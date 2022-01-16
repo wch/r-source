@@ -448,8 +448,9 @@ add_dummies <- function(dir, Log)
             owner <- file.info(foo)[, "uname"]
             foo[owner == user]
         }
-        user <- if (.Platform$OS.type != "windows") Sys.getenv("LOGNAME")
-                else Sys.info()[["login"]]
+        ## This should always give the uname for files created by the
+        ## current user:
+        user <- Sys.info()[["effective_user"]]
         home <- normalizePath("~")
         xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
         xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
@@ -497,7 +498,7 @@ add_dummies <- function(dir, Log)
             pkgdir <- getwd()
             resultLog(Log, "OK")
         } else {
-            errorLog(Log, "Package directory ", sQuote(pkg), "does not exist.")
+            errorLog(Log, "Package directory ", sQuote(pkg), " does not exist.")
             summaryLog(Log)
             do_exit(1L)
         }
@@ -612,7 +613,7 @@ add_dummies <- function(dir, Log)
 
         check_Rd_files(haveR, chkInternal = R_check_Rd_internal_too)
 
-        check_data() # 'data' dir and sysdata.rda
+        if (!extra_arch) check_data() # 'data' dir and sysdata.rda
 
         if (!is_base_pkg && !extra_arch) check_src_dir(desc)
 
@@ -1052,6 +1053,24 @@ add_dummies <- function(dir, Log)
             }
         }
 
+        ## Also check logical fields for appropriate values.
+        db <- .read_description(dfile)
+        fields <- c("LazyData", "KeepSource", "ByteCompile", "UseLTO",
+                    "StagedInstall", "Biarch", "BuildVignettes")
+        bad <- fields[vapply(fields,
+                             function(f) {
+                                 !is.na(x <- db[f]) &&
+                                     suppressWarnings(is.na(utils:::str2logical(x)))
+                             },
+                             NA)]
+        if(length(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     paste(c("Malformed field(s):", bad), collapse = " "),
+                     "\n")
+        }
+
         if(!is_base_pkg && is.na(db["Packaged"])) {
             if(!any) (noteLog(Log))
             any <- TRUE
@@ -1243,21 +1262,37 @@ add_dummies <- function(dir, Log)
                 }
                 check_autoconf <- check_incoming ||
                     config_val_to_logical(Sys.getenv("_R_CHECK_AUTOCONF_", "FALSE"))
-                if (check_autoconf && nzchar(Sys.which("autoreconf"))) {
-                    td <- tempfile()
-                    dir.create(td)
-                    file.copy(".", td, recursive = TRUE)
-                    od <- setwd(td)
-                    out <- suppressWarnings(system2("autoreconf", "-fi",
-                                                    stdout = TRUE, stderr = TRUE, timeout = 60))
-                    setwd(od); unlink(td, recursive = TRUE)
-                    if (length(out)) {
-                        if(!any) {
-                            any <- TRUE
-                            warningLog(Log)
+                if (check_autoconf) {
+                    arcf <- Sys.getenv("AUTORECONF", "autoreconf")
+                    arcf <- strsplit(arcf, " ")[[1L]]
+                    autoreconf <- arcf[1L]
+                    autoreconf_options <- arcf[-1L]
+                    if(nzchar(Sys.which(autoreconf))) {
+                        ver <- system2(autoreconf, "--version",
+                                       stdout = TRUE, stderr = TRUE)[1]
+                        if (grepl("2[.]6[89]", ver))
+                            autoreconf_options <-
+                                unique(c(autoreconf_options,
+                                         "--warnings=obsolete"))
+                        td <- tempfile()
+                        dir.create(td)
+                        file.copy(".", td, recursive = TRUE)
+                        od <- setwd(td)
+                        autoreconf_options <- c(autoreconf_options, "-f", "-i")
+                        out <- suppressWarnings(system2(autoreconf,
+                                                        autoreconf_options,
+                                                        stdout = TRUE,
+                                                        stderr = TRUE,
+                                                        timeout = 60))
+                        setwd(od); unlink(td, recursive = TRUE)
+                        if (length(out)) {
+                            if(!any) {
+                                any <- TRUE
+                                warningLog(Log)
+                            }
+                            printLog0(Log, "  Output from running autoreconf:\n")
+                            printLog0(Log, .format_lines_with_indent(out), "\n")
                         }
-                        printLog0(Log, "  Output from running autoreconf:\n")
-                        printLog0(Log, .format_lines_with_indent(out), "\n")
                     }
                 }
             }
@@ -1432,6 +1467,7 @@ add_dummies <- function(dir, Log)
                        "INSTALL.windows",
                        "README.md", "NEWS.md",
                        "configure", "configure.win", "cleanup", "cleanup.win",
+                       "configure.ucrt", "cleanup.ucrt",
                        "configure.ac", "configure.in",
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
@@ -1716,6 +1752,7 @@ add_dummies <- function(dir, Log)
             ## </NOTE>
             if (!any(file.exists(file.path("src",
                                            c("Makefile", "Makefile.win",
+					     "Makefile.ucrt",
                                              "install.libs.R"))))) {
                 if (!length(dir("src", pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)"))) {
                     if (!any) warningLog(Log)
@@ -2446,11 +2483,19 @@ add_dummies <- function(dir, Log)
                           sprintf("suppressPackageStartupMessages(tools:::.check_packages_used_in_examples(package = \"%s\"))\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            exfile <- paste0(pkgname, "-Ex.R")
             if (length(out)) {
-                warningLog(Log)
+                failed <- any(grepl("parse error in file", out, fixed = TRUE))
+                if (failed) errorLog(Log) else warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                if (failed) {
+                    printLog0(Log, "** will not attempt to run examples\n")
+                    do_examples <<- FALSE
+                    file.copy(exfile, pkgoutdir)  # keep that file (PR#17501)
+                }
                 # wrapLog(msg_DESCRIPTION)
             } else resultLog(Log, "OK")
+            if (file.exists(exfile)) unlink(exfile)
 
         } ## FIXME, what if no install?
     }
@@ -2568,9 +2613,7 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            el <- if (R_check_depends_only_data) {
-                      setRlibs(pkgdir = pkgdir, libdir = libdir)
-                  } else elibs
+            el <- if (R_cdo_data) setRlibs(pkgdir = pkgdir, libdir = libdir) else elibs
             out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
@@ -2581,7 +2624,7 @@ add_dummies <- function(dir, Log)
                 if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
-                    if(R_check_depends_only_data || R_check_suggests_only)
+                    if(R_cdo_data || R_check_suggests_only)
                         printLog0(Log,
                                   "  The dataset(s) may use package(s) not declared in Depends/Imports.\n")
                     else
@@ -3102,7 +3145,8 @@ add_dummies <- function(dir, Log)
         ## statically linked).
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
-                                          "Makefile", "Makefile.win")))
+                                          "Makefile", "Makefile.win",
+					  "Makefile.ucrt")))
         if(length(makefiles)) {
             checkingLog(Log, "for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS)")
             any <- FALSE
@@ -3148,8 +3192,9 @@ add_dummies <- function(dir, Log)
 
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
-                                          "Makevars.win",
-                                          "Makefile", "Makefile.win")))
+                                          "Makevars.win", "Makevars.ucrt",
+                                          "Makefile", "Makefile.win",
+					  "Makefile.ucrt")))
 
         if(length(makefiles)) {
             checkingLog(Log, "use of PKG_*FLAGS in Makefiles")
@@ -3385,7 +3430,7 @@ add_dummies <- function(dir, Log)
         ## spaces for which there is no portable way to quote/escape.
         all_files <-
             dir(".",
-                pattern = "^(Makefile|Makefile.in|Makefile.win|makefile|GNUmakefile)$",
+                pattern = "^(Makefile|Makefile.in|Makefile.win|Makefile.ucrt|makefile|GNUmakefile)$",
                 recursive = TRUE)
         all_files <- unique(sort(all_files))
         if(length(all_files)) {
@@ -3827,7 +3872,8 @@ add_dummies <- function(dir, Log)
             ## so force LANGUAGE=en
             status <- R_runR0(NULL, c(Ropts, enc),
                               c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
-                                if(nzchar(arch)) env0, jitstr, elibs),
+                                if(nzchar(arch)) env0, jitstr,
+                                if(R_cdo_examples) elibs else character()),
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
@@ -4283,20 +4329,25 @@ add_dummies <- function(dir, Log)
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
             dir <- file.path(pkgdir, "inst", "doc")
-            outputs <- character(length(vigns$docs))
-	    .msg <- character()
-            for (i in seq_along(vigns$docs)) {
-                file <- vigns$docs[i]
-                name <- vigns$names[i]
-                engine <- vignetteEngine(vigns$engines[i])
-                outputs[i] <- tryCatch({
-                    find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
-                }, error = function(e) {
-		    .msg <<- c(.msg, conditionMessage(e))
-	            NA}
-		)
+            if (dir.exists(dir)) {
+                outputs <- character(length(vigns$docs))
+                .msg <- character()
+                for (i in seq_along(vigns$docs)) {
+                    file <- vigns$docs[i]
+                    name <- vigns$names[i]
+                    engine <- vignetteEngine(vigns$engines[i])
+                    outputs[i] <- tryCatch({
+                        find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
+                    }, error = function(e) {
+                        .msg <<- c(.msg, conditionMessage(e))
+                        NA}
+                    )
+                }
+                bad_vignettes <- vigns$docs[is.na(outputs)]
+            } else {
+                .msg <- "Directory 'inst/doc' does not exist."
+                bad_vignettes <- vigns$docs
             }
-            bad_vignettes <- vigns$docs[is.na(outputs)]
             if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
@@ -4491,7 +4542,8 @@ add_dummies <- function(dir, Log)
                     status <- R_runR0(Rcmd,
                                       if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                       ## add timing as footer, as BATCH does
-                                      env = c(jitstr, "R_BATCH=1234", elibs,
+                                      env = c(jitstr, "R_BATCH=1234",
+                                              if (R_cdo_vignettes) elibs else character(),
                                               "_R_CHECK_INTERNALS2_=1"),
                                       stdout = outfile, stderr = outfile,
                                       timeout = tlim)
@@ -4634,20 +4686,29 @@ add_dummies <- function(dir, Log)
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
                     else {
-                        ## serialize elibs to avoid quotation hell
-                        tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
-                                   fixed=TRUE)
-                        saveRDS(c(jitstr, elibs), tf)
-                        sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
-                                opWarn_string,
-                                file.path(pkgoutdir, "vign_test", pkgname0),
-                                tf)
+                        if (R_cdo_vignettes) {
+                            ## serialize elibs to avoid quotation hell
+                            tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
+                                       fixed = TRUE)
+                            saveRDS(c(jitstr, elibs), tf)
+                            sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                                    opWarn_string,
+                                    file.path(pkgoutdir, "vign_test", pkgname0),
+                                    tf)
+                        } else {
+                            sprintf("%s\ntools:::buildVignettes(dir = '%s')",
+                                    opWarn_string,
+                                    file.path(pkgoutdir, "vign_test", pkgname0))
+                       }
                     }
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
-                status <- R_runR0(Rcmd, R_opts2, c(jitstr, elibs),
+                status <- R_runR0(Rcmd, R_opts2,
+                                  c(jitstr,
+                                    if(R_cdo_vignettes) elibs
+                                    else character()),
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
@@ -4759,9 +4820,11 @@ add_dummies <- function(dir, Log)
                 checkingLog(Log, "PDF version of manual without hyperrefs or index")
                 ## Also turn off hyperrefs.
                 Sys.setenv(R_RD4PDF = "times")
+                ## --force is used for the case when pdf file was created by
+                ## the previous run (seen with MiKTeX on Windows)
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste0("--build-dir=", shQuote(build_dir)),
-                          "--no-clean", "--no-index",
+                          "--no-clean", "--no-index", "--force",
                           "-o ", man_file, topdir)
                 if (run_Rcmd(args, "Rdlatex.log", timeout = tlim)) {
                     ## FIXME: the info is almost certainly in Rdlatex.log
@@ -5076,10 +5139,12 @@ add_dummies <- function(dir, Log)
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
                 ## which is implied by '-Wall'.
-                ## Currently only accessible via an internal environment
+                ## True as from R 4.2.0, as Apple clang on macOS made these
+                ## errors in 2020.
+                ## Previously only accessible via an internal environment
                 ## variable.
                 check_src_flag <-
-                    Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "TRUE")
                 ## (Not quite perfect, as the name should really
                 ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
                 if (config_val_to_logical(check_src_flag)) {
@@ -5145,6 +5210,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* with a value, in function returning void",
                              ": warning: .*\\[-Wlto",
                              ": warning: .*\\[-Wodr\\]",
+                             ": warning: .*\\[-Wswitch\\]",
                              ": warning: line number out of range",
                              ## gcc 10 some -fanalyzer warnings
                              ": warning: .*\\[-Wanalyzer-null-dereference\\]",
@@ -5152,7 +5218,13 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wanalyzer-malloc-leak\\]",
                              ": warning: .*\\[-Wanalyzer-file-leak\\]",
                              ": warning: .*\\[-Wanalyzer-use-after-free\\]",
-                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]"
+                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]",
+                             ## gcc and clang
+                             ": warning: .*\\[-Wpointer-sign\\]",
+                             ## gcc and clang reports on use of #warning
+                             ## but not suppressing the warning itself.
+                             "\\[-Wcpp\\] ",
+                             "\\[-W#warnings\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
@@ -5194,7 +5266,10 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wlogical-not-parentheses\\]",
                              ## For non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]",
-                             "warning: .* \\[-Wnested-anon-types\\]"
+                             "warning: .* \\[-Wnested-anon-types\\]",
+                             "warning: .* is not needed and will not be emitted",
+                             "warning: .* \\[-Wnon-literal-null-conversion\\]",
+                             "warning: .* \\[-Wignored-optimization-argument\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
@@ -5334,6 +5409,8 @@ add_dummies <- function(dir, Log)
                 if (WINDOWS) {
                     ## Warning on Windows with some packages that
                     ## cannot transparently be installed bi-arch.
+                    lines <- filtergrep("Warning: this package has a non-empty 'configure.ucrt' file",
+                                        lines)
                     lines <- filtergrep("Warning: this package has a non-empty 'configure.win' file",
                                         lines)
                     ## Warning on x64 Windows gcc 4.5.1 that
@@ -5371,6 +5448,11 @@ add_dummies <- function(dir, Log)
                     !grepl(pkgname, lines, fixed = TRUE, useBytes = TRUE)
                 lines <- lines[!ex]
 
+                ## byte-compilation errors, often from bugs there
+                this <- grep("Error: compilation failed -",
+                             lines0, value = TRUE)
+                lines <- c(lines, unique(this))
+
                 note_re <-
                     "warning: control may reach end of non-void function"
 
@@ -5406,8 +5488,7 @@ add_dummies <- function(dir, Log)
                 } else resultLog(Log, "OK")
             }   ## end of case B
         }
-
-    }
+    } ## {check_install()}
 
     ## This requires a GNU-like 'du' with 1k block sizes,
     ## so use -k (which POSIX requires).
@@ -5607,7 +5688,7 @@ add_dummies <- function(dir, Log)
             imp <- ns$imports
             lens <- lengths(imp)
             imp <- imp[lens == 2L]
-            nm <- sapply(imp, "[[", 1)
+            nm <- sapply(imp, `[[`, 1)
             lens <- vapply(imp, function(x) length(x[[2L]]), 0L)
             bad <- nm[lens == 0L]
             if(length(bad)) {
@@ -5757,6 +5838,7 @@ add_dummies <- function(dir, Log)
                 setwd(srcd)
                 if (!file.exists("Makefile") &&
                     !file.exists("Makefile.win") &&
+		    !file.exists("Makefile.ucrt") &&
                     !(file.exists("Makefile.in") && spec_install)) {
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)
@@ -6063,6 +6145,10 @@ add_dummies <- function(dir, Log)
         ## If we do not install, then we cannot *run* any code.
         do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
     }
+    if(startsWith(install, "check+fake")) {
+        install <- paste0("check", substring(install, 11L))
+        opts <- c(opts, "--install=fake")
+    }
     if (run_dontrun) opts <- c(opts, "--run-dontrun")
     if (run_donttest) opts <- c(opts, "--run-donttest")
     opts0 <- opts # other options are added later.
@@ -6194,14 +6280,23 @@ add_dummies <- function(dir, Log)
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
     R_check_unsafe_calls <-
         config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "TRUE"))
-    R_check_depends_only <-
+    R_cdo <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
+    R_cdo_examples <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_EXAMPLES_",
+                                         R_cdo))
+    R_cdo_tests <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_TESTS_",
+                                         R_cdo))
+    R_cdo_vignettes <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_VIGNETTES_",
+                                         R_cdo))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
     ## Restrict check of data() to Imports/Depends, if not already done
-    R_check_depends_only_data <-
+    R_cdo_data <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
-                                         "FALSE")) && !R_check_depends_only
+                                         "FALSE")) && !R_cdo
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
@@ -6248,7 +6343,10 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_" = "TRUE")
         Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_" = "TRUE")
-        Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
+        prev <- Sys.getenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_",
+                           NA_character_)
+        if(is.na(prev))
+            Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "FALSE")
         Sys.setenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
         Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
@@ -6657,14 +6755,14 @@ add_dummies <- function(dir, Log)
         } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
 
         elibs <- if(is_base_pkg) character()
-        else if(R_check_depends_only)
+             else if(R_cdo || R_cdo_examples || R_cdo_vignettes)
             setRlibs(pkgdir = pkgdir, libdir = libdir)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
         else character()
 
         elibs_tests <- if(is_base_pkg) character()
-        else if(R_check_depends_only)
+        else if(R_cdo_tests)
             setRlibs(pkgdir = pkgdir, libdir = libdir, tests = TRUE)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
@@ -6781,6 +6879,11 @@ add_dummies <- function(dir, Log)
                     }
                     ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
                 }
+            }
+            ## Precautionary clean up
+            if (length(ff)) {
+                ff <- ff[!is.na(ff)]
+                ff <- ff[ff != "NA"]
             }
             if (length(ff)) {
                 noteLog(Log)

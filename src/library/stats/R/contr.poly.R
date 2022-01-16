@@ -24,12 +24,12 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
     make.poly <- function(n, scores)
     {
 	y <- scores - mean(scores)
-	X <- outer(y, seq_len(n) - 1, "^")
+	X <- outer(y, seq_len(n) - 1, `^`)
 	QR <- qr(X)
 	z <- QR$qr
 	z <- z *(row(z) == col(z))
 	raw <- qr.qy(QR, z)
-	Z <- sweep(raw, 2L, apply(raw, 2L, function(x) sqrt(sum(x^2))), "/",
+	Z <- sweep(raw, 2L, apply(raw, 2L, function(x) sqrt(sum(x^2))), `/`,
 		   check.margin=FALSE)
 	colnames(Z) <- paste0("^", 1L:n - 1L)
 	Z
@@ -80,7 +80,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
     if(degree < 1)
         stop("'degree' must be at least 1")
     if(raw) {
-        Z <- outer(x, 1L:degree, "^")
+        Z <- outer(x, 1L:degree, `^`)
         colnames(Z) <- 1L:degree
     } else {
 	if(is.null(coefs)) { # fitting
@@ -89,7 +89,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
 		stop("'degree' must be less than number of unique points")
 	    xbar <- mean(x)
 	    x <- x - xbar
-	    X <- outer(x, 0L:degree, "^")
+	    X <- outer(x, 0L:degree, `^`)
 	    QR <- qr(X)
 	    if(QR$rank < degree)
 		stop("'degree' must be less than number of unique points")

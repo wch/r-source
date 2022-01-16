@@ -54,7 +54,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         if(verbose) message("found encoding ", enc, domain = NA)
         encoding <- if(enc %in% c("UTF-8", "utf-8", "utf8")) "UTF-8" else enc
     }
-    if (encoding == "unknown") encoding <- ""
+    if (length(encoding) != 1L || encoding == "unknown") encoding <- ""
 
     ## the internal function must get some sort of srcfile
     if (!inherits(srcfile, "srcfile"))

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2021   The R Core Team.
+ *  Copyright (C) 2000-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
-#include <R_ext/RS.h>		/* R_chk_calloc and Free */
+#include <R_ext/RS.h>		/* R_chk_calloc and R_Free */
 #include <R_ext/Riconv.h>
 #include <R_ext/Print.h> // REprintf, REvprintf
 #undef ERROR			/* for compilation on Windows */
@@ -2372,20 +2372,29 @@ static Rboolean clp_open(Rconnection con)
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     this->pos = 0;
+    if (strlen(con->encname) > 0 && strcmp(con->encname, "native.enc"))
+	/* R <= 4.1 allowed writing data to clipboard in given encoding,
+	   but did not specify that encoding using CF_LOCALE. Similarly, it
+	   would read data assuming a given encoding, without checking
+	   CF_LOCALE. Using CF_UNICODETEXT is simpler as it avoids the need
+	   for specifying CF_LOCALE and hence the conversion between iconv
+	   encoding names and Windows locale IDs. */
+	warning(_("argument '%s' will be ignored"), "encoding");
     if(con->canread) {
 	/* copy the clipboard contents now */
 #ifdef Win32
 	HGLOBAL hglb;
-	char *pc;
+	wchar_t *wpc;
 	if(GA_clipboardhastext() &&
 	   OpenClipboard(NULL) &&
-	   (hglb = GetClipboardData(CF_TEXT)) &&
-	   (pc = (char *)GlobalLock(hglb))) {
-	    int len = (int) strlen(pc);  // will be fairly small
+	   (hglb = GetClipboardData(CF_UNICODETEXT)) &&
+	   (wpc = (wchar_t *)GlobalLock(hglb))) {
+	    
+	    int len = (int)wcslen(wpc) * sizeof(wchar_t);
 	    this->buff = (char *)malloc(len + 1);
 	    this->last = this->len = len;
 	    if(this->buff) {
-		strcpy(this->buff, pc);
+		memcpy(this->buff, wpc, len + 1);
 		GlobalUnlock(hglb);
 		CloseClipboard();
 	    } else {
@@ -2416,6 +2425,10 @@ static Rboolean clp_open(Rconnection con)
     }
     con->text = TRUE;
     /* Not calling set_buffer(con) as the data is already buffered */
+#ifdef Win32
+    strncpy(con->encname, "UTF-16LE", 100);
+    con->encname[100 - 1] = '\0';
+#endif
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
@@ -2428,19 +2441,20 @@ static void clp_writeout(Rconnection con)
 #ifdef Win32
     Rclpconn this = con->private;
 
+    /* see comment on CF_UNICODETEXT/CF_TEXT in clp_open */
     HGLOBAL hglb;
-    char *s, *p;
-    if ( (hglb = GlobalAlloc(GHND, this->len)) &&
-	 (s = (char *)GlobalLock(hglb)) ) {
-	p = this->buff;
-	while(p < this->buff + this->pos) *s++ = *p++;
-	*s = '\0';
+    wchar_t *s;
+    int wlen = (this->last + sizeof(wchar_t) - 1) / sizeof(wchar_t);
+    if ( (hglb = GlobalAlloc(GHND, (wlen + 1) * sizeof(wchar_t))) &&
+	 (s = (wchar_t *)GlobalLock(hglb)) ) {
+	memcpy(s, this->buff, wlen * sizeof(wchar_t));
+	s[wlen] = L'\0';
 	GlobalUnlock(hglb);
 	if (!OpenClipboard(NULL) || !EmptyClipboard()) {
 	    warning(_("unable to open the clipboard"));
 	    GlobalFree(hglb);
 	} else {
-	    if(!SetClipboardData(CF_TEXT, hglb)) {
+	    if(!SetClipboardData(CF_UNICODETEXT, hglb)) {
 		warning(_("unable to write to the clipboard"));
 		GlobalFree(hglb);
 	    }
@@ -2520,29 +2534,39 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rclpconn this = con->private;
-    int i, len = (int)(size * nitems), used = 0;
-    char c, *p = (char *) ptr, *q = this->buff + this->pos;
+    int len = (int)(size * nitems), used = 0;
 
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
 
-    for(i = 0; i < len; i++) {
-	if(this->pos >= this->len) break;
-	c = *p++;
 #ifdef Win32
-    /* clipboard requires CRLF termination */
-	if(c == '\n') {
-	    *q++ = '\r';
-	    this->pos++;
+    /* clipboard requires CRLF termination, copy by wchar_t */
+    int i;
+    wchar_t wc, *p = (wchar_t *) ptr, *q = (wchar_t *) this->buff + this->pos;
+
+    for(i = 0; i < len; i += sizeof(wchar_t)) {
+	if(this->pos >= this->len) break;
+	wc = *p++;
+	if(wc == L'\n') {
+	    *q++ = L'\r';
+	    this->pos += sizeof(wchar_t);
 	    if(this->pos >= this->len) break;
 	}
-#endif
-	*q++ = c;
-	this->pos++;
-	used++;
+	*q++ = wc;
+	this->pos += sizeof(wchar_t);
+	used += sizeof(wchar_t);
     }
+#else
+    /* NOTE: not reachable as clipboard is not writeable on Unix */
+    /* copy byte-by-byte */
+    int space = this->len - this->pos;
+    used = (space < len) ? space : len;
+    memcpy(this->buff + this->pos, ptr, used);
+    this->pos += used;
+#endif
+
     if (used < len && !this->warned) {
 	warning(_("clipboard buffer is full and output lost"));
 	this->warned = TRUE;
@@ -2555,7 +2579,7 @@ static Rconnection newclp(const char *url, const char *inmode)
 {
     Rconnection new;
     const char *description;
-    int sizeKB = 32;
+    int sizeKB = 64;
     char mode[4];
 
     mode[3] = '\0';
@@ -2608,7 +2632,7 @@ static Rconnection newclp(const char *url, const char *inmode)
     ((Rclpconn)new->private)->buff = NULL;
     if (strncmp(url, "clipboard-", 10) == 0) {
 	sizeKB = atoi(url+10);
-	if(sizeKB < 32) sizeKB = 32;
+	if(sizeKB < 64) sizeKB = 64;
 	/* Rprintf("setting clipboard size to %dKB\n", sizeKB); */
     }
     ((Rclpconn)new->private)->sizeKB = sizeKB;
@@ -4173,7 +4197,7 @@ static SEXP rawOneString(Rbyte *bytes, R_xlen_t nbytes, R_xlen_t *np)
     buf = R_chk_calloc(nbytes - (*np) + 1, 1);
     memcpy(buf, bytes+(*np), nbytes-(*np));
     res = mkChar(buf);
-    Free(buf);
+    R_Free(buf);
     *np = nbytes;
     return res;
 }
@@ -4662,7 +4686,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    size_t nwrite = con->write(buf, size, len, con);
 	    if(nwrite < len) warning(_("problem writing to connection"));
 	}
-	Free(buf);
+	R_Free(buf);
     }
 
     if(!wasopen) {
@@ -4691,6 +4715,8 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 
 	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
 	memset(buf, 0, R_MB_CUR_MAX*len+1);
+	mbstate_t mb_st;
+	mbs_init(&mb_st);
 	for(i = 0; i < len; i++) {
 	    q = p;
 	    m = (int) con->read(p, sizeof(char), 1, con);
@@ -4701,7 +4727,7 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 		if(m < clen - 1) error(_("invalid UTF-8 input in readChar()"));
 		p += clen - 1;
 		/* NB: this only checks validity of multi-byte characters */
-		if((int)mbrtowc(NULL, q, clen, NULL) < 0)
+		if((int)mbrtowc(NULL, q, clen, &mb_st) < 0)
 		    error(_("invalid UTF-8 input in readChar()"));
 	    } else if (*q == '\0' && *warnOnNul) {
 		*warnOnNul = FALSE;
@@ -4762,7 +4788,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	memcpy(buf, bytes + (*np), len);
 	*np += len;
 	res = mkCharLenCE(buf, len, CE_NATIVE);
-	Free(buf);
+	R_Free(buf);
     }
     vmaxset(vmax);
     return res;

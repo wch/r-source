@@ -1,6 +1,6 @@
 % File src/library/utils/man/aspell.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aspell}
@@ -45,6 +45,12 @@ aspell(files, filter, control = list(), encoding = "unknown",
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
 
+  On Windows, Aspell is available via MSYS2.  One should use a non-Cygwin
+  version, e.g.  package \code{mingw-w64-x86_64-aspell}.  The version built
+  against the Cygwin runtime (package \code{aspell}) requires Unix line
+  endings in files and Unix-style paths, which is incompatible with
+  \code{aspell()}.
+
   The currently available built-in filters are \code{"Rd"}
   (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
   (corresponding to \code{\link{SweaveTeXFilter}}), \code{"R"},
@@ -76,7 +82,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 
   The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
-  possibly mis-spelled words.  The default is 2; Emacs users may find it
+  possibly misspelled words.  The default is 2; Emacs users may find it
   useful to use an indentation of 0 and visit output in grep-mode.  It
   also has a \code{verbose} argument: when this is true, suggestions for
   replacements are shown as well.
@@ -91,7 +97,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print
-  method) with the information about possibly mis-spelled words.
+  method) with the information about possibly misspelled words.
 }
 \references{
   Kurt Hornik and Duncan Murdoch (2011).

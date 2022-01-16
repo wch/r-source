@@ -758,4 +758,50 @@ stopifnot(exprs = {
 ## all three  qpois(), qbinom() & qnbinom() were *far* from good in R <= 4.1.0
 
 
+## PR#18072 : dnbinom() underflow
+stopifnot(dnbinom(1:40, size=2^58, prob = 1) == 0)
+## gave mostly 1 in R <= 4.1.0
+x <- unique(sort(c(1:12, 15, outer(c(1,2,5), 10^(1:11)))))
+sz <- 2^70 ; prb <- .9999999
+summary(dn <- dnbinom(x, size=sz, prob = prb, log=TRUE))
+dL <- 118059167912526.5
+summary(dl.dn1 <- diff(log(dn[-1] + dL)))
+stopifnot(dn + dL > 0,
+          0.09 < dl.dn1, dl.dn1 < 0.93)
+## accuracy loss of 6 and more digits in R <= 4.1.0
+##---- reverse case, very *small* size ---------------
+dS <- dnbinom(1:90, size=1e-15, mu=200, log=TRUE)
+d4S <- diff(d3S <- diff(ddS <- diff(dS)))
+stopifnot(-39.1 < dS,  dS < -34.53
+    ,     -0.7 < ddS, ddS < -0.01116
+    , 0.000126 < d3S, d3S < 0.287683
+    ,    -0.17 < d4S, d4S < -2.8859e-6
+    , all.equal(c(-48.40172, -49.155492, -49.905797, -50.653012, -51.397452),
+                dnbinom(16:20, size=1e-15, prob=1/2, log=TRUE))
+)
+## failed in R 4.1.1 (and R-devel) only
+
+
+## PR#15628 ebd0() for dpois() [for now] \\  dpois(x, *) for  2\pi x >= DMAX
+stopifnot(exprs = {
+ print(abs(dpois(  40, 7.5)/ 6.81705586862060455e-17 -1)) < 6e-16 # 2.66e-15 in R <= 4.1.1
+ print(abs(dpois(1400,1000)/ 1.46677334419656833e-33 -1)) < 8e-16 # 1.71e-14 in R <= 4.1.1
+})
+## very large x:
+x <- trunc(2^(1000+ head(seq(1,24, by=1/64), -1)))
+L <- tail(x,1)
+dpxx <-  dpois(x,x) ## had ended in many 0's
+ldpxx <- dpois(x,x, log=TRUE) # ... -Inf
+(d <- mean(dlp <- diff(ldpxx)))# -0.005415
+stopifnot(exprs = {
+    dpxx > 0
+    is.finite(ldpxx)
+    print(abs(print(dpois(L,L))/ (1/sqrt(2*pi)/sqrt(L)) -1)) < 1e-15 # see 1.11e-16
+    abs(range(dlp) - d) < 1e-12 # seen 4.4e-14, was NaN in R <= 4.1.1
+    all.equal(ldpxx, log(dpxx), tol = 1e-15)
+})
+## dpois(x,x) underflowed to zero in R <= 4.1.1 for such large x.
+
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

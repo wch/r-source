@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.extract}
@@ -33,17 +33,20 @@ model.weights(x)
   e.g.\sspace{}the \code{etastart} and \code{mustart} components of a
   \code{\link{glm}} fit.
 
-  \code{model.offset} and \code{model.response} are equivalent to
-  \code{model.extract(, "offset")} and \code{model.extract(, "response")}
+  \code{model.extract(m, "offset")} and \code{model.extract(m, "response")}
+  are equivalent to \code{model.offset(m)} and \code{model.response(m)}
   respectively.  \code{model.offset} sums any terms specified by
   \code{\link{offset}} terms in the formula or by \code{offset} arguments
   in the call producing the model frame: it does check that the offset
   is numeric.
 
   \code{model.weights} is slightly different from
-  \code{model.frame(, "weights")} in not naming the vector it returns.
+  \code{model.extract(, "weights")} in not naming the vector it returns.
 }
-\value{The specified component of the model frame, usually a vector.}
+\value{The specified component of the model frame, usually a vector.
+  \code{model.response()} now \emph{drops} a possible \code{"Asis"} class
+  (stemming from \code{\link{I}(.)}).
+}
 
 \seealso{\code{\link{model.frame}}, \code{\link{offset}}}
 
@@ -55,7 +58,8 @@ stopifnot(model.extract(a, "response") == model.response(a))
 a <- model.frame(ncases/(ncases+ncontrols) ~ agegp + tobgp + alcgp,
                  data = esoph, weights = ncases+ncontrols)
 model.response(a)
-model.extract(a, "weights")
+(mw <- model.extract(a, "weights"))
+stopifnot(identical(unname(mw), model.weights(a)))
 
 a <- model.frame(cbind(ncases,ncontrols) ~ agegp,
                  something = tobgp, data = esoph)

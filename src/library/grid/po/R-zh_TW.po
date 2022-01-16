@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -78,19 +78,11 @@ msgstr "'row' 的值只能在已存在行的範圍之內"
 msgid "invalid 'row' specification"
 msgstr "'row' 設定得無效"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"只能設定 'side=[\"left\"，\"right\"]'，'col'，'col.before' 或 'col.after' 中"
-"的一個"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "只能設定 'side=[\"left\"，\"right\"]'，'col'，'col.before' 或 'col.after' 中的一個"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"只能設定 'side=[\"top\"，\"bottom\"]'，'row'，'row.before' 或 'row.after' 中"
-"的一個"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "只能設定 'side=[\"top\"，\"bottom\"]'，'row'，'row.before' 或 'row.after' 中的一個"
 
 msgid "invalid 'n'"
 msgstr "'n' 的值無效"
@@ -129,16 +121,13 @@ msgid "invalid display list element"
 msgstr "顯示列成分無效"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 msgstr "grob 被覆寫(grab 不會保持原狀態；用 'wrap=TRUE' 試一試)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "檢視區被覆寫(grab 有可能不保持原狀態)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr "grob 推了檢視區，但沒有將它彈起來(grab 有可能不保持原狀態)"
 
 msgid "only valid to push viewports"
@@ -161,6 +150,10 @@ msgstr "至少需要往上駕一個檢視區"
 
 msgid "Invalid number of generations"
 msgstr "無效的世代數目"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "'arrow' 引數無效"
 
 msgid "invalid object inserted on the display list"
 msgstr "顯示列裡所插入的物件無效"
@@ -276,6 +269,30 @@ msgstr "\"gTree\"只能給 'children' 設定值"
 msgid "Invalid 'order'"
 msgstr "'order' 的值無效"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'order' 的值無效"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "定位無效"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "'order' 的值無效"
+
 msgid "'l' must be a layout"
 msgstr "'l' 必須為版面設置"
 
@@ -323,6 +340,28 @@ msgstr "'listing' 無效"
 
 msgid "invalid 'origin'"
 msgstr "'origin' 的值無效"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' 和 'y' 的長度必須相同"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1'，'y1' ,'x2' 和 'y2' 必須是單元"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1'，'y1' ,'x2' 和 'y2' 必須是單元"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x'，'y'，'width' 和 'height' 的長度都應該是為一"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -495,10 +534,8 @@ msgstr "'vpList' 裡的值只能是檢視區"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "'vpStack' 裡的值只能是檢視區"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' 的值必須為檢視區，'children' 的值必須是 'vpTree' 裡的 'vpList'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' 的值必須為檢視區，'children' 的值必須是 'vpTree' 裡的 'vpList'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "檢視區路徑至少要有一個檢視區的名稱"

@@ -61,7 +61,7 @@ rep.arrow <- function(x, ...) {
                  length=rep(x$length, length.out=maxn),
                  ends=rep(x$ends, length.out=maxn),
                  type=rep(x$type, length.out=maxn))
-    newa <- lapply(X = newa, FUN = "[", index, ...)
+    newa <- lapply(X = newa, FUN = `[`, index, ...)
     class(newa) <- "arrow"
     newa
 }

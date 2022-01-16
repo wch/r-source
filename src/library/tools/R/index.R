@@ -190,7 +190,7 @@ function(contents, packageName, defaultEncoding = NULL)
         ## package the object comes from.  The latter is useful when
         ## subscripting the help.search db according to package.
         dbBase <- cbind(packageName, "", IDs, base,
-                        topic = sapply(aliases, "[", 1L), encoding)
+                        topic = sapply(aliases, `[`, 1L), encoding)
         ## If there are no aliases at all, cbind() below would give
         ## matrix(packageName, ncol = 1L).  (Of course, Rd objects
         ## without aliases are useless ...)

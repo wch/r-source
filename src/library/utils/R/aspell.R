@@ -286,7 +286,7 @@ function(object, ...)
 {
     words <- sort(unique(object$Original))
     if(length(words)) {
-        writeLines("Possibly mis-spelled words:")
+        writeLines("Possibly misspelled words:")
         print(words)
     }
     invisible(words)
@@ -1158,8 +1158,9 @@ function(dir,
                do.call(aspell_package_R_files, args),
                do.call(aspell_package_C_files, args))
     if(nrow(a)) {
-        a$File <- tools:::.file_path_relative_to_dir(a$File,
-                                                     dirname(dir))
+        a$File <- tools:::file_path_relative_to(a$File,
+                                                dirname(dir),
+                                                parent = FALSE)
     }
     a
 }

@@ -88,7 +88,7 @@ make.packages.html <-
         lib <- lib.loc[ii]
         libname <-
             if (identical(lib, .Library)) "the standard library" else if (WINDOWS) chartr("/", "\\", lib) else lib
-        cat("<p><h3 id=\"lib-",ii,"\">Packages in ", libname, "</h3>\n", sep = "", file = out)
+        cat("<h3 id=\"lib-",ii,"\">Packages in ", libname, "</h3>\n", sep = "", file = out)
         lib0 <- "../../library"
         if (!temp) {
             if (WINDOWS) {
@@ -113,7 +113,7 @@ make.packages.html <-
             writeLines(paste0("<a href=\"#pkgs-", nm, "\">", nm, "</a>"), out)
             writeLines("</p>\n", out)
         }
-        cat('<p><table width="100%" summary="R Package list">\n', file = out)
+        cat('<table width="100%" summary="R Package list">\n', file = out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"> <td></td>\n", sep = "", file = out)
@@ -123,8 +123,9 @@ make.packages.html <-
                 if (is.na(title)) title <- "-- Title is missing --"
                 cat('<tr align="left" valign="top" id="lib-', i, '">\n',
                     '<td width="25%"><a href="', lib0, '/', i,
-                    '/html/00Index.html">', i, "</a></td><td>", title,
-                    "</td></tr>\n", file = out, sep = "")
+                    '/html/00Index.html">', i, "</a></td><td>",
+                    gsub("&", "&amp;", title), "</td></tr>\n",
+                    file = out, sep = "")
                 if (WINDOWS) {
                     npkgs <- npkgs + 1L
                     if(verbose) setWinProgressBar(pb, npkgs)
@@ -134,7 +135,7 @@ make.packages.html <-
         cat("</table>\n\n", file=out)
     }
     if (length(lib.loc) > 1L) add_lib_index(lib.loc)
-    cat("</body></html>\n", file=out)
+    cat("</div></body>\n</html>\n", file=out)
     if (verbose) { message(" ", "done"); flush.console() }
     if (temp) saveRDS(lib.loc, op)
     invisible(TRUE)

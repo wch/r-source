@@ -20,14 +20,10 @@ asplit(x, MARGIN)
   included and not included in \code{MARGIN}.
 }
 \details{
+  Since \R 4.1.0, one can also obtain the splits (less efficiently)
+  using \code{apply(x, MARGIN, identity, simplify = FALSE)}.
   The values of the splits can also be obtained (less efficiently) by
   \code{split(x, slice.index(x, MARGIN))}.
-
-  \code{\link{apply}} always simplifies common length results, so 
-  attempting to split via \code{apply(x, MARGIN, identity)} does not
-  work (as it simply gives \code{x}).  By chaining \code{asplit} with
-  \code{\link{lapply}} or \code{\link{vapply}}, one can obtain variants
-  of \code{apply} which do not auto-simplify.
 }
 \examples{
 ## A 3-dimensional array of dimension 2 x 3 x 4:

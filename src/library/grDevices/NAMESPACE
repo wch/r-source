@@ -27,8 +27,9 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        topo.colors, trans3d, Type1Font, .axisPars,
        xfig, xyTable, xy.coords, xyz.coords,
 
-       .linearGradientPattern, .radialGradientPattern,
-       .setClipPath, .setMask, .setPattern, .tilingPattern)
+       .linearGradientPattern, .mask, .radialGradientPattern,
+       .clipPath, .setClipPath, .setMask, .setPattern, .tilingPattern,
+       .defineGroup, .useGroup, .devUp, .ruleIndex, .opIndex)
 
 ## devices common to all platforms
 export(X11, x11, bitmap, bmp, cairo_pdf, cairo_ps, jpeg, png, svg, tiff)

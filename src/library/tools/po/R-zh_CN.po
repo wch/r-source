@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -61,8 +61,7 @@ msgstr "文件目录'%s'不含R编码"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "目录'%s'没有Rd对象"
 
-msgid ""
-"Functions or methods with usage in documentation object '%s' but not in code:"
+msgid "Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr "函数或文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
@@ -170,11 +169,8 @@ msgstr "参数'package'的长度必需为一"
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
-msgid ""
-"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
-"Depends/Suggests/Imports entries."
-msgstr ""
-"标头从属(%s条目)必需包含在DESCRIPTION文件里的Depends/Suggests/Imports条目中."
+msgid "Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr "标头从属(%s条目)必需包含在DESCRIPTION文件里的Depends/Suggests/Imports条目中."
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -206,12 +202,8 @@ msgstr "Depends/Suggests/Imports/Enhances这些域中有些是畸形的."
 msgid "Offending entries:"
 msgstr "有问题的条目为:"
 
-msgid ""
-"Entries must be names of packages optionally followed by '<=' or '>=', white "
-"space, and a valid version number in parentheses."
-msgstr ""
-"每条目都必需是程辑包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的适当"
-"版本数目."
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr "每条目都必需是程辑包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的适当版本数目."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "带不可行比较运算符号的条目:"
@@ -222,39 +214,31 @@ msgstr "可用的运算符号只能是'<='和'>='."
 msgid "Entries with infeasible version number:"
 msgstr "带不可行的版本数目的条目:"
 
-msgid ""
-"Version numbers must be sequences of at least two non-negative integers, "
-"separated by single '.' or '-'."
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
 msgstr "版本数目至少要由两个非负整数组成，中间用单一的'.'或'-'符号分开."
 
 #, fuzzy
 msgid "Invalid VignetteBuilder field."
 msgstr "Priority域不对."
 
-msgid ""
-"This field must contain one or more packages (and no version requirement)."
+msgid "This field must contain one or more packages (and no version requirement)."
 msgstr ""
 
 msgid "Invalid Priority field."
 msgstr "Priority域不对."
 
-msgid ""
-"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
-"already be known to R."
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
 msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
 msgid "Malformed Title field: should not end in a period."
 msgstr ""
 
-msgid ""
-"Malformed Description field: should contain one or more complete sentences."
+msgid "Malformed Description field: should contain one or more complete sentences."
 msgstr ""
 
 #, fuzzy
-msgid ""
-"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
-msgstr ""
-"请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
+msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
+msgstr "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
 msgid "Malformed Authors@R field:"
 msgstr "畸形Authors@R域."
@@ -286,9 +270,7 @@ msgid "Authors@R field gives more than one person with maintainer role:"
 msgstr "Authors@R域没有提供有作者作用的人"
 
 #, fuzzy
-msgid ""
-"Authors@R field gives no person with maintainer role, valid email address "
-"and non-empty name."
+msgid "Authors@R field gives no person with maintainer role, valid email address and non-empty name."
 msgstr "Authors@R域没有提供有维修作用的人和他的email"
 
 #, fuzzy
@@ -369,9 +351,7 @@ msgstr "%s的参数串列%s不对"
 msgid "%s calls:"
 msgstr "%s调用："
 
-msgid ""
-"Package startup functions should have two arguments with names starting with "
-"%s and %s, respectively."
+msgid "Package startup functions should have two arguments with names starting with %s and %s, respectively."
 msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
 
 msgid "Package startup functions should not change the search path."
@@ -387,8 +367,7 @@ msgid "See section %s in '%s'."
 msgstr "参见'%2$s'里的%1$s章节"
 
 #, fuzzy
-msgid ""
-"Package detach functions should have one argument with name starting with %s."
+msgid "Package detach functions should have one argument with name starting with %s."
 msgstr "程序包脱离函数需要有个名字开头为%s的参数。"
 
 msgid "Package detach functions should not call %s."
@@ -428,8 +407,7 @@ msgid "'library' or 'require' calls to packages already attached by Depends:"
 msgstr "'library'或'require'调用没有被声明:"
 
 #, fuzzy
-msgid ""
-"'library' or 'require' call to %s which was already attached by Depends."
+msgid "'library' or 'require' call to %s which was already attached by Depends."
 msgstr "'library'或'require'调用没有被声明: %s"
 
 #, fuzzy
@@ -616,19 +594,13 @@ msgstr "程序包'%s'缺少'DESCRIPTION.in'"
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "没有一个已知的文件扩展名"
 
-msgid ""
-"Failed to locate %s output file %s or %s for vignette with name %s and "
-"engine %s. The following files exist in working directory %s: %s"
+msgid "Failed to locate %s output file %s or %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 
-msgid ""
-"Located more than one %s output file (by engine %s) for vignette with name "
-"%s: %s"
+msgid "Located more than one %s output file (by engine %s) for vignette with name %s: %s"
 msgstr ""
 
-msgid ""
-"Failed to locate %s output file %s for vignette with name %s and engine %s. "
-"The following files exist in working directory %s: %s"
+msgid "Failed to locate %s output file %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 
 msgid "unable to create temp directory %s"
@@ -645,9 +617,7 @@ msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
 
 #, fuzzy
-msgid ""
-"Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each other's output files"
+msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "）因此可以冒险各个输出文件"
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -740,8 +710,7 @@ msgstr "***程辑包'%s'里的Built域坏了***"
 msgid "cannot open directory '%s'"
 msgstr "无法打开目录'%s'"
 
-msgid ""
-"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
 msgstr "警告：略过不带版本需求的无意义'R'从属"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
@@ -905,14 +874,14 @@ msgstr "代码演示"
 msgid "Help pages:"
 msgstr "说明页面："
 
+msgid "No package named %s could be found"
+msgstr "找不到叫%s的程序包"
+
 msgid "No help found for topic %s in any package."
 msgstr "没有在任何程序包里找到关于%s的主题"
 
 msgid "No package index found for package %s"
 msgstr "程序包%s里没有索引"
-
-msgid "No package named %s could be found"
-msgstr "找不到叫%s的程序包"
 
 msgid "No help found for package %s"
 msgstr "%s的程序包没有帮助文件"
@@ -926,8 +895,7 @@ msgstr "程序包%s里没有任何文件"
 msgid "URL %s was not found"
 msgstr "找不到%s这个URL"
 
-msgid ""
-"Only help files, %s, %s and files under %s and %s in a package can be viewed"
+msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能够查看的文件限制于帮助文件，%s, %s 和%s下的文件和程序包%s里的文件"
 
 msgid "unsupported URL %s"
@@ -978,9 +946,7 @@ msgstr "读取文件'%s'时出了错"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
 
-msgid ""
-"'cleanup' exists but is not executable -- see the 'R Installation and "
-"Administration Manual'"
+msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
 
 msgid "generating debug symbols (%s)"
@@ -1002,9 +968,7 @@ msgstr ""
 msgid "NOTE: fixed rpath"
 msgstr ""
 
-msgid ""
-"WARNING: shared objects/dynamic libraries with hard-coded temporary "
-"installation paths"
+msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -1016,9 +980,7 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
-msgid ""
-"R include directory is empty -- perhaps need to install R-devel.rpm or "
-"similar"
+msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
 
 msgid "package %s %s was found, but %s %s is required by %s"
@@ -1261,8 +1223,7 @@ msgstr ""
 msgid "Specified fields no present in existing PACKAGES file:"
 msgstr ""
 
-msgid ""
-"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
 msgstr ""
 
 msgid "Updating existing repository [strict mode:"
@@ -1399,10 +1360,8 @@ msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
 
-msgid ""
-"Found possibly global 'T' or 'F' in the examples of the following Rd file:"
-msgid_plural ""
-"Found possibly global 'T' or 'F' in the examples of the following Rd files:"
+msgid "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
+msgid_plural "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
 msgstr[0] "在以下的Rd例子文件中遇到了有可能是全局的T或F值:"
 
 #, fuzzy
@@ -1419,32 +1378,22 @@ msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的S4泛型函数的方法调用了.Internal:"
 
 msgid "Found a .Internal call in methods for the following reference class:"
-msgid_plural ""
-"Found .Internal calls in methods for the following reference classes:"
+msgid_plural "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "下面的引用类里的方法调用了.Internal:"
 
 #, fuzzy
 msgid "Found an obsolete/platform-specific call in the following function:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in the following functions:"
+msgid_plural "Found an obsolete/platform-specific call in the following functions:"
 msgstr[0] "下面的函数里出现了过时的调用"
 
 #, fuzzy
-msgid ""
-"Found an obsolete/platform-specific call in methods for the following S4 "
-"generic:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in methods for the following S4 "
-"generics:"
+msgid "Found an obsolete/platform-specific call in methods for the following S4 generic:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following S4 generics:"
 msgstr[0] "下面S4泛型函数里出现了过时的调用"
 
 #, fuzzy
-msgid ""
-"Found an obsolete/platform-specific call in methods for the following "
-"reference class:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in methods for the following "
-"reference classes:"
+msgid "Found an obsolete/platform-specific call in methods for the following reference class:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following reference classes:"
 msgstr[0] "下面引用类型里出现了过时的调用"
 
 msgid "Found the deprecated function:"
@@ -1512,9 +1461,7 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
 
-#~ msgid ""
-#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
-#~ "be checked"
+#~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
 #~ msgid "No news found in given file using old-style R-like format."
@@ -1746,15 +1693,12 @@ msgstr[0] ""
 
 #, fuzzy
 #~ msgid "Foreign function call with 'PACKAGE' argument in a base package:"
-#~ msgid_plural ""
-#~ "Foreign function calls with 'PACKAGE' argument in a base package:"
+#~ msgid_plural "Foreign function calls with 'PACKAGE' argument in a base package:"
 #~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
 
 #, fuzzy
-#~ msgid ""
-#~ "Foreign function call with 'PACKAGE' argument in a different package:"
-#~ msgid_plural ""
-#~ "Foreign function calls with 'PACKAGE' argument in a different package:"
+#~ msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+#~ msgid_plural "Foreign function calls with 'PACKAGE' argument in a different package:"
 #~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
 
 #, fuzzy
@@ -2042,11 +1986,8 @@ msgstr[0] ""
 #~ msgstr "DVI从Rd2dvi输出不再有用"
 
 #, fuzzy
-#~ msgid ""
-#~ "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
-#~ "Extensions' manual'"
-#~ msgstr ""
-#~ "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
+#~ msgid "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R Extensions' manual'"
+#~ msgstr "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
 #~ msgid "Malformed NEWS.Rd file."
 #~ msgstr "NEWS.Rd文件格式不对。"
@@ -2103,14 +2044,8 @@ msgstr[0] ""
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "在程序包%s找不到%s这个帮助文件"
 
-#~ msgid ""
-#~ "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as "
-#~ "an alias but not as a filename -- such links will not work in R < 2.10.0, "
-#~ "and only in HTML (not PDF) help in current versions."
-#~ msgstr ""
-#~ "'可能不对'的链结一般具有\\link[pkg]{a}这样的格式，这里 'a'指的是别名但不是"
-#~ "真的文件名字--这种链结不能在小于2.10.0版本的R里用, 而且也只能在这个版本R的"
-#~ "HTML帮助里用(PDF不行)。"
+#~ msgid "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an alias but not as a filename -- such links will not work in R < 2.10.0, and only in HTML (not PDF) help in current versions."
+#~ msgstr "'可能不对'的链结一般具有\\link[pkg]{a}这样的格式，这里 'a'指的是别名但不是真的文件名字--这种链结不能在小于2.10.0版本的R里用, 而且也只能在这个版本R的HTML帮助里用(PDF不行)。"
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
@@ -2166,12 +2101,8 @@ msgstr[0] ""
 #~ msgid "Rd files with non-standard keywords:"
 #~ msgstr "Rd文件内有非标准关键字:"
 
-#~ msgid ""
-#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
-#~ "listed in file 'KEYWORDS' in the R documentation directory)."
-#~ msgstr ""
-#~ "每'\\keyword'条目必需从标准关键字表中取一个(在R使用文件目录中'KEYWORDS'文"
-#~ "件内)."
+#~ msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
+#~ msgstr "每'\\keyword'条目必需从标准关键字表中取一个(在R使用文件目录中'KEYWORDS'文件内)."
 
 #~ msgid "Rd files with empty sections:"
 #~ msgstr "Rd文件内有空的段:"

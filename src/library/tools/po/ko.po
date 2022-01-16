@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -147,12 +147,16 @@ msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"
 msgid "invalid bind address specification"
 msgstr "유효하지 않은 바인드 주소지정이 있습니다"
 
-#: install.c:112 install.c:131 install.c:133
+#: install.c:98
+msgid "path too long"
+msgstr ""
+
+#: install.c:115 install.c:134 install.c:136
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"
 
-#: install.c:162
+#: install.c:165
 msgid "write error during file append"
 msgstr "파일병합을 하는 동안 쓰기 에러가 발생했습니다"
 

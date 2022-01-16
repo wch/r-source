@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -77,19 +77,11 @@ msgstr "'row'的值只能在已存在行的范围之内"
 msgid "invalid 'row' specification"
 msgstr "'row'设定得不对"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"只能设定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col.after'中的一"
-"个"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "只能设定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col.after'中的一个"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"只能设定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一"
-"个"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "只能设定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一个"
 
 msgid "invalid 'n'"
 msgstr "'n'的值不对"
@@ -129,16 +121,13 @@ msgid "invalid display list element"
 msgstr "显示列成分不对"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 msgstr "grob被覆盖(grab不会保持原状态；用'wrap=TRUE'试一试)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "视口被覆盖(grab有可能不保持原状态)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr "grob推了视口，但没有将它弹起来(grab有可能不保持原状态)"
 
 msgid "only valid to push viewports"
@@ -163,6 +152,10 @@ msgstr "至少需要往上驾一个视口"
 
 msgid "Invalid number of generations"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "'arrow'参数不对"
 
 msgid "invalid object inserted on the display list"
 msgstr "显示列里所插入的对象不对"
@@ -280,6 +273,30 @@ msgstr "\"gTree\"只能给'children'设定值"
 msgid "Invalid 'order'"
 msgstr "'order'的值不对"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'order'的值不对"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "定位不对"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "'order'的值不对"
+
 msgid "'l' must be a layout"
 msgstr "'l'必需为布局"
 
@@ -329,6 +346,28 @@ msgstr "'listing'不对"
 
 msgid "invalid 'origin'"
 msgstr "'origin'的值不对"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x'和'y'的长度必需相同"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2'和'y2'必需是单元"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2'和'y2'必需是单元"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width'和'height'的长度都应该是为一"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -501,8 +540,7 @@ msgstr "'vpList'里的值只能是视口"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "'vpStack'里的值只能是视口"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr "'parent'的值必需为视口，'children'的值必需是'vpTree'里的'vpList'"
 
 msgid "a viewport path must contain at least one viewport name"
@@ -588,9 +626,7 @@ msgstr[0] "视口名字不对"
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr "这个函数多余，因此在新的版本里将被删除。"
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
 #~ msgstr "grid.arrows()不再有用；请用画线函数中'arrow'这一参数。"
 
 #~ msgid "shape must be between -1 and 1"
@@ -599,14 +635,10 @@ msgstr[0] "视口名字不对"
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr "非单元运算对象必需为数字"
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
 #~ msgstr "unit.rep不再有用，取而代之的是一个同属rep函数的单元方法"
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
 #~ msgstr "unit.length不再有用，取而代之的是一个同属length函数的单元方法"
 
 #, fuzzy

@@ -705,7 +705,7 @@ function(dir, unpacked = FALSE)
     ## old versions in the "main" src/contrib directory.  But let's not
     ## worry about this for now ...
 
-    db <- do.call("rbind", db)
+    db <- do.call(rbind, db)
 
     ## Retain what is needed ...
     data.frame(db[ , c("Package", "Version", fields)],

@@ -23,6 +23,7 @@ var
   option : String;
   index : Integer;
 begin
+  WizardForm.DiskSpaceLabel.Visible := False;
   NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
     CustomMessage('adminprivilegesrequired'), CustomMessage('adminexplanation'));
   
@@ -160,9 +161,9 @@ begin
   if (not IsAdmin) then 
   begin
     try
-      Result := ExpandConstant('{userdocs}');
+      Result := ExpandConstant('{userpf}');
     except
-    // Do nothing, user doesn't have a My Documents folder
+    // Change nothing.
     end;
   end;
 end;

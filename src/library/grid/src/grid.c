@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2019 The R Core Team
+ *                2003-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -189,14 +189,14 @@ SEXP doSetViewport(SEXP vp,
     /*
      * Establish the clipping region for this viewport
      */
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /*
          * Clipping settings are (silently) ignored during resolution of 
-         * a clipping path
+         * a (clipping) path
          */
         if (!isClipPath(viewportClipSXP(vp)) &&
             (viewportClip(vp) == NA_LOGICAL || viewportClip(vp))) {
-            warning(_("Turning clipping on or off within a clipping path is no honoured"));
+            warning(_("Turning clipping on or off within a (clipping) path is no honoured"));
         }
     } else if (isClipPath(viewportClipSXP(vp))) {
         SEXP currentClip, parentClip;
@@ -355,7 +355,7 @@ SEXP doSetViewport(SEXP vp,
     /*
      * Establish the mask for this viewport
      */
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /* Masks are (silently) ignored during resolution of a 
          * clipping path
          */
@@ -451,8 +451,8 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP clip, resolvedclip;
         PROTECT(clip = viewportClipSXP(pushedvp));
         if (isClipPath(clip)) {
-            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
-                warning(_("Clipping paths within a clipping path are not honoured"));
+            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
+                warning(_("Clipping paths within a (clipping) path are not honoured"));
                 SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, R_NilValue);
             } else {
                 /* Record the resolved clip path for subsequent up/down/pop */
@@ -470,8 +470,8 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP mask, resolvedmask;
         PROTECT(mask = viewportMaskSXP(pushedvp));
         if (isMask(mask)) {
-            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
-                warning(_("Masks within a clipping path are not honoured"));
+            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
+                warning(_("Masks within a (clipping) path are not honoured"));
                 SET_VECTOR_ELT(pushedvp, PVP_MASK, R_NilValue);
             } else {
                 /* Record resolved mask for subsequent up/down/pop */
@@ -973,7 +973,7 @@ SEXP L_unsetviewport(SEXP n)
     setGridStateElement(dd, GSS_VP, newvp);
     /* Set the clipping region to the parent's cur.clip
      */
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /* Clipping is (silently) ignored during resolution of 
          * a clipping path
          */
@@ -994,7 +994,7 @@ SEXP L_unsetviewport(SEXP n)
         }
         UNPROTECT(2);
     }
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /* Masks are (silently) ignored during resolution of 
          * a clipping path
          */
@@ -1068,7 +1068,7 @@ SEXP L_upviewport(SEXP n)
     setGridStateElement(dd, GSS_VP, newvp);
     /* Set the clipping region to the parent's cur.clip
      */
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /* Clipping is (silently) ignored during resolution of 
          * a clipping path
          */
@@ -1089,7 +1089,7 @@ SEXP L_upviewport(SEXP n)
         }
         UNPROTECT(2);
     }
-    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGPATH))[0]) {
         /* Masks are (silently) ignored during resolution of 
          * a clipping path
          */
@@ -1293,14 +1293,23 @@ SEXP L_newpage()
 	GENewPage(&gc, dd);
     }
     
+    return R_NilValue;
+}
+
+SEXP L_clearDefinitions(SEXP clearGroups) {
+    pGEDevDesc dd = getDevice();
     /* Clear all device patterns */
     dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
-    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
-
+    if (LOGICAL(clearGroups)[0] && 
+        dd->dev->deviceVersion > R_GE_group) {
+        /* Clear all groups */
+        dd->dev->releaseGroup(R_NilValue, dd->dev);
+    }
     return R_NilValue;
 }
 
@@ -1810,10 +1819,10 @@ static void polygonEdge(double *x, double *y, int n,
 			double *edgex, double *edgey) {
     int i, v1, v2;
     double xm, ym;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     int found = 0;
     double angle = theta/180*M_PI;
     double vangle1, vangle2;
@@ -2327,10 +2336,10 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     SEXP tracePts = R_NilValue;
     SEXP result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
@@ -2869,10 +2878,10 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     double edgex, edgey;
     SEXP resolvedFill = R_NilValue;
     /* Get the current device 
@@ -3029,10 +3038,10 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
@@ -3525,10 +3534,10 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     LTransform transform;
     SEXP txt, result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     /* 
      * Bounding rectangles for checking overlapping
      * Initialised to shut up compiler
@@ -3705,7 +3714,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	    GEMode(0, dd);
 	}
 	if (ntxt > 0) {
-	    result = allocVector(REALSXP, 4);
+	    result = allocVector(REALSXP, 6);
 	    /*
 	     * If there is more than one text, just produce edge
 	     * based on bounding rect of all text
@@ -3729,6 +3738,10 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 		REAL(gridStateElement(dd, GSS_SCALE))[0];
 	    REAL(result)[3] = (ymax - ymin) / 
 		REAL(gridStateElement(dd, GSS_SCALE))[0];
+            REAL(result)[4] = xmin /
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
+            REAL(result)[5] = ymin / 
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
 	}
     }
     vmaxset(vmax);
@@ -3748,7 +3761,7 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
  * of multiple pieces of text, unaligned, and/or rotated) 
  * in INCHES.
  *
- * Result is (xmin, xmax, ymin, ymax)
+ * Result is (edgex, edgey, width, height, xmin, ymax)
  *
  * Return NULL if no text to draw;  R code will generate unit from that
  */
@@ -3957,9 +3970,15 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
     return R_NilValue;    
 }
 
+// for API back compatibility:
 SEXP L_pretty(SEXP scale) {
+    /* Default preferred number of ticks hard coded ! */
+    return L_pretty2(scale, ScalarInteger(5));
+}
+SEXP L_pretty2(SEXP scale, SEXP n_) {
     double min = numeric(scale, 0);
     double max = numeric(scale, 1);
+    int n = asInteger(n_);
     double temp;
     /* FIXME:  This is just a dummy pointer because we do not have
      * log scales.  This will cause death and destruction if it is 
@@ -3967,8 +3986,6 @@ SEXP L_pretty(SEXP scale) {
      */
     double *usr = NULL;
     double axp[3];
-    /* FIXME:  Default preferred number of ticks hard coded ! */
-    int n = 5;
     Rboolean swap = min > max;
     /* 
      * Feature: 
@@ -4058,10 +4075,10 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
     const void *vmax;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     double edgex, edgey;
     /* Get the current device 
      */

@@ -38,7 +38,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
 \details{
   The function \code{findInterval} finds the index of one vector \code{x} in
   another, \code{vec}, where the latter must be non-decreasing.  Where
-  this is trivial, equivalent to \code{apply( outer(x, vec, ">="), 1, sum)},
+  this is trivial, equivalent to \code{apply( outer(x, vec, `>=`), 1, sum)},
   as a matter of fact, the internal algorithm uses interval search
   ensuring \eqn{O(n \log N)}{O(n * log(N))} complexity where
   \code{n <- length(x)} (and \code{N <- length(vec)}).  For (almost)

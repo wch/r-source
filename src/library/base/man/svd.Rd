@@ -88,7 +88,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   \code{\link{eigen}}, \code{\link{qr}}.
 }
 \examples{
-hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, `+`) }
 X <- hilbert(9)[, 1:6]
 (s <- svd(X))
 D <- diag(s$d)

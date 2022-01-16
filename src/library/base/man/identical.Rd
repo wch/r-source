@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2001-2016 R Core Team
+% Copyright 2001-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -14,7 +14,7 @@
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
           ignore.bytecode = TRUE, ignore.environment = FALSE,
-          ignore.srcref = TRUE)
+          ignore.srcref = TRUE, extptr.as.ref = FALSE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -37,6 +37,11 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     should be ignored when comparing \link{closure}s.}
   \item{ignore.srcref}{logical indicating if their \code{"srcref"}
     attributes should be ignored when comparing \link{closure}s.}
+  \item{extptr.as.ref}{logical indicating whether external pointer
+    objects should be compared as reference objects and considered
+    identical only if they are the same object in memory. By default,
+    external pointers are considered identical if the addresses they
+    contain are identical.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -71,8 +76,11 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   \code{\link{NaN}} as different from \code{\link{NA_real_}}, but all
   \code{NaN}s are equal (and all \code{NA} of the same type are equal).
 
-  Character strings are regarded as identical if they are in different
-  marked encodings but would agree when translated to UTF-8.
+  Character strings (except those in marked encoding \code{"bytes"}) are
+  regarded as identical even if they are in different marked encodings but
+  would agree when translated to UTF-8. A character string in marked encoding
+  \code{"bytes"} is only regarded as identical to a character string in the
+  same encoding and with the same content.
 
   If \code{attrib.as.set} is true, as by default, comparison of
   attributes view them as a set (and not a vector, so order is not
@@ -90,8 +98,14 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   time zones represent the same time and time zones have multiple names,
   but several of the components are optional.
 
-  Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily
-  tests for exact equality.
+  Note that the strictest test for equality is
+  \preformatted{
+    identical(x, y,
+              num.eq = FALSE, single.NA = FALSE, attrib.as.set = FALSE,
+              ignore.bytecode = FALSE, ignore.environment = FALSE,
+              ignore.srcref = FALSE, extptr.as.ref = TRUE)
+}
+	     
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}

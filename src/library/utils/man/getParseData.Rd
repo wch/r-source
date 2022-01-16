@@ -1,6 +1,6 @@
 % File src/library/utils/man/getParseData.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2015 R Core Team
+% Copyright 2012-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getParseData}
@@ -92,6 +92,10 @@ Duncan Murdoch
     \item \verb{#line} directives are identified, but other comment
     markup (e.g., \CRANpkg{roxygen} comments) are not.
   }
+
+  Parse data by design explore details of the parser implementation, which
+  are subject to change without notice.  Applications computing on the parse
+  data may require updates for each R release.
 }
 
 \seealso{

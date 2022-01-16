@@ -1,6 +1,6 @@
 % File src/library/utils/man/txtProgressBar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-11, 18 R Core Team
+% Copyright 2008-21 R Core Team
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
@@ -25,7 +25,8 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
     progress bar. Must have \code{min < max}.}
   \item{initial, value}{initial or new value for the progress bar.  See
     \sQuote{Details} for what happens with invalid values.}
-  \item{char}{the character (or character string) to form the progress bar.}
+  \item{char}{the character (or character string) to form the progress
+    bar.  Must have non-zero display width.}
   \item{width}{the width of the progress bar, as a multiple of the width
     of \code{char}.  If \code{NA}, the default, the number of characters
     is that which fits into \code{getOption("width")}.}
@@ -84,5 +85,6 @@ testit <- function(x = sort(runif(20)), ...)
 testit()
 testit(runif(10))
 testit(style = 3)
+testit(char=' \u27a4')
 }}
 \keyword{utilities}

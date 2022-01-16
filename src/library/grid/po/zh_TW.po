@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-11-06 17:17+0100\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -23,7 +23,7 @@ msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
 #: grid.c:199
-msgid "Turning clipping on or off within a clipping path is no honoured"
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr ""
 
 #: grid.c:241
@@ -31,11 +31,11 @@ msgid "cannot clip to rotated viewport"
 msgstr "無法修剪至旋轉的視窗中"
 
 #: grid.c:455
-msgid "Clipping paths within a clipping path are not honoured"
+msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:474
-msgid "Masks within a clipping path are not honoured"
+msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
@@ -46,39 +46,39 @@ msgstr "無法彈到最上層的視窗('grid' 和 'graphics' 輸出有混合？)
 msgid "attempt to plot on null device"
 msgstr "不能在無效裝置上畫圖"
 
-#: grid.c:1693
+#: grid.c:1702
 msgid "there is no layout defined"
 msgstr "需要設定版面設置"
 
-#: grid.c:1913
+#: grid.c:1922
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "找不到多邊形的邊(零寬度或是零高度？)"
 
-#: grid.c:1922
+#: grid.c:1931
 msgid "polygon edge not found"
 msgstr "找不到多邊形的邊"
 
-#: grid.c:2076
+#: grid.c:2085
 msgid "require at least two points to draw arrow"
 msgstr "至少需要兩點才能畫一個箭頭"
 
-#: grid.c:2399
+#: grid.c:2408
 msgid "non-finite control point in Xspline"
 msgstr "Xspline 裡不能有無限值的控制點"
 
-#: grid.c:3324
+#: grid.c:3333
 msgid "non-finite x or y in graphics path"
 msgstr "圖形路徑裡 x 或 y 的值非限定"
 
-#: grid.c:3374
+#: grid.c:3383
 msgid "Empty raster"
 msgstr "空的柵格"
 
-#: grid.c:3860
+#: grid.c:3869
 msgid "invalid plotting symbol"
 msgstr "圖畫符號值無效"
 
-#: grid.c:3954
+#: grid.c:3963
 msgid "unable to clip to rotated rectangle"
 msgstr "無法修剪到旋轉的長方形上"
 
@@ -94,7 +94,7 @@ msgstr "'layout.pos.col' 的值無效"
 msgid "singular transformation matrix"
 msgstr "奇異轉換矩陣"
 
-#: state.c:180
+#: state.c:192
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "無法保留 'grid' 的狀況。是不是因為您開啟了太多的裝置？"
 
@@ -127,9 +127,7 @@ msgid "'units' must be of length > 0"
 msgstr "'units' 的長度必須大於零"
 
 #: unit.c:1584
-msgid ""
-"data must be either NULL, have length 1, or match the length of the final "
-"unit vector"
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr ""
 
 #: unit.c:1596

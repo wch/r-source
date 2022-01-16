@@ -71,6 +71,6 @@ deaths
 plot(med.d)
 ## Check decomposition:
 all(deaths ==
-    med.d$overall + outer(med.d$row,med.d$col, "+") + med.d$residuals)
+    med.d$overall + outer(med.d$row,med.d$col, `+`) + med.d$residuals)
 }
 \keyword{robust}

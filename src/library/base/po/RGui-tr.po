@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-04-15 19:37+0100\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -20,24 +20,24 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/gnuwin32/console.c:1172 src/gnuwin32/console.c:1214
+#: src/gnuwin32/console.c:1176 src/gnuwin32/console.c:1218
 msgid "Not enough memory"
 msgstr "Yetersiz bellek"
 
-#: src/gnuwin32/console.c:1261 src/gnuwin32/console.c:1265
+#: src/gnuwin32/console.c:1265 src/gnuwin32/console.c:1269
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Yetersiz bellek: metin panoya kopyalanmadı"
 
-#: src/gnuwin32/console.c:1303 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1307 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Pano açılamadı"
 
-#: src/gnuwin32/console.c:1936
+#: src/gnuwin32/console.c:1943
 msgid "Insufficient memory. Please close the console"
 msgstr "Yetersiz bellek. Lütfen konsolu kapatın"
 
-#: src/gnuwin32/console.c:1991 src/gnuwin32/console.c:2045
+#: src/gnuwin32/console.c:1998 src/gnuwin32/console.c:2052
 #: src/gnuwin32/preferences.c:338
 #, c-format
 msgid ""
@@ -47,23 +47,23 @@ msgstr ""
 "Yazıtipi %s-%d-%d bulunamadı.\n"
 "Sistemde gömülü yazıtipi kullanılıyor"
 
-#: src/gnuwin32/console.c:2150
+#: src/gnuwin32/console.c:2157
 msgid "Save selection to"
 msgstr "Seçileni kaydet"
 
-#: src/gnuwin32/console.c:2152
+#: src/gnuwin32/console.c:2159
 msgid "Save console contents to"
 msgstr "Konsol içeriklerini dosyaya kaydet "
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2258
 msgid "Scrolling.\n"
 msgstr "Kaydırma.\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2259
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "Klavye: PgUp, PgDown, Ctrl+Ok Tuşları, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2260
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -71,104 +71,93 @@ msgstr ""
 "  Fare: kaydırma çubuklarını kullan.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2261
 msgid "Editing.\n"
 msgstr "Düzenleme.\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2262
 msgid "  Moving the cursor: \n"
 msgstr "  İmleç hareket ettirme: \n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2263
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     Sol ok yada Ctrl+B: bir karakter geri git;\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2264
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     Sağ ok yada Ctrl+F: bir karakter ileri git;\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2265
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home tuşu yada Ctrl+A: satır başına git;\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2266
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End tuşu yada Ctrl+E: satır sonuna git;\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2267
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Geçmiş: Aşağı ve Yukarı Oklar, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2268
 msgid "  Deleting:\n"
 msgstr "  Silme:\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2269
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del tuşu yada Ctrl+D: geçerli seçimi yada karakteri sil;\n"
 
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2270
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: önceki karakteri sil;\n"
 
-#: src/gnuwin32/console.c:2264
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Del yada Ctrl+K: metni geçerli karakterden satır sonuna kadar "
-"sil.\n"
+#: src/gnuwin32/console.c:2271
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Del yada Ctrl+K: metni geçerli karakterden satır sonuna kadar sil.\n"
 
-#: src/gnuwin32/console.c:2265
+#: src/gnuwin32/console.c:2272
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: geçerli satırdaki tüm metni sil.\n"
 
-#: src/gnuwin32/console.c:2266
+#: src/gnuwin32/console.c:2273
 msgid "  Copy and paste.\n"
 msgstr "  Kopyalama ve yapıştırma.\n"
 
-#: src/gnuwin32/console.c:2267
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Metni işaretlemek (seçmek) için fareyi (sol tuşuna basılı tutarak) "
-"kullan.\n"
+#: src/gnuwin32/console.c:2274
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Metni işaretlemek (seçmek) için fareyi (sol tuşuna basılı tutarak) kullan.\n"
 
-#: src/gnuwin32/console.c:2268
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+#: src/gnuwin32/console.c:2275
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr "     Seçili metni panoya kopyalamak Shift+Del (veya Ctrl+C), \n"
 
-#: src/gnuwin32/console.c:2269
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
+#: src/gnuwin32/console.c:2276
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
 msgstr "      (eğer varsa) pano içeriğini konsola yapıştırmak için\n"
 
-#: src/gnuwin32/console.c:2270
+#: src/gnuwin32/console.c:2277
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 "     Shift+Ins (veya Ctrl+V veya Ctrl+Y) kısayollarını kullanın,\n"
 "     Ctrl+X önce kopyalar ardından yapıştırır.\n"
 
-#: src/gnuwin32/console.c:2271
+#: src/gnuwin32/console.c:2278
 msgid "  Misc:\n"
 msgstr "  Diğer:\n"
 
-#: src/gnuwin32/console.c:2272
+#: src/gnuwin32/console.c:2279
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Konsolu temizle.\n"
 
-#: src/gnuwin32/console.c:2273
+#: src/gnuwin32/console.c:2280
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr ""
-"     Ctrl+O veya INS: Üstüne yazma modunu değiştir: başlangıçta kapalıdır.\n"
+msgstr "     Ctrl+O veya INS: Üstüne yazma modunu değiştir: başlangıçta kapalıdır.\n"
 
-#: src/gnuwin32/console.c:2274
+#: src/gnuwin32/console.c:2281
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
-msgstr ""
-"     Ctrl+T: Geçerli karakteri soldakiyle karşılıklı olarak değiştir.\n"
+msgstr "     Ctrl+T: Geçerli karakteri soldakiyle karşılıklı olarak değiştir.\n"
 
-#: src/gnuwin32/console.c:2275
+#: src/gnuwin32/console.c:2282
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -176,7 +165,7 @@ msgstr ""
 "\n"
 "Not: Konsol sadece bir veri girişi gerektiğinde güncellenir.\n"
 
-#: src/gnuwin32/console.c:2276
+#: src/gnuwin32/console.c:2283
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -184,7 +173,7 @@ msgstr ""
 "  Bu özelliği açıp kapatmak için Ctrl+W kısayolunu kullanın.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2277
+#: src/gnuwin32/console.c:2284
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -192,7 +181,7 @@ msgstr ""
 "Yorumlamayı durdurmak için ESC tuşunu kullanın.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2278
+#: src/gnuwin32/console.c:2285
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -200,15 +189,13 @@ msgstr ""
 "TAB geçerli kelimenin tamamlanması işlemini başlatır.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2279
+#: src/gnuwin32/console.c:2286
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Grafik aygıtına geçmek için Standart Windows kısayolları\n"
 
-#: src/gnuwin32/console.c:2280
+#: src/gnuwin32/console.c:2287
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr ""
-"kullanılabilir  (Çoklu pencerede Ctrl+Tab ve Ctrl+F6i, Tekli pencerede Alt"
-"+Tab)"
+msgstr "kullanılabilir  (Çoklu pencerede Ctrl+Tab ve Ctrl+F6i, Tekli pencerede Alt+Tab)"
 
 #: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
 msgid "R Editor"
@@ -248,8 +235,7 @@ msgstr "R DÜZENLEYİCİ\n"
 
 #: src/gnuwin32/editor.c:606
 msgid "A standard text editor for editing and running R code.\n"
-msgstr ""
-"R kodunu düzenlemek ve çalıştırmak için bir standart metin düzenleyicidir.\n"
+msgstr "R kodunu düzenlemek ve çalıştırmak için bir standart metin düzenleyicidir.\n"
 
 #: src/gnuwin32/editor.c:608
 msgid "RUNNING COMMANDS\n"
@@ -257,8 +243,7 @@ msgstr "KOMUT ÇALIŞTIRMA\n"
 
 #: src/gnuwin32/editor.c:609
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr ""
-"R kodunun bir satırını veya bölgesini çalıştırmak için, kodu seçin ve:\n"
+msgstr "R kodunun bir satırını veya bölgesini çalıştırmak için, kodu seçin ve:\n"
 
 #: src/gnuwin32/editor.c:610
 msgid "     Press Ctrl-R\n"
@@ -275,13 +260,11 @@ msgstr ""
 "işlemlerinden birin yapın.\n"
 
 #: src/gnuwin32/editor.c:613
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Bu işlem, seçili komutları konsola kopyalayacak ve değerlendirecek.\n"
 
 #: src/gnuwin32/editor.c:614
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
 msgstr "Seçim yoksa, bu işlem sadece geçerli satırı çalıştıracak ve\n"
 
 #: src/gnuwin32/editor.c:615
@@ -340,7 +323,7 @@ msgid "Print"
 msgstr "Yazdır"
 
 #: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
-#: src/library/utils/src/windows/dataentry.c:1791
+#: src/library/utils/src/windows/dataentry.c:1793
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "Dosya"
@@ -372,7 +355,7 @@ msgid "Close script"
 msgstr "Betiği kapat"
 
 #: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
-#: src/library/utils/src/windows/dataentry.c:1797
+#: src/library/utils/src/windows/dataentry.c:1799
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -397,8 +380,8 @@ msgid "GUI preferences..."
 msgstr "Arabirim tercihleri..."
 
 #: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
-#: src/library/utils/src/windows/dataentry.c:1698
-#: src/library/utils/src/windows/dataentry.c:1808
+#: src/library/utils/src/windows/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1810
 msgid "Help"
 msgstr "Yardım"
 
@@ -418,7 +401,7 @@ msgstr "Düzenleyici penceresi oluşturulamadı"
 msgid "Untitled"
 msgstr "İsimsiz "
 
-#: src/gnuwin32/extra.c:1194
+#: src/gnuwin32/extra.c:1064
 msgid "Select file"
 msgstr "Dosya seç"
 
@@ -444,14 +427,14 @@ msgid "Paste commands to console"
 msgstr "Komutları konsola yapıştır"
 
 #: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
-#: src/library/utils/src/windows/dataentry.c:1704
+#: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "Üstte kal"
 
 #: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
-#: src/library/utils/src/windows/dataentry.c:1706
-#: src/library/utils/src/windows/dataentry.c:1793
+#: src/library/utils/src/windows/dataentry.c:1708
+#: src/library/utils/src/windows/dataentry.c:1795
 msgid "Close"
 msgstr "Kapat"
 
@@ -494,8 +477,7 @@ msgstr ""
 
 #: src/gnuwin32/preferences.c:376
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
-"Sayfalayıcı boyut değişiklikleri herhangi bir açık sayfalayıcıya uygulanmaz"
+msgstr "Sayfalayıcı boyut değişiklikleri herhangi bir açık sayfalayıcıya uygulanmaz"
 
 #: src/gnuwin32/preferences.c:382
 msgid ""
@@ -569,8 +551,7 @@ msgstr "Yardımda ara"
 
 #: src/gnuwin32/rui.c:617
 msgid "Search for words in help list archives and documentation"
-msgstr ""
-"Kelimeler için yardım listeleri arşivlerinde ve dokümantasyonlarda arama yap"
+msgstr "Kelimeler için yardım listeleri arşivlerinde ve dokümantasyonlarda arama yap"
 
 #: src/gnuwin32/rui.c:632
 msgid "Apropos"
@@ -834,7 +815,7 @@ msgstr "menü bulunamadı"
 msgid "menu or item does not exist"
 msgstr "menü yada öğe bulunmuyor"
 
-#: src/gnuwin32/system.c:448
+#: src/gnuwin32/system.c:446
 msgid "Save workspace image?"
 msgstr "Çalışma alanı görüntüsünü kaydetmek istermisiniz?"
 
@@ -885,72 +866,102 @@ msgstr "\"%s\" bulunamadı"
 msgid "Arrange Icons"
 msgstr "Simgeleri Düzenle"
 
-#: src/library/utils/src/windows/dataentry.c:223
-#: src/library/utils/src/windows/dataentry.c:1851
-#: src/library/utils/src/windows/dataentry.c:1854
-#: src/library/utils/src/windows/dataentry.c:1885
+#: src/extra/graphapp/metafile.c:55
+#, fuzzy
+msgid "Unable to save metafile to the clipboard"
+msgstr "Pano açılamadı"
+
+#: src/extra/graphapp/metafile.c:108
+#, fuzzy
+msgid "Unable to create metafile"
+msgstr "Düzenleyici penceresi oluşturulamadı"
+
+#: src/extra/graphapp/metafile.c:113
+#, fuzzy
+msgid "Insufficient memory to create metafile"
+msgstr "Yetersiz bellek. Lütfen konsolu kapatın"
+
+#: src/extra/graphapp/printer.c:90
+#, fuzzy
+msgid "Unable to choose printer"
+msgstr "Sayfalayıcı penceresi oluşturulamadı"
+
+#: src/extra/graphapp/printer.c:118
+#, fuzzy
+msgid "Insufficient memory for new printer"
+msgstr "Dosyayı iç sayfalayıcıda göstermek için yetersiz bellek"
+
+#: src/extra/graphapp/printer.c:151
+#, fuzzy
+msgid "Unable to start the print job"
+msgstr "Sayfalayıcı penceresi oluşturulamadı"
+
+#: src/library/utils/src/windows/dataentry.c:225
+#: src/library/utils/src/windows/dataentry.c:1853
+#: src/library/utils/src/windows/dataentry.c:1856
+#: src/library/utils/src/windows/dataentry.c:1887
 msgid "invalid argument"
 msgstr "geçersiz argüman"
 
-#: src/library/utils/src/windows/dataentry.c:270
+#: src/library/utils/src/windows/dataentry.c:272
 msgid "invalid type for value"
 msgstr "değişken için geçersiz yazım"
 
-#: src/library/utils/src/windows/dataentry.c:281
+#: src/library/utils/src/windows/dataentry.c:283
 msgid "Data Editor"
 msgstr "Veri Düzenleyici"
 
-#: src/library/utils/src/windows/dataentry.c:331
+#: src/library/utils/src/windows/dataentry.c:333
 msgid "dataentry: internal memory problem"
 msgstr "verigirişi: iç bellek sorunu"
 
-#: src/library/utils/src/windows/dataentry.c:634
-#: src/library/utils/src/windows/dataentry.c:1222
+#: src/library/utils/src/windows/dataentry.c:636
+#: src/library/utils/src/windows/dataentry.c:1224
 msgid "dataentry: internal memory error"
 msgstr "verigirişi: iç bellek hatası"
 
-#: src/library/utils/src/windows/dataentry.c:757
-#: src/library/utils/src/windows/dataentry.c:770
+#: src/library/utils/src/windows/dataentry.c:759
+#: src/library/utils/src/windows/dataentry.c:772
 msgid "internal type error in dataentry"
 msgstr "veri girişinde iç yazım hatası"
 
-#: src/library/utils/src/windows/dataentry.c:853
+#: src/library/utils/src/windows/dataentry.c:855
 msgid "dataentry: parse error on string"
 msgstr "verigirişi: satırda ayıklama hatası"
 
-#: src/library/utils/src/windows/dataentry.c:996
+#: src/library/utils/src/windows/dataentry.c:998
 msgid "dataentry: expression too long"
 msgstr "verigirişi: ifade çok uzun"
 
-#: src/library/utils/src/windows/dataentry.c:1473
+#: src/library/utils/src/windows/dataentry.c:1475
 msgid "column names cannot be blank"
 msgstr "sütun isimleri boş olamaz"
 
-#: src/library/utils/src/windows/dataentry.c:1519
+#: src/library/utils/src/windows/dataentry.c:1521
 msgid "Variable editor"
 msgstr "Değişken düzenleyici"
 
-#: src/library/utils/src/windows/dataentry.c:1524
+#: src/library/utils/src/windows/dataentry.c:1526
 msgid "variable name"
 msgstr "değişken adı"
 
-#: src/library/utils/src/windows/dataentry.c:1526
+#: src/library/utils/src/windows/dataentry.c:1528
 msgid "type"
 msgstr "tip"
 
-#: src/library/utils/src/windows/dataentry.c:1640
+#: src/library/utils/src/windows/dataentry.c:1642
 msgid "Cell width(s)"
 msgstr "Hücre genişliği"
 
-#: src/library/utils/src/windows/dataentry.c:1646
+#: src/library/utils/src/windows/dataentry.c:1648
 msgid "Cell width"
 msgstr "Hücre genişliği"
 
-#: src/library/utils/src/windows/dataentry.c:1649
+#: src/library/utils/src/windows/dataentry.c:1651
 msgid "variable"
 msgstr "değişken"
 
-#: src/library/utils/src/windows/dataentry.c:1692
+#: src/library/utils/src/windows/dataentry.c:1694
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -988,39 +999,38 @@ msgstr ""
 "  Ctrl-L sütunları oto-boyutlandırarak ekranı tekrar çizer\n"
 "  Ctrl-C seçilmiş hücreyi kopyalar\n"
 "  Ctrl-V seçilmiş hücreye yapıştırır\n"
-"  Kopyala, yapıştır, seçilmiş sütunu oto-boyutlandır menüsü için sağ "
-"tıklayın\n"
+"  Kopyala, yapıştır, seçilmiş sütunu oto-boyutlandır menüsü için sağ tıklayın\n"
 "\n"
 
-#: src/library/utils/src/windows/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1702
 msgid "Copy selected cell"
 msgstr "Seçili hücreye yapıştır"
 
-#: src/library/utils/src/windows/dataentry.c:1701
+#: src/library/utils/src/windows/dataentry.c:1703
 msgid "Paste to selected cell"
 msgstr "Seçili hücreye yapıştır"
 
-#: src/library/utils/src/windows/dataentry.c:1702
+#: src/library/utils/src/windows/dataentry.c:1704
 msgid "Autosize column"
 msgstr "Sütunu oto-boyutlandır"
 
-#: src/library/utils/src/windows/dataentry.c:1798
+#: src/library/utils/src/windows/dataentry.c:1800
 msgid "Copy  \tCTRL+C"
 msgstr "Kopyala  \tCTRL+C"
 
-#: src/library/utils/src/windows/dataentry.c:1800
+#: src/library/utils/src/windows/dataentry.c:1802
 msgid "Paste \tCTRL+V"
 msgstr "Yapıştır \tCTRL+V"
 
-#: src/library/utils/src/windows/dataentry.c:1802
+#: src/library/utils/src/windows/dataentry.c:1804
 msgid "Delete\tDEL"
 msgstr "Sil\tDEL"
 
-#: src/library/utils/src/windows/dataentry.c:1805
+#: src/library/utils/src/windows/dataentry.c:1807
 msgid "Cell widths ..."
 msgstr "Hücre genişlikleri ..."
 
-#: src/library/utils/src/windows/dataentry.c:1809
+#: src/library/utils/src/windows/dataentry.c:1811
 msgid "Data editor"
 msgstr "Veri düzenleyici"
 
@@ -1053,7 +1063,7 @@ msgid "Enhanced metafiles"
 msgstr "Gelişmiş metafile'lar"
 
 #: src/library/grDevices/src/devWindows.c:1013
-#: src/library/grDevices/src/devWindows.c:3487
+#: src/library/grDevices/src/devWindows.c:3559
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "seçilen dosya yolu çok uzun: sadece 512 bayta kadar izin verilir"
 
@@ -1195,15 +1205,15 @@ msgstr "Metafile olarak farklı kaydet..."
 msgid "Save as postscript..."
 msgstr "Postscript olarak farklı kaydet"
 
-#: src/library/grDevices/src/devWindows.c:3153
+#: src/library/grDevices/src/devWindows.c:3225
 msgid "Locator is active"
 msgstr "Konumlayıcı aktif "
 
-#: src/library/grDevices/src/devWindows.c:3813
+#: src/library/grDevices/src/devWindows.c:3885
 msgid "Waiting to confirm page change..."
 msgstr "Sayfa değişikliği onayı bekleniyor..."
 
-#: src/library/grDevices/src/devWindows.c:3825
+#: src/library/grDevices/src/devWindows.c:3897
 msgid "Click or hit ENTER for next page"
 msgstr "Sonraki sayfa için ENTER'a basın yada tıklayın"
 

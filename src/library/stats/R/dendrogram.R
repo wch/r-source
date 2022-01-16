@@ -919,12 +919,12 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     if(scale == "row") {
 	x <- sweep(x, 1L, rowMeans(x, na.rm = na.rm), check.margin=FALSE)
 	sx <- apply(x, 1L, sd, na.rm = na.rm)
-	x <- sweep(x, 1L, sx, "/", check.margin=FALSE)
+	x <- sweep(x, 1L, sx, `/`, check.margin=FALSE)
     }
     else if(scale == "column") {
 	x <- sweep(x, 2L, colMeans(x, na.rm = na.rm), check.margin=FALSE)
 	sx <- apply(x, 2L, sd, na.rm = na.rm)
-	x <- sweep(x, 2L, sx, "/", check.margin=FALSE)
+	x <- sweep(x, 2L, sx, `/`, check.margin=FALSE)
     }
 
     ## Calculate the plot layout

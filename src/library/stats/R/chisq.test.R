@@ -69,7 +69,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
             stop("invalid nrow(x) or ncol(x)", domain = NA)
 	sr <- rowSums(x)
 	sc <- colSums(x)
-	E <- outer(sr, sc, "*") / n
+	E <- outer(sr, sc) / n
 
         ## Cell residual variance. Essentially formula (2.9) in Agresti(2007).
         v <- function(r, c, n) c * r * (n - r) * (n - c)/n^3

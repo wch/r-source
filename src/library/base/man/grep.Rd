@@ -252,7 +252,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 }
 
 \note{
-  Aspects will be platform-dependent as well as local-dependent: for
+  Aspects will be platform-dependent as well as locale-dependent: for
   example the implementation of character classes (except
   \code{[:digit:]} and \code{[:xdigit:]}).  One can expect results to be
   consistent for ASCII inputs and when working in UTF-8 mode (when most

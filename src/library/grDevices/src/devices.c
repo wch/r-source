@@ -139,28 +139,91 @@ SEXP devholdflush(SEXP args)
 
 SEXP devcap(SEXP args)
 {
-    SEXP ans;
-    int i = 0;
+    SEXP capabilities, devcap;
+    SEXP trans, transbg, raster, capture, locator, events, 
+        patterns, clippaths, masks, compositing, transforms, paths;
     pDevDesc dd = GEcurrentDevice()->dev;
 
     args = CDR(args);
+    capabilities = CAR(args);
 
-    PROTECT(ans = allocVector(INTSXP, 9));
-    INTEGER(ans)[i] = dd->haveTransparency;
-    INTEGER(ans)[++i] = dd->haveTransparentBg;
+    PROTECT(trans = allocVector(INTSXP, 1));
+    INTEGER(trans)[0] = dd->haveTransparency;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_semiTransparency, trans);
+    UNPROTECT(1);
+
+    PROTECT(transbg = allocVector(INTSXP, 1));
+    INTEGER(transbg)[0] = dd->haveTransparentBg;
+    SET_VECTOR_ELT(capabilities, 
+                   R_GE_capability_transparentBackground, transbg);
+    UNPROTECT(1);
+    
     /* These will be NULL if the device does not define them */
-    INTEGER(ans)[++i] = (dd->raster != NULL) ? dd->haveRaster : 1;
-    INTEGER(ans)[++i] = (dd->cap != NULL) ? dd->haveCapture : 1;
-    INTEGER(ans)[++i] = (dd->locator != NULL) ? dd->haveLocator : 1;
-    INTEGER(ans)[++i] = (int)(dd->canGenMouseDown);
-    INTEGER(ans)[++i] = (int)(dd->canGenMouseMove);
-    INTEGER(ans)[++i] = (int)(dd->canGenMouseUp);
-    INTEGER(ans)[++i] = (int)(dd->canGenKeybd);
+    PROTECT(raster = allocVector(INTSXP, 1));
+    INTEGER(raster)[0] = (dd->raster != NULL) ? dd->haveRaster : 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_rasterImage, raster);
+    UNPROTECT(1);
+    PROTECT(capture = allocVector(INTSXP, 1));
+    INTEGER(capture)[0] = (dd->cap != NULL) ? dd->haveCapture : 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_capture, capture);
+    UNPROTECT(1);
+    PROTECT(locator = allocVector(INTSXP, 1));
+    INTEGER(locator)[0] = (dd->locator != NULL) ? dd->haveLocator : 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_locator, locator);
+    UNPROTECT(1);
+
     /* FIXME:  there should be a way for a device to declare its own
                events, and return information on how to set them */
-
+    PROTECT(events = allocVector(INTSXP, 4));
+    INTEGER(events)[0] = (int)(dd->canGenMouseDown);
+    INTEGER(events)[1] = (int)(dd->canGenMouseMove);
+    INTEGER(events)[2] = (int)(dd->canGenMouseUp);
+    INTEGER(events)[3] = (int)(dd->canGenKeybd);
+    SET_VECTOR_ELT(capabilities, R_GE_capability_events, events);
     UNPROTECT(1);
-    return ans;
+
+    /* Make conservative default guesses */
+    PROTECT(patterns = allocVector(INTSXP, 1));
+    INTEGER(patterns)[0] = NA_INTEGER;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_patterns, patterns);
+    UNPROTECT(1);
+
+    PROTECT(clippaths = allocVector(INTSXP, 1));
+    INTEGER(clippaths)[0] = NA_INTEGER;
+    SET_VECTOR_ELT(capabilities, 
+                   R_GE_capability_clippingPaths, clippaths);
+    UNPROTECT(1);
+
+    PROTECT(masks = allocVector(INTSXP, 1));
+    INTEGER(masks)[0] = NA_INTEGER;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_masks, masks);
+    UNPROTECT(1);
+
+    PROTECT(compositing = allocVector(INTSXP, 1));
+    PROTECT(transforms = allocVector(INTSXP, 1));
+    PROTECT(paths = allocVector(INTSXP, 1));
+    if (dd->deviceVersion < R_GE_group) {
+        INTEGER(compositing)[0] = 0;
+        INTEGER(transforms)[0] = 0;
+        INTEGER(paths)[0] = 0;
+    } else {            
+        INTEGER(compositing)[0] = NA_INTEGER;
+        INTEGER(transforms)[0] = NA_INTEGER;
+        INTEGER(paths)[0] = NA_INTEGER;
+    }
+    SET_VECTOR_ELT(capabilities, R_GE_capability_compositing, compositing);
+    SET_VECTOR_ELT(capabilities, R_GE_capability_transformations, transforms);
+    SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
+    UNPROTECT(3);
+
+    /* Further capabilities can be filled in by device */
+    if (dd->deviceVersion >= R_GE_group) {
+        devcap = dd->capabilities(capabilities);
+    } else {
+        devcap = capabilities;
+    }
+
+    return devcap;
 }
 
 SEXP devcapture(SEXP args)

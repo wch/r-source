@@ -42,13 +42,13 @@ scale.default <- function(x, center = TRUE, scale = TRUE)
 		sqrt(sum(v^2) / max(1, length(v) - 1L))
 	    }
             scale <- apply(x, 2L, f)
-	    x <- sweep(x, 2L, scale, "/", check.margin=FALSE)
+	    x <- sweep(x, 2L, scale, `/`, check.margin=FALSE)
 	}
     }
     else {
 	if(!is.numeric(scale)) scale <- as.numeric(scale)
 	if (length(scale) == nc)
-	    x <- sweep(x, 2L, scale, "/", check.margin=FALSE)
+	    x <- sweep(x, 2L, scale, `/`, check.margin=FALSE)
 	else
 	    stop("length of 'scale' must equal the number of columns of 'x'")
     }

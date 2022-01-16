@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -143,6 +143,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) :
 		       STRING_ELT(deparse1(x, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(x = tmp, xpi);
+	nx = xlength(x);
 	UNPROTECT(1);
     }
     if ((iS = isSymbol(y)) || TYPEOF(y) == LANGSXP) {
@@ -151,6 +152,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) :
 		       STRING_ELT(deparse1(y, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(y = tmp, ypi);
+	ny = xlength(y);
 	UNPROTECT(1);
     }
 

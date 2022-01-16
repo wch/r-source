@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mosaicplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mosaicplot}
@@ -48,8 +48,8 @@ mosaicplot(x, \dots)
   \item{color}{logical or (recycling) vector of colors for color
     shading, used only when \code{shade} is \code{FALSE}, or \code{NULL}
     (default).  By default, grey boxes are drawn.  \code{color = TRUE}
-    uses a gamma-corrected grey palette.  \code{color = FALSE} gives empty
-    boxes with no shading.}
+    uses \code{\link{grey.colors}} for a gamma-corrected grey palette.
+    \code{color = FALSE} gives empty boxes with no shading.}
   \item{shade}{a logical indicating whether to produce extended mosaic
     plots, or a numeric vector of at most 5 distinct positive numbers
     giving the absolute values of the cut points for the residuals.  By

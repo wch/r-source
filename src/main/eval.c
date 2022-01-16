@@ -468,6 +468,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 
        Recent Linux has CLOCK_PROCESS_CPUTIME_ID
        Solaris has CLOCK_PROF, in -lrt.
+       FreeBSD only supports CLOCK_{REALTIME,MONOTONIC}
        Seems not to be supported at all on macOS.
     */ 
     itv.it_interval.tv_sec = interval / 1000000;
@@ -719,9 +720,17 @@ SEXP eval(SEXP e, SEXP rho)
     /* We need to explicit set a NULL call here to circumvent attempts
        to deparse the call in the error-handler */
     if (R_EvalDepth > R_Expressions) {
+	/* This bump of R_Expressions doesn't really work in many
+	   cases since jumps (e.g. from explicit return() calls or in
+	   UseMethod dispatch) reset this. Something more
+	   sophisticated might work, but also increase the risk of a C
+	   stack overflow. LT */
 	R_Expressions = R_Expressions_keep + 500;
-	errorcall(R_NilValue,
-		  _("evaluation nested too deeply: infinite recursion / options(expressions=)?"));
+
+	/* condiiton is pre-allocated and protected with R_PreserveObject */
+	SEXP cond = R_getExpressionStackOverflowError();
+
+	R_signalErrorCondition(cond, R_NilValue);
     }
     R_CheckStack();
 
@@ -4892,7 +4901,10 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 
 static void NORET nodeStackOverflow()
 {
-    error(_("node stack overflow"));
+    /* condiiton is pre-allocated and protected with R_PreserveObject */
+    SEXP cond = R_getNodeStackOverflowError();
+
+    R_signalErrorCondition(cond, R_CurrentExpression);
 }
 
 /* Allocate consecutive space of nelems node stack elements */

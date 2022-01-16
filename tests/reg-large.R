@@ -92,7 +92,7 @@ if(exists("res")) rm(res)
 gc(reset = TRUE) # for the next step
 
 ### Testing PR#17992  c() / unlist() name creation for large vectors
-## Part 2 (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17292#c4):
+## Part 2 (https://bugs.r-project.org/show_bug.cgi?id=17292#c4):
 if(availableGB > 37) system.time({
     res <- c(a = list(rep(c(b=raw(1)), 2^31-2), raw(2)), recursive=TRUE)
 })
@@ -337,6 +337,29 @@ x [i]  <- r1 <- as.raw(1); stopifnot(x [i]  == r1)
 x[[i]] <- r2 <- as.raw(2); stopifnot(x[[i]] == r2)
 x[[i]] <- r3 <- as.raw(3); stopifnot(x[[i]] == r3)
 ## failed in R <= 0.4.3 {even with large vectors}
+
+
+## print()ing {up to max.print only!} of long vectors;
+## including named and "generic" (= list):
+stopifnot((n <- 2^31 + 352) > .Machine$integer.max)
+system.time(L <- integer(n))        #   5.8 sec {ada-20}
+system.time(LL <- vector("list", n))# ~15   sec {ada-20}
+system.time(nm <- c(LETTERS, letters, rep("xx", length(L) - 2*26)))
+## between 55 and 76 sec {ada-20, 2022-01-07}  user  system elapsed
+Ln <- L
+## FIXME? takes about 2 secs, but these are *not* seen by system.time (!!)
+system.time(names(Ln) <- nm)
+## user  system elapsed
+##    0       0       0
+op <- options(max.print = 300)
+L
+## now (after using %lld) gives
+## [ reached getOption("max.print") -- omitted 2147483700 entries ]
+## before, it gave   ..... -- omitted -2147483596 entries
+##                                   ^^^
+Ln # gave  Error: long vectors not supported yet: ...
+LL # gave  Error: long vect...
+options(op)
 
 
 

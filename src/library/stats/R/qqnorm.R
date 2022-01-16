@@ -1,7 +1,7 @@
 #  File src/library/stats/R/qqnorm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,14 +50,14 @@ qqline <- function(y, datax = FALSE, distribution = qnorm,
                    probs = c(0.25, 0.75), qtype = 7, ...)
 {
     stopifnot(length(probs) == 2, is.function(distribution))
-    y <- quantile(y, probs, names=FALSE, type=qtype, na.rm = TRUE)
+    y <- as.vector(quantile(y, probs, names=FALSE, type=qtype, na.rm = TRUE))
     x <- distribution(probs)
     if (datax) {
         slope <- diff(x)/diff(y)
-        int <- x[1L] - slope*y[1L]
+        int <- x[[1L]] - slope*y[[1L]]
     } else {
         slope <- diff(y)/diff(x)
-        int <- y[1L]-slope*x[1L]
+        int <- y[[1L]] - slope*x[[1L]]
     }
     abline(int, slope, ...)
 }

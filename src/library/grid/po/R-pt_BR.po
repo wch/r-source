@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -87,20 +87,12 @@ msgid "invalid 'row' specification"
 msgstr "Especificação inválida para 'row'"
 
 #, fuzzy
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"Não pode ser especificado mais de um 'side=[\"left\", \"right\"]', 'col', "
-"'col.before', ou 'col.after'"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "Não pode ser especificado mais de um 'side=[\"left\", \"right\"]', 'col', 'col.before', ou 'col.after'"
 
 #, fuzzy
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"Deve especificar exatamente um de 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', ou 'row.after'"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "Deve especificar exatamente um de 'side=[\"top\", \"bottom\"]', 'row', 'row.before', ou 'row.after'"
 
 #, fuzzy
 msgid "invalid 'n'"
@@ -150,19 +142,14 @@ msgid "invalid display list element"
 msgstr "elemento da lista de exibição inválido"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 msgstr "grob(s) sobrescrito(s) (captura NÃO será fiel; tente 'wrap=TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "Vista sobrescrita (captura PODE não ser fiel)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob modificou a ordem e a mesma não foi restaurada (captura PODE não ser "
-"fiel)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob modificou a ordem e a mesma não foi restaurada (captura PODE não ser fiel)"
 
 #, fuzzy
 msgid "only valid to push viewports"
@@ -190,6 +177,10 @@ msgstr "Deve ao menos navegar até uma vista"
 
 msgid "Invalid number of generations"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "argumento 'arrow' inválido"
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -337,6 +328,30 @@ msgstr "Só é permitido definir 'children' para uma 'gTree'"
 msgid "Invalid 'order'"
 msgstr "'frame' inválido"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'frame' inválido"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "Justificação inválida"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "'frame' inválido"
+
 msgid "'l' must be a layout"
 msgstr "'l' deve ser um layout"
 
@@ -394,6 +409,28 @@ msgstr "listing inválido"
 #, fuzzy
 msgid "invalid 'origin'"
 msgstr "'origin' inválido"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' e 'y' devem ter o mesmo comprimento"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidade"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidade"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width', e 'height' devem ter comprimento 1"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -472,13 +509,10 @@ msgstr "'x', 'y' e 'size' devem ser unidades"
 
 #, fuzzy
 msgid "'x' and 'y' must be 'unit' objects and have the same length"
-msgstr ""
-"'x' e 'y' devem ser objetos unitários e devem ter os mesmos comprimentos"
+msgstr "'x' e 'y' devem ser objetos unitários e devem ter os mesmos comprimentos"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"'x', 'y', 'width', e 'height' devem ser todos unidades de comprimento 1'x', "
-"'y', 'width', e 'height' devem ser todos unidades de comprimento 1"
+msgstr "'x', 'y', 'width', e 'height' devem ser todos unidades de comprimento 1'x', 'y', 'width', e 'height' devem ser todos unidades de comprimento 1"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x' e 'y' devem ser todos unidades de comprimento 1"
@@ -592,10 +626,8 @@ msgstr "Somente vistas permitidas em 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "Somente vistas permitidas em 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' deve ser uma vista e 'children' deve ser uma 'vpList' em 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' deve ser uma vista e 'children' deve ser uma 'vpList' em 'vpTree'"
 
 #, fuzzy
 msgid "a viewport path must contain at least one viewport name"
@@ -611,8 +643,7 @@ msgstr "Deve especificar pelo menos um de 'y' ou 'yscale'"
 
 #, fuzzy
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"desligando todos os dispositivos quando descarregando name space 'grid'"
+msgstr "desligando todos os dispositivos quando descarregando name space 'grid'"
 
 #, fuzzy
 msgid "invalid grob name"
@@ -700,12 +731,8 @@ msgstr[1] "Nome(s) de vista inválido(s)"
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr "Esta função é redundante e não aparecerá em versões futuras."
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
-#~ msgstr ""
-#~ "grid.arrows() tem sido depreciado;  use argumentos 'arrow' para funções "
-#~ "de desenho de linha"
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+#~ msgstr "grid.arrows() tem sido depreciado;  use argumentos 'arrow' para funções de desenho de linha"
 
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr "shape deve ser entre  -1 e 1"
@@ -713,19 +740,11 @@ msgstr[1] "Nome(s) de vista inválido(s)"
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr "Operando não-unitário deve ser numérico"
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
-#~ msgstr ""
-#~ "unit.rep tem sido depreciado em preferência ao método unitário para a "
-#~ "função genérica rep"
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+#~ msgstr "unit.rep tem sido depreciado em preferência ao método unitário para a função genérica rep"
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
-#~ msgstr ""
-#~ "unit.length tem sido depreciado em preferência ao método unitário para a "
-#~ "função genérica length"
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+#~ msgstr "unit.length tem sido depreciado em preferência ao método unitário para a função genérica length"
 
 #, fuzzy
 #~ msgid "invalid graphics parameters"

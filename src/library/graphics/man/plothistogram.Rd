@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plothistogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.histogram}
@@ -8,14 +8,13 @@
 \alias{lines.histogram}
 \title{Plot Histograms}
 \description{
-  These are methods for objects of class \code{"histogram"}, typically
+  Plotting methods for objects of class \code{"histogram"}, typically
   produced by \code{\link{hist}}.
 }
 \usage{
 \method{plot}{histogram}(x, freq = equidist, density = NULL, angle = 45,
-               col = NULL, border = par("fg"), lty = NULL,
-               main = paste("Histogram of",
-                            paste(x$xname, collapse = "\n")),
+               col = "lightgray", border = NULL, lty = NULL,
+               main = paste("Histogram of", paste(x$xname, collapse = "\n")),
                sub = NULL, xlab = x$xname, ylab,
                xlim = range(x$breaks), ylim = NULL,
                axes = TRUE, labels = FALSE, add = FALSE,
@@ -24,7 +23,7 @@
 \method{lines}{histogram}(x, \dots)
 }
 \arguments{
-  \item{x}{a \code{histogram} object, or a list with components
+  \item{x}{a \code{histogram} object, or a \code{\link{list}} with components
     \code{density}, \code{mid}, etc, see \code{\link{hist}} for
     information about the components of \code{x}.}
   \item{freq}{logical; if \code{TRUE}, the
@@ -32,8 +31,9 @@
     \code{x$counts}; if \code{FALSE}, \emph{relative} frequencies
     (probabilities), i.e., \code{x$density}, are plotted.  The
     default is true for equidistant \code{breaks} and false otherwise.}
-  \item{col}{a colour to be used to fill the bars.  The default of
-    \code{NULL} yields unfilled bars.}
+  \item{col}{a colour to be used to fill the bars.  The default has been
+    changed from \code{NULL} (unfilled bars) only for \R 4.2.0 for
+    consistency with the change in \code{\link{hist.default}} for \R 4.0.0.}
   \item{border}{the color of the border around the bars.}
   \item{angle, density}{select shading of bars by lines:
     see \code{\link{rect}}.}

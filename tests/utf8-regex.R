@@ -137,6 +137,56 @@ stopifnot(eq(z, strsplit(txt, "[a-c]", useBytes = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)[[1]]))
 
+## strsplit did not useBytes correctly in POSIX mode in R < 4.2 as
+## MBCS would still be interpreted
+x <- "\xf1\xa1_\xc5\xa2"
+split.a <- list(c("\xf1\xa1", "\xc5\xa2"))
+split.b <- list(c("\xf1", "_\xc5\xa2"))
+stopifnot(identical(strsplit(x, "_", useBytes=TRUE, perl=TRUE), split.a),
+          identical(strsplit(x, "\xa1", useBytes=TRUE, perl=TRUE), split.b),
+          identical(strsplit(x, "_", useBytes=TRUE), split.a),
+          identical(strsplit(x, "\xa1", useBytes=TRUE), split.b))
+
+## strsplit in R < 4.2 marked outputs when using bytes (it shouldn't)
+x <- xb <- xu <- "\U1F600"
+Encoding(xb) <- "bytes"
+Encoding(xu) <- "unknown"
+x98 <- "\x98"
+Encoding(x98) <- "bytes"
+split.a <- c("\xf0", "\x9f", "\x98", "\x80")
+Encoding(split.a) <- "unknown"
+split.b <- c("\xf0", "\x98")
+Encoding(split.b) <- "unknown"
+split.c <- c("\xf0\x9f", "\x80")
+Encoding(split.c) <- "unknown"
+## Are two character vectors truly identical?
+identichr <- function(x, y) {
+    if (is.character(x) &&
+        is.character(y) &&
+        identical(Encoding(x), Encoding(y))
+    ) {
+        Encoding(x) <- "bytes"
+        Encoding(y) <- "bytes"
+        identical(x, y)
+    } else FALSE
+}
+stopifnot(
+    identichr(strsplit(x, "", useBytes=TRUE)[[1]], strsplit(xb, "")[[1]]),
+    identichr(strsplit(xu, "", useBytes=TRUE)[[1]], strsplit(xb, "")[[1]]),
+    identichr(strsplit(xb, "")[[1]], split.a),
+    identichr(strsplit(x, "[\x80\x9f]", useBytes=TRUE)[[1]], split.b),
+    identichr(strsplit(x, "[\x80\x9f]", useBytes=TRUE, perl=TRUE)[[1]], split.b),
+    identichr(strsplit(x, "\x98", useBytes=TRUE, fixed=TRUE)[[1]], split.c),
+    identichr(strsplit(x, x98, fixed=TRUE)[[1]], split.c))
+if(l10n_info()[['Latin-1']]) {
+    xl <- x
+    Encoding(xl) <- "latin1"
+    stopifnot(Encoding(strsplit(xl, "", useBytes=TRUE)[[1]]) == "unknown",
+              Encoding(strsplit(xl, "")[[1]]) == "latin1",
+              Encoding(strsplit(xl, "\x98")[[1]]) == "latin1",
+              Encoding(strsplit(xl, x98)[[1]]) == "unknown")
+}
+
 ## from strsplit.Rd
 z <- strsplit("A text I want to display with spaces", NULL)[[1]]
 stopifnot(identical(z,
@@ -325,4 +375,21 @@ local({
     on.exit(options(old.warn))
     gregexec("123", "123 456", fixed=TRUE) # No warning with perl=FALSE
 })
+
+## Translations to wchar_t are done correctly?  Note: this is testing
+## undocumented behavior in `sub` and others whereby strings are translated
+## with substitution of invalid bytes into their escaped values, rather than
+## failing.  This behavior might change in the future, but in the interim we
+## must still ensure it is done correctly.  Currently "\xa0" is translated into
+## "<a0>" in UTF-8 strings.
+text <- c("\xa0<a0>", "<a0>\xa0\xff<a0>\xbb>", "\xc0")
+Encoding(text) <- "UTF-8"
+gsub.res <- c("!a0>!a0>", "!a0>!a0>!ff>!a0>!bb>>", "!c0>")
+grep.res <- c(TRUE, TRUE, TRUE)
+split.res <- list(c("", "a0>", "a0>"),
+                  c("", "a0>", "a0>", "ff>", "a0>", "bb>>"),
+                  c("", "c0>"))
+stopifnot(identical(gsub("<", "!", text), gsub.res),
+          identical(grepl("<", text), grep.res),
+          identical(strsplit(text, "<"), split.res))
 

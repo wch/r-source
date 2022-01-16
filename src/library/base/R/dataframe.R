@@ -125,7 +125,7 @@ is.na.data.frame <- function (x)
 {
     ## need to special-case no columns
     y <- if (length(x)) {
-        do.call("cbind", lapply(x, "is.na")) # gives a matrix
+        do.call(cbind, lapply(x, is.na)) # gives a matrix
     } else matrix(FALSE, length(row.names(x)), 0)
     if(.row_names_info(x) > 0L) rownames(y) <- row.names(x)
     y
@@ -1718,13 +1718,12 @@ xtfrm.data.frame <- function(x) {
 }
 
 list2DF <-
-function(x = list(), nrow = NULL)
+function(x = list(), nrow = 0L)
 {
     stopifnot(is.list(x), is.null(nrow) || nrow >= 0L)
     if(n <- length(x)) {
-        if(is.null(nrow))
-            nrow <- max(lengths(x), 0L)
-        x <- lapply(x, rep_len, nrow)
+        if(length(nrow <- unique(lengths(x))) > 1L)
+            stop("all variables should have the same length")
     } else {
         if(is.null(nrow))
             nrow <- 0L

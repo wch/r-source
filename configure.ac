@@ -738,7 +738,8 @@ AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search pat
 
 AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
-AC_GNU_SOURCE ## see note above
+dnl AC_GNU_SOURCE ## see note above
+AC_USE_SYSTEM_EXTENSIONS ## see note above
 
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
@@ -861,10 +862,10 @@ AC_SUBST(STRIP_STATIC_LIB)
 
 ## <NOTE>
 ## This actually comes from libtool.m4.
-AC_CHECK_LIBM
+LT_LIB_M
 AC_SUBST(LIBM)
 ## </NOTE>
-## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
+## LT_LIB_M computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
 ## This gives: 'sin' is a builtin with type 'double (double)'
 AC_CHECK_LIB(m, sin)
@@ -884,8 +885,9 @@ if test "${use_readline}" = yes; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
     AC_CHECK_LIB(ncurses, main, [],
-                 AC_CHECK_LIB(termcap, main, [],
-                              AC_CHECK_LIB(termlib, main)))
+                 AC_CHECK_LIB(tinfo, main, [],
+                              AC_CHECK_LIB(termcap, main, [],
+                                           AC_CHECK_LIB(termlib, main))))
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
     if test "${use_readline}" = yes; then
@@ -915,7 +917,6 @@ AC_SUBST(READLINE_LIBS)
 
 ### * Checks for header files.
 
-AC_HEADER_STDC
 AC_HEADER_DIRENT
 ## we also assume readdir and closedir
 if test "${ac_cv_search_opendir}" = "no"; then
@@ -954,9 +955,6 @@ R_HEADER_GLIBC2
 
 ### * Checks for types.
 
-## clang complains when checking return type
-##   indirection requires pointer operand ('void' invalid)
-AC_TYPE_SIGNAL
 ## liblzma uses uint64_t: used unconditionally in src/main/util.c
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([int64_t, int_fast64_t])
@@ -2568,9 +2566,9 @@ AC_SUBST(R_BATCHSAVE)
 ## Java support
 ## R_JAVA
 custom_JAVA_HOME="${JAVA_HOME}"
-: ${JAVA_LIBS=~autodetect~}
-: ${JAVA_CPPFLAGS=~autodetect~}
-: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+: ${JAVA_LIBS='~autodetect~'}
+: ${JAVA_CPPFLAGS='~autodetect~'}
+: ${JAVA_LD_LIBRARY_PATH='~autodetect~'}
 custom_JAVA_LIBS="${JAVA_LIBS}"
 custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"

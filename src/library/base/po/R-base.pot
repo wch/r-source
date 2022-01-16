@@ -2,14 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "'%s' is defunct."
 msgstr ""
@@ -200,9 +201,6 @@ msgstr ""
 msgid "'headers' must have names and must not be NA"
 msgstr ""
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr ""
-
 msgid "'name' must be a single character string"
 msgstr ""
 
@@ -366,6 +364,9 @@ msgid "only defined on a data frame with all numeric-alike variables"
 msgstr ""
 
 msgid "cannot xtfrm data frames"
+msgstr ""
+
+msgid "all variables should have the same length"
 msgstr ""
 
 msgid "character string is not in a standard unambiguous format"
@@ -959,6 +960,9 @@ msgstr ""
 msgid "'input' and 'target' must be character vectors"
 msgstr ""
 
+msgid "cannot mtfrm"
+msgstr ""
+
 msgid "'%s' is not a function, character or symbol"
 msgstr ""
 
@@ -1466,6 +1470,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr ""
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead."
 msgstr ""
 
@@ -1672,13 +1679,13 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "The following object is masked _by_ %s:\n\n%s\n"
-msgid_plural "The following objects are masked _by_ %s:\n\n%s\n"
+msgid        "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "The following object is masked from %s:\n\n%s\n"
-msgid_plural "The following objects are masked from %s:\n\n%s\n"
+msgid        "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
 msgstr[0]    ""
 msgstr[1]    ""
 

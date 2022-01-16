@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019 The R Core Team
+ *  Copyright (C) 2000-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -291,17 +291,11 @@ SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef Win32
 SEXP in_loadRconsole(SEXP);
-SEXP in_memsize(SEXP);
 SEXP in_shortpath(SEXP);
 
 SEXP loadRconsole(SEXP file)
 {
     return in_loadRconsole(file);
-}
-
-SEXP memsize(SEXP size)
-{
-    return in_memsize(size);
 }
 
 SEXP shortpath(SEXP paths)

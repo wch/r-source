@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -12,7 +12,7 @@
      caption = list("Residuals vs Fitted", "Normal Q-Q",
        "Scale-Location", "Cook's distance",
        "Residuals vs Leverage",
-       expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
+       expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
      panel = if(add.smooth) function(x, y, ...)
               panel.smooth(x, y, iter=iter.smooth, ...) else points,
      sub.caption = NULL, main = "",
@@ -20,21 +20,32 @@
      \dots,
      id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
      qqline = TRUE, cook.levels = c(0.5, 1.0),
+     cook.col = 8, cook.lty = 2, cook.legendChanges = list(),
      add.smooth = getOption("add.smooth"),
      iter.smooth = if(isGlm) 0 else 3,
      label.pos = c(4,2),
-     cex.caption = 1, cex.oma.main = 1.25)
+     cex.caption = 1, cex.oma.main = 1.25
+   , extend.ylim.f = 0.08
+     )
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
     \code{\link{glm}}.}
-  \item{which}{if a subset of the plots is required, specify a subset of
-    the numbers \code{1:6}, see \code{caption} below (and the
-    \sQuote{Details}) for the different kinds.}
+  \item{which}{a subset of the numbers \code{1:6}, by default \code{1:3, 5},
+    referring to \enumerate{
+      \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot. % 1
+      \item "Normal Q-Q" plot, an enhanced \code{\link{qqnorm}(resid(.))} % 2
+      \item "Scale-Location"     % 3
+      \item "Cook's distance"    % 4
+      \item "Residuals   vs  Leverage"      % 5
+      \item "Cook's dist vs Lev./(1-Lev.)"  % 6
+    },
+  see also \sQuote{Details} below.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
     graphics annotations, see \code{\link{as.graphicsAnnot}}, of length
-    6, the j-th entry corresponding to \code{which[j]}.  Can be set to
+    6, the j-th entry corresponding to \code{which[j]}, see also the
+    default vector in \sQuote{Usage}.  Can be set to
     \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function.  The useful alternative to
@@ -57,6 +68,14 @@
   \item{qqline}{logical indicating if a \code{\link{qqline}()} should be
     added to the normal Q-Q plot.}
   \item{cook.levels}{levels of Cook's distance at which to draw contours.}
+  \item{cook.col, cook.lty}{color and line type to use for these contour
+    lines.}
+  \item{cook.legendChanges}{a \code{\link{list}} (or \code{NULL} to
+    suppress the call) of arguments to \code{\link{legend}} which should be
+    \emph{modified} from (or added to) the \code{plot.lm()} default \code{
+      list(x = "bottomleft", legend = "Cook's distance = c",
+           lty = cook.lty, col = cook.col, text.col = cook.col,
+           bty = "n", adj = 0.1, y.intersp = 1/8) }.}
   \item{add.smooth}{logical indicating if a smoother should be added to
     most plots; see also \code{panel} above.}
   \item{iter.smooth}{the number of robustness iterations, the argument
@@ -66,10 +85,13 @@
     observations, but also for other models where the response
     distribution can be highly skewed.}
   \item{label.pos}{positioning of labels, for the left half and right
-    half of the graph respectively, for plots 1-3.}
+    half of the graph respectively, for plots 1-3, 5, 6.}
   \item{cex.caption}{controls the size of \code{caption}.}
   \item{cex.oma.main}{controls the size of the \code{sub.caption} only if
     that is \emph{above} the figures when there is more than one.}
+  \item{extend.ylim.f}{a numeric vector of length 1 or 2, to be used in
+    \code{ylim <- \link{extendrange}(r=ylim, f = *)}
+    for plots \code{1} and \code{5} when \code{id.n} is non-empty.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
@@ -87,37 +109,39 @@
   separate pages, or as a subtitle in the outer margin (if any) when
   there are multiple plots per page.
 
-  The \sQuote{Scale-Location} plot, also called \sQuote{Spread-Location} or
+  The \sQuote{Scale-Location} plot (\code{which=3}), also called \sQuote{Spread-Location} or
   \sQuote{S-L} plot, takes the square root of the absolute residuals in
   order to diminish skewness (\eqn{\sqrt{| E |}}{sqrt(|E|)} is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
-  The \sQuote{S-L}, the Q-Q, and the Residual-Leverage plot, use
+  The \sQuote{S-L}, the Q-Q, and the Residual-Leverage (\code{which=5}) plot use
   \emph{standardized} residuals which have identical variance (under the
   hypothesis).  They are given as
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s * sqrt(1 - h.ii))}
-  where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
+  where the \emph{\sQuote{leverages}} \eqn{h_{ii}}{h.ii} are the diagonal entries
+  of the hat matrix,
   \code{\link{influence}()$hat} (see also \code{\link{hat}}), and
-  where the Residual-Leverage plot uses standardized Pearson residuals
+  where the Residual-Leverage plot uses the standardized Pearson residuals
   (\code{\link{residuals.glm}(type = "pearson")}) for \eqn{R[i]}.
 
-  The Residual-Leverage plot shows contours of equal Cook's distance,
+  The Residual-Leverage plot (\code{which=5}) shows contours of equal Cook's distance,
   for values of \code{cook.levels} (by default 0.5 and 1) and omits
   cases with leverage one with a warning.  If the leverages are constant
   (as is typically the case in a balanced \code{\link{aov}} situation)
   the plot uses factor level combinations instead of the leverages for
   the x-axis.  (The factor levels are ordered by mean fitted value.)
 
-  In the Cook's distance vs leverage/(1-leverage) plot, contours of
+  In the Cook's distance vs leverage/(1-leverage) (= \dQuote{leverage*}), contours of
   standardized residuals (\code{\link{rstandard}(.)}) that are equal in
-  magnitude are lines through the origin.  The contour lines are
-  labelled with the magnitudes.
+  magnitude are lines through the origin.  These lines are labelled with
+  the magnitudes.  The x-axis is labeled with the (non equidistant)
+  leverages \eqn{h_{ii}}{h.ii}.
 
   Notice that some plots may not make much sense for the \code{glm}
   case; e.g., the normal Q-Q plot only makes sense if the distribution
   is approximately normal.
-    
 }
+
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).
   \emph{Regression Diagnostics}.
@@ -158,7 +182,7 @@ plot(lm.SR)
 
 ## 4 plots on 1 page;
 ## allow room for printing model formula in outer margin:
-par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+par(mfrow = c(2, 2), oma = c(0, 0, 2, 0)) -> opar
 plot(lm.SR)
 plot(lm.SR, id.n = NULL)                 # no id's
 plot(lm.SR, id.n = 5, labels.id = NULL)  # 5 id numbers
@@ -167,20 +191,34 @@ plot(lm.SR, id.n = 5, labels.id = NULL)  # 5 id numbers
 ## Cook's distances instead of Residual-Leverage plot
 plot(lm.SR, which = 1:4)
 
-## Fit a smooth curve, where applicable:
-plot(lm.SR, panel = panel.smooth)
-## Gives a smoother curve
+## All the above fit a smooth curve where applicable
+## by default unless "add.smooth" is changed.
+## Give a smoother curve by increasing the lowess span :
 plot(lm.SR, panel = function(x, y) panel.smooth(x, y, span = 1))
 
-par(mfrow = c(2,1))  # same oma as above
+par(mfrow = c(2,1)) # same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
+
+## Cook's distance tweaking; col / "legend" suppressed here
+par(mfrow = c(2,3)) # same oma ...
+plot(lm.SR, which = 1:6, cook.col = "royalblue")
+
+## A case where over plotting of the "legend" is to be avoided:
+if(dev.interactive()) getOption("device")(height = 6, width = 4)
+par(mfrow= c(3,1), mar= c(5,5,4,2)/2 +.1, mgp= c(1.4, .5, 0))
+plot(lm.SR, which=5, extend.ylim.f = c(0.2, 0.08))
+plot(lm.SR, which=5, cook.lty="dotdash",
+     cook.legendChanges = list(x = "bottomright"))
+plot(lm.SR, which=5, cook.legendChanges=NULL)# no "legend"
 
 \dontshow{
 ## An example with *long* formula that needs abbreviation:
+par(mfrow = c(2,2))
 for(i in 1:5) assign(paste("long.var.name", i, sep = "."), runif(10))
 plot(lm(long.var.name.1 ~
         long.var.name.2 + long.var.name.3 + long.var.name.4 + long.var.name.5))
 }
+par(opar) # reset par()s
 }
 \keyword{hplot}
 \keyword{regression}

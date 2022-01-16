@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2021
-@set FAQ_DATE @value{FAQ_YEAR}-05-29
+@set FAQ_DATE @value{FAQ_YEAR}-11-25
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -268,7 +268,7 @@ Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman,
 Kurt Hornik, Ross Ihaka, Tomas Kalibera, Michael Lawrence, Friedrich Leisch, Uwe Ligges,
-Thomas Lumley, Martin Maechler, Martin Morgan, Paul Murrell, Martyn
+Thomas Lumley, Martin Maechler, Sebastian Meyer, Paul Murrell, Martyn
 Plummer, Brian Ripley, Deepayan Sarkar, Duncan Temple Lang, Luke
 Tierney, and Simon Urbanek.
 
@@ -2765,24 +2765,12 @@ columns named @code{a} and @code{b}).
 @node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
 @section Why does the help.start() search engine not work?
 
-The browser-based search engine in @code{help.start()} utilizes a Java
-applet.  In order for this to function properly, a compatible version of
-Java must installed on your system and linked to your browser, and both
-Java @emph{and} JavaScript need to be enabled in your browser.
-
-There have been a number of compatibility issues with versions of Java
-and of browsers.  
-@ifclear UseExternalXrefs
-For further details please consult section ``Enabling search in HTML
-help'' in @cite{R Installation and Administration}.  This manual is
-included in the R distribution, @pxref{What documentation exists for
-R?}, and its @acronym{HTML} version is linked from the @acronym{HTML}
-search page.
-@end ifclear
-@ifset UseExternalXrefs
-@xref{Enabling search in HTML help, , Enabling search in HTML help,
-R-admin, R Installation and Administration}, for further details.
-@end ifset
+Since R 2.10.0, the browser-based search engine in @code{help.start()}
+is an @HTML{} interface to @code{help.search()}, and should always work.
+Before that, the engine utilized a Java applet.  In order for this to
+function properly, one needed a compatible version of Java installed on
+the system and linked to the browser, and both Java @emph{and}
+JavaScript enabled in the browser.
 
 @node Why did my .Rprofile stop working when I updated R?, Where have all the methods gone?, Why does the help.start() search engine not work?, R Miscellanea
 @section Why did my .Rprofile stop working when I updated R?

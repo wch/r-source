@@ -85,6 +85,8 @@ valid.viewport <- function(x, y, width, height, just,
     stop("invalid 'gp' value")
   if (!is.logical(clip)) {
       if (is.grob(clip)) {
+          clip <- createClipPath(as.path(clip))
+      } else if (inherits(clip, "GridPath")) {
           clip <- createClipPath(clip)
       } else {
           clip <- switch(as.character(clip),
@@ -95,7 +97,9 @@ valid.viewport <- function(x, y, width, height, just,
       }
   }
   if (!is.logical(mask)) {
-      if (is.grob(mask)) {
+      if (isMask(mask)) {
+          ## Do nothing
+      } else if (is.grob(mask)) {
           mask <- createMask(mask)
       } else {
           mask <- switch(as.character(mask),

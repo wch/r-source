@@ -1,6 +1,6 @@
 % File src/library/stats/man/read.ftable.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Copyright 2002-2013 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -19,7 +19,7 @@ read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
 
 write.ftable(x, file = "", quote = TRUE, append = FALSE,
-             digits = getOption("digits"), \dots)
+             digits = getOption("digits"), sep = " ", \dots)
 
 \method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"),
        method = c("non.compact", "row.compact", "col.compact", "compact"),

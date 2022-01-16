@@ -40,7 +40,7 @@ persp(x, \dots)
   \item{xlab, ylab, zlab}{titles for the axes.  N.B. These must be
     character strings; expressions are not accepted.  Numbers will be
     coerced to character strings.}
-  \item{main, sub}{main and sub title, as for \code{\link{title}}.}
+  \item{main, sub}{main title and subtitle, as for \code{\link{title}}.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
     the colatitude.}

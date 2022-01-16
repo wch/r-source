@@ -111,9 +111,8 @@ url_db <-
 function(urls, parents)
 {
     ## Some people get leading LFs in URLs, so trim before checking.
-    db <- data.frame(URL = trimws(as.character(urls)),
-                     Parent = as.character(parents),
-                     stringsAsFactors = FALSE)
+    db <- list2DF(list(URL = trimws(as.character(urls)),
+                       Parent = as.character(parents)))
     class(db) <- c("url_db", "data.frame")
     db
 }
@@ -152,8 +151,6 @@ function(dir, recursive = FALSE, files = NULL, verbose = FALSE)
         files <- list.files(dir, pattern = "[.]pdf$",
                             full.names = TRUE,
                             recursive = recursive)
-    ## FIXME: this is simpler to do with full.names = FALSE and without
-    ## tools:::.file_path_relative_to_dir().
     urls <-
         lapply(files,
                function(f) {
@@ -412,10 +409,8 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                         cran = rep.int("", length(u)),
                         spaces = rep.int("", length(u)),
                         R = rep.int("", length(u))) {
-        y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
-                        New = new, CRAN = cran, Spaces = spaces, R = R,
-                        row.names = NULL, stringsAsFactors = FALSE)
-        y$From <- p
+        y <- list2DF(list(URL = u, From = p, Status = s, Message = m,
+                          New = new, CRAN = cran, Spaces = spaces, R = R))
         class(y) <- c("check_url_db", "data.frame")
         y
     }
@@ -639,7 +634,14 @@ function(x, ...)
     u <- x$URL
     new <- x$New
     ind <- nzchar(new)
-    u[ind] <- sprintf("%s (moved to %s)", u[ind], new[ind])
+    if(any(ind)) {
+        u[ind] <- sprintf("%s (moved to %s)", u[ind], new[ind])
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_URLS_SHOW_301_STATUS_",
+                                            "FALSE"))) {
+            x$Message[ind] <- "Moved Permanently"
+            x$Status[ind] <- "301"
+        }
+    }
 
     paste0(sprintf("URL: %s", u),
            sprintf("\nFrom: %s",
@@ -696,10 +698,7 @@ function(x, ...)
         if(is.null(length)) {
             length <- 0L
         }
-        ## <FIXME>
-        ## make codetools happy
-        done <- fmt <- NULL
-        ## </FIXME>
+        done <- fmt <- NULL             # make codetools happy
         bar$length <- length
         bar$done <- -1L
         digits <- trunc(log10(length)) + 1L

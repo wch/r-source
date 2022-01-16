@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2021  The R Core Team.
+ *  Copyright (C) 1998--2022  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -90,17 +90,6 @@
 #include <R_ext/Rallocators.h> /* for R_allocator_t structure */
 #include <Rmath.h> // R_pow_di
 #include <Print.h> // R_print
-
-#if defined(Win32)
-extern void *Rm_malloc(size_t n);
-extern void *Rm_calloc(size_t n_elements, size_t element_size);
-extern void Rm_free(void * p);
-extern void *Rm_realloc(void * p, size_t n);
-#define calloc Rm_calloc
-#define malloc Rm_malloc
-#define realloc Rm_realloc
-#define free Rm_free
-#endif
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
@@ -689,7 +678,7 @@ static R_size_t R_NodesInUse = 0;
 #define FREE_FORWARD_CASE
 #endif
 /*** assume for now all ALTREP nodes are based on CONS nodes */
-#define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
+#define DO_CHILDREN4(__n__,dc__action__,dc__str__action__,dc__extra__) do { \
   if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
   if (ALTREP(__n__)) {					\
@@ -712,6 +701,12 @@ static R_size_t R_NodesInUse = 0;
   case S4SXP: \
     break; \
   case STRSXP: \
+    { \
+      R_xlen_t i; \
+      for (i = 0; i < XLENGTH(__n__); i++) \
+	dc__str__action__(VECTOR_ELT(__n__, i), dc__extra__); \
+    } \
+    break; \
   case EXPRSXP: \
   case VECSXP: \
     { \
@@ -751,25 +746,58 @@ static R_size_t R_NodesInUse = 0;
   } \
 } while(0)
 
+#define DO_CHILDREN(__n__,dc__action__,dc__extra__) \
+    DO_CHILDREN4(__n__,dc__action__,dc__action__,dc__extra__)
+
 
 /* Forwarding Nodes.  These macros mark nodes or children of nodes and
    place them on the forwarding list.  The forwarding list is assumed
    to be in a local variable of the caller named named
    forwarded_nodes. */
 
+#define MARK_AND_UNSNAP_NODE(s) do {		\
+	SEXP mu__n__ = (s);			\
+	CHECK_FOR_FREE_NODE(mu__n__);		\
+	MARK_NODE(mu__n__);			\
+	UNSNAP_NODE(mu__n__);			\
+    } while (0)
+
 #define FORWARD_NODE(s) do { \
   SEXP fn__n__ = (s); \
   if (fn__n__ && ! NODE_IS_MARKED(fn__n__)) { \
-    CHECK_FOR_FREE_NODE(fn__n__) \
-    MARK_NODE(fn__n__); \
-    UNSNAP_NODE(fn__n__); \
+    MARK_AND_UNSNAP_NODE(fn__n__); \
     SET_NEXT_NODE(fn__n__, forwarded_nodes); \
     forwarded_nodes = fn__n__; \
   } \
 } while (0)
 
+#define PROCESS_ONE_NODE(s) do {				\
+	SEXP pn__n__ = (s);					\
+	int __cls__ = NODE_CLASS(pn__n__);			\
+	int __gen__ = NODE_GENERATION(pn__n__);			\
+	SNAP_NODE(pn__n__, R_GenHeap[__cls__].Old[__gen__]);	\
+	R_GenHeap[__cls__].OldCount[__gen__]++;			\
+    } while (0)
+
+/* avoid pushing on the forwarding stack when possible */
+#define FORWARD_AND_PROCESS_ONE_NODE(s, tp) do {	\
+	SEXP fpn__n__ = (s);				\
+	int __tp__ = (tp);				\
+	if (fpn__n__ && ! NODE_IS_MARKED(fpn__n__)) {	\
+	    if (TYPEOF(fpn__n__) == __tp__ &&		\
+		! HAS_GENUINE_ATTRIB(fpn__n__)) {	\
+		MARK_AND_UNSNAP_NODE(fpn__n__);		\
+		PROCESS_ONE_NODE(fpn__n__);		\
+	    }						\
+	    else FORWARD_NODE(fpn__n__);		\
+	}						\
+    } while (0)
+
+#define PROCESS_CHARSXP(__n__) FORWARD_AND_PROCESS_ONE_NODE(__n__, CHARSXP)
+#define FC_PROCESS_CHARSXP(__n__,__dummy__) PROCESS_CHARSXP(__n__)
 #define FC_FORWARD_NODE(__n__,__dummy__) FORWARD_NODE(__n__)
-#define FORWARD_CHILDREN(__n__) DO_CHILDREN(__n__,FC_FORWARD_NODE, 0)
+#define FORWARD_CHILDREN(__n__) \
+    DO_CHILDREN4(__n__, FC_FORWARD_NODE, FC_PROCESS_CHARSXP, 0)
 
 /* This macro should help localize where a FREESXP node is encountered
    in the GC */
@@ -1618,10 +1646,9 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define PROCESS_NODES() do { \
     while (forwarded_nodes != NULL) { \
-	s = forwarded_nodes; \
+	SEXP s = forwarded_nodes; \
 	forwarded_nodes = NEXT_NODE(forwarded_nodes); \
-	SNAP_NODE(s, R_GenHeap[NODE_CLASS(s)].Old[NODE_GENERATION(s)]); \
-	R_GenHeap[NODE_CLASS(s)].OldCount[NODE_GENERATION(s)]++; \
+	PROCESS_ONE_NODE(s); \
 	FORWARD_CHILDREN(s); \
     } \
 } while (0)
@@ -1847,8 +1874,9 @@ static int RunGenCollect(R_size_t size_needed)
 	}
 	SET_TRUELENGTH(R_StringHash, nc); /* SET_HASHPRI, really */
     }
-    FORWARD_NODE(R_StringHash);
-    PROCESS_NODES();
+    /* chains are known to be marked so don't need to scan again */
+    FORWARD_AND_PROCESS_ONE_NODE(R_StringHash, VECSXP);
+    PROCESS_NODES(); /* probably nothing to process, but just in case ... */
 
 #ifdef PROTECTCHECK
     for(i=0; i< NUM_SMALL_NODE_CLASSES;i++){
@@ -3291,9 +3319,18 @@ void NORET R_signal_protect_error(void)
     cntxt.cend = &reset_pp_stack;
     cntxt.cenddata = &oldpps;
 
-    if (R_PPStackSize < R_RealPPStackSize)
+    /* condiiton is pre-allocated and protected with R_PreserveObject */
+    SEXP cond = R_getProtectStackOverflowError();
+
+    if (R_PPStackSize < R_RealPPStackSize) {
 	R_PPStackSize = R_RealPPStackSize;
-    errorcall(R_NilValue, _("protect(): protection stack overflow"));
+	/* allow calling handlers */
+	R_signalErrorCondition(cond, R_NilValue);
+    }
+
+    /* calling handlers at this point might produce a C stack
+       overflow/SEGFAULT so treat them as failed and skip them */
+    R_signalErrorConditionEx(cond, R_NilValue, TRUE);
 
     endcontext(&cntxt); /* not reached */
 }
@@ -3431,7 +3468,7 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 #endif
     p = calloc(nelem, elsize);
     if(!p) /* problem here is that we don't have a format for size_t. */
-	error(_("'Calloc' could not allocate memory (%.0f of %u bytes)"),
+	error(_("'R_Calloc' could not allocate memory (%.0f of %u bytes)"),
 	      (double) nelem, elsize);
     return(p);
 }
@@ -3442,7 +3479,7 @@ void *R_chk_realloc(void *ptr, size_t size)
     /* Protect against broken realloc */
     if(ptr) p = realloc(ptr, size); else p = malloc(size);
     if(!p)
-	error(_("'Realloc' could not re-allocate memory (%.0f bytes)"),
+	error(_("'R_Realloc' could not re-allocate memory (%.0f bytes)"),
 	      (double) size);
     return(p);
 }
@@ -3479,13 +3516,13 @@ static SEXP DeleteFromList(SEXP object, SEXP list)
 
 #define ALLOW_PRECIOUS_HASH
 #ifdef ALLOW_PRECIOUS_HASH
-/* This allows using a fixed size hash table. This makes deleting mush
+/* This allows using a fixed size hash table. This makes deleting much
    more efficient for applications that don't follow the "sparing use"
    advice in R-exts.texi. Using the hash table is enabled by starting
    R with the environment variable R_HASH_PRECIOUS set.
 
    Pointer hashing as used here isn't entirely portable (we do it in
-   at least one othe rplace, in serialize.c) but it could be made so
+   at least one other place, in serialize.c) but it could be made so
    by computing a unique value based on the allocation page and
    position in the page. */
 
@@ -4314,6 +4351,8 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
     return y;
 }
 
+SEXP (EXTPTR_PROT)(SEXP x) { return EXTPTR_PROT(CHK(x)); }
+SEXP (EXTPTR_TAG)(SEXP x) { return EXTPTR_TAG(CHK(x)); }
 void *(EXTPTR_PTR)(SEXP x) { return EXTPTR_PTR(CHK(x)); }
 
 void (SET_MISSING)(SEXP x, int v) { SET_MISSING(CHKCONS(x), v); }
@@ -4587,6 +4626,8 @@ void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
     blen = (blen / bsize) * bsize;
     if(blen < blen1) blen += bsize;
 
+    /* Result may be accessed as `wchar_t *` and other types; malloc /
+      realloc guarantee correct memory alignment for all object types */
     if(buf->data == NULL) {
 	buf->data = (char *) malloc(blen);
 	if(buf->data)
@@ -4637,6 +4678,13 @@ int Seql(SEXP a, SEXP b)
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
+    else if (IS_BYTES(a) || IS_BYTES(b)) {
+	if (IS_BYTES(a) && IS_BYTES(b))
+	    /* only get here if at least one is not cached */
+	    return !strcmp(CHAR(a), CHAR(b));
+	else
+	    return 0;
+    }	    
     else {
 	SEXP vmax = R_VStack;
 	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));

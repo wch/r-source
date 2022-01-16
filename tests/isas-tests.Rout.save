@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-12-02 r81280) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2348,9 +2348,7 @@ In doTryCatch(return(expr), name, parentenv, handler) :
 > if(!inherits(res, 'try-error')) report(is.table(res))
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
-[1] FALSE
-Error in report(is.vector(res)) : x is not TRUE
-Calls: report -> stopifnot
+[1] TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
@@ -2488,9 +2486,7 @@ In doTryCatch(return(expr), name, parentenv, handler) :
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
-[1] FALSE
-Error in report({ : x is not TRUE
-Calls: report -> stopifnot
+[1] TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
@@ -2609,6 +2605,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.17 0.024 0.194 0 0 
+Time elapsed:  0.094 0.02 0.114 0 0 
 > 
 > 

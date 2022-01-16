@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \encoding{UTF-8}
@@ -141,7 +141,7 @@ pairs(USJudgeRatings, text.panel = NULL, upper.panel = NULL)
 ## put histograms on the diagonal
 panel.hist <- function(x, ...)
 {
-    usr <- par("usr"); on.exit(par(usr))
+    usr <- par("usr")
     par(usr = c(usr[1:2], 0, 1.5) )
     h <- hist(x, plot = FALSE)
     breaks <- h$breaks; nB <- length(breaks)
@@ -156,7 +156,6 @@ pairs(USJudgeRatings[1:5], panel = panel.smooth,
 ## with size proportional to the correlations.
 panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 {
-    usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))
     r <- abs(cor(x, y))
     txt <- format(c(r, 0.123456789), digits = digits)[1]

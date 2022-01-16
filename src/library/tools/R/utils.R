@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ function(x, start = getwd(), parent = TRUE)
         unlist(Map(f, x, y, USE.NAMES = FALSE))
     }
 }
-    
+
 ### ** file_path_sans_ext
 
 file_path_sans_ext <-
@@ -111,7 +111,7 @@ function(op, x, y)
            "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
            "-d" = dir.exists(x),
            "-h" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),
-           "-L" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),           
+           "-L" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),
            "-nt" = (!is.na(mt.x <- file.mtime(x))
                     & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
@@ -120,7 +120,7 @@ function(op, x, y)
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            "-w" = (file.access(x, 2L) == 0L),
-           "-r" = (file.access(x, 4L) == 0L),           
+           "-r" = (file.access(x, 4L) == 0L),
            stop(gettextf("test '%s' is not available", op),
                 domain = NA))
 }
@@ -557,7 +557,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.13"))
+    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.14"))
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
 
@@ -1009,11 +1009,10 @@ function(package, lib.loc = NULL)
     if(!nzchar(path)) return(NULL)
     if(package == "base") {
         len <- nrow(.S3_methods_table)
-        return(data.frame(generic = .S3_methods_table[, 1L],
-                          home = rep_len("base", len),
-                          class = .S3_methods_table[, 2L],
-                          delayed = rep_len(FALSE, len),
-                          stringsAsFactors = FALSE))
+        return(list2DF(list(generic = .S3_methods_table[, 1L],
+                            home = rep_len("base", len),
+                            class = .S3_methods_table[, 2L],
+                            delayed = rep_len(FALSE, len))))
     }
     lib.loc <- dirname(path)
     nsinfo <- parseNamespaceFile(package, lib.loc)
@@ -1024,11 +1023,10 @@ function(package, lib.loc = NULL)
     if(!all(ind)) {
         ## Delayed registrations can be handled directly.
         pos <- which(!ind)
-        tab <- data.frame(generic = S3methods[pos, 1L],
-                          home = S3methods[pos, 4L],
-                          class = S3methods[pos, 2L],
-                          delayed = rep_len(TRUE, length(pos)),
-                          stringsAsFactors = FALSE)
+        tab <- list2DF(list(generic = S3methods[pos, 1L],
+                            home = S3methods[pos, 4L],
+                            class = S3methods[pos, 2L],
+                            delayed = rep_len(TRUE, length(pos))))
         S3methods <- S3methods[ind, , drop = FALSE]
     }
     generic <- S3methods[, 1L]
@@ -1046,11 +1044,10 @@ function(package, lib.loc = NULL)
                use.names = FALSE)
     ## S3 group generics belong to base.
     homes[!ind] <- "base"
-    home <- homes[match(generic, generics)]
-    class <- S3methods[, 2L]
-    delayed <- rep_len(FALSE, length(class))
-    rbind(data.frame(generic, home, class, delayed,
-                     stringsAsFactors = FALSE),
+    rbind(list2DF(list(generic = generic,
+                       home = homes[match(generic, generics)],
+                       class = S3methods[, 2L],
+                       delayed = rep_len(FALSE, length(generic)))),
           tab)
 }
 
@@ -1368,6 +1365,7 @@ function()
                "Title",
                "Type",
                "URL",
+               "UseLTO",
                "Version",
                "VignetteBuilder",
                "ZipData"),
@@ -1596,13 +1594,17 @@ function(package)
 .load_package_quietly <-
 function(package, lib.loc)
 {
-    ## Load (reload if already loaded) @code{package} from
-    ## @code{lib.loc}, capturing all output and messages.
+    ## Quietly ensure that package @code{package} is loaded and
+    ## attached.
+    ## If not yet loaded, look for the package in @code{lib.loc}.
+    ## Otherwise, we do not attempt reloading: previously we tried at
+    ## least when attached, but reloading namespaces invalidates DLLs
+    ## and S3 registries, see e.g. PR#18130
+    ## <https://bugs.r-project.org/show_bug.cgi?id=18130>.
+    ## Hence if already loaded, we can neither ensure that the package
+    ## came from @code{lib.loc}, nor that we used the currently
+    ## installed versions.
     ## Don't do anything for base.
-    ## Earlier versions did not attempt reloading methods as this used
-    ## to cause trouble, but this now (2009-03-19) seems ok.
-    ## Otoh, it seems that unloading tcltk is a bad idea ...
-    ## Also, do not unload ourselves (but shouldn't we be "in use"?).
     ##
     ## All QC functions use this for loading packages because R CMD
     ## check interprets all output as indicating a problem.
@@ -1610,8 +1612,13 @@ function(package, lib.loc)
         .try_quietly({
             pos <- match(paste0("package:", package), search())
             if(!is.na(pos)) {
-                detach(pos = pos,
-                       unload = package %notin% c("tcltk", "tools"))
+                detach(pos = pos)
+                ## Presumably this should use
+                ## <CODE>
+                ##   detach(pos, force = TRUE)
+                ## </CODE>
+                ## to always detach?
+                ## Or perhaps simply leave things as they are?
             }
             library(package, lib.loc = lib.loc, character.only = TRUE,
                     verbose = FALSE)
@@ -2040,8 +2047,7 @@ function(x, dfile)
         asc <- iconv(x, "latin1", "ASCII")
         ## fields might have been NA to start with, so use identical.
         if(!identical(asc, x)) {
-            warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
-                    domain = NA)
+            warning("Unknown encoding with non-ASCII data: converting to ASCII")
 	    ind <- is.na(asc) | (asc != x)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }
@@ -2265,7 +2271,7 @@ function(command, args = character(), env = character(),
 ### ** .trim_common_leading_whitespace
 
 .trim_common_leading_whitespace <-
-function(x)    
+function(x)
 {
     y <- sub("^([ \t]*).*", "\\1", x)
     n <- nchar(y)
@@ -2288,7 +2294,7 @@ function(x)
     }
     substring(x, min(n) + 1L)
 }
-    
+
 ### ** .try_quietly
 
 .try_quietly <-
@@ -2383,6 +2389,58 @@ function(args, msg)
 }
 
 ### * Miscellania
+
+### ** R
+
+R <-
+function(fun, args = list(), opts = character(), env = character(),
+         arch = "", timeout = 0)
+{
+    tfi <- tempfile("runri")
+    tfo <- tempfile("runro")
+    ## FIXME: do a more safe repos
+    wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
+             "options(repos = x$repos)",
+             ## need quote = TRUE in case some of args are not self-evaluating
+             ## could catch other conditions also
+             "y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)",
+             sprintf("saveRDS(y, \"%s\")", tfo))
+    saveRDS(list(fun = fun, args = args, repos = getOption("repos")),
+            tfi)
+    cmd <- if(.Platform$OS.type == "windows") {
+               if(nzchar(arch))
+                   file.path(R.home(), "bin", arch, "Rterm.exe")
+               else
+                   file.path(R.home("bin"), "Rterm.exe")
+           } else {
+               if(nzchar(arch))
+                   opts <- c(paste0("--arch=", arch), opts)
+               file.path(R.home("bin"), "R")
+           }
+    res <- .system_with_capture(cmd, opts, env, input = wrk,
+                                timeout = timeout)
+    ## FIXME: what should the "value" be in case of error?
+    if(file.exists(tfo)) {
+        val <- readRDS(tfo)
+        if (inherits(val, "condition")) {
+            ## maybe wrap in a classed error and include some of res
+            msg <- paste0("error in inferior call:\n  ", conditionMessage(val))
+            stop(errorCondition(msg,
+                                class = "inferiorCallError",
+                                res = res,
+                                error = val))
+        }
+        else
+            ## everything worked; don't need to see res
+            val[[1L]]
+    }
+    else
+        ## again maybe wrap in a classed error  and include some of res
+        ## might want to distinguish two errors by sub-classes
+        stop(errorCondition("inferior call failed",
+                            class = "inferiorCallError",
+                            res = res))
+}
 
 ### ** Rcmd
 

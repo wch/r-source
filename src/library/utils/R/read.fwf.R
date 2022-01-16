@@ -29,7 +29,7 @@ function(file, widths, header = FALSE, sep = "\t",
 
     if (is.list(widths)) {
         recordlength <- length(widths)
-        widths <- do.call("c", widths)
+        widths <- do.call(c, widths)
     } else recordlength <- 1L
 
     drop <- (widths < 0L)

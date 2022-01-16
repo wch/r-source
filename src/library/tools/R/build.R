@@ -446,17 +446,17 @@ inRbuildignore <- function(files, pkgdir) {
             messageLog(Log, "cleaning src")
             if (WINDOWS) {
                 have_make <- nzchar(Sys.which(Sys.getenv("MAKE", "make")))
-                if (file.exists("Makefile.win")) {
+                if (file.exists(fn <- "Makefile.ucrt") || file.exists(fn <- "Makefile.win")) {
                     if (have_make)
-                        Ssystem(Sys.getenv("MAKE", "make"), "-f Makefile.win clean")
+                        Ssystem(Sys.getenv("MAKE", "make"), paste0("-f ", fn, " clean"))
                     else warning("unable to run 'make clean' in 'src'",
                                  domain = NA)
                 } else {
-                    if (file.exists("Makevars.win")) {
+                    if (file.exists(fn <- "Makevars.ucrt") || file.exists(fn <- "Makevars.win")) {
                         if (have_make) {
                             makefiles <- paste("-f",
                                                shQuote(file.path(R.home("share"), "make", "clean.mk")),
-                                           "-f Makevars.win")
+                                           "-f", fn)
                             Ssystem(Sys.getenv("MAKE", "make"),
                                     c(makefiles, "clean"))
                         } else warning("unable to run 'make clean' in 'src'",
@@ -501,14 +501,20 @@ inRbuildignore <- function(files, pkgdir) {
         ## to 'Writing R Extensions', but were not in Perl version (nor
         ## was cleanup.win used).
         if (WINDOWS) {
-            if (file.exists("cleanup.win")) {
+            has_cleanup_ucrt <- file.exists("cleanup.ucrt")
+            if (has_cleanup_ucrt || file.exists("cleanup.win")) {
                 ## check we have sh.exe first
                 if (nzchar(Sys.which("sh.exe"))) {
                     Sys.setenv(R_PACKAGE_NAME = pkgname)
                     Sys.setenv(R_PACKAGE_DIR = pkgdir)
                     Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
-                    messageLog(Log, "running 'cleanup.win'")
-                    Ssystem("sh", "./cleanup.win")
+                    if (has_cleanup_ucrt) {
+                        messageLog(Log, "running 'cleanup.ucrt'")
+                        Ssystem("sh", "./cleanup.ucrt")
+                    } else {
+                        messageLog(Log, "running 'cleanup.win'")
+                        Ssystem("sh", "./cleanup.win")
+                    }
                 }
             }
         } else if (file_test("-x", "cleanup")) {
@@ -518,6 +524,7 @@ inRbuildignore <- function(files, pkgdir) {
             messageLog(Log, "running 'cleanup'")
             Ssystem("./cleanup")
         }
+        revert_install_time_patches()
     }
 
     update_Rd_index <- function(oldindex, Rd_files, Log)
@@ -640,8 +647,8 @@ inRbuildignore <- function(files, pkgdir) {
     fix_nonLF_in_make_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname,
                            paste0("^(",
-                                  paste(c("Makefile", "Makefile.in", "Makefile.win",
-                                          "Makevars", "Makevars.in", "Makevars.win"),
+                                  paste(c("Makefile", "Makefile.in", "Makefile.win", "Makefile.ucrt",
+                                          "Makevars", "Makevars.in", "Makevars.win", "Makevars.ucrt"),
                                         collapse = "|"), ")$"), Log)
         ## Other Makefiles
         makes <- dir(pkgname, pattern = "^Makefile$",

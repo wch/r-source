@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -226,9 +226,6 @@ msgstr "kan berre skriva teiknobjekt"
 msgid "'headers' must have names and must not be NA"
 msgstr "«X» må namn namngjevne «dimnames»"
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
@@ -413,6 +410,10 @@ msgstr "berre definert på dataramme med berre numeriske variablar"
 #, fuzzy
 msgid "cannot xtfrm data frames"
 msgstr "ikkje ei dataramme"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr "ugyldig listeargument: alle variablar må vera like lange"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "teiknstrengen er ikkje i eit standard utvetydig format"
@@ -1089,6 +1090,10 @@ msgstr "«input» må ha eitt element"
 msgid "'input' and 'target' must be character vectors"
 msgstr "«input» og «target» må vera teiknvektorar"
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "ikkje ei dataramme"
+
 msgid "'%s' is not a function, character or symbol"
 msgstr "«%s» er ikkje ein funksjon, eit teikn eller eit symbol"
 
@@ -1684,6 +1689,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "fleire argument ignorerte i warning()"
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1910,25 +1918,13 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0] "kjenner ikkje deparse-valet «%s»"
 msgstr[1] "kjenner ikkje deparse-vala «%s»"
 
-msgid ""
-"The following object is masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked _by_ %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid ""
-"The following object is masked from %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked from %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2094,6 +2090,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"

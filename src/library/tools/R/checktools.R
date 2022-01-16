@@ -673,9 +673,9 @@ function(dir, logs = NULL, ...)
             if(any(ind)) {
                 status <- sub(re, "\\6", lines[ind],
                               perl = TRUE, useBytes = TRUE)
-                if(any(status == "")) "FAIL"
+                if(any(status == "")) "FAILURE"
                 else if(any(status == "ERROR")) "ERROR"
-                else if(any(status == "WARNING")) "WARN"
+                else if(any(status == "WARNING")) "WARNING"
                 else "NOTE"
             } else {
                 "OK"
@@ -699,7 +699,7 @@ function(results)
                  status, deparse.level = 0L)
     tab <- tab[match(c("Source packages", "Reverse depends"),
                      rownames(tab), nomatch = 0L),
-               match(c("FAIL", "ERROR", "WARN", "NOTE", "OK"),
+               match(c("FAILURE", "ERROR", "WARNING", "NOTE", "OK"),
                      colnames(tab), nomatch = 0L),
                drop = FALSE]
     names(dimnames(tab)) <- NULL
@@ -927,7 +927,7 @@ function(log, drop_ok = TRUE, ...)
                                     perl = TRUE, useBytes = TRUE)
                        status <- sub(re, "\\6", line,
                                      perl = TRUE, useBytes = TRUE)
-                       if(status == "") status <- "FAIL"
+                       if(status == "") status <- "FAILURE"
                        list(check = check,
                             status = status,
                             output = paste(s[-1L], collapse = "\n"))
@@ -936,9 +936,9 @@ function(log, drop_ok = TRUE, ...)
         status <- vapply(chunks, `[[`, "", "status")
         if(isTRUE(drop_ok) ||
            (is.na(drop_ok)
-               && all(is.na(match(c("ERROR", "FAIL"), status)))))
+               && all(is.na(match(c("ERROR", "FAILURE"), status)))))
             chunks <- chunks[is.na(match(status, drop_ok_status_tags))]
-
+        
         chunks
     }
 
@@ -1091,11 +1091,10 @@ function(new, old, outputs = FALSE)
     packages <- intersect(old$Package, new$Package)
 
     if(!length(packages)) {
-        db <- data.frame(Package = character(),
-                         Check = character(),
-                         Old = character(),
-                         New = character(),
-                         stringsAsFactors = FALSE)
+        db <- list2DF(list(Package = character(),
+                           Check = character(),
+                           Old = character(),
+                           New = character()))
         class(db) <- check_details_changes_classes
         return(db)
     }
@@ -1121,9 +1120,9 @@ function(new, old, outputs = FALSE)
 
     ## Drop checks that are OK in both versions
     x.issue <- !is.na(match(db$Status.x,
-                            c("ERROR","FAIL","NOTE","WARNING")))
+                            c("ERROR","FAILURE","NOTE","WARNING")))
     y.issue <- !is.na(match(db$Status.y,
-                            c("ERROR","FAIL","NOTE","WARNING")))
+                            c("ERROR","FAILURE","NOTE","WARNING")))
     db <- db[x.issue | y.issue,]
 
     ## Even with the above simplification, missing entries do not
@@ -1174,7 +1173,7 @@ function(x, i, j, drop = FALSE)
     if(((nargs() - !missing(drop)) == 3L)
        && (length(i) == 1L)
        && any(!is.na(match(i, c("==", "!=", "<", "<=", ">", ">="))))) {
-        levels <- c("", "OK", "NOTE", "WARNING", "ERROR", "FAIL")
+        levels <- c("", "OK", "NOTE", "WARNING", "ERROR", "FAILURE")
         encode <- function(s) {
             s <- sub("\n.*", "", s)
             s[is.na(match(s, levels))] <- ""

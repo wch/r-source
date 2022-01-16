@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -228,9 +228,6 @@ msgstr "só é possível escrever objetos do tipo caracter"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X' deve ser dimnames nomeados"
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr ""
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr "'normal.kind' deve ser uma string de caracteres de tamanho 1."
@@ -423,6 +420,11 @@ msgstr ""
 #, fuzzy
 msgid "cannot xtfrm data frames"
 msgstr "não é um data frame"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr ""
+"argumento lista inválido: todas as variáveis devem ter o mesmo comprimento"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "string de caracteres não é um formato padrão não ambíguo"
@@ -1133,6 +1135,10 @@ msgstr "'input' deve ter comprimento 1"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' e 'target' devem ser vetores de caracteres"
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "não é um data frame"
+
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s' não é uma função, caracter ou símbolo"
 
@@ -1746,6 +1752,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "argumentos adicionais ignorados em warning()"
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1975,25 +1984,13 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0] "opção de deparse %s não é reconhecida"
 msgstr[1] "opções de deparse %s não são reconhecidas"
 
-msgid ""
-"The following object is masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked _by_ %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid ""
-"The following object is masked from %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked from %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
 msgstr[0] ""
 msgstr[1] ""
 

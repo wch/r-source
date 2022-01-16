@@ -187,3 +187,14 @@ export(DLL.version, Filters, choose.dir, choose.files, getClipboardFormats,
        arrangeWindows)
 S3method(close, winProgressBar)
 }
+
+export(hashtab, gethash, sethash, remhash, numhash, typhash,
+       maphash, clrhash, is.hashtab)
+
+S3method(print, hashtab)
+S3method(format, hashtab)
+S3method("[[", hashtab)
+S3method("[[<-", hashtab)
+S3method(length, hashtab)
+S3method(as.environment, hashtab)
+S3method(str, hashtab)

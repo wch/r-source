@@ -312,15 +312,15 @@ summary(data.frame(x))
 
 ## Chong Gu 2001-Feb-16.  step on binomials
 detg1 <-
-structure(list(Temp = structure(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L, 1L), .Label = c("High", "Low"), class = "factor"),
-    M.user = structure(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
-    1L, 2L, 2L), .Label = c("N", "Y"), class = "factor"),
-    Soft = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
-    .Label = c("Hard", "Medium", "Soft"), class = "factor"),
+structure(list(Temp = factor(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
+    1L, 2L, 1L, 2L, 1L), labels = c("High", "Low")),
+    M.user = factor(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
+    1L, 2L, 2L), labels = c("N", "Y")),
+    Soft = factor(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
+    labels = c("Hard", "Medium", "Soft")),
     M = c(42, 30, 52, 43,
     50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
-    33, 47, 23, 63, 29, 57, 19)), .Names = c("Temp", "M.user",
+    33, 47, 23, 63, 29, 57, 19)), names = c("Temp", "M.user",
 "Soft", "M", "X"), class = "data.frame", row.names = c("1", "3",
 "5", "7", "9", "11", "13", "15", "17", "19", "21", "23"))
 detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
@@ -367,10 +367,11 @@ gofX.df<-
     0.999573603041505, 0.67546318055115, -0.756802495307928,
     -0.0583741434275801, -0.756802495307928, 0.999573603041505,
     -0.756802495307928, 0.67546318055115, -0.0583741434275801
-    ), groups = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
-    2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3), class = "factor", .Label = c("1",
-    "2", "3"))), .Names = c("A", "B", "C", "D", "groups"), row.names = 1:24,
-            class = "data.frame")
+    ), groups = factor(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L,
+                         2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L),
+                       labels = c("1", "2", "3"))),
+names = c("A", "B", "C", "D", "groups"), row.names = 1:24,
+class = "data.frame")
 
 gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 try(summary(gofX.manova))
@@ -834,7 +835,7 @@ par(mfrow = c(1,1))
                    x4 = c(60, 52, 20, 47, 33, 22, 6, 44, 22, 26, 34, 12, 12),
                    y = c(78.5, 74.3, 104.3, 87.6, 95.9, 109.2, 102.7, 72.5,
                    93.1, 115.9, 83.8, 113.3, 109.4)),
-              .Names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
+              names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
               row.names = 1:13)
 teststep <- function(formula, data)
 {
@@ -2078,6 +2079,9 @@ dput(d0)
 dput(d1)
 identical(d0, d1)
 all.equal(d0, d1)
+## change to identical(,attrib.as.set) code to support internal representation in 4.2.0
+identical(d0, d1, attrib.as.set = FALSE)
+##
 row.names(d1) <- as.character(1:4)
 dput(d1)
 identical(d0, d1)
@@ -3037,6 +3041,9 @@ quote(!!x) # was `!(!x)`
 quote(??x) # Suboptimal
 quote(~+-!?x) # ditto: ....`?`(x)
 ## `!` no longer produces parentheses now
+##
+## There should be no parentheses (always worked)
+quote(+!x)
 
 
 ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -3193,3 +3200,74 @@ stopifnot( identical(ddd, dd2) )
 ##cm <- summary(lm(c(0,0,0) ~ 1))$coefficients
 cm <- cbind(Estimate = 0, SE = 0, t = NaN, "Pr(>|t|)" = NaN)
 printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
+
+
+## deparse() wraps cflow bodies when deeply burried through a LHS (PR#18232)
+##
+## These didn't print the same before fix, the bquote() expression
+## missed parentheses
+ quote(1 +        (if (TRUE) 2)  + 3)
+bquote(1 + .(quote(if (TRUE) 2)) + 3)
+bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
+## From Suharto. Failed `left` state wasn't properly forwarded across operators
+bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+bquote(1^- .  (quote(if (TRUE) 2)) + 3)
+## (found when fiddling w/ cases below):
+quote(`-`(1 + if(L) 2, 3+4))# wrongly was  1 + if (L) 2 - (3 + 4)
+##
+##__ All the following were ok in R <= 4.1.x already __
+bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
+## other constructs cancel the LHS state ==> `if` call isn't wrapped:
+bquote(1 + .(quote(   f(if (TRUE) 2))) + 3)
+bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
+## cflow bodies are only wrapped if needed ==> no parentheses here :
+quote(a <- if (TRUE) 1)
+## print the same
+quote(`^`(-1, 2))
+quote((-1)^2)
+## no parentheses:
+quote(1^-2)
+quote(1^-2 + 3)
+## The "formula" case of Adrian Dusa (maintainer of QCA); R-devel ML, Nov.15, 2021
+quote(A + ~B + C ~ D) # no parens
+## 'simple' binary op
+quote(a$"b")
+## When cflow body is burried deeply through the right, don't rewrap
+## unnecessarily. There should be only one set of parentheses.
+## Cases where R-devel 81211 still gave unneeded parens:
+quote(`^`(1 + if(L) 2, 3))
+quote(`*`(1 - if(L) 2 else 22, 3))
+quote(`^`(1 + repeat 2, 3))
+quote(`*`(1 + repeat 2, 3))
+quote(`=`(1 + repeat 2, 3))# *no* parens in R <= 4.1.x
+quote(`=`(1 + `+`(2, repeat 3), 4))
+quote(`+`(`<-`(1, `=`(2, repeat 3)), 4)) # (1 <- (2 = ..
+quote(`+`(`:`(1, `=`(2, repeat 3)), 4))
+## No parentheses when the cflow form is trailing
+quote(1 + +repeat 2)
+quote(`<-`(1, +repeat 2))
+quote(1^+repeat 2)
+quote(`$`(1, +repeat 2))
+## More cases where parens are needed
+quote(`^`(`+`(repeat 1, 2), 3))
+quote(`+`(`+`(repeat 1, 2), 3))
+quote(`+`(`+`(`+`(repeat 1, repeat 2), repeat 3), 4))
+##__ end { all fine in older R }
+
+## Unary operators are parenthesised if needed; print the same:
+quote((-a)$b)
+quote(`$`(-a, b))    # no parens in R <= 4.1.x
+## Binary operators are parenthesised on the LHS of `$`. ; the same:
+quote((1 + 1)$b)
+quote(`$`(1 + 1, b)) # no parens in R <= 4.1.x
+##
+## Unparseable expressions are deparsed in prefixed form
+quote(`$`(1))       # was 1$NULL  in R <= 4.1.x
+quote(`$`(1, 2, 3)) # was 1$2
+quote(`$`(1, NA_character_)) # was 1$NA_char..
+quote(`$`(1, if(L) 2))   # was 1$if (L) 2
+quote(`$`(`$`(1, if(L) 2), 3))
+## No parens because prefix form
+quote(`$`(1 + repeat 2, 3))
+quote(`=`(`$`(1, `$`(2, repeat 3)), 4))
+## these were really bad in  R <= 4.1.x

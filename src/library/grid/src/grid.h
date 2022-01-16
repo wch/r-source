@@ -59,7 +59,8 @@
 #define GSS_ENGINERECORDING 13
 /* #define GSS_ASK 14 unused in R >= 2.7.0 */
 #define GSS_SCALE 15
-#define GSS_RESOLVINGCLIP 16
+#define GSS_RESOLVINGPATH 16
+#define GSS_GROUPS 17
 
 /*
  * Structure of a viewport
@@ -293,6 +294,7 @@ SEXP L_getDLon();
 SEXP L_setDLon(SEXP value);
 SEXP L_getEngineDLon();
 SEXP L_setEngineDLon(SEXP value);
+SEXP L_setGridState(SEXP elementIndex, SEXP value);
 SEXP L_getCurrentGrob();
 SEXP L_setCurrentGrob(SEXP value);
 SEXP L_getEngineRecording();
@@ -300,6 +302,7 @@ SEXP L_setEngineRecording(SEXP value);
 SEXP L_currentGPar();
 SEXP L_newpagerecording();
 SEXP L_newpage();
+SEXP L_clearDefinitions(SEXP clearGroups);
 SEXP L_initGPar();
 SEXP L_initViewportStack();
 SEXP L_initDisplayList();
@@ -324,6 +327,7 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
 SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_pretty(SEXP scale);
+SEXP L_pretty2(SEXP scale, SEXP n);
 SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
@@ -669,6 +673,11 @@ SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
 SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
+
+/* From path.c */
+SEXP L_stroke(SEXP path);
+SEXP L_fill(SEXP path, SEXP rule);
+SEXP L_fillStroke(SEXP path, SEXP rule);
 
 /* From unit.c */
 SEXP validUnits(SEXP units);

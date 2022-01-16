@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2020-08-27 19:13+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -17,8 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 msgid "invalid 'at' location in 'axis'"
@@ -81,19 +80,11 @@ msgstr "'row' может быть только рангом из существующих строк"
 msgid "invalid 'row' specification"
 msgstr "неправильное указание 'row'"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', или 'col.after'"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col.before', или 'col.after'"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"надо задать в точности один из 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', или 'row.after'"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "надо задать в точности один из 'side=[\"top\", \"bottom\"]', 'row', 'row.before', или 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "неправильный 'n'"
@@ -131,21 +122,14 @@ msgstr "надо задавать только правильные имена 'gpar'"
 msgid "invalid display list element"
 msgstr "неправильный элемент списка изображений"
 
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap."
-"grobs = TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "оконница переписана (grab, ВОЗМОЖНО, не будет точным)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не "
-"будет точным)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не будет точным)"
 
 msgid "only valid to push viewports"
 msgstr "правильно только для задвигания оконниц"
@@ -167,6 +151,10 @@ msgstr "нужно управлять как минимум одной оконницей"
 
 msgid "Invalid number of generations"
 msgstr "Неправильное количество генераций"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "неправильный аргумент 'arrow'"
 
 msgid "invalid object inserted on the display list"
 msgstr "неправильный объект вставлен в список изображений"
@@ -282,6 +270,30 @@ msgstr "могу только переопределить 'children' для \"gTree\""
 msgid "Invalid 'order'"
 msgstr "неправильный 'order'"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "неправильный 'order'"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "неправильное выравнивание"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "неправильный 'order'"
+
 msgid "'l' must be a layout"
 msgstr "'l' должен быть эскизом"
 
@@ -329,6 +341,28 @@ msgstr "неправильный список"
 
 msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' и 'y' должны быть одной длины"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2', и 'y2' должны быть единицами"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1' ,'x2', и 'y2' должны быть единицами"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width', и 'height' должны иметь длину 1"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Пропущенный паттерн заливки определен как прозрачный"
@@ -495,14 +529,11 @@ msgstr "только оконницы разрешены в 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "только оконницы разрешены в 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
-msgstr ""
-"путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
+msgstr "путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
 
 msgid "must specify at least one of 'x' or 'xscale'"
 msgstr "надо задать по крайней мере одно из 'x' или 'xscale'"
@@ -586,12 +617,8 @@ msgstr[2] "Неправильные имена оконниц"
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr "Эта функция излишняя и исчезнет в будущих версиях."
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
-#~ msgstr ""
-#~ "grid.arrows() не одобряется;  используйте аргументы 'arrow' для функций, "
-#~ "рисующих линии."
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+#~ msgstr "grid.arrows() не одобряется;  используйте аргументы 'arrow' для функций, рисующих линии."
 
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr "форма должна быть между -1 и 1"
@@ -599,19 +626,11 @@ msgstr[2] "Неправильные имена оконниц"
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr "Операнды-не-единицы должны быть числовыми"
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
-#~ msgstr ""
-#~ "'unit.rep' не одобряется, используйте единичный метод для общей функции "
-#~ "'rep'"
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+#~ msgstr "'unit.rep' не одобряется, используйте единичный метод для общей функции 'rep'"
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
-#~ msgstr ""
-#~ "'unit.length' не одобряется, используйте единичный метод для общей "
-#~ "функции 'length'"
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+#~ msgstr "'unit.length' не одобряется, используйте единичный метод для общей функции 'length'"
 
 #, fuzzy
 #~ msgid "invalid graphics parameters"

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@
 #include "Startup.h"
 #include <R_ext/Riconv.h>
 #include <R_ext/Print.h> // for REprintf
-#include <R_ext/RS.h> // for Calloc
+#include <R_ext/RS.h> // for R_Calloc
 
 #define __SYSTEM__
 /* includes <sys/select.h> and <sys/time.h> */
@@ -102,11 +102,11 @@ void attribute_hidden Rstd_Suicide(const char *s)
 
 static SIGJMP_BUF seljmpbuf;
 
-static RETSIGTYPE (*oldSigintHandler)(int) = SIG_DFL;
+static void (*oldSigintHandler)(int) = SIG_DFL;
 
 typedef void (*sel_intr_handler_t)(void);
 
-static RETSIGTYPE NORET handleSelectInterrupt(int dummy)
+static void NORET handleSelectInterrupt(int dummy)
 {
     signal(SIGINT, oldSigintHandler);
     SIGLONGJMP(seljmpbuf, 1);
@@ -163,15 +163,14 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       context. */
 	    R_interrupts_suspended = FALSE;
 
+	    /* check for and handle any pending interrupt registered
+	       by the standard handler. */
+	    if (R_interrupts_pending)
+		myintr();
+
 	    /* install a temporary signal handler for breaking out of
 	       a blocking select */
 	    oldSigintHandler = signal(SIGINT, handleSelectInterrupt);
-
-	    /* once the new sinal handler is in place we need to check
-	       for and handle any pending interrupt registered by the
-	       standard handler. */
-	    if (R_interrupts_pending)
-		myintr();
 
 	    /* now do the (possibly blocking) select, restore the
 	       signal handler, and return the result of the select. */
@@ -227,7 +226,7 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
 {
     InputHandler *input, *tmp;
 //    input = (InputHandler*) calloc(1, sizeof(InputHandler));
-    input = Calloc(1, InputHandler);
+    input = R_Calloc(1, InputHandler);
 
     input->activity = activity;
     input->fileDescriptor = fd;
@@ -268,7 +267,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
 
     if(*handlers == it) {
 	*handlers = (*handlers)->next;
-	Free(it); // use Free to match allocation with Calloc
+	R_Free(it); // use R_Free to match allocation with R_Calloc
 	return(1);
     }
 
@@ -277,7 +276,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
     while(tmp) {
 	if(tmp->next == it) {
 	    tmp->next = it->next;
-	    Free(it); // use Free to match allocation with Calloc
+	    R_Free(it); // use R_Free to match allocation with R_Calloc
 	    return(1);
 	}
 	tmp = tmp->next;
@@ -569,7 +568,7 @@ static struct {
 #ifdef NEED_INT_HANDLER
 static volatile Rboolean caught_sigwinch = FALSE;
 
-static RETSIGTYPE
+static void
 R_readline_sigwinch_handler(int sig)
 {
     caught_sigwinch = TRUE;

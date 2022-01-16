@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -10,7 +10,7 @@ hist(x, \dots)
 
 \method{hist}{default}(x, breaks = "Sturges",
      freq = NULL, probability = !freq,
-     include.lowest = TRUE, right = TRUE,
+     include.lowest = TRUE, right = TRUE, fuzz = 1e-7,
      density = NULL, angle = 45, col = "lightgray", border = NULL,
      main = paste("Histogram of" , xname),
      xlim = range(breaks), ylim = NULL,
@@ -51,7 +51,10 @@ hist(x, \dots)
     unless \code{breaks} is a vector.}
   \item{right}{logical; if \code{TRUE}, the histogram cells are
     right-closed (left open) intervals.}
-
+  \item{fuzz}{non-negative number, for the case when the data is
+    \dQuote{pretty} and some observations \code{x[.]} are close but not
+    exactly on a \code{break}.  For counting fuzzy breaks proportional
+    to \code{fuzz} are used.  The default is occasionally suboptimal.}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
     are drawn. Non-positive values of \code{density} also inhibit the
@@ -59,7 +62,7 @@ hist(x, \dots)
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
   \item{col}{a colour to be used to fill the bars.
-    The default of \code{NULL} yields unfilled bars.}
+    The default used to be \code{NULL} (unfilled bars) in \R versions before 4.0.0.}
   \item{border}{the color of the border around the bars.  The default
     is to use the standard foreground color.}
   \item{main, xlab, ylab}{main title and axis labels: these arguments to
@@ -105,11 +108,11 @@ hist(x, \dots)
   fraction of the data points falling in the cells.
 
   If \code{right = TRUE} (default), the histogram cells are intervals
-  of the form \code{(a, b]}, i.e., they include their right-hand endpoint,
+  of the form \eqn{(a, b]}, i.e., they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
   \code{include.lowest} is \code{TRUE}.
 
-  For \code{right = FALSE}, the intervals are of the form \code{[a, b)},
+  For \code{right = FALSE}, the intervals are of the form \eqn{[a, b)},
   and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
@@ -192,9 +195,17 @@ hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
 ## pretty() determines how many counts are used (platform dependently!):
 length(hh$breaks) ## typically 1 million -- though 1e6 was "a suggestion only"
 }
+## R >= 4.2.0: no "*.5" labels on y-axis:
+hist(c(2,3,3,5,5,6,6,6,7))
+
 require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)
+
+## Histogram with custom x-axis:
+hist(x, xaxt = "n")
+axis(1, at = 0:17)
+
 \dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}
 ## Comparing data with a model distribution should be done with qqplot()!
 qqplot(x, qchisq(ppoints(x), df = 4)); abline(0, 1, col = 2, lty = 2)

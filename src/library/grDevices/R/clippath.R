@@ -17,6 +17,19 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## Create R objects defining clipping paths
+
+#######################################################
+## MUST match C API in
+## ../../../main/clippath.c and
+## ../../../include/R_ext/GraphicsEngine.h
+#######################################################
+
+.clipPath <- function(fun, rule) {
+    attr(fun, "rule") <- .ruleIndex(rule)
+    fun
+}
+
 .setClipPath <- function(path, index) {
     .External(C_setClipPath, path, index)
 }

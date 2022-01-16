@@ -188,7 +188,7 @@ function(x, i, j)
     y <- if(missing(j))
         unclass(x)[i]
     else
-        lapply(unclass(x)[i], "[", j)
+        lapply(unclass(x)[i], `[`, j)
     ## Change sequences which are NULL or contains NAs to integer().
     bad <- vapply(y, function(t) is.null(t) || anyNA(t), NA)
     if(any(bad))
@@ -283,7 +283,7 @@ function(..., na.rm)
     if(!ok)
         stop(gettextf("%s not defined for \"numeric_version\" objects",
                       .Generic), domain = NA)
-    x <- do.call("c", lapply(list(...), as.numeric_version))
+    x <- do.call(c, lapply(list(...), as.numeric_version))
     v <- xtfrm(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]
@@ -406,7 +406,7 @@ function(x, name)
     name <- pmatch(name, c("major", "minor", "patchlevel"))
     x <- unclass(x)
     switch(name,
-	   major = vapply(x, "[", 0L, 1L),
-	   minor = vapply(x, "[", 0L, 2L),
-	   patchlevel = vapply(x, "[", 0L, 3L))
+	   major = vapply(x, `[`, 0L, 1L),
+	   minor = vapply(x, `[`, 0L, 2L),
+	   patchlevel = vapply(x, `[`, 0L, 3L))
 }

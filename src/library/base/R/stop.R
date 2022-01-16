@@ -109,9 +109,9 @@ warning <- function(..., call. = TRUE, immediate. = FALSE,
                           .makeMessage(..., domain = domain)))
 }
 
-gettext <- function(..., domain = NULL) {
-    args <- lapply(list(...), as.character)
-    .Internal(gettext(domain, unlist(args)))
+gettext <- function(..., domain = NULL, trim = TRUE) {
+    char <- unlist(lapply(list(...), as.character))
+    .Internal(gettext(domain, char, trim))
 }
 
 bindtextdomain <- function(domain, dirname = NULL)
@@ -120,5 +120,21 @@ bindtextdomain <- function(domain, dirname = NULL)
 ngettext <- function(n, msg1, msg2, domain = NULL)
     .Internal(ngettext(n, msg1, msg2, domain))
 
-gettextf <- function(fmt, ..., domain = NULL)
-    sprintf(gettext(fmt, domain = domain), ...)
+gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
+    sprintf(gettext(fmt, domain=domain, trim=trim), ...)
+
+## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
+## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
+Sys.setLanguage <- function(lang, unset = "en", domain= "R")
+{
+    stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
+              grepl("^[a-z][a-z]", lang))
+    curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
+    if(is.na(curLang) || !nzchar(curLang))
+        curLang <- unset # "factory" default
+    ok <- Sys.setenv(LANGUAGE=lang)
+    if(!ok)
+        warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
+    ok. <- isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
+    invisible(structure(curLang, ok = ok && ok.))
+}

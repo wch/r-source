@@ -7,7 +7,7 @@
 \alias{pvec}
 \title{Parallelize a Vector Map Function using Forking}
 \description{
-  \code{pvec} parellelizes the execution of a function on vector elements
+  \code{pvec} parallelizes the execution of a function on vector elements
   by splitting the vector and submitting each part to one core. The
   function must be a vectorized map, i.e.\sspace{}it takes a vector input and
   creates a vector output of exactly the same length as the input which

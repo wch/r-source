@@ -228,13 +228,15 @@ FAQ: rw-FAQ ../html/rw-FAQ.html
 ifneq "$(TEXI2ANY)" "missing"
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@echo "making rw-FAQ.html"
-	@$(SED) $(SEDVER) $< | \
-	  $(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ 
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ tmp.texi
+	@rm -f tmp.texi
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
-	@$(SED) $(SEDVER) $< | \
-	  $(TEXI2ANY) --no-headers --number-sections -o $@
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp.texi
+	@rm -f tmp.texi
 else
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@$(ECHO) "texi2any is not available"

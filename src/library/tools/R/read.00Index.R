@@ -65,7 +65,7 @@ function(file)
                 chunk <- gsub("\n[ \t]+", "\t", chunk)
                 ## Split into lines and then according to whitespace.
                 x <- strsplit(unlist(strsplit(chunk, "\n")), "[ \t]")
-                cbind(unlist(lapply(x, "[[", 1L)),
+                cbind(unlist(lapply(x, `[[`, 1L)),
                       unlist(lapply(x, function(t) {
                           paste(t[-c(1L, which(!nzchar(t)))],
                                 collapse = " ")

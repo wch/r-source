@@ -282,12 +282,18 @@ plot(x,y, main = "nls(*), data, true function and fit, n=100")
 curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 lines(x, predict(nlmod), col = 2)
 
-## Here, requiring close convergence, you need to use more accurate numerical
-##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
-options(digits = 10) # more accuracy for 'trace'
+## Here, requiring close convergence, must use more accurate numerical differentiation,
+## as this typically gives Error: "step factor .. reduced below 'minFactor' .."
 ## IGNORE_RDIFF_BEGIN
-try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
-   (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+try(nlm1 <- update(nlmod, control = list(tol = 1e-7)))
+o2 <- options(digits = 10) # more accuracy for 'trace'
+## central differencing works here typically (PR#18165: not converging on *some*):
+ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
+   warnOnly =
+        TRUE || # << work around; e.g. needed on some ATLAS-Lapack setups
+        (grepl("^aarch64.*linux", R.version$platform) && grepl("^NixOS", osVersion)
+              ))
+(nlm2 <- update(nlmod, control = ctr2, trace = TRUE)); options(o2)
 ## --> convergence tolerance  4.997e-8 (in 11 iter.)
 ## IGNORE_RDIFF_END
 

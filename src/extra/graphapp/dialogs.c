@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004--2008	The R Foundation
-   Copyright (C) 2013--2020	The R Core Team
+   Copyright (C) 2013--2021	The R Core Team
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
@@ -50,14 +50,14 @@ typedef struct {
 static int CALLBACK
 InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
 {
-    char szDir[MAX_PATH], status[MAX_PATH + 40];
+    char szDir[MAX_PATH], status[MAX_PATH + 40 + 2];
 
     if (uMsg == BFFM_INITIALIZED) {
 	SendMessage(hwnd, BFFM_SETSELECTION, 1,
 		    (LPARAM)&((browserInfo*)lpData)->default_str);
     } else if (uMsg == BFFM_SELCHANGED) {
-	if (SHGetPathFromIDList((LPITEMIDLIST) lp ,szDir)) {
-	    snprintf(status, MAX_PATH+40, "%s\n %s",
+	if (SHGetPathFromIDList((LPITEMIDLIST) lp, szDir)) {
+	    snprintf(status, MAX_PATH+40+2, "%s\n %s",
 		     ((browserInfo*)lpData)->question, szDir);
 	    SetDlgItemText(hwnd, STATUSTEXT, status);
 	    SendMessage(hwnd, BFFM_ENABLEOK, 0, TRUE);

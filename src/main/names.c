@@ -129,7 +129,7 @@ FUNTAB R_FunTab[] =
 
 {"stop",	do_stop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"warning",	do_warning,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
-{"gettext",	do_gettext,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+{"gettext",	do_gettext,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	  0}},
 {"ngettext",	do_ngettext,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 {"bindtextdomain",do_bindtextdomain,0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {".addCondHands",do_addCondHands,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	  0}},
@@ -268,6 +268,8 @@ FUNTAB R_FunTab[] =
 {"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"lengths",	do_lengths,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"sequence",	do_sequence,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+
+{"vhash",	do_vhash,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"attach",	do_attach,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"detach",	do_detach,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -725,7 +727,7 @@ FUNTAB R_FunTab[] =
 {"browserSetDebug",  do_sysbrowser, 3,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"parent.frame",do_parentframe,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sort",	do_sort,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"is.unsorted",	do_isunsorted,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"is.unsorted",	do_isunsorted,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sorted_fpass",do_sorted_fpass,0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"psort",	do_psort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qsort",	do_qsort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -942,7 +944,7 @@ FUNTAB R_FunTab[] =
 {"bincode",	do_bincode,	 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"tabulate",	do_tabulate,	 0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"findInterval",do_findinterval, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"pretty",	do_pretty,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"pretty",	do_pretty,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"formatC",	do_formatC,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"crc64",	do_crc64,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"bitwiseAnd",	do_bitwise,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},

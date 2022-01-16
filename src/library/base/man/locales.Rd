@@ -4,29 +4,30 @@
 % Distributed under GPL 2 or later
 
 \name{locales}
+\title{Query or Set Aspects of the Locale}
+
 \alias{locales}
 \alias{Sys.getlocale}
 \alias{Sys.setlocale}
+\alias{.LC.categories}
 \alias{LC_ALL}
 \alias{LC_COLLATE}
 \alias{LC_CTYPE}
 \alias{LC_MONETARY}
 \alias{LC_NUMERIC}
 \alias{LC_TIME}
-
-#ifdef unix
+%% Next 3  were only 'ifdef unix':
 \alias{LC_MESSAGES}
 \alias{LC_PAPER}
 \alias{LC_MEASUREMENT}
-#endif
 
-\title{Query or Set Aspects of the Locale}
 \description{
   Get details of or set aspects of the locale for the \R process.
 }
 \usage{
-Sys.getlocale(category = "LC_ALL")
-Sys.setlocale(category = "LC_ALL", locale = "")
+Sys.getlocale (category = "LC_ALL")
+Sys.setlocale (category = "LC_ALL", locale = "")
+.LC.categories
 }
 \arguments{
   \item{category}{character string.  The following categories should
@@ -34,6 +35,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
     \code{"LC_CTYPE"}, \code{"LC_MONETARY"}, \code{"LC_NUMERIC"} and
     \code{"LC_TIME"}.  Some systems (not Windows) will also support
     \code{"LC_MESSAGES"}, \code{"LC_PAPER"} and \code{"LC_MEASUREMENT"}.
+    These category names are available in \code{.LC.categories}; even when
+    not supported, \code{Sys.getlocale(.)} will return \code{""}, e.g., for
+    the \code{"LC_PAPER"} example on Windows.
   }
   \item{locale}{character string.  A valid locale name on the system in
     use.  Normally \code{""} (the default) will pick up the default
@@ -53,7 +57,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   The first seven categories described here are those specified by
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
-  support message translation, and is not supported on Windows.  Trying
+  support message translation, and is not supported on Windows, where you
+  \emph{must} use the \env{LANGUAGE} environment variable for message
+  translation, see below.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
 
   Note that setting category \code{"LC_ALL"} sets only categories
@@ -159,9 +165,21 @@ Sys.setlocale("LC_TIME", "de_DE.utf8")   # some Linux versions
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
+.LC.categories # of length 9 on all platforms
 
 \dontrun{
 Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,
-                                   # usually (but not on all platforms)}
+                                   # usually (but not on all platforms)
+Sys.setenv("LANGUAGE" = "es") # set the language for error/warning messages
+}
+\donttest{## some nice formatting; should work on most platforms:
+ sys <- Sys.info()[["sysname"]]
+ sep <- switch(sys,
+               "Darwin"=, "SunOS" = "/",
+               "Linux" =, "Windows" = ";")
+ sg <- matrix(unlist(strsplit(strsplit(Sys.getlocale(), sep)[[1]], "=")), nrow=2)
+ str(sloc <- setNames(sg[2,], sg[1,]))
+ print.Dlist(sloc) # nicely readable
+}
 }
 \keyword{utilities}

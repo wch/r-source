@@ -79,10 +79,6 @@ limit vmemoryuse 4096m
   It is not normally possible to allocate as much as 2Gb to a single
   vector in a 32-bit build of \R even on 64-bit Windows because of
   preallocations by Windows in the middle of the address space.
-
-  Under Windows, \R imposes limits on the total memory allocation
-  available to a single session as the OS provides no way to do so: see
-  \code{\link{memory.size}} and \code{\link{memory.limit}}.
 }
 \seealso{
   \code{\link{object.size}(a)} for the (approximate) size of \R object

@@ -252,13 +252,14 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 
 /* ----- Calculating numerical derivatives example ----- */
 
-#include <R.h> /* for DOUBLE_EPS */
+#include <R.h>
 #include <Rinternals.h>
+#include <float.h> /* for DBL_EPSILON */
 
 SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
-    double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
+    double tt, xx, delta, eps = sqrt(DBL_EPSILON), *rgr, *rans;
     int i, start;
 
     expr = CADR(args);

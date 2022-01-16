@@ -2522,15 +2522,9 @@ factors, numeric matrices, lists, or other data frames.
 Matrices, lists, and data frames provide as many variables to the new
 data frame as they have columns, elements, or variables, respectively.
 @item
-Numeric vectors, logicals and factors are included as is, and by
-default@footnote{Conversion of character columns to factors is
-overridden using the @code{stringsAsFactors} argument to the
-@code{data.frame()} function.} character vectors are coerced to be
-factors, whose levels are the unique values appearing in the vector.
-@item
 Vector structures appearing as variables of the data frame must all have
-the @emph{same length}, and matrix structures must all have the same
-@emph{row size}.
+the @emph{same length}, and matrix structures must all have the
+@emph{same number of rows}.
 @end itemize
 
 A data frame may for many purposes be regarded as a matrix with columns
@@ -2781,7 +2775,7 @@ to be read as a data frame might look as follows.
 
 By default numeric items (except row labels) are read as numeric
 variables and non-numeric variables, such as @code{Cent.heat} in the
-example, as factors.  This can be changed if necessary.
+example, as character variables.  This can be changed if necessary.
 
 The function @code{read.table()} can then be used to read the data frame
 directly
@@ -7152,15 +7146,6 @@ locations.  This defaults to 10000, but can be increased to allow
 large and complicated calculations to be done.  Currently the maximum
 value accepted is 100000.
 
-@item --max-mem-size=@var{N}
-(Windows only) Specify a limit for the amount of memory to be used both
-for @R{} objects and working areas.  This is set by default to the
-smaller of the amount of physical RAM in the machine and for 32-bit
-@R{}, 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb per
-process and have the support enabled: see the @file{rw-FAQ} Q2.9; 3.5Gb
-on most 64-bit versions of Windows.}, and must be between 32Mb and the
-maximum allowed on that version of Windows.
-
 @item --quiet
 @itemx --silent
 @itemx -q
@@ -7522,7 +7507,9 @@ When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
 is used.  Note that other versions of @strong{readline} exist and may be
-used by the inbuilt command line editor: this used to happen on macOS.
+used by the inbuilt command line editor: this is most common on macOS.
+You can find out which version (if any) is available by running
+@code{extSoftVersion()} in an @R{} session.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}

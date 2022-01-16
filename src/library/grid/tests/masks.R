@@ -217,20 +217,6 @@ grid.grab
 grid.draw
 grey circle")
 
-######################
-## Check resource exhaustion
-options(warn=1)
-grid.newpage()
-for (i in 1:21) {
-    pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
-    grid.rect(gp=gpar(fill="grey"))
-    HersheyLabel(paste0("viewport ", i, " with mask
-runs out after 20
-result is grey rect"))
-    popViewport()
-}
-options(warn=0)
-
 ## A mask from two grobs, with ONE grob making use of a mask
 grid.newpage()
 mask <- gTree(children=gList(rectGrob(x=.25, width=.3, height=.8,
@@ -274,6 +260,69 @@ mask is grob with makeContent() method
 makeContent() adds circle
 draw rect
 result is grey circle")
+
+######################
+## Check resource exhaustion
+grid.newpage()
+for (i in 1:65) {
+    pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+    grid.rect(gp=gpar(fill="grey"))
+    HersheyLabel(paste0("viewport ", i, " with mask
+result is grey circle"))
+    popViewport()
+}
+
+## Bug from 4.1.0 (mask should NOT be applied to pattern)
+grid.newpage()
+pat <- pattern(circleGrob(r=.1),
+               width=.17, height=.17,
+               extend="repeat")
+mask <- rectGrob(0:1/2, 0:1/2, width=.5, height=.5,
+                 just=c("left", "bottom"),
+                 gp=gpar(fill=rgb(0,0,0,1:2/2)))
+pushViewport(viewport(mask=mask))
+grid.rect(gp=gpar(fill=pat))
+
+## Mask from text
+grid.newpage()
+mask <- textGrob("test", gp=gpar(cex=10))
+pushViewport(viewport(mask=mask))
+grid.rect(width=.5, height=.5, gp=gpar(fill=linearGradient()))
+popViewport()
+HersheyLabel("rect filled with linear gradient
+masked by text", y=.8)
+    
+## Text being masked
+grid.newpage()
+mask <- rectGrob(width=.5, height=.5,
+                 gp=gpar(fill=linearGradient(c("black", "transparent"))))
+grid.segments(gp=gpar(col=2, lwd=50))
+pushViewport(viewport(mask=mask))
+grid.text("test", gp=gpar(cex=10))
+popViewport()
+HersheyLabel("text with mask
+mask is rect with semitransparent linear gradient", y=.8)
+
+## Mask from raster
+grid.newpage()
+mask <- rasterGrob(matrix(rgb(0,0,0,1:3/4), nrow=1), interpolate=FALSE)
+grid.segments(gp=gpar(col=2, lwd=100))
+pushViewport(viewport(mask=mask))
+grid.circle(r=.4, gp=gpar(fill="black"))
+popViewport()
+HersheyLabel("circle with mask
+mask is semitransparent raster", y=.8)
+    
+## Raster being masked
+grid.newpage()
+mask <- circleGrob(r=.4, gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+grid.segments(gp=gpar(col=2, lwd=100))
+pushViewport(viewport(mask=mask))
+grid.raster(matrix(1:3/4, nrow=1), interpolate=FALSE)
+popViewport()
+HersheyLabel("raster with mask
+mask is semitransparent circle", y=.8)
+    
 
 ################################################################################
 ## Need to test ...

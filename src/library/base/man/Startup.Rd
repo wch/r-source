@@ -132,8 +132,15 @@
 
   Leading and trailing white space in \code{\var{value}} are stripped.
   \code{\var{value}} is then processed in a similar way to a Unix shell:
-  in particular the outermost level of (single or double) quotes is
-  stripped, and backslashes are removed except inside quotes.
+  in particular (single or double) quotes not preceded by backslash
+  are removed and backslashes are removed except inside such quotes.
+
+  For readability and future compatibility it is recommended to only use
+  constructs that have the same behavior as in a Unix shell.  Hence,
+  expansions of variables should be in double quotes (e.g. 
+  \code{"${HOME}"}, in case they may contain a backslash) and literals
+  including a backslash should be in single quotes.  It is ok to mix text in
+  single and double quotes, see examples below.
 
   On systems with sub-architectures (mainly Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
@@ -228,6 +235,9 @@ PAGER=/usr/local/bin/less
 ## Example .Renviron on Windows
 R_LIBS=C:/R/library
 MY_TCLTK="c:/Program Files/Tcl/bin"
+# Variable expansion in double quotes, string literals with backslashes in
+# single quotes.
+R_LIBS_USER="${APPDATA}"'\R-library'
 
 ## Example of setting R_DEFAULT_PACKAGES (from R CMD check)
 R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'

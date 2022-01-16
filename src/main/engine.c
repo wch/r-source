@@ -25,7 +25,7 @@
 #include <Internal.h>
 #include <float.h>  /* for DBL_MAX */
 #include <R_ext/GraphicsEngine.h>
-#include <R_ext/Applic.h>	/* pretty() */
+#include <R_ext/Applic.h>	/* R_pretty() */
 #include <Rmath.h>
 
 # include <rlocale.h>
@@ -2450,31 +2450,27 @@ void GEPretty(double *lo, double *up, int *ndiv)
  *	Pre:	    x1 == lo < up == x2      ;  ndiv >= 1
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
  */
-    double unit, ns, nu;
-    double high_u_fact[2] = { .8, 1.7 };
-#ifdef DEBUG_PLOT
-    double x1,x2;
-#endif
-
     if(*ndiv <= 0)
 	error(_("invalid axis extents [GEPretty(.,.,n=%d)"), *ndiv);
-    if(*lo == R_PosInf || *up == R_PosInf ||
-       *lo == R_NegInf || *up == R_NegInf ||
-       !R_FINITE(*up - *lo)) {
-	error(_("infinite axis extents [GEPretty(%g,%g,%d)]"), *lo, *up, *ndiv);
-	return;/*-Wall*/
-    }
+    if(!R_FINITE(*lo) || !R_FINITE(*up)) // also catch NA etc
+	error(_("non-finite axis extents [GEPretty(%g,%g, n=%d)]"), *lo, *up, *ndiv);
 
-    ns = *lo; nu = *up;
-#ifdef DEBUG_PLOT
-    x1 = ns; x2 = nu;
+    // For *finite* boundaries, now allow (*up - *lo) = +/- inf  as R_pretty() now does
+    double ns = *lo, nu = *up;
+#ifdef DEBUG_axis
+    double x1 = ns, x2 = nu;
 #endif
-    // -> ../appl/pretty.c 
+    double unit, high_u_fact[3] = { .8, 1.7, 1.125 };
+                             // =   (h, h5 , f_min) = (high.u.bias, u5.bias, f_min)
+    // -> ../appl/pretty.c
     unit = R_pretty(&ns, &nu, ndiv, /* min_n = */ 1,
 		    /* shrink_sml = */ 0.25,
 		    high_u_fact,
 		    2, /* do eps_correction in any case */
 		    0 /* return (ns,nu) in  (lo,up) */);
+#ifdef DEBUG_axis
+    REprintf(" R_pretty() -> new (ns=%g, nu=%g, ndiv=%d)\n", ns, nu, *ndiv);
+#endif
     // The following is ugly since it kind of happens already in R_pretty(..):
 #define rounding_eps 1e-10 /* <- compatible to seq*(); was 1e-7 till 2017-08-14 */
     if(nu >= ns + 1) {
@@ -2494,11 +2490,15 @@ void GEPretty(double *lo, double *up, int *ndiv)
 	*ndiv = nu - ns;
 #endif
 
-#ifdef DEBUG_PLOT
+#ifdef DEBUG_axis
+    REprintf(" .. GEPr final (lo=%g, up=%g, ndiv=%d)\n", *lo, *up, *ndiv);
+#endif
+
+#ifdef DEBUG_axis
     if(*lo < x1)
-	warning(_(" .. GEPretty(.): new *lo = %g < %g = x1"), *lo, x1);
+	warning(_(" new *lo = %g < %g = x1"), *lo, x1);
     if(*up > x2)
-	warning(_(" .. GEPretty(.): new *up = %g > %g = x2"), *up, x2);
+	warning(_(" new *up = %g > %g = x2"), *up, x2);
 #endif
 }
 
@@ -2854,6 +2854,7 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
 
 void GENewPage(const pGEcontext gc, pGEDevDesc dd)
 {
+    dd->appending = FALSE;
     dd->dev->newPage(gc, dd->dev);
 }
 
@@ -3778,3 +3779,44 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
         }
     }
 }
+
+/****************************************************************
+ * Path-drawing
+ ****************************************************************/
+
+void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd) {
+    if (dd->dev->deviceVersion >= R_GE_group) {
+        if (dd->appending) {
+            warning(_("Stroke ignored (device is appending path)"));
+        } else {
+            dd->appending = TRUE;
+            dd->dev->stroke(path, gc, dd->dev);
+            dd->appending = FALSE;
+        }
+    }
+}
+
+void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
+    if (dd->dev->deviceVersion >= R_GE_group) {
+        if (dd->appending) {
+            warning(_("Fill ignored (device is appending path)"));
+        } else {
+            dd->appending = TRUE;
+            dd->dev->fill(path, rule, gc, dd->dev);
+            dd->appending = FALSE;
+        }
+    }
+}
+
+void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
+    if (dd->dev->deviceVersion >= R_GE_group) {
+        if (dd->appending) {
+            warning(_("FillStroke ignored (device is appending path)"));
+        } else {
+            dd->appending = TRUE;
+            dd->dev->fillStroke(path, rule, gc, dd->dev);
+            dd->appending = FALSE;
+        }
+    }
+}
+

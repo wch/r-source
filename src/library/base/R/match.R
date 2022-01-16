@@ -79,3 +79,12 @@ char.expand <- function(input, target, nomatch = stop("no match"))
     if(anyNA(y)) eval(nomatch)
     target[y]
 }
+
+mtfrm <- function(x)
+    UseMethod("mtfrm")
+
+mtfrm.default <- function(x) {
+    if(length(y <- as.vector(x)) != length(x))
+        stop("cannot mtfrm")
+    y
+}

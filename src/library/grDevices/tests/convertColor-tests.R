@@ -41,3 +41,7 @@ toXYZ2 <- vapply(
 )
 stopifnot(all(toXYZ2))
 
+# Seg.fault in R 3.5.3 -- 4.1.1 (but not 3.4.4) -- PR#18183
+stopifnot(identical(character(0),
+                    gray(numeric(), alpha=1/2)))
+

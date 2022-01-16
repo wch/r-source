@@ -70,7 +70,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     subsets <- function(x) {
         y <- list(vector(mode(x), length = 0))
         for (i in seq_along(x)) {
-            y <- c(y, lapply(y, "c", x[i]))
+            y <- c(y, lapply(y, c, x[i]))
         }
         y[-1L]
     }

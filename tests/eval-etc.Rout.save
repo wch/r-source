@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2022-01-01 r81419) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -66,12 +66,12 @@ Variance ratio      tail area
 > attach(list(x=1))
 > evalq(dim(x) <- 1,as.environment(2))
 > dput(get("x", envir=as.environment(2)), control="all")
-structure(1, .Dim = 1L)
+structure(1, dim = 1L)
 > 
 > e <- local({x <- 1;environment()})
 > evalq(dim(x) <- 1,e)
 > dput(get("x",envir=e), control="all")
-structure(1, .Dim = 1L)
+structure(1, dim = 1L)
 > 
 > ### Substitute, Eval, Parse, etc
 > 
@@ -411,10 +411,10 @@ __ not parse()able __: hasMissObj(.) is true
 E2: new("mExpr", .Data = expression(x^2))
  --> checking list(*): Ok
 --=--=--=--=--
-L0: structure(logical(0), .Names = character(0), class = "Logi")
+L0: structure(logical(0), names = character(0), class = "Logi")
  --> checking list(*): Ok
 --=--=--=--=--
-L00: structure(logical(0), .Names = character(0))
+L00: structure(logical(0), names = character(0))
  --> checking list(*): Ok
 --=--=--=--=--
 L1: list(c(A = "Txt"))
@@ -426,13 +426,13 @@ L2: list(el = c(A = 2.5))
 L4: list(ii = 5:2)
  --> checking list(*): Ok
 --=--=--=--=--
-L6: list(L = structure(5:6, .Names = c("e", "f")))
+L6: list(L = structure(5:6, names = c("e", "f")))
  --> checking list(*): Ok
 --=--=--=--=--
-L6a: list(L = structure(6:5, .Names = c("f", "e"), myDoc = "info"))
+L6a: list(L = structure(6:5, names = c("f", "e"), myDoc = "info"))
  --> checking list(*): Ok
 --=--=--=--=--
-LNA: structure(list(1, 2, 99), .Names = c("A", "NA", NA))
+LNA: structure(list(1, 2, 99), names = c("A", "NA", NA))
  --> checking list(*): Ok
 --=--=--=--=--
 ST: .Primitive("invisible")
@@ -459,7 +459,7 @@ a3: quote(CC(1, 2, 3))
 aa: quote(B(a = x + y, b = 3))
  --> checking list(*): Ok
 --=--=--=--=--
-abc: structure(c("a", "b", "c", "d"), .Names = c("one", "recursive", 
+abc: structure(c("a", "b", "c", "d"), names = c("one", "recursive", 
 "use.names", "four"))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -609,19 +609,19 @@ e2: quote(c(`a b c` = 1, b = 2))
 e3: quote(c(`Variance ratio` = 1, `tail area` = pf(1, 1, 1)))
  --> checking list(*): Ok
 --=--=--=--=--
-en0: structure(0L, .Names = "")
+en0: structure(0L, names = "")
  --> checking list(*): Ok
 --=--=--=--=--
-en12: structure(1:2, .Names = c("", ""))
+en12: structure(1:2, names = c("", ""))
  --> checking list(*): Ok
 --=--=--=--=--
-en24: structure(2:4, .Names = c("two", "", "vier"))
+en24: structure(2:4, names = c("two", "", "vier"))
  --> checking list(*): Ok
 --=--=--=--=--
-enx0: structure(0, .Names = "")
+enx0: structure(0, names = "")
  --> checking list(*): Ok
 --=--=--=--=--
-enx12: structure(c(1, 2), .Names = c("", ""))
+enx12: structure(c(1, 2), names = c("", ""))
  --> checking list(*): Ok
 --=--=--=--=--
 enx24: c(two = 2, 3, vier = 4)
@@ -642,7 +642,7 @@ not identical(*, ignore.env=T), but all.equal(*,*, tol = ..)
  --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
-fx: structure(c(1L, 3L, 2L), .Label = c("a", "b", NA), class = "factor")
+fx: structure(c(1L, 3L, 2L), levels = c("a", "b", NA), class = "factor")
  --> checking list(*): Ok
 --=--=--=--=--
 g: function (...) 
@@ -727,19 +727,19 @@ checking formals(.):
 as.pairlist(alist(x = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-i0: structure(integer(0), .Names = character(0), foo = "bar")
+i0: structure(integer(0), names = character(0), foo = "bar")
  --> checking list(*): Ok
 --=--=--=--=--
-i00: structure(integer(0), .Names = character(0))
+i00: structure(integer(0), names = character(0))
  --> checking list(*): Ok
 --=--=--=--=--
-i13: structure(1:3, .Names = c("use.names", "recursive", "one"))
+i13: structure(1:3, names = c("use.names", "recursive", "one"))
  --> checking list(*): Ok
 --=--=--=--=--
-i6: structure(5:6, .Names = c("e", "f"))
+i6: structure(5:6, names = c("e", "f"))
  --> checking list(*): Ok
 --=--=--=--=--
-iNA: structure(c(1, 2, 99), .Names = c("A", "NA", NA))
+iNA: structure(c(1, 2, 99), names = c("A", "NA", NA))
  --> checking list(*): Ok
 --=--=--=--=--
 id_epd: function (expr, control = "all", ...) 
@@ -810,7 +810,7 @@ not identical(*, ignore.env=T), but all.equal(*,*, tol = ..)
  --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
-missL: structure(list(, , ), .Names = c("", NA, "c"))
+missL: structure(list(, , ), names = c("", NA, "c"))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 ml: new("mList", .Data = list(1, c("a", "b", "c")))
@@ -856,10 +856,10 @@ r: structure(c("[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ",
 "[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
 "Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
 "[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
-"Levels: a b <NA>"), .Dim = c(2L, 20L))
+"Levels: a b <NA>"), dim = c(2L, 20L))
  --> checking list(*): Ok
 --=--=--=--=--
-r00: structure(raw(0), .Names = character(0))
+r00: structure(raw(0), names = character(0))
  --> checking list(*): Ok
 --=--=--=--=--
 r1: list(value = quote({
@@ -877,7 +877,7 @@ r1: list(value = quote({
 }), visible = TRUE)
  --> checking list(*): Ok
 --=--=--=--=--
-r13: structure(c(1, 2, 3), .Names = c("use.names", "recursive", "one"
+r13: structure(c(1, 2, 3), names = c("use.names", "recursive", "one"
 ))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -938,8 +938,8 @@ checking formals(.):
 pairlist(env = quote(.GlobalEnv))
  --> checking list(*): Ok
 --=--=--=--=--
-sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, .Names = c("a", 
-"b")), v2 = structure(5:6, .Names = c("e", "f")), v0 = structure(logical(0), .Names = character(0))))
+sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, names = c("a", 
+"b")), v2 = structure(5:6, names = c("e", "f")), v0 = structure(logical(0), names = character(0))))
  --> checking list(*): Ok
 --=--=--=--=--
 t1:  --> checking list(*): Ok
@@ -1000,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.361 0.015 0.383 0 0 
+Time elapsed:  0.103 0.006 0.11 0 0 
 > 

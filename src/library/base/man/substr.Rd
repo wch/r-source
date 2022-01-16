@@ -1,6 +1,6 @@
 % File src/library/base/man/substr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substr}
@@ -12,13 +12,14 @@
 \usage{
 substr(x, start, stop)
 substring(text, first, last = 1000000L)
+
 substr(x, start, stop) <- value
 substring(text, first, last = 1000000L) <- value
 }
 \arguments{
   \item{x, text}{a character vector.}
-  \item{start, first}{integer.  The first element to be replaced.}
-  \item{stop, last}{integer.  The last element to be replaced.}
+  \item{start, first}{integer.  The first element to be extracted or replaced.}
+  \item{stop, last}{integer.  The last element to be extracted or replaced.}
   \item{value}{a character vector, recycled if necessary.}
 }
 \description{
@@ -63,11 +64,15 @@ substring(text, first, last = 1000000L) <- value
   after coercion, repeated as needed), and other attributes copied from
   \code{x} if it is the longest of the arguments).
 
-  Elements of \code{x} with a declared encoding (see
+  For the replacement functions, a character vector of the same length as
+  \code{x} or \code{text}, with \code{\link{attributes}} such as
+  \code{\link{names}} preserved.
+
+  Elements of \code{x} or \code{text} with a declared encoding (see
   \code{\link{Encoding}}) will be returned with the same encoding.
 }
 \note{
-  The S4 version of \code{substring<-} ignores \code{last}; this version
+  The S version of \code{substring<-} ignores \code{last}; this version
   does not.
 
   These functions are often used with \code{\link{nchar}} to truncate a
@@ -87,14 +92,20 @@ substring(text, first, last = 1000000L) <- value
 \examples{
 substr("abcdef", 2, 4)
 substring("abcdef", 1:6, 1:6)
-## strsplit is more efficient ...
+## strsplit() is more efficient ...
 
 substr(rep("abcdef", 4), 1:4, 4:5)
 x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
 substr(x, 2, 5)
 substring(x, 2, 4:6)
 
+X <- x
+names(X) <- LETTERS[seq_along(x)]
+comment(X) <- noquote("is a named vector")
+str(aX <- attributes(X))
 substring(x, 2) <- c("..", "+++")
-x
+substring(X, 2) <- c("..", "+++")
+X
+stopifnot(x == X, identical(aX, attributes(X)), nzchar(comment(X)))
 }
 \keyword{character}

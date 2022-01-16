@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -60,7 +60,7 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
 
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/RS.h>  /* for Calloc/Free */
+#include <R_ext/RS.h>  /* for R_Calloc/R_Free */
 #include <ctype.h>
 #include <wchar.h>
 #include <wctype.h>    /* for wctrans_t */
@@ -172,11 +172,11 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
 static SEXP mkCharW(const wchar_t *wc)
 {
     size_t nb = wcstoutf8(NULL, wc, INT_MAX);
-    char *xi = (char *) Calloc(nb, char);
+    char *xi = (char *) R_Calloc(nb, char);
     SEXP ans;
     wcstoutf8(xi, wc, nb);
     ans = mkCharCE(xi, CE_UTF8);
-    Free(xi);
+    R_Free(xi);
     return ans;
 }
 
@@ -301,7 +301,7 @@ static long R_pcre_max_recursions()
     uintptr_t ans, stack_used, current_frame;
     /* Approximate size of stack frame in PCRE match(), actually
        platform / compiler dependent.  Estimate found at
-       https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16757
+       https://bugs.r-project.org/show_bug.cgi?id=16757
        However, it seems that on Solaris compiled with cc, the size is
        much larger (not too surprising as that happens with R's
        parser). OTOH, OpenCSW's builds of PCRE are built to use the
@@ -407,7 +407,7 @@ set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
     if (limit >= 0) {
 	pcre_extra *re_pe = *re_pe_ptr;
 	if (!re_pe) {
-	    // this will be freed by pcre_free_study so cannot use Calloc
+	    // this will be freed by pcre_free_study so cannot use R_Calloc
 	    re_pe = (pcre_extra *) calloc(1, sizeof(pcre_extra));
 	    if (!re_pe) {
 		warning("allocation failure in set_pcre_recursion_limit");
@@ -602,9 +602,16 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ntok = strlen(buf);
 		    PROTECT(t = allocVector(STRSXP, ntok));
 		    bf[1] = '\0';
-		    for (j = 0; j < ntok; j++) {
-			bf[0] = buf[j];
-			SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+		    if(useBytes) {
+			for (j = 0; j < ntok; j++) {
+			    bf[0] = buf[j];
+			    SET_STRING_ELT(t, j, mkChar(bf));
+			}
+		    } else {
+			for (j = 0; j < ntok; j++) {
+			    bf[0] = buf[j];
+			    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+			}
 		    }
 		}
 		SET_VECTOR_ELT(ans, i, t);
@@ -671,7 +678,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
 		/* and fill with the splits */
 		laststart = bufp = buf;
-		pt = Realloc(pt, strlen(buf)+1, char);
+		pt = R_Realloc(pt, strlen(buf)+1, char);
 		for (size_t j = 0; j < ntok; j++) {
 		    /* This is UTF-8 safe since it compares whole
 		       strings, but <MBCS-FIXME> it would be more
@@ -689,7 +696,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
-			if (use_UTF8)
+			if (useBytes)
+			    SET_STRING_ELT(t, j, mkChar(pt));
+			else if (use_UTF8)
 			    SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 			else
 			    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
@@ -698,7 +707,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    bufp = laststart;
 		}
 		if (*bufp) {
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
@@ -787,7 +798,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
 		/* and fill with the splits */
 		bufp = buf;
-		pt = Realloc(pt, strlen(buf)+1, char);
+		pt = R_Realloc(pt, strlen(buf)+1, char);
 		for (j = 0; j < ntok; j++) {
 #ifdef HAVE_PCRE2
 		    int rc = pcre2_match(re, (PCRE2_SPTR) bufp,
@@ -811,13 +822,17 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, j, mkChar(pt));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
 		if (*bufp) {
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
@@ -874,7 +889,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			       t = allocVector(STRSXP, ntok + (*wbufp ? 1 : 0)));
 		/* and fill with the splits */
 		wbufp = wbuf;
-		wpt = Realloc(wpt, wcslen(wbuf)+1, wchar_t);
+		wpt = R_Realloc(wpt, wcslen(wbuf)+1, wchar_t);
 		for (j = 0; j < ntok; j++) {
 		    tre_regwexec(&reg, wbufp, 1, regmatch, 0);
 		    if (regmatch[0].rm_eo > 0) {
@@ -918,8 +933,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
-	    if ((rc = tre_regcomp(&reg, split, cflags)))
-		reg_report(rc, &reg, split);
+	    if (useBytes)
+		rc = tre_regcompb(&reg, split, cflags);
+	    else
+		rc = tre_regcomp(&reg, split, cflags);
+
+	    if(rc) reg_report(rc, &reg, split);
 
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
@@ -945,11 +964,20 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		ntok = 0;
 		bufp = buf;
 		if (*bufp) {
-		    while((rc = tre_regexec(&reg, bufp, 1, regmatch, 0)) == 0) {
+		    if (useBytes) {
+			while(!(rc = tre_regexecb(&reg, bufp, 1, regmatch, 0))) {
 			/* Empty matches get the next char, so move by one. */
 			bufp += MAX(regmatch[0].rm_eo, 1);
 			ntok++;
 			if (*bufp == '\0') break;
+		    }
+		    } else {
+			while(!(rc = tre_regexec(&reg, bufp, 1, regmatch, 0))) {
+			    /* Empty matches get the next char, so move by one. */
+			    bufp += MAX(regmatch[0].rm_eo, 1);
+			    ntok++;
+			    if (*bufp == '\0') break;
+			}
 		    }
 		    // AFAICS the only possible error report is REG_ESPACE
 		    if (rc == REG_ESPACE)
@@ -960,9 +988,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
 		/* and fill with the splits */
 		bufp = buf;
-		pt = Realloc(pt, strlen(buf)+1, char);
+		pt = R_Realloc(pt, strlen(buf)+1, char);
 		for (j = 0; j < ntok; j++) {
-		    int rc = tre_regexec(&reg, bufp, 1, regmatch, 0);
+		    int rc;
+		    if(useBytes) rc = tre_regexecb(&reg, bufp, 1, regmatch, 0);
+		    else rc = tre_regexec(&reg, bufp, 1, regmatch, 0);
+
 		    // AFAICS the only possible error report is REG_ESPACE
 		    if (rc == REG_ESPACE)
 			warning("Out-of-memory error in regexp matching for element %d",
@@ -979,10 +1010,17 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
+		    if (useBytes)
+			SET_STRING_ELT(t, j, mkChar(pt));
+		    else
+			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
-		if (*bufp)
-		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		if (*bufp) {
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else
+			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		}
 		vmaxset(vmax2);
 	    }
 	    tre_regfree(&reg);
@@ -993,7 +1031,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
 	namesgets(ans, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
-    Free(pt); Free(wpt);
+    R_Free(pt); R_Free(wpt);
 #ifdef HAVE_PCRE2
     if (tables) free((void *)tables);
     /* new PCRE2 will have pcre2_maketables_free() */
@@ -2052,7 +2090,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			slen -= (int)(sst+patlen);
 		    } while((sst = fgrep_one_bytes(spat, ss, slen, useBytes, use_UTF8)) >= 0);
 		} else nr = 1;
-		cbuf = u = Calloc(ns + nr*(replen - patlen) + 1, char);
+		cbuf = u = R_Calloc(ns + nr*(replen - patlen) + 1, char);
 		*u = '\0';
 		slen = ns;
 		do {
@@ -2070,7 +2108,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 		else
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
-		Free(cbuf);
+		R_Free(cbuf);
 	    }
 	} else if (perl_opt) {
 	   int ncap, maxrep;
@@ -2096,7 +2134,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
 	       nns = (int) dnns;
 	   } else nns = ns + maxrep + 1000;
-	   u = cbuf = Calloc(nns, char);
+	   u = cbuf = R_Calloc(nns, char);
 	   offset = 0; nmatch = 0; eflag = 0; last_end = -1;
 	   /* ncap is one more than the number of capturing patterns */
 #ifdef HAVE_PCRE2
@@ -2139,7 +2177,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   char *tmp;
 		   if (nns > INT_MAX/2) error(_("result string is too long"));
 		   nns *= 2;
-		   tmp = Realloc(cbuf, nns, char);
+		   tmp = R_Realloc(cbuf, nns, char);
 		   u = tmp + (u - cbuf);
 		   cbuf = tmp;
 	       }
@@ -2160,7 +2198,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   char *tmp;
 		   if (nns > INT_MAX/2) error(_("result string is too long"));
 		   nns *= 2;
-		   tmp = Realloc(cbuf, nns, char);
+		   tmp = R_Realloc(cbuf, nns, char);
 		   u = tmp + (u - cbuf);
 		   cbuf = tmp;
 	       }
@@ -2173,7 +2211,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       else
 		   SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 	   }
-	   Free(cbuf);
+	   R_Free(cbuf);
        } else if (!use_WC) {
 	    int maxrep, rc;
 	    /* extended regexp in bytes */
@@ -2188,7 +2226,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
 		nns = (int) dnns;
 	    } else nns = ns + maxrep + 1000;
-	    u = cbuf = Calloc(nns, char);
+	    u = cbuf = R_Calloc(nns, char);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
 	    while ((rc = tre_regexecb(&reg, s+offset, 10, regmatch, eflags))
 		   == 0) {
@@ -2209,7 +2247,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    char *tmp;
 		    if (nns > INT_MAX/2) error(_("result string is too long"));
 		    nns *= 2;
-		    tmp = Realloc(cbuf, nns, char);
+		    tmp = R_Realloc(cbuf, nns, char);
 		    u = tmp + (u - cbuf);
 		    cbuf = tmp;
 		}
@@ -2230,7 +2268,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    char *tmp;
 		    if (nns > INT_MAX/2) error(_("result string is too long"));
 		    nns *= 2;
-		    tmp = Realloc(cbuf, nns, char);
+		    tmp = R_Realloc(cbuf, nns, char);
 		    u = tmp + (u - cbuf);
 		    cbuf = tmp;
 		}
@@ -2241,7 +2279,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		else
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 	    }
-	    Free(cbuf);
+	    R_Free(cbuf);
 	} else  {
 	    /* extended regexp in wchar_t */
 	    const wchar_t *s = wtransChar(STRING_ELT(text, i));
@@ -2257,7 +2295,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (dnns > 10000) dnns = 2*ns + maxrep + 1000;
 		nns = (int) dnns;
 	    } else nns = ns + maxrep + 1000;
-	    u = cbuf = Calloc(nns, wchar_t);
+	    u = cbuf = R_Calloc(nns, wchar_t);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
 	    while (tre_regwexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
 		nmatch++;
@@ -2277,7 +2315,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		       it is merely an integer overflow check */
 		    if (nns > INT_MAX/2) error(_("result string is too long"));
 		    nns *= 2;
-		    tmp = Realloc(cbuf, nns, wchar_t);
+		    tmp = R_Realloc(cbuf, nns, wchar_t);
 		    u = tmp + (u - cbuf);
 		    cbuf = tmp;
 		}
@@ -2293,7 +2331,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    wchar_t *tmp;
 		    if (nns > INT_MAX/2) error(_("result string is too long"));
 		    nns *= 2;
-		    tmp = Realloc(cbuf, nns, wchar_t);
+		    tmp = R_Realloc(cbuf, nns, wchar_t);
 		    u = tmp + (u - cbuf);
 		    cbuf = tmp;
 		}
@@ -2301,7 +2339,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		*u = L'\0';
 		SET_STRING_ELT(ans, i, mkCharW(cbuf));
 	    }
-	    Free(cbuf);
+	    R_Free(cbuf);
 	}
 	vmaxset(vmax);
     }
@@ -2341,7 +2379,7 @@ static SEXP
 gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
 		R_xlen_t i, SEXP itype)
 {
-    int matchIndex = -1, j, st, foundAll = 0, foundAny = 0, rc;
+    int matchIndex = -1, j, st, foundAll = 0, foundAny = 0;
     size_t len, offset = 0;
     regmatch_t regmatch[10];
     SEXP ans, matchlen;         /* Return vect and its attribute */
@@ -2368,10 +2406,11 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
     }
 
     while (!foundAll) {
+        int rc = REG_OK; // in case offset>=len (e.g., when len==0)
 	if ( offset < len &&
 	     (rc = !use_WC ? tre_regexecb(reg, string+offset, 1, regmatch, eflags) :
 	      tre_regwexec(reg, ws+offset, 1, regmatch, eflags))
-	     == 0) {
+	     == REG_OK) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
 		int newbufsize = bufsize * 2;

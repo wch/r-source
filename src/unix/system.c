@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -409,6 +409,11 @@ int Rf_initialize_R(int ac, char **av)
 #define R_INIT_TREAT_F(_AV_)						\
 		Rp->R_Interactive = FALSE;				\
 		if(strcmp(_AV_, "-")) {					\
+		    if(strlen(_AV_) >= PATH_MAX) {			\
+			snprintf(msg, 1024,				\
+				 _("path given in -f/--file is too long"));	\
+			R_Suicide(msg);					\
+		    }							\
 		    char path[PATH_MAX], *p = path;			\
 		    p = unescape_arg(p, _AV_);				\
 		    *p = '\0';						\

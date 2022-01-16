@@ -1,6 +1,6 @@
 % File src/library/base/man/textconnections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{textConnection}
@@ -12,7 +12,7 @@
 }
 \usage{
 textConnection(object, open = "r", local = FALSE,
-               name = deparse(substitute(object)),
+               name = deparse1(substitute(object)),
                encoding = c("", "bytes", "UTF-8"))
 
 textConnectionValue(con)

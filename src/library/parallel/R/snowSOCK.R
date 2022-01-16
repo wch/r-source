@@ -247,7 +247,7 @@ makePSOCKcluster <- function(names, ...)
 print.SOCKcluster <- function(x, ...)
 {
     nc <- length(x)
-    hosts <- unique(sapply(x, "[[", "host"))
+    hosts <- unique(sapply(x, `[[`, "host"))
     msg <- sprintf(ngettext(length(hosts),
                             "socket cluster with %d nodes on host %s",
                             "socket cluster with %d nodes on hosts %s"),

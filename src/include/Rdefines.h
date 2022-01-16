@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2016 The R Core Team.
+ *  Copyright (C) 1999-2021 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,9 +23,10 @@
 
 /* From 'Writing R Extensions:
 
-   'these are not kept up to date and are not recommended for new projects.'
+Rdefines.h  macros for an S-like interface to the above (no longer maintained)
 
-   As from R 3.3.0 they have been adjusted to work when R_NO_REMAP is defined.
+and its contents are no longer documented.
+
 */
 
 #ifndef R_DEFINES_H
@@ -68,20 +69,12 @@
 #define AS_LIST(x)		Rf_coerceVector(x,VECSXP)
 #define AS_RAW(x)		Rf_coerceVector(x,RAWSXP)
 
-#ifdef USE_RINTERNALS
-// This is not documented to be supported, and may not be in future
-# define IS_LOGICAL(x)		isLogical(x)
-# define IS_INTEGER(x)		isInteger(x)
-# define IS_NUMERIC(x)		isReal(x)
-# define IS_CHARACTER(x)	isString(x)
-# define IS_COMPLEX(x)		isComplex(x)
-#else
 # define IS_LOGICAL(x)		Rf_isLogical(x)
 # define IS_INTEGER(x)		Rf_isInteger(x)
 # define IS_NUMERIC(x)		Rf_isReal(x)
 # define IS_CHARACTER(x)	Rf_isString(x)
 # define IS_COMPLEX(x)		Rf_isComplex(x)
-#endif
+
 /* NB: is this right?  It means atomic or VECSXP or EXPRSXP */
 #define IS_VECTOR(x)		Rf_isVector(x)
 /* And this cannot be right: isVectorList(x)? */
@@ -102,9 +95,7 @@
 #define NUMERIC_POINTER(x)	REAL(x)
 #define CHARACTER_POINTER(x)	STRING_PTR(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
-/* Use of VECTOR_PTR will fail unless USE_RINTERNALS is in use
-   This is probably unused.
-*/
+/* Use of VECTOR_PTR will fail; This is probably unused. */
 #define LIST_POINTER(x)		VECTOR_PTR(x)
 #define RAW_POINTER(x)		RAW(x)
 
@@ -122,7 +113,7 @@
 #define NUMERIC_DATA(x)		(REAL(x))
 #define CHARACTER_DATA(x)	(STRING_PTR(x))
 #define COMPLEX_DATA(x)		(COMPLEX(x))
-/* Use of VECTOR_PTR will fail unless USE_RINTERNALS is in use
+/* Use of VECTOR_PTR will now always fail in packages.
    VECTOR_DATA seems unused, and RECURSIVE_DATA is used only in
    the Expat part of XML.
 */
@@ -165,7 +156,7 @@
 #define NEW_OBJECT(class_def)	R_do_new_object(class_def)
 #define NEW(class_def)		R_do_new_object(class_def)
 
-#define s_object                SEXPREC
+typedef struct SEXPREC s_object;
 #define S_EVALUATOR             /**/
 
 /* These conflict with definitions in R_ext/Boolean.h,

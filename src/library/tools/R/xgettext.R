@@ -1,7 +1,7 @@
 #  File src/library/tools/R/xgettext.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -155,10 +155,13 @@ function(dir, potFile, name = "R", version, bugs)
     dir <- file_path_as_absolute(dir)
     if(missing(potFile))
         potFile <- paste0("R-", basename(dir), ".pot")
-    tmp <- unique(unlist(xgettext(dir, asCall = FALSE)))
-    tmp <- tmp[nzchar(tmp)]
-    if(length(tmp) > 0L)
-	tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
+    msgid <- unique(unlist(xgettext(dir, asCall = FALSE)))
+    msgid <- msgid[nzchar(msgid)]
+    if(length(msgid) > 0L)
+	msgid <- shQuote(encodeString(msgid), type="cmd")  # need to quote \n, \t etc
+    msgid_plural <- xngettext(dir)
+    un <- unique(unlist(msgid_plural))
+
     con <- file(potFile, "wt")
     on.exit(close(con))
     if(missing(version))
@@ -175,23 +178,24 @@ function(dir, potFile, name = "R", version, bugs)
                  '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"',
                  '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"',
                  '"Language-Team: LANGUAGE <LL@li.org>\\n"',
+                 '"Language: \\n"',
                  '"MIME-Version: 1.0\\n"',
                  '"Content-Type: text/plain; charset=CHARSET\\n"',
-                 '"Content-Transfer-Encoding: 8bit\\n"', ''))
-    for(e in tmp)
+                 '"Content-Transfer-Encoding: 8bit\\n"',
+                 if (length(un)) '"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\\n"'))
+    for(e in msgid)
         writeLines(con=con, c('', paste('msgid', e), 'msgstr ""'))
-    tmp <- xngettext(dir)
-    un <- unique(unlist(tmp, recursive=TRUE))
-    for(ee in tmp)
+    for(ee in msgid_plural)
         for(e in ee)
             if(e[1L] %in% un) {
-                writeLines(con=con, c('',
-                           paste('msgid       ',
-                                 shQuote(encodeString(e[1L]), type="cmd")),
-                           paste('msgid_plural',
-                                 shQuote(encodeString(e[2L]), type="cmd")),
-                           'msgstr[0]    ""', 'msgstr[1]    ""')
-                           )
+                writeLines(
+                    con=con,
+                    c('',
+                      paste('msgid       ', shQuote(encodeString(e[1L]), type="cmd")),
+                      paste('msgid_plural', shQuote(encodeString(e[2L]), type="cmd")),
+                      'msgstr[0]    ""',
+                      'msgstr[1]    ""')
+                )
                 un <- un[-match(e, un)]
             }
 }

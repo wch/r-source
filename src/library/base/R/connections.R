@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -149,15 +149,13 @@ rawConnection <- function(object, open = "r") {
 rawConnectionValue <- function(con) .Internal(rawConnectionValue(con))
 
 textConnection <- function(object, open = "r", local = FALSE,
-                           name = deparse(substitute(object)),
+                           name = deparse1(substitute(object)),
                            encoding = c("", "bytes", "UTF-8"))
 {
     env <- if (local) parent.frame() else .GlobalEnv
     type <- match(match.arg(encoding), c("", "bytes", "UTF-8"))
     if(!(is.character(name) && length(name) == 1))
-        stop(if(missing(name))
-                 "argument 'object' must deparse to a single character string"
-             else "'name' must be a single character string")
+        stop("'name' must be a single character string")
     .Internal(textConnection(name, object, open, env, type))
 }
 

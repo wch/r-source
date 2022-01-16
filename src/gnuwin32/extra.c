@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2020  The R Core Team
+ *  Copyright (C) 2005--2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
 #include <windows.h>
 #include "rui.h"
 #undef ERROR
-#include <R_ext/RS.h> /* for Calloc */
+#include <R_ext/RS.h> /* formerly for Calloc */
 
 #include <winbase.h>
 
@@ -284,60 +284,6 @@ void Rsleep(double timeint)
 
 }
 
-
-#define MALLINFO_FIELD_TYPE size_t
-struct mallinfo {
-    MALLINFO_FIELD_TYPE arena;    /* non-mmapped space allocated from system */
-    MALLINFO_FIELD_TYPE ordblks;  /* number of free chunks */
-    MALLINFO_FIELD_TYPE smblks;   /* number of fastbin blocks */
-    MALLINFO_FIELD_TYPE hblks;    /* number of mmapped regions */
-    MALLINFO_FIELD_TYPE hblkhd;   /* space in mmapped regions */
-    MALLINFO_FIELD_TYPE usmblks;  /* maximum total allocated space */
-    MALLINFO_FIELD_TYPE fsmblks;  /* space available in freed fastbin blocks */
-    MALLINFO_FIELD_TYPE uordblks; /* total allocated space */
-    MALLINFO_FIELD_TYPE fordblks; /* total free space */
-    MALLINFO_FIELD_TYPE keepcost; /* top-most, releasable (via malloc_trim) space */
-};
-extern R_size_t R_max_memory;
-
-struct mallinfo mallinfo(void);
-
-SEXP in_memsize(SEXP ssize)
-{
-    SEXP ans;
-    int maxmem = NA_LOGICAL;
-
-    if(isLogical(ssize)) 
-	maxmem = asLogical(ssize);
-    else if(isReal(ssize)) {
-	R_size_t newmax;
-	double mem = asReal(ssize);
-	if (!R_FINITE(mem))
-	    error(_("incorrect argument"));
-#ifndef _WIN64
-	if(mem >= 4096)
-	    error(_("don't be silly!: your machine has a 4Gb address limit"));
-#endif
-	newmax = mem * 1048576.0;
-	if (newmax < R_max_memory)
-	    warning(_("cannot decrease memory limit: ignored"));
-	else
-	    R_max_memory = newmax;
-    } else
-	error(_("incorrect argument"));
-	
-    PROTECT(ans = allocVector(REALSXP, 1));
-    if(maxmem == NA_LOGICAL)
-	REAL(ans)[0] = R_max_memory;
-    else if(maxmem)
-	REAL(ans)[0] = mallinfo().usmblks;
-    else
-	REAL(ans)[0] = mallinfo().uordblks;
-    REAL(ans)[0] /= 1048576.0;
-    UNPROTECT(1);
-    return ans;
-}
-
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP path = R_NilValue, ans;
@@ -488,7 +434,7 @@ enum {
 };
 #endif
 
-#if WIN32_WINNT < 0x602 || !defined(__MINGW32__)
+#if _WIN32_WINNT < 0x602 || !defined(__MINGW32__)
 /* Available in Windows Server 2012, but also in MinGW from Windows 8.  */
 typedef struct _FILE_ID_INFO {
   ULONGLONG   VolumeSerialNumber;
@@ -1105,82 +1051,6 @@ char *getDLLVersion(void)
     snprintf(DLLversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return (DLLversion);
 }
-
-
-
-/* UTF-8 support ----------------------------------------------- */
-
-#ifdef SUPPORT_UTF8_WIN32
-/* This is currently unused: for faking UTF-8 locale conversions */
-
-#define FAKE_UTF8 1
-
-
-size_t Rmbrtowc(wchar_t *wc, const char *s)
-{
-#ifdef FAKE_UTF8
-    unsigned int byte;
-    wchar_t local, *w;
-    byte = *((unsigned char *)s);
-    w = wc ? wc: &local;
-
-    if (byte == 0) {
-	*w = (wchar_t) 0;
-	return 0;
-    } else if (byte < 0xC0) {
-	*w = (wchar_t) byte;
-	return 1;
-    } else if (byte < 0xE0) {
-	if(strlen(s) < 2) return -2;
-	if ((s[1] & 0xC0) == 0x80) {
-	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
-	    return 2;
-	} else return -1;
-    } else if (byte < 0xF0) {
-	if(strlen(s) < 3) return -2;
-	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
-	    *w = (wchar_t) (((byte & 0x0F) << 12)
-			    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
-	    byte = *w;
-	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
-	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
-	    return 3;
-	} else return -1;
-    }
-    return -2;
-#else
-    return mbrtowc(wc, s, MB_CUR_MAX, NULL);
-#endif
-}
-
-size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
-{
-#ifdef FAKE_UTF8
-    int m, res=0;
-    const char *p;
-
-    if(wc) {
-	for(p = s; ; p+=m) {
-	    m = Rmbrtowc(wc+res, p);
-	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
-	    if(m <= 0) break;
-	    res++;
-	    if(res >= n) break;
-	}
-    } else {
-	for(p = s; ; p+=m) {
-	    m  = Rmbrtowc(NULL, p);
-	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
-	    if(m <= 0) break;
-	    res++;
-	}
-    }
-    return res;
-#else
-    return mbstowcs(wc, s, n);
-#endif
-}
-#endif
 
 /* base::file.choose */
 SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)

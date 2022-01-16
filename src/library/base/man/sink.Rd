@@ -98,7 +98,7 @@ sink.number(type = c("output", "message"))
 \examples{
 sink("sink-examp.txt")
 i <- 1:10
-outer(i, i, "*")
+outer(i, i)
 sink()
 \dontshow{unlink("sink-examp.txt")}% don't show what confuses newbies
 \donttest{

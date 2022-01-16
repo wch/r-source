@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,8 +54,7 @@ find_vignette_product <-
 
     exts <- c(exts, toupper(exts))
     pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
-    output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE,
-                          no.. = TRUE)
+    output0 <- list.files(path = dir, no.. = TRUE)
     output0 <- output0[file_test("-f", file.path(dir, output0))]
     output <- grep(pattern1, output0, value = TRUE)
     # If main is FALSE, we want to find all other files with related
@@ -68,7 +67,9 @@ find_vignette_product <-
 	output2 <- grep(pattern2, output0, value = TRUE)
 	output <- c(output, setdiff(output2, output))
     }
-
+    fmt_file_sizes <- function(files)
+	paste(sprintf("%s (%g bytes)", sQuote(files), file.size(file.path(dir, files))),
+	      collapse=", ")
     if (by == "weave") {
         if (length(output) == 0L)
             stop(gettextf("Failed to locate %s output file %s or %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s",
@@ -77,13 +78,13 @@ find_vignette_product <-
                           sQuote(name),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
                           sQuote(normalizePath(dir)),
-                          paste(sprintf("%s (%g bytes)", sQuote(output0), file.size(output0)), collapse=", ")),
+                          fmt_file_sizes(output0)),
                  domain = NA)
         if (length(output) > 2L || (final && length(output) > 1L))
             stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s", sQuote(by),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
                           sQuote(name),
-                          paste(sprintf("%s (%g bytes)", sQuote(output), file.size(output)), collapse=", ")),
+                          fmt_file_sizes(output)),
                  domain  = NA)
 	# If weave produced a TeX and then a PDF without cleaning out
 	# the TeX, consider the newer one (PDF wins a tie) as the weave product
@@ -104,14 +105,14 @@ find_vignette_product <-
                           sQuote(name),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
                           sQuote(normalizePath(dir)),
-                          paste(sprintf("%s (%g bytes)", sQuote(output0), file.size(output0)), collapse=", ")),
+                          fmt_file_sizes(output0)),
                  domain = NA)
         if (length(output) > 1L)
             stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s",
                           sQuote(by),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
                           sQuote(name),
-                          paste(sprintf("%s (%g bytes)", sQuote(output), file.size(output)), collapse=", ")),
+                          fmt_file_sizes(output)),
                  domain = NA)
     }
 
@@ -1087,7 +1088,7 @@ function(pkg, con, vignetteIndex = NULL)
 			     otherfiles)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
         html <- c(html, '<h2>Other files in the <span class="samp">doc</span> directory</h2>',
-                  '<table width="100%">',
+                  '<table width="100%" summary="Other docs">',
 		  '<col style="width: 24%;" />',
 		  '<col style="width: 50%;" />',
 		  '<col style="width: 24%;" />',

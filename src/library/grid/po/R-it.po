@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-grid 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -49,8 +49,7 @@ msgid "how did we get here?"
 msgstr "come siamo arrivati qui?"
 
 msgid "must start new page if showing leaves separately"
-msgstr ""
-"bisogna avviare una nuova pagina se si mostrano le foglie separatamente"
+msgstr "bisogna avviare una nuova pagina se si mostrano le foglie separatamente"
 
 msgid "invalid 'edit' information"
 msgstr "informazione 'edit' non valida"
@@ -79,19 +78,11 @@ msgstr "'row' può essere unicamente un intervallo di righe esistenti"
 msgid "invalid 'row' specification"
 msgstr "specificazione 'row' non valida"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"non si possono specificare più di un 'side=[\"left\", \"right\"]', 'col', "
-"'col.before', o 'col.after'"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "non si possono specificare più di un 'side=[\"left\", \"right\"]', 'col', 'col.before', o 'col.after'"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"bisogna specificare esattamente uno di 'side=[\"top\", \"bottom\"]', 'row', "
-"'row.before', o 'row.after'"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "bisogna specificare esattamente uno di 'side=[\"top\", \"bottom\"]', 'row', 'row.before', o 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "'n' non valido"
@@ -129,21 +120,14 @@ msgstr "bisogna specificare solo un valido nome 'gpar'"
 msgid "invalid display list element"
 msgstr "elemento lista display non valido"
 
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"uno o più grobs sovrascritti (la presa NON sarà affidabile; utilizza 'wrap."
-"grobs = TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "uno o più grobs sovrascritti (la presa NON sarà affidabile; utilizza 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "viewport sovrascritto"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob ha spinto viewport e non li ha alzati (grab potrebbe non essere "
-"affidabile)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob ha spinto viewport e non li ha alzati (grab potrebbe non essere affidabile)"
 
 msgid "only valid to push viewports"
 msgstr "valido solo per spingere viewport"
@@ -165,6 +149,10 @@ msgstr "bisogna restare almeno in una viewport"
 
 msgid "Invalid number of generations"
 msgstr "Numero di generazioni non valido"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "argomento 'arrow' non valido"
 
 msgid "invalid object inserted on the display list"
 msgstr "oggetto non valido inserito nella lista display"
@@ -251,8 +239,7 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "è solo valido per modificare un figlio di un \"gTree\""
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"non è valido modificare direttamente 'children' o lo slot 'childrenOrder'"
+msgstr "non è valido modificare direttamente 'children' o lo slot 'childrenOrder'"
 
 msgid "invalid 'result'"
 msgstr "'result' non valido"
@@ -279,6 +266,30 @@ msgid "can only reorder 'children' for a \"gTree\""
 msgstr "è solo possibile riordinare 'children' per un \"gTree\""
 
 msgid "Invalid 'order'"
+msgstr "'order' non valido"
+
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'order' non valido"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "giustificazione non valida"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
 msgstr "'order' non valido"
 
 msgid "'l' must be a layout"
@@ -329,6 +340,28 @@ msgstr "'listing' non valido"
 msgid "invalid 'origin'"
 msgstr "'origin' non valido"
 
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' e 'y' devono essere della medesima lunghezza"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' e 'y2' devono essere unità"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' e 'y2' devono essere unità"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width' e 'height' devono avere lunghezza 1"
+
+msgid "Pattern must be based on grob"
+msgstr ""
+
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Il pattern di riempimento mancante è stato impostato a trasparente"
 
@@ -360,8 +393,7 @@ msgid "'x' and 'y' and 'id' must all be same length"
 msgstr "'x' e 'y' e 'id' devono avere la stessa lunghezza"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
-"'x' e 'y' e 'id.lengths' devono specificare la medesima lunghezza complessiva"
+msgstr "'x' e 'y' e 'id.lengths' devono specificare la medesima lunghezza complessiva"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1' e 'y1' devono essere unità"
@@ -373,9 +405,7 @@ msgid "corrupt 'arrows' object"
 msgstr "oggetto 'arrows' corrotto"
 
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr ""
-"'x' e 'y' e 'pathid.lengths' devono specificare la medesima lunghezza "
-"complessiva"
+msgstr "'x' e 'y' e 'pathid.lengths' devono specificare la medesima lunghezza complessiva"
 
 msgid "x and y must be units"
 msgstr "x e y devono essere unità"
@@ -450,9 +480,7 @@ msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "indice fuori limite (sottodivisione \"unit\")"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
-"Non è possibile creare un vettore unità di lunghezza zero (sottodivisione "
-"\"unit\")"
+msgstr "Non è possibile creare un vettore unità di lunghezza zero (sottodivisione \"unit\")"
 
 msgid "index must be of length 1"
 msgstr "index dev'essere di lunghezza 1"
@@ -499,11 +527,8 @@ msgstr "solo i viewport sono ammessi in 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "solo i viewport sono ammessi in 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' dev'essere un viewport e 'children' dev'essere una 'vpList' in "
-"'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' dev'essere un viewport e 'children' dev'essere una 'vpList' in 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "un percorso viewport deve contenere almeno un nome viewport"
@@ -515,8 +540,7 @@ msgid "must specify at least one of 'y' or 'yscale'"
 msgstr "bisogna specificare almeno uno di 'y' o 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"spegnimento di tutti i dispositivi con l'unloading del namespace 'grid'"
+msgstr "spegnimento di tutti i dispositivi con l'unloading del namespace 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"

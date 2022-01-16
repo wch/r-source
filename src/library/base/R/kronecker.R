@@ -65,7 +65,7 @@ kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 	k <- length(dim(opobj))
 	dno <- vector("list", k)
 	for (i in 1L:k) {
-	    tmp <- outer(dnx[[i]], dny[[i]], FUN="paste", sep=":")
+	    tmp <- outer(dnx[[i]], dny[[i]], FUN=paste, sep=":")
 	    dno[[i]] <- as.vector(t(tmp))
 	}
 	dimnames(opobj) <- dno

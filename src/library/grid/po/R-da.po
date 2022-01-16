@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,20 +87,12 @@ msgid "invalid 'row' specification"
 msgstr "Ugyldig »row-specifikation«"
 
 #, fuzzy
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"Kan ikke angive mere end en af »side=[\"left\", \"right\"]«, »col«, »col."
-"before« eller »col.after«"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "Kan ikke angive mere end en af »side=[\"left\", \"right\"]«, »col«, »col.before« eller »col.after«"
 
 #, fuzzy
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"Kan ikke angive mere end en af »side=[\"left\", \"right\"]«, »col«, »col."
-"before« eller »col.after«"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "Kan ikke angive mere end en af »side=[\"left\", \"right\"]«, »col«, »col.before« eller »col.after«"
 
 #, fuzzy
 msgid "invalid 'n'"
@@ -142,16 +134,13 @@ msgstr ""
 msgid "invalid display list element"
 msgstr ""
 
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 msgstr ""
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr ""
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr ""
 
 #, fuzzy
@@ -175,6 +164,10 @@ msgstr ""
 
 msgid "Invalid number of generations"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "Ugyldig »grob«"
 
 msgid "invalid object inserted on the display list"
 msgstr ""
@@ -300,6 +293,30 @@ msgstr ""
 msgid "Invalid 'order'"
 msgstr "Ugyldig »frame«"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "Ugyldig »frame«"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "Ugyldig »col-specifikation«"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "Ugyldig »frame«"
+
 msgid "'l' must be a layout"
 msgstr ""
 
@@ -355,6 +372,26 @@ msgstr "Ugyldig »grob«"
 #, fuzzy
 msgid "invalid 'origin'"
 msgstr "Ugyldig »grob«"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+msgid "colours and stops must be at least length 1"
+msgstr ""
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "»x1«, »y1« ,»x2« og »y2« skal være enheder"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "»x1«, »y1« ,»x2« og »y2« skal være enheder"
+
+msgid "x, y, width, and height must all be length 1"
+msgstr ""
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -536,8 +573,7 @@ msgstr ""
 msgid "only viewports allowed in 'vpStack'"
 msgstr ""
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr ""
 
 msgid "a viewport path must contain at least one viewport name"

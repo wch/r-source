@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -220,9 +220,6 @@ msgstr " 文字オブジェクトしか書き込めません "
 msgid "'headers' must have names and must not be NA"
 msgstr " 'x' は名前付きの次元名を持たなければなりません "
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr " 引数 'object' は空でない単一の文字列でなければなりません "
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr " 引数 'object' は空でない単一の文字列でなければなりません "
@@ -400,6 +397,10 @@ msgstr " すべてが数値変数のデータフレームに対してだけ定�
 #, fuzzy
 msgid "cannot xtfrm data frames"
 msgstr " データフレームではありません "
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr " 無効なリストの引数です。全ての変数は同じ長さを持つべきです "
 
 msgid "character string is not in a standard unambiguous format"
 msgstr " 文字列は標準的な曖昧さのない書式にはなっていません "
@@ -1065,6 +1066,10 @@ msgstr " 'input' は長さ 1 でなければなりません "
 msgid "'input' and 'target' must be character vectors"
 msgstr " 'input' そして 'target' は文字ベクトルでなければなりません "
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr " データフレームではありません "
+
 msgid "'%s' is not a function, character or symbol"
 msgstr " '%s' は関数、文字、またはシンボルではありません "
 
@@ -1653,6 +1658,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr " warning() 中の追加引数は無視されます "
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1871,31 +1879,13 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] " 逆構文解析オプション %s は認識できません "
 
-msgid ""
-"The following object is masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-" 以下のオブジェクトは %s によってマスクされています: \n"
-"\n"
-" %s \n"
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
+msgstr[0] " 以下のオブジェクトは %s によってマスクされています:"
 
-msgid ""
-"The following object is masked from %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked from %s:\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-" 以下のオブジェクトは %s からマスクされています: \n"
-"\n"
-" %s \n"
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
+msgstr[0] " 以下のオブジェクトは %s からマスクされています:"
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
@@ -2022,6 +2012,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] " 余分な引数 %s は無視されます "
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr " 引数 'object' は空でない単一の文字列でなければなりません "
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr ""

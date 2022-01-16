@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,9 @@ msgstr ""
 msgid "Invalid number of generations"
 msgstr ""
 
+msgid "Invalid 'clearGroups' argument"
+msgstr ""
+
 msgid "invalid object inserted on the display list"
 msgstr ""
 
@@ -257,6 +260,27 @@ msgstr ""
 msgid "Invalid 'order'"
 msgstr ""
 
+msgid "Group definition failed"
+msgstr ""
+
+msgid "Invalid source"
+msgstr ""
+
+msgid "Invalid destination"
+msgstr ""
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+msgid "Invalid transform"
+msgstr ""
+
 msgid "'l' must be a layout"
 msgstr ""
 
@@ -303,6 +327,24 @@ msgid "invalid 'listing'"
 msgstr ""
 
 msgid "invalid 'origin'"
+msgstr ""
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+msgid "colours and stops must be at least length 1"
+msgstr ""
+
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr ""
+
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr ""
+
+msgid "x, y, width, and height must all be length 1"
+msgstr ""
+
+msgid "Pattern must be based on grob"
 msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"

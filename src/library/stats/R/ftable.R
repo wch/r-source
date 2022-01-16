@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ftable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -257,11 +257,11 @@ format.ftable <-
 }
 
 write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
-			 digits = getOption("digits"), ...)
+			 digits = getOption("digits"), sep = " ", ...)
 {
     r <- format.ftable(x, quote = quote, digits = digits, ...)
     cat(t(r), file = file, append = append,
-	sep = c(rep(" ", ncol(r) - 1), "\n"))
+	sep = c(rep(sep, ncol(r) - 1L), "\n"))
     invisible(x)
 }
 

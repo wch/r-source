@@ -1,6 +1,6 @@
 % File src/library/base/man/table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{table}
@@ -20,7 +20,7 @@
 \concept{contingency table}
 
 \description{
-  \code{table} uses the cross-classifying factors to build a contingency
+  \code{table} uses cross-classifying factors to build a contingency
   table of the counts at each combination of factor levels.
 }
 \usage{
@@ -38,7 +38,8 @@ is.table(x)
 }
 \arguments{
   \item{\dots}{one or more objects which can be interpreted as factors
-    (including character strings), or a list (or data frame) whose
+    (including numbers or character strings), or a \code{\link{list}} (such
+    as a data frame) whose
     components can be so interpreted.  (For \code{as.table}, arguments
     passed to specific methods; for \code{as.data.frame}, unused.)}
   \item{exclude}{levels to remove for all factors in \code{\dots}.  If
@@ -65,7 +66,10 @@ is.table(x)
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function
-  \code{list.names} is called to compute the \sQuote{dimname names}.  If the
+  \code{list.names} is called to compute the \sQuote{dimname names} as
+  follows:
+  If \code{\dots} is one \code{list} with its own \code{\link{names}()},
+  these \code{names} are used.  Otherwise, if the
   arguments in \code{\dots} are named, those names are used.  For the
   remaining arguments, \code{deparse.level = 0} gives an empty name,
   \code{deparse.level = 1} uses the supplied argument if it is a symbol,

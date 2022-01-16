@@ -44,7 +44,7 @@
     and \code{"xy"} or \code{"yx"} if both axes are to be logarithmic.}
 
   \item{main}{a main title for the plot, see also \code{\link{title}}.}
-  \item{sub}{a sub title for the plot.}
+  \item{sub}{a subtitle for the plot.}
   \item{xlab}{a label for the x axis, defaults to a description of \code{x}.}
   \item{ylab}{a label for the y axis, defaults to a description of \code{y}.}
 

@@ -65,7 +65,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	tstat <- (mx-mu)/stderr
 	method <- if(paired) "Paired t-test" else "One Sample t-test"
 	estimate <-
-	    setNames(mx, if(paired)"mean of the differences" else "mean of x")
+	    setNames(mx, if(paired)"mean difference" else "mean of x")
     } else {
 	ny <- length(y)
         if(nx < 1 || (!var.equal && nx < 2))
@@ -112,7 +112,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     cint <- mu + cint * stderr
     names(tstat) <- "t"
     names(df) <- "df"
-    names(mu) <- if(paired || !is.null(y)) "difference in means" else "mean"
+    names(mu) <- if(paired) "mean difference"
+                 else if(!is.null(y)) "difference in means"
+                 else "mean"
     attr(cint,"conf.level") <- conf.level
     rval <- list(statistic = tstat, parameter = df, p.value = pval,
 	       conf.int = cint, estimate = estimate, null.value = mu,
@@ -148,8 +150,9 @@ function (formula, data, subset, na.action, ...)
         g <- factor(mf[[-response]])
         if (nlevels(g) != 2L) 
             stop("grouping factor must have exactly 2 levels")
-        DATA <- setNames(split(mf[[response]], g), c("x", "y"))
-        y <- do.call("t.test", c(DATA, list(...)))
+        DATA <- split(mf[[response]], g)
+        ## Call the default method.
+        y <- t.test(x = DATA[[1L]], y = DATA[[2L]], ...)
         if (length(y$estimate) == 2L) {
             names(y$estimate) <- paste("mean in group", levels(g))
             names(y$null.value) <-
@@ -159,13 +162,14 @@ function (formula, data, subset, na.action, ...)
     }
     else { # 1-sample and paired tests
         respVar <- mf[[response]]
-        if (inherits(respVar, "Pair")){
-            DATA <- list(x = respVar[,1], y = respVar[,2], paired=TRUE)
-            y <- do.call("t.test", c(DATA, list(...)))
+        if (inherits(respVar, "Pair")) {
+            ## Call the default method.
+            y <- t.test(x = respVar[, 1L], y = respVar[, 2L],
+                        paired = TRUE, ...)
         }
         else {
-            DATA <- list(x = respVar)
-            y <- do.call("t.test", c(DATA, list(...)))
+            ## Call the default method.            
+            y <- t.test(x = respVar, ...)
         }
     }
     y$data.name <- DNAME

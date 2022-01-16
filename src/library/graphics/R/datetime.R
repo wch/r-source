@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                         start.on.monday = TRUE, format, right = TRUE)
 {
     if(!inherits(x, "POSIXt")) stop("wrong method")
-    xlab
+    force(xlab)
     x <- as.POSIXct(x)
     incr <- 1
     ## handle breaks ourselves
@@ -105,10 +105,10 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
         if(d > 86400*366) incr <- 86400*366
         num.br <- FALSE
     } else {
-        num.br <- is.numeric(breaks) && length(breaks) == 1
+        num.br <- is.numeric(breaks) && length(breaks) == 1L
         if(num.br) {
-        ## specified number of breaks
-        } else if(is.character(breaks) && length(breaks) == 1) {
+            ## specified number of breaks
+        } else if(is.character(breaks) && length(breaks) == 1L) {
             valid <-
                 pmatch(breaks,
                        c("secs", "mins", "hours", "days", "weeks",
@@ -125,7 +125,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
             if(valid == 5L) { # "weeks"
                 start$mday <- start$mday - start$wday
                 if(start.on.monday)
-                    start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
+                    start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
                 incr <- 7*86400
             }
             if(valid == 6L) { # "months"
@@ -166,9 +166,10 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 if (right)
                     breaks[ind] <- breaks[ind] - 86400
 		if (missing(format)) format <- "%Y-%m-%d"
-           } else { # "days" or "weeks"
+           } else { # anything from "secs" to "weeks"
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq(start, maxx + incr, breaks)
+                if (length(breaks) > 2L)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         }
@@ -177,15 +178,19 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE,
                         warn.unused = FALSE, right = right, ...)
     res$equidist <- TRUE # years are of uneven lengths
-    res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for hist.default, separate out 'axes'
+        ## swallow '...' args only for hist.default() above & separate out 'axes':
         myplot <- function(res, xlab, freq, format, breaks,
-                           right, include.lowest, labels = FALSE,
+                           include.lowest, fuzz, # <<- swallowed here
+                           density = NULL, angle = 45, col = "lightgray",
+                           border = NULL, lty = NULL,
+                           labels = FALSE,
                            axes = TRUE, xaxt = par("xaxt"), ...)
         {
 	    plot(res, xlab = xlab, axes = FALSE, freq = freq,
+                 density = density, angle = angle, col = col,
+                 border = border, lty = lty,
 		 labels = labels, ...)
 	    if(axes) {
 		axis(2, ...)
@@ -288,11 +293,11 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 ## drops through to "days".
             }
             if(valid == 3L) { ## "months"
-                start$mday <- 1
+                start$mday <- 1L
                 end <- as.POSIXlt(max(x, na.rm = TRUE))
                 end <- as.POSIXlt(end + (31 * 86400))
-                end$mday <- 1
-                end$isdst <- -1
+                end$mday <- 1L
+                end$isdst <- -1L
                 breaks <- as.Date(seq(start, end, "months"))
                 if (right)
                     breaks <- breaks - 1
@@ -304,7 +309,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 end <- as.POSIXlt(end + (366 * 86400))
                 end$mon <- 0L
                 end$mday <- 1L
-                end$isdst <- -1
+                end$isdst <- -1L
                 breaks <- as.Date(seq(start, end, "years"))
                 if (right)
                     breaks <- breaks - 1
@@ -317,7 +322,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 end <- as.POSIXlt(end + (93 * 86400))
                 end$mon <- qtr[end$mon + 1L]
                 end$mday <- 1L
-                end$isdst <- -1
+                end$isdst <- -1L
                 breaks <- as.Date(seq(start, end, "3 months"))
                 if (right)
                     breaks <- breaks - 1
@@ -326,28 +331,36 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 start <- as.Date(start)
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq(start, maxx + incr, breaks)
+                if (length(breaks) > 2L)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         } else stop("invalid specification of 'breaks'")
     }
-    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused = FALSE, right = right, ...)
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE,
+                        warn.unused = FALSE, right = right, ...)
     res$equidist <- TRUE # years are of uneven lengths
-    res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for hist.default, separate out 'axes'
+        ## swallow '...' args only for hist.default() above & separate out 'axes':
         myplot <- function(res, xlab, freq, format, breaks,
-                           right, include.lowest, labels = FALSE,
+                           include.lowest, fuzz, # <<- swallowed here
+                           density = NULL, angle = 45, col = "lightgray",
+                           border = NULL, lty = NULL,
+                           labels = FALSE,
                            axes = TRUE, xaxt = par("xaxt"), ...)
         {
             plot(res, xlab = xlab, axes = FALSE, freq = freq,
+                 density = density, angle = angle, col = col,
+                 border = border, lty = lty,
                  labels = labels, ...)
-            if(axes && xaxt != "n") {
+	    if(axes) {
                 axis(2, ...)
+              if(xaxt != "n") {
                 if(num.br)
                     breaks <- as.Date(res$breaks,
                                       origin = "1970-01-01")
                 axis.Date(1, at = breaks,  format = format, ...)
+              }
             }
         }
         myplot(res, xlab, freq, format, breaks, ...)

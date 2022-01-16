@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2020  The R Core Team
+ *  Copyright (C) 2000--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #endif
 #define NO_NLS
 #include <Defn.h>
-#include <R_ext/RS.h> // for Calloc
+#include <R_ext/RS.h> // for R_Calloc
 
 #include "tcltk.h" /* declarations of our `public' interface */
 #include <stdlib.h>
@@ -236,11 +236,11 @@ SEXP dotTclObjv(SEXP args)
 	char *tmp;
 	if (!isNull(nm) && strlen(s = translateChar(STRING_ELT(nm, i)))){
 	    //  tmp = calloc(strlen(s)+2, sizeof(char));
-	    tmp = Calloc(strlen(s)+2, char);
+	    tmp = R_Calloc(strlen(s)+2, char);
 	    *tmp = '-';
 	    strcpy(tmp+1, s);
 	    objv[objc++] = Tcl_NewStringObj(tmp, -1);
-	    Free(tmp);
+	    R_Free(tmp);
 	}
 	if (!isNull(t = VECTOR_ELT(avec, i)))
 	    objv[objc++] = (Tcl_Obj *) R_ExternalPtrAddr(t);

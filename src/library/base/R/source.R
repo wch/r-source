@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 
         if (chdir){
             if(is.character(ofile)) {
-                if(grepl("^(ftp|http|file)://", ofile)) ## is URL
+                if(grepl("^(ftp|ftps|http|https|file)://", ofile)) ## is URL
                     warning("'chdir = TRUE' makes no sense for a URL")
                 else if((path <- dirname(ofile)) != ".") {
                     owd <- getwd()

@@ -1,7 +1,7 @@
 #  File src/library/base/R/mapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 
     if (USE.NAMES && length(dots)) {
 	if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]]))
-	    names(answer) <- dots[[1L]]
+            names(answer) <- if(length(answer)) dots[[1L]] else character()
 	else if (!is.null(names1))
 	    names(answer) <- names1
     }
@@ -35,7 +35,7 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 }
 
 .mapply <- function(FUN, dots, MoreArgs)
-    .Internal(mapply(FUN, dots, MoreArgs))
+    .Internal(mapply(match.fun(FUN), dots, MoreArgs))
 
 Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
                       USE.NAMES = TRUE)

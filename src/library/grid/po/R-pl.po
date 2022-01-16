@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -11,8 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 2.0.4\n"
 
@@ -20,9 +19,7 @@ msgid "invalid 'at' location in 'axis'"
 msgstr "niepoprawne położenie 'at' w 'axis'"
 
 msgid "invalid to specify axis labels when 'at' is NULL"
-msgstr ""
-"nie można określać etykiet osi kiedy komponent 'at' argumentu 'x' ma wartość "
-"NULL"
+msgstr "nie można określać etykiet osi kiedy komponent 'at' argumentu 'x' ma wartość NULL"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "argument 'labels' oraz położenia 'at' muszą mieć tę samą długość"
@@ -49,8 +46,7 @@ msgid "how did we get here?"
 msgstr "jak się tu dostaliśmy?"
 
 msgid "must start new page if showing leaves separately"
-msgstr ""
-"trzeba rozpocząć nową stronę jeśli liście mają być pokazywane oddzielnie"
+msgstr "trzeba rozpocząć nową stronę jeśli liście mają być pokazywane oddzielnie"
 
 msgid "invalid 'edit' information"
 msgstr "niepoprawne wartość 'edit'"
@@ -65,9 +61,7 @@ msgid "invalid 'grob'"
 msgstr "niepoprawny argument 'grob'"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-"niepoprawne argumenty 'row' oraz/lub 'col' (brak takiej komórki w ramce "
-"layoutu)"
+msgstr "niepoprawne argumenty 'row' oraz/lub 'col' (brak takiej komórki w ramce layoutu)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col' może być tylko z zakresu istniejących kolumn"
@@ -81,19 +75,11 @@ msgstr "'row' może być tylko z zakresu istniejących wierszy"
 msgid "invalid 'row' specification"
 msgstr "niepoprawne określenie 'row'"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"nie można określić więcej niż jeden z 'side=[\"left\", \"right\"]', 'col', "
-"'col.before', lub 'col.after'"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "nie można określić więcej niż jeden z 'side=[\"left\", \"right\"]', 'col', 'col.before', lub 'col.after'"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"potrzeba określić dokładnie jeden z 'side=[\"top\", \"bottom\"]', 'row', "
-"'row.before', lub 'row.after'"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "potrzeba określić dokładnie jeden z 'side=[\"top\", \"bottom\"]', 'row', 'row.before', lub 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "niepoprawny argument 'n'"
@@ -132,21 +118,14 @@ msgid "invalid display list element"
 msgstr "niepoprawne element listy wyświetleń"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"jeden lub więcej 'grob' nadpisane ('grab' NIE BĘDZIE wiarygodne; spróbuj "
-"'wrap=TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "jeden lub więcej 'grob' nadpisane ('grab' NIE BĘDZIE wiarygodne; spróbuj 'wrap=TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "okno ekranu nadpisane ('grab' MOŻE nie być wiarygodne)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"'grob' wypchnął okna ekranów i nie wyświetlił ich ('grab' MOŻE nie być "
-"wiarygodny)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "'grob' wypchnął okna ekranów i nie wyświetlił ich ('grab' MOŻE nie być wiarygodny)"
 
 msgid "only valid to push viewports"
 msgstr "poprawne tylko dla wypychanych okien ekranów"
@@ -168,6 +147,10 @@ msgstr "potrzeba przenieść w górę przynajmniej jedno okno ekranu"
 
 msgid "Invalid number of generations"
 msgstr "niepoprawna liczba generacji"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "niepoprawny argument 'arrow'"
 
 msgid "invalid object inserted on the display list"
 msgstr "niepoprawne obiekty wstawione na listę wyświetleń"
@@ -254,9 +237,7 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "poprawna jest jedynie edycja dziecka \"gTree\""
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"niepoprawne jest bezpośrednie edytowanie gniazda 'children' lub "
-"'childrenOrder'"
+msgstr "niepoprawne jest bezpośrednie edytowanie gniazda 'children' lub 'childrenOrder'"
 
 msgid "invalid 'result'"
 msgstr "niepoprawna wartość 'result'"
@@ -283,6 +264,30 @@ msgid "can only reorder 'children' for a \"gTree\""
 msgstr "można jedynie zmienić kolejność argumentu 'children' dla \"gTree\""
 
 msgid "Invalid 'order'"
+msgstr "niepoprawna wartość 'order'"
+
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "niepoprawna wartość 'order'"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "niepoprawne justowanie"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
 msgstr "niepoprawna wartość 'order'"
 
 msgid "'l' must be a layout"
@@ -316,9 +321,7 @@ msgid "invalid vertical justification"
 msgstr "niepoprawne pionowe justowanie"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
-msgstr ""
-"'respect' musi być wartością logiczną lub macierzą o rozmiarze 'nrow' na "
-"'ncol'"
+msgstr "'respect' musi być wartością logiczną lub macierzą o rozmiarze 'nrow' na 'ncol'"
 
 msgid "invalid 'print' argument"
 msgstr "niepoprawny argument 'print'"
@@ -334,6 +337,28 @@ msgstr "niepoprawna wartość 'listing'"
 
 msgid "invalid 'origin'"
 msgstr "niepoprawna wartość \"origin\""
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "argumenty 'x' oraz 'units' muszą mieć tę samą długość"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "argumenty Wielkości 'x1', 'y1', 'x2', oraz 'y2' muszą być jednostkami"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "argumenty Wielkości 'x1', 'y1', 'x2', oraz 'y2' muszą być jednostkami"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width', oraz 'height' muszą mieć długość 1"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -357,22 +382,16 @@ msgid "invalid 'arrow' argument"
 msgstr "niepoprawny argument 'arrow'"
 
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
-msgstr ""
-"nie jest poprawnie określać oba komponenty 'id' oraz 'id.lengths' argumentu "
-"'x'"
+msgstr "nie jest poprawnie określać oba komponenty 'id' oraz 'id.lengths' argumentu 'x'"
 
 msgid "'x' and 'y' must be same length"
 msgstr "argumenty 'x' oraz 'units' muszą mieć tę samą długość"
 
 msgid "'x' and 'y' and 'id' must all be same length"
-msgstr ""
-"komponenty 'x' oraz 'y' oraz 'z' argumentu 'x' muszą wszystkie mieć tę samą "
-"długość"
+msgstr "komponenty 'x' oraz 'y' oraz 'z' argumentu 'x' muszą wszystkie mieć tę samą długość"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
-"komponenty 'x' oraz 'y' oraz 'id.lengths' argumentu 'x' muszą określać tę "
-"samą całościową długość"
+msgstr "komponenty 'x' oraz 'y' oraz 'id.lengths' argumentu 'x' muszą określać tę samą całościową długość"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "Wielkości 'x0', 'y0', 'x1', oraz 'y1' muszą być jednostkami"
@@ -385,9 +404,7 @@ msgstr "uszkodzony obiekt 'arrows'"
 
 #, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr ""
-"komponenty 'x' oraz 'y' oraz 'id.lengths' argumentu 'x' muszą określać tę "
-"samą całościową długość"
+msgstr "komponenty 'x' oraz 'y' oraz 'id.lengths' argumentu 'x' muszą określać tę samą całościową długość"
 
 msgid "x and y must be units"
 msgstr "'x' oraz 'y' muszą być jednostkami"
@@ -414,14 +431,10 @@ msgid "'x', 'y' and 'size' must be units"
 msgstr "'x', 'y' oraz 'size' muszą być jednostkami"
 
 msgid "'x' and 'y' must be 'unit' objects and have the same length"
-msgstr ""
-"komponenty 'x' oraz 'y' argumentu 'x' muszą być obiektami klasy \"unit\" "
-"oraz muszą mieć tę samą długość"
+msgstr "komponenty 'x' oraz 'y' argumentu 'x' muszą być obiektami klasy \"unit\" oraz muszą mieć tę samą długość"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"argumenty 'x', 'y', 'width' oraz 'height' muszą wszystkie być jednostkami o "
-"długości 1"
+msgstr "argumenty 'x', 'y', 'width' oraz 'height' muszą wszystkie być jednostkami o długości 1"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x' oraz 'y' muszą być jednostkami o długości 1"
@@ -518,11 +531,8 @@ msgstr "tylko okna ekranów są dozwolone w 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "tylko okna ekranów są dozwolone w 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"argument 'parent' musi być oknem ekranu oraz argument 'children' musi być "
-"'vpList' w 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "argument 'parent' musi być oknem ekranu oraz argument 'children' musi być 'vpList' w 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "ścieżka okna ekranu musi zawierać przynajmniej jedną nazwę okna ekranu"
@@ -534,9 +544,7 @@ msgid "must specify at least one of 'y' or 'yscale'"
 msgstr "tylko jeden z 'font' oraz 'fontface' może być określony"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"zamykanie wszystkich urządzeń kiedy wykonywane jest zwalnianie przestrzeni "
-"nazw 'grid'"
+msgstr "zamykanie wszystkich urządzeń kiedy wykonywane jest zwalnianie przestrzeni nazw 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
@@ -596,9 +604,7 @@ msgstr[2] "niepoprawne nazwy okien ekranu"
 #~ msgstr "argument 'vp' jest przestarzały"
 
 #~ msgid "grid.grob() is deprecated; please use grob() instead"
-#~ msgstr ""
-#~ "funkcja 'grid.grob()' jest przestarzała; proszę używać zamiast niej "
-#~ "funkcji 'grob()'"
+#~ msgstr "funkcja 'grid.grob()' jest przestarzała; proszę używać zamiast niej funkcji 'grob()'"
 
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 #~ msgstr "argument 'grob' musi być 'line.to', 'lines', lub 'segments'"

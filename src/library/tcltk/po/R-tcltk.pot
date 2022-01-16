@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,9 @@ msgid "'pb' is not from class %s"
 msgstr ""
 
 msgid "'filters' must be a 2-column character matrix"
+msgstr ""
+
+msgid "tcltk DLL is linked to"
 msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"

@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 1999-2016	The R Core Team
+ *  Copyright (C) 1999-2022	The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
     SEXP res;
     double *rx = REAL(x), *rxreg = REAL(xreg);
 
-    G = Calloc(1, starma_struct);
+    G = R_Calloc(1, starma_struct);
     G->mp = INTEGER(na)[0];
     G->mq = INTEGER(na)[1];
     G->msp = INTEGER(na)[2];
@@ -104,26 +104,26 @@ SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
     G->n = n = asInteger(pn);
     G->ncond = asInteger(sncond);
     G->m = m = asInteger(pm);
-    G->params = Calloc(G->mp + G->mq + G->msp + G->msq + G->m, double);
+    G->params = R_Calloc(G->mp + G->mq + G->msp + G->msq + G->m, double);
     G->p = ip = G->ns*G->msp + G->mp;
     G->q = iq = G->ns*G->msq + G->mq;
     G->r = ir = max(ip, iq + 1);
     G->np = np = (ir*(ir + 1))/2;
     G->nrbar = max(1, np*(np - 1)/2);
     G->trans = asInteger(ptrans);
-    G->a = Calloc(ir, double);
-    G->P = Calloc(np, double);
-    G->V = Calloc(np, double);
-    G->thetab = Calloc(np, double);
-    G->xnext = Calloc(np, double);
-    G->xrow = Calloc(np, double);
-    G->rbar = Calloc(G->nrbar, double);
-    G->w = Calloc(n, double);
-    G->wkeep = Calloc(n, double);
-    G->resid = Calloc(n, double);
-    G->phi = Calloc(ir, double);
-    G->theta = Calloc(ir, double);
-    G->reg = Calloc(1 + n*m, double); /* AIX can't calloc 0 items */
+    G->a = R_Calloc(ir, double);
+    G->P = R_Calloc(np, double);
+    G->V = R_Calloc(np, double);
+    G->thetab = R_Calloc(np, double);
+    G->xnext = R_Calloc(np, double);
+    G->xrow = R_Calloc(np, double);
+    G->rbar = R_Calloc(G->nrbar, double);
+    G->w = R_Calloc(n, double);
+    G->wkeep = R_Calloc(n, double);
+    G->resid = R_Calloc(n, double);
+    G->phi = R_Calloc(ir, double);
+    G->theta = R_Calloc(ir, double);
+    G->reg = R_Calloc(1 + n*m, double); /* AIX can't calloc 0 items */
     G->delta = asReal(dt);
     for(i = 0; i < n; i++) G->w[i] = G->wkeep[i] = rx[i];
     for(i = 0; i < n*m; i++) G->reg[i] = rxreg[i];
@@ -136,10 +136,10 @@ SEXP free_starma(SEXP pG)
 {
     GET_STARMA;
 
-    Free(G->params); Free(G->a); Free(G->P); Free(G->V); Free(G->thetab);
-    Free(G->xnext); Free(G->xrow); Free(G->rbar);
-    Free(G->w); Free(G->wkeep); Free(G->resid); Free(G->phi); Free(G->theta);
-    Free(G->reg); Free(G);
+    R_Free(G->params); R_Free(G->a); R_Free(G->P); R_Free(G->V); R_Free(G->thetab);
+    R_Free(G->xnext); R_Free(G->xrow); R_Free(G->rbar);
+    R_Free(G->w); R_Free(G->wkeep); R_Free(G->resid); R_Free(G->phi); R_Free(G->theta);
+    R_Free(G->reg); R_Free(G);
     return R_NilValue;
 }
 

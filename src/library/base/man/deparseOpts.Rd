@@ -72,7 +72,7 @@
     \item{\code{"niceNames"}:}{
       If true, \code{\link{list}}s and atomic vectors with non-\code{\link{NA}}
       names (see \code{\link{names}}) are deparsed as e.g., \code{c(A = 1)}
-      instead of \code{structure(1, .Names = "A")}, independently of the
+      instead of \code{structure(1, names = "A")}, independently of the
       \code{"showAttributes"} setting.
     }
     \item{\code{"all"}:}{

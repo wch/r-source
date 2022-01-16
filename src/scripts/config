@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2020 The R Core Team
+## Copyright (C) 2002-2021 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -134,6 +134,7 @@ if test "${R_OSTYPE}" = "windows"; then
 Windows only:
   COMPILED_BY   name and version of compiler used to build R
   LOCAL_SOFT    absolute path to '/usr/local' software collection
+  R_TOOLS_SOFT  absolute path to 'R tools' software collection
   OBJDUMP       command to dump objects"
 fi
 
@@ -256,6 +257,8 @@ if test "${personal}" = "yes"; then
   if test "${R_OSTYPE}" = "windows"; then
     if test -f "${R_MAKEVARS_USER}"; then
       makefiles="${makefiles} -f \"${R_MAKEVARS_USER}\""
+    elif test ${R_ARCH} = "/x64" && test -f "${HOME}/.R/Makevars.ucrt"; then
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars.ucrt"
     elif test ${R_ARCH} = "/x64" && test -f "${HOME}/.R/Makevars.win64"; then
       makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars.win64"
     elif test -f "${HOME}/.R/Makevars.win"; then
@@ -288,7 +291,7 @@ ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR NM RANLIB LTO LTO_FC LTO_LD"
 defunct_vars="CPP CXXCPP"
 if test "${R_OSTYPE}" = "windows"; then
-  ok_win_vars="LOCAL_SOFT COMPILED_BY OBJDUMP"
+  ok_win_vars="LOCAL_SOFT R_TOOLS_SOFT COMPILED_BY OBJDUMP"
 fi
 
 if test "${all}" = "yes"; then

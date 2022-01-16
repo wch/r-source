@@ -350,14 +350,12 @@ int R_system(const char *command)
 #if defined(__APPLE__)
 # include <crt_externs.h>
 # define environ (*_NSGetEnviron())
-#else
-extern char ** environ;
-#endif
-
-#ifdef Win32
+#elif defined(Win32)
 /* _wenviron is declared in stdlib.h */
 # define WIN32_LEAN_AND_MEAN 1
 # include <windows.h> /* _wgetenv etc */
+#else
+extern char ** environ;
 #endif
 
 SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -794,10 +792,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 // These two support "utf8"
 # ifdef Win32
     const char *cp = "ASCII";
-#  ifndef SUPPORT_UTF8_WIN32 /* Always, at present */
     char to[20] = "";
     if (localeCP > 0) {snprintf(to, 20, "CP%d", localeCP); cp = to;}
-#  endif
 # else /* __APPLE__ */
     const char *cp = "UTF-8";
     if (latin1locale) cp = "ISO-8859-1";
@@ -1286,6 +1282,7 @@ const wchar_t *wtransChar(SEXP x)
 #endif
     }
 
+    /* R_AllocStringBuffer returns correctly aligned for wchar_t */
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
     inbuf = ans; inb = strlen(inbuf);
@@ -1299,12 +1296,12 @@ next_char:
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
-	if(outb < 5) {
+	if(outb < 5 * sizeof(wchar_t)) {
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
 	}
-	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
-	outbuf += 4; outb -= 4;
+	swprintf((wchar_t*)outbuf, 5, L"<%02x>", (unsigned char)*inbuf);
+	outbuf += 4 * sizeof(wchar_t); outb -= 4 * sizeof(wchar_t);
 	inbuf++; inb--;
 	goto next_char;
 	/* if(!knownEnc) Riconv_close(obj);
@@ -1783,6 +1780,7 @@ void R_reInitTempDir(int die_on_fail)
 #ifdef Win32
     char tmp2[PATH_MAX];
     int hasspace = 0;
+    DWORD res = 0;
 #endif
 
 #define ERROR_MAYBE_DIE(MSG_)			\
@@ -1812,8 +1810,16 @@ void R_reInitTempDir(int die_on_fail)
 	for (p = tm; *p; p++)
 	    if (isspace(*p)) { hasspace = 1; break; }
 	if (hasspace) {
-	    GetShortPathName(tm, tmp2, MAX_PATH);
-	    tm = tmp2;
+	    res = GetShortPathName(tm, tmp2, MAX_PATH);
+	    if (res != 0) 
+	        tm = tmp2;
+
+	    hasspace = 0;
+	    for (p = tm; *p; p++)
+		if (isspace(*p)) { hasspace = 1; break; }
+	    if (hasspace) {
+		ERROR_MAYBE_DIE(_("'R_TempDir' contains space"));
+	    }
 	}
 	snprintf(tmp1, PATH_MAX+11, "%s\\RtmpXXXXXX", tm);
 #else
@@ -2002,6 +2008,58 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else elapsedLimit2 = -1;
 
     return R_NilValue;
+}
+
+void attribute_hidden R_CheckTimeLimits(void)
+{
+    if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
+
+	/* On Linux and macOS at least R_getProcTime can be quite slow;
+	   currentTIme is somewhat faster. */
+
+	/* To reduce overhead, skip checking TIME_CHECK_SKIP times. */
+	const int TIME_CHECK_SKIP = 5;
+	static int check_count = 0;
+	if (check_count < TIME_CHECK_SKIP) {
+	    check_count++;
+	    return;
+	}
+	else check_count = 0;
+
+	/* Before calling R_getProcTime first use checkTime to make
+	   sure at least TIME_CHECK_DELTA seconds have elapsed since
+	   the last call. */
+	const double TIME_CHECK_DELTA = 0.05;
+	static double check_time = 0;
+	double tm = currentTime();
+	if (tm < check_time)
+	    return;
+	else check_time = tm + TIME_CHECK_DELTA;
+
+	double cpu, data[5];
+	R_getProcTime(data);
+#ifdef Win32
+	cpu = data[0] + data[1];
+#else
+	cpu = data[0] + data[1] + data[3] + data[4];
+#endif
+	if (elapsedLimit > 0.0 && data[2] > elapsedLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (elapsedLimit2 > 0.0 && data[2] > elapsedLimit2) {
+		elapsedLimit2 = -1.0;
+		error(_("reached session elapsed time limit"));
+	    } else
+		error(_("reached elapsed time limit"));
+	}
+	if (cpuLimit > 0.0 && cpu > cpuLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (cpuLimit2 > 0.0 && cpu > cpuLimit2) {
+		cpuLimit2 = -1.0;
+		error(_("reached session CPU time limit"));
+	    } else
+		error(_("reached CPU time limit"));
+	}
+    }
 }
 
 /* moved from character.c in 2.10.0: configure requires this */

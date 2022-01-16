@@ -17,7 +17,8 @@ SOURCES_C = \
 	Rdynload.c Renviron.c RNG.c \
 	agrep.c altclasses.c altrep.c apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
-	character.c coerce.c colors.c complex.c connections.c context.c cum.c \
+	character.c clippath.c coerce.c \
+	colors.c complex.c connections.c context.c cum.c \
 	dcf.c datetime.c debug.c deparse.c devices.c \
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	edit.c engine.c envir.c errors.c eval.c \
@@ -25,7 +26,7 @@ SOURCES_C = \
 	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
-	main.c mapply.c match.c memory.c \
+	main.c mapply.c mask.c match.c memory.c \
 	names.c \
 	objects.c options.c \
 	paste.c patterns.c platform.c plot.c plot3d.c plotmath.c \

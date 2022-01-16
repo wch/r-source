@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2020   The R Core Team
+ *  Copyright (C) 2004-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -201,6 +201,10 @@ static int xbufmakeroom(xbuf p, xlong size)
 {
     if (size > p->dim) return 0;
     while ((p->av < size) || (p->ns == p->ms)) {
+	/* PR#17851 lost-scrollbar/lost-history issue could be handled here.
+	   Comment from Bill Dunlap: "One could change the p->av<size case to
+	   discard only enough lines to make space for the new characters, but
+	   I don't know if this extra complexity would be worthwhile." */
 	xbufshift(p);
     }
     p->av -= size;
@@ -1613,6 +1617,9 @@ static wchar_t consolegetc(control c)
 	    p->numkeys--;
 	    if (p->already) p->already--;
 	} else {
+	    /* Will not work for stateful encodings */
+	    mbstate_t mb_st;
+	    memset(&mb_st, 0, sizeof(mbstate_t));
 	    if(mbcslocale) {
 		/* Possibly multiple 'keys' for a single keystroke */
 		char tmp[20];
@@ -1620,7 +1627,7 @@ static wchar_t consolegetc(control c)
 
 		for(i = 0; i < MB_CUR_MAX; i++)
 		    tmp[i] = p->kbuf[(p->firstkey + i) % NKEYS];
-		used = mbrtowc(&ch, tmp, MB_CUR_MAX, NULL);
+		used = mbrtowc(&ch, tmp, MB_CUR_MAX, &mb_st);
 		p->firstkey = (p->firstkey + used) % NKEYS;
 		p->numkeys -= used;
 		if (p->already) p->already -= used;
@@ -1629,7 +1636,7 @@ static wchar_t consolegetc(control c)
 		if(ch >=128) {
 		    char tmp[2] = " ";
 		    tmp[0] = ch;
-		    mbrtowc(&ch, tmp, 2, NULL);
+		    mbrtowc(&ch, tmp, 2, &mb_st);
 		}
 		p->firstkey = (p->firstkey + 1) % NKEYS;
 		p->numkeys--;

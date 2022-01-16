@@ -1,26 +1,33 @@
 % File src/library/base/man/mapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
-% Copyright 2002-2020 The R Foundation
+% Copyright 1995-2021 R Core Team
+% Copyright 2002-2021 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{mapply}
-\alias{mapply}
 \title{Apply a Function to Multiple List or Vector Arguments}
+\alias{mapply}
+\alias{.mapply}
 \description{
   \code{mapply} is a multivariate version of \code{\link{sapply}}.
   \code{mapply} applies \code{FUN} to the first elements of each \dots
   argument, the second elements, the third elements, and so on.
   Arguments are recycled if necessary.
+
+  \code{.mapply()} is a bare-bones version of \code{mapply()}, e.g., to be
+  used in other functions.
 }
 \usage{
 mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
        USE.NAMES = TRUE)
+.mapply(FUN, dots, MoreArgs)
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{arguments to vectorize over (vectors or lists of strictly
-    positive length, or all of zero length).  See also \sQuote{Details}.}
+  \item{\dots}{arguments to vectorize over, will be recycled to common
+  length (zero if one of them is).  See also \sQuote{Details}.}
+  \item{dots}{\code{\link{list}} or \code{\link{pairlist}} of arguments to
+    vectorize over, see \code{\dots} above.}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
@@ -30,15 +37,17 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
 }
 \details{
   \code{mapply} calls \code{FUN} for the values of \code{\dots}
-  (re-cycled to the length of the longest, unless any have length zero),
+  (re-cycled to the length of the longest, unless any have length zero
+  where recycling to zero length will return \code{list()}),
   followed by the arguments given in \code{MoreArgs}.  The arguments in
   the call will be named if \code{\dots} or \code{MoreArgs} are named.
 
-  Arguments with classes in \code{\dots} will be accepted, and their
-  subsetting and \code{length} methods will be used.
+  For the arguments in \code{\dots} (or components in \code{dots}) class specific
+  subsetting (such as \code{\link{[}}) and \code{length} methods will be
+  used where applicable.
 }
 \value{
-  A list, or for \code{SIMPLIFY = TRUE}, a vector, array or list.
+  A \code{\link{list}}, or for \code{SIMPLIFY = TRUE}, a vector, array or list.
 }
 \seealso{
   \code{\link{sapply}}, after which \code{mapply()} is modelled.
@@ -58,7 +67,10 @@ mapply(function(x, y) seq_len(x) + y,
        c(A = 10, B = 0, C = -10))
 
 word <- function(C, k) paste(rep.int(C, k), collapse = "")
-utils::str(mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
+## names from the first, too:
+utils::str(L <- mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
+
+mapply(word, "A", integer()) # gave Error, now list()
 }
 \keyword{manip}
 \keyword{utilities}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,6 +156,9 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr ""
 
 msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
+msgid "Invalid fill rule"
 msgstr ""
 
 msgid "Invalid pattern type"

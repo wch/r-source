@@ -358,21 +358,85 @@ dev.capture <- function(native = FALSE) .External(C_devcapture, native)
 
 dev.capabilities <- function(what = NULL)
 {
-    zz <- .External(C_devcap)
-    z <- vector("list", 6L)
-    names(z) <-  c("semiTransparency", "transparentBackground",
-                   "rasterImage", "capture", "locator",
-                   "events")
-    z[[1L]] <- c(NA, FALSE, TRUE)[zz[1L] + 1L]
-    z[[2L]] <- c(NA, "no", "fully", "semi")[zz[2L] + 1L]
-    z[[3L]] <- c(NA, "no", "yes", "non-missing")[zz[3L] + 1L]
-    z[[4L]] <- c(NA, FALSE, TRUE)[zz[4L] + 1L]
-    z[[5L]] <- c(NA, FALSE, TRUE)[zz[5L] + 1L]
-    z[[6L]] <- c( "",
-                  if (zz[6L]) "MouseDown",
-                  if (zz[7L]) "MouseMove",
-                  if (zz[8L]) "MouseUp",
-                  if (zz[9L]) "Keybd" )[-1L]
+    ncap <- 12
+    template <- vector("list", ncap)
+    capabilities <- .External(C_devcap, template)
+    ## The device may have filled in some capabilities so check it is still
+    ## the right sort of structure
+    if (!(is.list(capabilities) &&
+          length(capabilities) == ncap &&
+          all(sapply(capabilities, class) == "integer")))
+        stop("Invalid capabilities - alert the device maintainer")
+    
+    z <- vector("list", ncap)
+    names(z) <- c("semiTransparency",
+                  "transparentBackground",
+                  "rasterImage",
+                  "capture",
+                  "locator",
+                  "events",
+                  "patterns",
+                  "clippingPaths",
+                  "masks",
+                  "compositing",
+                  "transformations",
+                  "paths")
+    z[[1L]] <- c(NA, FALSE, TRUE)[capabilities[[1L]] + 1L]
+    z[[2L]] <- c(NA, "no", "fully", "semi")[capabilities[[2L]] + 1L]
+    z[[3L]] <- c(NA, "no", "yes", "non-missing")[capabilities[[3L]] + 1L]
+    z[[4L]] <- c(NA, FALSE, TRUE)[capabilities[[4L]] + 1L]
+    z[[5L]] <- c(NA, FALSE, TRUE)[capabilities[[5L]] + 1L]
+    z[[6L]] <- c( "", 
+                  if (capabilities[[6L]][1L]) "MouseDown",
+                  if (capabilities[[6L]][2L]) "MouseMove",
+                  if (capabilities[[6L]][3L]) "MouseUp",
+                  if (capabilities[[6L]][4L]) "Keybd" )[-1L]
+    ## Patterns
+    if (length(capabilities[[7]]) == 1 && is.na(capabilities[[7]])) {
+        z[[7]] <- NA
+    } else if (length(capabilities[[7]]) == 1 && capabilities[[7]] < 1) {
+        z[[7]] <- FALSE
+    } else if (length(capabilities[[7]]) > 0) {
+        z[[7]] <- patternTypes[capabilities[[7]]]
+    } else {
+        z[[7]] <- NA
+    }
+    ## Clipping paths
+    if (is.na(capabilities[[8]]))
+        z[[8]] <- NA
+    else 
+        z[[8]] <- as.logical(capabilities[[8]])
+    ## Masks
+    if (length(capabilities[[9]]) == 1 && is.na(capabilities[[9]])) {
+        z[[9]] <- NA
+    } else if (length(capabilities[[9]]) == 1 && capabilities[[9]] < 1) {
+        z[[9]] <- FALSE
+    } else if (length(capabilities[[9]]) > 0) {
+        z[[9]] <- maskTypes[capabilities[[9]]]
+    } else {
+        z[[9]] <- NA
+    }
+    ## Compositing operators
+    if (length(capabilities[[10]]) == 1 && is.na(capabilities[[10]])) {
+        z[[10]] <- NA
+    } else if (length(capabilities[[10]]) == 1 && capabilities[[10]] < 1) {
+        z[[10]] <- FALSE
+    } else if (length(capabilities[[10]]) > 0) {
+        z[[10]] <- compositingOperators[capabilities[[10]]]
+    } else {
+        z[[10]] <- NA
+    }
+    ## Transforms
+    if (is.na(capabilities[[11]]))
+        z[[11]] <- NA
+    else 
+        z[[11]] <- as.logical(capabilities[[11]])
+    ## Paths
+    if (is.na(capabilities[[12]]))
+        z[[12]] <- NA
+    else 
+        z[[12]] <- as.logical(capabilities[[12]])
+    
     if (!is.null(what)) z[charmatch(what, names(z), 0L)] else z
 }
 

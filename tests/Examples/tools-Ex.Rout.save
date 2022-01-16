@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-28 r81109) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -204,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2fceeb0>
+<environment: 0x10c9b80>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1043,9 +1043,50 @@ List of 5
 > 
 > ### ** Examples
 > ## Not run: 
-> ##D ## in a source-directory build of R:
+> ##D ## in a source-directory build (not typical!) of R;
+> ##D ## otherwise, download and unpack the R sources, and replace
+> ##D ## R.home()  by  "<my_path_to_source_R>" :
 > ##D xgettext(file.path(R.home(), "src", "library", "splines"))
 > ## End(Not run)
+> 
+> ## Create source package-like  <tmp>/R/foo.R  and get text from it:
+> tmpPkg <- tempdir()
+> tmpRDir <- file.path(tmpPkg, "R")
+> dir.create(tmpRDir, showWarnings = FALSE)
+> fnChar <- paste(sep = "\n",
++   "foo <- function(x) {",
++   "  if (x < -1)  stop('too small')",
++   "  # messages unduplicated (not so for ngettext)",
++   "  if (x < -.5) stop('too small')",
++   "  if (x < 0) {",
++   "    warning(",
++   "      'sqrt(x) is', sqrt(as.complex(x)),",
++   "      ', which may be too small'",
++   "    )",
++   "  }",
++   "  # calls with domain=NA are skipped",
++   "  if (x == 0) cat(gettext('x is 0!\n', domain=NA))",
++   "  # gettext strings may be ignored due to 'outer' domain=NA",
++   "  if (x > 10) stop('x is ', gettextf('%.2f', x), domain=NA)",
++   "  x",
++   "}")
+> 
+> writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
+> 
+> ## [[1]] : suppressing (tmpfile) name to make example Rdiff-able
+> xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows  ' sqrt(as.complex(x)) '
+too small
+sqrt(x) is
+sqrt(as.complex(x))
+, which may be too small
+> xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' %.2f '
+too small
+sqrt(x) is
+, which may be too small
+%.2f
+> 
+> unlink(tmpRDir, recursive=TRUE)
+> 
 > 
 > 
 > ### * <FOOTER>
@@ -1053,7 +1094,7 @@ List of 5
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.314 0.026 0.343 0 0 
+Time elapsed:  0.194 0.035 0.289 0 0 
 > grDevices::dev.off()
 null device 
           1 

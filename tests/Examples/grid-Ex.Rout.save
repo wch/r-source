@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-24 r81238) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -78,6 +78,35 @@ $type
 
 attr(,"class")
 [1] "arrow"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("as.mask")
+> ### * as.mask
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.mask
+> ### Title: Define a Soft Mask
+> ### Aliases: as.mask
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for masks normal line segments 
+> ##       will be drawn
+> grid.newpage()
+> ## Alpha mask
+> grid.segments(y0=1, y1=0, gp=gpar(col=2, lwd=100))
+> pushViewport(viewport(mask=circleGrob(gp=gpar(fill=rgb(0,0,0,.5)))))
+> grid.segments(gp=gpar(col=3, lwd=100))
+> grid.newpage()
+> ## Luminance mask
+> grid.segments(y0=1, y1=0, gp=gpar(col=2, lwd=100))
+> pushViewport(viewport(mask=as.mask(circleGrob(gp=gpar(fill="grey50")),
++                                    "luminance")))
+> grid.segments(gp=gpar(col=3, lwd=100))
 > 
 > 
 > 
@@ -182,12 +211,12 @@ attr(,"class")
 +   just="left", name="C"))
 > pushViewport(viewport(width=0.8, height=0.8, name="D"))
 > current.vpPath()
-GRID.VP.65::A::C::D 
+GRID.VP.69::A::C::D 
 > upViewport(1)
 > current.vpPath()
-GRID.VP.65::A::C 
+GRID.VP.69::A::C 
 > current.vpTree()
-viewport[ROOT]->(viewport[GRID.VP.65]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
+viewport[ROOT]->(viewport[GRID.VP.69]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
 > current.viewport()
 viewport[C] 
 > current.vpTree(all=FALSE)
@@ -357,9 +386,9 @@ g1::g2
 > 
 > grid.grill()
 > getNames()
-[1] "GRID.text.171"     "GRID.rect.172"     "GRID.circle.173"  
-[4] "GRID.circle.174"   "GRID.rect.175"     "GRID.rect.176"    
-[7] "GRID.segments.177" "GRID.segments.178"
+[1] "GRID.text.179"     "GRID.rect.180"     "GRID.circle.181"  
+[4] "GRID.circle.182"   "GRID.rect.183"     "GRID.rect.184"    
+[7] "GRID.segments.185" "GRID.segments.186"
 > 
 > 
 > 
@@ -747,12 +776,12 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > # Draw xaxis
 > grid.xaxis(name="xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
 > # Force xaxis
 > grid.force()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
@@ -760,51 +789,51 @@ xax
 > # Revert xaxis
 > grid.revert()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
 > # Draw and force yaxis
 > grid.force(yaxisGrob(), draw=TRUE)
-forcedgrob[GRID.yaxis.254] 
+forcedgrob[GRID.yaxis.262] 
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
 > # Revert yaxis
 > grid.revert()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
 > # Force JUST xaxis
 > grid.force("xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
   labels
-GRID.yaxis.254
+GRID.yaxis.262
 > # Force ALL
 > grid.force()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
   labels
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
 > # Revert JUST xaxis
 > grid.revert("xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
@@ -1002,6 +1031,40 @@ vp1::vp2
 [[5]]
 grandparent::parent::child 
 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.group")
+> ### * grid.group
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.group
+> ### Title: Draw a Group
+> ### Aliases: grid.group groupGrob grid.define defineGrob grid.use useGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for groups (or masks or patterns),
+> ##       there will only be two overlapping opaque circles 
+> grid.newpage()
+> pat <- pattern(rasterGrob(matrix(c(.5, 1, 1, .5), nrow=2),
++                           width=unit(1, "cm"),
++                           height=unit(1, "cm"),
++                           interpolate=FALSE),
++                width=unit(1, "cm"), height=unit(1, "cm"),
++                extend="repeat")
+> grid.rect(gp=gpar(col=NA, fill=pat))
+> mask <- rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+> pushViewport(viewport(mask=mask))
+> pushViewport(viewport(y=.5, height=.5, just="bottom"))
+> grid.circle(1:2/3, r=.45, gp=gpar(fill=2:3))
+> popViewport()
+> pushViewport(viewport(y=0, height=.5, just="bottom"))
+> grid.group(circleGrob(1:2/3, r=.45, gp=gpar(fill=2:3)))
+> popViewport()
 > 
 > 
 > 
@@ -1557,6 +1620,29 @@ List of 6
 +                             width=unit(1, "inches"), height=unit(1, "inches")))
 > grid.show.viewport(viewport(layout.pos.row=2, layout.pos.col=2:3),
 +                    grid.layout(3, 4))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.stroke")
+> ### * grid.stroke
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.stroke
+> ### Title: Stroke or Fill a Path
+> ### Aliases: grid.stroke strokeGrob strokeGrob.grob strokeGrob.GridPath
+> ###   grid.fill fillGrob fillGrob.grob fillGrob.GridPath grid.fillStroke
+> ###   fillStrokeGrob fillStrokeGrob.grob fillStrokeGrob.GridPath as.path
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for stroking and filling
+> ##       nothing will be drawn
+> grid.newpage()
+> grid.stroke(textGrob("hello", gp=gpar(cex=10)))
+> grid.fill(circleGrob(1:2/3, r=.3), gp=gpar(fill=rgb(1,0,0,.5)))
 > 
 > 
 > 
@@ -2164,6 +2250,46 @@ $min$sum$mm
 > 
 > 
 > cleanEx()
+> nameEx("viewportTransform")
+> ### * viewportTransform
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: viewportTransform
+> ### Title: Define a Group Transformation
+> ### Aliases: viewportTransform viewportTranslate viewportScale
+> ###   viewportRotate defnTranslate defnScale defnRotate useTranslate
+> ###   useScale useRotate groupTranslate groupScale groupRotate groupShear
+> ###   groupFlip
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for groups nothing will be drawn
+> grid.newpage()
+> ## Define and use group in same viewport
+> pushViewport(viewport(width=.2, height=.2))
+> grid.define(circleGrob(gp=gpar(lwd=5)), name="circle")
+> grid.use("circle")
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> pushViewport(viewport(x=.2, y=.2, width=.1, height=.1))
+> grid.use("circle")
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> ## BUT only make use of the translation
+> pushViewport(viewport(x=.2, y=.8, width=.1, height=.1))
+> grid.use("circle", transform=viewportTranslate)
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> ## unevenly (distorted)
+> pushViewport(viewport(x=.8, y=.7, width=.2, height=.4))
+> grid.use("circle")
+> popViewport()
+> 
+> 
+> 
+> cleanEx()
 > nameEx("viewports")
 > ### * viewports
 > 
@@ -2310,7 +2436,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.522 0.033 1.564 0 0 
+Time elapsed:  2.212 0.024 2.232 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -181,7 +181,7 @@ function(topic, package = NULL)
     ## error.
     ## (Earlier versions showed what they found via print(), or gave
     ## an error.)
-    h <- tryCatch(do.call("help", list(topic, package = package)),
+    h <- tryCatch(do.call(help, list(topic, package = package)),
                   error = identity)
     if(inherits(h, "error") || !length(h)) NULL else h
 }

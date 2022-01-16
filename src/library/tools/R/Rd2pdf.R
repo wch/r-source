@@ -25,11 +25,14 @@
 ## (e.g., Latin-1 in UTF-8)
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
-    ## FIXME: enc2utf8
-    ## mygsub <- function(...) {
-    ##     .gsub_with_transformed_matches(..., useBytes = TRUE)
-    ## }
-    mygsub <- .gsub_with_transformed_matches
+    mytrfm <- .gsub_with_transformed_matches
+    mygsub <- function(pattern, replacement, x)
+        .Internal(gsub(pattern, replacement, x, FALSE, FALSE, FALSE, FALSE))
+    ## Unlike tools:::psub and tools:::fsub, don't use useBytes = TRUE:
+    mypsub <- function(pattern, replacement, x)
+        .Internal(gsub(pattern, replacement, x, FALSE, TRUE,  FALSE, FALSE))
+    myfsub <- function(pattern, replacement, x)
+        .Internal(gsub(pattern, replacement, x, FALSE, FALSE,  TRUE, FALSE))
     texify <- function(x, one = TRUE, two = FALSE) {
         ## Handle LaTeX special characters.
         ## one: handle # $ % & _ ^ ~
@@ -40,19 +43,19 @@
         ##      backslash escape the first two
         ##      replace \ by \textbackslash{}
         if(two)
-            x <- fsub("\\", "\\textbackslash", x)
+            x <- myfsub("\\", "\\textbackslash", x)
         if(one) {
-            x <- psub("([#$%&_])", "\\\\\\1", x)
-            x <- fsub("^", "\\textasciicircum", x)
-            x <- fsub("~", "\\textasciitilde", x)
+            x <- mypsub("([#$%&_])", "\\\\\\1", x)
+            x <- myfsub("^", "\\textasciicircum", x)
+            x <- myfsub("~", "\\textasciitilde", x)
         }
         if(two) {
-            x <- psub("([{}])", "\\\\\\1", x)
-            x <- fsub("\\textbackslash", "\\textbackslash{}", x)
+            x <- mypsub("([{}])", "\\\\\\1", x)
+            x <- myfsub("\\textbackslash", "\\textbackslash{}", x)
         }
         if(one) {
-            x <- fsub("\\textasciicircum", "\\textasciicircum{}", x)
-            x <- fsub("\\textasciitilde", "\\textasciitilde{}", x)
+            x <- myfsub("\\textasciicircum", "\\textasciicircum{}", x)
+            x <- myfsub("\\textasciitilde", "\\textasciitilde{}", x)
         }
         x
     }
@@ -67,13 +70,7 @@
                   collapse = "\n")
     }
 
-    ## <FIXME>
-    ##   desc <- read.dcf(descfile)[1L, ]
-    ## FIXME: enc2utf8
     desc <- enc2utf8(.read_description(descfile))
-    ## Using
-    ##   desc <- .read_description(descfile)
-    ## would preserve leading white space in Description and Author ...
     if (is.character(outfile)) {
         out <- file(outfile, "a")
         on.exit(close(out))
@@ -82,20 +79,14 @@
     fields <- fields %w/o% c("Package", "Packaged", "Built")
     enc <- desc["Encoding"]
     if(!is.na(enc)) {
-        ## FIXME: enc2utf8
-        ## cat("\\inputencoding{", latex_canonical_encoding(enc),
-        ##     "}\n", sep = "", file = out)
         cat("\\inputencoding{utf8}\n", file = out)
     }
     ## Also try adding PDF title and author metadata.
     tit <- desc["Title"]
     tit <- paste0(desc["Package"], ": ",
-                  texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
+                  texify(mygsub("[[:space:]]+", " ", tit), two = TRUE))
     tit <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
                   "{\\hypersetup{pdftitle = {", tit, "}}}{}")
-    ## FIXME: enc2utf8
-    ## if(!is.na(enc))
-    ##     tit <- iconv(tit, to = enc)
     writeLines(tit, con = out, useBytes = TRUE)
     ## Only try author from Authors@R.
     if(!is.na(aar <- desc["Authors@R"])) {
@@ -105,13 +96,10 @@
             aar <- Filter(utils:::.person_has_author_role, aar)
             aut <- format(aar, include = c("given", "family"))
             aut <- paste(aut[nzchar(aut)], collapse = "; ")
-            aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
+            aut <- texify(mygsub("[[:space:]]+", " ", aut), two = TRUE)
             if(nzchar(aut)) {
                 aut <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
                               "{\\hypersetup{pdfauthor = {", aut, "}}}{}")
-                ## FIXME: enc2utf8
-                ## if(!is.na(enc))
-                ##     aut <- iconv(aut, to = enc)
                 writeLines(aut, con = out, useBytes = TRUE)
             }
         }
@@ -132,37 +120,35 @@
         ##   # $ % & _ ^ ~ { } \
         ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
         ## braces and backslashes need explicit handling.
-        text <- gsub('"([^"]*)"', "\\`\\`\\1''", text, useBytes = TRUE)
+        text <- mygsub('"([^"]*)"', "\\`\\`\\1''", text)
         text <- texify(text, one = FALSE, two = TRUE)
-        text <- fsub("@VERSION@", version, text)
-        ## FIXME: enc2utf8
-        ## Encoding(text) <- "unknown"
+        text <- myfsub("@VERSION@", version, text)
         if(f %in% c("Author", "Maintainer", "Contact"))
-            text <- mygsub("<([^@ ]+)@([^> ]+)>",
+            text <- mytrfm("<([^@ ]+)@([^> ]+)>",
                            "}\\\\email{%s@%s}\\\\AsIs{",
                            text,
                            list(texify, texify),
                            c(1L, 2L))
         if(f %in% c("URL", "BugReports", "Additional_repositories"))
-            text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
-                         "}\\\\url{\\1\\2}\\\\AsIs{",
-                         text, useBytes = TRUE)
+            text <- mygsub("(http://|ftp://|https://)([^[:space:],]+)",
+                           "}\\\\url{\\1\\2}\\\\AsIs{",
+                           text)
         if(f %in% c("Author",       # possibly with ORCID URLs inside <>
                     "Description")) {
-            text <- gsub("<(http://|ftp://|https://)([^[:space:],>]+)>",
-                         "<}\\\\url{\\1\\2}\\\\AsIs{>",
-                         text, useBytes = TRUE)
+            text <- mygsub("<(http://|ftp://|https://)([^[:space:],>]+)>",
+                           "<}\\\\url{\\1\\2}\\\\AsIs{>",
+                           text)
         }
         if(f == "Description") {   # DOI and arXiv identifiers inside <>
-            text <- mygsub("<(DOI:|doi:)([[:space:]]*)([^[:space:]]+)>",
+            text <- mytrfm("<(DOI:|doi:)([[:space:]]*)([^[:space:]]+)>",
                            "<}\\\\Rhref{https://doi.org/%s}{\\1%s}\\\\AsIs{>",
                            text,
                            list(identity, texify),
                            c(3L, 3L))
             ## Fancy escaping should not be needed for arXiv ids.
-            text <- gsub("<(arXiv:|arxiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
-                         "<}\\\\Rhref{https://arxiv.org/abs/\\2}{\\1\\2}\\\\AsIs{\\3>",
-                         text, useBytes = TRUE)
+            text <- mygsub("<(arXiv:|arxiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
+                           "<}\\\\Rhref{https://arxiv.org/abs/\\2}{\\1\\2}\\\\AsIs{\\3>",
+                           text)
         }
         text <- paste0("\\AsIs{", text, "}")
         writeLines(paste0("\\item[", texify(f, TRUE, TRUE), "]",
@@ -932,16 +918,16 @@ function(pkgdir, outfile, title, batch = FALSE,
     if(!nzchar(dir)) dir <- paste(files, collapse = " ")
 
     ## Prepare for building the documentation.
-    if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
-        cat("cannot write to build dir\n")
-        q("no", status = 2L, runLast = FALSE)
-    }
-    dir.create(build_dir, FALSE)
     if(!nzchar(output)) output <- paste0("Rd2.", out_ext)
     if(file.exists(output) && !force) {
         cat("file", sQuote(output), "exists; please remove it first\n")
         q("no", status = 1L, runLast = FALSE)
     }
+    if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
+        cat("cannot write to build dir\n")
+        q("no", status = 2L, runLast = FALSE)
+    }
+    dir.create(build_dir, FALSE)
 
     res <-
         try(.Rd2pdf(files[1L], file.path(build_dir, "Rd2.tex"),

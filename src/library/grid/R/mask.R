@@ -1,10 +1,10 @@
 
-createMask <- function(mask) {
+createMask <- function(mask, type="alpha") {
     force(mask)
     maskFun <- function() {
         grid.draw(mask, recording=FALSE)
     }
-    result <- list(f=maskFun, ref=NULL)
+    result <- list(f=.mask(maskFun, type), ref=NULL)
     class(result) <- "GridMask"
     result
 }   
@@ -58,3 +58,9 @@ unresolveMask.GridResolvedMask <- function(mask) {
     result
 }
 
+## User interface
+as.mask <- function(x, type=c("alpha", "luminance")) {
+    if (!is.grob(x))
+        stop("Only a grob can be converted to a mask")
+    createMask(x, match.arg(type))
+}

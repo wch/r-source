@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -16,7 +16,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        text.font = NULL, merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0, xpd, title.col = text.col, title.adj = 0.5,
+       inset = 0, xpd, title.col = text.col[1], title.adj = 0.5,
+       title.cex = cex[1], title.font = text.font[1],
        seg.len = 2)
 }
 \description{
@@ -66,15 +67,19 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     x location.  A value of 0 means left justified, 0.5 means centered
     and 1 means right justified.}
   \item{yjust}{the same as \code{xjust} for the legend y location.}
-  \item{x.intersp}{character interspacing factor for horizontal (x) spacing.}
-  \item{y.intersp}{the same for vertical (y) line distances.}
+  \item{x.intersp}{character interspacing factor for horizontal (x) spacing
+    between symbol and legend text.}
+  \item{y.intersp}{vertical (y) distances (in lines of text shared above/below each legend entry).
+    A vector with one element for each row of the legend can be used.}
   \item{adj}{numeric of length 1 or 2; the string adjustment for legend
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
-    coordinates.  (Should be a single positive number even for a reversed
-    x axis.)  Defaults to the proper value computed by
-    \code{\link{strwidth}(legend)}.}
+    coordinates.  (Should be positive even for a reversed x axis.)
+    Can be a single positive numeric value (same width for each column of the legend),
+    a vector (one element for each column of the legend),
+    \code{NULL} (default) for computing a proper maximum value of \code{\link{strwidth}(legend)}),
+    or \code{NA} for computing a proper column wise maximum value of \code{\link{strwidth}(legend)}).}
   \item{text.col}{the color used for the legend text.}
   \item{text.font}{the font used for the legend text, see \code{\link{text}}.}
   \item{merge}{logical; if \code{TRUE}, merge points and lines but
@@ -95,9 +100,12 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     plot region when legend is placed by keyword.}
   \item{xpd}{if supplied, a value of the \link{graphical parameter} \code{xpd}
     to be used while the legend is being drawn.}
-  \item{title.col}{color for \code{title}.}
+  \item{title.col}{color for \code{title}, defaults to \code{text.col[1]}.}
   \item{title.adj}{horizontal adjustment for \code{title}: see the help
     for \code{\link{par}("adj")}.}
+  \item{title.cex}{expansion factor(s) for the title, defaults to \code{cex[1]}.}
+  \item{title.font}{the font used for the legend title, defaults to \code{text.font[1]},
+    see \code{\link{text}}.}
   \item{seg.len}{the length of lines drawn to illustrate \code{lty}
     and/or \code{lwd} (in units of character widths).}
 }
@@ -182,18 +190,26 @@ for (i in seq(cexv)) {
   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 }
 ## cex *vector* [in R <= 3.5.1 has 'if(xc < 0)' w/ length(xc) == 2]
-legend(6,1, leg.txt, pch = "sSvV", col = c(1, 3), cex = 1+(-1:2)/8)
+legend("right", leg.txt, pch = "sSvV", col = c(1, 3),
+       cex = 1+(-1:2)/8, trace = TRUE)# trace: show computed lengths & coords
 
 ## 'merge = TRUE' for merging lines & points:
 x <- seq(-pi, pi, length.out = 65)
-plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
-points(x, cos(x), pch = 3, col = 4)
-lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
-title("legend(..., lty = c(2, -1, 1), pch = c(NA, 3, 4), merge = TRUE)",
-      cex.main = 1.1)
-legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3, 4, 6),
+for(reverse in c(FALSE, TRUE)) {  ## normal *and* reverse axes:
+  F <- if(reverse) rev else identity
+  plot(x, sin(x), type = "l", col = 3, lty = 2,
+       xlim = F(range(x)), ylim = F(c(-1.2, 1.8)))
+  points(x, cos(x), pch = 3, col = 4)
+  lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
+  title("legend('top', lty = c(2, -1, 1), pch = c(NA, 3, 4), merge = TRUE)",
+        cex.main = 1.1)
+  legend("top", c("sin", "cos", "tan"), col = c(3, 4, 6),
        text.col = "green4", lty = c(2, -1, 1), pch = c(NA, 3, 4),
-       merge = TRUE, bg = "gray90")
+       merge = TRUE, bg = "gray90", trace=TRUE)
+  \dontshow{ if(!reverse && interactive()) {
+    cat("waiting .."); Sys.sleep(2); cat(" done\n") }
+  }
+} # for(..)
 
 ## right-justifying a set of labels: thanks to Uwe Ligges
 x <- 1:5; y1 <- 1/x; y2 <- 2/x
@@ -201,8 +217,8 @@ plot(rep(x, 2), c(y1, y2), type = "n", xlab = "x", ylab = "y")
 lines(x, y1); lines(x, y2, lty = 2)
 temp <- legend("topright", legend = c(" ", " "),
                text.width = strwidth("1,000,000"),
-               lty = 1:2, xjust = 1, yjust = 1,
-               title = "Line Types")
+               lty = 1:2, xjust = 1, yjust = 1, inset = 1/10,
+               title = "Line Types", title.cex = 0.5, trace=TRUE)
 text(temp$rect$left + temp$rect$w, temp$text$y,
      c("1,000", "1,000,000"), pos = 2)
 
@@ -220,8 +236,8 @@ for(ll in c("","x","y","xy")) {
   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0, 0.3))
   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
-         lty = 1, merge = TRUE)   #, trace = TRUE)
-}
+         lty = 1)  #, trace = TRUE)
+} #      ^^^^^^^ to force lines -> automatic merge=TRUE
 par(mfrow = c(1,1))
 
 ##-- Math expressions:  ------------------------------
@@ -244,26 +260,29 @@ ex12 <- expression(bar(x) == sum(over(x[i], n), i == 1, n),
                    hat(x) == median(x[i], i == 1, n))
 utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd = 2))
 
-## 'Filled' boxes -- for more, see example(plot.factor)
-op <- par(bg = "white") # to get an opaque box for the legend
-plot(cut(weight, 3) ~ group, data = PlantGrowth, col = NULL,
-     density = 16*(1:3))
-par(op)
+## 'Filled' boxes -- see also example(barplot) which may call legend(*, fill=)
+barplot(VADeaths)
+legend("topright", rownames(VADeaths), fill = gray.colors(nrow(VADeaths)))
 
-## Using 'ncol' :
+## Using 'ncol'
 x <- 0:64/64
-matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
+for(R in c(identity, rev)) { # normal *and* reverse x-axis works fine:
+  xl <- R(range(x)); x1 <- xl[1]
+matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)), xlim=xl,
         type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")
 op <- par(bg = "antiquewhite1")
-legend(0, 1.5, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
+legend(x1, 1.5, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
        pch = "*", ncol = 4, cex = 0.8)
-legend(.8,1.2, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
+legend("bottomright", paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
        pch = "*", cex = 0.8)
-legend(0, -.1, paste("sin(", 1:4, "pi * x)"), col = 1:4, lty = 1:4,
+legend(x1, -.1, paste("sin(", 1:4, "pi * x)"), col = 1:4, lty = 1:4,
        ncol = 2, cex = 0.8)
-legend(0, -.4, paste("sin(", 5:7, "pi * x)"), col = 4:6,  pch = 24,
+legend(x1, -.4, paste("sin(", 5:7, "pi * x)"), col = 4:6,  pch = 24,
        ncol = 2, cex = 1.5, lwd = 2, pt.bg = "pink", pt.cex = 1:3)
 par(op)
+  \dontshow{ if(interactive() && identical(R, identity)) {
+     cat("waiting .."); Sys.sleep(2); cat(" done\n") }}
+} # for(..)
 
 ## point covering line :
 y <- sin(3*pi*x)
@@ -293,5 +312,14 @@ for(i in 1:4) {
           ncol = 2, cex = 2, lwd = 3, text.font = i, text.col = c6)
 }
 par(op)
+
+# using text.width for several columns
+plot(1, type="n")
+legend("topleft", c("This legend", "has", "equally sized", "columns."),
+       pch = 1:4, ncol = 4)
+legend("bottomleft", c("This legend", "has", "optimally sized", "columns."),
+       pch = 1:4, ncol = 4, text.width = NA)
+legend("right", letters[1:4], pch = 1:4, ncol = 4,
+       text.width = 1:4 / 50)
 }
 \keyword{aplot}

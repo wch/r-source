@@ -106,12 +106,15 @@ Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
-Rfe.exe: Rfe.o ../rhome.o rcico.o
+Rfe.exe: Rfe.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
 Rscript.o: ../../unix/Rscript.c ../../include/Rversion.h
 	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
+
+Renviron.o: ../../main/Renviron.c
+	$(CC) $(CFLAGS) -I. -I../../include -DRENVIRON_WIN32_STANDALONE -c $< -o $@
 
 Rscript.exe: Rscript.o rsico.o 
 

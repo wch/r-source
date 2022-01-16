@@ -56,10 +56,10 @@ read.fortran <- function(file, format, ..., as.is = TRUE, colClasses = NA)
 
     if(is.list(format)){
         ff <- lapply(format,processFormat)
-        widths <- lapply(ff,"[[",1L)
+        widths <- lapply(ff,`[[`,1L)
         if (is.na(colClasses))
-            colClasses <- do.call("c",lapply(ff,"[[",2L))
-        decimals <- do.call("c",lapply(ff,"[[",3L))
+            colClasses <- do.call(c,lapply(ff,`[[`,2L))
+        decimals <- do.call(c,lapply(ff,`[[`,3L))
     } else {
         ff <- processFormat(format)
         widths <- ff[[1L]]

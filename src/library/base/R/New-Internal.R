@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ try <- function(expr, silent = FALSE,
             ## Use identical() since call[[1L]] can be non-atomic.
             if (identical(call[[1L]], quote(doTryCatch)))
                 call <- sys.call(-4L)
-            dcall <- deparse(call)[1L]
+            dcall <- deparse(call, nlines = 1L)
             prefix <- paste("Error in", dcall, ": ")
             LONG <- 75L # to match value in errors.c
             sm <- strsplit(conditionMessage(e), "\n")[[1L]]
@@ -182,7 +182,7 @@ is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
     ## else
     if(na.rm && any(ii <- is.na(x)))
 	x <- x[!ii]
-    .Internal(is.unsorted(x, strictly))
+    .Internal(is.unsorted(x, na.rm, strictly))
 }
 
 nchar <- function(x, type = "chars", allowNA = FALSE, keepNA = NA)

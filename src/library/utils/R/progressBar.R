@@ -1,7 +1,7 @@
 #  File src/library/utils/R/progressBar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,10 +29,11 @@ txtProgressBar <-
     .nb <- 0L
     .pc <- -1L # This ensures the initial value is displayed for style = 3
     nw <- nchar(char, "w")
+    if (nw == 0) stop("'char' must have a non-zero width")
     if(is.na(width)) {
         width <- getOption("width")
         if(style == 3L) width <- width - 10L
-        width <- trunc(width/nw)
+        if(nw > 1) width <- trunc(width/nw)
     }
     if (max <= min) stop("must have 'max' > 'min'")
 

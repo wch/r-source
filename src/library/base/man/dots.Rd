@@ -69,7 +69,14 @@ tst.dl(4, 5)    # 1
 tst.dl(4, 5, 6) # 2  namely '5, 6'
 tst.dl(4, 5, 6, 7, sin(1:10), "foo"/"bar") # 5.    Note: no evaluation!
 tst.dns(4, foo=5, 6, bar=7, sini = sin(1:10), "foo"/"bar")
-##        "foo"  NA "bar"  "sini"               NA
+##        "foo"  "" "bar"  "sini"               ""
+
+## From R 4.1.0 to 4.1.2, ...names() sometimes did not match names(list(...));
+## check and show (these examples all would've failed):
+chk.n2 <- function(...) stopifnot(identical(print(...names()), names(list(...))))
+chk.n2(4, foo=5, 6, bar=7, sini = sin(1:10), "bar")
+chk.n2()
+chk.n2(1,2)
 }
 \keyword{programming}
 \keyword{documentation}

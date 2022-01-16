@@ -1,23 +1,22 @@
-.TH Rscript "1" "April 2007" "R scripting" FSF
+.TH Rscript "1" "November 2021" "R scripting" FSF
 .SH NAME
 Rscript \- front end for scripting with R
 .SH SYNOPSIS
 .B Rscript
-[\fI--options\fR] [\fI-e expr\fR] \fIfile \fR[\fIargs\fR]
+[\fIoptions\fR] [\fI-e expr\fR [\fI-e expr2\fR ...] | \fIfile\fR] [\fIargs\fR]
 .SH DESCRIPTION
 A binary front-end to R, for use in scripting applications.
 .TP
 \fBexpr\fR
-An optional expression to be evaluated, used in place of \fBfile\fR.
+Optional expressions to be evaluated, used in place of \fBfile\fR.
 .TP
 \fBfile\fR
-Input file of R expressions
+Input file of R expressions.
 .TP
 \fBargs\fR
-Optional further arguments to be processed by \fIcommandArgs\fR
-in the R interpreter.
+Optional arguments to be processed by \fIcommandArgs\fR in the R interpreter.
 .SH OPTIONS
-\fB\-\-options\fR accepted are
+\fBoptions\fR accepted in [options]:
 .TP
 \fB\-\-help\fR
 Print usage and exit
@@ -29,8 +28,7 @@ Print version and exit
 Print information on progress
 .TP
 \fB\-\-default\-packages\fR=\fIlist\fR
-Where 'list' is a comma-separated set
-of package names, or 'NULL'
+Where 'list' is a comma-separated set of package names, or 'NULL'
 .PP
 and also options to R (in addition to \fB\-\-no-echo\fR \fB\-\-no\-restore\fR),
 such as
@@ -54,4 +52,4 @@ Do restore previously saved objects at startup
 Combine \fB\-\-no\-save\fR, \fB\-\-no\-restore\fR, \fB\-\-no\-site\-file\fR
 \fB\-\-no\-init\-file\fR and \fB\-\-no\-environ\fR
 .SH "SEE ALSO"
-.BR R(1)
+\fBR\fR\|(1), \fB?Rscript\fR from within R

@@ -725,6 +725,70 @@ struct _DevDesc {
      */
     Rboolean deviceClip;
 
+    /* Define a group of shapes that will be drawn together.
+     * 
+     * 'source' is an R function that draws something.
+     * 'op' is the composition operator applied when drawing 'group'.
+     *     (this must be R_GE_compositeOver or one of its ilk;
+     *      see GraphicsEngine.h).
+     * 'destination' is either NULL or an R function that draws something.
+     * 'name' is a string that can be used to identify the group on the device.
+     * 
+     * 'destination' is drawn first (using the "over" compositing operator), 
+     * then 'source' is drawn using the 'op' compositing operator.
+     * 
+     * The return value is a "reference" to the group that only has to 
+     * make sense to the device; it is sent back in via useGroup().
+     */
+#if R_USE_PROTOTYPES
+    SEXP (*defineGroup)(SEXP source, int op, SEXP destination, pDevDesc dd);
+#else
+    SEXP (*defineGroup)();
+#endif
+    /* Render a group of shapes that has previously been defined.
+     * If the group identified by 'ref' does not exist on the device, 
+     * do nothing.
+     *
+     * 'trans' is a transformation matrix or NULL (which means do not transform)
+     */
+#if R_USE_PROTOTYPES
+    void (*useGroup)(SEXP ref, SEXP trans, pDevDesc dd);
+#else
+    void (*useGroup)();
+#endif
+    /* An opportunity for the device to "release" (e.g., the memory 
+     * associated with) a group definition.
+     */
+#if R_USE_PROTOTYPES
+    void (*releaseGroup)(SEXP ref, pDevDesc dd);
+#else
+    void (*releaseGroup)();
+#endif
+
+    /* Draw (stroke or fill) a path,
+     * where the path is defined by an R function that draws something
+     */
+#if R_USE_PROTOTYPES
+    void (*stroke)(SEXP path, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*stroke)();
+#endif
+#if R_USE_PROTOTYPES
+    void (*fill)(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*fill)();
+#endif
+#if R_USE_PROTOTYPES
+    void (*fillStroke)(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*fillStroke)();
+#endif
+#if R_USE_PROTOTYPES
+    SEXP (*capabilities)(SEXP cap);
+#else
+    SEXP (*capabilities)();
+#endif
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

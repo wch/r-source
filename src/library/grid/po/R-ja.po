@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -44,9 +44,7 @@ msgid "how did we get here?"
 msgstr " どうしてこうなったのかな？ "
 
 msgid "must start new page if showing leaves separately"
-msgstr ""
-" もし提示したものが別々になったままなら、新しいページを開始する必要がありま"
-"す "
+msgstr " もし提示したものが別々になったままなら、新しいページを開始する必要があります "
 
 msgid "invalid 'edit' information"
 msgstr " 不正な 'edit' 情報です "
@@ -61,9 +59,7 @@ msgid "invalid 'grob'"
 msgstr " 不正な 'grob' です "
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-" 不正な 'row' かつ/または 'col' です (frame layout の中にそのようなセルは存在"
-"しません) "
+msgstr " 不正な 'row' かつ/または 'col' です (frame layout の中にそのようなセルは存在しません) "
 
 msgid "'col' can only be a range of existing columns"
 msgstr " 'col' は存在する列の範囲しかとり得ません "
@@ -77,19 +73,11 @@ msgstr " 'row' は存在する行の範囲しかとり得ません "
 msgid "invalid 'row' specification"
 msgstr " 不正な 'row' の指定です "
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-" 'side=[\"left\", \"right\"]', 'col', 'col.before', 'col.after' のうち 2 つ以"
-"上を同時に指定することは出来ません "
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr " 'side=[\"left\", \"right\"]', 'col', 'col.before', 'col.after' のうち 2 つ以上を同時に指定することは出来ません "
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-" 'side=[\"top\", \"bottom\"]', 'row', 'row.before', 'row.after' のうち 1 つの"
-"みを指定しなければいけません "
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr " 'side=[\"top\", \"bottom\"]', 'row', 'row.before', 'row.after' のうち 1 つのみを指定しなければいけません "
 
 msgid "invalid 'n'"
 msgstr " 不正な 'n' です "
@@ -128,22 +116,14 @@ msgid "invalid display list element"
 msgstr " 不正な display list 要素です "
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-" いずれかの grob(s) が上書きされました (おそらく grab は信用できるものではあ"
-"りません; 'wrap = TRUE' を試してください) "
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr " いずれかの grob(s) が上書きされました (おそらく grab は信用できるものではありません; 'wrap = TRUE' を試してください) "
 
 msgid "viewport overwritten (grab MAY not be faithful)"
-msgstr ""
-" viewport が上書きされました (おそらく grab は信用できるものではありません) "
+msgstr " viewport が上書きされました (おそらく grab は信用できるものではありません) "
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-" grob が viewports に push され、viewports は pop/up されませんでした (おそら"
-"く grab は信用できるものではありません) "
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr " grob が viewports に push され、viewports は pop/up されませんでした (おそらく grab は信用できるものではありません) "
 
 msgid "only valid to push viewports"
 msgstr " viewports を push することだけが有効です "
@@ -152,8 +132,7 @@ msgid "must specify at least one viewport"
 msgstr " 少なくとも 1 つの viewport を指定しなければいけません "
 
 msgid "Down viewport failed to record on display list"
-msgstr ""
-" ディスプレイリスト上でviewportを下げる操作を記録することに失敗しました "
+msgstr " ディスプレイリスト上でviewportを下げる操作を記録することに失敗しました "
 
 msgid "Down viewport incorrectly recorded on display list"
 msgstr " ディスプレイリスト上でviewportを下げる操作が誤って記録されました "
@@ -166,6 +145,10 @@ msgstr " 少なくとも 1 つの viewport を navigate up しなければいけ
 
 msgid "Invalid number of generations"
 msgstr " 生成数が不正です "
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr " 不正な 'arrow' 引数です "
 
 msgid "invalid object inserted on the display list"
 msgstr " display list 上に不正なオブジェクトが挿入されました "
@@ -189,8 +172,7 @@ msgid "invalid 'grob' class"
 msgstr " 不正な 'grob' クラスです "
 
 msgid "a 'grob' path must contain at least one 'grob' name"
-msgstr ""
-" 'grob' のパスは少なくとも 1 つの 'grob' の名前を含んでいなければなりません "
+msgstr " 'grob' のパスは少なくとも 1 つの 'grob' の名前を含んでいなければなりません "
 
 msgid "unable to coerce to \"gList\""
 msgstr " \"gList\" に強制変換出来ません "
@@ -282,6 +264,30 @@ msgstr " \"gTree\" に対しては 'children' の再順序化しかできませ�
 msgid "Invalid 'order'"
 msgstr " 不正な 'order' です "
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr " 不正な 'order' です "
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr " 不正な位置決め指定 (justification) です "
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr " 不正な 'order' です "
+
 msgid "'l' must be a layout"
 msgstr " 'l' は layout でなければなりません "
 
@@ -329,6 +335,28 @@ msgstr " 不正な 'listing' "
 
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr " 'x' と 'y' は同じ長さでなければなりません "
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr " 'x1', 'y1', 'x2', 'y2' は単位 (units) でなければなりません "
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr " 'x1', 'y1', 'x2', 'y2' は単位 (units) でなければなりません "
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr " 'x', 'y', 'width', 'height' は全て長さ 1 でなければなりません "
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -404,9 +432,7 @@ msgid "'x' and 'y' must be 'unit' objects and have the same length"
 msgstr " 'x' と 'y' は 'units' オブジェクトで，同じ長さでなければなりません "
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-" 'x', 'y', 'width', 'height' は全て長さ 1 の単位 (units) でなければなりませ"
-"ん "
+msgstr " 'x', 'y', 'width', 'height' は全て長さ 1 の単位 (units) でなければなりません "
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr " 'x' と 'y' は長さ 1 でなければなりません "
@@ -503,15 +529,11 @@ msgstr " 'vpList' 中には viewport のみが許されます "
 msgid "only viewports allowed in 'vpStack'"
 msgstr " 'vpStack' 中には viewport のみが許されます "
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-" 'parent' は viewport でなければならず、'children' は 'vpTree' 中の 'vpList' "
-"でなければなりません "
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr " 'parent' は viewport でなければならず、'children' は 'vpTree' 中の 'vpList' でなければなりません "
 
 msgid "a viewport path must contain at least one viewport name"
-msgstr ""
-" viewport のパスは少なくとも一つの viewport 名を含んでいる必要があります "
+msgstr " viewport のパスは少なくとも一つの viewport 名を含んでいる必要があります "
 
 msgid "must specify at least one of 'x' or 'xscale'"
 msgstr " 'x' または 'xscale' のうち少なくとも 1 つを指定しなければなりません "
@@ -534,17 +556,13 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgstr " 引数 'x' は単位 (units) オブジェクトでなければなりません "
 
 #~ msgid "no string supplied for 'strwidth/height' unit"
-#~ msgstr ""
-#~ " 'strwidth/height' 単位 (unit) に対する文字列があたえられていません "
+#~ msgstr " 'strwidth/height' 単位 (unit) に対する文字列があたえられていません "
 
 #~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
-#~ msgstr ""
-#~ " 'grobwidth/height' 単位 (unit) に対して 'grob' があたえられていません "
+#~ msgstr " 'grobwidth/height' 単位 (unit) に対して 'grob' があたえられていません "
 
 #~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-#~ msgstr ""
-#~ " 'gPath' は 'grobwidth/height' 単位 (units) 中では深さ 1 でなければなりま"
-#~ "せん "
+#~ msgstr " 'gPath' は 'grobwidth/height' 単位 (units) 中では深さ 1 でなければなりません "
 
 #~ msgid "non-NULL value supplied for plain unit"
 #~ msgstr " plain unit に対して NULL でない値が与えられました "
@@ -569,9 +587,7 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgstr " x と y は単位 (units) でなければなりません "
 
 #~ msgid "it is invalid to combine 'unit' objects with other types"
-#~ msgstr ""
-#~ " 単位 ('unit') オブジェクトとそれ以外の型のオブジェクトを結合することは出"
-#~ "来ません "
+#~ msgstr " 単位 ('unit') オブジェクトとそれ以外の型のオブジェクトを結合することは出来ません "
 
 #~ msgid "invalid element in the display list"
 #~ msgstr " ディスプレイリストの中に不正な要素があります "
@@ -586,9 +602,7 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgstr " grid.grob() は廃止予定です; 代わりに grob() を使って下さい "
 
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-#~ msgstr ""
-#~ " 'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければ"
-#~ "なりません "
+#~ msgstr " 'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければなりません "
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr " 添え字の符号は混在できません "
@@ -600,12 +614,8 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr " この関数は余分で，今後のバージョンでは無くなる予定です "
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
-#~ msgstr ""
-#~ " grid.arrows() は廃止されました。直線描画関数には 'arrow' 引数を使ってくだ"
-#~ "さい。 "
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+#~ msgstr " grid.arrows() は廃止されました。直線描画関数には 'arrow' 引数を使ってください。 "
 
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr " shape は -1 と 1 の間になければなりません  "
@@ -613,19 +623,11 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr " 単位ではないオペランド(operand)は数値でなければなりません "
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
-#~ msgstr ""
-#~ " unit.rep は廃止されました。総称的 rep 関数には代わりに unit メソッドを使"
-#~ "いましょう  "
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+#~ msgstr " unit.rep は廃止されました。総称的 rep 関数には代わりに unit メソッドを使いましょう  "
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
-#~ msgstr ""
-#~ " unit.length は廃止されました。総称的 length 関数には代わりに unit メソッ"
-#~ "ドを使いましょう  "
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+#~ msgstr " unit.length は廃止されました。総称的 length 関数には代わりに unit メソッドを使いましょう  "
 
 #, fuzzy
 #~ msgid "invalid graphics parameters"

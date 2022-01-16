@@ -24,45 +24,50 @@
 #include <Defn.h>
 #include <Internal.h>
 
+static SEXP checkArgIsSymbol(SEXP x) {
+    if (TYPEOF(x) != SYMSXP)
+	error("argument must be a symbol");
+    return x;
+}
+
 /* .Internal(lapply(X, FUN)) */
 
 /* This is a special .Internal, so has unevaluated arguments.  It is
-   called from a closure wrapper, so X and FUN are promises.
+   called from a closure wrapper, so X and FUN will be symbols that
+   are bound to promises in rho.
 
    FUN must be unevaluated for use in e.g. bquote .
 */
 SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    PROTECT_INDEX px;
+    PROTECT_INDEX pidx, cidx;
 
     checkArity(op, args);
     SEXP X, XX, FUN;
-    PROTECT_WITH_INDEX(X =CAR(args), &px);
+    X = checkArgIsSymbol(CAR(args));
     XX = PROTECT(eval(CAR(args), rho));
     R_xlen_t n = xlength(XX);  // a vector, so will be valid.
-    FUN = CADR(args);
+    FUN = checkArgIsSymbol(CADR(args));
     Rboolean realIndx = n > INT_MAX;
 
     SEXP ans = PROTECT(allocVector(VECSXP, n));
     SEXP names = getAttrib(XX, R_NamesSymbol);
     if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
 
-    /* Build call: FUN(XX[[<ind>]], ...) */
-
-    SEXP ind = PROTECT(allocVector(realIndx ? REALSXP : INTSXP, 1));
+    /* Build call: FUN(X[[<ind>]], ...) */
     SEXP isym = install("i");
+    SEXP tmp = PROTECT(lang3(R_Bracket2Symbol, X, isym));
+    SEXP R_fcall = PROTECT(lang3(FUN, tmp, R_DotsSymbol));
+    MARK_NOT_MUTABLE(R_fcall);
+
+    /* Create the loop index variable and value */
+    SEXP ind = allocVector(realIndx ? REALSXP : INTSXP, 1);
+    PROTECT_WITH_INDEX(ind, &pidx);
     defineVar(isym, ind, rho);
     INCREMENT_NAMED(ind);
+    R_varloc_t loc = R_findVarLocInFrame(rho, isym);
+    PROTECT_WITH_INDEX(loc.cell, &cidx);
 
-    /* Notice that it is OK to have one arg to LCONS do memory
-       allocation and not PROTECT the result (LCONS does memory
-       protection of its args internally), but not both of them,
-       since the computation of one may destroy the other */
-
-    SEXP tmp = PROTECT(LCONS(R_Bracket2Symbol,
-			LCONS(X, LCONS(isym, R_NilValue))));
-    SEXP R_fcall = PROTECT(LCONS(FUN,
-				 LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
     for(R_xlen_t i = 0; i < n; i++) {
 	if (realIndx) REAL(ind)[0] = (double)(i + 1);
@@ -70,6 +75,14 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	tmp = R_forceAndCall(R_fcall, 1, rho);
 	if (MAYBE_REFERENCED(tmp)) tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);
+	if (ind != R_GetVarLocValue(loc) || MAYBE_SHARED(ind)) {
+	    /* ind has been captured or removed by FUN so fix it up */
+	    REPROTECT(ind = duplicate(ind), pidx);
+	    defineVar(isym, ind, rho);
+	    INCREMENT_NAMED(ind);
+	    loc = R_findVarLocInFrame(rho, isym);
+	    REPROTECT(loc.cell, cidx);
+	}
     }
 
     UNPROTECT(6);

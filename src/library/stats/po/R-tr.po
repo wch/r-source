@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:26\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -322,8 +322,7 @@ msgid "wrong length for 'fixed'"
 msgstr "'fixed' için yanlış uzunluk"
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"bazı AR parametreleri düzeltildi: transform.pars = FALSE olarak ayarlanıyor"
+msgstr "bazı AR parametreleri düzeltildi: transform.pars = FALSE olarak ayarlanıyor"
 
 #, fuzzy
 msgid "too few non-missing observations"
@@ -369,8 +368,7 @@ msgid "converting non-invertible initial MA values"
 msgstr ""
 
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"bazı ARMA parametreleri düzeltildi: transform.pars = FALSE olarak ayarlanıyor"
+msgstr "bazı ARMA parametreleri düzeltildi: transform.pars = FALSE olarak ayarlanıyor"
 
 msgid "'xreg' is collinear"
 msgstr "'xreg' aynı doğrultuda"
@@ -522,9 +520,7 @@ msgstr ""
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr ""
 
-msgid ""
-"orthogonal polynomials cannot be represented accurately enough for %d "
-"degrees of freedom"
+msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
 msgstr ""
 
 msgid "'scores' argument is of the wrong length"
@@ -569,8 +565,7 @@ msgstr ""
 
 #, fuzzy
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr ""
-"xtabs(*, sparse=TRUE) \"Matrix\" paketinin düzgün kurulumunu gerektirir"
+msgstr "xtabs(*, sparse=TRUE) \"Matrix\" paketinin düzgün kurulumunu gerektirir"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
@@ -648,9 +643,7 @@ msgstr ""
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k' nın öğeleri 1 ve %d arasında olmalı"
 
-msgid ""
-"dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
-"\"hclust\""
+msgid "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to \"hclust\""
 msgstr ""
 
 msgid "dendrogram node with non-positive #{branches}"
@@ -708,11 +701,11 @@ msgstr ""
 msgid "argument 'x' must be numeric"
 msgstr "'x' argümanı nümerik olmalı"
 
-msgid "'x' contains missing values"
-msgstr "'x' eksik değerler içeriyor"
-
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' ve 'weights' eşit olmayan uzunluklara sahip"
+
+msgid "'x' contains missing values"
+msgstr "'x' eksik değerler içeriyor"
 
 msgid "'weights' must all be finite"
 msgstr "'weights' hep sonlu olmalı"
@@ -835,8 +828,7 @@ msgstr "bağlantı tanınmadı"
 
 #, fuzzy
 msgid "link \"%s\" not available for %s family; available links are %s"
-msgstr ""
-"bağlantı \"%s\" poisson ailesi için mevcut değil; mevcut bağlantılar: %s"
+msgstr "bağlantı \"%s\" poisson ailesi için mevcut değil; mevcut bağlantılar: %s"
 
 #, fuzzy
 msgid "negative values not allowed for the 'Poisson' family"
@@ -882,17 +874,13 @@ msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "pozitif değerlere sadece ters gauss ailesi için izin verilir"
 
 #, fuzzy
-msgid ""
-"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
-"family"
+msgid "need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian' ailesi için CRAN paketi 'SuppDists' gerekli"
 
 msgid "using weights as inverse variances"
 msgstr ""
 
-msgid ""
-"'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
-"\"mu^2\", \"mu^3\" and \"constant\""
+msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
 msgstr ""
 
 msgid "length mismatch in convolution"
@@ -1025,8 +1013,7 @@ msgstr "negatif sıklığa izin verilmiyor"
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr ""
 
-msgid ""
-"fitting to calculate the null deviance did not converge -- increase 'maxit'?"
+msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1045,8 +1032,7 @@ msgstr ""
 msgid "invalid fitted means in empty model"
 msgstr ""
 
-msgid ""
-"length of 'start' should equal %d and correspond to initial coefs for %s"
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
 
 msgid "NAs in V(mu)"
@@ -1067,8 +1053,7 @@ msgstr ""
 msgid "singular fit encountered"
 msgstr ""
 
-msgid ""
-"no valid set of coefficients has been found: please supply starting values"
+msgid "no valid set of coefficients has been found: please supply starting values"
 msgstr "uygun katsayı kümesi bulunamadı: lütfen başlangıç değeri verin"
 
 msgid "step size truncated due to divergence"
@@ -1118,8 +1103,7 @@ msgstr ""
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr ""
 
-msgid ""
-"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
 msgstr ""
 
 msgid "invalid clustering method"
@@ -1334,9 +1318,7 @@ msgstr ""
 msgid "predictions on current data refer to _future_ responses"
 msgstr ""
 
-msgid ""
-"assuming prediction variance inversely proportional to weights used for "
-"fitting"
+msgid "assuming prediction variance inversely proportional to weights used for fitting"
 msgstr ""
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
@@ -1387,13 +1369,10 @@ msgstr "geçersiz 'x'"
 msgid "invalid 'y'"
 msgstr "geçersiz 'y'"
 
-msgid ""
-"specified the square of a factor predictor to be dropped when degree = 1"
+msgid "specified the square of a factor predictor to be dropped when degree = 1"
 msgstr ""
 
-msgid ""
-"specified the square of a predictor to be dropped with only one numeric "
-"predictor"
+msgid "specified the square of a predictor to be dropped with only one numeric predictor"
 msgstr ""
 
 msgid "specified parametric for all predictors"
@@ -1571,8 +1550,7 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' en az bir uzunluğunda bir karakter vektörü olmalı"
 
-msgid ""
-"Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr ""
 
 msgid "reformulate"
@@ -1660,8 +1638,7 @@ msgstr "geçersiz 'method' argümanı"
 msgid "no sign change found in %d iterations"
 msgstr "%d ötelemede yakınsamadı"
 
-msgid ""
-"did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
+msgid "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
 
 msgid "f() values at end points not of opposite sign"
@@ -1764,8 +1741,7 @@ msgstr ""
 msgid "'trace != 0' needs 'REPORT >= 1'"
 msgstr "'trace != 0' 'REPORT >= 1' gerektiriyor"
 
-msgid ""
-"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
+msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 
 msgid ""
@@ -1830,10 +1806,8 @@ msgstr "k > 2 durumu tanımlanmamış"
 msgid "'r' must be a single positive number"
 msgstr "'r' tek bir pozitif tamsayı olmalı"
 
-msgid ""
-"exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr ""
-"'n', 'delta', 'sd', 'power', veya 'sig.level' dan biri tam olarak NULL olmalı"
+msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
+msgstr "'n', 'delta', 'sd', 'power', veya 'sig.level' dan biri tam olarak NULL olmalı"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1851,9 +1825,7 @@ msgstr ""
 msgid "'%s' must be numeric in [0, 1]"
 msgstr "'sig.level' [0,1] aralığında bir sayı olmalı"
 
-msgid ""
-"exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
-"level' must be NULL"
+msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
 msgid "number of groups must be at least 2"
@@ -1886,9 +1858,7 @@ msgstr ""
 msgid "'newdata' must be a matrix or data frame"
 msgstr ""
 
-msgid ""
-"'newdata' does not have named columns matching one or more of the original "
-"columns"
+msgid "'newdata' does not have named columns matching one or more of the original columns"
 msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
@@ -2010,9 +1980,7 @@ msgstr ""
 msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr "'init' uzunluğu 'filter' ile eşit uzunlukta olmalı"
 
-msgid ""
-"length of 'varying' must be the product of length of 'v.names' and length of "
-"'times'"
+msgid "length of 'varying' must be the product of length of 'v.names' and length of 'times'"
 msgstr ""
 
 msgid "'k' must be positive"
@@ -2346,12 +2314,8 @@ msgstr "değiştirme değeri verilmedi"
 msgid "too many replacement values supplied"
 msgstr "çok fazla değiştirme değeri verildi"
 
-msgid ""
-"number of values supplied is not a sub-multiple of the number of values to "
-"be replaced"
-msgstr ""
-"verilen değerlerin sayısı değiştirilecek değerlerin sayısının bir tam böleni "
-"değil"
+msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
+msgstr "verilen değerlerin sayısı değiştirilecek değerlerin sayısının bir tam böleni değil"
 
 msgid "only replacement of elements is allowed"
 msgstr "sadece öğelerin değişimine izin veriliyor"
@@ -2399,8 +2363,7 @@ msgid "requested conf.level not achievable"
 msgstr "İstenen conf.level elde edilemiyor"
 
 #, fuzzy
-msgid ""
-"cannot compute confidence interval when all observations are zero or tied"
+msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
 
 msgid "cannot compute exact confidence interval with ties"
@@ -2578,10 +2541,8 @@ msgstr[1] "'start' %d satıra sahip olmalı"
 #, fuzzy
 msgid "but variable found had %d row"
 msgid_plural "but variables found have %d rows"
-msgstr[0] ""
-"'newdata' %d satıra sahip ancak bulunan değişken(ler)in %d satırı var"
-msgstr[1] ""
-"'newdata' %d satıra sahip ancak bulunan değişken(ler)in %d satırı var"
+msgstr[0] "'newdata' %d satıra sahip ancak bulunan değişken(ler)in %d satırı var"
+msgstr[1] "'newdata' %d satıra sahip ancak bulunan değişken(ler)in %d satırı var"
 
 #, fuzzy
 msgid "factor %s has new level %s"
@@ -2627,45 +2588,29 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
 
-#~ msgid ""
-#~ "link \"%s\" not available for quasipoisson family; available links are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" quasipoisson ailesi için mevcut değil; mevcut "
-#~ "bağlantılar: %s"
+#~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
+#~ msgstr "bağlantı \"%s\" quasipoisson ailesi için mevcut değil; mevcut bağlantılar: %s"
 
-#~ msgid ""
-#~ "link \"%s\" not available for gaussian family; available links are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
+#~ msgid "link \"%s\" not available for gaussian family; available links are %s"
+#~ msgstr "bağlantı \"%s\" gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
 
-#~ msgid ""
-#~ "link \"%s\" not available for binomial family; available links are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" binom ailesi için mevcut değil; mevcut bağlantılar: %s"
+#~ msgid "link \"%s\" not available for binomial family; available links are %s"
+#~ msgstr "bağlantı \"%s\" binom ailesi için mevcut değil; mevcut bağlantılar: %s"
 
-#~ msgid ""
-#~ "link \"%s\" not available for quasibinomial family; available links are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" quasibinomial ailesi için mevcut değil; mevcut "
-#~ "bağlantılar: %s"
+#~ msgid "link \"%s\" not available for quasibinomial family; available links are %s"
+#~ msgstr "bağlantı \"%s\" quasibinomial ailesi için mevcut değil; mevcut bağlantılar: %s"
 
 #, fuzzy
 #~ msgid ""
 #~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
-#~ "failures"
+#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 #~ msgstr "quasibinomial ailesi için, y 0 ve 1'lerin olduğu bir vektör olmalı"
 
 #~ msgid "link \"%s\" not available for gamma family; available links are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" gama ailesi için mevcut değil; mevcut bağlantılar: %s"
+#~ msgstr "bağlantı \"%s\" gama ailesi için mevcut değil; mevcut bağlantılar: %s"
 
-#~ msgid ""
-#~ "link \"%s\" not available for inverse.gaussian family; available links "
-#~ "are %s"
-#~ msgstr ""
-#~ "bağlantı \"%s\" ters gauss ailesi için mevcut değil; mevcut bağlantılar: "
-#~ "%s"
+#~ msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
+#~ msgstr "bağlantı \"%s\" ters gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
 
 #~ msgid "all group levels must be finite"
 #~ msgstr "tüm grup seviyeleri sonlu olmalı"

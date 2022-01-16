@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-01-05 r81451) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -149,8 +147,9 @@ Hair    Brown Blue Hazel Green
 > 
 > x <- 9.9*10^(-3:10)
 > plot(x, 1:14, log = "x")
-> axTicks(1) # now length 5, in R <= 2.13.x gave the following
-[1] 1e-01 1e+01 1e+03 1e+05 1e+07 1e+09 1e+11
+> axTicks(1) # now length 7, in R <= 2.13.x gave 'nintLog = Inf' res; then
+[1] 1e-02 1e+00 1e+02 1e+04 1e+06 1e+08 1e+10
+> ## 1e-01 1e+01 1e+03 1e+05 1e+07 1e+09 1e+11 ; since R 4.2.0: 1e-2 1e0 1e2 .. 1e10
 > axTicks(1, nintLog = Inf) # rather too many
  [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 1e+07 1e+08 1e+09
 [13] 1e+10 1e+11
@@ -692,7 +691,7 @@ temperature no yes
 > x <- -6:16
 > op <- par(mfrow = c(2, 2))
 > contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
-> z <- outer(x, sqrt(abs(x)), FUN = "/")
+> z <- outer(x, sqrt(abs(x)), FUN = `/`)
 > image(x, x, z)
 > contour(x, x, z, col = "pink", add = TRUE, method = "edge",
 +         vfont = c("sans serif", "plain"))
@@ -716,7 +715,7 @@ temperature no yes
 > 
 > ## Persian Rug Art:
 > x <- y <- seq(-4*pi, 4*pi, length.out = 27)
-> r <- sqrt(outer(x^2, y^2, "+"))
+> r <- sqrt(outer(x^2, y^2, `+`))
 > opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
 > for(f in pi^(0:3))
 +   contour(cos(r^2)*exp(-r/f),
@@ -924,7 +923,7 @@ temperature no yes
 > 
 > ## Persian Rug Art:
 > x <- y <- seq(-4*pi, 4*pi, length.out = 27)
-> r <- sqrt(outer(x^2, y^2, "+"))
+> r <- sqrt(outer(x^2, y^2, `+`))
 > filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 > ## rather, the key *should* be labeled:
 > filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,
@@ -1024,9 +1023,22 @@ Female Yes                89  17 202 131  94  24
 > ### ** Examples
 > 
 > hist(.leap.seconds, "years", freq = TRUE)
-> hist(.leap.seconds,
-+      seq(ISOdate(1970, 1, 1), ISOdate(2020, 1, 1), "5 years"))
+> brks <- seq(ISOdate(1970, 1, 1), ISOdate(2030, 1, 1), "5 years")
+> hist(.leap.seconds, brks)
 > rug(.leap.seconds, lwd=2)
+> ## show that  'include.lowest' "works"
+> stopifnot(identical(c(2L, rep(1L,11)),
++    hist(brks, brks, plot=FALSE, include.lowest=TRUE )$counts))
+> tools::assertError(verbose=TRUE, ##--> 'breaks' do not span range of 'x'
++    hist(brks, brks, plot=FALSE, include.lowest=FALSE))
+Asserted error: some 'x' not counted; maybe 'breaks' do not span range of 'x'
+> ## The default fuzz in hist.default()  "kills" this, with a "wrong" message:
+> try ( hist(brks[-13] + 1, brks, include.lowest = FALSE) )
+Error in hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused = FALSE,  : 
+  some 'x' not counted; maybe 'breaks' do not span range of 'x'
+> ## and decreasing 'fuzz' solves the issue:
+> hb <- hist(brks[-13] + 1, brks, include.lowest = FALSE, fuzz = 1e-10)
+> stopifnot(hb$counts == 1)
 > 
 > ## 100 random dates in a 10-week period
 > random.dates <- as.Date("2001/1/1") + 70*stats::runif(100)
@@ -1096,9 +1108,17 @@ List of 6
 +      main = "WRONG histogram") # and warning
 Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = angle,  :
   the AREAS in the plot are wrong -- rather use 'freq = FALSE'
+> ## R >= 4.2.0: no "*.5" labels on y-axis:
+> hist(c(2,3,3,5,5,6,6,6,7))
+> 
 > require(stats)
 > set.seed(14)
 > x <- rchisq(100, df = 4)
+> 
+> ## Histogram with custom x-axis:
+> hist(x, xaxt = "n")
+> axis(1, at = 0:17)
+> 
 > ## Don't show: 
 > op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))
 > ## End(Don't show)
@@ -1168,7 +1188,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > require("grDevices") # for colours
 > x <- y <- seq(-4*pi, 4*pi, length.out = 27)
-> r <- sqrt(outer(x^2, y^2, "+"))
+> r <- sqrt(outer(x^2, y^2, `+`))
 > image(z = z <- cos(r^2)*exp(-r/6), col = gray.colors(33))
 > image(z, axes = FALSE, main = "Math can be beautiful ...",
 +       xlab = expression(cos(r^2) * e^{-r/6}))
@@ -1273,18 +1293,39 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 + }
 > ## cex *vector* [in R <= 3.5.1 has 'if(xc < 0)' w/ length(xc) == 2]
-> legend(6,1, leg.txt, pch = "sSvV", col = c(1, 3), cex = 1+(-1:2)/8)
+> legend("right", leg.txt, pch = "sSvV", col = c(1, 3),
++        cex = 1+(-1:2)/8, trace = TRUE)# trace: show computed lengths & coords
+  xchar= 0.1723,0.1969,0.2215,0.2461 ; (yextra, ychar)= 0,0,0,0, 0.2355,0.2355,0.2355,0.2355 
+  rect2(5.559,2.839, w=2.721, h=1.177, ...)
+  points2( 5.732 5.756 5.781 5.805 , 2.603 2.368 2.132 1.897 , pch= s S v V , ...) 
 > 
 > ## 'merge = TRUE' for merging lines & points:
 > x <- seq(-pi, pi, length.out = 65)
-> plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
-> points(x, cos(x), pch = 3, col = 4)
-> lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
-> title("legend(..., lty = c(2, -1, 1), pch = c(NA, 3, 4), merge = TRUE)",
-+       cex.main = 1.1)
-> legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3, 4, 6),
+> for(reverse in c(FALSE, TRUE)) {  ## normal *and* reverse axes:
++   F <- if(reverse) rev else identity
++   plot(x, sin(x), type = "l", col = 3, lty = 2,
++        xlim = F(range(x)), ylim = F(c(-1.2, 1.8)))
++   points(x, cos(x), pch = 3, col = 4)
++   lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
++   title("legend('top', lty = c(2, -1, 1), pch = c(NA, 3, 4), merge = TRUE)",
++         cex.main = 1.1)
++   legend("top", c("sin", "cos", "tan"), col = c(3, 4, 6),
 +        text.col = "green4", lty = c(2, -1, 1), pch = c(NA, 3, 4),
-+        merge = TRUE, bg = "gray90")
++        merge = TRUE, bg = "gray90", trace=TRUE)
++   ## Don't show: 
++  if(!reverse && interactive()) {
++     cat("waiting .."); Sys.sleep(2); cat(" done\n") }
++   
++ ## End(Don't show)
++ } # for(..)
+  xchar= 0.1767,0.1767,0.1767 ; (yextra, ychar)= 0,0,0, 0.1256,0.1256,0.1256 
+  rect2(-0.4885,1.92, w=0.977, h=0.5023, ...)
+  segments2( -0.4355 -0.4355 , 1.794 1.543 , dx= 0.3534 0.3534 , dy=0, ...) 
+  points2( -0.2588 -0.2588 , 1.669 1.543 , pch= 3 4 , ...) 
+  xchar= -0.1767,-0.1767,-0.1767 ; (yextra, ychar)= -0,-0,-0, -0.1256,-0.1256,-0.1256 
+  rect2(0.4885,-1.32, w=-0.977, h=-0.5023, ...)
+  segments2( 0.4355 0.4355 , -1.194 -0.9433 , dx= -0.3534 -0.3534 , dy=0, ...) 
+  points2( 0.2588 0.2588 , -1.069 -0.9433 , pch= 3 4 , ...) 
 > 
 > ## right-justifying a set of labels: thanks to Uwe Ligges
 > x <- 1:5; y1 <- 1/x; y2 <- 2/x
@@ -1292,8 +1333,11 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > lines(x, y1); lines(x, y2, lty = 2)
 > temp <- legend("topright", legend = c(" ", " "),
 +                text.width = strwidth("1,000,000"),
-+                lty = 1:2, xjust = 1, yjust = 1,
-+                title = "Line Types")
++                lty = 1:2, xjust = 1, yjust = 1, inset = 1/10,
++                title = "Line Types", title.cex = 0.5, trace=TRUE)
+  xchar= 0.1125,0.1125 ; (yextra, ychar)= 0,0, 0.07535,0.07535 
+  rect2(3.666,1.878, w=1.062, h=0.2637, ...)
+  segments2( 3.778 3.778 , 1.765 1.689 , dx= 0.225 0.225 , dy=0, ...) 
 > text(temp$rect$left + temp$rect$w, temp$text$y,
 +      c("1,000", "1,000,000"), pos = 2)
 > 
@@ -1311,8 +1355,8 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
 +                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0, 0.3))
 +   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
-+          lty = 1, merge = TRUE)   #, trace = TRUE)
-+ }
++          lty = 1)  #, trace = TRUE)
++ } #      ^^^^^^^ to force lines -> automatic merge=TRUE
 > par(mfrow = c(1,1))
 > 
 > ##-- Math expressions:  ------------------------------
@@ -1353,26 +1397,31 @@ List of 2
   ..$ x: num [1:2] 5.22 5.22
   ..$ y: num [1:2] 27.3 24.6
 > 
-> ## 'Filled' boxes -- for more, see example(plot.factor)
-> op <- par(bg = "white") # to get an opaque box for the legend
-> plot(cut(weight, 3) ~ group, data = PlantGrowth, col = NULL,
-+      density = 16*(1:3))
-> par(op)
+> ## 'Filled' boxes -- see also example(barplot) which may call legend(*, fill=)
+> barplot(VADeaths)
+> legend("topright", rownames(VADeaths), fill = gray.colors(nrow(VADeaths)))
 > 
-> ## Using 'ncol' :
+> ## Using 'ncol'
 > x <- 0:64/64
-> matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
+> for(R in c(identity, rev)) { # normal *and* reverse x-axis works fine:
++   xl <- R(range(x)); x1 <- xl[1]
++ matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)), xlim=xl,
 +         type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")
-> op <- par(bg = "antiquewhite1")
-> legend(0, 1.5, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
++ op <- par(bg = "antiquewhite1")
++ legend(x1, 1.5, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
 +        pch = "*", ncol = 4, cex = 0.8)
-> legend(.8,1.2, paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
++ legend("bottomright", paste("sin(", 1:7, "pi * x)"), col = 1:7, lty = 1:7,
 +        pch = "*", cex = 0.8)
-> legend(0, -.1, paste("sin(", 1:4, "pi * x)"), col = 1:4, lty = 1:4,
++ legend(x1, -.1, paste("sin(", 1:4, "pi * x)"), col = 1:4, lty = 1:4,
 +        ncol = 2, cex = 0.8)
-> legend(0, -.4, paste("sin(", 5:7, "pi * x)"), col = 4:6,  pch = 24,
++ legend(x1, -.4, paste("sin(", 5:7, "pi * x)"), col = 4:6,  pch = 24,
 +        ncol = 2, cex = 1.5, lwd = 2, pt.bg = "pink", pt.cex = 1:3)
-> par(op)
++ par(op)
++   ## Don't show: 
++  if(interactive() && identical(R, identity)) {
++      cat("waiting .."); Sys.sleep(2); cat(" done\n") }
++ ## End(Don't show)
++ } # for(..)
 > 
 > ## point covering line :
 > y <- sin(3*pi*x)
@@ -1402,6 +1451,15 @@ List of 2
 +           ncol = 2, cex = 2, lwd = 3, text.font = i, text.col = c6)
 + }
 > par(op)
+> 
+> # using text.width for several columns
+> plot(1, type="n")
+> legend("topleft", c("This legend", "has", "equally sized", "columns."),
++        pch = 1:4, ncol = 4)
+> legend("bottomleft", c("This legend", "has", "optimally sized", "columns."),
++        pch = 1:4, ncol = 4, text.width = NA)
+> legend("right", letters[1:4], pch = 1:4, ncol = 4,
++        text.width = 1:4 / 50)
 > 
 > 
 > 
@@ -1603,7 +1661,7 @@ List of 2
 > ## put histograms on the diagonal
 > panel.hist <- function(x, ...)
 + {
-+     usr <- par("usr"); on.exit(par(usr))
++     usr <- par("usr")
 +     par(usr = c(usr[1:2], 0, 1.5) )
 +     h <- hist(x, plot = FALSE)
 +     breaks <- h$breaks; nB <- length(breaks)
@@ -1618,7 +1676,6 @@ List of 2
 > ## with size proportional to the correlations.
 > panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 + {
-+     usr <- par("usr"); on.exit(par(usr))
 +     par(usr = c(0, 1, 0, 1))
 +     r <- abs(cor(x, y))
 +     txt <- format(c(r, 0.123456789), digits = digits)[1]
@@ -2149,7 +2206,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x4f01600>
+<bytecode: 0x55daca5416a8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2975,7 +3032,7 @@ List of 3
 > 
 > ## Specifying "..." :
 > plot(1, col.axis = "sky blue", col.lab = "thistle")
-> title("Main Title", sub = "sub title",
+> title("Main Title", sub = "subtitle",
 +       cex.main = 2,   font.main= 4, col.main= "blue",
 +       cex.sub = 0.75, font.sub = 3, col.sub = "red")
 > 
@@ -3019,7 +3076,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x42a4140>
+<bytecode: 0x55dacadb84e8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3100,7 +3157,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.061 0.057 4.135 0 0 
+Time elapsed:  2.98 0.04 3.02 0 0 
 > grDevices::dev.off()
 null device 
           1 

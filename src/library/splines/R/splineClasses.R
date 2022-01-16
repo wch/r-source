@@ -87,7 +87,7 @@ splineDesign <-
     ii <- if(need.outer && x.out) { # only assign non-zero for x[]'s "inside" knots
         rep.int((1L:nx)[in.x], rep.int(ord, nnx))
     } else rep.int(1L:nx, rep.int(ord, nx))
-    jj <- c(outer(1L:ord, attr(temp, "Offsets"), "+"))
+    jj <- c(outer(1L:ord, attr(temp, "Offsets"), `+`))
     ## stopifnot(length(ii) == length(jj))
 
     if(sparse) {

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-11 The R Core Team.
+ *  Copyright (C) 2001-21 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -79,11 +79,18 @@ extern "C" {
  *             - masks
  *             Added deviceVersion
  * Version 14: Added deviceClip
+ * Version 15: For R 4.2.0
+ *             Added more graphical definitions
+ *             - groups
+ *             - paths
+ *             - luminance masks
+ *             Added capabilities
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
+#define R_GE_group       15
 
-#define R_GE_version R_GE_deviceClip
+#define R_GE_version R_GE_group
 
 int R_GE_getVersion(void);
 
@@ -283,6 +290,9 @@ struct _GEDevDesc {
 
     /* per-device setting for 'ask' (use NewFrameConfirm) */
     Rboolean ask;
+
+    /* Is a device appending a path ? */
+    Rboolean appending;
 };
 
 typedef GEDevDesc* pGEDevDesc;
@@ -533,7 +543,7 @@ void GEnullDevice(void);
 
 /* From ../../main/plot.c, used by ../../library/grid/src/grid.c : */
 #define CreateAtVector		Rf_CreateAtVector
-SEXP CreateAtVector(double*, double*, int, Rboolean);
+SEXP CreateAtVector(double axp[], const double usr[], int nint, Rboolean logflag);
 /* From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c : */
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
@@ -576,6 +586,70 @@ double R_GE_tilingPatternY(SEXP pattern);
 double R_GE_tilingPatternWidth(SEXP pattern);
 double R_GE_tilingPatternHeight(SEXP pattern);
 int R_GE_tilingPatternExtend(SEXP pattern);
+
+/* Composition operators */
+/* Must match order in ../library/grDevices/R/group.R */
+/* Porter-Duff */
+#define R_GE_compositeClear 1
+#define R_GE_compositeSource 2
+#define R_GE_compositeOver 3
+#define R_GE_compositeIn 4
+#define R_GE_compositeOut 5
+#define R_GE_compositeAtop 6
+#define R_GE_compositeDest 7
+#define R_GE_compositeDestOver 8
+#define R_GE_compositeDestIn 9
+#define R_GE_compositeDestOut 10
+#define R_GE_compositeDestAtop 11
+#define R_GE_compositeXor 12
+/* Additional Porter-Duff */
+#define R_GE_compositeAdd 13
+#define R_GE_compositeSaturate 14
+/* PDF Blend Modes */
+#define R_GE_compositeMultiply 15
+#define R_GE_compositeScreen 16
+#define R_GE_compositeOverlay 17
+#define R_GE_compositeDarken 18
+#define R_GE_compositeLighten 19
+#define R_GE_compositeColorDodge 20
+#define R_GE_compositeColorBurn 21
+#define R_GE_compositeHardLight 22
+#define R_GE_compositeSoftLight 23
+#define R_GE_compositeDifference 24
+#define R_GE_compositeExclusion 25
+
+/* Path rules */
+/* Must match order in ../library/grDevices/R/path.R */
+#define R_GE_nonZeroWindingRule 1
+#define R_GE_evenOddRule        2
+
+int R_GE_clipPathFillRule(SEXP path);
+
+void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd);
+void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
+void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
+
+/* Mask types */
+/* Must match order in ../library/grDevices/R/mask.R */
+#define R_GE_alphaMask     1
+#define R_GE_luminanceMask 2
+
+int R_GE_maskType(SEXP mask);
+
+/* Device capabilities */
+/* Must match order in ../library/grDevices/R/device.R */
+#define R_GE_capability_semiTransparency      0
+#define R_GE_capability_transparentBackground 1
+#define R_GE_capability_rasterImage           2
+#define R_GE_capability_capture               3
+#define R_GE_capability_locator               4
+#define R_GE_capability_events                5
+#define R_GE_capability_patterns              6
+#define R_GE_capability_clippingPaths         7
+#define R_GE_capability_masks                 8
+#define R_GE_capability_compositing           9
+#define R_GE_capability_transformations      10
+#define R_GE_capability_paths                11 
 
 #ifdef __cplusplus
 }

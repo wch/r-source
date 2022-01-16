@@ -53,7 +53,7 @@ function(x, g, ...)
         n <- lengths(x) - 1L
         if (any(n <= 0))
             stop("there must be at least 2 observations in each group")
-        v <- sapply(x, "var")
+        v <- sapply(x, var)
     }
 
     n.total <- sum(n)
@@ -88,8 +88,8 @@ function(formula, data, subset, na.action, ...)
     if(length(mf) != 2L)
         stop("'formula' should be of the form response ~ group")
     DNAME <- paste(names(mf), collapse = " by ")
-    names(mf) <- NULL
-    y <- do.call("bartlett.test", as.list(mf))
+    ## Call the default method.
+    y <- bartlett.test(x = mf[[1L]], g = mf[[2L]])
     y$data.name <- DNAME
     y
 }

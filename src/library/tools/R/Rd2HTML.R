@@ -173,7 +173,7 @@ createRedirects <- function(file, Rdobj)
     redirHTML <- sprintf("<html><head><meta http-equiv='refresh' content='0; url=../html/%s'></head></html>\n", urlify(basename(file)))
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
-    aliasName <- function(i) Rdobj[[i]][[1]]
+    aliasName <- function(i) trimws(Rdobj[[i]][[1]])
     aliasFile <- function(i) file.path(helpdir, sprintf("%s.html", topic2filename(aliasName(i))))
     redirMsg <- function(type, src, dest, status) {
         ## change sprintf to gettextf to make translatable, but seems unnecessary
@@ -193,16 +193,16 @@ createRedirects <- function(file, Rdobj)
             message(msg, appendLF = FALSE)
         }
         try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
-        ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
-        if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
+        ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAILURE")
+        if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAILURE")
     }
     ## Also add .../pkg/help/file.html -> ../pkg/html/file.html as fallback
     ## when topic is not found (but do not overwrite)
     file.fallback <- file.path(helpdir, basename(file))
     if (!file.exists(file.fallback)) {
         try(cat(redirHTML, file = file.fallback), silent = TRUE)
-        ## redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
-        if (!file.exists(file.fallback)) redirMsg("file", basename(file), basename(file),  "FAIL")
+        ## redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAILURE")
+        if (!file.exists(file.fallback)) redirMsg("file", basename(file), basename(file),  "FAILURE")
     }
 }
 
@@ -312,7 +312,7 @@ Rd2HTML <-
                   "\\file"='&lsquo;<span class="file">',
                   "\\option"='<span class="option">',
                   "\\pkg"='<span class="pkg">',
-                  "\\samp"='<span class="samp">',
+                  "\\samp"='&lsquo;<span class="samp">&#8288;',
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
                   "\\verb"='<code style="white-space: pre;">')
@@ -322,7 +322,7 @@ Rd2HTML <-
                    "\\file"='</span>&rsquo;',
                    "\\option"="</span>",
                    "\\pkg"="</span>",
-                   "\\samp"="</span>",
+                   "\\samp"="&#8288;</span>&rsquo;",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;",
                    "\\verb"="</code>")
@@ -923,6 +923,10 @@ Rd2HTML <-
     invisible(out)
 } ## Rd2HTML()
 
+
+## The following functions return 'relative' links assuming that all
+## packages are installed in the same virtual library tree.
+
 findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 {
     ## The priority order is
@@ -952,23 +956,38 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
     gsub("[Rr]d$", "html", Links)
 }
 
+## These helper functions can optionally return the absolute path as
+## well (in the local file system)
+
 .find_HTML_links_in_package <-
-function(dir)
+function(dir, absolute = FALSE)
 {
-    if (file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
-        readRDS(f)
-    else if (file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
-        .build_links_index(readRDS(f), basename(dir))
-    else character()
+    ans <- 
+        if (file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
+            readRDS(f)
+        else if (file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
+            .build_links_index(readRDS(f), basename(dir))
+        else character()
+    if (absolute)
+        structure(file.path(dir, "html", basename(ans), fsep = "/"),
+                  names = names(ans))
+    else
+        ans
 }
 
 .find_HTML_links_in_library <-
-function(dir)
+function(dir, absolute = FALSE)
 {
-    if (file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
-        readRDS(f)
+    ans <- 
+        if (file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
+            readRDS(f)
+        else
+            .build_library_links_index(dir)
+    if (absolute)
+        structure(file.path(dir, substring(ans, first = 7), fsep = "/"), # drop initial "../../"
+                  names = names(ans))
     else
-        .build_library_links_index(dir)
+        ans
 }
 
 .build_library_links_index <-

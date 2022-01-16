@@ -1,7 +1,7 @@
 #  File src/library/base/R/table.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 {
     list.names <- function(...) {
 	l <- as.list(substitute(list(...)))[-1L]
+	if (length(l) == 1L && is.list(..1) && !is.null(nm <- names(..1)))
+	    return(nm)
 	nm <- names(l)
 	fixup <- if (is.null(nm)) seq_along(l) else nm == ""
 	dep <- vapply(l[fixup], function(x)
@@ -51,8 +53,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     if (length(args) == 1L && is.list(args[[1L]])) { ## e.g. a data.frame
 	args <- args[[1L]]
 	if (length(dnn) != length(args))
-	    dnn <- if (!is.null(argn <- names(args))) argn
-		   else paste(dnn[1L], seq_along(args), sep = ".")
+	    dnn <- paste(dnn[1L], seq_along(args), sep = ".")
     }
     if (!length(args))
 	stop("nothing to tabulate")
@@ -62,7 +63,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     dims <- integer()
     pd <- 1L
     dn <- NULL
-    for (a in args) {
+    for (a in args) { ## a is args[[ length(dims)+1 ]]
 	if (is.null(lens)) lens <- length(a)
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
@@ -77,8 +78,10 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
             ## excluded levels to missing, which is different
             ## from the <NA> factor level, but these
             ## excluded levels must NOT EVER be tabulated.
+            op <- options(warn = 2) ## prevent non-sensical factor() creation: turn warnings into errors
             a <- # NB: this excludes first, unlike the is.factor() case
                 factor(a, exclude = exclude)
+            options(op)
         }
 
 	## if(doNA)
@@ -285,7 +288,7 @@ marginSums <- function (x, margin = NULL)
 proportions <- function (x, margin = NULL)
 {
     if (length(margin)) 
-        sweep(x, margin, marginSums(x, margin), "/", check.margin = FALSE)
+        sweep(x, margin, marginSums(x, margin), `/`, check.margin = FALSE)
     else x/sum(x)
 }
 

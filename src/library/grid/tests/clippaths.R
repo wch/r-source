@@ -233,20 +233,6 @@ grey circle")
 
 
 ######################
-## Check resource exhaustion
-options(warn=1)
-grid.newpage()
-for (i in 1:21) {
-    pushViewport(viewport(clip=circleGrob()))
-    grid.rect(gp=gpar(fill="grey"))
-    HersheyLabel(paste0("viewport ", i, " with clip path
-runs out after 20
-result is grey rect"))
-    upViewport()
-}
-options(warn=0)
-
-######################
 ## Check for outlawed behaviour
 ## (clipping and masks are turned off during clipping path resolution)
 
@@ -351,18 +337,82 @@ grey circle
 saveRDS(recordPlot())
 replayPlot(readRDS())")
 
+################################################################################
+## Clipping paths from text
+
+grid.newpage()
+tg <- textGrob("testing", gp=gpar(fontface="bold", cex=4))
+pushViewport(viewport(clip=tg))
+grid.rect(gp=gpar(fill="grey"))
+grid.rect(width=.1, gp=gpar(fill="2"))
+popViewport()
+HersheyLabel("clipping path from text
+grey rect clipped to text
+thin red rect (black border) also clipped to text", y=.9)
+
+grid.newpage()
+gt <- gTree(children=gList(circleGrob(),
+                           textGrob("testing", gp=gpar(fontface="bold", cex=4)),
+                           rectGrob(width=.8, height=.5)))
+pushViewport(viewport(clip=as.path(gt, rule="evenodd")))
+grid.rect(gp=gpar(fill="grey"))
+grid.rect(width=.1, gp=gpar(fill="2"))
+popViewport()
+HersheyLabel("clipping path based on circle and text and rect
+with even-odd rule
+draw large grey rect and thin red rect
+both clipped to text and space between circle and rect
+(PDF will NOT include text in clipping path", y=.85)
+
+grid.newpage()
+gt <- gTree(children=gList(textGrob("testing", gp=gpar(fontface="bold", cex=4)),
+                           circleGrob(),
+                           rectGrob(width=.8, height=.5)))
+pushViewport(viewport(clip=as.path(gt, rule="evenodd")))
+grid.rect(gp=gpar(fill="grey"))
+grid.rect(width=.1, gp=gpar(fill="2"))
+popViewport()
+HersheyLabel("clipping path based on text and circle and rect
+with even-odd rule
+draw large grey rect and thin red rect
+both clipped to text and space between circle and rect
+(PDF will ONLY include text in clipping path", y=.85)
 
 ######################
-## NOT YET WORKING
+## Check resource exhaustion
+grid.newpage()
+for (i in 1:65) {
+    pushViewport(viewport(clip=circleGrob()))
+    grid.rect(gp=gpar(fill="grey"))
+    HersheyLabel(paste0("viewport ", i, " with clip path
+result is grey circle"))
+    upViewport()
+}
 
-## save()/load() a recordedPlot containing a clipping path
+## Text being clipped by path
+grid.newpage()
+grid.text("testing", gp=gpar(col="grey", cex=3))
+path <- circleGrob(r=.05, gp=gpar(fill=NA))
+grid.draw(path)
+pushViewport(viewport(clip=path))
+grid.text("testing", gp=gpar(cex=3))
+popViewport()
+HersheyLabel("text clipped by circle", y=.8)
+    
+## Raster being clipped by path
+grid.newpage()
+grid.raster(matrix(c(.5, 1, 1, .5), nrow=2),
+            width=.2, height=.2,
+            interpolate=FALSE)
+path <- circleGrob(r=.05, gp=gpar(fill=NA))
+grid.draw(path)
+pushViewport(viewport(clip=path))
+grid.raster(matrix(c(0:1, 1:0), nrow=2),
+            width=.2, height=.2,
+            interpolate=FALSE)
+popViewport()
+HersheyLabel("raster clipped by circle", y=.8)
 
-## Clipping path from text (Pango)
 
-## Clipping path from text ("Toy text")
-
-## Clipping path on viewport in vp of grob
-
-## Clipping path on viewport in vp of gTree
 
 

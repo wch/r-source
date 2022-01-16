@@ -191,9 +191,9 @@ x$name <- value
   hence providing access to even more general list-like objects.
 
   \code{[} and \code{[[} are sometimes applied to other recursive
-  objects such as \link{call}s and \link{expression}s.  Pairlists are
-  coerced to lists for extraction by \code{[}, but all three operators
-  can be used for replacement.
+  objects such as \link{call}s and \link{expression}s.  Pairlists (such
+  as calls) are coerced to lists for extraction by \code{[}, but all
+  three operators can be used for replacement.
 
   \code{[[} can be applied recursively to lists, so that if the single
   index \code{i} is a vector of length \code{p}, \code{alist[[i]]} is
@@ -288,6 +288,20 @@ x$name <- value
   even empty nor missing names.  If any object has no names or
   appropriate dimnames, they are taken as all \code{""} and so match
   nothing.
+}
+
+\section{Error conditions}{
+  Attempting to apply a subsetting operation to objects for which this is
+  not possible signals an error of class
+  \code{notSubsettableError}. The \code{object} component of the error
+  condition contains the non-subsettable object.
+
+  Subscript out of bounds errors are signaled as errors of class
+  \code{subscriptOutOfBoundsError}. The \code{object} component of the
+  error condition contains the object being subsetted. The integer
+  \code{subscript} component is zero for vector subscripting, and for
+  multiple subscripts indicates which subscript was out of bounds. The
+  \code{index} component contains the erroneous index.
 }
 
 \references{

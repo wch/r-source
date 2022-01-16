@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2020   The R Core Team.
+ *  Copyright (C) 1999-2021   The R Core Team.
  *
  *  Based on ACM TOMS643 (1993)
  *
@@ -1803,7 +1803,7 @@ void NORET prterr(int icode, const char *mes)
      mes    - Character string containing the error message.	(Input)
   -----------------------------------------------------------------------
   */
-    PROBLEM "FEXACT error %d.\n%s", icode, mes RECOVER(NULL_ENTRY);
+    Rf_error("FEXACT error %d.\n%s", icode, mes);
 }
 
 int iwork(int iwkmax, int *iwkpt, int number, int itype)

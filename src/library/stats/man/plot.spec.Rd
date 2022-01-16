@@ -56,7 +56,7 @@ plot.spec.coherency(x, ci = 0.95,
     phase.}
   \item{main}{overall title for the plot. If missing, a suitable title
     is constructed.}
-  \item{sub}{a sub title for the plot.  Only used for \code{plot.type =
+  \item{sub}{a subtitle for the plot.  Only used for \code{plot.type =
       "marginal"}.  If missing, a description of the smoothing is used.}
   \item{plot.type}{For multivariate time series, the type of plot
     required.  Only the first character is needed.}

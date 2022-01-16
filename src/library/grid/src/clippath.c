@@ -27,11 +27,11 @@ Rboolean isClipPath(SEXP clip) {
 SEXP resolveClipPath(SEXP path, pGEDevDesc dd) 
 {
     SEXP resolveFn, R_fcall, result;
-    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(TRUE));
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     PROTECT(resolveFn = findFun(install("resolveClipPath"), R_gridEvalEnv));
     PROTECT(R_fcall = lang2(resolveFn, path));
     result = eval(R_fcall, R_gridEvalEnv);
-    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     UNPROTECT(2);
     return result;    
 }

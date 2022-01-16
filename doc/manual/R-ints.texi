@@ -1123,10 +1123,10 @@ operations is termed the @dfn{write barrier} and is done by making the
 @code{SEXP} opaque and only providing access via functions (which cannot
 be used as lvalues in assignments in C).
 
-All code in @R{} extensions is by default behind the write barrier.  The
-only way to obtain direct access to the internals of the @code{SEXPREC}s
-is to define @samp{USE_RINTERNALS} before including header file
-@file{Rinternals.h}, which is normally defined in @file{Defn.h}.  To
+All code in @R{} extensions is behind the write barrier.  @R{}
+extensions cannot directly access the internals of the @code{SEXPREC}s.
+Base code can access internals if @samp{USE_RINTERNALS} is defined.
+This is normally defined in @file{Defn.h} when @R{} is compiled.  To
 enable a check on the way that the access is used, @R{} can be compiled
 with flag @option{--enable-strict-barrier} which ensures that header
 @file{Defn.h} does not define @samp{USE_RINTERNALS} and hence that
@@ -1292,9 +1292,9 @@ lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption. Then the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
-needs MBCS support, and was only enabled@footnote{See define
-@code{USE_UTF8_IF_POSSIBLE} in file @file{src/main/gram.c}.} on
-Windows.)  This is enabled for all platforms, and a @samp{\uxxxx} or
+needs MBCS support, and in the past was only enabled@footnote{See define
+@code{USE_UTF8_IF_POSSIBLE} in old versions of file @file{src/main/gram.c}.} on
+Windows.)  Now this is enabled for all platforms, and a @samp{\uxxxx} or
 @samp{\Uxxxxxxxx} escape ensures that the parsed string will be marked
 as UTF-8.
 
@@ -1314,7 +1314,7 @@ assumption: it wants the symbol font to be encoded in UTF-8 as if it
 were encoded in Latin-1 rather than Adobe Symbol: this is selected by
 @code{wantSymbolUTF8 = NA_LOGICAL}.
 
-Windows has no UTF-8 locales, but rather expects to work with
+Windows with MSVCRT as the C runtime has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it used not to be when encoding support was added to @R{}.}
 strings.  @R{} (being written in standard C) would not work internally
@@ -1329,6 +1329,39 @@ convention is used (see header file @file{rgui_UTF8.h}) by
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
 Windows if the encoding is declared explicitly on an unopened
 connection passed to those functions.
+
+Windows have multiple notions of the current locale encoding, one is in the
+C runtime (C library) and another is the active code page (system locale). 
+The active code page is used when calling non-UTF-16 variants of Windows API
+functions (earlier referred to as ANSI calls), either directly or indirectly
+via POSIX wrappers inside MinGW-w64, from R, R packages and libraries they
+link to.  While R has handled many cases by calling directly the UTF-16
+variants of the Windows API, it still may sometimes use the non-UTF-16 ones,
+and external libraries also primarily developed for POSIX systems typically
+do that.  Therefore, for R to reliably work with (non-ASCII) strings on
+Windows, both the C locale encoding and the active code page on Windows must
+be the same, and by default they are.
+
+The Windows UCRT C runtime supports UTF-8 locales.  Historically, the active
+code page was a system-wide setting, changing which required a reboot, and
+UTF-8 was not supported.  Later a "BETA: Use Unicode UTF-8 for worldwide
+language support" feature has been added to set the active code page to
+UTF-8, but this still required a reboot and impacted all applications, many
+of which would not work correctly with that unexpected setting, so it could
+not be used in practice.
+
+Windows since Windows 10 (version 1903), Windows Server 2022 (LTSC), and
+Windows Server 1903 (semi-annual channel) allow setting the active code page
+to UTF-8 in the application manifest.  This changes the active code page
+only for the given application and does so together with changing also the
+UCRT C locale to UTF-8. R 4.2 for Windows uses this feature to get UTF-8 as
+the native encoding on Windows. To make that possible, R had to switch to
+UCRT, which in turn required creation of Rtools42.
+
+Older versions of Windows still rely on the previous encoding support where
+the native encoding cannot be UTF-8. R 4.2 requires UCRT to work, but UCRT
+can be installed on Windows since Vista SP2 and Windows Server 2008 SP2. It
+is shipped with Windows since Windows 10 and Windows Server 2016.
 
 @node The CHARSXP cache, Warnings and errors, Encodings for CHARSXPs, R Internal Structures
 @section The CHARSXP cache
@@ -1574,22 +1607,7 @@ override for @code{c}.
 @section Memory allocators
 
 @R{}'s memory allocation is almost all done via routines in file
-@file{src/main/memory.c}.  It is important to keep track of where memory
-is allocated, as the Windows port (by default) makes use of a memory
-allocator that differs from @code{malloc} etc as provided by MinGW.
-Specifically, there are entry points @code{Rm_malloc}, @code{Rm_free},
-@code{Rm_calloc} and @code{Rm_free} provided by file
-@file{src/gnuwin32/malloc.c}.  This was done for two reasons.  The
-primary motivation was performance: the allocator provided by MSVCRT
-@emph{via} MinGW was far too slow at handling the many small allocations
-that the allocation system for @code{SEXPREC}s uses.  As a side benefit,
-we can set a limit on the amount of allocated memory: this is useful as
-whereas Windows does provide virtual memory it is relatively far slower
-than many other @R{} platforms and so limiting @R{}'s use of swapping is
-highly advantageous.  The high-performance allocator is only called from
-@file{src/main/memory.c}, @file{src/main/regex.c}, @file{src/extra/pcre}
-and @file{src/extra/xdr}: note that this means that it is not used in
-packages.
+@file{src/main/memory.c}. 
 
 The rest of @R{} should where possible make use of the allocators made
 available by file @file{src/main/memory.c}, which are also the methods
@@ -1601,11 +1619,11 @@ recommended in
 `Writing R Extensions'
 @end ifclear
 @findex R_alloc
-@findex Calloc
-@findex Realloc
-@findex Free
+@findex R_Calloc
+@findex R_Realloc
+@findex R_Free
 for use in @R{} packages, namely the use of @code{R_alloc},
-@code{Calloc}, @code{Realloc} and @code{Free}.  Memory allocated by
+@code{R_Calloc}, @code{R_Realloc} and @code{R_Free}.  Memory allocated by
 @code{R_alloc} is freed by the garbage collector once the `watermark'
 has been reset by calling
 @findex vmaxset
@@ -2465,14 +2483,15 @@ works well under Windows, this is less important than anticipated.)
 
 Messages for the @samp{RGui} domain are marked by @code{G_("msg")}, a
 macro that is defined in header file @file{src/gnuwin32/win-nls.h}.  The
-list of files that are considered is hardcoded in the
-@code{RGui.pot-update} target of file @file{po/Makefile.in.in}: note
+list of files that are considered is hardcoded in function @code{update_RGui_po}
+in file @file{src/library/tools/R/translations.R}, which is invoked via the
+@code{update-RGui} target of file @file{po/Makefile.win}: note
 that this includes @file{devWindows.c} as the menus on the
 @code{windows} device are considered to be part of the GUI.  (There is
 also @code{GN_("msg")}, the analogue of @code{N_("msg")}.)
 
 The template and message catalogs for the @samp{RGui} domain are in the
-top-level @file{po} directory.
+top-level @file{po} directory of package @pkg{base}.
 
 
 @node macOS GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
@@ -2784,6 +2803,8 @@ error or by the user).
 @item close the device.
 @end itemize
 
+
+
 The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
@@ -2977,6 +2998,14 @@ If a graphics device calls @code{R_GE_checkVersionOrDie(R_GE_version)}
 it can ensure it will only be used in versions of @R{} which provide the
 API it was designed for and compiled against.
 
+The @code{DevDesc} structure also contains an @code{int} @samp{deviceVersion}
+to indicate which version of the engine/device API that the device supports.
+If the device driver sets this correctly, 
+there is no need for a device driver to use 
+@code{R_GE_checkVersionOrDie(R_GE_version)} because the graphics engine will
+not make use of callbacks from an API version above the version that is
+supported by the device.
+
 @node Device capabilities, Handling text, Device structures, Graphics devices
 @subsection Device capabilities
 
@@ -3019,10 +3048,95 @@ is there support for rendering raster images?
 is there support for @code{grid::grid.cap}?
 @item @code{haveLocator}:
 is there an interactive locator?
+@item @code{deviceClip}:
+should the engine leave @emph{all} clipping to the device?
 @end itemize
 
-The last three can often be deduced to be false from the presence of
+@code{haveRaster},
+@code{haveCapture}, and @code{haveLocator}
+ can often be deduced to be false from the presence of
 @code{NULL} entries instead of the corresponding functions.
+
+In addition, the @code{capabilities} callback allows the device driver
+to provide more detailed information, especially related to callbacks
+in the engine/device API version 13 or higher.
+
+The @code{capabilities} callback is called with a list of integer
+vectors that represent the best guess that the graphics engine
+can make, based on the flags in the @code{DevDesc} structure and
+the @samp{deviceVersion}.  For some capabilities, the integer vector
+is length 1 with @code{0} for no support, @code{1} for support, or
+@code{NA} for unknown support.  For capabilities where support
+can be more nuanced, the integer vector may either take higher values
+or it may have length greater than 1,
+though length 1 and @code{0} still means no support and @code{NA} still means 
+unknown support.
+
+The following components of 
+this list are likely to need modifying (for these, the graphics engine 
+can only guess @code{0}
+if @samp{deviceVersion} is too low or @code{NA}
+otherwise):
+
+@itemize
+@item The @code{patterns} component reports what sort of pattern fills are 
+supported.  If the device supports one or more pattern types,
+this component should be replaced with an integer vector containing
+a value for each supported pattern type;
+the graphics engine provides 
+constants @code{R_GE_linearGradientPattern},
+@code{R_GE_radialGradientPattern}, and 
+@code{R_GE_tilingPattern}.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{clippingPaths} component reports whether 
+arbitrary clipping paths are supported. 
+If the device supports clipping paths, this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{masks} component reports what sort of masks are supported.
+If the device supports one or more mask types,
+this component should be replaced with an integer vector containing
+a value for each supported mask type;
+the graphics engine provides 
+constants @code{R_GE_alphaMask} and @code{R_GE_luminanceMask}.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{compositing} component reports which compositing operators 
+are supported. 
+If the device supports one or more compositing operators,
+this component should be replaced with an integer vector containing
+a value for each supported operator;
+The list of possible operators is long, 
+encompassing Porter-Duff operators and Adobe PDF Blend Modes; 
+the graphics engine provides constants @code{R_GE_compositeClear}, etc.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{transformations} component reports whether 
+affine transformations are supported.
+If the device supports transformations, this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{paths} component reports whether stroking and 
+filling of paths composed of multiple shapes is supported. 
+If the device supports stroking and filling paths, 
+this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@end itemize
+
+The graphics engine provides constants like 
+@code{R_GE_capability_patterns} for selecting the appropriate
+component of the list of capabilities.
+
+It is valid (if unhelpful) for the device driver to return the list
+of capabilities unaltered.
 
 @node Handling text, Conventions, Device capabilities, Graphics devices
 @subsection Handling text
@@ -3143,7 +3257,7 @@ character, which font at which size?  Some help can be obtained by
 looking at what this is used for.  The first element, `width', is not
 used by @R{} except to set the graphical parameters.  The second,
 `height', is use to set the line spacing, that is the relationship
-between @code{par("mai")} and @code{par("mai")} and so on.  It is
+between @code{par("mar")} and @code{par("mai")} and so on.  It is
 suggested that a good choice is
 
 @example
@@ -3537,7 +3651,8 @@ and many variables recording the graphics parameters and functions of
 them.
 
 The base system state is contained in @code{baseSystemState} structure
-defined in @file{R_ext/GraphicsBase.h}.  This contains three @code{GPar}
+defined in the private header @file{GraphicsBase.h}.  
+This contains three @code{GPar}
 structures and a Boolean variable used to record if @code{plot.new()}
 (or @code{persp}) has been used successfully on the device.
 
@@ -3897,8 +4012,9 @@ and Bioconductor repositories known to @R{} is used.
 Control whether installation output is checked for compilation warnings
 about implicit function declarations (as spotted by GCC with command
 line option @option{-Wimplicit-function-declaration}, which is implied
-by @option{-Wall}).
-Default: false.
+by @option{-Wall}).  NB: implicit function declarations are errors in
+some recent C compilers, including Apple @command{clang}.
+Default: true from @R{} 4.2.0, previously false.
 @item _R_CHECK_SRC_MINUS_W_UNUSED_
 Control whether installation output is checked for compilation warnings
 about unused code constituents (as spotted by GCC with command line
@@ -4016,51 +4132,6 @@ aggregate) the ratio of CPU time to elapsed time exceeds this threshold
 (and the CPU time is at least one second).  Not supported on
 Windows.
 Default: @code{NA}.
-
-@item _R_CHECK_INSTALL_DEPENDS_
-If set to a true value and a test installation is to be done, this is
-done with @code{.libPaths()} containing just a temporary library
-directory and @code{.Library}.  The temporary library is populated by
-symbolic links@footnote{under Windows, junction points, or copies if
-environment variable @env{R_WIN_NO_JUNCTIONS} has a non-empty value.}
-to the installed copies of all the Depends/Imports/LinkingTo packages
-which are not in @code{.Library}.  Default: false (but true for CRAN
-submission checks).
-
-Note that this is actually implemented in @command{R CMD INSTALL}, so it
-is available to those who first install recording to a log, then call
-@command{R CMD check}.
-
-@item _R_CHECK_DEPENDS_ONLY_
-@itemx _R_CHECK_SUGGESTS_ONLY_
-If set to a true value, running examples, tests and vignettes is done
-with @code{.libPaths()} containing just a temporary library directory
-and @code{.Library}.  The temporary library is populated by symbolic
-links@footnote{see the previous footnote.} to the installed copies of
-all the Depends/Imports and (for the second only) Suggests packages
-which are not in @code{.Library}.  (As exceptions, packages in a
-@samp{VignetteBuilder} field and test-suite managers in @samp{Suggests}
-are always made available.)  
-Default: false (but
-@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN submission checks: some
-of the regular checks use true
-@c Solaris and Windows
-and some use false).
-
-@item _R_CHECK_DEPENDS_ONLY_DATA_
-Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the check of loading from
-the @file{data} directory, so checks if any dataset depends on
-packages which are in Suggests or undeclared.  Default: false (but
-true for CRAN submission checks)
-
-@item _R_CHECK_NO_RECOMMENDED_
-If set to a true value, augment the previous checks to make recommended
-packages unavailable unless declared.
-Default: false (but true for CRAN submission checks).
-
-This may give false positives on code which uses
-@code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
-@CRANpkg{KernSmooth} and @CRANpkg{Matrix} respectively.
 
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
@@ -4316,7 +4387,11 @@ For packages with a @file{configure} file generated by GNU
 @command{autoconf} and either @file{configure.ac} or
 @file{configure,.in}, check that @command{autoreconf} can, if available,
 be run in a copy of the sources (this will detect missing source files
-and report @command{autoconf} warnings).
+and report @command{autoconf} warnings).  Environment variable
+@env{AUTORECONf} controls the command used: it can give the full path to
+@command{autoreconf} (without spaces) and can include flags such as
+@option{--warnings=obsolete} (which is added for @command{autoreconf}
+version 2.68 or 2.69 and is the default for later versions).
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_DATALIST_
@@ -4339,7 +4414,7 @@ of these might be out of the user's control, environment variable
 regex) pattern of file paths not to be reported -- CRAN uses
 @samp{^ompi.} for directories left behind by OpenMPI.  There are rare
 instances where @env{TEMPDIR} is not respected and so files are left in
-@file{/tmp} (and not reported, but see the nest item): one example is
+@file{/tmp} (and not reported, but see the next item): one example is
 @file{/tmp/boost_interprocess} on some OSes.
 @c macOS is one.
 Default: false (but true for CRAN submission checks).
@@ -4434,6 +4509,67 @@ dimensions in a call to @code{matrix} gives a warning: setting this to a
 true value gives an error with a compact traceback.
 @c
 Default: false (but true for CRAN submission checks).
+@end vtable
+
+The following variables control checks for undeclared/unconditional use
+of other packages.  They work by setting up a temporary library
+directory and setting @code{.libPaths()} to just that and
+@code{.Library}, so are only effective if additional packages are
+installed somewhere other than @code{.Library}.  The temporary library
+is populated by symbolic links@footnote{under Windows, junction points,
+or copies if environment variable @env{R_WIN_NO_JUNCTIONS} has a
+non-empty value.} to installed packages not also in @code{.library}.
+
+@vtable @code
+@item _R_CHECK_INSTALL_DEPENDS_
+If set to a true value and a test installation is to be done, this is
+done with a temporary library populated by all the
+Depends/Imports/LinkingTo packages.
+Default: false (but true for CRAN submission checks).
+
+Note that this is actually implemented in @command{R CMD INSTALL}, so it
+is available to those who first install recording to a log, then call
+@command{R CMD check}.
+
+@item _R_CHECK_SUGGESTS_ONLY_
+If set to a true value, running examples, tests and vignettes is done
+with a temporary library directory populated by all the
+Depends/Imports/Suggests packages.  (As exceptions, packages in a
+@samp{VignetteBuilder} field are always made available.)
+@c
+Default: false (but true for CRAN submission checks: some of the regular
+checks use true and some use false).
+
+@item _R_CHECK_DEPENDS_ONLY_
+As for @env{_R_CHECK_SUGGESTS_ONLY_} but using only Depends/Imports (and
+the exceptions, including test-suite managers in @samp{Suggests}).
+Default: false
+
+@item _R_CHECK_DEPENDS_ONLY_DATA_
+Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the check of loading from
+the @file{data} directory, so checks if any dataset depends on
+packages which are in Suggests or undeclared.
+Default: false (but true for CRAN submission checks)
+
+@item _R_CHECK_DEPENDS_ONLY_EXAMPLES_
+@itemx _R_CHECK_DEPENDS_ONLY_TESTS_
+@itemx _R_CHECK_DEPENDS_ONLY_VIGNETTES_
+Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the checking of
+examples, tests or vignettes.  These can be used on their own, or
+with a false value to override @env{_R_CHECK_DEPENDS_ONLY_}.
+@c
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset..
+
+@item _R_CHECK_NO_RECOMMENDED_
+If set to a true value, augment the previous checks to make recommended
+packages unavailable unless declared (even if installed in @code{.library}).
+Default: false (but true for CRAN submission checks).
+
+This may give false positives on code which uses
+@code{grDevices::densCols} and @code{stats:::.asSparse} /
+@code{stats:::.Diag} as these invoke @CRANpkg{KernSmooth} and
+@CRANpkg{Matrix} respectively. (Those in @pkg{stats} are called from
+various contrasts functions if @code{sparse = TRUE} is used.)
 @end vtable
 
 CRAN's submission checks use something like
@@ -4882,24 +5018,28 @@ elements.  Now longer vectors are allowed on 64-bit platforms, matrices
 with more elements are supported provided that each of the dimensions is
 no more than 2^31-1.  However, not all applications can be supported.
 
-The main problem is linear algebra done by Fortran code compiled
-with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
-the compilers currently used with @R{} on a 64-bit platform allow
-matrices each of whose dimensions is less than 2^31 but with more than
-2^31 elements, and index them correctly, and a substantial part of the
+The main problem is linear algebra done by Fortran code compiled with
+32-bit @code{INTEGER}.  Although not guaranteed, it seems that all the
+compilers currently used with @R{} on a 64-bit platform allow matrices
+each of whose dimensions is less than 2^31 but with 2^31 or more
+elements and index them correctly, and a substantial part of the
 support software (such as @acronym{BLAS} and @acronym{LAPACK}) also
 work.
 
 There are exceptions: for example some complex @acronym{LAPACK}
 auxiliary routines do use a single @code{INTEGER} index and hence
 overflow silently and segfault or give incorrect results.  One example
-is @code{svd()} on a complex matrix.
+seen was @code{svd()} on a complex matrix.
 
 Since this is implementation-dependent, it is possible that optimized
-@acronym{BLAS} and @acronym{LAPACK} may have further restrictions,
-although none have yet been encountered.  For matrix algebra on large
-matrices one almost certainly wants a machine with a lot of RAM (100s of
-gigabytes), many cores and a multi-threaded @acronym{BLAS}.
+@acronym{BLAS} and @acronym{LAPACK} may have further restrictions:
+a segfault have been reported from @code{svd()} using ATLAS on
+@cputype{x86_64} Linux.
+@c https://stat.ethz.ch/pipermail/r-devel/2021-August/081004.html
+
+For matrix algebra on large matrices one almost certainly wants a
+machine with a lot of RAM (100s of gigabytes), many cores and a
+multi-threaded @acronym{BLAS}.
 
 
 

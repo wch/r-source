@@ -736,12 +736,12 @@ y <- pi + (-9:9)*2^-53
 z <- c(1:2,2:1) ; names(z) <- nz <- letters[seq_along(z)]
 of <- ordered(4:1)
 stopifnot(identical(factor(c(2, 1:2), labels = L),
-		    structure(c(2L, 1:2), .Label = L, class="factor")),
+		    structure(c(2L, 1:2), levels = L, class="factor")),
 	  identical(factor(x),
-		    structure(5:1, .Label = lx, class="factor")),
+		    structure(5:1, levels = lx, class="factor")),
 	  length(levels(factor(y))) == 1, length(unique(y)) == 5,
 	  identical(factor(z),
-		    structure(z, .Names = nz, .Label = c("1","2"),
+		    structure(z, names = nz, levels = c("1","2"),
 			      class="factor")),
 	  identical(of, factor(of)))
 ## partly failed in R <= 2.9.0, partly in R-devel(2.10.0)
@@ -1867,13 +1867,18 @@ stopifnot(identical(as.vector(m1[,2]), as.vector(m2[,2])))
 
 
 ## JMC's version of class<- did not work as documented. (PR#14942)
-x <- 1:10
-class(x) <- character()
-class(x) <- "foo"
-class(x) <- character()
-oldClass(x) <- "foo"
-oldClass(x) <- character()
+chk1 <- function(x, cls="foo")
+    stopifnot(identical(list(attr(x,"class"), class(x), oldClass(x)),
+                        list(cls, cls, cls)))
+chk2 <- function(x) stopifnot(identical(class(x), "integer"),
+                              is.null(oldClass(x)),
+                              is.null(attr(x,"class")))
+## all class setting variants work consistently:
+f <- 1:2; attr(f, "class") <- "foo"; chk1(f); attr(f, "class") <- character(0); chk2(f)
+f <- 1:2;         class(f) <- "foo"; chk1(f);         class(f) <- character(0); chk2(f)
+f <- 1:2;      oldClass(f) <- "foo"; chk1(f);      oldClass(f) <- character(0); chk2(f)
 ## class<- version failed: required NULL
+## in R <= 2.15.1 (2012)
 
 
 ## anova.lmlist could fail (PR#14960)

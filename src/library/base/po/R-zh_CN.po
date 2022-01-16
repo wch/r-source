@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -223,9 +223,6 @@ msgstr "只能写字符对象"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X'必需有带名字的维名"
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr "参数'object'必需解析成单一个字符串"
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr "参数'object'必需解析成单一个字符串"
@@ -401,6 +398,10 @@ msgstr "只适用于全数值数据框"
 #, fuzzy
 msgid "cannot xtfrm data frames"
 msgstr "不是数据框"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr "串列参数有错：所有变数的长度都应该是一样的"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
@@ -1043,6 +1044,10 @@ msgstr "'input'的长度一定得为一"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input'和'target'一定都得是字符串"
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "不是数据框"
+
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s'不是函数，也不是字符，也不是符號"
 
@@ -1607,6 +1612,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "warning()里的附加参数略过不用"
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1824,32 +1832,14 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0] "没有%s反向分析这个选项"
 
 #, fuzzy
-msgid ""
-"The following object is masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-"下列对象被屏蔽了%s %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
+msgstr[0] "下列对象被屏蔽了%s %s:"
 
 #, fuzzy
-msgid ""
-"The following object is masked from %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked from %s:\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-"下列对象被屏蔽了%s %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
+msgstr[0] "下列对象被屏蔽了%s %s:"
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
@@ -1969,6 +1959,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr "参数'object'必需解析成单一个字符串"
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "'%s'不是'namespace:%s'内的出口对象："

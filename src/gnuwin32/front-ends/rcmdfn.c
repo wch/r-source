@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020  R Core Team
+ *  Copyright (C) 2000-2021  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,16 +88,73 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
+/* length of argument if quoted to be passed as a second or 
+   later to a program conforming to MSVC conventions */
+size_t quoted_arg_len(const char *arg)
+{
+    size_t len = 0;
+    size_t nbackslashes = 0;
+    for (size_t i = 0; arg[i]; i++) {
+	if (arg[i] == '\\')
+	    nbackslashes++;
+	else if (arg[i] == '"') {
+	    /* double backslashes before quote and escape the quote */
+	    len += 2 * nbackslashes;
+	    nbackslashes = 0;
+	    len += 2; /* \" */
+	} else {
+	    len += nbackslashes;
+	    nbackslashes = 0;
+	    len ++;
+	}
+    }
+    /* double trailing backslashes due to the following quote */
+    len += 2 * nbackslashes;
+    len += 2; /* surrounding double quotes */
+    return len;
+}
+
+/* strcat a quoted version of the argument to dest */
+char *quoted_arg_cat(char *dest, const char *arg)
+{
+    size_t j = strlen(dest);
+    size_t nbackslashes = 0;
+
+    dest[j++] = '"';
+    for (size_t i = 0; arg[i] ; i++) {
+	if (arg[i] == '\\')
+	    nbackslashes++;
+	else if (arg[i] == '"') {
+	    /* double backslashes before quote and escape the quote */
+	    for (;nbackslashes; nbackslashes--) {
+		dest[j++] = '\\';
+		dest[j++] = '\\';
+	    }
+	    dest[j++] = '\\';
+	    dest[j++] = '"';
+	} else {
+	    for (;nbackslashes; nbackslashes--) dest[j++] = '\\';
+	    dest[j++] = arg[i]; 
+	}
+    }
+    /* double trailing backslashes due to the following quote */
+    for (;nbackslashes; nbackslashes--) {
+	dest[j++] = '\\';
+	dest[j++] = '\\';
+    }
+    dest[j++] = '"';
+    dest[j] = '\0';
+    return dest;
+}
+
 #define PROCESS_CMD(ARG)	if (cmdarg + 1 < argc) {\
 	    for (i = cmdarg + 1; i < argc; i++) {\
 		strcat(cmd, ARG);\
-		if (strlen(cmd) + strlen(argv[i]) > 9900) {\
+		if (strlen(cmd) + quoted_arg_len(argv[i]) > 9900) {\
 		    fprintf(stderr, "command line too long\n");\
 		    return(27);\
 		}\
-		strcat(cmd, "\"");\
-		strcat(cmd, argv[i]);\
-		strcat(cmd, "\"");\
+		quoted_arg_cat(cmd, argv[i]);\
 	    }\
 	    /* the outermost double quotes are needed for cmd.exe */\
 	    strcat(cmd,"\"");\
@@ -119,7 +176,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        read R_HOME\etc\Rcmd_environ
        launch %R_HOME%\bin\$*
     */
-    int i, iused, status = 0;
+    int i, iused;
     char *p, cmd[CMD_LEN];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
@@ -167,21 +224,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(0);
 	}
 	snprintf(cmd, CMD_LEN, "\"\"%s/%s/Rterm.exe\"", getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++){
-	    strcat(cmd, " ");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, "\"");
-	    strcat(cmd, argv[i]);
-	    strcat(cmd, "\"");
-	}
-	/* the outermost double quotes are needed for cmd.exe */ 
-	strcat(cmd, "\"");
 	/* R.exe should ignore Ctrl-C, and let Rterm.exe handle it */
 	SetConsoleCtrlHandler(NULL, TRUE);
-	return system(cmd);
+	PROCESS_CMD(" ");
     }
 
     /* From here on down, this was called as Rcmd or R CMD */
@@ -397,20 +442,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --no-restore --no-echo --args",
 		 getRHOME(3), BINDIR, getRHOME(3));
-	for (i = cmdarg + 1; i < argc; i++){
-	    strcat(cmd, " ");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    /* Library names could contain spaces and other special characters */
-	    strcat(cmd, "\"");
-	    strcat(cmd, argv[i]);
-	    strcat(cmd, "\"");
-	}
-	/* the outermost double quotes are needed for cmd.exe */ 
-	strcat(cmd, "\"");
-	return(system(cmd));
+	PROCESS_CMD(" ");
     } else if (!strcmp(argv[cmdarg], "build")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.build_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --no-echo --args ",
@@ -483,21 +515,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    else strcpy(cmd, "\"");
 	    strcat(cmd, p);
 	}
-
-	for (i = cmdarg + 1; i < argc; i++){
-	    strcat(cmd, " ");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, "\"");
-	    strcat(cmd, argv[i]);
-	    strcat(cmd, "\"");
-	}
-	/* the outermost double quotes are needed for cmd.exe */ 
-	strcat(cmd, "\"");
-	/* printf("cmd is %s\n", cmd); */
-	status = system(cmd);
+	PROCESS_CMD(" ");
     }
-    return(status);
+    /* not reachable */
 }

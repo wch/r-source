@@ -167,7 +167,7 @@ function(files, type, fields, verbose, validate = FALSE)
     ## files was without path at this point in original code,
     ## use filetbs instead to compute pkg names and set db names 
     filetbs <- basename(files)
-    packages <- sapply(strsplit(filetbs, "_", fixed = TRUE), "[", 1L)
+    packages <- sapply(strsplit(filetbs, "_", fixed = TRUE), `[`, 1L)
     db <- vector(length(files), mode = "list")
     names(db) <- filetbs #files was not full paths before
     ## Many (roughly length(files)) warnings are *expected*, hence

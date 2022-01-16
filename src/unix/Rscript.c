@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2018  The R Core Team
+ *  Copyright (C) 2006-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,24 +91,24 @@ static int verbose = 0;
 
 void usage(void)
 {
-    fprintf(stderr, "Usage: /path/to/Rscript [--options] [-e expr [-e expr2 ...] | file] [args]\n\n");
-    fprintf(stderr, "--options accepted are\n");
+    fprintf(stderr, "Usage: /path/to/Rscript [options] [-e expr [-e expr2 ...] | file] [args]\n\n");
+    fprintf(stderr, "options accepted in [options]:\n");
     fprintf(stderr, "  --help              Print usage and exit\n");
     fprintf(stderr, "  --version           Print version and exit\n");
     fprintf(stderr, "  --verbose           Print information on progress\n");
     fprintf(stderr, "  --default-packages=list\n");
-    fprintf(stderr, "                      Where 'list' is a comma-separated set\n");
-    fprintf(stderr, "                        of package names, or 'NULL'\n");
-    fprintf(stderr, "or options to R, in addition to --no-echo --no-restore, such as\n");
+    fprintf(stderr, "                      A comma-separated 'list' of package names, or 'NULL'\n");
+    fprintf(stderr, "  and options to R (--no-echo --no-restore are added automatically), such as\n");
     fprintf(stderr, "  --save              Do save workspace at the end of the session\n");
     fprintf(stderr, "  --no-environ        Don't read the site and user environment files\n");
     fprintf(stderr, "  --no-site-file      Don't read the site-wide Rprofile\n");
     fprintf(stderr, "  --no-init-file      Don't read the user R profile\n");
     fprintf(stderr, "  --restore           Do restore previously saved objects at startup\n");
-    fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file\n");
+    fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file,\n");
     fprintf(stderr, "                        --no-init-file and --no-environ\n");
     fprintf(stderr, "\n'file' may contain spaces but not shell metacharacters\n");
     fprintf(stderr, "Expressions (one or more '-e <expr>') may be used *instead* of 'file'\n");
+    fprintf(stderr, "'args' are accessible via commandArgs(TRUE) in the script\n");
     fprintf(stderr, "See also  ?Rscript  from within R\n");
 }
 
@@ -207,7 +207,10 @@ int main(int argc_, char *argv_[])
 	p = strrchr(rhome,'\\');
 	if(!p) {fprintf(stderr, "installation problem\n"); exit(1);}
 	*p = '\0';
-	snprintf(cmd, PATH_MAX+1, "%s\\Rterm.exe",  rhome);
+	if (snprintf(cmd, PATH_MAX+1, "%s\\Rterm.exe",  rhome) > PATH_MAX) {
+	    fprintf(stderr, "impossibly long path for Rterm.exe\n");
+	    exit(1);
+	}
     }
 #else
     if(!(p && *p)) p = rhome;
@@ -252,6 +255,9 @@ int main(int argc_, char *argv_[])
 	    i0 = i;
 	    continue;
 	}
+	if (e_mode) break;
+	    /* Once in e_mode, only additional -e options are to be processed.
+	       Any remaining --options belong to the expressions (PR#18102). */ 
 	if(strncmp(argv[i], "--", 2) != 0) break;
 	if(strcmp(argv[i], "--verbose") == 0) {
 	    verbose = 1;

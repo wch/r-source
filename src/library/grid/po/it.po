@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56+0200\n"
+"POT-Creation-Date: 2021-11-06 17:17+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -23,7 +23,8 @@ msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext dev'essere unicamente chiamato dopo initGContext"
 
 #: grid.c:199
-msgid "Turning clipping on or off within a clipping path is no honoured"
+#, fuzzy
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr "On/off del clipping all'interno di un clipping path non onorato"
 
 #: grid.c:241
@@ -31,56 +32,56 @@ msgid "cannot clip to rotated viewport"
 msgstr "non è possibile tagliare su una viewport ruotata"
 
 #: grid.c:455
-msgid "Clipping paths within a clipping path are not honoured"
+#, fuzzy
+msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr "Clipping path interno ad altri non onorato"
 
 #: grid.c:474
-msgid "Masks within a clipping path are not honoured"
+#, fuzzy
+msgid "Masks within a (clipping) path are not honoured"
 msgstr "Maschere interne a un clipping path non onorate"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"non è possibile mostrare la view-port di livello più alto (output di 'grid' "
-"e 'graphics' mischiato?)"
+msgstr "non è possibile mostrare la view-port di livello più alto (output di 'grid' e 'graphics' mischiato?)"
 
 #: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
-#: grid.c:1693
+#: grid.c:1702
 msgid "there is no layout defined"
 msgstr "non c'è alcun layout definito"
 
-#: grid.c:1913
+#: grid.c:1922
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "bordo poligonale non trovato (larghezza o altezza zero?)"
 
-#: grid.c:1922
+#: grid.c:1931
 msgid "polygon edge not found"
 msgstr "bordo poligonale non trovato"
 
-#: grid.c:2076
+#: grid.c:2085
 msgid "require at least two points to draw arrow"
 msgstr "richiedono almeno due punti per disegnare la freccia"
 
-#: grid.c:2399
+#: grid.c:2408
 msgid "non-finite control point in Xspline"
 msgstr "punto di controllo non finito in Xspline"
 
-#: grid.c:3324
+#: grid.c:3333
 msgid "non-finite x or y in graphics path"
 msgstr "x o y non finiti nel percorso grafico"
 
-#: grid.c:3374
+#: grid.c:3383
 msgid "Empty raster"
 msgstr "Raster vuoto"
 
-#: grid.c:3860
+#: grid.c:3869
 msgid "invalid plotting symbol"
 msgstr "simbolo di plotting non valido"
 
-#: grid.c:3954
+#: grid.c:3963
 msgid "unable to clip to rotated rectangle"
 msgstr "non è possibile tagliare su un rettangolo ruotato"
 
@@ -96,15 +97,13 @@ msgstr "'layout.pos.col' non valido"
 msgid "singular transformation matrix"
 msgstr "matrice di trasformazione singolare"
 
-#: state.c:180
+#: state.c:192
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr ""
-"non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
+msgstr "non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
-msgstr ""
-"Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
+msgstr "Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
 
 #: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
@@ -131,12 +130,8 @@ msgid "'units' must be of length > 0"
 msgstr "'units' dev'essere di lunghezza > 0"
 
 #: unit.c:1584
-msgid ""
-"data must be either NULL, have length 1, or match the length of the final "
-"unit vector"
-msgstr ""
-"i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza "
-"del vettore dell'unità finale"
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
+msgstr "i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza del vettore dell'unità finale"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"

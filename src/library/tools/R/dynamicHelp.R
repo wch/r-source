@@ -262,7 +262,7 @@ httpd <- function(path, query, ...)
 
     error_page <- function(msg)
         list(payload =
-             paste0(HTMLheader("httpd error"), msg, "\n</div></body></html>"))
+             paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
 
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
@@ -296,7 +296,7 @@ httpd <- function(path, query, ...)
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
     fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
-    topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
+    topicRegexp <- "^/library/+([^/]*)/help/(.*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
     demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
@@ -311,8 +311,19 @@ httpd <- function(path, query, ...)
     	pkg <- sub(topicRegexp, "\\1", path)
     	if (pkg == "NULL") pkg <- NULL  # There were multiple hits in the console
     	topic <- sub(topicRegexp, "\\2", path)
-        ## if a package is specified, look there first, then everywhere
+        ## If a package is specified, look there first. If not found,
+        ## search in other packages. This is used to search for
+        ## off-package links where the target package is not specified
+        ## (they are nominally links to topics in the same package)
+
+        ## However, if pkg is specified but not installed, give an
+        ## error message.
     	if (!is.null(pkg)) { # () avoids deparse here
+            if (!nzchar(system.file(package = pkg))) {
+                msg <- gettextf("No package named %s could be found",
+                                mono(pkg))
+                return(error_page(msg))
+            }
     	    file <- utils::help(topic, package = (pkg), help_type = "text")
             ## Before searching other packages, check if topic.Rd is
             ## available as a file in the package.
@@ -331,7 +342,7 @@ httpd <- function(path, query, ...)
 	if (!length(file)) {
             msg <- gettextf("No help found for topic %s in any package.",
                             mono(topic))
-	    return(list(payload = error_page(msg)))
+	    return(error_page(msg))
 	} else if (length(file) == 1L) {
 	    path <- dirname(dirname(file))
 	    file <- paste0('../../', basename(path), '/html/',

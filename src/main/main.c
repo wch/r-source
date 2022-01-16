@@ -429,7 +429,7 @@ int R_ReplDLLdo1(void)
 /* We can now print a greeting, run the .First function and then enter */
 /* the read-eval-print loop. */
 
-static RETSIGTYPE handleInterrupt(int dummy)
+static void handleInterrupt(int dummy)
 {
     R_interrupts_pending = 1;
     signal(SIGINT, handleInterrupt);
@@ -445,7 +445,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
 // controlled by the internal http server in the internet module
 int R_ignore_SIGPIPE = 0;
 
-static RETSIGTYPE handlePipe(int dummy)
+static void handlePipe(int dummy)
 {
     signal(SIGPIPE, handlePipe);
     if (!R_ignore_SIGPIPE) error("ignoring SIGPIPE signal");
@@ -653,25 +653,32 @@ static void *signal_stack;
 #define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers(void)
 {
-    /* <FIXME> may need to reinstall this if we do recover. */
-    struct sigaction sa;
-    signal_stack = malloc(SIGSTKSZ + R_USAGE);
-    if (signal_stack != NULL) {
-	sigstk.ss_sp = signal_stack;
-	sigstk.ss_size = SIGSTKSZ + R_USAGE;
-	sigstk.ss_flags = 0;
-	if(sigaltstack(&sigstk, NULL) < 0)
-	    warning("failed to set alternate signal stack");
-    } else
-	warning("failed to allocate alternate signal stack");
-    sa.sa_sigaction = sigactionSegv;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
-    sigaction(SIGSEGV, &sa, NULL);
-    sigaction(SIGILL, &sa, NULL);
+    /* Do not set the (since 2005 experimantal) SEGV handler
+       UI if R_NO_SEGV_HANDLER env var is non-empty.
+       This is needed to debug crashes in the handler
+       (which happen as they involve the console interface). */
+    const char *val = getenv("R_NO_SEGV_HANDLER");
+    if (!val || !*val) {
+	/* <FIXME> may need to reinstall this if we do recover. */
+	struct sigaction sa;
+	signal_stack = malloc(SIGSTKSZ + R_USAGE);
+	if (signal_stack != NULL) {
+	    sigstk.ss_sp = signal_stack;
+	    sigstk.ss_size = SIGSTKSZ + R_USAGE;
+	    sigstk.ss_flags = 0;
+	    if(sigaltstack(&sigstk, NULL) < 0)
+		warning("failed to set alternate signal stack");
+	} else
+	    warning("failed to allocate alternate signal stack");
+	sa.sa_sigaction = sigactionSegv;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
+	sigaction(SIGSEGV, &sa, NULL);
+	sigaction(SIGILL, &sa, NULL);
 #ifdef SIGBUS
-    sigaction(SIGBUS, &sa, NULL);
+	sigaction(SIGBUS, &sa, NULL);
 #endif
+    }
 
     signal(SIGINT,  handleInterrupt);
     signal(SIGUSR1, onsigusr1);
@@ -892,6 +899,7 @@ void setup_Rmainloop(void)
     InitTypeTables(); /* must be before InitS3DefaultTypes */
     InitS3DefaultTypes();
     PrintDefaults();
+    R_InitConditions();
 
     R_Is_Running = 1;
     R_check_locale();

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2017   The R Core Team.
+ *  Copyright (C) 2012-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,6 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(getWindowsHandle, 1),
     CALLDEF(getWindowsHandles, 2),
     CALLDEF(loadRconsole, 1),
-    CALLDEF(memsize, 1),
     CALLDEF(shortpath, 1),
 #endif
 
@@ -97,6 +96,17 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(edit, 4),
     EXTDEF(fileedit, 3),
     EXTDEF(selectlist, 4),
+
+    /* Hash Tables */
+    EXTDEF(hashtab_Ext, 2),
+    EXTDEF(gethash_Ext, 3),
+    EXTDEF(sethash_Ext, 3),
+    EXTDEF(remhash_Ext, 2),
+    EXTDEF(numhash_Ext, 1),
+    EXTDEF(typhash_Ext, 1),
+    EXTDEF(maphash_Ext, 2),
+    EXTDEF(clrhash_Ext, 1),
+    EXTDEF(ishashtab_Ext, 1),
 
 #ifdef Win32
     EXTDEF(winProgressBar, 6),

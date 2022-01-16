@@ -1,5 +1,5 @@
 # Traditional Chinese translations for R package.
-# Copyright (C) 2005 The R Foundation
+# Copyright (C) 2005-2021 The R Foundation
 # This file is distributed under the same license as the R package.
 # 陈斐 <feic@normipaiva.com>, 2005, 06.
 # Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-02-01 13:58\n"
-"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"PO-Revision-Date: 2021-11-06 17:41+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
@@ -752,9 +752,7 @@ msgstr "只有當 '…' 是泛型方法引數時方法才能給泛型 %s 加引�
 msgid ""
 "%s arguments (%s) after %s in the generic must appear in the method, in the "
 "same place at the end of the argument list"
-msgstr ""
-"泛型方法裡在 %2$s 之後的引數 (%1$s) 必須也存在於方法裡，在引數串列末端的相同"
-"地方"
+msgstr "泛型方法裡在 %2$s .. %3$s .. 之後的引數 (%1$s) 必須也存在於方法裡，在引數串列末端的相同地方"
 
 msgid ""
 "argument 'f' must be a string, generic function, or primitive: got an "

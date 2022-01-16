@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2018-04-16 10:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -76,19 +76,11 @@ msgstr "'row' kann nur ein Bereich existierender Zeilen sein"
 msgid "invalid 'row' specification"
 msgstr "unzulässige 'row' Spezifikation"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"es kann nicht mehr als ein Parameter aus 'side=[\"left\", \"right\"]', "
-"'col', 'col.before' oder 'col.after' angegeben werden"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "es kann nicht mehr als ein Parameter aus 'side=[\"left\", \"right\"]', 'col', 'col.before' oder 'col.after' angegeben werden"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"es muss genau ein Parameter aus 'side=[\"left\", \"right\"]', 'row', 'row."
-"before' oder 'row.after' angegeben werden"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "es muss genau ein Parameter aus 'side=[\"left\", \"right\"]', 'row', 'row.before' oder 'row.after' angegeben werden"
 
 msgid "invalid 'n'"
 msgstr "unzulässiges 'n'"
@@ -127,21 +119,14 @@ msgid "invalid display list element"
 msgstr "ungültiges Displaylisten-Element"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"ein oder mehrere grobs überschrieben (grab NICHT zuverlässig; versuche "
-"'wrap=TRUE'"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "ein oder mehrere grobs überschrieben (grab NICHT zuverlässig; versuche 'wrap=TRUE'"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "Viewport überschrieben (grab EVTL. nicht zuverlässig)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob hat Viewports auf den Stack gelegt, aber nicht zurückgeholt/"
-"weitergeschoben (grab EVTL. nicht zuverlässig)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob hat Viewports auf den Stack gelegt, aber nicht zurückgeholt/weitergeschoben (grab EVTL. nicht zuverlässig)"
 
 msgid "only valid to push viewports"
 msgstr "Viewports dürfen nur ge\"pushed\" werden"
@@ -150,12 +135,10 @@ msgid "must specify at least one viewport"
 msgstr "es muss zumindest ein Viewport angegeben werden"
 
 msgid "Down viewport failed to record on display list"
-msgstr ""
-"Abgeschalteter Viewport konnte nicht in die Display-Liste aufgenommen werde"
+msgstr "Abgeschalteter Viewport konnte nicht in die Display-Liste aufgenommen werde"
 
 msgid "Down viewport incorrectly recorded on display list"
-msgstr ""
-"Abgeschalteter Viewport fälschlicherweise in die Displayliste aufgenommen"
+msgstr "Abgeschalteter Viewport fälschlicherweise in die Displayliste aufgenommen"
 
 msgid "must pop at least one viewport"
 msgstr "es muss zumindest ein Viewport vom Stack geholt werden"
@@ -165,6 +148,10 @@ msgstr "es muss mindestens ein Viewport nach oben navigiert werden"
 
 msgid "Invalid number of generations"
 msgstr "Ungültige Anzahl von Generationen"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "ungültiges 'arrow' Argument"
 
 msgid "invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
@@ -251,9 +238,7 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "es ist nur zulässig ein Kind eines \"gTree\" zu editieren"
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"es ist unzulässig direkt den 'children' oder 'childrenOrder' Slot zu "
-"editieren"
+msgstr "es ist unzulässig direkt den 'children' oder 'childrenOrder' Slot zu editieren"
 
 msgid "invalid 'result'"
 msgstr "unzulässiges 'result'"
@@ -280,6 +265,30 @@ msgid "can only reorder 'children' for a \"gTree\""
 msgstr "kann nur 'children' für einen \"gTree\" setzen"
 
 msgid "Invalid 'order'"
+msgstr "ungültige 'order'"
+
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "ungültige 'order'"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "unzulässige Ausrichtung"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
 msgstr "ungültige 'order'"
 
 msgid "'l' must be a layout"
@@ -329,6 +338,28 @@ msgstr "ungültiges 'listing'"
 
 msgid "invalid 'origin'"
 msgstr "unzulässiger 'origin'"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' und 'y' müssen gleiche Länge haben"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width' und 'height' müssen alle Länge 1 haben"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -501,10 +532,8 @@ msgstr "nur Viewports zulässig in 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "nur Viewports zulässig in 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' muss ein Viewport sein und 'children eine 'vpList' in einem 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' muss ein Viewport sein und 'children eine 'vpList' in einem 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "ein Viewport-Pfad muss zumindest einen Viewport-Namen enthalten"
@@ -577,9 +606,7 @@ msgstr[1] "Unzulässige Viewport-Namen"
 #~ msgstr "grid.grob() ist veraltet; bitte stattdessen grob() nutzen"
 
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-#~ msgstr ""
-#~ "Das 'grob' Argument muss entweder ein 'line.to', 'lines' oder 'segments' "
-#~ "Grob sein"
+#~ msgstr "Das 'grob' Argument muss entweder ein 'line.to', 'lines' oder 'segments' Grob sein"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Vorzeichen von Indices können nicht gemischt werden"
@@ -589,15 +616,10 @@ msgstr[1] "Unzulässige Viewport-Namen"
 #~ msgstr "es ist nur zulässig ein Kind aus einem 'gTree' zu entfernen"
 
 #~ msgid "This function is redundant and will disappear in future versions."
-#~ msgstr ""
-#~ "Diese Funktion ist redundant und wird in späteren Versionen verschwinden"
+#~ msgstr "Diese Funktion ist redundant und wird in späteren Versionen verschwinden"
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
-#~ msgstr ""
-#~ "grid.arrows() ist veraltet; bitte das 'arrow' Argument für die "
-#~ "Linienzugfuktionen nutzen"
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+#~ msgstr "grid.arrows() ist veraltet; bitte das 'arrow' Argument für die Linienzugfuktionen nutzen"
 
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr "shape muss zwischen -1 und 1 liegen"
@@ -605,19 +627,11 @@ msgstr[1] "Unzulässige Viewport-Namen"
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr "Nicht-einheits Operand muss nummerisch sein"
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
-#~ msgstr ""
-#~ "unit.rep ist veraltet zugunsten einer Einheiten-Methode für die "
-#~ "generische rep Funktion"
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+#~ msgstr "unit.rep ist veraltet zugunsten einer Einheiten-Methode für die generische rep Funktion"
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
-#~ msgstr ""
-#~ "unit.length ist veraltet zugunsten einer Einheiten-Methode für die "
-#~ "generische length Funktion"
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+#~ msgstr "unit.length ist veraltet zugunsten einer Einheiten-Methode für die generische length Funktion"
 
 #, fuzzy
 #~ msgid "invalid graphics parameters"

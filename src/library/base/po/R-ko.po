@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -227,9 +227,6 @@ msgstr "오로지 문자형 객체들을 기록할 수만 있습니다"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X'는 반드시 named dimnames를 가져야 합니다"
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
@@ -406,6 +403,11 @@ msgstr "모든 변수가 숫자형인 데이터 프레임에 대해서만 정의
 #, fuzzy
 msgid "cannot xtfrm data frames"
 msgstr "데이터 프레임이 아닙니다"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr ""
+"유효하지 않은 리스트 인자입니다:  모든 변수들이 같은 길이를 가지고 있습니다"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "문자열이 표준서식을 따르지 않습니다"
@@ -1046,6 +1048,10 @@ msgstr "'input'은 반드시 길이가 1 이어야 합니다"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input'과 'target'은 반드시 문자형 벡터이어야 합니다"
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "데이터 프레임이 아닙니다"
+
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s'은 함수, 문자, 또는 심볼이 아닙니다"
 
@@ -1615,6 +1621,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "warning()에서 무시된 추가적 인자들입니다"
 
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1829,24 +1838,12 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] ""
 
-msgid ""
-"The following object is masked _by_ %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked _by_ %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
 msgstr[0] ""
 
-msgid ""
-"The following object is masked from %s:\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"The following objects are masked from %s:\n"
-"\n"
-"%s\n"
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
 msgstr[0] ""
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
@@ -1963,6 +1960,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] ""
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "'%s'는 'namespace:%s'로부터 내보내어진 객체가 아닙니다"

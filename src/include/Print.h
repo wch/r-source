@@ -33,7 +33,8 @@
 #define formatStringS       Rf_formatStringS
 #define EncodeElement       Rf_EncodeElement
 #define EncodeElement0      Rf_EncodeElement0
-#define EncodeEnvironment   Rf_EncodeEnvironment
+#define EncodeExptr         Rf_EncodeExtptr
+#define EncodeElement       Rf_EncodeElement
 #define printArray          Rf_printArray
 #define printMatrix         Rf_printMatrix
 #define printNamedVector    Rf_printNamedVector
@@ -53,6 +54,7 @@ void formatStringS(SEXP, R_xlen_t, int*, int);
 /* Formating of values */
 const char *EncodeElement0(SEXP, R_xlen_t, int, const char *);
 const char *EncodeEnvironment(SEXP);
+const char *EncodeExtptr(SEXP);
 /* Legacy, for R.app */
 const char *EncodeElement(SEXP, int, int, char);
 

@@ -127,9 +127,14 @@ print.packageDescription <-
     xx[] <- lapply(xx, function(x) if(is.na(x)) "NA" else x)
     if(abbrCollate > 0 && any(names(xx) == "Collate")) {
         ## trim a long "Collate" field -- respecting word boundaries
-	wrds <- strsplit(xx$Collate,"[ \n]")[[1L]]
-	k <- which.max(cumsum(nchar(wrds)) > abbrCollate) - 1L
-	xx$Collate <- paste(c(wrds[seq_len(k)], "....."), collapse=" ")
+	wrds <- strsplit(xx$Collate,"[ \t\n]")[[1L]]
+        if(n <- length(wrds)) {
+            k <- sum((cumsum(nchar(wrds, "w")) + seq.int(0, n - 1)) <=
+                     abbrCollate)
+            if(k < n)
+                xx$Collate <-
+                    paste(c(wrds[seq_len(k)], "....."), collapse=" ")
+        }
     }
     write.dcf(as.data.frame.list(xx, optional = TRUE))
     cat("\n-- File:", attr(x, "file"), "\n")

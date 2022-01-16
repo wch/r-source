@@ -1,5 +1,5 @@
 # Translation of R-parallel.pot to French
-# Copyright (C) 2011 The R Foundation
+# Copyright (C) 2011-2021 The R Foundation
 # This file is distributed under the same license as the parallel R package.
 # Philippe Grosjean <phgrosjean@sciviews.org>, 2011.
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
-"PO-Revision-Date: 2021-02-10 17:48+0100\n"
+"PO-Revision-Date: 2021-11-06 22:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -113,8 +113,8 @@ msgstr "'mc.cores' > 1 n'est pas supporté sous Windows"
 
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
-msgstr[0] "L’initialisation du cluster a échoué. %d processus esclave n’a pas pu se connecter."
-msgstr[1] "L’initialisation du cluster a échoué. %d processus esclaves n’ont pas pu se connecter."
+msgstr[0] "L’initialisation du cluster a échoué. %d (de %d) processus esclave n’a pas pu se connecter."
+msgstr[1] "L’initialisation du cluster a échoué. %d (de %d) processus esclaves n’ont pas pu se connecter."
 
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
@@ -143,9 +143,6 @@ msgstr[1] "%d tâches en parallèle n’ont pas renvoyé de résultats"
 
 #~ msgid "socket cluster with %d nodes on hosts %s"
 #~ msgstr "groupe de processus socket avec %d noeuds sur les hôtes %s"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "host"
 #~ msgstr "hôte"

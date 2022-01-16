@@ -102,11 +102,14 @@ imagedir:
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pR ../windlgs $(RPREFIX)/src/library
-ifeq "$(WIN)" "64" 	
+ifeq "$(WIN)" "64" 
 # Edit Makeconf
-	$(SED) -e 's!^BINPREF [?]= .*!BINPREF ?= "$$(RTOOLS40_ROOT)/mingw64/bin/"!' \
-	  $(R_HOME)/etc/x64/Makeconf > $(RPREFIX)/etc/x64/Makeconf
-endif	  
+	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc/x64/Makeconf
+# Edit Rcmd_environ
+	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc/Rcmd_environ
+# Edit base package profile
+	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/library/base/R/Rprofile
+endif
 # test dir
 	mkdir $(RPREFIX)/tests
 	$(MAKE) --no-print-directory -C ../../../tests -f Makefile.win \

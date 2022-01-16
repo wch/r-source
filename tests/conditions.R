@@ -106,6 +106,18 @@ bumped <- list(
     error = function(...) "bar"
 )
 stopifnot(identical(globalCallingHandlers(), bumped))
+## Fails in R 4.0
+globalCallingHandlers(
+    warning = function(...) "foo",
+    error = function(...) "foo"
+)
+bumped <- list(
+    warning = function(...) "foo",
+    error = function(...) "foo",
+    condition = function(...) "foo",
+    error = function(...) "bar"
+)
+stopifnot(identical(globalCallingHandlers(), bumped))
 globalCallingHandlers(NULL)
 
 ## Attributes and closure environments are detected in the duplicate
@@ -120,4 +132,24 @@ expectedList <- list(
 )
 globalCallingHandlers(error = hnd1, error = hnd2, error = hnd3)
 stopifnot(identical(globalCallingHandlers(), expectedList))
+globalCallingHandlers(NULL)
+## and removeSource() now retains attributes:
+stopifnot( identical(attributes(removeSource(hnd2)), list(bar = TRUE)) )
+
+
+## Source references do not cause handlers to be treated as distinct
+withSource <- function(src, envir = parent.frame(), file = NULL) {
+    if (is.null(file)) {
+	file <- tempfile("sourced", fileext = ".R")
+    }
+    on.exit(unlink(file))
+    writeLines(src, file)
+    source(file, local = envir, keep.source = TRUE)
+}
+withSource("hnd1 <- structure(function(...) { NULL })")
+withSource("hnd2 <- structure(function(...) { NULL })")
+globalCallingHandlers(NULL)
+globalCallingHandlers(error = hnd1)
+globalCallingHandlers(error = hnd2) # message "pushing duplicate .."
+stopifnot(identical(globalCallingHandlers(), list(error = hnd2)))
 globalCallingHandlers(NULL)

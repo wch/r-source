@@ -402,13 +402,12 @@ void attribute_hidden R_check_locale(void)
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
 	p = strrchr(ctype, '.');
+	localeCP = 0;
 	if (p) {
 	    if (isdigit(p[1]))
 		localeCP = atoi(p+1);
 	    else if (!strcasecmp(p+1, "UTF-8") || !strcasecmp(p+1, "UTF8"))
 		localeCP = 65001;
-	    else
-		localeCP = 0;
 	}
 	/* Not 100% correct, but CP1252 is a superset */
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
@@ -422,10 +421,6 @@ void attribute_hidden R_check_locale(void)
 	}
 	systemCP = GetACP();
     }
-#endif
-#if defined(SUPPORT_UTF8_WIN32) /* never at present */
-    utf8locale = mbcslocale = TRUE;
-    strcpy(native_enc, "UTF-8");
 #endif
 }
 
@@ -490,11 +485,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	SEXP el = STRING_ELT(fn, i);
 	if (!isNull(el) && el != NA_STRING)
-#ifdef Win32
-	    f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
-#else
 	    f[i] = acopy_string(translateCharFP(el));
-#endif
 	else
 	    error(_("invalid filename specification"));
 	if (STRING_ELT(hd, i) != NA_STRING)
@@ -524,19 +515,18 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  the second set of files to be appended to the first.
  */
 
-#if defined(BUFSIZ) && (BUFSIZ > 512)
-/* OS's buffer size in stdio.h, probably.
-   Windows has 512, Solaris 1024, glibc 8192
- */
-# define APPENDBUFSIZE BUFSIZ
+/* Coreutils use 128K (with some adjustments based on st_blksize
+   and file size). Python uses 1M for Windows and 64K for other platforms.
+   R 4.1 and earlier used min(BUFSIZ, 512), increased in R 4.2 (PR#18245). */
+#ifdef Win32
+# define APPENDBUFSIZE (1024*1024)
 #else
-# define APPENDBUFSIZE 512
+# define APPENDBUFSIZE (128*1024)
 #endif
 
 static int R_AppendFile(SEXP file1, SEXP file2)
 {
     FILE *fp1, *fp2;
-    char buf[APPENDBUFSIZE];
     size_t nchar;
     int status = 0;
     if ((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) return 0;
@@ -544,11 +534,18 @@ static int R_AppendFile(SEXP file1, SEXP file2)
 	fclose(fp1);
 	return 0;
     }
+    char *buf = (char *)malloc(APPENDBUFSIZE);
+    if (!buf) {
+	fclose(fp1);
+	fclose(fp2);
+	error("could not allocate copy buffer");
+    }
     while ((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
 	if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE) goto append_error;
     if (fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
     status = 1;
  append_error:
+    free(buf);
     if (status == 0) warning(_("write error during file append"));
     fclose(fp1);
     fclose(fp2);
@@ -577,7 +574,6 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (int i = 0; i < n; i++) LOGICAL(ans)[i] = 0;  /* all FALSE */
     if (n1 == 1) { /* common case */
 	FILE *fp1, *fp2;
-	char buf[APPENDBUFSIZE];
 	int status = 0;
 	size_t nchar;
 	if (STRING_ELT(f1, 0) == NA_STRING ||
@@ -587,10 +583,22 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    status = 0;
 	    if (STRING_ELT(f2, i) == NA_STRING ||
 	       !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
+	    char *buf = (char *)malloc(APPENDBUFSIZE);
+	    if (!buf) {
+		fclose(fp1);
+		fclose(fp2);
+		error("could not allocate copy buffer");
+	    }
 	    while ((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
-		if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
+		if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE) {
+		    free(buf);
 		    goto append_error;
-	    if (fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
+		}
+	    if (fwrite(buf, 1, nchar, fp1) != nchar) {
+		free(buf);
+		goto append_error;
+	    }
+	    free(buf);
 	    status = 1;
 	append_error:
 	    if (status == 0)
@@ -1271,12 +1279,15 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 		Rboolean not_dot = strcmp(de->d_name, ".") && strcmp(de->d_name, "..");
 		if (recursive) {
+		    int res;
 #ifdef Win32
 		    if (strlen(dnp) == 2 && dnp[1] == ':') // e.g. "C:"
-			snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+			res = snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
 		    else
 #endif
-			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+			res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+		    if (res >= PATH_MAX) 
+			warning(_("over-long path"));
 
 #ifdef Windows
 		    _stati64(p, &sb);
@@ -1300,12 +1311,14 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 			    if (stem) {
 #ifdef Win32
 				if(strlen(stem) == 2 && stem[1] == ':')
-				    snprintf(stem2, PATH_MAX, "%s%s", stem,
+				    res = snprintf(stem2, PATH_MAX, "%s%s", stem,
 					     de->d_name);
 				else
 #endif
-				    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				    res = snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 					     R_FileSep, de->d_name);
+				if (res >= PATH_MAX)
+				    warning(_("over-long path"));
 			    } else
 				strcpy(stem2, de->d_name);
 
@@ -1409,14 +1422,17 @@ static void list_dirs(const char *dnp, const char *nm,
 	    SET_STRING_ELT(*pans, (*count)++, mkChar(full ? dnp : nm));
 	}
 	while ((de = readdir(dir))) {
+	    int res;
 #ifdef Win32
 	    if (strlen(dnp) == 2 && dnp[1] == ':')
-		snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+		res = snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
 	    else
-		snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+		res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 #else
-	    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+	    res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 #endif
+	    if (res >= PATH_MAX)
+		warning(_("over-long path"));
 #ifdef Windows
 	    _stati64(p, &sb);
 #else
@@ -1426,8 +1442,10 @@ static void list_dirs(const char *dnp, const char *nm,
 		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
 		    if(recursive) {
 			char nm2[PATH_MAX];
-			snprintf(nm2, PATH_MAX, "%s%s%s", nm, R_FileSep,
+			res = snprintf(nm2, PATH_MAX, "%s%s%s", nm, R_FileSep,
 				 de->d_name);
+			if (res >= PATH_MAX)
+			    warning(_("over-long path"));
 			list_dirs(p, nm[0] ? nm2 : de->d_name, full, count,
 				  pans, countmax, idx, recursive);
 
@@ -1588,9 +1606,17 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 static int R_rmdir(const wchar_t *dir)
 {
     wchar_t tmp[MAX_PATH];
-    GetShortPathNameW(dir, tmp, MAX_PATH);
-    //printf("removing directory %ls\n", tmp);
-    return _wrmdir(tmp);
+    DWORD res = 0;
+    /* FIXME: GetShortPathName is probably not needed here anymore. */
+    res = GetShortPathNameW(dir, tmp, MAX_PATH);
+    if (res == 0) 
+	/* GetShortPathName mail fail if there are insufficient permissions
+	   on a component of the path. */
+        return _wrmdir(dir);
+    else
+	/* Even when GetShortPathName succeeds, "tmp" may be the long name,
+	   because short names may not be enabled/available. */
+        return _wrmdir(tmp);
 }
 
 /* Junctions and symbolic links are fundamentally reparse points, so
@@ -1598,11 +1624,10 @@ static int R_rmdir(const wchar_t *dir)
 static int isReparsePoint(const wchar_t *name)
 {
     DWORD res = GetFileAttributesW(name);
-    if(res == INVALID_FILE_ATTRIBUTES) {
-	warning("cannot get info on '%ls', reason '%s'",
-		name, formatError(GetLastError()));
+    if(res == INVALID_FILE_ATTRIBUTES)
+	/* Do not warn, because this function is also used for files that don't
+	   exist. R_WFileExists may return false for broken symbolic links. */
 	return 0;
-    }
     // printf("%ls: %x\n", name, res);
     return res & FILE_ATTRIBUTE_REPARSE_POINT;
 }
@@ -1638,10 +1663,16 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
     //printf("R_unlink(%ls)\n", name);
-    if (!R_WFileExists(name)) return 0;
-    if (force) _wchmod(name, _S_IWRITE);
+    /* We cannot use R_WFileExists here since it is false for broken
+       symbolic links
+       if (!R_WFileExists(name)) return 0; */
+    int name_exists = (GetFileAttributesW(name) != INVALID_FILE_ATTRIBUTES);
+    if (name_exists && force)
+	_wchmod(name, _S_IWRITE);
+    if (name_exists && isReparsePoint(name))
+	return delReparsePoint(name);
 
-    if (recursive) {
+    if (name_exists && recursive) {
 	_WDIR *dir;
 	struct _wdirent *de;
 	wchar_t p[PATH_MAX];
@@ -1651,8 +1682,7 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	_wstati64(name, &sb);
 	/* We need to test for a junction first, as junctions
 	   are detected as directories. */
-	if (isReparsePoint(name)) ans += delReparsePoint(name);
-	else if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = _wopendir(name)) != NULL) {
 		while ((de = _wreaddir(dir))) {
 		    if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
@@ -1684,9 +1714,11 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	    return ans;
 	}
 	/* drop through */
-    } else if (isReparsePoint(name)) return delReparsePoint(name);
+    }
 
-    return _wunlink(name) == 0 ? 0 : 1;
+    int unlink_succeeded = (_wunlink(name) == 0);
+    /* We want to return 0 if either unlink succeeded or 'name' did not exist */
+    return (unlink_succeeded || !name_exists) ? 0 : 1;
 }
 
 void R_CleanTempDir(void)
@@ -1726,11 +1758,14 @@ static int R_unlink(const char *name, int recursive, int force)
 		    if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 			continue;
 		    size_t n = strlen(name);
+		    int pres;
 		    if (name[n] == R_FileSep[0])
-			snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+			pres = snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		    else
-			snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
+			pres = snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
 				 de->d_name);
+		    if (pres >= PATH_MAX)
+			error(_("path too long"));
 		    lstat(p, &sb);
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			if (force) chmod(p, sb.st_mode | S_IWUSR | S_IXUSR);
@@ -2550,7 +2585,6 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	if(dates) copyFileTime(this, dest);
     } else { /* a file */
 	FILE *fp1 = NULL, *fp2 = NULL;
-	wchar_t buf[APPENDBUFSIZE];
 
 	nfail = 0;
 	int nc = wcslen(to);
@@ -2568,15 +2602,24 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 		nfail++;
 		goto copy_error;
 	    }
+	    wchar_t *buf = (wchar_t *)malloc(APPENDBUFSIZE * sizeof(wchar_t));
+	    if (!buf) {
+		fclose(fp1);
+		fclose(fp2);
+		error("could not allocate copy buffer");
+	    }
 	    while ((nc = fread(buf, 1, APPENDBUFSIZE, fp1)) == APPENDBUFSIZE)
 		if (    fwrite(buf, 1, APPENDBUFSIZE, fp2)  != APPENDBUFSIZE) {
 		    nfail++;
+		    free(buf);
 		    goto copy_error;
 		}
 	    if (fwrite(buf, 1, nc, fp2) != nc) {
 		nfail++;
+		free(buf);
 		goto copy_error;
 	    }
+	    free(buf);
 	} else if (!over) {
 	    nfail++;
 	    goto copy_error;
@@ -2804,7 +2847,6 @@ static int do_copy(const char* from, const char* name, const char* to,
 	if(dates) copyFileTime(this, dest);
     } else { /* a file */
 	FILE *fp1 = NULL, *fp2 = NULL;
-	char buf[APPENDBUFSIZE];
 
 	nfail = 0;
 	size_t nc = strlen(to);
@@ -2823,15 +2865,24 @@ static int do_copy(const char* from, const char* name, const char* to,
 		nfail++;
 		goto copy_error;
 	    }
+	    char *buf = (char *)malloc(APPENDBUFSIZE);
+	    if (!buf) {
+		fclose(fp1);
+		fclose(fp2);
+		error("could not allocate copy buffer");
+	    }
 	    while ((nc = fread(buf, 1, APPENDBUFSIZE, fp1)) == APPENDBUFSIZE)
 		if (    fwrite(buf, 1, APPENDBUFSIZE, fp2)  != APPENDBUFSIZE) {
 		    nfail++;
+		    free(buf);
 		    goto copy_error;
 		}
 	    if (fwrite(buf, 1, nc, fp2) != nc) {
 		nfail++;
+		free(buf);
 		goto copy_error;
 	    }
+	    free(buf);
 	} else if (!over) {
 	    nfail++;
 	    goto copy_error;

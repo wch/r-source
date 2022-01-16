@@ -23,7 +23,7 @@ dirname(path)
   \item{path}{character vector, containing path names.}
 }
 \details{
-  \link{tilde expansion} of the path is done except on Windows.
+  \link{tilde expansion} of the path will be performed.
 
   Trailing path separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed

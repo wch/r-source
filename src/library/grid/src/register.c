@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3  Paul Murrell
- *                2003-2017 The R Core Team
+ *                2003-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(setDLon, 1),
     LCALLDEF(getEngineDLon, 0),
     LCALLDEF(setEngineDLon, 1),
+    LCALLDEF(setGridState, 2),
     LCALLDEF(getCurrentGrob, 0),
     LCALLDEF(setCurrentGrob, 1),
     LCALLDEF(getEngineRecording, 0),
@@ -53,6 +54,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(currentGPar, 0),
     LCALLDEF(newpagerecording, 0),
     LCALLDEF(newpage, 0),
+    LCALLDEF(clearDefinitions, 1),
     LCALLDEF(initGPar, 0),
     LCALLDEF(initViewportStack, 0),
     LCALLDEF(initDisplayList, 0),
@@ -72,6 +74,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(points, 4),
     LCALLDEF(clip, 6),
     LCALLDEF(pretty, 1),
+    LCALLDEF(pretty2, 2),
     LCALLDEF(locator, 0),
     LCALLDEF(convert, 4),
     LCALLDEF(devLoc, 3),
@@ -86,6 +89,9 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(xsplineBounds, 8),
     LCALLDEF(xsplinePoints, 8),
     LCALLDEF(stringMetric, 1),
+    LCALLDEF(stroke, 1),
+    LCALLDEF(fill, 2),
+    LCALLDEF(fillStroke, 2),
     {"validUnits", (DL_FUNC) &validUnits, 1},
     {"constructUnits", (DL_FUNC) &constructUnits, 3},
     {"asUnit", (DL_FUNC) &asUnit, 1},

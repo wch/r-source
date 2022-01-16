@@ -164,14 +164,11 @@ changequote([,])dnl
         fi
 
         AC_CACHE_CHECK([for GNU gettext in libc], [$gt_func_gnugettext_libc],
-         [AC_TRY_LINK([#include <libintl.h>
+         [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <libintl.h>
 $gt_revision_test_code
 extern int _nl_msg_cat_cntr;
-extern int *_nl_domain_bindings;],
-            [bindtextdomain ("", "");
-return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_domain_bindings],
-            [eval "$gt_func_gnugettext_libc=yes"],
-            [eval "$gt_func_gnugettext_libc=no"])])
+extern int *_nl_domain_bindings;]], [[bindtextdomain ("", "");
+return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_domain_bindings]])],[eval "$gt_func_gnugettext_libc=yes"],[eval "$gt_func_gnugettext_libc=no"])])
 
         if { eval "gt_val=\$$gt_func_gnugettext_libc"; test "$gt_val" != "yes"; }; then
           dnl Sometimes libintl requires libiconv, so first search for libiconv.
@@ -190,35 +187,30 @@ return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_domain_b
             gt_save_LIBS="$LIBS"
             LIBS="$LIBS $LIBINTL"
             dnl Now see whether libintl exists and does not depend on libiconv.
-            AC_TRY_LINK([#include <libintl.h>
+            AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <libintl.h>
 $gt_revision_test_code
 extern int _nl_msg_cat_cntr;
 extern
 #ifdef __cplusplus
 "C"
 #endif
-const char *_nl_expand_alias (const char *);],
-              [bindtextdomain ("", "");
-return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_alias ("")],
-              [eval "$gt_func_gnugettext_libintl=yes"],
-              [eval "$gt_func_gnugettext_libintl=no"])
+const char *_nl_expand_alias (const char *);]], [[bindtextdomain ("", "");
+return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_alias ("")]])],[eval "$gt_func_gnugettext_libintl=yes"],[eval "$gt_func_gnugettext_libintl=no"])
             dnl Now see whether libintl exists and depends on libiconv.
             if { eval "gt_val=\$$gt_func_gnugettext_libintl"; test "$gt_val" != yes; } && test -n "$LIBICONV"; then
               LIBS="$LIBS $LIBICONV"
-              AC_TRY_LINK([#include <libintl.h>
+              AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <libintl.h>
 $gt_revision_test_code
 extern int _nl_msg_cat_cntr;
 extern
 #ifdef __cplusplus
 "C"
 #endif
-const char *_nl_expand_alias (const char *);],
-                [bindtextdomain ("", "");
-return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_alias ("")],
-               [LIBINTL="$LIBINTL $LIBICONV"
+const char *_nl_expand_alias (const char *);]], [[bindtextdomain ("", "");
+return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_alias ("")]])],[LIBINTL="$LIBINTL $LIBICONV"
                 LTLIBINTL="$LTLIBINTL $LTLIBICONV"
                 eval "$gt_func_gnugettext_libintl=yes"
-               ])
+               ],[])
             fi
             CPPFLAGS="$gt_save_CPPFLAGS"
             LIBS="$gt_save_LIBS"])
@@ -382,10 +374,7 @@ AC_DEFUN([gt_INTL_MACOSX],
     gt_cv_func_CFPreferencesCopyAppValue,
     [gt_save_LIBS="$LIBS"
      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-     AC_TRY_LINK([#include <CoreFoundation/CFPreferences.h>],
-       [CFPreferencesCopyAppValue(NULL, NULL)],
-       [gt_cv_func_CFPreferencesCopyAppValue=yes],
-       [gt_cv_func_CFPreferencesCopyAppValue=no])
+     AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <CoreFoundation/CFPreferences.h>]], [[CFPreferencesCopyAppValue(NULL, NULL)]])],[gt_cv_func_CFPreferencesCopyAppValue=yes],[gt_cv_func_CFPreferencesCopyAppValue=no])
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
     AC_DEFINE([HAVE_CFPREFERENCESCOPYAPPVALUE], 1,
@@ -395,9 +384,7 @@ AC_DEFUN([gt_INTL_MACOSX],
   AC_CACHE_CHECK([for CFLocaleCopyCurrent], gt_cv_func_CFLocaleCopyCurrent,
     [gt_save_LIBS="$LIBS"
      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-     AC_TRY_LINK([#include <CoreFoundation/CFLocale.h>], [CFLocaleCopyCurrent();],
-       [gt_cv_func_CFLocaleCopyCurrent=yes],
-       [gt_cv_func_CFLocaleCopyCurrent=no])
+     AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <CoreFoundation/CFLocale.h>]], [[CFLocaleCopyCurrent();]])],[gt_cv_func_CFLocaleCopyCurrent=yes],[gt_cv_func_CFLocaleCopyCurrent=no])
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
     AC_DEFINE([HAVE_CFLOCALECOPYCURRENT], 1,
@@ -519,29 +506,25 @@ AC_DEFUN([AM_ICONV_LINK],
   dnl Add $INCICONV to CPPFLAGS before performing the following checks,
   dnl because if the user has installed libiconv and not disabled its use
   dnl via --without-libiconv-prefix, he wants to use it. The first
-  dnl AC_TRY_LINK will then fail, the second AC_TRY_LINK will succeed.
+  dnl AC_LINK_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]) will then fail, the second AC_LINK_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]) will succeed.
   am_save_CPPFLAGS="$CPPFLAGS"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCICONV])
 
   AC_CACHE_CHECK(for iconv, am_cv_func_iconv, [
     am_cv_func_iconv="no, consider installing GNU libiconv"
     am_cv_lib_iconv=no
-    AC_TRY_LINK([#include <stdlib.h>
-#include <iconv.h>],
-      [iconv_t cd = iconv_open("","");
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
+#include <iconv.h>]], [[iconv_t cd = iconv_open("","");
        iconv(cd,NULL,NULL,NULL,NULL);
-       iconv_close(cd);],
-      am_cv_func_iconv=yes)
+       iconv_close(cd);]])],[am_cv_func_iconv=yes],[])
     if test "$am_cv_func_iconv" != yes; then
       am_save_LIBS="$LIBS"
       LIBS="$LIBS $LIBICONV"
-      AC_TRY_LINK([#include <stdlib.h>
-#include <iconv.h>],
-        [iconv_t cd = iconv_open("","");
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
+#include <iconv.h>]], [[iconv_t cd = iconv_open("","");
          iconv(cd,NULL,NULL,NULL,NULL);
-         iconv_close(cd);],
-        am_cv_lib_iconv=yes
-        am_cv_func_iconv=yes)
+         iconv_close(cd);]])],[am_cv_lib_iconv=yes
+        am_cv_func_iconv=yes],[])
       LIBS="$am_save_LIBS"
     fi
   ])
@@ -568,7 +551,7 @@ AC_DEFUN([AM_ICONV],
   if test "$am_cv_func_iconv" = yes; then
     AC_MSG_CHECKING([for iconv declaration])
     AC_CACHE_VAL(am_cv_proto_iconv, [
-      AC_TRY_COMPILE([
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
 #include <iconv.h>
 extern
@@ -580,7 +563,7 @@ size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, si
 #else
 size_t iconv();
 #endif
-], [], am_cv_proto_iconv_arg1="", am_cv_proto_iconv_arg1="const")
+]], [[]])],[am_cv_proto_iconv_arg1=""],[am_cv_proto_iconv_arg1="const"])
       am_cv_proto_iconv="extern size_t iconv (iconv_t cd, $am_cv_proto_iconv_arg1 char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);"])
     am_cv_proto_iconv=`echo "[$]am_cv_proto_iconv" | tr -s ' ' | sed -e 's/( /(/'`
     AC_MSG_RESULT([$]{ac_t:-
@@ -605,7 +588,7 @@ AC_DEFUN([gt_INTDIV0],
   AC_CACHE_CHECK([whether integer division by zero raises SIGFPE],
     gt_cv_int_divbyzero_sigfpe,
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 
@@ -641,8 +624,7 @@ int main ()
   nan = y / y;
   exit (1);
 }
-], gt_cv_int_divbyzero_sigfpe=yes, gt_cv_int_divbyzero_sigfpe=no,
-        [
+]])],[gt_cv_int_divbyzero_sigfpe=yes],[gt_cv_int_divbyzero_sigfpe=no],[
           # Guess based on the CPU.
           case "$host_cpu" in
             alpha* | i[34567]86 | m68k | s390*)
@@ -678,7 +660,7 @@ dnl Authors:
 dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
 dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2006.
 
-AC_PREREQ(2.52)
+AC_PREREQ([2.69])
 
 dnl Checks for all prerequisites of the intl subdirectory,
 dnl except for INTL_LIBTOOL_SUFFIX_PREFIX (and possibly LIBTOOL), INTLOBJS,
@@ -686,7 +668,7 @@ dnl            USE_INCLUDED_LIBINTL, BUILD_INCLUDED_LIBINTL.
 AC_DEFUN([AM_INTL_SUBDIR],
 [
   AC_REQUIRE([AC_PROG_INSTALL])dnl
-  AC_REQUIRE([AM_PROG_MKDIR_P])dnl defined by automake
+  AC_REQUIRE([AC_PROG_MKDIR_P])dnl
   AC_REQUIRE([AC_PROG_CC])dnl
   AC_REQUIRE([AC_CANONICAL_HOST])dnl
   AC_REQUIRE([gt_GLIBC2])dnl
@@ -832,11 +814,8 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   AC_REQUIRE([gt_INTTYPES_PRI])dnl
   AC_REQUIRE([gl_LOCK])dnl
 
-  AC_TRY_LINK(
-    [int foo (int a) { a = __builtin_expect (a, 10); return a == 10 ? 0 : 1; }],
-    [],
-    [AC_DEFINE([HAVE_BUILTIN_EXPECT], 1,
-       [Define to 1 if the compiler understands __builtin_expect.  (For intl)])])
+  AC_LINK_IFELSE([AC_LANG_PROGRAM([[int foo (int a) { a = __builtin_expect (a, 10); return a == 10 ? 0 : 1; }]], [[]])],[AC_DEFINE([HAVE_BUILTIN_EXPECT], 1,
+       [Define to 1 if the compiler understands __builtin_expect.  (For intl)])],[])
 
   AC_CHECK_HEADERS([argz.h inttypes.h limits.h unistd.h sys/param.h])
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
@@ -856,11 +835,8 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   dnl glibc >= 2.4 has a NL_LOCALE_NAME macro when _GNU_SOURCE is defined,
   dnl and a _NL_LOCALE_NAME macro always.
   AC_CACHE_CHECK([for NL_LOCALE_NAME macro], gt_cv_nl_locale_name,
-    [AC_TRY_LINK([#include <langinfo.h>
-#include <locale.h>],
-      [char* cs = nl_langinfo(_NL_LOCALE_NAME(LC_MESSAGES));],
-      gt_cv_nl_locale_name=yes,
-      gt_cv_nl_locale_name=no)
+    [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <langinfo.h>
+#include <locale.h>]], [[char* cs = nl_langinfo(_NL_LOCALE_NAME(LC_MESSAGES));]])],[gt_cv_nl_locale_name=yes],[gt_cv_nl_locale_name=no])
     ])
   if test $gt_cv_nl_locale_name = yes; then
     AC_DEFINE(HAVE_NL_LOCALE_NAME, 1,
@@ -905,11 +881,11 @@ dnl Check whether a function is declared.
 AC_DEFUN([gt_CHECK_DECL],
 [
   AC_CACHE_CHECK([whether $1 is declared], ac_cv_have_decl_$1,
-    [AC_TRY_COMPILE([$2], [
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[$2]], [[
 #ifndef $1
   char *p = (char *) $1;
 #endif
-], ac_cv_have_decl_$1=yes, ac_cv_have_decl_$1=no)])
+]])],[ac_cv_have_decl_$1=yes],[ac_cv_have_decl_$1=no])])
   if test $ac_cv_have_decl_$1 = yes; then
     gt_value=1
   else
@@ -933,7 +909,7 @@ AC_DEFUN([gt_TYPE_INTMAX_T],
   AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])
   AC_REQUIRE([gl_AC_HEADER_STDINT_H])
   AC_CACHE_CHECK(for intmax_t, gt_cv_c_intmax_t,
-    [AC_TRY_COMPILE([
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <stddef.h>
 #include <stdlib.h>
 #if HAVE_STDINT_H_WITH_UINTMAX
@@ -942,10 +918,8 @@ AC_DEFUN([gt_TYPE_INTMAX_T],
 #if HAVE_INTTYPES_H_WITH_UINTMAX
 #include <inttypes.h>
 #endif
-],     [intmax_t x = -1;
-        return !x;],
-       gt_cv_c_intmax_t=yes,
-       gt_cv_c_intmax_t=no)])
+]], [[intmax_t x = -1;
+        return !x;]])],[gt_cv_c_intmax_t=yes],[gt_cv_c_intmax_t=no])])
   if test $gt_cv_c_intmax_t = yes; then
     AC_DEFINE(HAVE_INTMAX_T, 1,
       [Define if you have the 'intmax_t' type in <stdint.h> or <inttypes.h>.  (For intl)])
@@ -959,7 +933,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
 
-AC_PREREQ(2.52)
+AC_PREREQ([2.69])
 
 # Define PRI_MACROS_BROKEN if <inttypes.h> exists and defines the PRI*
 # macros to non-string values.  This is the case on AIX 4.3.3.
@@ -971,11 +945,11 @@ AC_DEFUN([gt_INTTYPES_PRI],
     AC_CACHE_CHECK([whether the inttypes.h PRIxNN macros are broken],
       gt_cv_inttypes_pri_broken,
       [
-        AC_TRY_COMPILE([#include <inttypes.h>
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <inttypes.h>
 #ifdef PRId32
 char *p = PRId32;
 #endif
-], [], gt_cv_inttypes_pri_broken=no, gt_cv_inttypes_pri_broken=yes)
+]], [[]])],[gt_cv_inttypes_pri_broken=no],[gt_cv_inttypes_pri_broken=yes])
       ])
   fi
   if test "$gt_cv_inttypes_pri_broken" = yes; then
@@ -1001,12 +975,8 @@ dnl From Paul Eggert.
 AC_DEFUN([gl_AC_HEADER_INTTYPES_H],
 [
   AC_CACHE_CHECK([for inttypes.h], gl_cv_header_inttypes_h,
-  [AC_TRY_COMPILE(
-    [#include <sys/types.h>
-#include <inttypes.h>],
-    [uintmax_t i = (uintmax_t) -1; return !i;],
-    gl_cv_header_inttypes_h=yes,
-    gl_cv_header_inttypes_h=no)])
+  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
+#include <inttypes.h>]], [[uintmax_t i = (uintmax_t) -1; return !i;]])],[gl_cv_header_inttypes_h=yes],[gl_cv_header_inttypes_h=no])])
   if test $gl_cv_header_inttypes_h = yes; then
     AC_DEFINE_UNQUOTED(HAVE_INTTYPES_H_WITH_UINTMAX, 1,
       [Define if <inttypes.h> exists, doesn't clash with <sys/types.h>,
@@ -1036,8 +1006,7 @@ dnl   Ulrich Drepper <drepper@cygnus.com>, 1995.
 AC_DEFUN([gt_LC_MESSAGES],
 [
   AC_CACHE_CHECK([for LC_MESSAGES], gt_cv_val_LC_MESSAGES,
-    [AC_TRY_LINK([#include <locale.h>], [return LC_MESSAGES],
-       gt_cv_val_LC_MESSAGES=yes, gt_cv_val_LC_MESSAGES=no)])
+    [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <locale.h>]], [[return LC_MESSAGES]])],[gt_cv_val_LC_MESSAGES=yes],[gt_cv_val_LC_MESSAGES=no])])
   if test $gt_cv_val_LC_MESSAGES = yes; then
     AC_DEFINE(HAVE_LC_MESSAGES, 1,
       [Define if your <locale.h> file defines LC_MESSAGES.])
@@ -1080,11 +1049,11 @@ AC_DEFUN([gl_LOCK_EARLY_BODY],
   AC_BEFORE([$0], [gl_ARGP])dnl
 
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_REQUIRE([AC_GNU_SOURCE]) dnl needed for pthread_rwlock_t on glibc systems
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS]) dnl needed for pthread_rwlock_t on glibc systems
   dnl Check for multithreading.
   AC_ARG_ENABLE(threads,
-dnl AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
-dnl AC_HELP_STRING([--disable-threads], [build without multithread safety]),
+dnl AS_HELP_STRING([--enable-threads={posix|solaris|pth|win32}],[specify multithreading API])
+dnl AS_HELP_STRING([--disable-threads],[build without multithread safety]),
 dnl    [gl_use_threads=$enableval],
     ,
     [case "$host_os" in
@@ -1103,7 +1072,7 @@ dnl    [gl_use_threads=$enableval],
         # groks <pthread.h>. cc also understands the flag -pthread, but
         # we don't use it because 1. gcc-2.95 doesn't understand -pthread,
         # 2. putting a flag into CPPFLAGS that has an effect on the linker
-        # causes the AC_TRY_LINK test below to succeed unexpectedly,
+        # causes the AC_LINK_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]) test below to succeed unexpectedly,
         # leading to wrong values of LIBTHREAD and LTLIBTHREAD.
         CPPFLAGS="$CPPFLAGS -D_REENTRANT"
         ;;
@@ -1132,8 +1101,8 @@ AC_DEFUN([gl_LOCK_BODY],
     dnl Check whether the compiler and linker support weak declarations.
     AC_MSG_CHECKING([whether imported symbols can be declared weak])
     gl_have_weak=no
-    AC_TRY_LINK([extern void xyzzy ();
-#pragma weak xyzzy], [xyzzy();], [gl_have_weak=yes])
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[extern void xyzzy ();
+#pragma weak xyzzy]], [[xyzzy();]])],[gl_have_weak=yes],[])
     AC_MSG_RESULT([$gl_have_weak])
     if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
       # On OSF/1, the compiler needs the flag -pthread or -D_REENTRANT so that
@@ -1147,10 +1116,8 @@ AC_DEFUN([gl_LOCK_BODY],
         # Test whether both pthread_mutex_lock and pthread_mutexattr_init exist
         # in libc. IRIX 6.5 has the first one in both libc and libpthread, but
         # the second one only in libpthread, and lock.c needs it.
-        AC_TRY_LINK([#include <pthread.h>],
-          [pthread_mutex_lock((pthread_mutex_t*)0);
-           pthread_mutexattr_init((pthread_mutexattr_t*)0);],
-          [gl_have_pthread=yes])
+        AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <pthread.h>]], [[pthread_mutex_lock((pthread_mutex_t*)0);
+           pthread_mutexattr_init((pthread_mutexattr_t*)0);]])],[gl_have_pthread=yes],[])
         # Test for libpthread by looking for pthread_kill. (Not pthread_self,
         # since it is defined as a macro on OSF/1.)
         if test -n "$gl_have_pthread"; then
@@ -1202,15 +1169,13 @@ AC_DEFUN([gl_LOCK_BODY],
             [],
             [#include <pthread.h>])
           # glibc defines PTHREAD_MUTEX_RECURSIVE as enum, not as a macro.
-          AC_TRY_COMPILE([#include <pthread.h>],
-            [#if __FreeBSD__ == 4
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <pthread.h>]], [[#if __FreeBSD__ == 4
 error "No, in FreeBSD 4.0 recursive mutexes actually don't work."
 #else
 int x = (int)PTHREAD_MUTEX_RECURSIVE;
 return !x;
-#endif],
-            [AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], 1,
-               [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.  (For intl)])])
+#endif]])],[AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], 1,
+               [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.  (For intl)])],[])
         fi
       fi
     fi
@@ -1219,10 +1184,8 @@ return !x;
         gl_have_solaristhread=
         gl_save_LIBS="$LIBS"
         LIBS="$LIBS -lthread"
-        AC_TRY_LINK([#include <thread.h>
-#include <synch.h>],
-          [thr_self();],
-          [gl_have_solaristhread=yes])
+        AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <thread.h>
+#include <synch.h>]], [[thr_self();]])],[gl_have_solaristhread=yes],[])
         LIBS="$gl_save_LIBS"
         if test -n "$gl_have_solaristhread"; then
           gl_threads_api=solaris
@@ -1247,7 +1210,7 @@ return !x;
       gl_have_pth=
       gl_save_LIBS="$LIBS"
       LIBS="$LIBS -lpth"
-      AC_TRY_LINK([#include <pth.h>], [pth_self();], gl_have_pth=yes)
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <pth.h>]], [[pth_self();]])],[gl_have_pth=yes],[])
       LIBS="$gl_save_LIBS"
       if test -n "$gl_have_pth"; then
         gl_threads_api=pth
@@ -1374,13 +1337,12 @@ AC_DEFUN([gt_TYPE_LONGDOUBLE],
     [if test "$GCC" = yes; then
        gt_cv_c_long_double=yes
      else
-       AC_TRY_COMPILE([
+       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
          /* The Stardent Vistra knows sizeof(long double), but does not support it.  */
          long double foo = 0.0;
          /* On Ultrix 4.3 cc, long double is 4 and double is 8.  */
          int array [2*(sizeof(long double) >= sizeof(double)) - 1];
-         ], ,
-         gt_cv_c_long_double=yes, gt_cv_c_long_double=no)
+         ]], [[]])],[gt_cv_c_long_double=yes],[gt_cv_c_long_double=no])
      fi])
 dnl if test $gt_cv_c_long_double = yes; then
 dnl    AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.  (For intl)])
@@ -1453,7 +1415,7 @@ dnl Authors:
 dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
 dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2003.
 
-AC_PREREQ(2.50)
+AC_PREREQ([2.69])
 
 AC_DEFUN([AM_NLS],
 [
@@ -1481,7 +1443,7 @@ AC_DEFUN([gt_PRINTF_POSIX],
   AC_CACHE_CHECK([whether printf() supports POSIX/XSI format strings],
     gt_cv_func_printf_posix,
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
 /* The string "%2$d %1$d", with dollar characters protected from the shell's
@@ -1492,8 +1454,7 @@ int main ()
 {
   sprintf (buf, format, 33, 55);
   return (strcmp (buf, "55 33") != 0);
-}], gt_cv_func_printf_posix=yes, gt_cv_func_printf_posix=no,
-      [
+}]])],[gt_cv_func_printf_posix=yes],[gt_cv_func_printf_posix=no],[
         AC_EGREP_CPP(notposix, [
 #if defined __NetBSD__ || defined _MSC_VER || defined __MINGW32__ || defined __CYGWIN__
   notposix
@@ -1527,7 +1488,7 @@ dnl They are *not* in the public domain.
 dnl Authors:
 dnl   Ulrich Drepper <drepper@cygnus.com>, 1996.
 
-AC_PREREQ(2.50)
+AC_PREREQ([2.69])
 
 # Search path for a program which passes the given test.
 
@@ -1629,19 +1590,19 @@ Found it
       dnl Define it ourselves. Here we assume that the type 'size_t' is not wider
       dnl than the type 'unsigned long'. Try hard to find a definition that can
       dnl be used in a preprocessor #if, i.e. doesn't contain a cast.
-      _AC_COMPUTE_INT([sizeof (size_t) * CHAR_BIT - 1], size_t_bits_minus_1,
+      AC_COMPUTE_INT([sizeof (size_t) * CHAR_BIT - 1], size_t_bits_minus_1,
         [#include <stddef.h>
 #include <limits.h>], size_t_bits_minus_1=)
-      _AC_COMPUTE_INT([sizeof (size_t) <= sizeof (unsigned int)], fits_in_uint,
+      AC_COMPUTE_INT([sizeof (size_t) <= sizeof (unsigned int)], fits_in_uint,
         [#include <stddef.h>], fits_in_uint=)
       if test -n "$size_t_bits_minus_1" && test -n "$fits_in_uint"; then
         if test $fits_in_uint = 1; then
           dnl Even though SIZE_MAX fits in an unsigned int, it must be of type
           dnl 'unsigned long' if the type 'size_t' is the same as 'unsigned long'.
-          AC_TRY_COMPILE([#include <stddef.h>
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stddef.h>
             extern size_t foo;
             extern unsigned long foo;
-            ], [], fits_in_uint=0)
+            ]], [[]])],[fits_in_uint=0],[])
         fi
         dnl We cannot use 'expr' to simplify this expression, because 'expr'
         dnl works only with 'long' integers in the host environment, while we
@@ -1677,12 +1638,8 @@ dnl From Paul Eggert.
 AC_DEFUN([gl_AC_HEADER_STDINT_H],
 [
   AC_CACHE_CHECK([for stdint.h], gl_cv_header_stdint_h,
-  [AC_TRY_COMPILE(
-    [#include <sys/types.h>
-#include <stdint.h>],
-    [uintmax_t i = (uintmax_t) -1; return !i;],
-    gl_cv_header_stdint_h=yes,
-    gl_cv_header_stdint_h=no)])
+  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
+#include <stdint.h>]], [[uintmax_t i = (uintmax_t) -1; return !i;]])],[gl_cv_header_stdint_h=yes],[gl_cv_header_stdint_h=no])])
   if test $gl_cv_header_stdint_h = yes; then
     AC_DEFINE_UNQUOTED(HAVE_STDINT_H_WITH_UINTMAX, 1,
       [Define if <stdint.h> exists, doesn't clash with <sys/types.h>,
@@ -1697,7 +1654,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Paul Eggert.
 
-AC_PREREQ(2.13)
+AC_PREREQ([2.69])
 
 # Define uintmax_t to 'unsigned long' or 'unsigned long long'
 # if it is not already defined in <stdint.h> or <inttypes.h>.
@@ -1799,14 +1756,10 @@ AC_DEFUN([gl_VISIBILITY],
     AC_CACHE_VAL(gl_cv_cc_visibility, [
       gl_save_CFLAGS="$CFLAGS"
       CFLAGS="$CFLAGS -fvisibility=hidden"
-      AC_TRY_COMPILE(
-        [extern __attribute__((__visibility__("hidden"))) int hiddenvar;
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[extern __attribute__((__visibility__("hidden"))) int hiddenvar;
          extern __attribute__((__visibility__("default"))) int exportedvar;
          extern __attribute__((__visibility__("hidden"))) int hiddenfunc (void);
-         extern __attribute__((__visibility__("default"))) int exportedfunc (void);],
-        [],
-        gl_cv_cc_visibility=yes,
-        gl_cv_cc_visibility=no)
+         extern __attribute__((__visibility__("default"))) int exportedfunc (void);]], [[]])],[gl_cv_cc_visibility=yes],[gl_cv_cc_visibility=no])
       CFLAGS="$gl_save_CFLAGS"])
     AC_MSG_RESULT([$gl_cv_cc_visibility])
     if test $gl_cv_cc_visibility = yes; then
@@ -1832,9 +1785,8 @@ dnl Prerequisite: AC_PROG_CC
 AC_DEFUN([gt_TYPE_WCHAR_T],
 [
   AC_CACHE_CHECK([for wchar_t], gt_cv_c_wchar_t,
-    [AC_TRY_COMPILE([#include <stddef.h>
-       wchar_t foo = (wchar_t)'\0';], ,
-       gt_cv_c_wchar_t=yes, gt_cv_c_wchar_t=no)])
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stddef.h>
+       wchar_t foo = (wchar_t)'\0';]], [[]])],[gt_cv_c_wchar_t=yes],[gt_cv_c_wchar_t=no])])
   if test $gt_cv_c_wchar_t = yes; then
     AC_DEFINE(HAVE_WCHAR_T, 1, [Define if you have the 'wchar_t' type.  (For intl)])
   fi
@@ -1852,9 +1804,8 @@ dnl Prerequisite: AC_PROG_CC
 AC_DEFUN([gt_TYPE_WINT_T],
 [
   AC_CACHE_CHECK([for wint_t], gt_cv_c_wint_t,
-    [AC_TRY_COMPILE([#include <wchar.h>
-       wint_t foo = (wchar_t)'\0';], ,
-       gt_cv_c_wint_t=yes, gt_cv_c_wint_t=no)])
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <wchar.h>
+       wint_t foo = (wchar_t)'\0';]], [[]])],[gt_cv_c_wint_t=yes],[gt_cv_c_wint_t=no])])
   if test $gt_cv_c_wint_t = yes; then
     AC_DEFINE(HAVE_WINT_T, 1, [Define if you have the 'wint_t' type.  (For intl)])
   fi

@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2020  The R Core Team
+ *  Copyright (C) 1998-2022  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,9 @@
 
    and nothing else.
 
-   It is part of the API and supports 'standalone Rmath'.
+   It is part of the API and supports 'standalone Rmath'. 
+   Apart that is from entries such as rmultinom not documented in
+   'Writing R Extensions'.
 
 */
 #ifndef RMATH_H
@@ -35,12 +37,9 @@
 #ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 # define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #endif
+
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cmath>
-// See comment in R.h
-# ifdef __SUNPRO_CC
-using namespace std;
-# endif
 #else
 # include <math.h>
 #endif
@@ -545,14 +544,15 @@ double dwilcox(double, double, double, int);
 double pwilcox(double, double, double, int, int);
 double qwilcox(double, double, double, int, int);
 double rwilcox(double, double);
-
+void wilcox_free(void);
 	/* Wilcoxon Signed Rank Distribution */
 
 double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
-
+void signrank_free(void);
+    
 	/* Gamma and Related Functions */
 double	gammafn(double);
 double	lgammafn(double);

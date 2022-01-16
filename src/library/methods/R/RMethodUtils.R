@@ -233,10 +233,9 @@ generic.skeleton <- function(name, fdef, fdefault)
     }
     if(is.null(fdefault)) {
         fdefault <- fdef
-	msg <- gettextf("invalid call in method dispatch to '%s' (no default method)",
-			name)
-	body(fdefault) <- substitute(stop(MESSAGE, domain = NA),
-				     list(MESSAGE = msg))
+	msg <- "invalid call in method dispatch to '%s' (no default method)"
+	body(fdefault) <- substitute(stop(gettextf(MSG, NAME), domain=NA),
+				     list(MSG = msg, NAME = name))
         environment(fdefault) <- baseenv()
     }
     skeleton[[1L]] <- fdefault

@@ -1,7 +1,7 @@
 #  File src/library/base/R/conditions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -387,7 +387,7 @@ globalCallingHandlers <-
 
                 if (identical(handlers, list(NULL))) {
                     out <- gh
-                    gh <<- list()
+                    gh <- list() # local gh
                 } else {
                     classes <- names(handlers)
                     if (length(classes) != length(handlers))
@@ -395,7 +395,7 @@ globalCallingHandlers <-
                     if (! all(vapply(handlers, is.function, logical(1))))
                         stop("condition handlers must be functions")
                     out <- NULL
-                    gh <<- c(handlers, gh)
+                    gh <- c(handlers, gh)
                 }
 
                 ## Remove duplicate handlers within class. We do it here so
@@ -404,30 +404,31 @@ globalCallingHandlers <-
                 ## first duplicate on the stack, so that registering a
                 ## handler again has the effect of pushing it on top of the
                 ## stack.
-                classes <- names(gh)
-                for (class in unique(classes)) {
-                    idx <- which(class == classes)
+                for (class in unique(names(gh))) {
+                    idx <- which(class == names(gh))
 
                     ## Ideally we'd just use `duplicated()` on the list
                     ## of handlers. Since that doesn't take into
                     ## account the closure environments, we first
-                    ## convert the functions to lists.
+                    ## convert the functions to lists and also remove
+                    ## source references.
                     funAsList <- function(x) {
+                        x <- utils::removeSource(x)
                         out <- list(formals(x), body(x), environment(x))
                         attributes(out) <- attributes(x)
                         out
-                    }
+		    }
                     classHandlers <- lapply(gh[idx], funAsList)
                     dups <- duplicated(classHandlers)
-
                     if (any(dups)) {
                         message(sprintf("pushing duplicate `%s` handler on top of the stack", class))
-                        gh <<- gh[-idx[dups]]
+                        gh <- gh[-idx[dups]]
                     }
                 }
 
                 ## Update the handler stack of the top-level context
                 .Internal(.addGlobHands(names(gh), gh, .GlobalEnv, NULL, TRUE))
+                gh <<- gh # only now update (PR#18257)
 
                 invisible(out)
             }

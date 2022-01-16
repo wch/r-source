@@ -463,6 +463,9 @@ SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_getS4DataSlot(SEXP obj, SEXPTYPE type);
 
+/* hash tables (temporary support for R-level experimenting and debugging) */
+SEXP do_vhash(SEXP, SEXP, SEXP, SEXP);
+
 /* bytecode */
 SEXP do_mkcode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bcclose(SEXP, SEXP, SEXP, SEXP);

@@ -84,13 +84,13 @@ function(formula, data, subset, na.action, ...)
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m[[1L]] <- quote(model.frame)
+    m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     if(length(mf) != 2L)
         stop("'formula' should be of the form response ~ group")
     DNAME <- paste(names(mf), collapse = " by ")
-    names(mf) <- NULL
-    y <- do.call("fligner.test", as.list(mf))
+    ## Call the default method.
+    y <- fligner.test(x = mf[[1L]], g = mf[[2L]])
     y$data.name <- DNAME
     y
 }

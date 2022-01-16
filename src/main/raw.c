@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2021 The R Core Team
+ *  Copyright (C) 2001--2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -370,7 +370,7 @@ static size_t inttomb(char *s, const int wc)
     return i + 1;
 }
 
-#include <R_ext/RS.h>  /* for Calloc/Free */
+#include <R_ext/RS.h>  /* for R_Calloc/R_Free */
 
 SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -436,7 +436,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return ans;
 	}
 	if (len >= 10000) {
-	    tmp = Calloc(len+1, char);
+	    tmp = R_Calloc(len+1, char);
 	} else {
 	    R_CheckStack2(len+1);
 	    tmp = alloca(len+1); tmp[len] = '\0';
@@ -455,7 +455,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
 	SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, (int) len, CE_UTF8));
-	if(len >= 10000) Free(tmp);
+	if(len >= 10000) R_Free(tmp);
     }
     UNPROTECT(2);
     return ans;

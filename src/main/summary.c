@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -481,14 +481,35 @@ static R_INLINE SEXP real_mean(SEXP x)
 	    for (R_xlen_t k = 0; k < nbatch; k++)
 		s += dx[k];
 	});
-    s /= n;
-    if (R_FINITE((double) s)) {
+    Rboolean finite_s = R_FINITE((double) s);
+    if (finite_s) {
+	s /= n;
+	DbgP3("real_mean(): n=%g, s=%g\n", (double)n, s);
+    } else { // infinite s, maybe just overflowed; try to use smaller terms:
+	DbgP3("real_mean(): n=%g, infinite s=%g -- try again: ", (double)n, s);
+	s = 0.;
+	ITERATE_BY_REGION(x, dx, i, nbatch, double, REAL, {
+		for (R_xlen_t k = 0; k < nbatch; k++)
+		    s += dx[k]/n;
+	    });
+	DbgP2(" --> new s=%g\n", s);
+    }
+    if (finite_s && R_FINITE((double) s)) {
 	LDOUBLE t = 0.0;
 	ITERATE_BY_REGION(x, dx, i, nbatch, double, REAL, {
 		for (R_xlen_t k = 0; k < nbatch; k++)
 		    t += (dx[k] - s);
 	    });
 	s += t/n;
+    }
+    else if (R_FINITE((double) s)) { // was infinite: more careful
+	LDOUBLE t = 0.0;
+	ITERATE_BY_REGION(x, dx, i, nbatch, double, REAL, {
+		for (R_xlen_t k = 0; k < nbatch; k++)
+		    t += (dx[k] - s)/n;
+	    });
+	DbgP2(" s = s + t, t=%g\n", t);
+	s += t;
     }
     return ScalarReal((double) s);
 }

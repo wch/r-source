@@ -14,9 +14,6 @@ endif
 DLLFLAGS += -static-libgcc
 LINKFLAGS += -static-libgcc
 
-## The rtools40 installer sets RTOOLS40_HOME, default to standard install path
-RTOOLS40_HOME ?= c:/rtools40
-RTOOLS40_ROOT ?= $(subst \,/,$(RTOOLS40_HOME))
 
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
 WIN = 32
@@ -33,7 +30,23 @@ DT_ARCH =
 RC_ARCH =
 # Used by packages tcltk and tkrplot
 TCL_HOME = $(R_HOME)/Tcl
+
+# automatically rewritten to assign value from MkRules
 LOCAL_SOFT ?=
+
+R_INSTALLER_BUILD = no
+# INSTALLER-BUILD: R_INSTALLER_BUILD = yes
+ifeq ($(R_INSTALLER_BUILD), yes)
+  ifneq ($(strip $(R_CUSTOM_TOOLS_SOFT)),)
+    LOCAL_SOFT = $(R_CUSTOM_TOOLS_SOFT)
+  else
+    ## The rtools42 installer sets RTOOLS42_HOME
+    RTOOLS42_HOME ?= c:/rtools42
+    LOCAL_SOFT = $(subst \,/,$(RTOOLS42_HOME))/x86_64-w64-mingw32.static.posix
+  endif
+endif
+R_TOOLS_SOFT ?= $(LOCAL_SOFT)
+
 NM_FILTER =
 
 ifneq ($(strip $(LOCAL_SOFT)),)
@@ -52,7 +65,8 @@ DLL = $(CC)
 
 ## Things defined in Renviron on Unix
 SED = sed
-TAR = tar
+TAR ?= tar
+TAR_OPTIONS ?= --force-local
 
 ## Things defined in MkRules
 CAT = cat

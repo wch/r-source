@@ -52,8 +52,8 @@
   How paths in \code{new} with a trailing slash are treated is
   OS-dependent.  On a POSIX filesystem existing directories can usually
   be specified with a trailing slash. On Windows filepaths with a
-  trailing slash (or backslash) are invalid and so will never be added
-  to the library search path.
+  trailing slash (or backslash) are invalid and existing directories
+  specified with a trailing slash may not be added to the library search path.
 
   At startup, the library search path is initialized from the
   environment variables \env{R_LIBS}, \env{R_LIBS_USER} and
@@ -77,7 +77,9 @@
   on Unix-alike systems
   (or \file{Library/R/\var{m}/\var{x.y}/library} for CRAN macOS
   builds, with \var{m} \code{\link{Sys.info}()["machine"]})
-  and \file{R/win-library/\var{x.y}} on Windows, for \R \var{x.y.z}.
+  and \file{R/win-library/\var{x.y}} subdirectory of \env{LOCALAPPDATA} on Windows
+  (before \R 4.2.0, it was a subdirectory of the home directory even on
+  Windows), for \R \var{x.y.z}.
 
   Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
   expansion of specifiers for \R-version-specific information as part of
@@ -109,6 +111,10 @@
 
   For consistency, the paths are always normalized by
   \code{\link{normalizePath}(winslash = "/")}.
+
+  \env{LOCALAPPDATA} (usually \code{C:\\Users\\username\\AppData\\Local}) on
+  Windows is a hidden directory and may not be viewed by some software. It
+  may be opened by \code{shell.exec(Sys.getenv("LOCALAPPDATA"))}.
 }
 \value{
   A character vector of file paths.

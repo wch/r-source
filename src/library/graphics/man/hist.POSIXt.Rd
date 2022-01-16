@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist.POSIXt}
@@ -8,7 +8,8 @@
 \alias{hist.Date}
 \title{Histogram of a Date or Date-Time Object}
 \description{
-  Method for \code{\link{hist}} applied to date or date-time objects.
+  Methods for \code{\link{hist}} applied to date (class \code{"\link{Date}"})
+  or date-time (class  \code{"\link{POSIXt}"}) objects.
 }
 \usage{
 \method{hist}{POSIXt}(x, breaks, \dots,
@@ -22,7 +23,8 @@
      start.on.monday = TRUE, format, right = TRUE)
 }
 \arguments{
-  \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
+  \item{x}{an object inheriting from class \code{"\link{POSIXt}"}
+    or \code{"\link{Date}"}.}
   \item{breaks}{
     a vector of cut points \emph{or} number giving the number of
     intervals which \code{x} is to be cut into \emph{or} an
@@ -33,7 +35,7 @@
  }
   \item{\dots}{\link{graphical parameters}, or arguments to
     \code{\link{hist.default}} such as \code{include.lowest},
-      \code{right} and \code{labels}.}
+    \code{density} and \code{labels}.}
   \item{xlab}{a character string giving the label for the x axis, if plotted.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
@@ -68,9 +70,19 @@
 }
 \examples{
 hist(.leap.seconds, "years", freq = TRUE)
-hist(.leap.seconds,
-     seq(ISOdate(1970, 1, 1), ISOdate(2020, 1, 1), "5 years"))
+brks <- seq(ISOdate(1970, 1, 1), ISOdate(2030, 1, 1), "5 years")
+hist(.leap.seconds, brks)
 rug(.leap.seconds, lwd=2)
+## show that  'include.lowest' "works"
+stopifnot(identical(c(2L, rep(1L,11)),
+   hist(brks, brks, plot=FALSE, include.lowest=TRUE )$counts))
+tools::assertError(verbose=TRUE, ##--> 'breaks' do not span range of 'x'
+   hist(brks, brks, plot=FALSE, include.lowest=FALSE))
+## The default fuzz in hist.default()  "kills" this, with a "wrong" message:
+try ( hist(brks[-13] + 1, brks, include.lowest = FALSE) )
+## and decreasing 'fuzz' solves the issue:
+hb <- hist(brks[-13] + 1, brks, include.lowest = FALSE, fuzz = 1e-10)
+stopifnot(hb$counts == 1)
 
 ## 100 random dates in a 10-week period
 random.dates <- as.Date("2001/1/1") + 70*stats::runif(100)

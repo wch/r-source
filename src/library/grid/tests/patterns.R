@@ -314,35 +314,6 @@ HersheyLabel(paste(traceHead, paste(traceOutput, collapse="\n"), sep="\n"))
 untrace(grid:::resolveFill.GridPattern)
 untrace(grid:::resolveFill.GridGrobPattern)
 
-######################################
-## Test for running out of patterns
-
-## Should NOT run out of patterns
-grid.newpage()
-for (i in 1:21) {
-    grid.rect(gp=gpar(fill=linearGradient()))
-    HersheyLabel(paste0("rect ", i, " with gradient
-new pattern every time"))
-}
-
-## Should run out of patterns
-grid.newpage()
-for (i in 1:21) {
-    pushViewport(viewport(gp=gpar(fill=linearGradient())))
-    grid.rect()
-    HersheyLabel(paste0("viewport ", i, " with gradient
-runs out after 20"))
-}
-
-## grid.newpage() should fix it
-grid.newpage()
-for (i in 1:21) {
-    grid.rect(gp=gpar(fill=linearGradient()))
-    HersheyLabel(paste0("rect ", i, " with gradient
-AFTER grid.newpage()
-new pattern every time"))
-}
-
 ################################################################################
 ## Grob-based patterns
 
@@ -491,3 +462,118 @@ pattern is small circle with pattern fill
 nested pattern is smaller circle (grey)
 both patterns repeat", y=.15)
 
+######################################
+## Test for expanding pattern resources
+grid.newpage()
+for (i in 1:21) {
+    grid.rect(gp=gpar(fill=linearGradient()))
+    HersheyLabel(paste0("rect ", i, " with gradient
+pattern released every time"))
+}
+
+grid.newpage()
+for (i in 1:65) {
+    pushViewport(viewport(gp=gpar(fill=linearGradient())))
+    grid.rect()
+    HersheyLabel(paste0("viewport ", i, " with gradient
+new pattern every time"))
+}
+
+grid.newpage()
+for (i in 1:21) {
+    grid.rect(gp=gpar(fill=linearGradient()))
+    HersheyLabel(paste0("rect ", i, " with gradient
+AFTER grid.newpage()
+pattern released every time"))
+}
+
+####################################
+## Additional tests
+
+## gTree with gradient fill
+grid.newpage()
+gt <- gTree(children=gList(circleGrob(1:2/3, r=.1)),
+            gp=gpar(fill=linearGradient(y1=.5, y2=.5)))
+grid.draw(gt)
+HersheyLabel("gTree with circles as children
+gTree has gradient fill
+gradient relative to circle bounds
+(black at left to white at right)", y=.8)
+
+## gTree with gradient fill with gTree 
+grid.newpage()
+gt <- gTree(children=gList(gTree(children=gList(circleGrob(1:2/3, r=.1)))),
+            gp=gpar(fill=linearGradient(y1=.5, y2=.5)))
+grid.draw(gt)
+HersheyLabel("gTree with gTree as child
+inner gTree has circles as children
+outer gTree has gradient fill
+gradient relative to circle bounds
+(black at left to white at right)", y=.8)
+
+## Pattern including text
+grid.newpage()
+pat <- pattern(textGrob("test"),
+               width=1.2*stringWidth("test"),
+               height=unit(1, "lines"),
+               extend="repeat")
+grid.circle(r=.3, gp=gpar(fill=pat))
+HersheyLabel("circle filled with pattern
+pattern based on (repeating) text", y=.9)
+
+## Text (path) filled with pattern
+grid.newpage()
+rects <- gTree(children=gList(rectGrob(width=unit(2, "mm"),
+                                       height=unit(2, "mm"),
+                                       just=c("left", "bottom"),
+                                       gp=gpar(fill="black")),
+                              rectGrob(width=unit(2, "mm"),
+                                       height=unit(2, "mm"),
+                                       just=c("right", "top"),
+                                       gp=gpar(fill="black"))))
+checkerBoard <- pattern(rects,
+                        width=unit(4, "mm"), height=unit(4, "mm"),
+                        extend="repeat")
+grid.fill(textGrob("test", gp=gpar(cex=10)),
+          gp=gpar(fontface="bold", fill=checkerBoard))
+HersheyLabel("stroked path based on text
+filled with checkerboard pattern", y=.8)
+    
+## Pattern including raster
+grid.newpage()
+rg <- rasterGrob(matrix(c(0:1, 1:0), nrow=2),
+                 width=unit(1, "cm"), height=unit(1, "cm"),
+                 interpolate=FALSE)
+pat <- pattern(rg, 
+               width=unit(1, "cm"), height=unit(1, "cm"),
+               extend="repeat")
+grid.circle(r=.2, gp=gpar(fill=pat))
+HersheyLabel("circle filled with pattern
+pattern is based on raster (checkerboard)", y=.8)
+
+## Radial gradient where start circle and final circle overlap
+grid.newpage()
+x1 <- .7
+y1 <- .7
+r1 <- .2
+x2 <- .4
+y2 <- .4
+r2 <- .4
+grid.circle(x1, y1, r=r1, gp=gpar(col="green", fill=NA, lwd=2))
+grid.circle(x2, y2, r=r2, gp=gpar(col="red", fill=NA, lwd=2))
+grid.rect(gp=gpar(fill=radialGradient(rgb(0:1, 1:0, 0, .5),
+                                      cx1=x1, cy1=y1, r1=r1,
+                                      cx2=x2, cy2=y2, r2=r2)))
+HersheyLabel("radial gradient with overlapping start and final circles
+gradient is from semitransparent green
+to semitransparent red
+start circle is green
+final circle is red")
+
+## Text (path) filled with pattern
+grid.newpage()
+grid.fill(textGrob("test", gp=gpar(cex=10)),
+          gp=gpar(fontface="bold", fill=linearGradient(2:3)))
+HersheyLabel("stroked path based on text
+filled with linear gradient", y=.8)
+    

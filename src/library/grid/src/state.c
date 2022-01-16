@@ -46,8 +46,9 @@ int gridRegisterIndex;
  *  Replaced by per-device setting as from R 2.7.0.]
  * GSS_SCALE 15 = a scale or "zoom" factor for all output 
  *   (to support "fit to window" resizing on windows device)
- * GSS_RESOLVINGCLIP 16 = are we currently resolving a clipping path
+ * GSS_RESOLVINGPATH 16 = are we currently resolving a (clipping) path
  *   (used to turn off/disallow things like clipping while resolving)
+ * GSS_GROUPS 17 = mapping of group names to device references
  * 
  * NOTE: if you add to this list you MUST change the size of the vector
  * allocated in createGridSystemState() below.
@@ -55,7 +56,7 @@ int gridRegisterIndex;
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 17);
+    return allocVector(VECSXP, 18);
 }
 
 void initDL(pGEDevDesc dd)
@@ -99,7 +100,7 @@ void initOtherState(pGEDevDesc dd)
     /* Clear all device patterns */
     dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
-    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
@@ -143,7 +144,8 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
     SET_VECTOR_ELT(state, GSS_ASK, ScalarLogical(dd->ask));
 #endif
     SET_VECTOR_ELT(state, GSS_SCALE, ScalarReal(1.0));
-    SET_VECTOR_ELT(state, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    SET_VECTOR_ELT(state, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
+    SET_VECTOR_ELT(state, GSS_GROUPS, R_NilValue);
     UNPROTECT(1);
 }
 
@@ -157,6 +159,16 @@ void setGridStateElement(pGEDevDesc dd, int elementIndex, SEXP value)
 {
     SET_VECTOR_ELT((SEXP) dd->gesd[gridRegisterIndex]->systemSpecific, 
 		   elementIndex, value);
+}
+
+/* Callable from R code */
+SEXP L_setGridState(SEXP elementIndex, SEXP value)
+{
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    setGridStateElement(dd, INTEGER(elementIndex)[0], value);
+    return R_NilValue;
 }
 
 static void deglobaliseState(SEXP state)
@@ -378,12 +390,18 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
              */
             if (!isNull(gridState) && !isNull(VECTOR_ELT(gridState, 0))) {
                 int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
-                if (dlIndex > 0) {
+                /* If 'grid' is loaded, but there has been no drawing,
+                 * the 'grid' DL will just consist of the ROOT viewport.
+                 * In that case, we want any 'grid' call to "dirty" the
+                 * device (in the 'grid' sense) and initialise 'grid'
+                 * (initVP(), initGPar(), etc)
+                 */
+                if (dlIndex > 1) {
                     /*
                      * Dirty the device, in a 'grid' sense, 
                      * (in case this is first 'grid' drawing on device) 
-                     * to stop first element on 'grid' DL
-                     * (which will be a call to L_gridDirty()) 
+                     * to stop first element on graphics engine DL
+                     * (which will trigger a call to L_gridDirty()) 
                      * from resetting the 'grid' DL.
                      * This will have the side effect of stopping L_gridDirty()
                      * from starting a new page (if the device is clean)

@@ -2,16 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57\n"
-"PO-Revision-Date: 2020-12-08 12:22+0200\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
+"PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.4.1\n"
 
 msgid "Checking %s"
@@ -56,10 +55,8 @@ msgstr "kataloge '%s' nėra R kodo"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "kataloge '%s' nėra Rd objektų"
 
-msgid ""
-"Functions or methods with usage in documentation object '%s' but not in code:"
-msgstr ""
-"Funkcijos arba metodai su naudojimu dokumentacijos objekte '%s', bet ne kode:"
+msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+msgstr "Funkcijos arba metodai su naudojimu dokumentacijos objekte '%s', bet ne kode:"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "Duomenys, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
@@ -113,12 +110,10 @@ msgid "Duplicated \\argument entries in documentation object '%s':"
 msgstr "Pasikartoja \\argument įrašai dokumentacijos objekte '%s':"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr ""
-"Dokumentuoti argumentai nėra \\usage, esančiame dokumentacijos objekte '%s':"
+msgstr "Dokumentuoti argumentai nėra \\usage, esančiame dokumentacijos objekte '%s':"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
-msgstr ""
-"Objektai, esantys \\usage be \alias, esančio dokumentacijos objekte '%s':"
+msgstr "Objektai, esantys \\usage be \\alias, esančio dokumentacijos objekte '%s':"
 
 msgid "Assignments in \\usage in documentation object '%s':"
 msgstr "Priskyrimai esantys \\usage dokumentacijos objekte '%s':"
@@ -164,16 +159,10 @@ msgid "The package 'dir' argument must be of length 1"
 msgstr "Paketo 'dir' argumentas turi būti 1 ilgio"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
-msgstr ""
-"paketo pavadinimas '%s' neteisingas; vietoj to, naudokite katalogo "
-"pavadinimą '%s'"
+msgstr "paketo pavadinimas '%s' neteisingas; vietoj to, naudokite katalogo pavadinimą '%s'"
 
-msgid ""
-"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
-"Depends/Suggests/Imports entries."
-msgstr ""
-"Vinjetės priklausomybės (%s įrašai) turi būti pateiktos DESCRIPTION įrašuose "
-"Depends/Suggests/Imports."
+msgid "Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr "Vinjetės priklausomybės (%s įrašai) turi būti pateiktos DESCRIPTION įrašuose Depends/Suggests/Imports."
 
 msgid "Malformed package name"
 msgstr "Netaisyklingas paketo pavadinimas"
@@ -200,18 +189,13 @@ msgid "Malformed maintainer field."
 msgstr "Netaisyklingas prižiūrėtojo laukas."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr ""
-"Netaisyklingas Depends arba Suggests arba Imports arba Enhances laukas."
+msgstr "Netaisyklingas Depends arba Suggests arba Imports arba Enhances laukas."
 
 msgid "Offending entries:"
 msgstr "Įžeidžiantys įrašai:"
 
-msgid ""
-"Entries must be names of packages optionally followed by '<=' or '>=', white "
-"space, and a valid version number in parentheses."
-msgstr ""
-"Įrašai turi būti paketų pavadinimai pasirinktinai pagal '< =' arba '> =', "
-"tarpas ir galiojantis versijos numeris skliaustuose."
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr "Įrašai turi būti paketų pavadinimai pasirinktinai pagal '< =' arba '> =', tarpas ir galiojantis versijos numeris skliaustuose."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "Įrašai su neįgyvendinamu palyginimo operatoriumi:"
@@ -222,43 +206,28 @@ msgstr "Galimi tik operatoriai '< =' ir '> ='."
 msgid "Entries with infeasible version number:"
 msgstr "Įrašai su neįgyvendinamu versijos numeriu:"
 
-msgid ""
-"Version numbers must be sequences of at least two non-negative integers, "
-"separated by single '.' or '-'."
-msgstr ""
-"Versijų numeriai turi būti bent dviejų neneigiamų sveikųjų skaičių sekos, "
-"atskirtos atskirais '.' arba '-'."
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr "Versijų numeriai turi būti bent dviejų neneigiamų sveikųjų skaičių sekos, atskirtos atskirais '.' arba '-'."
 
 msgid "Invalid VignetteBuilder field."
 msgstr "Neleistinas VignetteBuilder laukas."
 
-msgid ""
-"This field must contain one or more packages (and no version requirement)."
-msgstr ""
-"Šiame lauke turi būti vienas ar daugiau paketų (ir nėra versijos "
-"reikalavimo)."
+msgid "This field must contain one or more packages (and no version requirement)."
+msgstr "Šiame lauke turi būti vienas ar daugiau paketų (ir nėra versijos reikalavimo)."
 
 msgid "Invalid Priority field."
 msgstr "Neleistinas Priority laukas."
 
-msgid ""
-"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
-"already be known to R."
-msgstr ""
-"Paketai su prioritetais 'base' arba 'recommended' arba 'defunct-base' turi "
-"būti žinomas R."
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr "Paketai su prioritetais 'base' arba 'recommended' arba 'defunct-base' turi būti žinomas R."
 
 msgid "Malformed Title field: should not end in a period."
-msgstr ""
-"Neteisingai suformuluotas pavadinimo laukas: neturėtų baigtis laikotarpiu."
+msgstr "Neteisingai suformuluotas pavadinimo laukas: neturėtų baigtis laikotarpiu."
 
-msgid ""
-"Malformed Description field: should contain one or more complete sentences."
-msgstr ""
-"Netaisyklingas Description laukas: turi būti vienas ar daugiau sakinių."
+msgid "Malformed Description field: should contain one or more complete sentences."
+msgstr "Netaisyklingas Description laukas: turi būti vienas ar daugiau sakinių."
 
-msgid ""
-"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
+msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr "Žr. žinyno 'Writing R Extensions' skyrių 'The DESCRIPTION file'."
 
 msgid "Malformed Authors@R field:"
@@ -268,39 +237,28 @@ msgid "Cannot extract Author field from Authors@R field:"
 msgstr "Negalima išskirti autoriaus lauko iš Authors@R lauko:"
 
 msgid "Authors@R field gives no person with name and roles."
-msgstr ""
-"Authors@R laukas nesuteikia nė vieno asmens, turinčio autoriaus vaidmenį."
+msgstr "Authors@R laukas nesuteikia nė vieno asmens, turinčio autoriaus vaidmenį."
 
 msgid "Authors@R field gives persons with no name:"
 msgstr "Authors@R laukelyje pateikiami asmenys, neturintys pavadinimų:"
 
 msgid "Authors@R field gives persons with no role:"
-msgstr ""
-"Authors@R laukelyje pateikiami asmenys, neturintys galiojančių vaidmenų:"
+msgstr "Authors@R laukelyje pateikiami asmenys, neturintys galiojančių vaidmenų:"
 
 msgid "Authors@R field gives no person with name and author role"
-msgstr ""
-"Authors@R laukas nesuteikia nė vieno asmens, turinčio autoriaus vaidmenį"
+msgstr "Authors@R laukas nesuteikia nė vieno asmens, turinčio autoriaus vaidmenį"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Negalima išskirti Maintainer lauko iš Authors@R lauko:"
 
 msgid "Authors@R field gives more than one person with maintainer role:"
-msgstr ""
-"Authors@R laukas pateikia daugiau nei vieną asmenį, turintį prižiūrėtojo "
-"vaidmenį:"
+msgstr "Authors@R laukas pateikia daugiau nei vieną asmenį, turintį prižiūrėtojo vaidmenį:"
 
-msgid ""
-"Authors@R field gives no person with maintainer role, valid email address "
-"and non-empty name."
-msgstr ""
-"Authors@R lauke nenurodomi jokie asmenys su prižiūrėtojo vaidmenimi, "
-"galiojančiu el. pašto adresu ir netuščiu vardu."
+msgid "Authors@R field gives no person with maintainer role, valid email address and non-empty name."
+msgstr "Authors@R lauke nenurodomi jokie asmenys su prižiūrėtojo vaidmenimi, galiojančiu el. pašto adresu ir netuščiu vardu."
 
 msgid "Authors@R field gives persons with invalid ORCID identifiers:"
-msgstr ""
-"Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID "
-"identifikatorius:"
+msgstr "Authors@R laukelyje pateikiami asmenys, turintys negaliojančius ORCID identifikatorius:"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Kodavimas '%s' yra ne perkeliamas"
@@ -371,12 +329,8 @@ msgstr "%s turi neteisingą argumentų sąrašą %s"
 msgid "%s calls:"
 msgstr "%s kreipiniai:"
 
-msgid ""
-"Package startup functions should have two arguments with names starting with "
-"%s and %s, respectively."
-msgstr ""
-"Paketo paleisties funkcijos turi turėti du argumentus, kurių vardai "
-"prasideda atitinkamai su %s ir %s."
+msgid "Package startup functions should have two arguments with names starting with %s and %s, respectively."
+msgstr "Paketo paleisties funkcijos turi turėti du argumentus, kurių vardai prasideda atitinkamai su %s ir %s."
 
 msgid "Package startup functions should not change the search path."
 msgstr "Paketo paleisties funkcijos neturėtų pakeisti paieškos kelio."
@@ -390,11 +344,8 @@ msgstr "Paketo paleisties funkcijos neturėtų vadintis %s."
 msgid "See section %s in '%s'."
 msgstr "Žiūrėkite skyrių %s, esantį '%s'."
 
-msgid ""
-"Package detach functions should have one argument with name starting with %s."
-msgstr ""
-"Paketo atskyrimo funkcijos turėtų būti vienas argumentas, kurio vardas "
-"prasideda %s."
+msgid "Package detach functions should have one argument with name starting with %s."
+msgstr "Paketo atskyrimo funkcijos turėtų būti vienas argumentas, kurio vardas prasideda %s."
 
 msgid "Package detach functions should not call %s."
 msgstr "Paketo atskyrimo funkcijos neturėtų iškviesti %s."
@@ -424,14 +375,12 @@ msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
 msgstr "'loadNamespace' arba 'requireNamespace' kreipiniai nėra aprašyti iš:"
 
 msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
-msgstr ""
-"'loadNamespace' arba 'requireNamespace' kreipiniai nėra aprašyti iš: %s"
+msgstr "'loadNamespace' arba 'requireNamespace' kreipiniai nėra aprašyti iš: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"
 msgstr "'library' arba 'require' kreipinius į paketus prijungė Depends:"
 
-msgid ""
-"'library' or 'require' call to %s which was already attached by Depends."
+msgid "'library' or 'require' call to %s which was already attached by Depends."
 msgstr "'library' arba 'require' kreipinys į %s, kurį jau prijungė Depends."
 
 msgid "'library' or 'require' calls in package code:"
@@ -492,8 +441,7 @@ msgid "Package has no 'Version' field"
 msgstr "Pakete nėra lauko 'Version'"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
-msgstr ""
-"NB: norint naudotis CRAN įeinančiais segmentais, reikia interneto prieigos"
+msgstr "NB: norint naudotis CRAN įeinančiais segmentais, reikia interneto prieigos"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "RD failai su dubliuotais pavadinimais '%s':"
@@ -505,8 +453,7 @@ msgid "Argument items with no description in Rd object '%s':"
 msgstr "Argumento elementai be aprašo Rd objekte '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr ""
-"Automatiškai sugeneruotas turinys, kurį reikia redaguoti Rd objekte '%s':"
+msgstr "Automatiškai sugeneruotas turinys, kurį reikia redaguoti Rd objekte '%s':"
 
 msgid "no Rd sections specified"
 msgstr "nėra nurodytų Rd sekcijų"
@@ -558,9 +505,7 @@ msgid "'macros' must be TRUE or must specify existing macros"
 msgstr "'macros' turi būti TRUE arba turi nurodyti esamas makrokomandas"
 
 msgid "Macro file %s should only contain Rd macro definitions and comments"
-msgstr ""
-"Makrokomandos faile %s turi būti tik Rd makrokomandų apibrėžimai ir "
-"komentarai"
+msgstr "Makrokomandos faile %s turi būti tik Rd makrokomandų apibrėžimai ir komentarai"
 
 msgid "Rd macro package '%s' is not installed."
 msgstr "Nėra Rd makrokomandų pakete '%s'."
@@ -613,26 +558,14 @@ msgstr "DESCRIPTION failas skirtas paketui '%s', o ne '%s'"
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "Vinjetės produktas %s neturi žinomo failo vardo plėtinio (%s)"
 
-msgid ""
-"Failed to locate %s output file %s or %s for vignette with name %s and "
-"engine %s. The following files exist in working directory %s: %s"
-msgstr ""
-"Nepavyko rasti %s išvesties failo %s arba %s vinjetei su pavadinimu %s ir "
-"varikliu %s. Darbo kataloge %s yra šie failai: %s"
+msgid "Failed to locate %s output file %s or %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
+msgstr "Nepavyko rasti %s išvesties failo %s arba %s vinjetei su pavadinimu %s ir varikliu %s. Darbo kataloge %s yra šie failai: %s"
 
-msgid ""
-"Located more than one %s output file (by engine %s) for vignette with name "
-"%s: %s"
-msgstr ""
-"Yra daugiau nei vienas %s išvesties failas (pagal %s) vinjetėms su "
-"pavadinimu %s: %s"
+msgid "Located more than one %s output file (by engine %s) for vignette with name %s: %s"
+msgstr "Yra daugiau nei vienas %s išvesties failas (pagal %s) vinjetėms su pavadinimu %s: %s"
 
-msgid ""
-"Failed to locate %s output file %s for vignette with name %s and engine %s. "
-"The following files exist in working directory %s: %s"
-msgstr ""
-"Nepavyko rasti %s išvesties failo %s vinjetei su pavadinimu %s ir varikliu "
-"%s. Darbo kataloge %s yra šie failai: %s"
+msgid "Failed to locate %s output file %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
+msgstr "Nepavyko rasti %s išvesties failo %s vinjetei su pavadinimu %s ir varikliu %s. Darbo kataloge %s yra šie failai: %s"
 
 msgid "unable to create temp directory %s"
 msgstr "nepavyko sukurti temp katalogo %s"
@@ -646,12 +579,8 @@ msgstr "Vykdoma"
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr "Vinjetė %s perrašo šią %s išvestį vinjete %s: %s"
 
-msgid ""
-"Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each other's output files"
-msgstr ""
-"Aptikti vinjetės šaltinio failai (%s) su pasidalintais pavadinimais (%s) "
-"todėl rizikuojama perrašyti išvesties failus"
+msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
+msgstr "Aptikti vinjetės šaltinio failai (%s) su pasidalintais pavadinimais (%s) todėl rizikuojama perrašyti išvesties failus"
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr "Klaida: Vinjetė '%s' yra ne ASCII, bet nėra paskelbta kodavimo"
@@ -686,8 +615,7 @@ msgid "file '%s' not found"
 msgstr "failas '%s' nerastas"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
-"vinjetės failo vardas '%s' neatitinka nė vieno '%s' failo vardo modelio"
+msgstr "vinjetės failo vardas '%s' neatitinka nė vieno '%s' failo vardo modelio"
 
 msgid "+-+"
 msgstr "+-+"
@@ -734,11 +662,8 @@ msgstr "*** kažkas sugadino lauką Built pakete '%s' ***"
 msgid "cannot open directory '%s'"
 msgstr "negali atidaryti katalogo '%s'"
 
-msgid ""
-"WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr ""
-"ĮSPĖJIMAS: praleidžiama neefektyvi priklausomybė nuo 'R' be versijos "
-"reikalavimo"
+msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr "ĮSPĖJIMAS: praleidžiama neefektyvi priklausomybė nuo 'R' be versijos reikalavimo"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "negalima išjungti konkrečios lokalės rūšiavimo per LC_COLLATE"
@@ -830,8 +755,7 @@ msgid "ignored as vignettes have been rebuilt."
 msgstr "ignoruojama, nes atkuriamos vinjetės."
 
 msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
-msgstr ""
-"Paleidžia R CMD versiją su --no-build-vignettes siekiant išvengti atstatymo."
+msgstr "Paleidžia R CMD versiją su --no-build-vignettes siekiant išvengti atstatymo."
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "neteisinga '--compact-vignettes' reikšmė, darant prielaidą %s"
@@ -902,14 +826,14 @@ msgstr "Kodo demonstracijos:"
 msgid "Help pages:"
 msgstr "Žinyno puslapiai:"
 
+msgid "No package named %s could be found"
+msgstr "Paketo, pavadinto %s, nerasta"
+
 msgid "No help found for topic %s in any package."
 msgstr "Bet kuriame pakete nerastas žinynas temai %s."
 
 msgid "No package index found for package %s"
 msgstr "Nepavyko rasti paketo indekso paketui %s"
-
-msgid "No package named %s could be found"
-msgstr "Paketo, pavadinto %s, nerasta"
 
 msgid "No help found for package %s"
 msgstr "Nerastas žinynas paketui %s"
@@ -923,11 +847,8 @@ msgstr "Nerasta jokių dokumentų paketui %s"
 msgid "URL %s was not found"
 msgstr "URL %s nerastas"
 
-msgid ""
-"Only help files, %s, %s and files under %s and %s in a package can be viewed"
-msgstr ""
-"Galima peržiūrėti tik žinyno failus, %s, %s ir failus, esančius pakete %s ir "
-"%s"
+msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
+msgstr "Galima peržiūrėti tik žinyno failus, %s, %s ir failus, esančius pakete %s ir %s"
 
 msgid "unsupported URL %s"
 msgstr "nepalaikomas URL %s"
@@ -974,12 +895,8 @@ msgstr "klaida nuskaitant failą '%s'"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "tai atrodo kaip paketas -- ir yra nepilnas"
 
-msgid ""
-"'cleanup' exists but is not executable -- see the 'R Installation and "
-"Administration Manual'"
-msgstr ""
-"'cleanup' egzistuoja, bet nėra vykdoma -- peržiūrėti 'R diegimo ir "
-"administravimo žinyną'"
+msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
+msgstr "'cleanup' egzistuoja, bet nėra vykdoma -- peržiūrėti 'R diegimo ir administravimo žinyną'"
 
 msgid "generating debug symbols (%s)"
 msgstr "generuojami derinimo simboliai (%s)"
@@ -999,12 +916,8 @@ msgstr "PASTABA: fiksuotas bibliotekos kelias"
 msgid "NOTE: fixed rpath"
 msgstr "PASTABA: fiksuotas rpath"
 
-msgid ""
-"WARNING: shared objects/dynamic libraries with hard-coded temporary "
-"installation paths"
-msgstr ""
-"ĮSPĖJIMAS: bendrinami objektai/dinaminės bibliotekos su įkoduotais laikinais "
-"diegimo keliais"
+msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
+msgstr "ĮSPĖJIMAS: bendrinami objektai/dinaminės bibliotekos su įkoduotais laikinais diegimo keliais"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
@@ -1015,11 +928,8 @@ msgstr "nenaudoja etapinio diegimo su --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "pakopinis montavimas galimas tik užrakinant"
 
-msgid ""
-"R include directory is empty -- perhaps need to install R-devel.rpm or "
-"similar"
-msgstr ""
-"R įtrauktas katalogas tuščias - galbūt reikia įdiegti R-devel.rpm ar panašų"
+msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
+msgstr "R įtrauktas katalogas tuščias - galbūt reikia įdiegti R-devel.rpm ar panašų"
 
 msgid "package %s %s was found, but %s %s is required by %s"
 msgstr "paketas %s %s buvo surastas, bet %s %s reikalauja %s"
@@ -1031,8 +941,7 @@ msgid "empty 'data' directory"
 msgstr "katalogas 'data' tuščias"
 
 msgid "WARNING: moving package to final location failed, copying instead"
-msgstr ""
-"ĮSPĖJIMAS: nepavyko perkelti paketo į galutinę vietą, vietoj to kopijuoti"
+msgstr "ĮSPĖJIMAS: nepavyko perkelti paketo į galutinę vietą, vietoj to kopijuoti"
 
 msgid "cannot create unique directory for build"
 msgstr "negalima sukurti unikalaus katalogo dariniui"
@@ -1105,8 +1014,7 @@ msgid "NEWS file not found"
 msgstr "NEWS failas nerastas"
 
 msgid "No news found in given file using package default format."
-msgstr ""
-"Jokių naujienų nerasta pateiktame faile naudojant paketo numatytąjį formatą."
+msgstr "Jokių naujienų nerasta pateiktame faile naudojant paketo numatytąjį formatą."
 
 msgid "Could not extract news from the following text chunks:"
 msgstr "Nepavyko išskleisti naujienų iš šių teksto segmentų:"
@@ -1154,7 +1062,7 @@ msgstr ""
 "Netaisyklingas NEWS.Rd failas:\n"
 "Segmento pradėjimas\n"
 "  %s\n"
-"nėra \\itemize."
+"nėra \\item."
 
 msgid "Processing packages:"
 msgstr "Apdorojami paketai:"
@@ -1259,11 +1167,8 @@ msgstr "Esamame PACKAGES faile nėra eilučių ir (arba) stulpelių"
 msgid "Specified fields no present in existing PACKAGES file:"
 msgstr "Nurodyti laukai nėra esamo PAKETŲ faile:"
 
-msgid ""
-"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
-msgstr ""
-"Neįmanoma atnaujinti esamo PACKAGES failo. Iškvietimas write_PACKAGES "
-"tiesiogiai."
+msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr "Neįmanoma atnaujinti esamo PACKAGES failo. Iškvietimas write_PACKAGES tiesiogiai."
 
 msgid "Updating existing repository [strict mode:"
 msgstr "Esamos saugyklos atnaujinimas [strict rėžimas:"
@@ -1413,10 +1318,8 @@ msgstr[0] "Surastas galimai globalus 'T' arba 'F' šioje funkcijoje:"
 msgstr[1] "Surastas galimai globalus 'T' arba 'F' šiose funkcijose:"
 msgstr[2] "Surastas galimai globalus 'T' arba 'F' šiose funkcijose:"
 
-msgid ""
-"Found possibly global 'T' or 'F' in the examples of the following Rd file:"
-msgid_plural ""
-"Found possibly global 'T' or 'F' in the examples of the following Rd files:"
+msgid "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
+msgid_plural "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
 msgstr[0] "Surastas galimai globalus 'T' arba 'F' pavyzdžiuose šio Rd failo:"
 msgstr[1] "Surastas galimai globalus 'T' arba 'F' pavyzdžiuose šių Rd failų:"
 msgstr[2] "Surastas galimai globalus 'T' arba 'F' pavyzdžiuose šių Rd failų:"
@@ -1441,57 +1344,28 @@ msgstr[1] "Surasti .Internal iškvietimai į metodus šioms S4 bendrinėms:"
 msgstr[2] "Surasta .Internal iškvietimų į metodus šioms S4 bendrinėms:"
 
 msgid "Found a .Internal call in methods for the following reference class:"
-msgid_plural ""
-"Found .Internal calls in methods for the following reference classes:"
+msgid_plural "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "Surastas .Internal iškvietimas į metodus šiai referencinei klasei:"
-msgstr[1] ""
-"Surasti .Internal iškvietimai į metodus šioms referencinėms klasėms:"
+msgstr[1] "Surasti .Internal iškvietimai į metodus šioms referencinėms klasėms:"
 msgstr[2] "Surasta .Internal iškvietimų į metodus šioms referencinėms klasėms:"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in the following functions:"
-msgstr[0] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šią "
-"funkciją:"
-msgstr[1] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šias "
-"funkcijas:"
-msgstr[2] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šias "
-"funkcijas:"
+msgid_plural "Found an obsolete/platform-specific call in the following functions:"
+msgstr[0] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šią funkciją:"
+msgstr[1] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šias funkcijas:"
+msgstr[2] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į šias funkcijas:"
 
-msgid ""
-"Found an obsolete/platform-specific call in methods for the following S4 "
-"generic:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in methods for the following S4 "
-"generics:"
-msgstr[0] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šiai S4 bendrinei:"
-msgstr[1] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šioms S4 bendrinėms:"
-msgstr[2] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šioms S4 bendrinėms:"
+msgid "Found an obsolete/platform-specific call in methods for the following S4 generic:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following S4 generics:"
+msgstr[0] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šiai S4 bendrinei:"
+msgstr[1] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šioms S4 bendrinėms:"
+msgstr[2] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šioms S4 bendrinėms:"
 
-msgid ""
-"Found an obsolete/platform-specific call in methods for the following "
-"reference class:"
-msgid_plural ""
-"Found an obsolete/platform-specific call in methods for the following "
-"reference classes:"
-msgstr[0] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šiai referencinei klasei:"
-msgstr[1] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šioms referencinėms klasėms:"
-msgstr[2] ""
-"Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus "
-"šioms referencinėms klasėms:"
+msgid "Found an obsolete/platform-specific call in methods for the following reference class:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following reference classes:"
+msgstr[0] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šiai referencinei klasei:"
+msgstr[1] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šioms referencinėms klasėms:"
+msgstr[2] "Surastas nebenaudojamas/nuo platformos priklausantis iškvietimas į metodus šioms referencinėms klasėms:"
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
@@ -1523,9 +1397,15 @@ msgid ""
 msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
-msgstr[0] "trūkstamas/tuščias pavadinimo laukas, esantis Rd faile"
-msgstr[1] "trūkstamas/tuščias pavadinimo laukas, esantis Rd failuose"
-msgstr[2] "trūkstamas/tuščias pavadinimo laukas, esantis Rd failuose"
+msgstr[0] ""
+"trūkstamas/tuščias pavadinimo laukas, esantis Rd faile \n"
+"%s"
+msgstr[1] ""
+"trūkstamas/tuščias pavadinimo laukas, esantis Rd failuose \n"
+"%s"
+msgstr[2] ""
+"trūkstamas/tuščias pavadinimo laukas, esantis Rd failuose \n"
+"%s"
 
 msgid "duplicated vignette title:"
 msgid_plural "duplicated vignette titles:"
@@ -1581,138 +1461,91 @@ msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
 
-#~ msgid "2. %d of the package tests failed"
-#~ msgstr "2. nepavyko atlikti %d paketų testų"
-
-#~ msgid "3. %d of the package tests failed"
-#~ msgstr "3. nepavyko atlikti %d paketų testų"
-
 #~ msgid "%s must be a character string or a file/raw connection"
-#~ msgstr "% turi būti simbolių eilutė arba failas/neapdorotų duomenų ryšys"
+#~ msgstr "%s turi būti simbolių eilutė arba failas/neapdorotų duomenų ryšys"
 
-#~ msgid "%s"
-#~ msgstr "%s"
+#~ msgid "PDF header not found"
+#~ msgstr "PDF antraštė nerasta"
 
 #~ msgid "EOF marker not found"
 #~ msgstr "EOF žymeklis nerastas"
 
-#~ msgid ""
-#~ "2. Found .Internal calls in methods for the following reference classes:"
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr "nepavyksta rasti 'startxref' raktažodžio"
+
+#~ msgid "cannot find xref table"
+#~ msgstr "negalima rasti xref lentelės"
+
+#~ msgid "cannot read xref table"
+#~ msgstr "negali skaityti xref lentelės"
+
+#~ msgid "attempting to select less than one element"
+#~ msgstr "bandymas pasirinkti mažiau nei vieną elementą"
+
+#~ msgid "attempting to select more than one element"
+#~ msgstr "bandymas pasirinkti daugiau nei vieną elementą"
+
+#~ msgid "looking at %s"
+#~ msgstr "ieškoma %s"
+
+#~ msgid "cannot read literal string object"
+#~ msgstr "negali skaityti literalo eilutės objekto"
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr "negali skaityti šešioliktainės eilutės objekto"
+
+#~ msgid "cannot read name object"
+#~ msgstr "negali perskaityti vardo objekto"
+
+#~ msgid "cannot read array object"
+#~ msgstr "negali skaityti masyvo objekto"
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr "negali skaityti žodyno objekto"
+
+#~ msgid "cannot read stream object"
+#~ msgstr "negali skaityti srauto objekto"
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr "negali skaityti netiesioginės nuorodos objekto"
+
+#~ msgid "cannot find object header at xrefed position %d"
+#~ msgstr "negali rasti objekto antraštės xrefed padėtyje %d"
+
+#~ msgid "mismatch in object numbers (given: %d, found: %d)"
+#~ msgstr "objekto numerių neatitiktis (pateikta: %d, rasta: %d)"
+
+#~ msgid "mismatch in generation numbers (given: %d, found: %d)"
+#~ msgstr "generavimo numerių neatitiktis (pateikta: %d, rasta: %d)"
+
+#~ msgid "cannot read stream data"
+#~ msgstr "negali skaityti srauto duomenų"
+
+#~ msgid "invalid index in object stream lookup"
+#~ msgstr "neteisingas indeksas objektų srauto paieškoje"
+
+#~ msgid "expanding %s"
+#~ msgstr "išskleidžiama %s"
+
+#~ msgid "unsupported filter %s"
+#~ msgstr "nepalaikomas filtras %s"
+
+#~ msgid "unsupported %s predictor %d"
+#~ msgstr "nepalaikomas %s prediktorius %d"
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr "nepalaikomas PNG filtras %d"
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "argumentas ‘pkg’ turi būti ilgio 1"
+
+#~ msgid "package '%s' was not found"
+#~ msgstr "paketas '%s' nerastas"
+
+#~ msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 #~ msgstr ""
-#~ "2. Surasti „.Internal“ iškvietimai į metodus šioms referencinėms klasėms:"
-
-#~ msgid ""
-#~ "3. Found .Internal calls in methods for the following reference classes:"
-#~ msgstr ""
-#~ "3. Surasti „.Internal“ iškvietimai į metodus šioms referencinėms klasėms:"
-
-#~ msgid "2. Found .Internal calls in the following functions:"
-#~ msgstr "2. Surasti „.Internal“ iškvietimai šiose funkcijose:"
-
-#~ msgid "3. Found .Internal calls in the following functions:"
-#~ msgstr "3. Surasti „.Internal“ iškvietima išiose funkcijose:"
-
-#~ msgid "2. Found .Internal calls in methods for the following S4 generics:"
-#~ msgstr "2. Surasti „.Internal“ iškvietimai į metodus šioms S4 bendrinėms:"
-
-#~ msgid "3. Found .Internal calls in methods for the following S4 generics:"
-#~ msgstr "3. Surasti „.Internal“ iškvietimai į metodus šioms S4 bendrinėms:"
-
-#~ msgid ""
-#~ "2. Found an obsolete/platform-specific call in methods for the following "
-#~ "S4 generics:"
-#~ msgstr ""
-#~ "2. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šioms S4 bendrinėms:"
-
-#~ msgid ""
-#~ "3. Found an obsolete/platform-specific call in methods for the following "
-#~ "S4 generics:"
-#~ msgstr ""
-#~ "3. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šioms S4 bendrinėms:"
-
-#~ msgid ""
-#~ "2. Found an obsolete/platform-specific call in methods for the following "
-#~ "reference classes:"
-#~ msgstr ""
-#~ "2. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šioms referencinėms klasėms:"
-
-#~ msgid ""
-#~ "3. Found an obsolete/platform-specific call in methods for the following "
-#~ "reference classes:"
-#~ msgstr ""
-#~ "3. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šioms referencinėms klasėms:"
-
-#~ msgid ""
-#~ "2. Found an obsolete/platform-specific call in the following functions:"
-#~ msgstr ""
-#~ "2. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šiose funkcijose:"
-
-#~ msgid ""
-#~ "3. Found an obsolete/platform-specific call in the following functions:"
-#~ msgstr ""
-#~ "3. Surastas nebenaudojamas / nuo platformos priklausantis iškvietimas į "
-#~ "metodus šiose funkcijose:"
-
-#~ msgid ""
-#~ "2. Found possibly global 'T' or 'F' in the examples of the following Rd "
-#~ "files:"
-#~ msgstr ""
-#~ "2. Surastas galimai globalus 'T' arba 'F' pavyzdžiuose, esančiuose šiuose "
-#~ "Rd failuose:"
-
-#~ msgid ""
-#~ "3. Found possibly global 'T' or 'F' in the examples of the following Rd "
-#~ "files:"
-#~ msgstr ""
-#~ "3. Surastas galimai globalus 'T' arba 'F' pavyzdžiuose, esančiuose šiuose "
-#~ "Rd failuose:"
-
-#~ msgid "2. Found possibly global 'T' or 'F' in the following functions:"
-#~ msgstr "2. Surastas galimai globalus 'T' arba 'F' šiose funkcijose:"
-
-#~ msgid "3. Found possibly global 'T' or 'F' in the following functions:"
-#~ msgstr "3. Surastas galimai globalus 'T' arba 'F' šiose funkcijose:"
-
-#~ msgid "2. Found the defunct/removed functions:"
-#~ msgstr "2. Rastos nepilnos/pašalintos funkcijos:"
-
-#~ msgid "3. Found the defunct/removed functions:"
-#~ msgstr "3. Rasta nepilnų/pašalintų funkcijų:"
-
-#~ msgid "2. Found the deprecated functions:"
-#~ msgstr "2. Rastos nebenaudojamos funkcijos:"
-
-#~ msgid "3. Found the deprecated functions:"
-#~ msgstr "3. Rasta nebenaudojamų funkcijų:"
-
-#~ msgid "2. Found the platform-specific devices:"
-#~ msgstr "2. Rasti nuo platformos priklausantys įrenginiai:"
-
-#~ msgid "3. Found the platform-specific devices:"
-#~ msgstr "3. Rasta nuo platformos priklausančių įrenginių:"
-
-#~ msgid "2. Generics without any methods in %s: %s"
-#~ msgstr "2. Bendrinės be jokių metodų, esančios %s: %s"
-
-#~ msgid "3. Generics without any methods in %s: %s"
-#~ msgstr "3. Bendrinės be jokių metodų, esančios %s: %s"
-
-#~ msgid "May need something like"
-#~ msgstr "Gali prireikti kažko panašaus kaip"
-
-#~ msgid "in NAMESPACE."
-#~ msgstr "esantis NAMESPACE."
-
-#~ msgid "2. Help on topic '%s' was found in the following packages:"
-#~ msgstr "2. Žinynas tema '%s' buvo rastas šiuose paketuose:"
-
-#~ msgid "3. Help on topic '%s' was found in the following packages:"
-#~ msgstr "3. Žinynas tema '%s' buvo rastas šiuose paketuose:"
+#~ "skaitymas DESCRIPTION paketui %s nepavyko su pranešimu:\n"
+#~ "  %s"
 
 #~ msgid "Malformed NEWS.Rd file:"
 #~ msgstr "Netaisyklingas NEWS.Rd failas:"
@@ -1730,77 +1563,13 @@ msgstr[2] "Atitinkamų BibTeX įrašų:"
 #~ msgstr "nėra \\itemize."
 
 #~ msgid "No news found in given file using old-style R-like format."
-#~ msgstr ""
-#~ "Nurodytame faile nerasta jokių naujienų, naudojant seno tipo R pavidalą."
-
-#~ msgid "2. Note: found %d marked Latin-1 strings"
-#~ msgstr "2. Pastaba: rastos %d pažymėtos Latin-1 eilutės"
-
-#~ msgid "3. Note: found %d marked Latin-1 strings"
-#~ msgstr "3. Pastaba: rasta %d pažymėtų Latin-1 eilučių"
-
-#~ msgid "2. Note: found %d marked UTF-8 strings"
-#~ msgstr "2. Pastaba: rastos %d pažymėtos UTF-8 eilutės"
-
-#~ msgid "3. Note: found %d marked UTF-8 strings"
-#~ msgstr "3. Pastaba: rasta %d pažymėtų UTF-8 eilučių"
-
-#~ msgid "\"2. Note: found %d strings marked as \"\"bytes\"\"\""
-#~ msgstr "2. Pastaba: rastos %d eilutės, pažymėtos kaip „baitai“"
-
-#~ msgid "\"3. Note: found %d strings marked as \"\"bytes\"\"\""
-#~ msgstr "3. Pastaba: rasta %d eilučių, pažymėtų kaip „baitai“"
-
-#~ msgid "1. Obsolete package %s in Rd xrefs"
-#~ msgstr "1. Nebeaktualus paketas %s, esantis Rd xrefs"
-
-#~ msgid "2. Obsolete packages %s in Rd xrefs"
-#~ msgstr "2. Nebeaktualūs paketai %s, esantys Rd xrefs"
-
-#~ msgid "3. Obsolete packages %s in Rd xrefs"
-#~ msgstr "3. Nebeaktualių paketų %s, esančių Rd xrefs"
-
-#~ msgid "PDF header not found"
-#~ msgstr "PDF antraštė nerasta"
+#~ msgstr "Nurodytame faile nerasta jokių naujienų, naudojant seno tipo R pavidalą."
 
 #~ msgid "Package '%s' had its dependencies reduced to a minimal set."
 #~ msgstr "Paketo '%s' priklausomybės buvo sumažintos iki minimumo."
 
-#~ msgid "2. Packages unavailable to check Rd xrefs: %s"
-#~ msgstr "2. Paketai negali patikrinti Rd xrefs: %s"
-
-#~ msgid "3. Packages unavailable to check Rd xrefs: %s"
-#~ msgstr "3. Paketų negali patikrinti Rd xrefs: %s"
-
-#~ msgid "2. Required fields missing or empty:"
-#~ msgstr "2. Privalomų laukų nėra arba jie tušti:"
-
-#~ msgid "3. Required fields missing or empty:"
-#~ msgstr "3. Privalomų laukų nėra arba jie tušti:"
-
-#~ msgid "2. Unknown packages %s in Rd xrefs"
-#~ msgstr "2. Nežinomi paketai %s, esantys Rd xrefs"
-
-#~ msgid "3. Unknown packages %s in Rd xrefs"
-#~ msgstr "3. Nežinomų paketų %s, esančių Rd xrefs"
-
-#~ msgid "2. Warnings in file %s:"
-#~ msgstr "2. Įspėjimai faile %s:"
-
-#~ msgid "3. Warnings in file %s:"
-#~ msgstr "3. Įspėjimai faile %s:"
-
-#~ msgid "argument 'pkg' must be of length 1"
-#~ msgstr "argumentas ‘pkg’ turi būti ilgio 1"
-
 #~ msgid "argument 'vignette' must be of length 1"
 #~ msgstr "argumentas ‘vignette’ turi būti ilgio 1"
-
-#~ msgid "attempting to select less than one element"
-#~ msgstr "bandymas pasirinkti mažiau nei vieną elementą"
-
-#~ msgid "attempting to select more than one element"
-#~ msgstr "bandymas pasirinkti daugiau nei vieną elementą"
 
 #~ msgid "bad operand"
 #~ msgstr "netinkamas operandas"
@@ -1808,100 +1577,11 @@ msgstr[2] "Atitinkamų BibTeX įrašų:"
 #~ msgid "cannot coerce %s to logical"
 #~ msgstr "%s negali būti paverstas į loginį"
 
-#~ msgid "cannot find 'startxref' keyword"
-#~ msgstr "nepavyksta rasti 'startxref' raktažodžio"
-
-#~ msgid "cannot find object header at xrefed position %d"
-#~ msgstr "negali rasti objekto antraštės xrefed padėtyje %d"
-
-#~ msgid "cannot find xref table"
-#~ msgstr "negalima rasti xref lentelės"
-
-#~ msgid "cannot read array object"
-#~ msgstr "negali skaityti masyvo objekto"
-
-#~ msgid "cannot read dictionary object"
-#~ msgstr "negali skaityti žodyno objekto"
-
-#~ msgid "cannot read hexadecimal string object"
-#~ msgstr "negali skaityti šešioliktainės eilutės objekto"
-
-#~ msgid "cannot read indirect reference object"
-#~ msgstr "negali skaityti netiesioginės nuorodos objekto"
-
-#~ msgid "cannot read literal string object"
-#~ msgstr "negali skaityti literalo eilutės objekto"
-
-#~ msgid "cannot read name object"
-#~ msgstr "negali perskaityti vardo objekto"
-
-#~ msgid "cannot read stream data"
-#~ msgstr "negali skaityti srauto duomenų"
-
-#~ msgid "cannot read stream object"
-#~ msgstr "negali skaityti srauto objekto"
-
-#~ msgid "cannot read xref table"
-#~ msgstr "negali skaityti xref lentelės"
-
-#~ msgid "expanding %s"
-#~ msgstr "išskleidžiama %s"
-
-#~ msgid "invalid index in object stream lookup"
-#~ msgstr "neteisingas indeksas objektų srauto paieškoje"
-
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr "netinkama reikšmė 'compress': turi būti FALSE, TRUE, 2 arba 3"
 
-#~ msgid "looking at %s"
-#~ msgstr "ieškoma %s"
-
-#~ msgid "mismatch in generation numbers (given: %d, found: %d)"
-#~ msgstr "generavimo numerių neatitiktis (pateikta: %d, rasta: %d)"
-
-#~ msgid "mismatch in object numbers (given: %d, found: %d)"
-#~ msgstr "objekto numerių neatitiktis (pateikta: %d, rasta: %d)"
-
-#~ msgid ""
-#~ "1. missing/empty \n"
-#~ "ame field in Rd file"
-#~ msgstr "1. trūkstamas/tuščias pavadinimo laukas, esantis Rd faile "
-
-#~ msgid ""
-#~ "3. missing/empty \n"
-#~ "ame field in Rd files"
-#~ msgstr "3. trūkstamas/tuščias pavadinimo laukas, esantis Rd failuose"
-
-#~ msgid "2. objects %s are created by more than one data call"
-#~ msgstr "2.  %s objektai yra sukurti daugiau nei vienu duomenų iškvietimu"
-
-#~ msgid "3. objects %s are created by more than one data call"
-#~ msgstr "3.  %s objektų yra sukurta daugiau nei vienu duomenų iškvietimu"
-
-#~ msgid ""
-#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
-#~ "be checked"
-#~ msgstr ""
-#~ "paketas %s yra, bet nebuvo įdiegtas į R > = 2.10.0, todėl xrefs negali "
-#~ "būti patikrintas"
-
-#~ msgid "package '%s' was not found"
-#~ msgstr "paketas '%s' nerastas"
+#~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
+#~ msgstr "paketas %s yra, bet nebuvo įdiegtas į R > = 2.10.0, todėl xrefs negali būti patikrintas"
 
 #~ msgid "there is no package called '%s'"
 #~ msgstr "nėra paketo, kurio pavadinimas '%s'"
-
-#~ msgid "2. unable to re-encode %s lines %s"
-#~ msgstr "2. nepavyko perkoduoti %s eilutės %s"
-
-#~ msgid "3. unable to re-encode %s lines %s"
-#~ msgstr "3. nepavyko perkoduoti %s eilučių %s"
-
-#~ msgid "unsupported %s predictor %d"
-#~ msgstr "nepalaikomas %s prediktorius %d"
-
-#~ msgid "unsupported PNG filter %d"
-#~ msgstr "nepalaikomas PNG filtras %d"
-
-#~ msgid "unsupported filter %s"
-#~ msgstr "nepalaikomas filtras %s"

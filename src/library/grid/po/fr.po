@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-11-06 17:17+0100\n"
 "PO-Revision-Date: 2021-02-10 17:42+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -23,7 +23,8 @@ msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext doit être appelé après initGContext"
 
 #: grid.c:199
-msgid "Turning clipping on or off within a clipping path is no honoured"
+#, fuzzy
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr "Activer ou désactiver le découpage dans un chemin de découpage ('clipping path') n’est pas pris en compte"
 
 #: grid.c:241
@@ -31,11 +32,13 @@ msgid "cannot clip to rotated viewport"
 msgstr "impossible de couper une vue pivotée"
 
 #: grid.c:455
-msgid "Clipping paths within a clipping path are not honoured"
+#, fuzzy
+msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr "Les chemins de découpage ('clipping path’) à l’intérieur d’un chemin de découpage ne sont pas pris en compte"
 
 #: grid.c:474
-msgid "Masks within a clipping path are not honoured"
+#, fuzzy
+msgid "Masks within a (clipping) path are not honoured"
 msgstr "Le masquage à l’aide d’un chemin de découpage ('clipping path') n’est pas pris en compte"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
@@ -46,39 +49,39 @@ msgstr "impossible de rendre la vue de plus haut niveau active (sorties 'grid' e
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1693
+#: grid.c:1702
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1913
+#: grid.c:1922
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1922
+#: grid.c:1931
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:2076
+#: grid.c:2085
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:2399
+#: grid.c:2408
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
-#: grid.c:3324
+#: grid.c:3333
 msgid "non-finite x or y in graphics path"
 msgstr "x ou y infinis dans le chemin graphique"
 
-#: grid.c:3374
+#: grid.c:3383
 msgid "Empty raster"
 msgstr "Graphique raster vide"
 
-#: grid.c:3860
+#: grid.c:3869
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:3954
+#: grid.c:3963
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 
@@ -94,7 +97,7 @@ msgstr "'layout.pos.col' incorrect"
 msgid "singular transformation matrix"
 msgstr "matrice de transformation singulière"
 
-#: state.c:180
+#: state.c:192
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 

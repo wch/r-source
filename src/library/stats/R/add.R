@@ -702,12 +702,12 @@ step <- function(object, scope, scale = 0,
 
     step.results <- function(models, fit, object, usingCp=FALSE)
     {
-	change <- sapply(models, "[[", "change")
-	rd <- sapply(models, "[[", "deviance")
+	change <- sapply(models, `[[`, "change")
+	rd <- sapply(models, `[[`, "deviance")
         dd <- c(NA, abs(diff(rd)))
-	rdf <- sapply(models, "[[", "df.resid")
+	rdf <- sapply(models, `[[`, "df.resid")
 	ddf <- c(NA, diff(rdf))
-	AIC <- sapply(models, "[[", "AIC")
+	AIC <- sapply(models, `[[`, "AIC")
 	heading <- c("Stepwise Model Path \nAnalysis of Deviance Table",
 		     "\nInitial Model:", deparse(formula(object)),
 		     "\nFinal Model:", deparse(formula(fit)),

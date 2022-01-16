@@ -91,14 +91,14 @@ ftable( addmargins(A, c(1, 3),
 sqsm <- function(x) sum(x)^2/100
 B <- table(Sea, Bee)
 round(sweep(addmargins(B, 1, list(list(All = sum, N = sqsm))), 2,
-            apply(B, 2, sum)/100, "/"), 1)
+            apply(B, 2, sum)/100, `/`), 1)
 round(sweep(addmargins(B, 2, list(list(All = sum, N = sqsm))), 1,
-            apply(B, 1, sum)/100, "/"), 1)
+            apply(B, 1, sum)/100, `/`), 1)
 
 # A total over Bee requires formation of the Bee-margin first:
 mB <-  addmargins(B, 2, FUN = list(list(Total = sum)))
 round(ftable(sweep(addmargins(mB, 1, list(list(All = sum, N = sqsm))), 2,
-                   apply(mB, 2, sum)/100, "/")), 1)
+                   apply(mB, 2, sum)/100, `/`)), 1)
 
 ## Zero.Printing table+margins:
 set.seed(1)

@@ -13,6 +13,8 @@ linearGradient <- function(colours = c("black", "white"),
                            extend = c("pad", "repeat", "reflect", "none")) {
 
     nstops <- max(length(colours), length(stops))
+    if (nstops < 1)
+        stop("colours and stops must be at least length 1")
     colours <- rep(colours, length.out = nstops)
     stops <- rep(stops, length.out = nstops)
 
@@ -24,6 +26,10 @@ linearGradient <- function(colours = c("black", "white"),
         y1 <- unit(y1, default.units)
     if (! is.unit(y2))
         y2 <- unit(y2, default.units)
+
+    if (length(x1) != 1 || length(x2) != 1 ||
+        length(y1) != 1 || length(y2) != 1)
+        stop("x1, y1, x2, and y2 must all be length 1")
 
     grad <- list(x1 = x1, y1 = y1,
                  x2 = x2, y2 = y2,
@@ -43,6 +49,8 @@ radialGradient <- function(colours = c("black", "white"),
                            extend = c("pad", "repeat", "reflect", "none")) {
 
     nstops <- max(length(colours), length(stops))
+    if (nstops < 1)
+        stop("colours and stops must be at least length 1")
     colours <- rep(colours, length.out = nstops)
     stops <- rep(stops, length.out = nstops)
 
@@ -58,6 +66,11 @@ radialGradient <- function(colours = c("black", "white"),
         cy2 <- unit(cy2, default.units)
     if (!is.unit(r2))
         r2 <- unit(r2, default.units)
+
+    if (length(cx1) != 1 || length(cx2) != 1 ||
+        length(cy1) != 1 || length(cy2) != 1 ||
+        length(r1) != 1  || length(r2) != 1)
+        stop("cx1, cy1, cx2, cy2, r1, and r2 must all be length 1")
 
     grad <- list(cx1 = cx1, cy1 = cy1, r1=r1,
                  cx2 = cx2, cy2 = cy2, r2=r2,
@@ -89,8 +102,15 @@ pattern <- function(grob,
         height <- unit(height, default.units)
     hjust = resolveHJust(just, hjust)
     vjust = resolveVJust(just, vjust)
-    
+
+    if (length(x) != 1 || length(y) != 1 ||
+        length(width) != 1 || length(height) != 1)
+        stop("x, y, width, and height must all be length 1")
+
     force(grob)
+    if (!is.grob(grob))
+        stop("Pattern must be based on grob")
+    
     ## Do NOT want x$gp$fill to be NULL because that would mean
     ## that 'x' inherits its fill from the grob that it is
     ## filling, which means infinite recursion
@@ -150,9 +170,12 @@ resolveFill.GridGrobPattern <- function(fill) {
         width <- diff(range(x))
         height <- diff(range(y))
         ## Temporary viewport for calculations, so do NOT record on grid DL
+        ## Also, ensure NO mask and NO clip
+        ## (at least initially) for resolution of pattern
         pushViewport(viewport(left, bottom, width, height,
                               default.units="in",
-                              just=c("left", "bottom")),
+                              just=c("left", "bottom"),
+                              clip="off", mask="none"),
                      recording=FALSE)
         pattern <- resolvePattern(fill)
         popViewport(recording=FALSE)

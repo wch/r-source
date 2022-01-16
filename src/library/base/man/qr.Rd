@@ -155,7 +155,7 @@ as.qr(x)
   \code{\link{det}} (using \code{qr}) to compute the determinant of a matrix.
 }
 \examples{
-hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, `+`) }
 h9 <- hilbert(9); h9
 qr(h9)$rank           #--> only 7
 qrh9 <- qr(h9, tol = 1e-10)
