@@ -51,6 +51,9 @@
       named atomic vectors or lists and prints the correct number when
       reaching the \code{getOption("max.print")} limit; partly thanks to a
       report and proposal by Hugh Parsonage to the R-devel list.
+
+      \item \code{all.equal(<selfStart>, *)} no longer signals a deprecation
+      warning.
     }
   }
 }
