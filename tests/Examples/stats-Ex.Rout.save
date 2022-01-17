@@ -1,5 +1,5 @@
 
-R version 4.1.2 Patched (2022-01-15 r81509) -- "Bird Hippie"
+R version 4.1.2 Patched (2022-01-17 r81510) -- "Bird Hippie"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -9188,7 +9188,7 @@ it = 10 -2.083333 -2.083333
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm
+> ### Aliases: lm print.lm
 > ### Keywords: regression
 > 
 > ### ** Examples
