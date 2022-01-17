@@ -3937,6 +3937,19 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(result = symbolCoords(xx, yy, 4, dd));
+                    resultProtect = 1;
+                }
             }
 	    break;
 
@@ -3946,6 +3959,18 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(result = symbolCoords(cx, cy, 100, dd));
+                    resultProtect = 1;
+                }
             }
 	    break;
 
@@ -3961,6 +3986,11 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(result = symbolCoords(xx, yy, 3, dd));
+                    resultProtect = 1;
+                }
             }
 	    break;
 
