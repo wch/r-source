@@ -12104,7 +12104,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.lm
-> ### Title: Plot Diagnostics for an lm Object
+> ### Title: Plot Diagnostics for an 'lm' Object
 > ### Aliases: plot.lm
 > ### Keywords: hplot regression
 > 
@@ -12136,17 +12136,17 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > par(mfrow = c(2,1)) # same oma as above
 > plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
 > 
-> ## Cook's distance tweaking; col / "legend" suppressed here
+> ## Cook's distance tweaking
 > par(mfrow = c(2,3)) # same oma ...
 > plot(lm.SR, which = 1:6, cook.col = "royalblue")
 > 
 > ## A case where over plotting of the "legend" is to be avoided:
-> if(dev.interactive()) getOption("device")(height = 6, width = 4)
-> par(mfrow= c(3,1), mar= c(5,5,4,2)/2 +.1, mgp= c(1.4, .5, 0))
-> plot(lm.SR, which=5, extend.ylim.f = c(0.2, 0.08))
-> plot(lm.SR, which=5, cook.lty="dotdash",
-+      cook.legendChanges = list(x = "bottomright"))
-> plot(lm.SR, which=5, cook.legendChanges=NULL)# no "legend"
+> if(dev.interactive(TRUE)) getOption("device")(height = 6, width = 4)
+> par(mfrow = c(3,1), mar = c(5,5,4,2)/2 +.1, mgp = c(1.4, .5, 0))
+> plot(lm.SR, which = 5, extend.ylim.f = c(0.2, 0.08))
+> plot(lm.SR, which = 5, cook.lty = "dotdash",
++      cook.legendChanges = list(x = "bottomright", legend = "Cook"))
+> plot(lm.SR, which = 5, cook.legendChanges = NULL)  # no "legend"
 > 
 > ## Don't show: 
 > ## An example with *long* formula that needs abbreviation:
