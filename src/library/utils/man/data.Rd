@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -156,11 +156,11 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   appropriate labels.  Thus, the \file{.R} file can effectively contain
   a metadata specification for the plaintext formats.
 
-  In older versions of \R, up to 3.6.x, both \code{package = "base"} and
-  \code{package = "stats"} were using \code{package = "datasets"}, (with a
-  warning), as before 2004, (most of) the datasets in \pkg{datasets} were
-  either in \pkg{base} or \pkg{stats}.  For these packages, the result
-  is now empty as they contain no data sets.
+  %% In older versions of \R, up to 3.6.x, both \code{package = "base"} and
+  %% \code{package = "stats"} were using \code{package = "datasets"}, (with a
+  %% warning), as before 2004, (most of) the datasets in \pkg{datasets} were
+  %% either in \pkg{base} or \pkg{stats}.  For these packages, the result
+  %% is now empty as they contain no data sets.
 }
 \section{Warning}{
   This function creates objects in the \code{envir} environment (by
