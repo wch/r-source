@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sample}
@@ -15,7 +15,7 @@
 sample(x, size, replace = FALSE, prob = NULL)
 
 sample.int(n, size = n, replace = FALSE, prob = NULL,
-           useHash = (!replace && is.null(prob) && size <= n/2 && n > 1e7))
+           useHash = (n > 1e+07 && !replace && is.null(prob) && size <= n/2))
 }
 \arguments{
   \item{x}{either a vector of one or more elements from which to choose,

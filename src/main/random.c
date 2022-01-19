@@ -465,6 +465,8 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     sn = CAR(args); args = CDR(args);
     sk = CAR(args); args = CDR(args); /* size */
+    if (length(sk) != 1)
+	error(_("invalid '%s' argument"), "size");
     sreplace = CAR(args); args = CDR(args);
     if(length(sreplace) != 1)
 	 error(_("invalid '%s' argument"), "replace");
@@ -506,7 +508,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_xlen_t k = asVecSize(sk);
 	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0))
 	    error(_("invalid first argument"));
-	if (k < 0) error(_("invalid '%s' argument"), "size");
+	if (k < 0) error(_("invalid '%s' argument"), "size"); // includes NA
 	if (!replace && k > dn)
 	    error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
 	if (dn > INT_MAX || k > INT_MAX) {

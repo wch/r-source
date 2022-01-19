@@ -486,6 +486,9 @@
       \item \code{asOneSidedFormula()} now associates the resulting
       formula with the global environment rather than the evaluation
       environment created for the call.
+
+      \item \code{sample()} and \code{sample.int()} have additional
+      sanity checks on their \code{size} argument.
     }
   }
 }
