@@ -12,7 +12,7 @@
 %\VignetteDepends{stats}
 
 \title{Sweave User Manual}
-\author{Friedrich Leisch and R-core}
+\author{Friedrich Leisch and R Core Team}
 
 \usepackage[round]{natbib}
 \usepackage{graphicx, Rd}
@@ -32,7 +32,7 @@ urlcolor=Blue,%
 pdfstartview={XYZ null null 1},%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
-pdfauthor={Friedrich Leisch and R-core},%
+pdfauthor={Friedrich Leisch and R Core Team},%
 pdftitle={Sweave User Manual},%
 pdfsubject={R vignette documentation system}%
 }
@@ -91,7 +91,7 @@ of code and documentation segments, called \emph{chunks}:
   the contents of documentation chunks, and so will identify chunk
   indicators even inside \LaTeX{} verbatim environments.
 
-\item[Code chunks] start with \verb|<<options>>=| at the beginning of
+\item[Code chunks] start with \verb|<<|\texttt{\textsl{options}}\verb|>>=| at the beginning of
   a line; again the rest of the line is a comment and ignored.
 \end{description}
 The default for the first chunk is documentation.
