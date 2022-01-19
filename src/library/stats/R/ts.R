@@ -166,7 +166,7 @@ as.ts.default <- function(x, ...)
     n <- round(freq * (en - st) + 1)
     if(any(!tsser)) {
         ln <- vapply(sers[!tsser], NROW, 1)
-        if(any(ln != 1 && ln != n))
+        if(any(ln != 1L & ln != n)) # vectors, so not &&
             stop("non-time series not of the correct length")
         for(i in (1L:nser)[!tsser]) {
             sers[[i]] <- ts(sers[[i]], start=st, end=en, frequency=freq)
