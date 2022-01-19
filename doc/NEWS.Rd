@@ -488,7 +488,7 @@
       environment created for the call.
 
       \item \code{sample()} and \code{sample.int()} have additional
-      sanity checks on their \code{size} argument.
+      sanity checks on their \code{size} and \code{n} arguments.
     }
   }
 }

@@ -30,6 +30,7 @@ sample <- function(x, size, replace = FALSE, prob = NULL)
 sample.int  <- function(n, size = n, replace = FALSE, prob = NULL,
                         useHash = (n > 1e7 && !replace && is.null(prob) && size <= n/2))
 {
+    stopifnot(length(n) == 1L) # rest of the checks are at C level.
     if (useHash)
         .Internal(sample2(n, size))
     else .Internal(sample(n, size, replace, prob))
