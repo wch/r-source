@@ -266,10 +266,10 @@
 
       \item \code{libcurl} is now required for building from source.
 
-      \item Clipboard connection now works also with text in other than the
-      current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
-      always pasted in UTF16-LE to the clipboard and the \code{encoding}
-      argument is ignored.
+      \item The clipboard connection now works also with text in other
+      than the current native encoding (\PR{18267}, with Hiroaki
+      Yutani).  Text is always pasted in UTF16-LE to the clipboard and
+      the \code{encoding} argument is ignored.
     }
   }
 
@@ -298,7 +298,7 @@
       \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \dQuote{Writing R Extensions}.
+      \sQuote{Writing R Extensions}.
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
@@ -362,17 +362,23 @@
 
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
-      rather than the C header \file{float.h} (as C++11 is now
+      rather than the C header \file{float.h} (now possible as C++11 is
       required).
 
       \item The legacy S-compatibility macros \code{DOUBLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated.
       
+      \item The deprecated S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) have been
+      removed.
+
       \item \code{R_Calloc}, \code{R_Free} and \code{R_Realloc} are
       preferred to their unprefixed forms and error messages now use the
       prefix. These forms were introduced in \R 3.4.0 and are available
       even when \code{STRICT_R_HEADERS} is defined.
 
+      \item{rmultinom} has been documented in \sQuote{Writing R
+	Extensions} §6 so is now part of the \R API.
     }
   }
 
@@ -506,7 +512,7 @@
     \itemize{
       \item The legacy S-compatibility macros \code{SINGLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in due course. 
+      and will be removed in \R 4.2.0. 
     }
   }
 
