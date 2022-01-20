@@ -14093,10 +14093,6 @@ including the header file @file{Rmath.h}; @xref{Distribution functions}.
 Those calls should also be preceded and followed by calls to
 @code{GetRNGstate} and @code{PutRNGstate}.
 
-@c MM: FIXME   void rmultinom() is different, returning a vector!
-@c BUT rmultinom is not mentioned in the xref-ed section ... so it not
-@c even part of the API.
-
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
 @cindex Missing values
@@ -14651,8 +14647,25 @@ Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
 @samp{r} functions.
 
+@noindent
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
+
+Additionlly, a @emph{multivariate} RNG for the multionomial distribution is
+@example
+void rmultinom(int n, double* prob, int K, int* rN)
+@end example
+@noindent
+where @code{K = length(prob)},
+@iftex @tex $\pi :=$ @code{prob[]},
+@end tex
+@end iftex
+@eqn{\sum_{j=1}^K \pi_j = 1, sum(prob[.]) == 1}
+and @code{rN} must point to a length-@code{K} integer vector
+@eqn{n_1 n_2 \ldots n_K, n1 n2 .. nK} where each entry
+@eqn{n_j=, nj=}@code{rN[j]} is ``filled'' by a random binomial from
+@eqn{Bin(n; \pi_j), Bin(n; prob[j])},
+constrained to @eqn{\sum_{j=1}^K n_j = n, sum(rN[.]) == n}.
 
 After calls to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
 function @code{wilcox_free()} should be called, and similarly
