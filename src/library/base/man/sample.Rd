@@ -124,7 +124,7 @@ resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1
 resample(x[x > 10]) # length 0
 
-## R 3.x.y only
+## R 3.0.0 and later
 sample.int(1e10, 12, replace = TRUE)
 sample.int(1e10, 12) # not that there is much chance of duplicates
 }
