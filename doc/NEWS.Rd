@@ -18,7 +18,7 @@
     \itemize{
       \item The legacy S-compatibility macros \code{SINGLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in due course. 
+      and will be removed in \R 4.2.0. 
     }
   }
 
