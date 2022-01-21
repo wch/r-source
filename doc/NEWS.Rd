@@ -54,6 +54,9 @@
 
       \item \code{all.equal(<selfStart>, *)} no longer signals a deprecation
       warning.
+
+      \item \code{formulate(*, response=r)} gives a helpful error message
+      now when \code{length(r) > 1}, thanks to Bill Dunlap's \PR{18281}.
     }
   }
 }
