@@ -21,7 +21,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Included by R.h: API */
+/* Included by R.h: mainly API */
 
 #ifndef R_RS_H
 #define R_RS_H
@@ -82,7 +82,8 @@ extern void R_chk_free(void *);
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 
-#ifndef NO_CALL_R
+// Depreacated in R 2.15.0, non-API
+#if !defined(NO_CALL_R) && defined(DECLARE_LEGACY_CALL_R)
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 #endif
 

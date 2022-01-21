@@ -381,8 +381,13 @@
       prefix. These forms were introduced in \R 3.4.0 and are available
       even when \code{STRICT_R_HEADERS} is defined.
 
-      \item{rmultinom} has been documented in \sQuote{Writing R
+      \item \code{rmultinom} has been documented in \sQuote{Writing R
 	Extensions} §6 so is now part of the \R API.
+
+      \item The long-deprecated and non-API entry point \code{call_R} is
+      only declared \emph{pro tem} in \file{R_ext/RS.h} (included by
+      \file{R.h}) if \code{DECLARE_LEGACY_CALL_R} is defined before that
+      header is included.
     }
   }
 
