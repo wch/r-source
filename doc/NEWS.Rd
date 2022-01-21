@@ -164,6 +164,13 @@
       \item Deparsing no longer remaps attribute names \code{dim},
       \code{dimnames}, \code{levels}, \code{names} and \code{tsp} to
       historical S-compatible names (which \code{structure()} maps back).
+
+      \item \code{sample()} and \code{sample.int()} have additional
+      sanity checks on their \code{size} and \code{n} arguments.
+
+      \item \code{all.equal.numeric()} gains a sanity check on its
+      \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
+      three numeric vectors is a surprisingly common error.
     }
   }
 
@@ -492,9 +499,6 @@
       \item \code{asOneSidedFormula()} now associates the resulting
       formula with the global environment rather than the evaluation
       environment created for the call.
-
-      \item \code{sample()} and \code{sample.int()} have additional
-      sanity checks on their \code{size} and \code{n} arguments.
     }
   }
 }
