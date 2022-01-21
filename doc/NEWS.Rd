@@ -561,6 +561,9 @@
       \item Unregistering \code{globalCallingHandlers} inside
       \code{withCallingHandlers()} now works, thanks to Henrik Bengtsson's
       \PR{18275}.
+
+      \item \code{qbeta(.001, .9, .009)} and similar cases now converge
+      correctly thanks to Ben Bolker's report in \PR{17746}.
     }
   }
 }

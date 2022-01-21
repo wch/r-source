@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2018  The R Core Team
+ *  Copyright (C) 1998--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  based on code (C) 1979 and later Royal Statistical Society
  *
@@ -215,10 +215,11 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
      */
     double acu = fmax2(acu_min, pow(10., -13. - 2.5/(pp * pp) - 0.5/(a * a)));
     // try to catch  "extreme left tail" early
-    double tx, u0 = (la + log(pp) + logbeta) / pp; // = log(x_0)
+    double tx,
+	u0 = (la + log(pp) + logbeta) / pp, // = log(x_0)
+	rp = pp*(1.-qq)/(pp+1.);
     static const double
 	log_eps_c = M_LN2 * (1. - DBL_MANT_DIG);// = log(DBL_EPSILON) = -36.04..
-    r = pp*(1.-qq)/(pp+1.);
 
     t = 0.2;
     // FIXME: Factor 0.2 is a bit arbitrary;  '1' is clearly much too much.
@@ -230,21 +231,21 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	(log_p && (p_ == 0. || p_ == 1.)) ? (p_==0.?" p_=0":" p_=1") : "",
 	swap_tail, la, u0,
 	(t*log_eps_c - log(fabs(pp*(1.-qq)*(2.-qq)/(2.*(pp+2.)))))/2.,
-	 t*log_eps_c - log(fabs(r))
+	 t*log_eps_c - log(fabs(rp))
 	);
 
     if(M_LN2 * DBL_MIN_EXP < u0 && // cannot allow exp(u0) = 0 ==> exp(u1) = exp(u0) = 0
        u0 < -0.01 && // (must: u0 < 0, but too close to 0 <==> x = exp(u0) = 0.99..)
        // qq <= 2 && // <--- "arbitrary"
-       // u0 <  t*log_eps_c - log(fabs(r)) &&
+       // u0 <  t*log_eps_c - log(fabs(rp)) &&
        u0 < (t*log_eps_c - log(fabs(pp*(1.-qq)*(2.-qq)/(2.*(pp+2.)))))/2.)
     {
 // TODO: maybe jump here from below, when initial u "fails" ?
 // L_tail_u:
 	// MM's one-step correction (cheaper than 1 Newton!)
-	r = r*exp(u0);// = r*x0
-	if(r > -1.) {
-	    u = u0 - log1p(r)/pp;
+	rp = rp*exp(u0);// = rp*x0
+	if(rp > -1.) {
+	    u = u0 - log1p(rp)/pp;
 	    R_ifDEBUG_printf("u1-u0=%9.3g --> choosing u = u1\n", u-u0);
 	} else {
 	    u = u0;
@@ -287,26 +288,34 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	if (t == 0 || (t < 0. && s >= t)) { // cannot use chisq approx
 	    // x0 = 1 - { (1-a)*q*B(p,q) } ^{1/q}    {AS 65}
 	    // xinbta = 1. - exp((log(1-a)+ log(qq) + logbeta) / qq);
-	    double l1ma;/* := log(1-a), directly from alpha (as 'la' above):
-			 * FIXME: not worth it? log1p(-a) always the same ?? */
+	    double l1ma;/* := log(1-a), directly from alpha (as 'la' above);
+			   though only seen very small improvements */
 	    if(swap_tail)
 		l1ma = R_DT_log(alpha);
 	    else
 		l1ma = R_DT_Clog(alpha);
 	    R_ifDEBUG_printf(" t <= 0 : log1p(-a)=%.15g, better l1ma=%.15g\n", log1p(-a), l1ma);
 	    double xx = (l1ma + log(qq) + logbeta) / qq;
+	    R_ifDEBUG_printf("  xx = (l1ma + log(qq) + logbeta) / qq = %.10g; ", xx);
 	    if(xx <= 0.) {
 		xinbta = -expm1(xx);
 		u = R_Log1_Exp (xx);// =  log(xinbta) = log(1 - exp(...A...))
 	    } else { // xx > 0 ==> 1 - e^xx < 0 .. is nonsense
-		R_ifDEBUG_printf(" xx=%g > 0: xinbta:= 1-e^xx < 0\n", xx);
-		xinbta = 0; u = ML_NEGINF; /// FIXME can do better?
+		R_ifDEBUG_printf(" xx > 0: xinbta:= 1-e^xx < 0 'nonsense'; ");
+		// Try MM's one-step correction (or else u0)
+		double r_ = rp*exp(u0);
+		if(r_ > -1.) {
+		    u = u0 - log1p(r_)/pp; R_ifDEBUG_printf("u:= u0 - log1p(r_)/pp = %g\n");
+		} else {
+		    u = u0;                R_ifDEBUG_printf("u:= u0 = %g\n");
+		}
+		xinbta = exp(u);
 	    }
 	} else {
 	    t = s / t;
 	    R_ifDEBUG_printf(" t > 0 or s < t < 0:  new t = %g ( > 1 ?)\n", t);
 	    if (t <= 1.) { // cannot use chisq, either
-		u = (la + log(pp) + logbeta) / pp;
+		u = u0;
 		xinbta = exp(u);
 	    } else { // (1+x0)/(1-x0) = t,  solved for x0 :
 		xinbta = 1. - 2. / (t + 1.);
@@ -344,7 +353,7 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
    2) The correction step can go outside (u_n > 0 ==>  e^u > 1 is illegal)
    e.g., for  qbeta(0.2066, 0.143891, 0.05)
 */
-    } else R_ifDEBUG_printf("\n");
+    }
 
     if(!use_log_x)
 	use_log_x = (u < log_q_cut);// <==> xinbta = e^u < exp(log_q_cut)

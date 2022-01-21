@@ -1,5 +1,14 @@
 options(warn = 2)# warnings are errors here
 pdf("p-qbeta-strict-tst.pdf")
+.pt <- proc.time()
+
+## The relative error typically returned by all.equal.numeric()
+## "as simple as possible" -- should work also for 'Matrix' etc ==> no mean() ..
+relErr <- function(target, current) {
+    n <- length(current)
+    if(length(target) < n) target <- rep_len(target, n)
+    sum(abs(target - current)) / sum(abs(target))
+}
 
 a <- 25; b <- 6
 x <- 2^-(300:200)
@@ -50,11 +59,9 @@ stopifnot( all.equal(lpb, pbeta(x,a,b,log.=TRUE), tol=2e-16) )# pbeta() check
 qpb <- qbeta(lpb, a,b, log.p=TRUE)
 stopifnot(qpb > 0)# ok R >= 3.2.0, not in R 3.1.x
 ## ideally   x == qbeta(pbeta(x, *), *) :
-all.equal(x, qpb, tol=0)# now: 4.986e-15 (was 5.238e-15)
-relE <- 1 - qpb/x
-mean(abs(relE))    # 1.145508e-14 (was 1.3182e-14)
-stopifnot(mean(abs(relE)) < 4e-14,
-          max (abs(relE)) < 1e-13)
+all.equal(x, qpb, tol=0)# now 4.5666e-15; was 5.238e-15, then 4.986e-15
+(relE <- relErr(x, qpb)) # 4.5666e-15
+stopifnot(relE < 4e-14)
 
 ## a less extreme set -- but which uses *many* Newton iterations in qbeta()
 a <- 25; b <- 6
@@ -105,38 +112,34 @@ stopifnot( all.equal(lp1, pbeta(x1,a,b,log.=TRUE), tol=2e-16) )# pbeta() check
 qp1 <- qbeta(lp1, a,b, log.p=TRUE)
 stopifnot(qp1 > 0)
 ## ideally   x == qbeta(pbeta(x, *), *) :
-all.equal(x1, qp1, tol=0)# now: 2.99e-16 , but
+relErr(x1, qp1)# now 2.077e-16, was 2.99e-16
 relE <- 1 - qp1/x1
-mean(abs(relE))	   # 5.463177e-16 was 6.089738e-16
-stopifnot(mean(abs(relE)) < 3e-15,
-	  max (abs(relE)) < 1e-14)
+stopifnot(print(mean(abs(relE))) < 3e-15, # 5.331e-16; was 6.0897e-16, then 5.4632e-16
+	  print(max (abs(relE))) < 1e-14) # 1.776e-15
 
-## log.p=FALSE: --- here (with DEBUG), see number of Newton steps
-
+## log.p=FALSE: --- here (with DEBUG_qbeta), see number of Newton steps
 p1 <- exp(lp1)
 qp1. <- qbeta(p1, a,b)
 ## --> many cases that need "too many" Newton steps (on x0 scale: rather use log(x)-scale!)
+## TODO? maybe change log_q_cut = -5 to ~ -4 or so
 
 relE. <- 1 - qp1./x1
-mean(abs(relE.))    # 4.078146e-16
- max(abs(relE.))    # 1.332268e-15
-all.equal(qp1, qp1., tol=0) # 3.083e-16
 stopifnot(all.equal(qp1, qp1., tol=8*.Machine$double.eps),
-	  mean(abs(relE.)) < 2e-15,
-	  max (abs(relE.)) < 7e-15 )
+	  print(mean(abs(relE.))) < 2e-15,  # 3.9572e-16; was 4.0781e-16
+	  print(max (abs(relE.))) < 7e-15 ) # 1.1102e-15; was 1.3323e-15
+proc.time() - .pt; .pt <- proc.time()
 
 
 a <- 43779; b <- 0.06728; x <- -exp(901/256)
-(qx <- qbeta(x , a,b, log=TRUE)) ## (157 iterations in log_x scale); fast in orig.scale
+(qx <- qbeta(x , a,b, log=TRUE)) ## 157 iter. in log_x scale, now fast in orig.scale
 ## 0.9993614
 (pq <- pbeta(qx, a,b, log=TRUE)) ## = -33.7686
-1 - pq/x # rel.err ~  8.88e-16 "perfect"
-stopifnot(abs(1 - pq/x) < 1e-15)
+stopifnot(print(abs(1 - pq/x)) < 1e-15) # rel.err ~  8.88e-16 "perfect"
 ## but it uses probably the wrong swap_tail decision...
 curve(pbeta(exp(x), a,b, log=TRUE), -1e-3, -1e-7,   n=1025) # "the same" as
 par(new=TRUE)
 curve(pbeta(  x,    a,b, log=TRUE), 0.999, 1-1e-7, col=2, ylab="", xaxt="n"); axis(3)
-abline(v = qx, h = x, col="light blue", lty = 2)
+abline(v = qx, h = x, col="light blue", lty = 2); mtext(line=-1, sprintf("(a=%g, b=%g)",a,b))
 
 ## as is this one -- the mirror image:
 (x. <- log1p(-exp(x))) #  -2.160156e-15
@@ -158,7 +161,7 @@ abline(v = q2, h = -x., lty=3, col=2)
 a <- 800; b <- 2
 x <- 2^-c(10*(100:4), 37, 2*(17:14), 27:2, (8:1)/8)
 curve(pbeta(x,a,b, log=TRUE), n=1025, log="x", 1e-200, .1); mtext(R.version.string)
-axis(1, at=0.1); abline(h=0, lty=2)
+axis(1, at=0.1, padj=-1); abline(h=0, v=.1, lty=2); mtext(line=-1, sprintf("(a=%g, b=%g)",a,b))
 
 if(interactive() && require(Rmpfr)) {
     pbi <- pbetaI(x, a,b, log.p=TRUE, precBits = 2048)
@@ -221,28 +224,23 @@ stopifnot(qp2 > 0, is.finite(pq2))
 ## ideally   x == qbeta(pbeta(x, *), *) :
 all.equal(    x,      qp2,  tol=0)#  2.075e-16  was 1.956845e-08, but .. *misleading* a bit
 all.equal(log(x), log(qp2), tol=0)#  1.676e-16  was 1.0755 !!
-plot(qp2 ~ lp2, log='y', type='b', sub=R.version.string); V <- -5e4; abline(v = V, lty=3)
-plot(qp2 ~ lp2, log='y', type='b', sub=R.version.string, subset = lp2 > V)
 ## ideally  lp2 == pbeta(qbeta(lp2, *), *) :
 all.equal(lp2, pq2, tol=0)# 1.26e-16;  was 1.07...
-plot(lp2, pq2, type='b', sub=R.version.string)
-plot(pq2 ~ lp2, type='b', sub=R.version.string, subset = log2(x) >= -80)
-axis(3, at=lp2, labels=log2(x), col="blue3")
-
 relE <- 1 - qp2/x
 rel2 <- 1 - pq2/lp2
-mean(abs(relE))	   # 1.53e-14   was 0.9913043 (R 3.1.0), then 0.8521738
-mean(abs(rel2))	   #  ~ 3e-17 (!); was 0.9913043 (R 3.1.0), then 0.8521738
-stopifnot(mean(abs(relE)) < 7e-14,
-	  max (abs(relE)) < 6e-13,
-          mean(abs(rel2)) < 4e-16,
-          max (abs(rel2)) < 8e-16)
+stopifnot(print(mean(abs(relE))) < 7e-14, # 1.53e-14   was 0.9913043 (R 3.1.0), then 0.8521738
+	  print(max (abs(relE))) < 6e-13, # 1.43e-13
+          print(mean(abs(rel2))) < 4e-16, # ~ 3e-17 (!); was 0.9913043 (R 3.1.0), then 0.8521738
+          print(max (abs(rel2))) < 8e-16) # 2.22e-16
+proc.time() - .pt; .pt <- proc.time()
 
 
 ### even more extreme (a,b) [still computable with Rmpfr pbetaI():]
 a <- 2^12; b <- 2
 x <- 2^-c(10*(100:2), 17, 2*(7:4), 7:1, .5, .25)
-curve(pbeta(x,a,b, log=TRUE), n=1025, log="x", 1e-300, .1);mtext(R.version.string)
+curve(pbeta(x,a,b, log=TRUE), n=1025, log="x", 1e-300, .1)
+mtext(paste("(a=2^12, b=2) --", R.version.string))
+abline(h=0, v=1, lty=3); axis(1, at=1, padj=-1, col.axis=2)
 
 if(interactive() && require(Rmpfr)) {
     pbi <- pbetaI(x, a,b, log.p=TRUE, precBits = 2048)
@@ -299,21 +297,160 @@ all.equal(    x,      qp3,  tol=0)# 1.599e-16
 all.equal(log(x), log(qp3), tol=0)# 1.405e-16
 ## ideally  lp3 == pbeta(qbeta(lp3, *), *) :
 all.equal(lp3, pq3, tol=0)# 1.07... then TRUE!
-
-plot(pq3 ~ lp3, type='b', sub=R.version.string, subset = log2(x) >= -50)
-axis(3, at=lp3, labels=log2(x), col="blue2", col.axis="blue2")
-
 relE <- 1 - qp3/x
 rel2 <- 1 - pq3/lp3
-mean(abs(relE))# 1.518e-14 \\ 3.584e-14 for --disable-long-double
-mean(abs(rel2))# 0  !!
+stopifnot(print(mean(abs(rel2))) < 3e-15,# 0  !!
+	  print(mean(abs(relE))) < 8e-14,# 1.518e-14 \\ 3.584e-14 for --disable-long-double
+	  print(max (abs(relE))) < 4e-13)# 5.251e-14 \\ 2.140e-13 w/o long-double
+proc.time() - .pt; .pt <- proc.time()
 
-stopifnot(mean(abs(rel2)) < 3e-15,
-	  mean(abs(relE)) < 8e-14,
-	  max (abs(relE)) < 4e-13)# 5.251e-14 \\ 2.140e-13 w/o long-double
+## PR#17746 -- qbeta() not converging {from bad start}
+
+## Componentwise aka "Vectorized" relative error
+## {simplified (less robust; no arrays) from sfsmisc::relErrV()} :
+relErrV <- function(target, current, eps0 = .Machine$double.xmin) {
+    n <- length(target <- as.vector(target))
+    ## assert( <length current> is multiple of <length target>) :
+    lc <- length(current)
+    if(lc %% n)
+	stop("length(current) must be a multiple of length(target)")
+    recycle <- (lc != n) # explicitly recycle
+    R <- if(recycle)
+	     target[rep(seq_len(n), length.out=lc)]
+	 else
+	     target
+    R[] <- 0
+    ## use *absolute* error when target is zero {and deal with NAs}:
+    t0 <- abs(target) < eps0 & !(na.t <- is.na(target))
+    R[t0] <- current[t0]
+    ## absolute error also when it is infinite, as (-Inf, Inf) would give NaN:
+    dInf <- is.infinite(E <- current - target)
+    R[dInf] <- E[dInf]
+    useRE <- !dInf & !t0 & (na.t | is.na(current) | (current != target))
+    R[useRE] <- (current/target)[useRE] - 1
+    R
+}
+
+qbetShRelErr <- function(p=0.001, i=0.01, from=1/4, to=4,
+                   n.I = 5, n.seq = 65, # { = 1 + 2^k <==> 2^k intervals }
+                   lower.tail=FALSE, xI = NULL)
+{
+    stopifnot(is.numeric(n.seq), n.seq >= 2,
+              is.numeric(n.I),   n.I >= 2,
+              is.logical(lower.tail), !is.na(lower.tail))
+    if((has.I <- is.numeric(xI) && length(xI) >= 2)) {
+        x <-
+            if(length(xI) == 2)        seq(from=xI[1], to=xI[2], length.out = n.I)
+            else if(length(xI) == 4) c(seq(from=xI[1], to=xI[2], length.out = n.I),
+                                       seq(from=xI[3], to=xI[4], length.out = n.I))
+            else { warning("length(xI) == ", length(xI)); x <- numeric()
+                for(j in seq_len(floor(length(xI)/2)))
+                    x <- c(x, seq(from=xI[2*j-1], to=xI[2*j], length.out = n.I))
+            }
+    } else { # does *not* have xI
+        xI <- c(from, to)
+        x <- seq(from=from, to=to, length.out = n.seq)
+    }
+
+    qb <- qbeta(p, shape1=i/x, shape2=(1-i)/x, lower.tail=lower.tail)
+    pb <- pbeta(qb,shape1=i/x, shape2=(1-i)/x, lower.tail=lower.tail)
+    relErrV(p, pb)
+}
+
+chk_relE <- function(relE, meanTol, maxTol, na.rm=FALSE) {
+    stopifnot(maxTol >= 0, meanTol >= 0)
+    a.relE <- abs(relE)
+    mnErr <- mean(a.relE, na.rm=na.rm)
+    mxErr <- max (a.relE, na.rm=na.rm)
+    cat(sprintf("mean(abs(relE)) = %9.4g\n max(abs(relE)) = %9.4g\n",
+                mnErr, mxErr))
+    stopifnot(mnErr <= meanTol, mxErr <= maxTol)
+}
+
+chk_relE(qbetShRelErr(0.001,  i=0.001), 8e-16, 4e-15) # seen 9.22e-17, 6.66e-16
+chk_relE(qbetShRelErr(0.0001, i=0.001, xI = c(1.065625, 1.285)), 8e-16, 4e-15)# 3.997e-16, 6.66e-16
+## back to default p=0.001 :
+chk_relE(qbetShRelErr(i=0.00101, xI = c(12.565, 97.075)),     8e-16, 1e-15) # 0 0
+chk_relE(qbetShRelErr(i=0.00105, xI = c(5.539125, 31.26425)), 8e-16, 1e-15) # 0 0
+chk_relE(qbetShRelErr(i=0.0011,  xI = c(3.92275, 18.65525)),  4e-16, 1e-15) # 8.88e-17  2.22e-16
+chk_relE(qbetShRelErr(i=0.0012,  xI = c(2.81275, 11.119375)), 8e-16, 1e-15) # 0 0
+chk_relE(qbetShRelErr(i=0.0015,  xI = c(1.907125, 5.758)),    8e-16, 1e-15) # had warnings
+chk_relE(qbetShRelErr(i=0.002,   xI = c(1.508125, 3.660625)), 8e-16, 1e-15) #  "   "
+chk_relE(qbetShRelErr(i=0.005,   xI = c(1.13875, 1.7575)), 8e-16, 1e-15)    #  "   "
+chk_relE(qbetShRelErr(i=0.008,   xI = c(1.076875, 1.39375)), 8e-16, 1e-15)  #  "   "
+chk_relE(qbetShRelErr(,          xI = c(1.05625, 1.27)), 8e-16, 1e-15)      #  "   "
+chk_relE(qbetShRelErr(i=0.0113,  xI = c(1.16875, 1.21)), 8e-16, 1e-15)      #  "   "
+chk_relE(qbetShRelErr(i=0.0115,  xI = c(1.18798, 1.20183)), 2e-15, 4e-15)   # 7.55e-16 1.11e-15 (had warnings)
+chk_relE(qbetShRelErr(i=0.0117), 8e-14, 1e-12) # 2.12e-14 2.356e-13 not so good
+
+## now larger p:
+chk_relE(qbetShRelErr(0.002, xI = c(1.133125, 1.744375)), 8e-16, 1e-15) # had warnings
+chk_relE(qbetShRelErr(0.003, xI = c(1.22689, 2.2506)), 8e-16, 1e-15)    # had warnings
+chk_relE(qbetShRelErr(0.005, xI = c(1.49501, 3.62496)), 8e-16, 1e-15)   # -- warn. ; even larger jump
+chk_relE(qbetShRelErr(0.008, xI = c(2.52003, 9.34491)), 8e-16, 1e-15) # had warnings
+chk_relE(qbetShRelErr(0.009, xI = c(3.68804, 17.0798)), 8e-16, 1e-15) #  "   "
+## "FIXME": can be smarter: when result is close to '1' have accuracy loss in that order or magnit.!
+chk_relE(qbetShRelErr(0.01, from=.01, to=50), 8e-16, 1e-14) #  1.264e-16 4.885e-15 (nothing)
+chk_relE(qbetShRelErr(0.01,  0.02, xI = c(1.48001, 3.58184)), 8e-16, 1e-15) # -- warn.  bump ~ [1.6, 3.6]
+chk_relE(qbetShRelErr(0.015, 0.02, xI = c(2.19952, 7.50192)), 8e-16, 1e-15) # -- warn. bump ~ [2.2, 7.5]
+chk_relE(qbetShRelErr(0.018, 0.02, xI = c(3.6472, 16.8828)), 8e-16, 1e-15) # -- warn.
+chk_relE(qbetShRelErr(0.02, 0.03, to=7), 8e-16, 1e-15) ## 9.736e-17 6.661e-16 ; had 2 bumps [1.847, 1.982] and [2.994, 5.57]
+chk_relE(qbetShRelErr(0.022, 0.03 , xI = c(2.9354, 6.94593)), 8e-16, 1e-15) # had warnings
+chk_relE(qbetShRelErr(0.022, 0.035, xI = c(1.88914, 1.95886,  3.59804, 4.9232)), 8e-16, 1e-15) # -- 2 bumps !
+chk_relE(qbetShRelErr(0.022, 0.035, xI = c(1.85814, 1.96273,  3.59029, 4.94258)), 8e-16, 1e-15)# - 2 bumps !
+
+chk_relE(qbetShRelErr(0.025, 0.035, xI = c(3.46928, 6.47119)), 8e-16, 1e-15)
+chk_relE(qbetShRelErr(0.975, 0.035, lower.tail=TRUE, xI = c(3.47291, 6.47444)), 8e-16, 1e-15)
+chk_relE(qbetShRelErr(0.97 , 0.035, lower.tail=TRUE, xI = c(3.28853, 12.2711)), 8e-16, 1e-15)
+chk_relE(qbetShRelErr(0.969, 0.035, lower.tail=TRUE, xI = c(3.33278, 14.8597)), 8e-16, 1e-15)
+chk_relE(qbetShRelErr(0.967, 0.035, lower.tail=TRUE, xI = c(4.84642, 26.162)), 8e-16, 1e-15)
+chk_relE(qbetShRelErr(0.966, 0.035, lower.tail=TRUE, xI = c(6.99119, 44.4524)), 8e-16, 1e-15)  # had warnings
+chk_relE(qbetShRelErr(0.965, 0.035, lower.tail=TRUE), 8e-16, 1e-15)# 0 0  {much changed picture ...}
+pp. <- c(.965, .966)
+stopifnot(all.equal(tol = 1e-15, pp.,
+                    pbeta(print(qbeta(pp., .0035, .097)),
+                          .0035, .097)))
+
+pbeta(1e-323,  1/200, 1/100) # 0.01617775 >> 0.01
+## really smallest non zero (with subnormals!): 2^-(1022+52) == 2^-1074:
+pbeta(2^-1074, 1/200, 1/100) # 0.01612178 >> 0.01
+
+qbeta(.80, 1/100, 1/200)# gives 1 without a warning -- which *is* good:
+(qb.2 <- qbeta(.20, 1/200, 1/100)) # 2.613271e-105
+(pqb.2 <- pbeta(qb.2, 1/200, 1/100))# 0.2 -- very good:
+0.2 - pqb.2 # -2.77..e-17
+stopifnot(all.equal(0.2, pqb.2, tol = 1e-15))
+
+## completely different picture: smaller values; increasing -- max (~ 2.4) -- decreasing (????)
+chk_relE(qbetShRelErr(0.96 , 0.035, to= 15, lower.tail=TRUE),  8e-16, 1e-15)# completely different (mostly decreasing, no bump)
+chk_relE(qbetShRelErr(0.04 , 0.035, to= 15, lower.tail=FALSE), 8e-16, 1e-15)#  (ditto)
+chk_relE(qbetShRelErr(0.95 , 0.035, to= 15, lower.tail=TRUE),  8e-16, 1e-15)#  (ditto)
+chk_relE(qbetShRelErr(0.022, 0.04, to=20), 1e-13, 1e-12) # 2.484e-14 2.323e-13 ("close to 1"-FIXME above)
+chk_relE(qbetShRelErr(0.04, 0.06, to=20, n.seq=1+256), 5e-15, 4e-14)# 1.02e-15  1.044e-14 ("close to 1"-FIXME above)
+chk_relE(qbetShRelErr(0.04, 0.08, to=40, n.seq=1+256), 1e-6 , 5e-5 )# 2.673e-07 1.065e-05 ("close to 1"-FIXME above)
+chk_relE(qbetShRelErr(0.05, 0.07, from=.1, to=70, n.seq=1+256), 9e-9, 2e-7)# 1.509e-09 4.389e-08 ( "   "   " )
+
+## Now, the "necessarily hard" cases {reason: "correct underflow "}:
+options(warn = 1)# warnings allowed, happen immediately
+
+qbeta(.99, 1/100, 1/200)# *does* warn and gives 1 (but should *NOT* use 575 Newton steps!)
+##                                                  =============== FIXME !!!!!!!!!!!!!!
+## *and* should not warn, the warning would apply to the *other* tail only !
+qbeta(.01, 1/200, 1/100)# 4.283133e-301 {and *does* warn; ok}
+##--------- "zoom in": the last one uses 997 Newton steps (FIXME!)
+pX <- .98 + c(1, 3, 6:8)*1e-4
+(qbX <- qbeta(pX, 1/100, 1/200))
+stopifnot(qbX == 1) # correctly
+## however, here we *could* get accuracy, here, only those >= 0.9807 "fail"
+signif(qbX <- qbeta(pX, 1/200, 1/100, lower.tail=FALSE), 5)
+## 9.5896e-306 1.2718e-306 5.9092e-308 1.0386e-299 9.7579e-300
+## "swap tail": 1-.9807
+qbeta(.0193, 1/200, 1/100) # warning .. not accurate
+
+
+
 
 ### pbeta()  warnings  /// close to underflow situation ----
-options(warn = 1)# warnings allowed, happen immediately
 
 ## b = 1 ==> pbeta(x,a,1)  =  x^a  (mathematically, not quite numerically)
 
@@ -322,7 +459,7 @@ x <- 1e-311*2^(-2:5)
 a <- 9.9999e-16
 ##==> all work via  apser():
 all.equal(x^a, pbeta(x, a, 1), tol=0)               # 1.11e-16 -- perfect
-all.equal(a*log(x), pbeta(x, a, 1, log=TRUE), tol=0)# 3.5765e-14 -- less perfect
+all.equal(a*log(x), pbeta(x, a, 1, log=TRUE), tol=0)# 3.5753e-14 -- less perfect
 
 ## only very slightly larger a:
 a <- 1e-15
@@ -409,3 +546,10 @@ check.pb(try.pb(296/512, 1900, 38), true = -892.6670)#
 check.pb(try.pb(302/512, 1900, 38), true = -855.5796)#
 check.pb(try.pb(305/512, 1900, 38), true = -837.3302)#
 check.pb(try.pb(308/512, 1900, 38), true = -819.2725)#
+
+
+
+## keep at end
+rbind(last =  proc.time() - .pt,
+      total = proc.time())
+
