@@ -173,8 +173,9 @@
       three numeric vectors is a surprisingly common error.
 
       \item \code{mean()}, \code{rank()}, \code{which},
-      \code{barplot()}, \code{contour()} and \code{polygon()} have more
-      robust sanity checks on some of their arguments.
+      \code{barplot()}, \code{contour()}, \code{polygon()}
+      and \code{methods::is()}
+      have more robust sanity checks on some of their arguments.
     }
   }
 
