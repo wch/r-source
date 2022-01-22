@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1692,13 +1692,13 @@ function(package, dir, lib.loc = NULL)
     methods_in_package <-
         Map(function(g) {
                 ## This isn't really right: it assumes the generics are
-                ## visible. 
+                ## visible.
                 if(!exists(g, envir = code_env)) return(character())
                 ## <FIXME>
                 ## We should really determine the name g dispatches for,
                 ## see a current version of methods() [2003-07-07].
                 ## (Care is needed for internal generics and group
-                ## generics.) 
+                ## generics.)
                 name <- paste0(g, ".")
                 methods <-
                     functions_in_code[startsWith(functions_in_code, name)]
@@ -2102,7 +2102,7 @@ function(package, dir, file, lib.loc = NULL,
                     wrong_pkg <<- c(wrong_pkg, e)
                     bad_pkg <<- c(bad_pkg, this)
                 }
-                parg <- if(!is.null(parg) && (nzchar(parg))) "OK"
+                parg <- if(!is.null(parg) && any(nzchar(parg))) "OK"
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
