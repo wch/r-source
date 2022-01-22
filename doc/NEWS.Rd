@@ -158,6 +158,7 @@
       column wise maximum value of \code{strwidth(legend)}.
       The argument \code{y.intersp} can be specified as a vector with
       one entry for each row of the legend.
+
       \code{legend()} also gains new arguments \code{title.cex} and
       \code{title.font}. Thanks to Swetlana Herbrandt.
 
@@ -172,8 +173,8 @@
       \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
       three numeric vectors is a surprisingly common error.
 
-      \item \code{mean()}, \code{rank()}, \code{which},
-      \code{barplot()}, \code{contour()}, \code{polygon()}
+      \item \code{mean()}, \code{rank()}, \code{which()},
+      \code{barplot()}, \code{boxplot()}, \code{contour()}, \code{polygon()}
       and \code{methods::is()}
       have more robust sanity checks on some of their arguments.
     }
