@@ -171,6 +171,10 @@
       \item \code{all.equal.numeric()} gains a sanity check on its
       \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
       three numeric vectors is a surprisingly common error.
+
+      \item \code{mean()}, \code{rank()}, \code{which},
+      \code{barplot()}, \code{contour()} and \code{polygon()} have more
+      robust sanity checks on some of their arguments.
     }
   }
 
