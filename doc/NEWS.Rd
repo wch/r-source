@@ -510,6 +510,10 @@
       \item \code{asOneSidedFormula()} now associates the resulting
       formula with the global environment rather than the evaluation
       environment created for the call.
+
+      \item \code{<bibentry>$name} now matches the field name
+      case-insensitively, consistent with \code{bibentry()} creation and
+      the replacement method.
     }
   }
 }
