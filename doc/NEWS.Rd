@@ -571,9 +571,9 @@
       \item \code{formulate(*, response=r)} gives a helpful error message
       now when \code{length(r) > 1}, thanks to Bill Dunlap's \PR{18281}.
 
-      \item Unregistering \code{globalCallingHandlers} inside
-      \code{withCallingHandlers()} now works, thanks to Henrik Bengtsson's
-      \PR{18275}.
+      \item Modifying \code{globalCallingHandlers} inside
+      \code{withCallingHandlers()} now works or fails correctly, thanks to
+      Henrik Bengtsson's \PR{18257}.
 
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
