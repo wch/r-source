@@ -14709,6 +14709,7 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @subsection Mathematical functions
 
 @cindex Gamma function
+@cindex Polygamma functions
 @deftypefun double gammafn (double @var{x})
 @deftypefunx double lgammafn (double @var{x})
 @deftypefunx double digamma (double @var{x})
@@ -14716,11 +14717,20 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @deftypefunx double tetragamma (double @var{x})
 @deftypefunx double pentagamma (double @var{x})
 @deftypefunx double psigamma (double @var{x}, double @var{deriv})
+@deftypefunx void dpsifn (double @var{x}, int @var{n}, int @var{kode}, int @var{m}, double* @var{ans}, int* @var{nz}, int* @var{ierr})
 The Gamma function, the natural logarithm of its absolute value and
 first four derivatives and the n-th derivative of Psi, the digamma
 function, which is the derivative of @code{lgammafn}. In other words,
 @code{digamma(x)} is the same as @code{psigamma(x,0)},
 @code{trigamma(x) == psigamma(x,1)}, etc.
+The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivatives of
+@eqn{\log\Gamma=, log Gamma=}@code{lgammafn} are desired.  It computes and
+returns in @code{ans[]} the length-@var{m} sequence 
+@eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
+@eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
+is the k-th derivative of @eqn{\psi(x), Psi(x)}, i.e.,
+@code{psigamma(x,k)}.  For more details, see the comments in
+@file{src/nmath/polygamma.c}.
 @end deftypefun
 
 @cindex Beta function

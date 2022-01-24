@@ -179,6 +179,10 @@
       have more robust sanity checks on some of their arguments.
 
       As does \command{R CMD Rd2pdf} (used by \command{R CMD check}).
+
+      \item \code{psigamma(x, deriv)} for negative \code{x} now also works
+      for \code{deriv = 4} and \code{5}; their underlying C level
+      \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
     }
   }
 
