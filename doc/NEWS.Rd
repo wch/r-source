@@ -177,6 +177,8 @@
       \code{barplot()}, \code{boxplot()}, \code{contour()}, \code{polygon()}
       and \code{methods::is()}
       have more robust sanity checks on some of their arguments.
+
+      As does \command{R CMD Rd2pdf} (used by \command{R CMD check}).
     }
   }
 
