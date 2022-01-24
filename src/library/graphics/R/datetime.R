@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -166,9 +166,10 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 if (right)
                     breaks[ind] <- breaks[ind] - 86400
 		if (missing(format)) format <- "%Y-%m-%d"
-           } else { # "days" or "weeks"
+           } else { # anything from "secs" to "weeks"
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq(start, maxx + incr, breaks)
+                if (length(breaks) > 2L)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         }
@@ -330,6 +331,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                 start <- as.Date(start)
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq(start, maxx + incr, breaks)
+                if (length(breaks) > 2L)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         } else stop("invalid specification of 'breaks'")
