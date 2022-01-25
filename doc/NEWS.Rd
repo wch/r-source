@@ -511,7 +511,8 @@
       \item \code{x[i]} and \code{x[[i]]} for non-integer \code{i}
       should now behave in all cases as always documented: the index used is
       equivalent to \code{as.integer(i)} unless that would overflow where
-      \code{trunc(i)} is used instead.
+      \code{trunc(i)} is used instead; thanks to Suharto Anggono's report
+      and patch proposals in \PR{17977}.
 
       \item \code{asOneSidedFormula()} now associates the resulting
       formula with the global environment rather than the evaluation
