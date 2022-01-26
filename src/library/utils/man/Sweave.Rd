@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -30,47 +30,47 @@ Stangle(file, driver = Rtangle(),
     if there is exactly one Sweave file in the directory whose
     basename matches \code{file}.}
   \item{driver}{the actual workhorse, (a function returning) a named
-    \code{\link{list}} of five functions, see \sQuote{Details} or the
-    Sweave manual vignette.}
-  \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
+    \code{\link{list}} of five functions; for details, see Section 5 of the
+    \sQuote{Sweave User Manual} available as \code{vignette("Sweave")}.}
+  \item{syntax}{\code{NULL} or an object of class \code{"SweaveSyntax"} or
     a character string with its name.
     See the section \sQuote{Syntax Definition}.}
   \item{encoding}{The default encoding to assume for \code{file}.}
-  \item{\dots}{further arguments passed to the driver's setup function:
-    see section \sQuote{Details}, or specifically the arguments of the
-    \code{R...Setup()} function in \code{\link{RweaveLatex}} and
-    \code{\link{Rtangle}}, respectively.}
+  \item{\dots}{further arguments passed to the driver's setup function.
+    See \code{\link{RweaveLatexSetup}} and \code{\link{RtangleSetup}},
+    respectively, for the arguments of the default drivers.}
 }
 
 \details{
-  Automatic generation of reports by mixing word processing markup (like
-  \LaTeX) and S code.  The S code gets replaced by its output (text or
+  An Sweave source file contains both text in a markup language (like
+  \LaTeX) and \R (or S) code.  The code gets replaced by its output (text or
   graphs) in the final markup file.  This allows a report to be re-generated
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.
 
-  \code{Sweave} combines the documentation and code chunks together (or
+  \code{Sweave} combines the documentation and code chunks (or
   their output) into a single document.  \code{Stangle} extracts only
-  the code from the Sweave file creating an S source file that can be
+  the code from the Sweave file creating an \R source file that can be
   run using \code{\link{source}}.  (Code inside \code{\\Sexpr\{\}}
   statements is ignored by \code{Stangle}.)
-
+  
   \code{Stangle} is just a wrapper to \code{Sweave} specifying a
-  different default driver.  Alternative drivers can be used: the former
-  CRAN package \CRANpkg{cacheSweave} and the Bioconductor package
-  \pkg{weaver} provide drivers based on the default driver
-  \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
-  the results of computations on code chunks.
+  different default driver.  Alternative drivers can be used and are
+  provided by various contributed packages.
 
   Environment variable \env{SWEAVE_OPTIONS} can be used to override the
   initial options set by the driver: it should be a comma-separated set
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
 
-  Non-ASCII source files must contain a line of the form
+  If the \code{encoding} is unspecified (the default),
+  \emph{non-ASCII} source files must contain a line of the form
 \preformatted{  \usepackage[foo]{inputenc}}
   (where \samp{foo} is typically \samp{latin1}, \samp{latin2}, \samp{utf8} or
-  \samp{cp1252} or \samp{cp1250}) or they will give an error.
+  \samp{cp1252} or \samp{cp1250}) or a comment line
+  \preformatted{  \%\SweaveUTF8}
+  to declare UTF-8 input (the default encoding assumed by pdfTeX since 2018),
+  or they will give an error.
   Re-encoding can be turned off completely with argument
   \code{encoding = "bytes"}.
 }
@@ -107,15 +107,11 @@ Stangle(file, driver = Rtangle(),
   the \pkg{utils} package.
 
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
+  Alternative Sweave drivers are in, for example, packages
+  \pkg{weaver} (Bioconductor), \CRANpkg{R2HTML}, and \CRANpkg{ascii}.
 
-  Packages \CRANpkg{cacheSweave} (archived), \pkg{weaver} (Bioconductor) and
-  \CRANpkg{SweaveListingUtils} (archived).
-
-  Further Sweave drivers are in, for example, packages \CRANpkg{R2HTML},
-  \CRANpkg{ascii}, \CRANpkg{odfWeave} (archived) and \CRANpkg{pgfSweave}
-  (archived).
-
-  Non-Sweave vignettes may be built with \code{tools::\link[tools]{buildVignette}}.
+  \code{tools::\link[tools]{buildVignette}} to process source files
+  using Sweave or alternative vignette processing engines.
 }
 
 \examples{
