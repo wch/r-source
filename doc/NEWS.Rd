@@ -526,6 +526,13 @@
 
       \item \code{cbind()} failed to detect some length mismatches with
       a mixture of time-series and non-time-series inputs.
+
+      \item The default LaTeX style file \file{Sweave.sty} used by the
+      \code{RweaveLatex} driver no longer loads the obsolete \samp{ae}
+      package; thanks to a report by Thomas Soeiro in \PR{18271}.
+      Furthermore, it now skips \samp{\\usepackage[T1]{fontenc}} for
+      engines other than pdfTeX (if detected) or if the new
+      \samp{[nofontenc]} option is used.
     }
   }
 }

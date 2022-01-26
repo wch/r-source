@@ -4,15 +4,22 @@
 \RequirePackage{ifthen}
 \newboolean{Sweave@gin}
 \setboolean{Sweave@gin}{true}
-\newboolean{Sweave@ae}
-\setboolean{Sweave@ae}{true}
 \newboolean{Sweave@inconsolata}
 \setboolean{Sweave@inconsolata}{false}
+\newboolean{Sweave@fontenc}
+\setboolean{Sweave@fontenc}{true}
 
 \DeclareOption{nogin}{\setboolean{Sweave@gin}{false}}
-\DeclareOption{noae}{\setboolean{Sweave@ae}{false}}
-\DeclareOption{inconsolata}{\setboolean{Sweave@ae}{false}\setboolean{Sweave@inconsolata}{true}}
+\DeclareOption{noae}{\setboolean{Sweave@fontenc}{false}}  % retained for backward compatibility
+\DeclareOption{inconsolata}{\setboolean{Sweave@inconsolata}{true}}
+\DeclareOption{nofontenc}{\setboolean{Sweave@fontenc}{false}}
 \ProcessOptions
+
+%% disable fontenc for engines other than pdfTeX (requires iftex)
+\ifthenelse{\boolean{Sweave@fontenc}}{%
+  \IfFileExists{iftex.sty}{\RequirePackage{iftex}}{}
+  \@ifpackageloaded{iftex}{\ifPDFTeX\else\setboolean{Sweave@fontenc}{false}\fi}{}
+}{}%
 
 \RequirePackage{graphicx,fancyvrb,textcomp}
 %% inspired by an earlier version of upquote.sty
@@ -22,9 +29,8 @@
 \endgroup
 
 \ifthenelse{\boolean{Sweave@gin}}{\setkeys{Gin}{width=0.8\textwidth}}{}%
-\ifthenelse{\boolean{Sweave@ae}}{%
+\ifthenelse{\boolean{Sweave@fontenc}}{%
   \RequirePackage[T1]{fontenc}
-  \RequirePackage{ae}
 }{}%
 %% see comment in Rd.sty
 \ifthenelse{\boolean{Sweave@inconsolata}}{%
