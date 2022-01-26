@@ -388,7 +388,7 @@
 
       \item The legacy S-compatibility macros \code{DOUBLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated.
-      
+
       \item The deprecated S-compatibility macros \code{SINGLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) have been
       removed.
@@ -543,7 +543,7 @@
     \itemize{
       \item The legacy S-compatibility macros \code{SINGLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in \R 4.2.0. 
+      and will be removed in \R 4.2.0.
     }
   }
 
@@ -593,6 +593,10 @@
 
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
+
+      \item \code{window(x, start, end)} no longer wrongly signals
+      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
+      \PR{18291}.
     }
   }
 }
@@ -2122,7 +2126,7 @@
 	 control = "all")} now include control option \code{"digits17"}
        which typically ensures 1:1 invertibility.  New option
        \code{control = "exact"} ensures numeric exact invertibility
-       via \code{"hexDigits"}.
+       via \code{"hexNumeric"}.
 
       \item When loading data sets via \code{read.table()},
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure

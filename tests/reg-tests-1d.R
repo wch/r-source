@@ -5666,12 +5666,39 @@ options(op)# revert to sanity.  Then:
 h2 <- globalCallingHandlers()
 globalCallingHandlers(NULL)# unregister all
 stopifnot(identical(h1, h2))
-## h2 was empty list() erronously in R versions <= 4.2.x
+## h2 was empty list() erronously in R versions <= 4.1.x
 
 
 ## PR#18246: par() should warn about invalid/unused arguments
 tools::assertWarning({usr <- par("usr"); par(usr)}, verbose = TRUE)
-tools::assertWarning(par(las = 1, list(cex = 1)))
+tools::assertWarning(par(las = 1, list(cex = 2)))
+## silently did not have the "intended" effect; eventually may become errors
+
+
+## window(x, *) now uses fuzz also for 'start < end' -- PR#17527 & PR#18291
+## Start the time series from A.D. 1:
+(x2 <- ts(1:20, start = 1, frequency = 12))
+stopifnot(identical(end(x2), c(2,8)))
+(wx2 <- window(x2, start = c(2, 8), end = c(2, 8))) # always fine
+ wxs <- window(x2, start = c(2, 8))
+## gave error ...: 'start' cannot be after 'end'
+stopifnot(identical(wxs, wx2), as.numeric(wx2) == 20)
+## PR#18291
+x <- ts(1:8434, start=c(1999,4,1), frequency=366)
+s0 <- start(x); stopifnot(identical(s0, c(1999, 4)))
+e0 <-   end(x); stopifnot(identical(e0, c(2022,19)))
+s <- c(2022, 1)
+y1 <- window(x, start=s)
+stopifnot(identical(y1, window(x, start=s, end=e0)))
+## now, with 'end' clearly *beyond* end(x):
+tools::assertWarning(y3 <- window(x, start=s, end=c(2022,24), verbose=TRUE))
+## -> Warning: 'end' *not* changed  -- indeed:
+stopifnot(identical(end(y3), end(x)))
+## this *also* gives the warning as it should, but wrongly errored
+tools::assertWarning(y2 <- window(x, start=c(2022,19), end=c(2022,20)))
+stopifnot(identical(end(y2), end(x)), y2 == x[length(x)])
+## in R <= 4.1.2, wrongly signalled Error: 'start' cannot be after 'end'
+
 
 
 ## keep at end
