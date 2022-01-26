@@ -523,6 +523,9 @@
       \item \code{<bibentry>$name} now matches the field name
       case-insensitively, consistent with \code{bibentry()} creation and
       the replacement method.
+
+      \item \code{cbind()} failed to detect some length mismatches with
+      a mixture of time-series and non-time-series inputs.
     }
   }
 }
