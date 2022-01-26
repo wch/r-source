@@ -169,16 +169,18 @@
       \item \code{sample()} and \code{sample.int()} have additional
       sanity checks on their \code{size} and \code{n} arguments.
 
-      \item \code{all.equal.numeric()} gains a sanity check on its
+      \code{all.equal.numeric()} gains a sanity check on its
       \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
       three numeric vectors is a surprisingly common error.
 
-      \item \code{mean()}, \code{rank()}, \code{which()},
-      \code{barplot()}, \code{boxplot()}, \code{contour()}, \code{polygon()}
-      and \code{methods::is()}
-      have more robust sanity checks on some of their arguments.
+      \code{mean(na.rm =)}, \code{rank(na.last =)}, \code{which(arr.ind
+      =)}, \code{barplot(legend.text =)}, \code{boxplot()},
+      \code{contour(drawlabels =)}, \code{polygon(border =)} and
+      \code{methods::is(class2 =)} have more robust sanity checks on
+      some of their arguments.
 
-      As does \command{R CMD Rd2pdf} (used by \command{R CMD check}).
+      \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
+      robust sanity check on the format of \code{\\alias{}} commands.
 
       \item \code{psigamma(x, deriv)} for negative \code{x} now also works
       for \code{deriv = 4} and \code{5}; their underlying C level
