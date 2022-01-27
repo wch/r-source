@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2020 R Core Team
+% Copyright 2008-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -70,10 +70,11 @@ icuGetCollate(type = c("actual", "valid"))
       (unsigned) numerical order.}
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
-      session.  If environment variable \env{R_ICU_LOCALE} is set to a
-      non-empty value, its value is used rather than consulting the OS,
-      unless environment variable \env{LC_ALL} is set to 'C' (or unset but
-      \env{LC_COLLATE} is set to 'C').
+      session (except on Windows).  If environment variable
+      \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
+      rather than consulting the OS, unless environment variable
+      \env{LC_ALL} is set to 'C' (or unset but \env{LC_COLLATE} is set to
+      'C'). 
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -119,17 +120,17 @@ icuGetCollate(type = c("actual", "valid"))
   likely to report \code{"root"}.
 }
 \note{
-  ICU is used by default wherever it is available: this include macOS,
-  Solaris and many Linux installations.  As it works internally in
-  UTF-8, it will be most efficient in UTF-8 locales.
+  Except on Windows, ICU is used by default wherever it is available.
+  As it works internally in UTF-8, it will be most efficient in UTF-8
+  locales.
 
-  It is optional on Windows: if \R has been built against ICU, it will
-  only be used if environment variable \env{R_ICU_LOCALE} is set or once
-  \code{icuSetCollate} is called to select the locale (as ICU and
-  Windows differ in their idea of locale names).  Note that
-  \code{icuSetCollate(locale = "default")} should work reasonably well
-  for \R >= 3.2.0 and Windows Vista/Server 2008 and later (but finds the
-  system default ignoring environment variables such as \env{LC_COLLATE}).
+  On Windows, \R is normally built including ICU, but it will only be
+  used if environment variable \env{R_ICU_LOCALE} had been set when \R
+  is started or after \code{icuSetCollate} is called to select the
+  locale (as ICU and Windows differ in their idea of locale names).
+  Note that \code{icuSetCollate(locale = "default")} should work
+  reasonably well, but finds the system default ignoring environment
+  variables such as \env{LC_COLLATE}.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}.

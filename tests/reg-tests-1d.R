@@ -5676,7 +5676,7 @@ tools::assertWarning(par(las = 1, list(cex = 2)))
 
 
 ## window(x, *) now uses fuzz also for 'start < end' -- PR#17527 & PR#18291
-## Start the time series from A.D. 1:
+## Start the time series from CE 1:
 (x2 <- ts(1:20, start = 1, frequency = 12))
 stopifnot(identical(end(x2), c(2,8)))
 (wx2 <- window(x2, start = c(2, 8), end = c(2, 8))) # always fine
