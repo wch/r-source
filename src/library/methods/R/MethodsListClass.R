@@ -154,9 +154,10 @@
                 cv <- class(value)
                 co <- class(.Object)
                 if(.identC(cv[[1L]], co)) {
-                  ## ignore S3 with multiple classes  or basic classes
-                    if(is.na(match(cv, .BasicClasses)) &&
-                       length(cv) == 1L) {
+                    ## ignore S3 with multiple classes or basic classes
+                    ## Need to check length first.
+                    if(length(cv) == 1L &&
+                       is.na(match(cv, .BasicClasses))) {
                         warning(gettextf("missing package slot (%s) in object of class %s (package info added)",
                                          packageSlot(co),
                                          dQuote(class(.Object))),

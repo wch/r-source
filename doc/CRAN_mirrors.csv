@@ -18,7 +18,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Canada (BC) [https]",Canada,Burnaby,https://mirror.rcg.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca,"secure_mirror_from_master"
 "Canada (NS) [https]",Canada,Halifax,https://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",0,ca
-"Canada (ON 1) [https]",Canada,Toronto,https://utstat.toronto.edu/cran/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
+"Canada (ON 1) [https]",Canada,Toronto,https://utstat.toronto.edu/cran/,"University of Toronto","Claire Yu <clairex.yu # utoronto.ca>",1,ca
 "Canada (ON 2) [https]",Canada,Toronto,https://cran.pacha.dev/,"DigitalOcean","Mauricio Vargas <mavargas11 # uc.cl>",1,ca,"secure_mirror_from_master"
 "Canada (ON 3) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
 "Chile (Santiago) [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl,"secure_mirror_from_master"
@@ -78,7 +78,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Netherlands [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz,"secure_mirror_from_master"
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
-"Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Bert Mendoza <bert # asti.dost.gov.ph>, ops # pregi.net",0,ph,"secure_mirror_from_master"
+"Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Bert Mendoza <bert # asti.dost.gov.ph>, ops # pregi.net",0,ph,
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Russia (Moscow) [https]",Russia,Moscow,https://cran.cmm.msu.ru/,"Department of Biokinetics, Belozersky Institute of Physico-Chemical Biology, Lomonosov Moscow State University","viktor drobot <linux776 # gmail.com>",1,ru,"secure_mirror_from_master"
 "Russia (Novosibirsk) [https]",Russia,Novosibirsk,https://mirror.truenetwork.ru/CRAN/,"Truenetwork","mirror # truenetwork.ru",1,ru

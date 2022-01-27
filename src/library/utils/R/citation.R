@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1017,7 +1017,7 @@ function(x, name)
     ## </COMMENT>
     is_attribute <- name %in% bibentry_attribute_names
     rval <- if(is_attribute) lapply(unclass(x), attr, name)
-        else lapply(unclass(x), `[[`, name)
+        else lapply(unclass(x), `[[`, tolower(name))
     if(length(rval) == 1L) rval <- rval[[1L]]
     rval
 }
@@ -1028,7 +1028,7 @@ function(x, name, value)
     is_attribute <- name %in% bibentry_attribute_names
 
     x <- unclass(x)
-    name <- tolower(name)
+    if(!is_attribute) name <- tolower(name)
 
     ## recycle value
     value <- rep_len(.listify(value), length(x))

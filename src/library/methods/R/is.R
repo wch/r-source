@@ -1,7 +1,7 @@
 #  File src/library/methods/R/is.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ is <- function(object, class2)
         class1 <- class1[[1L]]
     if(missing(class2))
         return(extends(class1))
+    stopifnot(length(class2) == 1L)
     class1Def <- getClassDef(class1)
     class2Def <- NULL
     if(!is.character(class2)) {

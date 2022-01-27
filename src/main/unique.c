@@ -2247,10 +2247,14 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     SEXP ans;
     double dn = asReal(CAR(args));
-    int k = asInteger(CADR(args));
-    if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0))
+    SEXP sk = CADR(args);
+    if (length(sk) != 1)
+	error(_("invalid '%s' argument"), "size");
+    int k = asInteger(sk);
+    if  (length(CAR(args)) != 1 || !R_FINITE(dn) || dn < 0
+		|| dn > 4.5e15 || (k > 0 && dn == 0))
 	error(_("invalid first argument"));
-    if (k < 0) error(_("invalid '%s' argument"), "size");
+    if (k < 0) error(_("invalid '%s' argument"), "size"); // includes NA
     if (k > dn/2) error("This algorithm is for size <= n/2");
     HashData data = { 0 };
     GetRNGstate();

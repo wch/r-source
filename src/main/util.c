@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2332,6 +2332,12 @@ static const char *getLocale(void)
 {
     const char *p = getenv("R_ICU_LOCALE");
     if (p && p[0]) return p;
+
+    // FIXME: ideally, we would use a locale name corresponding to the current
+    //        C runtime locale, so as reported by setlocale(); since 4.2 this
+    //        means a UCRT locale name. As this is only approximated, we don't
+    //        use ICU by default on Windows yet for collation, even though
+    //        already having UTF-8 as the native encoding.
 
     // This call is >= Vista/Server 2008
     // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ

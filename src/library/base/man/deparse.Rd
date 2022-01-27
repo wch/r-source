@@ -25,9 +25,9 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   \item{backtick}{logical indicating whether symbolic names should be
     enclosed in backticks if they do not follow the standard syntax.}
   \item{control}{character vector (or \code{NULL}) of deparsing options.
-    See \code{\link{.deparseOpts}}.}
-  \item{nlines}{integer: the maximum number of lines to produce.
-    Negative values indicate no limit.}
+    \code{control = "all"} is thorough, see \code{\link{.deparseOpts}}.}
+  \item{nlines}{integer: the maximum number of lines to produce.  Negative
+    values indicate no limit.} 
   \item{collapse}{a string, passed to \code{\link{paste}()}.}
   \item{\dots}{further arguments passed to \code{deparse()}.}
 }
@@ -47,18 +47,6 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   The default for the \code{backtick} option is not to quote single
   symbols but only composite expressions.  This is a compromise to
   avoid breaking existing code.
-
-  Using \code{control = c("all", "hexDigits")} comes closest to making \code{deparse()}
-  an inverse of \code{parse()} (but we have not yet seen an example where
-  \code{"all"}, now including \code{"digits17"}, would not have been as
-  good).  However, not all objects are deparse-able even with these options
-  and a warning will be issued if the function recognizes that it is being
-  asked to do the impossible.
-
-  Unless \code{control} contains \code{"digits17"} or \code{"hexDigits"},
-  (or \code{"all"} or \code{"exact"} which include one of these), numeric
-  and complex vectors are converted using 15 significant digits:
-  see \code{\link{as.character}} for more details.
 
   \code{width.cutoff} is a lower bound for the line lengths: deparsing a
   line proceeds until at least \code{width.cutoff} \emph{bytes} have

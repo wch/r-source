@@ -2091,7 +2091,8 @@ When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
 compiler: flags such as @option{-O2 -Wall -pedantic} (and all other
 @option{-W} flags: for the Oracle compilers these are used to pass
-arguments to compiler phases) are all specific to GCC.
+arguments to compiler phases) are all specific to GCC (and compilers such
+as @command{clang} which aim to be options-compatible with it).
 
 Also, do not set variables such as @code{CPPFLAGS}, @code{CFLAGS} etc.:
 these should be settable by users (sites) through appropriate personal
@@ -13127,13 +13128,14 @@ Here is the complete C code which we will explain section by section.
 
 @example
 @group
-#include <R.h> /* for DOUBLE_EPS */
+#include <R.h> 
 #include <Rinternals.h>
+#include <float.h> /* for DBL_EPSILON */
 
 SEXP numeric_deriv(SEXP args)
 @{
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
-    double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
+    double tt, xx, delta, eps = sqrt(DBL_EPSILON), *rgr, *rans;
     int i, start;
 @end group
 
@@ -13833,7 +13835,7 @@ x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 (@code{size_t} is defined in @file{stddef.h} which the header defining
 @code{R_alloc} includes.)
 
-There is a similar call, @code{S_alloc} (for compatibility with older
+There is a similar call, @code{S_alloc} (named for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
 
 @example
@@ -13851,13 +13853,13 @@ char *S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 which changes the allocation size from @var{old} to @var{new} units, and
 zeroes the additional units.
 
-For compatibility with current versions of @Sl{}, header @file{S.h}
-(only) defines wrapper macros equivalent to
+@c For compatibility with later versions of @Sl{}, header @file{S.h}
+@c (only) defines wrapper macros equivalent to
 
-@example
-type* Salloc(long @var{n}, int @var{type})
-type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
-@end example
+@c @example
+@c type* Salloc(long @var{n}, int @var{type})
+@c type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
+@c @end example
 
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
@@ -13895,9 +13897,9 @@ never from front-ends.  They are not thread-safe.
 
 @node User-controlled memory,  , Transient storage allocation, Memory allocation
 @subsection User-controlled memory
-@findex Calloc
-@findex Realloc
-@findex Free
+@findex R_Calloc
+@findex R_Realloc
+@findex R_Free
 
 The other form of memory allocation is an interface to @code{malloc},
 the interface providing @R{} error signaling.  This memory lasts until
@@ -13908,9 +13910,9 @@ The interface macros are
 
 @example
 @group
-@var{type}* Calloc(size_t @var{n}, @var{type})
-@var{type}* Realloc(@var{any} *@var{p}, size_t @var{n}, @var{type})
-void Free(@var{any} *@var{p})
+@var{type}* R_Calloc(size_t @var{n}, @var{type})
+@var{type}* R_Realloc(@var{any} *@var{p}, size_t @var{n}, @var{type})
+void R_Free(@var{any} *@var{p})
 @end group
 @end example
 
@@ -13918,26 +13920,29 @@ void Free(@var{any} *@var{p})
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
 If there is an error during allocation it is handled by @R{}, so if
 these return the memory has been successfully allocated or freed.
-@code{Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
+@code{R_Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
 all versions of @Sl{} did so.)
 
-Users should arrange to @code{Free} this memory when no longer needed,
+Users should arrange to @code{R_Free} this memory when no longer needed,
 including on error or user interrupt.  This can often be done most
 conveniently from an @code{on.exit} action in the calling @R{} function
 -- see @code{pwilcox} for an example.
 
-Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
-comes from the same pool as used by @code{malloc}: in particular do not
-use @code{free} or @code{strdup} with it.
+Do not assume that memory allocated by @code{R_Calloc}/@code{R_Realloc}
+comes from the same pool as used by @code{malloc}:@footnote{That was not
+the case on Windows prior to @R{} 4.2.0.}in particular do not use
+@code{free} or @code{strdup} with it.
 
 Memory obtained by these macros should be aligned in the same way as
 @code{malloc}, that is `suitably aligned for any kind of variable'.
 
-@findex R_Calloc
-@findex R_Realloc
-@findex R_Free
-These macros need to be prefixed by @code{R_} if @code{STRICT_R_HEADERS}
-has been defined: the prefixed forms can always be used.
+@findex Calloc
+@findex Realloc
+@findex Free
+@c The R_ forms were introduced in 2016-09, hence for R 3.4.0
+Historically the macros @code{Calloc}, @code{Free} and @code{Realloc}
+were used, and these remain available unless  @code{STRICT_R_HEADERS}
+was defined prior to the inclusion of the header.
 
 @findex CallocCharBuf
 @findex Memcpy
@@ -13949,7 +13954,7 @@ void * Memcpy(@var{p}, @var{q}, @var{n})
 void * Memzero(@var{p}, @var{m})
 @end group
 @end example
-@code{CallocCharBuf} is shorthand for @code{Calloc(n+1, char)} to allow
+@code{CallocCharBuf} is shorthand for @code{R_Calloc(n+1, char)} to allow
 for the @code{nul} terminator.  @code{Memcpy} and @code{Memzero} take
 @code{n} items from array @code{p} and copy them to array @code{p} or
 zero them respectively.
@@ -14040,8 +14045,8 @@ Messages of more than 255 characters are truncated, with a warning.
 @findex GetRNGstate
 @findex PutRNGstate
 @findex .Random.seed
-@findex seed_in
-@findex seed_out
+@c @findex seed_in
+@c @findex seed_out
 
 The interface to @R{}'s internal random number generation routines is
 
@@ -14075,21 +14080,19 @@ out after use.
 
 These are defined in header @file{R_ext/Random.h}.
 
-File @file{S.h} defines @code{seed_in} and @code{seed_out} for
-@Sl{}-compatibility rather than @code{GetRNGstate} and
-@code{PutRNGstate}.  These take a @code{long *} argument which is
-ignored.
+@c File @file{S.h} defines @code{seed_in} and @code{seed_out} for
+@c @Sl{}-compatibility rather than @code{GetRNGstate} and
+@c @code{PutRNGstate}.  These take a @code{long *} argument which is
+@c ignored.
 
 The random number generator is private to @R{}; there is no way to
-select the kind of RNG or set the seed except by evaluating calls to the
+select the kind of RNG nor set the seed except by evaluating calls to the
 @R{} functions.
 
 The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
-including the header file @file{Rmath.h}; @xref{Distribution
-functions}.  Those calls generate a single variate and should also be
-enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
-
-@c MM: FIXME   void rmultinom() is different, returning a vector!
+including the header file @file{Rmath.h}; @xref{Distribution functions}.
+Those calls should also be preceded and followed by calls to
+@code{GetRNGstate} and @code{PutRNGstate}.
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
@@ -14645,8 +14648,25 @@ Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
 @samp{r} functions.
 
+@noindent
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
+
+Additionlly, a @emph{multivariate} RNG for the multionomial distribution is
+@example
+void rmultinom(int n, double* prob, int K, int* rN)
+@end example
+@noindent
+where @code{K = length(prob)},
+@iftex @tex $\pi :=$ @code{prob[]},
+@end tex
+@end iftex
+@eqn{\sum_{j=1}^K \pi_j = 1, sum(prob[.]) == 1}
+and @code{rN} must point to a length-@code{K} integer vector
+@eqn{n_1 n_2 \ldots n_K, n1 n2 .. nK} where each entry
+@eqn{n_j=, nj=}@code{rN[j]} is ``filled'' by a random binomial from
+@eqn{Bin(n; \pi_j), Bin(n; prob[j])},
+constrained to @eqn{\sum_{j=1}^K n_j = n, sum(rN[.]) == n}.
 
 After calls to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
 function @code{wilcox_free()} should be called, and similarly
@@ -14689,6 +14709,7 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @subsection Mathematical functions
 
 @cindex Gamma function
+@cindex Polygamma functions
 @deftypefun double gammafn (double @var{x})
 @deftypefunx double lgammafn (double @var{x})
 @deftypefunx double digamma (double @var{x})
@@ -14696,11 +14717,20 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 @deftypefunx double tetragamma (double @var{x})
 @deftypefunx double pentagamma (double @var{x})
 @deftypefunx double psigamma (double @var{x}, double @var{deriv})
+@deftypefunx void dpsifn (double @var{x}, int @var{n}, int @var{kode}, int @var{m}, double* @var{ans}, int* @var{nz}, int* @var{ierr})
 The Gamma function, the natural logarithm of its absolute value and
 first four derivatives and the n-th derivative of Psi, the digamma
 function, which is the derivative of @code{lgammafn}. In other words,
 @code{digamma(x)} is the same as @code{psigamma(x,0)},
 @code{trigamma(x) == psigamma(x,1)}, etc.
+The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivatives of
+@eqn{\log\Gamma=, log Gamma=}@code{lgammafn} are desired.  It computes and
+returns in @code{ans[]} the length-@var{m} sequence 
+@eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
+@eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
+is the k-th derivative of @eqn{\psi(x), Psi(x)}, i.e.,
+@code{psigamma(x,k)}.  For more details, see the comments in
+@file{src/nmath/polygamma.c}.
 @end deftypefun
 
 @cindex Beta function
@@ -15632,6 +15662,7 @@ currently includes
 @multitable @columnfractions 0.30 0.55
 @item @file{R.h} @tab includes many other files
 @item @file{S.h} @tab different version for code ported from @Sl{}
+(unsupported since 2016)
 @item @file{Rinternals.h} @tab definitions for using @R{}'s internal
 structures
 @item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the
@@ -15654,8 +15685,6 @@ not part of the stable API.
 @item @file{R_ext/RStartup.h} @tab for add-on front-ends
 @item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
 packages
-@item @file{R_ext/R-ftp-http.h} @tab interface to internal method of
-@code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @item @file{R_ext/Visibility.h} @tab definitions controlling visibility
 @item @file{R_ext/eventloop.h} @tab for add-on front-ends and for

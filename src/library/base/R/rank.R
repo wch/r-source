@@ -1,7 +1,7 @@
 #  File src/library/base/R/rank.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 rank <- function(x, na.last = TRUE,
 		 ties.method = c("average", "first", "last", "random", "max", "min"))
 {
+    stopifnot(length(na.last) == 1L) # misused in package rqdatatable
     nas <- is.na(x)
     nm <- names(x)
     ties.method <- match.arg(ties.method)

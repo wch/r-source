@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -16,10 +16,10 @@ rank(x, na.last = TRUE,
 }
 \arguments{% x: actually, only  x[!is.na(x)]  must be such a vector
   \item{x}{a numeric, complex, character or logical vector.}
-  \item{na.last}{for controlling the treatment of \code{\link{NA}}s.
-    If \code{TRUE}, missing values in the data are put last; if
-    \code{FALSE}, they are put first; if \code{NA}, they are removed; if
-    \code{"keep"} they are kept with rank \code{NA}.}
+  \item{na.last}{a logical or character string controlling the treatment
+    of \code{\link{NA}}s. If \code{TRUE}, missing values in the data are
+    put last; if \code{FALSE}, they are put first; if \code{NA}, they
+    are removed; if \code{"keep"} they are kept with rank \code{NA}.}
   \item{ties.method}{a character string specifying how ties are treated,
     see \sQuote{Details}; can be abbreviated.}
 }

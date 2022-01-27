@@ -28,7 +28,7 @@
 #include "graphapp/ga.h"
 #include <windows.h>
 #undef ERROR
-#include <R_ext/RS.h> /* for Calloc */
+#include <R_ext/RS.h> /* for R_Calloc */
 
 #include "win-nls.h"
 #include "rui.h"
@@ -70,7 +70,7 @@ SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean haveLabel;
 
     args = CDR(args);
-    pbar = Calloc(1, winprogressbar);
+    pbar = R_Calloc(1, winprogressbar);
     width = asInteger(CAR(args)); args = CDR(args);
     if(width == NA_INTEGER || width < 0) width = 200;
     tmp = CAR(args); args = CDR(args);

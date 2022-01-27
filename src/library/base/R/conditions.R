@@ -1,7 +1,7 @@
 #  File src/library/base/R/conditions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -387,7 +387,7 @@ globalCallingHandlers <-
 
                 if (identical(handlers, list(NULL))) {
                     out <- gh
-                    gh <<- list()
+                    gh <- list() # local gh
                 } else {
                     classes <- names(handlers)
                     if (length(classes) != length(handlers))
@@ -395,7 +395,7 @@ globalCallingHandlers <-
                     if (! all(vapply(handlers, is.function, logical(1))))
                         stop("condition handlers must be functions")
                     out <- NULL
-                    gh <<- c(handlers, gh)
+                    gh <- c(handlers, gh)
                 }
 
                 ## Remove duplicate handlers within class. We do it here so
@@ -422,12 +422,13 @@ globalCallingHandlers <-
                     dups <- duplicated(classHandlers)
                     if (any(dups)) {
                         message(sprintf("pushing duplicate `%s` handler on top of the stack", class))
-                        gh <<- gh[-idx[dups]]
+                        gh <- gh[-idx[dups]]
                     }
                 }
 
                 ## Update the handler stack of the top-level context
                 .Internal(.addGlobHands(names(gh), gh, .GlobalEnv, NULL, TRUE))
+                gh <<- gh # only now update (PR#18257)
 
                 invisible(out)
             }

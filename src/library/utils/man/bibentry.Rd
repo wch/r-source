@@ -1,6 +1,6 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
@@ -51,6 +51,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \code{\var{tag}=\var{value}} giving the fields of the entry, with
     \var{tag} and \var{value} the name and value of the field,
     respectively.  Arguments with empty values are dropped.
+    Field names are case-insensitive.
     See \bold{Entry Fields} for details.
 
     For the \code{print()} method, extra arguments to pass to the
@@ -281,6 +282,11 @@ bref["boot-book"]
 bref$author
 bref[1]$author
 bref[1]$author[2]$email
+
+## Field names are case-insensitive
+rref$Year
+rref$Year <- R.version$year
+stopifnot(identical(rref$year, R.version$year))
 
 ## Convert to BibTeX
 toBibtex(bref)

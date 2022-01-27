@@ -5596,19 +5596,6 @@ stopifnot(exprs = {
     identical(x[c(-.5, .5)], x[0])
     identical(x[c(-1, .5)], x[-1:0])
 })
-LL <- matrix(as.raw(1:2), 2, 2^30)# large (no overflow in index computations!)
-ca.half <- 0.5+ (eps <- unique(sort(outer(2^-c(16, 21, 26, 30), -1:1))))
-print(eps, digits=3)
-LL[cbind(2, ca.half)]   # should be of length 0, too: ca.half ~= 0.5
-LL[cbind(1, 1+ca.half)] # should be constantly == raw(1L) '01'
-LL[cbind(2+ca.half, 1)] # all 02
-LL[cbind(-ca.half, 1)] # raw(0) --- correct
-stopifnot(exprs = {
-    length(LL[cbind(2, ca.half)]) == 0
-    LL[cbind(1, 1+ca.half)] == as.raw(1L)
-    LL[cbind(2+ca.half, 1)] == as.raw(2L)
-    length(LL[cbind( -ca.half, 1)]) == 0
-})
 ## Now for `[[` :
 x <- 1:3
 (e05 <- tryCmsg(x[[0.5]]))
@@ -5648,6 +5635,69 @@ stopifnot(all.equal(SSfol, SSfol))
 if(englishMsgs)
     stopifnot(grepl("must be a character string", msg))
 ## was 'Error in doWithOneRestart(return(expr), restart) : bad error message'
+
+
+## hist() of a single date or date-time
+dt <- as.POSIXlt("2021-10-13", "UTC")
+hist(dt,          "secs", plot = FALSE)
+hist(as.Date(dt), "days", plot = FALSE)
+## failed in R <= 4.1.2 with Error in seq_len(1L + max(which(breaks < maxx)))
+
+
+### globalCallingHandlers() when being called inside withCallingHandlers(),  PR#18257
+globalCallingHandlers(NULL)
+stopifnot(identical(globalCallingHandlers(), list()))
+## Register a global calling handler for messages
+globalCallingHandlers(message = function(m) {
+  cat("Hey, message :", conditionMessage(m))
+  invokeRestart("muffleMessage")
+})
+h1 <- globalCallingHandlers()
+## Confirm that it is registered
+stopifnot(is.list(h1), length(h1) == 1, is.function(h1$message))
+## and verify it works
+stopifnot(identical(capture.output(message("boom")), "Hey, message : boom"))
+## Now try to remove all global calling handlers while having active
+## calling handlers; gives a non-tryCatch()able (!) error, hence:
+op <- options(error = expression(NULL)) # careful!!
+## ... "should not be called with handlers on the stack"  [as expected]
+withCallingHandlers(globalCallingHandlers(NULL), foo = identity)
+options(op)# revert to sanity.  Then:
+h2 <- globalCallingHandlers()
+globalCallingHandlers(NULL)# unregister all
+stopifnot(identical(h1, h2))
+## h2 was empty list() erronously in R versions <= 4.1.x
+
+
+## PR#18246: par() should warn about invalid/unused arguments
+tools::assertWarning({usr <- par("usr"); par(usr)}, verbose = TRUE)
+tools::assertWarning(par(las = 1, list(cex = 2)))
+## silently did not have the "intended" effect; eventually may become errors
+
+
+## window(x, *) now uses fuzz also for 'start < end' -- PR#17527 & PR#18291
+## Start the time series from A.D. 1:
+(x2 <- ts(1:20, start = 1, frequency = 12))
+stopifnot(identical(end(x2), c(2,8)))
+(wx2 <- window(x2, start = c(2, 8), end = c(2, 8))) # always fine
+ wxs <- window(x2, start = c(2, 8))
+## gave error ...: 'start' cannot be after 'end'
+stopifnot(identical(wxs, wx2), as.numeric(wx2) == 20)
+## PR#18291
+x <- ts(1:8434, start=c(1999,4,1), frequency=366)
+s0 <- start(x); stopifnot(identical(s0, c(1999, 4)))
+e0 <-   end(x); stopifnot(identical(e0, c(2022,19)))
+s <- c(2022, 1)
+y1 <- window(x, start=s)
+stopifnot(identical(y1, window(x, start=s, end=e0)))
+## now, with 'end' clearly *beyond* end(x):
+tools::assertWarning(y3 <- window(x, start=s, end=c(2022,24), verbose=TRUE))
+## -> Warning: 'end' *not* changed  -- indeed:
+stopifnot(identical(end(y3), end(x)))
+## this *also* gives the warning as it should, but wrongly errored
+tools::assertWarning(y2 <- window(x, start=c(2022,19), end=c(2022,20)))
+stopifnot(identical(end(y2), end(x)), y2 == x[length(x)])
+## in R <= 4.1.2, wrongly signalled Error: 'start' cannot be after 'end'
 
 
 

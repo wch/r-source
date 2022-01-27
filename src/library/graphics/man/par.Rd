@@ -1,6 +1,6 @@
 % File src/library/graphics/man/par.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{par}
@@ -97,12 +97,12 @@
 \usage{
 par(\dots, no.readonly = FALSE)
 
-\special{<highlevel plot> (..., <tag> = <value>)}
+\special{<highlevel plot> (...., <tag> = <value>)}
 }
 
 \arguments{
-  \item{\dots}{arguments in \code{tag = value} form, or a list of tagged
-    values.  The tags must come from the names of graphical parameters
+  \item{\dots}{arguments in \code{tag = value} form, a single list of tagged
+    values, or character vectors of parameter names. Supported parameters are
     described in the \sQuote{Graphical Parameters} section.}
   \item{no.readonly}{logical; if \code{TRUE} and there are no other
     arguments, only parameters are returned which can be set by a

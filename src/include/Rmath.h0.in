@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2021  The R Core Team
+ *  Copyright (C) 1998-2022  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,7 @@
    and nothing else.
 
    It is part of the API and supports 'standalone Rmath'.
+   Some entries possibly are not yet documented in 'Writing R Extensions'.
 
 */
 #ifndef RMATH_H
@@ -388,10 +389,11 @@ double	pgamma(double, double, double, int, int);
 double	qgamma(double, double, double, int, int);
 double	rgamma(double, double);
 
-double  log1pmx(double);
+double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
 double  log1pexp(double); // <-- ../nmath/plogis.c
 double  log1mexp(double);
-double  lgamma1p(double);
+double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
+
 double  logspace_add(double, double);
 double  logspace_sub(double, double);
 double  logspace_sum(const double *, int);
@@ -446,7 +448,7 @@ double	pbinom(double, double, double, int, int);
 double	qbinom(double, double, double, int, int);
 double	rbinom(double, double);
 
-	/* Multnomial Distribution */
+	/* Multinomial Distribution */
 
 void	rmultinom(int, double*, int, int*);
 
@@ -550,7 +552,7 @@ double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
 void signrank_free(void);
-    
+
 	/* Gamma and Related Functions */
 double	gammafn(double);
 double	lgammafn(double);
@@ -591,9 +593,6 @@ double	fprec(double, double);
 double	fround(double, double);
 double	fsign(double, double);
 double	ftrunc(double);
-
-double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
-double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
 
 /* More accurate cos(pi*x), sin(pi*x), tan(pi*x)
 

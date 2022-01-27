@@ -46,7 +46,7 @@
 #include <windows.h>
 #include "rui.h"
 #undef ERROR
-#include <R_ext/RS.h> /* for Calloc */
+#include <R_ext/RS.h> /* formerly for Calloc */
 
 #include <winbase.h>
 

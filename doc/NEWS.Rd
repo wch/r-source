@@ -158,12 +158,33 @@
       column wise maximum value of \code{strwidth(legend)}.
       The argument \code{y.intersp} can be specified as a vector with
       one entry for each row of the legend.
+
       \code{legend()} also gains new arguments \code{title.cex} and
       \code{title.font}. Thanks to Swetlana Herbrandt.
 
       \item Deparsing no longer remaps attribute names \code{dim},
       \code{dimnames}, \code{levels}, \code{names} and \code{tsp} to
       historical S-compatible names (which \code{structure()} maps back).
+
+      \item \code{sample()} and \code{sample.int()} have additional
+      sanity checks on their \code{size} and \code{n} arguments.
+
+      \code{all.equal.numeric()} gains a sanity check on its
+      \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
+      three numeric vectors is a surprisingly common error.
+
+      \code{mean(na.rm =)}, \code{rank(na.last =)}, \code{which(arr.ind
+      =)}, \code{barplot(legend.text =)}, \code{boxplot()},
+      \code{contour(drawlabels =)}, \code{polygon(border =)} and
+      \code{methods::is(class2 =)} have more robust sanity checks on
+      some of their arguments.
+
+      \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
+      robust sanity check on the format of \code{\\alias{}} commands.
+
+      \item \code{psigamma(x, deriv)} for negative \code{x} now also works
+      for \code{deriv = 4} and \code{5}; their underlying C level
+      \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
     }
   }
 
@@ -194,6 +215,9 @@
 
       \item \code{dev.capabilities()} reports on device support
       for the new features.
+
+      \item \code{par()} now warns about unnamed non-character arguments
+      to prevent misuse such as \code{{usr <- par("usr"); par(usr)}}.
     }
   }
 
@@ -263,10 +287,10 @@
 
       \item \code{libcurl} is now required for building from source.
 
-      \item Clipboard connection now works also with text in other than the
-      current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
-      always pasted in UTF16-LE to the clipboard and the \code{encoding}
-      argument is ignored.
+      \item The clipboard connection now works also with text in other
+      than the current native encoding (\PR{18267}, with Hiroaki
+      Yutani).  Text is always pasted in UTF16-LE to the clipboard and
+      the \code{encoding} argument is ignored.
     }
   }
 
@@ -278,7 +302,7 @@
       browsers have removed support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
 
-      \item \R can now be built with \samp{DEFS = -DSTRICT_R_HEADERS=1},
+      \item \R can now be built with \samp{DEFS = -DSTRICT_R_HEADERS},
       but not yet some of the recommended packages.
     }
   }
@@ -295,7 +319,7 @@
       \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \dQuote{Writing R Extensions}.
+      \sQuote{Writing R Extensions}.
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
@@ -359,12 +383,28 @@
 
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
-      rather than the C header \file{float.h} (as C++11 is now
+      rather than the C header \file{float.h} (now possible as C++11 is
       required).
 
-      \item The legacy S-compatibility macros \code{SINGLE_*} in
-      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in due course. 
+      \item The legacy S-compatibility macros \code{DOUBLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated.
+
+      \item The deprecated S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) have been
+      removed.
+
+      \item \code{R_Calloc}, \code{R_Free} and \code{R_Realloc} are
+      preferred to their unprefixed forms and error messages now use the
+      prefix. These forms were introduced in \R 3.4.0 and are available
+      even when \code{STRICT_R_HEADERS} is defined.
+
+      \item \code{rmultinom} has been documented in \sQuote{Writing R
+	Extensions} §6 so is now part of the \R API.
+
+      \item The long-deprecated and non-API entry point \code{call_R} is
+      only declared \emph{pro tem} in \file{R_ext/RS.h} (included by
+      \file{R.h}) if \code{DECLARE_LEGACY_CALL_R} is defined before that
+      header is included.
     }
   }
 
@@ -445,7 +485,7 @@
       \PR{18179}).
 
       \item \code{txtProgressBar()} now enforces a non-zero width for
-      \code{char}, without which no progress can be visible.
+      argument \code{char}, without which no progress can be visible.
 
       \item \code{dimnames(table(d))} is more consistent in the case where
       \code{d} is a list with a single component, thanks to Thomas Soeiro's
@@ -473,11 +513,26 @@
       \item \code{x[i]} and \code{x[[i]]} for non-integer \code{i}
       should now behave in all cases as always documented: the index used is
       equivalent to \code{as.integer(i)} unless that would overflow where
-      \code{trunc(i)} is used instead.
+      \code{trunc(i)} is used instead; thanks to Suharto Anggono's report
+      and patch proposals in \PR{17977}.
 
       \item \code{asOneSidedFormula()} now associates the resulting
       formula with the global environment rather than the evaluation
       environment created for the call.
+
+      \item \code{<bibentry>$name} now matches the field name
+      case-insensitively, consistent with \code{bibentry()} creation and
+      the replacement method.
+
+      \item \code{cbind()} failed to detect some length mismatches with
+      a mixture of time-series and non-time-series inputs.
+
+      \item The default LaTeX style file \file{Sweave.sty} used by the
+      \code{RweaveLatex} driver no longer loads the obsolete \samp{ae}
+      package; thanks to a report by Thomas Soeiro in \PR{18271}.
+      Furthermore, it now skips \samp{\\usepackage[T1]{fontenc}} for
+      engines other than pdfTeX (if detected) or if the new
+      \samp{[nofontenc]} option is used.
     }
   }
 }
@@ -488,6 +543,14 @@
       \item The default version of Bioconductor has been changed to
       3.14. (This is used by \code{setRepositories} and the menus in
       GUIs.)
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
+      and will be removed in \R 4.2.0.
     }
   }
 
@@ -524,8 +587,23 @@
       \item \code{all.equal(<selfStart>, *)} no longer signals a deprecation
       warning.
 
-      \item \code{formulate(*, response=r)} gives a helpful error message
+      \item \code{reformulate(*, response=r)} gives a helpful error message
       now when \code{length(r) > 1}, thanks to Bill Dunlap's \PR{18281}.
+
+      \item Modifying \code{globalCallingHandlers} inside
+      \code{withCallingHandlers()} now works or fails correctly, thanks to
+      Henrik Bengtsson's \PR{18257}.
+
+      \item \code{hist(<Date>, breaks = "days")} and
+      \code{hist(<POSIXt>, breaks = "secs")}
+      no longer fail for inputs of length 1.
+
+      \item \code{qbeta(.001, .9, .009)} and similar cases now converge
+      correctly thanks to Ben Bolker's report in \PR{17746}.
+
+      \item \code{window(x, start, end)} no longer wrongly signals
+      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
+      \PR{18291}.
     }
   }
 }
@@ -2055,7 +2133,7 @@
 	 control = "all")} now include control option \code{"digits17"}
        which typically ensures 1:1 invertibility.  New option
        \code{control = "exact"} ensures numeric exact invertibility
-       via \code{"hexDigits"}.
+       via \code{"hexNumeric"}.
 
       \item When loading data sets via \code{read.table()},
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure

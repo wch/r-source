@@ -1,7 +1,7 @@
 #  File src/library/base/R/mean.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
         warning("argument is not numeric or logical: returning NA")
         return(NA_real_)
     }
-    if (na.rm)
+    if (isTRUE(na.rm))
 	x <- x[!is.na(x)]
     if(!is.numeric(trim) || length(trim) != 1L)
         stop("'trim' must be numeric of length one")

@@ -43,7 +43,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	    attr(groups, "names") <- 1L:n
 	names <- attr(groups, "names")
     }
-    cls <- lapply(groups, class)    
+    cls <- lapply(groups, class)
     cl <- NULL
     ## Check for simple numeric structures with only a common class attribute
     if(all(vapply(groups,
@@ -70,7 +70,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	}
 	ct <- ct+1
     }
-    if(length(cl) && cl != "numeric")
+    if(length(cl) == 1L && cl != "numeric") # was length(cl)
         oldClass(stats) <- oldClass(conf) <- oldClass(out) <- cl
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
 	      names = names)
