@@ -14652,7 +14652,7 @@ functions available, and none of the non-central distributions have
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
 
-Additionlly, a @emph{multivariate} RNG for the multionomial distribution is
+Additionally, a @emph{multivariate} RNG for the multinomial distribution is
 @example
 void rmultinom(int n, double* prob, int K, int* rN)
 @end example
