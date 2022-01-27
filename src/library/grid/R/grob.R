@@ -1839,6 +1839,8 @@ drawGrob <- function(x) {
     # (should only return a basic grob that has a drawDetails()
     #  method, otherwise nothing will be drawn)
     x <- makeContent(x)
+    ## For pattern fill resolution, attach the built grob to gp$fill
+    recordGrobForPatternResolution(x)
     # Do any class-specific drawing
     drawDetails(x, recording=FALSE)
     ## R_GE_DEBUG print(paste0("pre  postDraw: ", current.viewport()))
@@ -1907,6 +1909,8 @@ drawGTree <- function(x) {
     ## R_GE_DEBUG print(paste0("post preDraw: ", current.viewport()))
     # Allow customisation of x (should be confined to x$children)
     x <- makeContent(x)
+    ## For pattern fill resolution, attach the built grob to gp$fill
+    recordGrobForPatternResolution(x)
     # Do any class-specific drawing
     drawDetails(x, recording=FALSE)
     # Draw all children IN THE RIGHT ORDER

@@ -241,7 +241,6 @@ set.gpar <- function(gp, grob=NULL) {
           class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
       } else {
           class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
-          attr(gp$fill, "grob") <- grob
       }
   } else if (is.list(gp$fill)) {
       if (is.null(grob)) {
@@ -250,7 +249,6 @@ set.gpar <- function(gp, grob=NULL) {
           class(gp$fill) <- c("GridViewportPatternList", class(gp$fill))
       } else {
           class(gp$fill) <- c("GridGrobPatternList", class(gp$fill))
-          attr(gp$fill, "grob") <- grob
       }      
   }
   # All other gpars

@@ -5,6 +5,10 @@ is.pattern <- function(x) {
     inherits(x, "GridPattern")
 }
 
+is.patternList <- function(x) {
+    inherits(x, "GridPatternList")
+}
+
 linearGradient <- function(colours = c("black", "white"),
                            stops = seq(0, 1, length.out = length(colours)),
                            x1 = unit(0, "npc"), y1 = unit(0, "npc"),  
@@ -130,6 +134,23 @@ pattern <- function(grob,
                 extend = match.arg(extend), group = as.logical(group))
     class(pat) <- c("GridTilingPattern", "GridPattern")
     pat
+}
+
+################################################################################
+## Pattern resolution
+
+## If grob (or gTree) has a pattern in gp$fill then need to attach
+## "built" grob (post makeContent() call) to gp$fill for resolution
+## of the pattern
+recordGrobForPatternResolution <- function(x) {
+    if (is.pattern(x$gp$fill) || is.patternList(x$gp$fill)) {
+        gpar <- grid.Call(C_getGPar)
+        attr(gpar$fill, "grob") <- x
+        ## If we have a gTree, *resolve* the pattern now as well
+        if (inherits(x, "gTree"))
+            gpar$fill <- resolveFill(gpar$fill, 1)
+        grid.Call(C_setGPar, gpar)
+    }
 }
 
 resolvedPattern <- function(pattern, ref) {
