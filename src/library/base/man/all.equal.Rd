@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -108,19 +108,21 @@ attr.all.equal(target, current, \dots,
   methods.
 
   Numerical comparisons for \code{scale = NULL} (the default) are
-  typically on \emph{relative difference} scale unless the target values
-  are close to zero:  First, the mean absolute difference of the two
-  numerical vectors is computed.  If this is smaller than
-  \code{tolerance} or not finite, absolute differences are used,
-  otherwise relative differences scaled by the mean absolute
-  \code{target} value.
-  Note that these comparisons are computed only for those vector elements
+  typically on a \emph{relative difference} scale unless the
+  \code{target} values are close to zero or infinite. Specifically,
+  the scale is computed as the mean absolute value of \code{target}.
+  If this scale is finite and exceeds \code{tolerance}, differences
+  are expressed relative to it; otherwise, absolute differences are used.
+  Note that this scale and all further steps are computed only for those
+  vector elements
   where \code{target} is not \code{\link{NA}} and differs from \code{current}.
   If \code{countEQ} is true, the equal and \code{NA} cases are
-  \emph{counted} in determining \dQuote{sample} size.
+  \emph{counted} in determining the \dQuote{sample} size.
 
   If \code{scale} is numeric (and positive), absolute comparisons are
-  made after scaling (dividing) by \code{scale}.
+  made after scaling (dividing) by \code{scale}.  Note that if all of
+  scale is close to 1 (specifically, within 1e-7), the difference is still
+  reported as being on an absolute scale.
 
   For complex \code{target}, the modulus (\code{\link{Mod}}) of the
   difference is used: \code{all.equal.numeric} is called so arguments
@@ -162,11 +164,14 @@ attr.all.equal(target, current, \dots,
 all.equal(pi, 355/113)
 # not precise enough (default tol) > relative error
 
-d45 <- pi*(1/4 + 1:10)
-stopifnot(
-all.equal(tan(d45), rep(1, 10)))          # TRUE, but
-all      (tan(d45) == rep(1, 10))         # FALSE, since not exactly
-all.equal(tan(d45), rep(1, 10), tolerance = 0)  # to see difference
+d45 <- pi*(1/4 + 1:10) ; one <- rep(1, 10)
+tan(d45) == one  # mostly FALSE, as not exactly
+stopifnot(all.equal(
+          tan(d45), one)) # TRUE, but not if we are picky:
+all.equal(tan(d45), one, tolerance = 0)  # to see difference
+all.equal(tan(d45), one, tolerance = 0, scale = 1)# "absolute diff.."
+all.equal(tan(d45), one, tolerance = 0, scale = 1+(-2:2)/1e9) # "absolute"
+all.equal(tan(d45), one, tolerance = 0, scale = 1+(-2:2)/1e6) # "scaled"
 
 ## advanced: equality of environments
 ae <- all.equal(as.environment("package:stats"),
