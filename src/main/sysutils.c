@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021   The R Core Team
+ *  Copyright (C) 1997-2022   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1328,9 +1328,6 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     char *outbuf, *p;
     size_t inb, outb, res, top;
     char *tocode = NULL, *fromcode = NULL;
-#ifdef Win32
-    char buf[20];
-#endif
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     /* We can only encode from Symbol to UTF-8 */
@@ -1352,17 +1349,11 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     if(strIsASCII(x)) return x;
 
     switch(ce_in) {
+    /* Looks like CP1252 is treated as Latin-1 by iconv (on Windows) */
+    case CE_NATIVE: fromcode = ""; break;
 #ifdef Win32
-    case CE_NATIVE:
-	{
-	    /* Looks like CP1252 is treated as Latin-1 by iconv */
-	    snprintf(buf, 20, "CP%d", localeCP);
-	    fromcode = buf;
-	    break;
-	}
     case CE_LATIN1: fromcode = "CP1252"; break;
 #else
-    case CE_NATIVE: fromcode = ""; break;
     case CE_LATIN1: fromcode = "latin1"; break; /* FIXME: allow CP1252? */
 #endif
     case CE_UTF8:   fromcode = "UTF-8"; break;
@@ -1370,17 +1361,8 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     }
 
     switch(ce_out) {
- #ifdef Win32
-    case CE_NATIVE:
-	{
-	    /* avoid possible misidentification of CP1250 as LATIN-2 */
-	    snprintf(buf, 20, "CP%d", localeCP);
-	    tocode = buf;
-	    break;
-	}
-#else
+    /* avoid possible misidentification of CP1250 as LATIN-2 (on Windows, ??) */
     case CE_NATIVE: tocode = ""; break;
-#endif
     case CE_LATIN1: tocode = "latin1"; break;
     case CE_UTF8:   tocode = "UTF-8"; break;
     default: return x;
@@ -1452,7 +1434,6 @@ void reEnc2(const char *x, char *y, int ny,
     char *outbuf;
     size_t inb, outb, res, top;
     char *tocode = NULL, *fromcode = NULL;
-    char buf[20];
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     strncpy(y, x, ny);
@@ -1467,26 +1448,16 @@ void reEnc2(const char *x, char *y, int ny,
     if(strIsASCII(x)) return;
 
     switch(ce_in) {
-    case CE_NATIVE:
-	{
-	    /* Looks like CP1252 is treated as Latin-1 by iconv */
-	    snprintf(buf, 20, "CP%d", localeCP);
-	    fromcode = buf;
-	    break;
-	}
+    /* Looks like CP1252 is treated as Latin-1 by iconv */
+    case CE_NATIVE: fromcode = ""; break;
     case CE_LATIN1: fromcode = "CP1252"; break;
     case CE_UTF8:   fromcode = "UTF-8"; break;
     default: return;
     }
 
     switch(ce_out) {
-    case CE_NATIVE:
-	{
-	    /* avoid possible misidentification of CP1250 as LATIN-2 */
-	    snprintf(buf, 20, "CP%d", localeCP);
-	    tocode = buf;
-	    break;
-	}
+    /* avoid possible misidentification of CP1250 as LATIN-2 (??) */
+    case CE_NATIVE: tocode = ""; break;
     case CE_LATIN1: tocode = "latin1"; break;
     case CE_UTF8:   tocode = "UTF-8"; break;
     default: return;
