@@ -533,6 +533,9 @@
       Furthermore, it now skips \samp{\\usepackage[T1]{fontenc}} for
       engines other than pdfTeX (if detected) or if the new
       \samp{[nofontenc]} option is used.
+
+      \item \code{smooth.spline()} now stores its logical \code{cv}
+      argument more safely, fixing a rare bug when printing.
     }
   }
 }

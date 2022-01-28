@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -198,6 +198,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
     }
   \item{lev}{(when \code{cv} was not \code{NA}) leverages, the diagonal
     values of the smoother matrix.}
+  \item{cv}{the \code{cv} argument used; i.e., \code{FALSE}, \code{TRUE}, or \code{NA}.}
   \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
     on \code{cv}.  The CV score is often called \dQuote{PRESS} (and
     labeled on \code{\link{print}()}), for \sQuote{\bold{PRE}diction

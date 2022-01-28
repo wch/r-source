@@ -104,7 +104,7 @@ smooth.spline <-
     yssw <- sum(tmp[, 3L] - wbar*ybar^2) # will be added to RSS for GCV
     rm(iOx, xx, xxs, nd, tmp)
     ## cv in {NA,FALSE,TRUE} :
-    if(is.na(cv) && !missing(df))
+    if(is.na(cv <- as.logical(cv)) && !missing(df))
 	stop("'cv' must not be NA when 'df' is specified")
     CV <- !is.na(cv) && cv
     if(CV && nx < n)
@@ -239,6 +239,7 @@ smooth.spline <-
 	list(x = ux, y = fit$ty, w = wbar, yin = ybar, tol = tol,
 	     data = if(keep.data) list(x = x, y = y, w = w), no.weights = no.wgts,
 	     lev = lev, cv.crit = cv.crit,
+	     cv = cv,
 	     pen.crit = sum(wbar * (ybar - fit$ty)^2),
 	     crit = fit$crit,
 	     df = df,
@@ -304,8 +305,6 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 	dput(cl, control=NULL)
     }
     ip <- x$iparms
-    cv <- cl$cv
-    if(is.null(cv)) cv <- FALSE else if(is.name(cv)) cv <- eval(cv)
     cat("\nSmoothing Parameter  spar=", format(x$spar, digits=digits),
         " lambda=", format(x$lambda, digits=digits),
         if(ip["ispar"] != 1L) paste0("(", ip["iter"], " iterations)"))
@@ -315,7 +314,7 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
     cat(sprintf("Penalized Criterion (%sRSS): %s\n",
 		if(x$no.weights) "" else "weighted ",
 		format(x$pen.crit, digits=digits)))
-    if(!is.na(cv))
+    if(!is.na(cv <- x$cv))
 	cat(if(cv) "PRESS(l.o.o. CV): " else "GCV: ",
             format(x$cv.crit, digits = digits), "\n", sep = "")
     invisible(x)

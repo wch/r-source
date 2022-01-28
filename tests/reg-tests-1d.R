@@ -4955,11 +4955,10 @@ Encoding(x) <- "bytes"
 xu <- x
 Encoding(xu) <- "unknown"
 stopifnot(identical(Encoding(c(x, xu)), c("bytes", "unknown")))
+proc.time() - .pt; .pt <- proc.time()
 
 
-## Correctness tests for sorted ALTREP handling of unique/duplicated (PR#17993)
-
-
+## Correctness tests for sorted ALTREP handling of unique/duplicated (PR#17993) ------
 altrep_dup_test <- function(vec, nalast, fromlast, s3class) {
     svec_ar <- sort(vec, na.last = nalast)
     svec_std <- svec_ar
@@ -5060,7 +5059,6 @@ altreal_dup_multicheck(numeric(0), 0, 0, 0)
 altint_dup_multicheck(1L, 0)
 altreal_dup_multicheck(1.0, 0, 0, 0)
 
-
 ## s3 methods take precedence over altrep methods
 ## these methods are (very) wrong on purpose so there can be
 ## no doubt they are hit rather than the altrep code even in the sorted case
@@ -5074,6 +5072,8 @@ unique.fake_class <- function(x, incomparables = FALSE, ...) {
 
 altint_dup_multicheck(ivec, 0, s3class = "fake_class")
 altreal_dup_multicheck(dvec, 0, 0, 0, s3class = "fake_class")
+##----------------------------------- end of tests for sorted ALTREP ... (PR#17993) ------
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## in 4.1.0, encodeString() below would return unflagged UTF-8
@@ -5367,6 +5367,7 @@ for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
     stopifnot(all.equal(atx, 10^cumsum(c(-307, rep(63, 5))), tol=1e-13)) # Win64: 3.3e-14
 }
 ## the *first* plot looked ugly in R <= 4.1.0 and failed for a few days in R-devel
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## Error message for missing weave outputs, PR#18154:
@@ -5698,6 +5699,13 @@ stopifnot(identical(end(y3), end(x)))
 tools::assertWarning(y2 <- window(x, start=c(2022,19), end=c(2022,20)))
 stopifnot(identical(end(y2), end(x)), y2 == x[length(x)])
 ## in R <= 4.1.2, wrongly signalled Error: 'start' cannot be after 'end'
+
+
+## print(smooth.spline()) failure when using special call
+f <- function(..., cv=FALSE) smooth.spline(..., cv=cv)
+x <- (1:23)/4
+(f(x, y=sin(x)))
+## gave an error in R <= 4.1.2
 
 
 
