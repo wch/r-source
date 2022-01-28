@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ summary.data.frame <-
     function(object, maxsum = 7L, digits = max(3L, getOption("digits") - 3L), ...)
 {
     ncw <- function(x) {
-        z <- nchar(x, type="w")
+        z <- nchar(x, type="w", allowNA=TRUE)
         if (any(na <- is.na(z))) {
             # FIXME: can we do better
             z[na] <- nchar(encodeString(z[na]), "b")
