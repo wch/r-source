@@ -291,6 +291,8 @@
       than the current native encoding (\PR{18267}, with Hiroaki
       Yutani).  Text is always pasted in UTF16-LE to the clipboard and
       the \code{encoding} argument is ignored.
+
+      \item Internal case-changing functions are now used also on Windows.
     }
   }
 

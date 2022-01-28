@@ -956,7 +956,8 @@ Replacement of the classification functions has been done for many years
 on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
 allows this to be suppressed on those platforms or used on others.
 Replacing the case-changing functions was new in @R{} 4.1.0 and the
-default on macOS.  Replacement of the width functions has also been done
+default on macOS (and on Windows since @R{} 4.2.0).
+Replacement of the width functions has also been done
 for many years and remains the default.  These options will only matter
 to those working with non-ASCII character data, especially in languages
 written in a non-Western script (which includes `symbols' such as

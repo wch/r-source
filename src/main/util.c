@@ -1410,7 +1410,7 @@ utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
 
     if(wc)
 	for(p = wc, t = s; ; p++, t += m) {
-	    wchar_t local;
+	    wchar_t local = L'\0';
 	    m  = (ssize_t) utf8toucs(&local, t);
 	    /* Needed to write all of R_wchar_t even on Windows where it is bigger
 	       than wchar_t */
