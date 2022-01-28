@@ -5181,7 +5181,7 @@ capabilities@footnote{For example, the ability to handle @samp{https://}
 URLs.} that vary by build but are not documented.  Several recent
 versions of @command{pandoc} for macOS did not work on @R{}'s target of
 High Sierra (and this too was undocumented): at the time of writing
-@samp{2.7.3} and @samp{2.14.0} and later did.  (Currently
+@samp{2.14.0} to @samp{2.16.2} did, but not @samp{2.17.0.1}.  (Currently
 @command{pandoc} is only available from the official site for Intel
 macOS but that build works well enough on @cputype{arm64} machines.)
 Another example is the Rust compilation system (@command{cargo} and
