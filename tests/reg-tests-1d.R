@@ -6,6 +6,15 @@ tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
+##' get value of `expr` and keep warning as attribute (if there is one)
+getVaW <- function(expr) {
+    W <- NULL
+    withCallingHandlers(val <- expr,
+                        warning = function(w) {
+                            W <<- conditionMessage(w)
+                            invokeRestart("muffleWarning") })
+    structure(val, warning = W)
+}
 onWindows <- .Platform$OS.type == "windows"
 .M <- .Machine
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
@@ -5706,6 +5715,56 @@ f <- function(..., cv=FALSE) smooth.spline(..., cv=cv)
 x <- (1:23)/4
 (f(x, y=sin(x)))
 ## gave an error in R <= 4.1.2
+
+
+## smooth.spline(x, y, [w, ], *)$cv.crit depending on sort()ed x -- PR#18294
+x <- 1:10
+e <- c(12, -16, 2:0, -49, -32, -9, -64, 60)/16
+y <- x^2 + e
+sspline_ <- function(x, y, w=NULL, cv=TRUE, ...)
+    smooth.spline(x, y, w=w, cv=cv, # see more: control.spar = list(trace=TRUE),
+                  keep.stuff=TRUE, keep.data=FALSE)
+noC <- function(x) { x$call <- NULL; x } # as the 'call's often differ
+i <- 10:1
+ss   <- sspline_(x=x,    y=y   )
+ss.u <- sspline_(x=x[i], y=y[i])
+## was "Component “cv.crit”: Mean relative difference: 3099.013" :
+          all.equal(noC(ss), noC(ss.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ss), noC(ss.u), tol=1e-14)) ## now fixed
+## The same with __weights__  some of which exactly 0
+table(w <- pmax(0, abs(16*e)-1)) # 2 x 0
+ssw   <- sspline_(x=x,    y=y,    w=w   )
+ssw.u <- sspline_(x=x[i], y=y[i], w=w[i])
+          all.equal(noC(ssw), noC(ssw.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ssw), noC(ssw.u), tol=1e-14)) ## now fixed
+## was "Component “cv.crit”: Mean relative difference: 60.05904"
+## Now with  GCV instead of CV ====================
+## 1) no weights
+ssg   <- sspline_(x=x,    y=y   , cv=FALSE)
+ssg.u <- sspline_(x=x[i], y=y[i], cv=FALSE)
+          all.equal(noC(ssg), noC(ssg.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ssg), noC(ssg.u), tol=1e-14)) ## now fixed
+## 2) with weights
+sswg   <- sspline_(x=x,    y=y,    w=w   , cv=FALSE)
+sswg.u <- sspline_(x=x[i], y=y[i], w=w[i], cv=FALSE)
+          all.equal(noC(sswg), noC(sswg.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(sswg), noC(sswg.u), tol=1e-14)) ## now fixed
+## the same with 'x' that are almost identical  so will be collapsed (and weighted):
+x. <- c(1:2, (1- 1e-7)*4, 4:6, (1- 1e-9)*8, 8:10)
+ss3w   <- getVaW(sspline_(x=x.,    y=y   , w=w   ))
+ss3w.u <- getVaW(sspline_(x=x.[i], y=y[i], w=w[i]))
+          all.equal(noC(ss3w), noC(ss3w.u), tol=0) # TRUE (also previously)
+stopifnot(all.equal(noC(ss3w), noC(ss3w.u), tol=1e-14))
+## was  "Component “cv.crit”: Mean relative difference: 60.05904"
+if(englishMsgs)
+    stopifnot(attr(ss3w,"warning") ==
+              "cross-validation with non-unique 'x' values seems doubtful")
+## now with GCV :
+ss3gw   <- sspline_(x=x.,    y=y   , w=w   , cv=FALSE)
+ss3gw.u <- sspline_(x=x.[i], y=y[i], w=w[i], cv=FALSE)
+          all.equal(noC(ss3gw), noC(ss3gw.u), tol=0)  # TRUE (also previously)
+stopifnot(all.equal(noC(ss3gw), noC(ss3gw.u), tol=1e-14))
+## non-ordered 'x' gave wrong  $cv.crit in the nx=n case in R <= 4.1.2
 
 
 

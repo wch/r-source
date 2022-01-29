@@ -76,13 +76,13 @@ smooth.spline <-
         stop("'tol' must be strictly positive and finite")
     if(!match(keep.stuff, c(FALSE,TRUE))) stop("invalid 'keep.stuff'")
     xx <- round((x - mean(x))/tol)  # de-mean to avoid possible overflow
-    iOx <- sort.list(x)
+    iOx <- if(is.unsorted(x)) sort.list(x) else TRUE
     xxs <- xx[iOx] # xx sorted
     nd <- c(TRUE, xxs[-n] < xxs[-1L]) # === !duplicated(xxs)
     nx <- length(ux <- x[iOx][nd]) # ux := unique & sorted  x
     if(nx <= 3L) stop("need at least four unique 'x' values")
     if(nx == n) { # speedup
-	ox <- TRUE
+	ox <- iOx
 	tmp <- cbind(w, w*y, w*y^2)[iOx,]
     } else {
 	ox <- match(xx, xxs[nd])
@@ -222,7 +222,7 @@ smooth.spline <-
     cv.crit <-
 	if(is.na(cv)) NA
 	else {
-	    r <- y - fit$ty[ox] ## not correct when isTRUE(ox)  ?? ?
+	    r <- y - fit$ty[ox] # true residuals; if(nx < n) *not* those used in fitting
 	    if(cv) {
 		ww <- wbar
 		ww[ww == 0] <- 1

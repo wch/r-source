@@ -539,7 +539,12 @@
       \samp{[nofontenc]} option is used.
 
       \item \code{smooth.spline()} now stores its logical \code{cv}
-      argument more safely, fixing a rare bug when printing.
+      argument more safely, fixing a rare bug when printing, and also
+      stores \code{n}.
+
+      \item \code{smooth.spline(x,y,*)} now computes the \code{cv.crit}
+      statistic correctly, also when \code{is.unsorted(x)}, fixing
+      \PR{18294}.
     }
   }
 }
