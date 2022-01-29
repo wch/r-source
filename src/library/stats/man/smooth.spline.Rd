@@ -196,13 +196,17 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
       i = 1, \dots, n}, values where \code{data$x} may have repeated values and
     hence be longer than the above \code{x} component; see details.
     }
+  \item{n}{an integer; the (original) sample size.}
   \item{lev}{(when \code{cv} was not \code{NA}) leverages, the diagonal
     values of the smoother matrix.}
   \item{cv}{the \code{cv} argument used; i.e., \code{FALSE}, \code{TRUE}, or \code{NA}.}
   \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
     on \code{cv}.  The CV score is often called \dQuote{PRESS} (and
     labeled on \code{\link{print}()}), for \sQuote{\bold{PRE}diction
-      \bold{S}um of \bold{S}quares}.}
+      \bold{S}um of \bold{S}quares}.  Note that this is \emph{not} the same
+    as the (CV or GCV) score which is minimized during fitting (and
+    returned in \code{crit}), e.g., in the case of \code{nx < n} (where
+    \code{nx}\eqn{=n_x}{=nx} is the number of unique x values).}
   \item{pen.crit}{the penalized criterion, a non-negative number; simply
     the (weighted) residual sum of squares (RSS), \code{ sum(.$w * residuals(.)^2) }.}
   \item{crit}{the criterion value minimized in the underlying
