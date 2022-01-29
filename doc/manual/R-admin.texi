@@ -956,18 +956,20 @@ Replacement of the classification functions has been done for many years
 on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
 allows this to be suppressed on those platforms or used on others.
 Replacing the case-changing functions was new in @R{} 4.1.0 and the
-default on macOS (and on Windows since @R{} 4.2.0).
-Replacement of the width functions has also been done
-for many years and remains the default.  These options will only matter
-to those working with non-ASCII character data, especially in languages
-written in a non-Western script (which includes `symbols' such as
-emoji).  Note that one of those @code{iswxxxxx} is @code{iswprint} which
-is used to decide whether to output a character as a glyph or as a
-@samp{\U@{xxxxxx@}} escape---for example, try @samp{"\U1f600"}, an
-emoji.  The width functions are of most importance in East Asian locale:
-their values differ between such locales.  (Replacing the system
-functions provides a degree of plaform-independence (including to OS
-updates) but replaces it with a dependence on the @R{} version.)
+default on macOS (and on Windows since @R{} 4.2.0).  Replacement of the
+width functions has also been done for many years and remains the
+default.  These options will only matter to those working with non-ASCII
+character data, especially in languages written in a non-Western
+script@footnote{But on Windows problems have been seen with
+case-changing functions on accented Latin-1 characters.} (which includes
+`symbols' such as emoji).  Note that one of those @code{iswxxxxx} is
+@code{iswprint} which is used to decide whether to output a character as
+a glyph or as a @samp{\U@{xxxxxx@}} escape---for example, try
+@samp{"\U1f600"}, an emoji.  The width functions are of most importance
+in East Asian locale: their values differ between such locales.
+(Replacing the system functions provides a degree of
+plaform-independence (including to OS updates) but replaces it with a
+dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::

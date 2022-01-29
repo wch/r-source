@@ -292,7 +292,9 @@
       Yutani).  Text is always pasted in UTF16-LE to the clipboard and
       the \code{encoding} argument is ignored.
 
-      \item Internal case-changing functions are now used also on Windows.
+      \item The internal case-changing functions are now used by default
+      on Windows -- this circumvents problems (for example with E acute)
+      of the UCRT Windows' runtime.
     }
   }
 
