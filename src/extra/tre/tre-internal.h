@@ -85,10 +85,12 @@ typedef wint_t tre_cint_t;
 #define tre_isupper iswupper
 #define tre_isxdigit iswxdigit
 
+#ifdef USE_RI18N_CASE
 /* use Ri18n_towlower and Ri18n_towupper, because the UCRT versions do not seem
    do be working with some characters, such as \ue9 / \uc9 */
 #define tre_tolower Ri18n_towlower
 #define tre_toupper Ri18n_towupper
+#endif
 #define tre_strlen  wcslen
 
 #else /* !TRE_WCHAR */
