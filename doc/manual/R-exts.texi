@@ -5200,9 +5200,11 @@ and conditional.
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 was announced not to have them (but released as
-macOS 11 with them).  Python 2 has passed end-of-life and been removed
-from many major distributions.  Support for Rust cannot be assumed, and
-it does not even support all the @R{} platforms used by @acronym{CRAN}.
+macOS 11 with them); later it was announced that macOS 12.3 does not
+have Python 2 and only a minimal install of Python 3 is included.
+Python 2 has passed end-of-life and been removed from many major
+distributions.  Support for Rust cannot be assumed, and it does not even
+support all the @R{} platforms used by @acronym{CRAN}.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
