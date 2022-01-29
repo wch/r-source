@@ -238,9 +238,10 @@ smooth.spline <-
 	## parms :  c(low = , high = , tol = , eps = )
 	list(x = ux, y = fit$ty, w = wbar, yin = ybar, tol = tol,
 	     data = if(keep.data) list(x = x, y = y, w = w), no.weights = no.wgts,
-	     lev = lev, cv.crit = cv.crit,
+	     n = n, # to reliablly know (when keep.data is false) if (nx < n)
+	     lev = lev,
 	     cv = cv,
-	     pen.crit = sum(wbar * (ybar - fit$ty)^2),
+	     cv.crit = cv.crit, pen.crit = sum(wbar * (ybar - fit$ty)^2),
 	     crit = fit$crit,
 	     df = df,
 	     spar = if(spar.is.lambda) NA else fit$spar,

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-01-27 r81578) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-01-29 r81589) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
@@ -13588,16 +13588,19 @@ $data$w
 $no.weights
 [1] TRUE
 
+$n
+[1] 50
+
 $lev
  [1] 0.8934338 0.4379689 0.1842314 0.1529048 0.3641292 0.2022506 0.3399561
  [8] 0.3123173 0.3248036 0.2745481 0.1965797 0.2777060 0.3368286 0.2546068
 [15] 0.5210306 0.1743541 0.1531692 0.6249904 0.3750748
 
-$cv.crit
-[1] 257.2678
-
 $cv
 [1] FALSE
+
+$cv.crit
+[1] 257.2678
 
 $pen.crit
 [1] 3015.936
@@ -16218,7 +16221,7 @@ GCV: 244.1044
 > ## Don't show: 
 >   stopifnot(cars.spl $ w == table(cars$speed)) # weights = multiplicities
 >   utils::str(cars.spl, digits.d = 5, vec.len = 6)
-List of 20
+List of 21
  $ x         : num [1:19] 4 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ...
  $ y         : num [1:19] 1.6578 11.6829 15.0644 18.4823 21.9471 25.4656 29.0505 32.7076 ...
  $ w         : num [1:19] 2 2 1 1 3 2 4 4 4 3 2 3 4 3 5 ...
@@ -16229,9 +16232,10 @@ List of 20
   ..$ y: num [1:50] 2 10 4 22 16 10 18 26 34 17 28 14 20 24 28 ...
   ..$ w: num 1
  $ no.weights: logi TRUE
+ $ n         : int 50
  $ lev       : num [1:19] 0.399342 0.179105 0.069771 0.055561 0.136721 0.077539 0.137252 0.126354 ...
- $ cv.crit   : num 244.1
  $ cv        : logi FALSE
+ $ cv.crit   : num 244.1
  $ pen.crit  : num 4187.8
  $ crit      : num 244.1
  $ df        : num 2.6353
