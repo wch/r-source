@@ -76,13 +76,14 @@ smooth.spline <-
         stop("'tol' must be strictly positive and finite")
     if(!match(keep.stuff, c(FALSE,TRUE))) stop("invalid 'keep.stuff'")
     xx <- round((x - mean(x))/tol)  # de-mean to avoid possible overflow
-    iOx <- if(is.unsorted(x)) sort.list(x) else TRUE
+    uns.x <- is.unsorted(x)
+    iOx <- if(uns.x) sort.list(x) else TRUE
     xxs <- xx[iOx] # xx sorted
     nd <- c(TRUE, xxs[-n] < xxs[-1L]) # === !duplicated(xxs)
     nx <- length(ux <- x[iOx][nd]) # ux := unique & sorted  x
     if(nx <= 3L) stop("need at least four unique 'x' values")
     if(nx == n) { # speedup
-	ox <- iOx
+	ox <- if(uns.x) (function(p) { p[p] <- seq_along(p) ; p })(iOx) else TRUE
 	tmp <- cbind(w, w*y, w*y^2)[iOx,]
     } else {
 	ox <- match(xx, xxs[nd])

@@ -5725,7 +5725,7 @@ sspline_ <- function(x, y, w=NULL, cv=TRUE, ...)
     smooth.spline(x, y, w=w, cv=cv, # see more: control.spar = list(trace=TRUE),
                   keep.stuff=TRUE, keep.data=FALSE)
 noC <- function(x) { x$call <- NULL; x } # as the 'call's often differ
-i <- 10:1
+i <- c(8:5, 3:4, 2:1, 9:10)# 10:1 is too special (a permutation which is its own inverse)
 ss   <- sspline_(x=x,    y=y   )
 ss.u <- sspline_(x=x[i], y=y[i])
 ## was "Component “cv.crit”: Mean relative difference: 3099.013" :
