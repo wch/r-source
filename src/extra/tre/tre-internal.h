@@ -90,6 +90,9 @@ typedef wint_t tre_cint_t;
    do be working with some characters, such as \ue9 / \uc9 */
 #define tre_tolower Ri18n_towlower
 #define tre_toupper Ri18n_towupper
+#else
+#define tre_tolower towlower
+#define tre_toupper towupper
 #endif
 #define tre_strlen  wcslen
 
