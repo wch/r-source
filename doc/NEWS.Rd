@@ -173,11 +173,11 @@
       \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
       three numeric vectors is a surprisingly common error.
 
-      \code{mean(na.rm =)}, \code{rank(na.last =)}, \code{which(arr.ind
-      =)}, \code{barplot(legend.text =)}, \code{boxplot()},
-      \code{contour(drawlabels =)}, \code{polygon(border =)} and
-      \code{methods::is(class2 =)} have more robust sanity checks on
-      some of their arguments.
+      \code{data(list =)}, \code{mean(na.rm =)}, \code{rank(na.last =)},
+      \code{which(arr.ind =)}, \code{barplot(legend.text =)},
+      \code{boxplot()}, \code{contour(drawlabels =)},
+      \code{polygon(border =)} and \code{methods::is(class2 =)} have
+      more robust sanity checks on some of their arguments.
 
       \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
       robust sanity check on the format of \code{\\alias{}} commands.
