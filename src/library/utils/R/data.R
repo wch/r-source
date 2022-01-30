@@ -1,7 +1,7 @@
 #  File src/library/utils/R/data.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,14 +43,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
     ## directory.
     if (!is.null(package)) {
         if (!is.character(package))
-            stop("'package' must be a character string or NULL")
-      if(FALSE) { # From 2004  to R 3.6.x {2020}
-        if (any(package %in% "base"))
-            warning("datasets have been moved from package 'base' to package 'datasets'")
-        if (any(package %in% "stats"))
-           warning("datasets have been moved from package 'stats' to package 'datasets'")
-        package[package %in% c("base", "stats")] <- "datasets"
-      }
+            stop("'package' must be a character vector or NULL")
     }
     paths <- find.package(package, lib.loc, verbose = verbose)
     if (is.null(lib.loc))
