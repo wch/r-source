@@ -767,21 +767,30 @@ function(x, style = "text", .bibstyle = NULL,
     }
 
     format_as_citation <- function(x, msg) {
-         c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
+        m <- attr(x, "mheader")
+        if(is.null(m) && !is.null(p <- attr(x, "package")))
+            m <- gettextf("To cite package %s in publications use:",
+                          sQuote(p))
+        i <- !is.null(m)
+        c(character(),
+          if(i)
+              paste(strwrap(m), collapse = "\n"),
           unlist(lapply(x, function(y) {
-              paste(c(if(!is.null(y$header))
-                      c(strwrap(y$header), ""),
-                      if(!is.null(y$textVersion)) {
-                          strwrap(y$textVersion, prefix = "  ")
-                      } else {
-                          format(y)
-                      },
+              h <- y$header
+              j <- !is.null(h)
+              s <- y$textVersion
+              if(is.null(s))
+                  s <- format(y)
+              paste(c(if(j)
+                          c(strwrap(h), ""),
+                      if(i || j)
+                          strwrap(s, prefix = "  ") else strwrap(s),
                       if(bibtex) {
                           c(gettext("\nA BibTeX entry for LaTeX users is\n"),
 			    paste0("  ", unclass(toBibtex(y))))
                       },
                       if(!is.null(y$footer))
-                      c("", strwrap(y$footer))),
+                          c("", strwrap(y$footer))),
                     collapse = "\n")
           })),
 	  paste(strwrap(c(attr(x, "mfooter"),
