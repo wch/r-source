@@ -38,7 +38,7 @@
   strings, and double quotes in double-quoted strings.
 
   \tabular{ll}{
-    \samp{\\n}\tab newline\cr
+    \samp{\\n}\tab newline (aka \sQuote{line feed})\cr
     \samp{\\r}\tab carriage return\cr
     \samp{\\t}\tab tab\cr
     \samp{\\b}\tab backspace\cr
