@@ -4036,6 +4036,10 @@ without the namespace being attached (e.g.@: by @code{pkgname::fun}) and
 that a package can be detached and re-attached whilst its namespace
 remains loaded.
 
+It is good practice for these functions to be quiet.  Any messages
+should use @code{packageStartupMessage} so users (include check scripts)
+can suppress them if desired.
+
 @node useDynLib, An example, Load hooks, Package namespaces
 @subsection useDynLib
 
