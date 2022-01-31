@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -130,6 +130,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   Remark AS R19 and Algorithm AS 109,
   \emph{Applied Statistics},  \bold{26}, 111--114,
   and subsequent remarks (AS83 and correction).
+
+  Enhancements, notably for starting values and switching to a log-scale
+  Newton search, by R Core.
 
   \item  The central case of \code{rbeta} is based on a C translation of
 
