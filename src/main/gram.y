@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2739,6 +2739,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if (!octal)
 		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		if(octal > 0xff)
+		    error(_("exceeded maximum allowed octal value \\377 (line %d)"), ParseState.xxlineno);
 		c = octal;
 		oct_or_hex = TRUE;
 	    }

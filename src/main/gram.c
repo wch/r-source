@@ -4960,6 +4960,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if (!octal)
 		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		if(octal > 0xff)
+		    error(_("exceeded maximum allowed octal value \\377 (line %d)"), ParseState.xxlineno);
 		c = octal;
 		oct_or_hex = TRUE;
 	    }
