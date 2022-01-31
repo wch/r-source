@@ -5026,7 +5026,7 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 12 is unrelated to LLVM clang 12).
+versioning (so Apple clang 13 is unrelated to LLVM clang 13).
 
 @item
 A Fortran compiler. An installer for @command{gfortran} is available at
@@ -5049,7 +5049,7 @@ sudo tar -xvzf xz-5.2.5-darwin.17-x86_64.tar.xz -C /
 and desirable
 @itemize
 @item
-GNU @code{readline} from
+GNU @code{readline5} from
 @uref{https://mac.r-project.org/bin/darwin17/x86_64/},@footnote{For
 licence reasons this is version 5.2 of @code{readline}: for those who
 want a more recent version it is straightforward to compile it from its
@@ -5058,10 +5058,11 @@ version of @code{libedit} (aka @code{editline}) will be used: if you
 wish to avoid that, configure with @option{--without-readline}.
 
 @item
-Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff}
+from @uref{https://mac.r-project.org/bin/darwin17/x86_64/} and
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
 for the full range of bitmapped graphics devices.  (Some builds of
-@code{tiff} may require @code{libwepb} and/or @code{openjpeg}.)
+@code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5730,11 +5731,9 @@ A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
-Binary builds of the prerequisites @footnote{There is no
-@code{readline}: the @acronym{CRAN} distribution uses @code{libedit}
-emulation.}  are available at
-@uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way to get
-Tcl/Tk is to install
+Binary builds of the prerequisites are available at
+@uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
+to get Tcl/Tk is to install
 @uref{https://mac.r-project.org/libs-arm64/tcltk-8.6.11-xft-darwin20.4-arm64.pkg}
 which bundles Tcl, Tk and Tktable.)  These unpack into
 @file{/opt/R/arm64}: it is simplest to first create that directory and
@@ -5756,11 +5755,9 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 @noindent
 using @command{sudo} if necessary.
 
-Prerequisite @code{readline} can easily be built from source, although
-@code{libedit} emulation can also be used.  If compiling from source,
-@code{pcre2} (at least up to version 10.39) needs to be built without
-JIT support (the default) as the @R{} build segfaults if that is
-enabled, so do run @code{make check} on your build.
+If compiling from source, @code{pcre2} (at least up to version 10.39)
+needs to be built without JIT support (the default) as the @R{} build
+segfaults if that is enabled, so do run @code{make check} on your build.
 
 Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like
