@@ -409,6 +409,11 @@
       only declared \emph{pro tem} in \file{R_ext/RS.h} (included by
       \file{R.h}) if \code{DECLARE_LEGACY_CALL_R} is defined before that
       header is included.
+
+
+      \item Use of the legacy header \file{S.h} (undocumented since
+      2016) now gives a compilation warning reported by
+      \command{R CMD check}. 
     }
   }
 

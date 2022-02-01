@@ -29,6 +29,9 @@
    Code using it should be converted to use R.h
 */
 
+// #warning is not strictly portable, but still ...
+#warning "Legacy header S.h is no longer supported: use R.h instead"
+
 /* This header includes C headers and so is not safe for inclusion
    from C++: use R.h instead. */
 
