@@ -768,7 +768,9 @@ function(x, style = "text", .bibstyle = NULL,
 
     format_as_citation <- function(x, msg) {
         m <- attr(x, "mheader")
-        if(is.null(m) && !is.null(p <- attr(x, "package")))
+        if(is.null(m) &&
+           is.null(x$header) &&
+           !is.null(p <- attr(x, "package")))
             m <- gettextf("To cite package %s in publications use:",
                           sQuote(p))
         i <- !is.null(m)
