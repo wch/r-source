@@ -173,11 +173,11 @@
       \code{tolerance} argument -- calling \code{all.equal(a, b, c)} for
       three numeric vectors is a surprisingly common error.
 
-      \code{data(list =)}, \code{mean(na.rm =)}, \code{rank(na.last =)},
-      \code{which(arr.ind =)}, \code{barplot(legend.text =)},
-      \code{boxplot()}, \code{contour(drawlabels =)},
-      \code{polygon(border =)} and \code{methods::is(class2 =)} have
-      more robust sanity checks on some of their arguments.
+      \code{mean(na.rm =)}, \code{rank(na.last =)},
+      \code{barplot(legend.text =)}, \code{boxplot()},
+      \code{contour(drawlabels =)}, \code{polygon(border =)} and
+      \code{methods::is(class2 =)} have more robust sanity checks on
+      some of their arguments.
 
       \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
       robust sanity check on the format of \code{\\alias{}} commands.
@@ -612,6 +612,14 @@
 
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
+
+      \item \code{data()} now checks that its (rarely used) \code{list}
+      argument is a character vector -- a couple of packages passed other
+      types and gave incorrect results.
+
+      \item \code{which()} now checks its \code{arr.ind} argument is
+      TRUE rather coercing to logical and taking the first element --
+      which gave incorrect results in package code.
 
       \item \code{window(x, start, end)} no longer wrongly signals
       \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
