@@ -18,7 +18,7 @@
     \itemize{
       \item The legacy S-compatibility macros \code{SINGLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in \R 4.2.0. 
+      and will be removed in \R 4.2.0.
     }
   }
 
@@ -68,6 +68,14 @@
 
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
+
+      \item \code{data()} now checks that its (rarely used) \code{list}
+      argument is a character vector -- a couple of packages passed other
+      types and gave incorrect results.
+
+      \item \code{which()} now checks its \code{arr.ind} argument is
+      TRUE rather coercing to logical and taking the first element --
+      which gave incorrect results in package code.
     }
   }
 }

@@ -37,6 +37,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         read.table(...)
     }
 
+    stopifnot(is.character(list))
     names <- c(as.character(substitute(list(...))[-1L]), list)
 
     ## Find the directories of the given packages and maybe the working
