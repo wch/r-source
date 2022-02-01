@@ -335,6 +335,11 @@ grobPoints.GridGroup <- function(x, closed, ...) {
     grobPoints(gTree(children=children), closed, ...)
 }
 
-grobCoords.GridDefine <- grobCoords.GridGroup
+grobCoords.GridDefine <- function(x, closed, ...) emptyCoords
 
-grobPoints.GridDefine <- grobPoints.GridGroup
+grobPoints.GridDefine <- function(x, closed, ...) emptyCoords
+
+## *MIGHT* develop the ones below to make use of affine transforms (?)
+grobCoords.GridUse <- function(x, closed, ...) emptyCoords
+
+grobPoints.GridUse <- function(x, closed, ...) emptyCoords
