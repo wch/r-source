@@ -1910,7 +1910,7 @@ drawGTree <- function(x) {
     # Allow customisation of x (should be confined to x$children)
     x <- makeContent(x)
     ## For pattern fill resolution, attach the built grob to gp$fill
-    recordGrobForPatternResolution(x)
+    recordGTreeForPatternResolution(x)
     # Do any class-specific drawing
     drawDetails(x, recording=FALSE)
     # Draw all children IN THE RIGHT ORDER

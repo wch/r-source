@@ -240,7 +240,11 @@ set.gpar <- function(gp, grob=NULL) {
       if (is.null(grob)) {
           class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
       } else {
-          class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+          if (inherits(grob, "gTree")) {
+              class(gp$fill) <- c("GridGTreePattern", class(gp$fill))
+          } else {
+              class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+          }
       }
   } else if (is.list(gp$fill)) {
       if (is.null(grob)) {
@@ -248,7 +252,11 @@ set.gpar <- function(gp, grob=NULL) {
           gp$fill <- gp$fill[[1]]
           class(gp$fill) <- c("GridViewportPatternList", class(gp$fill))
       } else {
-          class(gp$fill) <- c("GridGrobPatternList", class(gp$fill))
+          if (inherits(grob, "gTree")) {
+              class(gp$fill) <- c("GridGTreePatternList", class(gp$fill))
+          } else {
+              class(gp$fill) <- c("GridGrobPatternList", class(gp$fill))
+          }
       }      
   }
   # All other gpars
