@@ -1317,7 +1317,7 @@ if test "${GCC}" = yes; then
 ## has 32k and so can use -fpic.
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
-    sparc*|ppc64*|powerpc64*|s390*)
+    alpha*|sparc*|ppc64*|powerpc64*|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1328,7 +1328,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64*|powerpc64*|s390*)
+    alpha*|sparc*|ppc64*|powerpc64*|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1344,7 +1344,7 @@ case "${FC}" in
 esac
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64*|powerpc64*|s390*)
+    alpha*|sparc*|ppc64*|powerpc64*|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
