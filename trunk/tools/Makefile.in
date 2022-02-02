@@ -1,0 +1,58 @@
+#
+# ${R_HOME}/tools/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+subdir = tools
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = README \
+	Makefile.in \
+	GETCONFIG GETDISTNAME GETMAKEVAL GETVERSION \
+	config.guess \
+	config.rpath \
+	config.sub \
+	copy-if-change \
+	getsp.java \
+	help2man.pl \
+	install-sh \
+	ldAIX4 \
+	link-recommended \
+	ltmain.sh \
+	mdate-sh \
+	missing \
+	move-if-change \
+	rsync-recommended \
+	uniset \
+	updatefat
+
+CLEANFILES =
+DISTCLEANFILES = Makefile
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R: Makefile
+
+mostlyclean: clean
+clean:
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+distclean: clean
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+maintainer-clean: distclean
+
+install install-strip uninstall TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

@@ -1,0 +1,128 @@
+#  File src/library/methods/R/cbind.R
+#  Part of the R package, https://www.R-project.org
+#
+#  Copyright (C) 1995-2018 The R Core Team
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  https://www.R-project.org/Licenses/
+
+#### cbind() and rbind()  which build on  cbind2() / rbind2()
+#### --------------------------------------------------------
+### NOTE: We rely on
+### o	dim(.) working reliably for all arguments of [cr]bind2()
+### o	All [cr]bind2() methods are assumed to
+###	correctly *use* (row/col)names of their matrix arguments
+###     but cannot look at arguments for deparsing them
+###  => all (row/col)names setting depending on deparse.level must be done *here
+
+### Note that this
+### 1) is namespace-hidden usually,
+### 2) cbind / rbind are almost never called in 'methods' itself
+### hence, the following has almost no effect unless ``activated'' (see below)
+
+## rbind() is in ./rbind.R  {so it's easier to keep them 100% - synchronized !}
+
+cbind <- function(..., deparse.level = 1)
+{
+    has.dl <- !missing(deparse.level)
+    deparse.level <- as.integer(deparse.level)
+    if(identical(deparse.level, -1L)) deparse.level <- 0L # our hack
+    stopifnot(0 <= deparse.level, deparse.level <= 2)
+
+    argl <- list(...)
+    ## remove trailing 'NULL's:
+    na <- nargs() - has.dl
+    while(na > 0L && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1L }
+    if(na == 0) return(NULL)
+    symarg <- as.list(substitute(list(...)))[-1L] # symbolic argument (names)
+    nmsym <- names(symarg)
+    ## Give *names* depending on deparse.level {for non-matrix}:
+    nm <- c( ## 0:
+	function(i) NULL,
+	## 1:
+	function(i) if(is.symbol(s <- symarg[[i]])) deparse(s) else NULL,
+	## 2:
+	function(i) deparse(symarg[[i]])[[1L]])[[ 1L + deparse.level ]]
+    Nms <- function(i) { if(!is.null(s <- nmsym[i]) && nzchar(s)) s else nm(i) }
+    if(na == 1) {
+	if(isS4(..1)) {
+	    r <- cbind2(..1)
+	    if(length(dim(..1)) < 2L && length(dim(r)) == 2L)
+		colnames(r) <- Nms(1)
+	    return(r)
+	}
+	else return(base::cbind(..., deparse.level = deparse.level))
+    }
+
+    ## else :  na >= 2
+
+    if(na == 2) {
+	fix.na <- FALSE
+    }
+    else { ## na >= 3 arguments
+	## determine nrow(<result>)  for e.g.,	cbind(diag(2), 1, 2)
+	## only when the last two argument have *no* dim attribute:
+	nrs <- unname(lapply(argl, nrow)) # of length na
+	iV <- vapply(nrs, is.null, NA)# is 'vector'
+	fix.na <- identical(nrs[(na-1L):na], list(NULL,NULL))
+	if(fix.na) {
+	    ## "fix" last argument, using 1-column `matrix' of proper nrow():
+	    nr <- max(if(all(iV)) lengths(argl) else unlist(nrs[!iV]))
+	    argl[[na]] <- cbind(rep(argl[[na]], length.out = nr),
+				deparse.level = 0)
+	    ## and since it's a 'matrix' now, cbind() below may not name it
+	}
+	## if(deparse.level) {
+	    if(fix.na)
+		fix.na <- !is.null(Nna <- Nms(na))
+	## }
+    }
+
+    Ncol <- function(x) {
+	d <- dim(x); if(length(d) == 2L) d[2L] else as.integer(length(x) > 0L) }
+    setN <- function(i, nams)
+	colnames(r)[i] <<- if(is.null(nams)) "" else nams
+
+    r <- argl[[na]]
+    for(i in (na-1L):1L) {
+    d2 <- dim(r)
+    r <- cbind2(argl[[i]], r)
+    ## if(deparse.level == 0)
+    ##     if(i == 1L) return(r) else next
+    ism1 <- !is.null(d1 <- dim(argl[[i]])) && length(d1) == 2L
+    ism2 <- !is.null(d2)                   && length(d2) == 2L
+    if(ism1 && ism2) ## two matrices
+	next
+
+    ## else -- Setting colnames correctly
+    ##	       when one was not a matrix [needs some diligence!]
+    nn1 <- !is.null(N1 <- if(       (l1 <- Ncol(argl[[i]])) && !ism1) Nms(i)) # else NULL
+    nn2 <- !is.null(N2 <- if(i == na-1L && Ncol(argl[[na]]) && !ism2) Nms(na))
+    if(nn1 || nn2) {
+	if(is.null(colnames(r)))
+	    colnames(r) <- rep.int("", ncol(r))
+	if(nn1) setN(1,	 N1)
+	if(nn2) setN(1+l1, N2)
+    }
+    }
+
+    if(fix.na) {
+	if(is.null(colnames(r)))
+	    colnames(r) <- rep.int("", ncol(r))
+	setN(ncol(r), Nna)
+    }
+    r
+}
+
+### cbind2 () :	 Generic and methods need to be "method-bootstrapped"
+### --------   --> ./MethodsListClass.R

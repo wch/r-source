@@ -1,0 +1,6 @@
+LIBRARY Riconv.dll
+EXPORTS
+ libiconv
+ libiconv_close
+ libiconv_open
+ libiconvlist

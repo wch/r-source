@@ -1,0 +1,67 @@
+% File src/library/stats/man/makepredictcall.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2018 R Core Team
+% Distributed under GPL 2 or later
+
+\name{makepredictcall}
+\alias{makepredictcall}
+\alias{makepredictcall.default}
+\alias{SafePrediction}
+\title{Utility Function for Safe Prediction}
+\description{
+  A utility to help \code{\link{model.frame.default}} create the right
+  matrices when predicting from models with terms like (univariate)
+  \code{poly} or \code{ns}.
+}
+\usage{
+makepredictcall(var, call)
+}
+\arguments{
+  \item{var}{A variable.}
+  \item{call}{The term in the formula, as a call.}
+}
+\details{
+  This is a generic function with methods for \code{poly}, \code{bs} and
+  \code{ns}: the default method handles \code{scale}.  If
+  \code{model.frame.default} encounters such a term when
+  creating a model frame, it modifies the \code{predvars} attribute of
+  the terms supplied by replacing the term with one which will work for
+  predicting new data.  For example \code{makepredictcall.ns} adds
+  arguments for the knots and intercept.
+
+  To make use of this, have your model-fitting function return the
+  \code{terms} attribute of the model frame, or copy the \code{predvars}
+  attribute of the \code{terms} attribute of the model frame to your
+  \code{terms} object.
+
+  To extend this, make sure the term creates variables with a class,
+  and write a suitable method for that class.
+}
+\value{
+  A replacement for \code{call} for the \code{predvars} attribute of
+  the terms.
+}
+\seealso{
+  \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}};
+  \code{\link{bs}} and \code{\link{ns}} in package \pkg{splines}.
+
+  \code{\link{cars}} for an example of prediction from a polynomial fit.
+}
+\examples{
+require(graphics)
+
+## using poly: this did not work in R < 1.5.0
+fm <- lm(weight ~ poly(height, 2), data = women)
+plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
+ht <- seq(57, 73, length.out = 200)
+nD <- data.frame(height = ht)
+pfm <- predict(fm, nD)
+lines(ht, pfm)
+pf2 <- predict(update(fm, ~ stats::poly(height, 2)), nD)
+stopifnot(all.equal(pfm, pf2)) ## was off (rel.diff. 0.0766) in R <= 3.5.0
+
+## see also example(cars)
+
+## see bs and ns for spline examples.
+}
+\keyword{models}

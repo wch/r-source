@@ -1,0 +1,49 @@
+# Translation of R-stats4.pot to French
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the stats4 R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.0.4\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: 2021-02-10 17:52+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+msgid "named list expected"
+msgstr "liste nomm�e attendue"
+
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr "quelques valeurs nomm�es ne sont pas des arguments correspondant au maximum de vraissemblance fourni"
+
+msgid "Mismatch in length of start values"
+msgstr "Incoh�rence dans la longueur des valeurs de d�part"
+
+msgid "fixed values violate constraints"
+msgstr "des valeurs fix�es sont incompatibles avec les contraintes"
+
+msgid "start values do not satisfy constraints"
+msgstr "les valeurs de d�part ne sont pas coh�rentes par rapport aux contraintes"
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr "le profilage a trouv� une meilleure solution, l'ajustement original n'a donc pas converg�"
+
+msgid "levels truncated to positive values only"
+msgstr "les seuils sont nivel�s � des valeurs positives uniquement"
+
+msgid "extra arguments discarded"
+msgstr "arguments suppl�mentaires �limin�s"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' doit �tre une liste nomm�e"
+
+#~ msgid "some named arguments in 'start' are not arguments to the supplied log-likelihood"
+#~ msgstr "quelques arguments nomm�s dans 'start' ne sont pas les arguments correspondants au maximum de vraissemblance fourni"

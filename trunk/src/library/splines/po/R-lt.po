@@ -1,0 +1,85 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: splines 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
+"PO-Revision-Date: 2021-11-06 22:23+0100\n"
+"Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "must have at least 'ord' knots"
+msgstr "turi turėti bent 'ord' mazgus"
+
+msgid "length of 'derivs' is larger than length of 'x'"
+msgstr "'derivs' ilgis yra didesnis nei 'x' ilgis"
+
+msgid "empty 'derivs'"
+msgstr "tuščias 'derivs'"
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr ""
+"'ord' turi būti teigiamas sveikasis skaičius, didžiausias mazgų skaičius"
+
+msgid "need at least %s (=%d) knots"
+msgstr "reikia bent %s (=%d) mazgų"
+
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
+msgstr "'x' duomenys turi būti srityje nuo %g iki %g, nebent nustatėte '%s'"
+
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "%s reikia teisingai įdiegto 'Matrix' paketo"
+
+msgid "values of 'x' must be distinct"
+msgstr "'x' reikšmės turi būti skirtingos"
+
+msgid "must have at least 'ord'=%d points"
+msgstr "turi turėti bent 'ord'=%d taškus"
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "'formula' turi būti \"y ~ x\" formos"
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr "'x' ir 'y' ilgiai turi atitikti"
+
+msgid "values of 'x' must be strictly increasing"
+msgstr "'x' reikšmės turi būti griežtai didėjančios"
+
+msgid "'ord' must be >= 2"
+msgstr "'ord' turi būti >= 2"
+
+msgid "the range of 'x' values exceeds one period"
+msgstr "'x' reikšmių sritis viršija vieną periodą"
+
+msgid "knot positions must be non-decreasing"
+msgstr "mazgo pozicijos turi būti nemažėjančios"
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "'x' ir 'y' ilgiai turi būti tokie pat"
+
+msgid "'deriv' must be between 0 and %d"
+msgstr "'deriv' turi būti tarp 0 ir %d"
+
+msgid "knot positions must be strictly increasing"
+msgstr "mazgo pozicijos turi būti griežtai didėjančios"
+
+msgid "currently implemented only for cubic splines"
+msgstr "šiuo metu įgyvendinama tik kubiniams splines"
+
+msgid "spline must be monotone"
+msgstr "spline turi būti monotoninė"
+
+msgid "'degree' must be integer >= 1"
+msgstr "'degree' turi būti sveikasis skaičius >= 1"
+
+msgid "'df' was too small; have used %d"
+msgstr "'df' buvo per mažas; naudojote %d"
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr ""
+"kai kurios 'x' reikšmės už ribinių mazgų gali sukelti blogai sąlygotas bazes"

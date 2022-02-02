@@ -1,0 +1,21 @@
+#! /bin/sh
+#
+# ${R_HOME}/tools/link-recommended
+
+## This is like rsync-recommended but without the rsync.  Before running
+## it you are assumed to have already fetched the packages by (say) FTP.
+
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+(cd "${TOOLS_DIR}"/..
+  PKGS=`grep '^R_PKGS_RECOMMENDED *=' share/make/vars.mk | \
+    sed 's/.*=//'`
+  cd src/library/Recommended
+
+  ## Link all each package to a simplified name so that Make has an
+  ## easier time.  Notice that as far as Make is concerned, the symlinks
+  ## have the same timestamp as the file they point to.
+
+  for i in ${PKGS} ; do
+    ln -sf $i*.tar.gz ${i}.tgz
+  done
+)

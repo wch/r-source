@@ -1,0 +1,99 @@
+\input texinfo
+@c %**start of header
+@setfilename resources.info
+@settitle R Resources
+@c %**end of header
+
+@paragraphindent 0
+
+@c NOTE:
+@c This file is currently written for standalone usage only.
+@c If to be included in one the manuals, we need to conditionalize some
+@c nodes using @ifset/@ifclear (e.g. with flag STANDALONE), and change
+@c the hierarchical section levels with @raisesections/@lowersections.
+@c </NOTE>
+
+@ifinfo
+@sp 1
+@c Original header was centered, hence the @w{}.  Argh.
+@w{                            }AVAILABLE R RESOURCES
+@sp 1
+@end ifinfo
+
+@ifhtml
+@lowersections
+@html
+<h1>Other Resources
+<img class="toplogo" src="Rlogo.svg" alt="[R logo]">
+</h1>
+<hr width="100%">
+@end html
+@end ifhtml
+
+@node Top, FAQ, (dir), (dir)
+
+@menu
+* FAQ::                         
+* Mailing lists::               
+* Archives::                    
+* Bug-tracking system::         
+@end menu
+
+@node FAQ, Mailing lists, Top, Top
+@chapter FAQ
+
+A collection of @uref{faq.html, , Frequently Asked Questions} and their
+answers is maintained by @email{Kurt.Hornik@@R-project.org, Kurt Hornik}
+and can be found at the @acronym{URL}
+
+@quotation
+@uref{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html}
+@end quotation
+
+@ifinfo
+A text version is in file @file{FAQ} in this directory, and an
+@acronym{HTML} version is available as file @file{doc/html/faq.html} and
+via the on-line help (on the index page given by @code{help.start()}).
+@end ifinfo
+
+@node Mailing lists, Archives, FAQ, Top
+@chapter Mailing lists
+
+Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler} there
+are a number of mailing lists which are used by R users and developers.
+See
+
+@quotation
+@uref{https://www.R-project.org/mail.html}
+@end quotation
+
+for details.
+
+@node Archives, Bug-tracking system, Mailing lists, Top
+@chapter Archives
+
+The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
+sites which carry identical material, consisting of the R
+distribution(s), the contributed extensions, documentation for R, and
+binaries, with the master site at @uref{https://CRAN.R-project.org/} and
+information on daily mirrors available from
+
+@quotation
+@uref{https://CRAN.R-project.org/mirrors.html}
+@end quotation
+
+@node Bug-tracking system,  , Archives, Top
+@chapter Bug-tracking system
+
+R has a bug-tracking system (or perhaps a bug-filing system is a more
+precise description) available on the net at
+
+@quotation
+@uref{https://bugs.R-project.org/}
+@end quotation
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***

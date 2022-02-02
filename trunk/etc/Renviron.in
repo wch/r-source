@@ -1,0 +1,57 @@
+### @configure_input@
+###
+### ${R_HOME}/etc/Renviron
+###
+### Record R system environment variables.
+
+## As from R 4.0.0 the C code reading this follows the POSIX rules
+## for parameter substitution in shells, section 2.6.2 of
+## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18
+## In earlier versions ${FOO-bar} was interpreted the same as ${FOO:-bar}
+
+R_PLATFORM=${R_PLATFORM-'@R_PLATFORM@'}
+## Default printer paper size: first record if user set R_PAPERSIZE
+R_PAPERSIZE_USER=${R_PAPERSIZE}
+R_PAPERSIZE=${R_PAPERSIZE-'@R_PAPERSIZE@'}
+## Default print command
+R_PRINTCMD=${R_PRINTCMD-'@R_PRINTCMD@'}
+# for Rd2pdf, reference manual
+R_RD4PDF=${R_RD4PDF-'@R_RD4PDF@'}
+## used for options("texi2dvi")
+R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'@TEXI2DVICMD@'}}
+## used by untar(support_old_tars = TRUE) and installing grDevices
+R_GZIPCMD=${R_GZIPCMD-'@R_GZIPCMD@'}
+## Default zip/unzip commands
+R_UNZIPCMD=${R_UNZIPCMD-'@R_UNZIPCMD@'}
+R_ZIPCMD=${R_ZIPCMD-'@R_ZIPCMD@'}
+R_BZIPCMD=${R_BZIPCMD-'@R_BZIPCMD@'}
+## Default browser
+R_BROWSER=${R_BROWSER-'@R_BROWSER@'}
+## Default editor
+EDITOR=${EDITOR-${VISUAL-vi}}
+## Default pager
+PAGER=${PAGER-'@PAGER@'}
+## Default PDF viewer
+R_PDFVIEWER=${R_PDFVIEWER-'@R_PDFVIEWER@'}
+## Used by libtool
+LN_S='@LN_S@'
+MAKE=${MAKE-'@MAKE@'}
+## Prefer a POSIX-compliant sed on e.g. Solaris
+SED=${SED-'@SED@'}
+## Prefer a tar that can automagically read compressed archives
+TAR=${TAR-'@TAR@'}
+
+## System and compiler types.
+R_SYSTEM_ABI='@R_SYSTEM_ABI@'
+
+## Strip shared objects and static libraries.
+R_STRIP_SHARED_LIB=${R_STRIP_SHARED_LIB-'@STRIP_SHARED_LIB@'}
+R_STRIP_STATIC_LIB=${R_STRIP_STATIC_LIB-'@STRIP_STATIC_LIB@'}
+
+R_LIBS_USER=${R_LIBS_USER:-'%U'}
+R_LIBS_SITE=${R_LIBS_SITE:-'%S'}
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

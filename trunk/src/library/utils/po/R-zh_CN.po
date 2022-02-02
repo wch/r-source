@@ -1,0 +1,1801 @@
+# Chinese translations for R package
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@normipaiva.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
+"PO-Revision-Date: 2011-01-18 13:56+0000\n"
+"Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
+"Language-Team: Chinese\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr "RShowDoc()应该和指定说明书文件的字符串一起使用"
+
+msgid "no documentation for %s found in package %s"
+msgstr "程序包%2$s里没有%1$s这样一本说明书"
+
+msgid "document not found"
+msgstr "找不到这个说明书"
+
+msgid "A search query has been submitted to %s"
+msgstr "檢索查詢疑問已被提交给%s"
+
+msgid "The results page should open in your browser shortly"
+msgstr "计算结果应很快就在瀏覽器里打开"
+
+msgid "reference to unknown chunk %s"
+msgstr "没有这样一个可對照的%s块"
+
+msgid "no Sweave file with name %s found"
+msgstr "没有名字为'%s'的Sweave文件"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "在多套語法規則里选用第一个套"
+
+msgid "object %s does not have class \"SweaveSyntax\""
+msgstr "对象%s不属于\"SweavSyntax\"这一类别"
+
+msgid "recursive Sweave input %s in stack"
+msgstr "堆疊里不能有回歸Sweave输入%s"
+
+msgid "target syntax not of class %s"
+msgstr "目标語法不是%s这一类别"
+
+msgid "target syntax contains no translation table"
+msgstr "目标語法内没有翻译表"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"解析出错或是\n"
+"%s里有空白的选项"
+
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "警告：没有%s这样的选项"
+
+msgid "Warning: unknown option %s"
+msgstr "警告：没有%s这样的选项"
+
+msgid "Output file:"
+msgstr ""
+
+msgid "Compacting PDF document"
+msgstr "压缩了PDF文件"
+
+msgid "path to %s contains spaces,"
+msgstr "指向%s的路径里不能有空格,"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "这可能会对运行LaTeX里产生问题"
+
+msgid "the output file '%s' has disappeared"
+msgstr "输出文件'%s'不见了"
+
+msgid "invalid value for %s : %s"
+msgstr "%s的值不对: %s"
+
+msgid "value of 'results' option should be lowercase"
+msgstr "'results'这个选项的值必需小写"
+
+msgid "value of 'strip.white' option should be lowercase"
+msgstr "'strip.white'这个选项的值必需小写"
+
+msgid "elements of 'what' after the first will be ignored"
+msgstr "只用'what'值里的第一个元素"
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Unrecognized response"
+msgstr "没有这样的特殊数据值"
+
+msgid "No suitable spell-checker program found"
+msgstr "找不到可用的拼写查对器"
+
+msgid "Filter '%s' is not available."
+msgstr "没有'%s'这种过滤器"
+
+msgid "Invalid 'filter' argument."
+msgstr "'filter'参数不对"
+
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+"找不到下面这些字典：\n"
+"%s"
+
+msgid "Processing file %s"
+msgstr "处理文件%s"
+
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
+"执行aspell失败，诊断如下:\n"
+"%s"
+
+msgid "No suitable spell check program found."
+msgstr "没有可用的拼写查对器"
+
+msgid ""
+"Use <code> %s </code> \n"
+" to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+"用<code> %s </code>来\n"
+"陈列所有<strong>可供使用</strong>的程序包的小文品。"
+
+msgid "No vignettes found by %s"
+msgstr "没有找到小文品%s"
+
+msgid "Package %s: DESCRIPTION file not found"
+msgstr "程序包%s: 找不到DESCRIPTION这个文件"
+
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "'file'的值必需是NULL，字符串或联结"
+
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
+msgid "Not all arguments are of the same length, the following need to be recycled: %s"
+msgstr "不是所有的参数的长度都一样，下面这些需要被再循环：%s"
+
+msgid "Use either %s or %s/%s but not both."
+msgstr "要么用%s或%s/%s，但不能两者都用"
+
+msgid "It is recommended to use %s instead of %s."
+msgstr "建议你用%s而不用%s。"
+
+msgid "Use either %s or %s but not both."
+msgstr "要么用%s,要么用%s，但不能两者都用"
+
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "建议你用%s/%s而不用%s/%s/%s。"
+
+msgid "method is only applicable to %s objects"
+msgstr "这个方法只适用于%s目标对象"
+
+msgid "all arguments must be of class %s"
+msgstr "所有的参数都必需是%s类别"
+
+msgid "all fields have to be named"
+msgstr "所有的项都必需有名字"
+
+msgid "%s has to be one of %s"
+msgstr "%s必需是%s这些中的一个"
+
+msgid "subscript out of bounds"
+msgstr "标出界"
+
+msgid "%s should be one of %s"
+msgstr "%s必需是%s这些中的一个"
+
+#, fuzzy
+msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgstr "参数'namespace'已经不再用了"
+
+msgid "A BibTeX entry for LaTeX users is"
+msgstr "LaTeX的用户的BibTeX条目是"
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
+"删除无效的条目%d:\n"
+"%s"
+
+msgid "no date field in DESCRIPTION file of package %s"
+msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
+
+msgid "could not determine year for %s from package DESCRIPTION file"
+msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
+
+msgid "To cite package %s in publications use:"
+msgstr "在出版物中使用程序包时引用%s:"
+
+msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
+msgstr "注意：此引文信息是从软件包描述文件自动生成的，可能需要手工编辑，请参见%s。"
+
+msgid "'FUN' must be a function or NULL"
+msgstr "'FUN'的值必需是函数或NULL"
+
+msgid "cannot handle S4 methods yet"
+msgstr "还不能处理S4方法"
+
+msgid "'package' must be a character string or NULL"
+msgstr "'package'的值必需是字符串或NULL"
+
+msgid "datasets have been moved from package 'base' to package 'datasets'"
+msgstr "數據機从程序包'base'移到了程序包'datasets'"
+
+msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgstr "數據機从程序包'stats'移到了程序包'datasets'"
+
+msgid "data index for package %s is invalid and will be ignored"
+msgstr "程序包%s的数据索引不对，略过不用"
+
+msgid "file 'filelist' is missing for directory %s"
+msgstr "目录%s里没有'filelist'这一文件"
+
+msgid "data set %s not found"
+msgstr "没有%s这个数据集"
+
+msgid "an object named %s already exists and will not be overwritten"
+msgstr ""
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr "本平台只支持'html = TRUE'"
+
+msgid "kind '%s' not yet implemented"
+msgstr "'%s'这一类还没有被实现"
+
+msgid "wrong number of table row entries"
+msgstr "表中的行数不对"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "'dataentry'的参数不对"
+
+msgid "could not restore type information"
+msgstr "无法恢復种类的信息"
+
+msgid "'modes' argument ignored"
+msgstr "'modes'参数略过不用"
+
+msgid "'names' argument ignored"
+msgstr "'names'参数略过不用"
+
+msgid "could not restore variables properly"
+msgstr "无法正确恢复变量"
+
+msgid "did not assign() anything"
+msgstr "assign()没有用到"
+
+msgid "Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "为参数%s評估表示式时发生了错误(%s)"
+
+msgid "Browsing in the environment with call:"
+msgstr "在調用环境里浏览:"
+
+msgid "'dump' is not an object of class %s"
+msgstr "'dump'必需是类别为%s的对象"
+
+msgid "Message:"
+msgstr "訊息:"
+
+msgid "'dump' is empty"
+msgstr ""
+
+msgid "Available environments had calls:"
+msgstr "可用的环境中有这样的調用载入:"
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr "请输入一个环境号，要退出的话输入0"
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr "非交互式地調用了recover; 傾印出了所有的框，可以用debugger()来进行检查"
+
+msgid "No suitable frames for recover()"
+msgstr "找不到可用于recover()的框"
+
+msgid "No demo found for topic %s"
+msgstr "没有与題目%s有关的演示"
+
+msgid ""
+"Demo for topic %s' found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"有多个与題目%s有关的演示，\n"
+"用在%s找到的那一个"
+
+msgid "invalid 'data' argument"
+msgstr "'data'参数不对"
+
+msgid "invalid 'modes' argument"
+msgstr "'modes'参数不对"
+
+msgid "invalid 'x' argument"
+msgstr "'x'参数不对"
+
+msgid "can only handle vector and factor elements"
+msgstr "只能对向量和因子元素适用"
+
+msgid "invalid factor levels in '%s'"
+msgstr "'%s'因子水准不对"
+
+msgid "added factor levels in '%s'"
+msgstr "在'%s'里加上了因子水准"
+
+msgid "edited row names contain duplicates and will be ignored"
+msgstr "改过的行名中含有重复的名字，因此略过不用"
+
+msgid "invalid input matrix"
+msgstr "输入矩阵不对"
+
+msgid "class of 'name' will be discarded"
+msgstr "'name'的类别将被略过不用"
+
+msgid "cannot edit NULL row names"
+msgstr "无法修改NULL行名"
+
+msgid "no help found for %s"
+msgstr "找不到与%s有关的帮助文件"
+
+msgid "%s has a help file but no examples"
+msgstr "%s含帮助文件但没有示范文件"
+
+msgid "Line number missing"
+msgstr "缺少行数"
+
+msgid "'fix' requires a name"
+msgstr "'fix'需要名字值"
+
+msgid "too many list items (at most up to %d)"
+msgstr "串列项太多(最多只能有%d项)"
+
+msgid "no vector columns were selected"
+msgstr "没有选择向量列"
+
+msgid "non-vector columns will be ignored"
+msgstr "非向量列将被忽略不用"
+
+msgid "at least one vector element is required"
+msgstr "至少需要一个向量元素"
+
+msgid "non-vector elements will be ignored"
+msgstr "非向量元素将被忽略不用"
+
+msgid "'form' must be a two-sided formula"
+msgstr "'form'必需是双边公式"
+
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr "'form'必需是双边公式，每一边至少带一项"
+
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr "函数%s和标签%s没有设定方法"
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
+
+msgid "No documentation for %s in specified packages and libraries:"
+msgstr "在指定的程序包和图书馆里没有与%s有关的说明书:"
+
+msgid "you could try %s"
+msgstr "你可以用用%s"
+
+msgid "Help for topic %s is not in any loaded package but can be found in the following packages:"
+msgstr "在载入的程序包里没有与%s题目有关的帮助文件，但在以下的程序包里找得到:"
+
+msgid "Package"
+msgstr "程序包"
+
+msgid "Library"
+msgstr "图书馆"
+
+msgid "Help on topic %s was found in the following packages:"
+msgstr "在以下的程序包里找到了与%s题目有关的帮助文件:"
+
+msgid "Choose one"
+msgstr "选一个"
+
+msgid "Using the first match ..."
+msgstr "用第一个相配…"
+
+msgid "HTML help is unavailable"
+msgstr "没有HTML帮助"
+
+msgid "R Help on %s"
+msgstr "与%s有关的R Help"
+
+msgid "invalid %s argument"
+msgstr "%s参数不对"
+
+msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
+msgstr "有%s这样一个程序包但没有在R >= 2.10.0下安装，因此不能用它的帮助文件"
+
+msgid "creation of %s failed"
+msgstr "制造%s时出了问题"
+
+msgid "Saving help page to %s"
+msgstr "保存帮助页到%s"
+
+msgid "Cancelled by user"
+msgstr ""
+
+msgid "Unable to connect to CRAN to check R version."
+msgstr ""
+
+msgid "argument %s must be a single character string"
+msgstr "参数%s必需是单字符串"
+
+msgid "incorrect field specification"
+msgstr "域设定得不对"
+
+msgid "do not know what to search"
+msgstr "不知道要搜查什么"
+
+msgid "argument 'help.db' is deprecated"
+msgstr "参数'help.db'已经不再用了"
+
+msgid "incorrect type specification"
+msgstr "域设定得不对"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
+
+msgid "incorrect 'agrep' specification"
+msgstr "'agrep'设定得不对"
+
+msgid "package %s has empty hsearch data - strangely"
+msgstr "程序包%s的hsearch数据是空的-很奇怪"
+
+msgid "removing all entries with invalid multi-byte character data"
+msgstr "删除所有多字節字符数据出错的分錄"
+
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr "help.start()需要用HTTP服务器"
+
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
+msgstr "如果什么都不发生的话，你应该自己打开%s"
+
+msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr "如果由'%s'打开的浏览器已经在运行的话，它*不会*被重新启动，因此你必需人工地转换到它的窗口。"
+
+msgid "Otherwise, be patient ..."
+msgstr "否则的话请耐心等待…"
+
+msgid "'url' must be a non-empty character string"
+msgstr "url必需的非空字符串"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "'browser'必需为非空字符串"
+
+msgid "no package '%s' was found"
+msgstr "找不到'%s'这样一个程序包"
+
+msgid "metadata of package '%s' is corrupt"
+msgstr "程序包'%s'里元数据出了错"
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
+
+msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
+msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
+
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr "程序包'%s'里要么没有DESCRIPTION这个文件，要么出了错"
+
+msgid "Invalid \"Built\":"
+msgstr ""
+
+msgid "cannot update HTML package index"
+msgstr "无法更新HTML程序包索引"
+
+msgid "done"
+msgstr "做完了。"
+
+msgid "menu() cannot be used non-interactively"
+msgstr "menu()不能在非互交形式下使用"
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr "从菜單中选一项，或选0退出"
+
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr ""
+
+msgid "invalid query"
+msgstr "询问不对"
+
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr ""
+
+msgid "Unit \"%s\" is not part of standard \"%s\""
+msgstr ""
+
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr "'%s'是正式同属函数; 很有可能找不到S3方法"
+
+msgid "no function '%s' is visible"
+msgstr "看不到'%s'这样一个函数"
+
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr "同属函数'%s'给同属'%s'分發了方法"
+
+#, fuzzy
+msgid "function '%s' appears not to be S3 generic; found functions that look like S3 methods"
+msgstr "函数'%s'好象不是同属的"
+
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr "必需提供'generic.function'或'class'两个中的一个"
+
+msgid "no function '%s' could be found"
+msgstr "找不到'%s'这样一个函数"
+
+msgid "S3 method '%s' not found"
+msgstr "找不到S3方法'%s'"
+
+msgid "environment specified is not a package"
+msgstr "指定的环境不是程序包"
+
+msgid "changing locked binding for %s in %s whilst loading %s"
+msgstr "载入%3$s时为%2$s里的%1$s改变锁定约束"
+
+msgid "changing locked binding for %s in %s"
+msgstr "为%2$s里的%1$s改变锁定约束"
+
+msgid "'fixInNamespace' requires a name"
+msgstr "'fixInNamespace'需要名字值"
+
+msgid "only numeric indices can be used"
+msgstr "只能用数值的指标"
+
+msgid "Malformed package name."
+msgstr ""
+
+msgid "cannot create directory '%s'"
+msgstr "无法产生'%s'目录"
+
+msgid "'code_files' must be a character vector"
+msgstr "'code_files'必需是字符向量"
+
+msgid "'list' must be a character vector naming R objects"
+msgstr "'list'必需是为R对象取名的字符向量"
+
+msgid "no R objects specified or available"
+msgstr "没有指点定的R对象"
+
+msgid "directory '%s' already exists"
+msgstr "已经有了'%s'这样一个目录"
+
+msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
+msgstr "泛型函数和其他S4对象（例如'%s'）不能被转储出来；用'code_files'这个参数"
+
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip'必需是单字符串"
+
+msgid "unable to access index for repository %s"
+msgstr "无法在貯藏處%s中读写索引"
+
+msgid "invalid 'filters' argument."
+msgstr "'filters'参数不对。"
+
+msgid "specifying 'contriburl' or 'available' requires a single type, not type = \"both\""
+msgstr ""
+
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "程序库'%2$s'里'%1$s'这个程序包将不会被更新"
+
+msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
+msgstr "'oldPkgs'的值不对；必需字符矢量或从old.packages()得到的结果"
+
+msgid "ill-formed 'instPkgs' matrix"
+msgstr "'instPkgs'矩阵不对"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
+
+msgid "no new packages are available"
+msgstr "没有新的程序包"
+
+msgid "metadata of %s is corrupt"
+msgstr "%s元数据出了错"
+
+msgid "'priority' must be character or NULL"
+msgstr "'priority'的值要么是字符要么为NULL"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "更新'.Library'里的HTML程序包列表"
+
+msgid "'destdir' is not a directory"
+msgstr "'destdir'不是目录"
+
+msgid "no package %s at the repositories"
+msgstr "貯藏處里没有%s这样的程序包"
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "询问不对"
+
+msgid "package %s does not exist on the local repository"
+msgstr "地方貯藏處里没有%s这样的程序包"
+
+msgid "download of package %s failed"
+msgstr "下载程序包%s时出了问题"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- 在此連線階段时请选用CRAN的鏡子 ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr "试试在不设定镜像的情况下用CRAN"
+
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "read.dcf()在'%s'文件上出了错"
+
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "无法在非互交的情况下选用CRAN镜像"
+
+msgid "cannot set repositories non-interactively"
+msgstr "无法在非互交情况下设定貯藏處"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package'的值必需是字符串或NULL"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- 请选用一个貯藏處 ---"
+
+msgid "%s must be supplied"
+msgstr "必需提供%s"
+
+msgid "every package depends on at least one other"
+msgstr "每个程序包至少依赖其他另外一个程序字"
+
+msgid "packages %s are mutually dependent"
+msgstr "程序包%s相互依赖"
+
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"不知道'lib'元素里如何安装依赖程序\n"
+"因此略过不装"
+
+#, fuzzy
+msgid "type 'binary' is not supported on this platform"
+msgstr "本平台只支持'html = TRUE'"
+
+msgid "no packages were specified"
+msgstr "没有设定程序包"
+
+msgid "'lib = \"%s\"' is not writable"
+msgstr "'lib=\"%s\"'不可写"
+
+#, fuzzy
+msgid "Would you like to use a personal library instead?"
+msgstr ""
+"你是不是想建立一个用户定义库\n"
+"%s\n"
+"用来安装程序包?"
+
+msgid "unable to install packages"
+msgstr "无法安装程序包"
+
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
+"你是不是想建立一个用户定义库\n"
+"%s\n"
+"用来安装程序包?"
+
+msgid "unable to create %s"
+msgstr "无法建立%s"
+
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
+msgstr "从文件名字推断'repos = NULL'"
+
+msgid "unable to create temporary directory %s"
+msgstr "无法建立临时目录%s"
+
+#, fuzzy
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+msgstr "type == \"both\"只适用在Windows上或在为Mac OS X的CRAN构建上"
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr "设定了'repos = NULL'后就不能再设定type == \"both\""
+
+msgid "source repository is unavailable to check versions"
+msgstr "无法用代码源库来检查版本"
+
+#, fuzzy
+msgid "cannot install macOS binary packages on Windows"
+msgstr "无法在Windows下安装MacOS X二元程序包"
+
+#, fuzzy
+msgid "cannot install macOS binary packages on this platform"
+msgstr "无法在此平台下安装MacOS X二元程序包"
+
+msgid "cannot install Windows binary packages on this platform"
+msgstr "无法在此平台下安装Windows二元程序包"
+
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+"本版本的R不能安装程序包的原始程序\n"
+"如果它是从RPM上安装来的话你可能需要R-devel的RPM文件"
+
+msgid "system (cmd0): %s"
+msgstr "系统(cmd0): %s"
+
+msgid "installation of package %s had non-zero exit status"
+msgstr "安装程序包%s时退出狀態的值不是0"
+
+msgid "foundpkgs: %s"
+msgstr "foundpkgs: %s"
+
+msgid "files: %s"
+msgstr "文件: %s"
+
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"installation of one or more packages failed,\n"
+"  probably %s"
+msgstr ""
+"安装程序包时出了错，\n"
+"  可能原因%s"
+
+msgid ""
+"The downloaded source packages are in\n"
+"\t%s"
+msgstr ""
+"下载的程序包在\n"
+"\t%s里"
+
+msgid "The namespace for package \"%s\" is locked; no changes in the global variables list may be made."
+msgstr "程序包\"%s\"的名字空间被锁定了；全局变量列表没有改变。"
+
+msgid "'env' must be an environment"
+msgstr "'env'必需是环境"
+
+msgid "no object named '%s' to show"
+msgstr "找不到名字为'%s'的对象"
+
+msgid "'file' must be \"\" or an open connection object"
+msgstr "'file'必需是\"\"或打开的联结"
+
+msgid "'char' must have a non-zero width"
+msgstr ""
+
+msgid "must have 'max' > 'min'"
+msgstr "一定得满足'max' > 'min'这个条件"
+
+msgid "'pb' is not from class %s"
+msgstr "'pb'不属于%s这一类别"
+
+msgid "cannot determine a usable name"
+msgstr "无法指定一个可以用的名字"
+
+msgid "Created file named %s."
+msgstr "建立一名字叫%s的文件。"
+
+msgid "Edit the file and move it to the appropriate directory."
+msgstr "修改文件再把它放到合适的目录中去。"
+
+#, fuzzy
+msgid "cannot determine import name"
+msgstr "无法指定一个可以用的名字"
+
+msgid "no documentation of type %s and topic %s (or error in processing help)"
+msgstr "没有种类为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"
+
+msgid "the object of class %s in the function call %s could not be used as a documentation topic"
+msgstr "函数調用%2$s里类别为%1$s的对象不能用作帮助文件題目"
+
+msgid "no methods for %s and no documentation for it as a function"
+msgstr "%s没有方法，也没有将之用作函数的帮助文件"
+
+msgid "no method defined for function %s and signature %s"
+msgstr "函数%s和标签%s没有设定方法"
+
+msgid "no documentation for function %s and signature %s"
+msgstr "函数%s和标签%s没有帮助文件"
+
+msgid "No DIF data on clipboard"
+msgstr "剪贴板里没有DIF数据"
+
+msgid "file had no lines"
+msgstr "空文件没有内容"
+
+msgid "row and column counts not found"
+msgstr "找不到行和列的数目"
+
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr "实际行数比标题里指定的要多；或许应该用'transpose=TRUE'"
+
+msgid "Unrecognized special data value"
+msgstr "没有这样的特殊数据值"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr "实际列数比标题里指定的要多；或许应该用'transpose=TRUE'"
+
+msgid "Unrecognized value indicator"
+msgstr "没有这样的数值指示器"
+
+msgid "no lines available in input"
+msgstr "输入中没有多出的行"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "表头名称和'col.names'的长度不一样"
+
+msgid "more columns than column names"
+msgstr "列的数目比列的名字要多"
+
+msgid "more column names than columns"
+msgstr "行名比行的数目要多"
+
+msgid "rows are empty: giving up"
+msgstr "空白的行：停止运行"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "有些'colClasses'所设定的列并不存在"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "数目'as.is' 表现不对"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "有此'as.is' 所设定的列并不存在"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "'as.is' 的长度不对%d  != cols = %d "
+
+msgid "invalid 'row.names' specification"
+msgstr "'row.names'设定得不对"
+
+msgid "invalid 'row.names' length"
+msgstr "'row.names'的长度设定得不对"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "'row.names'里不能有重复的名字"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "'row.names'里不能有遗漏值"
+
+msgid "missing lengths for some fields"
+msgstr "某些域缺少长度值"
+
+msgid "invalid format"
+msgstr "格式不对"
+
+msgid "transfer failure"
+msgstr "转移时出了错"
+
+msgid "%s option must be a length one character vector or NULL"
+msgstr "%s选项的值必需是长度为一的字符串或NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'的值必需是字符串或联结"
+
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
+msgid "empty beginning of file"
+msgstr "空白的文件开头"
+
+msgid "first five rows are empty: giving up"
+msgstr "开头五行都是空白的：停止运行"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr "relist()需要递归解串列目标对象"
+
+msgid "The 'flesh' argument does not contain a skeleton attribute."
+msgstr "'flesh'参数不包含骨架属性"
+
+msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
+msgstr "你要么得保证你解串列了一个可重新串列的目标对象，要么你得分别设定一个骨架"
+
+msgid "cannot coerce 'x' to roman"
+msgstr "无法将'x'转变成罗马数"
+
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "无法恢復种类的信息"
+
+msgid "no valid packages were specified"
+msgstr "没有设定程序包"
+
+msgid "invalid 'socket' argument"
+msgstr "'socket'参数不对"
+
+msgid "'port' must be integer of length 1"
+msgstr "'port'必需是长度为一的整数"
+
+msgid "'host' must be character of length 1"
+msgstr "'host'必需是长度为一的字符"
+
+msgid "can only receive calls on local machine"
+msgstr "只能在局部电脑上接收調用"
+
+msgid "socket not established"
+msgstr "套介面还没有建立"
+
+msgid "argument is not a function or language object:"
+msgstr ""
+
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
+
+msgid "invalid options(\"str\") -- using defaults instead"
+msgstr "options(\"str\")不对--使用默认值"
+
+msgid "invalid components in options(\"str\"): %s"
+msgstr "options(\"str\")内元件无效：%s"
+
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr "'str.default': 'le'的值是NA，当零来用"
+
+msgid "'nchar.max = %d' is too small"
+msgstr ""
+
+msgid "Not a validObject():"
+msgstr ""
+
+msgid "'object' does not have valid levels()"
+msgstr "'object'的levels()的值不对"
+
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
+
+msgid "The number of captures in 'pattern' != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+#, fuzzy
+msgid "cannot coerce %s to logical"
+msgstr "无法将'x'转变成罗马数"
+
+msgid "no lines found in %s"
+msgstr "%s里找不到信息"
+
+msgid "profile does not contain memory information"
+msgstr "程序资料不包含内存信息"
+
+msgid "profile does not contain line information"
+msgstr "程序资料不包含行信息"
+
+msgid "no events were recorded"
+msgstr "没有记录下任何事件"
+
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
+msgid "invalid 'tarfile' argument"
+msgstr "'tarfile'参数不对"
+
+msgid "'compressed' must be logical or character"
+msgstr "'compressed'必需是字符向量"
+
+#, fuzzy
+msgid "No %s command found"
+msgstr "找不到'%s'这个对象"
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
+msgstr ""
+
+msgid "failed to create directory %s"
+msgstr "无法建立目录%s"
+
+msgid "invalid octal digit"
+msgstr "八进制数字格式不对"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "指向%s的路径里不能有空格,"
+
+msgid "path is empty"
+msgstr ""
+
+msgid "'tarfile' must be a character string or a connection"
+msgstr "'tarfile'的值必需是字符串或联结"
+
+msgid "incomplete block on file"
+msgstr "不完全文件锁"
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr ""
+
+msgid "invalid name field in tarball"
+msgstr "tarball里的名字域不对"
+
+msgid "checksum error for entry '%s'"
+msgstr "项目'%s'检查和错误"
+
+msgid "failed to copy %s to %s"
+msgstr "无法把%s拷贝到%s"
+
+msgid "unsupported entry type"
+msgstr "不支持这一项目种类"
+
+msgid "file '%s' not found"
+msgstr "找不到'%s'这一文件"
+
+msgid "file '%s' did not have execute permissions: corrected"
+msgstr ""
+
+msgid "file size is limited to 8GB"
+msgstr "文件大小限制为8GB"
+
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid ""
+"vignette %s found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"小文品%s有多个，\n"
+"用%s里的那一个"
+
+msgid "vignette %s not found"
+msgstr "没有找到小文品%s"
+
+#, fuzzy
+msgid "vignette %s has no PDF/HTML"
+msgstr "小文品%s没有PDF文件"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "没有找到小文品%s"
+
+msgid "select.list() cannot be used non-interactively"
+msgstr "select.list()不能在非互交形式下使用"
+
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
+
+#, fuzzy
+msgid "Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
+msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
+
+msgid "Invalid input, please try again"
+msgstr "输入不对，请再试一试"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "'quote'的值必需是'TRUE', 'FALSE' 或数值中的一个"
+
+msgid "invalid numbers in 'quote'"
+msgstr "'quote'里有不适当的数字"
+
+msgid "invalid 'quote' specification"
+msgstr "'quote'设定得不对"
+
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
+msgstr "row.names=FALSE时col.name=NA没有意义"
+
+msgid "invalid 'col.names' specification"
+msgstr "'col.names'设定得不对"
+
+msgid "appending column names to file"
+msgstr "给文件加列名"
+
+msgid "attempt to set '%s' ignored"
+msgstr "不能修改'%s'"
+
+msgid "'unzip' must be a single character string"
+msgstr "'unzip'必需是单字符串"
+
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
+msgstr "'files'必须指定一个或多个文件路径的字符向量"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "url必需的非空字符串"
+
+msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr "没有可以打开'mailto:'URIs的程序: 回复到'method=\"none\"'"
+
+msgid "Using the browser to open a mailto: URI"
+msgstr "用浏览器打开mailto: URI"
+
+msgid "must specify 'address'"
+msgstr "必需设定'address'"
+
+msgid "'subject' is missing"
+msgstr "缺少'subject'值"
+
+msgid "'ccaddress' must be of length 1"
+msgstr "'ccaddress'的长度必需为一"
+
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
+
+msgid "'headers' must have names and must not be NA"
+msgstr ""
+
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
+
+#, fuzzy
+msgid "'wget' call had nonzero exit status"
+msgstr "下载退出状态不是零"
+
+#, fuzzy
+msgid "'curl' call had nonzero exit status"
+msgstr "下载退出状态不是零"
+
+msgid "download had nonzero exit status"
+msgstr "下载退出状态不是零"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr "'tar'退出码为%d"
+
+#, fuzzy
+msgid "file %s is not a macOS binary package"
+msgstr "文件%s不是OS ​​X的二进制软件包"
+
+msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr "程序包%s打开成功，MD5和检查也通过"
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"错误：不能锁定目录%s进行修改\n"
+"尝试删除%s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "错误：无法建立锁定目录%s "
+
+msgid "restored %s"
+msgstr "回复了%s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "无法将临时安装%s搬到%s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "无法将拆除原来安装的程序包%s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"下载的二进制程序包在\n"
+"\t%s里"
+
+msgid "'memory.size()' is Windows-specific"
+msgstr "'memory.size()'只在Windows上有用"
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr "'memory.limit()'只在Windows上有用"
+
+msgid "method 'mailx' is Unix-only"
+msgstr "'mailx'只在Unix上有用"
+
+msgid "zip file %s not found"
+msgstr "找不到%s这一zip文件"
+
+msgid "failed to create %s"
+msgstr "无法建立%s"
+
+msgid "there is no 'libs' directory in package %s"
+msgstr "在程序包%s里找不到'libs'这个目录"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr "无法将临时安装%s搬到%s"
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr "无法将临时安装%s搬到%s"
+
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
+
+#, fuzzy
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()'只在Windows上有用"
+
+#, fuzzy
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()'只在Windows上有用"
+
+msgid "winDialog() cannot be used non-interactively"
+msgstr "winDialog()不能在非互交形式下使用"
+
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "winDialogString()不能在非互交形式下使用"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "找到了%d个不含路径文件字符串为%s的Sweave文件:"
+
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%2$s里%1$d出现"
+
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "角色设定得不对: %s"
+
+msgid "A bibentry of bibtype %s has to specify the field: %s"
+msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
+msgstr[0] "bibtype%s的条目必需设定这些项：%s"
+
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] "放弃不用列%s的类别"
+
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "%d个匹配对象。"
+
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
+msgstr[0] ""
+
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "找不到'%s'这个对象"
+
+msgid ""
+"Removing package from %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Removing packages from %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+"从%s中删除程序包\n"
+"(因为没有指定%s)"
+
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+msgid ""
+"A version of this package for your version of R might be available elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "没有%s这个程序包(给%s用)"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] "没有'%s'这种相依关系"
+
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "还安装相依关系%s"
+
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+msgid ""
+"Installing package into %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Installing packages into %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+"将程序包安装入%s\n"
+"(因为%s没有被指定)"
+
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
+msgstr[0] "'lib'元素%s不是可写目录"
+
+msgid "There is a binary version available but the source version is later"
+msgid_plural "There are binary versions available but the source versions are later"
+msgstr[0] "有二进制版本的，但源代码版本是后来的"
+
+#, fuzzy
+msgid "Do you want to install from sources the package which needs compilation?"
+msgid_plural "Do you want to install from sources the packages which need compilation?"
+msgstr[0] "你想从源代码安装的需要编译的程序包？"
+
+#, fuzzy
+msgid "Package which is only available in source form, and may need compilation of C/C++/Fortran"
+msgid_plural "Packages which are only available in source form, and may need compilation of C/C++/Fortran"
+msgstr[0] "程序包只以源代码的形式提供，有可能需要通过C/C++/Fortran语言编译"
+
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "安装源码包%s"
+
+msgid "package %s is available as a source package but not as a binary"
+msgid_plural "packages %s are available as source packages but not as binaries"
+msgstr[0] "程序包%s是源码包，但不是二进制包"
+
+msgid "There is a binary version available (and will be installed) but the source version is later"
+msgid_plural "There are binary versions available (and will be installed) but the source versions are later"
+msgstr[0] "有二进制版本（将被安装），但源代码版本是后来的"
+
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "最后一个记录不完全，%d行略过不用"
+
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
+msgstr[0] "罗马数字不对：%s"
+
+#~ msgid "bad argument"
+#~ msgstr "参数不对"
+
+#~ msgid "package %s not found"
+#~ msgstr "没有%s这一个程序包"
+
+#~ msgid "could not find package %s"
+#~ msgstr "找不到程序包%s"
+
+#~ msgid "Do you want to attempt to install these from sources?"
+#~ msgstr "你想从源代码尝试安装这些"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "无法在非互交的情况下选用BioC镜像"
+
+#~ msgid "no download method found"
+#~ msgstr "没有下载方法"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+#~ msgstr "如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""
+
+#~ msgid ""
+#~ "If nothing happens, you should open\n"
+#~ "'%s' yourself"
+#~ msgstr "如果什么都不发生的话，你应该自己打开'%s'"
+
+#~ msgid "test '%s' is not available"
+#~ msgstr "没有'%s'这种测试"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "安装出错，基本程序包里没有CITATION这一文件。"
+
+#~ msgid "Created PDF document %s"
+#~ msgstr "建立了PDF%s文件"
+
+#~ msgid "%d): succeeded '%s'"
+#~ msgstr "%d): 成功'%s'"
+
+#~ msgid "file path is too long"
+#~ msgstr "文件通路太长"
+
+#~ msgid "linked path is too long"
+#~ msgstr "链结的通路太长"
+
+#~ msgid "at least one field has to be specified"
+#~ msgstr "你至少需要填一项"
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "'name'的类别将被略过不用"
+
+#~ msgid "m < 0"
+#~ msgstr "m < 0"
+
+#~ msgid "n < m"
+#~ msgstr "n < m"
+
+#~ msgid "modes argument ignored"
+#~ msgstr "基本模式参数略过不用"
+
+#~ msgid "too many list items (at most up to number 3899)"
+#~ msgstr "串列项太多(最多只能有3899项("
+
+#~ msgid "Packages {readRDS() sequentially}:"
+#~ msgstr "程序包{顺序readRDS()}:"
+
+#~ msgid "."
+#~ msgstr "."
+
+#~ msgid "reencoding ..."
+#~ msgstr "重新编码"
+
+#~ msgid "saving the database ..."
+#~ msgstr "保存到数据库…"
+
+#~ msgid "... database rebuilt"
+#~ msgstr "…重新建立数据库"
+
+#~ msgid "Making packages.html  ..."
+#~ msgstr "制造packages.html …"
+
+#~ msgid "length mismatch: bug in code!"
+#~ msgstr "长度不对：程序里有虫!"
+
+#~ msgid "??"
+#~ msgstr "??"
+
+#~ msgid "call"
+#~ msgstr "调用"
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr "重建help.search()数据库"
+
+#~ msgid "..."
+#~ msgstr "…"
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr "程序包里没有hsearch.rds样的隐喻数据"
+
+#~ msgid "package"
+#~ msgstr "程序包"
+
+#~ msgid "not found"
+#~ msgstr "找不到"
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr "HTTPUserAgent"
+
+#~ msgid "Processing file"
+#~ msgstr "处理文件"
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "修改\n"
+#~ "试试删除"
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr "无法拆除原来安装的程序包"
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr "bibtype %s的条目必需正确地设定这些项：%s"
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr "'pb'不属于\"winProgressBar\"这一类别"
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr "无法通过LC_CTYPE关闭与地点有关的字符"
+
+#~ msgid "Creating directories ..."
+#~ msgstr "建立目录…"
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "建立DESCRIPTION…"
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "R 1.14.0以后所有的版本都要求每个程序包包含NAMESPACE这个文件"
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "建立NAMESPACE…"
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "建立Read-and-delete-me…"
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "保存函数和数据…"
+
+#~ msgid "Copying code files ..."
+#~ msgstr "拷贝程序文件…"
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "文件名无效，R代码在"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "现在被改名为'z<name>.R'"
+
+#~ msgid "Making help files ..."
+#~ msgstr "制造帮助文件…"
+
+#~ msgid "Done."
+#~ msgstr "做完了。"
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "'%s'里有详细内容"
+
+#~ msgid "Postscript offline help is deprecated"
+#~ msgstr "Postscript offline 脱机帮助已经不再用了"
+
+#~ msgid "running %s failed"
+#~ msgstr "执行%s失败"
+
+#~ msgid "%s produced no output file: sent to printer?"
+#~ msgstr "%s没有产生文件：是不是还要送到打印机？"
+
+#~ msgid "Use either 'given' or 'first'/'middle' but not both."
+#~ msgstr "要么用'given'，要么用'first'/'middle'，但不能两者都用"
+
+#~ msgid "It is recommended to use 'given' instead of 'middle'."
+#~ msgstr "我们建议你用'given'而不用'middle'。"
+
+#~ msgid "It is recommended to use 'family' instead of 'last'."
+#~ msgstr "我们建议你用'family'而不用'last'。"
+
+#~ msgid "It is recommended to use given/family instead of first/middle/last."
+#~ msgstr "我们建议用名/姓而不是名/中间名/姓"
+
+#~ msgid "A bibentry of bibtype '"
+#~ msgstr "参考项参考种类为'"
+
+#~ msgid "method is just applicable to 'bibentry' objects"
+#~ msgstr "这个方法不适用于'bibentry'对象"
+
+#, fuzzy
+#~ msgid "Enhanced authors specification provides no authors."
+#~ msgstr "详细作者规范中没有作者信息"
+
+#~ msgid "'namespace' must be a single logical"
+#~ msgstr "'namespace'必需是单独逻辑值"
+
+#~ msgid "Package '"
+#~ msgstr "程序包'"
+
+#~ msgid "You can now run LaTeX on '%s'"
+#~ msgstr "现在你可以在'%s'上运行LaTeX"
+
+#~ msgid "updating HTML package descriptions"
+#~ msgstr "更新HTML程序包的描述内容"
+
+#~ msgid "Could not find aspell or ispell executable."
+#~ msgstr "找不到aspell或ispell执行文件"
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "没有'lib'这个参数：改用%s"
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "没有'lib'这个参数：改用%s"
+
+#~ msgid "untar: using cmd ="
+#~ msgstr "untar：用cmd="
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "输入0个或多个由空格分开的数字"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr "找到了多个帮助文件：用程序包'%s'"
+
+#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+#~ msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""
+
+#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#~ msgstr "不推荐用chmhelp = TRUE：请用help_type =\"text\""
+
+#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+#~ msgstr "不推荐用htmhelp = TRUE：请用help_type =\"html\""
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr "用非联接文件：超联结有可能出错"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\")没有设好"
+
+#~ msgid ""
+#~ "No text help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "没有与'%s'有关的帮助文件:\n"
+#~ "帮助文件不存在"
+
+#~ msgid ""
+#~ "No offline help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "没有与'%s'有关的脱机帮助文件:\n"
+#~ "帮助文件不存在"
+
+#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
+#~ msgstr "包袱DESCRIPTION文件格式不对，没有Contains这一域"
+
+#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+#~ msgstr "成功地打开了包袱'%s'，MD5和检查也通过"
+
+#~ msgid ""
+#~ "No HTML help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "没有与'%s'有关的HTML帮助文件:\n"
+#~ "有关的文件不存在"
+
+#~ msgid "Compiled HTML is not installed"
+#~ msgstr "没有安装編譯过的HTML"
+
+#~ msgid "CHM file could not be displayed"
+#~ msgstr "无法显示CHM文件"
+
+#~ msgid ""
+#~ "No CHM help for '%s' in package '%s' is available:\n"
+#~ "the CHM file for the package is missing"
+#~ msgstr ""
+#~ "程序包'%2$s'里没有与'%1$s'有关的CHM帮助文件:\n"
+#~ "CHM文件不存在"
+
+#~ msgid "problems running R CMD Rdconv"
+#~ msgstr "调用R CMD Rdconv时出了错"
+
+#~ msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+#~ msgstr "将默认浏览器(由'browser'选项设定)改成目前指定的浏览器，这样未来所有的帮助要求都会由这个浏览器来控制。"
+
+#~ msgid "Making links in per-session dir ..."
+#~ msgstr "在每會期文件目录里建立联结…"
+
+#~ msgid "cannot create HTML package index"
+#~ msgstr "无法建立HTML程序包索引"
+
+#~ msgid "cannot create HTML search index"
+#~ msgstr "无法建立HTML搜索索引"
+
+#~ msgid "unable to find the HTML help"
+#~ msgstr "找不到HTML帮助文件"
+
+#~ msgid "updating HTML package listing"
+#~ msgstr "更新HTML程序包列表"
+
+#~ msgid "fixing URLs in non-standard libraries"
+#~ msgstr "修理非标准的图书馆里的URL"
+
+#~ msgid "cannot update '%s'"
+#~ msgstr "无法更新'%s'"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "多字節字符数据中有错。"
+
+#~ msgid "Cannot re-encode because 'iconv' is not available."
+#~ msgstr "因为没有'iconv'这个程序所以无法进行重新编码。"
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "请试试在单字节場所运行R。"
+
+#~ msgid "bundle '%s' is incompletely installed"
+#~ msgstr "包袱'%s'没有完全被装好"
+
+#~ msgid "bundle '%s' has extra contents %s"
+#~ msgstr "包袱'%s'里有多余的内容%s"
+
+#~ msgid "this function is intended to work with the Aqua GUI"
+#~ msgstr "此函数只能在Aqua GUI下有用"
+
+#~ msgid "Maintainer:"
+#~ msgstr "维修人:"
+
+#~ msgid "Index:"
+#~ msgstr "索引:"
+
+#~ msgid "Further information is available in the following vignettes:"
+#~ msgstr "以下的小文品里有其他信息:"
+
+#~ msgid "package title"
+#~ msgstr "程序包标题"
+
+#~ msgid "A concise (1-5 lines) description of the package"
+#~ msgstr "程序包的非常简明(1-5行) 的描述"
+
+#~ msgid "An overview of how to use the package, including the most important functions"
+#~ msgstr "如何用程序包的概况，包括最重要的函数"
+
+#~ msgid "The author and/or maintainer of the package"
+#~ msgstr "程序包的作者或维修人"
+
+#~ msgid "Literature or other references for background information"
+#~ msgstr "背景文选或其他参考材料"
+
+#~ msgid "Optional links to other man pages, e.g."
+#~ msgstr "可任意选择到其他帮助文件的联结，如"
+
+#~ msgid "simple examples of the most important functions"
+#~ msgstr "给最重要的函数的一些简单例子"
+
+#~ msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
+#~ msgstr "也可以用其他标准词汇，一行一个，在R文件目录中的KEYWORDS文件里列出"
+
+#~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+#~ msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
+
+#~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
+#~ msgstr "'sortby'的值不对。用sortby=\"score\""
+
+#~ msgid ""
+#~ "wrong restriction specified.\n"
+#~ "Using '%s'"
+#~ msgstr ""
+#~ "限制设定得不对。\n"
+#~ "用'%s'"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr "无法更新HTML搜索索引"
+
+#~ msgid "Unable to create temporary directory '%s'"
+#~ msgstr "无法建立临时目录'%s'"
+
+#~ msgid "dependency '%s' is not available"
+#~ msgid_plural "dependencies '%s' are not available"
+#~ msgstr[0] "没有'%s'这种相依关系"
+#~ msgstr[1] "没有'%s'这种相依关系"
+
+#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+#~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"

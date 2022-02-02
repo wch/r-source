@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Johnson &amp; Johnson, $ _ ### ^ ~</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for ver20"><tr><td>ver20</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Johnson &amp; Johnson,  $ _  ### ^ ~</h2>
+
+<h3>Description</h3>
+
+
+<p>This is the description
+</p>
+
+
+<h3>Arguments</h3>
+
+
+<table summary="R argblock">
+<tr valign="top"><td><code>foo</code></td>
+<td>
+<p>item 1</p>
+</td></tr>
+<tr valign="top"><td><code>bar</code></td>
+<td>
+<p>space, the item 2</p>
+</td></tr>
+<tr valign="top"><td><code>bah</code></td>
+<td>
+<p>newline, then item 3</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+
+<p><font face="Courier New,Courier" color="#666666"><b>R</b></font> <font face="Courier New,Courier" color="#666666"><b>R</b></font> \R <i>&alpha;&beta;&Gamma;</i>
+</p>
+<p>In code, all that needs to be escaped is percent, backslash and unpaired
+braces: <code>% \ {</code>. Unescaped: <code>$ # _ ^ ~ &lt; &gt; |</code>, and as a
+pair, <code>{...}</code>.  If we escape: <code> \_ \# \$ \&amp; { } \ </code>
+And some backslashes: <code>\ \ \\ \\</code> should
+give one, one, two, two backslashes.
+</p>
+<p>How about \ (that is backslash space) in text?
+</p>
+<p>Elsewhere, { } % \ need to be escaped, but not $ # _ ^ ~ &lt; &gt; | .
+Let's try that again in <code>\samp</code>: <span class="samp"> { } % \ $ # _ ^ ~ &lt; &gt; |</span>.
+And if we do escape: \$ \# \_ , and with three backslashes, \\#.
+</p>
+<p align="center"><i>a &lt; b &gt; c | d, x^y</i></p>
+
+<p align="center"><i>\$k &gt; \#k, x_y, x\_y</i></p>
+
+
+<p>group-weighting from $[N_iP_i(1-P_i)]$
+</p>
+<PRE>
+    % a
+    \
+    \% c
+    {
+    \{
+  </PRE>
+
+
+<h3>URLs and emails</h3>
+
+
+<p>URLs need to be verbatim:  <a href="testit ~^_$#<>|">testit ~^_$#&lt;&gt;|</a>.
+</p>
+<p>Markus Kuhn, &ldquo;ASCII and Unicode quotation marks&rdquo;.
+<a href="http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html">http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html</a>
+</p>
+<p>No escape is needed in <a href="mailto:Micah_Altman@harvard.edu">Micah_Altman@harvard.edu</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+"\\r\\n"
+</pre>
+
+
+</body></html>

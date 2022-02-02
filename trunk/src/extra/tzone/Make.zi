@@ -1,0 +1,31 @@
+## Makefile to be run on a Unix box with zic
+
+VERSION = 2021e
+TZDIR = zoneinfo
+TZTMP = tz
+TARFILE = tzdata$(VERSION).tar.gz
+
+## or ZIC = /usr/sbin/zic
+ZIC = zic
+
+all:
+	rm -Rf $(TZTMP)
+	mkdir $(TZTMP)
+	tar -C $(TZTMP) -zxf $(TARFILE)
+	rm -Rf $(TZDIR)
+	mkdir $(TZDIR)
+	(cd $(TZTMP); make -f ../Make.zi install)
+	echo $(VERSION) > $(TZDIR)/VERSION
+	rm -f zoneinfo.zip
+	zip -qr9X zoneinfo.zip $(TZDIR)
+	rm -Rf $(TZTMP) $(TZDIR)
+
+## omit Factory: meaningless.
+YDATA =	africa antarctica asia australasia europe northamerica southamerica \
+  etcetera backward
+TABDATA = iso3166.tab zone1970.tab zone.tab
+
+
+install: $(YDATA) $(TABDATA)
+	$(ZIC) -d ../$(TZDIR) -L /dev/null $(YDATA)
+	cp $(TABDATA) ../$(TZDIR)

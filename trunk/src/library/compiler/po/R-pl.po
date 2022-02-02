@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.4\n"
+
+msgid "namespace found within local environments"
+msgstr "przestrzeń nazw znaleziona wewnątrz lokalnych środowisk"
+
+msgid "not a proper evaluation environment"
+msgstr ""
+"dostarczony argument 'env' nie jest odpowiednim środowiskiem obliczeniowym"
+
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"obiekt niebędący przestrzenią nazw znaleziony wewnątrz środowisk przestrzeni "
+"nazw"
+
+msgid "namespace found within global environments"
+msgstr "przestrzeń nazw znaleziona wewnątrz globalnych środowisk"
+
+msgid "bad assignment: %s"
+msgstr "złe przypisanie: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "nie można ukryć stałych z dosłownymi obietnicami"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "nie można ukryć stałych dosłownych obiektów kodu bajtowego"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "nie zarejestrowano przesunięcia dla etykiety \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "nie można skompilować dosłownych bajtów kodu w kod"
+
+msgid "cannot compile promise literals in code"
+msgstr "nie można skompilować dosłownych obietnic w kod"
+
+msgid "possible error in '%s': %s"
+msgstr "prawdopodobny błąd w '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "zła przestrzeń nazw importowanej ramki"
+
+msgid "bad assignment 1"
+msgstr "złe przypisanie 1"
+
+msgid "bad assignment 2"
+msgstr "złe przypisanie 2"
+
+msgid "invalid function in complex assignment"
+msgstr "niepoprawna funkcja w zespolonym przypisaniu"
+
+msgid "missing arguments are not allowed"
+msgstr "brakujące argumenty nie są dozwolone"
+
+msgid "empty alternative in numeric switch"
+msgstr "pusta alternatywa w numerycznej instrukcji 'switch'"
+
+msgid "no visible global function definition for '%s'"
+msgstr "brak widocznej globalnej definicji funkcji dla '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "brak widocznego wiązania dla zmiennej globalnej '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "brak widocznego wiązania dla przypisania '<<-' do '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "błędna liczba argumentów w '%s'"
+
+msgid "more than one default provided in switch() call"
+msgstr "więcej niż jedna wartość domyślna dostarczona w wywołaniu 'switch()'"
+
+msgid "'switch' with no alternatives"
+msgstr "funkcja 'switch()' bez żadnych alternatyw"
+
+msgid "Error: compilation failed -"
+msgstr "Błąd: kompilacja nie powiodła się -"
+
+msgid "cannot compile a non-function"
+msgstr "nie można skompilować nie-funkcji"
+
+msgid "compiling '%s'"
+msgstr "kompilowanie '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "zapisywanie do pliku '%s' ..."
+
+msgid "done"
+msgstr "wykonano"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' musi być środowiskiem o najwyższym poziomie"
+
+msgid "input and output file names are the same"
+msgstr "nazwy plików wejścia i wyjścia są takie same"
+
+msgid "empty input file; no output written"
+msgstr "pusty plik wejściowy; brak zapisanego wyjścia"
+
+msgid "file '%s' does not exist"
+msgstr "plik '%s' nie istnieje"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' nie jest prawidłową opcją kompilatora"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "niepoprawa wartość zmiennej środowiskowej: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+"niepoprawne opcje kompilatora: 'optimize(==%d)<2' oraz 'jitEnabled(==%d)>2'"
+
+msgid "function is not compiled"
+msgstr "funkcja nie jest skompilowana"
+
+msgid "cannot compile this expression"
+msgstr "nie można skompilować tego wyrażenia"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "lokalne przypisanie do funkcji syntaktycznej:"
+msgstr[1] "lokalne przypisania do funkcji syntaktycznych:"
+msgstr[2] "lokalne przypisania do funkcji syntaktycznych:"
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns' musi być przestrzenią nazw lub przestrzenią nazw importującą "
+#~ "środowisko"
+
+#~ msgid "is not a registered math1 function"
+#~ msgstr ": to nie jest zarejestrowana funkcja math1"
+
+#~ msgid "%s is not a registered math1 function"
+#~ msgstr "%s nie jest zarejestrowaną funkcją 'math1'"

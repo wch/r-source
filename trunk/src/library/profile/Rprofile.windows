@@ -1,0 +1,76 @@
+###-*- R -*-
+
+## this will break if R is on a network share
+.Library <- file.path(chartr("\\", "/", R.home()), "library")
+
+.Library.site <- Sys.getenv("R_LIBS_SITE")
+if (!nzchar(.Library.site)) {
+    .Library.site <- .expand_R_libs_env_var('%S')
+    Sys.setenv(R_LIBS_SITE = .Library.site)
+}
+.Library.site <-
+    if(.Library.site == "NULL") character() else unlist(strsplit(.Library.site, ";"))
+.Library.site <- .Library.site[file.exists(.Library.site)]    
+    
+local({
+    libs <- Sys.getenv("R_LIBS_USER")
+    if (!nzchar(libs)) {
+        libs <- .expand_R_libs_env_var('%U')
+        Sys.setenv(R_LIBS_USER = libs)
+    }
+    libs <- if(libs == "NULL") character() else unlist(strsplit(libs, ";"))
+    invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
+                          libs)))
+})
+
+local({
+    popath <- Sys.getenv("R_TRANSLATIONS", "")
+    if(!nzchar(popath)) {
+        paths <- file.path(.libPaths(), "translations", "DESCRIPTION")
+        popath <- dirname(paths[file.exists(paths)][1])
+    }
+    bindtextdomain("R", popath)
+    bindtextdomain("R-base", popath)
+    bindtextdomain("RGui", popath)
+    assign(".popath", popath, .BaseNamespaceEnv)
+})
+
+if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
+    options(papersize = Sys.getenv("R_PAPERSIZE"))
+} else {
+    if(grepl("(canada|united.states)", Sys.getlocale("LC_MONETARY"),
+             ignore.case = TRUE)) options(papersize = "letter")
+    else options(papersize = "a4")
+}
+
+options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal",
+        useFancyQuotes = (.Platform$GUI == "Rgui"),
+        pdfviewer = Sys.getenv("R_PDFVIEWER", file.path(R.home("bin"), "open.exe")))
+
+if(.Platform$GUI == "Rgui")
+    Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1", GFORTRAN_STDERR_UNIT = "-1")
+
+local({
+    br <- Sys.getenv("R_BROWSER", NA_character_)
+    if(!is.na(br)) options(browser = br)
+    tests_startup <- Sys.getenv("R_TESTS")
+    if(nzchar(tests_startup)) source(tests_startup)
+    ca_cert <- Sys.getenv("CURL_CA_BUNDLE", NA_character_)
+    if(is.na(ca_cert) &&
+       file.exists(ca_path <- file.path(R.home("etc"), "curl-ca-bundle.crt")))
+        Sys.setenv(CURL_CA_BUNDLE = ca_path)
+})
+
+local({
+    setRtools42Path <- 0
+    # INSTALLER-BUILD: setRtools42Path <- 1
+
+    if (setRtools42Path) {
+        rthome <- Sys.getenv("RTOOLS42_HOME", "c:/rtools42")
+        rtpath <- paste0(rthome, "/x86_64-w64-mingw32.static.posix/bin;",
+                         rthome, "/usr/bin")
+        path <- Sys.getenv("R_CUSTOM_TOOLS_PATH", rtpath)
+        Sys.setenv(R_RTOOLS42_PATH = rtpath)
+        Sys.setenv(PATH = paste0(path, ";", Sys.getenv("PATH")))
+    }
+})

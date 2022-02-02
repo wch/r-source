@@ -1,0 +1,37 @@
+Files 
+
+R/detectCores.R
+R/unix/fork.R
+R/unix/mclapply/R
+R/unix/mcparallel.R
+R/unix/pvec.R
+src/fork.c
+man/unix/*.Rd
+
+are derived from package multicore by Simon Urbanek.
+
+Files
+
+R/clusterApply.R
+R/snow.R
+R/snowSOCK.R
+R/workers.R
+man/clusterApply.Rd
+man/makePSOCKcluster.Rd
+
+are derived from package snow by Luke Tierney
+
+
+Files
+R/RngStream.R
+R/unix/forkCluster.R
+R/zzz.R
+src/ncpus.c
+src/rngstream.c
+man/RngStream.Rd
+man/detectCores.Rd
+man/parallel-package.Rd
+vignettes/parallel.Rnw
+tests/*
+
+and the package infrastructure are by Brian Ripley

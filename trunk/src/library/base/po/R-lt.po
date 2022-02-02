@@ -1,0 +1,2267 @@
+# Lithuanian translations for base package.
+# Copyright (C) 2020-2021 The R Core Team
+# This file is distributed under the same license as the base package.
+# <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
+"PO-Revision-Date: 2021-01-27 10:37+0100\n"
+"Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' nepilnas."
+
+msgid "Use '%s' instead."
+msgstr "Vietoj to naudokite '%s'."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "Žiūrėkite help(\"Defunct\") ir help(\"%s-defunct\")."
+
+msgid "See help(\"Defunct\")"
+msgstr "Žiūrėkite help(\"Defunct\")"
+
+msgid "defunctError"
+msgstr "defunctError"
+
+msgid "'%s' is deprecated."
+msgstr "'%s' prieštaraujantis."
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "Žiūrėkite help(\"Deprecated\") ir help(\"%s-deprecated\")."
+
+msgid "See help(\"Deprecated\")"
+msgstr "Žiūrėkite help(\"Deprecated\")"
+
+msgid "deprecatedWarning"
+msgstr "deprecatedWarning"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "argumentas 'La.svd' turi būti skaitinis arba kompleksinis"
+
+msgid "infinite or missing values in 'x'"
+msgstr "begalinės arba trūkstamos reikšmės 'x'"
+
+msgid "a dimension is zero"
+msgstr "nulinis matavimo skaičius"
+
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr "\"all\" ir \"exact\" yra tarpusavyje nesuderinami"
+
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
+msgstr "\"hexNumeric\" ir \"digits17\" yra tarpusavyje nesuderinami"
+
+msgid "second argument must be a list"
+msgstr "antras argumentas turi būti sąrašas"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist' negalimas šioje sistemoje"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr ""
+"kind' turi būti simbolių eilutė, kurios ilgis 1 (RNG turi būti naudojamas)."
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' nėra tinkama RNG santrumpa"
+
+msgid "'normal.kind' must be a character string of length 1"
+msgstr "normal.kind' turi būti simbolių eilutė, kurios ilgis 1"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s' nėra tinkamas pasirinkimas"
+
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "'sample.kind' turi būti simbolių eilutė, kurios ilgis 1"
+
+msgid "malformed version string"
+msgstr "netaisyklinga versijos eilutė"
+
+msgid "target is %s, current is %s"
+msgstr "paskirtis %s, šiuo metu yra %s"
+
+msgid "'tolerance' should be numeric"
+msgstr "'tolerance' turi būti skaitinis"
+
+msgid "'scale' should be numeric or NULL"
+msgstr "'scale' turi būti skaitinis arba NULL"
+
+msgid "'%s' must be logical"
+msgstr "'%s' turi būti loginė reikšmė"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) ilgis turi būti teigiamas"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' turi turėti įvardytus dimnames"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "nevisi 'MARGIN' elementai yra matavimo skaičių vardai"
+
+msgid "'MARGIN' does not match dim(X)"
+msgstr "'MARGIN' neatitinka dim(X)"
+
+msgid "'dim' cannot be of length 0"
+msgstr "'dims' ilgis negali būti 0"
+
+msgid "'dim' specifies too large an array"
+msgstr "'dim' nurodo per didelį masyvą"
+
+msgid "'x' must have named dimnames"
+msgstr "'x' turi turėti įvardytus dimnames"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "neteisinga 'MARGIN' reikšmė"
+
+msgid "dim(x) must have a positive length"
+msgstr "dim(X) ilgis turi būti teigiamas"
+
+msgid "'pos=1' is not possible and has been warned about for years"
+msgstr "'pos=1' neįmanomas ir buvo įspėta prieš metus"
+
+msgid "file '%s' not found"
+msgstr "failas '%s' nerastas"
+
+msgid "invalid 'name' argument"
+msgstr "netaisyklingas 'name' argumentas"
+
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "paketas %s yra reikalaujamas %s, kuris gali nebeveikti tinkamai"
+
+msgid "package %s is required by %s so will not be detached"
+msgstr "paketas %s yra reikalaujamas %s , todėl jis nebus atskirtas"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
+"%s nepavyko %s() '%s', išsamiau:\n"
+"  kvietimas: %s\n"
+"  klaida: %s"
+
+msgid "%s namespace cannot be unloaded:"
+msgstr "%s vardų erdvė negali būti iškelta:"
+
+msgid "%s converted to character string"
+msgstr "%s pakeistas simbolių eilute"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "pakeistas reguliariojo reiškinio šablonas '[' by  '\\\\['"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "pakeistas '[<-' by '\\\\[<-' reguliariojo reiškinio šablone"
+
+msgid "'value' must be a list"
+msgstr "'value' turi būti sąrašas"
+
+msgid "an object with that name already exists"
+msgstr "objektas tokiu vardu jau yra"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "automatinis įkėliklis nerado '%s', esančio (-ios) '%s'"
+
+msgid "can only splice inside a call"
+msgstr "gali tik sujungti kvietimo viduje"
+
+msgid "can only splice vectors"
+msgstr "galima tik splice vektorius"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr "LINPACK argumentas nenaudojamas nuo R 3.1.0"
+
+msgid "complex matrices not permitted at present"
+msgstr "kompleksinė matrica nėra leistina šiuo metu"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x' turi būti mažiausiai dviejų matavimo skaičių masyvas"
+
+msgid "invalid 'dims'"
+msgstr "netaisyklinga 'dims'"
+
+msgid "condition handlers must be specified with a condition class"
+msgstr "sąlygos apdorojimo programos turi būti nurodytos su sąlygos klase"
+
+msgid "no 'restart' '%s' found"
+msgstr "'restart' '%s' nerasta"
+
+msgid "not an interactive session"
+msgstr "neinteraktyvi sesija"
+
+msgid "not a valid restart specification"
+msgstr "nėra tinkamos kartotinio paleidimo specifikacijos"
+
+msgid "condition handlers must be functions"
+msgstr "manipuliavimo programa turi būti funkcija"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr "stumiama dubliuota '%s' manipuliavimo programa dėklo viršuje"
+
+msgid "argument 'where' of length 0"
+msgstr "argumento 'where' ilgis 0"
+
+msgid "can only write character objects"
+msgstr "galima tik įrašyti ženklų objektus"
+
+msgid "'headers' must have names and must not be NA"
+msgstr "'headers' turi turėti pavadinimus ir negali būti NA"
+
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr ""
+"argumentas 'object' turi būti išnagrinėtas iki atskiros simbolių eilutės"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "'origin' turi būti vienas iš 'start', 'current' arba 'end'"
+
+msgid "can only truncate an open connection"
+msgstr "galima tik sutrumpinti atvirą ryšį"
+
+msgid "invalid 'endian' argument"
+msgstr "netaisyklingas 'endian' argumentas"
+
+msgid "can only write vector objects"
+msgstr "galima tik įrašyti vektorių objektus"
+
+msgid "'timeout' must be NULL or a non-negative number"
+msgstr "'timeout' turi būti NULL arba neneigiamas skaičius"
+
+msgid "'from' must be raw or character"
+msgstr "from' turi būti neapdoroti duomenys arba ženklas"
+
+msgid "'x' must be numeric"
+msgstr "'x' turi būti skaitinis"
+
+msgid "invalid number of intervals"
+msgstr "netinkamas intervalų skaičius"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks' nėra unikalūs"
+
+msgid "lengths of 'breaks' and 'labels' differ"
+msgstr "skiriasi 'breaks' ir 'labels' ilgiai"
+
+msgid "invalid 'row.names' length"
+msgstr "netaisyklingas 'row.names' ilgis"
+
+msgid "invalid 'make.names'"
+msgstr "netaisyklingas 'make.names'"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "negalimas 'row.names' pasikartojimas"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "trūkstamos reikšmės, esančios 'row.names' yra negalimos"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "neteisingas 'dimnames' suteiktas duomenų sistemai"
+
+msgid "cannot coerce class %s to a data.frame"
+msgstr "negalima paversti klasės %s į data.frame"
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
+"'row.names' nėra tekstinis vektorius, kurio ilgis %d - praleisti jį. Bus "
+"klaida!"
+
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+msgstr "options(\"stringsAsFactors\") nėra nustatyti TRUE arba FALSE"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "eilučių vardų nesutapimas 'data.frame' argumentuose, elementas %d"
+
+msgid "some row.names duplicated: %s --> row.names NOT used"
+msgstr "kai kurios row.names dubliuotos: %s --> row.names nenaudojamos"
+
+msgid "row names contain missing values"
+msgstr "eilučių varduose nėra reikšmių"
+
+msgid "duplicate row.names: %s"
+msgstr "pasikartojančios row.names: %s"
+
+msgid "arguments imply differing number of rows: %s"
+msgstr "argumentai reiškia skirtingą eilučių skaičių: %s"
+
+msgid "'row.names' should specify one of the variables"
+msgstr "'row.names' turi nurodyti vieną iš kintamųjų"
+
+msgid "row names supplied are of the wrong length"
+msgstr "netinkami pateikti eilučių vardų ilgiai"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "eilučių vardai surasti iš trumpųjų kintamųjų ir todėl atmesti"
+
+msgid "named arguments other than 'drop' are discouraged"
+msgstr "įvardyti argumentai, išskyrus 'drop', yra varžomi"
+
+msgid "'drop' argument will be ignored"
+msgstr "'drop' argumentas bus ignoruojamas"
+
+msgid "undefined columns selected"
+msgstr "pažymėti neapibrėžti stulpeliai"
+
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "įvardyti argumentai, išskyrus 'exact', yra varžomi"
+
+msgid "named arguments are discouraged"
+msgstr "įvardyti argumentai yra varžomi"
+
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr "keičiamų elementų skaičius nėra keičiamo ilgio kartotinis"
+
+msgid "'value' is the wrong length"
+msgstr "'value' ilgis neteisingas"
+
+msgid "unsupported matrix index in replacement"
+msgstr "pakeitime matricos rodyklė nepalaikoma"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "turi būti 0, 1 arba 2 indeksai"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr ""
+"trūkstamos reikšmės negalimos indeksuotuose duomenų sistemos priskyrimuose"
+
+msgid "non-existent rows not allowed"
+msgstr "neegzistuojančios eilutės neleidžiamos"
+
+msgid "column name \"\" cannot match any column"
+msgstr "stulpelio vardas \"\" negali sutapti su jokiu stulpeliu"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "nauji stulpeliai paliktų tarpus po esamais stulpeliais"
+
+msgid "duplicate subscripts for columns"
+msgstr "pasikartojantys stulpelių indeksai"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "tik tinkami kreipiniai yra x[[j]] <- value arba x[[i,j]] <- value"
+
+msgid "replacing element in non-existent column: %s"
+msgstr "elemento pakeitimas neegzistuojančiame stulpelyje: %s"
+
+msgid "only a single element should be replaced"
+msgstr "turėtų būti pakeisti tik atskiri elementai"
+
+msgid "names do not match previous names"
+msgstr "vardai nesutampa su ankstesniais vardais"
+
+msgid "numbers of columns of arguments do not match"
+msgstr "argumentų stulpelių skaičiai nesutampa"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr ""
+"netaisyklingas sąrašo argumentas: visi kintamieji turėtų būti to paties ilgio"
+
+msgid "<0 rows> (or 0-length row.names)"
+msgstr "<0 eilučių> (arba 0-ilgio row.names)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr "neteisingas 'max' / getOption(\"max.print\"):"
+
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
+msgstr "neskaitinis kintamasis (-ieji) duomenų sistemoje:"
+
+msgid ","
+msgstr ","
+
+msgid "%s only defined for equally-sized data frames"
+msgstr "%s tik apibrėžtas vienodo dydžio duomenų sistemoms"
+
+msgid "list of length %d not meaningful"
+msgstr "%d ilgio sąrašas nėra prasmingas"
+
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
+msgstr "apibrėžtas tik duomenų sistemoje su visais skaitiniais kintamaisiais"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "nėra duomenų sistemos"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr ""
+"netaisyklingas sąrašo argumentas: visi kintamieji turėtų būti to paties ilgio"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "ženklų eilutė nėra standartiniame vienareikšmiame formate"
+
+msgid "'origin' must be supplied"
+msgstr "origin' turi būti pateikta"
+
+msgid "do not know how to convert '%s' to class %s"
+msgstr "nežinoma kaip konvertuoti '%s' į klasę %s"
+
+msgid "binary + is not defined for \"Date\" objects"
+msgstr "dvejetainis + neapibrėžtas \"Date\"\" objektams"
+
+msgid "can only subtract from \"Date\" objects"
+msgstr "galima tik atimti iš \"Date\" objektų"
+
+msgid "unary - is not defined for \"Date\" objects"
+msgstr "vienvietis - neapibrėžtas \"Date\" objektams"
+
+msgid "can only subtract numbers from \"Date\" objects"
+msgstr "galima tik atimti skaičius iš \"Date\" objektų"
+
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "vienvietė %s neapibrėžta \"Date\" objektams"
+
+msgid "%s not defined for \"Date\" objects"
+msgstr "%s neapibrėžtas \"Date\" objektams"
+
+msgid "'from' must be specified"
+msgstr "'from' turi būti apibrėžtas"
+
+msgid "'from' must be a \"Date\" object"
+msgstr "'from' turi būti \"Date\" objektas"
+
+msgid "'from' must be of length 1"
+msgstr "'from' ilgis turi būti 1"
+
+msgid "'to' must be a \"Date\" object"
+msgstr "'to' turi būti \"Date\" objektas"
+
+msgid "'to' must be of length 1"
+msgstr "'to' ilgis turi būti 1"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out' ilgis turi būti 1"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr ""
+"tiksliai du iš 'to', 'by' ir 'length.out' / 'along.with' turi būti nurodyti"
+
+msgid "'by' must be of length 1"
+msgstr "'by' ilgis turi būti 1"
+
+msgid "invalid 'by' string"
+msgstr "netaisyklinga 'by' eilutė"
+
+msgid "invalid string for 'by'"
+msgstr "netaisyklinga 'by' eilutė"
+
+msgid "invalid mode for 'by'"
+msgstr "neteisingas 'by' tipas"
+
+msgid "'by' is NA"
+msgstr "'by' yra NA"
+
+msgid "'x' must be a date-time object"
+msgstr "'x' turi būti datos-laiko objektas"
+
+msgid "invalid specification of 'breaks'"
+msgstr "netinkama 'breaks' specifikacija"
+
+msgid "'origin' must be of length one"
+msgstr "'origin' ilgis turi būti 1"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag' ir 'differences' turi būti sveikieji skaičiai >= 1"
+
+msgid "unable to deduce timezone name from"
+msgstr "negalima nustatyti laiko juostos pavadinimo iš"
+
+msgid "wrong class"
+msgstr "neteisinga klasė"
+
+msgid "binary '+' is not defined for \"POSIXt\" objects"
+msgstr "dvejetainis '+' neapibrėžtas \"POSIXt\" objektams"
+
+msgid "can only subtract from \"POSIXt\" objects"
+msgstr "galima tik atimti iš \"POSIXt\" objektų"
+
+msgid "unary '-' is not defined for \"POSIXt\" objects"
+msgstr "vienvietis '-' neapibrėžtas \"POSIXt\" objektams"
+
+msgid "can only subtract numbers from \"POSIXt\" objects"
+msgstr "galima tik atimti skaičius iš \"POSIXt\" objektų"
+
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "vienvietis '%s' neapibrėžtas \"POSIXt\" objektams"
+
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "'%s' neapibrėžtas \"POSIXt\" objektams"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr "'tzone' atributai nenuoseklūs"
+
+msgid "'tim' is not character or numeric"
+msgstr "tim' nėra ženklas ar skaitinis"
+
+msgid "need explicit units for numeric conversion"
+msgstr "reikia išreikštinių vienetų skaitiniam konvertavimui"
+
+msgid "invalid units specified"
+msgstr "nurodyti netaisyklingi vienetai"
+
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "vienvietė '%s' neapibrėžta \"difftime\" objektams"
+
+msgid "'%s' not defined for \"difftime\" objects"
+msgstr "'%s' neapibrėžtas \"difftime\" objektams"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "abu * argumentai negali būti \"difftime\" objektai"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "antras argumentas / negali būti \"difftime\" objektas"
+
+msgid "'from' must be a \"POSIXt\" object"
+msgstr "'from' turi būti \"POSIXt\" objektas"
+
+msgid "'to' must be a \"POSIXt\" object"
+msgstr "'to' turi būti \"POSIXt\" objektas"
+
+msgid "component subscript must be a character string"
+msgstr "komponento apatinis indeksas turi būti simbolių eilutė"
+
+msgid "no Olson database found"
+msgstr "nerasta OLSON duomenų bazė"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' turi būti simbolių eilutė ar ryšys"
+
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Netinkamas DCF formatas.\n"
+"Įprastos eilutės turi turėti žymę.\n"
+"Sugadintos eilutės prasideda:\n"
+"%s"
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Netinkamas DCF formatas.\n"
+"Tęsinės eilutės neturėtų pradėti įrašo.\n"
+"Sugadintos eilutės prasideda:\n"
+"%s"
+
+msgid "failed to load the methods package for debugging by signature"
+msgstr "nepavyko įkelti metodų paketo, skirto derinimui parašu"
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr "nepavyko įkelti metodų paketo, skirto nederinti pagal parašą"
+
+msgid "failed to load methods package for handling signature"
+msgstr "nepavyko įkelti metodų paketo tvarkant parašą"
+
+msgid "'x' must be a square matrix"
+msgstr "'x' turi būti kvadratinė matrica"
+
+msgid "'determinant' not currently defined for complex matrices"
+msgstr "šiuo metu 'determinant' neapibrėžtas kompleksinėms matricoms"
+
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr "nrow' arba 'ncol' negali būti apibrėžti, kai 's' yra matrica"
+
+msgid "'x' is an array, but not one-dimensional."
+msgstr "'x' yra masyvas, bet ne vieno matavimo skaičiaus."
+
+msgid "only matrix diagonals can be replaced"
+msgstr "pakeistos gali būti tik matricos įstrižainės"
+
+msgid "replacement diagonal has wrong length"
+msgstr "neteisingas įstrižainės pakeitimo ilgis"
+
+msgid "MARGIN = %s is invalid for dim = %s"
+msgstr "MARGIN = %s neteisinga dim = %s"
+
+msgid "must pass a package name, %s or %s object"
+msgstr "turi pereiti paketo vardą, %s ar %s objektą"
+
+msgid "No DLL currently loaded with name or path %s"
+msgstr "Šiuo metu nėra įkeltos DLL su vardu ar keliu %s"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "kelių DLL atitikimas '%s'. Naudojant '%s'"
+
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
+msgstr "reikia nurodyti DLL per %s objektą. Žiūrėkite getLoadedDLLs()"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "funkcija nėra vardų erdvėje, todėl negalima rasti susijusios DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"ieškant DLL savosios programos iškvietimui, bet ne DLLs kreipinio vardų "
+"erdvėje"
+
+msgid "0 x 0 matrix"
+msgstr "0 x 0 matrica"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "ne kvadratinė matrica, esanti 'eigen'"
+
+msgid "invalid nrow(x)"
+msgstr "neteisingas nrow(x)"
+
+msgid "invalid 'labels'; length %d should be 1 or %d"
+msgstr "negaliojančios 'labels'; %d ilgis turėtų būti 1 arba %d"
+
+msgid "number of levels differs"
+msgstr "lygių skaičius skiriasi"
+
+msgid "%s not meaningful for factors"
+msgstr "%s nėra reikšmingas faktoriams"
+
+msgid "level sets of factors are different"
+msgstr "faktorių lygių rinkiniai yra skirtingi"
+
+msgid "invalid factor level, NA generated"
+msgstr "neteisingas faktoriaus lygmuo, NA sugeneruotas"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s' nėra reikšmingas sutvarkytiesiems faktoriams"
+
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s' neapibrėžtas sutvarkytiesiems faktoriams"
+
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr ""
+"'%s' yra tik reikšminga sutvarkytiesiems faktoriams, jei visi argumentai yra "
+"to paties lygio rinkiniai"
+
+msgid "no files to copy to"
+msgstr "nėra failo kopijuoti į"
+
+msgid "attempt to copy a directory to itself"
+msgstr "bandymas kopijuoti katalogą į jį patį"
+
+msgid "more 'from' files than 'to' files"
+msgstr "daugiau 'from' failų negu 'to' failų"
+
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr "recursive' bus ignoruojama, kai 'to' nėra atskiras esantis katalogas"
+
+msgid "cannot overwrite a non-directory with a directory"
+msgstr "negalima perrašyti ne katalogo su katalogu"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "failas negali būti nukopijuotas ir 'from', ir 'to'"
+
+msgid "no files to link from"
+msgstr "nėra failo susieti iš"
+
+msgid "no files/directory to link to"
+msgstr "nėra failų/katalogų susieti su"
+
+msgid "no files to link to"
+msgstr "nėra failų susieti su"
+
+msgid "'package' must be of length 1"
+msgstr "'package' ilgis turi būti 1"
+
+msgid "no file found"
+msgstr "nerastas joks failas"
+
+msgid "invalid 'path' argument"
+msgstr "netaisyklingas 'path' argumentas"
+
+msgid "invalid 'time' argument"
+msgstr "netaisyklingas 'time' argumentas"
+
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
+msgstr "'vec' turi būti surikiuotas nemažėjančiai ir neturėti NA"
+
+msgid "'fun' is not a function"
+msgstr "'fun' nėra funkcija"
+
+msgid "using the first element of 'value' of type \"expression\""
+msgstr "naudojant pirmąjį 'value' elementą, kurio tipas \"expression\""
+
+msgid "Found no format() method for class \"%s\""
+msgstr "Nerastas klasės \"%s\" format() metodas"
+
+msgid "class of 'x' was discarded"
+msgstr "'x' klasė buvo atmesta"
+
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "'arg' ilgis turi būti eilutė, pvz., 1 ilgio"
+
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "'flag' gali būti tik simbolis iš [0+- #'I]"
+
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' turi būti \"double\" (\"real\"), \"integer\" arba \"character\""
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "argumento pavertimas į \"character\" dėl format=\"s\""
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format' turi būti vienas iš {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+
+msgid "'digits' reduced to %d"
+msgstr "'digits' sumažintas iki %d"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr "sugadinta duomenų sistema: stulpeliai sutrumpinti arba pilni NAs"
+
+msgid "'zero.print' has length > 1"
+msgstr "'zero.print' ilgis > 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "'zero.print' turi būti ženklas, loginė reikšmė arba NULL"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
+"'zero.print' yra sutrumpintas, kad tilptų į suformatuotus nulius; "
+"apsvarstyti 'replace=TRUE'"
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr "'big.mark' ir 'decimal.mark', kurie yra '%s', gali būti klaidinantys"
+
+msgid "'input.d.mark' has no characters"
+msgstr "'input.d.mark' neturi simbolių"
+
+msgid "'subset' must be logical"
+msgstr "'subset' turi būti loginė reikšmė"
+
+msgid "value for %s not found"
+msgstr "%s reikšmė nerasta"
+
+msgid "all arguments must be named"
+msgstr "visi argumentai turi būti įvardyti"
+
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "'drop' argumentas bus ignoruojamas"
+
+msgid "match distance components must be non-negative"
+msgstr "atitinkami atstumo komponentai turi būti neneigiami"
+
+msgid "unknown match distance components ignored"
+msgstr "ignoruojami nežinomi atitinkami atstumo komponentai"
+
+msgid "unknown cost components ignored"
+msgstr "nežinomi kainos komponentai ignoruojami"
+
+msgid "cost components must be non-negative"
+msgstr "kainos komponentai turi būti neneigiami"
+
+msgid "%s and %s must have the same length"
+msgstr "%s ir %s turi būti tokio paties ilgio"
+
+msgid "need non-overlapping matches for %s"
+msgstr "turi būti nesutampantys atitikmenys %s"
+
+msgid "missing replacement values are not allowed"
+msgstr "trūkstamų reikšmių pakeitimas negalimas"
+
+msgid "must have replacement values for matches"
+msgstr "privalo turėti reikšmių pakeitimus suderinimui"
+
+msgid "value does not provide any replacement values"
+msgstr "reikšmė nepateikia jokių pakeitimo reikšmių"
+
+msgid "must have replacements for non-matches"
+msgstr "privalo turėti pakeitimus nesuderinimui"
+
+msgid "must have replacements for matches"
+msgstr "privalo turėti pakeitimus suderinimui"
+
+msgid "No factors specified"
+msgstr "Nėra nurodytų faktorių"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr "norma '%s' šiuo metu visada naudoja exact = FALSE"
+
+msgid "triangular matrix should be square"
+msgstr "trikampė matrica turi būti kvadratinė"
+
+msgid "unknown conflict policy: %s"
+msgstr "nežinoma konfliktų politika: %s"
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr "galima naudoti tik vieną iš 'include.only' ir 'exclude'"
+
+msgid "package %s has not been installed properly"
+msgstr "paketas %s įdiegtas neteisingai"
+
+msgid "package %s was built before R 3.0.0: please re-install it"
+msgstr "paketas %s buvo sukurtas prieš R 3.0.0: prašome įdiegti iš naujo"
+
+msgid "This is R %s, package %s needs %s %s"
+msgstr "Tai yra R %s, paketas %s reikalauja %s %s"
+
+msgid "package %s was built under R version %s"
+msgstr "paketas %s buvo sukurtas pagal R versiją %s"
+
+msgid "package %s was built for %s"
+msgstr "paketas %s buvo sukurtas %s"
+
+msgid "package %s is not installed for 'arch = %s'"
+msgstr "paketas %s neįdiegtas 'arch = %s'"
+
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr ""
+"Konfliktai pridedant paketą %s:\n"
+"%s"
+
+msgid "packageConflictError"
+msgstr "packageConflictError"
+
+msgid "Attaching package: %s"
+msgstr "Pridedamas paketas: %s"
+
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr "verbose' ir 'quietly' yra teisingi; yra daugiažodis kai.."
+
+msgid "invalid package name"
+msgstr "netaisyklingas paketo vardas"
+
+msgid "there is no package called %s"
+msgstr "nėra paketo iškviesto %s"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "'lib.loc' bibliotekų medžiai nerasti"
+
+msgid "%s is not a valid installed package"
+msgstr "%s nėra tinkamai įdiegtas paketas"
+
+msgid "%s not found on search path, using pos = 2"
+msgstr "%s nerastas paieškos kelyje naudojant pos = 2"
+
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
+msgstr ""
+"Paketo %s versija %s negali būti iškelta:\n"
+" %s"
+
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
+msgstr ""
+"paketo arba vardų srities apkrova nepavyko %s%s:\n"
+" %s"
+
+msgid "package %s does not have a namespace and should be re-installed"
+msgstr "pakete %s nėra vardų erdvės, turi būti įdiegtas iš naujo"
+
+msgid "package %s already present in search()"
+msgstr "paketas %s jau yra search()"
+
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
+msgstr "'DESCRIPTION' turi 'Encoding' lauką ir perkodavimas negalimas"
+
+msgid "%sPackages in library %s:"
+msgstr "%sPackages bibliotekoje %s:"
+
+msgid "no packages found"
+msgstr "paketai nerasi"
+
+msgid "R packages available"
+msgstr "R paketas prieinamas"
+
+msgid "DLL %s not found: maybe not installed for this architecture?"
+msgstr "DLL %s nerast: galbūt neįdiegta šioje architektūroje?"
+
+msgid "shared object %s not found"
+msgstr "bendrintas objektas %s nerastas"
+
+msgid "DLL %s already loaded"
+msgstr "DLL %s jau įkelta"
+
+msgid "shared object '%s' already loaded"
+msgstr "bendrintas objektas '%s' jau įkeltas"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "dabar dyn.load(\"%s\") ..."
+
+msgid "no DLL was specified"
+msgstr "nenurodyta DLL"
+
+msgid "no shared object was specified"
+msgstr "nenurodyti bendri objektai"
+
+msgid "DLL %s was not loaded"
+msgstr "DLL %s nebuvo įkelta"
+
+msgid "shared object %s was not loaded"
+msgstr "bendrintas objektas %s neįkeltas"
+
+msgid "DLL %s not found"
+msgstr "DLL %s nerasta"
+
+msgid "shared object '%s' not found"
+msgstr "bendrintas objektas '%s' nerastas"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "dabar dyn.unload(\"%s\") ..."
+
+msgid "Loading required package: %s"
+msgstr "Įkeliamas reikalingas paketas: %s"
+
+msgid "none of the packages are loaded"
+msgstr "neįkeltas nė vienas iš paketų"
+
+msgid ""
+"package %s found more than once, using the first from\n"
+"  %s"
+msgstr ""
+"paketas %s rastas daugiau nei vieną kartą, naudojant pirmąjį iš\n"
+"  %s"
+
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
+msgstr "Daugiau informacijos galima rasti šiame vinječių kataloge %s:"
+
+msgid "Description:"
+msgstr "Aprašas:"
+
+msgid "Index:"
+msgstr "Rodyklė:"
+
+msgid "Information on package %s"
+msgstr "Informacija apie paketą %s"
+
+msgid "Documentation for package %s"
+msgstr "Paketo %s dokumentacija"
+
+msgid "package %s required by %s could not be found"
+msgstr "paketas %s reikalaujamas %s nerastas"
+
+msgid "version %s of %s masked by %s in %s"
+msgstr "%s versija %s, kurią užmaskavo %s %s"
+
+msgid "package %s could not be loaded"
+msgstr "paketas %s negali būti įkeltas"
+
+msgid "empty (zero-byte) input file"
+msgstr "tuščias (nulis baitų) įvesties failas"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "įvestis sugadinta su LF, kuris pakeistas CR"
+
+msgid "bad 'file' argument"
+msgstr "netinkamas 'file' argumentas"
+
+msgid "'file' must be specified"
+msgstr "'file' turi būti apibrėžtas"
+
+msgid "nothing specified to be save()d"
+msgstr "niekas nenurodyta, kad būtų save()d"
+
+msgid "'file' must be non-empty string"
+msgstr "'file' turi būti netuščia eilutė"
+
+msgid "'compress' must be logical or character"
+msgstr "compress' turi būti loginė reikšmė arba ženklas"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr "'compress = \"%s\"' yrs neteisingas"
+
+msgid "bad file argument"
+msgstr "netinkamas failo argumentas"
+
+msgid "can only save to a binary connection"
+msgstr "galima išsaugoti tik į dvejetainį ryšį"
+
+msgid "image could not be renamed and is left in %s"
+msgstr "paveikslas negali būti pervardytas ir jis paliktas %s"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[Atkurta anksčiau išsaugota darbo aplinka]"
+
+msgid "Attempting to load the environment %s"
+msgstr "Bandymas įkelti aplinką %s"
+
+msgid "Specified environment not found: using '.GlobalEnv' instead"
+msgstr "Nurodyta aplinka nerasta, vietoj to naudojama '.GlobalEnv'"
+
+msgid "invalid 'category' argument"
+msgstr "netaisyklingas 'category' argumentas"
+
+msgid "must specify names of formal arguments for 'vectorize'"
+msgstr "reikia nurodyti formaliųjų argumentų vardus 'vectorize'"
+
+msgid "FUN"
+msgstr "FUN"
+
+msgid "may not have argument(s) named"
+msgstr "gali būti, kad nėra argumento (-ų), pavadintų"
+
+msgid "'arg' must be NULL or a character vector"
+msgstr "'arg' turi būti NULL arba tekstinis vektorius"
+
+msgid "'arg' must be of length 1"
+msgstr "'arg' ilgis turi būti 1"
+
+msgid "'arg' must be of length >= 1"
+msgstr "'arg' ilgis turi būti >= 1"
+
+msgid "'arg' should be one of %s"
+msgstr "'arg' turi būti vienas iš %s"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "yra daugiau nei viena atitiktis 'match.arg'"
+
+msgid "no match"
+msgstr "nėra atitikties"
+
+msgid "'input' must have length 1"
+msgstr "'input' ilgis turi būti 1"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "input' ir 'target' turi būti tekstinis vektoriai"
+
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "nėra duomenų sistemos"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' nėra funkcija, ženklas ar simbolis"
+
+msgid "found non-function '%s'"
+msgstr "rasta ne funkcija '%s'"
+
+msgid "attempt to set 'rownames' on an object with no dimensions"
+msgstr "bandymas nustatyti 'rownames' objekte su nuliniu matavimo skaičiumi"
+
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
+msgstr ""
+"bandymas nustatyti 'colnames' objekte su mažiau negu dviejų matavimų skaičius"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "argumentas nėra skaitinė ar loginė reikšmė, grąžinama NA"
+
+msgid "'trim' must be numeric of length one"
+msgstr "'trim' turi būti ilgio 1 realusis skaičius"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "apkarpytos priemonės nėra apibrėžtos sudėtingiems duomenims"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by' turi atitikti stulpelių skaičius"
+
+msgid "'by' must match number of columns"
+msgstr "'by' turi atitikti stulpelių skaičius"
+
+msgid "'by' must specify one or more columns as numbers, names or logical"
+msgstr ""
+"'by' turi nurodyti vieną ar daugiau stulpelių kaip skaičiai, vardai ar "
+"loginės reikšmės"
+
+msgid "long vectors are not supported"
+msgstr "ilgi vektoriai yra negalimi"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x' ir 'by.y' nurodo skirtingus stulpelių skaičius"
+
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr "'incomparables' palaikomas tik sujungiant atskirus stulpelius"
+
+msgid "additional arguments ignored in message()"
+msgstr "papildomi argumentai ignoruojami message()"
+
+msgid ""
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
+msgstr ""
+"sekimo funkcijoms reikalingas 'methods' paketas, bet negalima įkelti "
+"'methods' vardų erdvės"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr "negalima pakeisti faktoriaus saugojimo tipo"
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
+msgstr ""
+"vardų erdvės %s nėra ir buvo pakeista\n"
+".GlobalEnv apdorojant objekto %s"
+
+msgid "namespace is already attached"
+msgstr "vardų erdvė jau pridėta"
+
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr ""
+"nerasta namespace %s: \n"
+"\n"
+"%s"
+
+msgid "%s not found"
+msgstr "%s nerastas"
+
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "vardų erdvė %s %s jau įkelta, bet turi būti %s %s"
+
+msgid "- loading"
+msgstr ""
+
+msgid "namespace %s is already sealed in 'loadNamespace'"
+msgstr "vardų erdvė %s jau patvirtinta 'loadNamespace'"
+
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
+msgstr ""
+"nepavyko priskirti RegisteredNativeSymbol %s, į %s nuo %s jau yra apibrėžtas "
+"%s vardų erdvėje"
+
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
+"nepavyko priskirti NativeSymbolInfo %s į %s nuo %s jau yra apibrėžtas %s "
+"vardų erdvėje"
+
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
+"nepavyko priskirti NativeSymbolInfo %s nuo %s jau yra apibrėžtas %s vardų "
+"erdvėje"
+
+msgid "package %s does not have a namespace"
+msgstr "pakete %s nėra vardų erdvės"
+
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "paketas %s buvo įdiegtas prieš R 4.0.0: prašome iš naujo įdiegti jį"
+
+msgid "namespace %s %s is being loaded, but %s %s is required"
+msgstr "vardų erdvė %s %s įkeliama, bet turi būti %s %s"
+
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "paketas %s neturi 'package.rds', esančio Meta/"
+
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr ""
+"pakete %s yra licencija, su kuria turite sutikti interaktyvioje sesijoje"
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr "pakete %s yra licencija, su kuria turite sutikti po peržiūros"
+
+msgid "package %s has a license that you need to accept:"
+msgstr "pakete %s yra licencija, su kuria turite sutikti:"
+
+msgid "according to the DESCRIPTION file it is"
+msgstr "pagal failą DESCRIPTION tai yra"
+
+msgid "%s"
+msgstr "%s"
+
+msgid "license for package %s not accepted"
+msgstr "paketo %s licencija nepriimta"
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+"paketą %s įdiegė R versija; ji turi būti iš naujo įdiegta naudojantis šia R "
+"versija"
+
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
+msgid "unable to load R code in package %s"
+msgstr "negalima įkelti R kodo pakete %s"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
+
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr "S4 eksportas nurodytas 'NAMESPACE', bet neapibrėžtas %s pakete"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "neteisinga klasė"
+
+msgid ""
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
+msgstr ""
+"'exportClassPattern' apibrėžtas 'NAMESPACE', bet neatitinka klasių pakete %s"
+
+msgid "in package %s classes %s were specified for export but not defined"
+msgstr "pakete %s klasės %s nurodytos eksportui, bet neapibrėžtos"
+
+msgid "no function found corresponding to methods exports from %s for: %s"
+msgstr "nerasta funkcija atitinkanti metodus eksportuoti iš %s: %s"
+
+msgid "in %s methods for export not found: %s"
+msgstr "eksporto %s metoduose nerasta: %s"
+
+msgid "---- export method"
+msgstr ""
+
+msgid "multiple methods tables found for %s"
+msgstr "daugybinių metodų lentelės rastos %s"
+
+msgid "failed to find metadata object for %s"
+msgstr "nepavyko surasti metaduomenų objekto %s"
+
+msgid "in package %s methods %s were specified for export but not defined"
+msgstr "pakete %s metodai %s nurodyti eksportui, bet neapibrėžti"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
+
+msgid "Loading required namespace: %s"
+msgstr "Įkeliama reikalinga vardų erdvė: %s"
+
+msgid "not loading a namespace"
+msgstr "vardų erdvė neįkeliama"
+
+msgid "namespace %s is imported by %s so cannot be unloaded"
+msgstr "vardų erdvė %s importuojama pagal %s, todėl negali būti iškelta"
+
+msgid "not a namespace"
+msgstr "nėra vardų erdvės"
+
+msgid "operation not allowed on base namespace"
+msgstr "operacija negalima pagrindinėje vardų erdvėje"
+
+msgid "duplicate import names %s"
+msgstr "pasikartojantys importo vardai %s"
+
+msgid "replacing local value with import %s when loading %s"
+msgstr "pozicijos reikšmės pakeitimas importu %s kai įkeliamas %s"
+
+msgid "cannot import into a sealed namespace"
+msgstr "negalima importuoti į patvirtintą vardų erdvę"
+
+msgid "replacing previous import by %s when loading %s"
+msgstr "%s pakeičia ankstesnį importą, kai įkeliamas %s"
+
+msgid "invalid import target"
+msgstr "neteisinga importo paskirtis"
+
+msgid "found methods to import for function %s but not the generic itself"
+msgstr "rasti metodai, skirti importuoti funkcijai %s, bet ne į bendrinį patį"
+
+msgid "replacing previous import %s by %s when loading %s"
+msgstr "ankstesnį importą %s pakeičia %s, kai įkeliamas %s"
+
+msgid ""
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
+msgstr ""
+"Nerasta bendrinė funkcija %s, kuri atitinka pageidaujamą importuojamą metodą "
+"iš paketo %s, kai įkeliamas %s (netaisyklingas eksportas?)"
+
+msgid "cannot add to exports of a sealed namespace"
+msgstr "negalima pridėti į patvirtintos vardų erdvės eksportus"
+
+msgid "undefined exports: %s"
+msgstr "neapibrėžti eksportai: %s"
+
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "nepavyko iš naujo koduoti kai kurių eilučių NAMESPACE faile"
+
+msgid "package %s has no 'NAMESPACE' file"
+msgstr "pakete %s nėra 'NAMESPACE' failo"
+
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
+msgstr "tuščias vardas direktyvoje '%s', esančioje 'NAMESPACE' faile"
+
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
+msgstr "pasikartojantys simbolių vardai %s, esantys useDynLib(\"%s\")"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "bloga 'S3method' direktyva: %s"
+
+msgid "unknown namespace directive: %s"
+msgstr "nežinoma vardų erdvės direktyva: %s"
+
+msgid "S3 method %s was declared but not found"
+msgstr "S3 metodas %s buvo paskelbtas, bet nerastas"
+
+msgid "bad method"
+msgstr "netinkamas metodas"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "objektas '%s' nerastas kol keliama vardų erdvė '%s'"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+"Įkeliant vardų sritį \"%s\": \"%s\" skiriasi ncol(.), env=%d, newNS=%d."
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr "Gal paketas įdiegtas su naujesne R versija nei %s?"
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s' dar neįdiegtas"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "argumentas '%s' nenaudojamas (dar)"
+
+msgid "'x' cannot be coerced to class \"octmode\""
+msgstr "'x' negali būti paversta (-as) į klasę \"octmode\""
+
+msgid "'x' cannot be coerced to class \"hexmode\""
+msgstr "'x' negali būti paverstas į klasę \"hexmode\""
+
+msgid "using ... with FUN = \"*\" is an error"
+msgstr "naudojant... su FUN = \"*\" yra klaida"
+
+msgid "no arguments"
+msgstr "nėra argumentų"
+
+msgid "an argument will be fractionally recycled"
+msgstr "argumentas bus dalinai perdirbtas"
+
+msgid "invalid ncol(x)"
+msgstr "neteisingas ncol(x)"
+
+msgid "too large a matrix for LINPACK"
+msgstr "per didelė matrica LINPACK"
+
+msgid "first argument must be a QR decomposition"
+msgstr "pirmas argumentas turi būti QR išskaidymas"
+
+msgid "invalid nrow(qr$qr)"
+msgstr "neteisingas nrow(qr$qr)"
+
+msgid "invalid ncol(qr$qr)"
+msgstr "neteisingas ncol(qr$qr)"
+
+msgid "invalid ncol(qr$rank)"
+msgstr "neteisingas ncol(qr$rank)"
+
+msgid "invalid ncol(y)"
+msgstr "neteisingas ncol(y)"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr' ir 'y' turi turėti tą patį eilučių skaičių"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "tikslus singuliarumas 'qr.coef'"
+
+msgid "argument is not a QR decomposition"
+msgstr "argumentas nėra QR išskaidymas"
+
+msgid "invalid NCOL(y)"
+msgstr "neteisingas NCOL(y)"
+
+msgid "not implemented for complex 'qr'"
+msgstr "netaikoma kompleksiniam 'qr'"
+
+msgid "not supported for LAPACK QR"
+msgstr "nepalaikomas LAPACK QR"
+
+msgid "'k' is too large"
+msgstr "'k' per didelis"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "reikia didesnės 'ncol' reikšmės nes įvyko pasisukimas"
+
+msgid "invalid NCOL(R)"
+msgstr "netaisyklingas NCOL(R)"
+
+msgid "'x' must be a vector of an atomic type"
+msgstr "'x' turi būti atominio tipo vektorius"
+
+msgid "invalid 'rle' structure"
+msgstr "netaisyklingas 'rle' struktūra"
+
+msgid "... must contain names or character strings"
+msgstr "... turi būti vardai arba simbolių eilutė"
+
+msgid "incorrect length for 'group'"
+msgstr "neteisingas 'group' ilgis"
+
+msgid "missing values for 'group'"
+msgstr "trūkstamos 'group' reikšmės"
+
+msgid "not a data frame"
+msgstr "nėra duomenų sistemos"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "'center' ilgis turi būti lygus 'x' stulpelių skaičiui"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "'scale' ilgis turi būti lygus 'x' stulpelių skaičiui"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "nurodykite 'nmax' ar 'n', bet ne abu."
+
+msgid "'from' must be a finite number"
+msgstr "'from' turi būti baigtinis skaičius"
+
+msgid "argument 'length.out' must be of length 1"
+msgstr "argumento 'lenght.out' ilgis turi būti 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr "'length.out' argumentas naudoja pirmą elementą"
+
+msgid "'to' must be a finite number"
+msgstr "'to' turi būti baigtinis skaičius"
+
+msgid "invalid '(to - from)/by'"
+msgstr "neteisinga '(to - from)/by'"
+
+msgid "wrong sign in 'by' argument"
+msgstr "neteisingas prierašas 'by' argumente"
+
+msgid "'by' argument is much too small"
+msgstr "'by' argumentas per mažas"
+
+msgid "'length.out' must be a non-negative number"
+msgstr "'length.out' turi būti ne neigiamas skaičius"
+
+msgid "too many arguments"
+msgstr "per daug argumentų"
+
+msgid "invalid 'compress' argument:"
+msgstr "netaisyklingas'compress' argumentas:"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr "'compress' ignoruojamas, nebent 'file' yra failo vardas"
+
+msgid "'connection' must be a connection"
+msgstr "'connection' turi būti ryšys"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file' turi būti NULL arba jau atvertas ryšys"
+
+msgid "cannot split the message connection"
+msgstr "negalima skaidyti pranešimo ryšio"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "file' turi būti NULL, ryšys arba simbolių eilutė"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "tai yra \"qr\" metodas bendrinei funkcijai solve()"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "singuliari matrica 'a' 'solve'"
+
+msgid "only square matrices can be inverted"
+msgstr "tik kvadratinė matrica gali būti atvirkštinė"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "solve.default iškviesta su \"qr\" objektu: naudokite 'qr.solve'"
+
+msgid "singular matrix 'a' in solve"
+msgstr "singuliari matrica 'a' sprendime"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+"'decreasing' turi būti 1 ilgio loginių reikšmių vektorius.\n"
+"Ar ketinote nustatyti 'partial'?"
+
+msgid "'partial' sorting not supported by radix method"
+msgstr "'partial' rūšiavimas nepalaikomas radix metodu"
+
+msgid "'index.return' only for non-factors"
+msgstr "index.return' tik ne faktoriams"
+
+msgid "'x' must be atomic"
+msgstr "'x' turi būti atominis"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "'index.return' tik 'na.last = NA'"
+
+msgid "unsupported options for partial sorting"
+msgstr "daliniame rikiavime parinktys nepalaikomos"
+
+msgid "non-finite 'partial'"
+msgstr "nebaigtinis 'partial'"
+
+msgid "argument lengths differ"
+msgstr "skiriasi argumentų ilgiai"
+
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "metodas = \"quick\" tik skaitinei 'x'"
+
+msgid ""
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+"'x' turi būti atominis dėl 'sort.list', metodas \"shell\" ir \"quick\"\n"
+"Ar sąraše pavadinote 'sort'?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
+
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "'local' turi būti TRUE, FALSE arba aplinka"
+
+msgid "'echo' must be logical"
+msgstr "'echo' turi būti loginė reikšmė"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "'verbose' yra TRUE, 'echo' ne; ... verčiant 'echo <- TRUE'"
+
+msgid "unable to find a plausible encoding"
+msgstr "negalima surasti patikimos koduotės"
+
+msgid "encoding = \"%s\" chosen"
+msgstr "pasirinkta koduotė = \"%s\""
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "chdir = TRUE' neturi prasmės URL"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "negalima 'chdir' kai dabartinis katalogas nėra žinomas"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "'chdir = TRUE' neturi prasmės ryšiui"
+
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "nurodykite 'file' arba 'exprs', bet ne abu"
+
+msgid "'%s' is not an existing file"
+msgstr "'%s' nėra egzistuojantis failas"
+
+msgid "Timestamp of %s has changed"
+msgstr "Pasikeitė laiko žyma %s"
+
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x' ir 'to' turi kreiptis į tą patį failą"
+
+msgid "additional arguments ignored in stop()"
+msgstr "papildomi argumentai ignoruojami stop()"
+
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
+msgstr "Tik vienas iš 'exprs', 'exprObject' arba reiškinių, ne daugiau"
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+"%s ir %s nėra lygūs:\n"
+"  %s"
+
+msgid "additional arguments ignored in warning()"
+msgstr "papildomi argumentai ignoruojami warning()"
+
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
+"Iškvietimas 'structure(NULL, *)' yra nebenaudojamas, nes NULL negali turėti "
+"atributų.\n"
+"  Vietoj to apsvarstykite 'structure(list(), *)'."
+
+msgid "incorrect value for 'x'"
+msgstr "neteisinga 'x' reikšmė"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x' ir 'y' turi būti tokio paties ilgio"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr "tikriausiai neteisinga koduotė stulpelio names(.)"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr "STATS yra ilgesnis negu 'dim(x)[MARGIN]' dydis"
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr "STATS pakartotinai nenaudoja tiksliai per MARGIN"
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr "length(STATS) arba dim(STATS) nesutampa su dim(x)[MARGIN]"
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
+"'exclude', kuriame yra NA ir 'useNA' != \"no\"' yra šiek tiek "
+"prieštaraujantys"
+
+msgid "nothing to tabulate"
+msgstr "nėra ko išdėstyti"
+
+msgid "all arguments must have the same length"
+msgstr "visi argumentai turi būti to paties ilgio"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr "bandymas sukurti lentelę su >= 2^31 elementais"
+
+msgid "'object' must inherit from class %s"
+msgstr "'object' turi būti paveldėtas iš %s klasės"
+
+msgid "'x' must inherit from class %s"
+msgstr "'x' turi būti paveldėtas iš %s klasės"
+
+msgid "cannot coerce to a table"
+msgstr "negalima paversti į lentelę"
+
+msgid "'x' is not an array"
+msgstr "'x' nėra masyvas"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin' turi būti skaitinis arba faktorius"
+
+msgid "invalid value of %s"
+msgstr "neleistina %s reikšmė"
+
+msgid "'INDEX' is of length zero"
+msgstr "'INDEX' ilgis yra nulinis"
+
+msgid "arguments must have same length"
+msgstr "argumentai turi būti tokio paties ilgio"
+
+msgid "total number of levels >= 2^31"
+msgstr "bendras lygių skaičius > = 2^31"
+
+msgid "handler must be a function"
+msgstr "manipuliavimo programa turi būti funkcija"
+
+msgid "'which' must be of length 1"
+msgstr "'which' ilgis turi būti 1"
+
+msgid "no such element '%s'"
+msgstr "nėra tokio elemento '%s'"
+
+msgid "invalid 'which' argument"
+msgstr "netaisyklingas 'which' argumentas"
+
+msgid "'which' must be character or numeric"
+msgstr "'which' turi būti ženklas ar skaitinis"
+
+msgid "Removing %s"
+msgstr "Pašalinimas %s"
+
+msgid "Registering 'evaluate' as low-level callback"
+msgstr "Registruojant 'evaluate', kaip žemiausio lygio atgalinę iškvietą"
+
+msgid "Timing stopped at:"
+msgstr "Laikas sustojo:"
+
+msgid "user"
+msgstr "vartotojas"
+
+msgid "system"
+msgstr "sistema"
+
+msgid "elapsed"
+msgstr "praėjęs"
+
+msgid "'width' must be positive"
+msgstr "'width' turi būti teigiamas"
+
+msgid "No traceback available"
+msgstr "Pėdsakas negalimas"
+
+msgid "invalid version specification %s"
+msgstr "netaisyklinga versijos specifikacija %s"
+
+msgid "invalid 'value'"
+msgstr "neteisinga 'value'"
+
+msgid "unary '%s' not defined for \"numeric_version\" objects"
+msgstr "vienvietė '%s' neapibrėžta \"numeric_version\" objektams"
+
+msgid "'%s' not defined for \"numeric_version\" objects"
+msgstr "'%s' neapibrėžtas \"numeric_version\" objektams"
+
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "%s neapibrėžtas \"numeric_version\" objektams"
+
+msgid "<0 elements>"
+msgstr "<0 elementų>"
+
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr "'tags' turi būti tekstinis vektorius, kurio ilgis toks pat kaip 'x'"
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr "Įspėjimo pranešimų santrauka (iš viso %d):"
+
+msgid "invalid 'digits'"
+msgstr "netaisyklingi 'digits'"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"argumentai 'show.output.on.console', 'minimized' ir 'invisible' yra skirti "
+"tik Windows"
+
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'intern' turi būti TRUE arba FALSE"
+
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stdout' turi būti TRUE arba FALSE"
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'ignore.stderr' turi būti TRUE arba FALSE"
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'wait' turi būti TRUE arba FALSE"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "input' turi būti tekstinis vektorius arba 'NULL'"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr "argumentai 'minimized' ir 'invisible' yra skirti tik Windows"
+
+msgid "setting stdout = TRUE"
+msgstr "nuostata stdout = TRUE"
+
+msgid "'stdout' must be of length 1"
+msgstr "'stdout' ilgis turi būti 1"
+
+msgid "'stderr' must be of length 1"
+msgstr "'stderr' ilgis turi būti 1"
+
+msgid "'which' was not found on this platform"
+msgstr "'which' nerastas šioje platformoje"
+
+msgid "fewer 'from' files than 'to' files"
+msgstr "mažiau 'from' failų negu 'to' failų"
+
+msgid "link '%s' already exists"
+msgstr "nuoroda '%s' jau yra"
+
+msgid "failed to create directory for link '%s"
+msgstr "nepavyko sukurti katalogo '%s saitui"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'show.output.on.console' turi būti TRUE arba FALSE"
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'minimized' turi būti TRUE arba FALSE"
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'invisible' turi būti TRUE arba FALSE"
+
+msgid "running command '%s' had status %d"
+msgstr "vykdoma komanda '%s' turėjo būseną %d"
+
+msgid "'%s' could not be run"
+msgstr "'%s' negali būti vykdomas"
+
+msgid "'%s' execution failed with error code %d"
+msgstr "'%s' vykdymas nepavyko, klaidos kodas %d"
+
+msgid "-l option without value"
+msgstr "-l parinktis be reikšmės"
+
+msgid "ERROR: no packages specified"
+msgstr "KLAIDA: nenurodyti paketai"
+
+msgid "Removing from library"
+msgstr "Pašalinimas iš bibliotekos"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "KLAIDA: cd negalimas į katalogą"
+
+msgid "ERROR: no permission to remove from directory"
+msgstr "KLAIDA: nėra leidimo pašalinti iš katalogo"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "neatpažinta išnagrinėta parinktis %s"
+msgstr[1] "neatpažintos išnagrinėtos parinktys %s"
+msgstr[2] "neatpažinta išnagrinėtų parinkčių %s"
+
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
+msgstr[0] "Šis objektas yra užmaskuotas _by_ %s:"
+msgstr[1] "Šie objektai yra užmaskuoti _by_ %s:"
+msgstr[2] "Šie objektai yra užmaskuoti _by_ %s:"
+
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
+msgstr[0] "Šis objektas yra užmaskuotas nuo %s:"
+msgstr[1] "Šie objektai yra užmaskuoti nuo %s:"
+msgstr[2] "Šie objektai yra užmaskuoti nuo %s:"
+
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] "neteisingas 'row.names', ilgis %d duomenų sistemai su %d eilute"
+msgstr[1] "neteisingas 'row.names', ilgis %d duomenų sistemai su %d eilutėmis"
+msgstr[2] "neteisingas 'row.names', ilgis %d duomenų sistemai su %d eilučių"
+
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "pateiktas %d eilutės vardas %d eilutėms"
+msgstr[1] "pateikti %d eilutės vardai %d eilutėms"
+msgstr[2] "pateikta %d eilutės vardų %d eilutėms"
+
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "pakeitime yra %d eilutė, duomenys turi %d"
+msgstr[1] "pakeitime yra %d eilutės, duomenys turi %d"
+msgstr[2] "pakeitime yra %d eilučių, duomenys turi %d"
+
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "pakeitime yra %d elementas, turi būti %d"
+msgstr[1] "pakeitime yra %d elementai, turi būti %d"
+msgstr[2] "pakeitime yra %d elementų, turi būti %d"
+
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+"pakaitinis elementas %d yra %d eilutės matrica/duomenų sistema, turi būti %d"
+msgstr[1] ""
+"pakaitinis elementas %d yra %d eilučių matrica/duomenų sistema, turi būti %d"
+msgstr[2] ""
+"pakaitinis elementas %d yra %d eilučių matrica/duomenų sistema, turi būti %d"
+
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "pakaitinis elementas %d turi %d eilutę, turi būti %d"
+msgstr[1] "pakaitinis elementas %d turi %d eilutes, turi būti %d"
+msgstr[2] "pakaitinis elementas %d turi %d eilučių, turi būti %d"
+
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "pakaitinis elementas %d turi %d eilutę pakeisti %d eilutėmis"
+msgstr[1] "pakaitinis elementas %d turi %d eilutes pakeisti %d eilutėmis"
+msgstr[2] "pakaitinis elementas %d turi %d eilučių pakeisti %d eilutėmis"
+
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "%d eilutė reikšmėje, kuri pakeičia %d eilutes"
+msgstr[1] "%d eilutės reikšmėje, kuri pakeičia %d eilutes"
+msgstr[2] "%d eilučių reikšmėje, kuri pakeičia %d eilutes"
+
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "pakaitiniai duomenys turi %d eilutę pakeisti %d eilutėmis"
+msgstr[1] "pakaitiniai duomenys turi %d eilutes pakeisti %d eilutėmis"
+msgstr[2] "pakaitiniai duomenys turi %d eilučių pakeisti %d eilutėmis"
+
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "pateiktas %d kintamasis, kuris pakeičia %d kintamuosius"
+msgstr[1] "pateikti %d kintamieji, kurie pakeičia %d kintamuosius"
+msgstr[2] "pateikta %d kintamųjų, kurie pakeičia %d kintamuosius"
+
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "duomenų sistema su 0 stulpelių ir %d eilute"
+msgstr[1] "duomenų sistema su 0 stulpelių ir %d eilutėmis"
+msgstr[2] "duomenų sistema su 0 stulpelių ir %d eilučių"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "bibliotekoje %s paketų nėra"
+msgstr[1] "bibliotekose %s paketų nėra"
+msgstr[2] "bibliotekose %s paketų nėra"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "paketas %s neįkeltas"
+msgstr[1] "paketai %s neįkelti"
+msgstr[2] "paketų %s neįkelta"
+
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "nėra paketo, vadinamo"
+msgstr[1] "nėra paketų, vadinamų"
+msgstr[2] "nėra paketų, vadinamų"
+
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "objektas %s nerastas"
+msgstr[1] "objektai %s nerasti"
+msgstr[2] "objektų %s nerasta"
+
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' turi nurodyti vienareikšmiškai galiojantį stulpelį"
+msgstr[1] "'by' turi nurodyti vienareikšmiškai galiojančius stulpelius"
+msgstr[2] "'by' turi nurodyti vienareikšmiškai galiojančių stulpelių"
+
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
+msgid_plural ""
+"Functions found when exporting methods from the namespace %s which are not "
+"S4 generic: %s"
+msgstr[0] ""
+"Nustatyta funkcija, kai eksportuojami metodai iš vardų erdvės %s, kuri nėra "
+"S4 bendrinė: %s"
+msgstr[1] ""
+"Nustatytos funkcijos, kai eksportuojami metodai iš vardų erdvės %s, kuri "
+"nėra S4 bendrinė: %s"
+msgstr[2] ""
+"Nustatyta funkcijų, kai eksportuojami metodai iš vardų erdvės %s, kuri nėra "
+"S4 bendrinė: %s"
+
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] "Pakete %s nerasta jokių metodų užklausai: %s įkeliant %s"
+msgstr[1] "Pakete %s nerasta jokių metodų užklausoms: %s įkeliant %s"
+msgstr[2] "Pakete %s nerasta jokių metodų užklausoms: %s įkeliant %s"
+
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] "prašomas metodas nerastas aplinkoje/pakete %s: %s įkeliant %s"
+msgstr[1] "prašomi metodai nerasti aplinkoje/pakete %s: %s įkeliant %s"
+msgstr[2] "prašomų metodų nerasta aplinkoje/pakete %s: %s įkeliant %s"
+
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "klasė %s nėra eksportuojama 'namespace:%s'"
+msgstr[1] "klasės %s nėra eksportuojamos 'namespace:%s'"
+msgstr[2] "klasių %s nėra eksportuojama 'namespace:%s'"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "objektas %s nėra eksportuotas 'namespace:%s'"
+msgstr[1] "objektai %s nėra eksportuoti 'namespace:%s'"
+msgstr[2] "objektų %s nėra eksportuoti 'namespace:%s'"
+
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
+msgstr[0] "ankstesnis eksportas '%s' buvo pakeistas"
+msgstr[1] "ankstesni eksportai '%s' buvo pakeisti"
+msgstr[2] "ankstesnių eksportų '%s' buvo pakeista"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] "S3 metodas %s buvo aprašytas NAMESPACE, bet nerastas"
+msgstr[1] "S3 metodai %s buvo aprašyti NAMESPACE, bet nerasti"
+msgstr[2] "S3 metodų %s buvo aprašyta NAMESPACE, bet nerasta"
+
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "%s nėra TRUE"
+msgstr[1] "%s nėra TRUE"
+msgstr[2] "%s nėra TRUE"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "Įspėjantis pranešimas:\n"
+msgstr[1] "Įspėjantys pranešimai:\n"
+msgstr[2] "Įspėjančių pranešimų:\n"
+
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] ""
+"%s :\n"
+"%s papildomas argumentas bus ignoruojamas"
+msgstr[1] ""
+"%s :\n"
+"%s papildomi argumentai bus ignoruojami"
+msgstr[2] ""
+"%s :\n"
+"%s papildomų argumentų bus ignoruojama"
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr ""
+#~ "argumentas 'object' turi būti išnagrinėtas iki atskiros simbolių eilutės"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' nėra eksportuojamas objektas iš 'namespace:%s'"
+
+#~ msgid "2. %d rows in value to replace %d rows"
+#~ msgstr "2. %d eilutės reikšmėje, kurios pakeičia %d eilutes"
+
+#~ msgid "3. %d rows in value to replace %d rows"
+#~ msgstr "3. %d eilučių reikšmėje, kurios pakeičia %d eilutes"
+
+#~ msgid "call: %s"
+#~ msgstr "kreipinys: %s"
+
+#~ msgid "error: %s"
+#~ msgstr "klaida: %s"
+
+#~ msgid "2. %s are not all TRUE"
+#~ msgstr "2. %s nėra TRUE"
+
+#~ msgid "3. %s are not all TRUE"
+#~ msgstr "3. %s nėra TRUE"
+
+#~ msgid "\"'%s' is not a \"\"date\"\" object\""
+#~ msgstr "\"'%s' nėra \"\"date\"\" objektas\""
+
+#~ msgid "\"'%s' is not a \"\"dates\"\" object\""
+#~ msgstr "\"'%s' nėra \"\"dates\"\" objektas\""
+
+#~ msgid "by' must match number of columns"
+#~ msgstr "by' turi atitikti stulpelių skaičių"
+
+#~ msgid "2. 'by' must specify uniquely valid columns"
+#~ msgstr "2. ‘by’ turi nurodyti vienareikšmiškai galiojančius stulpelius"
+
+#~ msgid "3. 'by' must specify uniquely valid columns"
+#~ msgstr "3. ‘by’ turi nurodyti vienareikšmiškai galiojančių stulpelių"
+
+#~ msgid "Did you intend to set 'partial'?"
+#~ msgstr "Ar ketinate nustatyti 'partial'?"
+
+#~ msgid "'from' cannot be NA, NaN or infinite"
+#~ msgstr "'from' negali būti NA, NaN ar begalinis"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "'object' turi būti sąrašas"
+
+#~ msgid "'to' cannot be NA, NaN or infinite"
+#~ msgstr "'to' negali būti NA, NaN ar begalinis"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "vec' turi NA"
+
+#~ msgid "'x' must be atomic for 'sort.list'"
+#~ msgstr "'x' turi būti atominis 'sort.list'"
+
+#~ msgid "Have you called 'sort' on a list?"
+#~ msgstr "Ar kvietėte 'sort' sąrašui?"
+
+#~ msgid "\"*** 'pos=1' is not possible"
+#~ msgstr " setting 'pos=2' for now.\""
+
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr "*** Įsidėmėkite, kad 'pos=1' ateityje pateiks klaidą"
+
+#~ msgid ""
+#~ "2. Functions found when exporting methods from the namespace %s which are "
+#~ "not S4 generic: %s"
+#~ msgstr ""
+#~ "2. Funkcijos nustatyta, kai eksportuojami metodai iš vardų erdvės %s, "
+#~ "kurios nėra S4 bendrinė: %s"
+
+#~ msgid ""
+#~ "3. Functions found when exporting methods from the namespace %s which are "
+#~ "not S4 generic: %s"
+#~ msgstr ""
+#~ "3. Funkcijų nustatyta, kai eksportuojami metodai iš vardų erdvės %s, "
+#~ "kurios nėra S4 bendrinė: %s"
+
+#~ msgid "1. In %s :"
+#~ msgstr "1. %s :"
+
+#~ msgid "2. In %s :"
+#~ msgstr "2. %s :"
+
+#, fuzzy
+#~ msgid "extra arguments %s will be disregarded"
+#~ msgstr ""
+#~ "#-#-#-#-#  catalog.po  #-#-#-#-#\n"
+#~ "%s papildomi argumentai bus ignoruojami\n"
+#~ "#-#-#-#-#  catalog.po  #-#-#-#-#\n"
+#~ "%s papildomų argumentų bus ignoruojama"
+
+#~ msgid "3. In %s :"
+#~ msgstr "3. %s :"
+
+#~ msgid "Invalid DCF format."
+#~ msgstr "Klaidingas DCF formatas."
+
+#~ msgid "Offending lines start with:"
+#~ msgstr "Sugadintos eilutės prasideda:"
+
+#~ msgid "Regular lines must have a tag."
+#~ msgstr "Įprastos eilutės turi turėti žymę."
+
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "%s' dalinai sutampa su '%s' duomenų sistemoje"
+
+#~ msgid "2. S3 methods %s were declared in NAMESPACE but not found"
+#~ msgstr "2. S3 metodai %s buvo aprašyti NAMESPACE, bet nerasti"
+
+#~ msgid "3. S3 methods %s were declared in NAMESPACE but not found"
+#~ msgstr "3. S3 metodų %s buvo aprašyta NAMESPACE, bet nerasta"
+
+#~ msgid "2. The following objects are masked _by_ %s:"
+#~ msgstr "2. Šiuos objektaus užmaskavo %s:"
+
+#~ msgid "3. The following objects are masked _by_ %s:"
+#~ msgstr "3. Šiuos objektaus užmaskavo %s:"
+
+#~ msgid "2. The following objects are masked from %s:"
+#~ msgstr "2. Šie objektai užmaskuoti nuo %s:"
+
+#~ msgid "3. The following objects are masked from %s:"
+#~ msgstr "3. Šie objektai užmaskuoti nuo %s:"
+
+#~ msgid "2. Warning messages:"
+#~ msgstr "2. Įspėjantys pranešimai:"
+
+#~ msgid "3. Warning messages:"
+#~ msgstr "3. Įspėjančių pranešimų:"
+
+#~ msgid "bad handler specification"
+#~ msgstr "netinkama manipuliavimo programos specifikacija"
+
+#~ msgid "2. classes %s are not exported by 'namespace:%s'"
+#~ msgstr "2. klasės %s nėra eksportuojamos ‘namespace:%s’"
+
+#~ msgid "3. classes %s are not exported by 'namespace:%s'"
+#~ msgstr "3. klasių %s nėra eksportuojamos ‘namespace:%s’"
+
+#~ msgid "2. data frame with 0 columns and %d rows"
+#~ msgstr "2. duomenų sistema su 0 stulpelių ir %d eilutėmis"
+
+#~ msgid "3. data frame with 0 columns and %d rows"
+#~ msgstr "3. duomenų sistema su 0 stulpelių ir %d eilučių"
+
+#~ msgid "2. deparse options %s are not recognized"
+#~ msgstr "2. neatpažintos išnagrinėtos parinktys %s"
+
+#~ msgid "3. deparse options %s are not recognized"
+#~ msgstr "3. neatpažintų išnagrinėtų parinkčių %s"
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr "neteisingos 'indent' ir 'width' reikšmės"
+
+#~ msgid "\"invalid 'labels'"
+#~ msgstr " length %d should be 1 or %d\""
+
+#~ msgid "2. invalid 'row.names', length %d for a data frame with %d rows"
+#~ msgstr ""
+#~ "2. neteisingas ‘row.names’, ilgis %d duomenų sistemai su %d eilutėmis"
+
+#~ msgid "3. invalid 'row.names', length %d for a data frame with %d rows"
+#~ msgstr "3. neteisingas ‘row.names’, ilgis %d duomenų sistemai su %d eilučių"
+
+#~ msgid "2. libraries %s contain no packages"
+#~ msgstr "2. bibliotekose %s paketų nėra"
+
+#~ msgid "3. libraries %s contain no packages"
+#~ msgstr "3. bibliotekų %s paketų nėra"
+
+#~ msgid "\"method = \"\"radix\"\" is only for integer 'x'\""
+#~ msgstr "\"metodas = \"\"radix\"\" tik sveikiesiems skaičiams 'x'\""
+
+#~ msgid "by .GlobalEnv when processing object %s"
+#~ msgstr ".GlobalEnv apdorojant objektą %s"
+
+#~ msgid "2. objects %s are not exported by 'namespace:%s'"
+#~ msgstr "2. objektai %s nėra eksportuoti ‘namespace:%s’"
+
+#~ msgid "3. objects %s are not exported by 'namespace:%s'"
+#~ msgstr "3. objektų %s nėra eksportuota ‘namespace:%s’"
+
+#~ msgid "2. objects %s not found"
+#~ msgstr "2. objektai %s nerasti"
+
+#~ msgid "3. objects %s not found"
+#~ msgstr "3. objektų %s nerasta"
+
+#~ msgid "using the one found in %s"
+#~ msgstr "naudojant tą, kuris rastas %s"
+
+#~ msgid "2. packages %s are not loaded"
+#~ msgstr "2. paketai %s neįkelti"
+
+#~ msgid "3. packages %s are not loaded"
+#~ msgstr "3. paketų %s neįkelta"
+
+#~ msgid "2. previous exports '%s' are being replaced"
+#~ msgstr "2. ankstesni eksportai ‘%s’ buvo pakeisti"
+
+#~ msgid "3. previous exports '%s' are being replaced"
+#~ msgstr "3. ankstesnių eksportų ‘%s’ buvo pakeista"
+
+#~ msgid "2. provided %d variables to replace %d variables"
+#~ msgstr "2. pateikti %d kintamieji, kurie pakeičia %d kintamuosius"
+
+#~ msgid "3. provided %d variables to replace %d variables"
+#~ msgstr "3. pateikta %d kintamųjų, kurie pakeičia %d kintamųjų"
+
+#~ msgid "2. replacement data has %d rows to replace %d rows"
+#~ msgstr "2. pakaitiniai duomenys turi %d eilutes pakeisti %d eilutėmis"
+
+#~ msgid "2. replacement element %d has %d rows to replace %d rows"
+#~ msgstr "2. pakaitinis elementas %d turi %d eilutes pakeisti %d eilutėmis"
+
+#~ msgid "2. replacement element %d has %d rows, need %d"
+#~ msgstr "2. pakaitinis elementas %d turi %d eilutes, turi būti %d"
+
+#~ msgid "2. replacement element %d is a matrix/data frame of %d rows, need %d"
+#~ msgstr ""
+#~ "2. pakaitinis elementas %d yra %d eilučių matrica/duomenų sistema, turi "
+#~ "būti %d"
+
+#~ msgid "2. replacement has %d items, need %d"
+#~ msgstr "2. pakeitime yra %d elementai, turi būti %d"
+
+#~ msgid "3. replacement has %d items, need %d"
+#~ msgstr "3. pakeitime yra %d elementų, turi būti %d"
+
+#~ msgid "2. replacement has %d rows, data has %d"
+#~ msgstr "2. pakeitime yra %d eilutės, duomenys turi %d"
+
+#~ msgid "3. replacement has %d rows, data has %d"
+#~ msgstr "3. pakeitime yra %d eilučių, duomenys turi %d"
+
+#~ msgid "2. supplied %d row names for %d rows"
+#~ msgstr "2. pateikti %d eilučių vardai %d eilutėse"
+
+#~ msgid "3. supplied %d row names for %d rows"
+#~ msgstr "3. pateikta %d eilučių pavadinimų %d eilutėse"
+
+#~ msgid "2. there are no packages called"
+#~ msgstr "2. nėra paketų kreipinių"

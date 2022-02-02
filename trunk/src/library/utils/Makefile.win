@@ -1,0 +1,29 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/utils/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+pkg = utils
+
+R_OSTYPE = windows
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+INSTDIRS = Sweave doc misc
+DEFPKGS = NULL
+
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
+	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs
+	@$(MAKE) -f Makefile.win mksrc-win2
+	@$(MAKE) -f Makefile.win sysdata
+	@$(MAKE) -f Makefile.win mklazycomp
+
+include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

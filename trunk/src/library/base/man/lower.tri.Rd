@@ -1,0 +1,35 @@
+% File src/library/base/man/lower.tri.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2017 R Core Team
+% Distributed under GPL 2 or later
+
+\name{lower.tri}
+\alias{lower.tri}
+\alias{upper.tri}
+\title{Lower and Upper Triangular Part of a Matrix}
+\description{
+  Returns a matrix of logicals the same size of a given matrix with
+  entries \code{TRUE} in the lower or upper triangle.
+}
+\usage{
+lower.tri(x, diag = FALSE)
+upper.tri(x, diag = FALSE)
+}
+\arguments{
+  \item{x}{a matrix or other \R object with \code{length(dim(x)) == 2}.
+    For back compatibility reasons, when the above is not fulfilled,
+    \code{\link{as.matrix}(x)} is called first.}
+  \item{diag}{logical.  Should the diagonal be included?}
+}
+\seealso{
+  \code{\link{diag}}, \code{\link{matrix}}; further \code{\link{row}}
+  and \code{\link{col}} on which \code{lower.tri()} and
+  \code{upper.tri()} are built.
+}
+\examples{
+(m2 <- matrix(1:20, 4, 5))
+lower.tri(m2)
+m2[lower.tri(m2)] <- NA
+m2
+}
+\keyword{array}

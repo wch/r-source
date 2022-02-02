@@ -1,0 +1,60 @@
+\inputencoding{utf8}
+\HeaderA{ver20}{Johnson \& Johnson,  \$ \_  \#\#\# \textasciicircum{} \textasciitilde{}}{ver20}
+%
+\begin{Description}\relax
+This is the description
+\end{Description}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{foo}] item 1
+\item[\code{bar}] space, the item 2
+\item[\code{bah}] newline, then item 3
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+\R{} \R{} \bsl{}R \eqn{\alpha\beta\Gamma}{}
+
+In code, all that needs to be escaped is percent, backslash and unpaired
+braces: \code{\% \bsl{} \{}. Unescaped: \code{\$ \# \_ \textasciicircum{} \textasciitilde{} < > |}, and as a
+pair, \code{\{...\}}.  If we escape: \code{ \_ \# \$ \& \{ \} \bsl{} }
+And some backslashes: \code{\bsl{} \bsl{} \bsl{}\bsl{} \bsl{}\bsl{}} should
+give one, one, two, two backslashes.
+
+How about \bsl{} (that is backslash space) in text?
+
+Elsewhere, \{ \} \% \bsl{} need to be escaped, but not \$ \# \_ \textasciicircum{} \textasciitilde{} < > | .
+Let's try that again in \code{\bsl{}samp}: \samp{ \{ \} \% \bsl{} \$ \# \_ \textasciicircum{} \textasciitilde{} < > |}.
+And if we do escape: \bsl{}\$ \bsl{}\# \bsl{}\_ , and with three backslashes, \bsl{}\bsl{}\#.
+
+\deqn{a < b > c | d, x^y}{}
+\deqn{\$k > \#k, x_y, x\_y}{}
+
+
+group-weighting from \$[N\_iP\_i(1-P\_i)]\$
+
+\begin{alltt}
+    % a
+    \bsl{}
+    \bsl{}% c
+    \{
+    \bsl{}\{
+  \end{alltt}
+
+\end{Details}
+%
+\begin{Section}{URLs and emails}
+URLs need to be verbatim:  \url{testit ~^_$#<>|}.
+
+Markus Kuhn, ``ASCII and Unicode quotation marks''.
+\url{http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html}
+
+No escape is needed in \email{Micah\_Altman@harvard.edu}
+\end{Section}
+%
+\begin{Examples}
+\begin{ExampleCode}
+"\\r\\n"
+\end{ExampleCode}
+\end{Examples}

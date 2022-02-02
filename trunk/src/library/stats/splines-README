@@ -1,0 +1,96 @@
+smooth.spline()  [R]
+ |
+ \--> rbart() [ = C_rbart() ]           src/qsbart.f
+      |
+      \--> sbart()                      src/sbart.c
+           |--> sgram()                 src/sgram.f
+           |    |--> interv()           src/bvalue.f
+           |    \--> bsplvd()           src/bsplvd.f
+           |         \--> bsplvb()          "
+           |--> stxwx()                 src/stxwx.f
+           |    |--> interv()             (see above)
+           |    \--> bsplvd()               "
+           |         \--> bsplvb()          "
+           \--> sslvrg()                src/sslvrg.f
+                |--> sinerp()           src/sinerp.f
+                |--> bvalue()           src/bvalue.f   (above)
+                |    \--> interv()        (see above)
+                |--> interv()               "
+                |--> bsplvd()               "
+                |    \--> bsplvb()          "
+                |--> dpbfa()            ../../appl/dpbfa.f  {LINPACK}
+                \--> dpbsl()            ../../appl/dpbsl.f
+
+
+predict.smooth.spline()  [R]
+ |
+ \--> bvalus()                          src/bvalus.f
+       \--> bvalue()                    (see above)
+             \--> interv()                "
+
+
+-------------
+
+But note that both supsmu() and ppr() also call on smoothing splines :
+
+supsmu() [R]
+ |
+ |-> setsmu				src/ppr.f
+ \-> supsmu                               "
+     |
+     |--> smooth                          "
+     \--> spline                          "
+          |
+          |- intpr()
+          |- dblepr()
+          |- bdrsplerr()                src/ksmooth.c
+          |
+          \- rbart()                    (see above)
+             \-> sbart()  .....etc..... (see above)
+
+
+
+ppr()   [R]
+ |
+ |-> setppr				src/ppr.f
+ |
+ |-> pppred				  "
+ |   \-> fsort                            "
+ |       \-> sort                         "
+ |
+ \-> smart                                "
+     \-> smart1                           "
+         |
+         |-> sort			(see above)
+         |
+         |-> subfit                       "
+         |   |
+         |   |-> newb
+         |   |
+         \---+-> fulfit
+             |   |
+             |   v
+             \-> onetrm
+                 |
+                 \-> oneone
+                     |
+                     |--> supsmu	(see above)
+                     |--> sort		(see above)
+                     |
+                     |--> pprdir
+                     |    \-> ppconj
+                     |
+                     \--> pprder
+                          \-> pool
+
+
+predict.ppr() [R]
+ |
+ pppred					(see above)
+
+-------
+
+Note that CRAN package "mda" also relies on these (identical) six files :
+
+bsplvd.f bvalue.f
+sgram.f sinerp.f sslvrg.f stxwx.f

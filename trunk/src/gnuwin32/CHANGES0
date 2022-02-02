@@ -1,0 +1,2098 @@
+
+	**************************************************
+	*	 Windows-specific changes to R		 *
+	*	 See the file NEWS for changes that	 *
+	*        affect all versions of R.		 *
+	**************************************************
+
+
+	**************************************************
+	*						 *
+	*	       2.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.9.2 patched
+
+
+BUG FIXES
+
+    o	If a nonstandard font were specified in Rconsole, the GUI
+    	preferences dialog would crash R.
+    	
+
+
+		CHANGES IN R VERSION 2.9.2
+
+
+NEW FEATURES
+
+    o	The --internet2 command line option sets a flag internally;
+	that flag is now visible and controllable from R using the
+	setInternet2() function.
+
+    o	file.access() proved unreliable on some network-mounted file
+	systems (probably a Samba issue), so it has been replaced in R
+	CMD INSTALL by a directory creation test.  (Reported by Simon
+	Urbanek and Ruth Ripley.)
+
+    o 	Sys.glob() attempts to handle UNC paths starting with \\ (which
+	according to the globbing rules is escaped \), thanks to a patch
+	from Tony Plate.
+	
+	
+BUG FIXES
+
+    o	Topics marked as "internal" in help files were not visible
+    	from CHM help.
+
+    o	The bmp(), jpeg(), png() and tiff() devices were not scaling
+	'pointsize' correctly with the resolution, for grid-based
+	plots (e.g. those from lattice) only.
+
+	These devices were scaling 'width' by res=1 if units="mm".
+
+
+
+		CHANGES IN R VERSION 2.9.1
+
+
+BUG FIXES
+
+    o	memory.limit(size) gave a spurious error message.
+    
+    o	file.choose() and the save console dialog did not set the
+	file filters properly.
+
+    o	Rcmd INSTALL --build in 2.9.0 did not make _bundles_ in the
+	format install.packages() expected.
+
+    o	Calling setWinProgressBar() on a closed bar gives an error
+	message, rather than crashing R.  (PR#13709)
+
+    o	sprintf("%a") works better in some cases thanks to a patch to
+	trio from Ei-ji Nakama.
+
+    o	Scrolling controls (e.g. from View() and edit()) did not handle
+	large line counts well.
+
+    o	capabilities("tiff") was incorrectly being reported as FALSE
+	(due to an error in the Windows-specific config.h file).
+
+    
+
+    		CHANGES IN R VERSION 2.9.0
+
+
+NEW FEATURES
+
+    o	memory.size() and memory.limit() now return rounded values.
+    
+    o	The Rgui preferences dialog now allows more flexible colour
+    	settings, and shows a sample of what will be displayed.
+
+    o	The file selection items on Rgui's File menu now work in
+	Unicode and so allow filenames not in the current encoding to
+	be selected.
+
+    o	file.choose() and choose.files() now work with Unicode file
+	names, so are able to select filenames not in the current
+	encoding.  (Note that we do not expect to handle directory
+	paths not in the current encoding and they will not be
+	retained as the current search directory.)
+
+    o	The script editor is now able to open files with names which are
+	not in the current encoding: however the title displayed will
+	replace invalid bytes by '?'.
+
+    o	file() and pipe() now open non-ASCII pathnames as Unicode:
+	this helps if R is running in a character set different from that
+	used by Windows.
+
+    o	help(topic, offline=TRUE) now creates a file called <topic>.tex,
+	rather than Rdoc.tex.
+
+    o	The trio library has been updated to version 1.13.
+
+    o	New function msgWindow() to allow a windows() device or the
+	Rgui console to be minimized, maximize or restored and (not
+	the console) hidden, and to have recording turned on or off.
+
+    o	Rcmd SHLIB now uses the same code as on a Unix-alike, and so
+	has some extra options.
+
+    o	iconv() is now done by a version of Yukihiro Nakadaira's
+	win_iconv rather than by libiconv.  This version is based on
+	Windows' codepages and is not quite as comprehensive as
+	libiconv: it is however much smaller and easier to maintain.
+	The implementation here is 100% compatible: you can drop in
+	libiconv's iconv.dll as a replacement if you need it, from
+	http://www.stats.ox.ac.uk/pub/Rtools/Riconv.dll.
+
+	To avoid name conflicts with Gtk+, it has been renamed to
+	Riconv.dll.
+
+    o	Completions in Rgui when selected from a list are now coloured
+	as user input rather than R output (wish of PR#13562).
+
+    o	Omegahat is no longer offered as a repository for binary
+	packages, as the latest versions it had were for R 2.7.x.
+
+
+INSTALLATION
+
+    o	The installer now checks for Windows 2000 or later.
+
+    o	There is a new component, 'Test files', which if selected will
+	install the package-specific tests and some generic tests.
+	Functions testInstalledPackages() and testInstalledBasic() in
+	package 'tools'can be used to test these.
+
+    o	Support for cross-building has been withdrawn.
+
+
+UTILITIES
+
+    o	RSetReg's name for the version-specific Registry entry in
+	development versions of R now matches that of the R installer.
+
+
+PACKAGE INSTALLATION
+
+    o	The way packages are installed has been overhauled to be much
+	closer to the Unix version: for example Rcmd SHLIB is used to
+	build DLLs (unless there is a src/Makefile.win).  This means
+	that various private variables and files that some packages
+	used are no longer available, notably DPKG (the documented
+	variable was and is R_PACKAGE_DIR) and MkRules (use
+	etc/Makeconf).
+
+    o	Rcmd INSTALL now supports the same option names as the
+	Unix-alike version: use 'Rcmd INSTALL --help' for details.
+	In particular, --docs is replaced by --no-docs, --no-text,
+	--no-html, --no-latex, --no-example and --no-chm.
+
+    o	Since iconv.dll has been renamed, packages wanting to link
+	against it need to use -lRiconv (or, hetter, use the entry
+	points in R_exts/Riconv.h).
+
+
+CUSTOMIZATION
+
+    o	The name of the producer can be changed in installer/Makefile
+	and front-ends/RSetReg.c.
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.8 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.1 patched
+
+
+BUG FIXES
+
+    o	getwd() could segfault (PR#13424).
+
+    o	dir() does a better job when dir is of rhe form "d:", the
+	currrent directory is not the root on that drive, and either
+	'full' or 'recursive' is true.
+
+    o	Sys.setenv() since R 2.7.0 was limited to 1023 characters for
+	the name+value, and silently truncated the value otherwise.
+	It should now work up to the Windows limit (which is
+	version-dependent).
+
+
+
+		CHANGES IN R VERSION 2.8.1
+
+
+NEW FEATURES
+
+    o	R_HOME/bin/helpPRINT.bat now contains an example of use with
+	MiKTeX to produce a PDF version of the help file.
+
+    o	Rcmd INSTALL has a new option --pkglock to allow a per-package
+	lock directory (useful for parallel installs).
+
+
+BUG FIXES
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
+ 	
+    o	The script editor did not respect user preferences for the
+	background colour.
+	
+    o	normalizePath() no longer returns a garbage string when the
+    	input is bad; it now signals an error. (PR#13199)
+    	
+    o	File share/sh/dcf.sh was not distributed with the binary
+    	build. (PR#13200)
+
+    o	dir.create() did not print the path correctly in warning messages.
+
+    o	The C-level function consolecmd had been broken in non-Latin-1
+	single-byte locales in R 2.8.0 by changes intended to support
+	the Japanese IME.  This affected some menu items in Rgui
+	(e.g. to source R files with non-Latin-1 names) and submitting
+	commands from the script editor, but only in rarer encodings
+	such as Central European, Greek and Cyrillic.  (PR#13195,
+	probably also PR#13120)
+
+    o	The attempt to make the 'Load' button in the GUI preferences
+	start in the home directory failed if the latter was specified
+	with forward slashes, and reset the current search directory
+	for other file open dialogs (e.g. for opening a script).
+
+    o	The installer would sometimes write the current version
+	information to the registry even if that option was not
+	checked.
+
+    o	Rcmd INSTALL --with-package-versions now works in a few more
+	cases (of lazy loading and lazy data), but still many of the
+	options are not supported (e.g. --use-zip).  Versioned
+	installs are now deprecated, so regard them as unsupported on
+	Windows (and a warning is given).  (PR#13284)
+
+
+
+		CHANGES IN R VERSION 2.8.0
+
+
+NEW FEATURES
+
+    o	Rterm --ess sets stdout to be unbuffered, as it would be for
+	output to a terminal.
+
+    o	windows() gains a new argument 'clickToConfirm', default TRUE,
+	which controls if new-frame confirmation is done via clicking
+	(or ENTER) on the window (the recent default) or via a
+	question in the console (the default for other interactive
+	devices).  The non-default behaviour may be useful when R is
+	driven indirectly (e.g. via ESS) and for some Rterm users.
+
+    o	If the HOME environment variable is not set, Rgui and Rterm
+	will set it to match R_USER (as Rcmd does).
+
+    o	The graphics devices bmp, jpeg, png, tiff and win.metafile
+	perform tilde-expansion on their 'filename' argument.  Also
+	savePlot.
+
+
+UTILITIES
+
+    o	Rcmd sets many more enviroment variables, including all those
+	set by R CMD under a Unix-alike which make sense on Windows.
+
+    o	Rcmd now follows a similar strategy to R when finding a valid
+	TMPDIR setting: it tries TMPDIR, TMP, TEMP and R_USER looking
+	for a directory -- the last will succeed as it does for R.
+
+    o	Rcmd has a new utility open.exe to open files via their file
+    	associations.
+
+    o	Rcmd Rd2dvi now opens .dvi and .pdf files via their file
+    	associations (if set -- MiKTeX sets 'yap' for .dvi).
+
+    o	Rcmd check now checks the latex of any package vignettes if
+	texi2dvi (presumably from MiKTeX) is found on the path.
+
+    o	Package checking (including 'make check') is no longer done in a
+    	C locale but in the current locale (although LANGUAGE=en is
+    	used).
+
+    o	Rproxy.dll is no longer part of the R distribution: it has
+	been replaced by CRAN package rscproxy.
+
+
+BUG FIXES
+
+    o	winDialog() and winDialogString() check that they are being
+	used in an interactive session.
+
+    o	The Korean translation of the Rgui menus has been corrected
+    	and restored.  (Thanks to June Kim and Seung-ho Kang.)
+    	
+    o	The list of hives in the readRegistry() defaults contained
+    	a typo; error messages were incomplete. (PR#12937)
+    	
+    o	The custom install options were not saved/restored when the
+    	installer was run with /SAVEINF or /LOADINF respectively.
+
+    o	savePlot() expected 'filename' in the native encoding.
+
+
+
+	**************************************************
+	*						 *
+	*	       2.7 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.7.2 patched
+
+
+BUG FIXES
+
+    o	iconv() was incorrectly identifying R running in an Eastern
+	European locale as using ISO-8859-2 (aka Latin-2) rather than
+	CP1250: they differ in the positions of some characters,
+	notably s and z with caron.  This was seen in tcltk output
+	from Rcmdr in 2.7.x, but might have occurred elsewhere (and
+	earlier).
+
+	This also affected localeToCharset() which incorrectly
+	returned "ISO8859-2".
+
+	The same issue seems to have caused problems with starting
+	R 2.7.x in the Chinese (Hong Kong S.A.R.) locale on some
+	systems (e.g. PR#12658): the problems were with locale names
+	which contained periods.
+
+    o	dir.create(recursive = TRUE) was not working on //server/share
+	paths.
+
+    o	The clip region was sometimes wrong when printing from the
+	menu on a windows() graphics device (in 2.7.2 only).
+
+    o	The windows() device would sometimes ignore font family
+    	requests (PR#12931).	
+
+
+
+		CHANGES IN R VERSION 2.7.2
+
+
+NEW FEATURES
+
+    o	Rgui has a new menu item 'Html search page' on the Help menu,
+	which goes directly to the HTML search form.  This is needed
+	by users of Firefox 3, which generates incorrect links in
+	search results when the page is accessed via the 'Html help'
+	menu item (or via help.start()).
+
+
+BUG FIXES
+
+    o	Saving a graph in TIFF format could crash R (PR#11804).
+    
+    o	Rterm in interactive use did not implement R_FlushConsole() fully.
+
+    o	getGraphicsEvent() did not return onMouseMove events while a
+	mouse button was depressed.
+
+    o	The confirmation of a new frame for a windows() graphics
+	device works harder to give the device focus, including
+	bringing it to the top.
+
+    o	glob (used by Sys.glob() and unlink()) was not working correctly
+    	on some filename patterns including non-ASCII characters.
+    	Part of the problem was specific to 2.7.[01], part has existed
+    	since 2.5.0.
+
+    o	Sys.glob() returned a UTF-8 result in 2.7.[01] but failed to
+	mark its encoding.
+
+    o	User menus were not properly removed when a graph window was 
+	closed.
+
+    o	Rscript -e (and Rterm -e) failed on Vista because the MSVCRT
+	function 'tmpfile' is broken on that platform.
+
+    o	Making a .msi installer now works with WiX 2.0.5805.0 (the file
+	format had been changed since 2.0.4221.0 as previously tested).
+
+    o	The grid package could set the clipping region outside the
+	device region, and the windows() device now intersects the two
+	when setting the clipping region.  Once an invalid region was
+	set, semi-transparent text and lines might have been omitted.
+
+    o	Some (but not all) Korean users have been having problems with
+	Korean translations of the Rgui menus.  These had not been
+	updated for a long time, and have now been removed.
+
+
+
+		CHANGES IN R VERSION 2.7.1
+
+
+NEW FEATURES
+
+    o	Rgui now accepts Unicode characters invalid in the locale when
+	pasted in and converts them to \uxxxx sequences before passing
+	to R.
+
+    o	The Save as | Postscript ... file selection box now offers
+	*.eps (default) and *.ps file selections.
+
+    o	nchar() now gives the number of characters and their width as
+	would be printed in Rgui for non-representable UTF-8 strings,
+	not as they would be printed in Rterm (via <U+xxxx> escapes).
+
+    o	savePlot() now adds the file type as an extension to the
+	filename if no dot ('.') is present in the filename.  This
+	provides the same default as in versions prior to 2.7.0, but
+	allows the extension to be specified explicitly. (Contributed
+	by Steve Ellison.)
+
+
+BUG FIXES
+
+    o	Sys.getenv() could read incorrectly non-ASCII values.
+
+    o	The vertical scrollbar on the data editor/viewer now works
+	when scrolling beyond 65535 rows.  (PR#11291)
+
+    o	getWinProgressBar() returned an integer result -- it now
+    	returns a double value.
+
+    o	basename() and dirname() could truncate their results when
+   	Unicode chars were used (usually in a CJK locale).
+
+    o	memory.size() no longer wraps around allocations greater than
+	2Gb.  (PR#11596)
+	
+    o	file.choose() in SDI mode now restores the window focus
+    	properly.
+
+
+
+		CHANGES IN R VERSION 2.7.0
+
+
+WINDOWS VERSIONS
+
+    o	Versions of Windows older than 2000 are no longer supported
+	(specifically, 95, 98, ME, NT4).  Windows 2000 is minimally
+	tested, but those tests were successful.
+
+
+GUI CHANGES
+
+    o	The folder selection dialog used by choose.dir() and
+ 	File | Change dir is now re-sizeable with a status line showing
+	the currently selected path, rather than having a separate
+ 	'Browse' button.
+
+    o	When Rgui is launched from a terminal, C output from ill-formed
+	packages that write to stdout or stderr rather than use
+	Rprintf will appear in the terminal rather than being lost.
+	(Only on XP or later.)  This can be very handy for debugging C
+	code in packages: just write debugging messages to stdout.
+
+
+INTERNATIONALIZATION
+
+    o	If a string presented to the parser contains a \uxxxx escape
+	invalid in the current locale, the string is recorded in UTF-8
+	with the encoding declared.  This is likely to throw an error
+	if it is used later in the session, but it can be printed, and
+	used for e.g. plotting on the windows() device.  So "\u03b2"
+	gives a Greek small beta and "\u2642" a 'male sign'.  Such
+	strings will be printed as e.g. <U+2642> except in the Rgui
+	console (see below).
+	
+    o	Rgui has been re-written to work internally in Unicode.  This
+	means that copy and paste will be done in Unicode, and should
+	now work correctly if R is being run in a different locale
+	from other applications.  There is more support for input
+	methods, thanks to Ei-ji Nakama.
+
+    o	The Rgui console can display UTF-8 encoded strings (provided
+	the font selected has the glyphs needed).
+
+    o	The windows() family of devices now always use Unicode fonts
+	(except for the Symbol font), not just in multibyte locales.
+	This means it should be possble to plot in an 8-bit locale
+	other than the system locale (e.g. for R running in Russian
+	with Windows set to French).
+
+	Further, they can handle UTF-8-encoded strings, so if a
+	character string in R is marked (see ?Encoding) as UTF-8, it
+	can be plotted (for a suitable font) even if it is not a valid
+	character in the current locale.  Thus one way to plot a Greek
+	beta (Unicode point U+03B2) is text(x, y, "\u03b2").
+
+	The postscript() and pdf() devices handle UTF-8-encoded
+	strings provided the characters used are in both the output
+	encoding and the PostScript font used.
+
+    o	Environment variables are read and set in Unicode by
+	Sys.getenv()/Sys.setenv().
+
+    o	Sys.info() uses UTF-8 machine, login and user names.
+
+    o	readClipboard() can read Unicode text (format = 13), and
+	writeClipboard() can write it.
+
+    o	file() and pipe() connections and the functions basename(),
+	dir(), dirname(), dir.create(), DLL.version(), file.access(),
+	file.copy(), file.create(), file.exists(), file.info(),
+	file.remove(), file.rename(), getwd(), load(),
+	normalizePath(), path.expand(), save(), setwd(), shell(),
+	shell.exec(), shortPathName(), Sys.chmod(), Sys.glob(),
+	system() and unlink() have been converted to use Unicode
+	filenames.
+
+	Pathnames you select (by choose.files(), choose.dir() and
+	file.choose()) are returned in UTF-8.
+
+	list.files() still works with the native charsets as we do not
+	have a Unicode regexp engine.  (The code for grep uses wide
+	chars internally but does not provide an interface.)
+
+    o	Collating (e.g. <) and sorting is done in UTF-8 where one of
+	the items is in UTF-8.
+
+    o	If readLines() or scan() is passed an unopened connection with
+	a non-default 'encoding' argument, it will re-encode to UTF-8
+	and declare the encoding on character columns.
+
+
+TIME ZONES
+
+    o	This version of R no longer makes use of Windows' flawed concept
+	of time zones but replaces it by Arthur Olson's public-domain
+	tz database (which is widely used, including on Linux, Mac OS
+	X, Solaris, AIX, FreeBSD and by Java and Tcl).  This means
+	that time zones should now be referred to by their 'standard'
+	names, and will be output correctly (e.g. not the incorrect
+	'GMT Daylight Time' for 'British Summer Time' used by
+	Windows).
+
+    o	An attempt is made (once per session) to identify the current
+	timezone from the Windows' Registry.  If this does not work or
+	is incorrect, set the 'TZ' environment variable appropriately:
+	a list of known timezones is given in
+	R_HOME/share/zoneinfo/zones.tab (some alternative names will
+	also be recognized).  (Thanks to Uwe Ligges for testing
+	various versions on German versions of Windows: time zone
+	names are stored in the language of the Windows install.)
+
+    o	Since the Windows C runtime does not think that times prior to
+	1970-01-01 00:01 *in Seattle* are valid, heuristics had to be
+	used for the time zones pre-1970.  Now the database is
+	available for 1902-1969 (and nowhere had DST prior to 1902 and
+	the time offset is assumed to be the same as in 1902) and so
+	the results are reliable from the onset of standard time
+	(second half of the nineteenth century) until the near future
+	(since legislators change time zones with little notice).
+
+
+GRAPHICS DEVICE CHANGES
+
+    o	Options "graphics.record", "windowsBuffered", "xpinch" and
+	"ypinch" have been replaced by a function windows.options() to
+	set the defaults for the arguments of the windows() device.
+
+    o	The windows() device has a new argument 'title' to set the
+	title of the window.
+
+    o	The windows() device no longer sizes the window to allow for
+	scrollbars that might be needed for rescale="fixed", which
+	means the default size really is 7 inches square and not 7.177
+	inches.
+
+    o	Saving a graphics window containing semi-transparent colours
+	to BMP, JPEG or PNG now works.
+
+    o	The bmp(), jpeg() and png() devices support semi-transparent
+	colours.  See ?png for use with transparent backgrounds.
+
+	Specifying 'res' to these devices now scales the text size and
+	line width.
+
+    o	Drawing circles is now done with an integer diameter rather
+	than radius and so can be more accurate for small circles.
+	You can see this in the pairs plot and coplot examples in
+	demo(graphics) which on a 96dpi system use diameter 5 rather
+	than radius 2.
+
+    o	There is a new tiff() graphics device, and an option to save to
+	TIFF from the graphics device menu and in savePlot().  (The
+	only advantage of (simple) TIFF over PNG is that some journals
+	are unable to cope with formats from as recently as 1996.)
+
+    o	savePlot() no longer automatically adds an extension to the filename.
+
+
+PACKAGE INSTALLATION
+
+    o	Using PKG_C[XX]FLAGS instead of PKG_CPPFLAGS for -I and -D
+	flags is now a fatal error.
+
+    o	INSTALL does selection of lazyloading or not via an initial
+	dummy installation, so large packages which cannot be
+	installed without lazyloading and do not specify it may
+	succeed when they did not earlier.
+
+    o	The new argument dyn.load(DLLpath=) was implemented to make
+	DLL conflicts easier to manage on Windows (see ?dyn.load), and
+	is used by package tcltk.  This changes the meaning of the
+	environment value MY_TCLTK: its value is now the path to the
+	directory containing tcl85.dll and tk85.dll.
+
+    o	The GraphApp DLL is now called Rgraphapp.dll to avoid any
+	conflicts.  Packages using it (Cairo, RWinEdt) will need to be
+	re-installed for R 2.7.0.
+
+    o	zlib is now packaged as Rzlib.dll and its headers are
+	installed.  Packages attempting to use the former private 
+	entry points in R.dll will need to be modified to include
+	$(ZLIB_LIBS) in PKG_LIBS.
+
+    o	install.packages() now handles type="source", repos=NULL
+        installs.
+
+
+OTHERS
+
+    o	bitmap(), dev2bitmap() and embedfonts() now look at environment
+	variable GSC if R_GSCMD is unset.  (This is the variable used
+	by ps2pdf and similar batch files.)
+
+    o	loadRconsole() may now be used in Rterm and embedded R
+	(where it affects graphics windows and pagers).  Embedded R
+	no longer reads the Rconsole file on startup.
+
+    o	getClipboardFormats() by default returns a human-readable
+	character vector, but will give numeric output with new
+	arguent 'numeric = TRUE'.
+
+    o	New function readRegistry() to read registry hives.
+
+    o	The progress bar in download.file() is now supressed by
+    	quiet=TRUE (as it has long been on Unix).
+    	
+    o	RSetReg now uses full pathnames, the same as the regular
+    	installer.
+
+    o	Font Consolas has been added to the console fonts listed in the
+	GUI preferences widget.
+
+    o	New widget winProgressBar() (based on the progress bar used by
+	download.file()).
+
+    o	The download progress bar now shows the percentage done in the
+    	title bar (and hence in the Windows task bar).
+
+    o	download.file() now selects mode="wb" if 'mode' is not
+    	supplied and the file extension on the url looks like a binary file.
+
+    o	tools::texi2dvi() detects the use of MikTeX's texi2dvi and
+    	uses its '-I path' argument to add the path to R's style files
+    	(such as Sweave.sty) to the input search path.
+
+    o	R CMD Rd2dvi defaults to 'yap' as the previewer (rather than
+	xdvi.bat) -- as before this is set by the environment variable
+	'xdvi'.
+
+    o	The size of the Rgui buffer is now set in characters not bytes
+	(the difference only matters in CJK locales), but for
+	backwards compatibility the entry in Rconsole is still called
+	'bufbytes'.  The default has been increased to 250,000 chars
+	(0.5Mb).
+
+
+BUILDING R
+
+    o	Support for the ACML BLAS has been withdrawn (there is no
+	version of ACML 4.0.0 for gcc under Windows, and none at all
+	for gfortran).
+
+    o	We assume version 2.7.0 of Rtools.exe, in which gcc is
+	version 4.2.1.
+
+    o	We assume Tcl/Tk version 8.5.x (included in version 2.7.0 of
+	Rtools.exe).  Earlier versions can be selected in MkRules.
+	The distribution in Rtools (and hence in the binary installer)
+	includes the BWidget and Tktable extensions.
+
+
+BUG FIXES
+
+    o	If a windows(rescale="fit") device was shrunk initially to fit
+	on screen, the font size was not rescaled to take account of
+	the initial shrink factor.
+
+    o	If windows(ypinch=) was specified, the 'width' argument's value
+	was used for the height.
+
+    o	The Graphapp computation for keyboard accelerators for menus was
+	not always working correctly, at least on Windows XP -- this
+	affected e.g. Alt-M plus 'i' for 'List search path', where the
+	second 's' was being underlined.  (PR#11036)
+	
+    o	The winDialogString() dialog now releases CPU cycles while
+    	waiting for input. (PR#11045)
+
+    o	R CMD now sets TEXINPUTS to .;%R_HOME%/share/texmf;%TEXINPUTS%;
+	by exact analogy with Unix-alikes (that is, including the
+	current directory before R's texmf directory).
+
+
+
+	**************************************************
+	*						 *
+	*	       2.6 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.6.2 patched
+
+INSTALLER
+
+    o	The installer now uses version-specific identifiers so that
+	multiple versions of R can be installed and uninstalled
+	separately. (PR#10746)
+
+
+
+		CHANGES IN R VERSION 2.6.2
+
+WORKAROUNDS
+
+    o	We set some environment variables to work around hangs in Rgui
+	when packages (e.g. the then current version of tseries) use
+	Fortran WRITE calls.  The Fortran output will be written to a
+	file named 'fort.6' in the working directory.
+
+    o	Browsing for a directory in choose.dir() and the Rgui
+	'Change Dir...' menu item now works around Vista's confusion
+	about 'desktop' by starting at 'Computer' on Vista/Server 2008.
+
+    o	The shortcuts created by the installer now start R in the user's
+	personal folder (typically 'My Documents' or 'Documents').
+
+
+NEW FEATUES
+
+    o	win.version() and Sys.info() know about recent and upcoming
+	Windows versions, including if they are running on a 64-bit
+	platform.
+
+    o	The listbox used by select.list() now responds to
+	double-clicking an item (as if the item had been selected and
+	then the OK button pressed).
+
+    o	The header iconv.h is now installed, and can be used by
+	packages in conjunction with PKG_LIBS=-liconv .
+
+    o	The value of "default" for the postscript() 'paper' argument for
+	savePlot() and the windows() graphics device menus is now
+	interpreted as "special" (rather than "a4" or "letter"): it
+	can still be overridden by setting ps.options().  (This changes
+	the default output to be most suitable for inclusion in other
+	documents rather than to produce a page for printing.)
+
+
+BUG FIXES
+
+    o	If a graphics window was opened in MDI mode while the console
+	was zoomed, it would not be initialized properly.
+	
+    o	The graphics window placement parameters on the GUI preferences
+    	dialog were being ignored.
+
+    o	The text field in a drop-down list (as used in GUI preferences
+	for fonts) will now scroll horizontally when a user enters
+	text that exceeds the display width.
+
+    o	If Rterm is invoked as 'R', the status code (as passed to q())
+	is now returned (rather than 0 or 1).
+	
+    o	Double clicking on a saved workspace (or dragging and dropping it
+	onto Rgui.exe) failed to open it if the Rprofile or Rprofile.site file
+	changed the working directory.
+
+
+OTHERS
+
+    o	The MSVC run-time (used by MinGW) has a global variable to
+	determine whether files default to text or binary mode.  R now
+	overrides this setting so that files are always read in text
+	mode by default: this is relevant to embedded uses of R.
+
+
+
+		CHANGES IN R VERSION 2.6.1
+
+
+PACKAGE INSTALLATION
+
+    o	Fortran code in packages is no longer compiled with -Wall, as
+	this is not done on other platforms.
+
+
+OTHERS
+
+    o	The canvas used when plotting on a jpeg() or bmp() device with
+	a transparent background (most often by copying from a screen
+	device with the default transparent background) is now white
+	and not grey.
+
+    o	It seems file.access() can be unreliable both ways: that is it
+	can also report that access is barred when it is not.
+	(Seen on network file systems.)  So install.packages() to a
+	single library no longer makes use of file.access() but checks
+	directory creation instead: it is still possible that you can
+	create a directory but not be allowed to create a .dll or .chm
+	file, at least under Vista.
+
+    o	When R_COMPLETION is set to FALSE, TAB is no longer ignored,
+	but advances to the next tab stop in Rterm (the pre-2.5.0
+	behaviour) and inserts a space in Rgui.
+
+
+BUG FIXES
+
+    o	Saving a plot to Postscript or PDF required the font database
+	to have been initialized: this is now done if necessary.
+
+    o	Very long file or pathnames could cause a crash if opened in
+	the script editor. (PR#10402)
+
+
+
+		CHANGES IN R VERSION 2.6.0
+
+GUI CHANGES
+
+    o	The console now handles cut and paste and mouse clicks in the
+	input line in a more Windows standard way.  It also indicates
+	insert and overwrite mode with different cursors.
+
+
+FUNCTION CHANGES
+
+    o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
+
+    o	The windows() device supports semi-transparent colours under
+	Windows 2000 and later, for lines, fills and text.
+
+    o	file.info() has an additional column 'exe' saying if the file
+	is executable and if so what subsystem would be used to
+	execute it.
+
+    o	getWindowsHandle() now returns the handle as an external pointer.
+    	It no longer returns the process ID.
+
+    o	system() (and hence shell()) now reports as the return value
+	only the bottom 16 bits of process error codes to protect
+	against executables with invalid error codes (such as -1 from
+	fc.exe, PR#9868).
+
+    o	pipe() in Rgui now runs the command through the shell specified
+    	by the COMSPEC environment variable, as Rterm has always done.
+
+    o	l10n_info() reports the codepage in current use.
+
+    o	dQuote() and sQuote() now use directional quotes by default
+	under RGui.  You might prefer options(useFancyQuotes=FALSE)
+	if the console font does not have these quotes: see the
+	rw-FAQ.
+
+
+INSTALLER
+
+    o	The components now have two levels, and the Tcl/Tk docs can be
+	deselected independently.  Only CHM help for Tcl/Tk is shipped
+	(since Winhelp does not work on Vista).
+
+
+PACKAGE INSTALLATION
+
+    o	The undocumented use of 'OBJS' in src/Makevars.win has been
+	removed: use 'OBJECTS' (as documented in 'Writing R
+	Extensions') instead.
+
+    o	PKG_CFLAGS, PKG_CXXFLAGS, PKG_FCFLAGS and PKG_FFLAGS now
+	precede the system equivalents, as they have long done on
+	Unix-alikes.
+
+    o	FC is used rather than F95 for consistency with Unix-alikes.
+
+    o	A file src/Makefile will now be ignored: use src/Makefile.win.
+	(All packages known to build on Windows which have a
+	src/Makefile also have a src/Makefile.win.)
+
+    o	The src/Makevars flag SAFE_FFLAGS (documented in 'Writing R
+	Extensions') is now available on Windows.
+
+    o	There are dummy targets 'before' and 'after' in MakeDll which
+	can be overidden in src/Makevars.win.
+
+    o	graphapp is now in a separate DLL, so packages making direct use
+	of it need to link against -lgraphapp.  This is the value of
+	the macro GRAPHAPP_LIB that you can include in PKG_LIBS in
+	Makevars.win (etc).  (GRAPHAPP_LIB is undefined in earlier
+	versions, so this is backwards compatible).
+
+    o	If the HTML Help Workshop fails when chm help is requested,
+	package installation will continue with a warning.
+
+    o	The C99 flag (-std=gnu99) is now used for compiling packages
+	as well as R itself.
+
+    o	If the TMPDIR environment variable is not set, Rcmd now tries
+    	the TEMP variable before setting TMPDIR to C:/temp.
+
+
+BUILDING R
+
+    o	Cross-building does now lazy-load the base package.
+
+    o	The Lea malloc is now used by regex.c, src/extra/pcre and
+	src/extra/xdr.  (This is for potential performance gains.)
+
+    o	There is an experimental option BUILD=F2C for use when there is
+	no Fortran compiler installed, but there is a compatible f2c
+	installed.  Set CC in the environment to point to the C
+	compiler to be used.  (Some binary builds of gcc omit the
+	Fortran compiler, and commercial C compilers generally do not
+	have matching Fortran compilers.)
+
+
+OTHERS
+
+    o	Some 64-bit versions of Windows (e.g. Vista 64) allocate 4GB
+	user address space to each process that is large-address aware
+	(as the R processes are), and on those systems the default
+	memory limit will be the smaller of the amount of RAM and
+	3.5GB.
+
+    o	Rcmd INSTALL --docs=chm now means 'CHM only' and not 'all' as
+	in earlier versions of R.
+
+    o	The afm files in library/grDevices/afm are now compressed,
+	which reduces the installation size by ca 2Mb.
+
+    o	Installing a package with 'SaveImage: yes' no longer looks at
+	the .Renviron startup files, and so takes R_LIBS from the
+	environnment.  This is consistent with lazyloading a package.
+
+    o	The preferred build environment is to use gcc >= 4.2.1,
+	specified via BUILD=GCC4 in MkRules (the default).  Set
+	BUILD=GCC3 in MkRules if you have gcc 3.4.5.  There is support
+	for a gcc4 cross-compiler via the CROSS-GCC macro in MkRules.
+
+    o	Rcmd build now uses 'tar --force-local' so it should work with
+	Cygwin and MSYS tar as well as that in Rtools.  This replaces
+	a workaround for Cygwin tar only.
+
+    o	Rcmd config is now implemented.
+
+    o	More Windows locale names set via LC_ALL etc work to set the
+	message language, needed under Vista (which is picker than XP
+	about such names, so LC_ALL=ru no longer works and LC_ALL=rus
+	is required).
+
+    o	There are now warnings on startup if locale categories cannot
+	be set (a warning for LC_CTYPE may apply to all categories).
+	This has become much more common under Vista.
+
+    o	Single and double quotations are now rendered using directional
+	quotes in text conversions of R help (as they always have been
+	in HTML, CHM and latex versions of the help).  Note that
+	directional double quotes are missing in FixedSys on most
+	versions of Windows, and although the files will be rendered
+	correctly in CJK locales using the builtin pager, they may not
+	be in external pagers.
+
+    o	Rcmd Rdiff now ignores the difference between smart single quotes
+	and '.  This will probably only work correctly in single-byte
+	locales.  (This is in addition to UTF-8 directional single
+	quotes which the Unix version has for some time equated to '.)
+
+    o	locale category LC_CTYPE="C" is now supported: it was previously
+	remapped to 'en' (that is US English) due to problems in the
+	MinGW runtime which have since been resolved.
+
+
+BUG FIXES
+
+    o	Pasting into the script editor would sometimes change fonts and
+    	lose line breaks. (Reported by Bob Muenchen.)
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.5 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.5.1 patched
+
+BUG FIXES
+
+    o	.Platform$GUI would report "Rgui" when no GUI was present in
+	R(D)COM.
+
+    o	'=' within '-e expression' on the command line is no longer
+	interpreted as setting an environment variable.
+
+
+
+		CHANGES IN R VERSION 2.5.1
+
+GUI CHANGES
+
+    o	Within Rgui, completion can be turned on or off from the 'Misc'
+	menu, and if completion is on, file name completion can be
+	turned off (or back on again).
+
+	The list of possible completions is removed once any further
+	key is pressed.
+
+    o	The "Paste commands only" context menu is slightly better at
+	recognizing and removing prompts, e.g. from example() output
+	or debug sessions.
+
+    o	Using a modal widget from Rterm (e.g. select.list) is now far
+	more likely to be forced to the front.
+
+
+OTHERS
+
+    o	file.access() has been rewritten using Win32 functions and
+	should be more reliable, particularly on NT-based versions of
+	Windows.  (PR#7234)
+
+    o	The version number of the installer now includes the SVN
+	revision number (which is handy for R-patched and R-devel
+	daily builds).
+
+
+BUG FIXES
+
+    o	unlink() was not accepting wildcards.
+
+    o	Since Windows will not unlink the current working directory,
+	we change working directories before clearing the session
+	temporary directory.
+
+    o	The PDF version of the 'R Internals' manual was missing its
+	indices.
+
+    o	Rcmd BATCH did not accept input file paths with spaces in
+	2.5.0.  (PR#9652)
+
+    o	R_LIBS_SITE and R_LIBS_USER did not accept paths on network
+	shares (starting \\).  (Rcmd INSTALL will not work with
+	libraries on network shares, however.)
+
+    o	path.expand() and other uses of '~' (e.g. filepaths) now take
+	the value of the home directory from the environmental
+	variable R_USER and not from the pre-2.0.0 definition of
+	'home'.  This means that if HOME is unset, the value defaults
+	to the personal directory and not %HOMEDRIVE%HOMEDIR.
+
+    o	The setting of R_TEXOPTS has been moved from MkRules to
+	doc/manual/Makefile.win.  This avoids error messages if 'latex'
+	is not in the path.
+
+    o	Rcmd INSTALL now sets up lazyloading earlier if explicitly
+	requested in the DESCRIPTION file.  This is needed for
+	packages that use 'methods' and need to load themselves to
+	process their data.
+
+    o	winMenuDel() was not automatically deleting sub-menus when a
+	user menu was deleted.  (PR#9702)
+
+    o	Rcmd INSTALL --docs=txt etc works (for a single type, except
+	'chm' which is equivalent to 'all' nowadays).
+
+
+
+		CHANGES IN R VERSION 2.5.0
+
+GUI CHANGES
+
+    o	In MDI mode there is a new View menu when the console is in
+	focus which allows the toolbar and statusbar to be
+	(de)selected, with the initial settings taken from the
+	Rconsole file as before.  The default setting for the
+	statusbar has been changed to 'no', as it is barely used by
+	default.
+
+    o	There is a new menu item in Rgui to 'Stop all computations'
+	which kills all R computations immediately, skips any on.exit
+	conditions and returns to the command prompt.
+
+    o	The 'Install packages ...' menu item now only installs essential
+	dependencies ('Depends' and 'Imports' but not 'Suggests'),
+	using install.packages(dependencies = NA).
+
+    o	The 'save as' file dialogs from the 'File' menu in a graphics
+	window now add an appropriate extension to the file name.  To
+	specify a file name without an extension, put the name in
+	quotes, e.g.  "foo".  (As requested in PR#9336.)
+
+    o	There is support in both Rgui and Rterm for object/file name
+	completion via the TAB key using package rcompgen.  This can
+	be disabled by setting the environment variable
+	R_COMPLETION=FALSE when starting R (e.g. in ~/.Renviron).
+	(Words within quotes are interpreted as file names, others as
+	R object names.  Use library(rcompgen); ?rc.options for more
+	details, including tuning the behaviour.)
+
+
+FUNCTION CHANGES
+
+    o	Sys.getenv() has been changed to use the C-level environment and
+	not the Windows environment block for the process, for
+	consistency with Sys.getenv("FOO"), Sys.setenv() and
+	Sys.unsetenv().  A few Windows-specific environment variables
+	(such as =C:) no longer appear.
+
+    o	https:// URLs can be accessed by download.file() and url() if
+	--internet2 is used (and provided the certificate is accepted as
+	valid).
+
+    o	bitmap() and dev2bitmap() will now accept paths in 'GS_CMD' and
+	'file' which contain spaces (by converting to short path names
+	inside the functions).
+
+    o	system() gains an 'ignore.stderr' argument for consistency with
+	Unix.  (This changes the order of arguments.)  The defaults
+	have been changed to 'show.output.on.console=TRUE,
+	invisible=TRUE' which make system() in Rgui more consistent
+	with Rterm and with other ports of R.
+
+    o	For consistency with Unix, system(intern=TRUE) and pipe(, "r")
+	connections no longer capture stderr, only stdout (except on
+	Rgui if ignore.stderr = FALSE, since Rgui has no separate
+	stderr).
+
+
+INSTALLER
+
+    o	The Inno Setup installer now installs the desktop icon (if
+	selected) for all users if run from an account with
+	administrative privileges.
+
+
+OTHERS
+
+    o	This file (CHANGES) has been reformatted to be readable by the
+    	readNEWS() function.
+
+    o	The C-level printf function used for printing has been altered
+	to implement a round-to-even rule.  This means that output is
+	more likely to be identical to that on Unix-alikes.
+
+    o	R CMD INSTALL now installs by default into the first library on
+	the library path if R was run in the current environment.
+	Similarly, R CMD REMOVE by default removes from that library.
+	R CMD INSTALL does a better job of removing its temporary
+	directory.
+
+    o	R CMD BATCH now prints the result of proc.time() at the end of
+	the output, as it long has on Unix-alikes.
+
+    o	More of the messages from the script editor are translatable.
+
+    o	There is support for x86_64 cross-compilers as well as for ix86.
+
+    o	mingw-runtime >= 3.11 is needed to build R.  (E.g., it provides
+	isblank that was previously missing.)
+
+    o	src/extra/trio has been updated to 1.12.
+
+    o	malloc.c has been updated to version 2.8.3.  This version has a
+	slightly different allocation strategy, and is likely to work
+	a little better close to address space limits but may give
+	more warnings about reaching the total allocation before
+	successfully allocating.
+
+    o	file.access() would give an error if asking about execute
+	permission on Vista: the underlying C function has been
+	changed to be incompatible with POSIX and we now work around this.
+
+    o	Packages are now compiled with -O3.  (R itself has been since
+	2.3.0.)
+
+    o	Packages can have a 'cleanup.win' script to cleanup after
+	configure.win etc.
+
+    o	The toolset described in the R Installation and Administration
+	manual for building on Windows is now partially available in
+	an executable installer.
+
+    o	The messages about being unable to update package and search
+	index files when installing packages without sufficient
+	permissions to update R are now suppressed (as Windows often
+	reports inaccurately about file permissions).
+
+
+BUG FIXES
+
+    o	md5check.exe works again (it was throwing spurious differences
+	after a compiler update).
+
+    o	Some links in .chm help files were not working.  (PR#9586)
+
+    o	rcmd Rdiff was not working (used by R CMD check).
+
+    o	Workaround a Windows' mktime bug that affected the POSIXct to
+	POSIXlt conversion during leap days in leap years prior to
+	1970 in timezones which were on DST at the time.  (PR#9572)
+
+    o	system() could have overflowed a buffer with a very long
+	command line that contained quotes.
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.4 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+
+		CHANGES IN R VERSION 2.4.1 patched
+
+BUG FIXES
+
+    o	Using the AltGr key in the script editor was treated as a control key.
+	This was fixed for the rest of Rgui in R 0.9.1, and unfixed by the
+	contributed code implementing the script editor.  (PR#9430)
+
+    o	Returning focus to a window (e.g. the script editor after
+	saving) no longer changes the size or position, e.g. leaving a
+	maximized window maximized.
+
+    o	When reading from pipes (which includes pipe(open="r") and
+	system() with intern=TRUE or show.output.on.console=TRUE in
+	Rgui) it is now possible to interrupt the command and the Rgui
+	console will be responsive whilst it is running (and R will
+	take up far less of the CPU).  (Probably also fixes PR#7634.)
+
+    o	menu.ttest2() in example package 'windlgs' was broken.
+
+    o	CHM help is now converted with support for the \encoding{} section.
+
+    o	etc/Makeconf was being left out of builds of the installer.
+
+
+
+		CHANGES IN R VERSION 2.4.1
+
+UNCATEGORIZED
+
+    o	Inno Setup >= 5.1.7 is now required to build the installer.
+
+    o	Reverted 2.4.0 change that required case-sensitive specification of
+	commands to R CMD.
+
+    o	The Simplified Chinese menu messages were in the wrong format,
+	causing Rgui to crash on startup. (PR#9277)
+
+    o	Menu messages are now available in a Spanish translation.
+
+    o	The pointsize of fonts in the windows() graphics device may now
+	be set to any positive integer.
+
+    o	Building customized installers failed because the startup
+	options weren't being handled properly.
+
+    o	If Rconsole settings were such that R could not start properly,
+	it crashed.  It now suggests starting with the --vanilla
+	option, which now does not load Rconsole.  Additionally, an
+	option --no-Rconsole has been added for completeness and
+	debugging.
+
+    o	shell.exec() now gives an error and a reason when it fails
+	(rather than continuing silently as before).
+
+    o	R CMD SHLIB again uses PKG_LIBS in files Makevars[.win] (it did
+	not in R 2.4.0).
+
+
+
+		CHANGES IN R VERSION 2.4.0
+
+UNCATEGORIZED
+
+    o	The language for menus and messages can be set in the 'Rconsole'
+	file and (for future messages/sessions) from the GUI
+	preferences.
+
+    o	The initial setting for console buffering can be set in the
+	'Rconsole' file and (for future sessions) from the GUI
+	preferences.
+
+    o	The installer can set defaults for MDI/SDI display, help style,
+	and use of the --internet2 startup option.  Custom builds of R
+	can change these defaults.  The standard build now defaults to
+	CHM help.
+
+    o	If CHM help is selected, but is not present (e.g. a package was
+	cross- compiled on Unix), the help system defaults to text
+	help.
+
+    o	getGraphicsEvent() now writes its prompt to the standard output
+	stream, so it can be captured by sink() or capture.output().
+
+    o	getGraphicsEvent() now leaves the standard graphics window menus
+	in place, so those functions are available while waiting for
+	an event.
+
+    o	iconv.dll has been updated to 1.11, which has some improvements
+	for CJK languages under Windows (e.g. support for the Euro).
+
+    o	Rcmd and R CMD check the name of Perl scripts, so errors like 'R
+	CMD install' are detected.
+
+    o	The default limit for --max-mem-size has been changed: see the rw-FAQ.
+
+    o	The .chm files are now given a title identifying the package.
+
+    o	There are new utilities 'Rcmd Sweave' and 'Rcmd Stangle' for
+	processing of Sweave documentation.
+
+
+INSTALLING PACKAGES
+
+    o	It is now possible to use relative paths as 'lib' in
+	install.packages(), not just absolute ones.
+
+    o	Installing packages (in particular saving an image and preparing
+	for lazy-loading and lazydata) is now done in a C locale for
+	consistency with Unix.  (This will only possibly affect CJK
+	locales, where some checks on the validity of symbols and
+	strings might be locale-dependent.)
+
+    o	There is a new file etc/Makeconf that provides an approximation
+	to the Unix version and may help with src/Makefile's.
+
+
+C-LEVEL CHANGES
+
+    o	There is now a similar embedding interface to that under Unix,
+	using Rf_initEmbeddedR / Rf_endEmbeddedR.
+
+    o	The C-level *printf functions have been replaced by those from
+	the trio library, which ensures a higher level of C99
+	compliance without the need for lots of Windows-specific
+	workarounds.
+
+    o	Entry points which are hidden in libR.so on Unix are now also
+	hidden in R.dll.  (Just over half the entry points are hidden,
+	which speeds up loading.)
+
+    o	It is possible to select (in MkRules) the type of debug symbol
+	used, and this now defaults to 'dwarf-2' (which is more
+	efficient than the previous default of 'stabs').  More parts
+	of R are now built with debug symbols when DEBUG=T.
+
+    o	The symbols in graphapp are now remapped to start with GA_, so
+	any code making use of graphapp will need to be recompiled.
+
+
+BUILDING R
+
+    o	mingw-runtime >= 3.10 is required to build R (a bug fix in the
+	handling of MBCS code is required).  This is enforced by a
+	check in building Rpwd.exe.
+
+    o	At the time of writing mingw-runtime-3.10 was not listed on the
+	MinGW downloads page, but it is available from
+	http://prdownloads.sourceforge.net/mingw/mingw-runtime-3.10.tar.gz?download
+
+
+BUG FIXES
+
+    o	The menu items for source and load/save workspace/history and
+	drag-and-drop can now be used for paths on network shares
+	(starting with \\).
+
+    o	Using lines of more than 1000 chars in an R file in batch mode
+	could crash R.
+
+    o	If the input line limit (1024 bytes) was exceeded whilst pasting
+	in, a byte was lost and the last byte input from the keyboard
+	was repeated after the paste.
+
+    o	The script editor would only load 1000 bytes if the locale in
+	use was not the system locale.  (PR#9254)
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.3 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+
+		CHANGES IN R VERSION 2.3.1 patched
+
+BUG FIXES
+
+    o	winMenuAdd() could crash when too many menus were added.  (PR#8961)
+
+    o	The data editor could crash when too much was pasted into it.
+
+    o	dirname() converted paths involving network shares to forward slashes.
+	(PR#8892)
+
+    o	R could crash when very low on memory. (PR#8981)
+
+    o	Due to a typo, R CMD Rd2dvi would not work with MiKTeX.
+
+    o	Objects from Fortran 9X sources no longer need to be declared to
+	R CMD SHLIB/INSTALL via OBJS in Makevars.win.
+
+    o	There is a new option to make a .msi Microsoft Installer,
+	intended for use by sysadmins doing automated installs.  See
+	the 'R Installation and Administration Manual'.  (Thanks to
+	David del Campo (Dept of Statistics, University of Oxford) for
+	suggesting WiX and building a prototype installer.)
+
+    o	It was intended that saving the GUI preferences would default to
+	the home directory, but Windows only accepted paths with \
+	separators at that point, ignoring others with no error
+	message.
+
+
+
+		CHANGES IN R VERSION 2.3.1
+
+UNCATEGORIZED
+
+    o	In the GUI preferences editor, the font size can be set to
+	values not in the drop down list.  (The number of choices in
+	the list has been increased.)  Font names not in the drop-down
+	font list can be chosen.
+
+    o	The MinGW C function wcrtomb was only working for Latin-1
+	characters, and it had been replaced.  This affected the
+	specification of 'pch' as a character, and some little-used
+	aspects of plotmath.
+
+    o	The installer generated a link in the Program menu to a
+	no-longer existent help page.
+
+    o	Opening a device via windows(resize="fixed") would sometimes
+	fail with a message about 'outer margins too large'. (PR#8857)
+
+    o	Sys.setlocale() interprets LC_CTYPE=C as a request for CP1252,
+	as the startup code long has.  (This is necessary to avoid
+	various crashes in the MinGW runtime code.)
+
+
+
+		CHANGES IN R VERSION 2.3.0
+
+UNCATEGORIZED
+
+    o	There is an error handler for access violations and illegal
+	instructions, which issues a traceback and error message, then
+	returns to the top level.  This is switched off after 10 uses
+	in a session.  Note that such errors can be the result of
+	damage to the code or objects in memory, so it is advisable to
+	save your work and restart R unless you know exactly what
+	happened.
+
+    o	There is a new function choose.dir() to choose a folder (as used
+	for 'Change dir...' on the File menu in Rgui.)
+
+    o	New function shortPathName() to convert names to DOS-style paths
+	(8+3 names and no spaces).
+
+    o	Added workaround to Windows graphics devices (windows(),
+	win.metafile(), etc.) to allow callers to choose not to
+	restore the focus to the console.  The interface to this will
+	likely change in a future release.
+
+    o	For compatibility with Unix, the following environment variables
+	are checked for a writable directory for the R session
+	temporary directory:
+
+		TMPDIR TMP TEMP R_USER
+
+	(the last will always succeed).  The changes are that TMPDIR
+	is checked first and that the values are checked to be a
+	directory.
+
+    o	sprintf() now tries to ensure the output is C99-compliant, with
+	e.g. 1.23e+08 not 1.23e+008 as given by MSVCRT.dll.
+
+    o	Rterm now responds to Ctrl-C during input (Ctrl-Break always
+	worked).  This means ^C is no longer echoed.
+
+    o	The minimum value for --max-mem-size is now 32M (rather than 16M).
+
+    o	file.info() now supports files bigger than 2Gb (the size was
+	reported incorrectly before, since Windows' stat call only
+	supports smaller files).
+
+    o	The installer executable now has the file version information
+	set appropriately.
+
+    o	The DLL version number is now 2.xy.svn_revision.
+
+    o	There is now aggressive protection of the setting of the FPU
+	control word: it is reset to 64-bit mantissa and rounding mode
+	before evaluating every expression.  This should prevent the
+	implicit loading of DLLs changing to 53-bit mantissa, but has
+	a small performance penalty.
+
+    o	The file open dialogs now list *.ssc and *.S files in addition
+	to *.q files as "S files".
+
+    o	readClipboard() and writeClipboard() now support formats other
+	than text.  A new function getClipboardFormats() reports on
+	available formats.
+
+    o	The Rgui console now supports '\r' in output as a
+	non-destructive return to the left margin in the same way as
+	Rterm (it was previously ignored).  Note that copy/cut of
+	overtyped output will not necessarily pick up the visible
+	layer of text.
+
+    o	The "Edit|GUI preferences..." dialog now allows Rconsole files
+	to be loaded as well as saved.  A new function loadRconsole()
+	has also been added.
+
+
+INTERNATIONALIZATION
+
+    o	There is no longer a separate 'East Asian' version of R.dll.
+	(Also, msvcp60.dll is no longer used as libmingwex now
+	supplies suitable functions.)
+
+    o	There is now MBCS support for the line editor in Rterm.exe.
+	(Contributed by Haruki Koyanagi.)
+
+    o	On NT-based versions of Windows, Unicode characters are used to
+	draw on the console, pager, editor and windows() family of
+	devices in multi-byte locales.  (This allows the user to
+	select a locale other than the one Windows is running in, and
+	with suitable fonts see the intended characters.  Menus and
+	dialogs should also work in the selected locale.  A Windows
+	quirk means that window titles (which includes the legends for
+	the buttons used in the Preferences dialog box) use a font in
+	the system locale.
+
+    o	Added a few mappings from Windows locale names (e.g. "chinese",
+	"chs", "cht", "ptb", "spanish", "esp", "esm", "esn") to
+	language names.  There is still scope for confusion: LC_ALL=es
+	is Estonian, and LANGUAGE=es is Spanish.
+
+    o	Spanish (as used in Spain) has been added to the list of
+	installation languages.
+
+
+INSTALLING PACKAGES
+
+    o	R CMD INSTALL will now clean up after interruption (by Ctrl-C, at
+	least where supported by the shell).
+
+    o	R CMD INSTALL --docs now has more options.
+
+    o	Links to package 'methods' are now fixed up, and R CMD INSTALL
+	no longer reports as missing links to 'datasets' and
+	'grDevices' which would be fixed up.
+
+    o	There is now support for compiling Fortran 90/95 code in
+	packages: see 'Writing R Extensions'.
+
+    o	Packages can now supply export files pkgname/src/pkgname-win.def:
+	package 'stats' does so.
+
+    o	The restriction on the number of dots in a package name (which
+	stemmed from an undocumented restriction in ld.exe) has been worked
+	around.
+
+
+C-LEVEL CHANGES
+
+    o	This version of R expects a complete double-complex BLAS to be
+	available, and so customized (e.g. ATLAS and ACML) versions of
+	Rblas.dll need to be rebuilt.  (The pre-compiled ones available on
+	CRAN have been updated.)
+
+    o	The ACML optimized BLAS can be used for LAPACK: see the 'R
+	Installation and Administration Manual'.
+
+    o	Since the Goto BLAS is no longer available for Windows, support
+	for it has been withdrawn.
+
+    o	The assembler exponentiation code has been updated to that from
+	glibc 2.3.6.
+
+    o	The import libraries libR.a, libRblas.a, libRlapack.a and
+	libproxy.a are no longer used, as we now link directly to the
+	corresponding DLL (except that a local version of libRblas.a
+	is needed to build R.dll, since R.dll and Rblas.dll are
+	mutually dependent).
+
+    o	Import libraries are now made by default without -k (--kill-at).
+	This might be relevant for contributed software using R's
+	macros.
+
+    o	The default optimization level for code in R (but not packages)
+	has been changed from -O2 to -O3, since space taken by
+	compiled code is no longer much of an issue.  This will result
+	is a small performance increase.
+
+    o	When making DLLs, the objects are no longer wrapped in an
+	archive en route (this was needed to avoid line-length limits
+	on an earlier shell).
+
+    o	When making standalone Rmath, the static library is now
+	libRmath.a and the import library is called libRmath.dll.a.
+
+
+BUG FIXES
+
+    o	iconv() was not always getting the current charset ("") right,
+	especially if the locale was set in a running R session.
+
+    o	gzfile() now always ensures that the underlying file is opened
+	in binary mode (this is only an issue on Windows).  This
+	solves some problems with reading compressed data files via
+	gzfile().
+
+    o	winMenuAdd() now has no limits on the number of menus or items,
+	and names are now limited to 500 (not 50) bytes.
+
+    o	Several fixes to Rproxy have been submitted by Thomas Baier, so
+	it handles more types of objects.
+
+    o	Outputting \b in Rgui deleted the last byte and not the last
+	character.
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.2 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+
+		CHANGES IN R VERSION 2.2.1 patched
+
+BUG FIXES
+
+    o	Opening any window (pager/editor/windows() device) was resetting
+	the LC_CTYPE in the locale to the system default.
+
+    o	formatC() sometimes gave spurious leading spaces on Windows (PR#8337).
+
+    o	Workaround in unlink() for a Windows-run-time problem with
+	deleting directories with leading spaces in the name.
+
+    o	tempdir() and tempfile() use all backslashes again (2.2.1 did not).
+
+    o	When a graphics window was double-buffered, it would update too
+	frequently while waiting for input, overloading some remote
+	display utilities.
+
+
+
+		CHANGES IN R VERSION 2.2.1
+
+UNCATEGORIZED
+
+    o	Using the latest binutils allows us to distribute Rgui.exe and
+	Rterm.exe as large-address-aware (see the rw-FAQ Q2.9).
+
+    o	The maximum C stack size for Rgui.exe and Rterm.exe has been
+	increased to 10Mb (from 2Mb); this is comparable with the
+	default on Linux systems and may allow some larger programs to
+	run without crashes.
+
+    o	Overwrite mode in the console now works for MBCS charsets.
+	(Patch contributed by Haruki Koyanagi.)
+
+    o	Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
+	in the character set to letter 1.
+
+    o	R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
+	indices.
+
+    o	The windows() family of devices did not find the right character width
+	in MBCS locales for non-ASCII characters.  (Pointed out by Ei-ji
+	Nakama.)
+
+    o	The installer was missing doc/html/index.html.
+
+    o	Windows was sometimes incorrectly labelling times on BST as on GMT,
+	e.g. "1972-07-01 01:00:00 GMT Standard Time".
+
+    o	Closing the script editor could leave Rgui in an unstable
+	state. (PR#8288)
+
+    o	Support has been added for the ACML optimized BLAS: see the 'R
+	Installation and Administration Manual'.
+
+    o	winMenuAdd() had a limit of 16 additional menus but only
+	allocated 10: it now has the limit of 16 as intended.
+
+    o	Clicking on the left part of the MDI radiobutton in the
+	preferences dialog failed.
+
+    o	A different algorithm is used to find the R session temporary
+	directory, one that is more likely to succeed.
+
+    o	For compatibility with Unix, tempfile() names have a random hex
+	suffix (and not a decimal one), and there are many more values
+	to choose from.
+
+
+
+		CHANGES IN R VERSION 2.2.0
+
+UNCATEGORIZED
+
+    o	The installer will be called R-2.2.0-win32.exe and by default
+	install into (the local equivalent of) C:/Program
+	Files/R/R-2.2.0.  The 'rw2010' notation has been dropped.
+
+    o	file:// URLs are now interpreted by download.file(),
+	download.packages() and url() in the same way as Mozilla-based
+	browsers.  That is, the expected form is
+
+		file:///d:/path/to/file
+
+	with *three* slashes.
+
+    o	library.dynam() temporarily adds the <package>/libs dir to the
+	path so that dependent DLLs can be put there and found with no
+	further action.
+
+    o	The (D)COM support has been updated, and header files and an
+	import library (src/gnuwin32/librproxy.a) are now installed.
+	See the rcom package for usage.
+
+    o	There are now Brazilian Portuguese, Chinese (Traditional) and
+	Russian translations of the Rgui menus.
+
+    o	win.graph(), x11() and X11() now behave in the same way as
+	windows() in respect of the xpinch, ypinch, graphics.record,
+	gamma and windowsBuffered options.
+
+    o	savePlot() now allows extensions '.emf' and '.eps'.
+
+    o	The script editor menu no longer has an option to exit R (as the
+	pager and graphics menus do not).
+
+    o	Installation is now available in Finnish.
+
+    o	install.packages() now detect members of a bundle which are in use
+	and so skips the bundle (as it does for packages).
+
+    o	MiKTeX is now recognised and the command-line set suitably for it.
+
+    o	If the user chooses to register R during installation, a
+	registry entry
+	HKEY_LOCAL_MACHINE\Software\R-core\R\{version}\InstallPath
+	will be added.  Users require administrative privileges to
+	create this key: for others, the same key will be put under
+	the HKEY_CURRENT_USER root.
+
+    o	The sample R_HOME/etc/Rprofile file has been renamed to
+	Rprofile.site (the documented name for such a file for some
+	years).
+
+    o	mingw-runtime-3.8 is now required to build R (as it contains
+	expm1).
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.1 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+
+		CHANGES IN R VERSION 2.1.1 patched
+
+BUG FIXES
+
+    o	The progress bar was being left behind when a download was
+	aborted.  (PR#7964).  In addition, it now retains its position
+	from one download to the next, rather than always moving back
+	to the center of the screen.
+
+    o	Added workaround in Sys.timezone() for Windows' confusion over
+	the GMT timezone.
+
+    o	Windows was sometimes leaving behind temporary files associated
+	with anonymous file() connections - we now try to clean up
+	after it.
+
+    o	The default type of file for saving a script was not being set
+	by the contributed C code for the script editor, so it
+	reverted to the type of the last file dialog (PR#8018).
+
+    o	formatC() with an exponential format sometimes did not line the
+	fields up correctly.
+
+    o	The 'Open Script' button shown from the pager toolbar in MDI
+	mode was set up incorrectly and liable to crash R.  (PR#8060)
+
+    o	seek(origin = "end") was repositioning to the wrong
+	location. (PR#7896)
+
+
+
+		CHANGES IN R VERSION 2.1.1
+
+UNCATEGORIZED
+
+    o	The installer allows a choice of languages.  Note that
+	uninstallation will happen in the language chosen for
+	installation.
+
+    o	A menu item has been added for RSiteSearch().
+
+    o	localeToCharset() was failing on some unknown (to the maintainers)
+	locales such as
+
+		LC_CTYPE=Chinese_People's Republic of China.936
+
+	and that affected example().
+
+    o	Translation of the filters in file load/save dialog spaces was
+	being handled incorrectly by gettext, and is now not
+	attempted.
+
+    o	Attempting to plot repeatedly to the same metafile sometimes
+	crashed R.  (PR#7821: it is unclear why Windows does not allow
+	this.)
+
+    o	Using the mouse scroll wheel in the data editor sometimes caused
+	it to scroll out of range and crash or display garbage.
+
+    o	The support for mitred lines encountered a Windows problem with
+	a dramatic slowdown if more than 1000 or so segments were
+	plotted in a polyline.  We now plot in bunches of 1000, which
+	is less accurate but works around the Windows problem.
+
+    o	There is a workaround for the Windows-specific problems that
+	Sys.putenv(TZ="GMT") was not recognized by the OS and that
+	Windows believes that there is such a thing as "GMT Standard
+	Time".
+
+    o	Inno Setup >= 5.1.2 is now required to build the installer.
+
+    o	For some operations on windows() and related devices the first
+	text drawn could be improperly sized. (PR#7860).
+
+    o	R would crash when ESC was pressed during locator(). (PR#7873).
+
+    o	seek() was not always reporting the correct position on files >
+	2Gb. (PR#7879)
+
+
+
+		CHANGES IN R VERSION 2.1.0
+
+UNCATEGORIZED
+
+    o	There is no longer a miniR distribution.
+
+    o	Support for seek() on > 2Gb files has been added.
+
+    o	You will be asked to select a CRAN mirror when
+	downloading/updating packages unless options("repos") has
+	already been set in your session, e.g. in your .Rprofile file
+	or from the 'Select CRAN mirror' menu item.  (In batch use,
+	not having set a mirror will lead to an error.)  BDR's
+	supplementary collection is now included in the default
+	options("repos"): if you want to include it explicitly set
+	something like options(repos=c(some_cran_mirror,
+	http://www.stats.ox.ac.uk/pub/RWin"))
+
+    o	There is a new item on the Packages menu to set repositories,
+	e.g.  CRAN, Bioconductor, Omegahat.  You can modify the list
+	(and its defaults): see the rw-FAQ Q2.9.  This supersedes the
+	menu items for Bioconductor.
+
+    o	The new (in R 2.0.0) graphics pars "lend", "ljoin" and "lmitre"
+	are now implemented for the Windows devices.
+
+    o	`Writing R Extensions' now documents how to interface a
+	front-end directly to R.dll, and there are some new
+	convenience functions for such front-ends.
+
+    o	R CMD / Rcmd now set HOME if unset, e.g. for use in Rcmd check.
+
+    o	The installer now offers the option (by default unchecked) of a
+	`quick launch icon" for R.
+
+    o	par(ask = TRUE) now takes input from the graphics window, rather
+	than from the console.
+
+    o	Rcmd REMOVE works more similarly to Unix, setting the default
+	library from R_LIBS if the latter is set.
+
+    o	install.packages() can install source packages as well as binary
+	ones.
+
+    o	shQuote() now defaults to type="cmd" on Windows.
+
+    o	R can now be built with Unicode support on Win9x and WinME.  See
+	src/gnuwin32/MkRules: this is currently experimental and not
+	needed for standard builds.
+
+    o	R can now be built with support for multibyte and variable-width
+	character sets, e.g. for Japanese. See README.rw????.  The
+	standard installer includes both single-byte and multi-byte
+	builds.
+
+    o	select.list() now looks up the current font size and chooses its
+	window size based on that.  It allows multiple preselections
+	if multiple=TRUE.
+
+    o	The instructions for compiling packages from source and for
+	compiling R itself have been moved to the R Installation and
+	Administration manual; the PDF copy of that manual has been
+	added to the Rgui Help | Manuals menu list.
+
+    o	The way the command history works has been changed to be more
+	like readline.  All the commands used in a session are kept,
+	but only the last R_HISTSIZE (default 512) lines are saved.
+	The environment variable R_HISTSIZE can be changed during the
+	session (by Sys.putenv) as the current value is used.
+
+    o	The font list in the Preferences screen has been expanded to
+	include fonts used in `East Asian' terminals.
+
+    o	A bug with font changing in Preferences introduced with the
+	script editor in R 2.0.0 had been fixed.  This should fix
+	PR#7271,7277,7749.
+
+    o	Line widths on windows() devices (including win.print()) are now
+	interpreted as multiples of 1/96" (or the pixel size if it is
+	larger, as it may be for a screen device).  This follows the
+	postscript() and pdf() drivers.  It is now possible to set lwd
+	< 1 provided this corresponds to lines of at least one pixel
+	width.
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.0 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+
+		CHANGES IN R VERSION 2.0.1 patched
+
+BUG FIXES
+
+    o	We work around reported bugs in Windows XP as to which
+	characters are printable by attempting to print all
+	non-control characters when using print().
+
+    o	There are now facilities (documented in file
+	src/gnuwin32/INSTALL) to add packages when building the R
+	installer, and to rebuild a customized installer from the
+	existing binary distribution.
+
+    o	Tcl/Tk could crash Rgui during shutdown by trying to print an
+	error message after the console had been shut down.  Such
+	messages are now redirected to message boxes.
+
+    o	bug.report() failed to open the internal editor.  We have
+	changed it to use file.edit() to edit the report, with the
+	consequence that there is no longer a "wait" parameter.
+
+
+
+		CHANGES IN R VERSION 2.0.1
+
+GUI CHANGES
+
+    o	There is a new menu item to set a CRAN mirror.
+
+
+BUG FIXES
+
+    o	jpeg(), png() and bmp() were not handling background colours properly.
+
+    o	It seems that on some systems (but not the maintainers') Mozilla
+	1.7.3 requires \ not / in filepaths, so help(topic,
+	htmlhelp=TRUE) now uses \.  (PR#7269) Hopefully no system
+	requires / not \ !
+
+    o	Changes to help() meant that help(topic, chmhelp=TRUE) was no
+	longer working if `topic' was an alias.  (PR#7269)
+
+    o	Recent changes caused (D)COM to sometimes go into infinite loops.
+
+    o	Any change in the GUI preferences via the dialog box changed
+	font (even if to the same font as before).  This is causing
+	problems in MDI mode with toolbars (PR#7277), where real font
+	changes are not working properly.
+
+    o	Control keys in Tcl/Tk windows were not handled properly; Tcl/Tk
+	interacted badly with Rgui in other ways as well.
+
+    o	R CMD SHLIB gave spurious error messages for inputs like all.f
+	and all.c.
+
+    o	`make recommended' was not consulting the setting of WINHELP or
+	HELP, so failed if HHW was not installed.
+
+    o	We have increased the chances that installing a source package
+	from an explicit path with spaces in will work, so e.g.
+
+	    R CMD INSTALL "/Documents and Settings/myname/Source Files/mypkg"
+
+	will probably work -- it is still not recommended.  You can
+	also get away with backslashes here, but forward slashes are
+	safer.
+
+    o	select.list(preselect=) was not working. (PR#7328)
+
+    o	The graphics recording mechanism windows(record = TRUE) could
+	cause memory corruption.
+
+
+
+
+	*********************************************************
+	*							*
+	*	News of 1.x.y and 2.0.0 is in file `CHANGES1'	*
+	*	News of 1.0.0 and earlier is in file `CHANGES0'	*
+	*	These files are available in the source		*
+	*	distribution.					*
+	*							*
+	*********************************************************
+
+%%% Local Variables:
+%%% mode: text
+%%% End:

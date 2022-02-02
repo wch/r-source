@@ -1,0 +1,101 @@
+#
+# ${R_HOME}/src/extra/intl/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/extra/intl
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win R_changes VERSION \
+  config.charset $(SOURCES) $(HEADERS)
+
+HEADERS = \
+  gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
+  localcharset.h xsize.h printf-args.h printf-args.c printf-parse.h \
+  wprintf-parse.h printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c \
+  libgnuintl.h.in lock.h intl-exports.c tsearch.c tsearch.h
+
+SOURCES = \
+ bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
+ textdomain.c l10nflist.c explodename.c dcigettext.c \
+ dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
+ localcharset.c localename.c printf.c osdep.c intl-compat.c \
+ hash-string.c lock.c
+
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS) @C_VISIBILITY@
+
+libintl_a_SOURCES = $(SOURCES)
+libintl_a_OBJECTS = $(OBJECTS)
+noinst_LIBRARIES = libintl.a
+
+# LOCALEDIR is the default location for catalogs in dcigettext.c,
+# and unused in R.
+DEFS=-DLOCALEDIR=\"\" -DLOCALEALIAS_PATH=\"\" -DIN_LIBINTL @DEFS@
+
+ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
+
+R all: all-@USE_INCLUDED_LIBINTL@
+all-yes: Makefile 
+	@$(MAKE) headers charsetalias.h
+	@$(MAKE) Makedeps
+	@$(MAKE) $(noinst_LIBRARIES)
+all-no: Makefile
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+libintl.a: $(libintl_a_OBJECTS)
+	@rm -f $@
+	$(AR) -cr $@ $(libintl_a_OBJECTS)
+	$(RANLIB) $@
+
+headers: libgnuintl.h
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change libgnuintl.h \
+	  $(top_builddir)/src/include/libintl.h
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change libgnuintl.h \
+	 $(top_builddir)/include/libintl.h
+
+libgnuintl.h: $(srcdir)/libgnuintl.h.in
+	@sed -e 's,@''HAVE_POSIX_PRINTF''@,@HAVE_POSIX_PRINTF@,g' \
+	    -e 's,@''HAVE_ASPRINTF''@,@HAVE_ASPRINTF@,g' \
+	    -e 's,@''HAVE_SNPRINTF''@,@HAVE_SNPRINTF@,g' \
+	    -e 's,@''HAVE_WPRINTF''@,@HAVE_WPRINTF@,g' \
+	  < $(srcdir)/libgnuintl.h.in > libgnuintl.h
+
+charset.alias: $(srcdir)/config.charset
+	@$(SHELL) $(srcdir)/config.charset '@host@' > t-$@
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change t-$@ $@
+	@rm t-$@
+
+charsetalias.h: charset.alias
+	@$(ECHO) "cp =" > $@
+	@ @SED@ -e 's/\([^ ]\{1,\}\)/"\1" "\\0"/g' charset.alias >> $@
+	@$(ECHO) ";" >> $@
+
+mostlyclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o *.lo *.a
+	@rm -f libgnuintl.h libintl.h charset.alias charsetalias.h ref-add.sed ref-del.sed
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+install install-strip uninstall TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

@@ -1,0 +1,457 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2007, 08.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "invalid 'filename'"
+msgstr "'filename' 無效"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr "'coef' 的值不能是負的"
+
+msgid "no 'z' matrix specified"
+msgstr "必須設定 'z' 這個矩陣"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "'x' 和 'y' 的值必須都是上升的"
+
+msgid "no proper 'z' matrix specified"
+msgstr "沒有正確設定 'z' 這個矩陣"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr "'x'、'y' 和 'z' 的維度不相符"
+
+msgid "finite coordinates are needed"
+msgstr "需要有限的座標"
+
+msgid "'bias' must be positive"
+msgstr "'bias' 的值必須是正數"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr "如果指定了 'space'，那麼 'alpha' 必須為假"
+
+msgid "at least 3 columns needed"
+msgstr "至少需要三行"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb 矩陣必須是數字"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "rgb 矩陣必須有三列"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb 的值必須是在[0，maxColorValue] 之間"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start' 和 'end' 不能相等，而且必須在[0，1] 之間。"
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' 的值要麼是數量，要麼是 'sRGB'"
+
+msgid "Color space converter: %s"
+msgstr "顏色空間轉換器: %s "
+
+msgid "Reference white: %s"
+msgstr "白色參考: %s "
+
+msgid "display gamma = %s"
+msgstr "顯示 gamma = %s"
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr "'from' 要麼是\"colorConverter\"，要麼是字串"
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr "'to' 要麼是\"colorConverter\"，要麼是字串"
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr "'from.ref.white' 同下面 %s 這個定義有衝突"
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr "'to.ref.white' 同下面 %s 這個定義有衝突"
+
+msgid "color spaces use different reference whites"
+msgstr "顏色空間不能使用不同的白色參考"
+
+msgid "'name' must be a character vector"
+msgstr "'name' 必須是非空字串"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "不能關閉一號裝置(無效裝置)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "不能同時設定 'which' 和 'device' 的值"
+
+msgid "cannot copy from the null device"
+msgstr "不能從無效裝置拷貝"
+
+msgid "cannot copy to the null device"
+msgstr "不能拷貝到無效裝置去"
+
+msgid "cannot copy device to itself"
+msgstr "不能自我拷貝裝置"
+
+msgid "'device' should be a function"
+msgstr "'device' 必須是函式"
+
+msgid "no device to print from"
+msgstr "沒有可以列印的裝置"
+
+msgid "can only print from a screen device"
+msgstr "只可以從螢幕裝置列印"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "至少需要設定 'width' 和 'height' 中的一個"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "在沒有開啟圖形裝置前是不能呼叫 dev.control()的"
+
+msgid "argument is missing with no default"
+msgstr "沒有設定引數，也沒有預設值"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "在沒有開啟圖形裝置前是不能呼叫 dev.displaylist()的"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "'getOption(\"device\")' 的設定無效"
+
+msgid "device '%s' not found"
+msgstr "沒有 '%s' 這個裝置"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "沒有合適的檔案名稱給 pdf()來用"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new():用 pdf(file=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "沒有合適的檔案名稱給 postscript()來用"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new():用 postscript(file=\"%s\")"
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "'file' 無效"
+
+#, fuzzy
+msgid "Invalid pattern type"
+msgstr "字型種類無效"
+
+#, fuzzy
+msgid "Invalid 'extend' value"
+msgstr "'filename' 無效"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "'%s' 裡的引數不對(需要有帶名稱引數)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' 的值必須是字串，目前存在的串列的名稱"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "還不存在的 '%s' 是不能被重新設定的"
+
+msgid "invalid options in '%s'"
+msgstr "'%s' 裡的選擇項發生錯誤"
+
+msgid "NOT changing %s"
+msgstr "不更換 %s"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "'append' 引數不向後相容，因此忽略不用"
+
+msgid "unknown family '%s'"
+msgstr "沒有 '%s' 這樣的系列"
+
+msgid "invalid 'family' argument"
+msgstr "'family' 引數無效"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
+
+msgid "invalid 'file' argument '%s'"
+msgstr "'file' 引數 '%s' 無效"
+
+msgid "invalid PDF version"
+msgstr "PDF 版本無效"
+
+msgid "Invalid font type"
+msgstr "字型種類無效"
+
+msgid "invalid family name in font specification"
+msgstr "字型設定裡的系列名稱無效"
+
+msgid "invalid metric information in font specification"
+msgstr "字型設定裡的公制資訊無效"
+
+msgid "invalid encoding in font specification"
+msgstr "字型設定裡的編碼有問題"
+
+msgid "Not a CID font"
+msgstr "非 CID 字型"
+
+msgid "invalid CMap name in font specification"
+msgstr "字型設定裡的 CMap 名稱無效"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "字型設定裡的 'cmapEncoding' 值無效"
+
+msgid "invalid PDF resource in font specification"
+msgstr "字型設定裡的 PDF 資源無效"
+
+msgid "Invalid font database name"
+msgstr "字型資料庫名稱無效"
+
+msgid "font %s already in use"
+msgstr "字型 %s 已經在用了"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "'%s' 裡的引數不對(必須是字型名稱)"
+
+msgid "unknown font"
+msgstr "不明的字型"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "字型編碼衝突 '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' 必須是非空字串"
+
+msgid "GhostScript was not found"
+msgstr "找不到 GhostScript"
+
+msgid "invalid output format"
+msgstr "輸出的格式無效"
+
+msgid "status %d in running command '%s'"
+msgstr "呼叫命令 '%2$s' 的執行狀況為 %1$d"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr "無法加入更多刻度；'min.n' 太大？"
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr "光柵矩陣必須是字元，數字或邏輯值"
+
+msgid "a raster array must be numeric"
+msgstr "柵格陣列必須是數字"
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr "柵格陣列必須是三維的"
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr "柵格陣列必須有三個或四個平面"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "'[.raster' 裡的 'drop' 含蓄值總是 FALSE"
+
+msgid "invalid raster subsetting"
+msgstr "柵格子集無效"
+
+msgid "invalid raster subassignment"
+msgstr "光柵子指派無效"
+
+msgid "operator not meaningful for raster objects"
+msgstr "這種作業對光柵物件沒有意義"
+
+msgid "no current device to record from"
+msgstr "沒有可用來記載的裝置"
+
+msgid "argument is not of class %s"
+msgstr "引數的類別必須為 %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr "由不同 R 版本 (pre 3.3.0) 記錄的快照"
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr "由不同 R 版本 (%s) 記錄的快照"
+
+msgid "snapshot contains invalid graphics call"
+msgstr "快照包含無效的繪圖呼叫"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "'nbin' 的值應該是長度 1 或 2 的數值"
+
+msgid "'bandwidth' must be numeric"
+msgstr "'bandwidth' 必須是數字"
+
+msgid "'bandwidth' must be positive"
+msgstr "'bandwidth' 的值必須是正數"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' 的值應該為\"range\"，因此它的長度必須為二"
+
+msgid "invalid first argument"
+msgstr "第一個引數無效"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x' 是串列，但沒有 'x' 和 'y' 這兩個元件"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "'x' 和 'y' 的長度不一樣"
+
+msgid "invalid first argument [bad language object]"
+msgstr "第一個引數不對[語言物件發生錯誤]"
+
+msgid "at least 2 columns needed"
+msgstr "至少需要兩行"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x' 是串列，但沒有 'x'，'y' 和 'z' 這三個元件"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "'x'，'y' 和 'z' 的長度不一樣"
+
+msgid "'file' is missing with no default"
+msgstr "'file' 不存在，也沒有預設值"
+
+msgid "unrecognized format of gs -help"
+msgstr "gs -help 的格式無效"
+
+msgid "device '%s' is not available"
+msgstr "沒有 '%s' 這樣的裝置"
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+"可用的裝置是：\n"
+"%s"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "除非 'units = \"px\"'，否則必須設定 'res'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "invalid 'title'"
+msgstr "'title' 無效"
+
+msgid "invalid 'file'"
+msgstr "'file' 無效"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "石英字型不對： 必須有四條字串"
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr "'quartzFonts' 裡的引數不對(必須為字型名稱)"
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr "'quartzFonts' 裡的引數不對(需要帶名稱引數)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "這個組建不支援基於 cairo 的類型 - 用\"Xlib\""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "X11(type = \"XLib\")的系列無效"
+
+msgid "invalid X11 font specification:"
+msgstr "X11 字型設定發生錯誤："
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "'X11Fonts' 裡的引數不對(必須是字型名稱)"
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "'X11Fonts' 裡的引數不對(需要有帶名稱引數)"
+
+msgid "no such device"
+msgstr "不明的裝置"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "只能從 'X11(type=\"*cairo\")' 裝置拷貝"
+
+msgid "invalid value for 'rescale'"
+msgstr "'rescale' 無效"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
+
+msgid "can only bring windows devices to the front"
+msgstr "只能把視窗裝置帶到前方去"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' 不適於在 R 主控臺使用"
+
+msgid "can only manipulate windows devices"
+msgstr "只能操控視窗裝置"
+
+msgid "can only copy from 'windows' devices"
+msgstr "只能從 'windows' 裝置拷貝"
+
+msgid "subscript out of range"
+msgstr "註標超出邊界了"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "視窗字型不對：必須為單一字型系列名稱"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "'windowsFonts' 裡的引數不對(必須為字型名稱)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "'windowsFonts' 裡的引數不對(需要帶名稱引數)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "'%2$s' 裡的 %1$s 引數名稱無效"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "新的值和舊的值不一樣"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "對數圖裡忽略 %d 個小於等於零的 x 值"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "對數圖裡忽略 %d 個小於等於零的 y 值"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "對數圖裡忽略 %d 個小於等於零的 z 值"

@@ -1,0 +1,78 @@
+@documentlanguage en
+@documentencoding ISO-8859-1
+
+@macro R{}
+R
+@end macro
+
+@macro Sl{}
+S
+@end macro
+
+@macro SPLUS{}
+@sc{S-Plus}
+@end macro
+
+@macro HTML{}
+@acronym{HTML}
+@end macro
+
+@iftex
+@macro eqn {t, a}
+@tex
+$\t\$%
+@end tex
+@end macro
+@end iftex
+@ifnottex
+@macro eqn {t, a}
+\a\
+@end macro
+@end ifnottex
+
+@macro pkg {p}
+@strong{\p\}
+@end macro
+
+@macro CRANpkg {p}
+@url{https://CRAN.R-project.org/package=\p\, @strong{\p\}}
+@end macro
+
+@macro cputype {c}
+@samp{\c\}
+@end macro
+
+@c -- edit these here alone -- in order keep consistency
+@macro Rcopyright{year}
+Copyright @copyright{} \year\--2021 R Core Team
+@end macro
+
+@macro permission{}
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation
+approved by the R Core Team.
+@end macro
+
+@c This breaks HTML conversion on texinfo 4.x.
+@iftex
+@hyphenation{name-space name-spaces}
+@end iftex
+
+@set ISBN-FAQ 
+@set ISBN-admin 
+@set ISBN-data 
+@set ISBN-exts 
+@set ISBN-intro 
+@set ISBN-lang 
+@set ISBN-ints 
+

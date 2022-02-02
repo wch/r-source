@@ -1,0 +1,64 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/Recommended/Makefile.win
+
+top_builddir = ../../..
+
+include ../../../share/make/vars.mk
+
+include ../../gnuwin32/MkRules
+
+## foo.ts is the timestamp for package foo;
+## foo.tgz is a copy of foo_x.y-z.tar.gz.
+## unfortunately package foo can be uninstalled and leave foo.ts
+
+## For developers: A shell script, tools/rsync-recommended, updates
+## packages from the CRAN master directory. 
+
+OBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
+
+CLEANFILES = $(OBJECTS) stamp-recommended
+
+.SUFFIXES:
+.SUFFIXES: .tgz .ts
+
+all: stamp-recommended
+
+stamp-recommended: $(OBJECTS)
+	@touch $@
+
+## allow parallel installs, modulo dependencies below
+INSTALL_OPTS=--pkglock --install-tests --data-compress=xz --no-staged-install
+
+RCMD = $(top_builddir)/$(BINDIR)/Rcmd
+
+## force tar.exe, as internal tar gets wrong permissions on >= Vista
+## when run from Cygwin
+.tgz.ts:
+	@echo
+	@echo "----- installing recommended package" `basename $< .tgz`
+	@if test -n "$(R_NO_BASE_COMPILE)"; then \
+	R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' \
+	  R_LIBS_USER=NULL R_LIBS_SITE=NULL \
+	  _R_CHECK_INSTALL_DEPENDS_=no \
+	  $(RCMD) INSTALL $(INSTALL_OPTS) --no-byte-compile -l $(top_builddir)/library `basename $< .tgz`_*.tar.gz; \
+	else \
+	R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' \
+	  R_LIBS_USER=NULL R_LIBS_SITE=NULL \
+	  _R_CHECK_INSTALL_DEPENDS_=no \
+	  $(RCMD) INSTALL $(INSTALL_OPTS) --byte-compile -l $(top_builddir)/library `basename $< .tgz`_*.tar.gz; \
+	fi
+	@touch $@
+
+clean:
+	@rm -f $(CLEANFILES)
+
+## Hardcoded dependencies (see '../../../share/make/vars.mk')
+Matrix.ts: lattice.ts
+mgcv.ts: nlme.ts MASS.ts Matrix.ts
+nlme.ts: lattice.ts
+class.ts: MASS.ts
+survival.ts: Matrix.ts
+## and for static html links
+boot.ts: MASS.ts survival.ts
+cluster.ts: MASS.ts

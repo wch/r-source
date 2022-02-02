@@ -1,0 +1,64 @@
+NB: These instructions are only for R >= 3.x.y
+
+There is only support for preparing translations on a Unix-alike as a
+UTF-8 locale has to be used. (Apart from the RGui translations: see
+below.)
+
+If you convert a C file for use with gettext, add it to POTFILES in
+this directory.
+
+Target
+
+	make update-pkg-po
+
+updates the message catalogs for the C and R code in the interpreter
+and standard packages.  To update just one package, see
+?tools::update_pkg_po .
+
+If you add a package with messages that should be translated (hence
+not 'datasets'), add it to R_PKGS_PO in po/Makefile.in.  R-level
+template catalogs (R-pkg.pot) are produced automatically by 'make
+update-pkg-po' but for a C-level template catalog you need to touch
+src/library/pkg/po/pkg.pot: only do so once some messages have been
+marked for translation.
+
+For package translations, add the [R-]lang.po files to the package's
+po directory (and perhaps update THANKS in this directory).  Note that
+translations for the interpreter itself are in
+src/library/base/po/R.pot.
+
+Note also tools::checkPoFiles().
+
+R-core members: after updating translations, run
+
+       make update-pkg-po update-RGui
+
+and then commit the changes in the svn checkout.  See
+?tools::make_translations_pkg for how to distribute updated
+translations.
+
+
+Windows RGui translations
+=========================
+
+These are contained in src/library/base/po/RGui.pot, and translations
+should be called RGui-ll.po for language 'll'.
+
+To re-make RGui.pot and all the translations use 'make update-RGui'
+('make -f Makefile.win update-RGui' on Windows).
+
+
+Adding translations to other packages
+=====================================
+
+See 'Writing R Extensions'.
+
+
+Subversion note
+===============
+
+If you need to add a en@quot directory, the current incantation appears to be
+
+svn add .../en@quot@
+
+with a trailing @.

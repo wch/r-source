@@ -1,0 +1,491 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2008 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Shipunov <dactylorhiza at gmail> 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.11.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: 2020-08-27 18:56+0900\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+msgid "invalid 'filename'"
+msgstr "неправильное 'filename'"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr "'coef'  не должен быть отрицательным"
+
+msgid "no 'z' matrix specified"
+msgstr "не указана 'z'-матрица"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "ожидается увеличение значений 'x' и 'y'"
+
+msgid "no proper 'z' matrix specified"
+msgstr "не указана подходящая 'z'-матрица"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr "измерения 'x', 'y' and 'z' не соответствуют друг другу"
+
+msgid "finite coordinates are needed"
+msgstr "нужны конечные координаты"
+
+msgid "'bias' must be positive"
+msgstr "'bias' должен быть положительным"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr "'alpha' должно быть false если указано 'space'"
+
+msgid "at least 3 columns needed"
+msgstr "нужны по крайней мере 3 колонки"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb-матрица должна быть числовой"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "у rgb-матрицы должно быть 3 строки"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb-значения должны быть в пределах [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start' и 'end' должны быть различными и в пределах [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr "'palette' не соответствует ни одной из имеющихся палитр"
+
+msgid "'palette' is ambiguous"
+msgstr "непонятная 'palette'"
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr "'n' равна %s, это максимум, доступный для палитры %s"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' должна быть скаляром или 'sRGB'"
+
+msgid "Color space converter: %s"
+msgstr "Конвертер цветового пространства: %s"
+
+msgid "Reference white: %s"
+msgstr "Стандартный белый: %s"
+
+msgid "display gamma = %s"
+msgstr "отразить гамму = %s"
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr "'from' должен быть объектом \"colorConverter\" или строкой"
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr "'to' должен быть объектом \"colorConverter\" или строкой"
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr "'from.ref.white' не согласуется с определением %s"
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr "'to.ref.white' не согласуется с определением %s"
+
+msgid "color spaces use different reference whites"
+msgstr "цветовые пространства используют разные стандарты белого"
+
+msgid "'name' must be a character vector"
+msgstr "'name' должен быть непустой текстовой строкой"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "не могу отключить устройство 1 (null-устройство)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "не могу использовать 'which' и 'устройство' одновременно"
+
+msgid "cannot copy from the null device"
+msgstr "не могу копировать с null-устройства"
+
+msgid "cannot copy to the null device"
+msgstr "не могу копировать на null-устройство"
+
+msgid "cannot copy device to itself"
+msgstr "не могу скопировать устройство в само себя"
+
+msgid "'device' should be a function"
+msgstr "'устройство' должно быть функцией"
+
+msgid "no device to print from"
+msgstr "нет устройства, с которого печатать"
+
+msgid "can only print from a screen device"
+msgstr "могу печатать только с экранного устройства"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "надо указать либо 'width', либо 'height'"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.control() вызван без открытия графического устройства"
+
+msgid "argument is missing with no default"
+msgstr "аргумент пропущен, умолчания нет"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() вызван без открытия графического устройства"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "неправильный установки для 'getOption(\"device\")'"
+
+msgid "device '%s' not found"
+msgstr "устройство '%s' не найдено"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "для pdf() не нашлось подходящего неиспользованного имени файла"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): использую pdf(file=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "для postscript() не нашлось подходящего неиспользованного имени файла"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): использую postscript(file=\"%s\")"
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr "неправильный 'type'; так быть не должно, сообщите об ошибке!"
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "неправильный 'file'"
+
+msgid "Invalid pattern type"
+msgstr "Неправильный тип паттерна"
+
+msgid "Invalid 'extend' value"
+msgstr "Неправильное значение 'extend'"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' должен быть символом, именем существующего списка"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "не могу перегрузить несуществующий '%s'"
+
+msgid "invalid options in '%s'"
+msgstr "неправильные опции в '%s'"
+
+msgid "NOT changing %s"
+msgstr "НЕ изменяется %s"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+
+msgid "unknown family '%s'"
+msgstr "неизвестное семейство '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "неправильный аргумент 'family'"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr "аргумент 'title' \"%s\" содержит неправильные символы"
+
+msgid "invalid 'file' argument '%s'"
+msgstr "неправильный аргумент 'file' '%s'"
+
+msgid "invalid PDF version"
+msgstr "неправильная версия PDF"
+
+msgid "Invalid font type"
+msgstr "Неправильный тип шрифта"
+
+msgid "invalid family name in font specification"
+msgstr "неправильное имя семейства в определении шрифта"
+
+msgid "invalid metric information in font specification"
+msgstr "неправильная метрическая информация в определении шрифта"
+
+msgid "invalid encoding in font specification"
+msgstr "неправильная кодировка в определении шрифта"
+
+msgid "Not a CID font"
+msgstr "Не CID-шрифт"
+
+msgid "invalid CMap name in font specification"
+msgstr "неправильное имя CMap в определении шрифта"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "неправильная 'cmapEncoding' в определении шрифта"
+
+msgid "invalid PDF resource in font specification"
+msgstr "неправильный PDF-ресурс в определении шрифта"
+
+msgid "Invalid font database name"
+msgstr "Неправильное имя базы данных шрифтов"
+
+msgid "font %s already in use"
+msgstr "шрифт %s уже используется"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "неправильные аргументы в '%s' (должны быть имена шрифтов)"
+
+msgid "unknown font"
+msgstr "неизвестный шрифт"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "несоответствие кодировки шрифта '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' должен быть непустой символьной строкой"
+
+msgid "GhostScript was not found"
+msgstr "GhostScript не найден"
+
+msgid "invalid output format"
+msgstr "неправильный формат вывода"
+
+msgid "status %d in running command '%s'"
+msgstr "статус %d выполняющейся команды '%s'"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr "не удалось добавить больше делений; слишком большое 'min.n'?"
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr "растровая матрица должна быть символом, числом или логическим выражением"
+
+msgid "a raster array must be numeric"
+msgstr "растровая многомерная матрица должна быть числовой"
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr "растровая многомерная матрица должна быть в точности трехмерной"
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr "растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "'drop' всегда неявно выставлен в FALSE в '[.raster'"
+
+msgid "invalid raster subsetting"
+msgstr "неправильное извлечение элемента растра"
+
+msgid "invalid raster subassignment"
+msgstr "неправильная замена жлемента растра"
+
+msgid "operator not meaningful for raster objects"
+msgstr "оператор не имеет смысла для объектов растра"
+
+msgid "no current device to record from"
+msgstr "нет устройства, которое надо записывать"
+
+msgid "argument is not of class %s"
+msgstr "аргумент не принадлежит к классу %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr "неправильный \"recordedplot\":"
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr "снимок из другой версии R (до 3.3.0)"
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr "снимок из другой версии R (%s)"
+
+msgid "snapshot contains invalid graphics call"
+msgstr "снимок содержит неправильный графический вызов"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "'nbin' должен быть числовым вектором длиной 1 или 2"
+
+msgid "'bandwidth' must be numeric"
+msgstr "'bandwidth' должна быть числовой"
+
+msgid "'bandwidth' must be positive"
+msgstr "'bandwidth' должна быть положительной"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr "Надо обязательно поставить (из 'Recommended') пакет \"KernSmooth\""
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' должен быть \"range\", то есть длины 2"
+
+msgid "invalid first argument"
+msgstr "неправильный первый аргумент"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x' является списком, но не содержит компонент 'x' и 'y'"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "длины 'x' и 'y' различаются"
+
+msgid "invalid first argument [bad language object]"
+msgstr "неправильный первый аргумент [неправильный объект языка]"
+
+msgid "at least 2 columns needed"
+msgstr "нужны по крайней мере 2 колонки"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x' является списком, но не содержит компонент 'x', 'y' и 'z'"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "длины 'x', 'y' и 'z' различаются"
+
+msgid "'file' is missing with no default"
+msgstr "пропущен 'file', умолчания нет"
+
+msgid "unrecognized format of gs -help"
+msgstr "неподдерживаемый формат gs -help"
+
+msgid "device '%s' is not available"
+msgstr "устройство '%s' недоступно"
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+"Доступные устройства:\n"
+"%s"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "'res' должен быть определен до тех пор пока 'units = \"px\"'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "invalid 'title'"
+msgstr "неправильный 'title'"
+
+msgid "invalid 'file'"
+msgstr "неправильный 'file'"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "неправильный шрифт Quartz:  должно быть 4 строки"
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr "неправильные аргументы в 'quartzFonts' (должны быть имена шрифтов)"
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr "неправильные аргументы в эquartzFontsэ (нужны именованные аргументы)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "типы, основанные на cairo, в этой сборке не поддерживаются -- использую \"Xlib\""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "неизвестное семейство X11(type = \"XLib\")"
+
+msgid "invalid X11 font specification:"
+msgstr "неправильное указание шрифта X11:"
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "неправильные аргументы в 'X11Fonts' (должны быть имена шрифтов)"
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "неправильные аргументы в 'X11Fonts' (нужны именованные аргументы)"
+
+msgid "no such device"
+msgstr "нет такого устройства"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "могу копировать лишь с 'X11(type=\"*cairo\")'-устройств"
+
+msgid "invalid value for 'rescale'"
+msgstr "неправильное значение 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr "Вызовы типа '%s' небезопасны, их нужно заменить на '%s'"
+
+msgid "can only bring windows devices to the front"
+msgstr "могу лишь переместить устройства windows на первый план"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' неприменим к консоли R"
+
+msgid "can only manipulate windows devices"
+msgstr "могу работать только с 'windows'-устройствами"
+
+msgid "can only copy from 'windows' devices"
+msgstr "могу копировать лишь с 'windows'-устройств"
+
+msgid "subscript out of range"
+msgstr "индекс вне пределов"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "неправильный шрифт Windows:  должно быть простое имя семейства"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "неправильные аргументы в 'windowsFonts' (должен быть имена шрифтов)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "неправильные аргументы в 'windowsFonts' (нужны именованные аргументы)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "неправильное имя аргумента %s в '%s'"
+msgstr[1] "неправильные имена аргументов %s в '%s'"
+msgstr[2] "неправильные имена аргументов %s в '%s'"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "отличие между старым и новым"
+msgstr[1] "отличия между старыми и новыми"
+msgstr[2] "отличия между старыми и новыми"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d значение x <= 0 пропущено на логарифмическом графике"
+msgstr[1] "%d значения x <= 0 пропущены на логарифмическом графике"
+msgstr[2] "%d значения x <= 0 пропущены на логарифмическом графике"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d значение y <= 0 пропущено на логарифмическом графике"
+msgstr[1] "%d значения y <= 0 пропущены на логарифмическом графике"
+msgstr[2] "%d значения y <= 0 пропущены на логарифмическом графике"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
+msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
+msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "размах слишком мал для 'min.n'"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "извините, не могу найти 'gs'"
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "загрузка снимка из версии R до 3.0.0"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "могу печатать только с экранного устройства"
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr "'maxRasters' больше не нужны и будут пропущены"
+
+#~ msgid "The 'gamma' argument is deprecated and has no effect"
+#~ msgstr "Аргумент 'gamma' устарел и не возымеем никакого эффекта"
+
+#~ msgid "invalid value for 'antialias'"
+#~ msgstr "неправильное значение 'antialias'"
+
+#~ msgid "quartz() device interactivity reduced without an event loop manager"
+#~ msgstr "устройство quartz() интерактивно сокращено без использования обработчика циклов"

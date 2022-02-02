@@ -1,0 +1,300 @@
+Notes for Windows Maintainers
+=============================
+
+1) fixed/h/config.h can be made automatically.  Some of this is
+achieved by overrides in the configure script.
+
+You will need a copy of sh.exe in /bin.  Then with the R sources in
+/R/R-2.10.0, I used in /TEMP/R (any other directory will do, except the
+sources).
+
+To test trio set
+
+LIBS='<RHOME>/src/extra/trio/libtrio.a'
+
+sh /R/R-2.10.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
+
+This ran fairly slowly, currently producing a src/include/config.h
+that differs only in that
+
+ - it does not find the declarations of siglongjmp/sigsetjmp (in
+   psignal.[ch])
+
+ - MinGW gcc 4.2.1 supports pthreads, but I left that undefined.
+
+Also, watch out for versions of the header files.  For example,
+<strings.h> was in mingw-runtime-1.2 and later, but not (long ago) in
+the mingw-1.1 bundle.  These days we insist on a current MinGW.
+
+BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25, 2006-07-06, 2007-08-09, 
+    2009-07-08
+
+
+2) The Makefiles for building a distribution have been reorganized.  Now
+all of the decisions about what files go into the distributables are made
+in installer/Makefile; the decisions about which component of the setup
+program each file goes into are made in installer/JRins.pl.
+
+DJM 2003-02-25
+
+
+3) Making Tcl/Tk.
+
+For R 4.2 (64-bit UCRT bundle),
+see https://svn.r-project.org/R-dev-web/trunk/WindowsBuilds/winutf8/ucrt3/tcl_bundle/
+
+For more background, see "Tcl/Tk bundle" in
+https://svn.r-project.org/R-dev-web/trunk/WindowsBuilds/winutf8/winutf8.html
+
+Earlier versions used:
+  https://github.com/waddella/Tclbuild
+  https://raw.githubusercontent.com/r-windows/r-base/master/create-tcltk-bundle.sh
+
+
+4) Linking to DLLs.
+
+MinGW's ld.exe takes the internal name of the DLL as the object to
+link to, and hence for DLLs which are to be linked to (rather than
+loaded), the internal names need to be dllname.dll.  This was not being
+done by the %.dll rule used in 2.2.1, which builds via a .def file
+with first line
+
+LIBRARY $*
+
+[The example in ld.info is
+
+LIBRARY "xyz.dll"
+
+whereas that in the MSDN documentation
+(http://msdn2.microsoft.com/en-us/library/d91k01sh.aspx) is
+
+LIBRARY BTREE
+
+so MinGW is inconsistent with MSDN here.]
+
+It would seem that this should just be replaced by $*.dll, but there
+is another problem: ld.exe rejects .def files whose LIBRARY name
+contains more than one dot, and so this is unable to cope with
+packages with a dot in their name.  (We already document that two or
+more dots are not allowed.)  So we have had to treat separately the
+DLLs which are designed to be linked to.  These are
+
+R.dll : is special-cased, and as it wants to export entry points from
+static libraries and exports variables, nothing else we tried worked.
+
+Rblas.dll : has a .def file, and the name was changed to Rblas.dll
+there.
+
+Rlapack.dll : is simple, so gcc -shared with no .def file works.
+
+Rproxy.dll : is special-cased.  (Linked against by rcom package.)
+
+The other DLLs which were in R_HOME/bin, Rbitmap.dll and Rchtml.dll,
+have been moved to R_HOME/modules.  They are now made directly with
+gcc -shared.  Rchtml.dll needs an import library as you cannot link
+directly to a .ocx.
+
+However, whereas MSDN says there must be a LIBRARY statement, it seems
+not to be required for ld.exe.  So the %.dll rule in MkRules as from
+2.3.0 does not have a LIBRARY statement, which circumvents the 'at
+most one dot' rule.
+
+BDR 2006-02-15, 2006-02-24
+
+
+5) Rdll.hide
+
+AllDevicesKilled
+RConsole
+RFrame
+Rf_runcmd
+RgetMDIheight
+RgetMDIwidth
+RguiMDI
+Ri18n_wcwidth
+Riconv
+Riconv_close
+Riconv_open
+Rwin_graphicsx
+Rwin_graphicsy
+UserBreak
+locale2charset
+optclosefile
+optfile
+optline
+optopenfile
+optread
+
+for grDevices
+
+
+R_deferred_default_method
+R_do_MAKE_CLASS
+R_do_new_object
+R_do_slot
+R_do_slot_assign
+R_execMethod
+R_primitive_generic
+R_primitive_methods
+R_set_prim_method
+R_set_quick_method_check
+R_set_standardGeneric_ptr
+R_subassign3_dflt
+do_set_prim_method
+
+for methods
+
+
+set_R_Tcldo
+unset_R_Tcldo
+Rf_wtransChar
+
+for tcltk
+
+R_fixbackslash
+consolefn
+freeConsoleData
+freemenuitems
+lzma_crc64
+orderVector1
+wgl_histadd etc
+
+for utils
+
+
+R_gl_tab_set
+cmdlineoptions
+getDLLVersion
+gl_hist_init
+gl_loadhistory
+readconsolecfg
+saveConsoleTitle
+setupui
+
+for rgui/rterm/Rscript
+
+
+Rf_mbrtowc
+Rf_strchr
+localeCP
+
+for graphapp.dll
+
+setup_term_ui
+
+for package Rserve
+
+optif9
+
+for package nlme
+
+
+BDR 2007-08-20
+
+
+6) Conversion to Unicode/UTF-8.
+
+[Notes are a work in progress.  This has been discussed since 2003.]
+
+As from R 2.7.0, Rgui works internally in UCS-2.  Currently key strokes are
+recorded as bytes, but that could easily be changed if we had testers with CJK
+keyboards.  Input/output is converted to/from the current locale in
+R_ReadConsole/R_WriteConsole.
+
+The internal pager works in UCS-2.
+
+History files are currently written in the locale's charset, for
+compatibility with Rterm and past versions of R.  We could perhaps
+alleviate this by using a BOM when writing in UCS-2, and detecting
+that when loading history files.
+
+Chris Jackson's script editor is still MBCS.  Quite a bit of work will
+be needed to convert it, since e.g. GA_gettext() expects to work with
+char *.
+
+The only bar to converting Rterm to UCS-2 is the lack of CJK keyboards
+to test on, but there would be little advantage in doing so.
+
+6.1 Internal use of UTF-8
+
+- Internal mbcs<->wchar/UCS translations would need to be modified to
+  use UTF-8 and not the locale charset.  Several places
+  (e.g. Riconv_open) already have support for this.  The
+  gettext-runtime (src/extra/intl) does not.
+
+*All* I/O would need to be translated.  This includes
+
+- Rprintf and allies, error messaging.
+
+  [This one is really tricky: we don't want to be writing UTF-8 files
+   when sink() is in use, for example, and rterm/some embedded uses
+   run in environments that probably do not support UCS-2.
+
+   The current compromise is to encode UTF-8 character vector elements
+   in EncodeString, at least when called from printing and from cat(),
+   and if outputting to the Rgui console. This is done by surrounding
+   them by 3-byte escape sequences starting with STX/ETX.]
+
+- file names.  Since Windows NTFS can have file names not valid in the
+  current locale, this needs to use wfopen and similar interfaces, as
+  well as GetFullPathNameW ... also _w* versions of mkdir, rmdir,
+  unlink, open, popen, stat, system.  Use with care, as not all file
+  systems use UCS-2 file names.  [Done]
+
+  This needs to include bzlib and zlib, as well as file/folder
+  selection widgets. [Done]
+
+- environment variables.  Both values and names, since _wputenv is
+  needed to set name=value strings.  It would be better to use wmain
+  and only ever use _wgetenv and _wputenv to avoid maintaining
+  parallel environments.  [Done]
+
+- graphics devices.  Calls to text() and points() (with pch as a
+  string) need either to be translated or, preferably, the device
+  adjusted to accept UTF-8 (and we would need a flag to know if it
+  could).  Note that this impacts third-party devices.
+  [Done for windows() family, postscript, pdf.]
+
+- GetUserName, GetComputerName, [GS]etCurrentDirectory. [Done]
+
+Also:
+
+- There would be compatibility issues with saved workspaces, although
+  few for those working in CP1252 locales.
+
+- It is not clear what to do with strings passed to packages.  We
+  could force conversion in .C and .Fortran, but most
+  character-manipulation packages are likely to be using .Call.
+
+BDR 2008-01-06
+
+
+7) Changing the parser
+
+By default the parser in gram.y is only processed in maintainer mode, 
+which isn't supported in Windows builds.  Defining RUN_BISON will 
+cause src/main/Makefile.win to process it (and correct for the erroneous
+line number records caused by our renaming of the output).
+
+
+8) Making iconv.dll
+
+In the past this was done from the libiconv sources using VC++ 6, but
+as from version 1.12 that is no longer supported.  It does not build
+easily with MinGW (due to the overuse of libtool), but we used
+
+setenv INSTALL cp
+setenv INSTALL_DATA cp
+sh configure --build=i386-pc-mingw32 --disable-nls
+cd libcharset; make
+cp include/localcharset.h ../lib
+cd ../lib
+make
+gcc -shared  .libs/iconv.o .libs/localcharset.o .libs/relocatable.o \
+  .libs/iconv-exports.o -export-all-symbols -o Riconv.dll
+
+We now use a modified version of win-iconv, but the libiconv version
+can still be used by replacing bin/Riconv.dll.
+
+
+BDR 2009-02-08

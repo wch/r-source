@@ -1,0 +1,57 @@
+# R Italian translation
+# Copyright (C) The R Foundation
+# This file is distributed under the same license as the R package.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-stats 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+
+msgid "named list expected"
+msgstr "attesa lista nominata"
+
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr ""
+"alcuni valori nominati non sono argomenti passati alla log-verosimiglianza"
+
+msgid "Mismatch in length of start values"
+msgstr "La lunghezza dei valori iniziali non corrisponde"
+
+msgid "fixed values violate constraints"
+msgstr "i valori fissi violano i vincoli"
+
+msgid "start values do not satisfy constraints"
+msgstr "i valori iniziali non soddisfano i vincoli"
+
+msgid ""
+"profiling has found a better solution, so original fit had not converged"
+msgstr ""
+"la profilazione ha trovato una soluzione migliore, quindi la stima originale "
+"non converge"
+
+msgid "levels truncated to positive values only"
+msgstr "livelli troncati solo a valori positivi"
+
+msgid "extra arguments discarded"
+msgstr "argomenti extra ignorati"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' dev'essere una lista nominata"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "alcuni argomenti nominati in 'start' non sono argomenti passati alla log-"
+#~ "verosimiglianza"

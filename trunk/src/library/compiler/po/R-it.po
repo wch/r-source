@@ -1,0 +1,136 @@
+# R Italian translation
+# # Copyright (C) The R Foundation
+# This file is distributed under the same license as the R package.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-compiler 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+
+msgid "namespace found within local environments"
+msgstr "namespace trovato dentro ambienti locali"
+
+msgid "not a proper evaluation environment"
+msgstr "non è un appropriato ambiente di valutazione"
+
+msgid "non-namespace found within namespace environments"
+msgstr "non-namespace trovato dentro ambienti namespace"
+
+msgid "namespace found within global environments"
+msgstr "namespace trovato dentro ambienti globali"
+
+msgid "bad assignment: %s"
+msgstr "assegnamento errato: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "non è possibile fare un constant fold su literal promises"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "non è possibile fare un constant fold su oggetti literal bytecode"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "nessun offset registrato per l'etichetta \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "non è possibile compilare byte code literal nel codice"
+
+msgid "cannot compile promise literals in code"
+msgstr "non è possibile compilare promise literal nel codice"
+
+msgid "possible error in '%s': %s"
+msgstr "possibile errore in '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "errato namespace import frame"
+
+msgid "bad assignment 1"
+msgstr "errato assegnamento 1"
+
+msgid "bad assignment 2"
+msgstr "errato assegnamento 2"
+
+msgid "invalid function in complex assignment"
+msgstr "funzione non valida in un assegnamento complesso"
+
+msgid "missing arguments are not allowed"
+msgstr "non è ammessa l'assenza di argomenti"
+
+msgid "empty alternative in numeric switch"
+msgstr "alternativa vuota nello switch numerico"
+
+msgid "no visible global function definition for '%s'"
+msgstr "nessuna definizione di funzione globale visibile per '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "nessun binding visibile per variabile globale '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "nessun binding visibile per assegnamento '<<-' a '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "numero errato di argomenti per '%s'"
+
+msgid "more than one default provided in switch() call"
+msgstr "più di un valore predefinito nella chiamata switch()"
+
+msgid "'switch' with no alternatives"
+msgstr "'switch' senza alternative"
+
+msgid "Error: compilation failed -"
+msgstr "Errore: compilazione fallita -"
+
+msgid "cannot compile a non-function"
+msgstr "non è possibile compilare una non-funzione"
+
+msgid "compiling '%s'"
+msgstr "compilando '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "salvataggio in corso del file \"%s\" ..."
+
+msgid "done"
+msgstr "fatto"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' dev'essere un ambiente radice"
+
+msgid "input and output file names are the same"
+msgstr "i nomi dei file input e output sono i medesimi"
+
+msgid "empty input file; no output written"
+msgstr "file input vuoto; nessun output scritto"
+
+msgid "file '%s' does not exist"
+msgstr "il file '%s' non esiste"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' non è una valida opzione del compilatore"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "valore variabile di ambiente non valido: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+"opzioni del compilatore non valide: optimize(==%d)<2 e jitEnabled(==%d)>2"
+
+msgid "function is not compiled"
+msgstr "la funzione non è compilata"
+
+msgid "cannot compile this expression"
+msgstr "non è possibile compilare questa espressione"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "assegnamento locale a funzione sintattica: "
+msgstr[1] "assegnamenti locali a funzione sintattiche: "

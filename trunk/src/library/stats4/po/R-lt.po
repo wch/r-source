@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: stats4 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
+"PO-Revision-Date: 2020-12-08 12:24+0200\n"
+"Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "named list expected"
+msgstr "numatomas įvardytas sąrašas"
+
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr ""
+"kai kurios įvardytos reikšmės nėra argumentai pateiktam logaritminiam "
+"tikėtinumui"
+
+msgid "Mismatch in length of start values"
+msgstr "Pradžios reikšmių ilgio neatitikimas"
+
+msgid "fixed values violate constraints"
+msgstr "fiksuotos reikšmės pažeidžia apribojimus"
+
+msgid "start values do not satisfy constraints"
+msgstr "pradžios reikšmės neatitinka apribojimų"
+
+msgid ""
+"profiling has found a better solution, so original fit had not converged"
+msgstr ""
+"profiliavimas rado geresnį sprendimą, todėl originalus pritaikymas nebuvo "
+"konverguotas"
+
+msgid "levels truncated to positive values only"
+msgstr "lygiai sutrumpinami iki teigiamų reikšmių"
+
+msgid "extra arguments discarded"
+msgstr "papildomi argumentai išmesti"
+
+#~ msgid "start' must be a named list"
+#~ msgstr "start' turi būti įvardytas sąrašas"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "kai kurie įvardyti argumentai, esantys 'start', nėra argumentai pateiktam "
+#~ "logaritminiam tikėtinumui"

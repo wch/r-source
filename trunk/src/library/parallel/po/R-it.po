@@ -1,0 +1,167 @@
+# R Italian translation
+# Copyright (C) The R Foundation
+# This file is distributed under the same license as the R package.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-parallel 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+
+msgid "invalid value of %s"
+msgstr "valore di %s non valido"
+
+msgid "need at least one argument"
+msgstr "richiesto almeno un argomento"
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"gli input di lunghezza zero non possono essere mescolati con quelli di "
+"lunghezza differente"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) deve avere una lunghezza positiva"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' deve avere nomi dimensioni nominate"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "non tutti gli elementi di 'MARGIN' sono nomi di dimensioni"
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr "nessun cluster 'cl' fornito e nessuno è registrato"
+
+msgid "not a valid cluster"
+msgstr "non è un cluster valido"
+
+msgid "unknown cluster type"
+msgstr "tipo di cluster sconosciuto"
+
+msgid "numeric 'names' must be >= 1"
+msgstr "il numerico 'names' dev'essere >= 1"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "nodo di un cluster socket sul host %s con pid %d"
+
+msgid "Connection setup failed or timed out."
+msgstr "Attivazione della connessione non riuscita o scaduta."
+
+msgid "PORT must be specified"
+msgstr "PORT dev'essere specificato"
+
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes' dev'essere >= 1"
+
+msgid "Cluster setup failed."
+msgstr "Attivazione del cluster non riuscita."
+
+msgid "invalid 'child' argument"
+msgstr "argomento 'child' non valido"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "'children' dev'essere una lista di processi o un singolo processo"
+
+msgid "'process' must be of class %s"
+msgstr "'process' dev'essere di classe %s"
+
+msgid "'child' must be a valid child process"
+msgstr "'child' dev'essere una valido processo figlio"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what' dev'essere un vettore di caratteri o raw"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores' dev'essere >= 1"
+
+msgid "affinity.list and X must have the same length"
+msgstr "affinity.list e X devono avere la medesima lunghezza"
+
+msgid "%d function calls resulted in an error"
+msgstr "%d chiamate di funzione apparse in un errore"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr "'mc.preschedule' dev'essere falso se 'affinity.list' è utilizzato"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "tutti i core schedulati hanno riscontrato errori nel codice utente"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Gli input di lunghezza zero non possono essere mescolati con quelli di "
+"lunghezza differente"
+
+msgid "invalid 'jobs' argument"
+msgstr "argomento 'jobs' non valido"
+
+msgid "'v' must be a vector"
+msgstr "'v' dev'essere un vettore"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+"alcuni risultati potrebbero essere assenti, folded o hanno causato un errore"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "il fork di cluster non è supportato su Windows"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "'mc.cores' > 1 non è supportato su Windows"
+
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+"Attivazione del cluster non riuscita. %d worker su %d non è riuscito a "
+"connettersi."
+msgstr[1] ""
+"Attivazione del cluster non riuscita. %d worker su %d non sono riusciti a "
+"connettersi."
+
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "socket cluster con %d nodi sul host %s"
+msgstr[1] "socket cluster con %d nodi su %s host"
+
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] "%d chiamata alla funzione parallel non ha restituito risultati"
+msgstr[1] "%d chiamate alle funzioni parallel non hanno restituito risultati"
+
+msgid ""
+"scheduled core %s did not deliver a result, all values of the job will be "
+"affected"
+msgid_plural ""
+"scheduled cores %s did not deliver results, all values of the jobs will be "
+"affected"
+msgstr[0] ""
+"il core pianificato %s non ha distribuito risultati, tutti i valori del job "
+"saranno interessati"
+msgstr[1] ""
+"i core pianificati %s non hanno distribuito risultati, tutti i valori dei "
+"job saranno interessati"
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"il core pianificato %s ha riscontrato un errore nel codice utente, tutti i "
+"valori del job saranno interessati"
+msgstr[1] ""
+"i core pianificati %s hanno riscontrato errori nel codice utente, tutti i "
+"valori dei job saranno interessati"
+
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] "Il job parallelo%d non ha prodotto risultati"
+msgstr[1] "I job paralleli %d non hanno prodotto risultati"

@@ -1,0 +1,137 @@
+#
+# ${R_HOME}/src/scripts/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = src/scripts
+
+include $(top_builddir)/Makeconf
+
+## don't add '#! R_SHELL' for scripts intend to be run by 'R CMD script'
+SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2pdf Rdconv Rdiff Rprof \
+  SHLIB Stangle Sweave build check config
+## <NOTE>
+## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
+SCRIPTS_B_IN = Rcmd.in javareconf.in mkinstalldirs.in pager.in rtags.in
+SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
+## </NOTE>
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
+
+CLEANFILES =
+DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R: $(SCRIPTS_B) R.fe
+	@$(MAKE) rhome=$(top_builddir) install-cmds
+	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
+
+## <NOTE>
+## Seems we need target rules for creating FOO from FOO.in: pattern
+## rules ('%:%.in') are not portable, and some versions of Make do not
+## allow separated dependencies for single suffix rules.
+Rcmd: $(srcdir)/Rcmd.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+javareconf: $(srcdir)/javareconf.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+makeinstalldirs: $(srcdir)/makeinstalldirs.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+pager: $(srcdir)/pager.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+rtags: $(srcdir)/rtags.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## The following target helps in automatically generating the above
+## target rules (provided that $(ECHO) understands backslash escapes).
+Makerules:
+	@(dep="\$$(top_builddir)/config.status"; \
+	  cmd="@cd \$$(top_builddir)"; \
+	  cmd="$${cmd} && \$$(SHELL) ./config.status \$$(subdir)/\$$@"; \
+	  for f in $(SCRIPTS_B); do \
+	    $(ECHO) "$${f}: \$$(srcdir)/$${f}.in $${dep}"; \
+	    $(ECHO) "	$${cmd}"; \
+	  done)
+## </NOTE>
+
+## <NOTE>
+## The front-end shell script now (2000-08-02) also contains the version
+## information.  As we keep this information outside configure (as
+## otherwise developers would have to reconfigure and hence rebuild
+## every day), we now first create 'R.sh' from 'R.sh.in' via configure,
+## and then use sed to create the front end ('R.fe') which gets
+## installed as 'R'.
+R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
+	@$(ECHO) "creating $(subdir)/$@"
+	@(v=`cat $(top_srcdir)/VERSION`; \
+	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
+	  v="$${v} ($${dat})"; \
+	  y=`$(ECHO) $${dat} | cut -d- -f1`; \
+	  d=`$(ECHO) "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
+	  sed "1,/R_HOME_DIR/s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
+	       s@REPLACE_BY_VERSION@$${v}@; \
+	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
+	@chmod +x $@
+## </NOTE>
+
+$(top_builddir)/libtool:
+	@(cd $(@D); $(MAKE) $(@F))
+
+install: installdirs install-cmds
+	@rm -f $(DESTDIR)$(bindir)/R
+	@(d=`$(ECHO) '$(rhome)' | sed 's,/,\\\/,g';`; \
+	  d2=`$(ECHO) '$(rsharedir)' | sed 's,/,\\\/,g';`; \
+	  d3=`$(ECHO) '$(rincludedir)' | sed 's,/,\\\/,g';`; \
+	  d4=`$(ECHO) '$(rdocdir)' | sed 's,/,\\\/,g';`; \
+	  sed -e "1,/R_HOME_DIR=/s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s/\\(R_SHARE_DIR=\\).*/\\1$${d2}/;" -e  "s/\\(R_INCLUDE_DIR=\\).*/\\1$${d3}/;" -e "s/\\(R_DOC_DIR=\\).*/\\1$${d4}/;"\
+	  < R.fe > "$(DESTDIR)$(Rexecbindir)/R")
+	@$(INSTALL_SCRIPT)  "$(DESTDIR)$(Rexecbindir)/R" "$(DESTDIR)$(bindir)/R"
+	@chmod 755 "$(DESTDIR)$(bindir)/R" "$(DESTDIR)$(Rexecbindir)/R"
+## why of all the scripts does this alone chmod just one copy?
+installdirs:
+	@$(MKINSTALLDIRS) $(DESTDIR)$(bindir)
+install-cmds:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
+	@for f in $(SCRIPTS_S); do \
+	  source="$(srcdir)/$${f}"; \
+	  target="$(DESTDIR)$(Rexecbindir)/$${f}"; \
+	  (test -r "$${target}" && \
+	   cmp "$${source}" "$${target}" > /dev/null) || \
+	    $(INSTALL_SCRIPT) "$${source}" "$${target}"; \
+	done
+	@for f in $(SCRIPTS_B); do \
+	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \
+	done
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(DESTDIR)$(Rexecbindir)"
+## there are no programs to install in this dir
+install-strip:
+	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
+	  rm -f "$(DESTDIR)$(Rexecbindir)/$${f}"; \
+	done
+	@rm -f $(DESTDIR)$(bindir)/R
+
+mostlyclean: clean
+clean:
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+distclean: clean
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+maintainer-clean: distclean
+
+TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

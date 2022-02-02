@@ -1,0 +1,134 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 06.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "namespace found within local environments"
+msgstr "在本地環境中找到命名空間"
+
+msgid "not a proper evaluation environment"
+msgstr "不是一個正確的評估環境"
+
+msgid "non-namespace found within namespace environments"
+msgstr "在命名空間環境中找到非命名空間"
+
+msgid "namespace found within global environments"
+msgstr "在全域環境中找到命名空間"
+
+msgid "bad assignment: %s"
+msgstr "壞的指派：%s"
+
+msgid "cannot constant fold literal promises"
+msgstr "無法對字面承諾進行不固定折疊"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "無法對字面位元組碼物件進行不固定倍折疊"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "沒有給標籤\"%s\"記錄了偏移"
+
+msgid "cannot compile byte code literals in code"
+msgstr "不能在編碼裡編譯程式碼的位元組碼字面值"
+
+msgid "cannot compile promise literals in code"
+msgstr "不能編譯程式碼中的承諾文字"
+
+msgid "possible error in '%s': %s"
+msgstr "'%s' 裡可能不正確: %s"
+
+msgid "bad namespace import frame"
+msgstr "命名空間匯入框無效"
+
+msgid "bad assignment 1"
+msgstr "1 指派發生錯誤"
+
+msgid "bad assignment 2"
+msgstr "2 指派發生錯誤"
+
+msgid "invalid function in complex assignment"
+msgstr "複雜指派裡的函式無效"
+
+msgid "missing arguments are not allowed"
+msgstr "不允許缺少參數"
+
+msgid "empty alternative in numeric switch"
+msgstr "在數字交換機裡不能有空的替代"
+
+msgid "no visible global function definition for '%s'"
+msgstr "看不到 '%s' 的全域函式定義"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "看不到全域變數 '%s' 的連接"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "看不到 '<<-' 指派到 '%s' 的連接"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "給 '%s' 的參數個數無效"
+
+msgid "more than one default provided in switch() call"
+msgstr "呼叫 switch() 時只能有一個預設值"
+
+msgid "'switch' with no alternatives"
+msgstr "'switch' 沒有任何替代方案"
+
+msgid "Error: compilation failed -"
+msgstr "錯誤：編譯失敗 -"
+
+msgid "cannot compile a non-function"
+msgstr "無法編譯非函式"
+
+msgid "compiling '%s'"
+msgstr "編譯 '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "儲存到檔案\"%s\" … "
+
+msgid "done"
+msgstr "做完了"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' 必須是頂級環境"
+
+msgid "input and output file names are the same"
+msgstr "輸入和輸出檔案的檔案名稱是一樣的"
+
+msgid "empty input file; no output written"
+msgstr "輸入檔案是空的，因此沒有寫任何輸出"
+
+msgid "file '%s' does not exist"
+msgstr "沒有 '%s' 這樣的檔案"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "沒有 '%s' 這樣的編譯器選項"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "無效的環境變數值：%s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr "無效的編譯選項：optimize(==%d)<2 和 jitEnabled(==%d)>2"
+
+msgid "function is not compiled"
+msgstr "函式沒有被編制"
+
+msgid "cannot compile this expression"
+msgstr "無法編譯這段運算式"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "為句法函式作了本地指派："

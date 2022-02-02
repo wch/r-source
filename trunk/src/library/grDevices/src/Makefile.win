@@ -1,0 +1,61 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/grDevices/src/Makefile.win
+
+pkg = grDevices
+
+srcdir = .
+top_srcdir = ../../../..
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+
+SOURCES_C = axis_scales.c chull.c devices.c init.c stubs.c colors.c \
+   clippath.c patterns.c mask.c group.c \
+   devPicTeX.c devPS.c devWindows.c winbitmap.c
+SOURCES_F =
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
+
+SHLIB = $(pkg).dll
+RESFLAGS = -I $(R_HOME)/include
+
+## need config.h
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H
+## devPS needs zlib.h and run.h
+devPS-CPPFLAGS = -I"$(EXT_LIBS)/include" -I$(R_HOME)/src/gnuwin32
+
+## devWindows needs opt.h, console.h, rui.h and graphapp headers
+ifeq "$(WIN)" "64"
+arch_DEFS = -DR_ARCH='"x64"'
+else
+arch_DEFS = -DR_ARCH='"i386"'
+endif
+devWindows-CPPFLAGS = -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
+
+winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)/include"
+
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lzstd -lz -lwebp -llzma
+
+
+all: makeMakedeps shlib
+
+shlib: $(SHLIB)
+	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o $(SHLIB)
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps

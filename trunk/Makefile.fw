@@ -1,0 +1,92 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/Makefile.fw
+
+top_builddir = .
+
+include $(top_builddir)/Makeconf
+
+install install-strip: install-R-framework
+		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
+		  $(top_builddir)/etc/Makeconf > "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/etc${R_ARCH}/Makeconf")
+		@(sed 's/Versions\/$(FW_VERSION)\/Resources/Resources/' \
+		  "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/R" > \
+		  "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/RR")
+		@(mv "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/RR" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/R")
+		@(chmod a+x "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/R")
+		@(chmod -R g+w "$(DESTDIR)$(R_FRAMEWORK_DIR)")
+
+
+install-R-framework:
+	@$(ECHO) "Creating R framework ..."
+	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)" && \
+	  ln -f -s -n Resources/include Headers && \
+	  ln -f -s -n Resources/lib/libR.dylib R)
+	@if [ ! -e "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/PrivateHeaders" ]; then \
+	 mkdir "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/PrivateHeaders"; fi
+	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions" && \
+	  ln -f -s -n $(FW_VERSION) Current)
+	@(if [ -e "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" -a ! -L "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" ]; then \
+	  rm -Rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; mv "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; \
+	  fi)
+	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)"  && \
+	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
+	  ln -f -s -n Versions/Current/Headers Headers&& \
+	  ln -f -s -n Versions/Current/R R && \
+	  ln -f -s -n Versions/Current/Resources/lib Libraries && \
+	  ln -f -s -n Versions/Current/Resources Resources)
+	@## the resulting libR will point dyld to the fat libR regardless of its origin
+	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/lib" && \
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" "$(DESTDIR)$(Rexeclibdir)/libR.dylib")
+	@( otool=otool ; if otool -D "$(DESTDIR)$(Rexeclibdir)/libR.dylib"|grep 'not an object'>/dev/null; then otool=otool64; fi; \
+	   for lib in Rlapack Rblas R; do \
+	   if test -e "$(DESTDIR)$(Rexeclibdir)/lib$${lib}.dylib"; then $(ECHO) "  lib$${lib}"; \
+	    find "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change \
+	    `$${otool} -L "$(DESTDIR)$(Rexeclibdir)/lib$${lib}.dylib" |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    find "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change lib$${lib}.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	    "$(DESTDIR)$(Rexeclibdir)/lib$${lib}.dylib"; \
+	    if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
+	      $(top_srcdir)/tools/updatefat "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$(DESTDIR)$(Rexeclibdir)/lib$${lib}.dylib"; \
+	      install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	      "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib"; \
+	    fi; \
+	    for rexe in `ls "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)"/Resources/bin/exec/*/R "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/exec/R" 2>/dev/null`; do \
+	     install_name_tool -change lib$${lib}.dylib \
+	     "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$$rexe" ; \
+	    done; \
+           fi; \
+          done)
+	@(cp -R $(top_srcdir)/src/include/* "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/" && \
+	  cp src/include/config.h "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/" && \
+	  chmod a+r "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/config.h"; \
+	  find "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders" -name .svn | xargs rm -Rf)
+	@(install_name_tool -change libR.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
+	    "$(DESTDIR)$(Rexecbindir2)/R")
+	@(if [ -n "${R_ARCH}" ]; then \
+	  rm -Rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}" && \
+	  mkdir "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}" && \
+	  cp src/include/config.h "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h"; \
+	  chmod a+r "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h"; \
+	  sed -e "s|R_ARCH=${R_ARCH}|R_ARCH=/\`arch\`|" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R" \
+	  > "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  chmod a+x "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  mv "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R"; \
+	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 -a "${R_ARCH}" != /arm ]; then \
+	    $(ECHO) "\
+	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc, ppc64 or arm as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
+	  else \
+	    for f in `ls "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename` config.h; do \
+	      fn="Headers/$$f"; if [ "$$f" = "config.h" ]; then fn="PrivateHeaders/config.h"; fi; \
+	      $(ECHO) "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include \"i386/$$f\"~#elif defined __ppc__~#include \"ppc/$$f\"~#elif defined __ppc64__~#include \"ppc64/$$f\"~#elif defined __x86_64__~#include \"x86_64/$$f\"~#elif defined __arm__~#include \"arm/$$f\"~#else~#error \"Unsupported architecture.\"~#endif" |sed -e 'y/~/\n/' > "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/$$fn"; \
+	    done; \
+	  fi; \
+	fi )
+	@( rm -f "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" && \
+	   ln -s bin/R "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" )
+	@( $(ECHO) "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist")

@@ -1,0 +1,90 @@
+The Fortran routines here were extracted from LAPACK 3.1.0, then
+3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0, 3.7.1, 3.8.0, 3.9.0
+(Sources from http://www.netlib.org/lapack and mirrors).
+
+dlapack.f contains support routines for `real' LAPACK calls.  
+cmplx.f contains support routines for LAPACK calls from complex
+arithmetic routines, that are only used if COMPLEX*16 is supported by
+the Fortran compiler and compatible with the Rcomplex type.
+Neither will be compiled if an external LAPACK is used.
+
+We have tried to avoid including any single-precision routines.
+
+
+Preparation
+-----------
+
+dlapack.f and cmplx.f were created at the top level in the LAPACK
+3.9.0 sources by copying {dble,cmplx}.txt there and running in R
+
+dir.create('dble')
+foo <- scan('dble.txt', "")
+file.copy(file.path("SRC", foo), 'dble')
+file.copy(file.path("INSTALL", 'ilaver.f'), 'dble')
+system('cpp SRC/iparam2stage.F > dble/iparam2stage.f')
+system("cat dble/* > dlapack.f")
+
+dir.create('cmplx')
+foo <- scan('cmplx.txt', "")
+file.copy(file.path("SRC", foo), 'cmplx')
+system("cat cmplx/* > cmplx.f")
+
+If you update the LAPACK version, you need to copy over the LICENSE
+file and update it in doc/COPYRIGHTS.  And if you patch the sources,
+*DO* mention it here and add the patch to a file R.patch (not
+currently used).
+
+New LAPACK versions (even point releases) often add new auxiliary
+routines, and these can be hard to track down.  We found it helpful to
+compare the outputs of
+
+nm -g dlapack.o | grep ' T ' | cut -b20-
+nm -g dlapack.o | grep ' U ' | cut -b20-
+
+before and after upating (ditto for cmplx.o).  (This may need
+adjusting for your platform's nm.)
+
+
+History
+-------
+
+zlahr2 zlaqr0 zlaqr1 zlaqr2 zlaqr3 zlaqr4 zlaqr5 zlartg zpotf2 zpotrf
+zrot ztrexc
+were added in R 2.5.0.
+
+izmax1 zdrscl zgecon zlacn2 zlantr ztrcon
+were added in R 2.7.0.
+
+dzsum1 ilazlc ilazlr zunmhr
+were added in R 2.15.2.
+
+zgelsd zgesdd zlacp2 zlacrm zlals0 zlalsa zlalsd zlarcm
+were added in R 3.1.0.
+
+zgeequ zgees zgels zgerfs zgesc2 zgesvx zgetc2 zgetri zggbak zggbal
+zgges zggev zgghrd zheevd zhgeqz zlaed0 zlaed7 zlaed8 zlaqge zlasyf
+zlatdf zlauu2 zlauum zpotri zstedc zsymv zsyr zsytf2 zsytrf zsytri
+ztgevc ztgex2 ztgexc ztgsen ztgsy2 ztgsyl ztrsen ztrsyl ztrti2 ztrtri
+zunm2l zunmql zunmtr
+were added in R 3.3.0 for use by a CRAN package.
+
+dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
+zgetrf2 zpotrf2
+were new in LAPACK 3.6.0 and added in R 3.3.0.
+
+dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
+
+-------------------------------------------------
+
+For 'base' R addition of a new .Call()able Lapack routine,
+all these files must be updated {path relative to R's topdir}:
+
+  src/gnuwin32/Rdll.hide
+  src/include/R_ext/Lapack.h
+  src/include/Rmodules/Rlapack.h
+  src/main/basedecl.h
+  src/main/lapack.c
+  src/main/registration.c
+  src/modules/lapack/Lapack.c
+  src/modules/lapack/Lapack.h
+  src/modules/lapack/cmplx.f or dlapack.f

@@ -1,0 +1,47 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/grDevices/src/cairo/Makefile.win
+
+srcdir = .
+top_srcdir = ../../../../..
+
+top_builddir = ../../../../..
+R_HOME = $(top_builddir)
+
+ifeq "$(WIN)" "64"
+arch_DEFS = -DR_ARCH='"x64"'
+R_ARCH = /x64
+else
+arch_DEFS = -DR_ARCH='"i386"'
+R_ARCH = /i386
+endif
+
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -I. -I.. -DHAVE_CONFIG_H \
+  $(arch_DEFS) $(CAIRO_CPPFLAGS)
+
+PKG_LIBS = $(CAIRO_LIBS) -L.. -lgrDevices
+
+SOURCES = cairoBM.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+
+all: makeMakedeps winCairo.dll
+	@cp winCairo.dll $(R_HOME)/library/grDevices/libs$(R_ARCH)
+
+winCairo.dll: $(OBJECTS)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o winCairo.dll
+	@-rm -f $(R_HOME)/library/grDevices/libs$(R_ARCH)/winCairo.dll
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps

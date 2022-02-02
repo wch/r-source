@@ -1,0 +1,217 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.4\n"
+
+#: class_support.c:29
+msgid "calling the C routine used as an initializer for 'externalptr' objects"
+msgstr ""
+"wywołanie procedury C użyte jako inicjalizator dla obiektów 'externalptr'"
+
+#: do_substitute_direct.c:41
+msgid "invalid list for substitution"
+msgstr "niepoprawna lista do podmiany"
+
+#: methods_list_dispatch.c:129
+#, c-format
+msgid "unexpected type '%s' for condition message"
+msgstr ""
+
+#: methods_list_dispatch.c:132
+msgid "condition message must be length 1"
+msgstr ""
+
+#: methods_list_dispatch.c:213
+msgid ""
+"could not find the skeleton calls for 'methods' (package detached?): expect "
+"very bad things to happen"
+msgstr ""
+"nie można znaleźć głównych wywołań dla 'methods' (odłączony pakiet?): "
+"oczekuj pojawienia się bardzo złych rzeczy"
+
+#: methods_list_dispatch.c:279
+#, c-format
+msgid ""
+"no \"allMethods\" slot found in object of class \"%s\" used as methods list "
+"for function '%s'"
+msgstr ""
+"nie znaleziono gniazd 'allMethods' w obiekcie klasy \"%s\" użytej jako listy "
+"metod dla funkcji '%s'"
+
+#: methods_list_dispatch.c:407
+#, c-format
+msgid ""
+"S language method selection did not return normally when called from "
+"internal dispatch for function '%s'"
+msgstr ""
+
+#: methods_list_dispatch.c:409
+msgid "Function name for method selection called internally"
+msgstr ""
+
+#: methods_list_dispatch.c:503
+#, c-format
+msgid "no generic function definition found for '%s'"
+msgstr "nie znaleziono definicji ogólnej funkcji dla '%s'"
+
+#: methods_list_dispatch.c:506
+#, c-format
+msgid ""
+"no generic function definition found for '%s' in the supplied environment"
+msgstr ""
+"nie znaleziono definicji ogólnej funkcji dla '%s' w dostarczonym środowisku"
+
+#: methods_list_dispatch.c:541
+#, c-format
+msgid ""
+"invalid generic function object for method selection for function '%s': "
+"expected a function or a primitive, got an object of class \"%s\""
+msgstr ""
+"niepoprawny obiekt ogólnej funkcji dla wyboru metody dla funkcji '%s': "
+"oczekiwano funkcji lub typu prymitywnego, otrzymano obiekt klasy '%s'"
+
+#: methods_list_dispatch.c:556
+#, c-format
+msgid "no direct or inherited method for function '%s' for this call"
+msgstr ""
+"Brak bezpośredniej lub dziedziczonej metody dla funkcji '%s' dla tego "
+"wywołania"
+
+#: methods_list_dispatch.c:586 methods_list_dispatch.c:1157
+msgid "invalid object (non-function) used as method"
+msgstr "niepoprawny obiekt (nie-funkcja) użyty jako metoda"
+
+#: methods_list_dispatch.c:607
+#, c-format
+msgid "could not find symbol '%s' in frame of call"
+msgstr "nie można było znaleźć symbolu '%s' w strukturze wywołania"
+
+#: methods_list_dispatch.c:615
+#, c-format
+msgid ""
+"invalid symbol in checking for missing argument in method dispatch: expected "
+"a name, got an object of class \"%s\""
+msgstr ""
+"niepoprawny symbol w sprawdzaniu brakującego argumentu w wysyłaniu metody: "
+"oczekiwano nazwy, otrzymano obiekt klasy '%s'"
+
+#: methods_list_dispatch.c:618
+msgid "use of NULL environment is defunct"
+msgstr "użycie środowiska NULL jest przestarzałe"
+
+#: methods_list_dispatch.c:622
+#, c-format
+msgid ""
+"invalid environment in checking for missing argument, '%s', in methods "
+"dispatch: got an object of class \"%s\""
+msgstr ""
+"niepoprawne środowisko w sprawdzaniu brakującego argumentu '%s' w wysyłaniu "
+"metod: otrzymano obiekt klasy '%s'"
+
+#: methods_list_dispatch.c:645
+#, c-format
+msgid ""
+"error in evaluating the argument '%s' in selecting a method for function "
+"'%s': %s"
+msgstr ""
+"błąd podczas obliczania argumentu '%s' przy wybieraniu metody dla funkcji "
+"'%s': %s"
+
+#: methods_list_dispatch.c:662
+#, c-format
+msgid ""
+"object of class \"%s\" used as methods list for function '%s' ( no "
+"'argument' slot)"
+msgstr ""
+"obiekt klasy '%s' został użyty jako lista metod dla funkcji '%s' ( brak "
+"gniazda 'argument')"
+
+#: methods_list_dispatch.c:673
+#, c-format
+msgid ""
+"(in selecting a method for function '%s') '...' and related variables cannot "
+"be used for methods dispatch"
+msgstr ""
+"(przy wybieraniu metody dla funkcji '%s') '...' oraz powiązane zmienne nie "
+"mogą być użyte dla wysyłania metod"
+
+#: methods_list_dispatch.c:676
+#, c-format
+msgid ""
+"(in selecting a method for function '%s') the 'environment' argument for "
+"dispatch must be an R environment; got an object of class \"%s\""
+msgstr ""
+"(przy wybieraniu metody dla funkcji '%s') argument 'environment' dla "
+"wysyłania musi być środowiskiem R; otrzymano obiekt klasy '%s'"
+
+#: methods_list_dispatch.c:707
+#, c-format
+msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
+msgstr "brak pasującej metody dla funkcji '%s' (argument '%s', z klasą '%s')"
+
+#: methods_list_dispatch.c:714
+#, c-format
+msgid ""
+"recursive use of function '%s' in method selection, with no default method"
+msgstr ""
+"rekursywne użycie funkcji '%s' w wyborze metody, z brakiem określonej metody "
+"domyślnej"
+
+#: methods_list_dispatch.c:739
+#, c-format
+msgid "error in evaluating a 'primitive' next method: %s"
+msgstr "błąd w trakcie obliczania 'primitive' następnej metody: %s"
+
+#: methods_list_dispatch.c:895
+#, c-format
+msgid "'%s' must be a single string (got a character vector of length %d)"
+msgstr ""
+"'%s' musi być pojedynczym łańcuchem (otrzymano wektor tekstowy o długości %d)"
+
+#: methods_list_dispatch.c:899
+#, c-format
+msgid "'%s' must be a non-empty string; got an empty string"
+msgstr "'%s' musi być niepustym łańcuchem; otrzymano pusty łańcuch"
+
+#: methods_list_dispatch.c:903
+#, c-format
+msgid "'%s' must be a single string (got an object of class \"%s\")"
+msgstr "'%s' musi być pojedynczym łańcuchem (otrzymano obiekt klasy '%s')"
+
+#: methods_list_dispatch.c:980
+msgid "class should be either a character-string name or a class definition"
+msgstr "klasa powinna być albo nazwą tekstową albo definicją klasy"
+
+#: methods_list_dispatch.c:1066
+#, c-format
+msgid "failed to get the generic for the primitive \"%s\""
+msgstr "nie udało się uzyskać ogólnej funkcji dla typu prymitywnego \"%s\""
+
+#: methods_list_dispatch.c:1073
+#, c-format
+msgid ""
+"expected a generic function or a primitive for dispatch, got an object of "
+"class \"%s\""
+msgstr ""
+"oczekiwano ogólnej funkcji lub typu prymitywnego dla wysyłania, otrzymano "
+"obiekt klasy \"%s\""
+
+#~ msgid ""
+#~ "in processing 'callNextMethod', found a '...' in the matched call, but no "
+#~ "corresponding '...' argument"
+#~ msgstr ""
+#~ "przy przetwarzaniu 'callNextMethod', znaleziono '...' w dopasowanym "
+#~ "wywołaniu, ale nie ma odpowiedniego argumentu '...'"

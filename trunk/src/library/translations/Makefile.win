@@ -1,0 +1,23 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/translations/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+pkg = translations
+
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) -p $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkdesc
+	@cp -R `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
+	@find "$(top_builddir)/library/$(pkg)" -name .svn -type d -prune \
+            -exec rm -Rf \{\} \; 2>/dev/null
+	@cp DESCRIPTION $(top_builddir)/library/$(pkg)
+
+include $(top_srcdir)/share/make/basepkg.mk

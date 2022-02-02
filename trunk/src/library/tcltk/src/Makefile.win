@@ -1,0 +1,46 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/tcltk/src/Makefile.win
+
+pkg = tcltk
+
+srcdir = .
+top_srcdir = ../../../..
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+
+SOURCES_C = init.c tcltk.c tcltk_win.c
+SOURCES_F =
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
+
+SHLIB = $(pkg).dll
+RESFLAGS = -I $(R_HOME)/include
+
+## The TCL_* variables are set in etc/Makeconf.
+## Because the 64-bit build is customized, no other Tcl/Tk build is suitable
+PKG_CPPFLAGS = -I "$(TCL_HOME)"/include -DWin32 -I$(R_HOME)/src/include -DHAVE_CONFIG_H
+PKG_LIBS = -L"$(TCL_HOME)"/bin -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
+
+all: makeMakedeps shlib
+
+shlib: $(SHLIB)
+	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o $(SHLIB)
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps

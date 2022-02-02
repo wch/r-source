@@ -1,0 +1,11 @@
+Package: tcltk
+Version: @VERSION@
+Priority: base
+Title: Tcl/Tk Interface
+Author: R Core Team
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
+Description: Interface and language bindings to Tcl/Tk GUI elements.
+License: Part of R @VERSION@
+Imports: utils
+NeedsCompilation: yes

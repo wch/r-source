@@ -1,0 +1,2120 @@
+# Lithuanian translations for methods package.
+# Copyright (C) 2020 THE methods'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the methods package.
+# <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: methods 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
+"PO-Revision-Date: 2020-12-08 13:57+0200\n"
+"Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: class_support.c:29
+msgid "calling the C routine used as an initializer for 'externalptr' objects"
+msgstr ""
+"C programos iškvietimas naudojamas kaip inicializatorius 'externalptr' "
+"objektams"
+
+#: do_substitute_direct.c:41
+#, fuzzy
+msgid "invalid list for substitution"
+msgstr "neteisingas metodo posąrašis"
+
+#: methods_list_dispatch.c:129
+#, c-format
+msgid "unexpected type '%s' for condition message"
+msgstr "netikėtas sąlygos pranešimo tipas '%s'"
+
+#: methods_list_dispatch.c:132
+msgid "condition message must be length 1"
+msgstr "sąlygos pranešimas turi būti 1 ilgio"
+
+#: methods_list_dispatch.c:213
+msgid ""
+"could not find the skeleton calls for 'methods' (package detached?): expect "
+"very bad things to happen"
+msgstr ""
+"nerasti 'methods' (atskiro paketo?) struktūros kreipiniai: tikėtis "
+"blogiausių dalykų, kurie gali nutikti"
+
+#: methods_list_dispatch.c:279
+#, c-format
+msgid ""
+"no \"allMethods\" slot found in object of class \"%s\" used as methods list "
+"for function '%s'"
+msgstr ""
+"nenurodytas \"allMethods\" laukas objekte (klasės \"%s\" ), kuris naudojamas "
+"kaip metodų sąrašas funkcijai '%s'"
+
+#: methods_list_dispatch.c:407
+#, c-format
+msgid ""
+"S language method selection did not return normally when called from "
+"internal dispatch for function '%s'"
+msgstr ""
+"S kalbos metodo pasirinkimas negrįžta normaliai, kai iškviečiama iš vidinio "
+"perdavimo funkcijai '%s'"
+
+#: methods_list_dispatch.c:409
+msgid "Function name for method selection called internally"
+msgstr "Metodo pasirinkimo funkcijos pavadinimas iškviečiamas viduje"
+
+#: methods_list_dispatch.c:503
+#, fuzzy, c-format
+msgid "no generic function definition found for '%s'"
+msgstr "nėra funkcijos apibrėžties %s"
+
+#: methods_list_dispatch.c:506
+#, fuzzy, c-format
+msgid ""
+"no generic function definition found for '%s' in the supplied environment"
+msgstr "nėra funkcijos apibrėžties %s"
+
+#: methods_list_dispatch.c:541
+#, fuzzy, c-format
+msgid ""
+"invalid generic function object for method selection for function '%s': "
+"expected a function or a primitive, got an object of class \"%s\""
+msgstr ""
+"neteisinga metodo apibrėžtis: turėtų būti funkcija, gautas klasės %s objektas"
+
+#: methods_list_dispatch.c:556
+#, fuzzy, c-format
+msgid "no direct or inherited method for function '%s' for this call"
+msgstr "nepavyko rasti paveldėto metodo funkcijos %s prierašui %s"
+
+#: methods_list_dispatch.c:586 methods_list_dispatch.c:1157
+#, fuzzy
+msgid "invalid object (non-function) used as method"
+msgstr "neteisinga funkcijos argumento rodyklė"
+
+#: methods_list_dispatch.c:607
+#, c-format
+msgid "could not find symbol '%s' in frame of call"
+msgstr "simbolis '%s' nerastas kreipinyje"
+
+#: methods_list_dispatch.c:615
+#, fuzzy, c-format
+msgid ""
+"invalid symbol in checking for missing argument in method dispatch: expected "
+"a name, got an object of class \"%s\""
+msgstr ""
+"neteisingas objektas metodų lentelėje (%s), turėtų būti metodas, gautas "
+"klasės %s objektas"
+
+#: methods_list_dispatch.c:618
+msgid "use of NULL environment is defunct"
+msgstr "NULL aplinkos naudojimas yra nepilnas"
+
+#: methods_list_dispatch.c:622
+#, fuzzy, c-format
+msgid ""
+"invalid environment in checking for missing argument, '%s', in methods "
+"dispatch: got an object of class \"%s\""
+msgstr ""
+"neteisinga aplinka tikrinant trūkstamą argumentą '%s' metodo perdavime, "
+"gaunamas klasės \"%s\" objektas"
+
+#: methods_list_dispatch.c:645
+#, fuzzy, c-format
+msgid ""
+"error in evaluating the argument '%s' in selecting a method for function "
+"'%s': %s"
+msgstr "klaida vertinant 'primitive' sekantį metodą: %s"
+
+#: methods_list_dispatch.c:662
+#, c-format
+msgid ""
+"object of class \"%s\" used as methods list for function '%s' ( no "
+"'argument' slot)"
+msgstr ""
+"klasės \"%s\" objektas naudojamas kaip metodų sąrašas funkcijai '%s' (nėra "
+"nurodytas 'argument' laukas)"
+
+#: methods_list_dispatch.c:673
+#, c-format
+msgid ""
+"(in selecting a method for function '%s') '...' and related variables cannot "
+"be used for methods dispatch"
+msgstr ""
+"(renkantis funkcijos '%s' metodą) '...' ir susiję kintamieji negali būti "
+"naudojami metodų perdavimui"
+
+#: methods_list_dispatch.c:676
+#, c-format
+msgid ""
+"(in selecting a method for function '%s') the 'environment' argument for "
+"dispatch must be an R environment; got an object of class \"%s\""
+msgstr ""
+"(renkantis funkcijos '%s' metodą) 'environment' perdavimo argumentas turi "
+"būti R aplinka; gaunamas klasės objektas \"%s\""
+
+#: methods_list_dispatch.c:707
+#, fuzzy, c-format
+msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
+msgstr ""
+"nėra metodo ar numatytojo parametro dėl as() pakeitimo %s su Class=\"%s\""
+
+#: methods_list_dispatch.c:714
+#, c-format
+msgid ""
+"recursive use of function '%s' in method selection, with no default method"
+msgstr ""
+"rekursinis funkcijos '%s' naudojimas metodo pasirinkime, nėra numatytojo "
+"metodo"
+
+#: methods_list_dispatch.c:739
+#, c-format
+msgid "error in evaluating a 'primitive' next method: %s"
+msgstr "klaida vertinant 'primitive' sekantį metodą: %s"
+
+#: methods_list_dispatch.c:895
+#, fuzzy, c-format
+msgid "'%s' must be a single string (got a character vector of length %d)"
+msgstr ""
+"vienos klasės vardas reikalingas %s laukui, gautas %d ilgio tekstinis "
+"vektorius"
+
+#: methods_list_dispatch.c:899
+#, c-format
+msgid "'%s' must be a non-empty string; got an empty string"
+msgstr "'%s' negali būti tuščia eilutė; gavo tuščią eilutę"
+
+#: methods_list_dispatch.c:903
+#, fuzzy, c-format
+msgid "'%s' must be a single string (got an object of class \"%s\")"
+msgstr "viena eilutė, gaunamas klasės %s objektas"
+
+#: methods_list_dispatch.c:980
+#, fuzzy
+msgid "class should be either a character-string name or a class definition"
+msgstr "'class1' turi būti klasės vardas arba klasės apibrėžimas"
+
+#: methods_list_dispatch.c:1066
+#, c-format
+msgid "failed to get the generic for the primitive \"%s\""
+msgstr "nepavyko gauti bendrinės funkcijos primityviai funkcijai \"%s\""
+
+#: methods_list_dispatch.c:1073
+#, fuzzy, c-format
+msgid ""
+"expected a generic function or a primitive for dispatch, got an object of "
+"class \"%s\""
+msgstr ""
+"argumentas %s turi būti bendrinė funkcija arba vieno simbolio eilutė, "
+"gaunamas klasės %s objektas"
+
+#~ msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
+#~ msgstr "Ak!: kažkas negerai su '.OldClassesPrototypes[[%d]]'"
+
+#~ msgid ""
+#~ "unnamed argument to initialize() for S3 class must have a class "
+#~ "definition; %s does not"
+#~ msgstr ""
+#~ "neįvardytas argumentas į initialize() S3 klasei turi būti klasės "
+#~ "apibrėžtis, %s nėra"
+
+#~ msgid ""
+#~ "unnamed argument must extend either the S3 class or the class of the data "
+#~ "part; not true of class %s"
+#~ msgstr ""
+#~ "neįvardyti argumentai turi praplėsti arba S3 klasę, arba duomenų dalies "
+#~ "klasę, neteisinga apie %s klasę"
+
+#~ msgid ""
+#~ "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
+#~ "equivalent"
+#~ msgstr ""
+#~ "klasė %s neturi S3 duomenų dalies, todėl yra \"S4\" tipo, nėra S3 "
+#~ "atitikmuo"
+
+#~ msgid ""
+#~ "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
+#~ msgstr ""
+#~ "%s klasė yra VIRTUAL; nėra prasminga sukurti S4 objektą iš šios klasės"
+
+#~ msgid "object must be a valid data part for class %s; not true of type %s"
+#~ msgstr ""
+#~ "objektas turi būti galiojanti duomenų dalis klasei %s, neteisingas %s "
+#~ "tipas"
+
+#~ msgid "cannot specify matrix() arguments when specifying '.Data'"
+#~ msgstr "nepavyko nurodyti matrix() argumentų, kai nurodyta '.Data'"
+
+#~ msgid "cannot specify array() arguments when specifying '.Data'"
+#~ msgstr "nepavyko nurodyti array() argumentų, kai nurodyta '.Data'"
+
+#~ msgid "cannot have more than one unnamed argument as environment"
+#~ msgstr "negali turėti daugiau nei vieną neįvardytą argumentą kaip aplinką"
+
+#~ msgid "unnamed argument to new() must be an environment for the new object"
+#~ msgstr "neįvardytas argumentas į new() turi būti aplinka naujam objektui"
+
+#~ msgid ""
+#~ "methods may not be defined for primitive function %s in this version of R"
+#~ msgstr ""
+#~ "šioje R versijoje negalima apibrėžti primityvios funkcijos %s metodų"
+
+#~ msgid ""
+#~ "S3Part() is only defined for classes set up by setOldCLass(), basic "
+#~ "classes or subclasses of these:  not true of class %s"
+#~ msgstr ""
+#~ "S3Part() apibrėžtas tik klasėms, sudarytoms setOldCLass(), pagrindinių "
+#~ "klasių ar jų poklasių: klaida apie klasę %s"
+
+#~ msgid ""
+#~ "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
+#~ msgstr "'S3Class' argumentas turi būti %s viršklasis: neteisinga klasei %s"
+
+#~ msgid "replacement value must extend class %s, got %s"
+#~ msgstr "pakeitimo reikšmė turi praplėsti klasę %s, yra %s"
+
+#~ msgid "replacement value must be of class %s, got one of class %s"
+#~ msgstr "pakeitimo reikšmė turi būti %s klasės, yra viena iš %s klasės"
+
+#~ msgid ""
+#~ "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
+#~ msgstr "neapibrėžtas 'replace' metodas 'as(x, \"%s\") <- value' klasei %s"
+
+#~ msgid ""
+#~ "the 'coerce' argument to 'setIs' should be a function of one argument, "
+#~ "got an object of class %s"
+#~ msgstr ""
+#~ "coerce' argumentas į 'setIs' turi būti vieno argumento funkcija, yra "
+#~ "klasės %s objektas"
+
+#~ msgid ""
+#~ "the computation: 'as(object,\"%s\") <- value' is valid when object has "
+#~ "class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
+#~ msgstr ""
+#~ "skaičiavimas: 'as(object,\"%s\") <- value' yra tinkamas, kai objektas "
+#~ "turi klasę %s tik tada kai 'is(value, \"%s\")' yra TRUE ('class(value)' "
+#~ "buvo %s)"
+
+#~ msgid ""
+#~ "there is no automatic definition for 'as(object, \"%s\") <- value' when "
+#~ "object has class %s and no 'replace' argument was supplied; replacement "
+#~ "will be an error"
+#~ msgstr ""
+#~ "nėra automatinės apibrėžties 'as(object, \"%s\") <- value' kai objektas "
+#~ "turi klasę %s ir nepateiktas 'replace' argumentas; pakeitimas bus "
+#~ "neteisingas"
+
+#~ msgid ""
+#~ "the 'replace' argument to setIs() should be a function of 2 or 3 "
+#~ "arguments, got an object of class %s"
+#~ msgstr ""
+#~ "'replace' argumentas setIs() turi būti 2 arba 3 argumentų funkcija, yra "
+#~ "klasės %s objektas"
+
+#~ msgid "the member classes must be defined: not true of %s"
+#~ msgstr "klasių nariai turi būti apibrėžti: %s neteisinga"
+
+#~ msgid "unable to create union class:  could not set members %s"
+#~ msgstr "nepavyko sukurti sąjungos klasės: nepavyko nustatyti narių %s"
+
+#~ msgid ""
+#~ "methods:::bind_activation() is defunct;\n"
+#~ " rather provide methods for cbind2() / rbind2()"
+#~ msgstr ""
+#~ "methods:::bind_activation() yra nebenaudojamas;\n"
+#~ " geriau pateikti metodus cbind2() / rbind2()"
+
+#~ msgid "invalid argument 'name': %s"
+#~ msgstr "neteisingas argumentas 'name': %s"
+
+#~ msgid ""
+#~ "%s dispatches internally;  methods can be defined, but the generic "
+#~ "function is implicit, and cannot be changed."
+#~ msgstr ""
+#~ "%s išsiuntimai viduje;  metodus galima apibrėžti, tačiau bendrinė "
+#~ "funkcija yra numanoma ir negali būti pakeista."
+
+#~ msgid ""
+#~ "if the 'def' argument is supplied, it must be a function that calls "
+#~ "standardGeneric(\"%s\") or is the default"
+#~ msgstr ""
+#~ "jei pateiktas 'def' argumentas, tai turi būti funkcija, kuri iškviečia "
+#~ "standardGeneric(\"\"%s\"\") arba yra numatytoji"
+
+#~ msgid ""
+#~ "must supply a function skeleton for %s, explicitly or via an existing "
+#~ "function"
+#~ msgstr ""
+#~ "privalo teikti funkcijos struktūrą %s, aiškiai arba per egzistuojančią "
+#~ "funkciją"
+
+#~ msgid ""
+#~ "Creating a generic function for %s from %s in %s\n"
+#~ "    (from the saved implicit definition)"
+#~ msgstr ""
+#~ "Bendrinės funkcijos %s kūrimas iš %s esančios %s\n"
+#~ "(iš išsaugoto neišreikšto apibrėžimo)"
+
+#~ msgid "Creating a new generic function for %s in %s"
+#~ msgstr "Naujos bendrinės funkcijos kūrimas %s esančios %s"
+
+#~ msgid ""
+#~ "no generic version of %s on package %s is allowed;\n"
+#~ "   a new generic will be assigned for %s"
+#~ msgstr ""
+#~ "negalima bendrinės %s versija pakete %s;\n"
+#~ "nauja bendrinė bus priskirta %s"
+
+#~ msgid ""
+#~ "function %s appears to be a generic function, but with generic name %s"
+#~ msgstr ""
+#~ "funkcija %s atrodo kaip bendrinė funkcija, tačiau su bendruoju vardu %s"
+
+#~ msgid "generic function %s not found for removal"
+#~ msgstr "nėra bendrinės funkcijos %s, kurią reikia pašalinti"
+
+#~ msgid "a function for argument 'f' must be a generic function"
+#~ msgstr "funkcija argumentui 'f' turi būti bendrinė funkcija"
+
+#~ msgid "the environment %s is locked; cannot assign methods for function %s"
+#~ msgstr "%s aplinka yra užrakinta; negali priskirti metodų funkcijai %s"
+
+#~ msgid ""
+#~ "the 'where' environment (%s) is a locked namespace; cannot assign methods "
+#~ "there"
+#~ msgstr ""
+#~ "'where' aplinka (%s) yra uždara vardų erdvė, negalima priskirti metodų"
+
+#~ msgid ""
+#~ "Copying the generic function %s to environment %s, because the previous "
+#~ "version was in a sealed namespace (%s)"
+#~ msgstr ""
+#~ "Bendrinė funkcija %s kopijuojama į %s aplinką, nes ankstesnė versija buvo "
+#~ "patvirtintoje vardų erdvėje (%s)"
+
+#~ msgid "no existing definition for function %s"
+#~ msgstr "nėra esamos funkcijos %s apibrėžties"
+
+#~ msgid "Creating a generic function from function %s in %s"
+#~ msgstr "Bendrinės funkcijos kūrimas iš funkcijos %s esančios %s"
+
+#~ msgid "Creating a generic function for %s from package %s in %s"
+#~ msgstr "Bendrinės funkcijos kūrimas %s iš paketo %s esančio %s"
+
+#~ msgid ""
+#~ "the method for function %s and signature %s is sealed and cannot be re-"
+#~ "defined"
+#~ msgstr ""
+#~ "metodas funkcijai %s ir prierašas %s yra patvirtinti bei negali būti "
+#~ "apibrėžtas iš naujo"
+
+#~ msgid ""
+#~ "For function %s, signature %s: argument in method definition changed from "
+#~ "(%s) to (%s)"
+#~ msgstr ""
+#~ "Funkcijai %s prierašas %s: argumentas metodo apibrėžime pakeistas iš (%) "
+#~ "į (%s)"
+
+#~ msgid ""
+#~ "primitive functions cannot be methods; they must be enclosed in a regular "
+#~ "function"
+#~ msgstr ""
+#~ "primityvios funkcijos negali būti metodai, jos turi būti uždaros "
+#~ "reguliariojoje funkcijoje"
+
+#~ msgid "function supplied as argument 'f' must be a generic"
+#~ msgstr "funkcija, kuri pateikta kaip argumentas 'f', turi būti bendrinė"
+
+#~ msgid "no generic function %s found"
+#~ msgstr "nerasta bendrinės funkcijos %s"
+
+#~ msgid "no method found for function %s and signature %s"
+#~ msgstr "nėra funkcijos '%s' ir prierašo %s metodo"
+
+#~ msgid "no environment or package corresponding to argument where=%s"
+#~ msgstr "nėra aplinkos ar paketo atitinkančio argumentą where=%s"
+
+#~ msgid "no generic function found for '%s'"
+#~ msgstr "nerasta bendrinės funkcijos '%s'"
+
+#~ msgid "no method found for function '%s' and signature %s"
+#~ msgstr "nėra funkcijos '%s' ir prierašo %s metodo"
+
+#~ msgid "'file' must be a character string or a connection"
+#~ msgstr "'file' turi būti simbolių eilutė ar ryšys"
+
+#~ msgid ""
+#~ "argument 'signature' is not meaningful with the current implementation "
+#~ "and is ignored \n"
+#~ "(extract a subset of the methods list instead)"
+#~ msgstr ""
+#~ "argumentas 'signature' neturi prasmės su dabartiniu įgyvendinimu ir yra "
+#~ "ignoruojamas\n"
+#~ "(vietoj to išskirkite metodų sąrašo poaibį)"
+
+#~ msgid "no method for %s matches class %s"
+#~ msgstr "nėra metodo %s, kuris atitinka klasę %s"
+
+#~ msgid "no method found for signature %s"
+#~ msgstr "nėra prierašo %s metodo"
+
+#~ msgid "%s has no methods defined"
+#~ msgstr "%s neturi apibrėžtų metodų"
+
+#~ msgid ""
+#~ "bad class specified for element %d (should be a single character string)"
+#~ msgstr ""
+#~ "netinkamai nurodyta klasė %d elementui (turi būti viena simbolių eilutė)"
+
+#~ msgid ""
+#~ "first argument should be the names of one of more generic functions (got "
+#~ "object of class %s)"
+#~ msgstr ""
+#~ "pirmas argumentas turėtų būti vienas iš daugelio bendrinių funkcijų vardų "
+#~ "(gautas klasės %s objektas)"
+
+#~ msgid "must supply 'generic.function' or 'class'"
+#~ msgstr "privalo teikti 'generic.function' arba 'class'"
+
+#~ msgid "%s is not an S4 generic function in %s; methods not removed"
+#~ msgstr "%s nėra S4 bendrinė funkcija %s, metodai nepašalinti"
+
+#~ msgid "cannot remove methods for %s in locked environment/package %s"
+#~ msgstr "nepavyko pašalinti metodų %s užrakintoje aplinkoje/pakete %s"
+
+#~ msgid "Restoring default function definition of %s"
+#~ msgstr "Atstatomas numatytasis %s funkcijos apibrėžimas"
+
+#~ msgid ""
+#~ "error in updating S4 generic function %s; the function definition is not "
+#~ "an S4 generic function (class %s)"
+#~ msgstr ""
+#~ "klaida atnaujinant S4 bendrinę funkciją %s; funkcijos apibrėžimas nėra S4 "
+#~ "bendrinė funkcija (klasė %s)"
+
+#~ msgid "Function %s is already a group generic; no change"
+#~ msgstr "Funkcija %s jau yra bendrinė grupės; jokių keitimų"
+
+#~ msgid "Function %s is a group generic; do not call it directly"
+#~ msgstr "Funkcija %s yra bendrinė grupė, nesikreipkite į ją tiesiogiai"
+
+#~ msgid "callGeneric() must be called from within a method body"
+#~ msgstr "callGeneric() turi būti iškviesta iš metodo pagrindinės dalies"
+
+#~ msgid "expected a non-empty character string for argument name"
+#~ msgstr "turėtų būti ne tuščia simbolių eilutė argumento varde"
+
+#~ msgid "generic function supplied was not created for %s"
+#~ msgstr "pateikta bendrinė funkcija nebuvo sukurta %s"
+
+#~ msgid "%s is a primitive function; its generic form cannot be redefined"
+#~ msgstr ""
+#~ "%s yra pirminė funkcija, jos bendrinė forma negali būti apibrėžta iš naujo"
+
+#~ msgid ""
+#~ "%s is not currently a generic:  define it first to create a non-default "
+#~ "implicit form"
+#~ msgstr ""
+#~ "šiuo metu %s nėra bendrinė: pirma apibrėžkite, kad sukurtumėte "
+#~ "nenumatytąją išreikštinę formą"
+
+#~ msgid "must provide an environment table; got class %s"
+#~ msgstr "privalo pateikti aplinkos lentelę, gauta klasė %s"
+
+#~ msgid "original function is prohibited as a generic function"
+#~ msgstr "pradinė funkcija draudžiama kaip bendrinė funkcija"
+
+#~ msgid "not both functions!"
+#~ msgstr "ne abi funkcijos!"
+
+#~ msgid "argument %s is not S4"
+#~ msgstr "argumentas %s nėra S4"
+
+#~ msgid "formal arguments differ (in default values?)"
+#~ msgstr "skiriasi formalieji parametrai (numatytose reikšmėse?)"
+
+#~ msgid "formal arguments differ: (%s), (%s)"
+#~ msgstr "skiriasi formalieji parametrai: (%s), (%s)"
+
+#~ msgid "value classes differ: %s, %s"
+#~ msgstr "klasių reikšmės skiriasi: %s, %s"
+
+#~ msgid "signatures differ:  (%s), (%s)"
+#~ msgstr "skiriasi prierašai: (%s), (%s)"
+
+#~ msgid "package slots  differ: %s, %s"
+#~ msgstr "paketo laukai skiriasi: %s, %s"
+
+#~ msgid "groups differ: %s, %s"
+#~ msgstr "skiriasi grupės: %s, %s"
+
+#~ msgid "generic names differ: %s, %s"
+#~ msgstr "bendrieji vardai skiriasi: %s, %s"
+
+#~ msgid "non-generic function '%s' given to findMethods()"
+#~ msgstr "nebendrinė funkcija '%s' perduota findMethods()"
+
+#~ msgid ""
+#~ "only FALSE is meaningful for 'inherited', when 'where' is supplied (got "
+#~ "%s)"
+#~ msgstr "tik FALSE yra reikšminga 'inherited', kai pateikta 'where' (yra %s)"
+
+#~ msgid "argument 'f' must be a generic function or %s"
+#~ msgstr "argumentas 'f' turi būti bendrinė funkcija arba %s"
+
+#~ msgid "'%s' is not a known generic function {and 'package' not specified}"
+#~ msgstr "'%s' nežinoma bendrinė funkcija {ir 'package' nenurodytas}"
+
+#~ msgid ""
+#~ "invalid first argument: should be the name of the first argument in the "
+#~ "dispatch"
+#~ msgstr ""
+#~ "neteisingas pirmas argumentas: perdavime turėtų būti pirmo argumento "
+#~ "vardas"
+
+#~ msgid "duplicate element names in 'MethodsList' at level %d: %s"
+#~ msgstr "vienodi elementų vardai, esantys 'MethodsList' lygyje %d: %s"
+
+#~ msgid ""
+#~ "element %d at level %d (class %s) cannot be interpreted as a function or "
+#~ "named list"
+#~ msgstr ""
+#~ "elementas %s lygyje %d(klasė %s) negali būti interpretuojamas kaip "
+#~ "funkcija ar įvardytas sąrašas"
+
+#~ msgid "arguments 'names' and 'signature' must have the same length"
+#~ msgstr "argumentai 'names' ir 'signature' turi būti tokio paties ilgio"
+
+#~ msgid ""
+#~ "inserting method with invalid signature matching argument '...' to class "
+#~ "%s"
+#~ msgstr ""
+#~ "įterpiamas metodas su neteisingu prierašu atitinkančiu argumentą '...' "
+#~ "klasėje %s"
+
+#~ msgid "inserting method corresponding to empty signature"
+#~ msgstr "įterpiamas metodas, atitinkantis tuščią prierašą"
+
+#~ msgid "inserting method into non-methods-list object (class %s)"
+#~ msgstr "įterpiamas metodas į ne metodų sąrašo objektą (klasė %s)"
+
+#~ msgid ""
+#~ "%f is not a valid generic function: methods list was an object of class %s"
+#~ msgstr ""
+#~ "%f nėra tinkama bendrinė funkcija: metodų sąrašas buvo klasės %s objektas"
+
+#~ msgid ""
+#~ "%s must be TRUE, FALSE, or a named logical vector of those values; got an "
+#~ "object of class %s"
+#~ msgstr ""
+#~ "%s turi būti TRUE, FALSE arba įvardytas loginių reikšmių vektorius, "
+#~ "gaunamas klasės %s objektas"
+
+#~ msgid ""
+#~ "default method must be a method definition, a primitive or NULL: got an "
+#~ "object of class %s"
+#~ msgstr ""
+#~ "numatytasis metodas turi būti metodo apibrėžimas, pirminis arba NULL: "
+#~ "gauta klasės %s objektas"
+
+#~ msgid ""
+#~ "trying to match a method signature to an object (of class %s) that is not "
+#~ "a generic function"
+#~ msgstr ""
+#~ "bandymas suderinti metodo prierašą su objektu (klasės %s), kuris nėra "
+#~ "bendrinė funkcija"
+
+#~ msgid "invalid 'package' slot or attribute, wrong length"
+#~ msgstr "neteisingas 'package' laukas ar atributas, klaidingas ilgis"
+
+#~ msgid ""
+#~ "invalid element in a list for \"signature\" argument; element %d is "
+#~ "neither a class definition nor a class name"
+#~ msgstr ""
+#~ "neteisingas elementas \"signature\" argumento sąraše, elementas %d nėra "
+#~ "nei klasės apibrėžtis, nei klasės vardas"
+
+#~ msgid ""
+#~ "trying to match a method signature of class %s; expects a list or a "
+#~ "character vector"
+#~ msgstr ""
+#~ "bandymas suderinti klasės %s metodo prierašą, turi būti sąrašas arba "
+#~ "tekstinis vektorius"
+
+#~ msgid ""
+#~ "object to use as a method signature for function %s does not look like a "
+#~ "legitimate signature (a vector of single class names): there were %d "
+#~ "class names, but %d elements in the signature object"
+#~ msgstr ""
+#~ "objektas naudojamas kaip metodo prierašas funkcijai %s, nėra leistinas "
+#~ "prierašas (atskiros klasės vardų vektorius): %s klasės vardai, bet %s "
+#~ "elementai prierašo objekte"
+
+#~ msgid ""
+#~ "more elements in the method signature (%d) than in the generic signature "
+#~ "(%d) for function %s"
+#~ msgstr ""
+#~ "daugiau elementų metodo prieraše (%d) negu bendriniame prieraše (%d) "
+#~ "funkcijai %s"
+
+#~ msgid "no generic function found corresponding to %s"
+#~ msgstr "nerasta bendrinės funkcijos atitinkančios %s"
+
+#~ msgid "skipping methods list element %s of unexpected class %s"
+#~ msgstr "praleidžiamas metodų sąrašo elementas %s nenumatytos klasės %s"
+
+#~ msgid ""
+#~ "%s, along with other use of the \"MethodsList\" metadata objects, is "
+#~ "deprecated."
+#~ msgstr ""
+#~ "%s, kartu su kitais naudojamais \"MethodsList\" metaduomenų objektais, "
+#~ "yra skirtingai naudojami."
+
+#~ msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+#~ msgstr "%s: \"MethodsList\" metaduomenų objektų naudojimas yra skirtingas."
+
+#~ msgid "Use %s instead."
+#~ msgstr "Vietoj to naudokite %s."
+
+#~ msgid ""
+#~ "%s, along with other use of the \"MethodsList\" metadata objects, is "
+#~ "defunct."
+#~ msgstr ""
+#~ "%s, kartu su kitais naudojamais \"MethodsList\" metaduomenų objektais, "
+#~ "yra nepilnas."
+
+#~ msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
+#~ msgstr "%s: \"MethodsList\" metaduomenų objektų naudojimas yra nepilnas."
+
+#~ msgid "invalid object for formal method definition: type %s"
+#~ msgstr "neteisingas objektas formaliam metodo apibrėžimui: tipas %s"
+
+#~ msgid "missing package slot (%s) in object of class %s (package info added)"
+#~ msgstr ""
+#~ "trūksta paketo lauko (%s) klasės %s objekte (pridėta paketo informacija)"
+
+#~ msgid ""
+#~ "'initialize' method returned an object of class %s instead of the "
+#~ "required class %s"
+#~ msgstr ""
+#~ "'initialize' metodas grąžino klasės %s objektą, o ne reikalaujamą klasę %s"
+
+#~ msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+#~ msgstr "%d: paskirtis \"%s\": pasirinkite \"%s\" (kiti: %s)"
+
+#~ msgid "Notes: %s."
+#~ msgstr "Pastabos: %s."
+
+#~ msgid "class generator function for class %s from package %s"
+#~ msgstr "klasės generuojančioji funkcija klasei %s iš paketo %s"
+
+#~ msgid ""
+#~ "the names in signature for method (%s) do not match %s's arguments (%s)"
+#~ msgstr "vardai metodo (%s) prieraše neatitinka %s argumentų (%s)"
+
+#~ msgid ""
+#~ "the names in signature for method (%s) do not match function's arguments "
+#~ "(%s)"
+#~ msgstr "vardai metodo (%s) prieraše neatitinka funkcijos argumentų (%s)"
+
+#~ msgid ""
+#~ "a call to callNextMethod() appears in a call to %s, but the call does not "
+#~ "seem to come from either a generic function or another 'callNextMethod'"
+#~ msgstr ""
+#~ "kreipinys į callNextMethod() atsiranda kreipinyje į %s, bet kreipinys "
+#~ "nėra iš bendrinės funkcijos ar kito 'callNextMethod'"
+
+#~ msgid ""
+#~ "call to 'callNextMethod' does not appear to be in a 'method' or "
+#~ "'callNextMethod' context"
+#~ msgstr ""
+#~ "kreipinys į 'callNextMethod' neatsiras 'method' arba 'callNextMethod' "
+#~ "kontekste"
+
+#~ msgid "bad object found as method (class %s)"
+#~ msgstr "netinkamas objektas rastas kaip metodas (klasė %s)"
+
+#~ msgid "No next method available"
+#~ msgstr "Nėra kito metodo"
+
+#~ msgid ""
+#~ "in constructing the prototype for class %s: prototype has class %s, but "
+#~ "the data part specifies class %s"
+#~ msgstr ""
+#~ "konstruojant klasės %s prototipą: prototipas turi klasę %s, bet duomenų "
+#~ "dalis nurodo klasę %s"
+
+#~ msgid ""
+#~ "in constructing the prototype for class %s, slots in prototype and not in "
+#~ "class: %s"
+#~ msgstr ""
+#~ "konstruojant klasės %s prototipą, laukai prototipe ir ne klasėje: %s"
+
+#~ msgid ""
+#~ "in making the prototype for class %s elements of the prototype failed to "
+#~ "match the corresponding slot class: %s"
+#~ msgstr ""
+#~ "kuriant klasės %s elementų prototipo prototipą nepavyko suderinti "
+#~ "atitinkamos lauko klasės: %s"
+
+#~ msgid ""
+#~ "potential cycle in class inheritance: %s has duplicates in superclasses "
+#~ "and subclasses (%s)"
+#~ msgstr ""
+#~ "galimas ciklas klasės paveldėjime: %s turi dublikatus viršklasiuose ir "
+#~ "poklasiuose (%s)"
+
+#~ msgid "undefined slot classes in definition of %s: %s"
+#~ msgstr "neapibrėžtos laukų klasės %s apibrėžtyje: %s"
+
+#~ msgid "(class %s)"
+#~ msgstr "(klasė %s)"
+
+#~ msgid ""
+#~ "in definition of class %s, information for superclass %s is of class %s "
+#~ "(expected \"SClassExtension\")"
+#~ msgstr ""
+#~ "klasės %s apibrėžime, viršklasio %s informacija yra klasės %s (turėtų "
+#~ "būti \"SClassExtension\")"
+
+#~ msgid "class %s extends an undefined class, %s"
+#~ msgstr "klasė %s praplečia neapibrėžtą klasę, %s"
+
+#~ msgid "'Class' must be a valid class definition or class"
+#~ msgstr "'Class' turi būti galiojantis klasės apibrėžimas arba klasė"
+
+#~ msgid ""
+#~ "trying to assign an object of class %s as the definition of class %s: "
+#~ "must supply a \"classRepresentation\" object"
+#~ msgstr ""
+#~ "bandymas priskirti klasės %s objektą kaip klasės %s apibrėžtį: turi "
+#~ "pateikti \"classRepresentation\" objektą"
+
+#~ msgid "assigning as %s a class representation with internal name %s"
+#~ msgstr "priskyrimas kaip % klasės atvaizdavimas su vidiniu vardu %s"
+
+#~ msgid "class %s has a locked definition in package %s"
+#~ msgstr "klasė %s turi užrakintą apibrėžimą pakete %s"
+
+#~ msgid "'externalptr' objects cannot be initialized from new()"
+#~ msgstr "'externalptr' objektai negali būti inicijuoti iš new()"
+
+#~ msgid ""
+#~ "initializing objects from class %s with these arguments is not supported"
+#~ msgstr "objektų iniciavimas iš klasės %s su šiais argumentais nepalaikomas"
+
+#~ msgid ""
+#~ "in defining class %s, the supplied data part class, %s is not valid (must "
+#~ "be a basic class or a virtual class combining basic classes)"
+#~ msgstr ""
+#~ "apibrėžiant klasę %s, pateikta duomenų dalies klasė %s nėra tinkama (turi "
+#~ "būti pagrindinė klasė arba virtuali klasė, derinant pagrindines klases)"
+
+#~ msgid ""
+#~ "no definition was found for superclass %s in the specification of class %s"
+#~ msgstr "nėra viršklasio %s apibrėžties klasės %s specifikacijoje"
+
+#~ msgid ""
+#~ "conflicting definition of data part: .Data = %s, superclass implies %s"
+#~ msgstr ""
+#~ "nesuderinamas duomenų dalies apibrėžimas: .Data = %s, viršklasis reiškia "
+#~ "%s"
+
+#~ msgid ""
+#~ "a prototype object was supplied with object slot of class %s, but the "
+#~ "class definition requires an object that is class %s"
+#~ msgstr ""
+#~ "prototipo objektas buvo taikomas su objekto klasės %s lauku, bet klasės "
+#~ "apibrėžimui reikia objekto, kuris yra %s klasė"
+
+#~ msgid ""
+#~ "a prototype was supplied of class %s, but the class definition requires "
+#~ "an object that is class %s"
+#~ msgstr ""
+#~ "buvo taikomas klasės %s prototipas, bet klasės apibrėžtis reikia objekto, "
+#~ "kuris yra %s klasė"
+
+#~ msgid ""
+#~ "Definition of slot %s, in class %s, as %s conflicts with definition, "
+#~ "inherited from class %s, as %s"
+#~ msgstr ""
+#~ "Lauko %s apibrėžimas klasėje %s, kaip %s prieštaravimas apibrėžimui "
+#~ "paveldėtam iš klasės %s, kaip %s"
+
+#~ msgid "class %s extends an undefined class (%s)"
+#~ msgstr "klasė %s praplečia neapibrėžtą klasę (%s)"
+
+#~ msgid "The prototype for class %s has undefined slot(s): %s"
+#~ msgstr "%s klasės prototipas turi neapibrėžtą (-us) lizdą (-us): %s"
+
+#~ msgid ""
+#~ "%s is not eligible to be the data part of another class (must be a basic "
+#~ "class or a virtual class with no slots)"
+#~ msgstr ""
+#~ "%s negali būti kitos klasės duomenų dalis (turi būti pagrindinė klasė "
+#~ "arba virtuali klasė be laukų)"
+
+#~ msgid ""
+#~ "prototype is a list with named elements (could be ambiguous):  better to "
+#~ "use function prototype() to avoid trouble."
+#~ msgstr ""
+#~ "prototipas sąraše su įvardytais elementais (gali būti dviprasmiškas): "
+#~ "geriau naudoti funkciją prototype() norint išvengti problemų."
+
+#~ msgid "the '%s' list for class %s, includes an undefined class %s"
+#~ msgstr "'%s' sąrašas klasei %s apima neapibrėžtą klasę %s"
+
+#~ msgid ""
+#~ "class %s is inheriting an inconsistent superclass structure from class "
+#~ "%s, inconsistent with %s"
+#~ msgstr ""
+#~ "klasė %s paveldi nesuderinamą viršklasio struktūrą iš klasės %s, tai "
+#~ "nesuderinama su %s"
+
+#~ msgid ""
+#~ "unable to find a consistent ordering of superclasses for class %s: order "
+#~ "chosen is inconsistent with the superclasses of %s"
+#~ msgstr ""
+#~ "nepavyko rasti viršklasių nuoseklios tvarkos klasei %s: pasirinkta tvarka "
+#~ "yra nesuderinama su %s viršklasiu"
+
+#~ msgid "\"class\" is a reserved slot name and cannot be redefined"
+#~ msgstr ""
+#~ "\"class\" yra rezervuotas lauko pavadinimas ir negali būti apibrėžtas iš "
+#~ "naujo"
+
+#~ msgid "Data part is undefined for general S4 object"
+#~ msgstr "Duomenų dalis neapibrėžta bendram S4 objektui"
+
+#~ msgid "no '.Data' slot defined for class %s"
+#~ msgstr "nėra apibrėžtas '.Data' laukas klasei %s"
+
+#~ msgid "class %s does not have a data part (a .Data slot) defined"
+#~ msgstr "klasė %s neturi apibrėžtos duomenų dalies (.Data laukas)"
+
+#~ msgid ""
+#~ "more than one possible class for the data part: using %s rather than %s"
+#~ msgstr ""
+#~ "daugiau negu viena galima klasė duomenų dalyje: naudojant %s, o ne %s"
+
+#~ msgid "class cannot have both an ordinary and hidden data type"
+#~ msgstr "klasė negali turėti ir paprasto ir paslėpto duomenų tipo"
+
+#~ msgid ""
+#~ "a validity method must be a function of one argument, got an object of "
+#~ "class %s"
+#~ msgstr ""
+#~ "metodo galiojimas turi būti vieno argumento funkcija, gautas klasės %s "
+#~ "objektas"
+
+#~ msgid "unable to find required package %s"
+#~ msgstr "nepavyko rasti būtino paketo %s"
+
+#~ msgid "unable to find an environment containing class %s"
+#~ msgstr "nepavyko rasti aplinkos, kurioje yra %s klasė"
+
+#~ msgid ""
+#~ "Note: some superclasses of class %s in package %s have duplicate "
+#~ "definitions.  This definition is not being treated as equivalent to that "
+#~ "from package %s"
+#~ msgstr ""
+#~ "Pastaba: kai kurių klasių %s viršklasiai pakete %s turi sudubliuotas "
+#~ "apibrėžtis. Ši apibrėžtis nėra tokia pat kaip iš šio paketo %s"
+
+#~ msgid ""
+#~ "Note: the specification for class %s in package %s seems equivalent to "
+#~ "one from package %s: not turning on duplicate class definitions for this "
+#~ "class."
+#~ msgstr ""
+#~ "Pastaba: klasės %s specifikacija pakete %s yra ekvivalenti vienai iš "
+#~ "paketo %s: neatsižvelgiant į sudubliuotus klasės apibrėžimus šiai klasei."
+
+#~ msgid ""
+#~ "Found more than one class \"%s\" in cache; using the first, from "
+#~ "namespace '%s'"
+#~ msgstr ""
+#~ "Podėlyje rasta daugiau nei viena klasė \"%s\"; naudojant pirmąjį, iš "
+#~ "vardų srities '%s'"
+
+#~ msgid "Also defined by"
+#~ msgstr "Taip pat apibrėžė"
+
+#~ msgid "undefined subclass %s of class %s; definition not updated"
+#~ msgstr "neapibrėžtas poklasis %s klasės %s, apibrėžtis neatnaujinta"
+
+#~ msgid ""
+#~ "no definition of inheritance from %s to %s, though the relation was "
+#~ "implied by the setIs() from %s"
+#~ msgstr ""
+#~ "nėra paveldėjimo iš %s į %s apibrėžimo, nors ryšys buvo numatytas setIs() "
+#~ "iš %s"
+
+#~ msgid ""
+#~ "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+#~ "force=TRUE);"
+#~ msgstr ""
+#~ "Derinimas .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+#~ "force=TRUE);"
+
+#~ msgid "E := environment(): %s; parent.env(E): %s"
+#~ msgstr "E := environment(): %s; parent.env(E): %s"
+
+#~ msgid ""
+#~ "argument 'includeSubclasses' must be a logical, either one value or a "
+#~ "vector of the same length as argument 'classes'"
+#~ msgstr ""
+#~ "argumentas 'includeSubclasses' turi būti loginis arba viena reikšmė, arba "
+#~ "to paties ilgio kaip argumentas 'classes' vektorius"
+
+#~ msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
+#~ msgstr "argumentas 'abbreviate' turi būti 0, 1, 2 arba 3"
+
+#~ msgid "needed the supplied labels vector of length %d, got %d"
+#~ msgstr "reikalingas pateiktų žymenų vektorius, kurio ilgis %d, gaunamas %d"
+
+#~ msgid ""
+#~ "the function being used as %s in making a generic function for %s is "
+#~ "currently traced; the function used will have tracing removed"
+#~ msgstr ""
+#~ "funkcija naudojama kaip %s kuriant bendrinę funkciją %s, kuri yra "
+#~ "žymėtoji; naudojama funkcija turės pašalintą žymėjimą"
+
+#~ msgid ""
+#~ "must supply either a generic function or a function as default for %s"
+#~ msgstr ""
+#~ "turi pateikti arba bendrinę funkciją arba funkciją kaip numatytąją %s"
+
+#~ msgid ""
+#~ "the %s argument must be NULL or a generic function object; got an object "
+#~ "of class %s"
+#~ msgstr ""
+#~ "%s argumentas turi būti NULL arba bendrinės funkcijos objektas; gaunamas "
+#~ "klasės %s objektas"
+
+#~ msgid "no suitable arguments to dispatch methods in this function"
+#~ msgstr "nėra tinkamų argumentų perduoti metodus šioje funkcijoje"
+
+#~ msgid "making a generic for special function %s"
+#~ msgstr "sukurti bendrinę specialiajai funkcijai %s"
+
+#~ msgid "invalid call in method dispatch to '%s' (no default method)"
+#~ msgstr ""
+#~ "neteisingas kreipinys metodo perdavime į '%s' (nėra numatytojo metodo)"
+
+#~ msgid "in method for %s with signature %s:"
+#~ msgstr "metode %s su prierašu %s:"
+
+#~ msgid ""
+#~ "formal arguments in method and generic do not appear in the same order"
+#~ msgstr ""
+#~ "formalieji argumentai metode ir bendrinėje funkcijoje nėra pateikti tokia "
+#~ "pat tvarka"
+
+#~ msgid ""
+#~ "formal arguments (%s) omitted in the method definition cannot be in the "
+#~ "signature"
+#~ msgstr ""
+#~ "formalieji argumentai (%s), kurie praleisti metodo apibrėžime, negali "
+#~ "būti prieraše"
+
+#~ msgid ""
+#~ "expanding the signature to include omitted arguments in definition: %s"
+#~ msgstr ""
+#~ "išplečiamas prierašas, kad įterpti praleistus argumentus apibrėžime: %s"
+
+#~ msgid ""
+#~ "methods can add arguments to the generic %s only if '...' is an argument "
+#~ "to the generic"
+#~ msgstr ""
+#~ "metodai gali pridėti argumentus į bendrinę %s tik jei '...' yra bendrinės "
+#~ "funkcijos argumentas"
+
+#~ msgid ""
+#~ "%s arguments (%s) after %s in the generic must appear in the method, in "
+#~ "the same place at the end of the argument list"
+#~ msgstr ""
+#~ "%s argumentai (%s) po %s bendrinėje turi būti rodomi metode toje pačioje "
+#~ "vietoje argumentų sąrašo pabaigoje"
+
+#~ msgid ""
+#~ "argument 'f' must be a string, generic function, or primitive: got an "
+#~ "ordinary function"
+#~ msgstr ""
+#~ "argumentas 'f' turi būti eilutė, bendrinė funkcija arba primityvas: "
+#~ "gaunama paprastoji funkcija"
+
+#~ msgid "no generic function found for %s"
+#~ msgstr "nerasta bendrinės funkcijos %s"
+
+#~ msgid "Empty function name in .getGeneric"
+#~ msgstr "Tuščias funkcijos vardas .getGeneric"
+
+#~ msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
+#~ msgstr "%s metodų nerasta; cacheGenericsMetaData() neturės jokio poveikio"
+
+#~ msgid "invalid value from generic function %s, class %s, expected %s"
+#~ msgstr ""
+#~ "neteisinga bendrinės funkcijos %s, klasės %s, reikšmė, turėtų būti %s"
+
+#~ msgid "\"MethodsList\" is defunct; allMethods now are empty"
+#~ msgstr "\"MethodsList\" yra nepilnas; allMethods dabar yra tušti"
+
+#~ msgid ""
+#~ "the body of the generic function for %s calls 'standardGeneric' to "
+#~ "dispatch on a different name (\"%s\")!"
+#~ msgstr ""
+#~ "pagrindinė bendrinės funkcijos %s dalis iškviečia 'standardGeneric' "
+#~ "perduoti skirtingu vardu (\"%s\")!"
+
+#~ msgid ""
+#~ "trying to change the formal arguments in %s in an object of class %s; "
+#~ "expected a function definition"
+#~ msgstr ""
+#~ "bandymas pakeisti formaliuosius argumentus %s klasės %s objekte; turėtų "
+#~ "būti funkcijos apibrėžtis"
+
+#~ msgid ""
+#~ "trying to change the formal arguments in %s, but getting the new formals "
+#~ "from an object of class %s; expected a function definition"
+#~ msgstr ""
+#~ "bandymas pakeisti formaliuosius argumentus, esančius %s, bet gauti nauji "
+#~ "formalieji argumentai iš klasės %s objekto, turėtų būti funkcijos "
+#~ "apibrėžtis"
+
+#~ msgid ""
+#~ "trying to change the formal arguments in %s, but the number of existing "
+#~ "arguments is less than the number of new arguments: (%s) vs (%s)"
+#~ msgstr ""
+#~ "bandymas pakeisti formaliuosius argumentus, esančius %s, bet "
+#~ "egzistuojančių argumentų skaičius yra mažesnis negu naujų argumentų: (%s) "
+#~ "prieš (%s)"
+
+#~ msgid ""
+#~ "trying to change the formal arguments in %s, but the number of existing "
+#~ "arguments is greater than the number of new arguments (the extra "
+#~ "arguments won't be used): (%s) vs (%s)"
+#~ msgstr ""
+#~ "bandymas pakeisti formaliuosius argumentus, esančius %s, bet "
+#~ "egzistuojančių argumentų skaičius yra didesnis negu naujų parametrų "
+#~ "(papildomi parametrai nebus naudojami): (%s) prieš (%s)"
+
+#~ msgid ""
+#~ "in changing formal arguments in %s, some of the old names are not in fact "
+#~ "arguments: %s"
+#~ msgstr ""
+#~ "keičiant formaliuosius argumentus, esančius %s, kai kurie seni vardai "
+#~ "nėra faktiniuose argumentuose: %s"
+
+#~ msgid "got a negative maximum number of frames to look at"
+#~ msgstr "turite peržvelgti neigiamą maksimalų kadrų skaičių"
+
+#~ msgid "%s is not a generic function (or not visible here)"
+#~ msgstr "%s nėra bendrinė funkcija (ar nematoma čia)"
+
+#~ msgid "invalid element in the \"groupMembers\" slot (class %s)"
+#~ msgstr "neteisingas elementas \"groupMembers\" lauke (klasė %s)"
+
+#~ msgid "argument f must be a generic function with signature \"...\""
+#~ msgstr "argumentas f turi būti bendrinė funkcija su prierašu \"...\""
+
+#~ msgid "no method or default matching the \"...\" arguments in %s"
+#~ msgstr "nėra metodo ar atitikimo \"...\" argumentams, esantiems %s"
+
+#~ msgid "multiple direct matches: %s; using the first of these"
+#~ msgstr "keli tiesioginiai atitikmenys: %s, naudojant pirmą iš šių"
+
+#~ msgid "multiple equivalent inherited matches: %s; using the first of these"
+#~ msgstr "keli ekvivalentūs paveldėti atitikmenys: %s, naudojant pirmą iš šių"
+
+#~ msgid ""
+#~ "multiple definitions exist for class %s, but the supplied package (%s) is "
+#~ "not one of them (%s)"
+#~ msgstr ""
+#~ "yra kelios klasės %s apibrėžtys, tačiau pateiktas paketas (%s) nėra viena "
+#~ "iš jų (%s)"
+
+#~ msgid ""
+#~ "multiple definitions exist for class %s; should specify one of them (%s), "
+#~ "e.g. by className()"
+#~ msgstr ""
+#~ "yra kelios klasės %s apibrėžtys, turėtumėte nurodyti vieną iš jų (%s), "
+#~ "pavyzdžiui, pagal className()"
+
+#~ msgid "no definition found for class %s"
+#~ msgstr "nėra klasės %s apibrėžties"
+
+#~ msgid "missing function for load action: %s"
+#~ msgstr "įkėlimo veiksme trūksta funkcijos: %s"
+
+#~ msgid "error in load action %s for package %s: %s: %s"
+#~ msgstr "klaida įkėlime veiksme %s paketui %s: %s: %s"
+
+#~ msgid "non-function action: %s"
+#~ msgstr "ne funkcinis veiksmas: %s"
+
+#~ msgid "action function %s has no arguments, should have at least 1"
+#~ msgstr "veikimo funkcija %s neturi argumentų, turėtų turėti bent 1"
+
+#~ msgid "some actions are missing: %s"
+#~ msgstr "trūksta kai kurių veiksmų: %s"
+
+#~ msgid "%s has a sealed class definition and cannot be redefined"
+#~ msgstr ""
+#~ "%s turi patvirtintą klasės apibrėžimą ir negali būti apibrėžtas iš naujo"
+
+#~ msgid ""
+#~ "Argument \"representation\" cannot be used if argument \"slots\" is "
+#~ "supplied"
+#~ msgstr ""
+#~ "Argumentas \"representation\" negali būti naudojamas, jei pateiktas "
+#~ "\"slots\" argumentas"
+
+#~ msgid ""
+#~ "only arguments 'Class' and 'where' can be supplied when argument "
+#~ "'representation' is a 'classRepresentation' object"
+#~ msgstr ""
+#~ "tik argumentai 'Class' ir 'where' gali būti pateikti kai argumentas "
+#~ "'representation' yra 'classRepresentation' objektas"
+
+#~ msgid ""
+#~ "error in contained classes (%s) for class %s and unable to remove "
+#~ "definition from %s"
+#~ msgstr ""
+#~ "klaida uždarose klasėse (%s) klasei %s ir negalima pašalinti apibrėžimo "
+#~ "iš %s"
+
+#~ msgid ""
+#~ "error in contained classes (%s) for class %s; class definition removed "
+#~ "from %s"
+#~ msgstr ""
+#~ "klaida uždarose klasėse (%s) klasei %s ir negalima pašalinti apibrėžimo "
+#~ "iš %s"
+
+#~ msgid ""
+#~ "error in contained classes (%s) for class %s and unable to restore "
+#~ "previous definition from %s"
+#~ msgstr ""
+#~ "klaida uždarose klasėse (%s) klasei %s ir negalima atkurti ankstesnio "
+#~ "apibrėžimo iš %s"
+
+#~ msgid ""
+#~ "error in contained classes (%s) for class %s; previous definition "
+#~ "restored to %s"
+#~ msgstr ""
+#~ "klaida uždarose klasėse (%s) klasei %s ir negalima atkurti ankstesnio "
+#~ "apibrėžimo iš %s"
+
+#~ msgid "element %d of the representation was not a single character string"
+#~ msgstr "atvaizdavimo elementas %d nebuvo vieno simbolio eilutė"
+
+#~ msgid "duplicate class names among superclasses: %s"
+#~ msgstr "vienodi klasės vardai viršklasiuose: %s"
+
+#~ msgid "only one data object (unnamed argument to prototype) allowed"
+#~ msgstr "leidžiamas tik duomenų objektas (neįvardytas argumentas prototipui)"
+
+#~ msgid "%s is not a defined class"
+#~ msgstr "% nėra apibrėžta klasė"
+
+#~ msgid "%s is not a slot in class %s"
+#~ msgstr "%s nėra laukas klasėje %s"
+
+#~ msgid ""
+#~ "assignment of an object of class %s is not valid for slot %s in an object "
+#~ "of class %s; is(value, \"%s\") is not TRUE"
+#~ msgstr ""
+#~ "klasės %s objekto priskyrimas nėra teisingas %s laukui klasės %s objekte, "
+#~ "is(value, \"%s\") nėra TRUE"
+
+#~ msgid ""
+#~ "assignment of an object of class %s is not valid for @%s in an object of "
+#~ "class %s; is(value, \"%s\") is not TRUE"
+#~ msgstr ""
+#~ "klasės %s objekto priskyrimas nėra tinkamas @%s klasės %s objekte; "
+#~ "is(value, \"%s\") nėra TRUE"
+
+#~ msgid "class definition for %s not found (no action taken)"
+#~ msgstr "%s klasė neapibrėžta (nesiimta jokių veiksmų)"
+
+#~ msgid "class %s has multiple definitions visible; only the first removed"
+#~ msgstr ""
+#~ "klasė % turi matomus sudėtinius apibrėžimus, tik pirmasis pašalintas"
+
+#~ msgid "invalid class %s object"
+#~ msgstr "neteisingas klasės %s objektas"
+
+#~ msgid "validity method must be NULL or a function of one argument"
+#~ msgstr ""
+#~ "pagrįstumo metodas turi būti NULL arba vienas iš funkcijos argumentų"
+
+#~ msgid "class %s not found on %s; 'resetClass' will have no effect"
+#~ msgstr "klasė %s nerasta %s; 'resetClass' neturės jokios įtakos"
+
+#~ msgid ""
+#~ "argument 'classDef' must be a string or a class representation; got an "
+#~ "object of class %s"
+#~ msgstr ""
+#~ "argumentas 'classDef' turi būti eilutė ar klasės atvaizdavimas, gautas "
+#~ "klasės % objektas"
+
+#~ msgid "class %s is sealed; 'resetClass' will have no effect"
+#~ msgstr "%s klasė yra patvirtinta; 'resetClass' neturės jokios įtakos"
+
+#~ msgid ""
+#~ "cannot use object of class %s in new():  class %s does not extend that "
+#~ "class"
+#~ msgstr ""
+#~ "negalima naudoti klasės %s objekto new(): klasė %s nepraplečia šios klasės"
+
+#~ msgid "duplicated slot names: %s"
+#~ msgstr "dubliuoti lauko pavadinimai: %s"
+
+#~ msgid ""
+#~ "class %s is defined, with package %s, but no corresponding metadata "
+#~ "object was found (not exported?)"
+#~ msgstr ""
+#~ "klasė %s apibrėžta su paketu %s, bet nerasta atitinkamų objekto "
+#~ "metaduomenų (neeksportuoti?)"
+
+#~ msgid "no definition of %s to use for %s"
+#~ msgstr "nėra %s apibrėžties naudojamos %s"
+
+#~ msgid "class definition cannot extend more than one of these data types: %s"
+#~ msgstr ""
+#~ "klasės apibrėžtis nepraplečia daugiau nei vieno iš šių duomenų tipų: %s"
+
+#~ msgid ""
+#~ "abnormal type %s is not supported as a superclass of a class definition"
+#~ msgstr ""
+#~ "nenormalus tipas %s nėra palaikomas kaip klasės apibrėžties viršklasis"
+
+#~ msgid ""
+#~ "multiple class definitions for %s from packages: %s; picking the first"
+#~ msgstr "kelių klasių apibrėžtys %s iš paketų: %s, pasirenkant pirmą"
+
+#~ msgid "no package name supplied and no class definition found for %s"
+#~ msgstr "nėra paketo vardo ir klasės %s apibrėžimo"
+
+#~ msgid ""
+#~ "argument 'classDef' must be a class definition or the name of a class"
+#~ msgstr ""
+#~ "argumentas 'classDef' turi būti klasės apibrėžimas arba klasės vardas"
+
+#~ msgid "No %s names supplied"
+#~ msgstr "Nepateikti %s vardai"
+
+#~ msgid ""
+#~ "All %s names must be nonempty in:\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Visi % vardai turi būti netušti, esantys:\n"
+#~ "(%s)"
+
+#~ msgid ""
+#~ "All %s names must be distinct in:\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Visi %s vardai turi būti skirtingi, esantys:\n"
+#~ "(%s)"
+
+#~ msgid ""
+#~ "argument %s must be a list or a character vector; got an object of class "
+#~ "%s"
+#~ msgstr ""
+#~ "argumentas %s turi būti sąrašas arba tekstinis vektorius, gautas klasės "
+#~ "%s objektas"
+
+#~ msgid "no function %s found"
+#~ msgstr "funkcijos %s nėra"
+
+#~ msgid "no non-generic function %s found"
+#~ msgstr "nėra nebendrinės funkcijos %s"
+
+#~ msgid "%s is not one of the element names"
+#~ msgstr "%s nėra vienas iš elemento vardų"
+
+#~ msgid "no method or default for coercing %s to %s"
+#~ msgstr "nėra metodo ar numatytojo parametro paversti %s į %s"
+
+#~ msgid "trying to set an 'as' relation from %s to itself"
+#~ msgstr "bandymas nustatyti 'as' ryšį iš %s į patį save"
+
+#~ msgid "class %s is not defined in this environment"
+#~ msgstr "klasė %s neapibrėžta šioje aplinkoje"
+
+#~ msgid ""
+#~ "class %s is a class union: 'coerce' relations to a class union are not "
+#~ "meaningful"
+#~ msgstr ""
+#~ "klasė %s yra klasės sąjunga: 'coerce' ryšiai su klasės sąjunga nėra "
+#~ "prasmingi"
+
+#~ msgid ""
+#~ "'as' method should have one argument, or match the arguments of coerce(): "
+#~ "got  (%s)"
+#~ msgstr ""
+#~ "'as' metodas turi turėti vieną argumentą arba atitikti coerce() "
+#~ "argumentus: gauta (%s)"
+
+#~ msgid ""
+#~ "a 'replace' method definition in 'setAs' must be a function of two "
+#~ "arguments, got %d"
+#~ msgstr ""
+#~ "'replace' metodo apibrėžimas, esantis 'setAs' turi būti dviejų argumentų "
+#~ "funkcija, gauta %d"
+
+#~ msgid ""
+#~ "argument names in 'replace' changed to agree with 'coerce<-' generic:\n"
+#~ "%s"
+#~ msgstr "argumentas f turi būti bendrinė funkcija su prierašu \"...\""
+
+#~ msgid "ambiguous object (length != 1) to coerce to \"name\""
+#~ msgstr "neapibrėžtą objektą (ilgis != 1) paversti į \"name\""
+
+#~ msgid "undefined 'coerce' method"
+#~ msgstr "neapibrėžtas 'coerce' metodas"
+
+#~ msgid ""
+#~ "methods currently exist for coercing from %s to %s; they will be replaced."
+#~ msgstr ""
+#~ "šiuo metu egzistuoja metodai perversti iš %s į %s, jie bus pakeisti."
+
+#~ msgid "Function must be an S4 generic"
+#~ msgstr "Funkcija turi būti S4 bendrinė"
+
+#~ msgid "method is not being debugged"
+#~ msgstr "metodas nėra derinamas"
+
+#~ msgid "object %s not found"
+#~ msgstr "objektas %s nerastas"
+
+#~ msgid ""
+#~ "object %s not changed (it is not consistent with the current definition "
+#~ "of class %s from %s)"
+#~ msgstr ""
+#~ "objektas %s nepakeistas (jis neatitinka dabartinio klasės %s apibrėžimo "
+#~ "iš %s)"
+
+#~ msgid "no definition for the class of %s (class %s) found"
+#~ msgstr "nerasta klasės %s apibrėžties (klasė %s)"
+
+#~ msgid ""
+#~ "object %s not changed (it does not appear to be from a version of R "
+#~ "earlier than 1.8.0)"
+#~ msgstr ""
+#~ "objektas %s nepakeistas (neatrodo, kad jis būtų R ankstesnėje nei 1.8.0 "
+#~ "versijoje)"
+
+#~ msgid "'class2' must be the name of a class or a class definition"
+#~ msgstr "'class2' turi būti klasės vardas arba klasės apibrėžimas"
+
+#~ msgid "class %s has no visible definition from package or environment %s"
+#~ msgstr "klasė %s neturi matomo apibrėžimo iš paketo ar aplinkos %s"
+
+#~ msgid ""
+#~ "cannot create a 'setIs' relation when neither of the classes (%s and %s) "
+#~ "is local and modifiable in this package"
+#~ msgstr ""
+#~ "nepavyko sukurti 'setls' ryšio kai nė viena iš klasių (%s ir %s) nėra "
+#~ "vidinė ir pakeičiama šiame pakete"
+
+#~ msgid ""
+#~ "class %s is sealed; new superclasses can not be defined, except by "
+#~ "'setClassUnion'"
+#~ msgstr ""
+#~ "%s klasė yra patvirtinta; naujų superklasių apibrėžti negalima, išskyrus "
+#~ "'setClassUnion'"
+
+#~ msgid ""
+#~ "class %s is defined (with package slot %s) but no metadata object found "
+#~ "to revise %s information---not imported?  Making a copy in package %s"
+#~ msgstr ""
+#~ "klasė %s apibrėžta (su paketo lauku %s), bet nerasta metaduomenų objekto, "
+#~ "kad būtų galima peržiūrėti %s informaciją -- neeksportuojamas? "
+#~ "Kopijuojama pakete %s"
+
+#~ msgid "class %s cannot extend class %s"
+#~ msgstr "klasė % negali praplėsti %s klasės"
+
+#~ msgid "both classes must be defined"
+#~ msgstr "turi būti apibrėžtos abi klasės"
+
+#~ msgid "need a definition for the method here"
+#~ msgstr "reikia apibrėžti metodą"
+
+#~ msgid "Skeleton of method written to %s"
+#~ msgstr "Metodo struktūra įrašyta į %s"
+
+#~ msgid ""
+#~ "invalid object in meta table of methods for %s, label %s, had class %s"
+#~ msgstr ""
+#~ "neteisingas objektas metodų meta lentelėje %s, žymei %s, turėjo klasę %s"
+
+#~ msgid ""
+#~ "invalid mlist element for signature %s at level %d (should be "
+#~ "MethodDefinition or .Primitive, had class %s)"
+#~ msgstr ""
+#~ "neteisingas mlist elementas prierašui %s lygyje %d (turėtų būti "
+#~ "MethodDefinition arba .Primitive, turi klasę %s)"
+
+#~ msgid "bad method object stored in method table, class %s"
+#~ msgstr "netinkamas metodo objektas saugomas metodo lentelėje, klasė %s"
+
+#~ msgid "invalid or unset methods table in generic function %s"
+#~ msgstr "neteisinga arba nenustatyta metodų lentelė bendrinėje funkcijoje %s"
+
+#~ msgid "trying to find a methods table in a non-generic function"
+#~ msgstr "bandymas rasti metodų lentelę nebendrinėje funkcijoje"
+
+#~ msgid ""
+#~ "the \"ambiguousMethodSelection\" option should be a function to be called "
+#~ "as the condition action; got an object of class %s"
+#~ msgstr ""
+#~ "\"ambiguousMethodSelection\" parinktis turi būti funkcija, kuri "
+#~ "iškviečiama kaip sąlygos veiksmas, yra klasės %s objektas"
+
+#~ msgid ""
+#~ "No simply inherited methods found for function %s; using non-simple method"
+#~ msgstr ""
+#~ "Nerasta paprastai paveldimų metodų funkcijai % naudojant nepaprastą metodą"
+
+#~ msgid ""
+#~ "Note: method with signature %s chosen for function %s,\n"
+#~ " target signature %s.\n"
+#~ " %s would also be valid"
+#~ msgstr ""
+#~ "Pastaba: metodas su prierašu %s parinktas funkcijai %s,\n"
+#~ "paskirties prierašas %s.\n"
+#~ "%s taip pat būtų teisinga"
+
+#~ msgid "failed to find expected group generic function:"
+#~ msgstr "nepavyko rasti grupės bendrinės funkcijos:"
+
+#~ msgid ""
+#~ "invalid group generic function in search for inherited method (class %s)"
+#~ msgstr ""
+#~ "neteisinga grupės bendrinė funkcija ieškant paveldėto metodo (klasė %s)"
+
+#~ msgid "invalid methods table request"
+#~ msgstr "neteisinga metodų lentelės užklausa"
+
+#~ msgid ""
+#~ "trying to check signature length of group generic '%s', but it is not a "
+#~ "group generic"
+#~ msgstr ""
+#~ "bandymas patikrinti bendrinės grupės '%s' prierašo ilgį, bet tai nėra "
+#~ "bendrinė grupė"
+
+#~ msgid ""
+#~ "trying to check signature length of generic '%s', but it is not a generic "
+#~ "function: i = %d, funs = %s, gnames = %s"
+#~ msgstr ""
+#~ "bandymas patikrinti bendrinės funkcijos '%s' prierašo ilgį, bet tai nėra "
+#~ "bendrinė funkcija: i = %d, funs = %s, gnames = %s"
+
+#~ msgid "no methods table for generic %s from package %s in package %s"
+#~ msgstr "nėra metodų lentelės bendrinei %s iš paketo %s pakete %s"
+
+#~ msgid "undefined classes (%s) will be ignored for argument '%s'"
+#~ msgstr "neapibrėžtos klasės (%s) bus ignoruojamos argumentui '%s'"
+
+#~ msgid ""
+#~ "argument 'signatures' must be a character matrix whose rows are method "
+#~ "signatures"
+#~ msgstr ""
+#~ "argumentas 'signatures' turi būti simbolių matrica, kurios eilutės yra "
+#~ "metodo prierašai"
+
+#~ msgid "not allowed to have test==TRUE and an S4Class definition"
+#~ msgstr "negali būti test==TRUE ir S4Class apibrėžtis"
+
+#~ msgid ""
+#~ "argument 'S4Class' must be a class definition: got an object of class %s"
+#~ msgstr ""
+#~ "argumentas 'S4Class' turi būti klasės apibrėžimas, gaunamas klasės %s "
+#~ "objektas"
+
+#~ msgid ""
+#~ "inconsistent old-style class information for %s; the class is defined but "
+#~ "does not extend %s and is not valid as the data part"
+#~ msgstr ""
+#~ "nesuderinama seno stiliaus klasės informacija %s, klasė yra apibrėžta, "
+#~ "bet nepraplečia %s ir nėra tinkama kaip duomenų dalis"
+
+#~ msgid ""
+#~ "the S3 class of the prototype, \"%s\", is undefined; only allowed when "
+#~ "this is the S3 class being registered (\"%s\")"
+#~ msgstr ""
+#~ "prototipo S3 klasė \"%\" yra neapibrėžta, leidžiama tik tada, kai ji yra "
+#~ "registruota S3 klasė (\"%s\")"
+
+#~ msgid "restoring definition of class %s"
+#~ msgstr "atkuriama klasės %s apibrėžtis"
+
+#~ msgid "slot %s: class %s should extend class %s"
+#~ msgstr "laukas %s: klasė %s turi praplėsti klasę %s"
+
+#~ msgid ""
+#~ "invalid S4 class corresponding to S3 class: slots in  S4 version must "
+#~ "extend corresponding slots in S3 version: fails for %s"
+#~ msgstr ""
+#~ "neteisinga S4 klasė atitinkanti S3 klasę: laukai S4 versijoje turi "
+#~ "praplėsti laukus S3 versijoje: klaida %s"
+
+#~ msgid "explicit coercion of old-style class (%s) is not defined"
+#~ msgstr "išreikštinis seno stiliaus klasės (%s) pavertimas neapibrėžtas"
+
+#~ msgid ""
+#~ "explicit replacement not defined for as(x, \"%s\") <- value for old-style "
+#~ "class %s"
+#~ msgstr ""
+#~ "išreikštinis pakeitimas neapibrėžtas as(x, \"%s\") <- reikšmė seno "
+#~ "stiliaus klasei %s"
+
+#~ msgid ""
+#~ "argument 'Classes' must be a vector of two classes; got an argument of "
+#~ "length %d"
+#~ msgstr ""
+#~ "argumentas 'Classes' turi būti dviejų klasių vektorius, gautas %d ilgio "
+#~ "argumentas"
+
+#~ msgid ""
+#~ "inconsistent old-style class information for %s (maybe mixing old and new "
+#~ "classes?)"
+#~ msgstr ""
+#~ "nesuderinama seno stiliaus klasės informacija %s (galbūt sumaišomos senos "
+#~ "ir naujos klases?)"
+
+#~ msgid ""
+#~ "'S3Class' only defined for extensions of %s or classes with a data part:  "
+#~ "not true of class %s"
+#~ msgstr ""
+#~ "'S3Class' apibrėžia tik %s plėtiniams arba klasėms su duomenų dalimi: "
+#~ "netikra klasė %s"
+
+#~ msgid ""
+#~ "'S3Class' can only assign to S4 objects that extend \"oldClass\"; not "
+#~ "true of class %s"
+#~ msgstr ""
+#~ "'S3Class' gali priskirti tik S4 objektams, kurie išplečia \"oldClass\"; "
+#~ "netiesa apie klasę %s"
+
+#~ msgid "Created a package name, %s, when none found"
+#~ msgstr "Sukurtas paketo vardas, %s, kai nieko nerasta"
+
+#~ msgid "no definition of class %s found"
+#~ msgstr "nėra %s klasės apibrėžties"
+
+#~ msgid "multiple definitions of %s found; using the one on %s"
+#~ msgstr "rastos %s kelios apibrėžtys, naudojant vieną %s"
+
+#~ msgid "%s is not a valid field or method name for reference class %s"
+#~ msgstr "%s nėra tinkamas laukas ar metodo vardas referencinei klasei %s"
+
+#~ msgid ""
+#~ "a call to superClass() is in the method %s but there is no superclass "
+#~ "definition of this method for class %s"
+#~ msgstr ""
+#~ "kreipinys į superClass() yra metode %s, bet jame nėra šio metodo "
+#~ "viršklasio apibrėžimo klasei %s"
+
+#~ msgid "methods declared in usingMethods() but not found: %s"
+#~ msgstr "metodai aprašyti usingMethods(), tačiau nerasti: %s"
+
+#~ msgid "%s is not a reference class"
+#~ msgstr "%s nėra referencinė klasė"
+
+#~ msgid "%s is not a field in class %s"
+#~ msgstr "%s nėra laukas klasėje %s"
+
+#~ msgid ""
+#~ "unnamed arguments to $new() must be objects from a reference class; got "
+#~ "an object of class %s"
+#~ msgstr ""
+#~ "neįvardyti argumentai $new() turi būti objektai iš referencinės klasės; "
+#~ "gaunamas klasės %s objektas"
+
+#~ msgid "%s is not a valid field or method name for this class"
+#~ msgstr "%s nėra tinkamas laukas ar metodo vardas šiai klasei"
+
+#~ msgid ""
+#~ "the class of field %s in the object is not compatible with the desired "
+#~ "class %s in the target"
+#~ msgstr ""
+#~ "klasės laukas %s objekte nesuderinamas su norima klase %s paskirtyje"
+
+#~ msgid "%s is not a defined class in this environment"
+#~ msgstr "%s nėra apibrėžta klasė šioje aplinkoje"
+
+#~ msgid "invalid 'Class' argument:  should be a single string"
+#~ msgstr "neteisingas 'Class' argumentas: turėtų būti viena eilutė"
+
+#~ msgid "%s is not one of the reference super classes for this object"
+#~ msgstr "%s nėra viena iš referencinių viršklasių šiam objektui"
+
+#~ msgid ""
+#~ "direct calls to callSuper() are invalid:  should only be called from "
+#~ "another method"
+#~ msgstr ""
+#~ "tiesioginiai kreipiniai į callSuper() klaidingi: turėtų būti iškviesti iš "
+#~ "kito metodo"
+
+#~ msgid "%s is not a field in this class"
+#~ msgstr "%s nėra laukas šioje klasėje"
+
+#~ msgid "Methods not found: %s"
+#~ msgstr "Metodai nerasti: %s"
+
+#~ msgid ""
+#~ "the definition of class %s in package %s is locked, methods may not be "
+#~ "redefined"
+#~ msgstr ""
+#~ "klasės %s apibrėžtis pakete %s yra užrakinta, nebūtina apibrėžti metodų "
+#~ "iš naujo"
+
+#~ msgid "arguments to methods() must be named, or one named list"
+#~ msgstr ""
+#~ "methods() argumentai turi būti įvardyti arba vienas įvardytas sąrašas"
+
+#~ msgid ""
+#~ "topic %s is not a method name in class %s\n"
+#~ "The class definition follows"
+#~ msgstr ""
+#~ "tema %s nėra metodo vardas klasėje %s\n"
+#~ "Klasės apibrėžtis seka"
+
+#~ msgid ""
+#~ "the definition of class %s in package %s is locked so fields may not be "
+#~ "modified"
+#~ msgstr ""
+#~ "klasės %s apibrėžtis pakete %s yra užrakinta, todėl laukai gali būti "
+#~ "nekeičiami"
+
+#~ msgid ""
+#~ "the overriding class (\"%s\") of field %s is not a subclass of the "
+#~ "existing field definition (\"%s\")"
+#~ msgstr ""
+#~ "pagrindinė klasė (\"%s\") lauko %s nėra poklasis egzistuojančio lauko "
+#~ "apibrėžimo (\"%s\")"
+
+#~ msgid ""
+#~ "invalid assignment for reference class field %s, should be from class %s "
+#~ "or a subclass (was class %s)"
+#~ msgstr ""
+#~ "neteisingas priskyrimas referencinės klasės laukui, turėtų būti iš klasės "
+#~ "%s arba poklasio (buvo klasė %s)"
+
+#~ msgid "invalid replacement: reference class field %s is read-only"
+#~ msgstr ""
+#~ "neteisingas pakeitimas: referencinės klasės laukas %s skirtas tik skaityti"
+
+#~ msgid ""
+#~ "the 'contains' argument should be the names of superclasses:  got an "
+#~ "element of class %s"
+#~ msgstr ""
+#~ "'contains' argumentas turėtų būti viršklasių vardai: gaunamas klasės %s "
+#~ "elementas"
+
+#~ msgid "no definition found for inherited class: %s"
+#~ msgstr "nėra paveldėtos klasės apibrėžties: %s"
+
+#~ msgid "class %s for field %s is not defined"
+#~ msgstr "klasė % laukui %s neapibrėžta"
+
+#~ msgid ""
+#~ "field %s was supplied as an object of class %s; must be a class name or a "
+#~ "binding function"
+#~ msgstr ""
+#~ "laukas %s buvo pateiktas kaip klasės %s objektas, turi būti klasės vardas "
+#~ "arba funkcijos susiejimas"
+
+#~ msgid ""
+#~ "code for methods in class %s was not checked for suspicious field "
+#~ "assignments (recommended package %s not available?)"
+#~ msgstr ""
+#~ "metodo kodas klasėje % nepatikrintas dėl įtartinų lauko priskyrimų "
+#~ "(rekomenduojamas paketas %s negalimas?)"
+
+#~ msgid "class %s is defined but is not a reference class"
+#~ msgstr "klasė %s yra apibrėžta, bet nėra referencinė klasė"
+
+#~ msgid ""
+#~ "class must be a reference class representation or a character string; got "
+#~ "an object of class %s"
+#~ msgstr ""
+#~ "klasė turi būti referencinės klasės atvaizdavimas ar simbolių eilutė, "
+#~ "gaunamas klasės %s objektas"
+
+#~ msgid "not a reference class: %s"
+#~ msgstr "ne referencinė klasė: %s"
+
+#~ msgid ""
+#~ "local assignment to field name will not change the field:\n"
+#~ "    %s\n"
+#~ " Did you mean to use \"<<-\"? ( in method %s for class %s)"
+#~ msgstr ""
+#~ "vietos priskyrimas lauko vardui nepakeis lauko:\n"
+#~ "%s\n"
+#~ "Norėjote naudoti \"<<-\"? ( metode %s klasei %s)"
+
+#~ msgid ""
+#~ "non-local assignment to non-field names (possibly misspelled?)\n"
+#~ "    %s\n"
+#~ "( in method %s for class %s)"
+#~ msgstr ""
+#~ "nevietinis priskyrimas laukų neturintiems vardams (galbūt parašyta su "
+#~ "klaidomis?)\n"
+#~ "%s\n"
+#~ "(metode %s klasei %s )"
+
+#~ msgid ""
+#~ "non-local assignment to method names is not allowed\n"
+#~ "    %s\n"
+#~ "( in method %s for class %s)"
+#~ msgstr ""
+#~ "nevietinis priskyrimas į metodo vardus nėra leidžiamas\n"
+#~ "%s\n"
+#~ "(metode %s klasei %s )"
+
+#~ msgid "arguments must all be character string names of fields"
+#~ msgstr "visi argumentai turi būti simbolių eilučių laukų vardai"
+
+#~ msgid "field %s is already locked"
+#~ msgstr "laukas %s jau užrakintas"
+
+#~ msgid "field %s of class %s has a non-default binding and cannot be locked"
+#~ msgstr ""
+#~ "laukas %s klasės %s neturi numatytojo susiejimo ir negali būti užrakintas"
+
+#~ msgid ""
+#~ "Reference superclasses must come from the same package for the "
+#~ "environment to be defined:  got %s and %s"
+#~ msgstr ""
+#~ "Referencinės superklasės turi būti iš aplinkos, kurią reikia apibrėžti, "
+#~ "to paties paketo: gaunami %s ir %s"
+
+#~ msgid ""
+#~ "Class %s is not a subclass of %s; functional semantics not defined for "
+#~ "this class"
+#~ msgstr ""
+#~ "%s klasė nėra %s poklasis; šiai klasei neapibrėžta funkcinė semantika"
+
+#~ msgid "Could not find local object in supplied environment"
+#~ msgstr "Nepavyko rasti vietinio objekto pateiktoje aplinkoje"
+
+#~ msgid ""
+#~ "invalid 'ignore' argument; should be a class definition or a character "
+#~ "vector, got an object of class %s"
+#~ msgstr ""
+#~ "neteisingas 'ignore' argumentas, turėtų būti klasės apibrėžtis arba "
+#~ "tekstinis vektorius, gaunamas klasės %s objektas"
+
+#~ msgid "An object of class %s"
+#~ msgstr "Klasės objektas %s"
+
+#~ msgid ""
+#~ "invalid call to 'classLabel': expected a name or a class definition, got "
+#~ "an object of class %s"
+#~ msgstr ""
+#~ "neteisingas kreipinys į 'classLabel': turėtų būti vardas arba klasės "
+#~ "apibrėžtis, gaunamas klasės %s objektas"
+
+#~ msgid "argument 'signature' is not meaningful for tracing reference methods"
+#~ msgstr "argumentas 'signature' neturi prasmės sekant referencinius metodus"
+
+#~ msgid "%s is not a method for reference class %s"
+#~ msgstr "%s nėra metodas referencinei klasei %s"
+
+#~ msgid "argument 'what' should be the name of a function"
+#~ msgstr "argumentas 'what' turėtų būti funkcijos vardas"
+
+#~ msgid "tracing the internal function %s is not allowed"
+#~ msgstr "vidinės funkcijos %s sekimas negalimas"
+
+#~ msgid "no function definition for %s found"
+#~ msgstr "nėra funkcijos apibrėžties %s"
+
+#~ msgid ""
+#~ "cannot untrace method for %s; no method defined for this signature: %s"
+#~ msgstr "nepavyko atsekti metodo %s, nėra apibrėžto šio metodo prierašo: %s"
+
+#~ msgid "the method for %s for this signature was not being traced"
+#~ msgstr "metodas %s šiam prierašui nebuvo atsektas"
+
+#~ msgid "making a traced version of a special; arguments may be altered"
+#~ msgstr ""
+#~ "darant atsekamą specialiosios versijos variantą; argumentai gali būti "
+#~ "pakeisti"
+
+#~ msgid ""
+#~ "the editing in trace() can only change the body of the function; got an "
+#~ "object of class %s"
+#~ msgstr ""
+#~ "redagavimas trace() gali pakeisti tik pagrindinę funkcijos dalį, gaunamas "
+#~ "klasės % objektas"
+
+#~ msgid ""
+#~ "the editing in trace() can only change the body of the function, not the "
+#~ "arguments or defaults"
+#~ msgstr ""
+#~ "redagavimas trace() gali pakeisti tik pagrindinę funkcijos dalį, bet ne "
+#~ "argumentus ar numatytuosius parametrus"
+
+#~ msgid "cannot use 'at' argument without a trace expression"
+#~ msgstr "negalima naudoti 'at' argumento be išraiškos pėdsako"
+
+#~ msgid ""
+#~ "cannot use 'at' argument unless the function body has the form '{ ... }'"
+#~ msgstr ""
+#~ "negalima naudoti 'at' argumento, nebent funkcijos pagrindinė dalies forma "
+#~ "yra '{ ... }'"
+
+#~ msgid "assigning over the binding of symbol %s in environment/package %s"
+#~ msgstr "priskyrimas per simbolio %s saistymą aplinkoje/pakete %s"
+
+#~ msgid ""
+#~ "setting a method over the binding of symbol %s in environment/package %s"
+#~ msgstr "metodo nustatymas per simbolio %s saistymą aplinkoje/pakete %s"
+
+#~ msgid ""
+#~ "Environment of class %s is locked; using global environment for new class"
+#~ msgstr ""
+#~ "Klasės %s aplinka užrakinta naudojant globalią aplinką naujai klasei"
+
+#~ msgid ""
+#~ "none of the objects in the source code could be found:  need to attach or "
+#~ "specify the package"
+#~ msgstr ""
+#~ "nerastas joks objektas pirminiame programos kode: reikia pridėti arba "
+#~ "nurodyti paketą"
+
+#~ msgid "objects found in multiple packages: using %s and ignoring %s"
+#~ msgstr "objektai rasti keliuose paketuose, naudojant %s ir ignoruojant %s"
+
+#~ msgid "package %s is not attached and no namespace found for it"
+#~ msgstr "paketas %s nepridėtas ir jo vardų erdvė nerasta"
+
+#~ msgid ""
+#~ "invalid 'source' argument: expected file names or a connection but got an "
+#~ "object of class %s"
+#~ msgstr ""
+#~ "neteisingas 'source' argumentas: turėtų būti failo vardai ar ryšiai, bet "
+#~ "yra klasės %s objektas"
+
+#~ msgid "cannot find an environment corresponding to package name '%s\""
+#~ msgstr "nepavyko surasti aplinkos atitinkančios paketo vardą '%s'"
+
+#~ msgid "supplied package, %s, differs from package inferred from source, %s"
+#~ msgstr ""
+#~ "pateiktas paketas %s skiriasi nuo paketo, kuris paveldėtas iš šaltinio %s"
+
+#~ msgid "cannot insert these (not found in source): %s"
+#~ msgstr "nepavyko įterpti (nėra šaltinyje): %s"
+
+#~ msgid ""
+#~ "cannot insert methods for these functions (methods table not found in "
+#~ "source): %s"
+#~ msgstr ""
+#~ "nepavyko įterpti metodų į šias funkcijas (metodų lentelės šaltinyje "
+#~ "nėra): %s"
+
+#~ msgid "Non-function objects are not currently inserted (not traceable): %s"
+#~ msgstr "Nefunkciniai objektai nėra šiuo metu įterpti (nesurandami): %s"
+
+#~ msgid "New functions are not currently inserted (not untraceable): %s"
+#~ msgstr "Naujos funkcijos šiuo metu nėra įterptos (nėra atsekamos): %s"
+
+#~ msgid "Modified functions inserted through trace(): %s"
+#~ msgstr "Pakeistos funkcijos įterptos per trace(): %s"
+
+#~ msgid ""
+#~ "%s() is not a generic function in the target environment -- methods will "
+#~ "not be inserted"
+#~ msgstr "%s() nėra bendrinė funkcija aplinkoje -- metodai nebus įtraukti"
+
+#~ msgid "Methods inserted for function %s(): %s"
+#~ msgstr "Metodai įterpti į funkciją %s(): %s"
+
+#~ msgid "no definition for object %s found in tracing environment"
+#~ msgstr "nėra apibrėžties objektui %s sekimo aplinkoje"
+
+#~ msgid "multiple generics match pattern, using table %s"
+#~ msgstr "kelios bendrinės atitinka šabloną, naudojant lentelę %s"
+
+#~ msgid ""
+#~ "does not seem to be a method table for generic %s in tracing environment"
+#~ msgstr "neatrodo, kad yra metodų lentelė bendriniam %s sekimo aplinkoje"
+
+#~ msgid "no method in methods table for %s for signature %s"
+#~ msgstr "nėra metodo metodų lentelėje %s prierašui %s"
+
+#~ msgid "unloading 'methods' package ..."
+#~ msgstr "iškeliamas 'methods' paketas ..."
+
+#~ msgid "apparently bad method or class metadata in saved environment;"
+#~ msgstr "blogas metodas ar klasės metaduomenys išsaugotoje aplinkoje;"
+
+#~ msgid "move the file or remove the class/method"
+#~ msgstr "perkelti failą ar pašalinti klasę/metodą"
+
+#~ msgid "no definition for class %s"
+#~ msgid_plural "no definition for classes %s"
+#~ msgstr[0] "nėra apibrėžties klasei %s"
+#~ msgstr[1] "nėra apibrėžties klasėms %s"
+#~ msgstr[2] "nėra apibrėžties klasėms %s"
+
+#~ msgid ""
+#~ "in the method signature for function %s invalid argument name in the "
+#~ "signature: %s"
+#~ msgid_plural ""
+#~ "in the method signature for function %s invalid argument names in the "
+#~ "signature: %s"
+#~ msgstr[0] ""
+#~ "metodo prieraše funkcijai %s neteisingas argumento vardas prieraše: %s"
+#~ msgstr[1] ""
+#~ "metodo prieraše funkcijai %s neteisingi argumento vardai prieraše: %s"
+#~ msgstr[2] ""
+#~ "metodo prieraše funkcijai %s neteisingų argumento vardų prieraše: %s"
+
+#~ msgid "Reported %d ambiguous selection out of %d for function %s\n"
+#~ msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+#~ msgstr[0] "Pranešta, kad %d neapibrėžtas pasirinkimas iš %d funkcijai %s\n"
+#~ msgstr[1] "Pranešta, kad %d neapibrėžti pasirinkimai iš %d funkcijai %s\n"
+#~ msgstr[2] "Pranešta, kad %d neapibrėžtų pasirinkimų iš %d funkcijai %s\n"
+
+#~ msgid "named elements of prototype do not correspond to slot name: %s"
+#~ msgid_plural ""
+#~ "named elements of prototype do not correspond to slot names: %s"
+#~ msgstr[0] "įvardyti prototipo elementai neatitinka lauko pavadinimo: %s"
+#~ msgstr[1] "įvardyti prototipo elementai neatitinka lauko pavadinimų: %s"
+#~ msgstr[2] "įvardyti prototipo elementai neatitinka lauko pavadinimų: %s"
+
+#~ msgid "non-argument found in the signature: %s"
+#~ msgid_plural "non-arguments found in the signature: %s"
+#~ msgstr[0] "ne argumentas rastas prieraše: %s"
+#~ msgstr[1] "ne argumentai rasti prieraše: %s"
+#~ msgstr[2] "ne argumentų rasta prieraše: %s"
+
+#~ msgid ""
+#~ "the formal argument of the generic function for %s (%s) differs from that "
+#~ "of the non-generic to be used as the default (%s)"
+#~ msgid_plural ""
+#~ "the formal arguments of the generic function for %s (%s) differ from "
+#~ "those of the non-generic to be used as the default (%s)"
+#~ msgstr[0] ""
+#~ "bendrinės funkcijos %s (%s) formalusis argumentas skiriasi nuo "
+#~ "nebendrinės funkcijos, kuri bus naudojama kaip numatytoji (%s)"
+#~ msgstr[1] ""
+#~ "bendrinės funkcijos %s (%s) formalieji argumentai skiriasi nuo "
+#~ "nebendrinės funkcijos, kuri bus naudojama kaip numatytoji (%s)"
+#~ msgstr[2] ""
+#~ "bendrinės funkcijos %s (%s) formaliųjų argumentų skiriasi nuo nebendrinės "
+#~ "funkcijos, kuri bus naudojama kaip numatytoji (%s)"
+
+#~ msgid "duplicated slot name: %s"
+#~ msgid_plural "duplicated slot names: %s"
+#~ msgstr[0] "dubliuotas lauko pavadinimas: %s"
+#~ msgstr[1] "dubliuoti lauko pavadinimai: %s"
+#~ msgstr[2] "dubliuotų lauko pavadinimų: %s"
+
+#~ msgid "invalid name for slot of class %s: %s"
+#~ msgid_plural "invalid names for slots of class %s: %s"
+#~ msgstr[0] "neteisingas klasės %s lauko vardas: %s"
+#~ msgstr[1] "neteisingi klasės %s laukų vardai: %s"
+#~ msgstr[2] "neteisingų klasės %s laukų vardų: %s"
+
+#~ msgid ""
+#~ "multiple definition of class %s visible (%s); using the definition\n"
+#~ "   in package %s for %s"
+#~ msgid_plural ""
+#~ "multiple definitions of class %s visible (%s); using the definition\n"
+#~ "   in package %s for %s"
+#~ msgstr[0] ""
+#~ "daugkartinis apibrėžimas klasės %s matomume (%s); naudojant apibrėžimą\n"
+#~ "   pakete %s dėl %s"
+#~ msgstr[1] ""
+#~ "daugkartiniai apibrėžimai klasės %s matomume (%s); naudojant apibrėžimą\n"
+#~ "   pakete %s dėl %s"
+#~ msgstr[2] ""
+#~ "daugkartinių apibrėžimų klasės %s matomume (%s); naudojant apibrėžimą\n"
+#~ "   pakete %s dėl %s"
+
+#~ msgid ""
+#~ "class %s is missing slot from class %s (%s), and no coerce method was "
+#~ "supplied"
+#~ msgid_plural ""
+#~ "class %s is missing slots from class %s (%s), and no coerce method was "
+#~ "supplied"
+#~ msgstr[0] ""
+#~ "klasė %s yra trūkstamas laukas iš klasės %s (%s), ir priverstinis metodas "
+#~ "nebuvo taikomas"
+#~ msgstr[1] ""
+#~ "klasė %s yra trūkstami laukai iš klasės %s (%s), ir priverstinis metodas "
+#~ "nebuvo taikomas"
+#~ msgstr[2] ""
+#~ "klasė %s yra trūkstami laukai iš klasės %s (%s), ir priverstinis metodas "
+#~ "nebuvo taikomas"
+
+#~ msgid ""
+#~ "slot in class %s must extend corresponding slot in class %s: fails for %s"
+#~ msgid_plural ""
+#~ "slots in class %s must extend corresponding slots in class %s: fails for "
+#~ "%s"
+#~ msgstr[0] ""
+#~ "laukas klasėje %s turi papildyti atitinkamą lauką klasėje %s: nepavyksta "
+#~ "dėl %s"
+#~ msgstr[1] ""
+#~ "laukai klasėje %s turi papildyti atitinkamus laukus klasėje %s: "
+#~ "nepavyksta dėl %s"
+#~ msgstr[2] ""
+#~ "laukai klasėje %s turi papildyti atitinkamus laukus klasėje %s: "
+#~ "nepavyksta dėl %s"
+
+#~ msgid "found %d equally good next method"
+#~ msgid_plural "found %d equally good next methods"
+#~ msgstr[0] "rastas %d vienodai geras kitas metodas"
+#~ msgstr[1] "rasti %d vienodai geri kiti metodai"
+#~ msgstr[2] "rasta %d vienodai gerų kitų metodų"
+
+#~ msgid "Selecting %d method of minimum distance"
+#~ msgid_plural "Selecting %d methods of minimum distance"
+#~ msgstr[0] "Minimalaus atstumo %d metodo pasirinkimas"
+#~ msgstr[1] "Minimalaus atstumo %d metodų pasirinkimas"
+#~ msgstr[2] "Minimalaus atstumo %d metodų pasirinkimas"
+
+#~ msgid "Selecting %d non-group method"
+#~ msgid_plural "Selecting %d non-group methods"
+#~ msgstr[0] "Ne grupės %d metodo pasirinkimas"
+#~ msgstr[1] "Ne grupės %d metodų pasirinkimas"
+#~ msgstr[2] "Ne grupės %d metodų pasirinkimas"
+
+#~ msgid "Selecting %d partially exact-matching method"
+#~ msgid_plural "Selecting %d partially exact-matching methods"
+#~ msgstr[0] "Iš dalies atitinkamo %d metodo pasirinkimas"
+#~ msgstr[1] "Iš dalies atitinkamų %d metodų pasirinkimas"
+#~ msgstr[2] "Iš dalies atitinkamų %d metodų pasirinkimas"
+
+#~ msgid "Choosing method %s from %d ambiguous possibility"
+#~ msgid_plural "Choosing method %s from %d ambiguous possibilities"
+#~ msgstr[0] "Metodo %s pasirinkimas iš %d neapibrėžtos galimybės"
+#~ msgstr[1] "Metodo %s pasirinkimas iš %d neapibrėžtų galimybių"
+#~ msgstr[2] "Metodo %s pasirinkimas iš %d neapibrėžtų galimybių"
+
+#~ msgid ""
+#~ "no definition of class %s in the specified position, %s, definition on : "
+#~ "%s"
+#~ msgid_plural ""
+#~ "no definition of class %s in the specified position, %s, definitions on : "
+#~ "%s"
+#~ msgstr[0] ""
+#~ "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimas : %s"
+#~ msgstr[1] ""
+#~ "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimai : %s"
+#~ msgstr[2] ""
+#~ "klasė %s nurodytoje pozicijoje neturi apibrėžties, %s, apibrėžimų : %s"

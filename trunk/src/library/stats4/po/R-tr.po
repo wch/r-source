@@ -1,0 +1,57 @@
+# Turkish translations for R package
+# R paketi için Türkçe çeviriler.
+# Copyright (C) 2010 The R Foundation
+# This file is distributed under the same license as the R package.
+#
+# Murat Alkan <muratalk@gmail.com>, 2010, 2011.
+# Özlem Alpu <ozlem.alpu@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.13.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: 2011-04-01 04:27+0200\n"
+"Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
+"Language-Team: Turkish <muratalk@gmail.com>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
+msgstr ""
+"'fixed' içindeki bazı argümanlar log-likelihood'a verilen argümanlar değil"
+
+msgid "Mismatch in length of start values"
+msgstr ""
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
+
+msgid ""
+"profiling has found a better solution, so original fit had not converged"
+msgstr "profilleme daha iyi bir çözüm buldu, özgün uyum yakınsamadı"
+
+msgid "levels truncated to positive values only"
+msgstr "seviyeler sadece pozitif değerlere kısaltıldı"
+
+msgid "extra arguments discarded"
+msgstr "ekstra argümanlar çıkarıldı"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' isimlendirilmiş bir liste olmalı"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "'start' içindeki bazı argümanlar log-likelihood'a verilen argümanlar değil"

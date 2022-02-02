@@ -1,0 +1,546 @@
+
+R Under development (unstable) (2019-10-01 r77238) -- "Unsuffered Consequences"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## tests of options in system() and system2.
+> 
+> options(warn = 1)
+> 
+> opts <- list("", NULL, FALSE, TRUE, "o1.txt", "o2.txt")
+> outs <- c("o1.txt", "o2.txt")
+> tos <- c(0, 10)
+> 
+> process <- function(res)
++ {
++     unlink(outs)
++     if(is.character(res)) {
++         cat("value:\n")
++         writeLines(res)
++     }
++     for(f in outs)
++         if(file.exists(f)) {
++             cat(f, ":\n", sep = "")
++             writeLines(readLines(f))
++         }
++ }
+> 
+> for(to in tos)
++     for(out in opts)
++         for(err in opts) {
++             ## skip this for the sake of Unix-alikes
++             if(identical(err, TRUE) && !identical(out,TRUE)) next
++             cat(sprintf("\ntesting stdout = %s, stderr = %s\n",
++                 deparse(out), deparse(err)))
++             process(system2("test-system2", stdout = out, stderr = err,
++                             timeout = to))
++         }
+
+testing stdout = "", stderr = ""
+stdout 1
+stderr 1
+
+testing stdout = "", stderr = NULL
+stdout 1
+
+testing stdout = "", stderr = FALSE
+stdout 1
+
+testing stdout = "", stderr = "o1.txt"
+stdout 1
+o1.txt:
+stderr 1
+
+testing stdout = "", stderr = "o2.txt"
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = NULL, stderr = ""
+stderr 1
+
+testing stdout = NULL, stderr = NULL
+
+testing stdout = NULL, stderr = FALSE
+
+testing stdout = NULL, stderr = "o1.txt"
+o1.txt:
+stderr 1
+
+testing stdout = NULL, stderr = "o2.txt"
+o2.txt:
+stderr 1
+
+testing stdout = FALSE, stderr = ""
+stderr 1
+
+testing stdout = FALSE, stderr = NULL
+
+testing stdout = FALSE, stderr = FALSE
+
+testing stdout = FALSE, stderr = "o1.txt"
+o1.txt:
+stderr 1
+
+testing stdout = FALSE, stderr = "o2.txt"
+o2.txt:
+stderr 1
+
+testing stdout = TRUE, stderr = ""
+stderr 1
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = NULL
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = FALSE
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = TRUE
+value:
+stdout 1
+stderr 1
+
+testing stdout = TRUE, stderr = "o1.txt"
+value:
+stdout 1
+o1.txt:
+stderr 1
+
+testing stdout = TRUE, stderr = "o2.txt"
+value:
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = "o1.txt", stderr = ""
+stderr 1
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = NULL
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = FALSE
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = "o1.txt"
+o1.txt:
+stdout 1
+stderr 1
+
+testing stdout = "o1.txt", stderr = "o2.txt"
+o1.txt:
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = "o2.txt", stderr = ""
+stderr 1
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = NULL
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = FALSE
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = "o1.txt"
+o1.txt:
+stderr 1
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = "o2.txt"
+o2.txt:
+stdout 1
+stderr 1
+
+testing stdout = "", stderr = ""
+stdout 1
+stderr 1
+
+testing stdout = "", stderr = NULL
+stdout 1
+
+testing stdout = "", stderr = FALSE
+stdout 1
+
+testing stdout = "", stderr = "o1.txt"
+stdout 1
+o1.txt:
+stderr 1
+
+testing stdout = "", stderr = "o2.txt"
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = NULL, stderr = ""
+stderr 1
+
+testing stdout = NULL, stderr = NULL
+
+testing stdout = NULL, stderr = FALSE
+
+testing stdout = NULL, stderr = "o1.txt"
+o1.txt:
+stderr 1
+
+testing stdout = NULL, stderr = "o2.txt"
+o2.txt:
+stderr 1
+
+testing stdout = FALSE, stderr = ""
+stderr 1
+
+testing stdout = FALSE, stderr = NULL
+
+testing stdout = FALSE, stderr = FALSE
+
+testing stdout = FALSE, stderr = "o1.txt"
+o1.txt:
+stderr 1
+
+testing stdout = FALSE, stderr = "o2.txt"
+o2.txt:
+stderr 1
+
+testing stdout = TRUE, stderr = ""
+stderr 1
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = NULL
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = FALSE
+value:
+stdout 1
+
+testing stdout = TRUE, stderr = TRUE
+value:
+stdout 1
+stderr 1
+
+testing stdout = TRUE, stderr = "o1.txt"
+value:
+stdout 1
+o1.txt:
+stderr 1
+
+testing stdout = TRUE, stderr = "o2.txt"
+value:
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = "o1.txt", stderr = ""
+stderr 1
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = NULL
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = FALSE
+o1.txt:
+stdout 1
+
+testing stdout = "o1.txt", stderr = "o1.txt"
+o1.txt:
+stdout 1
+stderr 1
+
+testing stdout = "o1.txt", stderr = "o2.txt"
+o1.txt:
+stdout 1
+o2.txt:
+stderr 1
+
+testing stdout = "o2.txt", stderr = ""
+stderr 1
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = NULL
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = FALSE
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = "o1.txt"
+o1.txt:
+stderr 1
+o2.txt:
+stdout 1
+
+testing stdout = "o2.txt", stderr = "o2.txt"
+o2.txt:
+stdout 1
+stderr 1
+> 
+> for(to in tos) {
++     # timeout 0 uses different implementations from timeout 10
++     # the outputs should be identical
++ 
++     process(system("test-system2", timeout = to))
++     process(system("test-system2", ignore.stdout = TRUE, timeout = to))
++     process(system("test-system2", ignore.stderr = TRUE, timeout = to))
++     process(system("test-system2", ignore.stdout = TRUE, ignore.stderr = TRUE,
++                    timeout = to))
++ 
++     process(system("test-system2", TRUE, timeout = to))
++     process(system("test-system2", TRUE, ignore.stdout = TRUE, timeout = to))
++     process(system("test-system2", TRUE, ignore.stdout = TRUE,
++                    ignore.stderr = TRUE, timeout = to))
++ 
++     process(system2("test-system2", "1", input=letters[1:4], timeout = to))
++     process(system2("test-system2", "1", input=letters[1:4], stdout = TRUE,
++                     timeout = to))
++ 
++     process(system("test-system2 1", input=letters[1:4], timeout = to))
++     process(system("test-system2 1", input=letters[1:4], intern = TRUE,
++                    timeout = to))
++ 
++     tmp <- tempfile()
++     writeLines(letters[5:7], tmp)
++     process(system2("test-system2", "1", stdin = tmp, timeout = to))
++     process(system2("test-system2", "1", stdin = tmp, stdout = TRUE,
++                     timeout = to))
++     process(system2("test-system2", "1", stdin = tmp, stdout = TRUE,
++                     stderr = TRUE, timeout = to))
++     process(system2("test-system2", "1", stdin = tmp, stdout = "o1.txt",
++                     stderr = "o1.txt", timeout = to))
++     process(system2("test-system2", "1", stdin = tmp, stdout = "o1.txt",
++                     stderr = "o2.txt", timeout = to))
++ 
++     unlink(c(tmp, outs))
++ 
++     print(system("test-system2 5", timeout = to))
++     system("test-system2 6", intern = TRUE, timeout = to)
++     print(system2("test-system2", "7", timeout = to))
++     system2("test-system2", "8", stdout=TRUE, timeout = to)
++ }
+stdout 1
+stderr 1
+stderr 1
+stdout 1
+stderr 1
+value:
+stdout 1
+stderr 1
+value:
+value:
+stdout 1
+stderr 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stderr 1
+value:
+stdout 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stdout 1
+stderr 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stderr 1
+value:
+stdout 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+stderr 1
+value:
+stdout 1
+stdin: e
+stdin: f
+stdin: g
+value:
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+o1.txt:
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+o1.txt:
+stdout 1
+stdin: e
+stdin: f
+stdin: g
+o2.txt:
+stderr 1
+stdout 1
+stderr 1
+[1] 5
+stderr 1
+Warning in system("test-system2 6", intern = TRUE, timeout = to) :
+  running command 'test-system2 6' had status 6
+stdout 1
+stderr 1
+[1] 7
+stderr 1
+Warning in system2("test-system2", "8", stdout = TRUE, timeout = to) :
+  running command ''test-system2' 8' had status 8
+stdout 1
+stderr 1
+stderr 1
+stdout 1
+stderr 1
+value:
+stdout 1
+stderr 1
+value:
+value:
+stdout 1
+stderr 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stderr 1
+value:
+stdout 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stdout 1
+stderr 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stderr 1
+value:
+stdout 1
+stdin: a
+stdin: b
+stdin: c
+stdin: d
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+stderr 1
+value:
+stdout 1
+stdin: e
+stdin: f
+stdin: g
+value:
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+o1.txt:
+stdout 1
+stderr 1
+stdin: e
+stdin: f
+stdin: g
+o1.txt:
+stdout 1
+stdin: e
+stdin: f
+stdin: g
+o2.txt:
+stderr 1
+stdout 1
+stderr 1
+[1] 5
+stderr 1
+Warning in system("test-system2 6", intern = TRUE, timeout = to) :
+  running command 'test-system2 6' had status 6
+stdout 1
+stderr 1
+[1] 7
+stderr 1
+Warning in system2("test-system2", "8", stdout = TRUE, timeout = to) :
+  running command ''test-system2' 8' had status 8
+> 
+> # tests that time out
+> #   (each runs for a second)
+> 
+> system("./test-system2 sleep 10", timeout = 1)
+stdout 1
+stderr 1
+Sleeping for 10 seconds...
+Warning in system("./test-system2 sleep 10", timeout = 1) :
+  command './test-system2 sleep 10' timed out after 1s
+> system("./test-system2 infinite_loop", timeout = 1)
+stdout 1
+stderr 1
+Going to infinite loop...
+Warning in system("./test-system2 infinite_loop", timeout = 1) :
+  command './test-system2 infinite_loop' timed out after 1s
+> system("./test-system2 sleep 10", timeout = 1, intern = T)
+stderr 1
+Warning in system("./test-system2 sleep 10", timeout = 1, intern = T) :
+  command './test-system2 sleep 10' timed out after 1s
+[1] "stdout 1"                   "Sleeping for 10 seconds..."
+attr(,"status")
+[1] 124
+> system("./test-system2 infinite_loop", timeout = 1, intern = T)
+stderr 1
+Warning in system("./test-system2 infinite_loop", timeout = 1, intern = T) :
+  command './test-system2 infinite_loop' timed out after 1s
+[1] "stdout 1"                  "Going to infinite loop..."
+attr(,"status")
+[1] 124
+> 
+> ## test results with timeout set
+> 
+> stopifnot(identical(system("./test-system2 2", timeout = 1), 2L))
+stdout 1
+stderr 1
+> stopifnot(identical(system("./test-system2 2", timeout = 1, intern = T),
++                     structure("stdout 1", status = 2L)))
+stderr 1
+Warning in system("./test-system2 2", timeout = 1, intern = T) :
+  running command './test-system2 2' had status 2
+> 

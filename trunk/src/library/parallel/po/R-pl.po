@@ -1,0 +1,175 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.4\n"
+
+msgid "invalid value of %s"
+msgstr "niepoprawna wartość '%s'"
+
+msgid "need at least one argument"
+msgstr "co najmniej jeden argument jest wymagany"
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
+"długości"
+
+msgid "dim(X) must have a positive length"
+msgstr "'dim(X)' musi mieć dodatnią długość"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' musi mieć nazwane wymiary"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr ""
+"nie dostarczono argumentu klastr 'cl' oraz żaden nie jest zarejestrowany"
+
+msgid "not a valid cluster"
+msgstr "to nie jest poprawny klaster"
+
+msgid "unknown cluster type"
+msgstr "nieznany typ klastra"
+
+msgid "numeric 'names' must be >= 1"
+msgstr "argument 'names' musi być >= 1"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "węzeł gniazda klastra na hoście %s z pid %d"
+
+msgid "Connection setup failed or timed out."
+msgstr ""
+
+msgid "PORT must be specified"
+msgstr "argument 'port' musi być określony"
+
+msgid "'nnodes' must be >= 1"
+msgstr "argument 'nnodes' musi być >= 1"
+
+msgid "Cluster setup failed."
+msgstr ""
+
+msgid "invalid 'child' argument"
+msgstr "niepoprawny argument 'child'"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "argument 'children' musi być listą procesów lub pojedynczym procesem"
+
+msgid "'process' must be of class %s"
+msgstr "argument 'process' musi być klasy %s"
+
+msgid "'child' must be a valid child process"
+msgstr "argument 'child' musi być poprawnym procesem potomnym"
+
+msgid "'what' must be a character or raw vector"
+msgstr "argument 'what' musi być tekstem albo pustym wektorem"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "argument 'mc.cores' musi być >= 1"
+
+msgid "affinity.list and X must have the same length"
+msgstr "'affinity.list' oraz 'X' muszą mieć tę samą długość"
+
+msgid "%d function calls resulted in an error"
+msgstr "wywołania funkcji %d spowodowało błąd"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
+"'mc.preschedule' musi mieć wartość FALSE jeśli argument 'affinity.list' jest "
+"użyty"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
+"długości"
+
+msgid "invalid 'jobs' argument"
+msgstr "niepoprawny argument 'jobs'"
+
+msgid "'v' must be a vector"
+msgstr "argument 'v' musi być wektorem"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+"niektórych wyników może brakować, mogą być zwinięte lub spowodowały błąd"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
+
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
+msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
+msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"
+
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, fuzzy
+msgid ""
+"scheduled core %s did not deliver a result, all values of the job will be "
+"affected"
+msgid_plural ""
+"scheduled cores %s did not deliver results, all values of the jobs will be "
+"affected"
+msgstr[0] ""
+"zaplanowane jądro '%s' napotkało błąd w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadania"
+msgstr[1] ""
+"zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadań"
+msgstr[2] ""
+"zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadań"
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"zaplanowane jądro '%s' napotkało błąd w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadania"
+msgstr[1] ""
+"zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadań"
+msgstr[2] ""
+"zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
+"wszystkie wartości zadań"
+
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""

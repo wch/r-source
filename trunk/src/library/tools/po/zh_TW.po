@@ -1,0 +1,185 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 07.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: Rmd5.c:47
+msgid "argument 'files' must be character"
+msgstr "引數 'files' 必須是字元"
+
+#: Rmd5.c:63
+#, fuzzy, c-format
+msgid "md5 failed on file '%ls'"
+msgstr "用於 '%s' 檔案的 md5 執行失敗"
+
+#: Rmd5.c:65
+#, c-format
+msgid "md5 failed on file '%s'"
+msgstr "用於 '%s' 檔案的 md5 執行失敗"
+
+#: getfmts.c:61
+#, c-format
+msgid "only %d arguments are allowed"
+msgstr "只允許 %d 個引數"
+
+#: getfmts.c:66
+msgid "'fmt' is not a character vector"
+msgstr "'fmt' 不是字元向量"
+
+#: getfmts.c:69
+msgid "'fmt' must be length 1"
+msgstr "'fmt' 的長度必須為一"
+
+#: getfmts.c:75
+#, c-format
+msgid "'fmt' length exceeds maximal format length %d"
+msgstr "'fmt' 的長度超過了最大格式長度 %d"
+
+#: getfmts.c:96
+#, c-format
+msgid "unrecognised format specification '%s'"
+msgstr "不明的格式設定 '%s'"
+
+#: getfmts.c:136
+msgid "at most one asterisk '*' is supported in each conversion specification"
+msgstr "每一個轉換設定最多只支援一個星 '*'"
+
+#: gramLatex.c:2390 gramRd.c:3976
+#, c-format
+msgid "unable to allocate buffer for long string at line %d"
+msgstr "無法為 %d 列的長字串指派緩衝區"
+
+#: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
+#, c-format
+msgid "invalid '%s' value"
+msgstr "'%s' 值無效"
+
+#: gramRd.c:2547 gramRd.c:2550
+#, c-format
+msgid "bad markup (extra space?) at %s:%d:%d"
+msgstr "壞標記(額外的空間？)在 %s：%d：%d"
+
+#: gramRd.c:3125
+#, c-format
+msgid "Macro '%s' previously defined."
+msgstr "'%s' 巨集之前已經定義了"
+
+#: gramRd.c:3135
+#, c-format
+msgid "At most 4 arguments are allowed for user defined macros."
+msgstr "使用者定義的巨集最多只允許四個引數"
+
+#: gramRd.c:3177
+#, c-format
+msgid "No macro definition for '%s'."
+msgstr "'%s' 巨集的定義沒有。"
+
+#: gramRd.c:3239
+#, fuzzy, c-format
+msgid "Not enough arguments passed to user macro '%s'"
+msgstr "使用者定義的巨集最多只允許四個引數"
+
+#: gramRd.c:3379 gramRd.c:3383
+#, c-format
+msgid "newline within quoted string at %s:%d"
+msgstr "出現了換列內引號的字串在 %s:%d"
+
+#: gramRd.c:3402
+#, c-format
+msgid "unable to allocate buffer for long macro at line %d"
+msgstr "無法為在第 %d 列的長巨集指派緩衝區"
+
+#: gramRd.c:3432
+msgid "macros nested too deeply: infinite recursion?"
+msgstr "巨集巢狀過深：無限遞迴？"
+
+#: gramRd.c:3838
+#, c-format
+msgid "Unable to find macro %s"
+msgstr "找不到巨集 %s "
+
+#: gramRd.c:4036
+#, c-format
+msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
+msgstr "意外結束輸入(在 %c 引號的字串於 %s:%d:%d)"
+
+#: gramRd.c:4535
+msgid "cannot open the connection"
+msgstr "打不開鏈結"
+
+#: gramRd.c:4542
+msgid "cannot read from this connection"
+msgstr "無法從這個鏈結讀取"
+
+#: gramRd.c:4550
+msgid "invalid Rd file"
+msgstr "Rd 檔案無效"
+
+#: gramRd.c:4569
+msgid "'deparseRd' only supports deparsing character elements"
+msgstr "'deparseRd' 只支援反解析字元元素"
+
+#: gramRd.c:4572
+msgid "bad state"
+msgstr "狀態不好"
+
+#: gramRd.c:4585
+#, c-format
+msgid "bad text mode %d in 'deparseRd'"
+msgstr "'deparseRd' 裡的文字模式 %d 無效"
+
+#: http.c:32
+msgid "invalid bind address specification"
+msgstr "繫結位址規範無效"
+
+#: install.c:98
+msgid "path too long"
+msgstr ""
+
+#: install.c:115 install.c:134 install.c:136
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "'%s' 引數無效"
+
+#: install.c:165
+msgid "write error during file append"
+msgstr "檔案附加寫入時發生錯誤"
+
+#: pdscan.c:67
+msgid "too many items"
+msgstr ""
+
+#: pdscan.c:115
+msgid "non-character argument"
+msgstr ""
+
+#: signals.c:42
+msgid "pskill() is not supported on this platform"
+msgstr "這個平臺不支援 pskill()"
+
+#: signals.c:140
+msgid "psnice() is not supported on this platform"
+msgstr "這個平臺不支援 psnice()"
+
+#: text.c:69
+msgid "invalid argument type"
+msgstr "引數種類無效"
+
+#: text.c:225 text.c:247
+msgid "out of memory"
+msgstr "記憶體不足"

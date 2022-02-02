@@ -1,0 +1,12 @@
+### Name: testit
+### Title: An Rd Regression Test
+### Aliases: {
+
+### ** Examples
+
+\x
+%{}
+foo(x, y)
+
+
+

@@ -1,0 +1,144 @@
+
+
+Windows version
+===============
+
+src/gnuwin32/e_pow.S
+
+is distributed under the Lesser GNU Public Licence (file COPYING.LIB),
+being based closely on code in the GNU C Library.
+
+
+src/gnuwin32/getline/*
+
+/*
+ * Copyright (C) 1991, 1992, 1993 by Chris Thewalt (thewalt@ce.berkeley.edu)
+ *
+ * Permission to use, copy, modify, and distribute this software 
+ * for any purpose and without fee is hereby granted, provided
+ * that the above copyright notices appear in all copies and that both the
+ * copyright notice and this permission notice appear in supporting
+ * documentation.  This software is provided "as is" without express or
+ * implied warranty.
+ *
+ * Thanks to the following people who have provided enhancements and fixes:
+ *   Ron Ueberschaer, Christoph Keller, Scott Schwartz, Steven List,
+ *   DaviD W. Sanderson, Goran Bostrom, Michael Gleason, Glenn Kasten,
+ *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
+ */
+
+
+
+src/extra/graphapp/*
+
+The files {arith, array, bitmap, buttons, context, controls, cursors,
+drawing, drawtext, events, fonts, image, init, menus, objects,
+strings, windows}.c, {graphapp, internal}.h are in part
+
+	Copyright (C) 1993-1998 Lachlan Patrick
+	Distributed under the GNU Library General Public License
+
+
+src/gnuwin32/psignal.[ch]
+
+Based on files which are
+	Freely redistributable and modifiable.  Use at your own risk.
+	Copyright 1994-1999 The Downhill Project
+	http://www.ede.com/free/u2nt
+
+
+R_HOME/Tcl:
+
+Files compiled and installed from Tcl 8.6.4 and Tk 8.6.4.
+see R_HOME/Tcl/license.terms for the license.
+
+    This software is copyrighted by the Regents of the University of
+    California, Sun Microsystems, Inc., and other parties. [...]
+
+
+src/extra/trio/* (except compat.c)
+
+From trio-1.13 (http://daniel.haxx.se/projects/trio/)
+
+ Copyright (C) 1998-2001 by Bjorn Reese and Daniel Stenberg.
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+ WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+ MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE AUTHORS AND
+ CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
+
+
+src/gnuwin32/dos_wglob.[ch]
+
+(Very much) modified from perl's ext/File/Glob/bsd_glob.[ch].
+
+/*
+ * Copyright (c) 1989, 1993
+ *	The Regents of the University of California.  All rights reserved.
+ *
+ * This code is derived from software contributed to Berkeley by
+ * Guido van Rossum.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+src/fixed/h/iconv.h
+
+From GNU libiconv-1.11, distributed under LGPL>=2,
+Copyright (C) 1999-2003, 2005-2006 Free Software Foundation, Inc.
+
+
+
+Binary components
+-----------------
+
+The Windows binary distribution contains components that have been
+compiled separately.  Most of these are from the Rtools distribution
+at https://cran.r-project.org/bin/windows/Rtools/;
+https://cran.r-project.org/bin/windows/Rtools/Rtools.txt lists the current
+contents.
+
+The build of Tcl/Tk contained in the binary installer was produced
+by Adrian Waddell; see https://github.com/waddella/Tclbuild for 
+instructions.  Sources are available via links on that page, or on
+request from R-windows@r-project.org.
+
+Rbitmap.dll is built against static libraries for libpng, jpeg and
+libtiff: the Makefiles and configuration headers used are in the
+src/gnuwin32/bitmap direcctory.  The exact sources used for these
+libraries are available on request to R-windows@r-project.org (you
+will need to specify which binary installer version).
+
+A binary build may contain compiled sources from cairographics,
+distributed under LGPL 2.1 (our choice) or MPL 1.1.  The binary
+distribution used is that at https://www.rforge.net/Cairo/files/ .
+
+A binary build may contain compiled components from ICU, whose license
+can be viewed at
+https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE

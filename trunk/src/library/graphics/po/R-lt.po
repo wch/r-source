@@ -1,0 +1,522 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: graphics 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
+"PO-Revision-Date: 2020-11-29 17:23+0200\n"
+"Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "'a' is overridden by 'reg'"
+msgstr "'a' yra pakeičiamas 'reg'"
+
+msgid "only using the first two of %d regression coefficients"
+msgstr "naudojami tik pirmi du %d regresijos koeficientai"
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr "'a' ir 'b' yra pakeisti 'coef'"
+
+msgid "one of 'x1' and 'y1' must be given"
+msgstr "turi būti duotas vienas iš 'x1' ir 'y1'"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
+"'length', 'angle' ar 'code' ilgis didesnis kaip 1; reikšmės po pirmojo yra "
+"nepaisomos"
+
+msgid "'x' must be a 2-d contingency table"
+msgstr "'x' turi būti dvimatė požymių sąveikos lentelė"
+
+msgid "all entries of 'x' must be nonnegative and finite"
+msgstr "visi 'x' įrašai turi būti neneigiami ir baigtiniai"
+
+msgid "at least one entry of 'x' must be positive"
+msgstr "bent vienas 'x' įrašas turi būti teigiamas"
+
+msgid "incorrect 'col': must be length 2"
+msgstr "neteisingas 'col': ilgis turi būti 2"
+
+msgid "only for 1-D table"
+msgstr "tik vienmatei lentelei"
+
+msgid "'side' must be in {1:4}"
+msgstr "'side' turi būti {1:4}"
+
+msgid "invalid 'axp'"
+msgstr "neteisinga 'axp'"
+
+msgid "invalid 'log'"
+msgstr "neteisinga 'log'"
+
+msgid "invalid positive 'axp[3]'"
+msgstr "netinkamas teigiamas 'axp[3]'"
+
+msgid "invalid 'usr'"
+msgstr "neteisingas 'usr'"
+
+msgid "'height' must be a vector or a matrix"
+msgstr "'height' turi būti vektorius arba matrica"
+
+msgid "Cannot use shading lines in bars when log scale is used"
+msgstr ""
+"Kai naudojama logaritminė skalė, negalima naudoti linijų šešėliavimo juostoje"
+
+msgid "log scale error: at least one 'height + offset' value <= 0"
+msgstr "logaritminės skalės klaida: bent viena 'height + offset' reikšmė <= 0"
+
+msgid "log scale error: 'xlim' <= 0"
+msgstr "logaritminės skalės klaida: 'xlim' <= 0"
+
+msgid "log scale error: 'ylim' <= 0"
+msgstr "logaritminės skalės klaida: 'ylim' <= 0"
+
+msgid "incorrect number of names"
+msgstr "neteisingas vardų skaičius"
+
+msgid "'formula' missing or incorrect"
+msgstr "trūkstama 'formula' arba neteisinga"
+
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula' turi nurodyti 1 ar 2 kategorinius kintamuosius"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr "dubliuotos kategorinės reikšmės - pabandykite kitą formulę ar poaibį"
+
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "formulėje su cbind() turi būti nurodytas 1 kategoriškas kintamasis"
+
+msgid "invalid first argument"
+msgstr "neteisingas pirmas argumentas"
+
+msgid "'at' must have same length as 'z$n', i.e. %d"
+msgstr "'at' turi būti tokio paties ilgio kaip 'z$n', t. y. %d"
+
+msgid "invalid boxplot widths"
+msgstr "neteisingas stačiakampės diagramos plotis"
+
+msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
+msgstr "kai kurie rėžiai viršijo rėmus ('box'): galbūt nustatykite notch=FALSE"
+
+msgid "'formula' should specify exactly two variables"
+msgstr "'formula' turi nurodyti būtent du kintamuosius"
+
+msgid "dependent variable should be a factor"
+msgstr "priklausomasis kintamasis turėtų būti faktorius"
+
+msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
+msgstr ""
+"y ašis yra integralioje tikimybės skalėje, 'ylim' turi būti intervale [0,1]"
+
+msgid "no 'z' matrix specified"
+msgstr "'z' matrica nenurodyta"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "turėtų būti didėjančios 'x' ir 'y' reikšmės"
+
+msgid "no proper 'z' matrix specified"
+msgstr "nenurodyta tinkama 'z' matrica"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
+"'labels' yra nulinio ilgio.  Norint nerodyti žymenų, naudokite 'drawlabels = "
+"FALSE'."
+
+msgid "invalid conditioning formula"
+msgstr "neteisinga sąlyginė formulė"
+
+msgid "incompatible variable lengths"
+msgstr "nesuderinami kintamųjų ilgiai"
+
+msgid "'number' must be integer >= 1"
+msgstr "'number' turi būti sveikasis skaičius >= 1"
+
+msgid "'overlap' must be < 1 (and typically >= 0)."
+msgstr "'overlap' turi būti < 1 (ir kaip paprastai būna >= 0)."
+
+msgid "invalid 'given.values'"
+msgstr "neteisinga 'given.values'"
+
+msgid "rows * columns too small"
+msgstr "eilutės * stulpeliai per maži"
+
+msgid "Missing rows: %s"
+msgstr "Trūkstamos eilutės: %s"
+
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
+msgstr "'expr' turi būti funkcija, kreipinys arba reiškinys, kuriame yra '%s'"
+
+msgid "'add' will be ignored as there is no existing plot"
+msgstr "'add' bus ignoruojamas, nes nėra egzistuojančio grafiko"
+
+msgid "'from' and 'to' must be > 0 with log=\"x\""
+msgstr "'from' ir 'to' turi būti > 0 su log=\"x\""
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr "'expr' neįvertina 'n' ilgio objekto"
+
+msgid "wrong method"
+msgstr "neteisingas metodas"
+
+msgid "Must specify 'breaks' in hist(<POSIXt>)"
+msgstr "Privalote nurodyti 'breaks', esantį hist(<POSIXt>)"
+
+msgid "invalid specification of 'breaks'"
+msgstr "netinkama 'breaks' specifikacija"
+
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr "Privalote nurodyti 'breaks', esantį hist(<Date>)"
+
+msgid "'x' must be a numeric vector or matrix"
+msgstr "'x' turi būti skaitinis vektorius arba matrica"
+
+msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
+msgstr "'x' nėra nei vektorius, nei matrica: naudojama as.numeric(x)"
+
+msgid "'x' must be an array"
+msgstr "'x' turi būti masyvas"
+
+msgid "'x' must be 2- or 3-dimensional"
+msgstr "'x' turi būti 2 arba 3 matavimų skaičius"
+
+msgid "table for each stratum must be 2 by 2"
+msgstr "lentelė kiekvienam sluoksniui turi būti 2 iš 2"
+
+msgid "'conf.level' must be a single number between 0 and 1"
+msgstr "'conf.level' turi būti vienas skaičius tarp 0 ir 1"
+
+msgid "incorrect 'margin' specification"
+msgstr "neteisinga 'margin' specifikacija"
+
+msgid "incorrect geometry specification"
+msgstr "neteisinga geometrijos specifikacija"
+
+msgid "'x' must be numeric"
+msgstr "'x' turi būti realusis skaičius"
+
+msgid "invalid length(x)"
+msgstr "neteisingas length(x)"
+
+msgid "'nclass' not used when 'breaks' is specified"
+msgstr "'nclass' nenaudojama, kai yra nurodomi 'breaks'"
+
+msgid "'include.lowest' ignored as 'breaks' is not a vector"
+msgstr "'include.lowest' ignoruojamas kaip 'breaks' ir nėra vektorius"
+
+msgid "unknown 'breaks' algorithm"
+msgstr "nežinomas 'breaks' algoritmas"
+
+msgid "invalid number of 'breaks'"
+msgstr "neteisingas 'breaks' skaičius"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr "'breaks = %g' yra per didelis ir nustatytas kaip 1e6"
+
+msgid "hist.default: pretty() error, breaks=%s"
+msgstr "hist.default: pretty() klaida, breaks=%s"
+
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr "Neteisingas trūkio taškas pateiktas 'breaks(x)': %s"
+
+msgid "invalid length(breaks)"
+msgstr "neteisingas length(breaks)"
+
+msgid "'breaks' are not strictly increasing"
+msgstr "'breaks' nėra griežtai didėjantis"
+
+msgid "'probability' is an alias for '!freq', however they differ."
+msgstr "'probability' yra slapyvardis '!freq', tačiau jie skiriasi."
+
+msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
+msgstr "kai kurie 'x' neįskaičiuojami; gal 'breaks' neapima 'x'"
+
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
+msgstr "grafike AREAS yra neteisingos -- geriau naudokite 'freq = FALSE'"
+
+msgid "'x' is wrongly structured"
+msgstr "'x' struktūriškai neteisingas"
+
+msgid "argument must be matrix-like"
+msgstr "argumentas turi būti kaip matrica"
+
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr "'x' ir 'y' reikšmės turi būti baigtinės arba netrūkstamos"
+
+msgid "'z' must be a matrix"
+msgstr "'z' turi būti matrica"
+
+msgid "'z' must be numeric or logical"
+msgstr "'z' turi būti skaitinė arba loginė reikšmė"
+
+msgid "invalid z limits"
+msgstr "neteisingos z ribos"
+
+msgid "must have one more break than colour"
+msgstr "turi būti vienu trūkiu daugiau negu spalva"
+
+msgid "'breaks' must all be finite"
+msgstr "'breaks' turi būti baigtinis"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr "nesurikiuotas 'breaks' bus surikiuojamas prieš naudojimą"
+
+msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
+msgstr "z matavimo skaičius nėra length(x)(-1) kart length(y)(-1)"
+
+msgid "%s can only be used with a regular grid"
+msgstr "%s gali būti naudojamas tik su įprastu tinkleliu"
+
+msgid "integer colors must be non-negative"
+msgstr "sveikųjų skaičių spalvos turi būti neneigiamos"
+
+msgid "'respect' must be logical or matrix with same dimension as 'mat'"
+msgstr ""
+"'respect' turi būti loginė reikšmė arba matrica su tokiu pat matavimo "
+"skaičiumi kaip 'mat'"
+
+msgid ""
+"layout matrix must contain at least one reference\n"
+"to each of the values {1 ... %d}"
+msgstr ""
+"matricos formate turi būti bent viena nuoroda\n"
+"kiekvienai {1 ... %d} reikšmei"
+
+msgid "invalid 'title'"
+msgstr "neteisingas 'title'"
+
+msgid "'legend' is of length 0"
+msgstr "'legend' yra 0 ilgio"
+
+msgid "invalid coordinate lengths"
+msgstr "neteisingi koordinačių ilgiai"
+
+msgid "'text.width' must be numeric, >= 0"
+msgstr "'text.width' turi būti skaitinis, >= 0"
+
+msgid "horizontal specification overrides: Number of columns := %d"
+msgstr "horizontalus detalizavimas pakeičia: stulpelių skaičius:= %d"
+
+msgid "'merge = TRUE' has no effect when no line segments are drawn"
+msgstr "'merge = TRUE' neturi poveikio, kai tiesės segmentai nėra piešiami"
+
+msgid "not using pch[2..] since pch[1L] has multiple chars"
+msgstr "nenaudojama pch[2..] kai pch[1L] turi kelis chars"
+
+msgid "must specify at least one of 'x' and 'y'"
+msgstr "turi nurodyti bent vieną iš 'x' ar 'y'"
+
+msgid "'x' and 'y' must have same number of rows"
+msgstr "'x' ir 'y' turi būti to paties eilučių skaičiaus"
+
+msgid "'x' and 'y' must have only 1 or the same number of columns"
+msgstr "'x' ir 'y' turi būti tik vieno arba to paties stulpelių skaičiaus"
+
+msgid "default 'pch' is smaller than number of columns and hence recycled"
+msgstr "numatytasis 'pch' mažesnis nei stulpelių skaičius ir todėl perdirbtas"
+
+msgid "missing values in contingency table"
+msgstr "trūkstama reikšmė požymių sąveikos lentelėje"
+
+msgid "'x' must not have 0 dimensionality"
+msgstr "'x' neturi turėti nulinio matavimo skaičiaus"
+
+msgid "invalid 'shade' specification"
+msgstr "neteisinga 'shade' specifikacija"
+
+msgid "length of 'sort' does not conform to 'dim(x)'"
+msgstr "'sort' ilgis neatitinka 'dim(x)'"
+
+msgid "non-numeric argument to 'pairs'"
+msgstr "neskaitinis argumentas į 'pairs'"
+
+msgid "only one column in the argument to 'pairs'"
+msgstr "tik vienas stulpelis argumente 'pairs'"
+
+msgid "invalid argument 'horInd'"
+msgstr "neteisingas argumentas 'horInd'"
+
+msgid "invalid argument 'verInd'"
+msgstr "neteisingas argumentas 'verInd'"
+
+msgid "the 'panel' function made a new plot"
+msgstr "'panel' funkcija sukūrė naują grafiką"
+
+msgid "surface extends beyond the box"
+msgstr "paviršius tęsiasi už langelio"
+
+msgid "'x' values must be positive."
+msgstr "'x' reikšmė turi būti teigiama."
+
+msgid "invalid table 'x'"
+msgstr "neteisinga 'x' lentelė"
+
+msgid "the formula '%s' is treated as '%s'"
+msgstr "formulė '%s' yra laikoma kaip '%s'"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "negalima apdoroti daugiau nei vienos 'x' koordinatės"
+
+msgid "must have a response variable"
+msgstr "turi turėti atsako kintamąjį"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "neteisingas stačiakampės diagramos plotis"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "neteisingas stačiakampės diagramos plotis"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' taikomas ne duomenų sistemai"
+
+msgid "'y' must be a numeric vector"
+msgstr "'y' turi būti skaitinis vektorius"
+
+msgid "'x' must be a data frame"
+msgstr "'x' turi būti duomenų sistema"
+
+msgid "all columns/components of 'x' must be factors"
+msgstr "visi 'x' stulpeliai/komponentai turi būti faktoriai"
+
+msgid "some levels of the factors are empty"
+msgstr "kai kurie faktorių lygiai tušti"
+
+msgid "'x' must be a dataframe or a formula"
+msgstr "'x' turi būti duomenų sistema arba formulė"
+
+msgid "a variable in 'y' is not numeric"
+msgstr "kintamasis 'y' nėra skaitinis"
+
+msgid "there must be at least one numeric variable!"
+msgstr "turi būti bent vienas skaitinis kintamasis!"
+
+msgid "cannot hatch with logarithmic scale active"
+msgstr "negalimas perėjimas, kai aktyvi logaritminė skalė"
+
+msgid "Invalid fill rule for graphics path"
+msgstr "Neteisinga užpildymo taisyklė grafikos adrese"
+
+msgid "invalid rectangle specification"
+msgstr "netinkama stačiakampio specifikacija"
+
+msgid "some values will be clipped"
+msgstr "kai kurios reikšmės bus sutrumpintos"
+
+msgid "invalid screen number"
+msgstr "neteisingas ekrano numeris"
+
+msgid "'figs' must be a vector or a matrix with 4 columns"
+msgstr "'figs' turi būti vektorius arba 4 stulpelių matrica"
+
+msgid "'figs' must specify at least one screen"
+msgstr "'figs' turi nurodyti bent vieną ekraną"
+
+msgid "'nrpoints' should be numeric scalar with value >= 0."
+msgstr "'nrpoints' turėtų būti skaitinis skaliaras, kurio reikšmė >= 0."
+
+msgid "a 2-way table has to be specified"
+msgstr "turi būti nurodyta dvikryptė lentelė"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr ""
+"x ašis yra integralioje tikimybės skalėje, 'xlim' turi būti intervale [0,1]"
+
+msgid "'x' must be a matrix or a data frame"
+msgstr "'x' turi būti matrica arba duomenų sistema"
+
+msgid "data in 'x' must be numeric"
+msgstr "duomenys 'x' turi būti skaitiniai"
+
+msgid "'nrow * ncol' is less than the number of observations"
+msgstr "'nrow * ncol' yra mažesnis nei stebėjimų skaičius"
+
+msgid "labels do not make sense for a single location"
+msgstr "žymenos neturi prasmės atskiram išdėstymui"
+
+msgid "'locations' must be a 2-column matrix."
+msgstr "'locations' turi būti 2 stulpelių matrica."
+
+msgid "number of rows of 'locations' and 'x' must be equal."
+msgstr "'locations' ir 'x' eilučių skaičius turi būti lygus."
+
+msgid "length of 'angles' must equal 'ncol(x)'"
+msgstr "'angles' turi būti lygus 'ncol(x)'"
+
+msgid "no finite and non-missing values"
+msgstr "nėra baigtinių ar netrūkstamų reikšmių"
+
+msgid "'scale' must be positive"
+msgstr "'scale' turi būti teigiama"
+
+msgid "invalid plotting method"
+msgstr "neteisingas braižymo metodas"
+
+msgid "'at' must have length equal to the number %d of groups"
+msgstr "'at' ilgis turi būti lygus grupės skaičiui %d"
+
+msgid "formula missing or incorrect"
+msgstr "trūkstama arba neteisinga formulė"
+
+msgid "'number' must have same length as 'x' and 'y'"
+msgstr "'number' turi būti tokio paties ilgio kaip 'x' ir 'y'"
+
+msgid "exactly one symbol type must be specified"
+msgstr "turi būti nurodytas būtent vienas simbolio tipas"
+
+msgid "x log scale:  xinch() is nonsense"
+msgstr "x logaritminė skalė: xinch() neturi prasmės"
+
+msgid "y log scale:  yinch() is nonsense"
+msgstr "y logaritminė skalė: yinch() neturi prasmės"
+
+msgid "log scale:  xyinch() is nonsense"
+msgstr "logaritminė skalė: xyinch() yra beprasmė"
+
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] "Dubliuotas argumentas %s yra ignoruojamas"
+msgstr[1] "Dubliuoti argumentai %s yra ignoruojami"
+msgstr[2] "Dubliuotų %s argumentų yra ignoruojama"
+
+msgid "Outlier (%s) in boxplot %d is not drawn"
+msgid_plural "Outliers (%s) in boxplot %d are not drawn"
+msgstr[0] "Klaidingas duomuo (%s) stačiakampėje diagramoje %d yra nenupieštas"
+msgstr[1] "Klaidingi duomenys (%s) stačiakampėje diagramoje %d nėra nupiešti"
+msgstr[2] "Klaidingų duomenų (%s) stačiakampėje diagramoje %d nėra nupiešta"
+
+msgid "argument %s is not made use of"
+msgid_plural "arguments %s are not made use of"
+msgstr[0] "argumentas %s nėra sukurtas naudoti"
+msgstr[1] "argumentai %s nėra sukurti naudoti"
+msgstr[2] "argumentų %s nėra sukurta naudoti"
+
+#~ msgid "2. Outliers (%s) in boxplot %d are not drawn"
+#~ msgstr ""
+#~ "2. Klaidingi duomenys (%s) stačiakampėje diagramoje %d yra nenupiešti"
+
+#~ msgid "3. Outliers (%s) in boxplot %d are not drawn"
+#~ msgstr ""
+#~ "3. Klaidingų duomenų (%s) stačiakampėje diagramoje %d yra nenupieštų"
+
+#~ msgid "2. arguments %s are not made use of"
+#~ msgstr "2. argumentai %s nėra naudojami"
+
+#~ msgid "3. arguments %s are not made use of"
+#~ msgstr "3. argumentų %s nėra naudojamų"
+
+#~ msgid "to each of the values {1 ... %d}"
+#~ msgstr "kiekvienai {1 ... %d} reikšmei"
+
+#~ msgid "\"some 'x' not counted"
+#~ msgstr " maybe 'breaks' do not span range of 'x'\""

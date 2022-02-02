@@ -1,0 +1,120 @@
+# Translation of parallel.pot to French
+# Copyright (C) 2011 The R Foundation
+# This file is distributed under the same license as the parallel R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.0.4\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-04-15 19:36+0100\n"
+"PO-Revision-Date: 2021-02-10 17:48+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: fork.c:215
+#, c-format
+msgid "unable to terminate child process: %s"
+msgstr "impossible de terminer un processus fils : %s"
+
+#: fork.c:242
+#, c-format
+msgid "unable to terminate child: %s"
+msgstr "impossible de terminer le processus fils : %s"
+
+#: fork.c:321 fork.c:608 ncpus.c:90 ncpus.c:126 ncpus.c:191
+msgid "memory allocation error"
+msgstr "erreur d'allocation mémoire"
+
+#: fork.c:377 fork.c:381 fork.c:385
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "argument '%s' incorrect"
+
+#: fork.c:443
+msgid ""
+"Error while shutting down parallel: unable to terminate some child "
+"processes\n"
+msgstr ""
+"Erreur lors de la fermeture de parallel : impossible de terminer certains "
+"processus fils\n"
+
+#: fork.c:532 fork.c:535
+msgid "unable to create a pipe"
+msgstr "impossible de créer un canal (pipe)"
+
+#: fork.c:557
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "impossible de créer une nouvelle branche, raison possible : %s"
+
+#: fork.c:749
+msgid "only children can send data to the master process"
+msgstr ""
+"seuls des processus enfants peuvent envoyer des données à un processus maître"
+
+#: fork.c:751
+msgid "there is no pipe to the master process"
+msgstr "aucun canal vers le processus maître"
+
+#: fork.c:753
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "le contenu à envoyer doit être RAW, utilisez serialize() si nécessaire"
+
+#: fork.c:762 fork.c:770 fork.c:1180
+msgid "write error, closing pipe to the master"
+msgstr "erreur d'écriture, fermeture du canal vers le processus maître"
+
+#: fork.c:780
+msgid "only the master process can send data to a child process"
+msgstr ""
+"seul le processus maître peut envoyer des données vers un processus fils"
+
+#: fork.c:788
+#, c-format
+msgid "child %d does not exist"
+msgstr "le processus fils %d n'existe pas"
+
+#: fork.c:794
+msgid "write error"
+msgstr "erreur d'écriture"
+
+#: fork.c:880
+#, c-format
+msgid "cannot wait for child %d as it does not exist"
+msgstr "impossible d’attendre le processus fils %d parce qu’il n’existe pas"
+
+#: fork.c:939 fork.c:1059
+#, c-format
+msgid "error '%s' in select"
+msgstr "erreur '%s' lors de la sélection"
+
+#: fork.c:1149
+msgid "'mckill' failed"
+msgstr "'mckill' a échoué"
+
+#: fork.c:1162
+msgid "'mcexit' can only be used in a child process"
+msgstr "'mcexit' peut seulement être utilisé avec un processus fils"
+
+#: fork.c:1194
+msgid "'mcexit' failed"
+msgstr "'mcexit' a échoué"
+
+#: fork.c:1223 fork.c:1232
+msgid "invalid CPU affinity specification"
+msgstr "spécification d'affinité CPU incorrecte"
+
+#: fork.c:1243
+msgid "requested CPU set is too large for this system"
+msgstr "le set de CPU demandé est trop large pour ce système"
+
+#: fork.c:1266
+msgid "retrieving CPU affinity set failed"
+msgstr "la récupération de l'affinité CPU a échoué"

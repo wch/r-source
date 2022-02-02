@@ -1,0 +1,62 @@
+# Korean translation for R tcltk package
+# Copyright (C) 1995-2018 The R Core Team
+#
+# This file is distributed under the same license as the R tcltk package.
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"PO-Revision-Date: 2018-04-09 12:10-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: tcltk.c:70
+msgid "parse error in R expression"
+msgstr ""
+"R 표현식(expression)을 구문분석(parse) 하던 도중에 에러가 발생했습니다."
+
+#: tcltk.c:179 tcltk.c:257
+msgid "tcl error.\n"
+msgstr "tcl 에러입니다.\n"
+
+#: tcltk.c:208 tcltk.c:283 tcltk.c:300 tcltk.c:320 tcltk.c:340 tcltk.c:415
+#: tcltk.c:480 tcltk.c:534 tcltk.c:773
+msgid "invalid argument"
+msgstr "올바르지 않은 인자입니다."
+
+#: tcltk.c:290
+msgid "no such variable"
+msgstr ""
+
+#: tcltk.c:322 tcltk.c:342 tcltk.c:417 tcltk.c:482 tcltk.c:536
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr ""
+"올바르지 않은 tclObj입니다 -- 혹시 다른 세션으로부터 저장된것이 아닐까요?"
+
+#: tcltk.c:646
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr "tcltk 내부 함수 'callback_closure'에 있는 인자목록이 너무 깁니다"
+
+#: tcltk.c:679
+msgid "argument is not of correct type"
+msgstr "올바른 유형(correct type)의 인자가 아닙니다."
+
+#: tcltk.c:731
+msgid "no DISPLAY variable so Tk is not available"
+msgstr "DISPLAY 변수가 없기 때문에 Tk를 사용할 수 없습니다"
+
+#: tcltk_unix.c:94
+msgid "Tcl is not loaded"
+msgstr "Tcl이 로드되지 않았습니다"
+
+#: tcltk_unix.c:98
+msgid "Tcl is not last loaded handler"
+msgstr "Tcl은 마지막으로 로드된 핸들러(handler)가 아닙니다"

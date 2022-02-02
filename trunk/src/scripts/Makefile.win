@@ -1,0 +1,10 @@
+#-*- Makefile -*-
+R_HOME = ../..
+
+## COMPILE LINK javareconf rtags are Unix-only
+
+all: \
+  $(R_HOME)/bin/config.sh
+
+$(R_HOME)/bin/config.sh: config
+	@cp $< $@

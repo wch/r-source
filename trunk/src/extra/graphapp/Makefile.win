@@ -1,0 +1,54 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+all: makeMakedeps DLL implib
+
+CPPFLAGS = -I. -I../../gnuwin32 -I../../include
+DEFS = -DGA_DLL_BUILD -DENABLE_NLS=1
+CPPFLAGS += $(DEFS)
+
+SOURCES = $(wildcard *.c)
+OBJECTS = $(SOURCES:.c=.o)
+
+DLL: libR.dll.a Rgraphapp.dll
+	@cp Rgraphapp.dll ../../../$(BINDIR)
+
+
+ifdef USE_IMPLIBS
+implib: libRgraphapp.dll.a
+	@$(MKDIR) -p ../../../lib
+	@$(CP) libRgraphapp.dll.a ../../../lib
+else
+implib:
+endif
+
+libRgraphapp.dll.a: Rgraphapp.def
+
+## MinGW symbols have trailing @, MinGW-w64 do not
+Rgraphapp.def: $(OBJECTS)
+	@$(ECHO) EXPORTS > $@
+	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SED) -e 's/@16//' | LC_COLLATE=C $(SORT) | uniq > g.def
+	@LC_COLLATE=C comm -23 g.def ga.hide >> $@
+	@$(RM) g.def
+
+Rgraphapp.dll: $(OBJECTS) dllversion.o Rgraphapp.def
+	$(DLL) -shared -mwindows -o $@ Rgraphapp.def $(OBJECTS) dllversion.o -L. -lR -lcomctl32 -limm32 -lmsimg32
+
+## need to break mutual dependence with R.dll
+libR.dll.a: R.def
+
+clean:
+	$(RM) *.o Rgraphapp.def *~ \#*\# *.d Makedeps
+
+distclean: clean
+	$(RM) *.a  *.dll
+
+# Dependencies
+dllversion.o: ../../include/Rversion.h
+DEPS = $(SOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

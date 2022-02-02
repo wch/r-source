@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.4\n"
+
+msgid "invalid 'filename'"
+msgstr "niepoprawny argument 'filename'"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr "wartość 'coef' musi być nieujemna"
+
+msgid "no 'z' matrix specified"
+msgstr "brak określonej macierzy 'z'"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "oczekiwano rosnących wartości 'x' oraz 'y'"
+
+msgid "no proper 'z' matrix specified"
+msgstr "nie określono odpowiedniej macierzy 'z'"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr "wymiary 'x', 'y' oraz 'z' nie zgadzają się"
+
+msgid "finite coordinates are needed"
+msgstr "wymagane są skończone współrzędne"
+
+msgid "'bias' must be positive"
+msgstr "argument 'bias' musi być dodatni"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr "argument 'alpha' musi mieć wartość FALSE, jeśli określono argument 'space'"
+
+msgid "at least 3 columns needed"
+msgstr "przynajmniej 3 kolumny są potrzebne"
+
+msgid "rgb matrix must be numeric"
+msgstr "macierz RGB musi być liczbowa"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "macierz RGB musi mieć 3 wiersze"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "argumenty 'r', 'g' oraz 'b' muszą być w przedziale [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "wartości 'start' oraz 'end' muszą być różne oraz zawierać się w przedziale [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "argument 'gamma' musi być liczbą lub wartością 'sRGB'"
+
+msgid "Color space converter: %s"
+msgstr "Konwerter przestrzeni kolorów: %s"
+
+msgid "Reference white: %s"
+msgstr "Referencyjna biel: %s"
+
+msgid "display gamma = %s"
+msgstr "wyświetl gamma = %s"
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr "argument 'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem tekstowym"
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr "'to' musi być obiektem klasy \"colorConverter\" lub łańcuchem"
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr "'from.ref.white' nie zgadza się z definicją %s"
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr "'to.ref.white' nie zgadza się z definicją %s"
+
+msgid "color spaces use different reference whites"
+msgstr "przestrzenie kolorów używają różnych referencyjnych bieli"
+
+msgid "'name' must be a character vector"
+msgstr "argument 'name' musi być wektorem tekstowym"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "nie można zamknąć urządzenia 1 (urządzenie 'null')"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "nie można dostarczyć 'which' oraz 'device' w tym samym czasie"
+
+msgid "cannot copy from the null device"
+msgstr "nie można kopiować z urządzenia 'null'"
+
+msgid "cannot copy to the null device"
+msgstr "nie można kopiować do urządzenia 'null'"
+
+msgid "cannot copy device to itself"
+msgstr "nie można kopiować urządzenia na siebie samego"
+
+msgid "'device' should be a function"
+msgstr "'device' powinno być funkcją"
+
+msgid "no device to print from"
+msgstr "brak urządzenia z którego można drukować"
+
+msgid "can only print from a screen device"
+msgstr "można drukować jedynie z ekranu urządzenia"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "potrzeba określić jeden z 'width' oraz 'height'"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "funkcja 'dev.control()' wywołana bez otwartego urządzenia graficznego"
+
+msgid "argument is missing with no default"
+msgstr "brakuje argumentu, a brak zdefiniowanej dla niego wartości domyślnej"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "funkcja 'dev.displaylist()' wywołana bez otwartego urządzenia graficznego"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "niepoprawne ustawienie dla 'getOption(\"device\")'"
+
+msgid "device '%s' not found"
+msgstr "urządzenie '%s' nie zostało znalezione"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "brak odpowiedniej nieużywanej nazwy pliku dla 'pdf()'"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): używanie 'pdf(file=\"%s\")'"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "brak odpowiedniej nieużywanej nazwy pliku dla 'postscript()'"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): używanie 'postscript(file=\"%s\")'"
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "niepoprawny argument 'file'"
+
+#, fuzzy
+msgid "Invalid pattern type"
+msgstr "Niepoprawny typ czcionki"
+
+#, fuzzy
+msgid "Invalid 'extend' value"
+msgstr "niepoprawny argument 'filename'"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "niepoprawne argumenty w '%s' (potrzebne są nazwane argumenty)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "argument 'name.opt' musi być tekstem, nazwą istniejącej listy"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "nie można zresetować nieistniejące '%s'"
+
+msgid "invalid options in '%s'"
+msgstr "niepoprawne opcje w '%s'"
+
+msgid "NOT changing %s"
+msgstr "NIE zmienianie %s"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "argument 'append' jest dla zapewnienia wstecznej kompatybilności i będzie zignorowany"
+
+msgid "unknown family '%s'"
+msgstr "nieznana rodzina '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "niepoprawny argument 'family'"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
+
+msgid "invalid 'file' argument '%s'"
+msgstr "niepoprawny argument 'file' '%s'"
+
+msgid "invalid PDF version"
+msgstr "niepoprawna wersja PDF"
+
+msgid "Invalid font type"
+msgstr "Niepoprawny typ czcionki"
+
+msgid "invalid family name in font specification"
+msgstr "niepoprawna rodzina czcionki w specyfikacji czcionki"
+
+msgid "invalid metric information in font specification"
+msgstr "niepoprawna informacja metryczna w specyfikacji czcionki"
+
+msgid "invalid encoding in font specification"
+msgstr "niepoprawna strona kodowa w specyfikacji czcionki"
+
+msgid "Not a CID font"
+msgstr "To nie jest czcionka CID"
+
+msgid "invalid CMap name in font specification"
+msgstr "niepoprawna nazwa 'CMap' w specyfikacji czcionki"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "niepoprawne 'cmapEncoding' w specyfikacji czcionki"
+
+msgid "invalid PDF resource in font specification"
+msgstr "niepoprawne źródło PDF w specyfikacji czcionki"
+
+msgid "Invalid font database name"
+msgstr "Niepoprawna nazwa bazy danych czcionek"
+
+msgid "font %s already in use"
+msgstr "czcionka '%s' jest już w użyciu"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "niepoprawne argumenty w '%s' (muszą być nazwy czcionek)"
+
+msgid "unknown font"
+msgstr "nieznana czcionka"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "niezgodność strony kodowej czcionki '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+
+msgid "GhostScript was not found"
+msgstr "program 'GhostScript' nie został znaleziony"
+
+msgid "invalid output format"
+msgstr "niepoprawny format wyjściowy"
+
+msgid "status %d in running command '%s'"
+msgstr "status '%d' w działającym poleceniu '%s'"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr "nie udało się dodać więcej znaczników na osi; 'min.n' jest zbyt duże?"
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr "macierz rastrowa musi być tekstem lub liczbą lub być wartością logiczną"
+
+msgid "a raster array must be numeric"
+msgstr "tablica rastrowa musi być liczbowa"
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr "tablica rastrowa musi mieć dokładnie 3 wymiary"
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr "tablica rastrowa musi mieć dokładnie 3 lub 4 płaszczyzny"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "'drop' jest zawsze rozumiany jako FALSE w '[.raster'"
+
+msgid "invalid raster subsetting"
+msgstr "niepoprawny podzbiór rastra"
+
+msgid "invalid raster subassignment"
+msgstr "niepoprawny wymiana elementu rastra"
+
+msgid "operator not meaningful for raster objects"
+msgstr "operator nie ma znaczenia dla obiektów rastrowych"
+
+msgid "no current device to record from"
+msgstr "brak bieżącego urządzenia z którego można nagrywać"
+
+msgid "argument is not of class %s"
+msgstr "argument nie jest obiektem klasy %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr "zrzut zapisany w innej wersji R (przed 3.3.0)"
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr "zrzut zapisany w innej wersji R (%s)"
+
+msgid "snapshot contains invalid graphics call"
+msgstr "zrzut zawiera niepoprawne wywołania grafiki"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "argument 'nbin' musi być liczbą o długości 1 lub 2"
+
+msgid "'bandwidth' must be numeric"
+msgstr "wartość 'bandwidth' musi być liczbą"
+
+msgid "'bandwidth' must be positive"
+msgstr "argument 'bandwidth' musi być dodatni"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' musi być wynikiem funkcji 'range()', a więc o długości 2"
+
+msgid "invalid first argument"
+msgstr "niepoprawny pierwszy argument"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "obiekt 'x' jest listą, ale nie zawiera komponentów 'x' oraz 'y'"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "długości zmiennych 'x' oraz 'y' różnią się"
+
+msgid "invalid first argument [bad language object]"
+msgstr "niepoprawny pierwszy argument [niepoprawny obiekt języka]"
+
+msgid "at least 2 columns needed"
+msgstr "przynajmniej 2 kolumny są potrzebne"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "obiekt 'x' jest listą, ale nie zawiera komponentów 'x', 'y' oraz 'z'"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "długości zmiennych 'x', 'y' oraz 'z' różnią się"
+
+msgid "'file' is missing with no default"
+msgstr "brakuje argumentu 'file', a brak zdefiniowanej wartości domyślnej"
+
+msgid "unrecognized format of gs -help"
+msgstr "nierozpoznany format 'gs -help'"
+
+msgid "device '%s' is not available"
+msgstr "urządzenie '%s' nie jest dostępne"
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+"Dostępne urządzenia to:\n"
+"%s"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "invalid 'title'"
+msgstr "niepoprawny argument 'title'"
+
+msgid "invalid 'file'"
+msgstr "niepoprawny argument 'file'"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "niepoprawna czcionka 'Quartz': muszą być 4 łańcuchy"
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr "niepoprawne argumenty w 'quatzFonts' (muszą być nazwy czcionek)"
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr "niepoprawne argumenty w 'quatzFonts' (potrzebne są nazwane argumenty)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "czcionki oparte o cairo nie są wspierane w tej kompilacji - używanie \"Xlib\""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "nieznana rodzina dla  'X11(type = \"XLib\")'"
+
+msgid "invalid X11 font specification:"
+msgstr "niepoprawne określenie czcionki X11:"
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "niepoprawne argumenty w 'X11Fonts' (muszą być nazwy czcionek)"
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "niepoprawne argumenty w 'X11Fonts' (potrzebne są nazwane argumenty)"
+
+msgid "no such device"
+msgstr "brak takiego urządzenia"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "można kopiować jedynie z urządzeń 'X11(type=\"*cairo\")'"
+
+msgid "invalid value for 'rescale'"
+msgstr "niepoprawna wartość dla 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
+
+msgid "can only bring windows devices to the front"
+msgstr "można jedynie przywołać urządzenia okien na wierzch"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' nie ma zastosowania w konsoli R"
+
+msgid "can only manipulate windows devices"
+msgstr "można działać tylko z urządzeniami 'windows'"
+
+msgid "can only copy from 'windows' devices"
+msgstr "można kopiować jedynie z urządzeń 'windows'"
+
+msgid "subscript out of range"
+msgstr "indeks jest poza zakresem"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "niepoprawna czcionka Windows:  musi być nazwa pojedynczej rodziny czcionek"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "niepoprawne argumenty w 'windowsFonts' (muszą być nazwy czcionek)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "niepoprawne argumenty w 'windowsFonts' (potrzebne są nazwane argumenty)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "niepoprawna nazwa argumentu %s w '%s'"
+msgstr[1] "niepoprawne nazwy argumentów %s w '%s'"
+msgstr[2] "niepoprawne nazwy argumentów %s w '%s'"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "różni się pomiędzy nowym a poprzednim"
+msgstr[1] "różnią się pomiędzy nowym a poprzednim"
+msgstr[2] "różnią się pomiędzy nowym a poprzednim"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d wartość x <= 0 pominięto na wykresie logarytmicznym"
+msgstr[1] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
+msgstr[2] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d wartość y <= 0 pominięto na wykresie logarytmicznym"
+msgstr[1] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
+msgstr[2] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
+msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "zakres jest zbyt mały dla 'min.m'"

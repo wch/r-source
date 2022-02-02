@@ -1,0 +1,1461 @@
+# Korean translation for R tools package
+# Copyright (C) 1995-2018 The R Core Team
+#
+# This file is distributed under the same license as the R tools package.
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
+"PO-Revision-Date: 2018-04-09 12:11-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Checking %s"
+msgstr "%s를 확인합니다."
+
+msgid "Processing %s ..."
+msgstr "%s를 프로세싱 중입니다..."
+
+msgid "argument 'package' must be of length 1"
+msgstr "인자 'package'는 반드시 길이가 1 이어야 합니다"
+
+msgid "you must specify 'package' or 'dir'"
+msgstr "'package' 또는 'dir'를 반드시 지정해야 합니다"
+
+msgid "directory '%s' does not exist"
+msgstr "디렉토리 '%s'는 존재하지 않습니다"
+
+msgid "neither code nor data objects found"
+msgstr "코드와 데이터 객체들 모두를 찾을 수 없습니다"
+
+msgid "Undocumented code objects:"
+msgstr "문서화되지 않은 코드 객체들:"
+
+msgid "Undocumented data sets:"
+msgstr "문서화 되지 않은 데이터셋들:"
+
+msgid "Undocumented S4 classes:"
+msgstr "문서화되지 않은 S4 클래스들:"
+
+msgid "Undocumented S4 methods:"
+msgstr "문서화되지 않은 S4 메소드들:"
+
+msgid "Prototyped non-primitives:"
+msgstr ""
+
+msgid "Undocumented %s:"
+msgstr "문서화되지 않은 %s:"
+
+msgid "directory '%s' does not contain R code"
+msgstr "디렉토리 '%s'는 R 코드를 포함하지 않습니다"
+
+msgid "directory '%s' does not contain Rd objects"
+msgstr "디렉퇴 '%s'는 Rd 객체들을 포함하지 않습니다"
+
+msgid "Functions or methods with usage in documentation object '%s' but not in code:"
+msgstr "객체 '%s'에 대한 함수 또는 메소드의 사용법을 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
+
+msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr "객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
+msgstr "객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습니다:"
+
+msgid "Argument names in code not in docs:"
+msgstr "코드에는 있는 인자들의 이름이 문서에는 없습니다:"
+
+msgid "Argument names in docs not in code:"
+msgstr "문서안에 있는 인자들의 이름이 코드에는 없습니다:"
+
+msgid "Mismatches in argument names (first 3):"
+msgstr "인자들의 이름이 일치하지 않습니다 (처음 세개):"
+
+msgid "Mismatches in argument names:"
+msgstr "인자들의 이름이 일치하지 않습니다:"
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr "인자들의 기본값이 일치하지 않습니다 (처음 세개):"
+
+msgid "Mismatches in argument default values:"
+msgstr "인자들의 기본값이 일치하지 않습니다:"
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr "문서 객체 '%s'로부터 다음과 같은 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
+
+msgid "Code: %s"
+msgstr "코드: %s"
+
+msgid "Docs: %s"
+msgstr "문서: %s"
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr "문서 객체 '%s'로부터 S4 클래스 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
+
+msgid "Slots for class '%s'"
+msgstr "클래스 '%s'에 대한 슬롯들"
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr "문서 객체 '%s'로부터 데이터 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
+
+msgid "Variables in data frame '%s'"
+msgstr "데이터 프레임 '%s'내의 변수들"
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr "다큐멘테이션 객체 '%s'에 기록되지 않은 인자들입니다"
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s'에 중복된 \\argument 항목들입니다:"
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s' 내에 \\usage 부분에 기록되지 않은 인자들입니다 :"
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s'내에 \\usage 부분에는 있고 \\alias 부분에는 없는 객체들입니다:"
+
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr ""
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr "문서 객체 '%s'내에서 올바르지 않은 \\usage 라인들을 찾았습니다:"
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s' 내에 전체이름과 함께 보여지는 S3 메소드들입니다:"
+
+msgid "you must specify 'package', 'dir' or 'file'"
+msgstr "'package', 'dir' 또는 'file'을 지정해야 합니다"
+
+msgid "file '%s' does not exist"
+msgstr "파일 '%s'는 존재하지 않습니다 "
+
+msgid ""
+"parse error in file '%s':\n"
+"%s"
+msgstr ""
+"파일 '%s'내에서 파싱에러가 발생했습니다:\n"
+"%s"
+
+msgid "declared S3 method '%s' not found"
+msgstr "선언된 S3 메소드 '%s'를 찾을 수 없습니다"
+
+msgid "cannot check R code installed as image"
+msgstr "이미지로서 설치된 R 코드는 확인할 수 없습니다"
+
+msgid "parse error in file '%s':"
+msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
+
+msgid "parse error in examples from file '%s':"
+msgstr "파일 '%s'에 포함된 예제부분에서  파싱에러가 발생했습니다:"
+
+msgid "File '%s':"
+msgstr "파일 '%s':"
+
+msgid "found T/F in %s"
+msgstr "%s 내에서 T/F를 찾았습니다"
+
+msgid "The package 'dir' argument must be of length 1"
+msgstr "패키지 'dir' 인자의 길이는 1 이어야 합니다."
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr "패키지 이름 '%s'이 잘못된 듯 하여, 대신에 디렉토리 이름 '%s'를 사용합니다"
+
+msgid "Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr "비니에트 종속성 (%s 항목들)은 반드시 DESCRIPTION Depends/Suggests/Imports 항목내에 포함되어 있어야 합니다."
+
+msgid "Malformed package name"
+msgstr "잘못된 패키지명입니다"
+
+msgid "Unknown encoding"
+msgstr "알 수 없는 인코딩입니다"
+
+msgid "Fields with non-ASCII tags:"
+msgstr "ASCII가 아닌 태그가 사용된 항목들:"
+
+msgid "All field tags must be ASCII."
+msgstr "모든 항목들은 반드시 ASCII이어야 합니다."
+
+msgid "Fields with non-ASCII values:"
+msgstr "ASCII가 아닌 값을 가지는 항목들:"
+
+msgid "These fields must have ASCII values."
+msgstr "반드시 ASCII 값들을 가져야만 하는 항목들입니다."
+
+msgid "Malformed package version."
+msgstr "잘못된 패키지 버전입니다."
+
+msgid "Malformed maintainer field."
+msgstr "유지보수자 항목이 잘못되었습니다. "
+
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
+msgstr "Depends 또는 Suggests 또는 Imports 또는 Enhances 항목이 잘못되었습니다."
+
+msgid "Offending entries:"
+msgstr "다음과 같은 문제가 되는 항목들이 있습니다:"
+
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr "항목들은 반드시 패키지들의 이름들이어야 하며, 추가정보는 괄호안에 '<=' 또는 '>=', 공백문자, 그리고 유효한 버전정보의 순서로 나열합니다. "
+
+msgid "Entries with infeasible comparison operator:"
+msgstr "실행할 수 없는 비교연산자가 함께 있는 항목들은 다음과 같습니다:"
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr "오로지 '<='와 '>=' 연산자들만이 사용가능합니다."
+
+msgid "Entries with infeasible version number:"
+msgstr "가능하지 않은 버전정보를 가진 항목들은 다음과 같습니다:"
+
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr "버전을 표시하는 숫자들은 반드시 두 부분의 음이 아닌 정수로 되어야 하며, '.' 또는 '-'으로 구분되어야 합니다."
+
+msgid "Invalid VignetteBuilder field."
+msgstr "VignetteBuilder 항목이 잘못되었습니다."
+
+msgid "This field must contain one or more packages (and no version requirement)."
+msgstr "이 항목은 반드시 하나 이상의 패키지를 포함해야 합니다 (버전은 요구되지 않습니다)."
+
+msgid "Invalid Priority field."
+msgstr "Priority 항목이 잘못되었습니다."
+
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr "'base' 또는 'recommended' 또는 'defunct-base'와 같은 우선순위를 가지는 패키지들은 반드시 R이 인식할 수 있도록 해야합니다."
+
+msgid "Malformed Title field: should not end in a period."
+msgstr "Title 항목이 올바르지 않습니다: 마침표로 끝나면 안됩니다."
+
+msgid "Malformed Description field: should contain one or more complete sentences."
+msgstr "Description 항목이 올바르지 않습니다: 하나 이상의 완전한 문장을 포함하고 있어야 합니다. "
+
+msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
+msgstr "매뉴얼 'Writing R Extensions'에 있는 섹션 'The DESCRIPTION file'을 살펴보시길 바랍니다."
+
+msgid "Malformed Authors@R field:"
+msgstr "Authors@R 항목이 잘못되었습니다:"
+
+msgid "Cannot extract Author field from Authors@R field:"
+msgstr "Author 항목을 Authors@R 항목으로부터 추출할 수 없습니다:"
+
+msgid "Authors@R field gives no person with name and roles."
+msgstr ""
+
+msgid "Authors@R field gives persons with no name:"
+msgstr ""
+
+msgid "Authors@R field gives persons with no role:"
+msgstr ""
+
+msgid "Authors@R field gives no person with name and author role"
+msgstr ""
+
+msgid "Cannot extract Maintainer field from Authors@R field:"
+msgstr "Maintainer의 항목을 Authors@R 항목으로부터 추출할 수 없습니다:"
+
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인하게 되었습니다:"
+
+msgid "Authors@R field gives no person with maintainer role, valid email address and non-empty name."
+msgstr ""
+
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr "Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인하게 되었습니다:"
+
+msgid "Encoding '%s' is not portable"
+msgstr "인코딩 '%s'은 포터블(portable)하지 않습니다."
+
+msgid "Unknown encoding with non-ASCII data"
+msgstr "ASCII가 아닌 데이터에 이용된 인코딩을 알 수 없습니다"
+
+msgid "Non-standard license specification:"
+msgstr "비표준 라이센스 지정(non-standard license specification)입니다:"
+
+msgid "Standardizable: %s"
+msgstr ""
+
+msgid "Standardized license specification:"
+msgstr "표준화된 라이센스 지정입니다:"
+
+msgid "Deprecated license: %s"
+msgstr "다음의 라이센스들은 더 이상 지원되지 않습니다: %s"
+
+msgid "Invalid license file pointers: %s"
+msgstr "라이센스 파일 포인터가 올바르지 않습니다: %s"
+
+msgid "License components with restrictions not permitted:"
+msgstr "다음은 허용되지 않는 제한을 가지고 있는 라이센스 구성요소들입니다:"
+
+msgid "License components which are templates and need '+ file LICENSE':"
+msgstr ""
+
+msgid "Non-portable flags in variable '%s':"
+msgstr ""
+
+#, fuzzy
+msgid "Non-portable flags in file '%s':"
+msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
+
+msgid "Variables overriding user/site settings:"
+msgstr ""
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
+msgstr ""
+
+msgid "Missing link or links in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
+
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
+msgstr "매뉴얼 'Writing R Extensions'에 있는 섹션 'Cross-references'을 살펴보시길 바랍니다."
+
+msgid "Call sequence:"
+msgstr "호출 시퀀스: "
+
+msgid "..."
+msgstr ""
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
+msgstr ""
+
+msgid "File %s:"
+msgstr "파일 %s:"
+
+msgid "%s has wrong argument list %s"
+msgstr "%s는 잘못된 인자목록 %s를 가지고 있습니다"
+
+msgid "%s calls:"
+msgstr "%s는 다음을 호출합니다:"
+
+msgid "Package startup functions should have two arguments with names starting with %s and %s, respectively."
+msgstr "패키지 스타트업 함수들은 반드시 %s와 %s로 시작하는 이름을 가진 인수를 가져야만 합니다."
+
+msgid "Package startup functions should not change the search path."
+msgstr "패키지 스타트업 함수들은 서치패스를 변경해서는 안됩니다."
+
+msgid "Package startup functions should use %s to generate messages."
+msgstr "패키지 스타트업 함수들은 메시지를 생성하기 위해서 %s를 사용해야만 합니다."
+
+msgid "Package startup functions should not call %s."
+msgstr "패키지 스타트업 함수들은 %s를 호출해서는 안됩니다."
+
+msgid "See section %s in '%s'."
+msgstr "'%2$s'에서 섹션 %1$s를 살펴보세요."
+
+msgid "Package detach functions should have one argument with name starting with %s."
+msgstr "패키지 분리(package detach)와 관계된 함수들은 %s로 시작하는 이름을 가진 인자 하나만을 가져야 합니다."
+
+msgid "Package detach functions should not call %s."
+msgstr "패키지 분리와 관계된 함수들은 %s를 호출하면 안됩니다."
+
+msgid "unable to create"
+msgstr "생성할 수 없습니다"
+
+msgid "unable to write code files"
+msgstr "코드 파일들을 기록할 수 없습니다"
+
+msgid "package 'methods' is used but not declared"
+msgstr "패키지 'methods'가 사용되었으나 선언되지 않았습니다"
+
+msgid "'::' or ':::' imports not declared from:"
+msgstr "다음으로부터 선언되지 않은 '::' 또는 ':::' 임포트입니다:"
+
+msgid "'::' or ':::' import not declared from: %s"
+msgstr "다음으로부터 선언되지 않은 '::' 또는 ':::' 임포트입니다: %s"
+
+msgid "'library' or 'require' calls not declared from:"
+msgstr "'library' 또는 'require'은 다음으로부터 선언되지 않은 호출입니다:"
+
+msgid "'library' or 'require' call not declared from: %s"
+msgstr "'library' 또는 'require'은 다음으로부터 선언되지 않은 호출입니다: %s"
+
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "'loadNamespace' 또는 'requireNamespace'은 다음으로부터 선언되지 않은 호출입니다:"
+
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
+msgstr "'loadNamespace' 또는 'requireNamespace'는 다음으로부터 선언되지 않은 호출입니다: %s"
+
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr "다음은 Depends에 의하여 이미 부착된 패키지로의 'library' 또는 'require' 호출입니다 :"
+
+msgid "'library' or 'require' call to %s which was already attached by Depends."
+msgstr "Depends에 의하여 이미 부착된 %s로의 'library' 또는 'require' 호출입니다."
+
+msgid "'library' or 'require' calls in package code:"
+msgstr "다음의 패키지 코드(package code)내 'library' 또는 'require' 호출입니다:"
+
+msgid "'library' or 'require' call to %s in package code."
+msgstr "패키지 코드(package code)내 %s로의 'library' 또는 'require' 호출입니다."
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr "Imports 항목 내에 있는 네임스페이스들은 다음으로부터 불러온 것이 아닙니다:"
+
+msgid "Namespace in Imports field not imported from: %s"
+msgstr "Imports 항목 내에 있는 네임스페이스들은 다음으로부터 불러온 것이 아닙니다: %s"
+
+msgid "Packages in Depends field not imported from:"
+msgstr "Depends 항목에 있는 패키지들은 다음으로부터 불러온 것이 아닙니다:"
+
+msgid "Package in Depends field not imported from: %s"
+msgstr "Depends 항목에 있는 패키지들은 다음으로부터 불러온 것이 아닙니다: %s"
+
+msgid "Missing or unexported objects:"
+msgstr "다음은 누락되거나 예상하지 못한 객체들입니다:"
+
+msgid "Missing or unexported object: %s"
+msgstr "다음은 누락되거나 예상하지 못한 객체입니다: %s"
+
+msgid "':::' calls which should be '::':"
+msgstr "다음은 '::'을 이용해야 하는데 ':::'을 이용한 호출입니다:"
+
+msgid "':::' call which should be '::': %s"
+msgstr "다음은 '::'을 이용해야 하는데 ':::'를 이용한 호출입니다: %s"
+
+msgid "Missing objects imported by ':::' calls:"
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 누락된 객체들입니다:"
+
+msgid "Missing object imported by a ':::' call: %s"
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 누락된 객체입니다: %s"
+
+msgid "Unexported objects imported by ':::' calls:"
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 예상하지 못한 객체들입니다:"
+
+msgid "Unexported object imported by a ':::' call: %s"
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 예상하지 못한 객체입니다: %s"
+
+msgid "Unavailable namespaces imported from by ':::' calls:"
+msgstr "':::'을 이용한 호출에 의하여 다음으로부터 임포트된 이용불가능한 네임스페이스들입니다:"
+
+msgid "Unavailable namespace imported from by a ':::' call: %s"
+msgstr "':::'을 이용한 호출에 의하여 다음으로부터 임포트된 이용불가능한 네임스페이스입니다: %s"
+
+msgid "'data(package=)' calls not declared from:"
+msgstr "다음으로부터 선언되지 않은 'data(package=)' 호출입니다:"
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr "다음으로부터 선언되지 않은 'data(package=)' 호출입니다: %s"
+
+msgid "Package has no 'Version' field"
+msgstr "패키지가 'Version' 항목을 가지고 있지 않습니다"
+
+msgid "NB: need Internet access to use CRAN incoming checks"
+msgstr "NB: CRAN 인커밍 체크를 이용하기 위해서 인터넷 엑세스가 필요합니다"
+
+msgid "Rd files with duplicated name '%s':"
+msgstr "다음은 중복된 이름 '%s'를 가진 Rd 파일들입니다:"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "다음은 중복된 에일리어스 '%s'를 가진 Rd 파일들입니다:"
+
+msgid "Argument items with no description in Rd object '%s':"
+msgstr "다음은 Rd 객체 '%s'에 아무런 설명이 없는 인자항목들입니다:"
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr "다음은 Rd 객체 '%s'를 편집하는데 필요한 자동으로 생성된 컨텐츠입니다:"
+
+msgid "no Rd sections specified"
+msgstr "Rd 섹션들이 지정되지 않았습니다"
+
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
+
+msgid "Rd object required"
+msgstr "Rd 객체가 필요합니다."
+
+msgid "missing/empty %s field in '%s'"
+msgstr "'%2$s'내에 %1$s 항목이 없습니다"
+
+msgid "Rd files must have a non-empty %s."
+msgstr "Rd 파일들은 반드시 비어있지 않은 %s를 가져야 합니다."
+
+msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
+msgstr "'Writing R Extensions' 매뉴얼의 'Writing R documentation' 챕터를 보세요."
+
+msgid "missing/empty \\title field in '%s'"
+msgstr "'%s'내에 \\title 항목이 비어있습니다 "
+
+msgid "Rd files must have a non-empty \\title."
+msgstr "Rd 파일은 반드시 비어있지 않은 \\title 를 가지고 있어야 합니다."
+
+msgid "argument 'outFile' must be a character string or connection"
+msgstr "인자 'outFile'는 반드시 문자열 또는 연결이어야 합니다"
+
+msgid "you must specify 'dir' or 'files'"
+msgstr "'dir' 또는 'files'을 반드시 지정해야 합니다"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "이름이 없는 Rd 객체들은 다루어질 수 없습니다"
+
+msgid "No help on %s found in RdDB %s"
+msgstr "RdDB %2$s 로부터 %1$s와 관계된 도움말을 찾을 수 없습니다"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr "'macros'가 반드시 TRUE 이거나 이미 존재하는 매크로를 사용해야 합니다."
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr "매크로 파일 %s는 오로지 Rd 매크로 정의와 주석만을 포함하고 있어야 합니다."
+
+msgid "Rd macro package '%s' is not installed."
+msgstr ""
+
+msgid "No Rd macros in package '%s'."
+msgstr "패키지 %s로부터 Rd macro를 찾을 수 없습니다."
+
+msgid "more than one \\examples section, using the first"
+msgstr "한 개이상의 \\examples 섹션이 발견되었기 때문에 첫 번째 것을 이용합니다."
+
+msgid "Converting Rd files to LaTeX ..."
+msgstr "Rd 파일들을 LaTeX 로 변환하고 있습니다..."
+
+msgid "-t option without value"
+msgstr "-t 옵션의 값이 없습니다 "
+
+msgid "-o option without value"
+msgstr "-o 옵션의 값이 없습니다"
+
+msgid "Warning: unknown option"
+msgstr "경고: 알 수 없는 옵션입니다"
+
+msgid "exactly one Rd file must be specified"
+msgstr "반드시 한개의 Rd 파일은 지정되어야 합니다"
+
+msgid "no 'type' specified"
+msgstr "'type'이 지정되지 않았습니다"
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr "'type'은 반드시 'txt', 'html', 'latex' 또는 'example' 중 하나이어야 합니다"
+
+msgid "current working directory cannot be ascertained"
+msgstr "현재의 작업디렉토리를 확인할 수 없습니다"
+
+msgid "no inputs"
+msgstr "입력이 없습니다"
+
+msgid "Error in running tools::texi2pdf()"
+msgstr "tools::texi2pdf()를 실행하는 도중 에러가 발생했습니다"
+
+msgid "invalid value for '%s' : %s"
+msgstr "'%s'에 대한 값이 잘못되었습니다 : %s"
+
+msgid "Only one Rd section per %s is supported."
+msgstr ""
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr "DESCRIPTION 파일은 패키지 '%1$s'에 관한 것이지 '%2$s'에 관한 것이 아닙니다."
+
+msgid "Vignette product %s does not have a known filename extension (%s)"
+msgstr "비니에트 프로덕트 %s는 알려진 파일확장자 (%s)를 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "Failed to locate %s output file %s or %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
+msgstr "%3$s 이름을 가진 비니에트에 대해서 %1$s 출력파일 (엔진 %2$s에 의해서)을 위치시키는데 실패했습니다. 디렉토리 %4$s내에 다음과 같은 파일들이 있습니다: %5$s"
+
+msgid "Located more than one %s output file (by engine %s) for vignette with name %s: %s"
+msgstr "이름 %3$s을 가진 비니에트에 대해서 다음과 같은 한 개이상의 %1$s 출력파일 (엔진 %2$s에 의하여)들이 놓여졌습니다: %4$s"
+
+#, fuzzy
+msgid "Failed to locate %s output file %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s"
+msgstr "%3$s 이름을 가진 비니에트에 대해서 %1$s 출력파일 (엔진 %2$s에 의해서)을 위치시키는데 실패했습니다. 디렉토리 %4$s내에 다음과 같은 파일들이 있습니다: %5$s"
+
+msgid "unable to create temp directory %s"
+msgstr "임시디렉토리 %s를 생성하지 못했습니다"
+
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr "비그네트 '%s'는 ASCII 형식이 아니며 이에 대하여 선언된 인코딩을 찾을 수 없습니다."
+
+msgid "Running"
+msgstr "실행중입니다"
+
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
+msgstr "비니에트 %1$s은 다음의 %2$s 출력물을 비니에트 %3$s에 의하여 덮어썼습니다: %4$s"
+
+#, fuzzy
+msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
+msgstr "같은 이름들 (%2$s)을 가지고 있는 비니에트 소스 파일들 (%1$s)이 발견되었기 때문에 출력된 파일들이 서로 덮어쓸 위험이 있습니다"
+
+#, fuzzy
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr "비그네트 '%s'는 ASCII 형식이 아니며 이에 대하여 선언된 인코딩을 찾을 수 없습니다."
+
+msgid "--- re-building %s using %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Error: processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"비니에트 '%s'를 프로세스하는데 다음과 같은 이유로 실패했습니다:\n"
+"%s"
+
+#, fuzzy
+msgid ""
+"Error: tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"비니에트 '%s'를 프로세스하는데 다음과 같은 이유로 실패했습니다:\n"
+"%s"
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
+msgstr ""
+
+msgid "running 'make' failed"
+msgstr "'make'를 실행하는데 실패했습니다"
+
+msgid "file '%s' not found"
+msgstr "파일 '%s'를 찾을 수 없습니다"
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr "비니에트 파일명 '%1$s'은 '%2$s' 파일명 패턴들 중 어느것과도 일치하지 않습니다"
+
+msgid "+-+"
+msgstr ""
+
+msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
+msgstr "'%1$s' 비니에트 내에서 '%2$s'와 '%3$s'은 같은 비니에트 이름을 가지고 있습니다"
+
+msgid "Vignette engine package not specified"
+msgstr "비니에트 엔진 패키지가 지정되지 않았습니다"
+
+msgid "Unsupported engine name"
+msgstr "지원되지 않는 엔진명입니다"
+
+msgid "None of packages %s have registered vignette engines"
+msgstr "패키지들 %s 모두 등록된 비니에트 엔진들은 가지고 있지 않습니다"
+
+msgid "Vignette engine %s is not registered"
+msgstr "비니에트 엔진 %s이 등록되지 않았습니다"
+
+msgid "Vignette engine %s is not registered by any of the packages %s"
+msgstr "비니에트 엔진 %1$s은 패키지들 %2$s 어느 것에라도 등록되어 있지 않습니다"
+
+msgid "Engine name %s and package %s do not match"
+msgstr "엔진명 %1$s과 패키지 %2$s가 일치하지 않습니다"
+
+msgid "Argument %s must be a function and not %s"
+msgstr "인자 %s는 반드시 함수이고 %s이 아니어야 합니다"
+
+msgid "Argument %s must be a character vector or NULL and not %s"
+msgstr "인자 %s는 반드시 문자형 벡터 또는 NULL이고 %s가 아니어야 합니다"
+
+msgid "Cannot change the %s engine or use an engine of that name"
+msgstr "%s 엔진을 변경할 수 없거나 해당이름을 가진 엔진을 사용할 수 없습니다"
+
+msgid "vignette builder '%s' not found"
+msgstr "비니에트 빌더 '%s'를 찾을 수 없습니다"
+
+msgid "Invalid DESCRIPTION file"
+msgstr "DESCRIPTION 파일이 잘못되었습니다"
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr "*** 패키지 '%s'내에 있는 Built 항목을 손상되었습니다 ***"
+
+msgid "cannot open directory '%s'"
+msgstr "디렉토리 '%s'를 열 수 없습니다"
+
+msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
+
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr ""
+
+msgid "duplicated files in '%s' field:"
+msgstr "다음은 '%s' 항목에서 중복된 파일들입니다:"
+
+msgid "files in '%s' field missing from '%s':"
+msgstr "다음은 '%2$s'으로부터 누락된 '%1$s' 항목에 있는 파일들입니다:"
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr "다음은 '%2$s' 항목으로부터 누락된 '%1$s' 내에 있는 파일들입니다:"
+
+msgid "unable to create '%s'"
+msgstr "'%s'을 생성할 수 없습니다"
+
+msgid "unable to copy INDEX to '%s'"
+msgstr "INDEX를 '%s'에 복사할 수 없습니다"
+
+msgid "cannot create directory '%s'"
+msgstr "디렉토리 '%s'를 생성할 수 없습니다"
+
+msgid "processing %s"
+msgstr "%s를 처리중입니다"
+
+msgid ""
+"running %s on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"비니에트 '%2$s'에서 %1$s을 실행하는데 실패했으며 다음과 같은 메시지가 반환되었습니다:\n"
+"%3$s"
+
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+"TeX 파일 %s를 컴파일하는데 실패했습니다:\n"
+"%s"
+
+msgid "cannot copy '%s' to '%s'"
+msgstr "'%s'를 '%s'로 복사할 수 없습니다"
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr "경고: 'DESCRIPTION'내의 'Depends' 항목이 잘못되었습니다"
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr "에러: 현재 버전의 R은 %s인데, 패키지 '%s'는 R %s %s를 필요로 합니다"
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr "에러: 현재 버전의 R은 %s인데 필요한 것은 R %s %s입니다"
+
+msgid "loading failed"
+msgstr "로딩에 실패했습니다"
+
+msgid "assertConditon: Successfully caught a condition"
+msgstr ""
+
+msgid "Got %s in evaluating %s; wanted %s"
+msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
+
+msgid "Failed to get %s in evaluating %s"
+msgstr "%2$s를 평가로부터 %1$s를 얻는데 실패했습니다"
+
+msgid "Failed to get error in evaluating %s"
+msgstr "%s 평가로부터 에러를 얻는데 실패했습니다"
+
+msgid "Asserted error: %s"
+msgstr ""
+
+msgid "Got warning in evaluating %s, but also an error"
+msgstr "%s를 평가시에 경고를 얻었지만 이는 또한 에러입니다"
+
+msgid "Asserted warning: %s"
+msgstr ""
+
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr "기본 JSS 스타일은 아마도 변경되지 않을 것입니다."
+
+msgid "inst/doc"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "ignored as vignettes have been rebuilt."
+msgstr ""
+
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+
+msgid "invalid value for '--compact-vignettes', assuming %s"
+msgstr "'--compact-vignettes'의 값이 잘못되었고, %s로 가정합니다"
+
+msgid "Error: cannot rename directory to %s"
+msgstr "에러: 디렉토리 이름을 %s으로 바꿀 수 없습니다"
+
+msgid "elapsed-time limit of %g %s reached for sub-process"
+msgstr ""
+
+msgid "cannot link from %s"
+msgstr "%s로부터 연결할 수 없습니다"
+
+msgid "-l option without value"
+msgstr "-l 옵션에 대한 값이 주어지지 않았습니다."
+
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr "R 2.12.0 부터는 환경설정 파일들이 지원되지 않습니다"
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
+msgid "'--as-cran' turns off '--extra-arch'"
+msgstr "'--as-cran'이 '--extra-arch'를 비활성화 시켰습니다"
+
+msgid "Error: no packages were specified"
+msgstr "에러: 지정된 패키지들이 없습니다"
+
+msgid "ERROR: cannot create check dir %s"
+msgstr "에러: check dir %s를 생성할 수 없습니다."
+
+msgid "package directory %s does not exist"
+msgstr "패키지 디렉토리 %s가 존재하지 않습니다"
+
+msgid "no packages to check"
+msgstr "체크할 패키지들이 없습니다"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr "%s을 다운로드 하고 있습니다  ..."
+
+msgid "checking %s ..."
+msgstr "%s를 확인합니다 ..."
+
+msgid "wrong class"
+msgstr "잘못된 클래스입니다"
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
+msgstr "미리 선언된 인코딩없이 ASCII가 아닌 입력이 CITATION 파일에 사용되었습니다"
+
+msgid "No files in this directory"
+msgstr "이 디렉토리에는 아무런 파일이 없습니다"
+
+msgid "No results found"
+msgstr "아무런 결과를 찾을 수 없습니다"
+
+msgid "Vignettes:"
+msgstr "비니에트:"
+
+msgid "Code demonstrations:"
+msgstr "코드 설명: "
+
+msgid "Help pages:"
+msgstr "도움말 페이지:"
+
+msgid "No package named %s could be found"
+msgstr "%s이라는 이름의 패키지를 찾을 수없습니다"
+
+msgid "No help found for topic %s in any package."
+msgstr "%s이라는 주제에 대한 도움말을 어떠한 패키지에서도  찾을 수 없습니다."
+
+msgid "No package index found for package %s"
+msgstr "패키지 %s에 대한 패키지 인덱스를 찾을 수 없습니다"
+
+msgid "No help found for package %s"
+msgstr "패키지 %s에 관한 도움말을 찾을 수 없습니다"
+
+msgid "Link %s in package %s could not be located"
+msgstr "패키지 %2$s 내의 링크 %1$s 를 제자리에 위치시킬 수 없습니다"
+
+msgid "No docs found for package %s"
+msgstr "패키지 %s에 대한 문서를 찾을 수 없습니다"
+
+msgid "URL %s was not found"
+msgstr "URL %s을 찾을 수 없습니다"
+
+msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
+msgstr "오로지 도움말 파일들, %s, %s 그리고 %s 내에 있는 파일들과 패키지내에 있는 %s만을 볼 수 있습니다"
+
+msgid "unsupported URL %s"
+msgstr "지원되지 않는 URL %s입니다"
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr "서버가 이미 실행중입니다"
+
+msgid "server could not be started on an earlier attempt"
+msgstr "이전에 시도를 했었으나, 서버를 실행할 수 없었습니다"
+
+msgid "no running server to stop"
+msgstr "중단해야 할 실행중인 서버가 없습니다"
+
+msgid "starting httpd help server ..."
+msgstr "httpd 도움말 서버를 시작합니다 ..."
+
+msgid "done"
+msgstr "완료"
+
+msgid "failed to start the httpd server"
+msgstr "httpd 서버를 시작하는데 실패했습니다"
+
+msgid "cannot read index information in file '%s'"
+msgstr "파일 '%s'에 있는 인덱스 정보를 읽을 수 없습니다"
+
+msgid ".install_packages() exit status"
+msgstr ""
+
+#, fuzzy
+msgid "restoration failed"
+msgstr "로딩에 실패했습니다"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "패키지가 잘못되었습니다"
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
+
+msgid "error reading file '%s'"
+msgstr "파일 '%s'를 읽는데 에러가 발생했습니다"
+
+msgid "this seems to be a bundle -- and they are defunct"
+msgstr ""
+
+msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
+msgstr "'cleanup'이 있지만 실행가능하지 않습니다 -- 'R Installation and Administration Manual'을 살펴보세요"
+
+msgid "generating debug symbols (%s)"
+msgstr "디버그 기호 %s를 생성합니다"
+
+msgid "no DLL was created"
+msgstr "DLL이 생성되지 않았습니다"
+
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
+msgstr ""
+
+msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
+msgstr ""
+
+msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
+msgstr ""
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr "패키지 %1$s %2$s 을 찾았으나 %3$s %4$s는 %5$s에 의해 요구되어집니다"
+
+msgid "no source files found"
+msgstr "소스파일들을 찾을 수 없습니다"
+
+msgid "empty 'data' directory"
+msgstr "비어있는 'data' 디렉토리입니다"
+
+msgid "WARNING: moving package to final location failed, copying instead"
+msgstr ""
+
+msgid "cannot create unique directory for build"
+msgstr "build를 위한 고유의 디렉토리를 생성할 수 없습니다."
+
+msgid "cannot create temporary directory"
+msgstr "임시 디렉토리를 생성할 수 없습니다"
+
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
+msgstr "에러: '--merge-multiarch'는 오로지 한개의 tarball에만 적용됩니다"
+
+msgid "invalid package"
+msgstr "패키지가 잘못되었습니다"
+
+msgid "ERROR: no packages specified"
+msgstr "에러: 지정된 패키지가 없습니다"
+
+msgid "ERROR: cannot cd to directory %s"
+msgstr "에러: 디렉토리 %s에 들어갈 수 없습니다"
+
+msgid "ERROR: no permission to install to directory"
+msgstr "에러: 디렉토리에 설치할 권한이 없습니다"
+
+msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
+msgid "namespace must not be already loaded"
+msgstr "네임스페이스가 반드시 먼저 로드되어져야 합니다"
+
+msgid "all packages should have a NAMESPACE"
+msgstr "모든 패키지들은 반드시 NAMESPACE를 가지고 있어야 합니다"
+
+msgid "package seems to be using lazy loading for data already"
+msgstr "패키지는 이미 데이터에 대해서 레이지 로딩을 이용하고 있는 것 같습니다"
+
+msgid "source list must have names for all elements"
+msgstr "소스는 반드시 모든 구성요소들에 대해서 이름들을 가지고 있어야 합니다"
+
+msgid "source must be an environment or a list"
+msgstr "소스는 반드시 환경 또는 리스트이어야 합니다"
+
+msgid "this cannot be used for package 'base'"
+msgstr "이것은 패키지 'base'에 이용될 수 없습니다"
+
+msgid "package contains no R code"
+msgstr "패키지가 R 코드를 포함하지 않습니다"
+
+msgid "package seems to be using lazy loading already"
+msgstr "패키지는 이미 레이지 로딩을 이용하고 있는 것 같습니다"
+
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
+msgid "DESCRIPTION file not found"
+msgstr "DESCRIPTION 파일을 찾을 수 없습니다."
+
+msgid "NEWS file not found"
+msgstr "NEWS 파일을 찾을 수 없습니다."
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr "다음의 섹션 제목으로부터 버전정보를 추출할 수 없습니다:"
+
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\itemize."
+msgstr ""
+
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains more than one \\itemize.\n"
+"Using the first one."
+msgstr ""
+
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+
+msgid "Processing packages:"
+msgstr "다음의 패키지들을 프로세싱하고 있습니다:"
+
+#, fuzzy
+msgid "Invalid DESCRIPTION file for package %s"
+msgstr "DESCRIPTION 파일이 잘못되었습니다"
+
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr ""
+
+msgid "argument '%s' must be a character string or connection"
+msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
+
+msgid "unimplemented encoding"
+msgstr "구현되지 않은 인코딩입니다"
+
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr ""
+
+msgid "this requires 'nm' to be on the PATH"
+msgstr ""
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "no native symbols were extracted"
+msgstr ""
+
+msgid "testing '%s' failed"
+msgstr "'%s'를 테스팅하는 것은 실패했습니다"
+
+msgid "Testing examples for package %s"
+msgstr "패키지 %s의 예제를 테스트합니다"
+
+msgid "comparing %s to %s ..."
+msgstr "%s를 %s에 비교중입니다 ..."
+
+msgid "ERROR"
+msgstr ""
+
+msgid "NOTE"
+msgstr ""
+
+msgid "results differ from reference results"
+msgstr "결과가 레퍼런스 결과와 다릅니다"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "no examples found for package %s"
+msgstr "패키지 %s에 대한 예제를 찾을 수 없습니다"
+
+msgid "Running specific tests for package %s"
+msgstr "패키지 %s에 특정 테스트들을 실행중입니다"
+
+msgid "Running %s"
+msgstr "%s를 실행중입니다"
+
+msgid "Running vignettes for package %s"
+msgstr "패키지 %s에 대한 비니에트를 실행중입니다"
+
+msgid "Comparing %s to %s ..."
+msgstr "%s를 %s에 비교중입니다 ..."
+
+msgid "no parsed files found"
+msgstr ""
+
+msgid "FAILED"
+msgstr "실패했습니다"
+
+msgid "DIFFERED"
+msgstr ""
+
+msgid "running tests of random deviate generation -- fails occasionally"
+msgstr ""
+
+msgid "unknown header specification"
+msgstr ""
+
+msgid "R CMD build failed"
+msgstr "R CMD build가 실패했습니다"
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+msgid "Found"
+msgstr ""
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
+msgstr ""
+
+msgid "'x' must be a single character string"
+msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
+
+msgid "test '%s' is not available"
+msgstr "테스트 '%s'는 사용가능하지 않습니다"
+
+msgid "argument 'x' must be a character vector"
+msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"
+
+msgid "argument 'delim' must specify two characters"
+msgstr "인자 'delim'는 반드시 두개의 문자를 지정해야 합니다"
+
+msgid "only Rd syntax is currently supported"
+msgstr ""
+
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "'%s'에 'texi2dvi'를 실행하는데 실패했습니다"
+
+msgid "running 'texi2dvi' on '%s' failed"
+msgstr "'%s'에 'texi2dvi'를 실행하는데 실패했습니다"
+
+msgid "unable to run %s on '%s'"
+msgstr "'%2$s'에 %1$s를 실행할 수 없습니다"
+
+msgid "unable to run '%s' on '%s'"
+msgstr "'%2$s'에 '%1$s'를 실행할 수 없습니다"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr "'DESCRIPTION' 파일을 찾을 수 없습니다."
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr "'DESCRIPTION'과 'DESCRIPTION.in' 파일들을 찾을 수 없습니다."
+
+msgid "invalid package layout"
+msgstr "올바른 패키지 레이아웃(package layout)이 아닙니다."
+
+msgid "file '%s' is not in valid DCF format"
+msgstr "파일 '%s'는 유효한 DCF 형식을 가지고 있지 않습니다."
+
+msgid "contains a blank line"
+msgstr "비어있는 라인을 포함하고 있습니다"
+
+msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+msgstr "ASCII가 아닌 데이터에 대한 인코딩을 알 수 없으므로 ASCII로의 변환을 시도합니다."
+
+msgid "cannot source package code:"
+msgstr "패키지 코드를 읽어들일 수 없습니다:"
+
+msgid "'text' must be a character vector"
+msgstr "'text'는 반드시 문자형 벡터이어야 합니다."
+
+msgid "parsing '%s'"
+msgstr "'%s'을 파싱(parsing)합니다"
+
+#, fuzzy
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs에 알 수 없는 패키지 %s입니다"
+
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] "다음은 Rd xrefs를 확인할 수 없는 패키지들입니다: %s"
+
+msgid "Unknown package %s in Rd xrefs"
+msgid_plural "Unknown packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs에 알 수 없는 패키지 %s입니다"
+
+msgid "Note: found %d marked Latin-1 string"
+msgid_plural "Note: found %d marked Latin-1 strings"
+msgstr[0] "노트: Latin-1 문자열로 표시된 %d를 찾았습니다"
+
+msgid "Note: found %d marked UTF-8 string"
+msgid_plural "Note: found %d marked UTF-8 strings"
+msgstr[0] "노트: UTF-8 문자열로 표시된 %d을 찾았습니다"
+
+msgid "Note: found %d string marked as \"bytes\""
+msgid_plural "Note: found %d strings marked as \"bytes\""
+msgstr[0] "노트: \"bytes\"로서 표시된 %d 문자열을 찾았습니다"
+
+msgid "Warning in file %s:"
+msgid_plural "Warnings in file %s:"
+msgstr[0] "파일 %s내에 다음과 같은 경고를 발견했습니다:"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] ""
+
+msgid "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
+msgid_plural "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
+msgstr[0] ""
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] "다음의 함수로부터 .Internal 호출을 찾았습니다:"
+
+msgid "Found a .Internal call in the following function:"
+msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] "다음의 함수로부터 .Internal 호출을 찾았습니다:"
+
+msgid "Found a.Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "다음의 S4 제네릭에 대하여 메소드로부터 .Internal 호출을 찾았습니다:"
+
+msgid "Found a .Internal call in methods for the following reference class:"
+msgid_plural "Found .Internal calls in methods for the following reference classes:"
+msgstr[0] "다음과 같은 레퍼런스 클래스에 대하여 메소들로부터 .Internal 호출을 찾았습니다:"
+
+msgid "Found an obsolete/platform-specific call in the following function:"
+msgid_plural "Found an obsolete/platform-specific call in the following functions:"
+msgstr[0] ""
+
+msgid "Found an obsolete/platform-specific call in methods for the following S4 generic:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following S4 generics:"
+msgstr[0] ""
+
+msgid "Found an obsolete/platform-specific call in methods for the following reference class:"
+msgid_plural "Found an obsolete/platform-specific call in methods for the following reference classes:"
+msgstr[0] ""
+
+msgid "Found the deprecated function:"
+msgid_plural "Found the deprecated functions:"
+msgstr[0] "다음은 더 이상 지원되지 않는 함수들입니다:"
+
+msgid "Found the defunct/removed function:"
+msgid_plural "Found the defunct/removed functions:"
+msgstr[0] "다음은 더 이상 지원되지 않거나 제거된 함수들입니다:"
+
+msgid "Found the platform-specific device:"
+msgid_plural "Found the platform-specific devices:"
+msgstr[0] "다음과 같은 특정 플랫폼 디바이스를 찾았습니다:"
+
+msgid "Generic without any methods in %s: %s"
+msgid_plural "Generics without any methods in %s: %s"
+msgstr[0] ""
+
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] ""
+
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] ""
+
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] ""
+
+msgid "%s file\n"
+msgid_plural "%s files\n"
+msgstr[0] ""
+
+msgid "Required field missing or empty:"
+msgid_plural "Required fields missing or empty:"
+msgstr[0] "필요한 항목이 누락되거나 비어있습니다:"
+
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "'%s'와 관련된 주제를 다음의 패키지들로부터 찾았습니다:"
+
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었습니다"
+
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] ""
+
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
+msgstr[0] ""
+
+#~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
+#~ msgstr "패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 xrefs를 확인할 수 없습니다"
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "인자 'pkg'는 반드시 길이가 1이어야 합니다"
+
+#~ msgid "bad operand"
+#~ msgstr "잘못된 연산자입니다"
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr "'%s'이라는 패키지가 없습니다"
+
+#~ msgid "%s must be a character string or a file/raw connection"
+#~ msgstr "%s는 문자열 또는 파일/raw 커넥션이어야 합니다."
+
+#~ msgid "PDF header not found"
+#~ msgstr "PDF 헤더를 찾을 수 없습니다"
+
+#~ msgid "EOF marker not found"
+#~ msgstr "EOF 표시자를 찾을 수 없습니다"
+
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr "'startxref' 키워드를 찾을 수 없습니다"
+
+#~ msgid "cannot find xref table"
+#~ msgstr "xref 테이블을 찾을 수 없습니다"
+
+#~ msgid "cannot read xref table"
+#~ msgstr "xref 테이블을 읽을 수 없습니다"
+
+#~ msgid "looking at %s"
+#~ msgstr "%s를 살펴보는 중입니다."
+
+#~ msgid "cannot read literal string object"
+#~ msgstr "literal 문자열 객체를 읽을 수 없습니다"
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr "hexadecimal 문자열 객체를 읽을 수 없습니다"
+
+#~ msgid "cannot read name object"
+#~ msgstr "이름 객체(name object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read array object"
+#~ msgstr "배열 객체(array object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr "사전 객체(dictionary object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read stream object"
+#~ msgstr "스트림 객체(stream object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr "간접적 레퍼런스 객체(indirect reference object)를 읽을 수 없습니다"
+
+#~ msgid "cannot read stream data"
+#~ msgstr "스트림 데이터를 읽을 수 없습니다"
+
+#~ msgid "expanding %s"
+#~ msgstr "%s을 확장하고 있습니다"
+
+#~ msgid "unsupported filter %s"
+#~ msgstr "지원되지 않는 필터 %s입니다"
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr "지원되지 않는 PNG 필터 %d입니다"
+
+#~ msgid "package '%s' was not found"
+#~ msgstr "패키지 '%s'를 찾을 수 없습니다"
+
+#~ msgid "cannot coerce %s to logical"
+#~ msgstr "%s를 논리형(logical)로 강제변환을 할 수 없습니다."

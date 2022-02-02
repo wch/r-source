@@ -1,0 +1,70 @@
+#
+# ${R_HOME}/src/library/tools/src/Makefile
+
+pkg = tools
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+R_SHARE_DIR = $(R_HOME)/share
+R_INCLUDE_DIR = $(R_HOME)/include
+
+SOURCES_C = text.c init.c Rmd5.c md5.c signals.c install.c getfmts.c http.c \
+  gramLatex.c gramRd.c pdscan.c
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o)
+
+# need config.h
+PKG_CPPFLAGS = -I../../../include -I$(top_srcdir)/src/include \
+  -DHAVE_CONFIG_H -I$(top_srcdir)/src/main
+PKG_CFLAGS = $(C_VISIBILITY)
+
+SHLIB = $(pkg)@SHLIB_EXT@
+
+all: Makedeps
+	@$(MAKE) shlib
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+shlib: $(SHLIB)
+	@$(MKINSTALLDIRS) \
+	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
+	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/shlib.mk
+## override to use LTO for linking with --enable-lto=R
+LTO = @LTO@
+
+mostlyclean: clean
+clean:
+	@-rm -Rf .libs _libs
+	@-rm -f Makedeps *.d *.o *$(SHLIB_EXT)
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+# suppress #line directives
+YFLAGS=-l
+
+$(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
+	@$(ECHO) "re-making gramRd.c"
+	$(YACC) $(YFLAGS) $(srcdir)/gramRd.y
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramRd.c	
+# depend on gramRd.c to avoid race condition with parallel make
+$(srcdir)/gramLatex.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramLatex.y $(srcdir)/gramRd.c
+	@$(ECHO) "re-making gramLatex.c"
+	$(YACC) $(YFLAGS) $(srcdir)/gramLatex.y
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramLatex.c
+
+## Automagically generated dependencies:

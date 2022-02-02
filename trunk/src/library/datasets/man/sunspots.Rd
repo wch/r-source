@@ -1,0 +1,35 @@
+% File src/library/datasets/man/sunspots.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2014 R Core Team
+% Distributed under GPL 2 or later
+
+\name{sunspots}
+\docType{data}
+\alias{sunspots}
+\title{Monthly Sunspot Numbers, 1749--1983}
+\description{
+  Monthly mean relative sunspot numbers from 1749 to 1983.  Collected at
+  Swiss Federal Observatory, Zurich until 1960, then Tokyo Astronomical
+  Observatory.
+}
+\usage{sunspots}
+\format{
+  A time series of monthly data from 1749 to 1983.
+}
+\source{
+  Andrews, D. F. and Herzberg, A. M. (1985)
+  \emph{Data: A Collection of Problems from Many Fields for the
+    Student and Research Worker}.
+  New York: Springer-Verlag.
+}
+\seealso{
+  \code{\link{sunspot.month}} has a longer (and a bit different) series,
+  \code{\link{sunspot.year}} is a much shorter one.  See there for
+  getting more current sunspot numbers.
+}
+\examples{
+require(graphics)
+plot(sunspots, main = "sunspots data", xlab = "Year",
+     ylab = "Monthly sunspot numbers")
+}
+\keyword{datasets}

@@ -1,0 +1,23 @@
+#-*- Makefile -*-
+
+all:
+clean:
+
+## datasets does not have any translations
+R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
+
+top_srcdir = ..
+ECHO = echo
+
+R_EXE = ../bin/R --vanilla --no-echo
+update-RGui:
+	@echo "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+
+## en@quot has to be done in a UTF-8 locale, so this is incomplete
+update-pkg-po:
+	@for pkg in $(R_PKGS_PO); do \
+	   $(ECHO) "updating translations for $${pkg}"; \
+	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\", mergeOpts=\"--no-wrap\")" | \
+	     R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE); \
+	done

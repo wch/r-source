@@ -1,0 +1,7 @@
+import(methods)
+
+import(graphics)
+
+importMethodsFrom(pkgA, "plot")
+
+importClassesFrom(pkgA, "classA")# but not "classApp"

@@ -1,0 +1,24 @@
+#-*- Makefile -*-
+include ../gnuwin32/MkRules
+
+CPPFLAGS = -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+CSOURCES = \
+	integrate.c interv.c maxcol.c optim.c pretty.c uncmin.c
+FSOURCES = \
+	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
+	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f
+OBJS = $(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
+
+all: makeMakedeps libappl.a
+
+libappl.a: $(OBJS)
+
+# Dependencies
+DEPS = $(CSOURCES:.c=.d)
+
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

@@ -1,0 +1,9 @@
+Package: datasets
+Version: @VERSION@
+Priority: base
+Title: The R Datasets Package
+Author: R Core Team and contributors worldwide
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
+Description: Base R datasets.
+License: Part of R @VERSION@

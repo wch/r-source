@@ -1,0 +1,13 @@
+#-*- Makefile -*-
+include ../gnuwin32/MkRules
+
+MODULES = internet lapack
+
+ifndef DEBUG
+  DLLFLAGS = -s
+endif
+
+all clean:
+	@for d in $(MODULES); do \
+	  (cd $${d} && $(MAKE) R_HOME=$(RHOME) DLLFLAGS=$(DLLFLAGS) -f Makefile.win $@) || exit 1; \
+	done

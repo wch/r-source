@@ -1,0 +1,134 @@
+# Korean translation for R compiler package
+# Copyright (C) 1995-2018 The R Core Team
+#
+# This file is distributed under the same license as the R compiler package.
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2018-04-09 12:06-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "namespace found within local environments"
+msgstr ""
+
+msgid "not a proper evaluation environment"
+msgstr ""
+
+msgid "non-namespace found within namespace environments"
+msgstr ""
+
+msgid "namespace found within global environments"
+msgstr ""
+
+msgid "bad assignment: %s"
+msgstr ""
+
+msgid "cannot constant fold literal promises"
+msgstr ""
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr ""
+
+msgid "no offset recorded for label \"%s\""
+msgstr "라벨 \"%s\"에 대하여 기록된 오프셋이 없습니다"
+
+msgid "cannot compile byte code literals in code"
+msgstr ""
+
+msgid "cannot compile promise literals in code"
+msgstr ""
+
+msgid "possible error in '%s': %s"
+msgstr "'%1$s'에서 다음과 같은 에러가 예상됩니다: %2$s"
+
+msgid "bad namespace import frame"
+msgstr ""
+
+msgid "bad assignment 1"
+msgstr ""
+
+msgid "bad assignment 2"
+msgstr ""
+
+msgid "invalid function in complex assignment"
+msgstr ""
+
+msgid "missing arguments are not allowed"
+msgstr "누락된 인자들이 있어서는 안됩니다"
+
+msgid "empty alternative in numeric switch"
+msgstr ""
+
+msgid "no visible global function definition for '%s'"
+msgstr ""
+
+msgid "no visible binding for global variable '%s'"
+msgstr ""
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr ""
+
+msgid "wrong number of arguments to '%s'"
+msgstr "'%s'에 올바르지 않은 개수의 인자들이 있습니다"
+
+msgid "more than one default provided in switch() call"
+msgstr "switch() 함수호출시 주어진 기본값이 하나이상입니다"
+
+msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
+msgstr ""
+
+msgid "cannot compile a non-function"
+msgstr "함수가 아닌 것을 컴파일 할 수 없습니다"
+
+msgid "compiling '%s'"
+msgstr "'%s'을 컴파일중입니다"
+
+msgid "saving to file \"%s\" ..."
+msgstr "파일 \"%s\"에 저장합니다 ..."
+
+msgid "done"
+msgstr "완료"
+
+msgid "'env' must be a top level environment"
+msgstr "'env'은 반드시 최상위의 환경이어야 합니다"
+
+msgid "input and output file names are the same"
+msgstr "입력파일과 출력파일의 이름이 같아야 합니다"
+
+msgid "empty input file; no output written"
+msgstr "입력파일이 비어 있으므로 기록할 출력이 없습니다"
+
+msgid "file '%s' does not exist"
+msgstr "파일 '%s'은 존재하지 않습니다"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s'은 선택가능한 컴파일러가 아닙니다"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
+msgid "function is not compiled"
+msgstr "함수가 컴파일 되지 않았습니다"
+
+msgid "cannot compile this expression"
+msgstr "이 표현식(expression)은 컴파일 할 수 없습니다."
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] ""

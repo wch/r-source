@@ -1,0 +1,78 @@
+#
+# ${R_HOME}/src/extra/blas/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/extra/blas
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+
+ALL_CFLAGS = $(ALL_CFLAGS_LO)
+ALL_FFLAGS = $(ALL_FFLAGS_LO)
+
+SOURCES = blas00.c blas.f cmplxblas.f
+
+@BUILD_LTO_CHECK_FALSE@Rblas_la = libRblas$(R_DYLIB_EXT)
+@BUILD_LTO_CHECK_TRUE@Rblas_la = libRblas.a
+## @RBLAS_LDFLAGS@ is used on macOS
+## first for internal BLAS
+Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO)
+## then external one
+Rblas_la_LIBADD0 = @RBLAS_LDFLAGS@
+
+all: Makefile @BLAS_SHLIB_TRUE@ R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES_C)
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R:
+	@$(MAKE) $(Rblas_la)
+	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
+
+blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
+	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
+	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_TRUE@$(AR) -cr $(Rblas_la) $(blas_OBJS)
+
+@USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
+@USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
+
+Rblas_install: $(Rblas_la)
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rblas_la) \
+	  "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)"
+
+Rblas_install-strip: $(Rblas_la)
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
+	@$(INSTALL) $(Rblas_la) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)"
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)" ;\
+	fi
+
+mostlyclean: clean
+clean:
+	@-rm -f *.o $(Rblas_la)
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+install: @BLAS_SHLIB_TRUE@ Rblas_install
+install-strip: @BLAS_SHLIB_TRUE@ Rblas_install-strip
+
+uninstall TAGS info dvi check:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win Rblas.def \
+  $(SOURCES) $(HEADERS)
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+

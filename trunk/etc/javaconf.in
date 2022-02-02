@@ -1,0 +1,9 @@
+## Versions from settings when configure was run
+: ${JAVA_HOME=@custom_JAVA_HOME@}
+: ${JAVA_CPPFLAGS=@custom_JAVA_CPPFLAGS@}
+: ${JAVA_LD_LIBRARY_PATH=@custom_JAVA_LD_LIBRARY_PATH@}
+: ${JAVA_LIBS=@custom_JAVA_LIBS@}
+: ${JAVA=@custom_JAVA@}
+: ${JAVAC=@custom_JAVAC@}
+: ${JAVAH=@custom_JAVAH@}
+: ${JAR=@custom_JAR@}

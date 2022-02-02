@@ -1,0 +1,11 @@
+The command
+
+    notangle -Rcmp.R compiler.nw
+
+extracts the file cmp.R to standard output.
+
+To build the pdf verison:
+
+    noweave -delay compiler.nw > compiler.tex
+    pdflatex compiler.tex
+

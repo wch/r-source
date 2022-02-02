@@ -1,0 +1,49 @@
+\inputencoding{utf8}
+\HeaderA{testit}{An Rd Regression Test}{testit}
+\aliasB{\{}{testit}{.Rlbrace.}
+%
+\begin{Usage}
+\begin{verbatim}
+\x \y %{}
+
+foo(x, y)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Details}\relax
+Escaped backslash \code{\bsl{}x}.
+
+\code{\%\{\}}
+
+\LinkA{a link}{a link} and one to a known destination:
+\LinkA{weighted.mean}{weighted.mean}
+
+var in \var{text}.
+
+\code{foo(\var{x}, \var{y})}.
+\begin{alltt}
+  Escaped backslash \bsl{}x.
+
+  %\{\}
+
+  var in \bsl{}var\{text\}.
+  
+  foo(\bsl{}var\{x\}, \bsl{}var\{y\}).
+  
+  From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034") 
+  \end{alltt}
+
+Yihui Xie's example:
+\begin{description}
+\item[def] ghi
+\end{description}
+
+\end{Details}
+%
+\begin{Examples}
+\begin{ExampleCode}
+\x
+%{}
+foo(x, y)
+\end{ExampleCode}
+\end{Examples}

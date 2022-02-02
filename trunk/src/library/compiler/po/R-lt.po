@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: compiler 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
+"PO-Revision-Date: 2020-12-09 13:20+0200\n"
+"Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "namespace found within local environments"
+msgstr "vardų sritis randama vietinėse aplinkose"
+
+msgid "not a proper evaluation environment"
+msgstr "netinkama vertinimo aplinka"
+
+msgid "non-namespace found within namespace environments"
+msgstr "ne vardų sritis, rasta vardų srities aplinkose"
+
+msgid "namespace found within global environments"
+msgstr "vardų sritis rasta globaliose aplinkose"
+
+msgid "bad assignment: %s"
+msgstr "neteisingas priskyrimas: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "negalima pastoviai suskleisti tikėtinų literalų"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "negalima pastoviai suskleisti literalų baitinio kodo objektų"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "joks poslinkis neįrašytas \"%s\" žymenai"
+
+msgid "cannot compile byte code literals in code"
+msgstr "negalima kompiliuoti baitinio kodo literalų kode"
+
+msgid "cannot compile promise literals in code"
+msgstr "negalima kompiliuoti tikėtinų literalų kode"
+
+msgid "possible error in '%s': %s"
+msgstr "galima klaida, esanti '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "neteisinga vardų erdvės importo sistema"
+
+msgid "bad assignment 1"
+msgstr "neteisingas priskyrimas 1"
+
+msgid "bad assignment 2"
+msgstr "neteisingas priskyrimas 2"
+
+msgid "invalid function in complex assignment"
+msgstr "neteisinga funkcija kompleksiniame priskyrime"
+
+msgid "missing arguments are not allowed"
+msgstr "trūkstami argumentai yra neleidžiami"
+
+msgid "empty alternative in numeric switch"
+msgstr "tuščia alternatyva skaitiniame perjungime"
+
+msgid "no visible global function definition for '%s'"
+msgstr "nėra matomas globaliosios funkcijos apibrėžimas '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "nėra matomo saistymo globaliam kintamajam '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "nėra matomo saistymo '<<-' priskyrimui į '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "neteisingas argumentų skaičius į '%s'"
+
+msgid "more than one default provided in switch() call"
+msgstr ""
+"daugiau negu vienas numatytasis pateikiamas, esantis switch() kreipinyje"
+
+msgid "'switch' with no alternatives"
+msgstr "'switch' be alternatyvų"
+
+msgid "Error: compilation failed -"
+msgstr "Klaida: kompiliavimas nepavyko -"
+
+msgid "cannot compile a non-function"
+msgstr "negalima kompiliuoti ne fukcijos"
+
+msgid "compiling '%s'"
+msgstr "'%s' kompiliavimas"
+
+msgid "saving to file \"%s\" ..."
+msgstr "įrašoma į failą \"%s\" ..."
+
+msgid "done"
+msgstr "atlikta"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' turi būti aukščiausio lygio aplinka"
+
+msgid "input and output file names are the same"
+msgstr "įvesties failo vardas toks pat, kaip ir išvesties"
+
+msgid "empty input file; no output written"
+msgstr "tuščias įvesties failas; nėra įrašytos išvesties"
+
+msgid "file '%s' does not exist"
+msgstr "'%s' failo nėra"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' netinkama kompiliatoriaus parinktis"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "neleistina aplinkos kintamojo reikšmė: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+"netinkamos kompiliatoriaus parinktys: optimize(==%d)<2 ir jitEnabled(=%d)>2"
+
+msgid "function is not compiled"
+msgstr "funkcija nesukompiliuota"
+
+msgid "cannot compile this expression"
+msgstr "negalima kompiliuoti šio reiškinio"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "vietos priskyrimas į sintaksinę funkciją: "
+msgstr[1] "vietų priskyrimas į sintaksines funkcijas: "
+msgstr[2] "vietos priskyrimas į sintaksinę funkciją: "
+
+#~ msgid "%s is not a registered math1 function"
+#~ msgstr "%s nėra registruota math1 funkcija"
+
+#~ msgid "2. local assignments to syntactic functions:"
+#~ msgstr "2. vietos priskyrimai į sintaksines funkcijas:"
+
+#~ msgid "3. local assignments to syntactic functions:"
+#~ msgstr "3. vietos priskyrimų į sintaksines funkcijas:"

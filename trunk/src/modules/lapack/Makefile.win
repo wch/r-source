@@ -1,0 +1,57 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+MODULE = lapack
+all: 
+	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../$(BINDIR)/Rlapack.dll 
+ifdef USE_IMPLIBS
+	@$(MAKE) --no-print-directory -f Makefile.win implib
+endif
+	@$(MAKE) --no-print-directory -f Makefile.win install
+
+CSOURCES = Lapack.c
+OBJS=$(CSOURCES:.c=.o) dllversion.o
+LIBSOURCES = dlamch.f dlapack.f cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.o) init_win.o Rlapackrc.o
+
+CPPFLAGS = -I../../include -DHAVE_CONFIG_H
+dlamch-FFLAGS = -ffloat-store
+
+install: $(MODULE).dll
+	@$(MKDIR) -p ../../../modules$(R_ARCH)
+	$(CP) $< ../../../modules$(R_ARCH)/$(MODULE).dll
+
+lapack-DLLLIBS = -L../../../$(IMPDIR) -lRlapack -lRblas -lR
+
+implib: libRlapack.dll.a
+	@$(CP) libRlapack.dll.a ../../../lib
+
+libRlapack.dll.a: Rlapack.def
+
+Rlapack.def: $(LIBOBJECTS)
+	@$(ECHO) EXPORTS > $@
+	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SORT) | uniq >> $@
+
+
+$(MODULE).dll: $(OBJS)
+
+../../../$(BINDIR)/Rlapack.dll: $(LIBOBJECTS)
+	$(DLL) -shared -s -o $@ $^ -L../../../$(IMPDIR) -lR -lRblas $(FLIBS)
+
+clean:
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
+	  Rlapack.dll *.a
+
+
+# Dependencies
+dllversion.o: ../../include/Rversion.h
+Rlapackrc.o: ../../include/Rversion.h
+
+DEPS = $(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

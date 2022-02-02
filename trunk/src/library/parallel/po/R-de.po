@@ -1,0 +1,172 @@
+# Translation of src/library/parallel/po/R-parallel.pot to German
+# Copyright (C) 2011-2014 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2011-2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.4.4\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: 2018-04-05 14:54+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R-Core <r-core@r-project.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+msgid "invalid value of %s"
+msgstr "unzulässiger Wert für %s"
+
+msgid "need at least one argument"
+msgstr "benötige mindestens ein Argument"
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge gemischt "
+"werden"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) muss positive Länge haben"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' muss benannte Dimensionsnamen haben"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "nicht alle Elemente von 'MARGIN' sind Dimensionsnamen"
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr "kein Cluster 'cl' angegeben und keiner registriert"
+
+msgid "not a valid cluster"
+msgstr "kein zulässiger Cluster"
+
+msgid "unknown cluster type"
+msgstr "unbekannter Clustertyp"
+
+msgid "numeric 'names' must be >= 1"
+msgstr "numerisches 'names' muss >= 1 sein"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "Knoten des Socketclusters auf System %s mit PID %d"
+
+msgid "Connection setup failed or timed out."
+msgstr ""
+
+msgid "PORT must be specified"
+msgstr "PORT muss angegeben werden"
+
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes' muss >= 1 sein"
+
+msgid "Cluster setup failed."
+msgstr ""
+
+msgid "invalid 'child' argument"
+msgstr "unzulässiges Argument für 'child'"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr ""
+"'children' muss eine Liste von Prozessen oder ein einzelner Prozess sein"
+
+msgid "'process' must be of class %s"
+msgstr "'process' muss aus der  Klasse %s sein"
+
+msgid "'child' must be a valid child process"
+msgstr "'child' muss ein gültiger Kindprozess sein"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what' muss ein Zeichen oder ein ein raw Vektor sein"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores' muss >= 1 sein"
+
+msgid "affinity.list and X must have the same length"
+msgstr "affinity.list und X müssen dieselbe Länge haben"
+
+msgid "%d function calls resulted in an error"
+msgstr "%d Funktionsaufrufe endeten in einem Fehler"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr "'mc.preschedule' muss FALSE sein, wenn 'affinity.list' benutzt wird"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "alle verplanten Kerne berichten Fehler im Benutzerkode"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge gemischt "
+"werden"
+
+msgid "invalid 'jobs' argument"
+msgstr "unzulässiges 'jobs' Argument"
+
+msgid "'v' must be a vector"
+msgstr "'v' muss ein Vektor sein"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+"einige Ergebnisse könnten fehlen, brachen ab oder verursachten einen Fehler"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "Fork-Cluster sind unter Windows nicht unterstützt"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "'mc.cores' > 1 ist unter Windows nicht unterstützt"
+
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "Socketcluster mit %d Knoten auf System %s"
+msgstr[1] "Socketcluster mit %d Knoten auf Systemen %s"
+
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid ""
+"scheduled core %s did not deliver a result, all values of the job will be "
+"affected"
+msgid_plural ""
+"scheduled cores %s did not deliver results, all values of the jobs will be "
+"affected"
+msgstr[0] ""
+"eingeplanter Kern %s berichtet Fehler in Benutzerkode, alle Werte des Jobs "
+"werden betroffen sein"
+msgstr[1] ""
+"eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
+"werden betroffen sein"
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"eingeplanter Kern %s berichtet Fehler in Benutzerkode, alle Werte des Jobs "
+"werden betroffen sein"
+msgstr[1] ""
+"eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
+"werden betroffen sein"
+
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] ""
+msgstr[1] ""
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "Socketcluster mit %d Knoten auf den Systemen %s"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "host"
+#~ msgstr "System"

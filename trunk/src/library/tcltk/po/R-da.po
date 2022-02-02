@@ -1,0 +1,111 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.0.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
+"PO-Revision-Date: 2011-11-29 14:36+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "kan ikke håndtere tilstandsobjekt '%s'"
+
+msgid "cannot change names on Tcl array"
+msgstr "kan ikke ændre navne på Tcl-array"
+
+msgid "cannot set length of Tcl array"
+msgstr "kan ikke angive længde for Tcl-array"
+
+msgid "Tcl package '%s' not found"
+msgstr "Tcl-pakke '%s' blev ikke fundet"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "tkGUI'en er ikke tilgængelig under Windows"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Demos"
+msgstr "Demoer"
+
+msgid "Packages"
+msgstr "Pakker"
+
+msgid "Help"
+msgstr "Hjælp"
+
+msgid "Source R code"
+msgstr "Kilde R-kode"
+
+msgid "Quit"
+msgstr "Afslut"
+
+msgid "Save workspace"
+msgstr "Gem arbejdsrum"
+
+msgid "Don't save workspace"
+msgstr "Gem ikke arbejdsrum"
+
+msgid "t test"
+msgstr "t-test"
+
+msgid "Density"
+msgstr "Tæthed"
+
+msgid "Interactive linear fitting"
+msgstr "Interaktiv lineær tilpasning"
+
+msgid "R FAQ"
+msgstr "R OSS"
+
+msgid "Load"
+msgstr "Indlæs"
+
+msgid "Go get them!"
+msgstr "Hent dem!"
+
+msgid "Load packages"
+msgstr "Indlæs pakker"
+
+msgid "Install packages from CRAN"
+msgstr "Installer pakker fra CRAN"
+
+msgid "Help topic:"
+msgstr "Hjælpeemne:"
+
+msgid "Manuals in PDF format"
+msgstr "Manualer i PDF-format"
+
+msgid "OK"
+msgstr "O.k."
+
+msgid "Cancel"
+msgstr "Afbryd"
+
+#, fuzzy
+msgid "'pb' is not from class %s"
+msgstr "'pb' er ikke fra klasse »tkProgressBar«"
+
+msgid "'filters' must be a 2-column character matrix"
+msgstr "'filters' skal være en 2-kolonne tegnmatrix"
+
+msgid "tcltk DLL is linked to"
+msgstr ""
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "Tcl/Tk-understøttelse er ikke tilgængelig på dette system"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "Tcl/Tk-understøttelsesfiler blev ikke installeret"
+
+#~ msgid "Loading Tcl/Tk interface ..."
+#~ msgstr "Indlæser Tcl/TK-grænseflade..."
+
+#~ msgid "done"
+#~ msgstr "færdig"

@@ -1,0 +1,145 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.13.0 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2015-03-27 14:15+0900 \n"
+"Last-Translator: Masafumi  \n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"Language: ja \n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427433312.000000 \n"
+
+msgid "namespace found within local environments"
+msgstr ""
+
+msgid "not a proper evaluation environment"
+msgstr " 評価環境が適切ではありません "
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+" 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけれ"
+"ばなりません "
+
+msgid "namespace found within global environments"
+msgstr ""
+
+msgid "bad assignment: %s"
+msgstr " 誤った付値: %s "
+
+msgid "cannot constant fold literal promises"
+msgstr " プロミスのリテラルの定数畳み込みができません "
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr " バイトコードオブジェクトのリテラルの定数畳み込みができません "
+
+msgid "no offset recorded for label \"%s\""
+msgstr " ラベル \"%s\" に対するオフセットが記録されていません "
+
+msgid "cannot compile byte code literals in code"
+msgstr " コード中のバイトコードリテラルをコンパイルできません "
+
+msgid "cannot compile promise literals in code"
+msgstr " コード中のプロミスリテラルをコンパイルできません "
+
+msgid "possible error in '%s': %s"
+msgstr " おそらく '%s' 中のエラーです: %s "
+
+msgid "bad namespace import frame"
+msgstr " ネームスペースのインポートフレームが不正です "
+
+msgid "bad assignment 1"
+msgstr " 付値の誤り 1 "
+
+msgid "bad assignment 2"
+msgstr " 付値の誤り 2 "
+
+msgid "invalid function in complex assignment"
+msgstr " complex の付値に不正な関数があります "
+
+msgid "missing arguments are not allowed"
+msgstr " 引数の欠損は許されません "
+
+msgid "empty alternative in numeric switch"
+msgstr " 数値によるスイッチの中で、代替選択肢が空です。 "
+
+msgid "no visible global function definition for '%s'"
+msgstr " グローバル関数 '%s' の明示された定義が見つかりません "
+
+msgid "no visible binding for global variable '%s'"
+msgstr " グローバル変数 '%s' の明示されたバインディングが見つかりません "
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr " '%s' に対する '<<-' 付値の明示されたバインディングが見つかりません "
+
+msgid "wrong number of arguments to '%s'"
+msgstr " '%s' に対する引数の数が違います "
+
+msgid "more than one default provided in switch() call"
+msgstr " switch() 呼び出しの中で、デフォルト選択肢が 2 つ以上あります "
+
+msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
+msgstr ""
+
+msgid "cannot compile a non-function"
+msgstr " 非関数はコンパイルできません "
+
+msgid "compiling '%s'"
+msgstr " '%s' をコンパイルしています "
+
+msgid "saving to file \"%s\" ..."
+msgstr " ファイル \"%s\" に保存しています... "
+
+msgid "done"
+msgstr " 完了 "
+
+msgid "'env' must be a top level environment"
+msgstr " 'env' はトップレベルの環境でなければなりません "
+
+msgid "input and output file names are the same"
+msgstr " 入力ファイルと出力ファイルの名前が同じです "
+
+msgid "empty input file; no output written"
+msgstr " 空の入力ファイルです; アウトプットは出力されません "
+
+msgid "file '%s' does not exist"
+msgstr " ファイル '%s' は存在しません "
+
+msgid "'%s' is not a valid compiler option"
+msgstr " '%s' は有効なコンパイルオプションではありません "
+
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
+msgid "function is not compiled"
+msgstr " 関数はコンパイルされません "
+
+msgid "cannot compile this expression"
+msgstr " この式はコンパイルできません "
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] " シンタックス関数へのローカル付値です: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ " 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけ"
+#~ "ればなりません "
+
+#, fuzzy
+#~ msgid "is not a registered math1 function"
+#~ msgstr " %s は登録された math1 関数ではありません "
+
+#~ msgid "expected a single logical value for the S4 state flag"
+#~ msgstr "S4の状態フラグは, 単一の真偽値であるべきです "

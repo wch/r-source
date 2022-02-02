@@ -1,0 +1,40 @@
+These files are used by a program called aclocal (part of the GNU
+automake package) which uses them to create aclocal.m4 which is in turn
+used by autoconf to create the configure script at the the top level in
+this distribution.
+
+(Actually, as we need to change a few `standard' macros, we need to
+create acinclude.m4 by concatenating all m4 files in this directory
+before running aclocal.)
+
+The files are as follows.
+
+  R.m4
+	contains R specific macros.  Some of these might be useful for
+	other systems as well, but we first need to split this into
+	pieces.
+	R_BLAS_LIBS is based on the AC_ARG_WITH(fastblas) code from
+	Octave, but with tests for Alpha CXML/DXML and IRIX SCSL and
+	SGIMATH libraries commented out.
+	Some macros do not conform to the Autoconf $PKG_$CATEGORY_$FOO
+	naming scheme.  These test for `features' such as GNOME, zlib,
+	etc., are named R_$FEATURE, and typically define HAVE_$FEATURE.
+
+  clibs.m4
+	versions of the autoconf macros to find the Fortran libraries
+	amended to find the C libraries (for comparison with the Fortran
+	ones).
+
+  codeset.m4
+        is from GNU gettext and checks whether nl_langinfo(CODESET)
+        is available in langinfo.h.
+
+  gettext.m4
+	a concatenation of all the required files from gettext 0.14.5
+	except codeset.m4.
+
+  gettext-lib.m4
+	a concatenation of the m4 files from gettext-0.14.5/autoconf-lib-link.
+
+  libtool.m4
+	is from libtool 1.5.6.

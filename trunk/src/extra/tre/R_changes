@@ -1,0 +1,56 @@
+tre-config.h contains additional defines that their configure puts in
+config.h.
+
+We have remapped the POSIX entry points with a tre_ suffix: without
+it there was confusion with entry points in OS libraries on some OSes
+(e.g. macOS).
+
+alloca has been disabled: the declarations used do not work on
+Windows, and most likely not on FreeBSD.
+
+The way we compile it, TRE works internally in one of three modes
+
+STR_BYTE, using bytes
+STR_MBS , using wchar_t for matching, I/O in MBCS
+STR_WIDE, using wchar_t
+
+We've added interfaces tre_regcompb, tre_regncompb, tre_regexecb,
+tre_regnexecb and regaexecb to force STR_BYTE.  Unless forced, bytes
+are used in a single-byte locale and wchar_t in a MBCS.  We need to
+force for useBytes=TRUE, for support for UTF-8 encoded strings
+in a single-byte locale (principally on Windows) and when dealing with
+raw vectors. You do need to ensure that regcomp and regexec use the
+same type.
+
+The offsets in the regmatch_t structure are in characters for
+STR_WIDE, bytes for the other two modes.
+
+On Windows (MinGW?), iswctype is missing 'blank'.
+
+REG_LITERAL was not matching "" in some cases, hence a change at
+line 1652 of tre-parse.c.
+
+We fixed stack trampling in tre_tnfa_run_approx() and converted
+tre_ast_to_tnfa() from recursion to iteration over a TRE stack.
+
+We commented out in tre-match-approx.c
+
+/* These seem compiler/OS-specific, but unexplained
+On Linux the first is intended to be used only with GCC.
+#define __USE_STRING_INLINES
+#undef __NO_INLINE__
+*/
+
+since it failed on clang
+https://stat.ethz.ch/pipermail/r-devel/2010-February/056728.html
+
+Nov 2011: incorporated minor fixes from https://github.com/GerHobbelt/libtre
+(see https://laurikari.net/tre/website-issues-and-future-plans/#comments).
+
+Oct 2014: fixed R bug PR#16009 by copying the class member of a LITERAL
+in tre_copy_ast.
+
+Nov 2014: changed tre_version() to report this is a modified version.
+
+Apr 2020: incorporated a patch to tre-parse.c from
+https://github.com/laurikari/tre/issues/55

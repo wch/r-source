@@ -1,0 +1,1959 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 06.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
+"PO-Revision-Date: 2021-01-27 10:34+0100\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' 不再有用。"
+
+msgid "Use '%s' instead."
+msgstr "請用 '%s'。"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "見 help(\"Defunct\"))和 help(\"%s-defunct\")。"
+
+msgid "See help(\"Defunct\")"
+msgstr "見 help(\"Defunct\"))"
+
+msgid "defunctError"
+msgstr ""
+
+msgid "'%s' is deprecated."
+msgstr "%s 不再有用。"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "見 help(\"Deprecated\")和 help(\"%s-deprecated\")。"
+
+msgid "See help(\"Deprecated\")"
+msgstr "見 help(\"Deprecated\")"
+
+msgid "deprecatedWarning"
+msgstr ""
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd' 的引數必須是數值或複數值"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x' 裡有無窮值或缺值"
+
+msgid "a dimension is zero"
+msgstr "維度為零"
+
+#, fuzzy
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr "\"hexNumeric\" 與 \"digits17\" 彼此互斥"
+
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
+msgstr "\"hexNumeric\" 與 \"digits17\" 彼此互斥"
+
+msgid "second argument must be a list"
+msgstr "第二個引數必須為串列"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "本系統不支援 'iconvlist'"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' 必須是字串，而且其長度只能為一(用 RNG) 。"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' 不是正當的 RNG 縮寫"
+
+msgid "'normal.kind' must be a character string of length 1"
+msgstr "'normal.kind' 必須是字串，而且其長度只能為一。"
+
+msgid "'%s' is not a valid choice"
+msgstr "%s' 不是正當的選擇"
+
+#, fuzzy
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "'normal.kind' 必須是字串，而且其長度只能為一。"
+
+msgid "malformed version string"
+msgstr "版本字串格式不正確"
+
+msgid "target is %s, current is %s"
+msgstr "目標應該是 %s ，現在卻是 %s"
+
+msgid "'tolerance' should be numeric"
+msgstr "'tolerance' 必須是數值"
+
+msgid "'scale' should be numeric or NULL"
+msgstr "'scale' 應當是數值或空值"
+
+msgid "'%s' must be logical"
+msgstr "'%s' 必須是邏輯值"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) 的值必須是正數"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' 必須有帶名稱的維名稱"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "所有 'MARGIN' 的元素都必須是維的名稱不是 ' 緣 ' 的所有元素都是尺寸名稱"
+
+msgid "'MARGIN' does not match dim(X)"
+msgstr ""
+
+#, fuzzy
+msgid "'dim' cannot be of length 0"
+msgstr "'dims' 的長度不能為零"
+
+msgid "'dim' specifies too large an array"
+msgstr "'dim' 的值太大"
+
+#, fuzzy
+msgid "'x' must have named dimnames"
+msgstr "'X' 必須有帶名稱的維名稱"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "'MARGIN' 的值不正確"
+
+#, fuzzy
+msgid "dim(x) must have a positive length"
+msgstr "dim(X) 的值必須是正數"
+
+msgid "'pos=1' is not possible and has been warned about for years"
+msgstr "'pos=1' 不可能且已警示多年"
+
+msgid "file '%s' not found"
+msgstr "沒有 '%s' 檔案"
+
+msgid "invalid 'name' argument"
+msgstr "'name' 引數無效"
+
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "%2$s 需要套件 %1$s，但它與目前的版本不相容"
+
+msgid "package %s is required by %s so will not be detached"
+msgstr "%2$s 需要套件 %1$s，因此不能將之分離"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
+"%2$s() 裡算 '%3$s' 時 %1$s 失敗了，詳細內容：\n"
+"  呼叫: %4$s\n"
+"  錯誤: %5$s"
+
+msgid "%s namespace cannot be unloaded:"
+msgstr "無法卸下 %s 這個命名空間："
+
+msgid "%s converted to character string"
+msgstr "%s 被轉換成字串"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "正規表示式 '[' 被換成 '\\\\['"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "正規表示式 '[<-' 被換成 '\\\\[<-'"
+
+msgid "'value' must be a list"
+msgstr "'value' 必須是串列"
+
+msgid "an object with that name already exists"
+msgstr "物件的名稱已經存在"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "自動載入器在 '%2$s' 找不到 '%1$s' "
+
+msgid "can only splice inside a call"
+msgstr ""
+
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "只能寫向量物件"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
+msgid "complex matrices not permitted at present"
+msgstr "複數矩陣現在不能用"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x' 必須是陣列，而且至少得有兩個維度"
+
+msgid "invalid 'dims'"
+msgstr "'dims' 無效"
+
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
+
+msgid "no 'restart' '%s' found"
+msgstr "找不到 'restart' '%s'"
+
+msgid "not an interactive session"
+msgstr "非交互執行式"
+
+msgid "not a valid restart specification"
+msgstr "重新開始的規格無效"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "處理常式必須是函式"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
+
+msgid "argument 'where' of length 0"
+msgstr "引數長度為零"
+
+msgid "can only write character objects"
+msgstr "只能寫字元物件"
+
+#, fuzzy
+msgid "'headers' must have names and must not be NA"
+msgstr "'X' 必須有帶名稱的維名稱"
+
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "引數 'object' 必須解析成單一個字串"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "'origin' 引數的值必須是 'start'，'current' 或 'end' 中的一個"
+
+msgid "can only truncate an open connection"
+msgstr "只能截斷已經開啟的鏈結"
+
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "'name' 引數無效"
+
+msgid "can only write vector objects"
+msgstr "只能寫向量物件"
+
+msgid "'timeout' must be NULL or a non-negative number"
+msgstr "'timeout' 的值要麼是 NULL，要麼是非負數"
+
+msgid "'from' must be raw or character"
+msgstr "'from' 要麼是生的，要麼是字元。"
+
+msgid "'x' must be numeric"
+msgstr "'x' 必須是數值"
+
+msgid "invalid number of intervals"
+msgstr "間隔數目無效"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks' 的值有重複"
+
+msgid "lengths of 'breaks' and 'labels' differ"
+msgstr "'breaks' 和 'labels' 的長度不一樣"
+
+msgid "invalid 'row.names' length"
+msgstr "'row.names' 的長度無效"
+
+msgid "invalid 'make.names'"
+msgstr "無效的 'make.names'"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "不允許有重複的 'row.names'"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "'row.names' 裡不允許有缺值"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "資料框的 'dimnames' 給得無效"
+
+msgid "cannot coerce class %s to a data.frame"
+msgstr "不能把 \"%s\" 類別強迫變成 data.frame"
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr "'row.names' 不是長度為 %d 的字元向量 -- 省略它。將會産生錯誤！"
+
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+msgstr "options(\"stringsAsFactors\")只能取 TRUE 或 FALSE 值"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "'data.frame' 引數裡 %d 單元中列名稱不匹配"
+
+msgid "some row.names duplicated: %s --> row.names NOT used"
+msgstr "某些 row.names 有重複：%s --> row.names 不用了"
+
+msgid "row names contain missing values"
+msgstr "列名稱裡有缺值"
+
+msgid "duplicate row.names: %s"
+msgstr "row.names 有重複: %s"
+
+msgid "arguments imply differing number of rows: %s"
+msgstr "引數值意味着不同的列數: %s"
+
+msgid "'row.names' should specify one of the variables"
+msgstr "'row.names' 必須指定一個變數"
+
+msgid "row names supplied are of the wrong length"
+msgstr "列名稱長度無效"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "短變數裡找到了列名稱，因此不用"
+
+msgid "named arguments other than 'drop' are discouraged"
+msgstr "除了 'drop' 之外最好不用帶名稱的引數"
+
+msgid "'drop' argument will be ignored"
+msgstr "忽略 'drop' 引數"
+
+msgid "undefined columns selected"
+msgstr "選擇了未定義的行"
+
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "除了 'exact' 之外最好不用帶名稱的引數"
+
+msgid "named arguments are discouraged"
+msgstr "最好不用帶名稱的引數"
+
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr "更換的項數應該是更換長度的整數倍"
+
+msgid "'value' is the wrong length"
+msgstr "'value' 長度無效"
+
+msgid "unsupported matrix index in replacement"
+msgstr "不支援這樣的替換中矩陣索引"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "需要零，一或二索引"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr "執行數據框索引賦值時是不允許缺值的"
+
+msgid "non-existent rows not allowed"
+msgstr "不能有不存在的列"
+
+msgid "column name \"\" cannot match any column"
+msgstr "對不上\"\"這個行名稱"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "新的行會在舊的行裡留下洞"
+
+msgid "duplicate subscripts for columns"
+msgstr "行裡有重複的索引"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "正確呼叫的寫法是 x[[j]] <- value 或 x[[i,j]] <- value "
+
+msgid "replacing element in non-existent column: %s"
+msgstr "在不存在的行裡替換單元: %s"
+
+msgid "only a single element should be replaced"
+msgstr "只能替換一個單元"
+
+msgid "names do not match previous names"
+msgstr "名稱同原來已有的名稱不相對"
+
+msgid "numbers of columns of arguments do not match"
+msgstr "變數的行數無效"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "串列引數不正確：所有變數的長度都應該是一樣的"
+
+msgid "<0 rows> (or 0-length row.names)"
+msgstr "<0 列> (或零長度的 row.names)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr ""
+
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
+msgstr "資料框裡有非數值的變數："
+
+msgid ","
+msgstr "，"
+
+msgid "%s only defined for equally-sized data frames"
+msgstr "%s 只適用於大小相同的資料框"
+
+msgid "list of length %d not meaningful"
+msgstr "%d 長度的串列沒有意義"
+
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
+msgstr "只適用於全數值資料框"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "不是資料框"
+
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr "串列引數不正確：所有變數的長度都應該是一樣的"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "字串的格式不夠標準明確"
+
+msgid "'origin' must be supplied"
+msgstr "'origin' 一定得給值"
+
+msgid "do not know how to convert '%s' to class %s"
+msgstr "不知如何將 '%s' 轉換成 %s 類別"
+
+msgid "binary + is not defined for \"Date\" objects"
+msgstr "二元的+法對\"Date\"物件不適用"
+
+msgid "can only subtract from \"Date\" objects"
+msgstr "只能從\"Date\"物件減"
+
+msgid "unary - is not defined for \"Date\" objects"
+msgstr "一元的 - 法對\"Date\"物件不適用"
+
+msgid "can only subtract numbers from \"Date\" objects"
+msgstr "只能從\"Date\"物件減數值"
+
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "一元 %s 對\"Date\"物件不適用"
+
+msgid "%s not defined for \"Date\" objects"
+msgstr "%s 對\"Date\"沒有定義"
+
+msgid "'from' must be specified"
+msgstr "'from' 一定得給值"
+
+msgid "'from' must be a \"Date\" object"
+msgstr "'from' 一定得是\"Date\"物件"
+
+msgid "'from' must be of length 1"
+msgstr "'from' 的長度必須為一"
+
+msgid "'to' must be a \"Date\" object"
+msgstr "'to' 一定得是\"Date\"物件"
+
+msgid "'to' must be of length 1"
+msgstr "'to' 的長度必須為一"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out' 的長度必須為一"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr " 'to'，'by'，'length.out'/'along.with' 中四個只能同時選兩個"
+
+msgid "'by' must be of length 1"
+msgstr "'by' 的長度必須為一"
+
+msgid "invalid 'by' string"
+msgstr "'by' 字串不正確"
+
+msgid "invalid string for 'by'"
+msgstr "'by' 的字串不正確"
+
+msgid "invalid mode for 'by'"
+msgstr "'by' 的模式無效"
+
+msgid "'by' is NA"
+msgstr "'by' 是 NA"
+
+msgid "'x' must be a date-time object"
+msgstr "'x' 必須是 date-time 物件"
+
+msgid "invalid specification of 'breaks'"
+msgstr "'breaks' 的值不正確"
+
+msgid "'origin' must be of length one"
+msgstr "'origin' 的長度必須為一"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag' 和 'differences' 的值必須為大於等於一的整數"
+
+msgid "unable to deduce timezone name from"
+msgstr "無法推論時區名稱自"
+
+msgid "wrong class"
+msgstr "類別無效"
+
+msgid "binary '+' is not defined for \"POSIXt\" objects"
+msgstr "二元 '+' 法不適用於 \"POSIXt\" 的物件"
+
+msgid "can only subtract from \"POSIXt\" objects"
+msgstr "只能從 \"POSIXt\" 物件那兒減"
+
+msgid "unary '-' is not defined for \"POSIXt\" objects"
+msgstr "一元的 '-' 法對 \"POSIXt\" 物件不適用"
+
+msgid "can only subtract numbers from \"POSIXt\" objects"
+msgstr "只能從 \"POSIXt\" 物件那兒減數值"
+
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "一元 '%s' 對 \"POSIXt\" 物件不適用"
+
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "'%s' 對 \"POSIXt\" 物件不適用"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr "'tzone' 的屬性相互有矛盾"
+
+msgid "'tim' is not character or numeric"
+msgstr "'tim' 不是字元，也不是數值"
+
+msgid "need explicit units for numeric conversion"
+msgstr "數值轉換需要明確單元"
+
+msgid "invalid units specified"
+msgstr "單元設定無效"
+
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "一元 '%s' 對\"difftime\"物件不適用"
+
+msgid "'%s' not defined for \"difftime\" objects"
+msgstr "'%s' 對\"difftime\"物件不適用"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "* 法的兩個引數不能同時都是\"difftime\" 物件"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "/法的第二個引數不能是\"difftime\" 物件"
+
+msgid "'from' must be a \"POSIXt\" object"
+msgstr "'from' 一定得是\"POSIXt\"物件"
+
+msgid "'to' must be a \"POSIXt\" object"
+msgstr "'to' 一定得是\"POSIXt\"物件"
+
+#, fuzzy
+msgid "component subscript must be a character string"
+msgstr "引數 'object' 必須解析成單一個字串"
+
+msgid "no Olson database found"
+msgstr "找不到 Olson 資料庫"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' 要麼是字串，要麼是連接"
+
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"DCF 格式不對。\n"
+"正則列必須含標籤。\n"
+"不對列的開頭為：\n"
+"%s"
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"DCF 格式不對。\n"
+"連續列不能由記錄開頭。\n"
+"不對列的開頭為：\n"
+"%s"
+
+msgid "failed to load the methods package for debugging by signature"
+msgstr "無法載入方法套件以利用簽名來除錯"
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr "無法載入方法套件以利用簽名來解除除錯"
+
+msgid "failed to load methods package for handling signature"
+msgstr "無法載入方法套件以處理簽名"
+
+msgid "'x' must be a square matrix"
+msgstr "'x' 必須是正方形矩陣"
+
+msgid "'determinant' not currently defined for complex matrices"
+msgstr "目前還不能算複數矩陣的 'determinant' "
+
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr "如果 'x' 是矩陣的話不能直接設定 'nrow' 或 'ncol'"
+
+msgid "'x' is an array, but not one-dimensional."
+msgstr "'x' 陣列但卻不是一維的"
+
+msgid "only matrix diagonals can be replaced"
+msgstr "只能替換矩陣的對角"
+
+msgid "replacement diagonal has wrong length"
+msgstr "對角替換值的長度無效"
+
+#, fuzzy
+msgid "MARGIN = %s is invalid for dim = %s"
+msgstr "MARGIN = %d 不能適用於 dim = %d"
+
+msgid "must pass a package name, %s or %s object"
+msgstr "必須提供程輯名稱，%s 或 %s 物件"
+
+msgid "No DLL currently loaded with name or path %s"
+msgstr "目前並沒有載入帶 %s 這個名稱或路徑的 DLL"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "多個 DLL 有相同的 '%s' 名稱。用 %s"
+
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
+msgstr "必須透過 %s 物件來設定 DLL 的名稱。見 getLoadedDLLs()"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "函式在命名空間裡並不存在，因此無法找到與其對應的 DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr "尋找含本機協力子程式的 DLL，但呼叫的命名空間裡沒有 DLL"
+
+msgid "0 x 0 matrix"
+msgstr "零乘零的矩陣"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "eigen 裡的矩陣不是正方形的"
+
+msgid "invalid nrow(x)"
+msgstr "nrow(x)無效"
+
+msgid "invalid 'labels'; length %d should be 1 or %d"
+msgstr "'labels' 不對；長度 %d 應該是一或 %d"
+
+msgid "number of levels differs"
+msgstr "層次數目不同"
+
+msgid "%s not meaningful for factors"
+msgstr "%s 對因子沒有意義"
+
+msgid "level sets of factors are different"
+msgstr "因子的層次集不同"
+
+msgid "invalid factor level, NA generated"
+msgstr "因子層次不正確，產生了 NA"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s' 對順序化的因子沒有意義"
+
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s' 對順序化的因子沒有意義"
+
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr ""
+"如果所有的引數都有相同的因子層次設定的話，'%s' 才能對順序化的因子有意義"
+
+msgid "no files to copy to"
+msgstr "拷貝時沒有可以寫的檔案"
+
+msgid "attempt to copy a directory to itself"
+msgstr "無法將目錄拷貝到自己上"
+
+msgid "more 'from' files than 'to' files"
+msgstr "'from' 的檔案比 'to' 的檔案要多"
+
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr "'recursive' 將被忽略，因為 'to' 不是一個單一的現有目錄"
+
+msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "不能同時又讀又寫同一個檔案"
+
+msgid "no files to link from"
+msgstr "鏈結時沒有可以讀的檔案"
+
+msgid "no files/directory to link to"
+msgstr "鏈結時沒有可以寫的檔案/目錄"
+
+msgid "no files to link to"
+msgstr "沒有可以鏈結上的檔案"
+
+msgid "'package' must be of length 1"
+msgstr "'package' 的長度必須為一"
+
+msgid "no file found"
+msgstr "找不到檔案"
+
+msgid "invalid 'path' argument"
+msgstr "'path' 引數無效"
+
+msgid "invalid 'time' argument"
+msgstr "'time' 引數無效"
+
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
+msgstr "'vec' 的順序一定得從小到大且不包含 NA"
+
+msgid "'fun' is not a function"
+msgstr "'fun' 不是函式"
+
+msgid "using the first element of 'value' of type \"expression\""
+msgstr "用種類為\"expression\"的 'value' 的第一個元素"
+
+msgid "Found no format() method for class \"%s\""
+msgstr ""
+
+msgid "class of 'x' was discarded"
+msgstr "類別 'x' 已被捨棄"
+
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "'flag' 必須為字串，亦即長度為一"
+
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "'flag' 只能包含字元 [0+- #'I]"
+
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr ""
+"'mode' 的值必須是\"double\" (\"real\")， \"integer\"或\"character\"中的一個"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "用 format=\"s\"時引數被強迫轉變成\"character\" "
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format' 的值必須從{\"f\",\"e\",\"E\",\"g\",\"G\"，\"fg\"，\"s\"}中選一個"
+
+msgid "'digits' reduced to %d"
+msgstr "'digits' 被減少到 %d"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr "破損的資料框：縮短行的長度或用 NA 來填充空白"
+
+msgid "'zero.print' has length > 1"
+msgstr "'zero.print' 的長度一定得大於一"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "'zero.print' 只能取字元，邏輯或 NULL 值"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr "'big.mark' 與 'decimal.mark' 兩者都是 '%s'，可能會造成混淆"
+
+msgid "'input.d.mark' has no characters"
+msgstr "'input.d.mark' 必須包含字元"
+
+msgid "'subset' must be logical"
+msgstr "'subset' 必須是邏輯值"
+
+msgid "value for %s not found"
+msgstr "%s 的值沒有"
+
+msgid "all arguments must be named"
+msgstr "所有引數都必須具名字"
+
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "忽略 'drop' 引數"
+
+msgid "match distance components must be non-negative"
+msgstr "匹配距離元件不能有負值"
+
+msgid "unknown match distance components ignored"
+msgstr "匹配位距的組成部分不存在，因此忽略不計"
+
+msgid "unknown cost components ignored"
+msgstr "忽略未知的成本組成部分"
+
+msgid "cost components must be non-negative"
+msgstr "成本組成部分不能有負值"
+
+msgid "%s and %s must have the same length"
+msgstr "%s 和 %s 的長度必須一致"
+
+msgid "need non-overlapping matches for %s"
+msgstr "需要為 %s 設非重疊匹配"
+
+msgid "missing replacement values are not allowed"
+msgstr "不允許有替換值"
+
+msgid "must have replacement values for matches"
+msgstr "匹配值必須有替換值"
+
+msgid "value does not provide any replacement values"
+msgstr "值不提供任何替代值"
+
+msgid "must have replacements for non-matches"
+msgstr "非匹配值必須有替換值"
+
+msgid "must have replacements for matches"
+msgstr "匹配必須有替換"
+
+msgid "No factors specified"
+msgstr "沒有指定因子"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr "範數 '%s' 現在總是用 exact = FALSE"
+
+msgid "triangular matrix should be square"
+msgstr "三角矩陣必須的正方形的"
+
+msgid "unknown conflict policy: %s"
+msgstr ""
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr ""
+
+msgid "package %s has not been installed properly"
+msgstr "沒有正確安裝套件 %s "
+
+msgid "package %s was built before R 3.0.0: please re-install it"
+msgstr "套件 %s 是在 R 版本 3.0.0 之前建的：您得重新安裝"
+
+msgid "This is R %s, package %s needs %s %s"
+msgstr "這是 R%s，套件 %s 需要 %s %s "
+
+msgid "package %s was built under R version %s"
+msgstr "套件 %s 是用 R 版本 %s 來建造的"
+
+msgid "package %s was built for %s"
+msgstr "套件 %s 是為 %s 建造的"
+
+msgid "package %s is not installed for 'arch = %s'"
+msgstr "套件 %s 沒有安裝在 'arch=%s' 中"
+
+#, fuzzy
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr "載入套件：%s"
+
+msgid "packageConflictError"
+msgstr ""
+
+msgid "Attaching package: %s"
+msgstr "載入套件：%s"
+
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr "'verbose' 和 'quietly' 兩個值都是 TRUE；因此先詳細再…"
+
+msgid "invalid package name"
+msgstr "套件名稱無效"
+
+msgid "there is no package called %s"
+msgstr "不存在叫 %s 這個名稱的套件"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "在 'lib.loc' 裡找不到常式庫樹"
+
+msgid "%s is not a valid installed package"
+msgstr "%s 不是有效的已經安裝的程式套件"
+
+msgid "%s not found on search path, using pos = 2"
+msgstr "在搜尋路徑上找不到 %s，用 pos=2"
+
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
+msgstr ""
+"套件 %s 版本 %s 無法被卸載：\n"
+" %s"
+
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
+msgstr ""
+"套件或命名空間載入失敗 %s%s:\n"
+" %s"
+
+msgid "package %s does not have a namespace and should be re-installed"
+msgstr "套件 %s 沒具名字空間，應該重新安裝"
+
+msgid "package %s already present in search()"
+msgstr "search() 裡已經存在套件 %s"
+
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
+msgstr "'DESCRIPTION' 內有 'Encoding' 這個欄位，但重新編碼是不可能的"
+
+msgid "%sPackages in library %s:"
+msgstr "圖書館 %2$s 裡有 %1$s 個套件："
+
+msgid "no packages found"
+msgstr "找不到套件"
+
+msgid "R packages available"
+msgstr "有 R 套件"
+
+msgid "DLL %s not found: maybe not installed for this architecture?"
+msgstr "無此 DLL %s：是不是沒有為此架構安裝？"
+
+msgid "shared object %s not found"
+msgstr "共享目標物件 %s 不存在"
+
+msgid "DLL %s already loaded"
+msgstr "DLL %s 已經載入了"
+
+msgid "shared object '%s' already loaded"
+msgstr "共享物件 '%s' 已經載入了"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "現在 dyn.load(\"%s\") …"
+
+msgid "no DLL was specified"
+msgstr "沒有指定 DLL"
+
+msgid "no shared object was specified"
+msgstr "沒有指定共享物件"
+
+msgid "DLL %s was not loaded"
+msgstr "DLL %s 沒有載入"
+
+msgid "shared object %s was not loaded"
+msgstr "共享物件 %s 沒有載入"
+
+msgid "DLL %s not found"
+msgstr "沒有 %s 這個 DLL"
+
+msgid "shared object '%s' not found"
+msgstr "共享目標物件 '%s' 不存在"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "現在 dyn.unload(\"%s\") …"
+
+msgid "Loading required package: %s"
+msgstr "載入需要的套件：%s"
+
+msgid "none of the packages are loaded"
+msgstr "沒有載入任何套件"
+
+msgid ""
+"package %s found more than once, using the first from\n"
+"  %s"
+msgstr ""
+"找到多個稱為 %s 的套件，使用其中的第一個\n"
+" %s"
+
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
+msgstr "可以在目錄 %s 中的簡介內找到更多的資訊"
+
+msgid "Description:"
+msgstr "描述："
+
+msgid "Index:"
+msgstr "索引："
+
+msgid "Information on package %s"
+msgstr "關於套件 %s 的資訊"
+
+msgid "Documentation for package %s"
+msgstr "關於這個套件 %s 的說明書"
+
+msgid "package %s required by %s could not be found"
+msgstr "找不到 %2$s 所需要的套件 %1$s"
+
+msgid "version %s of %s masked by %s in %s"
+msgstr "%2$s 的版本 %1$s 被 %4$s 中的 %3$s 所遮蓋"
+
+msgid "package %s could not be loaded"
+msgstr "無法載入套件 %s"
+
+msgid "empty (zero-byte) input file"
+msgstr "空的(零位元組)輸入檔案"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "輸入有破損，LF 被 CR 取代"
+
+msgid "bad 'file' argument"
+msgstr "'file' 引數無效"
+
+msgid "'file' must be specified"
+msgstr "必須設定 'file' 的值"
+
+msgid "nothing specified to be save()d"
+msgstr "沒有指定要 save()的東西"
+
+msgid "'file' must be non-empty string"
+msgstr "'file' 的值必須是長度大於零的字串"
+
+msgid "'compress' must be logical or character"
+msgstr "'compress' 要麼是邏輯值，要麼是字元"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr "'compress = \"%s\"' 得無效"
+
+msgid "bad file argument"
+msgstr "檔案引數值無效"
+
+msgid "can only save to a binary connection"
+msgstr "只能儲存到二元鏈結"
+
+msgid "image could not be renamed and is left in %s"
+msgstr "映像無法被重新命名，因此被留在 %s"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[原來儲存的工作空間已還原]"
+
+msgid "Attempting to load the environment %s"
+msgstr "試圖載入 %s 環境"
+
+msgid "Specified environment not found: using '.GlobalEnv' instead"
+msgstr "不明指定的環境：用.GlobalEnv"
+
+msgid "invalid 'category' argument"
+msgstr "'category' 引數不正確"
+
+msgid "must specify names of formal arguments for 'vectorize'"
+msgstr "用 'vectorize' 時必須設定正式引數"
+
+msgid "FUN"
+msgstr "有趣"
+
+msgid "may not have argument(s) named"
+msgstr "可能無法具有所稱的引數"
+
+msgid "'arg' must be NULL or a character vector"
+msgstr "'arg' 要麼是 NULL，要麼是字元向量。"
+
+msgid "'arg' must be of length 1"
+msgstr "'arg' 的長度必須為一"
+
+msgid "'arg' must be of length >= 1"
+msgstr "'arg' 的長度必須大於等於一"
+
+msgid "'arg' should be one of %s"
+msgstr "'arg' 應當是 %s 其中的一個"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "'match.arg' 裡有重複的匹配"
+
+msgid "no match"
+msgstr "找不到匹配"
+
+msgid "'input' must have length 1"
+msgstr "'input' 的長度一定得為一"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "'input' 和 'target' 一定都得是字串"
+
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "不是資料框"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' 不是函式，也不是字元，也不是符號"
+
+msgid "found non-function '%s'"
+msgstr "找到個非函式 '%s'"
+
+msgid "attempt to set 'rownames' on an object with no dimensions"
+msgstr "不能給沒有維度的物件設 'rownames'"
+
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
+msgstr "不能給維度小於二的物件設 'colnames'"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "引數不是數值也不是邏輯值：回覆 NA"
+
+msgid "'trim' must be numeric of length one"
+msgstr "'trim' 必須是長度必須為一的數值"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "複數資料不能算切尾平平均值"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by' 的長度一定得和行的長度相同"
+
+msgid "'by' must match number of columns"
+msgstr "'by' 的長度一定得和行的長度相同"
+
+msgid "'by' must specify one or more columns as numbers, names or logical"
+msgstr "'by' 一定得用數字，名稱或邏輯值來指定一個或多個行"
+
+msgid "long vectors are not supported"
+msgstr "不支援長整數向量"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x' 和 'by.y' 設定了不同數目的行"
+
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr "只有當合併於單行時才支援 'incomparables'"
+
+msgid "additional arguments ignored in message()"
+msgstr "message() 裡附加引數忽略不用"
+
+msgid ""
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
+msgstr "追蹤函式需要 'methods' 套件，但在載入 'methods' 命名空間的時候發生錯誤"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr "不能變更因子的儲存狀態"
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
+msgstr ""
+"當處理物件 %s 時，\n"
+"無法使用命名空間 %s 且被 .GlobalEnv 取代"
+
+msgid "namespace is already attached"
+msgstr "已經連接上命名空間了"
+
+#, fuzzy
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr "不載入命名空間"
+
+msgid "%s not found"
+msgstr "%s 不存在"
+
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "載入了命名空間 %1$s %2$s，但需要的是 %3$s %4$s"
+
+msgid "- loading"
+msgstr ""
+
+msgid "namespace %s is already sealed in 'loadNamespace'"
+msgstr "命名空間 %s 已經在 'loadNamespace' 封條了"
+
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
+msgstr ""
+"不能為 %1$s 指派 RegisteredNativeSymbol 給 %2$s 因為 %4$s 已經在 %3$s 命名空"
+"間有定義了"
+
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
+"不能為 %1$s 指派 NativeSymbolInfo 給 %2$s 因為 %4$s 已經在 %3$s 命名空間有定"
+"義了"
+
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
+"不能為 %1$s 指派 NativeSymbolInfo 因為 %2$s 已經在 %3$s 命名空間有定義了"
+
+msgid "package %s does not have a namespace"
+msgstr "套件 %s 沒具名字空間"
+
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "套件 %s 是在 R 版本 3.0.0 之前建的：您得重新安裝"
+
+msgid "namespace %s %s is being loaded, but %s %s is required"
+msgstr "載入了命名空間 %1$s %2$s，但需要的是 %3$s %4$s"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "套件 %s 沒有 'NAMESPACE' 此一檔案"
+
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr "套件 %s 的使用許可要求您先透過交談式作業階段時接受它"
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr "套件 %s 的使用許可證要求您在看完後接受它"
+
+msgid "package %s has a license that you need to accept:"
+msgstr "套件 %s 的使用許可證要求您在看完後接受它："
+
+msgid "according to the DESCRIPTION file it is"
+msgstr "按照 DESCRIPTION 檔案它是"
+
+msgid "%s"
+msgstr "%s"
+
+msgid "license for package %s not accepted"
+msgstr "套件 %s 的使用許可證沒有被接受"
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+"套件 %s 被之前某個具有不同內部結構的 R 版本所安裝；它需要重新安裝以用於目前"
+"的 R 版本"
+
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
+msgid "unable to load R code in package %s"
+msgstr "套件 %s 裡的 R 寫碼載入失敗"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"雖然 'exportClassPattern' 在 'NAMESPACE' 有設定但它在 %s 套件中沒有相對應的類"
+"別"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "類別無效"
+
+msgid ""
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
+msgstr ""
+"雖然 'exportClassPattern' 在 'NAMESPACE' 有設定但它在 %s 套件中沒有相對應的類"
+"別"
+
+msgid "in package %s classes %s were specified for export but not defined"
+msgstr "在 %s 套件中 %s 類別指定被用於匯出，但它的定義並不存在"
+
+msgid "no function found corresponding to methods exports from %s for: %s"
+msgstr "從 %s 匯出功能裡找不到適用於 %s 的相應方法"
+
+msgid "in %s methods for export not found: %s"
+msgstr "用於匯出的 %s 方法不存在：%s "
+
+msgid "---- export method"
+msgstr ""
+
+msgid "multiple methods tables found for %s"
+msgstr "%s 存在多個方法表"
+
+msgid "failed to find metadata object for %s"
+msgstr "找不到關於 %s 的隱喻資料物件"
+
+msgid "in package %s methods %s were specified for export but not defined"
+msgstr "在 %s 套件中 %s 方法指定被用於匯出，但它的定義並不存在"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
+
+msgid "Loading required namespace: %s"
+msgstr "載入需要的命名空間：%s"
+
+msgid "not loading a namespace"
+msgstr "不載入命名空間"
+
+msgid "namespace %s is imported by %s so cannot be unloaded"
+msgstr "命名空間 %s 是由 %s 匯入的，因此無法將之卸下"
+
+msgid "not a namespace"
+msgstr "不是命名空間"
+
+msgid "operation not allowed on base namespace"
+msgstr "命令不能在基本命名空間上使用"
+
+msgid "duplicate import names %s"
+msgstr "重複匯入名稱 %s"
+
+msgid "replacing local value with import %s when loading %s"
+msgstr "在輸入 %2$s 時局部值將被匯入值 %1$s 代替"
+
+msgid "cannot import into a sealed namespace"
+msgstr "不能匯入到已經封閉的命名空間"
+
+msgid "replacing previous import by %s when loading %s"
+msgstr "載入 %2$s 將代替前次 %1$s 的匯入"
+
+msgid "invalid import target"
+msgstr "匯入目標不正確"
+
+msgid "found methods to import for function %s but not the generic itself"
+msgstr "%s 函式有可匯入的方法，但找不到它的同屬方法"
+
+msgid "replacing previous import %s by %s when loading %s"
+msgstr "載入 %2$s 將代替前次匯入 %1$s ..?.. %3$s"
+
+msgid ""
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
+msgstr ""
+"程式套件 \"%2$s\" 裡沒有相應於為 \"%1$s\" 所要求的匯入方法的泛型函式 \"%3$s"
+"\" (是不是匯出的格式不對？)"
+
+msgid "cannot add to exports of a sealed namespace"
+msgstr "不能在封閉命名空間裡進行匯出加入"
+
+msgid "undefined exports: %s"
+msgstr "匯出不存在：%s"
+
+#, fuzzy
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "'NAMESPACE' 檔案裡 '%s' 指示中有空的名稱"
+
+msgid "package %s has no 'NAMESPACE' file"
+msgstr "套件 %s 沒有 'NAMESPACE' 此一檔案"
+
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
+msgstr "'NAMESPACE' 檔案裡 '%s' 指示中有空的名稱"
+
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
+msgstr "useDynlib(\"%1$s\") 裡有重複字元名稱 %2$s"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "不是 'S3method' 指令：%s"
+
+msgid "unknown namespace directive: %s"
+msgstr "未知命名空間指令：%s"
+
+msgid "S3 method %s was declared but not found"
+msgstr "S3 方法 %s 有宣告但並不存在"
+
+msgid "bad method"
+msgstr "方法不正確"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "在載入命名空間 '%2$s' 的時候找不到 '%1$s' 物件"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr ""
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s' 還沒有程式設計實作"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "'%s' 引數現在還沒有用"
+
+msgid "'x' cannot be coerced to class \"octmode\""
+msgstr "不能強迫把 'x' 變更成\"octmode\"這個類別"
+
+msgid "'x' cannot be coerced to class \"hexmode\""
+msgstr "不能強迫把 'x' 變更成\"hexmode\"這個類別"
+
+msgid "using ... with FUN = \"*\" is an error"
+msgstr "和 FUN = \"*\"一起用…肯定是錯的"
+
+msgid "no arguments"
+msgstr "沒有引數"
+
+msgid "an argument will be fractionally recycled"
+msgstr "引數將被資料略微回收"
+
+msgid "invalid ncol(x)"
+msgstr "ncol(x)無效"
+
+msgid "too large a matrix for LINPACK"
+msgstr "矩陣對 LINPACK 來說太大了"
+
+msgid "first argument must be a QR decomposition"
+msgstr "第一個引數必須是 QR 分解"
+
+msgid "invalid nrow(qr$qr)"
+msgstr "nrow(qr$qr)無效"
+
+msgid "invalid ncol(qr$qr)"
+msgstr "ncol(qr$qr)無效"
+
+msgid "invalid ncol(qr$rank)"
+msgstr "ncol(qr$rank)無效"
+
+msgid "invalid ncol(y)"
+msgstr "ncol(y)無效"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr' 和 'y' 必須有相同的列數"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "'qr.coef' 裡出現了精確奇異"
+
+msgid "argument is not a QR decomposition"
+msgstr "引數不是 QR 分解"
+
+msgid "invalid NCOL(y)"
+msgstr " NCOL(y)無效"
+
+msgid "not implemented for complex 'qr'"
+msgstr "沒有在複數 'qr' 內實作"
+
+msgid "not supported for LAPACK QR"
+msgstr "不支援 LAPACK QR"
+
+msgid "'k' is too large"
+msgstr "'k' 值太大"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "因為產生了主軸，需要大一點的 'ncol' 值"
+
+msgid "invalid NCOL(R)"
+msgstr "NCOL(R)無效"
+
+msgid "'x' must be a vector of an atomic type"
+msgstr "'x' 必須為原子類型向量"
+
+msgid "invalid 'rle' structure"
+msgstr "'rle' 結構不正確"
+
+msgid "... must contain names or character strings"
+msgstr "…要麼含名稱，要麼是字串"
+
+msgid "incorrect length for 'group'"
+msgstr "'group' 的長度無效"
+
+msgid "missing values for 'group'"
+msgstr "'group' 裡有缺值"
+
+msgid "not a data frame"
+msgstr "不是資料框"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "'center' 的長度必須和 'x' 行的數目相同"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "'scale' 的長度必須和 'x' 行的數目相同"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "'nmax' 和 'n' 兩者只能有一個設定"
+
+msgid "'from' must be a finite number"
+msgstr "'from' 必須是有限數值"
+
+msgid "argument 'length.out' must be of length 1"
+msgstr "'length.out' 引數的長度必須為一"
+
+msgid "first element used of 'length.out' argument"
+msgstr "用了 'length.out' 引數裡的第一個元素"
+
+msgid "'to' must be a finite number"
+msgstr "'to' 必須是有限數值"
+
+msgid "invalid '(to - from)/by'"
+msgstr "無效的 '(to - from)/by"
+
+msgid "wrong sign in 'by' argument"
+msgstr "'by' 引數的正負號無效"
+
+msgid "'by' argument is much too small"
+msgstr "'by' 引數太小"
+
+msgid "'length.out' must be a non-negative number"
+msgstr "'length.out' 必須為非負數"
+
+msgid "too many arguments"
+msgstr "太多引數"
+
+msgid "invalid 'compress' argument:"
+msgstr "無效的 'compress' 引數："
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr "除非 'file' 是檔案名稱，'compress' 將被忽略不用"
+
+msgid "'connection' must be a connection"
+msgstr "'connection' 必須是個鏈結"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file' 要麼是 NULL 要麼是已經開啟的鏈結"
+
+msgid "cannot split the message connection"
+msgstr "無法將訊息鏈結分割"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "'file' 要麼是 NULL 要麼是是鏈結要麼是字串"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "泛型函式 solve()有\"qr\" 方法"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "'solve' 裡的 'a' 是奇異矩陣"
+
+msgid "only square matrices can be inverted"
+msgstr "只有正方形的矩陣才能求逆"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "呼叫 solve.default 在\"qr\"物件上：用 'qr.solve'"
+
+msgid "singular matrix 'a' in solve"
+msgstr "solve 裡的 'a' 是奇異矩陣"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr "'decreasing' 必須是長度為一的向量，您是不是想設 'partial' 的值？"
+
+msgid "'partial' sorting not supported by radix method"
+msgstr "基數方法不支援 'partial' 排序"
+
+msgid "'index.return' only for non-factors"
+msgstr "'index.return' 只能適用於非因子"
+
+msgid "'x' must be atomic"
+msgstr "'x' 必須為基元"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "只有 'na.last = NA' 才能用 'index.return' "
+
+msgid "unsupported options for partial sorting"
+msgstr "部分排序時不支援這些選項"
+
+msgid "non-finite 'partial'"
+msgstr "無窮 'partial'"
+
+msgid "argument lengths differ"
+msgstr "引數的長度不一樣"
+
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "method=\"quick\"只適用於數值的 'x'"
+
+#, fuzzy
+msgid ""
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+"'sort.list' 的 'x' 必須為原子值\n"
+"您是不是在串列上呼叫了 'sort' 函式？"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
+
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "'local' 的值必須是 'TRUE'，或是 'FALSE'，或是環境"
+
+msgid "'echo' must be logical"
+msgstr "'echo' 必須為邏輯值"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "'verbose' 是 TRUE，但 'echo' 不是；… 強迫 'echo <- TRUE'"
+
+msgid "unable to find a plausible encoding"
+msgstr "找不到合理的編碼"
+
+msgid "encoding = \"%s\" chosen"
+msgstr "已經選擇了 encoding = \"%s\""
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "'chdir = TRUE' 對 URL 來說沒有意義"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "'chdir' 沒有作用，因為不知道目前的工作目錄在哪裡"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "'chdir = TRUE' 對聯結來說沒有任何意義"
+
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "'file' 或 'exprs' 兩者只能指定一個"
+
+msgid "'%s' is not an existing file"
+msgstr "'%s' 不存在"
+
+msgid "Timestamp of %s has changed"
+msgstr "時間戳記 %s 變了"
+
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x' 和 'to' 必須參照相同檔案"
+
+msgid "additional arguments ignored in stop()"
+msgstr "stop() 裡的附加引數忽略不用"
+
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
+msgstr ""
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+"%s 與 %s 並不相等：\n"
+"  %s"
+
+msgid "additional arguments ignored in warning()"
+msgstr "warning() 裡的附加引數忽略不用"
+
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
+msgstr ""
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
+"呼叫 'structure(NULL, *)' 已過時，因為空值無法具有屬性。\n"
+"  考慮以 'structure(list(), *)' 做為替代。"
+
+msgid "incorrect value for 'x'"
+msgstr "'x' 的值無效"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x' 和 'y' 的長度必須一致"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr "行名稱的編碼可能無效"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr "STATS 大於 'dim(x)[MARGIN]' 的範圍"
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr "STATS 沒有確切地再利用於界限"
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr "length(STATS) 或 dim(STATS) 於 dim(x)[MARGIN] 不符合"
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr "包含 NA 與 'useNA' != \"no\"' 的 'exclude' 有一些矛盾"
+
+msgid "nothing to tabulate"
+msgstr "沒有可列表的東西"
+
+msgid "all arguments must have the same length"
+msgstr "所有引數的長度都應一致"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr "企圖建立一個元素多於 2^31 的表"
+
+msgid "'object' must inherit from class %s"
+msgstr "'object' 必須從\"table\"繼承類別 %s"
+
+msgid "'x' must inherit from class %s"
+msgstr "'x' 必須從 %s 繼承類別"
+
+msgid "cannot coerce to a table"
+msgstr "不能強迫變為表"
+
+msgid "'x' is not an array"
+msgstr "'x' 不是陣列"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin' 必須是數值或是因子"
+
+msgid "invalid value of %s"
+msgstr "'%s' 的值無效"
+
+msgid "'INDEX' is of length zero"
+msgstr "'INDEX' 的長度必須為一"
+
+msgid "arguments must have same length"
+msgstr "引數的長度必須相同"
+
+msgid "total number of levels >= 2^31"
+msgstr "層次總數 >= 2^31"
+
+msgid "handler must be a function"
+msgstr "處理常式必須是函式"
+
+#, fuzzy
+msgid "'which' must be of length 1"
+msgstr "'to' 的長度必須為一"
+
+msgid "no such element '%s'"
+msgstr "不明的單元 '%s'"
+
+#, fuzzy
+msgid "invalid 'which' argument"
+msgstr "'path' 引數無效"
+
+#, fuzzy
+msgid "'which' must be character or numeric"
+msgstr "'tim' 不是字元，也不是數值"
+
+msgid "Removing %s"
+msgstr "刪除 %s"
+
+msgid "Registering 'evaluate' as low-level callback"
+msgstr "把 'evaluate' 登記為低階回叫"
+
+msgid "Timing stopped at:"
+msgstr "計時已停止於："
+
+msgid "user"
+msgstr "使用者"
+
+msgid "system"
+msgstr "系統"
+
+msgid "elapsed"
+msgstr "流逝"
+
+msgid "'width' must be positive"
+msgstr "'width' 必須為正數"
+
+msgid "No traceback available"
+msgstr "無 traceback"
+
+msgid "invalid version specification %s"
+msgstr "版本設定不對 %s"
+
+msgid "invalid 'value'"
+msgstr "'value' 無效"
+
+msgid "unary '%s' not defined for \"numeric_version\" objects"
+msgstr "一元運算子 '%s' 對 numeric_version 物件沒有定義"
+
+msgid "'%s' not defined for \"numeric_version\" objects"
+msgstr "'%s' 對 numeric_version 物件沒有定義"
+
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "'%s' 對 numeric_version 物件沒有定義"
+
+msgid "<0 elements>"
+msgstr "<0 元素>"
+
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr "'tags' 只能是與 'x' 長度相同的字元向量"
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr "警告訊息 (總計 %d) 的概要："
+
+msgid "invalid 'digits'"
+msgstr "'digits' 的值無效"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"引數 'show.output.on.console'，'minimized' 和 'invisible' 只適用在 Windows 上"
+
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'intern' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stdout' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'ignore.stderr' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'wait' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' 只能為字元向量或 NULL 值"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr "引數 'minimized' 和 'invisible' 只適用在 Windows 上"
+
+msgid "setting stdout = TRUE"
+msgstr "把 stdout 設為 TRUE"
+
+msgid "'stdout' must be of length 1"
+msgstr "'stdout' 的長度必須為一"
+
+msgid "'stderr' must be of length 1"
+msgstr "'stderr' 的長度必須為一"
+
+msgid "'which' was not found on this platform"
+msgstr "這個平臺上找不到 'which'"
+
+msgid "fewer 'from' files than 'to' files"
+msgstr "'from' 的檔案比 'to' 的檔案要少"
+
+msgid "link '%s' already exists"
+msgstr "已經存在 '%s' 這個鏈結"
+
+msgid "failed to create directory for link '%s"
+msgstr "無法為 '%s' 這個鏈結建立目錄"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'show.output.on.console' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'minimized' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'invisible' 的值必須是 'TRUE' 或 'FALSE' 值"
+
+msgid "running command '%s' had status %d"
+msgstr ""
+
+msgid "'%s' could not be run"
+msgstr "無法運行 '%s'"
+
+msgid "'%s' execution failed with error code %d"
+msgstr "'%s' 執行失敗，錯誤碼為 %d"
+
+msgid "-l option without value"
+msgstr "-l 選項沒有值"
+
+msgid "ERROR: no packages specified"
+msgstr "錯誤：沒有設定套件"
+
+msgid "Removing from library"
+msgstr "從圖書館裡刪除"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "錯誤：無法更換到目錄"
+
+msgid "ERROR: no permission to remove from directory"
+msgstr "錯誤：沒有從目錄裡刪除的許可"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "沒有 %s 反向分析這個選項"
+
+msgid "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
+msgstr[0] "下列物件被遮斷由 %s:"
+
+msgid "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
+msgstr[0] "下列物件被遮斷自 %s:"
+
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] "'row.names' 不對，長度 %d 與資料框的 %d 列不符合"
+
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "%d 列名稱與 %d 列不符合"
+
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "替換資料裡有 %d 列，但資料有 %d"
+
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "替換值裡有 %d 單元，需要的是 %d"
+
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] "替換單元 %d 是有 %d 列的矩陣/資料框，但需要的是 %d"
+
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "替換單元 %d 有 %d 列，但需要的是 %d"
+
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "替換單元 %d 有 %d 列來替換 %d 列"
+
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "值裡有 %d 列替換 %d 列"
+
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "替換資料裡有 %d 列來替換 %d 列"
+
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "提供了 %d 變數用來替換 %d 變數"
+
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "資料框沒有行但有 %d 列"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "圖書館 %s 裡沒有套件"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "沒有載入套件 %s"
+
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "不存在叫這個名稱的套件"
+
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "目標物件 %s 不存在"
+
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' 必須指定唯一有效的行"
+
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
+msgid_plural ""
+"Functions found when exporting methods from the namespace %s which are not "
+"S4 generic: %s"
+msgstr[0] "在從命名空間 %s 中匯出方法時發現了不是 S4 通用的函式 %s"
+
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] "在套件 \"%s\" 找不到需要的方法：%s 於載入 %s 時"
+
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] "環境/套件 %s 裡找不到所要求的方法：%s 於載入 %s 時"
+
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "'namespace:%2$s' 沒有匯出 %1$s 這個類別"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "'namespace:%2$s' 沒有匯出 %1$s 這個物件"
+
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
+msgstr[0] "現在正在替換原匯出物件 '%s'"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] "S3 方法 %s 在 NAMESPACE 裡有宣告但不存在"
+
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "不是所有的 %s 都是 TRUE"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "警告資訊：\n"
+
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] ""
+"於 %s：\n"
+" 額外引數 %s 忽略不用"
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr "引數 'object' 必須解析成單一個字串"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' 不是 'namespace:%s' 內的匯出物件："
+
+#~ msgid "bad handler specification"
+#~ msgstr "處置器柄規格無效"
+
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "資料框裡 '%s' 部分符合 '%s'"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "'object' 必須是串列"
+
+#~ msgid "Must use 'exprs' or unnamed expressions, but not both"
+#~ msgstr "必須使用 'exprs' 或未命名的運算式，但並非兩者同時"

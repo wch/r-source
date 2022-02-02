@@ -1,0 +1,62 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: tcltk.c:70
+msgid "parse error in R expression"
+msgstr "R表达式里句法分析错误"
+
+#: tcltk.c:179 tcltk.c:257
+msgid "tcl error.\n"
+msgstr "tcl错误。\n"
+
+#: tcltk.c:208 tcltk.c:283 tcltk.c:300 tcltk.c:320 tcltk.c:340 tcltk.c:415
+#: tcltk.c:480 tcltk.c:534 tcltk.c:773
+msgid "invalid argument"
+msgstr "参数不对"
+
+#: tcltk.c:290
+msgid "no such variable"
+msgstr ""
+
+#: tcltk.c:322 tcltk.c:342 tcltk.c:417 tcltk.c:482 tcltk.c:536
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr "tclObj无效--是不是因此它是由另外一个对话期间保存的？"
+
+#: tcltk.c:646
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr "tcltk内部函数'callback_closure'的参数串列太长"
+
+#: tcltk.c:679
+msgid "argument is not of correct type"
+msgstr "参数的种类不对"
+
+#: tcltk.c:731
+msgid "no DISPLAY variable so Tk is not available"
+msgstr "没有DISPLAY变量，因此没有Tk这个功能"
+
+#: tcltk_unix.c:94
+msgid "Tcl is not loaded"
+msgstr "还没有载入Tcl"
+
+#: tcltk_unix.c:98
+msgid "Tcl is not last loaded handler"
+msgstr "Tcl不是最后载入的处理器"
+
+#~ msgid "Tcl already loaded"
+#~ msgstr "已经载入了Tcl"

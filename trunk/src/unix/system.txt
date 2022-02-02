@@ -1,0 +1,168 @@
+/*
+ *  SYSTEM DEPENDENT CODE
+ *
+ *  The sys*.c files contain the platform dependent code for
+ *  the Unix command-line (reference) port of R.
+ *
+ *	sys-common.c  has code common to the unix/gnome/gnuwin32 ports
+ *	sys-unix.c    has code common to the unix/gnome ports
+ *	system.c      has interface-specific code
+ *
+ *
+ *  1) FATAL MESSAGES AT STARTUP
+ *
+ *    void  R_Suicide(char *msg)
+ *
+ *  This function displays the given message and the causes R to
+ *  die immediately.  It is used for non-recoverable errors such as
+ *  not having enough memory to launch etc.  The phrase "dialog box"
+ *  springs to mind for non-Unix platforms.
+ *
+ *
+ *  2. CONSOLE I/O
+ *
+ *  The first group of functions is concerned with reading and
+ *  writing to the system console.
+ *
+ *    int   R_ReadConsole(const char *prompt, unsigned char *buf, 
+ *                        int buflen, int hist)
+ *
+ *  This function prints the given prompt at the console and then
+ *  does an fgets(3)-like operation, transferring up to "buflen" bytes
+ *  into the buffer "buf".  This should be zero-terminated, and end
+ *  with "\n\0" if there is no more input available (but not if the 
+ *  input line exceeds "buflen" bytes).  If "hist" is non-zero, then
+ *  the line is added to any command history which is being maintained.
+ *  Note that this is one natural place from which to run an event loop.
+ *
+ *    void  R_WriteConsole(const char *buf, int buflen)
+ *    void  R_WriteConsoleEx(const char *buf, int buflen, int otype)
+ *
+ *  Those functions write the given buffer out to the console.  No
+ *  special actions are required.  Under Unix the characters are
+ *  just appended to stdout. otype determines whether the content is
+ *  regular output (0) or error/warning (1) and can be used by GUIs
+ *  to distinguish those.
+ *
+ *    void  R_ResetConsole(void)
+ *
+ *  This function is called when the system is reset after an error.
+ *  It probably isn't really needed.
+ *
+ *    void  R_FlushConsole(void)
+ *
+ *  This called to flush any output to the system console.  Under Unix
+ *  this is just fflush(stdout).  Other systems may not need this.
+ *
+ *    void  R_ClearerrConsole(void)
+ *
+ *  This function clears any errors associated with reading from the
+ *  console.  In Unix it is used to clear any EOF condition associated
+ *  with stdin.
+ *
+ *    void R_ShowMessage(const char *s)
+ *
+ *  Display the (multi-line) message in the string s. This might be
+ *  printed on an error stream or displayed in a message dialog box:
+ *  it should be brought to the user's attention immediately.
+ *
+ *
+ *  3) ACTIONS DURING (LONG) COMPUTATIONS
+ *
+ *    void  R_Busy(int which)
+ *
+ *  This function invokes actions (such as change of cursor) when
+ *  R embarks on an extended computation (which=1) and when such a
+ *  state terminates (which=0).
+ *
+ *
+ *  4) INITIALIZATION AND TERMINATION ACTIONS
+ *
+ *    void  R_InitialData(void)
+ *    FILE* R_OpenInitFile(void)
+ *    FILE* R_OpenLibraryFile(char *file)
+ *    FILE* R_OpenSysInitFile(void)
+ *    FILE* R_OpenSiteFile()
+ *
+ *  These functions load the initial system and user data into R.
+ *
+ *    void  R_RestoreGlobalEnv(void)
+ *    void  R_SaveGlobalEnv(void)
+ *
+ *  These functions save and restore the user's global environment.
+ *  The system specific aspect of this is what files are used.
+ *
+ *    void  R_CleanUp(Rboolean saveact, int status, int RunLast)
+
+ *  This function invokes any actions which occur at system termination.
+ *
+ *
+ *  5) FILESYSTEM INTERACTION
+ *
+ *    int FileExists(const char *file)
+ *
+ *  This function returns 1 if the named file exists and 0 otherwise.
+ *  On Unix/Windows this is just an interface to "stat".
+ *
+ *    int R_HiddenFile(const char *file)
+ *
+ *  This function returns 1 if the named file is "hidden".  In Unix,
+ *  this is the case if the file name begins with a '.'.  On the Mac
+ *  a file is hidden if the file name ends in '\r'.
+ *  More complex tests may be needed on other platforms. Currently,
+ *  only the Unix-style visibility is implemented and used on all platforms.
+ *
+ *    int R_ShowFiles(int nfile, const char **file, const char **headers,
+ *                    const char *wtitle, Rboolean del, const char *pager)
+ *
+ *     nfile   = number of files
+ *     file    = array of filenames
+ *     headers = the `headers' args of file.show. Printed before each file.
+ *     wtitle  = title for window: the `title' arg of file.show
+ *     del     = flag for whether files should be deleted after use
+ *     pager   = pager to be used.
+ *
+ *  This function is used to display the contents of files.  On (raw)
+ *  Unix this means invoking a pager on the file.  On Gui-based platforms
+ *  the file would probably be displayed in a window with the given
+ *  title.
+ *
+ *    int R_ChooseFile(int new, const char *buf, int len)
+ *
+ *  Choose a file and return its name in buf of length len. On
+ *  command-line systems ask the user, on GUI platforms bring up a
+ *  dialog box.
+ *
+ *  Argument new is designed to choose the style of dialog box
+ *  presented to the user: at present only new = 0 is used. (In 
+ *  file.choose(new), new is logical.)
+ *
+ *    char* R_ExpandFileName(const char *s)
+ *
+ *  This is a utility function which can be used to expand special
+ *  characters in file names.  In Unix it's sole function is to expand
+ *  and "~"s which occur in filenames.  The minimal action is to 
+ *  return the argument unaltered.
+ *
+ *    FILE *R_fopen(const char *filename, const char *mode);
+ *
+ *  This is a wrapper function for ``fopen''.  It was necessary for
+ *  classic MacOS.
+ *
+ *
+ *  6) SYSTEM INFORMATION
+ *
+ *    char *R_HomeDir(void)
+ *
+ *  Get the R ``home directory'' as a string.
+ *
+ *
+ *  7) PLATFORM DEPENDENT FUNCTIONS
+ *
+ *    SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *
+ */

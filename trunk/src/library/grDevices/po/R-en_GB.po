@@ -1,0 +1,451 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: 2005-08-15 11:43+0000\n"
+"Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
+"Language-Team: English\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "invalid 'filename'"
+msgstr ""
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr ""
+
+msgid "no 'z' matrix specified"
+msgstr ""
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr ""
+
+msgid "no proper 'z' matrix specified"
+msgstr ""
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
+
+msgid "finite coordinates are needed"
+msgstr ""
+
+msgid "'bias' must be positive"
+msgstr ""
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr ""
+
+msgid "at least 3 columns needed"
+msgstr ""
+
+msgid "rgb matrix must be numeric"
+msgstr ""
+
+msgid "rgb matrix must have 3 rows"
+msgstr ""
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr ""
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr ""
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr ""
+
+msgid "Color space converter: %s"
+msgstr ""
+
+msgid "Reference white: %s"
+msgstr ""
+
+msgid "display gamma = %s"
+msgstr ""
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr ""
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr ""
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr ""
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr ""
+
+#, fuzzy
+msgid "color spaces use different reference whites"
+msgstr "colour spaces use different reference whites."
+
+msgid "'name' must be a character vector"
+msgstr ""
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr ""
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr ""
+
+msgid "cannot copy from the null device"
+msgstr ""
+
+msgid "cannot copy to the null device"
+msgstr ""
+
+msgid "cannot copy device to itself"
+msgstr ""
+
+msgid "'device' should be a function"
+msgstr ""
+
+msgid "no device to print from"
+msgstr ""
+
+msgid "can only print from a screen device"
+msgstr ""
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr ""
+
+msgid "dev.control() called without an open graphics device"
+msgstr ""
+
+msgid "argument is missing with no default"
+msgstr ""
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr ""
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr ""
+
+msgid "device '%s' not found"
+msgstr ""
+
+msgid "no suitable unused file name for pdf()"
+msgstr ""
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr ""
+
+msgid "no suitable unused file name for postscript()"
+msgstr ""
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr ""
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
+msgid "Invalid fill rule"
+msgstr ""
+
+msgid "Invalid pattern type"
+msgstr ""
+
+msgid "Invalid 'extend' value"
+msgstr ""
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr ""
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr ""
+
+msgid "cannot reset non-existent '%s'"
+msgstr ""
+
+msgid "invalid options in '%s'"
+msgstr ""
+
+msgid "NOT changing %s"
+msgstr ""
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr ""
+
+msgid "unknown family '%s'"
+msgstr ""
+
+msgid "invalid 'family' argument"
+msgstr ""
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
+
+msgid "invalid 'file' argument '%s'"
+msgstr ""
+
+msgid "invalid PDF version"
+msgstr ""
+
+msgid "Invalid font type"
+msgstr ""
+
+msgid "invalid family name in font specification"
+msgstr ""
+
+msgid "invalid metric information in font specification"
+msgstr ""
+
+msgid "invalid encoding in font specification"
+msgstr ""
+
+msgid "Not a CID font"
+msgstr ""
+
+msgid "invalid CMap name in font specification"
+msgstr ""
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr ""
+
+msgid "invalid PDF resource in font specification"
+msgstr ""
+
+msgid "Invalid font database name"
+msgstr ""
+
+msgid "font %s already in use"
+msgstr ""
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr ""
+
+msgid "unknown font"
+msgstr ""
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr ""
+
+msgid "'file' must be a non-empty character string"
+msgstr ""
+
+msgid "GhostScript was not found"
+msgstr ""
+
+msgid "invalid output format"
+msgstr ""
+
+msgid "status %d in running command '%s'"
+msgstr ""
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr ""
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr ""
+
+msgid "a raster array must be numeric"
+msgstr ""
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr ""
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr ""
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr ""
+
+msgid "invalid raster subsetting"
+msgstr ""
+
+msgid "invalid raster subassignment"
+msgstr ""
+
+msgid "operator not meaningful for raster objects"
+msgstr ""
+
+msgid "no current device to record from"
+msgstr ""
+
+msgid "argument is not of class %s"
+msgstr ""
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr ""
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr ""
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr ""
+
+msgid "'bandwidth' must be numeric"
+msgstr ""
+
+msgid "'bandwidth' must be positive"
+msgstr ""
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr ""
+
+msgid "invalid first argument"
+msgstr ""
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
+msgid "'x' and 'y' lengths differ"
+msgstr ""
+
+msgid "invalid first argument [bad language object]"
+msgstr ""
+
+msgid "at least 2 columns needed"
+msgstr ""
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr ""
+
+msgid "'file' is missing with no default"
+msgstr ""
+
+msgid "unrecognized format of gs -help"
+msgstr ""
+
+msgid "device '%s' is not available"
+msgstr ""
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "invalid 'title'"
+msgstr ""
+
+msgid "invalid 'file'"
+msgstr ""
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr ""
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr ""
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr ""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr ""
+
+msgid "invalid X11 font specification:"
+msgstr ""
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr ""
+
+msgid "no such device"
+msgstr ""
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr ""
+
+msgid "invalid value for 'rescale'"
+msgstr ""
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
+
+msgid "can only bring windows devices to the front"
+msgstr ""
+
+msgid "'type' not applicable to the R console"
+msgstr ""
+
+msgid "can only manipulate windows devices"
+msgstr ""
+
+msgid "can only copy from 'windows' devices"
+msgstr ""
+
+msgid "subscript out of range"
+msgstr ""
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr ""
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr ""
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""

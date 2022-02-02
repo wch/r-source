@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tcltk 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
+"PO-Revision-Date: 2020-11-29 16:50+0200\n"
+"Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "negalima valdyti objekto, kurio rėžimas '%s'"
+
+msgid "cannot change names on Tcl array"
+msgstr "negalima pakeisti vardų Tcl masyve"
+
+msgid "cannot set length of Tcl array"
+msgstr "negalima nustatyti Tcl masyvo ilgio"
+
+msgid "Tcl package '%s' not found"
+msgstr "Tcl paketas '%s' nerastas"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "TkGUI nėra prieinamas Windows"
+
+msgid "File"
+msgstr "Failas"
+
+msgid "Demos"
+msgstr "Demo"
+
+msgid "Packages"
+msgstr "Paketai"
+
+msgid "Help"
+msgstr "Žinynas"
+
+msgid "Source R code"
+msgstr "Šaltinio R kodas"
+
+msgid "Quit"
+msgstr "Išeiti"
+
+msgid "Save workspace"
+msgstr "Išsaugoti darbo sritį"
+
+msgid "Don't save workspace"
+msgstr "Neišsaugota darbo sritis"
+
+msgid "t test"
+msgstr "t-testas"
+
+msgid "Density"
+msgstr "Tankis"
+
+msgid "Interactive linear fitting"
+msgstr "Interaktyvus tiesinis pritaikymas"
+
+msgid "R FAQ"
+msgstr "R DUK"
+
+msgid "Load"
+msgstr "Įkelti"
+
+msgid "Go get them!"
+msgstr "Grįžkite gauti juos!"
+
+msgid "Load packages"
+msgstr "Įkelti paketus"
+
+msgid "Install packages from CRAN"
+msgstr "Įdiekite paketus iš CRAN"
+
+msgid "Help topic:"
+msgstr "Žinyno tema:"
+
+msgid "Manuals in PDF format"
+msgstr "Žinynai PDF formatu"
+
+msgid "OK"
+msgstr "Gerai"
+
+msgid "Cancel"
+msgstr "Atšaukti"
+
+msgid "'pb' is not from class %s"
+msgstr "'pb' nėra iš klasės %s"
+
+msgid "'filters' must be a 2-column character matrix"
+msgstr "'filters' turi būti 2 stulpelių simbolių matrica"
+
+msgid "tcltk DLL is linked to"
+msgstr ""
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "Tcl/Tk palaikymas neprieinamas šioje sistemoje"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "Tcl/Tk palaikymo failai nebuvo įdiegti"

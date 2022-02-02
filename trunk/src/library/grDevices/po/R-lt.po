@@ -1,0 +1,495 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: grDevices 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: 2020-11-29 17:27+0200\n"
+"Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "invalid 'filename'"
+msgstr "neteisingas 'filename'"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr "'coef' turi neturi būti neigiamas"
+
+msgid "no 'z' matrix specified"
+msgstr "'z' matrica nenurodyta"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "turėtų būti didėjančios 'x' ir 'y' reikšmės"
+
+msgid "no proper 'z' matrix specified"
+msgstr "nenurodyta tinkama 'z' matrica"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr "nesutampa 'x', 'y' ir 'z' matavimo skaičiai"
+
+msgid "finite coordinates are needed"
+msgstr "turi būti baigtinės koordinatės"
+
+msgid "'bias' must be positive"
+msgstr "'bias' turi būti teigiamas"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr "'alpha' turi būti klaidingas, jei nurodyta 'space'"
+
+msgid "at least 3 columns needed"
+msgstr "turi būti bent 3 stulpeliai"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb matrica turi būti skaitinė"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "rgb matrica turi būti 3 eilučių"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb reikšmės turi būti intervale [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start' ir 'end' turi būti skirtingos ir iš intervalo [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr "'palette' neatitinka jokios konkrečios paletės"
+
+msgid "'palette' is ambiguous"
+msgstr "'palette' yra dviprasmiška"
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr "'n' nustatyta kaip %s, didžiausia galima paletei %s"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' turi būti skaliaras arba 'sRGB'"
+
+msgid "Color space converter: %s"
+msgstr "Spalvų erdvės keitiklis: %s"
+
+msgid "Reference white: %s"
+msgstr "Nuoroda baltos spalvos: %s"
+
+msgid "display gamma = %s"
+msgstr "rodyti gamma = %s"
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr "'from' turi būti \"colorConverter\" objektas ar eilutė"
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr "'to' turi būti \"colorConverter\" objektas ar eilutė"
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr "'from.ref.white' nesutampa su %s apibrėžtimi"
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr "'to.ref.white' nesutampa su %s apibrėžtimi"
+
+msgid "color spaces use different reference whites"
+msgstr "spalvų erdvės naudoja skirtingas baltas nuorodas"
+
+msgid "'name' must be a character vector"
+msgstr "'names' turi būti tekstinis vektorius"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "nepavyko išjungti 1 įrenginio (NULL įrenginio)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "nepavyko pateikti 'which' ir 'device' tuo pačiu metu"
+
+msgid "cannot copy from the null device"
+msgstr "nepavyko kopijuoti iš NULL įrenginio"
+
+msgid "cannot copy to the null device"
+msgstr "nepavyko kopijuoti į NULL įrenginį"
+
+msgid "cannot copy device to itself"
+msgstr "nepavyko kopijuoti įrenginio į tą patį įrenginį"
+
+msgid "'device' should be a function"
+msgstr "'device' turėtų būti funkcija"
+
+msgid "no device to print from"
+msgstr "nėra įrenginio spausdinti iš"
+
+msgid "can only print from a screen device"
+msgstr "galima tik spausdinti iš ekrano įrenginio"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "reikia nurodyti vieną iš 'width' ir 'height'"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.control() iškviesta be atverto grafikos įrenginio"
+
+msgid "argument is missing with no default"
+msgstr "trūkstamas argumentas nėra numatytasis"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() iškviesta be atverto grafikos įrenginio"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "netinkamas nustatymas 'getOption(\"device\")'"
+
+msgid "device '%s' not found"
+msgstr "įrenginio '%s' nėra"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "nėra tinkamo nenaudojamo failo vardo pdf()"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): naudojant pdf(file=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "nėra tinkamo nenaudojamo failo vardo postscript()"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): naudojant postscript(file=\"%s\")"
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr "neteisingas 'type'; niekada neturėtų taip atsitikti, prašome pranešti!"
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "neteisingas 'file'"
+
+msgid "Invalid pattern type"
+msgstr "Netinkamas šablono tipas"
+
+msgid "Invalid 'extend' value"
+msgstr "Neleistina 'extend' reikšmė"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "%s' neteisingi argumentai (turi būti įvardyti args)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' turi būti ženklas, egzistuojančio sąrašo vardas"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "nepavyko atstatyti neegzistuojančio '%s'"
+
+msgid "invalid options in '%s'"
+msgstr "neleistinos parinktys '%s'"
+
+msgid "NOT changing %s"
+msgstr "NOT pakeičia %s"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "argumentas 'append' yra atgaliniam suderinamumui ir bus ignoruojamas"
+
+msgid "unknown family '%s'"
+msgstr "nežinoma šeima '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "neteisingas 'family' argumentas"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr "'title' argumentas \"%s\" turi neleistinų simbolių"
+
+msgid "invalid 'file' argument '%s'"
+msgstr "neteisingas 'file' argumentas '%s'"
+
+msgid "invalid PDF version"
+msgstr "netinkama PDF versija"
+
+msgid "Invalid font type"
+msgstr "Neteisingas šrifto tipas"
+
+msgid "invalid family name in font specification"
+msgstr "neteisingas šeimos vardas šriftų specifikacijoje"
+
+msgid "invalid metric information in font specification"
+msgstr "netinkama metrikos informacija šriftų specifikacijoje"
+
+msgid "invalid encoding in font specification"
+msgstr "neteisinga koduotė šriftų specifikacijoje"
+
+msgid "Not a CID font"
+msgstr "Ne CID šriftas"
+
+msgid "invalid CMap name in font specification"
+msgstr "netinkamas CMap vardas šriftų specifikacijoje"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "neteisinga 'cmapEncoding' šrifto specifikacijoje"
+
+msgid "invalid PDF resource in font specification"
+msgstr "netinkamas PDF šaltinis šriftų specifikacijoje"
+
+msgid "Invalid font database name"
+msgstr "Neteisingas šriftų duomenų bazės vardas"
+
+msgid "font %s already in use"
+msgstr "šriftas %s jau naudojamas"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "'%s' neteisingi argumentai (turi būti šriftų vardai)"
+
+msgid "unknown font"
+msgstr "nežinomas šriftas"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "šriftų kuoduotė nesutampa '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' turi būti netuščia simbolių eilutė"
+
+msgid "GhostScript was not found"
+msgstr "GhostScript nerastas"
+
+msgid "invalid output format"
+msgstr "netinkamas išvesties formatas"
+
+msgid "status %d in running command '%s'"
+msgstr "%d būsena vykdant komandą '%s'"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr "nepavyko pridėti daugiau padalų; 'min.n' per didelis?"
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr "rastrinė matrica turi būti ženklas, skaičius ar loginė reikšmė"
+
+msgid "a raster array must be numeric"
+msgstr "rastrinis masyvas turi būti skaitinis"
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr "rastrinis masyvas turi būti būtent 3 matavimo skaičių"
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr "rastrinis masyvas turi būti būtent 3 ar 4 plokštumų"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "drop' visada netiesiogiai FALSE, esanti '[.raster'"
+
+msgid "invalid raster subsetting"
+msgstr "netinkamas rastro potipis"
+
+msgid "invalid raster subassignment"
+msgstr "netinkamas rastro padalijimas"
+
+msgid "operator not meaningful for raster objects"
+msgstr "operatorius nėra reikšmingas rastriniams objektams"
+
+msgid "no current device to record from"
+msgstr "nėra dabartinio įrenginio, iš kurio norite įrašyti"
+
+msgid "argument is not of class %s"
+msgstr "argumentas nėra %s klasės"
+
+msgid "invalid \"recordedplot\":"
+msgstr "neteisingas \"recordedplot\":"
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr "momentinė kopija įrašyta kitoje R versijoje (3.3.0)"
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr "momentinė kopija įrašyta kitoje R versijoje (%s)"
+
+msgid "snapshot contains invalid graphics call"
+msgstr "momentinė kopija yra netinkamas grafikos iškvietimas"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "'nbin' turi būti 1 ar 2 ilgio skaitmuo"
+
+msgid "'bandwidth' must be numeric"
+msgstr "'bandwidth' turi būti skaitinis"
+
+msgid "'bandwidth' must be positive"
+msgstr "'bandwidth' turi būti teigiamas"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr "Turi būti įdiegtas ('Recommended') paketas \"KernSmooth\""
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' turi būti \"range\", vadinasi 2 ilgio"
+
+msgid "invalid first argument"
+msgstr "neteisingas pirmas argumentas"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x' yra sąrašas, bet neturi 'x' ir 'y' komponentų"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "skirtingi 'x' ir 'y' ilgiai"
+
+msgid "invalid first argument [bad language object]"
+msgstr "neteisingas pirmasis argumentas [netinkamas kalbos objektas]"
+
+msgid "at least 2 columns needed"
+msgstr "turi būti bent 2 stulpeliai"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x' yra sąrašas, bet neturi 'x', 'y' ir 'z' komponentų"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "skirtingi 'x', 'y', 'z' ilgiai"
+
+msgid "'file' is missing with no default"
+msgstr "'file' yra trūkstamas be numatytojo"
+
+msgid "unrecognized format of gs -help"
+msgstr "neatpažįstamas gs -help formatas"
+
+msgid "device '%s' is not available"
+msgstr "įrenginys '%s' nepasiekiamas"
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+"Galimi įrenginiai:\n"
+"%s"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "'res' turi nurodytas nebent 'units = \"px\"'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "invalid 'title'"
+msgstr "neteisingas 'title'"
+
+msgid "invalid 'file'"
+msgstr "neteisingas 'file'"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "neteisingas Quart šriftas: turi būti 4 eilutės"
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr "'quartzFonts' neteisingi argumentai (turi būti šriftų vardai)"
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr "quartzFonts' neteisingi argumentai (turi būti įvardyti args)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "Kairo tipai nepalaikomi šioje versijoje - naudoti \"Xlib\""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "nežinoma šeima X11(type = \"XLib\")"
+
+msgid "invalid X11 font specification:"
+msgstr "neteisinga X11 šrifto specifikacija:"
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "'X11Fonts' neteisingi argumentai (turi būti šriftų vardai)"
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "neteisingi argumentai, esantys 'X11Fonts' (turi būti įvardyti args)"
+
+msgid "no such device"
+msgstr "nėra tokio įrenginio"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "galima tik kopijuoti iš 'X11(type=\"*cairo\")' įrenginių"
+
+msgid "invalid value for 'rescale'"
+msgstr "netinkama reikšmė 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr "Iškvietimai, pvz., '%s', yra nesaugūs ir turėtų būti pakeisti '%s'"
+
+msgid "can only bring windows devices to the front"
+msgstr "tik Windows įrenginius galima perkelti į priekį"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' nėra taikomas R konsolei"
+
+msgid "can only manipulate windows devices"
+msgstr "galima valdyti tik Windows įrenginius"
+
+msgid "can only copy from 'windows' devices"
+msgstr "galima kopijuoti tik iš 'windows' įrenginių"
+
+msgid "subscript out of range"
+msgstr "indeksas nepatenka į sritį"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "neteisingas Windows šriftas: turi būti vienas šriftų šeimos vardas"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "'windowsFonts' neteisingi argumentai (turi būti šriftų vardai)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "'windowsFonts' neteisingi argumentai (turi būti vadinamieji args)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "neteisingas argumento vardas %s, esantis ‘%s’"
+msgstr[1] "neteisingi argumento vardai %s, esantys ‘%s’"
+msgstr[2] "neteisingų argumento vardų %s, esančių ‘%s’"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "skiriasi tarp naujo ir ankstesnio"
+msgstr[1] "skiriasi tarp naujų ir ankstesnių"
+msgstr[2] "skiriasi tarp naujų ir ankstesnių"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d x reikšmė <= 0 praleista iš logaritminės diagramos"
+msgstr[1] "%d x reikšmės <= 0 praleista iš logaritminės diagramos"
+msgstr[2] "%d x reikšmių <= 0 praleista iš logaritminės diagramos"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d y reikšmė <= 0 praleista iš logaritminės diagramos"
+msgstr[1] "%d y reikšmės <= 0 praleista iš logaritminės diagramos"
+msgstr[2] "%d y reikšmių <= 0 praleista iš logaritminės diagramos"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d z reikšmė <= 0 praleista iš logaritminės diagramos"
+msgstr[1] "%d z reikšmės <= 0 praleista iš logaritminės diagramos"
+msgstr[2] "%d z reikšmių <= 0 praleista iš logaritminės diagramos"
+
+#~ msgid "2. %d x values <= 0 omitted from logarithmic plot"
+#~ msgstr "2. %d x reikšmės <= 0 praleistos logaritminėje diagramoje"
+
+#~ msgid "3. %d x values <= 0 omitted from logarithmic plot"
+#~ msgstr "3. %d x reikšmių <= 0 praleistų logaritminėje diagramoje"
+
+#~ msgid "2. %d y values <= 0 omitted from logarithmic plot"
+#~ msgstr "2. %d y reikšmės <= 0 praleistos logaritminėje diagramoje"
+
+#~ msgid "3. %d y values <= 0 omitted from logarithmic plot"
+#~ msgstr "3. %d y reikšmių <= 0 praleistų logaritminėje diagramoje"
+
+#~ msgid "2. %d z values <= 0 omitted from logarithmic plot"
+#~ msgstr "2. %d z reikšmės <= 0 praleistos logaritminėje diagramoje"
+
+#~ msgid "3. %d z values <= 0 omitted from logarithmic plot"
+#~ msgstr "3. %d z reikšmių <= 0 praleistų logaritminėje diagramoje"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "2. differ between new and previous"
+#~ msgstr "2. skiriasi tarp naujų ir ankstesnių"
+
+#~ msgid "3. differ between new and previous"
+#~ msgstr "3. skiriasi tarp naujų ir ankstesnių"
+
+#~ msgid "2. invalid argument names %s in '%s'"
+#~ msgstr "2. neteisingi argumentų vardai %s, esantys ‘%s’"
+
+#~ msgid "3. invalid argument names %s in '%s'"
+#~ msgstr "3. neteisingų argumentų vardų %s, esančių ‘%s’"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "sritis per maža 'min.n'"

@@ -1,0 +1,594 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 06.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "invalid 'at' location in 'axis'"
+msgstr "'axis' 裡的 'at' 位置無效"
+
+msgid "invalid to specify axis labels when 'at' is NULL"
+msgstr "'at' 是 NULL 的話不能設定軸標籤"
+
+msgid "'labels' and 'at' locations must have same length"
+msgstr "'labels' 和 'at' 的位置量必須有相同的長度"
+
+msgid "logical 'label' supplied of length 0"
+msgstr "提供的邏輯 'label' 的長度為零"
+
+msgid "end points must not be identical"
+msgstr "端點兩頭的值是不能相等的"
+
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
+msgstr "'x1'，'y1' ,'x2' 和 'y2' 必須是單元"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "'shape' 的值必須在 -1 和 1 之間"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "'squareShape' 的值必須在 -1 和 1 之間"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'arrow' 要麼是箭頭物件，要麼是 NULL 值"
+
+msgid "how did we get here?"
+msgstr "怎麼搞的？"
+
+msgid "must start new page if showing leaves separately"
+msgstr "如果分別顯示樹葉的話需要重新開一頁"
+
+msgid "invalid 'edit' information"
+msgstr "'edit' 資訊無效"
+
+msgid "'gEditList' can only contain 'gEdit' objects"
+msgstr "'gEditList' 只能包含 'gEdit' 物件"
+
+msgid "invalid 'frame'"
+msgstr "'frame' 的值無效"
+
+msgid "invalid 'grob'"
+msgstr "'grob' 的值無效"
+
+msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
+msgstr "'row' 或是是 'col' 的值不對(沒有在框版面設置裡有這樣的儲存格)"
+
+msgid "'col' can only be a range of existing columns"
+msgstr "'col' 的值只能在已存在列的範圍之內"
+
+msgid "invalid 'col' specification"
+msgstr "'col' 設定得無效"
+
+msgid "'row' can only be a range of existing rows"
+msgstr "'row' 的值只能在已存在行的範圍之內"
+
+msgid "invalid 'row' specification"
+msgstr "'row' 設定得無效"
+
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "只能設定 'side=[\"left\"，\"right\"]'，'col'，'col.before' 或 'col.after' 中的一個"
+
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "只能設定 'side=[\"top\"，\"bottom\"]'，'row'，'row.before' 或 'row.after' 中的一個"
+
+msgid "invalid 'n'"
+msgstr "'n' 的值無效"
+
+msgid "invalid 'f'"
+msgstr "'f' 的值無效"
+
+msgid "'gpar' element '%s' must not be length 0"
+msgstr "'gpar' 成分 '%s' 的長度不能為零"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr "%s 出現缺少值與非缺少值的混合"
+
+msgid "'gamma' 'gpar' element is defunct"
+msgstr "'gamma' gpar 已經不再有用"
+
+msgid "invalid 'linemitre' value"
+msgstr "'linemitre' 的值無效"
+
+msgid "invalid 'alpha' value"
+msgstr "'alpha' 的值無效"
+
+msgid "must specify only one of 'font' and 'fontface'"
+msgstr "'font' 和 'fontface' 兩個量只能設定一個"
+
+msgid "invalid fontface"
+msgstr "字體設定無效"
+
+msgid "argument must be a 'gpar' object"
+msgstr "引數必須是 'gpar' 物件"
+
+msgid "must specify only valid 'gpar' names"
+msgstr "只能用正確的 'gpar' 名稱"
+
+msgid "invalid display list element"
+msgstr "顯示列成分無效"
+
+#, fuzzy
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "grob 被覆寫(grab 不會保持原狀態；用 'wrap=TRUE' 試一試)"
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr "檢視區被覆寫(grab 有可能不保持原狀態)"
+
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob 推了檢視區，但沒有將它彈起來(grab 有可能不保持原狀態)"
+
+msgid "only valid to push viewports"
+msgstr "只能推檢視區"
+
+msgid "must specify at least one viewport"
+msgstr "至少必須設定一個檢視區"
+
+msgid "Down viewport failed to record on display list"
+msgstr "於顯示串列記錄下方檢視區時失敗"
+
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "於顯示串列記錄的下方檢視區不正確"
+
+msgid "must pop at least one viewport"
+msgstr "至少需要彈起一個檢視區"
+
+msgid "must navigate up at least one viewport"
+msgstr "至少需要往上駕一個檢視區"
+
+msgid "Invalid number of generations"
+msgstr "無效的世代數目"
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "'arrow' 引數無效"
+
+msgid "invalid object inserted on the display list"
+msgstr "顯示列裡所插入的物件無效"
+
+msgid "invalid modification of the display list"
+msgstr "顯示單修改得無效"
+
+msgid "'expr' must return a grob or gList"
+msgstr "'expr' 必須回返 grob 或 gList"
+
+msgid "invalid 'grob' argument"
+msgstr "'grob' 引數值無效"
+
+msgid "invalid 'vp' slot"
+msgstr "'vp' 槽的值無效"
+
+msgid "invalid 'gp' slot"
+msgstr "'gp' 槽的值無效"
+
+msgid "invalid 'grob' class"
+msgstr "'grob' 的類別無效"
+
+msgid "a 'grob' path must contain at least one 'grob' name"
+msgstr "'grob' 的路徑至少要包含一個 'grob' 名稱"
+
+msgid "unable to coerce to \"gList\""
+msgstr "無法轉換成\"gList\""
+
+msgid "only 'grobs' allowed in \"gList\""
+msgstr "\"gList\"只許用 'grobs'"
+
+msgid "invalid element to add to \"gList\""
+msgstr "\"gList\"加的成分無效"
+
+msgid "can only set 'children' for a \"gTree\""
+msgstr "\"gTree\"只能給 'children' 設定值"
+
+msgid "'children' must be a \"gList\""
+msgstr "'children' 必須是\"gList\"這種物件"
+
+msgid "it is only valid to get 'children' from a \"gTree\""
+msgstr "只能從\"gTree\"那兒得到 'children' 的值"
+
+msgid "invalid \"gTree\" class"
+msgstr "\"gTree\"的類別無效"
+
+msgid "'allDevices' not yet implemented"
+msgstr "'allDevices' 還沒有被實作"
+
+msgid "invalid 'gPath'"
+msgstr "'gPath' 的值無效"
+
+msgid "invalid 'grep' value"
+msgstr "'grep' 的值無效"
+
+msgid "it is only valid to get a child from a \"gTree\""
+msgstr "只能從\"gTree\"那兒取得子樹"
+
+msgid "'gPath' does not specify a valid child"
+msgstr "'gPath' 沒有設定正確的子值"
+
+msgid "it is only valid to set a child of a \"gTree\""
+msgstr "只能給\"gTree\"設子值"
+
+msgid "it is only valid to set a 'grob' as child of a \"gTree\""
+msgstr "\"gTree\"的子值只能設成 'grob'"
+
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
+msgstr "新的 'grob' 名稱(%s) 與原來的 'gPath'(%s) 名稱不符合"
+
+msgid "it is only valid to add a 'grob' to a \"gTree\""
+msgstr "對\"gTree\"只能加 'grob' 這樣的值數"
+
+msgid "it is only valid to add a child to a \"gTree\""
+msgstr "給\"gTree\"只能加子值"
+
+msgid "'gPath' (%s) not found"
+msgstr "不存在 'gPath'(%s)"
+
+msgid "it is only valid to remove a child from a \"gTree\""
+msgstr "只能從\"gTree\"那兒刪除子值"
+
+msgid "it is only valid to edit a child of a \"gTree\""
+msgstr "只能對 'gTree' 的子值進行修改"
+
+msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
+msgstr "不能直接對 'children' 或 'childrenOrder' 這樣的槽進行修改"
+
+msgid "invalid 'result'"
+msgstr "'result' 的值無效"
+
+msgid "the new 'grob' must have the same name as the old 'grob'"
+msgstr "新的 'grob' 值必須等於舊的 'grob' 值"
+
+msgid "slot '%s' not found"
+msgstr "沒有 '%s' 這樣的槽"
+
+msgid "gPath (%s) not found"
+msgstr "gPath(%s)不存在"
+
+msgid "grob '%s' not found"
+msgstr "不存在 grob'%s' 這個值"
+
+msgid "Invalid force target"
+msgstr "無效的強制目標"
+
+msgid "Invalid revert target"
+msgstr "無效的回復目標"
+
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "\"gTree\"只能給 'children' 設定值"
+
+msgid "Invalid 'order'"
+msgstr "'order' 的值無效"
+
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'order' 的值無效"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "定位無效"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "'order' 的值無效"
+
+msgid "'l' must be a layout"
+msgstr "'l' 必須為版面設置"
+
+msgid "'pch' and 'labels' not the same length"
+msgstr "'pch' 和 'labels' 的長度不一樣"
+
+msgid "'hgap' must be single unit"
+msgstr "'hgap' 的值必須是單元"
+
+msgid "'vgap' must be single unit"
+msgstr "'vgap' 的值必須是單元"
+
+msgid "'nrow' must be >= 1"
+msgstr "'nrow' 必須 >= 1"
+
+msgid "'ncol' must be >= 1"
+msgstr "'ncol' 必須 >= 1"
+
+msgid "nrow * ncol < #{legend labels}"
+msgstr "nrow * ncol < #{legend labels}"
+
+msgid "invalid justification"
+msgstr "定位無效"
+
+msgid "invalid horizontal justification"
+msgstr "水平定位無效"
+
+msgid "invalid vertical justification"
+msgstr "垂直定位無效"
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr "'respect' 的值要麼是邏輯值，要麼是一個 'nrow' 乘 'ncol' 大小的矩陣"
+
+msgid "invalid 'print' argument"
+msgstr "'print' 引數值無效"
+
+msgid "invalid object in 'listing'"
+msgstr "'listing' 裡目標物件無效"
+
+msgid "invalid listing"
+msgstr "表無效"
+
+msgid "invalid 'listing'"
+msgstr "'listing' 無效"
+
+msgid "invalid 'origin'"
+msgstr "'origin' 的值無效"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' 和 'y' 的長度必須相同"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1'，'y1' ,'x2' 和 'y2' 必須是單元"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1'，'y1' ,'x2' 和 'y2' 必須是單元"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x'，'y'，'width' 和 'height' 的長度都應該是為一"
+
+msgid "Pattern must be based on grob"
+msgstr ""
+
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
+msgid "'length' must be a 'unit' object"
+msgstr "'length' 的值必須是 'unit' 物件"
+
+msgid "invalid 'ends' or 'type' argument"
+msgstr "'ends' 或 'type' 引數的值無效"
+
+msgid "'x' and 'y' must be units"
+msgstr "'x' 和 'y' 必須為單元值"
+
+msgid "'x' and 'y' must have length 1"
+msgstr "'x' 和 'y' 的長度必須為一"
+
+msgid "invalid 'arrow' argument"
+msgstr "'arrow' 引數無效"
+
+msgid "it is invalid to specify both 'id' and 'id.lengths'"
+msgstr "不能同時對 'id' 和 'id.lengths' 進行設定"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x' 和 'y' 的長度必須相同"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x'，'y' 和 'id' 的長度必須相同"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr "'x'，'y' 和 'id.lengths' 必須設定整體長度"
+
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
+msgstr "'x0'，'y0'，'x1' 和 'y1' 必須為單元值"
+
+msgid "'x' and 'y' must be units or NULL"
+msgstr "'x' 和 'y' 要麼是單元值，要麼是 NULL"
+
+msgid "corrupt 'arrows' object"
+msgstr "'arrows' 物件發生錯誤"
+
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "'x'，'y' 和 'id.lengths' 必須設定整體長度"
+
+msgid "x and y must be units"
+msgstr "x 和 y 必須為單元值"
+
+msgid "must have exactly 4 control points"
+msgstr "一定要有 4 個控制點"
+
+msgid "must have exactly 4 control points per Bezier curve"
+msgstr "每個 Bezier 曲線一定要有 4 個控制點"
+
+msgid "'x', 'y', and 'r' must be units"
+msgstr "'x'，'y' 和 'r' 必須為單元值"
+
+msgid "'x', 'y', 'width', and 'height' must be units"
+msgstr "'x'，'y'，'width' 和 'height' 必須為單元值"
+
+msgid "invalid 'rot' value"
+msgstr "'rot' 的值無效"
+
+msgid "zero-length 'pch'"
+msgstr "'pch' 的長度不能為零"
+
+msgid "'x', 'y' and 'size' must be units"
+msgstr "'x'，'y' 和 'size' 必須為單元值"
+
+msgid "'x' and 'y' must be 'unit' objects and have the same length"
+msgstr "'x' 和 'y' 必須為 'unit' 物件，而且它們的長度必須相同"
+
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr "'x'，'y'，'width' 和 'height' 都應該是長度為一的單元值"
+
+msgid "'x' and 'y' must all be units of length 1"
+msgstr "'x' 和 'y' 必須是長度為一的單元"
+
+msgid "'r' must be a 'unit' object"
+msgstr "'' 的值必須是 'unit' 物件"
+
+msgid "'x', 'y', 'width', and 'height' must have length 1"
+msgstr "'x'，'y'，'width' 和 'height' 的長度都應該是為一"
+
+msgid "'x' and 'units' must have length > 0"
+msgstr "'x' 和 'unit' 的長度必須大於零"
+
+msgid "invalid 'axis' or 'type'"
+msgstr "'axis' 或 'type' 的值無效"
+
+#, fuzzy
+msgid "Not a unit object"
+msgstr "'unit' 物件無效"
+
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary' 函式 '%s' 對這個單元沒有意義"
+
+msgid "operator '%s' not meaningful for units"
+msgstr "運算子號 '%s' 對這個單元沒有意義"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
+
+msgid "only one operand may be a unit"
+msgstr "只能有一個單元運算物件"
+
+msgid "non-unit operand must be numeric"
+msgstr "非單元運算物件必須為數字"
+
+msgid "can't divide with a unit"
+msgstr ""
+
+msgid "both operands must be units"
+msgstr "兩個運算物件都必須為單元"
+
+#, fuzzy
+msgid "index out of bounds (\"unit\" subsetting)"
+msgstr "索引值出界(取 'unit' 子集時)"
+
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr ""
+
+#, fuzzy
+msgid "index must be of length 1"
+msgstr "'x' 和 'y' 必須是長度為一的單元"
+
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr "'gpar' 成分 '%s' 的長度不能為零"
+
+msgid "invalid 'theta'"
+msgstr "'theta' 值無效"
+
+msgid "'range' must be numeric"
+msgstr "'range' 必須為數字"
+
+msgid "invalid 'gp' value"
+msgstr "'gp' 的值無效"
+
+msgid "invalid 'clip' value"
+msgstr "'clip' 值無效"
+
+#, fuzzy
+msgid "invalid 'mask' value"
+msgstr "'gp' 的值無效"
+
+msgid "invalid 'xscale' in viewport"
+msgstr "檢視區裡的 'xscale' 值無效"
+
+msgid "invalid 'yscale' in viewport"
+msgstr "檢視區裡的 'yscale' 值無效"
+
+msgid "invalid 'angle' in viewport"
+msgstr "檢視區裡的 'angle' 值無效"
+
+msgid "invalid 'layout' in viewport"
+msgstr "檢視區裡的 'layout' 值無效"
+
+msgid "invalid 'layout.pos.row' in viewport"
+msgstr "檢視區裡的 'layout.pos.row' 值無效"
+
+msgid "invalid 'layout.pos.col' in viewport"
+msgstr "檢視區裡的 'layout.pos.col' 值無效"
+
+msgid "only viewports allowed in 'vpList'"
+msgstr "'vpList' 裡的值只能是檢視區"
+
+msgid "only viewports allowed in 'vpStack'"
+msgstr "'vpStack' 裡的值只能是檢視區"
+
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' 的值必須為檢視區，'children' 的值必須是 'vpTree' 裡的 'vpList'"
+
+msgid "a viewport path must contain at least one viewport name"
+msgstr "檢視區路徑至少要有一個檢視區的名稱"
+
+msgid "must specify at least one of 'x' or 'xscale'"
+msgstr "至少要設定 'x' 或 'xscale' 兩個中的一個"
+
+msgid "must specify at least one of 'y' or 'yscale'"
+msgstr "至少要設定 'y' 或 'yscale' 兩個中的一個"
+
+msgid "shutting down all devices when unloading 'grid' namespace"
+msgstr "卸載 'grid' 命名空間時關閉所有的裝置"
+
+msgid "invalid grob name"
+msgid_plural "invalid grob names"
+msgstr[0] "'grob' 名稱無效"
+
+msgid "invalid viewport name"
+msgid_plural "invalid viewport names"
+msgstr[0] "檢視區名稱無效"
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr "'x' 引數必須是單元物件"
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr "'strwidth/height' 單元值缺少字串"
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr "'grobwidth/height' 單元值缺少 'grob' 的值"
+
+#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+#~ msgstr "'grobwidth/height' 單元值裡的 'gPath' 其深度必須為一"
+
+#~ msgid "non-NULL value supplied for plain unit"
+#~ msgstr "簡單單元裡不能有非 NULL 值"
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr "不能沒有引數，至少需要有一個"
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr "不能沒有引數，至少需要有一個"
+
+#~ msgid "cannot mix signs of indices"
+#~ msgstr "不能混用索引子號"
+
+#~ msgid "index out of bounds (unit arithmetic subsetting)"
+#~ msgstr "索引值出界(取單元數字子集時)"
+
+#~ msgid "index out of bounds (unit list subsetting)"
+#~ msgstr "索引值出界(取單元串子集時)"
+
+#~ msgid "Value being assigned must be a unit"
+#~ msgstr "被賦予的值必須為單元值"
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr "不能將 'unit' 物件同其他類別的物件相結合"

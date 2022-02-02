@@ -1,0 +1,12 @@
+Package: PkgC
+Type: Package
+Title: Yet Another Regression Testing Package
+Version: 1.0-0
+Date: 2019-01-21
+Author: R Core
+Maintainer: R Core Team <R-core@somewhere.net>
+Description: Regression Testing.  Import from 'pkgA'; name "PkgC" in dir "pkgC".
+Imports: methods, pkgA
+LazyLoad: yes
+License: Artistic-2.0
+

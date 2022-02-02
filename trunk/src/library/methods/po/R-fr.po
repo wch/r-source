@@ -1,0 +1,1604 @@
+# Translation of R-methods.pot to French
+# Copyright (C) 2005-2021 The R Foundation
+# This file is distributed under the same license as the methods R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
+"PO-Revision-Date: 2021-11-06 17:51+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
+msgstr "OOPS : il y a un problème avec '.OldClassesPrototypes[[‘%d]]'"
+
+msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
+msgstr "un argument non nommé de initialize() pour une classe S3 doit avoir une définition de classe ; %s n'en a pas"
+
+msgid "unnamed argument must extend either the S3 class or the class of the data part; not true of class %s"
+msgstr "un argument non nommé doit étendre soit la classe S3, soit la classe de la partie 'data' ; ce n'est pas le cas pour la classe %s"
+
+msgid "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent"
+msgstr "la classe %s n'a pas de partie de données S3 définie (un slot .Data), elle est donc de type \"S4\" ; pas d'équivalent S3"
+
+msgid "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
+msgstr "la classe %s est VIRTUELLE ; créer un objet S4 pour cette classe n'a pas de sens"
+
+msgid "object must be a valid data part for class %s; not true of type %s"
+msgstr "l'objet doit être une partie 'data' correcte pour la classe %s ; ce n'est pas le cas pour un type %s"
+
+msgid "cannot specify matrix() arguments when specifying '.Data'"
+msgstr "impossible de spécifier des arguments matrix() lorsque .Data est spécifié"
+
+msgid "cannot specify array() arguments when specifying '.Data'"
+msgstr "impossible de spécifier des arguments array() lorsque .Data est spécifié"
+
+msgid "cannot have more than one unnamed argument as environment"
+msgstr "impossible d'utiliser plus d'un argument non nommé comme environnement"
+
+msgid "unnamed argument to new() must be an environment for the new object"
+msgstr "l'argument non nommé de new() doit être un environnement pour le nouvel objet"
+
+msgid "methods may not be defined for primitive function %s in this version of R"
+msgstr "les méthodes ne sont peut-être pas définies pour la fonction primitive %s dans cette version de R"
+
+msgid "S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class %s"
+msgstr "S3Part() est défini uniquement pour des classes créées par setOldClass(), des classes de base ou leurs sous-classes : ce n'est pas le cas pour la classe %s"
+
+msgid "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
+msgstr "l'argument 'S3Class' doit être une super-classe de %s : ce n'est pas le cas pour la classe %s"
+
+msgid "replacement value must extend class %s, got %s"
+msgstr "la valeur de remplacement doit étendre la classe %s, pas la classe %s"
+
+msgid "replacement value must be of class %s, got one of class %s"
+msgstr "la valeur de remplacement doit étendre la classe %s, pas la classe %s"
+
+msgid "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
+msgstr "pas de méthode 'replace' définie pour 'as(x, \"%s\") <- value' pour la classe %s"
+
+msgid "the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class %s"
+msgstr "l'argument 'coerce' de 'setIs' doit être une fonction à un seul argument et un objet de la classe %s est défini"
+
+msgid "the computation: 'as(object,\"%s\") <- value' is valid when object has class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
+msgstr "l'instruction : 'as(object, \"%s\") <- value' est valable lorsque l'objet est de la classe %s seulement si 'is(value, \"%s\")' est vrai ('class(value)' est %s)"
+
+msgid "there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error"
+msgstr "il n'y a pas de définition automatique pour 'as(object, \"%s\") <- value' lorsque 'object' est de classe %s et aucun argument 'replace' n'a été fourni ; Le remplacement génère une erreur"
+
+msgid "the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class %s"
+msgstr "l'argument 'replace' de setIs() doit être une fonction à 2 ou 3 arguments alors qu'un objet de classe %s est défini"
+
+msgid "the member classes must be defined: not true of %s"
+msgstr "les classes membres doivent être définies : Ce n'est pas le cas pour %s"
+
+msgid "unable to create union class:  could not set members %s"
+msgstr "impossible de créer une classe d'union : Les membres %s sont indéfinissables"
+
+msgid ""
+"methods:::bind_activation() is defunct;\n"
+" rather provide methods for cbind2() / rbind2()"
+msgstr ""
+"methods:::bind_activation() is défunte ;\n"
+" Fournissez plutôt des méthodes pour cbind2() / rbind2()"
+
+msgid "invalid argument 'name': %s"
+msgstr "argument 'name' erroné : %s"
+
+msgid "%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed."
+msgstr "%s dispatcher en interne ; Les méthodes peuvent être définies, mais la fonction générique est implicite et ne peut être modifiée."
+
+msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default"
+msgstr "si l'argument 'def' est fourni, il doit être une fonction appelant standardGeneric(\"%s\") ou être la valeur par défaut"
+
+msgid "must supply a function skeleton for %s, explicitly or via an existing function"
+msgstr "il faut fournir le squelette d'une fonction pour %s, de manière explicite ou via une fonction existante"
+
+msgid ""
+"Creating a generic function for %s from %s in %s\n"
+"    (from the saved implicit definition)"
+msgstr ""
+"Création d'une fonction générique pour %s à partir de %s dans %s\n"
+"    (à partir de la définition implicite sauvegardée)"
+
+msgid "Creating a new generic function for %s in %s"
+msgstr "Une nouvelle fonction générique est créée pour %s dans %s"
+
+msgid ""
+"no generic version of %s on package %s is allowed;\n"
+"   a new generic will be assigned for %s"
+msgstr ""
+"pas de version du générique de %s permise dans le package %s ;\n"
+"    un nouveau générique sera attribué pour %s"
+
+msgid "function %s appears to be a generic function, but with generic name %s"
+msgstr "la fonction %s semble être une fonction générique, mais avec le nom générique %s"
+
+msgid "generic function %s not found for removal"
+msgstr "la fonction générique %s est introuvable pour son élimination"
+
+msgid "a function for argument 'f' must be a generic function"
+msgstr "une fonction pour l'argument 'f' doit être générique"
+
+msgid "the environment %s is locked; cannot assign methods for function %s"
+msgstr "l'environnement %s est verrouillé ; Impossible d'y assigner des méthodes pour la fonction %s"
+
+msgid "the 'where' environment (%s) is a locked namespace; cannot assign methods there"
+msgstr "l'environnement dans 'where' (%s) est un espace de noms verrouillé ; Impossible d'y assigner des méthodes"
+
+msgid "Copying the generic function %s to environment %s, because the previous version was in a sealed namespace (%s)"
+msgstr "La fonction générique %s est recopiée dans l'environnement %s parce que la version originale est dans un espace de noms verrouillé (%s)"
+
+msgid "no existing definition for function %s"
+msgstr "aucune définition n'existe pour la fonction %s"
+
+msgid "Creating a generic function from function %s in %s"
+msgstr "Une nouvelle fonction générique est créée pour %s dans %s"
+
+msgid "Creating a generic function for %s from package %s in %s"
+msgstr "Une nouvelle fonction générique est créée pour %s du package %s dans %s"
+
+msgid "the method for function %s and signature %s is sealed and cannot be re-defined"
+msgstr "la méthode pour la fonction %s, ainsi que la signature %s, sont verrouillées et ne peuvent être redéfinies"
+
+msgid "For function %s, signature %s: argument in method definition changed from (%s) to (%s)"
+msgstr "Pour la fonction %s, signature %s : l'argument dans la définition de méthode est changé de (%s) vers (%s)"
+
+msgid "primitive functions cannot be methods; they must be enclosed in a regular function"
+msgstr "les fonctions primitives ne peuvent être des méthodes ; Elles doivent être encapsulées dans des fonctions régulières"
+
+msgid "invalid method definition: expected a function, got an object of class %s"
+msgstr "définition de méthode incorrecte : une fonction est attendue et un objet de classe %s est fourni"
+
+msgid "function supplied as argument 'f' must be a generic"
+msgstr "la fonction fournie dans l'argument 'f' doit être générique"
+
+msgid "no generic function %s found"
+msgstr "aucune fonction générique %s n'est trouvée"
+
+msgid "no method found for function %s and signature %s"
+msgstr "aucune méthode n'est trouvée pour la fonction %s et la signature %s"
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr "pas d'environnement ou de package correspondant à l'argument where=%s"
+
+msgid "no generic function found for '%s'"
+msgstr "aucune fonction générique n'est trouvée pour '%s'"
+
+msgid "no method found for function '%s' and signature %s"
+msgstr "aucune méthode n'est trouvée pour la fonction '%s' et la signature %s"
+
+msgid "'file' must be a character string or a connection"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
+msgid ""
+"argument 'signature' is not meaningful with the current implementation and is ignored \n"
+"(extract a subset of the methods list instead)"
+msgstr ""
+"l'argument 'signature' n'est pas utilisable dans l'implémentation actuelle et est ignoré\n"
+"(extraction d'un sous-ensemble de la liste de méthodes à la place)"
+
+msgid "no method for %s matches class %s"
+msgstr "pas de méthode pour %s correspondant à la classe %s"
+
+msgid "no method found for signature %s"
+msgstr "aucune méthode trouvée pour la signature %s"
+
+msgid "%s has no methods defined"
+msgstr "%s n'a aucune méthode définie"
+
+msgid "bad class specified for element %d (should be a single character string)"
+msgstr "mauvaise classe spécifiée pour l'élément %d (doit être une simple chaîne de caractères)"
+
+msgid "first argument should be the names of one of more generic functions (got object of class %s)"
+msgstr "le premier argument doit être le ou les noms des fonctions génériques (un objet de classe %s est fourni)"
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr "il faut fournir 'generic.function' or 'class'"
+
+msgid "%s is not an S4 generic function in %s; methods not removed"
+msgstr "%s n'est pas une fonction générique S4 dans %s ; Les méthodes ne sont pas éliminées"
+
+msgid "cannot remove methods for %s in locked environment/package %s"
+msgstr "impossible d'éliminer la méthode pour %s dans l'environnement / le package %s verrouillé"
+
+msgid "Restoring default function definition of %s"
+msgstr "Rétablissement de la définition par défaut de la fonction %s"
+
+msgid "error in updating S4 generic function %s; the function definition is not an S4 generic function (class %s)"
+msgstr "erreur lors de la mise-à-jour de la fonction générique S4 %s ; La définition de fonction n'est pas une fonction générique S4 (classe %s)"
+
+msgid "Function %s is already a group generic; no change"
+msgstr "La fonction %s est déjà un groupe générique ; Pas de changement"
+
+msgid "Function %s is a group generic; do not call it directly"
+msgstr "La fonction %s est un groupe générique ; Ne l'appelez pas directement"
+
+msgid "callGeneric() must be called from within a method body"
+msgstr "callGeneric() doit être appelé depuis le code d’une méthode"
+
+msgid "expected a non-empty character string for argument name"
+msgstr "une chaîne de caractères non vide est attendue pour l'argument name"
+
+msgid "generic function supplied was not created for %s"
+msgstr "la fonction générique fournie n'est pas créée pour %s"
+
+msgid "%s is a primitive function; its generic form cannot be redefined"
+msgstr "%s est une fonction primitive ; sa forme générique ne peut être redéfinie"
+
+msgid "%s is not currently a generic:  define it first to create a non-default implicit form"
+msgstr "%s n'est pas actuellement générique : définissez-le d'abord avant de créer une forme implicite qui n'est pas la forme par défaut"
+
+msgid "must provide an environment table; got class %s"
+msgstr "il fallait fournir une table d'environnement, et c'est un objet de classe %s"
+
+msgid "original function is prohibited as a generic function"
+msgstr "la fonction originale ne peut être utilisée comme fonction générique"
+
+msgid "not both functions!"
+msgstr "au moins l'une des deux n'est pas une fonction !"
+
+msgid "argument %s is not S4"
+msgstr "l'argument %s n'est pas un objet S4"
+
+msgid "formal arguments differ (in default values?)"
+msgstr "les arguments formels diffèrents (pour les valeurs par défaut ?)"
+
+msgid "formal arguments differ: (%s), (%s)"
+msgstr "les arguments formels diffèrent : (%s), (%s)"
+
+msgid "value classes differ: %s, %s"
+msgstr "les classes valeur diffèrent : %s, %s"
+
+msgid "signatures differ:  (%s), (%s)"
+msgstr "les signatures diffèrent : (%s), (%s)"
+
+msgid "package slots  differ: %s, %s"
+msgstr "les slots package diffèrent : %s, %s"
+
+msgid "groups differ: %s, %s"
+msgstr "les groupes diffèrent : %s, %s"
+
+msgid "generic names differ: %s, %s"
+msgstr "les noms génériques diffèrent : %s, %s"
+
+msgid "argument %s must be a generic function or a single character string; got an object of class %s"
+msgstr "l'argument %s doit être une fonction générique ou une chaîne de caractères ; un objet de classe %s est obtenu"
+
+msgid "non-generic function '%s' given to findMethods()"
+msgstr "fonction non générique '%s' fournie à findMethods()"
+
+msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
+msgstr "seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni (j’ai %s)"
+
+msgid "argument 'f' must be a generic function or %s"
+msgstr "l'argument 'f' doit être une fonction générique ou %s"
+
+msgid "'%s' is not a known generic function {and 'package' not specified}"
+msgstr "'%s' ne correspond pas à une fonction générique connue {et le 'package' n'est pas spécifié}"
+
+msgid "invalid first argument: should be the name of the first argument in the dispatch"
+msgstr "premier argument incorrect : il doit être le nom du premier argument dans le dispatching"
+
+msgid "duplicate element names in 'MethodsList' at level %d: %s"
+msgstr "noms d'éléments dupliqués dans 'MethodsList' au niveau %d : %s"
+
+msgid "element %d at level %d (class %s) cannot be interpreted as a function or named list"
+msgstr "l'élément %d au niveau %d (classe %s) ne peut être interprété comme une fonction ou une liste nommée"
+
+msgid "arguments 'names' and 'signature' must have the same length"
+msgstr "les arguments 'names' et 'signature' doivent être de même taille"
+
+msgid "inserting method with invalid signature matching argument '...' to class %s"
+msgstr "insertion d'une méthode ayant une signature incorrecte correspondante à l'argument '...' pour la classe %s"
+
+msgid "inserting method corresponding to empty signature"
+msgstr "insertion d'une méthode correspondant à une signature vide"
+
+msgid "inserting method into non-methods-list object (class %s)"
+msgstr "insertion d'une méthode dans un objet qui n'est pas une liste de méthodes (classe %s)"
+
+msgid "invalid method sublist"
+msgstr "liste de méthodes incorrecte"
+
+msgid "%f is not a valid generic function: methods list was an object of class %s"
+msgstr "%f n'est pas une fonction générique valide : la liste des méthodes est un objet de classe %s"
+
+msgid "%s must be TRUE, FALSE, or a named logical vector of those values; got an object of class %s"
+msgstr "%s doit être TRUE, FALSE, ou un vecteur nommé de valeurs logiques ; Un objet de classe %s est fourni"
+
+msgid "default method must be a method definition, a primitive or NULL: got an object of class %s"
+msgstr "la méthode par défaut doit être une définition de méthode, une primitive ou NULL ; c'est un objet de classe %s"
+
+msgid "trying to match a method signature to an object (of class %s) that is not a generic function"
+msgstr "tentative d'application d'une signature à un objet (de classe %s) qui n'est pas une fonction générique"
+
+msgid "invalid 'package' slot or attribute, wrong length"
+msgstr "slot ou attribut 'package' incorrect, longueur erronée"
+
+msgid "invalid element in a list for \"signature\" argument; element %d is neither a class definition nor a class name"
+msgstr "élément incorrect dans une liste pour l'argument \"signature\" ; l'élément %d n'est ni une définition de classe ni son nom"
+
+msgid "trying to match a method signature of class %s; expects a list or a character vector"
+msgstr "tentative d'application d'une signature de classe %s ; Une liste ou un vecteur de chaînes de caractères est attendu"
+
+msgid "object to use as a method signature for function %s does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object"
+msgstr "l'objet à utiliser comme signature de méthode pour la fonction %s ne semble pas être une signature correcte (un vecteur de noms de classes uniques) : il y a %d noms de classes, mais seulement %d éléments dans l'objet signature"
+
+msgid "more elements in the method signature (%d) than in the generic signature (%d) for function %s"
+msgstr "plus d'éléments dans la signature de méthode (%d) que dans la signature du générique (%d) pour la fonction %s"
+
+msgid "no generic function found corresponding to %s"
+msgstr "aucune fonction générique ne correspond à %s"
+
+msgid "skipping methods list element %s of unexpected class %s"
+msgstr "l'élément %s de classe inattendue %s dans la liste de méthodes est ignoré"
+
+msgid "%s, along with other use of the \"MethodsList\" metadata objects, is deprecated."
+msgstr "%s, ainsi que d'autres utilisations des objets metadonnées \"MethodList\", sont obsolètes."
+
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr "Dans %s : l'utilisation des objets de métadonnée \"MethodList\" est obsolète."
+
+msgid "Use %s instead."
+msgstr "Utilisez %s à la place."
+
+msgid "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr "%s, ainsi que d'autres utilisations des objets metadonnées \"MethodList\", sont obsolètes."
+
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr "Dans %s : l'utilisation des objets de métadonnée \"MethodList\" est obsolète."
+
+msgid "invalid object for formal method definition: type %s"
+msgstr "objet incorrect pour la définition formelle de méthode : type %s"
+
+msgid "missing package slot (%s) in object of class %s (package info added)"
+msgstr "slot (%s) package manquant dans l'objet de classe %s (info 'package' ajoutée)"
+
+msgid "'initialize' method returned an object of class %s instead of the required class %s"
+msgstr "la méthode 'initialize' a renvoyé un objet de classe %s au lieu de la classe requise %s"
+
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr "%d : cible \"%s\" : choix \"%s\" (autres : %s)"
+
+msgid "Notes: %s."
+msgstr "Notes : %s."
+
+msgid "class generator function for class %s from package %s"
+msgstr "fonction génératrice de classe pour la classe %s du package %s"
+
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
+msgstr "les noms dans la signature pour la méthode (%s) ne correspondent pas aux arguments de la fonction %s (%s)"
+
+msgid "the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr "les noms dans la signature pour la méthode (%s) ne correspondent pas aux arguments de la fonction (%s)"
+
+msgid "a call to callNextMethod() appears in a call to %s, but the call does not seem to come from either a generic function or another 'callNextMethod'"
+msgstr "un appel à callNextMethod() apparaît dans un appel à %s, mais l'appel ne semble pas provenir d'une fonction générique ou d'un autre 'callNextMethod'"
+
+msgid "call to 'callNextMethod' does not appear to be in a 'method' or 'callNextMethod' context"
+msgstr "l'appel à 'callNextMethod' ne semble pas être dans un contexte 'method' ou 'callNextMethod'"
+
+msgid "bad object found as method (class %s)"
+msgstr "mauvais objet trouvé comme méthode (class %s)"
+
+msgid "No next method available"
+msgstr "Pas de méthode suivante disponible"
+
+msgid "in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s"
+msgstr "lors de la construction du prototype pour la classe %s : le prototype est de classe %s, mais les données spécifient la classe %s"
+
+msgid "in constructing the prototype for class %s, slots in prototype and not in class: %s"
+msgstr "lors de la construction du prototype pour la classe %s, des slots sont dans le prototype mais pas dans la classe : %s"
+
+msgid "in making the prototype for class %s elements of the prototype failed to match the corresponding slot class: %s"
+msgstr "lors de la construction du prototype pour la classe %s, des éléments du prototype ne correspondent pas aux slots de la classe : %s"
+
+msgid "potential cycle in class inheritance: %s has duplicates in superclasses and subclasses (%s)"
+msgstr "référence circulaire possible dans l'héritage de classe : %s est dupliqué dans les superclasses et les sous-classes (%s)"
+
+msgid "undefined slot classes in definition of %s: %s"
+msgstr "slot non défini dans la définition de classe de %s : %s"
+
+msgid "(class %s)"
+msgstr "(classe %s)"
+
+msgid "in definition of class %s, information for superclass %s is of class %s (expected \"SClassExtension\")"
+msgstr "dans la définition de classe %s, l'information de superclasse %s est de classe %s (attendu \"SClassExtension\")"
+
+msgid "class %s extends an undefined class, %s"
+msgstr "la classe %s étend une classe non définie, %s"
+
+msgid "'Class' must be a valid class definition or class"
+msgstr "'Class' doit être le nom d'une classe ou d'une définition de classe"
+
+msgid "trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object"
+msgstr "essai d'assignation d'un objet de classe %s comme définition de la classe %s : il faut un objet \"classRepresentation\""
+
+msgid "assigning as %s a class representation with internal name %s"
+msgstr "assignation comme %s d'une représentation de classe avec un nom interne %s"
+
+msgid "class %s has a locked definition in package %s"
+msgstr "la classe %s a une définition verrouillée dans le package %s"
+
+msgid "'externalptr' objects cannot be initialized from new()"
+msgstr "les objets 'externalptr' ne peuvent être intialisés avec new()"
+
+msgid "initializing objects from class %s with these arguments is not supported"
+msgstr "l'initialisation d'objets de la classe %s avec ces arguments n'est pas supportée"
+
+msgid "in defining class %s, the supplied data part class, %s is not valid (must be a basic class or a virtual class combining basic classes)"
+msgstr "lors de la définition de classe %s, la classe fournie pour la partie de données, %s, n'est pas correcte (doit être une classe basique ou une classe virtuelle qui combine des classes basiques)"
+
+msgid "no definition was found for superclass %s in the specification of class %s"
+msgstr "aucune définition de la super-classe %s n'existe dans la spécification de la classe %s"
+
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
+msgstr "définition conflictuelle de la partie de données : .Data = %s, or la superclasse implique %s"
+
+msgid "a prototype object was supplied with object slot of class %s, but the class definition requires an object that is class %s"
+msgstr "un objet prototype est fourni avec le slot objet de classe %s, mais la définition de classe nécessite un objet de classe %s"
+
+msgid "a prototype was supplied of class %s, but the class definition requires an object that is class %s"
+msgstr "un prototype de classe %s est fourni, mais la définition de classe nécessite un objet de classe %s"
+
+msgid "Definition of slot %s, in class %s, as %s conflicts with definition, inherited from class %s, as %s"
+msgstr "La définition du slot %s de la classe %s comme %s est en conflit avec sa définition, héritée de la classe %s, comme %s"
+
+msgid "class %s extends an undefined class (%s)"
+msgstr "la classe %s étend une classe non définie (%s)"
+
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "Le prototype pour la classe %s à un ou des spots non définis : %s"
+
+msgid "%s is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)"
+msgstr "%s ne peut être utilisé comme partie de données d'une autre classe (doit être une classe basique ou une classe virtuelle sans slots)"
+
+msgid "prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble."
+msgstr "le prototype est une liste d'éléments nommés (ce peut être ambigu) : il vaut mieux utiliser la fonction prototype() pour éviter les problèmes."
+
+msgid "the '%s' list for class %s, includes an undefined class %s"
+msgstr "la liste '%s' pour la classe %s inclut une classe non définie %s"
+
+msgid "class %s is inheriting an inconsistent superclass structure from class %s, inconsistent with %s"
+msgstr "la classe %s hérite d'une structure de superclasse incohérente de la classe %s, incohérente avec %s"
+
+msgid "unable to find a consistent ordering of superclasses for class %s: order chosen is inconsistent with the superclasses of %s"
+msgstr "impossible de déterminer un ordre cohérent des superclasses pour la classe %s : l'ordre choisi est incohérent avec la superclasse de %s"
+
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr "\"class\" est un nom de slot réservé et ne peut être redéfini"
+
+msgid "Data part is undefined for general S4 object"
+msgstr "La partie 'data' n'est pas définie pour un objet général S4"
+
+msgid "no '.Data' slot defined for class %s"
+msgstr "pas de slot '.Data' defini pour la classe %s"
+
+msgid "class %s does not have a data part (a .Data slot) defined"
+msgstr "la classe %s n'a pas de partie de données définie (un slot .Data)"
+
+msgid "more than one possible class for the data part: using %s rather than %s"
+msgstr "plus d'une classe possible pour la partie de données : utilisation de %s au lieu de %s"
+
+msgid "class cannot have both an ordinary and hidden data type"
+msgstr "une classe ne peut avoir simultanément un type 'data' ordinaire et caché"
+
+msgid "a validity method must be a function of one argument, got an object of class %s"
+msgstr "une méthode de validation doit être une fonction a un seul argument, un objet de classe %s est trouvé"
+
+msgid "unable to find required package %s"
+msgstr "impossible de trouver le package %s nécessaire"
+
+msgid "unable to find an environment containing class %s"
+msgstr "impossible de trouver un environnement contenant la classe %s"
+
+msgid "Note: some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s"
+msgstr "Note : quelques super-classes de la classe %s dans le package %s ont des définitions dupliquées. Cette définition n'est pas considérée équivalente à celle du package %s"
+
+msgid "Note: the specification for class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class."
+msgstr "Note : une spécification de la classe %s du package %s semble équivalente de celle du package %s et ne conduit donc pas à une définition dupliquée pour cette classe."
+
+msgid "Found more than one class \"%s\" in cache; using the first, from namespace '%s'"
+msgstr "Plus d’une classe \"%s\" est trouvée en cache : Utilisation de la première, depuis l’espace de noms '%s'"
+
+msgid "Also defined by"
+msgstr "Aussi défini par"
+
+msgid "undefined subclass %s of class %s; definition not updated"
+msgstr "sous-classe indéfinie, %s, de la classe %s ; la définition n'est pas mise à jour"
+
+msgid "no definition of inheritance from %s to %s, though the relation was implied by the setIs() from %s"
+msgstr "pas de définition d'héritage de %s à %s, bien qu'une telle relation était supposée par setIs() de %s"
+
+msgid "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
+msgstr "Débogage .checkSubclasses() : assignClassDef(what=“%s”, *, where=%s, force=TRUE);"
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr "E := environment(): %s; parent.env(E): %s"
+
+msgid "argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'"
+msgstr "l'argument 'includeSubclasses' doit être un booléen (logical), soit une valeur unique, ou un vecteur de même longueur que l'argument 'classes'"
+
+msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
+msgstr "l'argument 'abbreviate' doit être 0, 1, 2 ou 3"
+
+msgid "needed the supplied labels vector of length %d, got %d"
+msgstr "il fallait suppléer un vecteur d'étiquettes de longueur %d, mais sa longueur est %d"
+
+msgid "the function being used as %s in making a generic function for %s is currently traced; the function used will have tracing removed"
+msgstr "la fonction utilisée comme %s dans l'établissement d'une fonction générique pour %s est actuellement en cours de déboguage (tracing) ; La fonction ne sera plus déboguée"
+
+msgid "must supply either a generic function or a function as default for %s"
+msgstr "il faut fournir soit une fonction générique, soit une fonction par défaut pour %s"
+
+msgid "the %s argument must be NULL or a generic function object; got an object of class %s"
+msgstr "l'argument %s doit être soit NULL, soit un objet de type fonction générique ; Un objet de classe %s est trouvé"
+
+msgid "no suitable arguments to dispatch methods in this function"
+msgstr "pas d'arguments corrects pour dispatcher les méthodes de cette fonction"
+
+msgid "making a generic for special function %s"
+msgstr "création d'un fonction générique pour la fonction spéciale %s"
+
+msgid "invalid call in method dispatch to '%s' (no default method)"
+msgstr "appel incorrect dans le dispatcheur de méthodes vers '%s' (pas de méthode par défaut)"
+
+msgid "in method for %s with signature %s:"
+msgstr "dans la méthode pour %s avec la signature %s :"
+
+msgid "formal arguments in method and generic do not appear in the same order"
+msgstr "les arguments formels n'apparaissent pas dans le même ordre dans la méthode et dans la fonction générique"
+
+msgid "formal arguments (%s) omitted in the method definition cannot be in the signature"
+msgstr "les arguments formels (%s) omis dans la définition de la méthode ne peuvent figurer dans la signature"
+
+msgid "expanding the signature to include omitted arguments in definition: %s"
+msgstr "développement de la signature pour y inclure les arguments omis dans la définition : %s"
+
+msgid "methods can add arguments to the generic %s only if '...' is an argument to the generic"
+msgstr "les méthodes peuvent ajouter des arguments à la fonction générique %s seulement si '...' est un argument de cette fonction générique"
+
+msgid "%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list"
+msgstr "%s arguments (%s) après %s dans la fonction générique doivent apparaitre dans la méthode, à la même place à la fin de la liste des arguments"
+
+msgid "argument 'f' must be a string, generic function, or primitive: got an ordinary function"
+msgstr "l’argument 'f' doit être une chaîne de caractères, une fonction générique, ou une primitive : il s'agit d'une fonction ordinaire"
+
+msgid "no generic function found for %s"
+msgstr "aucune fonction générique n'est trouvée pour %s"
+
+msgid "Empty function name in .getGeneric"
+msgstr "Nom de fonction vide dans .getGeneric"
+
+msgid "--- caching class"
+msgstr "--- mise en cache des classes"
+
+msgid "--- done caching class"
+msgstr "--- mise en cache des classes terminée"
+
+msgid "--- getting generic"
+msgstr "--- récupération des fonctions génériques"
+
+msgid "(and methods)"
+msgstr "(et des méthodes)"
+
+msgid "--- done getting generic"
+msgstr "--- récupération des fonctions génériques terminée"
+
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
+msgstr "aucune méthode n'est trouvée pour %s ; cacheGenericMetaData() n'aura aucun effet"
+
+msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr "valeur incorrecte pour la fonction générique %s, classe %s, mais attendu %s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr "“MethodsList” est obsolète ; allMethods sont maintenant vides"
+
+msgid "the body of the generic function for %s calls 'standardGeneric' to dispatch on a different name (\"%s\")!"
+msgstr "le corps de la fonction générique pour %s appelle 'standardGeneric' pour dispatcher vers un nom différent (\"%s\") !"
+
+msgid "trying to change the formal arguments in %s in an object of class %s; expected a function definition"
+msgstr "tentative de modification des arguments formels de %s, vers un objet de classe %s ; Une définition de fonction était attendue"
+
+msgid "trying to change the formal arguments in %s, but getting the new formals from an object of class %s; expected a function definition"
+msgstr "tentative de modification des arguments formels de %s, mais les nouveaux arguments formels sont obtenus depuis l'objet de classe %s ; Une définition de fonction était attendue"
+
+msgid "trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)"
+msgstr "tentative de modification des arguments formels de %s, mais le nombre d'arguments existants est inférieur au nombre de nouveaux arguments : (%s) contre (%s)"
+
+msgid "trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)"
+msgstr "tentative de modification des arguments formels de %s, mais le nombre d'arguments existants est supérieur au nombre de nouveaux arguments (les arguments additionnels seront ignorés) : (%s) contre (%s)"
+
+msgid "in changing formal arguments in %s, some of the old names are not in fact arguments: %s"
+msgstr "lors de la modification des arguments formels dans %s, quelques uns des anciens noms ne sont en réalité pas des arguments : %s"
+
+msgid "got a negative maximum number of frames to look at"
+msgstr "une valeur négative est trouvée pour le nombre maximum de contextes (frames) à rechercher"
+
+msgid "%s is not a generic function (or not visible here)"
+msgstr "%s n'est pas une fonction générique (ou elle n'est pas visible)"
+
+msgid "invalid element in the \"groupMembers\" slot (class %s)"
+msgstr "élément incorrect dans le slot \"groupMembers\" (classe %s)"
+
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "l'argument f doit être une fonction générique ayant une signature \"...\""
+
+msgid "no method or default matching the \"...\" arguments in %s"
+msgstr "pas de méthode ou de fonction par défaut correspondant à l'argument \"...\" dans %s"
+
+msgid "multiple direct matches: %s; using the first of these"
+msgstr "correspondances directes multiples : %s ; utilisation de la première d'entre elles"
+
+msgid "multiple equivalent inherited matches: %s; using the first of these"
+msgstr "correspondances héritées équivalentes multiples : %s ; utilisation de la première d'entre elles"
+
+msgid "single string; got an object of class %s"
+msgstr "chaîne de caractères unique ; mais l'objet est de classe %s"
+
+msgid "multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)"
+msgstr "il existe plusieurs définitions pour la classe %s, mais le package fourni (%s) ne contient pas l'une d'elles (%s)"
+
+msgid "multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()"
+msgstr "il existe plusieurs définitions pour la classe %s, l'une d'entre elles (%s) doit être spécifiée, e.g. en utilisant className()"
+
+msgid "no definition found for class %s"
+msgstr "aucune définition de la classe %s n'est trouvée"
+
+msgid "missing function for load action: %s"
+msgstr "aucune définition n'existe pour la fonction load : %s"
+
+msgid "error in load action %s for package %s: %s: %s"
+msgstr "erreur dans l'action de chargement %s pour le package %s : %s : %s"
+
+msgid "non-function action: %s"
+msgstr "action qui n'est pas une fonction : %s"
+
+msgid "action function %s has no arguments, should have at least 1"
+msgstr "la fonction d'action %s n'a pas d'arguments, elle doit en avoir au moins 1"
+
+msgid "some actions are missing: %s"
+msgstr "quelques actions sont manquantes : %s"
+
+msgid "%s has a sealed class definition and cannot be redefined"
+msgstr "%s a une définition de classe scellée et ne peut donc pas être redéfinie"
+
+msgid "Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr "L'argument \"representation\" ne peut être utilisé is l'argument \"slot\" est fournis"
+
+msgid "only arguments 'Class' and 'where' can be supplied when argument 'representation' is a 'classRepresentation' object"
+msgstr "seuls les arguments 'Class' et 'where' peuvent être fournis lorsque l'argument 'representation' est un objet de type 'classRepresentation'"
+
+msgid "error in contained classes (%s) for class %s and unable to remove definition from %s"
+msgstr "erreur dans les classes contenues (%s) pour la classe %s et impossible d'éliminer la définition pour %s"
+
+msgid "error in contained classes (%s) for class %s; class definition removed from %s"
+msgstr "erreur dans les classes contenues (%s) pour la classe %s ; Définition de classe éliminées pour %s"
+
+msgid "error in contained classes (%s) for class %s and unable to restore previous definition from %s"
+msgstr "erreur dans les classes contenues (%s) pour la classe %s et impossible de récupérer la définition précédente depuis %s"
+
+msgid "error in contained classes (%s) for class %s; previous definition restored to %s"
+msgstr "erreur dans les classes contenues (%s) pour la classe %s ; Définition précédente récupérée vers %s"
+
+msgid "element %d of the representation was not a single character string"
+msgstr "l'élément %d de la représentation n'est pas une chaîne de caractères unique"
+
+msgid "duplicate class names among superclasses: %s"
+msgstr "noms de classes dupliqués dans les superclasses : %s"
+
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr "un seul objet est permis (argument non nommé vers prototype)"
+
+msgid "%s is not a defined class"
+msgstr "%s n'est pas une classe définie"
+
+msgid "%s is not a slot in class %s"
+msgstr "%s n'est pas un slot de la classe %s"
+
+msgid "assignment of an object of class %s is not valid for slot %s in an object of class %s; is(value, \"%s\") is not TRUE"
+msgstr "l'affectation d'un objet de classe %s n'est pas permise pour le slot %s dans un objet de classe %s ; is(value, \"%s\") ne renvoie pas TRUE"
+
+msgid "assignment of an object of class %s is not valid for @%s in an object of class %s; is(value, \"%s\") is not TRUE"
+msgstr "l'affectation d'un objet de classe %s n'est pas permise pour @%s dans un objet de classe %s ; is(value, \"%s\") ne renvoie pas TRUE"
+
+msgid "class definition for %s not found (no action taken)"
+msgstr "la définition de classe pour %s est introuvable (aucune action n'est prise)"
+
+msgid "class %s has multiple definitions visible; only the first removed"
+msgstr "la classe %s a plusieurs définitions visibles ; Seule la première est détruite"
+
+msgid "invalid class %s object"
+msgstr "objet de classe %s incorrect"
+
+msgid "validity method must be NULL or a function of one argument"
+msgstr "la méthode de validation doit être soit NULL, soit une fonction à un seul argument"
+
+msgid "class %s not found on %s; 'resetClass' will have no effect"
+msgstr "la classe %s est introuvable dans %s ; 'resetClass' n'aura aucun effet"
+
+msgid "argument 'classDef' must be a string or a class representation; got an object of class %s"
+msgstr "l'argument 'classDef' doit être une chaîne de caractères ou une représentation de classe ; Un objet de classe %s est obtenu"
+
+msgid "class %s is sealed; 'resetClass' will have no effect"
+msgstr "la classe %s est scellée ; 'resetClass' n'aura aucun effet"
+
+msgid "cannot use object of class %s in new():  class %s does not extend that class"
+msgstr "impossible d'utiliser un objet de classe %s dans new() : la classe %s n'étend pas cette classe"
+
+msgid "duplicated slot names: %s"
+msgstr "noms de slots dupliqués : %s"
+
+msgid "class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)"
+msgstr "la classe %s est définie, avec le package %s, mais aucun objet de métadonnées correspondant n'est trouvé (il n'est pas exporté, peut-être ?)"
+
+msgid "no definition of %s to use for %s"
+msgstr "aucune définition de %s à utiliser pour %s"
+
+msgid "class definition cannot extend more than one of these data types: %s"
+msgstr "la définition de classe ne peut être étendue à plus d'un de ces types de données : %s"
+
+msgid "abnormal type %s is not supported as a superclass of a class definition"
+msgstr "désolé, le type %s anormal n'est pas supporté comme superclasse d'une définition de classe"
+
+msgid "multiple class definitions for %s from packages: %s; picking the first"
+msgstr "définitions de classe multiples pour %s depuis les packages : %s ; la première est utilisée"
+
+msgid "no package name supplied and no class definition found for %s"
+msgstr "aucun nom de package fourni et pas de définition de classe trouvée pour %s"
+
+msgid "argument 'classDef' must be a class definition or the name of a class"
+msgstr "l'argument 'classDef' doit être une définition de classe ou le nom d'une classe"
+
+msgid "No %s names supplied"
+msgstr "Aucuns noms %s fournis"
+
+msgid ""
+"All %s names must be nonempty in:\n"
+"(%s)"
+msgstr ""
+"Aucun des noms %s ne peut être vide dans :\n"
+"(%s)"
+
+msgid ""
+"All %s names must be distinct in:\n"
+"(%s)"
+msgstr ""
+"Tous les noms %s doivent être distincts dans :\n"
+"(%s)"
+
+msgid "argument %s must be a list or a character vector; got an object of class %s"
+msgstr "l'argument %s doit être une liste ou un vecteur de chaîne de caractères ; un objet de classe %s est obtenu"
+
+msgid "no function %s found"
+msgstr "fonction %s introuvable"
+
+msgid "no non-generic function %s found"
+msgstr "aucune fonction %s non générique n'est trouvée"
+
+msgid "%s is not one of the element names"
+msgstr "%s n'est pas un des noms des éléments"
+
+msgid "no method or default for coercing %s to %s"
+msgstr "pas de méthode ou de fonction par défaut pour la conversion automatique de %s en %s"
+
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
+msgstr "pas de méthode ou de fonction par défaut pour le remplacement avec as() de %s avec Class = \"%s\""
+
+msgid "trying to set an 'as' relation from %s to itself"
+msgstr "tentative de définition d'une relation 'as' de %s vers lui-même"
+
+msgid "class %s is not defined in this environment"
+msgstr "la classe %s n'est pas définie dans cet environnement"
+
+msgid "class %s is a class union: 'coerce' relations to a class union are not meaningful"
+msgstr "la classe %s est une classe d'union : des relations de type 'coerce' vers une classe d'union n'ont pas de sens"
+
+msgid "'as' method should have one argument, or match the arguments of coerce(): got  (%s)"
+msgstr "la méthode 'as' doit avoir un seul argument, ou correspondre aux arguments de coerce(), trouvé : (%s)"
+
+msgid "a 'replace' method definition in 'setAs' must be a function of two arguments, got %d"
+msgstr "une définition de méthode 'replace' dans 'setAs' doit être une fonction à deux arguments, or elle en a %d"
+
+msgid ""
+"argument names in 'replace' changed to agree with 'coerce<-' generic:\n"
+"%s"
+msgstr ""
+"les noms des arguments dans 'replace' sont modifiés pour être en accord avec la fonction générique 'coerce<-' :\n"
+"%s"
+
+msgid "ambiguous object (length != 1) to coerce to \"name\""
+msgstr "objet ambigu (longueur différente de 1) à convertir automatiquement en \"name\""
+
+msgid "undefined 'coerce' method"
+msgstr "méthode de conversion automatique 'coerce' non définie"
+
+msgid "methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr "des méthodes existent actuellement pour convertir automatiquement de %s vers %s ; Elles seront remplacées."
+
+msgid "Function must be an S4 generic"
+msgstr "La fonction doit être un générique S4"
+
+msgid "method is not being debugged"
+msgstr "la méthode n’est pas déboguée"
+
+msgid "object %s not found"
+msgstr "objet %s introuvable"
+
+msgid "object %s not changed (it is not consistent with the current definition of class %s from %s)"
+msgstr "objet %s inchangé (il n'est pas compatible avec la définition actuelle de la classe %s de %s)"
+
+msgid "no definition for the class of %s (class %s) found"
+msgstr "pas de définition trouvée pour la classe de %s (classe %s)"
+
+msgid "object %s not changed (it does not appear to be from a version of R earlier than 1.8.0)"
+msgstr "objet %s inchangé (il ne semble pas être originaire d'une version de R antérieure à 1.8.0)"
+
+msgid "'class1' must be the name of a class or a class definition"
+msgstr "'class1' doit être le nom d'une classe ou d'une définition de classe"
+
+msgid "'class2' must be the name of a class or a class definition"
+msgstr "'class2' doit être le nom d'une classe ou d'une définition de classe"
+
+msgid "class %s has no visible definition from package or environment %s"
+msgstr "la classe %s n'a pas de définition visible depuis le package ou l'environnement %s"
+
+msgid "cannot create a 'setIs' relation when neither of the classes (%s and %s) is local and modifiable in this package"
+msgstr "impossible de créer une relation 'setIs' lorsqu'aucune des deux classes (%s et %s) n'est locale et modifiable dans ce package"
+
+msgid "class %s is sealed; new superclasses can not be defined, except by 'setClassUnion'"
+msgstr "la classe %s est scellée ; De nouvelles superclasses ne peuvent être définies, à l'exception de 'setClassUnion'"
+
+msgid "class %s is defined (with package slot %s) but no metadata object found to revise %s information---not imported?  Making a copy in package %s"
+msgstr "la classe %s est définie (avec le slot %s du package) mais aucun objet de métadonnées n'est trouvé pour réviser l'information %s --- il n'est pas exporté ? Une copie est réalisée dans le package %s"
+
+msgid "class %s cannot extend class %s"
+msgstr "la classe %s ne peut étendre la classe %s"
+
+msgid "both classes must be defined"
+msgstr "les deux classes doivent être définies"
+
+msgid "invalid index for function argument"
+msgstr "indice incorrect pour l'argument de fonction"
+
+msgid "no function definition found for %s"
+msgstr "aucune définition de fonction n'est trouvée pour %s"
+
+msgid "need a definition for the method here"
+msgstr "une définition est nécessaire ici pour la méthode"
+
+msgid "Skeleton of method written to %s"
+msgstr "Le squelette de la méthode est écrite dans %s"
+
+msgid "invalid object in meta table of methods for %s, label %s, had class %s"
+msgstr "objet incorrect dans la table de métadonnées des méthodes pour %s, l'étiquette %s, avait la classe %s"
+
+msgid "invalid mlist element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)"
+msgstr "élément mlist incorrect pour la signature %s au niveau %d (devrait être MethodDefinition ou .Primitive, a la classe %s)"
+
+msgid "bad method object stored in method table, class %s"
+msgstr "mauvais objet trouvé comme méthode dans la table des méthodes, class %s"
+
+msgid "invalid object in methods table (%s), expected a method, got an object of class %s"
+msgstr "objets incorrects dans la table des méthodes (%s) : une méthode est attendue et un objet de classe %s est fourni"
+
+msgid "invalid or unset methods table in generic function %s"
+msgstr "table de méthodes incorrecte ou non définie pour la fonction générique %s"
+
+msgid "trying to find a methods table in a non-generic function"
+msgstr "tentative de recherche d'une table de méthodes dans une fonction non générique"
+
+msgid "the \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s"
+msgstr "l'option \"ambiguousMethodSelection\" doit être une fonction à appeler comme action de condition ; un objet de classe %s est fourni à la place"
+
+msgid "No simply inherited methods found for function %s; using non-simple method"
+msgstr "Aucune méthode de simple héritage n'est trouvée pour la fonction %s ; utilisation d'une méthode à héritage plus complexe"
+
+msgid ""
+"Note: method with signature %s chosen for function %s,\n"
+" target signature %s.\n"
+" %s would also be valid"
+msgstr ""
+"Note : méthode avec la signature %s choisie pour la fonction %s,\n"
+"signature cible %s.\n"
+"%s aurait aussi pu être acceptée"
+
+msgid "unable to find an inherited method for function %s for signature %s"
+msgstr "impossible de trouver une méthode héritée pour la fonction %s pour la signature %s"
+
+msgid "failed to find expected group generic function:"
+msgstr "impossible de trouver la fonction générique du groupe attendu :"
+
+msgid "invalid group generic function in search for inherited method (class %s)"
+msgstr "fonction générique de groupe incorrecte lors de la recherche de méthode héritée (classe %s)"
+
+msgid "invalid methods table request"
+msgstr "demande de table de méthodes incorrecte"
+
+msgid "trying to check signature length of group generic '%s', but it is not a group generic"
+msgstr "essai de vérification de la longueur de la signature pour le groupe générique '%s', mais ce n'est pas un groupe générique"
+
+msgid "trying to check signature length of generic '%s', but it is not a generic function: i = %d, funs = %s, gnames = %s"
+msgstr "tentative de vérification de la longueur de signature du générique '%s', mais ce n'est pas un générique : i = %d, funs = %s, gnames = %s"
+
+msgid "no methods table for generic %s from package %s in package %s"
+msgstr "impossible de trouver la table des méthodes pour le générique %s du package %s dans le package %s"
+
+msgid "undefined classes (%s) will be ignored for argument '%s'"
+msgstr "les classes non définies (%s) seront ignorées pour l'argument '%s'"
+
+msgid "argument 'signatures' must be a character matrix whose rows are method signatures"
+msgstr "l'argument 'signatures' doit être une matrice de chaînes de caractères dont les lignes sont les signatures de méthode"
+
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr "avoir à la fois test == TRUE et une définition S4Class n'est pas permis"
+
+msgid "argument 'S4Class' must be a class definition: got an object of class %s"
+msgstr "l'argument 'S4Class' doit être une définition de classe : un objet de classe %s est obtenu à la place"
+
+msgid "inconsistent old-style class information for %s; the class is defined but does not extend %s and is not valid as the data part"
+msgstr "information d'une classe d'ancien style (S3) incompatible pour %s ; la classe est définie mais n'étend pas %s et n'est pas utilisable comme sa partie 'data'"
+
+msgid "the S3 class of the prototype, \"%s\", is undefined; only allowed when this is the S3 class being registered (\"%s\")"
+msgstr "la classe S3 du prototype, \"%s\", est définie ; ceci est autorisé uniquement lorsque la classe S3 est enregistrée (\"%s\")"
+
+msgid "restoring definition of class %s"
+msgstr "récupération de la définition de classe %s"
+
+msgid "slot %s: class %s should extend class %s"
+msgstr "slot %s : la classe %s doit étendre la classe %s"
+
+msgid "invalid S4 class corresponding to S3 class: slots in  S4 version must extend corresponding slots in S3 version: fails for %s"
+msgstr "classe S4 incorrecte en correspondance à une classe S3 : les slots dans la version S4 doivent étendre les slots correspondants de la version S3 : échec pour %s"
+
+msgid "explicit coercion of old-style class (%s) is not defined"
+msgstr "la conversion explicite de classes d'ancien style (%s) n'est pas définie"
+
+msgid "explicit replacement not defined for as(x, \"%s\") <- value for old-style class %s"
+msgstr "un remplacement explicite n'est pas défini pour as(x, \"%s\") <- value pour la classe d'ancien style %s"
+
+msgid "argument 'Classes' must be a vector of two classes; got an argument of length %d"
+msgstr "l'argument 'Classes' doit être un vecteur contenant deux classes ; un argument de longueur %d est obtenu à la place"
+
+msgid "inconsistent old-style class information for %s (maybe mixing old and new classes?)"
+msgstr "information d'une classe d'ancien style (S3) incompatible pour %s (un mélange entre des anciennes et nouvelles classes est peut-être fait ?)"
+
+msgid "'S3Class' only defined for extensions of %s or classes with a data part:  not true of class %s"
+msgstr "'S3Class' est seulement défini pour des extensions de %s ou des classes ayant une partie 'data' : ce n'est pas le cas de la classe %s"
+
+msgid "'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true of class %s"
+msgstr "'S3Class' ne peut seulement être attribuée qu'à des objets S4 qui étendent \"oldClass\" ; ce n'est pas le cas de la classe %s"
+
+msgid "Created a package name, %s, when none found"
+msgstr "Le nom de package, %s, est créé alors qu'aucun n'est trouvé"
+
+msgid "no definition of class %s found"
+msgstr "aucune définition de la classe %s n'est trouvée"
+
+msgid "multiple definitions of %s found; using the one on %s"
+msgstr "plusieurs définition de %s sont trouvées ; Celle dans %s est utilisée"
+
+msgid "%s is not a valid field or method name for reference class %s"
+msgstr "%s n'est pas un champ correct ou le nom d'une méthode pour la classe de référence %s"
+
+msgid "a call to superClass() is in the method %s but there is no superclass definition of this method for class %s"
+msgstr "un appel à superClass() est trouvé dans la méthode %s mais aucune superclasse n'est définie pour cette méthode pour la classe %s"
+
+msgid "methods declared in usingMethods() but not found: %s"
+msgstr "des méthodes sont déclarées dans usingMethods() mais elles sont introuvables : %s"
+
+msgid "%s is not a reference class"
+msgstr "%s n'est pas une classe de référence"
+
+msgid "%s is not a field in class %s"
+msgstr "%s n'est pas un champ de la classe %s"
+
+msgid "unnamed arguments to $new() must be objects from a reference class; got an object of class %s"
+msgstr "les arguments non nommés de $new() doivent être des objets d'une classe de référence ;  Un objet de classe %s est trouvé"
+
+msgid "%s is not a valid field or method name for this class"
+msgstr "%s n'est pas un champ correct ou le nom d'une méthode pour cette classe"
+
+msgid "the class of field %s in the object is not compatible with the desired class %s in the target"
+msgstr "la classe du champ %s dans l'objet n'est pas compatible avec la classe souhaitée %s pour la cible"
+
+msgid "%s is not a defined class in this environment"
+msgstr "%s n'est pas une classe définie dans cet environnement"
+
+msgid "invalid 'Class' argument:  should be a single string"
+msgstr "mauvais argument 'Class' :  doit être une chaîne de caractères unique"
+
+msgid "%s is not one of the reference super classes for this object"
+msgstr "%s n'est pas une des références à des superclasses pour cet objet"
+
+msgid "direct calls to callSuper() are invalid:  should only be called from another method"
+msgstr "les appels directs à callSuper() ne sont pas autorisés : ils ne peuvent être réalisés qu'à partir d'une autre méthode"
+
+msgid "%s is not a field in this class"
+msgstr "%s n'est pas un champ de cette classe"
+
+msgid "Methods not found: %s"
+msgstr "Méthodes introuvables : %s"
+
+msgid "the definition of class %s in package %s is locked, methods may not be redefined"
+msgstr "la définition de classe %s dans le package %s est verrouillée, les méthodes ne peuvent être redéfinies"
+
+msgid "arguments to methods() must be named, or one named list"
+msgstr "les arguments à methods() doivent être nommés, ou dans une liste nommée"
+
+msgid ""
+"topic %s is not a method name in class %s\n"
+"The class definition follows"
+msgstr ""
+"l'item %s n'est pas un nom de méthode dans la classe %s\n"
+"La définition de classe est la suivante"
+
+msgid "the definition of class %s in package %s is locked so fields may not be modified"
+msgstr "la définition de classe %s dans le package %s est verrouillée, les champs ne peuvent être redéfinis"
+
+msgid "the overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")"
+msgstr "la redéfinition de classe (\"%s\") pour le champ %s n'est pas une sous-classe de la définition de champ existante (\"%s\")"
+
+msgid "invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)"
+msgstr "le remplaçant pour le champ de la classe de référence %s doit être de la classe %s ou d'une sous-classe (une classe %s est obtenue à la place)"
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr "remplacement incorrect : le champ de la classe de référence %s est en lecture seule"
+
+msgid "the 'contains' argument should be the names of superclasses:  got an element of class %s"
+msgstr "l'argument 'contains' doit renseigner les noms de superclasses : un objet de classe %s est fourni"
+
+msgid "no definition found for inherited class: %s"
+msgstr "aucune définition de la classe héritée n'est trouvée : %s"
+
+msgid "a single class name is needed for field %s, got a character vector of length %d"
+msgstr "un nom de classe unique est nécessaire pour le champ %s, un vecteur de chaîne de caractères de longueur %d est fourni"
+
+msgid "class %s for field %s is not defined"
+msgstr "la classe %s pour le champ %s n'est pas définie"
+
+msgid "field %s was supplied as an object of class %s; must be a class name or a binding function"
+msgstr "le champ %s est fourni comme étant un objet de classe %s ; il doit être un nom de classe ou une fonction de lien"
+
+msgid "code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)"
+msgstr "le code des méthodes de la classe %s n'a pas été vérifié pour les affectations de champs suspectes (package recommandé %s indisponible ?)"
+
+msgid "class %s is defined but is not a reference class"
+msgstr "la classe %s est définie mais n'est pas une classe de référence"
+
+msgid "class must be a reference class representation or a character string; got an object of class %s"
+msgstr "la classe doit être une représentation de classe de référence ou une chaine de caractères ; Un objet de classe %s est obtenu à la place"
+
+msgid "not a reference class: %s"
+msgstr "ceci n'est pas une classe de référence : %s"
+
+msgid ""
+"local assignment to field name will not change the field:\n"
+"    %s\n"
+" Did you mean to use \"<<-\"? ( in method %s for class %s)"
+msgstr ""
+"une affectation locale vers le nom de champ ne change pas ce champ :\n"
+"    %s\n"
+"Vouliez-vous utiliser \"<<-\" ? (dans la méthode %s de la classe %s)"
+
+msgid ""
+"non-local assignment to non-field names (possibly misspelled?)\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+"affectation non-locale à des noms qui ne sont pas des champs (coquille possible ?)\n"
+"    %s\n"
+"(dans la méthode %s de la classe %s)"
+
+msgid ""
+"non-local assignment to method names is not allowed\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+"l'affectation non-locale à des noms de méthodes n'est pas autorisée\n"
+"    %s\n"
+"(dans la méthode %s de la classe %s)"
+
+msgid "arguments must all be character string names of fields"
+msgstr "les arguments doivent tous être des noms sous forme de chaînes de caractères des champs"
+
+msgid "field %s is already locked"
+msgstr "le champ \"%s est déjà verrouillé"
+
+msgid "field %s of class %s has a non-default binding and cannot be locked"
+msgstr "le champ %s de la classe %s a un lien non standard et ne peut être verrouillé"
+
+msgid "Reference superclasses must come from the same package for the environment to be defined:  got %s and %s"
+msgstr "Une super classe de référence doit provenir du même package pour que l’environnement soit défini : j’ai %s et %s"
+
+msgid "Class %s is not a subclass of %s; functional semantics not defined for this class"
+msgstr "La classe %s n'est pas une sous-classe de %s ; sémantiques fonctionnelles non définies pour cette classe"
+
+msgid "Could not find local object in supplied environment"
+msgstr "Impossible de trouver l'objet local dans l'environnement fourni"
+
+msgid "invalid 'ignore' argument; should be a class definition or a character vector, got an object of class %s"
+msgstr "argument 'ignore' incorrect ; doit être une définition de classe ou un vecteur de chaînes de caractères ; un objet de classe %s est obtenu"
+
+msgid "An object of class %s"
+msgstr "Un objet de classe %s"
+
+msgid "invalid call to 'classLabel': expected a name or a class definition, got an object of class %s"
+msgstr "appel incorrect à 'classLabel' : un nom ou une classe de définition est attendu, un objet de classe %s est obtenu"
+
+msgid "argument 'signature' is not meaningful for tracing reference methods"
+msgstr "l'argument 'signature' n'a aucune signification pour tracer les méthodes de référence"
+
+msgid "%s is not a method for reference class %s"
+msgstr "%s n'est pas une méthode pour la référence de classe %s"
+
+msgid "argument 'what' should be the name of a function"
+msgstr "l'argument 'what' devrait être le nom d'une fonction"
+
+msgid "tracing the internal function %s is not allowed"
+msgstr "le traçage de la fonction interne %s n'est pas autorisé"
+
+msgid "no function definition for %s found"
+msgstr "aucune définition de fonction n'est trouvée pour %s"
+
+msgid "cannot untrace method for %s; no method defined for this signature: %s"
+msgstr "impossible d'éliminer le traçage de méthode pour %s ; Aucune méthode n'est définie pour cette signature : %s"
+
+msgid "the method for %s for this signature was not being traced"
+msgstr "la méthode pour %s pour cette signature ne sera pas déboguée (tracée)"
+
+msgid "making a traced version of a special; arguments may be altered"
+msgstr "création d'une version de déboguage d'une fonction spéciale ; Les arguments peuvent être altérés"
+
+msgid "the editing in trace() can only change the body of the function; got an object of class %s"
+msgstr "l'édition dans trace() ne peut changer que le corps de la fonction ; Un objet de classe %s est obtenu"
+
+msgid "the editing in trace() can only change the body of the function, not the arguments or defaults"
+msgstr "l'édition dans trace() ne peut changer que le corps de la fonction, pas les arguments ou les valeurs par défaut"
+
+msgid "cannot use 'at' argument without a trace expression"
+msgstr "impossible d'utiliser l'argument 'at' sans une expression de déboguage"
+
+msgid "cannot use 'at' argument unless the function body has the form '{ ... }'"
+msgstr "impossible d'utiliser l'argument 'at', à moins que le corps de la fonction n'ait la forme '{ ... }'"
+
+msgid "assigning over the binding of symbol %s in environment/package %s"
+msgstr "affectation à travers un lien du symbole %s dans l'environnement/le package %s"
+
+msgid "setting a method over the binding of symbol %s in environment/package %s"
+msgstr "création d'une méthode à travers un lien du symbole %s dans l'environnement/le package %s"
+
+msgid "Environment of class %s is locked; using global environment for new class"
+msgstr "L'environnement de laclasse %s est verrouillé ; Utilisation de l'environnement global pour la nouvelle classe"
+
+msgid "none of the objects in the source code could be found:  need to attach or specify the package"
+msgstr "aucuns des objets utilisés dans le code source ne peuvent être trouvés : il faut attacher ou spécifier un package"
+
+msgid "objects found in multiple packages: using %s and ignoring %s"
+msgstr "objects trouvés dans plusieurs packages : utilisation de celui dans %s sans tenir compte de %s"
+
+msgid "package %s is not attached and no namespace found for it"
+msgstr "le package %s n'est pas attaché et ne possède aucun espace de noms"
+
+msgid "invalid 'source' argument: expected file names or a connection but got an object of class %s"
+msgstr "argument 'source' incorrect : un ou des noms de fichiers ou une connexion sont attendus, un objet de classe %s est fourni"
+
+msgid "cannot find an environment corresponding to package name '%s\""
+msgstr "impossible de trouver un environnement correspondant au nom de package \"%s\""
+
+msgid "supplied package, %s, differs from package inferred from source, %s"
+msgstr "le package fourni, %s, diffère du package déduit des sources, %s"
+
+msgid "cannot insert these (not found in source): %s"
+msgstr "insertion de ceci impossible (introuvable dans les sources) : %s"
+
+msgid "cannot insert methods for these functions (methods table not found in source): %s"
+msgstr "impossible d'insérer les méthodes pour ces fonctions (table de méthodes introuvable dans le source) : %s"
+
+msgid "Non-function objects are not currently inserted (not traceable): %s"
+msgstr "Les objets qui ne sont pas des fonctions ne peuvent pas être insérés pour l'instant (ils ne sont pas traçables) : %s"
+
+msgid "New functions are not currently inserted (not untraceable): %s"
+msgstr "Les nouvelles fonctions ne sont pas encore insérées (impossible de les détraçer) : %s"
+
+msgid "Modified functions inserted through trace(): %s"
+msgstr "Fonctions modifiées insérées par l'intermédiaire de trace() : %s"
+
+msgid "%s() is not a generic function in the target environment -- methods will not be inserted"
+msgstr "%s() n'est pas une fonction générique dans l'environnement cible -- Les méthodes ne sont pas insérées"
+
+msgid "Methods inserted for function %s(): %s"
+msgstr "Méthodes insérées pour la fonction %s() : %s"
+
+msgid "no definition for object %s found in tracing environment"
+msgstr "la définition de l'objet %s est introuvable dans l'environnement de traçage"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr "plusieurs génériques correespondent au masque, utilisation de la table %s"
+
+msgid "does not seem to be a method table for generic %s in tracing environment"
+msgstr "ne semble pas être une table de méthode pour le générique %s dans l'environnement de traçage"
+
+msgid "no method in methods table for %s for signature %s"
+msgstr "pas de méthode définie dans la table de méthodes pour %s pour la signature %s"
+
+msgid "unloading 'methods' package ..."
+msgstr "déchargement du package 'methods' ..."
+
+msgid "apparently bad method or class metadata in saved environment;"
+msgstr "apparemment des métadonnées erronées de classe ou de méthode sont sauvées dans l'environnement ;"
+
+msgid "move the file or remove the class/method"
+msgstr "déplacez le fichier ou éliminez la classe / méthode"
+
+msgid "no definition for class %s"
+msgid_plural "no definition for classes %s"
+msgstr[0] "aucune définition de la classe %s n'est trouvée"
+msgstr[1] "aucune définition des classes %s n'est trouvée"
+
+msgid "in the method signature for function %s invalid argument name in the signature: %s"
+msgid_plural "in the method signature for function %s invalid argument names in the signature: %s"
+msgstr[0] "dans la signature de méthode pour la fonction %s, il y a un noms d'argument incorrect dans cette signature : %s"
+msgstr[1] "dans la signature de méthode pour la fonction %s, il y a des noms d'arguments incorrects dans cette signature : %s"
+
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "%d sélection ambigüe reportée depuis %d pour la fonction %s\n"
+msgstr[1] "%d sélections ambigües reportées depuis %d pour la fonction %s\n"
+
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] "les éléments nommés du prototype ne correspondent pas au nom d'un slot : %s"
+msgstr[1] "les éléments nommés du prototype ne correspondent pas aux noms des slots : %s"
+
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "un item qui n'est pas un argument est trouvé dans la signature : %s"
+msgstr[1] "des items qui ne sont pas des arguments sont trouvés dans la signature : %s"
+
+msgid "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)"
+msgid_plural "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"
+msgstr[0] "l'argument formel de la fonction générique pour %s (%s) diffère de celui de la fonction non générique à utiliser par défaut (%s)"
+msgstr[1] "les arguments formels de la fonction générique pour %s (%s) diffèrent de ceux de la fonction non générique à utiliser par défaut (%s)"
+
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "nom de slot dupliqué : %s"
+msgstr[1] "noms de slots dupliqués : %s"
+
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "nom incorrect pour un slot de la classe %s : %s"
+msgstr[1] "noms incorrects pour des slots de la classe %s : %s"
+
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] ""
+"définition multiple de la classe %s est visible (%s) ; utilisation de la définition\n"
+"   du package %s pour %s"
+msgstr[1] ""
+"plusieurs définitions de la classe %s sont visibles (%s) ; utilisation de la définition\n"
+"   du package %s pour %s"
+
+msgid "class %s is missing slot from class %s (%s), and no coerce method was supplied"
+msgid_plural "class %s is missing slots from class %s (%s), and no coerce method was supplied"
+msgstr[0] "la classe %s a un slot manquant de la classe %s (%s), et aucune méthode de conversion automatique n'est fournie"
+msgstr[1] "la classe %s a des slots manquants de la classe %s (%s), et aucune méthode de conversion automatique n'est fournie"
+
+msgid "slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural "slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] "un slot de la classe %s doit étendre le slot correspondant de la classe %s : échec pour %s"
+msgstr[1] "les slots de la classe %s doivent étendre les slots correspondants de la classe %s : échec pour %s"
+
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "%d méthode est aussi bonne que la méthode suivante"
+msgstr[1] "%d méthodes sont aussi bonnes que la méthode suivante"
+
+msgid "Selecting %d method of minimum distance"
+msgid_plural "Selecting %d methods of minimum distance"
+msgstr[0] "Section de %d méthode de distance minimale"
+msgstr[1] "Section de %d méthodes de distance minimale"
+
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "Sélection de %d méthode qui n'est pas un groupe"
+msgstr[1] "Sélection de %d méthodes qui ne sont pas des groupes"
+
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "Sélection de %d méthode à concordance partielle"
+msgstr[1] "Sélection de %d méthodes à concordance partielle"
+
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "Choix de la méthode %s de %d possibilité ambigüe"
+msgstr[1] "Choix de la méthode %s de %d possibilités ambigües"
+
+msgid "no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définition dans : %s"
+msgstr[1] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définitions dans : %s"
+
+#~ msgid "subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()"
+#~ msgstr "La sous-classe %s de la classe %s n'est pas locale et ne peut être mise à jour pour une nouvelle information d'héritage ; considérez setClassUnion()"
+
+#~ msgid "Note: the specification for S3 class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class."
+#~ msgstr "Note: une spécification de classe S3 %s dans le package %s semble équivalente de celle dans le package %s et ne conduit pas à une définition dupliquée de classe"
+
+#~ msgid "methods cannot be defined for the primitive function %s"
+#~ msgstr "des méthodes ne peuvent être définies pour la fonction primitive %s"
+
+#~ msgid "package %s seems to have out-of-date methods; need to reinstall from source"
+#~ msgstr "le package %s semble avoir des méthodes périmées ; il faut le réinstaller depuis ses sources"
+
+#~ msgid "trying to execute load actions without 'methods' package"
+#~ msgstr "tentative d'exécution les actions de chargement sans le package 'methods'"
+
+#~ msgid "special function %s is not permitted to have methods"
+#~ msgstr "la fonction spéciale %s ne peut recevoir des définitions de méthodes"
+
+#~ msgid "special function %s has no known argument list; will assume '(x, ...)'"
+#~ msgstr "la fonction spéciale %s n'a pas de liste d'arguments connue ; les arguments '(x, ...)' seront considérés par défaut"
+
+#~ msgid "'callGeneric' with a primitive needs explicit arguments (no formal args defined)"
+#~ msgstr "'callGeneric' avec une primitive nécessite des arguments explicites (pas d'arguments formels définis)"
+
+#~ msgid "\""
+#~ msgstr "\""
+
+#~ msgid "could not find superclass %s to clean up when removing subclass references to class %s"
+#~ msgstr "Superclasse %s introuvable pour son nettoyage lors de l'élimination des références à la sous-classe %s"
+
+#~ msgid "no class %s found as expected in removing subclass %s"
+#~ msgstr "La classe %s est introuvable, pourtant elle est attendue lors de l'élimination de la sous-classe %s"
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "la valeur de remplacement n'est pas une matrice"
+
+#~ msgid "field %s is read-only"
+#~ msgstr "champ %s en lecture seule"
+
+#~ msgid "not a package name: %s"
+#~ msgstr "ceci n'est pas un nom de package : %s"
+
+#, fuzzy
+#~ msgid "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr "Un argument liste pour les champs ne peut avoir de champs non nommés"
+
+#, fuzzy
+#~ msgid "argument 'fields' must be a list of the field classes or definitions or the names of the fields; got an object of class %s"
+#~ msgstr "L'arguments champs doit être une liste des champs de classe ou des définitions, ou bien juste les noms des champs  ; Un objet de classe %s est obtenu"
+
+#~ msgid "Warning:  using defunct methods list search"
+#~ msgstr "Avis : la recherche dans une liste de méthodes n'est plus supportée"
+
+#~ msgid "apparent inconsistency in the methods for function %s; argument %s in the signature corresponds to %s in the methods list object"
+#~ msgstr "inconsistence apparente pour les méthodes de la fonction %s ; L'argument %s dans la signature correspond à %s dans la liste des méthodes de l'objet"
+
+#~ msgid "no S4 method for function %s and signature %s; consider getS3method() if you wanted the S3 method"
+#~ msgstr "pas de méthode S4 pour la fonction %s et la signature %s ; Considérez getS3method() si vous recherchez une méthode S3"
+
+#~ msgid "no method defined in methods list object for function %s and signature %s"
+#~ msgstr "pas de méthode définie dans l'objet de liste des méthodes pour la fonction %s et la signature %s"
+
+#~ msgid "Methods list objects are not maintained in this version of R:  request for function %s may return incorrect information"
+#~ msgstr "Les objets de liste de méthodes ne sont pas maintenus dans cette version de R : la requête pour la fonction %s produit peut-être une information incorrecte"
+
+#~ msgid "multiple equivalent inherited matches:"
+#~ msgstr "correspondances multiples en héritage :"
+
+#~ msgid "; using the first of these"
+#~ msgstr " ; utilisation de la première d'entre elles"
+
+#~ msgid "'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead"
+#~ msgstr "'traceOn' est obsolète : utilisez la fonction 'trace' du package 'methods' à la place"
+
+#~ msgid "'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead"
+#~ msgstr "'traceOff' est obsolète : utilisez la fonction 'untrace' du package 'methods' à la place"
+
+#, fuzzy
+#~ msgid "The class of field %s in the object is not compatible with the desired class %s in the target"
+#~ msgstr "La classe du champ \"%s\" dans l'objet n'est pas compatible avec la classe souhaitée %s pour la cible"
+
+#~ msgid "in .OldClassesPrototypes"
+#~ msgstr "dans .OldClassesPrototypes"
+
+#~ msgid "internal error: did not get a valid generic function object for function %s"
+#~ msgstr "erreur interne : une fonction générique valide n'est pas fournie pour la fonction %s"
+
+#~ msgid "apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\""
+#~ msgstr "erreur interne apparente : une fonction générique est trouvée pour \"%s\", mais aucun objet correspondant n'est trouvé en recherchant dans \"%s\""
+
+#~ msgid "selectMethod(): mlist is not an environment or NULL :"
+#~ msgstr "selectMethod() : mlist n'est pas un environnement ou NULL :"
+
+#~ msgid "** should no longer happen!"
+#~ msgstr "** ne devrait plus se produire !"
+
+#~ msgid "Classes: %s, %s"
+#~ msgstr "Classes : %s, %s"
+
+#~ msgid "internal error: Bad methods list object in fixing methods for primitive function %s"
+#~ msgstr "erreur interne : l'object contenant la liste des méthodes est corrompu pour la fonction primitive %s"
+
+#~ msgid "botched namespace: failed to find 'base' namespace in its parents"
+#~ msgstr "espace de noms corrompu : impossible de trouver l'espace de noms 'base' dans ses parents"
+
+#~ msgid "multiple direct matches:"
+#~ msgstr "correspondances directes multiples :"
+
+#, fuzzy
+#~ msgid "Internal error: definition of class %s not properly assigned"
+#~ msgstr "Erreur interne : aucune définition de la classe \"%s\" n'est attribuée"
+
+#, fuzzy
+#~ msgid "internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE"
+#~ msgstr "problème interne dans as() : \"%s\" is(object, \"%s\") renvoie 'TRUE', mais les métadonnées indiquent que la relation 'is' doit être fausse"
+
+#~ msgid "connection"
+#~ msgstr "connexion"
+
+#~ msgid "Internal error in finding inherited methods; didn't return a unique method"
+#~ msgstr "Erreur interne dans la recherche des méthodes héritées ; une méthode unique n'a pas été renvoyée"
+
+#~ msgid "\", but it is not a group generic"
+#~ msgstr "\", mais celui-ci n'est pas un groupe générique"
+
+#~ msgid "Trying to check signature length of generic \""
+#~ msgstr "Essai de vérification de la longueur de la signature pour la fonction générique \""
+
+#~ msgid "\", but it is not a  generic function: i ="
+#~ msgstr "\", mais ce n'est pas une fonction générique : i ="
+
+#~ msgid ", funs ="
+#~ msgstr ", funs ="
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "; gnames ="
+#~ msgstr "; gnames ="
+
+#~ msgid "Something weird:  inconsistent number of args in methods table strings:"
+#~ msgstr "Quelque chose d'étrange s'est produit : nombre d'arguments inconsistent pour args dans la table des méthodes"
+
+#~ msgid "(using the largest value)"
+#~ msgstr "(utilisation d'une value importante)"
+
+#~ msgid "Undefined classes ("
+#~ msgstr "Les classes non définies ("
+
+#~ msgid "Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class."
+#~ msgstr "La méthode %s de la classe %s n'a pas été traitée comme méthode de classe avant installation. Les méthodes de la classe sont peut-être corrompues."
+
+#~ msgid ".TraceWithMethods: after computing what, whereF"
+#~ msgstr ".TraceWithMethods : après calcul de 'what', 'whereF'"
+
+#~ msgid ".TraceWithMethods: untrace case"
+#~ msgstr ".TraceWithMethods : les cas sont détracés"
+
+#~ msgid ".TraceWithMethods: about to assign or setMethod"
+#~ msgstr ".TraceWithMethods : prêt à effectuer l'assignation ou setMethod"
+
+#, fuzzy
+#~ msgid "Constructing traceable class %s"
+#~ msgstr "La construction de la classe traçable \""
+
+#~ msgid "Pretend we inserted class"
+#~ msgstr "Faisons comme si la classe est insérée"
+
+#~ msgid "= \"missing\""
+#~ msgstr "\"manquant\""
+
+#~ msgid "found"
+#~ msgstr "trouvé"
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "Elément mlist incorrect pour la signature \""
+
+#~ msgid "\" at level"
+#~ msgstr "\" au niveau"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "Mauvais objet trouvé comme méthode (\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"), une méthode est attendue et un objet est fourni de classe \""
+
+#~ msgid "Environment of class \""
+#~ msgstr "Un environnement de classe \""
+
+#~ msgid "Replacement value must be of class \""
+#~ msgstr "La valeur de remplacement doit être de classe \""
+
+#~ msgid "\", got one of class \""
+#~ msgstr "\", or il s'agit d'un objet de classe \""
+
+#~ msgid "\", for signature"
+#~ msgstr "\", pour la signature"
+
+#~ msgid "Field \""
+#~ msgstr "Champ \""
+
+#~ msgid "the supplied generic function definition for"
+#~ msgstr "la fonction de définition de générique fournie pour"
+
+#~ msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
+#~ msgstr "ne semble par appeler 'standardGeneric' ; aucune méthode n'est disponible pour le dispatching !"
+
+#~ msgid "no generic function \"'%s\" found"
+#~ msgstr "aucune fonction générique \"%s\" n'est trouvée"
+
+#~ msgid ""
+#~ "Restoring the implicit generic function for %s from package %s\n"
+#~ "    into package %s; the generic differs from the default conversion (%s)"
+#~ msgstr ""
+#~ "Recupération de la fonction générique implicite pour %s depuis le package %s\n"
+#~ "    dans le package %s ; le générique diffère de la conversion par défaut (%s)"
+
+#~ msgid ""
+#~ "Creating a generic for %s in package %s\n"
+#~ "    (the supplied definition differs from and overrides the implicit generic\n"
+#~ "    in package %s: %s)"
+#~ msgstr ""
+#~ "Création d'une fonction générique pour %s dans le package %s\n"
+#~ "    (la définition fournie diffère de et remplace le générique explicite\n"
+#~ "    dans le package %s : %s)"
+
+#~ msgid "\" is not a known action (warn, stop, once, ignore); no action recorded for function \""
+#~ msgstr "\" n'est pas une action connue (warn, stop, once, ignore) ; aucune action enregistrée pour la fonction \""
+
+#~ msgid "must give named list of refdefined fields"
+#~ msgstr "nécessite une liste nommée de redéfinition de champs"
+
+#~ msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+#~ msgstr "Seuls les champs d'accès peuvent être remplacés : le champ \"%s\" a la classe \"%s\""
+
+#, fuzzy
+#~ msgid "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of required class \"%s\""
+#~ msgstr "la méthode d'initialisation a renvoyé un objet de classe \"%s\" au lieu de la classe requise \"%s\""
+
+#, fuzzy
+#~ msgid "The fieldReadOnly argument must be the names of the read-only fields; got an object of class \"%s\""
+#~ msgstr "le premier argument doit être le ou les nom(s) des fonctions génériques (un objet de classe \"%s\" est fourni)"
+
+#, fuzzy
+#~ msgid "Field classes undefined: %s"
+#~ msgstr "Les classes valeur diffèrent : %s, %s"
+
+#, fuzzy
+#~ msgid "Trying to set a read-only field ("
+#~ msgstr "tentative de définition d'une relation 'as' de \"%s\" vers lui-même"
+
+#, fuzzy
+#~ msgid ")"
+#~ msgstr "\")"
+
+#, fuzzy
+#~ msgid "\"%s\" is not a known reference class"
+#~ msgstr "\"%s\" n'est pas une classe définie"
+
+#, fuzzy
+#~ msgid "Invalid accessor function list: %s"
+#~ msgstr "indice incorrect pour l'argument de fonction"
+
+#~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
+#~ msgstr "Définition du type \"%s\" comme une superclasse par l'intermédiaire de la classe \"%s\""

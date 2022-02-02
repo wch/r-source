@@ -1,0 +1,20 @@
+importFrom("graphics", plot) # because we want to define methods on it
+
+## Generics and functions defined in this package
+export(pubGenf, pubfn, # generic functions
+       assertError)# and a simple one
+
+## own classes
+exportClasses(pubClass, subClass)# both classes [where 'pkgA' only exports main class]
+
+exportMethods(
+ ## for own generics:
+ pubGenf, pubfn,
+ ## for other generics:
+ plot, show
+)
+
+## The "Matrix-like"
+exportClasses("atomicVector", "array_or_vector")
+exportClasses("M", "dM", "diagM", "ddiM") ## but *not* "mM" !
+

@@ -1,0 +1,37 @@
+# Russian translations for R GUI
+# Русский перевод для пакета R
+#
+# Copyright (C) 2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Shipunov <dactylorhiza@gmail.com> 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.9.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"PO-Revision-Date: 2020-08-27 19:44+0900\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: splines.c:154
+msgid "'ord' must be a positive integer"
+msgstr "'ord' должен быть положительным целым"
+
+#: splines.c:222
+#, c-format
+msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr "derivs = %d >= ord = %d, но они должны быть в пределах {0,..,ord-1}"
+
+#: splines.c:225
+#, c-format
+msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr ""
+"derivs[%d] = %d >= ord = %d, но они должны быть в пределах {0,..,ord-1}"

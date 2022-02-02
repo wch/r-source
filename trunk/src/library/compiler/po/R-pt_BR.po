@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.13.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2011-03-26 08:55-0300\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+msgid "namespace found within local environments"
+msgstr ""
+
+msgid "not a proper evaluation environment"
+msgstr "não é um ambiente apropriado para avaliação"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de nomes"
+
+msgid "namespace found within global environments"
+msgstr ""
+
+msgid "bad assignment: %s"
+msgstr "atribuição não apropriada: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "não é possível dobrar de maneira constante promessas literais"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "não é possível dobrar objetos literais bytecode"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "nenhuma compensação registrada para o rótulo \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "não é possível compilar literais de byte code no código"
+
+msgid "cannot compile promise literals in code"
+msgstr "não é possível compilar promessas literais em código"
+
+msgid "possible error in '%s': %s"
+msgstr "possível erro em '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "nome de espaço inválido no quadro de importação"
+
+msgid "bad assignment 1"
+msgstr "atribuição inválida 1"
+
+msgid "bad assignment 2"
+msgstr "atribuição inválida 2"
+
+msgid "invalid function in complex assignment"
+msgstr "função inválida em atribuição complexa"
+
+msgid "missing arguments are not allowed"
+msgstr "argumentos faltantes não são permitidos"
+
+msgid "empty alternative in numeric switch"
+msgstr "alternativa vazia em switch numérico"
+
+msgid "no visible global function definition for '%s'"
+msgstr "nenhuma definição de função global visível para '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "nenhuma associação visível para variável global '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "nenhuma associação para atribuição '<<-' para '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "número de argumentos inválidos para '%s'"
+
+#, fuzzy
+msgid "more than one default provided in switch() call"
+msgstr "mais de um valor default fornecido na chamada de switch"
+
+msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
+msgstr ""
+
+msgid "cannot compile a non-function"
+msgstr "não é possível compilar algo que não seja uma função"
+
+msgid "compiling '%s'"
+msgstr "compilando '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "salvando para o arquivo \"%s\" ..."
+
+msgid "done"
+msgstr "pronto"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' deve ser um ambiente em primeiro nível"
+
+msgid "input and output file names are the same"
+msgstr "nomes de entrada e saida são os mesmos"
+
+msgid "empty input file; no output written"
+msgstr "arquivo de entrada vazio; nenhuma saída escrita"
+
+msgid "file '%s' does not exist"
+msgstr "arquivo '%s' não existe"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' não é uma opção válida de compilação"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
+msgid "function is not compiled"
+msgstr "função não está compilada"
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr "não é possível compilar promessas literais em código"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "atribuição local para função sintática: "
+msgstr[1] "atribuições locais para funções sintáticas: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de "
+#~ "nomes"
+
+#~ msgid "expected a single logical value for the S4 state flag"
+#~ msgstr "esperado somente um valor lógico para a flag de estado S4"

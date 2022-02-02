@@ -1,0 +1,11 @@
+Package: tools
+Version: @VERSION@
+Priority: base
+Title: Tools for Package Development
+Author: R Core Team
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
+Description: Tools for package development, administration and documentation.
+License: Part of R @VERSION@
+Suggests: codetools, methods, xml2, curl, commonmark
+NeedsCompilation: yes

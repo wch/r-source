@@ -1,0 +1,144 @@
+# Korean translation for R parallel package
+# Copyright (C) 1995-2018 The R Core Team
+#
+# This file is distributed under the same license as the R parallel package.
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: 2018-04-09 12:09-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "invalid value of %s"
+msgstr ""
+
+msgid "need at least one argument"
+msgstr "최소한 하나 이상의 인자가 필요합니다."
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "길이가 0인 입력은 길이가 0이 아닌 입력들과 혼용될 수 없습니다"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X)는 반드시 양의 길이를 가져야 합니다"
+
+msgid "'X' must have named dimnames"
+msgstr "'X'는 반드시 named dimnames를 가져야 합니다"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "'MARGIN'의 모든 요소들이 dimensions의 이름들은 아닙니다"
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr "클러스터 'cl'은 제공되지도 않았고, 어떠한 것들도 등록되지 않았습니다"
+
+msgid "not a valid cluster"
+msgstr "유효한 클러스터가 아닙니다"
+
+msgid "unknown cluster type"
+msgstr "알 수 없는 클러스터 유형입니다"
+
+msgid "numeric 'names' must be >= 1"
+msgstr "'names'는 반드시 1보다 크거나 같아야 합니다."
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "pid가 %2$d인 호스트 %1$s에 있는 소켓 클러스터의 노드입니다"
+
+msgid "Connection setup failed or timed out."
+msgstr ""
+
+msgid "PORT must be specified"
+msgstr "PORT가 반드시 지정되어야 합니다"
+
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes'는 반드시 1보다 크거나 같아야 합니다."
+
+msgid "Cluster setup failed."
+msgstr ""
+
+msgid "invalid 'child' argument"
+msgstr "유효하지 않은 'child' 인자입니다"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "'children'은 반드시 프로세스들의 목록이거나 단일 프로세스이어야 합니다"
+
+msgid "'process' must be of class %s"
+msgstr "'process'는 반드시 클래스 %s이어야 합니다"
+
+msgid "'child' must be a valid child process"
+msgstr "'child'은 반드시 유효한 자식 프로세스이어야 합니다"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what'은 반드시 문자 또는 raw 벡터이어야 합니다"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores'는 1보다 크거나 같아야 합니다."
+
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
+msgid "%d function calls resulted in an error"
+msgstr "%d번의 함수 호출결과 에러가 발생했습니다"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "모든 예약된 코어들은 사용자코드내 에러를 접했습니다"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "길이가 0인 입력은 길이가 0이 아닌 입력들과 혼용될 수 없습니다"
+
+msgid "invalid 'jobs' argument"
+msgstr "올바르지 않은 'jobs' 인자입니다."
+
+msgid "'v' must be a vector"
+msgstr "'v'는 벡터이어야 합니다."
+
+msgid "some results may be missing, folded or caused an error"
+msgstr "일부 결과가 누락될 수도 있고, 오류를 접하거나 발생시켰을 수 있습니다"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "포크 클러스터들은 윈도우즈에서 지원되지 않습니다"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "'mc.cores' > 1은 윈도우즈에서 지원되지 않습니다"
+
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "호스트 %2$s에 있는 %1$d개의 노드들을 가진 소켓클러스터입니다"
+
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] ""
+
+msgid ""
+"scheduled core %s did not deliver a result, all values of the job will be "
+"affected"
+msgid_plural ""
+"scheduled cores %s did not deliver results, all values of the jobs will be "
+"affected"
+msgstr[0] ""
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] ""

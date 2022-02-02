@@ -1,0 +1,185 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2011 The R Foundation
+# This file is distributed under the same license as the R package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.14.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
+"PO-Revision-Date: 2020-08-27 19:52+0900\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=koi8-r\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+msgid "invalid value of %s"
+msgstr "неправильное значение %s"
+
+msgid "need at least one argument"
+msgstr "нужен хотя бы один аргумент"
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "нулевой ввод нельзя смешивать с ненулевым"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) должен иметь положительную длину"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' должен иметь именованные dimnames"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "не все элементы 'MARGIN' -- имена измерений"
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr "кластера 'cl' нет и ничего не зарегистрировано"
+
+msgid "not a valid cluster"
+msgstr "неправильный кластер"
+
+msgid "unknown cluster type"
+msgstr "неизвестный тип кластера"
+
+msgid "numeric 'names' must be >= 1"
+msgstr "числовые 'names' должны быть >= 1"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "узел на кластере-приемнике на хосте %s с pid %d"
+
+msgid "Connection setup failed or timed out."
+msgstr "Установление соединения не удалось или превысило лимит ожидания."
+
+msgid "PORT must be specified"
+msgstr "надо определить PORT"
+
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes' должны быть >= 1"
+
+msgid "Cluster setup failed."
+msgstr "Создание кластера не удалось."
+
+msgid "invalid 'child' argument"
+msgstr "неправильный аргумент 'child'"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "'children' должен быть списком процессов или одним процессом"
+
+msgid "'process' must be of class %s"
+msgstr "'process' должен быть класса %s"
+
+msgid "'child' must be a valid child process"
+msgstr "'child' должен быть правильным дочерним процессом"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what' должен быть текстовым или простым вектором"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores' должны быть >= 1"
+
+msgid "affinity.list and X must have the same length"
+msgstr "affinity.list и X должны быть одинаковой длины"
+
+msgid "%d function calls resulted in an error"
+msgstr "вызовы функции %d привели к ошибке"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
+"'mc.preschedule' должен быть fasle в том случае, когда используется "
+"'affinity.list'"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "все запланированные ядра столкнулись с ошибкой в пользовательском коде"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "Нулевой ввод нельзя смешивать с ненулевым"
+
+msgid "invalid 'jobs' argument"
+msgstr "неправильный аргумент 'jobs'"
+
+msgid "'v' must be a vector"
+msgstr "'v' должен быть вектором"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+"некоторые результаты могут быть пропущены, схлопнуты или привели к ошибке"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "разветвленные кластеры под винды не поддерживаются"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "'mc.cores' > 1 не поддерживается под Windows"
+
+msgid "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0] ""
+"Создание кластера не удалось. %d процесс из %d не смогли подсоединиться."
+msgstr[1] ""
+"Создание кластера не удалось. %d процесса из %d не смогли подсоединиться."
+msgstr[2] ""
+"Создание кластера не удалось. %d процессов из %d не смогли подсоединиться."
+
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "кластер-приемник с %d узлами на хосте %s"
+msgstr[1] "кластер-приемник с %d узлами на хостах %s"
+msgstr[2] "кластер-приемник с %d узлами на хостах %s"
+
+msgid "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0] "%d вызов параллельной функции не выдали результат"
+msgstr[1] "%d вызова параллельной функции не выдали результат"
+msgstr[2] "%d вызовов параллельной функции не выдали результат"
+
+msgid ""
+"scheduled core %s did not deliver a result, all values of the job will be "
+"affected"
+msgid_plural ""
+"scheduled cores %s did not deliver results, all values of the jobs will be "
+"affected"
+msgstr[0] ""
+" %s запланированное ядро столкнулось с ошибкой в пользовательском коде, "
+"будут затронуты все значения работ"
+msgstr[1] ""
+" %s запланированных ядра столкнулись с ошибкой в пользовательском коде, "
+"будут затронуты все значения работ"
+msgstr[2] ""
+" %s запланированных ядер столкнулись с ошибкой в пользовательском коде, "
+"будут затронуты все значения работ"
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"запланированное ядро %s столкнулось с ошибкой в пользовательском коде, будут "
+"затронуты все значения работ"
+msgstr[1] ""
+"запланированные ядра %s столкнулись с ошибкой в пользовательском коде, будут "
+"затронуты все значения работ"
+msgstr[2] ""
+"запланированные ядра %s столкнулись с ошибкой в пользовательском коде, будут "
+"затронуты все значения работ"
+
+msgid "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0] "%d параллельное задание не выдало результат"
+msgstr[1] "%d параллельных задания не выдали результат"
+msgstr[2] "%d параллельных заданий не выдали результат"
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "кластер-приемник с %d узлами на хосте %s"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "host"
+#~ msgstr "хост"

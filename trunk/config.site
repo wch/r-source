@@ -1,0 +1,441 @@
+#! /bin/sh
+
+### This file is part of R.
+###
+### R is free software; you can redistribute it and/or modify it under
+### the terms of the GNU General Public License as published by the Free
+### Software Foundation; either version 2 of the License, or (at your
+### option) any later version.
+###
+### R is distributed in the hope that it will be useful, but WITHOUT ANY
+### WARRANTY; without even the implied warranty of MERCHANTABILITY or
+### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+### License for more details.
+###
+### You should have received a copy of the GNU General Public License
+### along with R; if not, a copy is available at
+### https://www.r-project.org/Licenses/
+
+## By means of this file you can (also) provide default values for the
+## configuration process.  To set variables, uncomment the VAR=DEFAULT 
+## lines and set DEFAULT according to your needs.
+## See etc/Renviron.in for further variables you may wish to set.
+
+## The command used to spool PostScript files to the printer.
+## If unspecified, the system will look for either 'lpr' or 'lp'.
+## R_PRINTCMD=lpr
+
+## The paper size for the local (PostScript) printer.
+## It must either be left blank or set to one of 'a4' or 'letter'.
+## If left blank the system will use 'a4'.
+## R_PAPERSIZE=a4
+
+## Set the default behavior of R when ending a session
+## Set this to one of '--save' or '--no-save' depending whether you
+## want automatic saving of '.RData' or not.
+## Note that this applies to interactive and batch use, 
+## but NOT to the utility R CMD BATCH 
+## (which defaults to --save irrespective of this setting)
+## R_BATCHSAVE=
+
+## The command which runs the C compiler.
+## If unspecified, a search is made for gcc and cc (in that order).
+## To override this choice, specify the name or path of the command
+## which runs the compiler, for example 'c99'.
+## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
+## CC=
+
+## Debugging and optimization options for the C compiler.
+## Use this to specify CFLAGS for the version of the C compiler
+## specified above.
+## If unspecified, defaults to '-g -O2' for gcc, 
+## and '-g' in all other cases except icc (for which see R-admin.html).
+## Be wary of aggressive settings such as -ffast-math, -Ofast and
+## -Werror (which is likely to cause configure to fail).
+## CFLAGS=
+
+## Defines for C compilation.
+## Use this to specify defines to be used in the compilation of R,
+## DEFS=
+
+## The following additional CFLAGS to be used only in the main
+## compilation and only in building shared objects respectively.
+## For example, on some systems one needs 'MAIN_CFLAGS=-pg' when
+## profiling.
+## MAIN_CFLAGS=
+## SHLIB_CFLAGS=
+
+## Header file search directory ('-IDIR') and any other miscellaneous
+## options (such as defines) for the C preprocessor and compiler.
+## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
+## prepended on systems using Fink with root '/sw'.
+## CPPFLAGS=
+
+## The command which runs the Fortran compiler.
+## Used for both fixed-form and free-form Fortran
+## FC=
+
+## Options for the Fortran compiler.
+## Use this to specify comilation flags for fixed-form Fortran.
+## FFLAGS=
+## Ditto for free-form Fortran.
+## FCFLAGS=
+## If just one of these is set, it is used for both.
+## If both are unspecified, defaults to '-g -O2' for gfortran, 
+## otherwise '-g' if this is accepted, otherwise ''.
+## Use these if the compiler needs flags such as --free, -qfixed and
+## cannot determine which from the source-file extension.
+
+## macros for compiling by Fortran (for use in Makefiles)
+## SHLIB_FCLD=${FC}
+## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
+## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
+
+## Additional libraries needed to link a shared object with FC,
+## e.g. on x86 Solaris
+## FCLIBS_XTRA=
+
+## Options for safe compilation under the Fortran compiler.
+## Use this to specify FFLAGS for the version of the compiler specified
+## above, using as accurate a result as possible, e.g. no optimization
+## or using -ffloat-store.
+## SAFE_FFLAGS=
+
+## The following additional FFLAGS to be used only in the main
+## compilation and only in building shared objects respectively.
+## For example, on some systems one needs 'MAIN_FFLAGS=-pg' when
+## profiling.
+## MAIN_FFLAGS=
+## SHLIB_FFLAGS=
+
+## The command to be used to load the main R binary.
+## This is usually the C compiler, but the automatic
+## choice can be overridden by means of this variable.
+## MAIN_LD=
+
+## The flags which are necessary for loading main program which will
+## load DLLs at runtime.  HP-UX and Linux-elf are examples of platforms
+## which use this.  Those platforms are already taken care of by
+## configure, and anything set here will be in addition unless MAIN_LD
+## is given.
+## For example, one can set flags for profiling here.
+## MAIN_LDFLAGS=
+
+## Any special flags which must be used when compiling C code to be
+## turned into a shared object.  This is typically something like
+## '-fpic' or '-fPIC'.  If this variable is left unspecified an attempt
+## is made to automatically detect the correct value.
+## CPICFLAGS=
+
+## The following variable can be used to provide any PIC flags for the
+## Fortran compiler.  If this variable is left unspecified an
+## attempt is made to automatically detect the correct value.
+## FPICFLAGS=
+
+## The command to be used to create shared objects which contain object
+## files from a C or Fortran compiler only.  This is usually the C
+## compiler or 'ld', but the automatic choice can be overridden by means
+## of this variable.
+## SHLIB_LD=
+
+## Any special flags which are required by the linker when creating
+## shared objects containing object files from a C or Fortran
+## compiler only.  This is usually automatically detected by configure,
+## and anything set here will be in addition unless SHLIB_LD is given.
+## SHLIB_LDFLAGS=
+
+## ditto for a dynamic library: DYLIB_LDFLAGS defaults to SHLIB_LDFLAGS
+## DYLIB_LD=
+## DYLIB_LDFLAGS=
+
+## The appropriate 'lib' dir, normally 'lib', but 'lib64' on Linux on
+## x86_64, mips64, ppc64, sparc64, s390x but not ia64 (except Debian
+## and derivatives).
+## LIBnn=
+
+## Path ('-L'), and any other miscellaneous options for the linker.
+## '-L' options set here will be prepended to LD_LIBRARY_PATH (or its
+## system equivalent) at run time.
+## If unset defaults to '-L/usr/local/lib', with '-L/sw/lib' prepended
+## on macOS systems using Fink with root '/sw'.
+## On some Linux 64-bit systems its default is -L/usr/local/lib64.
+## If LIBnn is set it defaults to -L/usr/local/$LIBnn.
+## LDFLAGS=
+
+
+## The command which runs the C++ compiler.
+## This is optional, for use in packages.
+## If not specified, configure
+## uses the values of the environment variables 'CXX' or 'CCC' if set,
+## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
+## names (from autoconf).
+## CXX=
+
+## Options for the C++ compiler.
+## CXXFLAGS=
+
+## Any special flags which must be used when compiling C++ code to be
+## turned into a shared object.  If this variable is left unspecified
+## an attempt is made to automatically detect the correct value.
+## CXXPICFLAGS=
+
+## Option to specify the default C++ standard, 
+## e.g. -std=c++11 or -std=gnu++11
+## CXXSTD=
+
+## The command to be used to load shared objects which contain object
+## files from the C++ compiler.  This is usually the C++ compiler/linker,
+## but the automatic choice can be overridden by means of this
+## variable.  (Include $(CXXSTD) if set.)
+## SHLIB_CXXLD=
+
+## Any special flags which are required when creating shared objects
+## containing object files from a C++ compiler.  This is usually
+## automatically detected by configure, and anything set here will be in
+## addition unless SHLIB_CXXLD is given.
+## SHLIB_CXXLDFLAGS=
+
+## Not used by R but configure can fail to find it, so set to
+## "$CXX -E" if it does.
+## CXXCPP=
+
+## Tcl/Tk settings.
+## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
+## against the Tcl and Tk library.
+## TCLTK_LIBS=
+## Use TCLTK_CPPFLAGS for all '-I' options needed for finding the tcl.h
+## and tk.h headers.
+## TCLTK_CPPFLAGS=
+
+## Browser default
+## Default setting for the R_BROWSER env variable
+## If unset configure searches in turn for (currently)
+## firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open
+## and uses the full path of the first it finds.
+## R_BROWSER=
+
+## BLAS and LAPACK settings
+## Use BLAS_LIBS for all '-L' and '-l' options needed for linking
+## against an external BLAS implementation.
+## BLAS_LIBS=
+## Use LAPACK_LIBS for all '-L' and '-l' options needed for linking
+## against an external LAPACK implementation.  
+## Note that (see R-admin) that our main intention is to allow a
+## LAPACK-containing BLAS to be used, so this is rarely needed, and
+## it is not used if the BLAS already contains LAPACK.
+## LAPACK_LIBS=
+
+## Make name or path
+## Set this if you want to use a make by another name.
+## For example, if your GNU make is called 'gmake', use 'MAKE=gmake'.
+## MAKE=
+
+## Tar name or path
+## Set this to prefer a tar which has the capability to automagically
+## read compressed archives.  The default is to choose 'gtar' or
+## 'gnutar'(normally GNU tar) then 'tar'.
+## Note that 'bsdtar' (from the libarchive project) is known to create
+## archives in a non-POSIX format that other tars and untar() cannot
+## read, so should be avoided.
+## TAR=
+
+## Dynamic library path
+## This is be default created from libraries added to LIBS.
+## Used for DYLD_FALLBACK_LIBRARY_PATH on macOS and LD_LIBRARY_PATH elsewhere.
+## Allow user to override.
+## R_LD_LIBRARY_PATH=
+
+## C++11 compiler, optional for use in packages.
+## Introduced in R 3.1.0
+## The command which runs the C++11 compiler: defaults to $(CXX), but
+## empty if that (plus standard) cannot compile the tested C++11 code.
+## CXX11=
+
+## The 'standard' for the C++11 compiler, which is invoked as
+## $(CXX11) $(CXX11STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++11' and '-std=gnu++0x' are tried in turn by configure.
+## followed by '-std=c++11' and '-std=c++0x'
+## CXX11STD=
+
+## Analogues for the C++11 compiler: default to the settings for C++
+## CXX11FLAGS=
+## CXX11PICFLAGS=
+## SHLIB_CXX11LD=
+## SHLIB_CXX11LDFLAGS=
+
+## C++14 compiler, optional for use in packages.
+## Introduced in R 3.4.0
+## The command which runs the C++14 compiler: defaults to $(CXX11), but
+## empty if that (plus standard) cannot compile the tested C++14 code.
+## CXX14=
+
+## The 'standard' for the C++14 compiler, which is invoked as
+## $(CXX14) $(CXX14STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++14' and '-std=gnu++1y" are tried by configure, also
+## '-std=c++14' and '-std=c++1y"
+## CXX14STD=
+
+## Analogues for the C++14 compiler: default to the settings for C++11
+## CXX14FLAGS=
+## CXX14PICFLAGS=
+## SHLIB_CXX14LD=
+## SHLIB_CXX14LDFLAGS=
+
+## C++17 compiler, optional for use in packages.
+## Introduced in R 3.4.0
+## The command which runs the C++17 compiler: defaults to $(CXX14), but
+## empty if that (plus standard) cannot compile the tested C++17 code.
+## CXX17=
+
+## The 'standard' for the C++17 compiler, which is invoked as
+## $(CXX17) $(CXX17STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++17' and '-std=gnu++1z" are tried by configure, also
+## '-std=c++17' and '-std=c++1z"
+## CXX17STD=
+
+## Analogues for the C++17 compiler: default to the settings for C++14
+## CXX17FLAGS=
+## CXX17PICFLAGS=
+## SHLIB_CXX17LD=
+## SHLIB_CXX17LDFLAGS=
+
+## C++20 compiler, optional for use in packages.
+## Introduced in R 4.0.0
+## The command which runs the C++20 compiler: defaults to $(CXX17), but
+## empty if that (plus standard) cannot compile the tested C++20 code.
+## CXX20=
+
+## The 'standard' for the C++20 compiler, which is invoked as
+## $(CXX20) $(CXX20STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++20' and '-std=gnu++2a" are tried by configure, also
+## '-std=c++20' and '-std=c++2a"
+## CXX20STD=
+
+## Analogues for the C++20 compiler: default to the settings for C++17
+## CXX20FLAGS=
+## CXX20PICFLAGS=
+## SHLIB_CXX20LD=
+## SHLIB_CXX20LDFLAGS=
+
+## Additional libraries to link the internet module against.
+## Some claim Solaris needs -lsocket -lnsl
+## INTERNET_LIBS=
+
+## Script from texinfo 5.1 or later.
+## Usually the full path to texi2any.
+## TEXI2ANY=
+
+## Full path to version of curl-config to be used
+## CURL_CONFIG=
+## Use these to override curl-config if needed.
+## Used as from R 3.2.0.
+## CURL_CPPFLAGS=
+## CURL_LIBS=
+## To force a static link use the line below: this is only needed
+## if both shared and static libcurl libraries were installed (and
+## not guaranteed to work then).
+## CURL_LIBS=`curl-config --static-libs`
+
+## Path to the version of pkg-config to be used for locating cairographics,
+## and possibly jpeg, libpng and libtiff.
+## PKG_CONFIG=
+## search path for pkg-config
+## PKG_CONFIG_PATH=
+## path overriding pkg-config's default search path
+## PKG_CONFIG_LIBDIR=
+
+## OpenMP settings.
+## The configure code is conservative about enabling OpenMP 
+## so use can be forced here (or non-use if set but empty).
+## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
+## necessarily for CXX11/14/17/20).
+## SHLIB_OPENMP_CFLAGS=
+## SHLIB_OPENMP_CXXFLAGS=
+## SHLIB_OPENMP_FFLAGS=
+## For R itself (src/main/array.c and src/library/stats/src/distance.c)
+## R_OPENMP_CFLAGS=
+
+## POSIX threads setting
+## pthreads is used in src/main/eval.c.  The configure code sees if
+## any flag is needed to link to pthread functions (after the OpenMP
+## CFLAGS) and if so tries -pthread.  Setting this allows an
+## alternative to be tried immediately before -pthread.
+## PTHREAD_OPT=
+
+## Visibility settings
+## Allow user to override the configure checks if they know what they
+## are doing.
+## C_VISIBILITY=
+## CXX_VISIBILITY=
+## F_VISIBILITY=
+
+## Fortran-C compatibility
+## The C type used by Fortran to pass 'hidden' character lengths (if any)
+## Often size_t (unsigned int or long, or long long in Win64)
+## Allow user to override the configure checks if they know what they
+## are doing (the value is unchecked).
+## FC_LEN_T=
+
+## C Stack Direction
+## In case optimization defeats the configure test: 'down' (the usual) or 'up'
+## R_C_STACK_DIRECTION=
+
+## Commands which might need to be set for LTO builds
+## Typical values for LTO are gcc-ar, gcc-nm and gcc-ranlib
+## AR=
+## NM=
+## RANLIB=
+##
+## The LTO macro, defaulting to -flto
+## Could be e.g. -flto=8 for GCC or -flto=thin for clang.
+## LTO= 
+## Ditto for the Fortran compiler, defaulting to the value of LTO.
+## LTO_FC= 
+##
+## Flags for linking with LTO in addition to $(LTO), e.g. to
+## parallelize ThinLTO or to change linker such as -fuse-ld=gold or
+## -fuse-ld=lld (with gcc or clang).
+## LTO_LD=
+
+## Programs which configure will look for on the path
+## AR
+## GETWD=pwd
+## A BSD-compatible install program or script:
+## tries ginstall scoinst install and falls back to tools/install-sh
+## INSTALL
+## LN_S="ln -s"
+## MAKE
+## Tries less more page pg in turn
+## PAGER
+## PAPERCONF
+## Tries pkg-config then pkgconf
+## PKG_CONFIG
+## RANLIB
+## REALPATH
+## Tries gtar gnutar tar
+## TAR
+## XMKMF
+## R_BZIPCMD=bzip2
+## R_GZIPCMD=gzip
+## looks for lpr then lp
+## R_PRINTCMD
+## tries firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open
+## R_BROWSER
+## tries acroread acroread4 xdg-open evince xpdf gv gnome-gv ggv
+##   okular kpdf open gpdf kghostview
+## R_PDFVIEWER
+## R_TEXI2DVICMD
+## R_UNZIPCMD=unzip
+## R_ZIPCMD=zip
+
+## Tries ginstall-info install-info
+## INSTALL_INFO
+## KPSEWHICH
+## MAKEINDEX
+## PDFLATEX
+## PDFTEX
+## TEXI2ANY
+## TEXI2DVI
+
+## The exception, looked for in /usr/xpg4/bin before the path
+## SED=sed

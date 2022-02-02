@@ -1,0 +1,7 @@
+R-@FULLVERSION@ for Windows
+===================
+This directory contains a binary distribution of R-@RVER@ to run on
+Windows XP or later on i386 and x64 CPUs (and not Itanium, ia64). 
+
+See 'README.@RWVER@' for further instructions and
+'CHANGES' for the new features of this version.

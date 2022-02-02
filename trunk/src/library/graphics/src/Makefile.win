@@ -1,0 +1,43 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/graphics/src/Makefile.win
+
+pkg = graphics
+
+srcdir = .
+top_srcdir = ../../../..
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+
+SOURCES_C = init.c base.c graphics.c par.c plot.c plot3d.c stem.c
+
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
+
+SHLIB = $(pkg).dll
+RESFLAGS = -I $(R_HOME)/include
+
+## need config.h
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H -I$(R_HOME)/src/main
+all: makeMakedeps shlib
+
+shlib: $(SHLIB)
+	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o $(SHLIB)
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps

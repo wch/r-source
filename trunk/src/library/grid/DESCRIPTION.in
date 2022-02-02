@@ -1,0 +1,12 @@
+Package: grid
+Version: @VERSION@
+Priority: base
+Title: The Grid Graphics Package
+Author: Paul Murrell <paul@stat.auckland.ac.nz>
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
+Description: A rewrite of the graphics layout capabilities, plus some
+  support for interaction.
+Imports: grDevices, utils
+License: Part of R @VERSION@
+NeedsCompilation: yes

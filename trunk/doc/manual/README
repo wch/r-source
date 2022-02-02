@@ -1,0 +1,26 @@
+The version of Rd.sty in R_HOME/share/texmf uses url.sty.  This is
+normally installed, and can be obtained from any CTAN node or mirror:
+see
+
+	https://www.tug.org/ctan.html
+
+It also uses the standard package bm, which is part of the standard
+tools bundle and should be part of any reasonably recent LaTeX
+installation.
+
+The reference manual is made using the ae fonts package. If you do not
+have that available, you can get it from CTAN, or set the environment
+variable R_RD4DVI to "", but the latin1 characters in text.Rd (and a
+few other places) will be missing.  Other alternatives are discussed
+in the R-admin manual.
+
+To make PDF versions of the manuals you will need pdf(la)tex and the
+hyperref package.  If you want to avoid making the hyperlinks, you can
+set the environment variable R_RD4PDF to "times" (or even to "").
+
+You may have to increase the poolsize of your pdflatex to process the
+reference manual with hyperlinks, although these days the limits are
+set high.
+
+pdftex will warn (correctly) about missing hyperlinks in forming
+refman.pdf.

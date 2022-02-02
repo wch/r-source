@@ -1,0 +1,139 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R /3.0.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2011-11-29 17:20+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+msgid "namespace found within local environments"
+msgstr ""
+
+msgid "not a proper evaluation environment"
+msgstr "ikke et korrekt evuleringsmiljø"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
+
+msgid "namespace found within global environments"
+msgstr ""
+
+msgid "bad assignment: %s"
+msgstr "ugyldig tildeling: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "kan ikke konstant folde ordrette løfter"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "kan ikke konstant folde ordrette bytecode-objekter"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "ingen forskydning optaget for etiket »%s«"
+
+msgid "cannot compile byte code literals in code"
+msgstr "kan ikke kompilere ordrette bytecode i kode"
+
+msgid "cannot compile promise literals in code"
+msgstr "kan ikke kompilere ordrette lovninger i kode"
+
+msgid "possible error in '%s': %s"
+msgstr "mulig fejl i '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "ugyldig importramme for navnerum"
+
+msgid "bad assignment 1"
+msgstr "ugyldig tildeling 1"
+
+msgid "bad assignment 2"
+msgstr "ugyldig tildeling 2"
+
+msgid "invalid function in complex assignment"
+msgstr "ugyldig funktion i kompleks tildeling"
+
+msgid "missing arguments are not allowed"
+msgstr "manglende argumenter er ikke tilladt"
+
+msgid "empty alternative in numeric switch"
+msgstr "tom alternativ i numerisk kontakt"
+
+msgid "no visible global function definition for '%s'"
+msgstr "ingen synlig global funktionsdefinition for '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "ingen synlig binding for global variabel '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "ingen synlig binding for '<<-'-tildeling for '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "forkert antal argumenter for '%s'"
+
+#, fuzzy
+msgid "more than one default provided in switch() call"
+msgstr "mere end en standard tilbudt i kontaktkald"
+
+msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
+msgstr ""
+
+msgid "cannot compile a non-function"
+msgstr "kan ikke kompilere en ikkefunktion"
+
+msgid "compiling '%s'"
+msgstr "kompilerer '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "gemmer til fil »%s«..."
+
+msgid "done"
+msgstr "færdig"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' skal være et miljø på topniveau"
+
+msgid "input and output file names are the same"
+msgstr "filnavne for inddata og uddata er ens"
+
+msgid "empty input file; no output written"
+msgstr "tom inddatafil; ingen uddata skrevet"
+
+msgid "file '%s' does not exist"
+msgstr "fil '%s' findes ikke"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' er ikke et gyldigt kompilertilvalg"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
+msgid "function is not compiled"
+msgstr "funktion er ikke kompileret"
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr "kan ikke kompilere ordrette lovninger i kode"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "lokal tildeling til syntaksfunktion: "
+msgstr[1] "lokale tildelinger til syntaksfunktioner: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
+
+#~ msgid "expected a single logical value for the S4 state flag"
+#~ msgstr "forventede en enkel logisk værdi for S4-tilstandsflaget"

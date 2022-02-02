@@ -1,0 +1,74 @@
+These files are shell and perl scripts used for configuring/building R.
+They are not required at run time, and hence not installed.
+
+The files are as follows.
+
+  config.guess
+  config.sub
+	auxiliary scripts for configure.
+	From https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD etc
+
+  config.rpath
+	from gettext 1.18.1.1 sources.  Modified here to allow for FreeBSD 10.x.
+
+  install-sh
+  mdate-sh
+  missing
+	standard tools from GNU autoconf.  Taken from the autoconf CVS
+	(pserver:anoncvs@subversions.gnu.org:/cvsroot/autoconf, module 
+	'autoconf').
+	install-sh may be set by configure as a substitute for the
+	'install' program.  
+	missing may be set by configure as a substitute for various GNU programs.
+	mdate-sh is not currently used.
+
+  GETCONFIG
+	create API 'Rconfig.h' from the configure information in
+	'config.h'.
+  GETDISTNAME
+	get the name of the distribution tarball.
+  GETMAKEVAL
+	get the value of a Make variable from a Makefile [this needs to
+	be improved].  Used by configure.
+  GETVERSION
+	create API 'Rversion.h' from 'VERSION' and 'SVN-REVISION'.
+  
+  copy-if-change
+	copy a file if changed; otherwise, do nothing.
+
+  getsp.java
+	Java source for share/java/getsp.class used for extracting
+	system properties when detecting Java support in R CMD
+	javareconf.  We don't require the existence of a Java
+	compiler, so we need to supply the compiled version as well.
+
+  help2man.pl
+	generate simple manual pages from program output.  Taken from
+	the GNU help2man package (https://ftp.gnu.org/gnu/help2man/).
+	Used for a maintainer-mode build only: requires Perl.
+	
+  ldAIX4
+	writes an export file, assembling the exported symbols by
+	reading the output of nm.  This file is needed on AIX (4.2 and
+	later) to compile shared libs.
+
+  link-recommended
+	create links with simplified names to the recommended packages.
+
+  ltmain.sh
+	provide generalized library-building support services.  Taken
+	from Libtool 2.2.6a.
+
+  move-if-change
+	move a file if changed; otherwise, remove.
+
+  rsync-recommended
+	obtain sources for the recommended packages using rsync, and then
+	create links with simplified names to these.
+
+  updatefat
+	updates a fat file by adding a new architecture (macOS only)
+	it is essentially a smart wrapper for "lipo".  (No longer used.)
+
+GETCONFIG, GETVERSION, copy-if-change and move-if-change are used on Windows,
+and require cmp, cp, echo, expr, grep, mv and sed.

@@ -1,0 +1,70 @@
+###-*- R -*- Unix Specific ----
+
+.Library <- file.path(R.home(), "library")
+.Library.site <- Sys.getenv("R_LIBS_SITE") # This is set in Renviron.
+.Library.site <-
+    if(.Library.site == "NULL") character() else unlist(strsplit(.Library.site, ":"))
+.Library.site <- .Library.site[dir.exists(.Library.site)]
+
+local({
+    libs <- Sys.getenv("R_LIBS_USER") # This is set in Renviron.
+    libs <- if(libs == "NULL") character() else unlist(strsplit(libs, ":"))
+    ## .libPaths filters on existence.
+    invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
+                          libs)))
+})
+local({
+    popath <- Sys.getenv("R_TRANSLATIONS", "")
+    if(!nzchar(popath)) {
+        paths <- file.path(.libPaths(), "translations", "DESCRIPTION")
+        popath <- dirname(paths[file.exists(paths)][1])
+    }
+    bindtextdomain("R", popath)
+    bindtextdomain("R-base", popath)
+    assign(".popath", popath, .BaseNamespaceEnv)
+})
+local({
+## we distinguish between R_PAPERSIZE as set by the user and by configure
+papersize <- Sys.getenv("R_PAPERSIZE_USER")
+if(!nchar(papersize)) {
+    lcpaper <- Sys.getlocale("LC_PAPER") # might be null: OK as nchar is 0
+    papersize <- if(nchar(lcpaper))
+        if(length(grep("(_US|_CA)", lcpaper))) "letter" else "a4"
+    else Sys.getenv("R_PAPERSIZE")
+}
+options(papersize = papersize,
+        printcmd = Sys.getenv("R_PRINTCMD"),
+        dvipscmd = Sys.getenv("DVIPS", "dvips"),
+        texi2dvi = Sys.getenv("R_TEXI2DVICMD"),
+        browser = Sys.getenv("R_BROWSER"),
+        pager = file.path(R.home(), "bin", "pager"),
+        pdfviewer = Sys.getenv("R_PDFVIEWER"),
+        useFancyQuotes = TRUE)
+})
+
+## non standard settings for the R.app GUI of the macOS port
+if(.Platform$GUI == "AQUA") {
+    ## this is set to let RAqua use both X11 device and X11/TclTk
+    if (Sys.getenv("DISPLAY") == "")
+	Sys.setenv("DISPLAY" = ":0")
+
+    ## this is to allow gfortran compiler to work
+    Sys.setenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
+}## end "Aqua"
+
+## de-dupe the environment on macOS (bug in Yosemite which affects things like PATH)
+if (grepl("^darwin", R.version$os)) local({
+    ## we have to de-dupe one at a time and re-check since the bug affects how
+    ## environment modifications propagate
+    while(length(dupes <- names(Sys.getenv())[table(names(Sys.getenv())) > 1])) {
+        env <- dupes[1]
+        value <- Sys.getenv(env)
+        Sys.unsetenv(env)             ## removes the dupes, good
+        .Internal(Sys.setenv(env, value)) ## wrapper requries named vector, a pain, hence internal
+    }
+})
+
+local({
+    tests_startup <- Sys.getenv("R_TESTS")
+    if(nzchar(tests_startup)) source(tests_startup)
+})

@@ -1,0 +1,25 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/stats4/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+pkg = stats4
+
+DEFPKGS = "methods,graphics,stats"
+
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR2 mkdesc
+	@$(MAKE) -f Makefile.win mklazycomp
+
+mkR: mkR2
+
+include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

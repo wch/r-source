@@ -1,0 +1,8 @@
+#export(THIS_OBJECT_DOES_NOT_EXIST)       # -> installation fails
+
+exportClasses(THIS_CLASS_DOES_NOT_EXIST)
+exportMethods(THIS_GENERIC_DOES_NOT_EXIST)
+## these directives only fail (during package installation)
+## if the package actually defines any S4 classes/methods,
+## otherwise the directives are silently ignored
+

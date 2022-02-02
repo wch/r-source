@@ -1,0 +1,86 @@
+\usepackage{graphicx}
+\usepackage{makeidx}
+\pagestyle{headings}
+
+%% Set PDF 1.5 and compression, including object compression
+%% Needed for MiKTeX -- most other distributions default to this
+\ifx\pdfoutput\undefined
+\else
+  \ifx\pdfoutput\relax
+  \else
+    \ifnum\pdfoutput>0
+      % PDF output
+      \pdfminorversion=5
+      \pdfcompresslevel=9
+      \pdfobjcompresslevel=2
+    \fi
+  \fi
+\fi
+
+\makeatletter
+\renewcommand\@pnumwidth{2.05em} % over 1000 pages
+\makeatother
+
+\makeindex
+\sloppy{}
+
+\begin{document}
+\pagenumbering{Roman}
+
+\begin{titlepage}
+  \strut\vfill
+
+  \begin{center}
+    \Huge
+    \textbf{R: A Language and Environment for Statistical Computing}
+
+    \LARGE
+    \par\vspace*{6\medskipamount}
+    \textbf{Reference Index}
+
+    \par\vspace*{6\medskipamount}
+    The \R\ Core Team
+
+    \large
+    \par\vspace*{3\medskipamount}
+    Version \input{version}
+  \end{center}
+
+  \vfill
+  \vfill
+  \noindent
+  Copyright ({\copyright}) 1999--2012 R Foundation for Statistical Computing.
+
+  \noindent
+  Permission is granted to make and distribute verbatim copies of this
+  manual provided the copyright notice and this permission notice are
+  preserved on all copies.
+
+  \noindent
+  Permission is granted to copy and distribute modified versions of this
+  manual under the conditions for verbatim copying, provided that the
+  entire resulting derived work is distributed under the terms of a
+  permission notice identical to this one.
+
+  \noindent
+  Permission is granted to copy and distribute translations of this manual
+  into another language, under the above conditions for modified versions,
+  except that this permission notice may be stated in a translation
+  approved by the R Core Team.
+
+  \par\bigskip\noindent
+  R is free software and comes with ABSOLUTELY NO WARRANTY.  You are
+  welcome to redistribute it under the terms of the GNU General Public
+  License.  For more information about these matters, see
+  \textsf{https://www.gnu.org/copyleft/gpl.html}.
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+%%% Local variables: ***
+%%% mode: LaTeX ***
+%%% End: ***

@@ -1,0 +1,100 @@
+
+R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(grid)
+> 
+> ## Set up
+> grid.newpage()
+> pushViewport(viewport(name="a.vp"))
+> grid.rect(name="a.grob")
+> 
+> ## Default finds only grobs (no vpPath)
+> result <- grid.grep("a", grep=TRUE, global=TRUE)
+> result
+[[1]]
+a.grob 
+
+> attr(result[[1]], "vpPath")
+[1] ""
+> 
+> ## 'viewports = TRUE' (and 'vpPath = TRUE')
+> ## finds grobs and viewports (AND vpPath on grobs)
+> result <- grid.grep("a", grep=TRUE, global=TRUE, viewports=TRUE)
+> result
+[[1]]
+a.vp 
+
+[[2]]
+a.grob 
+
+> attr(result[[2]], "vpPath")
+[1] "a.vp"
+> 
+> ## 'viewports = FALSE' and 'vpPath = TRUE'
+> ## finds only grobs AND vpPath on grobs
+> result <- grid.grep("a", grep=TRUE, global=TRUE, vpPath=TRUE)
+> result
+[[1]]
+a.grob 
+
+> attr(result[[1]], "vpPath")
+[1] "a.vp"
+> 
+> ## 'viewports = TRUE' and 'vpPath = FALSE'
+> ## finds viewports and grobs (no vpPath)
+> result <- grid.grep("a", grep=TRUE, global=TRUE, viewports=TRUE, vpPath=FALSE)
+> result
+[[1]]
+a.vp 
+
+[[2]]
+a.grob 
+
+> attr(result[[2]], "vpPath")
+[1] ""
+> 
+> ###########################
+> ## global=FALSE versions
+> 
+> ## grob (no vpPath)
+> result <- grid.grep("a", grep=TRUE)
+> result
+a.grob 
+> attr(result, "vpPath")
+[1] ""
+> ## viewport (NULL vpPath)
+> result <- grid.grep("a", grep=TRUE, viewports=TRUE)
+> result
+a.vp 
+> attr(result, "vpPath")
+NULL
+> ## grob with vpPath
+> result <- grid.grep("a", grep=TRUE, vpPath=TRUE)
+> result
+a.grob 
+> attr(result, "vpPath")
+[1] "a.vp"
+> ## viewport (NULL vpPath)
+> result <- grid.grep("a", grep=TRUE, viewports=TRUE, vpPath=FALSE)
+> result
+a.vp 
+> attr(result, "vpPath")
+NULL
+> 
+> proc.time()
+   user  system elapsed 
+  0.235   0.032   0.252 

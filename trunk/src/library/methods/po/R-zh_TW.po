@@ -1,0 +1,1701 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2005-2021 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 06.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
+"PO-Revision-Date: 2021-11-06 17:41+0100\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
+msgstr "啊呀：'.OldClassesPrototypes[[%d]]' 那裡發生錯誤了"
+
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class definition; "
+"%s does not"
+msgstr ""
+"給 S3 類別用的 initialize() 函式中沒具名字的引數必須有類別定義；但 %s 沒有"
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class %s"
+msgstr ""
+"沒具名字的引數要麼擴充 S3 類別，要麼擴充資料類別；%s 類別沒有做到此一點"
+
+msgid ""
+"class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr "類別 %s 不包含 S3 資料部分，因此其種類為 \"S4\"；而不是 S3 同變類別"
+
+msgid ""
+"class %s is VIRTUAL; not meaningful to create an S4 object from this class"
+msgstr "%s 是虛擬類別；用這種類別來建立新的 S4 目標物件是沒有意義的"
+
+msgid "object must be a valid data part for class %s; not true of type %s"
+msgstr "%s 類別的目標物件必須包含有效的資料部分；但 %s 種類不是這樣的"
+
+msgid "cannot specify matrix() arguments when specifying '.Data'"
+msgstr "在指定 '.Data' 時不能同時指定 matrix()引數"
+
+msgid "cannot specify array() arguments when specifying '.Data'"
+msgstr "在指定 '.Data' 時不能同時指定 array()引數"
+
+msgid "cannot have more than one unnamed argument as environment"
+msgstr "不能有超過一個的無名稱引數來做為環境用"
+
+msgid "unnamed argument to new() must be an environment for the new object"
+msgstr "為新物件呼叫 new()時中的無名稱引數必須是環境"
+
+msgid ""
+"methods may not be defined for primitive function %s in this version of R"
+msgstr "此版本的 R 沒有給基元函式 %s 定義方法"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class %s"
+msgstr ""
+"S3Part()只適用於由 setOldCLass()，基本類別，或基本類別或這些類別的子類別 %s "
+"類別不是這種情況"
+
+msgid ""
+"the 'S3Class' argument must be a superclass of %s:  not true of class %s"
+msgstr "'S3Class' 引數必須是 %s 的母類別: %s 不是這種情況"
+
+msgid "replacement value must extend class %s, got %s"
+msgstr "替換值必須擴充 %s 類別，但現在得到的是 %s"
+
+msgid "replacement value must be of class %s, got one of class %s"
+msgstr "替換值的類別必須是 %s，但現在得到的類別是 %s"
+
+msgid ""
+"no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
+msgstr ""
+"不存在 %2$s 此一類別用於 'as(x，\"%1$s\") <- value' 函式的 'replace' 方法"
+
+msgid ""
+"the 'coerce' argument to 'setIs' should be a function of one argument, got "
+"an object of class %s"
+msgstr ""
+"'setIs' 的 'coerce' 引數值必須是單引數函式，而現在它卻是類別為 %s 的物件"
+
+msgid ""
+"the computation: 'as(object,\"%s\") <- value' is valid when object has class "
+"%s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
+msgstr ""
+"運算發生錯誤：當 object 的類別是 %2$s 時，'as(object,\"%1$s\") <- value' 只能"
+"在 'is(value，\"%3$s\")' 值為 TRUE 的時候才能用('class(value) ' 的值不能是 "
+"%4$s)"
+
+msgid ""
+"there is no automatic definition for 'as(object, \"%s\") <- value' when "
+"object has class %s and no 'replace' argument was supplied; replacement will "
+"be an error"
+msgstr ""
+"當物件的類別為 %2$s 而 'replace' 引數不存在的話，沒有自動定義的 "
+"'as(object，\"%1$s\") <- value' 這樣一個函式；因此替換時將發生錯誤"
+
+msgid ""
+"the 'replace' argument to setIs() should be a function of 2 or 3 arguments, "
+"got an object of class %s"
+msgstr ""
+"setIs()的 'replace' 引數必須是個二或三引數的函式，現在得到的卻是類別為 %s 的"
+"物件"
+
+msgid "the member classes must be defined: not true of %s"
+msgstr "必須設定成員類別: %s 不明的設定"
+
+msgid "unable to create union class:  could not set members %s"
+msgstr "無法建立併集類別: 無法設定 %s 成員"
+
+msgid ""
+"methods:::bind_activation() is defunct;\n"
+" rather provide methods for cbind2() / rbind2()"
+msgstr ""
+"methods:::bind_activation() 失去功能；\n"
+" 代之以提供 cbind2() / rbind2() 方法"
+
+msgid "invalid argument 'name': %s"
+msgstr "引數 'name' 無效: %s"
+
+msgid ""
+"%s dispatches internally;  methods can be defined, but the generic function "
+"is implicit, and cannot be changed."
+msgstr ""
+"%s 為內部派送 ; 能夠為其設定方法，但泛型函式是隱含定義的，無法對之進行改動。"
+
+msgid ""
+"if the 'def' argument is supplied, it must be a function that calls "
+"standardGeneric(\"%s\") or is the default"
+msgstr ""
+"如果設定了 'def' 引數的話，它要麼是調用 standardGeneric(\"%s\")的函式，要麼是"
+"預設值"
+
+msgid ""
+"must supply a function skeleton for %s, explicitly or via an existing "
+"function"
+msgstr "必須提供函式 %s 的骨架，要麼是明確地提供，要麼透過已存在的函式來提供"
+
+msgid ""
+"Creating a generic function for %s from %s in %s\n"
+"    (from the saved implicit definition)"
+msgstr " %3$s 裡的從 %2$s 為 %1$s 建立新的泛型函式(從儲存的隱含定義)"
+
+msgid "Creating a new generic function for %s in %s"
+msgstr "為 %2$s 裡的 %1$s 建立新的泛型函式"
+
+msgid ""
+"no generic version of %s on package %s is allowed;\n"
+"   a new generic will be assigned for %s"
+msgstr ""
+"程式套件 %2$s 不允許泛型版本的 %1$s；\n"
+"一個新的泛型函式將會同程式套件 %3$s 一起被指派"
+
+msgid "function %s appears to be a generic function, but with generic name %s"
+msgstr "函式 %s 好像是泛型函式，卻有 %s 的泛型名稱"
+
+msgid "generic function %s not found for removal"
+msgstr "沒有 %s 這樣的泛型函式，因此不能將之刪除"
+
+msgid "a function for argument 'f' must be a generic function"
+msgstr "為引數 'f' 提供的函式必須是泛型函式"
+
+msgid "the environment %s is locked; cannot assign methods for function %s"
+msgstr "環境 %s 被鎖住了；無法為函式 %s 指定方法"
+
+msgid ""
+"the 'where' environment (%s) is a locked namespace; cannot assign methods "
+"there"
+msgstr "'where' 所指的環境(%s)是個鎖住的命名空間；因此無法在其中指定方法"
+
+msgid ""
+"Copying the generic function %s to environment %s, because the previous "
+"version was in a sealed namespace (%s)"
+msgstr ""
+"因為前版本是封閉的命名空間(%3$s) ，所以將泛型函式 %1$s 拷貝到 %2$s 環境裡"
+
+msgid "no existing definition for function %s"
+msgstr "函式 %s 沒有定義"
+
+msgid "Creating a generic function from function %s in %s"
+msgstr "用 %s 裡的函式 %s 來建立新的泛型函式"
+
+msgid "Creating a generic function for %s from package %s in %s"
+msgstr "從 %3$s 裡的套件 %2$s 為 %1$s 建立新的泛型函式"
+
+msgid ""
+"the method for function %s and signature %s is sealed and cannot be re-"
+"defined"
+msgstr "函式 %s 的方法和 %s 標記都被封閉了，因此無法將之重新定義"
+
+msgid ""
+"For function %s, signature %s: argument in method definition changed from "
+"(%s) to (%s)"
+msgstr "%s 函式，%s 標記：方法定義中的引數由(%s)改成(%s)"
+
+msgid ""
+"primitive functions cannot be methods; they must be enclosed in a regular "
+"function"
+msgstr "基元函式不能是方法函式；它們必須被包含在一個正規函式裡"
+
+msgid ""
+"invalid method definition: expected a function, got an object of class %s"
+msgstr "方法定義不對：提供的應該是函式，現在卻是個類別為 %s 的物件"
+
+msgid "function supplied as argument 'f' must be a generic"
+msgstr "給引數 'f' 所提供的函式必須是泛型函式"
+
+msgid "no generic function %s found"
+msgstr "不存在 %s 此一泛型函式"
+
+msgid "no method found for function %s and signature %s"
+msgstr "找不到對函式 %s 和標記 %s 適用的方法"
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr "找不到與 where=%s 引數符合的環境或套件"
+
+msgid "no generic function found for '%s'"
+msgstr "找不到適合 '%s' 的泛型函式"
+
+msgid "no method found for function '%s' and signature %s"
+msgstr "函式 '%s' 和標記 %s 找不到方法"
+
+msgid "'file' must be a character string or a connection"
+msgstr "'file' 必須是字串或聯結"
+
+msgid ""
+"argument 'signature' is not meaningful with the current implementation and "
+"is ignored \n"
+"(extract a subset of the methods list instead)"
+msgstr ""
+"'signature' 引數對目前的實作沒有意義，因此忽略不用\n"
+"(解開方法串列子集)"
+
+msgid "no method for %s matches class %s"
+msgstr "%2$s 類別裡沒有一個匹配 %1$s 的方法"
+
+msgid "no method found for signature %s"
+msgstr "標記 %s 裡不存在任何方法"
+
+msgid "%s has no methods defined"
+msgstr "%s 沒有設定任何方法"
+
+msgid ""
+"bad class specified for element %d (should be a single character string)"
+msgstr "為單元 %d 所設定的類別不對(應當是條單字元字串)"
+
+msgid ""
+"first argument should be the names of one of more generic functions (got "
+"object of class %s)"
+msgstr "第一個引數應當為泛型函式的名稱 (現在卻是類別為 %s 的物件)"
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr "必須提供 'generic.function' 或 'class'"
+
+msgid "%s is not an S4 generic function in %s; methods not removed"
+msgstr "%s 不是在 %s 裡的 S4 泛型函式；因此方法沒有被刪除掉"
+
+msgid "cannot remove methods for %s in locked environment/package %s"
+msgstr "無法將鎖住的環境/程輯封包 %2$s 裡的 %1$s 方法刪除"
+
+msgid "Restoring default function definition of %s"
+msgstr "重存 %s 的預設函式定義"
+
+msgid ""
+"error in updating S4 generic function %s; the function definition is not an "
+"S4 generic function (class %s)"
+msgstr "更新泛型函式 %s 時發生錯誤；函式定義不是泛型函式(類別為 %s)"
+
+msgid "Function %s is already a group generic; no change"
+msgstr "函式 %s 已經是群體泛型函式了；沒有變動"
+
+msgid "Function %s is a group generic; do not call it directly"
+msgstr "函式 %s 是群體泛型函式；不能直接調用"
+
+msgid "callGeneric() must be called from within a method body"
+msgstr "callGeneric() 只能從方法之中呼叫"
+
+msgid "expected a non-empty character string for argument name"
+msgstr "引數的名稱應該是非空字串"
+
+msgid "generic function supplied was not created for %s"
+msgstr "所提供的泛型函式沒有為 %s 建立"
+
+msgid "%s is a primitive function; its generic form cannot be redefined"
+msgstr "%s 是基元函式；其泛型形式是不能被重新定義的"
+
+msgid ""
+"%s is not currently a generic:  define it first to create a non-default "
+"implicit form"
+msgstr "%s 目前不是泛型函式：請先將之定義以建立一個非較默隱含形式 "
+
+msgid "must provide an environment table; got class %s"
+msgstr "必須提供環境表；得到的是 %s 類別"
+
+msgid "original function is prohibited as a generic function"
+msgstr "原始函式是禁止做為泛型函式來用的"
+
+msgid "not both functions!"
+msgstr "不能同時用於兩個函式！"
+
+msgid "argument %s is not S4"
+msgstr "引數 %s 不是 S4"
+
+msgid "formal arguments differ (in default values?)"
+msgstr "正式引數不相對(預設值不一樣？)"
+
+msgid "formal arguments differ: (%s), (%s)"
+msgstr "正式引數不相對: (%s)，(%s)"
+
+msgid "value classes differ: %s, %s"
+msgstr "值類別不相對: %s，%s"
+
+msgid "signatures differ:  (%s), (%s)"
+msgstr "標記不相對: (%s)，(%s)"
+
+msgid "package slots  differ: %s, %s"
+msgstr "套件槽不相對: %s，%s"
+
+msgid "groups differ: %s, %s"
+msgstr "組不相對: %s，%s"
+
+msgid "generic names differ: %s, %s"
+msgstr "泛型名稱不相對：%s，%s"
+
+msgid ""
+"argument %s must be a generic function or a single character string; got an "
+"object of class %s"
+msgstr ""
+"引數 %s 要麼是泛型函式要麼是單一字串；現在得到的卻是類別為 %s 的目標物件物件"
+
+msgid "non-generic function '%s' given to findMethods()"
+msgstr "findMethods()不適用於非泛型函式 '%s'"
+
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
+msgstr "用 'where' 時，只有 FALSE 對於 'inherited' 有意義，(卻得到 %s)"
+
+msgid "argument 'f' must be a generic function or %s"
+msgstr "引數 'f' 必須是泛型函式，或為 %s"
+
+msgid "'%s' is not a known generic function {and 'package' not specified}"
+msgstr "沒有 '%s' 這樣一個泛型函式，{也沒有設定 'package'}"
+
+msgid ""
+"invalid first argument: should be the name of the first argument in the "
+"dispatch"
+msgstr "第一個引數不對: 應該是指派裡的第一引數的名稱"
+
+msgid "duplicate element names in 'MethodsList' at level %d: %s"
+msgstr "'MethodsList' 裡 %d: %s 水平上的單元名稱有重複"
+
+msgid ""
+"element %d at level %d (class %s) cannot be interpreted as a function or "
+"named list"
+msgstr "水平 %2$d 上的 %1$d 單元(%3$s 類別)既不是函式也不是命名串列"
+
+msgid "arguments 'names' and 'signature' must have the same length"
+msgstr "'names' 和 'signature' 這兩個引數的長度必須相同"
+
+msgid ""
+"inserting method with invalid signature matching argument '...' to class %s"
+msgstr "無法插入標記不正確的方法其引數 '…' 同類別 %s 相對應"
+
+msgid "inserting method corresponding to empty signature"
+msgstr "無法插入相對應於空標記的方法"
+
+msgid "inserting method into non-methods-list object (class %s)"
+msgstr "無法將方法插入非方法串列物件(類別為 %s)"
+
+msgid "invalid method sublist"
+msgstr "方法子串列不正確"
+
+msgid ""
+"%f is not a valid generic function: methods list was an object of class %s"
+msgstr "%f 不是正確的泛型函式: 方法串列是類別為 %s 的物件"
+
+msgid ""
+"%s must be TRUE, FALSE, or a named logical vector of those values; got an "
+"object of class %s"
+msgstr ""
+"%s 的值必須為 TRUE，FALSE，或是個帶名稱的邏輯向量 ; 現在得到的卻是類別為 %s "
+"的物件"
+
+msgid ""
+"default method must be a method definition, a primitive or NULL: got an "
+"object of class %s"
+msgstr "預設方法必須是方法定義，原始方法或 NULL，得到的卻是類別為 %s 的物件"
+
+msgid ""
+"trying to match a method signature to an object (of class %s) that is not a "
+"generic function"
+msgstr "無法將方法標記同一個不是泛型函式的物件(類別是 %s)相對應起來"
+
+msgid "invalid 'package' slot or attribute, wrong length"
+msgstr "'package' 槽或屬性發生錯誤，其長度無效"
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+"\"signature\"引數裡串列元素發生錯誤；第 %d 個元素不是類別定義出不是類別名稱"
+
+msgid ""
+"trying to match a method signature of class %s; expects a list or a "
+"character vector"
+msgstr "無法同類別為 %s 的方法標記相對應 ; 必須用串列或字元向量"
+
+msgid ""
+"object to use as a method signature for function %s does not look like a "
+"legitimate signature (a vector of single class names): there were %d class "
+"names, but %d elements in the signature object"
+msgstr ""
+"為函式 %1$s 做為方法標記而用的物件看來不像是合法的標記(單類別名稱向量) ：一共"
+"有 %2$d 類別名稱，但標記物件裡只有 %3$d 個元素"
+
+msgid ""
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
+msgstr "用在函式 %3$s 上的方法標記(%1$d)裡元素比泛型標記(%2$d)裡的要多"
+
+msgid "no generic function found corresponding to %s"
+msgstr "%s 找不到泛型函式"
+
+msgid "skipping methods list element %s of unexpected class %s"
+msgstr "因為其類別 %2$s 沒有定義，忽略 %1$s 此一方法串列單元"
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is "
+"deprecated."
+msgstr "%s 和其他\"MethodsList\"後設資料目標物件都已經不推薦使用了"
+
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr "%s 裡：\"MethodsList\"後設資料目標物件已經不推薦使用了。"
+
+#, fuzzy
+msgid "Use %s instead."
+msgstr "請用 %s。"
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr "%s 和其他 \"MethodsList\" 後設資料目標物件都已經不推薦使用了。"
+
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr "%s 裡：\"MethodsList\" 後設資料目標物件已經不推薦使用了。"
+
+msgid "invalid object for formal method definition: type %s"
+msgstr "正式方法定義的物件不對: %s 種類"
+
+msgid "missing package slot (%s) in object of class %s (package info added)"
+msgstr "%2$s 類別的物件裡缺少程輯封包槽(%1$s)(加入了程輯封包資訊)"
+
+msgid ""
+"'initialize' method returned an object of class %s instead of the required "
+"class %s"
+msgstr "'initialize' 方法回復了類別為 %s 的物件而不是所要求的 %s 此一類別"
+
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr "%d: 目標\"%s\": 選擇\"%s\" (其他：%s)"
+
+msgid "Notes: %s."
+msgstr "記錄：%s。"
+
+msgid "class generator function for class %s from package %s"
+msgstr "套件\"%2$s\"裡用於\"%1$s\"此一類別的類別產生函式"
+
+msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
+msgstr "方法(%s)標記裡的名稱同函式 %s 引數(%s)不相對應"
+
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr "方法 (%s) 標記裡的名稱與函式的引數 (%s) 不相符"
+
+msgid ""
+"a call to callNextMethod() appears in a call to %s, but the call does not "
+"seem to come from either a generic function or another 'callNextMethod'"
+msgstr ""
+"callNextMethod() 的呼叫是在調用 %s 時所要求的，但此一調用既不從泛型函式來，也"
+"從另外一個 'callNextMethod' 中來"
+
+msgid ""
+"call to 'callNextMethod' does not appear to be in a 'method' or "
+"'callNextMethod' context"
+msgstr ""
+"調用 'callNextMethod' 既不在 'method' 也不在 'callNextMethod' 的文脈中出現"
+
+msgid "bad object found as method (class %s)"
+msgstr "做為方法的物件(類別 %s)發生錯誤"
+
+msgid "No next method available"
+msgstr "沒有下一個方法可用"
+
+msgid ""
+"in constructing the prototype for class %s: prototype has class %s, but the "
+"data part specifies class %s"
+msgstr ""
+"為類別 %s 建立原型時發生錯誤：原型的類別是 %s，但資料部分設定的類別是 %s"
+
+msgid ""
+"in constructing the prototype for class %s, slots in prototype and not in "
+"class: %s"
+msgstr "為類別 %s 建立原型時發生錯誤，原型裡有槽但類別裡卻沒有: %s"
+
+msgid ""
+"in making the prototype for class %s elements of the prototype failed to "
+"match the corresponding slot class: %s"
+msgstr "為類別\"%s\"建立原型時發生錯誤，原型的單元同槽的類別對應不上: %s"
+
+msgid ""
+"potential cycle in class inheritance: %s has duplicates in superclasses and "
+"subclasses (%s)"
+msgstr "類別繼承裡有可能有循環: %s 在父類別和子類別(%s)裡有重複"
+
+msgid "undefined slot classes in definition of %s: %s"
+msgstr "在 %s 的定義中不存在這種槽類別: %s"
+
+msgid "(class %s)"
+msgstr "(類別 %s)"
+
+msgid ""
+"in definition of class %s, information for superclass %s is of class %s "
+"(expected \"SClassExtension\")"
+msgstr ""
+"在類別 %s 的定義中有關於父類別 %s 的資訊的類別是 %s (所要求的則是"
+"\"SClassExtension\")"
+
+msgid "class %s extends an undefined class, %s"
+msgstr "類別 %s 不能擴充不存在的類別 ,%s"
+
+msgid "'Class' must be a valid class definition or class"
+msgstr "'Class' 必須是有效的類別名稱或類別定義"
+
+msgid ""
+"trying to assign an object of class %s as the definition of class %s: must "
+"supply a \"classRepresentation\" object"
+msgstr ""
+"無法將類別為 %s 的物件指定成類別 %s 的定義：必須提供\"classRepresentation\"這"
+"種物件"
+
+msgid "assigning as %s a class representation with internal name %s"
+msgstr "無法將內部名稱為 %2$s 的類別表現指定成 %1$s"
+
+msgid "class %s has a locked definition in package %s"
+msgstr "類別 %s 在程輯封包 %s 裡的定義被鎖住了"
+
+msgid "'externalptr' objects cannot be initialized from new()"
+msgstr "'externalptr' 物件無法從 new() 裡來進行初始化"
+
+msgid ""
+"initializing objects from class %s with these arguments is not supported"
+msgstr "類別為 %s 的帶這些引數的物件無法被初始化"
+
+msgid ""
+"in defining class %s, the supplied data part class, %s is not valid (must be "
+"a basic class or a virtual class combining basic classes)"
+msgstr ""
+"是設定類別 %s 時，所提供的資料部分類別，%s 不正確(必須是基本類別或組合多個基"
+"本類別的虛擬類別)"
+
+msgid ""
+"no definition was found for superclass %s in the specification of class %s"
+msgstr "在定義 %2$s 裡不存在母類別 %1$s 的定義"
+
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
+msgstr "資料部分的定義相互有矛盾: .Data = %s，而父類別卻意味着 %s"
+
+msgid ""
+"a prototype object was supplied with object slot of class %s, but the class "
+"definition requires an object that is class %s"
+msgstr "原型物件與類別為 %s 的物件槽同時被提供，但類別定義要求類別為 %s 的物件"
+
+msgid ""
+"a prototype was supplied of class %s, but the class definition requires an "
+"object that is class %s"
+msgstr "被提供的原型的類別為 %s，類別定義需要類別為 %s 的物件"
+
+#, fuzzy
+msgid ""
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
+msgstr ""
+"類別 %s 裡的槽 %s 目前被定義為(或繼承於)\"%s\"，這與類別 %s 裡所繼承的定義相"
+"互有矛盾"
+
+msgid "class %s extends an undefined class (%s)"
+msgstr "類別 %s 擴充不存在的類別(%s)"
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "類別為 %2$s 的 '%1$s' 串列，包含不存在的類別 %3$s"
+
+msgid ""
+"%s is not eligible to be the data part of another class (must be a basic "
+"class or a virtual class with no slots)"
+msgstr ""
+"%s 不可以成為另外一個類別的資料部分(必須是沒有槽的基本類別或虛擬類別才可以)"
+
+msgid ""
+"prototype is a list with named elements (could be ambiguous):  better to use "
+"function prototype() to avoid trouble."
+msgstr ""
+"原型是帶名稱單元的串列(允許有歧義) ：最好用函式 prototype()以避免發生錯誤。"
+
+msgid "the '%s' list for class %s, includes an undefined class %s"
+msgstr "類別為 %2$s 的 '%1$s' 串列，包含不存在的類別 %3$s"
+
+msgid ""
+"class %s is inheriting an inconsistent superclass structure from class %s, "
+"inconsistent with %s"
+msgstr "%s 類別從 %s 繼承了有矛盾的超類別結構，與 %s 有矛盾"
+
+msgid ""
+"unable to find a consistent ordering of superclasses for class %s: order "
+"chosen is inconsistent with the superclasses of %s"
+msgstr "無法為類別 %s 找到相容的超類別順序: 所選擇的順序同 %s 超類別不相容"
+
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr "\"class\"是為保留槽名稱，不可以重新被定義"
+
+msgid "Data part is undefined for general S4 object"
+msgstr "沒有定義一般 S4 物件的資料部分"
+
+msgid "no '.Data' slot defined for class %s"
+msgstr "類別 %s 沒有 '.Data' 此一個槽"
+
+msgid "class %s does not have a data part (a .Data slot) defined"
+msgstr "類別 %s 沒有資料部分(.Data 槽)"
+
+msgid "more than one possible class for the data part: using %s rather than %s"
+msgstr "資料部分有多種類別：用 %s 而不用 %s"
+
+msgid "class cannot have both an ordinary and hidden data type"
+msgstr "類別不能同時具有普通的和暗藏的資料種類"
+
+msgid ""
+"a validity method must be a function of one argument, got an object of class "
+"%s"
+msgstr "正確的方法必須的帶一個引數的函式，收到的卻是類別為 %s 的物件"
+
+msgid "unable to find required package %s"
+msgstr "找不到所需要的程輯封包 %s"
+
+msgid "unable to find an environment containing class %s"
+msgstr "找不到包含類別 %s 的環境"
+
+msgid ""
+"Note: some superclasses of class %s in package %s have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package %s"
+msgstr ""
+"在程式套件 %2$s 中類別 %1$s 的某些超類別有重複的定義。這個定義不同於程式套件 "
+"%3$s 裡的定義"
+
+msgid ""
+"Note: the specification for class %s in package %s seems equivalent to one "
+"from package %s: not turning on duplicate class definitions for this class."
+msgstr ""
+"程式套件 %2$s 裡的 %1$s 類別定義似乎與程式套件 %3$s 裡的類別定義相當，因此不"
+"開啟重複的類別定義"
+
+msgid ""
+"Found more than one class \"%s\" in cache; using the first, from namespace "
+"'%s'"
+msgstr "在快取中找到一個以上的類別 \"%s\"；使用來自命名空間 '%s' 的第一個"
+
+msgid "Also defined by"
+msgstr "同時被定義自"
+
+msgid "undefined subclass %s of class %s; definition not updated"
+msgstr "%2$s 類別的子類別 %1$s 沒有定義；因此沒有更新"
+
+msgid ""
+"no definition of inheritance from %s to %s, though the relation was implied "
+"by the setIs() from %s"
+msgstr "不存在從 %s 到\"%s\"類別的繼承定義，雖然 %s 的 setIs()暗示其存在"
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
+
+msgid ""
+"argument 'includeSubclasses' must be a logical, either one value or a vector "
+"of the same length as argument 'classes'"
+msgstr ""
+"引數 'includeSubclasses' 必須是邏輯值，要麼是單一值要麼是向量，其長度應同引"
+"數 'classes' 相等"
+
+msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
+msgstr "引數 'abbreviate' 必須為零，1，2，或 3 "
+
+msgid "needed the supplied labels vector of length %d, got %d"
+msgstr "需要的是長度為 %d 而不是 %d 的標籤向量"
+
+msgid ""
+"the function being used as %s in making a generic function for %s is "
+"currently traced; the function used will have tracing removed"
+msgstr ""
+"在為 %2$s 製造泛型函式時用的 %1$s 此一個函式現在已經被追蹤；因此刪除了對所用"
+"函式的追蹤"
+
+msgid "must supply either a generic function or a function as default for %s"
+msgstr "必須為 %s 提供一個作預設用的泛型函式或函式"
+
+msgid ""
+"the %s argument must be NULL or a generic function object; got an object of "
+"class %s"
+msgstr "%s 的引數要麼是 NULL，要麼是泛型函式物件；現在卻是類別為 %s 的物件"
+
+msgid "no suitable arguments to dispatch methods in this function"
+msgstr "此函式裡沒有合適的引數可用來指派方法"
+
+msgid "making a generic for special function %s"
+msgstr "為特殊函式 %s 製造泛型函式"
+
+msgid "invalid call in method dispatch to '%s' (no default method)"
+msgstr "給 '%s' 進行方法指派時的呼叫發生錯誤(沒有預設方法)"
+
+msgid "in method for %s with signature %s:"
+msgstr "帶 %s 標記的 %s 的方法："
+
+msgid "formal arguments in method and generic do not appear in the same order"
+msgstr "方法正式引數和泛型方法正式引數的順序不同"
+
+msgid ""
+"formal arguments (%s) omitted in the method definition cannot be in the "
+"signature"
+msgstr "方法定義裡所忽略的正式引數(%s)不能存在於標記"
+
+msgid "expanding the signature to include omitted arguments in definition: %s"
+msgstr "在定義裡擴充標記來包括進忽略的引數：%s"
+
+msgid ""
+"methods can add arguments to the generic %s only if '...' is an argument to "
+"the generic"
+msgstr "只有當 '…' 是泛型方法引數時方法才能給泛型 %s 加引數"
+
+msgid ""
+"%s arguments (%s) after %s in the generic must appear in the method, in the "
+"same place at the end of the argument list"
+msgstr "泛型方法裡在 %2$s .. %3$s .. 之後的引數 (%1$s) 必須也存在於方法裡，在引數串列末端的相同地方"
+
+msgid ""
+"argument 'f' must be a string, generic function, or primitive: got an "
+"ordinary function"
+msgstr ""
+"'f' 引數要麼是字元，要麼是泛型函式，要麼是原始函式：現在得到的卻是普通函式"
+
+msgid "no generic function found for %s"
+msgstr "為 '%s' 找不到泛型函式"
+
+msgid "Empty function name in .getGeneric"
+msgstr ".getGeneric 裡不能有空的函式名稱"
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+msgid "(and methods)"
+msgstr ""
+
+msgid "--- done getting generic"
+msgstr ""
+
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
+msgstr "%s 找不到方法；'cacheGenericsMetaData()' 沒有作用"
+
+msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr "類別為 %2$s 的泛型函式 '%1$s' 的值不對，所要求的是 %3$s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr "\"MethodsList\" 已失去功能；目前 allMethods 為空"
+
+msgid ""
+"the body of the generic function for %s calls 'standardGeneric' to dispatch "
+"on a different name (\"%s\")!"
+msgstr ""
+"'%s' 泛型函式的程式部分調用 'standardGeneric' 來指派給一個不同的名稱(\"%s"
+"\")！"
+
+msgid ""
+"trying to change the formal arguments in %s in an object of class %s; "
+"expected a function definition"
+msgstr "%s 裡在類別為 %s 的物件中是不能變更其正式引數的；所需要的是函式定義"
+
+msgid ""
+"trying to change the formal arguments in %s, but getting the new formals "
+"from an object of class %s; expected a function definition"
+msgstr ""
+"無法在 %s 中變更正式引數，因為從類別為 %s 的物件裡得到的是新的正式引數；所需"
+"要的是函式定義"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is less than the number of new arguments: (%s) vs (%s)"
+msgstr ""
+"無法在 %s 中變更正式引數，因為存在的引數數目比新的引數數目要小：(%s)比(%s)"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is greater than the number of new arguments (the extra arguments "
+"won't be used): (%s) vs (%s)"
+msgstr ""
+"無法在 %s 中變更正式引數，因為存在的引數數目比新的引數數目要大(額外的變無是不"
+"能用的): (%s)比(%s)"
+
+msgid ""
+"in changing formal arguments in %s, some of the old names are not in fact "
+"arguments: %s"
+msgstr "在 %s 中變更正式引數時，一些舊的引數名稱其實不是引數: %s"
+
+msgid "got a negative maximum number of frames to look at"
+msgstr "框的最大數不能是負值"
+
+msgid "%s is not a generic function (or not visible here)"
+msgstr "%s 不是泛型函式(或從這兒看不到)"
+
+msgid "invalid element in the \"groupMembers\" slot (class %s)"
+msgstr "\"groupMembers\"槽裡的單元不對(類別為 %s)"
+
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "引數 f 必須是帶\"…\"標記的泛型函式"
+
+msgid "no method or default matching the \"...\" arguments in %s"
+msgstr "%s 裡沒有同\"…\"引數符合的方法或預設值"
+
+msgid "multiple direct matches: %s; using the first of these"
+msgstr "有多個直接的匹配:%s；用第一個"
+
+msgid "multiple equivalent inherited matches: %s; using the first of these"
+msgstr "多條等價繼承安匹配: %s；用第一個"
+
+msgid "single string; got an object of class %s"
+msgstr "單獨字串：不該是類別為 %s 的物件"
+
+msgid ""
+"multiple definitions exist for class %s, but the supplied package (%s) is "
+"not one of them (%s)"
+msgstr "%s 類別存在多個定義，但提供的套件(%s)不是其中之一(%s)"
+
+msgid ""
+"multiple definitions exist for class %s; should specify one of them (%s), e."
+"g. by className()"
+msgstr "%s 類別存在多個定義；應該指定用一個(%s)，比如透過 className()"
+
+msgid "no definition found for class %s"
+msgstr "類別 %s 的定義不存在"
+
+msgid "missing function for load action: %s"
+msgstr "荷載作業時找不到函式：%s"
+
+msgid "error in load action %s for package %s: %s: %s"
+msgstr "為套件 %2$s 荷載作業 %1$s 時發生錯誤：%3$s: %4$s"
+
+msgid "non-function action: %s"
+msgstr "非函式作業：%s"
+
+msgid "action function %s has no arguments, should have at least 1"
+msgstr "作業函式 %s 沒有引數，至少應該有一個"
+
+msgid "some actions are missing: %s"
+msgstr "有些作業沒有：%s"
+
+msgid "%s has a sealed class definition and cannot be redefined"
+msgstr "%s 的類別定義被封閉了，因此無法重新被定義"
+
+msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr "如果已經提供了\"slots\"引數的話，\"representation\"引數就不能用了"
+
+msgid ""
+"only arguments 'Class' and 'where' can be supplied when argument "
+"'representation' is a 'classRepresentation' object"
+msgstr ""
+"當引數 'representation' 是 'classRepresentation' 物件時只能使用 'Class' 和 "
+"'where' 引數"
+
+msgid ""
+"error in contained classes (%s) for class %s and unable to remove definition "
+"from %s"
+msgstr "%2$s 類別裡包含的子類別(%1$s)不對，但無法將定義從 %3$s 中刪除"
+
+msgid ""
+"error in contained classes (%s) for class %s; class definition removed from "
+"%s"
+msgstr "%2$s 類別裡包含的子類別(%1$s)不對；類別定義從 %3$s 中被刪除"
+
+msgid ""
+"error in contained classes (%s) for class %s and unable to restore previous "
+"definition from %s"
+msgstr "%2$s 類別裡包含的子類別(%1$s)不對，但無法將 %3$s 中原來的定義重新儲存"
+
+msgid ""
+"error in contained classes (%s) for class %s; previous definition restored "
+"to %s"
+msgstr "%2$s 類別裡包含的子類別(%1$s)不對；原來的定義重新儲存到 %3$s 中"
+
+msgid "element %d of the representation was not a single character string"
+msgstr "表現的 %d 單元不是單字元的字串"
+
+msgid "duplicate class names among superclasses: %s"
+msgstr "父類別裡有重複的類別名稱: %s"
+
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr "只能有一個資料物件(原型的引數沒具名字)"
+
+msgid "%s is not a defined class"
+msgstr "%s 不是有定義的類別"
+
+msgid "%s is not a slot in class %s"
+msgstr "%s 不是在 %s 類別裡的槽"
+
+msgid ""
+"assignment of an object of class %s is not valid for slot %s in an object of "
+"class %s; is(value, \"%s\") is not TRUE"
+msgstr ""
+"不可以在類別為 %3$s 的物件裡的 %2$s 槽指定類別為 %1$s 的物件；"
+"is(value，\"%4$s\")的值不是 TRUE"
+
+msgid ""
+"assignment of an object of class %s is not valid for @%s in an object of "
+"class %s; is(value, \"%s\") is not TRUE"
+msgstr ""
+"不可以在類別為 %3$s 的物件裡的@%2$s 槽指定類別為 %1$s 的物件；"
+"is(value，\"%4$s\")的值不是 TRUE"
+
+msgid "class definition for %s not found (no action taken)"
+msgstr "找不到 %s 類別定義(無效)"
+
+msgid "class %s has multiple definitions visible; only the first removed"
+msgstr "類別 %s 有多個定義；只刪除了第一個"
+
+msgid "invalid class %s object"
+msgstr "類別為 %s 的物件無效"
+
+msgid "validity method must be NULL or a function of one argument"
+msgstr "正確的方法要麼是 NULL 要麼是帶一個引數的函式"
+
+msgid "class %s not found on %s; 'resetClass' will have no effect"
+msgstr "類別 %s 不存在於 %s 中；因此 'resetClass' 沒有任何作用"
+
+msgid ""
+"argument 'classDef' must be a string or a class representation; got an "
+"object of class %s"
+msgstr ""
+"引數 'classDef' 要麼是個字串要麼是個類別表現；現在得到的卻是類別為 %s 的目標"
+"物件"
+
+msgid "class %s is sealed; 'resetClass' will have no effect"
+msgstr "類別 %s 被封閉了；因此 'resetClass' 沒有任何作用"
+
+msgid ""
+"cannot use object of class %s in new():  class %s does not extend that class"
+msgstr "無法在 new() 裡用類別為 %s 的物件；類別 %s 並不擴充此類別"
+
+msgid "duplicated slot names: %s"
+msgstr "重複槽名稱: %s"
+
+msgid ""
+"class %s is defined, with package %s, but no corresponding metadata object "
+"was found (not exported?)"
+msgstr ""
+"%s 類別已經在 %s 程式套件裡被定義過了，但沒有與之相對應的後設資料物件(有沒有"
+"被匯出過？)"
+
+msgid "no definition of %s to use for %s"
+msgstr "%s 沒有定義，不能為 %s 可行"
+
+msgid "class definition cannot extend more than one of these data types: %s"
+msgstr "類別定義最多只能擴充這些資料種類中的一個: %s"
+
+msgid "abnormal type %s is not supported as a superclass of a class definition"
+msgstr "不支援做為一個類別定義的超類別 %s"
+
+msgid "multiple class definitions for %s from packages: %s; picking the first"
+msgstr "程式套件:%2$s 裡有多個類別 %1$s 的定義；現在用第一個"
+
+msgid "no package name supplied and no class definition found for %s"
+msgstr "沒有套件也沒有給 %s 做的類別定義"
+
+msgid "argument 'classDef' must be a class definition or the name of a class"
+msgstr "引數 'classDef' 必須是類別定義或是類別的名稱"
+
+msgid "No %s names supplied"
+msgstr "沒有提供 %s 名稱"
+
+msgid ""
+"All %s names must be nonempty in:\n"
+"(%s)"
+msgstr ""
+"所有 %s 的名稱都不能是空的：\n"
+"(%s)"
+
+msgid ""
+"All %s names must be distinct in:\n"
+"(%s)"
+msgstr ""
+"所有 %s 的名稱都必須是不同的：\n"
+"(%s)"
+
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr "引數 %s 要麼是串列要麼是單一字串；現在得到的卻是類別為 %s 的目標物件"
+
+msgid "no function %s found"
+msgstr "找不到 %s 此一函式"
+
+msgid "no non-generic function %s found"
+msgstr "找不到 %s 此一非泛型函式"
+
+msgid "%s is not one of the element names"
+msgstr "%s 不是單元名稱中的一個"
+
+msgid "no method or default for coercing %s to %s"
+msgstr "沒有可以用來強制轉換 %s 成 %s 的方法或預設函式"
+
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
+msgstr "沒有可用於 Class=\"%2$s\"as()\"%1$s\"替換值的方法或預設函式"
+
+msgid "trying to set an 'as' relation from %s to itself"
+msgstr "無法為 %s 與自己設立 'as' 關係"
+
+msgid "class %s is not defined in this environment"
+msgstr "類別 %s 在這個環境裡沒有定義"
+
+msgid ""
+"class %s is a class union: 'coerce' relations to a class union are not "
+"meaningful"
+msgstr "類別 %s 是類別併集：類別併集的 'coerce' 關係在這裡沒有意義"
+
+msgid ""
+"'as' method should have one argument, or match the arguments of coerce(): "
+"got  (%s)"
+msgstr "'as' 方法必須有一個引數，或同 coerce()相對應，得到的卻是(%s)"
+
+msgid ""
+"a 'replace' method definition in 'setAs' must be a function of two "
+"arguments, got %d"
+msgstr "'setAs' 中的 'replace' 方法定義必須是帶兩個引數的函式，得到的卻是 %d"
+
+msgid ""
+"argument names in 'replace' changed to agree with 'coerce<-' generic:\n"
+"%s"
+msgstr ""
+"'replace' 裡的引數名稱得到了修改使之與 'coerce<-' 泛型相符合:\n"
+"%s"
+
+msgid "ambiguous object (length != 1) to coerce to \"name\""
+msgstr "物件不明確(長度！=1) 因此無法強制轉換成\"name\""
+
+msgid "undefined 'coerce' method"
+msgstr "沒有 'coerce' 方法"
+
+msgid ""
+"methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr "目前存在着強制轉換 %s 成 %s 的方法；這些方法將會被替換掉。"
+
+msgid "Function must be an S4 generic"
+msgstr "函式必須是 S4 泛型"
+
+msgid "method is not being debugged"
+msgstr "方法未被除錯"
+
+msgid "object %s not found"
+msgstr "找不到 %s 這個物件"
+
+msgid ""
+"object %s not changed (it is not consistent with the current definition of "
+"class %s from %s)"
+msgstr "物件 %1$s 沒有變動 (它與 %3$s 裡類別為 %2$s 的目前定義不相符合)"
+
+msgid "no definition for the class of %s (class %s) found"
+msgstr "類別為 %s 的定義不存在 (類別 %s)"
+
+msgid ""
+"object %s not changed (it does not appear to be from a version of R earlier "
+"than 1.8.0)"
+msgstr "物件 %s 沒有變動 (它不是從 R 版本 1.8.0 之前來的)"
+
+msgid "'class1' must be the name of a class or a class definition"
+msgstr "'class1' 必須是類別名稱或類別定義"
+
+msgid "'class2' must be the name of a class or a class definition"
+msgstr "'class2' 必須是類別名稱或類別定義"
+
+msgid "class %s has no visible definition from package or environment %s"
+msgstr "類別 %s 在程輯封包或環境 %s 裡沒有看得見的定義"
+
+msgid ""
+"cannot create a 'setIs' relation when neither of the classes (%s and %s) is "
+"local and modifiable in this package"
+msgstr ""
+"無法建立 'setIs' 這個關係，因為兩個類別 (%s 和 %s) 都不是局部性的，也不能在程"
+"輯封包進行改動"
+
+msgid ""
+"class %s is sealed; new superclasses can not be defined, except by "
+"'setClassUnion'"
+msgstr "類別 %s 被封閉了；除了 'setClassUnion' 之外無法設定新的父類別"
+
+#, fuzzy
+msgid ""
+"class %s is defined (with package slot %s) but no metadata object found to "
+"revise %s information---not imported?  Making a copy in package %s"
+msgstr ""
+"%s 類別已經(在 %s 程式套件槽裡)被定義過了，但沒有可用於修改 %s 資訊的後設資料"
+"物件 -- 沒有被匯出？在 %s 程式套件裡拷貝"
+
+msgid "class %s cannot extend class %s"
+msgstr "類別 %s 無法擴充類別 %s"
+
+msgid "both classes must be defined"
+msgstr "兩個類別都得有定義"
+
+msgid "invalid index for function argument"
+msgstr "函式引數的索引無效"
+
+msgid "no function definition found for %s"
+msgstr "沒有 %s 函式定義"
+
+msgid "need a definition for the method here"
+msgstr "這裡需要方法定義"
+
+msgid "Skeleton of method written to %s"
+msgstr "方法骨架寫於 %s "
+
+msgid "invalid object in meta table of methods for %s, label %s, had class %s"
+msgstr "元方法表裡方法 %1$s，標籤 %2$s 的物件不對，類別不應該是 %3$s"
+
+msgid ""
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
+msgstr ""
+"無效的 mlist 元素的標籤 %s 的 %d 級 (應該是方法列表或方法，類別另是 %s)"
+
+msgid "bad method object stored in method table, class %s"
+msgstr "做為方法的物件(類別是 %s)發生錯誤"
+
+msgid ""
+"invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr "方法表 (%s)裡的物件定義不對：應該是方法，現在卻是個類別為 %s 的物件"
+
+msgid "invalid or unset methods table in generic function %s"
+msgstr "泛型函式 %s 的方法表不對，或還沒有設置\""
+
+msgid "trying to find a methods table in a non-generic function"
+msgstr "在非泛型函式裡是找不到方法表的"
+
+msgid ""
+"the \"ambiguousMethodSelection\" option should be a function to be called as "
+"the condition action; got an object of class %s"
+msgstr ""
+"\"ambiguousMethodSelection\" 這個選項應該是做為條件來呼叫的函式；現在它卻是類"
+"別為 %s 的物件"
+
+msgid ""
+"No simply inherited methods found for function %s; using non-simple method"
+msgstr "找不到適用於函式 %s 的簡單方法；用複雜方法"
+
+msgid ""
+"Note: method with signature %s chosen for function %s,\n"
+" target signature %s.\n"
+" %s would also be valid"
+msgstr ""
+"注意: 為函式\"%2$s\"選擇了帶\"%1$s\"標籤的方法 ,\n"
+" 目標標籤為\"%3$s\".\n"
+" %4$s 應該是有效的"
+
+msgid "unable to find an inherited method for function %s for signature %s"
+msgstr "函式 %s 標籤 %s 找不到繼承方法"
+
+msgid "failed to find expected group generic function:"
+msgstr "找不到需要的團體泛型函式："
+
+msgid ""
+"invalid group generic function in search for inherited method (class %s)"
+msgstr "在找繼承方法時出現的團體泛型函式不對(類別 %s)"
+
+msgid "invalid methods table request"
+msgstr "方法表要求發生錯誤"
+
+msgid ""
+"trying to check signature length of group generic '%s', but it is not a "
+"group generic"
+msgstr "檢查團體泛型 '%s' 的標記長度，但它不是團體泛型"
+
+msgid ""
+"trying to check signature length of generic '%s', but it is not a generic "
+"function: i = %d, funs = %s, gnames = %s"
+msgstr ""
+"檢查泛型 '%s' 的標記長度，但它不是團體泛型 function: i = %d，funs = %s，"
+"gnames = %s"
+
+msgid "no methods table for generic %s from package %s in package %s"
+msgstr "在 %3$s 程式套件中程式套件 %2$s 裡的泛型 %1$s 沒有方法列表"
+
+msgid "undefined classes (%s) will be ignored for argument '%s'"
+msgstr "引數 '%2$s' 裡沒有定義的類別(%1$s)會被忽略不用"
+
+msgid ""
+"argument 'signatures' must be a character matrix whose rows are method "
+"signatures"
+msgstr "\"signatures\"引數必須為字元矩陣，每列裡都是標籤方法"
+
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr "test==TRUE 和 S4Class 定義不能同時存在"
+
+msgid ""
+"argument 'S4Class' must be a class definition: got an object of class %s"
+msgstr "引數 'S4Class' 必須是類別定義：現在得到的卻是類別為 %s 的目標物件"
+
+msgid ""
+"inconsistent old-style class information for %s; the class is defined but "
+"does not extend %s and is not valid as the data part"
+msgstr ""
+"%s 舊式類別資訊有矛盾；雖然類別的定義是存在的，但它不擴充 %s 而且也不能當作資"
+"料來用"
+
+msgid ""
+"the S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
+msgstr ""
+"S3 類別的原型，\"%s\"，沒有定義；只有在註冊這個 S3 類別時才允許這種情況(\"%s"
+"\")"
+
+msgid "restoring definition of class %s"
+msgstr "恢復類別 %s 的定義"
+
+msgid "slot %s: class %s should extend class %s"
+msgstr "槽 %s：類別 %s 無法擴充類別 %s"
+
+msgid ""
+"invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
+"corresponding slots in S3 version: fails for %s"
+msgstr ""
+"與 S3 類別相對應的 S4 類別不對：S4 類別裡的槽必須擴充類別 S3 中相對的槽：%s "
+"發生錯誤"
+
+msgid "explicit coercion of old-style class (%s) is not defined"
+msgstr "舊式類別(%s)的明確強制轉換沒有定義"
+
+msgid ""
+"explicit replacement not defined for as(x, \"%s\") <- value for old-style "
+"class %s"
+msgstr "用於舊式類別 %2$s 的 as(x，\"%1$s\") <- value 的替換值沒有明確的定義"
+
+msgid ""
+"argument 'Classes' must be a vector of two classes; got an argument of "
+"length %d"
+msgstr "引數 'classes' 必須是包含兩個類別的向量；現在得到的是長度為 %d 的引數"
+
+msgid ""
+"inconsistent old-style class information for %s (maybe mixing old and new "
+"classes?)"
+msgstr "%s 舊式類別資訊有矛盾(會不會是將舊的和新的類別混在了一起用？)"
+
+msgid ""
+"'S3Class' only defined for extensions of %s or classes with a data part:  "
+"not true of class %s"
+msgstr "'S3Class' 只能定義於為 %s 擴充或帶資料部分的類別，不適用於類別 %s"
+
+msgid ""
+"'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true "
+"of class %s"
+msgstr ""
+"'S3Class' 只能指派給擴充\"oldClass\"類別的 S4 目標物件；不適用於類別 %s"
+
+msgid "Created a package name, %s, when none found"
+msgstr "建立了程輯封包名稱: %s，因為找不到其他名稱"
+
+msgid "no definition of class %s found"
+msgstr "類別 %s 的定義不存在"
+
+msgid "multiple definitions of %s found; using the one on %s"
+msgstr "%s 有多個定義；用 %s 此一個"
+
+msgid "%s is not a valid field or method name for reference class %s"
+msgstr "\"%s\"場要麼無效，要麼參照類別 %s 的方法名稱無效"
+
+msgid ""
+"a call to superClass() is in the method %s but there is no superclass "
+"definition of this method for class %s"
+msgstr "在 %s 方法裡呼叫了 superClass()，但是 %s 類別裡無此方法的超類別定義"
+
+msgid "methods declared in usingMethods() but not found: %s"
+msgstr "usingMethods() 裡有方法的宣告，但找不到：%s"
+
+msgid "%s is not a reference class"
+msgstr "%s 不是參照類別"
+
+msgid "%s is not a field in class %s"
+msgstr "%s 不是在 %s 類別裡的場"
+
+msgid ""
+"unnamed arguments to $new() must be objects from a reference class; got an "
+"object of class %s"
+msgstr ""
+"$new() 裡沒具名字的引數必須是從參照類別來的物件；現在得到的卻是類別 %s 的物件"
+
+msgid "%s is not a valid field or method name for this class"
+msgstr "%s 不是個有效的場，也不是這個類別的方法名稱"
+
+msgid ""
+"the class of field %s in the object is not compatible with the desired class "
+"%s in the target"
+msgstr "%s 物件場類別不符合目標中 %s 類別的需要"
+
+msgid "%s is not a defined class in this environment"
+msgstr "%s 在這個環境裡沒有類別定義"
+
+msgid "invalid 'Class' argument:  should be a single string"
+msgstr "'Class' 引數不對：應當是單字元字串"
+
+msgid "%s is not one of the reference super classes for this object"
+msgstr "%s 不是該物件的參照超類別之一"
+
+msgid ""
+"direct calls to callSuper() are invalid:  should only be called from another "
+"method"
+msgstr "不能直接呼叫 callSuper()：只能用其他的方法來呼叫它"
+
+msgid "%s is not a field in this class"
+msgstr "%s 不是這個類別裡的場"
+
+msgid "Methods not found: %s"
+msgstr "找不到 %s 這個方法"
+
+msgid ""
+"the definition of class %s in package %s is locked, methods may not be "
+"redefined"
+msgstr "套件 %2$s 中 %1$s 類別的定義封閉了，因此無法將方法重新定義"
+
+msgid "arguments to methods() must be named, or one named list"
+msgstr "methods() 裡的引數必須帶名稱，或是是帶名稱的串列"
+
+msgid ""
+"topic %s is not a method name in class %s\n"
+"The class definition follows"
+msgstr ""
+"%s 主題在 %s 類別裡不是方法名稱\n"
+"類別定義在下面"
+
+msgid ""
+"the definition of class %s in package %s is locked so fields may not be "
+"modified"
+msgstr "套件 %2$s 中 %1$s 類別的定義封閉了，因此無法修改場的定義"
+
+msgid ""
+"the overriding class (\"%s\") of field %s is not a subclass of the existing "
+"field definition (\"%s\")"
+msgstr "場 %2$s 的首要類別(\"%1$s\")不是已經存在的場定義的子類別(\"%3$s\")"
+
+msgid ""
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
+msgstr "參照類別欄位 %s 的賦值不對，應當是 %s 類別或子類別 (原來是 %s 類別)"
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr "無效的替換值：參照類別欄位 %s 為唯讀"
+
+msgid ""
+"the 'contains' argument should be the names of superclasses:  got an element "
+"of class %s"
+msgstr "'contains' 引數應當是超類別的名稱(現在卻是類別為 %s 的物件)"
+
+msgid "no definition found for inherited class: %s"
+msgstr "繼承類別的定義不存在: %s"
+
+msgid ""
+"a single class name is needed for field %s, got a character vector of length "
+"%d"
+msgstr "%s 場需要單一類別名稱，現在得到的是長度為 %d 的字串"
+
+msgid "class %s for field %s is not defined"
+msgstr "場 %2$s 的類別 %1$s 還沒有定義"
+
+msgid ""
+"field %s was supplied as an object of class %s; must be a class name or a "
+"binding function"
+msgstr "場 %s 被提供了類別 %s 的物件 ; 但它必須是類別名稱或繫結函式"
+
+msgid ""
+"code for methods in class %s was not checked for suspicious field "
+"assignments (recommended package %s not available?)"
+msgstr ""
+"沒有檢查 %s 類別方法程式碼可能不正確的場指派(是不是因為沒有推薦套件 %s？)"
+
+msgid "class %s is defined but is not a reference class"
+msgstr "類別 %s 有定義但不是參照類別"
+
+msgid ""
+"class must be a reference class representation or a character string; got an "
+"object of class %s"
+msgstr "類別必須是參照類別或字串；現在得到的卻是類別為 %s 的目標物件"
+
+msgid "not a reference class: %s"
+msgstr "非參照類別: %s"
+
+msgid ""
+"local assignment to field name will not change the field:\n"
+"    %s\n"
+" Did you mean to use \"<<-\"? ( in method %s for class %s)"
+msgstr ""
+"場名稱本地指派不會變更場的內容：\n"
+"    %1$s\n"
+" 您意思是不是用\"<<-\"？ (在類別 %3$s 的 %2$s 方法裡)"
+
+msgid ""
+"non-local assignment to non-field names (possibly misspelled?)\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+"非本地指派非場名稱(是不是您寫錯了？)\n"
+"    %1$s\n"
+"(在類別 %3$s 的 %2$s 方法裡)"
+
+msgid ""
+"non-local assignment to method names is not allowed\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+"不行允許非本地指派方法名稱\n"
+"    %1$s\n"
+"(在類別 %3$s 的 %2$s 方法裡)"
+
+msgid "arguments must all be character string names of fields"
+msgstr "引數必須是場名稱的字串"
+
+msgid "field %s is already locked"
+msgstr "場 %s 已經被鎖住了"
+
+msgid "field %s of class %s has a non-default binding and cannot be locked"
+msgstr "%1$s 類別的 %2$s 場有非預設的約束力，因此不能被鎖定"
+
+msgid ""
+"Reference superclasses must come from the same package for the environment "
+"to be defined:  got %s and %s"
+msgstr "參照超類別必須來自要定義的環境中相同的套件： 卻得到 %s 和 %s"
+
+msgid ""
+"Class %s is not a subclass of %s; functional semantics not defined for this "
+"class"
+msgstr "%s 類別不是 %s 的子類別；這沒有功能語義定義"
+
+msgid "Could not find local object in supplied environment"
+msgstr "無法在所提供的環境找到本地物件"
+
+msgid ""
+"invalid 'ignore' argument; should be a class definition or a character "
+"vector, got an object of class %s"
+msgstr ""
+"'ignore' 引數不對，它要麼是類別定義，要麼是字串；現在得到的卻是類別為 %s 的物"
+"件"
+
+msgid "An object of class %s"
+msgstr "為類別為 %s 的物件"
+
+msgid ""
+"invalid call to 'classLabel': expected a name or a class definition, got an "
+"object of class %s"
+msgstr ""
+"'classLabel' 呼叫不對：需要的是個名稱或類別定義，但得到的卻是類別為 %s 的目標"
+"物件"
+
+msgid "argument 'signature' is not meaningful for tracing reference methods"
+msgstr "'signature' 引數不能適用於參照追蹤方法"
+
+msgid "%s is not a method for reference class %s"
+msgstr "%s 不是適用於參照類別 %s 的方法"
+
+msgid "argument 'what' should be the name of a function"
+msgstr "引數 'what' 必須是一個函式名稱"
+
+msgid "tracing the internal function %s is not allowed"
+msgstr "不可以對內部函式 %s 進行追蹤"
+
+msgid "no function definition for %s found"
+msgstr "沒有 %s 這樣一個函式定義"
+
+msgid "cannot untrace method for %s; no method defined for this signature: %s"
+msgstr "無法將 %s 刪除追蹤；此一標記沒有與之相對應的方法：%s"
+
+msgid "the method for %s for this signature was not being traced"
+msgstr "此標記的 %s 方法沒有被追蹤"
+
+msgid "making a traced version of a special; arguments may be altered"
+msgstr "創造一個被追蹤的特殊函式版本；其引數可被變更"
+
+msgid ""
+"the editing in trace() can only change the body of the function; got an "
+"object of class %s"
+msgstr "trace() 裡的編輯只能用來變更函式主體；現在得到的卻是類別為 %s 的物件"
+
+msgid ""
+"the editing in trace() can only change the body of the function, not the "
+"arguments or defaults"
+msgstr "trace() 裡的編輯只能用來變更函式主體，不能用於引數預設值"
+
+msgid "cannot use 'at' argument without a trace expression"
+msgstr "不能用 'at' 這個引數，因為沒有追蹤表式"
+
+msgid ""
+"cannot use 'at' argument unless the function body has the form '{ ... }'"
+msgstr "不能用 'at' 這個引數，除非函式的主體有 '{ … }' 這樣的形式"
+
+msgid "assigning over the binding of symbol %s in environment/package %s"
+msgstr "在環境/程輯封包 %2$s 將符號 %1$s 的連結重新設定"
+
+msgid ""
+"setting a method over the binding of symbol %s in environment/package %s"
+msgstr "在環境/程輯封包 %2$s 裡將符號 %1$s 的連結重新進行了方法設定"
+
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
+msgstr "類別為 %s 的環境被鎖住了；為新的類別用全域環境"
+
+msgid ""
+"none of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr "在原始碼中找不到任何物件：需要附加或指定程式套件"
+
+msgid "objects found in multiple packages: using %s and ignoring %s"
+msgstr "在多個程式套件中找到了物件：用 %s 而不用 %s"
+
+msgid "package %s is not attached and no namespace found for it"
+msgstr "%s 程式套件沒有被附加，也找不到它的命名空間"
+
+msgid ""
+"invalid 'source' argument: expected file names or a connection but got an "
+"object of class %s"
+msgstr "'source' 引數不對：應該是檔案名稱或鏈結，現在卻是類別為 %s 的物件"
+
+msgid "cannot find an environment corresponding to package name '%s\""
+msgstr "找不到對應的環境於程式套件 '%s\""
+
+msgid "supplied package, %s, differs from package inferred from source, %s"
+msgstr "提供的程式套件，%s，與從來源推斷出的程式套件，%s，不一樣"
+
+msgid "cannot insert these (not found in source): %s"
+msgstr "這些無法插入(在原始碼中找不到)：%s"
+
+msgid ""
+"cannot insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr "無法為這些函式插入方法(原始碼裡找不到方法表):%s"
+
+msgid "Non-function objects are not currently inserted (not traceable): %s"
+msgstr "目前沒有插入非函式物件(不可追溯): %s"
+
+msgid "New functions are not currently inserted (not untraceable): %s"
+msgstr "目前沒有插入新函式(不可追溯): %s"
+
+msgid "Modified functions inserted through trace(): %s"
+msgstr "用 trace()插入修改過的函式: %s"
+
+msgid ""
+"%s() is not a generic function in the target environment -- methods will not "
+"be inserted"
+msgstr "%s()不是在目標環境裡的泛型函式 -- 因此方法沒有被插入"
+
+msgid "Methods inserted for function %s(): %s"
+msgstr "為函式 %s()插入了方法: %s"
+
+msgid "no definition for object %s found in tracing environment"
+msgstr "在追溯環境裡找不到 %s 物件的定義"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr "有多個泛型同模式相匹配，用表 %s"
+
+msgid ""
+"does not seem to be a method table for generic %s in tracing environment"
+msgstr "在追溯環境裡找不到 %s 泛型函式的方法表"
+
+msgid "no method in methods table for %s for signature %s"
+msgstr "函式 %s 標記 %s 方法表裡沒有設定方法"
+
+msgid "unloading 'methods' package ..."
+msgstr "卸載 'methods' 程式套件"
+
+msgid "apparently bad method or class metadata in saved environment;"
+msgstr "儲存的環境中出現了不良方法或類別後設資料；"
+
+msgid "move the file or remove the class/method"
+msgstr "移動檔案或刪除類別/方法"
+
+msgid "no definition for class %s"
+msgid_plural "no definition for classes %s"
+msgstr[0] "類別 %s 的定義不存在"
+
+msgid ""
+"in the method signature for function %s invalid argument name in the "
+"signature: %s"
+msgid_plural ""
+"in the method signature for function %s invalid argument names in the "
+"signature: %s"
+msgstr[0] "在函式 %s 裡的方法標記中標記的引數名稱不對: %s"
+
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "函式 %3$s 裡 %2$d 個選擇有 %1$d 是歧義的\n"
+
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] "原型的命名單元同槽的名稱對應不上: %s"
+
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "標記裡出現了非引數：%s"
+
+msgid ""
+"the formal argument of the generic function for %s (%s) differs from that of "
+"the non-generic to be used as the default (%s)"
+msgid_plural ""
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+"用於 %s 泛型函式(%s)的正式引數與將做為預設值(%s)來用的非泛型的正式引數不相符"
+"合"
+
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "重複槽名稱: %s"
+
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "類別 %s 的槽的名稱不對：%s"
+
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] "看得到 %s 有多個定義(%s)；現在用程式套件 %s 中 %s 的定義"
+
+msgid ""
+"class %s is missing slot from class %s (%s), and no coerce method was "
+"supplied"
+msgid_plural ""
+"class %s is missing slots from class %s (%s), and no coerce method was "
+"supplied"
+msgstr[0] "類別 %s 在類別 %s(%s)中缺少槽，找不到強制方法"
+
+msgid ""
+"slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural ""
+"slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] "類別 %s 裡的槽必須擴充類別 %s 中相對的槽：%s 發生錯誤"
+
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "找到了 %d 個同樣有效的方法"
+
+msgid "Selecting %d method of minimum distance"
+msgid_plural "Selecting %d methods of minimum distance"
+msgstr[0] "選用最小距離 %d 方法"
+
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "選用 %d 非組方法"
+
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "選用 %d 部分精密匹配方法"
+
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "從 %2$d 個歧義可能選擇中選 %1$s 方法"
+
+msgid ""
+"no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural ""
+"no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] "在指定的 %2$s 這個位置不存在類別 %1$s 的定義，定義在: %3$s"
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ "%2$s 類別的 %1$s 子類別不是區域性的，因此無法按新的繼承資訊進行更新；考慮"
+#~ "用 setClassUnion()"

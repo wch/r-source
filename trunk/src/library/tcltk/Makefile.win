@@ -1,0 +1,36 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/tcltk/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+pkg = tcltk
+
+R_OSTYPE = windows
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/zzz.R`
+DEFPKGS = NULL
+BUILD_TCLTK = yes
+
+ifeq "$(BUILD_TCLTK)" "yes"
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR1 mkdesc mkexec mkdemos
+	@$(MAKE) -f Makefile.win mksrc-win2
+	@$(MAKE) -f Makefile.win mklazycomp
+else
+all:
+	@$(ECHO) "building stub package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@$(MAKE) -f Makefile.win mkdesc
+	@cp $(srcdir)/R/unix/zzzstub.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@cp $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg)
+endif
+
+include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

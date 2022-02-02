@@ -1,0 +1,5 @@
+is.things		Explore some properties of R objects and is.FOO()
+			functions.  Not for newbies!
+recursion		Using recursion for adaptive integration
+scoping			An illustration of lexical scoping.
+error.catching		More examples on catching and handling errors

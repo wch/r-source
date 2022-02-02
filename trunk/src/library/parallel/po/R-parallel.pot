@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "invalid value of %s"
+msgstr ""
+
+msgid "need at least one argument"
+msgstr ""
+
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+
+msgid "dim(X) must have a positive length"
+msgstr ""
+
+msgid "'X' must have named dimnames"
+msgstr ""
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
+
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr ""
+
+msgid "not a valid cluster"
+msgstr ""
+
+msgid "unknown cluster type"
+msgstr ""
+
+msgid "numeric 'names' must be >= 1"
+msgstr ""
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr ""
+
+msgid "Connection setup failed or timed out."
+msgstr ""
+
+msgid "PORT must be specified"
+msgstr ""
+
+msgid "'nnodes' must be >= 1"
+msgstr ""
+
+msgid "Cluster setup failed."
+msgstr ""
+
+msgid "invalid 'child' argument"
+msgstr ""
+
+msgid "'children' must be a list of processes or a single process"
+msgstr ""
+
+msgid "'process' must be of class %s"
+msgstr ""
+
+msgid "'child' must be a valid child process"
+msgstr ""
+
+msgid "'what' must be a character or raw vector"
+msgstr ""
+
+msgid "'mc.cores' must be >= 1"
+msgstr ""
+
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
+msgid "%d function calls resulted in an error"
+msgstr ""
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr ""
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+
+msgid "invalid 'jobs' argument"
+msgstr ""
+
+msgid "'v' must be a vector"
+msgstr ""
+
+msgid "some results may be missing, folded or caused an error"
+msgstr ""
+
+msgid "fork clusters are not supported on Windows"
+msgstr ""
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr ""
+
+msgid        "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "scheduled core %s did not deliver a result, all values of the job will be affected"
+msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "scheduled core %s encountered error in user code, all values of the job will be affected"
+msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
+msgstr[0]    ""
+msgstr[1]    ""

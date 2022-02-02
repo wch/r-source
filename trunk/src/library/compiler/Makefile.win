@@ -1,0 +1,26 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/compiler/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+pkg = compiler
+
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+DEFPKGS = NULL
+
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR1 mkdesc
+	@$(MAKE) -f Makefile.win mklazycomp
+
+mkR: mkR1
+
+include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

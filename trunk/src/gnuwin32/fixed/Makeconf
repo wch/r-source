@@ -1,0 +1,12 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/Makeconf for Windows
+# called from $(R_HOME)/src/library/*/Makefile.win, settings for basepkg.mk
+
+ECHO = echo
+MKINSTALLDIRS = mkdir -p
+INSTALL_DATA = cp
+SHELL = sh
+USE_NLS = yes
+
+R_EXE = R_ENABLE_JIT=0 $(top_builddir)/@BINDIR@/Rterm.exe --vanilla --no-echo

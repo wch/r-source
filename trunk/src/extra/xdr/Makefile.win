@@ -1,0 +1,15 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+DEFS = -DWIN32 -DHAVE_CONFIG_H
+
+CPPFLAGS = -I. -I../../include $(DEFS)
+
+all: libxdr.a
+
+libxdr.a: xdr.o xdr_float.o xdr_stdio.o xdr_mem.o
+
+clean:
+	$(RM) *.o *~
+distclean: clean
+	$(RM) libxdr.a

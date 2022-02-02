@@ -1,0 +1,39 @@
+#-*- Makefile -*-
+include ../../src/gnuwin32/MkRules
+
+PROGRAMS = Rtest.exe Rplot.exe Rpostscript.exe Rerror.exe RNamedCall.exe RParseEval.exe Rpackage.exe tryEval.exe
+
+R_CMD_LINK= $(CC)
+CFLAGS = -I../../include -O3 -Wall -pedantic
+LIBR = -L../../$(IMPDIR) -lR
+R_EXE = R_HOME=../..
+
+tests: $(PROGRAMS)
+	$(R_EXE) ./Rtest --silent
+	$(R_EXE) ./RNamedCall --silent
+	$(R_EXE) ./RParseEval --silent
+	$(R_EXE) ./Rpackage --silent
+	$(R_EXE) ./Rerror --silent
+	$(R_EXE) ./Rplot --silent
+	$(R_EXE) ./Rpostscript --silent --no-save
+	$(R_EXE) ./tryEval --silent
+
+Rtest.exe: Rtest.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ Rtest.o embeddedRCall.o $(LIBR)
+Rplot.exe: Rplot.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ Rplot.o embeddedRCall.o $(LIBR)
+Rpostscript.exe: Rpostscript.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ Rpostscript.o embeddedRCall.o $(LIBR)
+Rerror.exe: Rerror.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ Rerror.o embeddedRCall.o $(LIBR)
+Rpackage.exe: Rpackage.o  embeddedRCall.o
+	$(R_CMD_LINK) -o $@ Rpackage.o embeddedRCall.o $(LIBR)
+RNamedCall.exe: RNamedCall.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ RNamedCall.o embeddedRCall.o $(LIBR)
+RParseEval.exe: RParseEval.o embeddedRCall.o
+	$(R_CMD_LINK) -o $@ RParseEval.o embeddedRCall.o $(LIBR)
+tryEval.exe: tryEval.o
+	$(R_CMD_LINK) -o $@ tryEval.o $(LIBR)	
+
+clean:
+	$(RM) *.exe *.o Rplots.pdf Rplots.ps

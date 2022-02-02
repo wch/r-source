@@ -1,0 +1,33 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+DEFS = -DHAVE_CONFIG_H
+
+CPPFLAGS = -I../../include -I. $(DEFS)
+
+## done this way for parallel make
+all:
+	$(MAKE) -f Makefile.win makeMakedeps
+	$(MAKE) -f Makefile.win libtre.a
+
+CSOURCES = regcomp.c regerror.c regexec.c tre-ast.c tre-compile.c \
+  tre-match-approx.c tre-match-backtrack.c tre-match-parallel.c \
+  tre-mem.c tre-parse.c tre-stack.c xmalloc.c
+
+OBJS = $(CSOURCES:.c=.o)
+libtre.a: $(OBJS)
+
+clean:
+	@$(RM) *.o *~ *.d Makedeps
+
+distclean: clean
+	@$(RM) libtre.a
+
+# Dependencies
+DEPS = $(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

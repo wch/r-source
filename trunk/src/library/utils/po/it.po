@@ -1,0 +1,285 @@
+# R Italian translation
+# Copyright (C) The R Foundation
+# This file is distributed under the same license as the R package.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: utils 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
+#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
+#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
+#: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
+#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
+#: windows/widgets.c:78 windows/widgets.c:83
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "argomento '%s' non valido"
+
+#: io.c:350 io.c:835
+msgid "invalid quote symbol set"
+msgstr "simbolo di citazione non valido"
+
+#: io.c:362 io.c:858 io.c:1078
+msgid "cannot open the connection"
+msgstr "non è possibile aprire la connessione"
+
+#: io.c:365 io.c:369
+msgid "cannot read from this connection"
+msgstr "non posso leggere da questa connessione"
+
+#: io.c:416 io.c:434
+#, c-format
+msgid "quoted string on line %d terminated by EOF"
+msgstr "la stringa tra apici alla linea %d termina con EOF"
+
+#: io.c:567
+msgid "the first argument must be of mode character"
+msgstr "il primo argomento dev'essere in modalità caratteri"
+
+#: io.c:597
+#, c-format
+msgid "invalid 'numerals' string: \"%s\""
+msgstr "stringa 'numerals' non valida: \"%s\""
+
+#: io.c:773
+#, c-format
+msgid "Selection: "
+msgstr "Selezione: "
+
+#: io.c:868 io.c:883
+msgid "cannot allocate buffer in 'readTableHead'"
+msgstr "non posso allocare il buffer in 'readTableHead'"
+
+#: io.c:896
+msgid "\\ followed by EOF"
+msgstr "\\ seguito da EOF"
+
+#: io.c:948 io.c:952
+#, c-format
+msgid "incomplete final line found by readTableHeader on '%s'"
+msgstr "trovata linea finale incompleta da readTableHeader su '%s'"
+
+#: io.c:1009
+msgid "index out of range"
+msgstr "indice fuori campo di variazione"
+
+#: io.c:1046
+#, c-format
+msgid "Problem closing connection:  %s"
+msgstr "Problema riscontrato durante la chiusura della connessione: %s"
+
+#: io.c:1048
+msgid "Problem closing connection"
+msgstr "Problema riscontrato durante la chiusura della connessione"
+
+#: io.c:1071
+msgid "'file' is not a connection"
+msgstr "'file' non è una connessione"
+
+#: io.c:1074
+msgid "cannot write to this connection"
+msgstr "non è possibile scrivere su questa connessione"
+
+#: io.c:1104
+msgid "'dec' must be a single character"
+msgstr "'dec' dev'essere un singolo carattere"
+
+#: io.c:1130
+#, c-format
+msgid "corrupt data frame -- length of column %d does not match nrows"
+msgstr ""
+"data frame corrotto -- la lunghezza della colonna %d non corrisponde con "
+"nrows"
+
+#: io.c:1161
+#, c-format
+msgid "column %s claims to be a factor but does not have numeric codes"
+msgstr "la colonna %s si presenta come un factor ma non ha codici numerici"
+
+#: io.c:1179
+msgid "corrupt matrix -- dims do not match length"
+msgstr "matrice corrotta -- le dimensioni non corrispondono con la lunghezza"
+
+#: stubs.c:56
+msgid "'savehistory' can only be used in Rgui and Rterm"
+msgstr "'savehistory' può essere utilizzata in Rgui e Rterm"
+
+#: stubs.c:73
+msgid "'loadhistory' can only be used in Rgui and Rterm"
+msgstr "'loadhistory' può essere utilizzata in Rgui e Rterm"
+
+#: stubs.c:85
+msgid "invalid timestamp"
+msgstr "timestamp non valido"
+
+#: stubs.c:151 stubs.c:159
+msgid "X11 dataentry cannot be loaded"
+msgstr "La dataentry X11 non può essere caricata"
+
+#: stubs.c:155 stubs.c:184 stubs.c:190
+msgid "X11 is not available"
+msgstr "X11 non è disponibile"
+
+#: stubs.c:248 stubs.c:251
+#, c-format
+msgid "invalid '%s' specification"
+msgstr "specificazione '%s' non valida"
+
+#: stubs.c:254
+#, c-format
+msgid "'%s' contains missing values"
+msgstr "'%s' contiene valori mancanti"
+
+#: utils.c:68
+msgid "argument 'class' must be a character string"
+msgstr "l'argomento 'class' dev'essere una stringa character"
+
+#: utils.c:78
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "l'argomento 'x' dev'essere un vettore carattere di lunghezza 1"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr "l'argomento 'x' dev'essere codificato UTF-8 (incluso ASCII)"
+
+#: utils.c:147
+msgid "'hostname' must be a character vector of length 1"
+msgstr "'hostname' dev'essere un vettore di caratteri di lunghezza 1"
+
+#: utils.c:153
+#, c-format
+msgid "nsl() was unable to resolve host '%s'"
+msgstr "nls() non è stato in grado di risolvere il nome host '%s'"
+
+#: utils.c:160
+msgid "unknown format returned by 'gethostbyname'"
+msgstr "'gethostbyname' ha restituito un formato sconosciuto"
+
+#: utils.c:169
+msgid "nsl() is not supported on this platform"
+msgstr "nls() non è supportata su questa piattaforma"
+
+#: windows/dialogs.c:181
+msgid "unknown type"
+msgstr "tipo sconosciuto"
+
+#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
+#: windows/dialogs.c:310
+msgid "menu functions can only be used in the GUI"
+msgstr "le funzioni menu possono solo essere usate nella GUI"
+
+#: windows/dialogs.c:245
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr "non è possibile recuperare le voci per %s (%s)"
+
+#: windows/dialogs.c:283
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr "non è possibile aggiungere il menu (%s)"
+
+#: windows/dialogs.c:295
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr "non è possibile aggiungere la voce di menu (%s)"
+
+#: windows/dialogs.c:318
+msgid "menu does not exist"
+msgstr "il menu non esiste"
+
+#: windows/dialogs.c:325
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr "non è possibile eliminare la voce di menu (%s)"
+
+#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
+#: windows/registry.c:254
+#, c-format
+msgid "invalid '%s' value"
+msgstr "valore '%s' non valido"
+
+#: windows/registry.c:266
+#, c-format
+msgid "Registry key '%ls' not found"
+msgstr "Chiave registro '%ls' non trovata"
+
+#: windows/util.c:46
+msgid "unsupported version of Windows"
+msgstr "versione non supportata di Windows"
+
+#: windows/util.c:285
+msgid "argument must be a character vector or a raw vector"
+msgstr "l'argomento dev'essere un vettore di caratteri o un vettore raw"
+
+#: windows/util.c:324
+msgid "unable to open the clipboard"
+msgstr "non è possibile aprire gli appunti"
+
+#: windows/util.c:329
+msgid "unable to write to the clipboard"
+msgstr "non è possibile scrivere negli appunti"
+
+#: windows/util.c:408
+msgid "'title' must be a character string"
+msgstr "'title' dev'essere una stringa di caratteri"
+
+#: windows/util.c:417
+msgid "'text' must be a character string"
+msgstr "'text' dev'essere una stringa di caratteri"
+
+#: windows/util.c:456
+#, c-format
+msgid "'%s' must be length 1"
+msgstr "'%s' dev'essere di lunghezza 1"
+
+#: windows/util.c:569
+#, c-format
+msgid "'%s' must be a list"
+msgstr "'%s' dev'essere una lista"
+
+#: windows/util.c:573
+#, c-format
+msgid "'%s' element %d is not a window handle"
+msgstr "'%s' elemento %d non è un gestore di finestra"
+
+#: windows/widgets.c:105
+msgid "Select one or more"
+msgstr "Selezionane uno o più"
+
+#: windows/widgets.c:105
+msgid "Select one"
+msgstr "Selezionane uno"
+
+#: windows/widgets.c:188 windows/widgets.c:256
+msgid "'default' must be a character string"
+msgstr "'default' dev'essere una stringa di caratteri"
+
+#: windows/widgets.c:190 windows/widgets.c:258
+msgid "'default' is overlong"
+msgstr "'default' è troppo lungo"
+
+#: windows/widgets.c:194 windows/widgets.c:262
+msgid "'caption' must be a character string"
+msgstr "'caption' dev'essere una stringa di caratteri"
+
+#: windows/widgets.c:196
+msgid "'multi' must be a logical value"
+msgstr "'multi' dev'essere una valore logico"
+
+#: windows/widgets.c:198
+msgid "'filterindex' must be an integer value"
+msgstr "'filterindex' dev'essere un valore integer"

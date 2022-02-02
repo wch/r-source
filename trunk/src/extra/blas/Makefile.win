@@ -1,0 +1,24 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+all: ../../../$(BINDIR)/Rblas.dll
+
+## suppress lots of warnings: this is a dummy
+blas00.o: blas00.c
+	$(CC) -O3 -I../../include  -c $< -o $@
+
+## Rblas.dll imports xerbla_ from R.dll
+ifeq "$(USE_ATLAS)" "YES"
+../../../$(BINDIR)/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
+	   -L../../../$(IMPDIR) -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
+else
+../../../$(BINDIR)/Rblas.dll: blas.o cmplxblas.o ../../gnuwin32/dllversion.o
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../../$(IMPDIR) -lR $(FLIBS)
+endif
+
+distclean clean:
+	@$(RM) ../../../$(BINDIR)/Rblas.dll *~ blas00.o blas00.d blas.o cmplxblas.o
+

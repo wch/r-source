@@ -1,0 +1,9 @@
+Package: exNSS4nil
+Title: Package Exporting Non-Existent S4 Class/Method
+Type: Package
+Version: 1.0
+Author: Sebastian Meyer
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: Tiny example package without any S4 classes or methods,
+             but with exportClasses and exportMethods directives.
+License: GPL (>= 2)

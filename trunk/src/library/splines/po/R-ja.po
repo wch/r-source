@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2013-02-28 04:15+0200 \n"
+"Last-Translator: Triad sou  \n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"Language: ja \n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
+
+msgid "must have at least 'ord' knots"
+msgstr " 少なくとも 'ord' 個のノットを持たなければなりません "
+
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
+msgstr " 'derivs' の長さは 'x' の長さと合わせる必要があります "
+
+msgid "empty 'derivs'"
+msgstr ""
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr " 'ord' は正の整数で、多くてもノット数です "
+
+msgid "need at least %s (=%d) knots"
+msgstr " 少なくとも %s (=%d) 個のノットが必要です "
+
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
+msgstr ""
+" データ 'x' は %g から %g の範囲内でなければなりません、ただし '%s' を設定し"
+"ている場合を除きます "
+
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr ""
+" %s には 'Matrix' パッケージが正しくインストールされている必要があります "
+
+msgid "values of 'x' must be distinct"
+msgstr " 'x' の値はすべて別々の値でなければなりません "
+
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr " 少なくとも 'ord' 個のノットを持たなければなりません "
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr " 'formula' は \"y ~ x\" という形式でなければなりません "
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr " 'x' と 'y' の長さを合わせる必要があります "
+
+msgid "values of 'x' must be strictly increasing"
+msgstr " ノット位置 'x' は狭義に単調増加でなければなりません "
+
+msgid "'ord' must be >= 2"
+msgstr " 'ord' は 2 以上でなければなりません "
+
+msgid "the range of 'x' values exceeds one period"
+msgstr " 'x' の値の範囲は一周期を超えています "
+
+msgid "knot positions must be non-decreasing"
+msgstr " ノット位置は非減少順でなければなりません "
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr " 'x' と 'y' の長さは同じでなければなりません "
+
+msgid "'deriv' must be between 0 and %d"
+msgstr " 'deriv' は 0 と %d の間でなければなりません "
+
+msgid "knot positions must be strictly increasing"
+msgstr " ノットの位置は狭義の単調増加でなければなりません "
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
+
+msgid "spline must be monotone"
+msgstr " スプラインは単調でなければなりません "
+
+msgid "'degree' must be integer >= 1"
+msgstr " 'degree' は 1 以上の整数でなければなりません "
+
+msgid "'df' was too small; have used %d"
+msgstr " 'df' が小さすぎました; 代わりに %d が使われました "
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr ""
+" ある 'x' の値がノットの境界線を越えてしまったため、状況の悪化を招いてしまっ"
+"た可能性があります "

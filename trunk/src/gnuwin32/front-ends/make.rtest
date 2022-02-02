@@ -1,0 +1,26 @@
+#-*- Makefile -*-
+
+## this is for Win32, no import libs
+
+include ../MkRules
+
+LINKFLAGS=-Wl,--stack=0xA00000
+ifdef DEBUG
+  DEBUGFLAG=$(G_FLAG)
+else
+  DEBUGFLAG=
+  LINKFLAGS+=-s
+endif
+
+CFLAGS=-Wall -O2 -pedantic
+
+rtest-CFLAGS=-I.. -I../../include -I../../../include $(DEBUGFLAG)
+Rtest.exe: rtest.o
+	$(CC) $(LINKFLAGS) -o $@ rtest.o -L../../../bin -lR -lRgraphapp
+
+rtest.c: ../../include/Rversion.h
+
+clean:
+	$(RM) rtest.o Rtest.exe *~
+
+
