@@ -1,3 +1,0 @@
-LIBRARY grid.dll
-EXPORTS
- R_init_grid

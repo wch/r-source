@@ -1,8 +1,0 @@
-graphics		A show of some of R's graphics capabilities
-Hershey			Tables of the characters in the Hershey vector fonts
-image			The image-like graphics builtins of R
-Japanese		Tables of the Japanese characters in the Hershey 
-			vector fonts
-persp			Extended persp() examples
-plotmath		Examples of the use of mathematics annotation
-

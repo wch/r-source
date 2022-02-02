@@ -1,5 +1,0 @@
-
-importFrom       (pkgA, nil)
-importClassesFrom(pkgA, "classA")# but not "classApp"
-
-export(unique, nil)

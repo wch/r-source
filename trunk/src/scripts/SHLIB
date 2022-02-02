@@ -1,5 +1,0 @@
-#
-# ${R_HOME}/bin/SHLIB
-
-echo 'tools:::.SHLIB()' | R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" --no-restore --no-echo --no-site-file --no-init-file --args $@
-

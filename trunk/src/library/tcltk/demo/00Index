@@ -1,5 +1,0 @@
-tkcanvas		Creates a canvas widget showing a 2-D plot with
-			data points that can be dragged with the mouse. 
-tkdensity		Interactive density plots.
-tkfaq			Show long file, the R FAQ, using scrollbared window.
-tkttest			t-test example of GUI interface to a function call.

@@ -1,9 +1,0 @@
-Package: exSexpr
-Version: 1.1
-Title: Sexpr Bug Demo
-Description: Just a container for a bug demo.
-Author: Duncan Murdoch
-Maintainer: Duncan Murdoch <dmurdoch@abc.def>
-License: GPL-2
-
-
