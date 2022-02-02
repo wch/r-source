@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -196,13 +196,13 @@ void R_Suicide(const char *s)
 */
 
 /* Global variables */
-static int (*TrueReadConsole) (const char *, char *, int, int);
-static int (*InThreadReadConsole) (const char *, char *, int, int);
+static int (*TrueReadConsole) (const char *, unsigned char *, int, int);
+static int (*InThreadReadConsole) (const char *, unsigned char *, int, int);
 static void (*TrueWriteConsole) (const char *, int);
 static void (*TrueWriteConsoleEx) (const char *, int, int);
 HANDLE EhiWakeUp;
 static const char *tprompt;
-static char *tbuf;
+static unsigned char *tbuf;
 static  int tlen, thist, lineavailable;
 
  /* Fill a text buffer with user typed console input. */
@@ -211,7 +211,7 @@ R_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	      int addtohistory)
 {
     R_ProcessEvents();
-    return TrueReadConsole(prompt, (char *) buf, len, addtohistory);
+    return TrueReadConsole(prompt, buf, len, addtohistory);
 }
 
 	/* Write a text buffer to the console. */
@@ -244,7 +244,8 @@ void Rconsolesetwidth(int cols)
 }
 
 static int
-GuiReadConsole(const char *prompt, char *buf, int len, int addtohistory)
+GuiReadConsole(const char *prompt, unsigned char *buf, int len,
+               int addtohistory)
 {
     int res;
     const char *NormalPrompt =
@@ -255,7 +256,7 @@ GuiReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 	Rconsolesetwidth(consolecols(RConsole));
     }
     ConsoleAcceptCmd = !strcmp(prompt, NormalPrompt);
-    res = consolereads(RConsole, prompt, buf, len, addtohistory);
+    res = consolereads(RConsole, prompt, (char *)buf, len, addtohistory);
     ConsoleAcceptCmd = 0;
     return !res;
 }
@@ -276,7 +277,8 @@ static void __cdecl ReaderThread(void *unused)
 }
 
 static int
-ThreadedReadConsole(const char *prompt, char *buf, int len, int addtohistory)
+ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
+                    int addtohistory)
 {
     sighandler_t oldint,oldbreak;
     /*
@@ -309,10 +311,11 @@ ThreadedReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 
 /*2: from character console with getline (only used as InThreadReadConsole)*/
 static int
-CharReadConsole(const char *prompt, char *buf, int len, int addtohistory)
+CharReadConsole(const char *prompt, unsigned char *buf, int len,
+                int addtohistory)
 {
-    int res = getline(prompt, buf, len);
-    if (addtohistory) gl_histadd(buf);
+    int res = getline(prompt, (char *)buf, len);
+    if (addtohistory) gl_histadd((char *)buf);
     return !res;
 }
 
@@ -320,7 +323,7 @@ CharReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 static void *cd = NULL;
 
 static int
-FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
+FileReadConsole(const char *prompt, unsigned char *buf, int len, int addhistory)
 {
     int ll, err = 0;
 
@@ -328,11 +331,11 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (fgets(buf, len, ifp ? ifp : stdin) == NULL) return 0;
+    if (fgets((char *)buf, len, ifp ? ifp : stdin) == NULL) return 0;
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
-	size_t res, inb = strlen(buf), onb = len;
-	const char *ib = buf; 
+	size_t res, inb = strlen((char *)buf), onb = len;
+	const char *ib = (char *)buf; 
 	char obuf[len+1], *ob = obuf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
@@ -344,19 +347,19 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 	/* errors lead to part of the input line being ignored */
 	if(err) printf(_("<ERROR: re-encoding failure from encoding '%s'>\n"),
 		       R_StdinEnc);
-	strncpy(buf, obuf, len);
+	strncpy((char *)buf, obuf, len);
     }
 
 /* according to system.txt, should be terminated in \n, so check this
    at eof or error */
-    ll = strlen(buf);
+    ll = strlen((char *)buf);
     if ((err || feof(ifp ? ifp: stdin))
 	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
 
     if (!R_Interactive && !R_NoEcho) {
-	fputs(buf, stdout);
+	fputs((char *)buf, stdout);
 	fflush(stdout);
     }
     return 1;

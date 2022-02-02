@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2020  The R Core Team
+ *  Copyright (C) 1999-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,15 +41,6 @@ extern "C" {
 #endif
 
 #ifdef Win32
-typedef int (*blah1) (const char *, char *, int, int);
-typedef void (*blah2) (const char *, int);
-typedef void (*blah3) (void);
-typedef void (*blah4) (const char *);
-/* Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
-   symbolic constants in graphapp.h */
-typedef int (*blah5) (const char *);
-typedef void (*blah6) (int);
-typedef void (*blah7) (const char *, int, int);
 typedef enum {RGui, RTerm, LinkDLL} UImode;
 #endif
 
@@ -85,14 +76,19 @@ typedef struct
 #ifdef Win32
     char *rhome;               /* R_HOME */
     char *home;                /* HOME  */
-    blah1 ReadConsole;
-    blah2 WriteConsole;
-    blah3 CallBack;
-    blah4 ShowMessage;
-    blah5 YesNoCancel;
-    blah6 Busy;
+
+    int (*ReadConsole) (const char *, unsigned char *, int, int);
+    void (*WriteConsole) (const char *, int);
+    void (*CallBack) (void);
+    void (*ShowMessage) (const char *);
+    int (*YesNoCancel) (const char *);
+	/* Return value here is expected to be 1 for Yes, -1 for No and
+	   0 for Cancel: symbolic constants in graphapp.h
+	*/
+    void (*Busy) (int);
     UImode CharacterMode;
-    blah7 WriteConsoleEx; /* used only if WriteConsole is NULL */
+    void (*WriteConsoleEx) (const char *, int, int);
+	/* used only if WriteConsole is NULL */
     Rboolean EmitEmbeddedUTF8;
 	/* R may embed UTF-8 sections into strings otherwise in current native
 	   encoding, escaped by UTF8in and UTF8out (rgui_UTF8.h). The setting

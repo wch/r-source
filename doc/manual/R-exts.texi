@@ -16624,11 +16624,11 @@ front end @file{rtest.c} whose code is
    frequently. See rterm.c and ../system.c for one approach using
    a separate thread for input.
 */
-int myReadConsole(const char *prompt, char *buf, int len, int addtohistory)
+int myReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory)
 @{
     fputs(prompt, stdout);
     fflush(stdout);
-    if(fgets(buf, len, stdin)) return 1; else return 0;
+    if(fgets((char *)buf, len, stdin)) return 1; else return 0;
 @}
 
 void myWriteConsole(const char *buf, int len)
