@@ -5045,8 +5045,9 @@ sudo tar -xvzf xz-5.2.5-darwin.17-x86_64.tar.xz -C /
 @end example
 (Messages like @samp{usr/local/: Can't restore time} should be ignored.)
 @end itemize
-
-and desirable
+@noindent
+(there is an @R{} script at @uref{https://mac.r-project.org/bin/} to
+help with this) and desirable
 @itemize
 @item
 GNU @code{readline5} from
@@ -5262,10 +5263,11 @@ Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
 if all the external software required by both Pango and Cairo is
 available: running @command{pkg-config pangocairo --exists
 --print-errors} should show if the installation suffices and if not,
-what is missing.  At the time of writing pre-built components were
-available only for @cputype{arm64}, where components @code{cairo},
-@code{fontconfig}, @code{freetype}, @code{ffi}, @code{glib},
-@code{harfbuzz}, @code{pango} and @code{xml2} sufficed.
+what is missing.  At the time of writing using pre-built components
+@code{cairo}, @code{fontconfig}, @code{freetype}, @code{ffi},
+@code{fribidi}, @code{gettext}, @code{icu}, @code{glib},
+@code{harfbuzz}, @code{pango}, @code{pixman}, @code{pcre} and
+@code{xml2} sufficed.
 
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
@@ -5735,7 +5737,8 @@ Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
 to get Tcl/Tk is to install
 @uref{https://mac.r-project.org/libs-arm64/tcltk-8.6.11-xft-darwin20.4-arm64.pkg}
-which bundles Tcl, Tk and Tktable.)  These unpack into
+which bundles Tcl, Tk and Tktable, but you may already have these
+installed by the @R{} binary package installer.)  These unpack into
 @file{/opt/R/arm64}: it is simplest to first create that directory and
 adjust its ownership if desired:
 
@@ -5753,7 +5756,8 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 @end example
 
 @noindent
-using @command{sudo} if necessary.
+using @command{sudo} if necessary.  (There is an @R{} script at
+@uref{https://mac.r-project.org/bin/} to help with this.)
 
 If compiling from source, @code{pcre2} (at least up to version 10.39)
 needs to be built without JIT support (the default) as the @R{} build
