@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2015   The R Core Team
+  Copyright (C) 1997-2022   The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -164,6 +164,13 @@ void R_DefParams(Rstart Rp)
     Rp->max_nsize = R_SIZE_T_MAX;
     Rp->ppsize = R_PPSSIZE;
     Rp->NoRenviron = FALSE;
+
+#ifdef Win32
+    Rp->CallBack = NULL;
+    Rp->Busy = NULL;
+    Rp->ResetConsole = NULL;
+#endif
+
     R_SizeFromEnv(Rp);
 }
 
