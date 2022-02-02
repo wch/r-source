@@ -1370,9 +1370,6 @@ function(package = "base", lib.loc = NULL, auto = NULL)
                         tail(author, 1L), sep = " and ")
 
     rval <- bibentry(bibtype = "Manual",
-                     textVersion =
-                     paste0(author, " (", z$year, "). ", z$title, ". ",
-                            z$note, ". ", z$url),
                      header = header,
                      footer = footer,
                      other = z
