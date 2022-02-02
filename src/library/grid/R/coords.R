@@ -148,11 +148,13 @@ grobPoints.circle <- function(x, closed, ..., n=100) {
         ## Recycle via cbind()
         circs <- cbind(cx, cy, r)
         n <- nrow(circs)
-        lapply(1:n,
-               function(i) {
-                   list(x=circs[i, 1] + circs[i, 3]*cos(t),
-                        y=circs[i, 2] + circs[i, 3]*sin(t))
-               })
+        pts <- lapply(1:n,
+                      function(i) {
+                          list(x=circs[i, 1] + circs[i, 3]*cos(t),
+                               y=circs[i, 2] + circs[i, 3]*sin(t))
+                      })
+        names(pts) <- 1:n
+        pts
     } else {
         emptyCoords
     }
@@ -164,7 +166,7 @@ grobPoints.lines <- function(x, closed, ..., n=100) {
     } else {
         xx <- convertX(x$x, "in", valueOnly=TRUE)
         yy <- convertY(x$y, "in", valueOnly=TRUE)
-        list(list(x=xx, y=yy))
+        list("1"=list(x=xx, y=yy))
     }
 }
 
@@ -177,7 +179,7 @@ grobPoints.polyline <- function(x, closed, ...) {
         yy <- convertY(x$y, "in", valueOnly=TRUE)
         pts <- list(x=xx, y=yy)
         if (is.null(x$id) && is.null(x$id.lengths)) {
-            list(pts)
+            list("1"=pts)
         } else {
             if (is.null(x$id)) {
                 n <- length(x$id.lengths)
@@ -189,7 +191,7 @@ grobPoints.polyline <- function(x, closed, ...) {
             if (n > 1) {
                 split(as.data.frame(pts), id)
             } else {
-                list(pts)
+                list("1"=pts)
             }
         }
     }    
@@ -202,7 +204,7 @@ grobPoints.polygon <- function(x, closed, ...) {
         yy <- convertY(x$y, "in", valueOnly=TRUE)
         pts <- list(x=xx, y=yy)
         if (is.null(x$id) && is.null(x$id.lengths)) {
-            list(pts)
+            list("1"=pts)
         } else {
             if (is.null(x$id)) {
                 n <- length(x$id.lengths)
@@ -214,7 +216,7 @@ grobPoints.polygon <- function(x, closed, ...) {
             if (n > 1) {
                 split(as.data.frame(pts), id)
             } else {
-                list(pts)
+                list("1"=pts)
             }
         }
     } else {
@@ -249,7 +251,7 @@ grobPoints.pathgrob <- function(x, closed, ...) {
             if (hasMultiple) {
                 split(as.data.frame(pts), pathId)
             } else {
-                list(pts)
+                list("1"=pts)
             }
         } else {
             if (is.null(x$id)) {
@@ -260,9 +262,13 @@ grobPoints.pathgrob <- function(x, closed, ...) {
                 id <- x$id
             }
             if (hasMultiple) {
-                split(as.data.frame(pts), list(id, pathId))
+                pts <- split(as.data.frame(pts), list(id, pathId))
+                names(pts) <- gsub("^[0-9]+[.]", "", names(pts))
+                pts
             } else {
-                split(as.data.frame(pts), id)
+                pts <- split(as.data.frame(pts), id)
+                names(pts) <- rep(1, length(pts))
+                pts
             }
         }
     } else {
@@ -282,7 +288,9 @@ grobPoints.rect <- function(x, closed, ...) {
         top <- bottom + h
         ## Recycle via cbind()
         rects <- cbind(left, right, bottom, top)
-        xyListFromMatrix(rects, c(1, 1, 2, 2), c(3, 4, 4, 3))
+        pts <- xyListFromMatrix(rects, c(1, 1, 2, 2), c(3, 4, 4, 3))
+        names(pts) <- seq_along(pts)
+        pts
     } else {
         emptyCoords
     }
@@ -298,7 +306,9 @@ grobPoints.segments <- function(x, closed, ...) {
         y1 <- convertY(x$y1, "in", valueOnly=TRUE)
         ## Recycle via cbind()        
         xy <- cbind(x0, x1, y0, y1)
-        xyListFromMatrix(xy, 1:2, 3:4)
+        pts <- xyListFromMatrix(xy, 1:2, 3:4)
+        names(pts) <- seq_along(pts)
+        pts
     }
 }
 
@@ -309,13 +319,15 @@ grobPoints.xspline <- function(x, closed, ...) {
         trace <- xsplinePoints(x)
         if ("x" %in% names(trace)) {
             ## Single X-spline
-            list(list(x=as.numeric(trace$x),
-                      y=as.numeric(trace$y)))
+            list("1"=list(x=as.numeric(trace$x),
+                          y=as.numeric(trace$y)))
         } else {
-            lapply(trace,
-                   function(t) {
-                       list(x=as.numeric(t$x), y=as.numeric(t$y))
-                   })
+            pts <- lapply(trace,
+                          function(t) {
+                              list(x=as.numeric(t$x), y=as.numeric(t$y))
+                          })
+            names(pts) <- seq_along(pts)
+            pts
         }
     } else {
         emptyCoords
@@ -339,8 +351,8 @@ grobPoints.text <- function(x, closed, ...) {
             bottom <- bounds[6]
             right <- left + bounds[3]
             top <- bottom + bounds[4]
-            list(list(x=c(left, left, right, right),
-                      y=c(bottom, top, top, bottom)))
+            list("1"=list(x=c(left, left, right, right),
+                          y=c(bottom, top, top, bottom)))
         }
     } else {
         emptyCoords
@@ -356,15 +368,18 @@ grobPoints.points <- function(x, closed, ...) {
         all(sapply(pts, is.null))) {
         emptyCoords
     } else {
-        lapply(pts,
-               function(x) {
-                   if (is.null(x))
-                       emptyCoords
-                   else {
-                       names(x) <- c("x", "y")
-                       x
-                   }
-               })
+        names <- attr(pts, "coordNames")
+        pts <- lapply(pts,
+                      function(x) {
+                          if (is.null(x))
+                              emptyCoords
+                          else {
+                              names(x) <- c("x", "y")
+                              x
+                          }
+                      })
+        names(pts) <- names
+        pts
     }
 }
 

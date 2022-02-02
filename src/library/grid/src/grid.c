@@ -3813,6 +3813,77 @@ static SEXP symbolCoords(double *x, double *y, int n, pGEDevDesc dd)
     return result;
 }
 
+/* How many separate sets of coordinates (shapes) are drawn for a symbol.
+ * NOTE that MINIMUM value is 1, even if no coordinates are returned
+ * (coordinates are NULL) */
+
+static int symbolNumCoords(int pch, Rboolean closed) {
+    int result = 1;
+    /* Only need to worry about SOME pch=<int> */
+    switch(pch) {
+    case 0: /* S square */
+    case 1: /* S octahedron ( circle) */
+    case 2:	/* S triangle - point up */
+        break;
+    case 3: /* S plus */
+        if (!closed) result = 2; break;
+    case 4: /* S times */
+        if (!closed) result = 2; break;
+    case 5: /* S diamond */
+    case 6: /* S triangle - point down */
+        break;
+    case 7:	/* S square and times superimposed */
+        if (closed) 
+            result = 1;
+        else 
+            result = 2;
+        break;
+    case 8: /* S plus and times superimposed */
+        if (!closed) result = 4; break;
+    case 9: /* S diamond and plus superimposed */
+        if (closed) 
+            result = 1;
+        else 
+            result = 2;
+        break;
+    case 10: /* S hexagon (circle) and plus superimposed */
+        if (closed) 
+            result = 1;
+        else 
+            result = 2;
+        break;
+    case 11: /* S superimposed triangles */
+        if (closed) result = 2; break;
+    case 12: /* S square and plus superimposed */
+        if (closed) 
+            result = 1;
+        else 
+            result = 2;
+        break;
+    case 13: /* S octagon (circle) and times superimposed */
+        if (closed) 
+            result = 1;
+        else 
+            result = 2;
+        break;
+    case 14: /* S square and point-up triangle superimposed */
+        if (closed) result = 2; break;
+    case 15: /* S filled square */
+    case 16: /* S filled octagon (circle) */
+    case 17: /* S filled point-up triangle */
+    case 18: /* S filled diamond */
+    case 19: /* R filled circle */
+    case 20: /* R `Dot' (small circle) */
+    case 21: /* circles */
+    case 22: /* squares */
+    case 23: /* diamonds */
+    case 24: /* triangle (point up) */
+    case 25: /* triangle (point down) */
+        break;
+    }
+    return result;
+}
+
 /*
  * In many ways a duplicate of GESymbol, but with the ability
  * to rotate symbols AND the ability to return symbol 
@@ -3838,15 +3909,22 @@ static SEXP symbolCoords(double *x, double *y, int n, pGEDevDesc dd)
  * Return R_NilValue if no coordinates. 
  */
 SEXP gridSymbol(double x, double y, int pch, double size, 
-                Rboolean draw, Rboolean closed,
+                Rboolean draw, Rboolean closed, int numCoords,
                 const pGEcontext gc, pGEDevDesc dd)
 {
     double r, xc, yc;
     double xx[4], yy[4];
     unsigned int maxchar;
 
-    SEXP result = R_NilValue;
-    int resultProtect = 0;
+    SEXP result, coords; 
+
+    if (draw) {
+        result = R_NilValue;
+    } else {
+        /* Default is a list of one component which is NULL */
+        PROTECT(result = allocVector(VECSXP, numCoords));
+        SET_VECTOR_ELT(result, 0, R_NilValue);
+    }
 
     maxchar = (mbcslocale && gc->fontface != 5) ? 127 : 255;
     /* Special cases for plotting pch="." or pch=<character>
@@ -3906,8 +3984,9 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                     yy[1] = y+yc;
                     yy[2] = y+yc;
                     yy[3] = y-yc;
-                    PROTECT(result = symbolCoords(xx, yy, 4, dd));
-                    resultProtect = 1;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
                 }
             }
 	} else {
@@ -3947,8 +4026,9 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                     yy[1] = y+yc;
                     yy[2] = y+yc;
                     yy[3] = y-yc;
-                    PROTECT(result = symbolCoords(xx, yy, 4, dd));
-                    resultProtect = 1;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
                 }
             }
 	    break;
@@ -3968,8 +4048,9 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                         cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
                         cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
                     }
-                    PROTECT(result = symbolCoords(cx, cy, 100, dd));
-                    resultProtect = 1;
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
                 }
             }
 	    break;
@@ -3988,8 +4069,9 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 GEPolygon(3, xx, yy, gc, dd);
             } else {
                 if (closed) {
-                    PROTECT(result = symbolCoords(xx, yy, 3, dd));
-                    resultProtect = 1;
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
                 }
             }
 	    break;
@@ -4000,6 +4082,23 @@ SEXP gridSymbol(double x, double y, int pch, double size,
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP h, v;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y;
+                    yy[1] = y;
+                    PROTECT(h = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, h);
+                    xx[0] = x;
+                    xx[1] = x;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(v = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, v);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4009,6 +4108,23 @@ SEXP gridSymbol(double x, double y, int pch, double size,
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP u, d;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(u = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, u);
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y+yc;
+                    yy[1] = y-yc;
+                    PROTECT(d = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, d);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4023,6 +4139,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(4, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4038,6 +4160,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4050,6 +4178,35 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);                    
+                } else {
+                    SEXP u, d;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(u = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, u);
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y+yc;
+                    yy[1] = y-yc;
+                    PROTECT(d = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, d);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4059,12 +4216,46 @@ SEXP gridSymbol(double x, double y, int pch, double size,
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP u, d;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(u = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, u);
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y+yc;
+                    yy[1] = y-yc;
+                    PROTECT(d = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, d);
+                    UNPROTECT(2);
+                }
             }
-	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+            xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+            yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP h, v;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y;
+                    yy[1] = y;
+                    PROTECT(h = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 2, h);
+                    xx[0] = x;
+                    xx[1] = x;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(v = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 3, v);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4074,6 +4265,23 @@ SEXP gridSymbol(double x, double y, int pch, double size,
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP h, v;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y;
+                    yy[1] = y;
+                    PROTECT(h = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, h);
+                    xx[0] = x;
+                    xx[1] = x;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(v = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, v);
+                    UNPROTECT(2);
+                }
             }
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+yc;
@@ -4083,6 +4291,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(4, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4095,6 +4309,34 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 GECircle(x, y, xc, gc, dd);
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                } else {
+                    SEXP h, v;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y;
+                    yy[1] = y;
+                    PROTECT(h = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, h);
+                    xx[0] = x;
+                    xx[1] = x;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(v = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, v);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4111,12 +4353,24 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
             if (draw) {
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 1, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4129,6 +4383,35 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);                    
+                } else {
+                    SEXP h, v;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y;
+                    yy[1] = y;
+                    PROTECT(h = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, h);
+                    xx[0] = x;
+                    xx[1] = x;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(v = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, v);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4138,12 +4421,42 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            } else {
+                if (!closed) {
+                    SEXP u, d;
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    PROTECT(u = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 0, u);
+                    xx[0] = x-xc;
+                    xx[1] = x+xc;
+                    yy[0] = y+yc;
+                    yy[1] = y-yc;
+                    PROTECT(d = symbolCoords(xx, yy, 2, dd));
+                    SET_VECTOR_ELT(result, 1, d);
+                    UNPROTECT(2);
+                }
             }
 	    break;
 
@@ -4158,6 +4471,26 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->patternFill = R_NilValue;
                 GEPolygon(3, xx, yy, gc, dd);
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);                    
+                    xx[0] = x; yy[0] = y+yc;
+                    xx[1] = x+xc; yy[1] = y-yc;
+                    xx[2] = x-xc; yy[2] = y-yc;
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 1, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4173,6 +4506,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->col = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(4, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4183,6 +4522,19 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->col = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4199,6 +4551,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->col = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4214,6 +4572,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->col = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
                 GEPolygon(4, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4223,6 +4587,19 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = gc->col;
                 gc->patternFill = R_NilValue;
                 GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4233,6 +4610,19 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                 gc->fill = gc->col;
                 gc->patternFill = R_NilValue;
                 GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4250,8 +4640,9 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                         cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
                         cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
                     }
-                    PROTECT(result = symbolCoords(cx, cy, 100, dd));
-                    resultProtect = 1;
+                    PROTECT(coords = symbolCoords(cx, cy, 100, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
                 }
             }
 	    break;
@@ -4261,6 +4652,20 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    yc = toDeviceHeight(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
             if (draw) {
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);                    
+                }
             }
 	    break;
 
@@ -4273,6 +4678,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    xx[3] = x-xc; yy[3] = y;
             if (draw) {
                 GEPolygon(4, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 4, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4286,6 +4697,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    xx[2] = x-xc; yy[2] = y-yc;
             if (draw) {
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 
@@ -4299,6 +4716,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    xx[2] = x-xc; yy[2] = y+yc;
             if (draw) {
                 GEPolygon(3, xx, yy, gc, dd);
+            } else {
+                if (closed) {
+                    PROTECT(coords = symbolCoords(xx, yy, 3, dd));
+                    SET_VECTOR_ELT(result, 0, coords);
+                    UNPROTECT(1);
+                }
             }
 	    break;
 	default:
@@ -4306,8 +4729,8 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	}
     }
 
-    if (resultProtect > 0)
-        UNPROTECT(resultProtect);
+    if (!draw)
+        UNPROTECT(1); /* result */
 
     return result;
 }
@@ -4315,7 +4738,7 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size, 
                        Rboolean draw, Rboolean closed) 
 {
-    int i, nx, npch, nss;
+    int i, nx, npch, nss, ncoords, coordIndex;
     /*    double *xx, *yy;*/
     double *xx, *yy, *ss;
     int *ps;
@@ -4331,6 +4754,7 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
     SEXP currentvp, currentgp;
     SEXP savedFill;
     SEXP result = R_NilValue;
+    SEXP resultNames = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -4436,8 +4860,14 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
         SET_VECTOR_ELT(currentgp, GP_FILL, savedFill);
         UNPROTECT(1); /* savedFill */
     } else {
-        PROTECT(result = allocVector(VECSXP, nx));
+        ncoords = 0;
+        for (i=0; i<nx; i++) {
+            ncoords += symbolNumCoords(ps[i % npch], closed);
+        }
+        PROTECT(result = allocVector(VECSXP, ncoords));
+        PROTECT(resultNames = allocVector(INTSXP, ncoords));
     }
+    coordIndex = 0;
     for (i=0; i<nx; i++)
 	if (R_FINITE(xx[i]) && R_FINITE(yy[i])) {
 	    /* FIXME:  The symbols will not respond to viewport
@@ -4463,17 +4893,27 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
                  */
                 if (draw)
                     gridSymbol(xx[i], yy[i], ipch, symbolSize, 
-                               TRUE, closed, &gc, dd);
-                else 
-                    SET_VECTOR_ELT(result, i,
-                                   gridSymbol(xx[i], yy[i], ipch, symbolSize, 
-                                              FALSE, closed, &gc, dd));
+                               TRUE, closed, 0, &gc, dd);
+                else {
+                    int j, nc = symbolNumCoords(ipch, closed);
+                    SEXP coords;
+                    PROTECT(coords = gridSymbol(xx[i], yy[i], ipch, symbolSize,
+                                                FALSE, closed, nc, &gc, dd));
+                    for (j=0; j<nc; j++) {
+                        INTEGER(resultNames)[coordIndex] = i + 1;
+                        SET_VECTOR_ELT(result, coordIndex++, 
+                                       VECTOR_ELT(coords, j));
+                    }
+                    UNPROTECT(1);
+                }
 	    }
 	}
     if (draw) 
         GEMode(0, dd);
-    else 
-        UNPROTECT(1); /* result */
+    else {
+        setAttrib(result, install("coordNames"), resultNames);
+        UNPROTECT(2); /* result and resultNames */
+    }
     vmaxset(vmax);
     UNPROTECT(2); 
     return result;
