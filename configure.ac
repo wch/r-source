@@ -1317,6 +1317,7 @@ if test "${GCC}" = yes; then
 ## has 32k and so can use -fpic.
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
+## See <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004747> for alpha.
     alpha*|sparc*|ppc64*|powerpc64*|s390*)
       cpicflags="-fPIC"
       ;;
