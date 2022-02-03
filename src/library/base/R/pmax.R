@@ -1,7 +1,7 @@
 #  File src/library/base/R/pmax.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ pmax <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     if(length(elts) == 0L) stop("no arguments")
-    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) { # incl. NULL
+    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
 	mmm <- .Internal(pmax(na.rm, ...))
 	mostattributes(mmm) <- attributes(elts[[1L]])
     } else {
@@ -65,7 +65,7 @@ pmin <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     if(length(elts) == 0L) stop("no arguments")
-    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) { # incl. NULL
+    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
 	mmm <- .Internal(pmin(na.rm, ...))
 	mostattributes(mmm) <- attributes(elts[[1L]])
     } else {

@@ -114,8 +114,8 @@ pmin.int(\dots, na.rm = FALSE)
 }
 \note{
   \sQuote{Numeric} arguments are vectors of type integer and numeric,
-  and logical (coerced to integer).  For historical reasons, \code{NULL}
-  is accepted as equivalent to \code{integer(0)}.% PR#1283
+  and logical (coerced to integer).  In R version before 4.2.0, \code{NULL}
+  had been accepted as equivalent to \code{integer(0)}.% PR#1283
 
   \code{pmax} and \code{pmin} will also work on classed S3 or S4 objects
   with appropriate methods for comparison, \code{is.na} and \code{rep}
@@ -145,7 +145,8 @@ curve(cut01(x^2 - 1/4), col = "blue", add = TRUE, n = 500)
 D <- diag(x = (3:1)/4) ; n0 <- numeric()
 stopifnot(identical(D,  cut01(D) ),
           identical(n0, cut01(n0)),
-          identical(n0, cut01(NULL)),
+#R <= 4.1 identical(n0, cut01(NULL)), # instead (in R >= 4.2.0):
+          is.null(cut01(NULL)),
           identical(n0, pmax(3:1, n0, 2)),
           identical(n0, pmax(n0, 4)))
 }

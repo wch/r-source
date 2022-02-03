@@ -2136,7 +2136,7 @@ substr(x, 1, 2) <- NA_character_; x
 
 
 ## regression tests for pmin/pmax, rewritten in C for 2.5.0
-# NULL == integer(0)
+# had "NULL == integer(0)" but no longer
 pmin(NULL, integer(0))
 pmax(integer(0), NULL)
 pmin(NULL, 1:3)# now ok

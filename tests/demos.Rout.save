@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-12-05 r81297) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-02-02 r81629) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -215,7 +215,7 @@ Number of functions from these:	1330
 
 > is.ALL(NULL)
 is.array           : . 
-is.atomic          : | 
+is.atomic          : . 
 is.call            : . 
 is.character       : . 
 is.complex         : . 
@@ -226,7 +226,7 @@ is.expression      : .
 is.factor          : . 
 is.finite          : NA 
 is.function        : . 
-is.infinite        :  
+is.infinite        : NA 
 is.integer         : . 
 is.language        : . 
 is.list            : . 
@@ -234,7 +234,7 @@ is.logical         : .
 is.matrix          : . 
 is.na              : NA 
 is.name            : . 
-is.nan             :  
+is.nan             : NA 
 is.null            : | 
 is.numeric         : . 
 is.numeric_version : . 
@@ -252,7 +252,7 @@ is.vector          : .
 
 > ##fails: is.ALL(NULL, not.using = c("is.single", "is.loaded"))
 > is.ALL(NULL,   true.only = TRUE)
-[1] "is.atomic"   "is.null"     "is.pairlist"
+[1] "is.null"     "is.pairlist"
 
 > all.equal(NULL, pairlist())
 [1] TRUE
