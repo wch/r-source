@@ -2149,6 +2149,12 @@ SEXP L_moveTo(SEXP x, SEXP y)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* This shape has no fill so set gp$fill to transparent */
+    SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
     PROTECT(prevloc = gridStateElement(dd, GSS_PREVLOC));
     PROTECT(devloc = gridStateElement(dd, GSS_CURRLOC));
     getViewportTransform(currentvp, dd, 
@@ -2191,6 +2197,16 @@ SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* Fill may be used by arrow head, but disallow pattern fill
+     * within arrow head. */
+    if (Rf_inherits(gpFillSXP(currentgp), "GridPattern") ||
+        Rf_inherits(gpFillSXP(currentgp), "GridPatternList")) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
+    }
     PROTECT(prevloc = gridStateElement(dd, GSS_PREVLOC));
     PROTECT(devloc = gridStateElement(dd, GSS_CURRLOC));
     getViewportTransform(currentvp, dd, 
@@ -2255,6 +2271,16 @@ SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* Fill may be used by arrow head, but disallow pattern fill
+     * within arrow head. */
+    if (Rf_inherits(gpFillSXP(currentgp), "GridPattern") ||
+        Rf_inherits(gpFillSXP(currentgp), "GridPatternList")) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -2355,19 +2381,34 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     double xmax = -DBL_MAX;
     double ymin = DBL_MAX;
     double ymax = -DBL_MAX;
-    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* If not drawing (calculating size), set gp$fill to transparent
+     * to avoid infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    if (!draw) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
+    }
+    /* If xspline is open ...
+     * fill may be used by arrow head, but disallow pattern fill
+     * within arrow head. */
+    if (LOGICAL(o)[0] && 
+        (Rf_inherits(gpFillSXP(currentgp), "GridPattern") ||
+         Rf_inherits(gpFillSXP(currentgp), "GridPatternList"))) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    if (!LOGICAL(o)[0] && draw) {
-        PROTECT(resolvedFill = resolveGPar(currentgp));
-    }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     /* 
      * Number of xsplines
@@ -2519,14 +2560,6 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 	    GEMode(0, dd);
 	vmaxset(vmax);
     }
-    if (!LOGICAL(o)[0] && draw) {
-        if (resolvedFill != R_NilValue &&
-            Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            SEXP patternRef = getListElement(resolvedFill, "index");
-            dd->dev->releasePattern(patternRef, dd->dev);
-        }
-        UNPROTECT(1); /* resolvedFill */
-    }
 
     if (!draw && !trace && nloc > 0) {
 	PROTECT(result = allocVector(REALSXP, 4));
@@ -2593,6 +2626,16 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* Fill may be used by arrow head, but disallow pattern fill
+     * within arrow head. */
+    if (Rf_inherits(gpFillSXP(currentgp), "GridPattern") ||
+        Rf_inherits(gpFillSXP(currentgp), "GridPatternList")) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -2796,6 +2839,9 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     return R_NilValue;
 }
 
+/* This one only gets called for drawing - L_locnBounds() is used for
+ * x/y/width/height 
+ */
 SEXP L_polygon(SEXP x, SEXP y, SEXP index)
 {
     int i, j, nx, np, start=0;
@@ -2808,17 +2854,20 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
-    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    PROTECT(resolvedFill = resolveGPar(currentgp));
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     GEMode(1, dd);
     /* 
@@ -2870,12 +2919,6 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
 	vmaxset(vmax);
     }
     GEMode(0, dd);
-    if (resolvedFill != R_NilValue &&
-        Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        SEXP patternRef = getListElement(resolvedFill, "index");
-        dd->dev->releasePattern(patternRef, dd->dev);
-    }
-    UNPROTECT(1); /* resolvedFill */
 
     return R_NilValue;
 }
@@ -2898,19 +2941,26 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     double ymin = DBL_MAX;
     double ymax = -DBL_MAX;
     double edgex, edgey;
-    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* If not drawing (calculating size), set gp$fill to transparent
+     * to avoid infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    if (!draw) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    if (draw) {
-        PROTECT(resolvedFill = resolveGPar(currentgp));
-    }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     ny = unitLength(y);
@@ -2988,12 +3038,6 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     }
     if (draw) {
 	GEMode(0, dd);
-        if (resolvedFill != R_NilValue &&
-            Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            SEXP patternRef = getListElement(resolvedFill, "index");
-            dd->dev->releasePattern(patternRef, dd->dev);
-        }
-        UNPROTECT(1); /* resolvedFill */
 
     } else if (ncirc > 0) {
 	result = allocVector(REALSXP, 4);
@@ -3281,8 +3325,6 @@ SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
     return gridRect(x, y, w, h, hjust, vjust, REAL(theta)[0], FALSE);
 }
 
-/* FIXME: need to add L_pathBounds ? */
-
 SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
 {
     int i, j, k, h, npoly, *nper, ntot;
@@ -3295,17 +3337,20 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
-    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    PROTECT(resolvedFill = resolveGPar(currentgp));
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     GEMode(1, dd);
     /*
@@ -3355,11 +3400,6 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
     	vmaxset(vmax);
     }
     GEMode(0, dd);
-    if (resolvedFill != R_NilValue &&
-        Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        SEXP patternRef = getListElement(resolvedFill, "index");
-        dd->dev->releasePattern(patternRef, dd->dev);
-    }
     UNPROTECT(1); /* resolvedFill */
     return R_NilValue;
 }
@@ -3388,6 +3428,12 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
     unsigned int *image;
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* This shape has no fill so set gp$fill to transparent */
+    SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -3569,13 +3615,12 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
-    /* If not drawing (calculating size), NULL gp$fill to avoid 
-     * infinite loop when gp$fill is a pattern 
-     * (resolving a pattern involves calculating size) */
+    /* This copy is used to modify gp$fill to avoid
+     * stupid amounts of pattern resolving WITHOUT touching current gp
+     * in 'grid' state. */
     currentgp = PROTECT(duplicate(currentgp));
-    if (!draw) {
-        setListElement(currentgp, "fill", R_NilValue);
-    }
+    /* This shape has no fill so set gp$fill to transparent */
+    SET_VECTOR_ELT(currentgp, GP_FILL, mkString("transparent"));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -5213,6 +5258,11 @@ SEXP L_stringMetric(SEXP label)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* If not drawing (calculating size), NULL gp$fill to avoid 
+     * infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    currentgp = PROTECT(duplicate(currentgp));
+    setListElement(currentgp, "fill", R_NilValue);
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);

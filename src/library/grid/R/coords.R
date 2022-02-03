@@ -262,8 +262,12 @@ grobPoints.pathgrob <- function(x, closed, ...) {
                 id <- x$id
             }
             if (hasMultiple) {
-                pts <- split(as.data.frame(pts), list(id, pathId))
-                names(pts) <- gsub("^[0-9]+[.]", "", names(pts))
+                pts <- unlist(mapply(split,
+                                     split(as.data.frame(pts), pathId),
+                                     split(id, pathId),
+                                     SIMPLIFY=FALSE),
+                              recursive=FALSE)
+                names(pts) <- gsub("[.][0-9]+$", "", names(pts))
                 pts
             } else {
                 pts <- split(as.data.frame(pts), id)

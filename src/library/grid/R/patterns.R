@@ -248,8 +248,15 @@ resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
 (recycling coords)")
                 index <- (index - 1) %% length(pts) + 1
             }
-            x <- pts[[index]]$x
-            y <- pts[[index]]$y
+            ## Individual shape may consist of more than one set of
+            ## coordinates (e.g., single path consists of distinct shapes)
+            shapeIndex <- names(pts) %in% index
+            ## Fallback if 'pts' does not have names to identify shapes
+            if (!any(shapeIndex)) {
+                shapeIndex <- index
+            }
+            x <- unlist(lapply(pts[shapeIndex], function(p) p$x))
+            y <- unlist(lapply(pts[shapeIndex], function(p) p$y))
         }
         left <- min(x)
         bottom <- min(y)
@@ -296,8 +303,15 @@ resolveFill.GridGrobPatternList <- function(fill, ...) {
                 y <- unlist(lapply(pts, function(p) p$y))
             } else {
                 ## Pattern is relative to bounding box of individual shapes
-                x <- pts[[i]]$x
-                y <- pts[[i]]$y
+                ## Individual shape may consist of more than one set of
+                ## coordinates (e.g., single path consists of distinct shapes)
+                shapeIndex <- names(pts) %in% i
+                ## Fallback if 'pts' does not have names to identify shapes
+                if (!any(shapeIndex)) {
+                    shapeIndex <- i
+                }
+                x <- unlist(lapply(pts[shapeIndex], function(p) p$x))
+                y <- unlist(lapply(pts[shapeIndex], function(p) p$y))
             }
             left <- min(x)
             bottom <- min(y)
