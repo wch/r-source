@@ -69,6 +69,10 @@
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
 
+      \item \code{window(x, start, end)} no longer wrongly signals
+      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
+      \PR{18291}.
+
       \item \code{data()} now checks that its (rarely used) \code{list}
       argument is a character vector -- a couple of packages passed other
       types and gave incorrect results.
