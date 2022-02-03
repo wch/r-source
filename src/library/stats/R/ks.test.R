@@ -16,7 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-ks.test <-
+ks.test <- function(x, ...) UseMethod("ks.test")
+
+ks.test.default <-
     function(x, y, ..., alternative = c("two.sided", "less", "greater"),
              exact = NULL)
 {
@@ -145,4 +147,48 @@ ks.test <-
                  data.name = DNAME)
     class(RVAL) <- "htest"
     return(RVAL)
+}
+
+ks.test.formula <-
+function(formula, data, subset, na.action, ...)
+{
+    if(missing(formula) || (length(formula) != 3L))
+        stop("'formula' missing or incorrect")
+    oneSample <- FALSE
+    if (length(attr(terms(formula[-2L]), "term.labels")) != 1L)
+        if (formula[[3L]] == 1L)
+            oneSample <- TRUE
+        else
+            stop("'formula' missing or incorrect")
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    ## need stats:: for non-standard evaluation
+    m[[1L]] <- quote(stats::model.frame)
+    m$... <- NULL
+    mf <- eval(m, parent.frame())
+    rname <- names(mf)[1L]
+    DNAME <- paste(names(mf), collapse = " by ") # works in all cases
+    names(mf) <- NULL
+    response <- attr(attr(mf, "terms"), "response")
+    if (! oneSample) { # two-sampl Smirnov test
+        g <- factor(mf[[-response]])
+        if(nlevels(g) != 2L)
+            stop("grouping factor must have exactly 2 levels")
+        DATA <- split(mf[[response]], g)
+        ## Call the default method.
+        y <- ks.test(x = DATA[[1L]], y = DATA[[2L]], ...)        
+        y$alternative <- gsub("x", levels(g)[1L], y$alternative)
+        y$alternative <- gsub("y", levels(g)[2L], y$alternative)
+        y$response <- rname             # FIXME confband
+        y$groups <- levels(g)           # FIXME confband
+    }
+    else { # one-sample test
+        respVar <- mf[[response]]
+        ## Call the default method.
+        y <- ks.test(x = respVar, ...)
+        y$alternative <- gsub("x", DNAME, y$alternative)
+    }
+    y$data.name <- DNAME
+    y
 }
