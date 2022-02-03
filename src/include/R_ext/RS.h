@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2021 The R Core Team.
+ *  Copyright (C) 1999-2022 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -45,6 +45,8 @@ extern "C" {
 /* S Like Error Handling */
 
 #if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
+
+#warning "R_LEGACY_S_DEFS will be removed before R 4.2.0 is released"
 
 #include <R_ext/Error.h>	/* for Rf_error and Rf_warning */
     
