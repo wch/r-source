@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-02-02 r81629) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-01-03 r81435) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
@@ -5948,13 +5948,13 @@ expression(bin <- bin + 1L)
 > 
 > 
 > ## regression tests for pmin/pmax, rewritten in C for 2.5.0
-> # had "NULL == integer(0)" but no longer
+> # NULL == integer(0)
 > pmin(NULL, integer(0))
-NULL
+integer(0)
 > pmax(integer(0), NULL)
 integer(0)
 > pmin(NULL, 1:3)# now ok
-NULL
+integer(0)
 > pmax(pi, NULL, 2:4)
 numeric(0)
 > 
