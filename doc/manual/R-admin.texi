@@ -5266,7 +5266,7 @@ available: running @command{pkg-config pangocairo --exists
 what is missing.  At the time of writing using pre-built components
 @code{cairo}, @code{fontconfig}, @code{freetype}, @code{ffi},
 @code{fribidi}, @code{gettext}, @code{icu}, @code{glib},
-@code{harfbuzz}, @code{pango}, @code{pixman}, @code{pcre} and
+@code{harfbuzz}, @code{pango}, @code{pcre}, @code{pixman} and
 @code{xml2} sufficed.
 
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
