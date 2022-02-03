@@ -1,6 +1,6 @@
 % File src/library/base/man/dump.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dump}
@@ -26,8 +26,8 @@ dump(list, file = "dumpdata.R", append = FALSE,
     output will be appended to \code{file}; otherwise, it will overwrite
     the contents of \code{file}.}
 
-  \item{control}{character vector indicating deparsing options.
-    See \code{\link{.deparseOpts}} for their description.}
+  \item{control}{character vector (or \code{NULL}) indicating deparsing
+    options.  See \code{\link{.deparseOpts}} for their description.}
 
   \item{envir}{the environment to search for objects.}
 
@@ -51,12 +51,12 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \code{\link{saveRDS}} are designed to
   be used for transporting \R data, and will work with \R objects that
   \code{dump} does not handle.  For maximal reproducibility use
-  \code{control = c("all", "hexNumeric")}.
+  \code{control = "exact"}.
 
   To produce a more readable representation of an object, use
   \code{control = NULL}.  This will skip attributes, and will make other
   simplifications that make \code{source} less likely to produce an
-  identical copy.  See \code{\link{deparse}} for details.
+  identical copy.  See \code{\link{.deparseOpts}} for details.
 
   To deparse the internal representation of a function rather than
   displaying the saved source, use \code{control = c("keepInteger",

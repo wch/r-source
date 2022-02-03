@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -117,14 +117,16 @@
   \code{control = NULL}.  This displays the object's value, but not its
   attributes.  The default in \code{\link{deparse}} is to display the
   attributes as well, but not to use any of the other options to make
-  the result parseable.  (\code{\link{dput}} and \code{\link{dump}} do
-  use more default options, and printing of functions without sources
-  uses \code{c("keepInteger", "keepNA")}.)
+  the result parseable.  (\code{\link{dump}} uses more default options via
+  \code{control = "all"}, and printing of functions without sources
+  uses \code{c("keepInteger", "keepNA")} to which one may add
+  \code{"warnIncomplete"}.)
 
-  Using \code{control = c("all", "hexNumeric")} comes closest to making
-  \code{deparse()} an inverse of \code{parse()}, as representing double
-  and complex numbers as decimals may well not be exact.  However, not all
-  objects are deparse-able even with this option.  A warning will be
+  Using \code{control = "exact"} (short for \code{control = c("all", "hexNumeric")})
+  comes closest to making \code{deparse()} an inverse of \code{parse()}
+  (but we have not yet seen an example where \code{"all"}, now including
+   \code{"digits17"}, would not have been as good).  However, not all
+  objects are deparse-able even with these options, and a warning will be
   issued if the function recognizes that it is being asked to do the
   impossible.
 
@@ -135,6 +137,7 @@
   selected.
 }
 \examples{
+stopifnot(.deparseOpts("exact") == .deparseOpts(c("all", "hexNumeric")))
 (iOpt.all <- .deparseOpts("all")) # a four digit integer
 
 ## one integer --> vector binary bits
@@ -149,14 +152,17 @@ int2bits <- function(x, base = 2L,
     rev(r) # smallest bit at left
 }
 int2bits(iOpt.all)
-## what options does  "all" contain ?
-depO.indiv <- setdiff(..deparseOpts, c("all", "exact"))
-(oa <- depO.indiv[int2bits(iOpt.all) == 1])
+## What options does  "all" contain ? =========
+(depO.indiv <- setdiff(..deparseOpts, c("all", "exact")))
+(oa <- depO.indiv[int2bits(iOpt.all) == 1])# 8 strings
 stopifnot(identical(iOpt.all, .deparseOpts(oa)))
 
 ## ditto for "exact" instead of "all":
-int2bits(iOpt.X <- .deparseOpts("exact"))
-(oX <- depO.indiv[int2bits(iOpt.X) == 1])
+(iOpt.X <- .deparseOpts("exact"))
+data.frame(opts = depO.indiv,
+           all  = int2bits(iOpt.all),
+           exact= int2bits(iOpt.X))
+(oX <- depO.indiv[int2bits(iOpt.X) == 1]) # 8 strings, too
 diffXall <- oa != oX
 stopifnot(identical(iOpt.X, .deparseOpts(oX)),
           identical(oX[diffXall], "hexNumeric"),
