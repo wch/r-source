@@ -87,7 +87,7 @@ extern void R_chk_free(void *);
    Used by a couple of packages. */
 #define Memzero(p,n)  memset(p, 0, (R_SIZE_T)(n) * sizeof(*p))
 
-/* In NEWS.2 for R 2.6.0 for but not otherwise documented.  Used by patchDVI */
+/* Added in R 2.6.0 */
 #define CallocCharBuf(n) (char *) R_chk_calloc(((R_SIZE_T)(n))+1, sizeof(char))
 
 /* S Like Fortran Interface */
