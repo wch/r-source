@@ -548,6 +548,10 @@
       \item \code{smooth.spline(x,y,*)} now computes the \code{cv.crit}
       statistic correctly, also when \code{is.unsorted(x)}, fixing
       \PR{18294}.
+
+      \item \code{model.weights()} and \code{model.offset()} more carefully
+      extract their model components, thanks to Ben Bolker and Tim Taylor's
+      R-devel post.
     }
   }
 }
