@@ -153,7 +153,16 @@ escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
 invalid_HTML_chars_re <-
     "[\u0001-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]"
 
+## topics can contain weird characters like % / & !, so need to be
+## encoded. We allow for different encodings for URLs and filenames
+## (although mostly the same for now).
 
+## & -> %26F is OK, & -> &amp; is NOT OK with dynamic help
+topic2url <- function(x)
+{
+    if (config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_", "TRUE"))) utils::URLencode(x, reserved=TRUE)
+    else urlify(x)
+}
 topic2filename <- function(x) gsub("%", "+", utils::URLencode(x, reserved=TRUE))
 
 
@@ -388,7 +397,7 @@ Rd2HTML <-
             ## ---------------- \link{topic} and \link[=topic]{foo}
             topic <- parts$dest
     	    if (dynamic) { # never called with package=""
-                htmlfile <- paste0("../../", urlify(package), "/help/", urlify(topic))
+                htmlfile <- paste0("../../", urlify(package), "/help/", topic2url(topic))
                 writeHref()
                 return()
             }
@@ -433,9 +442,9 @@ Rd2HTML <-
             if (!dynamic && !linksToTopics && !no_links &&
                 nzchar(pkgpath <- system.file(package = parts$pkg))) {
                 ## old-style static HTML: prefer filename over topic,
-                ## so treat as filename and urlify() instead of
+                ## so treat as filename and topic2url() instead of
                 ## topic2filename()
-                htmlfile <- paste0(urlify(parts$targetfile), ".html")
+                htmlfile <- paste0(topic2url(parts$targetfile), ".html")
                 ## check the link, only if the package is found
                 OK <- FALSE
                 if (!file.exists(file.path(pkgpath, "html", htmlfile))) {
@@ -464,23 +473,22 @@ Rd2HTML <-
             if (parts$pkg == package) { # within same package
                 if (linksToTopics)
                     htmlfile <-
-                        if (dynamic) paste0("../help/", urlify(parts$targetfile))
+                        if (dynamic) paste0("../help/", topic2url(parts$targetfile))
                         else paste0("../help/", topic2filename(parts$targetfile), ".html")
                 else # use href = "file.html"
-                    htmlfile <- paste0(urlify(parts$targetfile), ".html")
+                    htmlfile <- paste0(topic2url(parts$targetfile), ".html")
                 writeHref()
             } else {  # link to different package
                 ## href = "../../pkg/html/file.html"
                 if (linksToTopics)
                     htmlfile <-
                         if (dynamic) paste0("../../", urlify(parts$pkg), "/help/",
-                                            urlify(parts$targetfile))
+                                            topic2url(parts$targetfile))
                         else paste0("../../", urlify(parts$pkg), "/help/",
                                     topic2filename(parts$targetfile), ".html")
-
                 else
                     htmlfile <- paste0("../../", urlify(parts$pkg), "/html/",
-                                       urlify(parts$targetfile), ".html")
+                                       topic2url(parts$targetfile), ".html") # FIXME Is this always OK ??
                 writeHref()
             }
         }
