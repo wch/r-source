@@ -46,8 +46,6 @@ extern "C" {
 
 #if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
 
-#warning "R_LEGACY_S_DEFS will be removed before R 4.2.0 is released"
-
 #include <R_ext/Error.h>	/* for Rf_error and Rf_warning */
     
 #define R_PROBLEM_BUFSIZE	4096
