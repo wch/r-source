@@ -103,7 +103,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
 
-  %% Package \pkg{Aspell} on Omegahat
+  %% Package \pkg{Aspell} formerly available from Omegahat
   %% (\url{http://www.omegahat.net/Aspell}) for a fine-grained R interface
   %% to the Aspell library.
 }
