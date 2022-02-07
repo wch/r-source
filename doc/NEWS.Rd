@@ -552,6 +552,9 @@
       \item \code{model.weights()} and \code{model.offset()} more carefully
       extract their model components, thanks to Ben Bolker and Tim Taylor's
       R-devel post.
+
+      \item The \code{formula} method of \code{aggregate} now matches the
+      generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
     }
   }
 }
