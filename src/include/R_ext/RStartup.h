@@ -95,7 +95,6 @@ typedef struct
 	   currently has no effect in Rgui (always enabled) and in Rterm (never
 	   enabled).
 	*/
-    void (*ResetConsole) (void);
 #endif
 } structRstart;
 
