@@ -1,4 +1,3 @@
-
 ## Regression tests for R >= 3.4.0
 
 .pt <- proc.time()
@@ -5765,6 +5764,15 @@ ss3gw.u <- sspline_(x=x.[i], y=y[i], w=w[i], cv=FALSE)
           all.equal(noC(ss3gw), noC(ss3gw.u), tol=0)  # TRUE (also previously)
 stopifnot(all.equal(noC(ss3gw), noC(ss3gw.u), tol=1e-14))
 ## non-ordered 'x' gave wrong  $cv.crit in the nx=n case in R <= 4.1.2
+
+
+## aggregate(<formula>, *) method in lapply() etc -- ## PR18299
+L1 <- lapply(X = list(mtcars), FUN = aggregate, x = mpg ~ cyl, mean)
+mtcars |> aggregate(x = mpg ~ cyl, FUN = mean) -> m
+stopifnot(identical(L1[[1]], aggregate(mpg ~ cyl, mtcars, mean)),
+          is.data.frame(m), dim(m) == 3:2)
+## formula method different 1st arg than generic such that
+## both examples failed in  R <= 4.1.2
 
 
 
