@@ -809,7 +809,7 @@ function(x, style = "text", .bibstyle = NULL,
                    out[!lengths(out)] <- ""
                    unlist(out)
                },
-               "citation" = format_as_citation(x,
+               "citation" = format_as_citation(.bibentry(x),
                                                msg = missing(bibtex) &&
                                                    missing(citation.bibtex.max)),
                "R" = .format_bibentry_as_R_code(x, ...)
@@ -1069,6 +1069,10 @@ function(x, name, value)
 
     .bibentry(x)
 }
+
+`$<-.citation` <-
+function(x, name, value)
+    .citation(NextMethod("$<-"))
 
 c.bibentry <-
 function(..., recursive = FALSE)
