@@ -58,21 +58,15 @@ function(given = NULL, family = NULL, middle = NULL,
                               sQuote("given"),
                               sQuote("first"), sQuote("middle")),
                      domain = NA)
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("given"), sQuote("first")),
                     domain = NA)
-            ## </FIXME>
             given <- first
         }
         if(!.is_not_nonempty_text(middle)) {
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("given"), sQuote("middle")),
                     domain = NA)
-            ## </FIXME>
             given <- c(given, unlist(strsplit(middle, "[[:space:]]+")))
         }
 
@@ -81,12 +75,9 @@ function(given = NULL, family = NULL, middle = NULL,
                 stop(gettextf("Use either %s or %s but not both.",
                               sQuote("family"), sQuote("last")),
                      domain = NA)
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("family"), sQuote("last")),
                     domain = NA)
-            ## </FIXME>
             family <- last
         }
 
