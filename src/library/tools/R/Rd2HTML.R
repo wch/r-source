@@ -179,7 +179,7 @@ createRedirects <- function(file, Rdobj)
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     if (!linksToTopics) return(invisible()) # do nothing
     ## create a HTTP redirect for each 'alias' in .../pkg/help/
-    redirHTML <- sprintf("<html><head><meta http-equiv='refresh' content='0; url=../html/%s'></head></html>\n", urlify(basename(file)))
+    redirHTML <- sprintf("<!DOCTYPE html>\n<html><head><meta http-equiv='refresh' content='0; url=../html/%s'><title>HTTP redirect</title></head><body></body></html>\n", urlify(basename(file)))
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
     aliasName <- function(i) trimws(Rdobj[[i]][[1]])
