@@ -173,9 +173,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         txt <- txt[(cumsum(txt == "> ## IGNORE_RDIFF_BEGIN") <=
                     cumsum(txt == "> ## IGNORE_RDIFF_END"))]
         ## (Keeps the end markers, but that's ok.)
-        if (nullPointers)
+        if (nullPointers) {
             ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
+            ## standardize hashtable, pro tem
+            txt <- sub("<hashtable.*>", "<hashtable output>", txt)
+        }
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- .canonicalize_quotes(txt)
         if(.Platform$OS.type == "windows") {
