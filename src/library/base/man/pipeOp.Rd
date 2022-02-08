@@ -1,6 +1,6 @@
 % File src/library/base/man/pipeOp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pipeOp}
@@ -15,14 +15,14 @@
 }
 \arguments{
   \item{lhs}{expression producing a value.}
-  \item{rhs}{a call expression or an expression of the form
-    \code{symbol => call}.}
+  \item{rhs}{a call expression.}% or an expression of the form \code{symbol => call}
 }
 \details{
   A pipe expression passes, or pipes, the result of the left-hand side
   expression \code{lhs} to the right-hand side expression \code{rhs}.
 
-  If the \code{rhs} expression is a call, then the \code{lhs} is
+  %If the \code{rhs} expression is a call, then the
+  The \code{lhs} is
   inserted as the first argument in the call. So \code{x |> f(y)} is
   interpreted as \code{f(x, y)}.
 
@@ -54,8 +54,11 @@ mtcars |> head()                      # same as head(mtcars)
 mtcars |> head(2)                     # same as head(mtcars, 2)
 mtcars |> subset(cyl == 4) |> nrow()  # same as nrow(subset(mtcars, cyl == 4))
 
-# passing the lhs into an argument other than the first:
+# passing the lhs into an argument other than the first, either:
 mtcars |> subset(cyl == 4) |> (function(d) lm(mpg ~ disp, data = d))()
+mtcars |> subset(cyl == 4) |> (\(d) lm(mpg ~ disp, data = d))()
+# or explicitly naming the argument(s) before the "one":
+mtcars |> subset(cyl == 4) |> lm(formula = mpg ~ disp)
 
 # the pipe operator is implemented as a syntax transformation:
 quote(mtcars |> subset(cyl == 4) |> nrow())
