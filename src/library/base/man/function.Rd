@@ -40,9 +40,6 @@
     + 1}. It may be helpful in making code containing simple function
   expressions more readable.
 }
-\note{ \bold{The shorthand function notation is experimental and may change
-    prior to release.} }
-
 \section{Technical details}{
   This type of function is not the only type in \R: they are called
   \emph{closures} (a name with origins in LISP) to distinguish them from
