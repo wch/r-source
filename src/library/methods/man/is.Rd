@@ -20,7 +20,7 @@ extends(class1, class2, maybe = TRUE, fullInfo = FALSE)
 \arguments{
   \item{object}{any \R object.}
   \item{class1, class2}{
-    character strings giving the names of each od the two classes
+    character strings giving the names of each of the two classes
     between which \code{is} relations are to be examined, or (more
     efficiently) the class definition objects for the classes.}
 
