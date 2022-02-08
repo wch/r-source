@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016 The R Core Team.
+ *  Copyright (C) 1997--2022 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,10 @@
    This is a legacy header and no longer documented.
    Code using it should be converted to use R.h
 */
+
+// #warning is not strictly portable, but nothing is ....
+// Defer until 2022-03-15
+// #warning "Legacy header S.h is no longer supported: use R.h instead"
 
 /* This header includes C headers and so is not safe for inclusion
    from C++: use R.h instead. */
@@ -65,7 +69,7 @@ extern double norm_rand(void);
 /* Macros for S/R Compatibility */
 
 #include <R_ext/RS.h>
-/* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
+/* for Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
 /* S4 uses macros equivalent to */
 #define Salloc(n,t) (t*)S_alloc(n, sizeof(t))
@@ -82,7 +86,9 @@ typedef struct {
 #endif
 
 #ifndef NO_CALL_R
-/* Not quite full compatibility: beware! */
+/* Not quite full compatibility: beware! 
+   Deprecated in R 2.15.0
+*/
 /* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
 #define call_S call_R
 #endif

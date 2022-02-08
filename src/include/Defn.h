@@ -2054,6 +2054,13 @@ SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
 void NORET R_signalErrorCondition(SEXP cond, SEXP call);
 void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
+SEXP R_vmakeErrorCondition(SEXP call,
+			   const char *classname, const char *subclassname,
+			   int nextra, const char *format, va_list ap);
+SEXP R_makeErrorCondition(SEXP call,
+			  const char *classname, const char *subclassname,
+			  int nextra, const char *format, ...);
+void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix);

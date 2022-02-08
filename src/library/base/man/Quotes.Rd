@@ -1,6 +1,6 @@
 % File src/library/base/man/Quotes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Quotes}
@@ -38,7 +38,7 @@
   strings, and double quotes in double-quoted strings.
 
   \tabular{ll}{
-    \samp{\\n}\tab newline\cr
+    \samp{\\n}\tab newline (aka \sQuote{line feed})\cr
     \samp{\\r}\tab carriage return\cr
     \samp{\\t}\tab tab\cr
     \samp{\\b}\tab backspace\cr
@@ -60,6 +60,8 @@
   and \code{\link{read.table}} if \code{allowEscapes = TRUE}.  Unicode
   escapes can be used to enter Unicode characters not in the current
   locale's charset (when the string will be stored internally in UTF-8).
+  The maximum allowed value for \samp{\\nnn} is \samp{\\377} (the same
+  character as \samp{\\xff}).
 
   As from \R 4.1.0 the largest allowed \samp{\\U} value is
   \samp{\\U10FFFF}, the maximum Unicode point.

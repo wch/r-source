@@ -1,12 +1,12 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
 \alias{plot.lm}
 % \alias{plot.mlm} %which is .NotYetImplemented()
-\title{Plot Diagnostics for an lm Object}
+\title{Plot Diagnostics for an \code{lm} Object}
 \usage{
 \method{plot}{lm}(x, which = c(1,2,3,5), %% was which = 1:4
      caption = list("Residuals vs Fitted", "Normal Q-Q",
@@ -33,14 +33,14 @@
     \code{\link{glm}}.}
   \item{which}{a subset of the numbers \code{1:6}, by default \code{1:3, 5},
     referring to \enumerate{
-      \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot. % 1
+      \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot % 1
       \item "Normal Q-Q" plot, an enhanced \code{\link{qqnorm}(resid(.))} % 2
       \item "Scale-Location"     % 3
       \item "Cook's distance"    % 4
       \item "Residuals   vs  Leverage"      % 5
       \item "Cook's dist vs Lev./(1-Lev.)"  % 6
-    },
-  see also \sQuote{Details} below.}
+    }
+    See also \sQuote{Details} below.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
     graphics annotations, see \code{\link{as.graphicsAnnot}}, of length
@@ -73,9 +73,9 @@
   \item{cook.legendChanges}{a \code{\link{list}} (or \code{NULL} to
     suppress the call) of arguments to \code{\link{legend}} which should be
     \emph{modified} from (or added to) the \code{plot.lm()} default \code{
-      list(x = "bottomleft", legend = "Cook's distance = c",
+      list(x = "bottomleft", legend = "Cook's distance",
            lty = cook.lty, col = cook.col, text.col = cook.col,
-           bty = "n", adj = 0.1, y.intersp = 1/8) }.}
+           bty = "n", x.intersp = 1/4, y.intersp = 1/8) }.}
   \item{add.smooth}{logical indicating if a smoother should be added to
     most plots; see also \code{panel} above.}
   \item{iter.smooth}{the number of robustness iterations, the argument
@@ -131,7 +131,8 @@
   the plot uses factor level combinations instead of the leverages for
   the x-axis.  (The factor levels are ordered by mean fitted value.)
 
-  In the Cook's distance vs leverage/(1-leverage) (= \dQuote{leverage*}), contours of
+  In the Cook's distance vs leverage/(1-leverage) (= \dQuote{leverage*})
+  plot (\code{which=6}), contours of
   standardized residuals (\code{\link{rstandard}(.)}) that are equal in
   magnitude are lines through the origin.  These lines are labelled with
   the magnitudes.  The x-axis is labeled with the (non equidistant)
@@ -199,17 +200,17 @@ plot(lm.SR, panel = function(x, y) panel.smooth(x, y, span = 1))
 par(mfrow = c(2,1)) # same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
 
-## Cook's distance tweaking; col / "legend" suppressed here
+## Cook's distance tweaking
 par(mfrow = c(2,3)) # same oma ...
 plot(lm.SR, which = 1:6, cook.col = "royalblue")
 
 ## A case where over plotting of the "legend" is to be avoided:
-if(dev.interactive()) getOption("device")(height = 6, width = 4)
-par(mfrow= c(3,1), mar= c(5,5,4,2)/2 +.1, mgp= c(1.4, .5, 0))
-plot(lm.SR, which=5, extend.ylim.f = c(0.2, 0.08))
-plot(lm.SR, which=5, cook.lty="dotdash",
-     cook.legendChanges = list(x = "bottomright"))
-plot(lm.SR, which=5, cook.legendChanges=NULL)# no "legend"
+if(dev.interactive(TRUE)) getOption("device")(height = 6, width = 4)
+par(mfrow = c(3,1), mar = c(5,5,4,2)/2 +.1, mgp = c(1.4, .5, 0))
+plot(lm.SR, which = 5, extend.ylim.f = c(0.2, 0.08))
+plot(lm.SR, which = 5, cook.lty = "dotdash",
+     cook.legendChanges = list(x = "bottomright", legend = "Cook"))
+plot(lm.SR, which = 5, cook.legendChanges = NULL)  # no "legend"
 
 \dontshow{
 ## An example with *long* formula that needs abbreviation:

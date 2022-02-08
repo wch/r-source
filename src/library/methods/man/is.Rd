@@ -1,6 +1,6 @@
 % File src/library/methods/man/is.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is}
@@ -20,9 +20,9 @@ extends(class1, class2, maybe = TRUE, fullInfo = FALSE)
 \arguments{
   \item{object}{any \R object.}
   \item{class1, class2}{
-    the names of the classes between which \code{is} relations are to be
-    examined defined, or (more efficiently) the class definition
-    objects for the classes.}
+    character strings giving the names of each of the two classes
+    between which \code{is} relations are to be examined, or (more
+    efficiently) the class definition objects for the classes.}
 
   \item{fullInfo}{
     In a call to \code{extends}, with \code{class2} missing,
@@ -96,7 +96,13 @@ extends(class1, class2, maybe = TRUE, fullInfo = FALSE)
   which should rarely be encountered.
 
 
- }
+}
+
+\note{
+  Prior to \R 4.2.0 the code used the first elements of \code{class1}
+  and \code{class2}, silently,  These are now required to be length-one
+  character vectors.
+}
 
 \references{
  Chambers, John M. (2016)

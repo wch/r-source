@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2846,6 +2846,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if (!octal)
 		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		if(octal > 0xff)
+		    error(_("exceeded maximum allowed octal value \\377 (line %d)"), ParseState.xxlineno);
 		c = octal;
 		oct_or_hex = TRUE;
 	    }
@@ -3023,12 +3025,16 @@ static int StringValue(int c, Rboolean forSymbol)
 	}
 	STEXT_PUSH(c);
 	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
-	else { /* have an 8-bit char in the current encoding */
+	else { 
+	    /* have an 8-bit char in the current encoding */
+	    /* FIXME: `wc` values will be wrong when native encoding differs
+	       from that indicated by `known_to_be*` */
+	    int res = 0;
 #ifdef WC_NOT_UNICODE
 	    ucs_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbtoucs(&wc, s, 2);
+	    res = (int) mbtoucs(&wc, s, 2);
 #else
 	    wchar_t wc;
 	    char s[2] = " ";
@@ -3036,8 +3042,9 @@ static int StringValue(int c, Rboolean forSymbol)
 	    /* This is not necessarily correct for stateful SBCS */
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
-	    mbrtowc(&wc, s, 2, &mb_st);
+	    res = (int) mbrtowc(&wc, s, 2, &mb_st);
 #endif
+	    if(res < 0) wc = 0xFFFD; /* placeholder for invalid encoding */
 	    WTEXT_PUSH(wc);
 	}
     }
@@ -3154,11 +3161,12 @@ static int RawStringValue(int c0, int c)
 	STEXT_PUSH(c);
 	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
 	else { /* have an 8-bit char in the current encoding */
+	    int res = 0;
 #ifdef WC_NOT_UNICODE
 	    ucs_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbtoucs(&wc, s, 2);
+	    res = (int) mbtoucs(&wc, s, 2);
 #else
 	    wchar_t wc;
 	    char s[2] = " ";
@@ -3166,8 +3174,9 @@ static int RawStringValue(int c0, int c)
 	    /* This is not necessarily correct for stateful SBCS */
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
-	    mbrtowc(&wc, s, 2, &mb_st);
+	    res = (int) mbrtowc(&wc, s, 2, &mb_st);
 #endif
+	    if(res < 0) wc = 0xFFFD; /* placeholder for invalid encoding */
 	    WTEXT_PUSH(wc);
 	}
     }

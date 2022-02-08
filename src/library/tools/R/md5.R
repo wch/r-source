@@ -1,7 +1,7 @@
 #  File src/library/tools/R/md5.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ md5sum <- function(files) {
 checkMD5sums <- function(package, dir)
 {
     if(missing(dir)) dir <- find.package(package, quiet = TRUE)
-    if(!length(dir)) return(NA)
+    if(length(dir) != 1L) return(NA)
     md5file <- file.path(dir, "MD5")
     if(!file.exists(md5file)) return(NA)
     inlines <- readLines(md5file)

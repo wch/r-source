@@ -3257,8 +3257,9 @@ mean of x mean of y
 @noindent
 which does indicate a significant difference, assuming normality.  By
 default the @R{} function does not assume equality of variances in the
-two samples (in contrast to the similar @SPLUS{} @code{t.test}
-function).  We can use the F test to test for equality in the variances,
+two samples.
+@c (in contrast to the similar @SPLUS{} @code{t.test} function).
+We can use the F test to test for equality in the variances,
 provided that the two samples are from normal populations.
 
 @example
@@ -3745,8 +3746,8 @@ topic and is not covered further here.
 If global and permanent assignments are intended within a function, then
 either the ``superassignment'' operator, @code{<<-} or the function
 @code{assign()} can be used.  See the @code{help} document for details.
-@SPLUS{} users should be aware that @code{<<-} has different semantics
-in @R{}.  These are discussed further in @ref{Scope}.
+@c @SPLUS{} users should be aware that @code{<<-} has different semantics
+@c in @R{}.  These are discussed further in @ref{Scope}.
 
 @node More advanced examples, Scope, Assignment within functions, Writing your own functions
 @section More advanced examples
@@ -5092,8 +5093,9 @@ and @code{nlminb()},
 @findex nlm
 @findex optim
 @findex nlminb
-which provide the functionality (and more) of @SPLUS{}'s @code{ms()} and
-@code{nlminb()}.  We seek the parameter values that minimize some index
+@c which provide the functionality (and more) of @SPLUS{}'s @code{ms()} and
+@c @code{nlminb()}.
+We seek the parameter values that minimize some index
 of lack-of-fit, and they do this by trying out various parameter values
 iteratively.  Unlike linear regression for example, there is no
 guarantee that the procedure will converge on satisfactory estimates.
@@ -6104,8 +6106,8 @@ tick marks.
 Axis styles for the @math{x} and @math{y} axes, respectively.   With
 styles @code{"i"} (internal) and @code{"r"} (the default) tick marks
 always fall within the range of the data, however style @code{"r"}
-leaves a small amount of space at the edges.  (@Sl{} has other styles
-not implemented in @R{}.)
+leaves a small amount of space at the edges.
+@c (@Sl{} has other styles not implemented in @R{}.)
 
 @c Setting this parameter to @code{"d"} (direct axis) @emph{locks in} the
 @c current axis and uses it for all future plots (or until the parameter is

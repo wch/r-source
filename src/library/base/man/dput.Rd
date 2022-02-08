@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -21,8 +21,8 @@ dget(file, keep.source = FALSE)
   \item{x}{an object.}
   \item{file}{either a character string naming a file or a
     \link{connection}. \code{""} indicates output to the console.}
-  \item{control}{character vector indicating deparsing options.
-    See \code{\link{.deparseOpts}} for their description.}
+  \item{control}{character vector (or \code{NULL}) of deparsing options.
+    \code{control = "all"} is thorough, see \code{\link{.deparseOpts}}.}
   \item{keep.source}{logical: should the source formatting be retained when
     parsing functions, if possible?}
 }
@@ -71,7 +71,8 @@ dget(file, keep.source = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{deparse}}, \code{\link{dump}}, \code{\link{write}}.
+  \code{\link{deparse}}, \code{\link{.deparseOpts}},
+  \code{\link{dump}}, \code{\link{write}}.
 }
 \examples{
 fil <- tempfile()

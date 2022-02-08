@@ -1,7 +1,7 @@
 #  File src/library/stats/R/smspline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,14 +76,17 @@ smooth.spline <-
         stop("'tol' must be strictly positive and finite")
     if(!match(keep.stuff, c(FALSE,TRUE))) stop("invalid 'keep.stuff'")
     xx <- round((x - mean(x))/tol)  # de-mean to avoid possible overflow
-    nd <- !duplicated(xx); ux <- sort(x[nd]); uxx <- sort(xx[nd])
-    nx <- length(ux)
+    uns.x <- is.unsorted(x)
+    iOx <- if(uns.x) sort.list(x) else TRUE
+    xxs <- xx[iOx] # xx sorted
+    nd <- c(TRUE, xxs[-n] < xxs[-1L]) # === !duplicated(xxs)
+    nx <- length(ux <- x[iOx][nd]) # ux := unique & sorted  x
     if(nx <= 3L) stop("need at least four unique 'x' values")
     if(nx == n) { # speedup
-	ox <- TRUE
-	tmp <- cbind(w, w*y, w*y^2)[order(x),]
+	ox <- if(uns.x) (function(p) { p[p] <- seq_along(p) ; p })(iOx) else TRUE
+	tmp <- cbind(w, w*y, w*y^2)[iOx,]
     } else {
-	ox <- match(xx, uxx)
+	ox <- match(xx, xxs[nd])
 	## Faster, much simplified version of tapply()
 	tapply1 <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE) {
 	    sapply(X = unname(split(X, INDEX)), FUN = FUN, ...,
@@ -100,8 +103,9 @@ smooth.spline <-
     wbar <- tmp[, 1L]
     ybar <- tmp[, 2L]/ifelse(wbar > 0, wbar, 1)
     yssw <- sum(tmp[, 3L] - wbar*ybar^2) # will be added to RSS for GCV
-    ## Note: now  cv in {NA,FALSE,TRUE}
-    if(is.na(cv) && !missing(df))
+    rm(iOx, xx, xxs, nd, tmp)
+    ## cv in {NA,FALSE,TRUE} :
+    if(is.na(cv <- as.logical(cv)) && !missing(df))
 	stop("'cv' must not be NA when 'df' is specified")
     CV <- !is.na(cv) && cv
     if(CV && nx < n)
@@ -219,23 +223,26 @@ smooth.spline <-
     cv.crit <-
 	if(is.na(cv)) NA
 	else {
-	    r <- y - fit$ty[ox]
+	    r <- y - fit$ty[ox] # true residuals; if(nx < n) *not* those used in fitting
 	    if(cv) {
 		ww <- wbar
 		ww[ww == 0] <- 1
 		r <- r / (1 - (lev[ox] * w)/ww[ox])
 		if(no.wgts) mean(r^2) else weighted.mean(r^2, w)
-	    } else
+	    } else # GCV
 		(if(no.wgts) mean(r^2) else weighted.mean(r^2, w)) /
 		    (1 - (df.offset + penalty * df)/n)^2
         }
+
     ## return :
     structure(
 	## parms :  c(low = , high = , tol = , eps = )
 	list(x = ux, y = fit$ty, w = wbar, yin = ybar, tol = tol,
 	     data = if(keep.data) list(x = x, y = y, w = w), no.weights = no.wgts,
-	     lev = lev, cv.crit = cv.crit,
-	     pen.crit = sum(wbar * (ybar - fit$ty)^2),
+	     n = n, # to reliablly know (when keep.data is false) if (nx < n)
+	     lev = lev,
+	     cv = cv,
+	     cv.crit = cv.crit, pen.crit = sum(wbar * (ybar - fit$ty)^2),
 	     crit = fit$crit,
 	     df = df,
 	     spar = if(spar.is.lambda) NA else fit$spar,
@@ -300,8 +307,6 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 	dput(cl, control=NULL)
     }
     ip <- x$iparms
-    cv <- cl$cv
-    if(is.null(cv)) cv <- FALSE else if(is.name(cv)) cv <- eval(cv)
     cat("\nSmoothing Parameter  spar=", format(x$spar, digits=digits),
         " lambda=", format(x$lambda, digits=digits),
         if(ip["ispar"] != 1L) paste0("(", ip["iter"], " iterations)"))
@@ -311,7 +316,7 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
     cat(sprintf("Penalized Criterion (%sRSS): %s\n",
 		if(x$no.weights) "" else "weighted ",
 		format(x$pen.crit, digits=digits)))
-    if(!is.na(cv))
+    if(!is.na(cv <- x$cv))
 	cat(if(cv) "PRESS(l.o.o. CV): " else "GCV: ",
             format(x$cv.crit, digits = digits), "\n", sep = "")
     invisible(x)

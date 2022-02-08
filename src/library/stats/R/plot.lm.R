@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -272,9 +272,9 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                 }
 		if(!is.null(cook.legendChanges))
 		    do.call(legend, modifyList(
-				list(x = "bottomleft", legend = "Cook's distance = c",
+				list(x = "bottomleft", legend = "Cook's distance",
 				     lty = cook.lty, col = cook.col, text.col = cook.col,
-				     bty = "n", adj = 0.1, y.intersp = 1/8),
+				     bty = "n", x.intersp = 1/4, y.intersp = 1/8),
 				cook.legendChanges))
                 xmax <- min(0.99, usr2)
                 ymult <- sqrt(p*(1-xmax)/xmax)

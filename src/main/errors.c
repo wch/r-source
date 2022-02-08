@@ -2646,7 +2646,7 @@ static void R_signalCondition(SEXP cond, SEXP call,
     }
 }
 
-attribute_hidden
+attribute_hidden /* for now */
 void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 {
     /* caller must make sure that 'cond' and 'call' are protected. */
@@ -2664,7 +2664,7 @@ void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
     errorcall(call, "%s", CHAR(STRING_ELT(elt, 0)));
 }
 
-attribute_hidden
+attribute_hidden /* for now */
 void NORET R_signalErrorCondition(SEXP cond, SEXP call)
 {
     R_signalErrorConditionEx(cond, call, FALSE);
@@ -2677,33 +2677,86 @@ void NORET R_signalErrorCondition(SEXP cond, SEXP call)
    condition objects to save stack space */
 static char emsg_buf[BUFSIZE];
 
-attribute_hidden
-SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
+attribute_hidden /* for now */
+SEXP R_vmakeErrorCondition(SEXP call,
+			   const char *classname, const char *subclassname,
+			   int nextra, const char *format, va_list ap)
 {
     if (call == R_CurrentExpression)
 	/* behave like error() */
 	call = getCurrentCall();
 
-    SEXP cond = allocVector(VECSXP, 3);
-    PROTECT(cond);
-    Rsnprintf_mbcs(emsg_buf, BUFSIZE - 1,  R_MSG_ob_nonsub,
-		   type2char(TYPEOF(x)));
+    int nelem = nextra + 2;
+    SEXP cond = PROTECT(allocVector(VECSXP, nelem));
+
+    Rvsnprintf_mbcs(emsg_buf, BUFSIZE, format, ap);
     SET_VECTOR_ELT(cond, 0, mkString(emsg_buf));
     SET_VECTOR_ELT(cond, 1, call);
-    SET_VECTOR_ELT(cond, 2, x);
 
-    SEXP names = allocVector(STRSXP, 3);
+    SEXP names = allocVector(STRSXP, nelem);
     setAttrib(cond, R_NamesSymbol, names);
     SET_STRING_ELT(names, 0, mkChar("message"));
     SET_STRING_ELT(names, 1, mkChar("call"));
-    SET_STRING_ELT(names, 2, mkChar("object"));
 
-    SEXP klass = allocVector(STRSXP, 3);
+    SEXP klass = allocVector(STRSXP, subclassname == NULL ? 3 : 4);
     setAttrib(cond, R_ClassSymbol, klass);
-    SET_STRING_ELT(klass, 0, mkChar("notSubsettableError"));
-    SET_STRING_ELT(klass, 1, mkChar("error"));
-    SET_STRING_ELT(klass, 2, mkChar("condition"));
+    if (subclassname == NULL) {
+	SET_STRING_ELT(klass, 0, mkChar(classname));
+	SET_STRING_ELT(klass, 1, mkChar("error"));
+	SET_STRING_ELT(klass, 2, mkChar("condition"));
+    }
+    else {
+	SET_STRING_ELT(klass, 0, mkChar(subclassname));
+	SET_STRING_ELT(klass, 1, mkChar(classname));
+	SET_STRING_ELT(klass, 2, mkChar("error"));
+	SET_STRING_ELT(klass, 3, mkChar("condition"));
+    }
 
+    UNPROTECT(1); /* cond */
+
+    return cond;
+}
+
+attribute_hidden /* for now */
+SEXP R_makeErrorCondition(SEXP call,
+			  const char *classname, const char *subclassname,
+			  int nextra, const char *format, ...)
+{
+    va_list(ap);
+    va_start(ap, format);
+    SEXP cond = R_vmakeErrorCondition(call, classname, subclassname,
+				      nextra, format, ap);
+    va_end(ap);
+    return cond;
+}
+			  
+attribute_hidden /* for now */
+void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val)
+{
+    PROTECT(cond);
+    PROTECT(val);
+    /**** maybe this should be a general set named vector elt */
+    /**** or maybe it should check that cond inherits from "condition" */
+    /**** or maybe just fill in the next empty slot and not take an index */
+    if (TYPEOF(cond) != VECSXP)
+	error("bad condition argument");
+    if (idx < 0 || idx >= XLENGTH(cond))
+	error("bad field index");
+    SEXP names = getAttrib(cond, R_NamesSymbol);
+    if (TYPEOF(names) != STRSXP || XLENGTH(names) != XLENGTH(cond))
+	error("bad names attribute on condition object");
+    SET_VECTOR_ELT(cond, idx, val);
+    SET_STRING_ELT(names, idx, mkChar(name));
+    UNPROTECT(2); /* cond, val */
+}
+
+attribute_hidden
+SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
+{
+    SEXP cond = R_makeErrorCondition(call, "notSubsettableError", NULL, 1,
+				     R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "object", x);
     UNPROTECT(1); /* cond */
     return cond;
 }
@@ -2712,44 +2765,29 @@ attribute_hidden
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix)
 {
-    if (call == R_CurrentExpression)
-	/* behave like error() */
-	call = getCurrentCall();
+    SEXP cond;
+    const char *classname = "subscriptOutOfBoundsError";
+    int nextra = 3;
 
-    size_t bufsiz = BUFSIZ;
-    char *buf = emsg_buf;
-
-    if (prefix) {
-	size_t n = Rsnprintf_mbcs(buf, bufsiz - 1, "%s ", prefix);
-	bufsiz -= n;
-	buf += n;
-    }
-
-    Rsnprintf_mbcs(buf, bufsiz - 1, "%s", R_MSG_subs_o_b);
-
-    SEXP cond = allocVector(VECSXP, 5);
+    if (prefix)
+	cond = R_makeErrorCondition(call, classname, NULL, nextra,
+				    "%s %s", prefix, R_MSG_subs_o_b);
+    else
+	cond = R_makeErrorCondition(call, classname, NULL, nextra,
+				    "%s", R_MSG_subs_o_b);
     PROTECT(cond);
-    SET_VECTOR_ELT(cond, 0, mkString(emsg_buf));
-    SET_VECTOR_ELT(cond, 1, call);
-    SET_VECTOR_ELT(cond, 2, x);
-    SET_VECTOR_ELT(cond, 3, ScalarInteger(subscript + 1));
-    SET_VECTOR_ELT(cond, 4, sindex);
 
-    SEXP names = allocVector(STRSXP, 5);
-    setAttrib(cond, R_NamesSymbol, names);
-    SET_STRING_ELT(names, 0, mkChar("message"));
-    SET_STRING_ELT(names, 1, mkChar("call"));
-    SET_STRING_ELT(names, 2, mkChar("object"));
-    SET_STRING_ELT(names, 3, mkChar("subscript"));
-    SET_STRING_ELT(names, 4, mkChar("index"));
+    /* In some cases the 'sbscript' argument is negative, indicating
+       that which subscript is out of bounds is not known. We could
+       probably do better, but for now report 'subscript' as NA in the
+       condition objec. */
+    SEXP ssub = ScalarInteger(subscript >= 0 ? subscript + 1 : NA_INTEGER);
 
-    SEXP klass = allocVector(STRSXP, 3);
-    setAttrib(cond, R_ClassSymbol, klass);
-    SET_STRING_ELT(klass, 0, mkChar("subscriptOutOfBoundsError"));
-    SET_STRING_ELT(klass, 1, mkChar("error"));
-    SET_STRING_ELT(klass, 2, mkChar("condition"));
-
+    R_setConditionField(cond, 2, "object", x);
+    R_setConditionField(cond, 3, "subscript", ssub);
+    R_setConditionField(cond, 4, "index", sindex);
     UNPROTECT(1); /* cond */
+
     return cond;
 }
 
@@ -2757,57 +2795,15 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 static const char *C_SO_msg_fmt =
     "C stack usage  %ld is too close to the limit";
 
-static SEXP R_makeStackOverflowError(const char *type, SEXP call,
-				     intptr_t usage)
-{
-    int csize = 2;
-    const char *msg;
-
-    if (call == R_CurrentExpression)
-	/* behave like error( */
-	call = getCurrentCall();
-
-    if (strcmp(type, "CStackOverflowError") == 0) {
-	csize = 3;
-	Rsnprintf_mbcs(emsg_buf, BUFSIZE - 1, C_SO_msg_fmt, usage);
-	msg = emsg_buf;
-    }
-    else if (strcmp(type, "protectStackOverflowError") == 0)
-	msg = _("protect(): protection stack overflow");
-    else if (strcmp(type, "expressionStackOverflowError") == 0)
-	msg = _("evaluation nested too deeply: infinite recursion / options(expressions=)?");
-    else if (strcmp(type, "nodeStackOverflowError") == 0)
-	msg = _("node stack overflow");
-    else error("unknown stack overflow error: %s", type);
-
-    SEXP cond = PROTECT(allocVector(VECSXP, csize));
-    SET_VECTOR_ELT(cond, 0, mkString(msg));
-    SET_VECTOR_ELT(cond, 1, call);
-
-    SEXP klass = allocVector(STRSXP, 4);
-    setAttrib(cond, R_ClassSymbol, klass);
-    SET_STRING_ELT(klass, 0, mkChar(type));
-    SET_STRING_ELT(klass, 1, mkChar("stackOverflowError"));
-    SET_STRING_ELT(klass, 2, mkChar("error"));
-    SET_STRING_ELT(klass, 3, mkChar("condition"));
-
-    SEXP names = allocVector(STRSXP, csize);
-    setAttrib(cond, R_NamesSymbol, names);
-    SET_STRING_ELT(names, 0, mkChar("message"));
-    SET_STRING_ELT(names, 1, mkChar("call"));
-
-    if (csize == 3) {
-	SET_VECTOR_ELT(cond, 2, ScalarReal((double) usage));
-	SET_STRING_ELT(names, 2, mkChar("usage"));
-    }
-
-    UNPROTECT(1); /* cond */
-    return cond;
-}
-
 SEXP attribute_hidden R_makeCStackOverflowError(SEXP call, intptr_t usage)
 {
-    return R_makeStackOverflowError("CStackOverflowError", call, usage);
+    SEXP cond = R_makeErrorCondition(call, "stackOverflowError",
+				     "CStackOverflowError", 1,
+				     C_SO_msg_fmt, usage);
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "usage", ScalarReal((double) usage));
+    UNPROTECT(1); /* cond */
+    return cond;
 }
 
 static SEXP R_protectStackOverflowError = NULL;
@@ -2828,21 +2824,28 @@ SEXP attribute_hidden R_getNodeStackOverflowError()
     return R_nodeStackOverflowError;
 }
 
+#define PROT_SO_MSG _("protect(): protection stack overflow")
+#define EXPR_SO_MSG _("evaluation nested too deeply: infinite recursion / options(expressions=)?")
+#define NODE_SO_MSG _("node stack overflow")
+
 attribute_hidden
 void R_InitConditions()
 {
     R_protectStackOverflowError =
-	R_makeStackOverflowError("protectStackOverflowError", R_NilValue, 0);
+	R_makeErrorCondition(R_NilValue, "stackOverflowError",
+			     "protectStackOverflowError", 0, PROT_SO_MSG);
     MARK_NOT_MUTABLE(R_protectStackOverflowError);
     R_PreserveObject(R_protectStackOverflowError);
 
     R_expressionStackOverflowError =
-	R_makeStackOverflowError("expressionStackOverflowError", R_NilValue, 0);
+	R_makeErrorCondition(R_NilValue, "stackOverflowError",
+			     "expressionStackOverflowError", 0, EXPR_SO_MSG);
     MARK_NOT_MUTABLE(R_expressionStackOverflowError);
     R_PreserveObject(R_expressionStackOverflowError);
 
     R_nodeStackOverflowError =
-	R_makeStackOverflowError("nodeStackOverflowError", R_NilValue, 0);
+	R_makeErrorCondition(R_NilValue, "stackOverflowError",
+			     "nodeStackOverflowError", 0, NODE_SO_MSG);
     MARK_NOT_MUTABLE(R_nodeStackOverflowError);
     R_PreserveObject(R_nodeStackOverflowError);
 }

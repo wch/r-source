@@ -1,6 +1,6 @@
 % File src/library/base/man/encodeString.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{encodeString}
@@ -32,7 +32,8 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 }
 \details{
   This escapes backslash and the control characters \samp{\\a} (bell),
-  \samp{\\b} (backspace), \samp{\\f} (formfeed), \samp{\\n} (line feed),
+  \samp{\\b} (backspace), \samp{\\f} (formfeed),
+  \samp{\\n} (line feed, aka \dQuote{newline}),
   \samp{\\r} (carriage return), \samp{\\t} (tab) and \samp{\\v}
   (vertical tab) as well as any non-printable characters in a
   single-byte locale, which are printed in octal notation (\samp{\\xyz}

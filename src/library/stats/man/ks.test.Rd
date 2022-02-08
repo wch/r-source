@@ -5,14 +5,18 @@
 
 \name{ks.test}
 \alias{ks.test}
+\alias{ks.test.default}
+\alias{ks.test.formula}
 \title{Kolmogorov-Smirnov Tests}
 \description{
   Perform a one- or two-sample Kolmogorov-Smirnov test.
 }
 \usage{
-ks.test(x, y, \dots,
+ks.test(x, \dots)
+\method{ks.test}{default}(x, y, \dots,
         alternative = c("two.sided", "less", "greater"),
         exact = NULL)
+\method{ks.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x}{a numeric vector of data values.}
@@ -20,8 +24,9 @@ ks.test(x, y, \dots,
     naming a cumulative distribution function or an actual cumulative
     distribution function such as \code{pnorm}.  Only continuous CDFs
     are valid.}
-  \item{\dots}{parameters of the distribution specified (as a character
-    string) by \code{y}.}
+  \item{\dots}{for the default method, parameters of the distribution
+    specified (as a character string) by \code{y}.  Otherwise, further
+    arguments to be passed to or from methods.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"} (default), \code{"less"}, or
     \code{"greater"}.  You can specify just the initial letter of the
@@ -31,6 +36,19 @@ ks.test(x, y, \dots,
     p-value should be computed.  See \sQuote{Details} for the meaning of
     \code{NULL}.  Not available in the two-sample case for a one-sided
     test or if ties are present.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    is a numeric variable giving the data values and \code{rhs} either
+    \code{1} for a one-sample test or a factor with two levels giving
+    the corresponding groups for a two-sample test.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
 }
 \details{
   If \code{y} is numeric, a two-sample test of the null hypothesis
@@ -125,7 +143,7 @@ ks.test(x, y, \dots,
   normality.
 }
 \examples{
-require(graphics)
+require("graphics")
 
 x <- rnorm(50)
 y <- runif(30)
@@ -143,5 +161,9 @@ plot(ecdf(x2), add = TRUE, lty = "dashed")
 t.test(x, x2, alternative = "g")
 wilcox.test(x, x2, alternative = "g")
 ks.test(x, x2, alternative = "l")
+
+# formula interface, see ?wilcox.test
+ks.test(Ozone ~ Month, data = airquality,
+        subset = Month \%in\% c(5, 8))
 }
 \keyword{htest}

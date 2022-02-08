@@ -104,6 +104,7 @@ all.equal.numeric <-
 {
     if (!is.numeric(tolerance))
         stop("'tolerance' should be numeric")
+    stopifnot(length(tolerance) == 1L)
     if (!is.numeric(scale) && !is.null(scale))
         stop("'scale' should be numeric or NULL")
     if (!is.logical(check.attributes))

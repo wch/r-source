@@ -1,6 +1,6 @@
 % File src/library/base/man/mean.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mean}
@@ -21,8 +21,9 @@ mean(x, \dots)
     trimmed from each end of \code{x} before the mean is computed.
     Values of trim outside that range are taken as the nearest endpoint.
   }
-  \item{na.rm}{a logical value indicating whether \code{NA}
-    values should be stripped before the computation proceeds.}
+  \item{na.rm}{a logical evaluating to \code{TRUE} or \code{FALSE}
+    indicating whether \code{NA} values should be stripped before the
+    computation proceeds.} 
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/polygon.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright 1995-2016 The R Core Team
+#  Copyright 1995-2022 The R Core Team
 #  In part (C) 2001 Kevin Buhr
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -275,7 +275,7 @@ polygon <-
     }
     else {
         if (is.logical(border)) {
-            if (!is.na(border) && border) border <- par("fg")
+            if (isTRUE(border)) border <- par("fg")
             else border <- NA
         }
         .External.graphics(C_polygon, xy$x, xy$y, col, border, lty, ...)

@@ -141,7 +141,7 @@ function(x, ...)
                                   cchunks))
                         } else {
                             c(vheaders[i],
-                              print_items(vchunk$Text))
+                              print_items(vchunk$HTML))
                         }
                     })
              ),

@@ -692,7 +692,9 @@ static void *in_R_FTPOpen2(const char *url)
 #endif // Win32
 
 #include "sock.h"
-#define STRICT_R_HEADERS
+#ifndef STRICT_R_HEADERS
+# define STRICT_R_HEADERS
+#endif
 #include <R_ext/RS.h> /* for R_Calloc */
 #include <R_ext/Rdynload.h>
 

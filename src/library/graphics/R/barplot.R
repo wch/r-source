@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/barplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 
     if(is.logical(legend.text))
       legend.text <-
-	if(legend.text && is.matrix(height)) rownames(height)
+	if(isTRUE(legend.text) && is.matrix(height)) rownames(height) else NULL
 
     stopifnot(is.character(log))
     logx <- logy <- FALSE

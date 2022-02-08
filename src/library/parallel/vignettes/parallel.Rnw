@@ -19,7 +19,7 @@ urlcolor=Blue,%
 pdfstartview={XYZ null null 1},% 100%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
-pdfauthor={R Core},%
+pdfauthor={R Core Team},%
 pdftitle={Package `parallel'}% Could also have pdfusetitle
 }
 
@@ -28,7 +28,7 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 
 
 \title{Package `parallel'}
-\author{R-core}
+\author{R Core Team}
 
 
 \begin{document}

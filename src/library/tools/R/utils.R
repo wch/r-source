@@ -2394,18 +2394,26 @@ function(args, msg)
 
 R <-
 function(fun, args = list(), opts = character(), env = character(),
-         arch = "", timeout = 0)
+         arch = "", drop = TRUE, timeout = 0)
 {
+    .safe_repositories <- function() {
+        x <- getOption("repos")
+        y <- .get_standard_repository_URLs()
+        i <- which(names(x) == "CRAN")[1L]
+        if(is.na(i) || x[i] == "@CRAN@")
+            x[i] <- y["CRAN"]
+        c(x, y[match(names(y), names(x), 0L) == 0L])
+    }
+    
     tfi <- tempfile("runri")
     tfo <- tempfile("runro")
-    ## FIXME: do a more safe repos
     wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
              "options(repos = x$repos)",
              ## need quote = TRUE in case some of args are not self-evaluating
              ## could catch other conditions also
              "y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)",
              sprintf("saveRDS(y, \"%s\")", tfo))
-    saveRDS(list(fun = fun, args = args, repos = getOption("repos")),
+    saveRDS(list(fun = fun, args = args, repos = .safe_repositories()),
             tfi)
     cmd <- if(.Platform$OS.type == "windows") {
                if(nzchar(arch))
@@ -2430,9 +2438,13 @@ function(fun, args = list(), opts = character(), env = character(),
                                 res = res,
                                 error = val))
         }
-        else
-            ## everything worked; don't need to see res
-            val[[1L]]
+        else {
+            val <- val[[1L]]
+            if(drop)
+                val
+            else
+                c(list(value = val), res)
+        }
     }
     else
         ## again maybe wrap in a classed error  and include some of res

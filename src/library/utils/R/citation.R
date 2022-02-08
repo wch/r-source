@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,21 +58,15 @@ function(given = NULL, family = NULL, middle = NULL,
                               sQuote("given"),
                               sQuote("first"), sQuote("middle")),
                      domain = NA)
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("given"), sQuote("first")),
                     domain = NA)
-            ## </FIXME>
             given <- first
         }
         if(!.is_not_nonempty_text(middle)) {
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("given"), sQuote("middle")),
                     domain = NA)
-            ## </FIXME>
             given <- c(given, unlist(strsplit(middle, "[[:space:]]+")))
         }
 
@@ -81,12 +75,9 @@ function(given = NULL, family = NULL, middle = NULL,
                 stop(gettextf("Use either %s or %s but not both.",
                               sQuote("family"), sQuote("last")),
                      domain = NA)
-            ## <FIXME>
-            ## Start warning eventually ... maybe use message() for now?
-            message(gettextf("It is recommended to use %s instead of %s.",
+            warning(gettextf("It is recommended to use %s instead of %s.",
                              sQuote("family"), sQuote("last")),
                     domain = NA)
-            ## </FIXME>
             family <- last
         }
 
@@ -767,21 +758,32 @@ function(x, style = "text", .bibstyle = NULL,
     }
 
     format_as_citation <- function(x, msg) {
-         c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
+        m <- attr(x, "mheader")
+        if(is.null(m) &&
+           is.null(x$header) &&
+           !is.null(p <- attr(x, "package")))
+            m <- gettextf("To cite package %s in publications use:",
+                          sQuote(p))
+        i <- !is.null(m)
+        c(character(),
+          if(i)
+              paste(strwrap(m), collapse = "\n"),
           unlist(lapply(x, function(y) {
-              paste(c(if(!is.null(y$header))
-                      c(strwrap(y$header), ""),
-                      if(!is.null(y$textVersion)) {
-                          strwrap(y$textVersion, prefix = "  ")
-                      } else {
-                          format(y)
-                      },
+              h <- y$header
+              j <- !is.null(h)
+              s <- y$textVersion
+              if(is.null(s))
+                  s <- format(y)
+              paste(c(if(j)
+                          c(strwrap(h), ""),
+                      if(i || j)
+                          strwrap(s, prefix = "  ") else strwrap(s),
                       if(bibtex) {
                           c(gettext("\nA BibTeX entry for LaTeX users is\n"),
 			    paste0("  ", unclass(toBibtex(y))))
                       },
                       if(!is.null(y$footer))
-                      c("", strwrap(y$footer))),
+                          c("", strwrap(y$footer))),
                     collapse = "\n")
           })),
 	  paste(strwrap(c(attr(x, "mfooter"),
@@ -807,7 +809,7 @@ function(x, style = "text", .bibstyle = NULL,
                    out[!lengths(out)] <- ""
                    unlist(out)
                },
-               "citation" = format_as_citation(x,
+               "citation" = format_as_citation(.bibentry(x),
                                                msg = missing(bibtex) &&
                                                    missing(citation.bibtex.max)),
                "R" = .format_bibentry_as_R_code(x, ...)
@@ -1017,7 +1019,7 @@ function(x, name)
     ## </COMMENT>
     is_attribute <- name %in% bibentry_attribute_names
     rval <- if(is_attribute) lapply(unclass(x), attr, name)
-        else lapply(unclass(x), `[[`, name)
+        else lapply(unclass(x), `[[`, tolower(name))
     if(length(rval) == 1L) rval <- rval[[1L]]
     rval
 }
@@ -1028,7 +1030,7 @@ function(x, name, value)
     is_attribute <- name %in% bibentry_attribute_names
 
     x <- unclass(x)
-    name <- tolower(name)
+    if(!is_attribute) name <- tolower(name)
 
     ## recycle value
     value <- rep_len(.listify(value), length(x))
@@ -1067,6 +1069,10 @@ function(x, name, value)
 
     .bibentry(x)
 }
+
+`$<-.citation` <-
+function(x, name, value)
+    .citation(NextMethod("$<-"))
 
 c.bibentry <-
 function(..., recursive = FALSE)
@@ -1359,9 +1365,6 @@ function(package = "base", lib.loc = NULL, auto = NULL)
                         tail(author, 1L), sep = " and ")
 
     rval <- bibentry(bibtype = "Manual",
-                     textVersion =
-                     paste0(author, " (", z$year, "). ", z$title, ". ",
-                            z$note, ". ", z$url),
                      header = header,
                      footer = footer,
                      other = z

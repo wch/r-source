@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2015 The R Core Team
+ *  Copyright (C) 2000-2022 The R Core Team
  *  Copyright (C) 2004-2009 The R Foundation
+ *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -145,6 +145,32 @@
 
 #define n_max (100)
 
+// Compute  d_n(x) = (d/dx)^n cot(x)  ; cot(x) := cos(x) / sin(x)
+double d_n_cot(double x, int n)
+{
+    if (n == 0)
+	return cos(x)/sin(x);
+    else if (n == 1) // -1/sin^2
+	return -1/R_pow_di(sin(x), 2);
+    else if (n == 2) // 2 cos / sin^3
+	return 2*cos(x)/R_pow_di(sin(x), 3);
+    else if (n == 3) { // (-4 cos^2 - 2) / sin^4 ; num.= -2(2 cos^2 +1) = -2(3 - 2 sin^2)
+	// tt = -2*(2*R_pow_di(cos(x), 2) + 1.)/R_pow_di(sin(x), 4);
+	double sin2 = R_pow_di(sin(x), 2); // = sin^2
+	return -2*(3 - 2*sin2)/R_pow_di(sin2, 2);
+    }
+    else if (n == 4) { // 8 cos (cos^2  + 2) / sin^5
+	double co = cos(x);
+	return 8*co*(R_pow_di(co, 2) + 2) / R_pow_di(sin(x), 5);
+    }
+    else if (n == 5) { // (-16 cos^4 - 88 cos^2 - 16)/ sin^6
+	double co2 = R_pow_di(cos(x), 2); // cos^2
+	return -8*(2*R_pow_di(co2, 2) + 11*co2 + 2) / R_pow_di(sin(x), 6);
+    }
+    else
+	return ML_NAN;
+}
+
 /* From R, currently only used for kode = 1, m = 1 : */
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
@@ -173,21 +199,24 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	-1.92965793419400681e+16
     };
 
-    int i, j, k, mm, mx, nn, np, nx, fn;
-    double arg, den, elim, eps, fln, fx, rln, rxsq,
-	r1m4, r1m5, s, slope, t, ta, tk, tol, tols, tss, tst,
-	tt, t1, t2, wdtol, xdmln, xdmy, xinc, xln = 0.0 /* -Wall */,
-	xm, xmin, xq, yint;
+    int i, j, k, nn, np, nx, fn;
+    double arg, den, eps, fx, rxsq,
+	s, t, ta, tk, tol, tols, tss, tst,
+	tt, t1, t2, xdmln, xdmy, xinc,
+	xm, xmin, xq;
     double trm[23], trmr[n_max + 1];
 
     *ierr = 0;
+    *nz = 0;
     if (n < 0 || kode < 1 || kode > 2 || m < 1) {
 	*ierr = 1;
 	return;
     }
     if (x <= 0.) {
-	/* use	Abramowitz & Stegun 6.4.7 "Reflection Formula"
-	 *	psi(k, x) = (-1)^k psi(k, 1-x)	-  pi^{n+1} (d/dx)^n cot(x)
+	/* use	Abramowitz & Stegun 6.4.7 "Reflection Formula", p.260
+	 *  psi(n, 1-x) + (-1)^(n+1) psi(n, x) = (-1)^n pi (d/dx)^n cot(pi*x)
+	 *  psi(n, x) = (-1)^n psi(n, 1-x)   -  pi^{n+1} d_n(pi*x),
+                         where    d_n(x) := (d/dx)^n cot(x)
 	 */
 	if (x == round(x)) {
 	    /* non-positive integer : +Inf or NaN depends on n */
@@ -201,44 +230,31 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	 *	     for j = 0:(m-1) ,	k = n + j
 	 */
 
-	/* Cheat for now: only work for	 m = 1, n in {0,1,2,3} : */
-	if(m > 1 || n > 3) {/* doesn't happen for digamma() .. pentagamma() */
-	    /* not yet implemented */
+	/* For now: only work for  n in {0,1,..,5} : */
+	if(n > 5) {
+	    /* not yet implemented for x < 0 and n >= 6 */
 	    *ierr = 4; return;
 	}
+	// tt := d_n(pi * x)
 	x *= M_PI; /* pi * x */
-	if (n == 0)
-	    tt = cos(x)/sin(x);
-	else if (n == 1)
-	    tt = -1/R_pow_di(sin(x), 2);
-	else if (n == 2)
-	    tt = 2*cos(x)/R_pow_di(sin(x), 3);
-	else if (n == 3)
-	    tt = -2*(2*R_pow_di(cos(x), 2) + 1.)/R_pow_di(sin(x), 4);
-	else /* can not happen! */
-	    tt = ML_NAN;
-	/* end cheat */
 
-	s = (n % 2) ? -1. : 1.;/* s = (-1)^n */
-	/* t := pi^(n+1) * d_n(x) / gamma(n+1)	, where
-	 *		   d_n(x) := (d/dx)^n cot(x)*/
+	// t := pi^(n+1) * d_n(x) / gamma(n+1)
 	t1 = t2 = s = 1.;
 	for(k=0, j=k-n; j < m; k++, j++, s = -s) {
 	    /* k == n+j , s = (-1)^k */
 	    t1 *= M_PI;/* t1 == pi^(k+1) */
 	    if(k >= 2)
 		t2 *= k;/* t2 == k! == gamma(k+1) */
-	    if(j >= 0) /* by cheat above,  tt === d_k(x) */
-		ans[j] = s*(ans[j] + t1/t2 * tt);
+	    if(j >= 0) /* now using d_k(x) */
+		ans[j] = s*(ans[j] + t1/t2 * d_n_cot(x, k));
 	}
-	if (n == 0 && kode == 2) /* unused from R, but "wrong": xln === 0 :*/
-	    ans[0] += xln;
+	/* if (n == 0 && kode == 2)  -- nonsense for x < 0 !
+	 *     ans[0] += log(x); */
 	return;
     } /* x <= 0 */
 
     /* else :  x > 0 */
-    *nz = 0;
-    xln = log(x);
+    double xln = log(x);
     if(kode == 1 && m == 1) {/* the R case  ---  for very large x: */
 	double lrg = 1/(2. * DBL_EPSILON);
 	if(n == 0 && x * xln > lrg) {
@@ -250,24 +266,29 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    return;
 	}
     }
-    mm = m;
     nx = imin2(-Rf_i1mach(15), Rf_i1mach(16));/* = 1021 */
-    r1m5 = Rf_d1mach(5);
-    r1m4 = Rf_d1mach(4) * 0.5;
-    wdtol = fmax2(r1m4, 0.5e-18); /* 1.11e-16 */
+
+    const double
+	r1m5 = Rf_d1mach(5),       // = M_LOG10_2 = log10(2) = 0.30103..
+	r1m4 = Rf_d1mach(4) * 0.5, // = DBL_EPSILON * 0.5 = 2^-53 = 1.110223e-16
+	wdtol = fmax2(r1m4, 0.5e-18); /* = 2^-53 = 1.11e-16 */
 
     /* elim = approximate exponential over and underflow limit */
-    elim = 2.302 * (nx * r1m5 - 3.0);/* = 700.6174... */
+    double elim = 2.302 * (nx * r1m5 - 3.0);/* = 700.6174... */
+    const double
+	rln = fmin2(r1m5 * Rf_i1mach(14), 18.06);// = 0.30103 * 53 = 15.95.. ~= #{decimals}
+    double fln = fmax2(rln, 3.0) - 3.0; // = 12.95..
+    const double yint = 3.50 + 0.40 * fln, // = 8.6818..
+	slope = 0.21 + fln * (0.0006038 * fln + 0.008677); // = 0.4237..
+    int mm = m;
     for(;;) {
 	nn = n + mm - 1;
 	fn = nn;
 	t = (fn + 1) * xln;
 
 	/* overflow and underflow test for small and large x */
-
 	if (fabs(t) > elim) {
 	    if (t <= 0.0) {
-		*nz = 0;
 		*ierr = 2;
 		return;
 	    }
@@ -284,24 +305,15 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 		return;
 	    }
 
-	    /* compute xmin and the number of terms of the series,  fln+1 */
-
-	    rln = r1m5 * Rf_i1mach(14);
-	    rln = fmin2(rln, 18.06);
-	    fln = fmax2(rln, 3.0) - 3.0;
-	    yint = 3.50 + 0.40 * fln;
-	    slope = 0.21 + fln * (0.0006038 * fln + 0.008677);
+	    /* compute xmin and the number of terms of the series, fln+1 */
 	    xm = yint + slope * fn;
-	    mx = (int)xm + 1;
+	    int mx = (int)xm + 1;
 	    xmin = mx;
 	    if (n != 0) {
 		xm = -2.302 * rln - fmin2(0.0, xln);
-		arg = xm / n;
-		arg = fmin2(0.0, arg);
+		arg = fmin2(0., xm / n);
 		eps = exp(arg);
-		xm = 1.0 - eps;
-		if (fabs(arg) < 1.0e-3)
-		    xm = -arg;
+		xm = (fabs(arg) < 1.0e-3) ? -arg : 1. - eps;
 		fln = x * xm / eps;
 		xm = xmin - x;
 		if (xm > 7.0 && fln < 15.0)
@@ -326,7 +338,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    if (tk <= elim) /* for all but large x */
 		goto L10;
 	}
-	nz++; /* underflow */
+	nz++; /* nz := #{underflows} */
 	mm--;
 	ans[mm] = 0.;
 	if (mm == 0)
@@ -397,7 +409,6 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	nx = (int)xinc;
 	np = nn + 1;
 	if (nx > n_max) {
-	    *nz = 0;
 	    *ierr = 3;
 	    return;
 	}

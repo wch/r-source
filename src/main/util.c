@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1410,8 +1410,11 @@ utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
 
     if(wc)
 	for(p = wc, t = s; ; p++, t += m) {
-	    // FIXME this gives a warning on Windows.
-	    m  = (ssize_t) utf8toucs(p, t);
+	    wchar_t local = L'\0';
+	    m  = (ssize_t) utf8toucs(&local, t);
+	    /* Needed to write all of R_wchar_t even on Windows where it is bigger
+	       than wchar_t */
+	    *p = (R_wchar_t) local;
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs32'"), s);
 	    if (m == 0) break;
 	    if (IS_HIGH_SURROGATE(*p)) *p = utf8toucs32(*p, s);
@@ -2332,6 +2335,12 @@ static const char *getLocale(void)
 {
     const char *p = getenv("R_ICU_LOCALE");
     if (p && p[0]) return p;
+
+    // FIXME: ideally, we would use a locale name corresponding to the current
+    //        C runtime locale, so as reported by setlocale(); since 4.2 this
+    //        means a UCRT locale name. As this is only approximated, we don't
+    //        use ICU by default on Windows yet for collation, even though
+    //        already having UTF-8 as the native encoding.
 
     // This call is >= Vista/Server 2008
     // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ

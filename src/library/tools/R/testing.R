@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -173,9 +173,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         txt <- txt[(cumsum(txt == "> ## IGNORE_RDIFF_BEGIN") <=
                     cumsum(txt == "> ## IGNORE_RDIFF_END"))]
         ## (Keeps the end markers, but that's ok.)
-        if (nullPointers)
+        if (nullPointers) {
             ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
+            ## standardize hashtable, pro tem
+            txt <- sub("<hashtable.*>", "<hashtable output>", txt)
+        }
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- .canonicalize_quotes(txt)
         if(.Platform$OS.type == "windows") {
@@ -210,9 +213,9 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     if (!useDiff && (length(left) == length(right))) {
         ## The idea is to emulate diff -b, as documented by POSIX:
         ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
-        bleft <- gsub("[[:space:]]*$", "", left)
+        bleft  <- gsub("[[:space:]]*$", "", left)
         bright <- gsub("[[:space:]]*$", "", right)
-        bleft <- gsub("[[:space:]]+", " ", bleft)
+        bleft  <- gsub("[[:space:]]+", " ", bleft)
         bright <- gsub("[[:space:]]+", " ", bright)
         if(all(bleft == bright))
             return(if(Log) list(status = 0L, out = character()) else 0L)
@@ -777,7 +780,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
     }
 }
 
-## Usage: Rscript --vanilla --default-packages=NULL args
+## Wrapper for  R CMD Rdiff   based on Rdiff() above :
 .Rdiff <- function(no.q = FALSE)
 {
     options(showErrorCalls=FALSE)
@@ -817,7 +820,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2018 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -827,13 +830,13 @@ detachPackages <- function(pkgs, verbose = TRUE)
         do_exit(1L)
     }
 
-    if (length(args) < 2L) {
+    if (length(args) == 0L) {
         Usage()
         do_exit(1L)
     }
     exitstatus <- as.integer(args[3L])
-    if(is.na(exitstatus)) exitstatus <- 0L
-
+    if(is.na(exitstatus)) # default, also if length(args) == 2
+        exitstatus <- 0L
     left <- args[1L]
     if(left == "-") left <- "stdin"
     status <- Rdiff(left, args[2L], useDiff = TRUE)

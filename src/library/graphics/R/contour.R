@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/contour.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
                    fontindex = pmatch(vfont[2L], Hershey$fontindex))
     if (!is.null(labels)) {
         labels <- as.character(labels)
-	if (drawlabels && !length(labels))
+	if (isTRUE(drawlabels) && !length(labels))
 	    stop("'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels.")
     }
     .External.graphics(C_contour, x, y, z, levels, labels, labcex, drawlabels,

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/strwidth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strwidth}
@@ -33,7 +33,7 @@ strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 }
 \details{
   Note that the \sQuote{height} of a string is determined only by the
-  number of linefeeds (\code{"\n"}) it contains: it is the (number of
+  number of linefeeds (\code{"\n"}, aka \dQuote{newline}s) it contains: it is the (number of
   linefeeds - 1) times the line spacing plus the height of \code{"M"} in
   the selected font.  For an expression it is the height of the
   bounding box as computed by \link{plotmath}.  Thus in both cases it is

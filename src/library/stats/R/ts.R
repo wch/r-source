@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 	       deltat = 1, ts.eps  =  getOption("ts.eps"),
 	       class = if(nseries > 1) c("mts", "ts", "matrix") else "ts",
                names = if(!is.null(dimnames(data))) colnames(data)
-               else paste("Series", seq(nseries))
+                       else paste("Series", seq(nseries))
                )
 {
     if(is.data.frame(data)) data <- data.matrix(data)
@@ -166,7 +166,7 @@ as.ts.default <- function(x, ...)
     n <- round(freq * (en - st) + 1)
     if(any(!tsser)) {
         ln <- vapply(sers[!tsser], NROW, 1)
-        if(any(ln != 1 && ln != n))
+        if(any(ln != 1L & ln != n)) # vectors, so not &&
             stop("non-time series not of the correct length")
         for(i in (1L:nser)[!tsser]) {
             sers[[i]] <- ts(sers[[i]], start=st, end=en, frequency=freq)
@@ -183,8 +183,7 @@ as.ts.default <- function(x, ...)
         nm <- character(ns)
         for(i in 1L:nser)
             if(nsers[i] > 1) {
-                cn <- colnames(sers[[i]])
-                if(is.null(cn)) cn <- 1L:nsers[i]
+                cn <- colnames(sers[[i]]) %||% 1L:nsers[i]
                 nm[(1+cs[i]):cs[i+1]] <- paste(nmsers[i], cn, sep=".")
             } else nm[cs[i+1]] <- nmsers[i]
         dimnames(x) <- list(NULL, nm)
@@ -344,9 +343,8 @@ deltat.default <- function(x, ...)
 
 time.default <- function (x, offset = 0, ...)
 {
-    n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(hasTsp(x), "tsp")
-    y <- seq.int(xtsp[1L], xtsp[2L], length.out = n) + offset/xtsp[3L]
+    y <- seq.int(xtsp[1L], xtsp[2L], length.out = NROW(x)) + offset/xtsp[3L]
     tsp(y) <- xtsp
     y
 }
@@ -494,8 +492,7 @@ plot.ts <-
 	    nser <- NCOL(x)
 	    if(nser > 10) stop("cannot plot more than 10 series as \"multiple\"")
 	    if(is.null(main)) main <- xlabel
-	    nm <- colnames(x)
-	    if(is.null(nm)) nm <- paste("Series", 1L:nser)
+	    nm <- colnames(x) %||% paste("Series", 1L:nser)
 	    if(missing(nc)) nc <- if(nser > 4) 2 else 1
 	    nr <- ceiling(nser/nc)
 
@@ -544,10 +541,10 @@ plot.ts <-
 		xy <- xy.coords(xy[,1], xy[,2], xlabel, ylabel, log)
 	    } else
 		xy <- xy.coords(x, y, xlabel, ylabel, log)
-	    xlab <- if (missing(xlab)) xy$xlab else xlab
-	    ylab <- if (missing(ylab)) xy$ylab else ylab
-	    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
-	    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+	    if(missing(xlab)) xlab <- xy$xlab
+	    if(missing(ylab)) ylab <- xy$ylab
+	    if(is.null(xlim)) xlim <- range(xy$x[is.finite(xy$x)])
+	    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
 	    n <- length(xy $ x)
 	    if(missing(xy.labels)) xy.labels <- (n <= 150)
 	    do.lab <-
@@ -649,54 +646,59 @@ window.default <- function(x, start = NULL, end = NULL,
     if(!is.null(frequency) && !is.null(deltat) &&
        abs(frequency*deltat - 1) > ts.eps)
         stop("'frequency' and 'deltat' are both not NULL and are inconsistent")
-    yfreq <- if(is.null(frequency) && is.null(deltat))
+    noFreq <- is.null(frequency) && is.null(deltat)
+    yfreq <- if(noFreq)
                  xfreq
              else if(is.null(deltat))
                  frequency
              else if(is.null(frequency))
                  1/deltat
+    ## fuzz to use for (start, end) boundary comparisons:
+    eps_ <- ts.eps/xfreq
     thin <- round(xfreq/yfreq)
     if (yfreq > 0 && abs(xfreq/yfreq -thin) < ts.eps) {
         yfreq <- xfreq/thin
-    } else {
+    } else if(!noFreq) {
         thin <- 1
         yfreq <- xfreq
-        warning("'frequency' not changed")
+            warning("'frequency' not changed")
     }
-    start <- if(is.null(start))
-	xtsp[1L]
-    else switch(length(start),
-		start,
-		start[1L] + (start[2L] - 1)/xfreq,
-		stop("bad value for 'start'"))
-    if(start < xtsp[1L]-ts.eps/xfreq && !extend) {
+    start <-
+        if(is.null(start))
+            xtsp[1L]
+        else switch(length(start),
+                    start,
+                    start[1L] + (start[2L] - 1)/xfreq,
+                    stop("bad value for 'start'"))
+    if(start < xtsp[1L]-eps_ && !extend) {
 	start <- xtsp[1L]
 	warning("'start' value not changed")
     }
 
-    end <- if(is.null(end))
-	xtsp[2L]
-    else switch(length(end),
-		end,
-		end[1L] + (end[2L] - 1)/xfreq,
-		stop("bad value for 'end'"))
-    if(end > xtsp[2L]+ts.eps/xfreq && !extend) {
+    end <-
+        if(is.null(end))
+            xtsp[2L]
+        else switch(length(end),
+                    end,
+                    end[1L] + (end[2L] - 1)/xfreq,
+                    stop("bad value for 'end'"))
+    if(end > xtsp[2L]+eps_ && !extend) {
 	end <- xtsp[2L]
 	warning("'end' value not changed")
     }
 
-    if(start > end)
+    if(start > end + eps_)
 	stop("'start' cannot be after 'end'")
 
     if(!extend) {
-        if(all(abs(start - xtime) > ts.eps/xfreq))
+        if(all(abs(start - xtime) > eps_))
             start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
 
-        if(all(abs(end - xtime) > ts.eps/xfreq))
+        if(all(abs(end - xtime) > eps_))
             end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
         i <- seq.int(trunc((start - xtsp[1L]) * xfreq + 1.5),
-                     trunc((end - xtsp[1L]) * xfreq + 1.5), by = thin)
+                     trunc((end   - xtsp[1L]) * xfreq + 1.5), by = thin)
         y <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
         ystart <- xtime[i[1L]]
         yend <- xtime[i[length(i)]]
@@ -705,16 +707,16 @@ window.default <- function(x, start = NULL, end = NULL,
         ## first adjust start and end to the time base
         ## try to ensure that they are exactly n/xfreq
         stoff <- ceiling((start - xtsp[1L]) * xfreq - ts.eps)
+        enoff <-   floor((end   - xtsp[2L]) * xfreq + ts.eps)
         ystart <- stoff/xfreq + xtsp[1L]
-        enoff <- floor((end - xtsp[2L]) * xfreq + ts.eps)
-        yend <- enoff/xfreq + xtsp[2L]
+        yend   <- enoff/xfreq + xtsp[2L]
         # Rounding can cause problems #PR13272
         if (ystart > yend && (ystart - yend)*xfreq < ts.eps)
             yend <- ystart
         nold <- round(xfreq*(xtsp[2L] - xtsp[1L])) + 1
         ## both start and end could be outside time base
         ## and indeed the new ad old ranges might not intersect.
-        i <- if(start > xtsp[2L]+ts.eps/xfreq || end < xtsp[1L] - ts.eps/xfreq)
+        i <- if(start > xtsp[2L]+eps_ || end < xtsp[1L] - eps_)
             rep(nold+1, floor(1+(end-start)*xfreq + ts.eps))
         else {
             i0 <- 1+max(0, stoff); i1 <- nold + min(0, enoff)

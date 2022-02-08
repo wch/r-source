@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2021   The R Core Team.
+ *  Copyright (C) 2001-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -894,7 +894,7 @@ check_single_string(SEXP obj, Rboolean nonEmpty, const char *what)
 	if(length(obj) != 1)
 	    error(_("'%s' must be a single string (got a character vector of length %d)"),
 		  what, length(obj));
-	string = CHAR(STRING_ELT(obj, 0));
+	string = CHAR(STRING_ELT(obj, 0)); /* FIXME: translateChar? */
 	if(nonEmpty && (! string || !string[0]))
 	    error(_("'%s' must be a non-empty string; got an empty string"),
 		  what);
@@ -929,8 +929,9 @@ static const char *class_string(SEXP obj)
 */
 SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name, SEXP pkg)
 {
-    char str[501];
     const char *prefixString, *nameString, *pkgString;
+    const void *vmax = vmaxget();
+    SEXP res;
 
     prefixString = check_single_string(prefix, TRUE,
 				       "The internal prefix (e.g., \"C\") for a meta-data object");
@@ -938,11 +939,18 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name, SEXP pkg)
 				     "The name of the object (e.g,. a class or generic function) to find in the meta-data");
     pkgString = check_single_string(pkg, FALSE,
 				   "The name of the package for a meta-data object");
+    size_t len;
+    /* fits pkgString version format + '\0' */
+    len = strlen(pkgString) + strlen(prefixString) + strlen(nameString) + 7;
+    char *str = (char*) R_alloc(len, sizeof(char));
+
     if(*pkgString)
-      snprintf(str, 500, ".__%s__%s:%s", prefixString, nameString, pkgString);
+      snprintf(str, len, ".__%s__%s:%s", prefixString, nameString, pkgString);
     else
-      snprintf(str, 500, ".__%s__%s", prefixString, nameString);
-    return mkString(str);
+      snprintf(str, len, ".__%s__%s", prefixString, nameString);
+    res = mkString(str);
+    vmaxset(vmax);
+    return res;
 }
 
 SEXP R_identC(SEXP e1, SEXP e2)

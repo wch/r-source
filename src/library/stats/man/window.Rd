@@ -1,6 +1,6 @@
 % File src/library/stats/man/window.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{window}
@@ -31,7 +31,8 @@ window(x, \dots) <- value
     series give a warning and are ignored.}
   \item{ts.eps}{time series comparison tolerance.  Frequencies are
     considered equal if their absolute difference is less than
-    \code{ts.eps}.}
+    \code{ts.eps} and boundaries (length-1 versions of \code{start} and
+    \code{end}) are checked with fuzz \code{ts.eps/frequency(x)}.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{value}{replacement values.}
 }

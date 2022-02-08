@@ -1,5 +1,5 @@
 /*  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020 R Core Team
+ *  Copyright (C) 1998--2022 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,12 +47,12 @@ extern int R_ReplDLLdo1();
    frequently. See rterm.c and ../system.c for one approach using
    a separate thread for input.
 */
-static int myReadConsole(const char *prompt, char *buf, int len,
+static int myReadConsole(const char *prompt, unsigned char *buf, int len,
 			 int addtohistory)
 {
     fputs(prompt, stdout);
     fflush(stdout);
-    if(fgets(buf, len, stdin)) return 1;
+    if(fgets((char *)buf, len, stdin)) return 1;
     else return 0;
 }
 

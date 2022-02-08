@@ -1139,20 +1139,28 @@ if(FALSE) {
                             utils::download.file(purl, destfile = fname, mode = "wb")
     		        else
                             file.copy(purl, fname)
-                        ## FIXME: we could first run --dry-run to
-                        ## non-destructively check if the patch can be
-                        ## applied (suggested by Dirk Eddelbuettel)
-                        ##
-                        ## We could also try reverting (-R) and if that
-                        ## succeeds fully, assume the patch has already been
-                        ## aplied.
-                        if (system2("patch", args = c("-p2", "--binary", "--force"), stdin = fname) != 0)
-                            message("WARNING: failed to apply patch ", p, "\n")
-                        else
-                            message("Applied installation-time patch ", purl,
-                                    " and saved it as ", fname,
-                                    " in package installation\n")
-                     }
+
+                        if (system2("patch", args = c("--dry-run", "-p2", "--binary", "--force"),
+                                    stdin = fname, stdout = NULL, stderr = NULL) != 0) {
+                            ## the patch cannot be applied, check if it might
+                            ## be reversed
+                            if (system2("patch", args = c("--dry-run", "-R", "-p2", "--binary",
+                                                          "--force"), stdin = fname) == 0)
+                                message("NOTE: Skipping installation-time patch ", purl, 
+                                        " which seems to be already applied.\n")
+                            else
+                                message("WARNING: failed to apply patch ", purl, "\n")
+                        } else {
+                            if (system2("patch", args = c("-p2", "--binary", "--force"),
+                                        stdin = fname) != 0)
+                                ## should not happen as dry-run succeeded
+                                message("WARNING: failed to apply patch ", p, "\n")
+                            else
+                                message("Applied installation-time patch ", purl,
+                                        " and saved it as ", fname,
+                                        " in package installation\n")
+                        }
+                    }
                 }
             }
 	}
@@ -1972,7 +1980,7 @@ if(FALSE) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2020 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -2494,7 +2502,7 @@ if(FALSE) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2020 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")

@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -38,7 +38,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   The \LaTeX file generated needs to contain the line
   \samp{\\usepackage\{Sweave\}}, and if this is not present in the
   Sweave source file (possibly in a comment), it is inserted by the
-  \code{RweaveLatex} driver.  If \code{stylepath = TRUE}, a hard-coded
+  \code{RweaveLatex} driver as last line before the \samp{\\begin{document}}
+  statement. If \code{stylepath = TRUE}, a hard-coded
   path to the file \file{Sweave.sty} in the \R installation is set in
   place of \code{Sweave}.  The hard-coded path makes the \LaTeX file less
   portable, but avoids the problem of installing the current version of
@@ -86,21 +87,21 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \code{width} options will determine both the runtime generated graphic
   file sizes and the size of the graphics in your final document.
 
-  \file{Sweave.sty} also supports the \samp{[noae]} option, which
-  suppresses the use of the \samp{ae} package, the use of which may
-  interfere with certain encoding and typeface selections.  If you have
-  problems in the rendering of certain character sets, try this option.
+  \file{Sweave.sty} also supports the \samp{[nofontenc]} option, which
+  skips the default inclusion of \samp{\\usepackage[T1]{fontenc}}
+  for pdfTeX processing.
 
   It also supports the \samp{[inconsolata]} option, to render monospaced
   text in \code{inconsolata}, the font used by default for \R help
   pages.
 
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
-  when setting \R output.  Either set
+  when setting \R output in non-UTF-8 locales (note that pdfTeX assumes
+  UTF-8 by default since 2018).  Either set
   \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX is
-  aware of the encoding used (by a \samp{\\usepackage[utf8]\{inputenc\}}
-  declaration: Windows users of \code{Sweave} from \command{Rgui.exe}
-  will need to replace \samp{utf8} by \samp{cp1252} or similar) and
+  aware of the encoding used (in \R < 4.2.0, Windows users needed a
+  \samp{\\usepackage[cp1252]\{inputenc\}} declaration or similar,
+  see \code{\link{l10n_info}()}) and
   ensure that typewriter fonts containing directional quotes are used.
 
   Some \LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
@@ -117,7 +118,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \code{RweaveLatex} supports the following options for code chunks (the
   values in parentheses show the default values).  Character string
   values should be quoted when passed from \code{\link{Sweave}} through
-  \code{\dots} but not when use in the header of a code chunk.
+  \code{\dots} but not when used in the header of a code chunk.
   \describe{
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}

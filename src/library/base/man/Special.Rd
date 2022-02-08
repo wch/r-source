@@ -1,6 +1,6 @@
 % File src/library/base/man/Special.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Special}
@@ -104,12 +104,14 @@ lfactorial(x)
   C translations of Fortran subroutines by W. Fullerton of Los Alamos
   Scientific Laboratory (now available as part of SLATEC).
 
-  \code{digamma}, \code{trigamma} and \code{psigamma} are based on
+  \code{digamma}, \code{trigamma} and \code{psigamma} for \code{x >= 0} are based on
 
   Amos, D. E. (1983). A portable Fortran subroutine for
   derivatives of the psi function, Algorithm 610,
   \emph{ACM Transactions on Mathematical Software} \bold{9(4)}, 494--502.
 
+  For, \code{x < 0} and \code{deriv <= 5}, the reflection formula (6.4.7) of
+  Abramowitz and Stegun is used.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

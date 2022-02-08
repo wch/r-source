@@ -956,17 +956,20 @@ Replacement of the classification functions has been done for many years
 on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
 allows this to be suppressed on those platforms or used on others.
 Replacing the case-changing functions was new in @R{} 4.1.0 and the
-default on macOS.  Replacement of the width functions has also been done
-for many years and remains the default.  These options will only matter
-to those working with non-ASCII character data, especially in languages
-written in a non-Western script (which includes `symbols' such as
-emoji).  Note that one of those @code{iswxxxxx} is @code{iswprint} which
-is used to decide whether to output a character as a glyph or as a
-@samp{\U@{xxxxxx@}} escape---for example, try @samp{"\U1f600"}, an
-emoji.  The width functions are of most importance in East Asian locale:
-their values differ between such locales.  (Replacing the system
-functions provides a degree of plaform-independence (including to OS
-updates) but replaces it with a dependence on the @R{} version.)
+default on macOS (and on Windows since @R{} 4.2.0).  Replacement of the
+width functions has also been done for many years and remains the
+default.  These options will only matter to those working with non-ASCII
+character data, especially in languages written in a non-Western
+script@footnote{But on Windows problems have been seen with
+case-changing functions on accented Latin-1 characters.} (which includes
+`symbols' such as emoji).  Note that one of those @code{iswxxxxx} is
+@code{iswprint} which is used to decide whether to output a character as
+a glyph or as a @samp{\U@{xxxxxx@}} escape---for example, try
+@samp{"\U1f600"}, an emoji.  The width functions are of most importance
+in East Asian locale: their values differ between such locales.
+(Replacing the system functions provides a degree of
+plaform-independence (including to OS updates) but replaces it with a
+dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::
@@ -2257,11 +2260,11 @@ without the corresponding headers (not even in Xcode nor the Command
 Line Tools): they are often rather old versions.  If installing packages
 from source using them it is usually easiest to install a
 statically-linked up-to-date copy of the Open Source package from its
-sources or from @uref{https://mac.R-project.org/libs-4/}.  But sometimes
-it is desirable/necessary to use Apple's dynamically linked library, in
-which case appropriate headers could be extracted from the
-sources@footnote{Note that capitalization and versioning may differ from
-the Open Source project.} available @emph{via}
+sources or from @uref{https://mac.r-project.org/bin/darwin17/x86_64/}.
+But sometimes it is desirable/necessary to use Apple's dynamically
+linked library, in which case appropriate headers could be extracted
+from the sources@footnote{Note that capitalization and versioning may
+differ from the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
 @code{OpenSSL}@footnote{no longer a system library in macOS 11.} and
 @code{iodbc}.
@@ -5023,7 +5026,7 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 12 is unrelated to LLVM clang 12).
+versioning (so Apple clang 13 is unrelated to LLVM clang 13).
 
 @item
 A Fortran compiler. An installer for @command{gfortran} is available at
@@ -5033,32 +5036,34 @@ Sierra.}  This installs into @file{/usr/local/gfortran}.
 
 @item
 Binary components @code{pcre2} and @code{xz} (for @code{liblzma}) from
-@uref{https://mac.R-project.org/libs-4/}.  For example
+@uref{https://mac.r-project.org/bin/darwin17/x86_64/}.  For example
 @example
-curl -OL https://mac.r-project.org/libs-4/pcre2-10.34-darwin.17-x86_64.tar.gz
-sudo tar -xvzf pcre2-10.34-darwin.17-x86_64.tar.gz -C /
-curl -OL https://mac.r-project.org/libs-4/xz-5.2.4-darwin.17-x86_64.tar.gz
-sudo tar -xvzf xz-5.2.4-darwin.17-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin17/x86_64/pcre2-10.39-darwin.17-x86_64.tar.xz
+sudo tar -xvzf pcre2-10.39-darwin.17-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin17/x86_64/xz-5.2.5-darwin.17-x86_64.tar.xz
+sudo tar -xvzf xz-5.2.5-darwin.17-x86_64.tar.xz -C /
 @end example
 (Messages like @samp{usr/local/: Can't restore time} should be ignored.)
 @end itemize
-
-and desirable
+@noindent
+(there is an @R{} script at @uref{https://mac.r-project.org/bin/} to
+help with this) and desirable
 @itemize
 @item
-GNU @code{readline} from
-@uref{https://mac.R-project.org/libs-4/},@footnote{For licence reasons
-this is version 5.2 of @code{readline}: for those who want a more recent
-version it is straightforward to compile it from its sources.}.  If
-@code{readline} is not present, the emulation in Apple's version of
-@code{libedit} (aka @code{editline}) will be used: if you wish to avoid
-that, configure with @option{--without-readline}.
+GNU @code{readline5} from
+@uref{https://mac.r-project.org/bin/darwin17/x86_64/},@footnote{For
+licence reasons this is version 5.2 of @code{readline}: for those who
+want a more recent version it is straightforward to compile it from its
+sources.}.  If @code{readline} is not present, the emulation in Apple's
+version of @code{libedit} (aka @code{editline}) will be used: if you
+wish to avoid that, configure with @option{--without-readline}.
 
 @item
-Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff}
+from @uref{https://mac.r-project.org/bin/darwin17/x86_64/} and
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
 for the full range of bitmapped graphics devices.  (Some builds of
-@code{tiff} may require @code{libwepb} and/or @code{openjpeg}.)
+@code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5099,7 +5104,7 @@ future).
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
-@uref{https://mac.R-project.org/libs-4/}.
+@uref{https://mac.r-project.org/bin/darwin17/x86_64/}.
 @end itemize
 
 To build @R{} itself from the sources with the compilers in the Command
@@ -5258,10 +5263,11 @@ Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
 if all the external software required by both Pango and Cairo is
 available: running @command{pkg-config pangocairo --exists
 --print-errors} should show if the installation suffices and if not,
-what is missing.  At the time of writing pre-built components were
-available only for @cputype{arm64}, where components @code{cairo},
-@code{fontconfig}, @code{freetype}, @code{ffi}, @code{glib},
-@code{harfbuzz}, @code{pango} and @code{xml2} sufficed.
+what is missing.  At the time of writing using pre-built components
+@code{cairo}, @code{fontconfig}, @code{freetype}, @code{ffi},
+@code{fribidi}, @code{gettext}, @code{icu}, @code{glib},
+@code{harfbuzz}, @code{pango}, @code{pcre}, @code{pixman} and
+@code{xml2} sufficed.
 
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
@@ -5315,7 +5321,7 @@ use @command{gcc} to build the @code{quartz()} device, so
 @subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{https://mac.R-project.org/libs-4/} or
+are available from @uref{https://mac.r-project.org/bin/darwin17/x86_64/} or
 @uref{https://mac.R-project.org/libs/}.
 
 @cindex BLAS library
@@ -5385,8 +5391,9 @@ Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
 @uref{https://www.tug.org/mactex/morepackages.html}, including for High
 Sierra) and @command{qpdf} (from
-@uref{https://mac.R-project.org/libs-4/}, a version of which is in the
-@file{bin} directory of a binary installation of @R{}, usually
+@uref{https://mac.r-project.org/bin/darwin17/x86_64/}, a version of
+which is in the @file{bin} directory of a binary installation of @R{},
+usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
@@ -5411,8 +5418,6 @@ Unix-alikes), which is installed under @file{/usr/local/lib} as part of
 the @acronym{CRAN} binary for @R{}.@footnote{Just that component can be
 selected from the installer for @R{}: at the `Installation Type' screen
 select `Customise' and then just the `Tcl/Tk 8.6.6' component.}
-@c and available as separate @code{tcl} and @code{tk} components
-@c from @uref{https://mac.R-project.org/libs-4/}.
 This may need @command{configure} options
 @example
 --with-tcltk=/usr/local/lib
@@ -5728,13 +5733,12 @@ A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
-Binary builds of the prerequisites @footnote{There is no
-@code{readline}: the @acronym{CRAN} distribution uses @code{libedit}
-emulation.}  are available at
-@uref{https://mac.r-project.org/libs-arm64/}.  (The simplest way to get
-Tcl/Tk is to install
+Binary builds of the prerequisites are available at
+@uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
+to get Tcl/Tk is to install
 @uref{https://mac.r-project.org/libs-arm64/tcltk-8.6.11-xft-darwin20.4-arm64.pkg}
-which bundles Tcl, Tk and Tktable.)  These unpack into
+which bundles Tcl, Tk and Tktable, but you may already have these
+installed by the @R{} binary package installer.)  These unpack into
 @file{/opt/R/arm64}: it is simplest to first create that directory and
 adjust its ownership if desired:
 
@@ -5752,13 +5756,12 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 @end example
 
 @noindent
-using @command{sudo} if necessary.
+using @command{sudo} if necessary.  (There is an @R{} script at
+@uref{https://mac.r-project.org/bin/} to help with this.)
 
-Prerequisite @code{readline} can easily be built from source, although
-@code{libedit} emulation can also be used.  If compiling from source,
-@code{pcre2} (at least up to version 10.37) needs to be built without
-JIT support (the default) as the @R{} build segfaults if that is
-enabled, so do run @code{make check} on your build.
+If compiling from source, @code{pcre2} (at least up to version 10.39)
+needs to be built without JIT support (the default) as the @R{} build
+segfaults if that is enabled, so do run @code{make check} on your build.
 
 Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like

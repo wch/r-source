@@ -156,7 +156,7 @@ dir.create(file.path(dir, "dir"))
 
 # Take a snapshot
 snapshot <- fileSnapshot(dir, timestamp = tempfile("timestamp"), md5sum=TRUE)
-
+\dontshow{Sys.sleep(.01)}  % avoid spurious Rdiff below
 # Change one of the files.
 writeBin(3L:4L, file.path(dir, "file2"))
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2021 The R Core Team.
+ *  Copyright (C) 1999-2022 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Included by R.h: API */
+/* Included by R.h: mainly API */
 
 #ifndef R_RS_H
 #define R_RS_H
@@ -85,7 +85,7 @@ extern void R_chk_free(void *);
    Used by a couple of packages. */
 #define Memzero(p,n)  memset(p, 0, (R_SIZE_T)(n) * sizeof(*p))
 
-/* In NEWS.2 for R 2.6.0 for but not otherwise documented.  Used by patchDVI */
+/* Added in R 2.6.0 */
 #define CallocCharBuf(n) (char *) R_chk_calloc(((R_SIZE_T)(n))+1, sizeof(char))
 
 /* S Like Fortran Interface */
@@ -102,9 +102,11 @@ extern void R_chk_free(void *);
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 
-#ifndef NO_CALL_R
+/* Depreacated in R 2.15.0, non-API
+#if !defined(NO_CALL_R) && defined(DECLARE_LEGACY_CALL_R)
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 #endif
+*/
 
 #ifdef  __cplusplus
 }
