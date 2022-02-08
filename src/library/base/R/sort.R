@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -120,7 +120,9 @@ sort.int <-
 	nlev <- nlevels(x)
  	isord <- is.ordered(x)
         x <- c(x) # drop attributes
-    } else if(!is.atomic(x))
+    } else if(is.null(x))
+        return(x)
+    else if(!is.atomic(x))
         stop("'x' must be atomic")
 
     if(has.na <- any(ina <- is.na(x))) {
