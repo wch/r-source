@@ -93,9 +93,11 @@ typedef struct
 	/* R may embed UTF-8 sections into strings otherwise in current native
 	   encoding, escaped by UTF8in and UTF8out (rgui_UTF8.h). The setting
 	   currently has no effect in Rgui (always enabled) and in Rterm (never
-	   enabled).
+	   enabled). The setting has no effect when UTF-8 is the native
+	   encoding, which it is from R 4.2 on recent Windows systems when
+	   the embedding application/front-end uses UTF-8 as the active code
+	   page (system encoding) via its fusion manifest.
 	*/
-    void (*ResetConsole) (void);
 #endif
 } structRstart;
 

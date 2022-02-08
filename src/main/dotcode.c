@@ -2580,7 +2580,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifndef NO_CALL_R
-// call_R was deprecated in R 2.15.0 and hidden in RS.h in R 4.2.0
+// call_R was deprecated in R 2.15.0 and removed from RS.h in R 4.2.0
 
 static const struct {
     const char *name;

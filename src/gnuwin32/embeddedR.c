@@ -71,11 +71,6 @@ static void myBusy(int which)
     /* set a busy cursor ... if which = 1, unset if which = 0 */
 }
 
-void myResetConsole(void)
-{
-    /* called when the system is reset after an error */
-}
-
 static void my_onintr(int sig)
 {
     UserBreak = 1;
@@ -112,7 +107,6 @@ int Rf_initialize_R(int argc, char **argv)
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;
     Rp->Busy = myBusy;
-    Rp->ResetConsole = myResetConsole;
 
     Rp->R_Quiet = TRUE;
     Rp->R_Interactive = TRUE;

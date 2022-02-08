@@ -4820,7 +4820,7 @@ example on @cputype{arm} CPUs).
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
-functions where Windows does not support @code{%lld}, @code{%Lf} and
+functions where Windows did not support @code{%lld}, @code{%Lf} and
 similar formats (and has its own formats such as @code{%I64d} for 64-bit
 integers).  It is very rare to need to output such types, and 64-bit
 integers can usually be converted to doubles for output.  However, the
@@ -4970,6 +4970,22 @@ system dynamic library.  The only safe solution is to rename the entry
 points in the copy in the package.  We have even seen problems with
 entry point name @code{myprintf}, which is a system entry
 point@footnote{in @file{libselinux}.} on some Linux systems.
+
+@c example fron package fst on M1 mac in 2022-02.
+A related issue is the naming of libraries built as part of the package
+installation.  macOS and Windows have case-insensitive file systems, so
+using
+@example
+-L. -lLZ4
+@end example
+@noindent
+in @code{PKG_LIBS} will match @code{liblz4}.  And @code{-L.} only
+appends to the list of searched locations, and @code{liblz4} might be
+found in an earlier-searched location (and has been).  The only safe way
+is to give an explicit path, for example
+@example
+./libLZ4.a
+@end example
 
 @item
 Conflicts between symbols in DLLs are handled in very platform-specific
@@ -16646,13 +16662,6 @@ void myBusy(int which)
     /* set a busy cursor ... if which = 1, unset if which = 0 */
 @}
 
-void myResetConsole(void)
-@{
-    /* called when the system is reset after an error */
-@}
-
-
-
 static void my_onintr(int sig) @{ UserBreak = 1; @}
 
 int main (int argc, char **argv)
@@ -16682,7 +16691,6 @@ int main (int argc, char **argv)
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;
     Rp->Busy = myBusy;
-    Rp->ResetConsole = myResetConsole;
 
     Rp->R_Quiet = TRUE;        /* Default is FALSE */
     Rp->R_Interactive = FALSE; /* Default is TRUE */

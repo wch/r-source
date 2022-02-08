@@ -411,11 +411,9 @@
       \item \code{rmultinom} has been documented in \sQuote{Writing R
 	Extensions} §6 so is now part of the \R API.
 
-      \item The long-deprecated and non-API entry point \code{call_R} is
-      only declared \emph{pro tem} in \file{R_ext/RS.h} (included by
-      \file{R.h}) if \code{DECLARE_LEGACY_CALL_R} is defined before that
-      header is included.
-
+      \item The long-deprecated, undocumented and non-API entry point
+      \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
+      by \file{R.h}).
 
       \item Use of the legacy header \file{S.h} (undocumented since
       2016) now gives a compilation warning reported by
@@ -556,6 +554,13 @@
       \item \code{smooth.spline(x,y,*)} now computes the \code{cv.crit}
       statistic correctly, also when \code{is.unsorted(x)}, fixing
       \PR{18294}.
+
+      \item \code{model.weights()} and \code{model.offset()} more carefully
+      extract their model components, thanks to Ben Bolker and Tim Taylor's
+      R-devel post.
+
+      \item The \code{formula} method of \code{aggregate} now matches the
+      generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
     }
   }
 }
