@@ -44,7 +44,7 @@ print.browseVignettes <- function(x, ...)
 
     oneLink <- function(s) {
         if (length(s) == 0L) return(character(0L))
-        title <- s[, "Title"]
+        title <- gsub("&", "&amp;", s[, "Title"])
         if (port > 0L)
             prefix <- sprintf("/library/%s/doc", pkg)
         else
