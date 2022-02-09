@@ -203,6 +203,7 @@ SEXP		mkTrue(void);
 static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
+static int	Status = 1;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
@@ -414,11 +415,11 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 %%
 
-prog	:	END_OF_INPUT			{ YYACCEPT; }
-	|	'\n'				{ yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
-	|	expr_or_assign_or_help '\n'	{ yyresult = xxvalue($1,3,&@1);	goto yyreturn; }
-	|	expr_or_assign_or_help ';'	{ yyresult = xxvalue($1,4,&@1);	goto yyreturn; }
-	|	error	 			{ YYABORT; }
+prog	:	END_OF_INPUT			{ Status = 0; YYACCEPT; }
+	|	'\n'				{ Status = 2; yyresult = xxvalue(NULL,2,NULL); YYACCEPT; }
+	|	expr_or_assign_or_help '\n'	{ Status = 3; yyresult = xxvalue($1,3,&@1); YYACCEPT; }
+	|	expr_or_assign_or_help ';'	{ Status = 4; yyresult = xxvalue($1,4,&@1); YYACCEPT; }
+	|	error	 			{ Status = 1; YYABORT; }
 	;
 
 expr_or_assign_or_help  :    expr               { $$ = $1; }
@@ -1619,26 +1620,37 @@ static int checkForPipeBind(SEXP arg)
 
 static SEXP R_Parse1(ParseStatus *status)
 {
+    Status = 1; /* safety */
     switch(yyparse()) {
-    case 0:                     /* End of file */
-	*status = PARSE_EOF;
-	if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+    case 0:
+	switch(Status) {
+	case 0:                     /* End of file */
+	    *status = PARSE_EOF;
+	    if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+	    break;
+	case 1:                     /* Error (currently unreachable) */
+	    *status = PARSE_ERROR;
+	    if (EndOfFile) *status = PARSE_INCOMPLETE;
+	    break;
+	case 2:                     /* Empty Line */
+	    *status = PARSE_NULL;
+	    break;
+	case 3:                     /* Valid expr '\n' terminated */
+	case 4:                     /* Valid expr ';' terminated */
+	    if (checkForPipeBind(R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("pipe bind symbol may only appear "
+			    "in pipe expressions"));
+	    *status = PARSE_OK;
+	    break;
+	}
 	break;
     case 1:                     /* Syntax error / incomplete */
 	*status = PARSE_ERROR;
 	if (EndOfFile) *status = PARSE_INCOMPLETE;
 	break;
-    case 2:                     /* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:                     /* Valid expr '\n' terminated */
-    case 4:                     /* Valid expr ';' terminated */
-        if (checkForPipeBind(R_CurrentExpr))
-	    errorcall(R_CurrentExpr,
-		      _("pipe bind symbol may only appear "
-			"in pipe expressions"));
-	*status = PARSE_OK;
-	break;
+    case 2:
+	error(_("out of memory while parsing"));
     }
     return R_CurrentExpr;
 }

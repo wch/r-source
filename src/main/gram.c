@@ -268,6 +268,7 @@ SEXP		mkTrue(void);
 static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
+static int	Status = 1;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
@@ -902,16 +903,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   417,   417,   418,   419,   420,   421,   424,   425,   426,
-     429,   430,   433,   434,   435,   436,   438,   439,   441,   442,
-     443,   444,   445,   447,   448,   449,   450,   451,   452,   453,
-     454,   455,   456,   457,   458,   459,   460,   461,   462,   463,
-     464,   465,   466,   467,   468,   469,   471,   472,   473,   474,
-     475,   476,   477,   478,   479,   480,   481,   482,   483,   484,
-     485,   486,   487,   488,   489,   490,   491,   492,   493,   497,
-     500,   503,   507,   508,   509,   510,   511,   512,   515,   516,
-     519,   520,   521,   522,   523,   524,   525,   526,   529,   530,
-     531,   532,   533,   537
+       0,   418,   418,   419,   420,   421,   422,   425,   426,   427,
+     430,   431,   434,   435,   436,   437,   439,   440,   442,   443,
+     444,   445,   446,   448,   449,   450,   451,   452,   453,   454,
+     455,   456,   457,   458,   459,   460,   461,   462,   463,   464,
+     465,   466,   467,   468,   469,   470,   472,   473,   474,   475,
+     476,   477,   478,   479,   480,   481,   482,   483,   484,   485,
+     486,   487,   488,   489,   490,   491,   492,   493,   494,   498,
+     501,   504,   508,   509,   510,   511,   512,   513,   516,   517,
+     520,   521,   522,   523,   524,   525,   526,   527,   530,   531,
+     532,   533,   534,   538
 };
 #endif
 
@@ -1970,31 +1971,31 @@ yyreduce:
     {
         case 2:
 
-    { YYACCEPT; }
+    { Status = 0; YYACCEPT; }
 
     break;
 
   case 3:
 
-    { yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
+    { Status = 2; yyresult = xxvalue(NULL,2,NULL); YYACCEPT; }
 
     break;
 
   case 4:
 
-    { yyresult = xxvalue((yyvsp[-1]),3,&(yylsp[-1]));	goto yyreturn; }
+    { Status = 3; yyresult = xxvalue((yyvsp[-1]),3,&(yylsp[-1])); YYACCEPT; }
 
     break;
 
   case 5:
 
-    { yyresult = xxvalue((yyvsp[-1]),4,&(yylsp[-1]));	goto yyreturn; }
+    { Status = 4; yyresult = xxvalue((yyvsp[-1]),4,&(yylsp[-1])); YYACCEPT; }
 
     break;
 
   case 6:
 
-    { YYABORT; }
+    { Status = 1; YYABORT; }
 
     break;
 
@@ -3840,26 +3841,37 @@ static int checkForPipeBind(SEXP arg)
 
 static SEXP R_Parse1(ParseStatus *status)
 {
+    Status = 1; /* safety */
     switch(yyparse()) {
-    case 0:                     /* End of file */
-	*status = PARSE_EOF;
-	if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+    case 0:
+	switch(Status) {
+	case 0:                     /* End of file */
+	    *status = PARSE_EOF;
+	    if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+	    break;
+	case 1:                     /* Error (currently unreachable) */
+	    *status = PARSE_ERROR;
+	    if (EndOfFile) *status = PARSE_INCOMPLETE;
+	    break;
+	case 2:                     /* Empty Line */
+	    *status = PARSE_NULL;
+	    break;
+	case 3:                     /* Valid expr '\n' terminated */
+	case 4:                     /* Valid expr ';' terminated */
+	    if (checkForPipeBind(R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("pipe bind symbol may only appear "
+			    "in pipe expressions"));
+	    *status = PARSE_OK;
+	    break;
+	}
 	break;
     case 1:                     /* Syntax error / incomplete */
 	*status = PARSE_ERROR;
 	if (EndOfFile) *status = PARSE_INCOMPLETE;
 	break;
-    case 2:                     /* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:                     /* Valid expr '\n' terminated */
-    case 4:                     /* Valid expr ';' terminated */
-        if (checkForPipeBind(R_CurrentExpr))
-	    errorcall(R_CurrentExpr,
-		      _("pipe bind symbol may only appear "
-			"in pipe expressions"));
-	*status = PARSE_OK;
-	break;
+    case 2:
+	error(_("out of memory while parsing"));
     }
     return R_CurrentExpr;
 }
