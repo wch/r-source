@@ -179,7 +179,8 @@ recordGTreeForPatternResolution <- function(x) {
         gpar <- grid.Call(C_getGPar)
         attr(gpar$fill, "grob") <- x
         resolvedFill <- resolveFill(gpar$fill, 1)
-        if (inherits(resolvedFill, "GridResolvedPattern")) {
+        if (inherits(resolvedFill, "GridResolvedPattern") ||
+            inherits(resolvedFill, "GridGTreePatternList")) {
             gpar$fill <- resolvedFill
         } else {
             gpar$fill <- "transparent"
@@ -387,7 +388,7 @@ resolveFill.GridGTreePatternList <- function(fill, ...) {
     pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
     resolveOneFill <- function(x) {
         if (x$group) {
-            resolveGTreeFill(fill, pts)
+            resolveGTreeFill(x, pts)
         } else {
             x
         }
