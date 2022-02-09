@@ -884,8 +884,8 @@ Rd2HTML <-
         if (create_redirects) createRedirects(out, Rd)
 	name <- htmlify(Rd[[2L]][[1L]])
 
-        of0('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-            '<html xmlns="http://www.w3.org/1999/xhtml">',
+        of0('<!DOCTYPE html>',
+            "<html>",
 	    '<head><title>')
 	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),
 	                     width=65, initial="R: ")
