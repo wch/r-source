@@ -557,7 +557,7 @@
       generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
 
       \item The \code{data.frame} method of \code{rbind()} now warns
-      when binding not-wholly-reclying vectors, in analogy to the default
+      when binding not-wholly-recycling vectors, in analogy to the default
       method (for matrix).
     }
   }
