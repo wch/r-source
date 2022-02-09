@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2021 The R Core Team
+# Changes Copyright (C) 1998-2022 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1448,11 +1448,16 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
         }
     }
 
-    for(i in seq_len(n)) { ## add arg [[i]] to result
+    for(i in seq_len(n)) { ## add arg [[i]] to result  (part 2)
 	xi <- unclass(allargs[[i]])
 	if(!is.list(xi))
-	    if(length(xi) != nvar)
-		xi <- rep(xi, length.out = nvar)
+	    if((ni <- length(xi)) != nvar) {
+		if(ni && nvar %% ni != 0)
+		    warning(gettextf(
+		"number of columns of result, %d, is not a multiple of vector length %d of arg %d",
+                		nvar, ni, i), domain = NA)
+		xi <- rep_len(xi, nvar)
+            }
 	ri <- rows[[i]]
 	pi <- perm[[i]]
 	if(is.null(pi)) pi <- pseq

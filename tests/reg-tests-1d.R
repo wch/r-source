@@ -5775,6 +5775,27 @@ stopifnot(identical(L1[[1]], aggregate(mpg ~ cyl, mtcars, mean)),
 ## both examples failed in  R <= 4.1.2
 
 
+## rbind.data.frame() : should warn when it does not fully recycle:
+df  <- data.frame(a = 1, b = 2)
+d22 <- data.frame(a = c(1, 3), b = c(2, 4))
+tools::assertWarning(r <- rbind(df, c(3, 4, 5)), verbose=TRUE)
+L <- FN <- c(cbind, data.frame) # <==> rbind() for  matrix and data.frame
+LC <- lapply(seq_along(FN), function(i)
+    tools::assertWarning(
+	       L[[i]] <<- rbind((FN[[i]])(a=1, b=2, c=3, d=4),
+                                5:7, -1, 8:9, integer(), 11:14, NULL, 21:28),
+	       verbose=TRUE))#   2    3   4       5        6     7      8
+stopifnot(exprs = {
+    all.equal(r, d22)
+    identical(lapply(L, class), list(c("matrix","array"), "data.frame"))
+    identical(dim(L[[1]]), dim(L[[2]]))
+    L[[1]] == L[[2]]  # a matrix of TRUE
+    unlist(lapply(LC, function(x) vapply(print(x), inherits, what="warning", NA)))
+    identical(lengths(LC), 1:2) #        ^^^^^   2 warnings in data.frame case
+})
+## rbind.data.frame(.) did not warn in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
