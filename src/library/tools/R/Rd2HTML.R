@@ -315,7 +315,7 @@ Rd2HTML <-
     		     "\\dots"="...",
     		     "\\ldots"="...")
     ## These correspond to idiosyncratic wrappers
-    HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
+    HTMLLeft <- c("\\acronym"='<abbr><span class="acronym">',
     		  "\\donttest"="",
     		  "\\env"='<span class="env">',
                   "\\file"='&lsquo;<span class="file">',
@@ -325,7 +325,7 @@ Rd2HTML <-
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
                   "\\verb"='<code style="white-space: pre;">')
-    HTMLRight <- c("\\acronym"='</span></acronym>',
+    HTMLRight <- c("\\acronym"='</span></abbr>',
     		   "\\donttest"="",
     		   "\\env"="</span>",
                    "\\file"='</span>&rsquo;',
@@ -665,7 +665,7 @@ Rd2HTML <-
         tags <- RdTags(content)
 
 	leavePara(NA)
-	of1('\n<table summary="Rd table">\n')
+	of1('\n<table>\n')
         newrow <- TRUE
         newcol <- TRUE
         for (i in seq_along(tags)) {
@@ -744,8 +744,8 @@ Rd2HTML <-
     	    	leavePara(FALSE)
     	    	if (!inlist) {
     	    	    switch(blocktag,
-                           "\\value" =  of1('<table summary="R valueblock">\n'),
-                           "\\arguments" = of1('<table summary="R argblock">\n'),
+                           "\\value" =  of1('<table>\n'),
+                           "\\arguments" = of1('<table>\n'),
                            "\\itemize" = of1("<ul>\n"),
                            "\\enumerate" = of1("<ol>\n"),
                            "\\describe" = of1("<dl>\n"))
@@ -901,11 +901,11 @@ Rd2HTML <-
 	    urlify(stylesheet),
 	    '" />\n',
 	    '</head><body><div class="container">\n\n',
-	    '<table width="100%" summary="page for ', htmlify(name))
+	    '<table width="100%">',
+            '<tr><td>',
+            name)
 	if (nchar(package))
-	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
-	else
-	    of0('"><tr><td>',name)
+	    of0(' {', package, '}')
 	of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
 
 	of1("<h2>")

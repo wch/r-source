@@ -23,7 +23,7 @@ make.packages.html <-
 {
     add_lib_index <- function(libs)
     {
-        cat('<div align="left">\n<ul>\n', file = out)
+        cat('<div style="text-align: left;">\n<ul>\n', file = out)
         for (i in seq_along(libs)) {
             nm <- libs[i]
             if (nm == .Library) {
@@ -109,11 +109,11 @@ make.packages.html <-
         first <- toupper(substr(pg, 1, 1))
         nm <- sort(names(table(first)))
         if(use_alpha) {
-            writeLines("<p align=\"center\">", out)
+            writeLines("<p style=\"text-align: center;\">", out)
             writeLines(paste0("<a href=\"#pkgs-", nm, "\">", nm, "</a>"), out)
             writeLines("</p>\n", out)
         }
-        cat('<table width="100%" summary="R Package list">\n', file = out)
+        cat('<table width="100%">\n', file = out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"> <td></td>\n", sep = "", file = out)
@@ -121,7 +121,7 @@ make.packages.html <-
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
-                cat('<tr align="left" valign="top" id="lib-', i, '">\n',
+                cat('<tr style="text-align: left;" valign="top" id="lib-', i, '">\n',
                     '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>",
                     gsub("&", "&amp;", title), "</td></tr>\n",

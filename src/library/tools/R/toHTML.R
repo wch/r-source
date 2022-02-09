@@ -184,7 +184,7 @@ function(x, ...)
 # is depth 3
 
 makeVignetteTable <- function(vignettes, depth=2) {
-    out <- c('<table width="100%" summary="Vignettes">',
+    out <- c('<table width="100%">',
              '<col style="width: 22%;" />',
              '<col style="width:  2%;" />',
              '<col style="width: 50%;" />',

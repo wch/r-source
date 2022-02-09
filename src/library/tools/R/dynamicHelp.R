@@ -168,11 +168,11 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search concepts"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
                        utils::URLencode(reQuote(s), reserved = TRUE),
-                       "&fields.concept=1&agrep=0\">",
+                       "&amp;fields.concept=1&amp;agrep=0\">",
                        shtmlify(substr(s, 1L, 80L)),
                        "</a>",
                        "</td><td style=\"text-align: right\">",
@@ -192,7 +192,7 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search keywords"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?category=",
                        keywords$Keyword,
@@ -378,7 +378,14 @@ httpd <- function(path, query, ...)
                                collapse = "\n")
 
             return(list(payload =
-                        paste0("<p>",
+                        paste0("<!DOCTYPE html>",
+                               "<html>",
+                               "<head>",
+                               "<title>R: help</title>",
+                               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+                               "</head>",
+                               "<body>",
+                                "<p>",
                                ## for languages with multiple plurals ....
                                sprintf(ngettext(length(paths),
                                                 "Help on topic '%s' was found in the following package:",
@@ -386,6 +393,8 @@ httpd <- function(path, query, ...)
                                                 ), topic),
                                "</p><dl>\n",
                                packages, "</dl>",
+                               "</body>",
+                               "</html>",
                                collapse = "\n")
                         ))
         }

@@ -31,8 +31,7 @@ function(mirrors = NULL, file = "mirrors.html",
         m <- mirrors[mirrors$Country == country,]
         z <- c(z, paste0("<dt>", country, "</dt>"),
                "<dd>",
-               sprintf("<table border=0 width=\"90%%\" summary=\"%s\">",
-                       country))
+               "<table border=0 width=\"90%\">")
         for(k in seq_len(nrow(m))) {
             z <- c(z, "<tr>",
                    "<td width=\"45%\">",
