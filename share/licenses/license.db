@@ -122,7 +122,7 @@ OSI: open (https://opensource.org/licenses/BSD-3-Clause)
 FSF: free_and_GPLv3_compatible (https://www.gnu.org/licenses/license-list.html#ModifiedBSD)
 URL: https://opensource.org/licenses/BSD-3-Clause
 FOSS: yes
-Note: do not use: use BSD_2_clause or BSD_3_clause instead
+Note: do not use: use BSD_2_clause or BSD_3_clause instead 
 
 Name: BSD 2-clause License
 Abbrev: BSD_2_clause
@@ -198,62 +198,6 @@ FSF: free_and_GPLv3_incompatible (https://www.gnu.org/licenses/license-list.html
 OSI: open (https://opensource.org/licenses/EUPL-1.1)
 URL: https://joinup.ec.europa.eu/software/page/eupl
 FOSS: yes
-
-Name: Creative Commons Attribution-ShareAlike 2.0 Generic License
-Abbrev: CC BY-SA 2.0
-FSF: free_and_GPLv3_incompatible (https://www.gnu.org/licenses/license-list.html#ccbysa)
-URL: https://creativecommons.org/licenses/by-sa/2.0
-FOSS: yes
-Extensible: yes
-Note: do not use: use CC BY-SA 4.0 instead
-
-Name: Creative Commons Attribution 3.0 Unported License
-Abbrev: CC BY 3.0
-FSF: free_and_GPLv3_incompatible
-URL: https://creativecommons.org/licenses/by/3.0
-FOSS: yes
-Extensible: yes
-Note: do not use: use CC BY 4.0 instead
-
-Name: Creative Commons Attribution-ShareAlike 3.0 Unported License
-Abbrev: CC BY-SA 3.0
-FSF: free_and_GPLv3_incompatible
-URL: https://creativecommons.org/licenses/by-sa/3.0
-FOSS: yes
-Extensible: yes
-Note: do not use: use CC BY-SA 4.0 instead
-
-Name: Creative Commons Attribution-NonCommercial 3.0 Unported License
-Abbrev: CC BY-NC 3.0
-URL: https://creativecommons.org/licenses/by-nc/3.0
-FOSS: no
-Extensible: yes
-Restricts_use: yes
-Note: do not use: use CC BY-NC 4.0 instead
-
-Name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0 United States License
-Abbrev: CC BY-NC-ND 3.0 US
-URL: https://creativecommons.org/licenses/by-nc-nd/3.0/us
-FOSS: no
-Extensible: yes
-Restricts_use: yes
-Note: do not use: use CC BY-NC-ND 4.0 instead
-
-Name: Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-Abbrev: CC BY-NC-SA 3.0
-URL: https://creativecommons.org/licenses/by-nc-sa/3.0
-FOSS: no
-Extensible: yes
-Restricts_use: yes
-Note: do not use: use CC BY-NC-SA 4.0 instead
-
-Name: Creative Commons Attribution-ShareAlike 3.0 United States License
-Abbrev: CC BY-SA 3.0 US
-FSF: free_and_GPLv3_incompatible
-URL: https://creativecommons.org/licenses/by-sa/3.0/us/
-FOSS: yes
-Extensible: yes
-Note: do not use: use CC BY-SA 4.0 instead
 
 Name: Creative Commons Attribution 4.0 International License
 Abbrev: CC BY 4.0
