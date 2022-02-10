@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -114,6 +114,13 @@ aggregate(x, \dots)
   unnamed grouping variables being named \code{Group.\var{i}} for
   \code{by[[\var{i}]]}.
 }
+
+\section{Warning}{
+  In future, the first argument of the \code{"formula"} method may be named
+  \code{x} rather than \code{formula}.  Portable uses should not name
+  that argument.
+}
+
 \author{
   Kurt Hornik, with contributions by Arni Magnusson.
 }
