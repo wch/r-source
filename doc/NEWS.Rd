@@ -185,6 +185,8 @@
       \item \code{psigamma(x, deriv)} for negative \code{x} now also works
       for \code{deriv = 4} and \code{5}; their underlying C level
       \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
+
+      \item The HTML help system now uses HTML5 (wish of \PR{18149}).
     }
   }
 
@@ -555,6 +557,10 @@
 
       \item The \code{formula} method of \code{aggregate} now matches the
       generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
+
+      \item The \code{data.frame} method of \code{rbind()} now warns
+      when binding not-wholly-recycling vectors, in analogy to the default
+      method (for matrix).
     }
   }
 }
@@ -634,6 +640,9 @@
       \item \code{window(x, start, end)} no longer wrongly signals
       \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
       \PR{18291}.
+
+      \item \code{list.files(recursive = TRUE)} now shows all broken
+      symlinks (previously, some of them may have been omitted, \PR{18296}).
     }
   }
 }

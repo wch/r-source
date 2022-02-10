@@ -1088,7 +1088,7 @@ function(pkg, con, vignetteIndex = NULL)
 			     otherfiles)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
         html <- c(html, '<h2>Other files in the <span class="samp">doc</span> directory</h2>',
-                  '<table width="100%" summary="Other docs">',
+                  '<table width="100%">',
 		  '<col style="width: 24%;" />',
 		  '<col style="width: 50%;" />',
 		  '<col style="width: 24%;" />',

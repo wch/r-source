@@ -113,6 +113,13 @@ aggregate(x, \dots)
   unnamed grouping variables being named \code{Group.\var{i}} for
   \code{by[[\var{i}]]}.
 }
+
+\section{Warning}{
+  The first argument of the \code{"formuala"} method was named
+  \code{formula} rather than \code{x} prior to \R 4.2.0.  Portable uses
+  should not name that argument.
+}
+
 \author{
   Kurt Hornik, with contributions by Arni Magnusson.
 }

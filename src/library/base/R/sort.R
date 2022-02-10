@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -203,6 +203,8 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     }
 
     if(method != "radix" && !is.na(na.last)) {
+        if(length(decreasing) > 1L)
+            stop("'decreasing' of length > 1 is only for method = \"radix\"")
         return(.Internal(order(na.last, decreasing, ...)))
     }
 

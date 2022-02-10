@@ -1072,7 +1072,7 @@ function(x, name, value)
 
 `$<-.citation` <-
 function(x, name, value)
-    .citation(NextMethod("$<-"))
+    .citation(NextMethod("$<-"), attr(x, "package"))
 
 c.bibentry <-
 function(..., recursive = FALSE)
