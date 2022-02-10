@@ -638,6 +638,9 @@
       \item \code{window(x, start, end)} no longer wrongly signals
       \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
       \PR{18291}.
+
+      \item \code{list.files(recursive = TRUE)} now shows all broken
+      symlinks (previously, some of them may have been omitted, \PR{18296}).
     }
   }
 }
