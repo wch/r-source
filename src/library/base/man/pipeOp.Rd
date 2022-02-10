@@ -21,13 +21,16 @@
   A pipe expression passes, or pipes, the result of the left-hand side
   expression \code{lhs} to the right-hand side expression \code{rhs}.
 
-  %If the \code{rhs} expression is a call, then the
   The \code{lhs} is
   inserted as the first argument in the call. So \code{x |> f(y)} is
   interpreted as \code{f(x, y)}.
 
   To avoid ambiguities, functions in \code{rhs} calls may not be
   syntactically special, such as \code{+} or \code{if}.
+  
+  It is also possible to use named argument with the placeholder
+  \code{_} to specify where the \code{lhs} is to be inserted.
+  The placeholder can only appear once on the \code{rhs}.
   
   Pipe notation allows a nested sequence of calls to be written in a way
   that may make the sequence of processing steps easier to follow.
@@ -59,6 +62,8 @@ mtcars |> subset(cyl == 4) |> (function(d) lm(mpg ~ disp, data = d))()
 mtcars |> subset(cyl == 4) |> (\(d) lm(mpg ~ disp, data = d))()
 # or explicitly naming the argument(s) before the "one":
 mtcars |> subset(cyl == 4) |> lm(formula = mpg ~ disp)
+# or use the _ placeholder with a named argument:
+mtcars |> subset(cyl == 4) |> lm(mpg ~ disp, data = _)
 
 # the pipe operator is implemented as a syntax transformation:
 quote(mtcars |> subset(cyl == 4) |> nrow())
