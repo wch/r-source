@@ -185,6 +185,8 @@
       \item \code{psigamma(x, deriv)} for negative \code{x} now also works
       for \code{deriv = 4} and \code{5}; their underlying C level
       \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
+
+      \item The HTML help system now uses HTML5 (wish of \PR{18149}).
     }
   }
 
