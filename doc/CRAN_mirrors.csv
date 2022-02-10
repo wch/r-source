@@ -17,7 +17,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Bulgaria [https]",Bulgaria,Sofia,https://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
 "Canada (BC) [https]",Canada,Burnaby,https://mirror.rcg.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca,"secure_mirror_from_master"
-"Canada (NS) [https]",Canada,Halifax,https://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",0,ca
 "Canada (ON 1) [https]",Canada,Toronto,https://utstat.toronto.edu/cran/,"University of Toronto","Claire Yu <clairex.yu # utoronto.ca>",1,ca
 "Canada (ON 2) [https]",Canada,Toronto,https://cran.pacha.dev/,"DigitalOcean","Mauricio Vargas <mavargas11 # uc.cl>",1,ca,"secure_mirror_from_master"
 "Canada (ON 3) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
@@ -47,7 +46,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
-"France (Montpellier) [https]",France,Montpellier,https://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","eric.mauger # igf.cnrs.fr, vincent.arbaud # igh.cnrs.fr, ftpmaster # igh.cnrs.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 1) [https]",France,Paris,https://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr,"secure_mirror_from_master"
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
 "Germany (Leipzig) [https]",Germany,Leipzig,https://mirror.dogado.de/cran/,"dogado GmbH","mirror # dogado.de",1,de,"secure_mirror_from_master"
