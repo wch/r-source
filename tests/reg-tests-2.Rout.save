@@ -7533,25 +7533,27 @@ $foo
 > p <- parse(text = raw)
 > getParseData(p)
    line1 col1 line2 col2 id parent          token terminal          text
-36     2    1     4   15 36      0   expr_not_sym    FALSE              
-3      2    1     2    8  3     36       FUNCTION     TRUE      function
-4      2    9     2    9  4     36            '('     TRUE             (
-5      2   11     2   11  5     36 SYMBOL_FORMALS     TRUE             a
-6      2   15     2   27  6     36        COMMENT     TRUE # parameter 1
-8      3   10     3   10  8     36            ','     TRUE             ,
-10     3   12     3   12 10     36 SYMBOL_FORMALS     TRUE             b
-11     3   13     3   13 11     36     EQ_FORMALS     TRUE             =
+32     2    1     4   15 32      0           expr    FALSE              
+3      2    1     2    8  3     32       FUNCTION     TRUE      function
+4      2    9     2    9  4     32            '('     TRUE             (
+5      2   11     2   11  5     32 SYMBOL_FORMALS     TRUE             a
+6      2   15     2   27  6     32        COMMENT     TRUE # parameter 1
+8      3   10     3   10  8     32            ','     TRUE             ,
+10     3   12     3   12 10     32 SYMBOL_FORMALS     TRUE             b
+11     3   13     3   13 11     32     EQ_FORMALS     TRUE             =
 12     3   14     3   14 12     13      NUM_CONST     TRUE             2
-13     3   14     3   14 13     36   expr_not_sym    FALSE              
-15     3   16     3   28 15     36        COMMENT     TRUE # parameter 2
-17     4   10     4   10 17     36            ')'     TRUE             )
-32     4   11     4   15 32     36   expr_not_sym    FALSE              
-21     4   11     4   11 21     32            '{'     TRUE             {
-28     4   12     4   14 28     32   expr_not_sym    FALSE              
-22     4   12     4   12 22     28         SYMBOL     TRUE             a
-23     4   13     4   13 23     28            '+'     TRUE             +
-25     4   14     4   14 25     28         SYMBOL     TRUE             b
-26     4   15     4   15 26     32            '}'     TRUE             }
+13     3   14     3   14 13     32           expr    FALSE              
+14     3   16     3   28 14     32        COMMENT     TRUE # parameter 2
+16     4   10     4   10 16     32            ')'     TRUE             )
+29     4   11     4   15 29     32           expr    FALSE              
+19     4   11     4   11 19     29            '{'     TRUE             {
+26     4   12     4   14 26     29           expr    FALSE              
+20     4   12     4   12 20     22         SYMBOL     TRUE             a
+22     4   12     4   12 22     26           expr    FALSE              
+21     4   13     4   13 21     26            '+'     TRUE             +
+23     4   14     4   14 23     25         SYMBOL     TRUE             b
+25     4   14     4   14 25     26           expr    FALSE              
+24     4   15     4   15 24     29            '}'     TRUE             }
 > ## Got some parents wrong
 > 
 > 

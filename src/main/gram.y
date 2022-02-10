@@ -190,6 +190,9 @@ static int      checkForPlaceholder(SEXP placeholder, SEXP arg);
 static int HavePlaceholder = FALSE; 
 attribute_hidden SEXP R_PlaceholderToken = NULL;
 
+static int HavePipeBind = FALSE; 
+static SEXP R_PipeBindSymbol = NULL;
+
 /* These routines allocate constants */
 
 static SEXP	mkComplex(const char *);
@@ -204,6 +207,7 @@ SEXP		mkTrue(void);
 static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
+static int	Status = 1;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
@@ -306,7 +310,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
-	while(clen <= MB_CUR_MAX) {
+	while(clen <= R_MB_CUR_MAX) {
 	    mbs_init(&mb_st);
 	    res = (int) mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
@@ -357,8 +361,7 @@ static SEXP	xxnxtbrk(SEXP);
 static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxpipe(SEXP, SEXP);
-static SEXP	xxpipe2(SEXP, SEXP);
-static SEXP	xxshortfun(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxpipebind(SEXP, SEXP, SEXP);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -375,7 +378,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		INCOMPLETE_STRING
-%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB SHORTFUN
+%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR AND2 OR2
 %token		NS_GET NS_GET_INT
@@ -388,31 +391,26 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 /* no longer used: %token COLON_ASSIGN */
 %token		SLOT
 %token		PIPE
-%token		PIPE2
-%token		PIPE3
 %token          PLACEHOLDER
 %token          PIPEBIND
 
 /* This is the precedence table, low to high */
 %left		'?'
 %left		LOW WHILE FOR REPEAT
-%nonassoc	SHORTFUN
 %right		IF
 %left		ELSE
 %right		LEFT_ASSIGN
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
-%left		PIPE3
 %left		'~' TILDE
-%left		PIPE PIPE2
-%left		PIPEBIND
 %left		OR OR2
 %left		AND AND2
 %left		UNOT NOT
 %nonassoc   	GT GE LT LE EQ NE
 %left		'+' '-'
 %left		'*' '/'
-%left		SPECIAL
+%left		SPECIAL PIPE
+%left		PIPEBIND
 %left		':'
 %left		UMINUS UPLUS
 %right		'^'
@@ -422,11 +420,11 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 %%
 
-prog	:	END_OF_INPUT			{ YYACCEPT; }
-	|	'\n'				{ yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
-	|	expr_or_assign_or_help '\n'	{ yyresult = xxvalue($1,3,&@1);	goto yyreturn; }
-	|	expr_or_assign_or_help ';'	{ yyresult = xxvalue($1,4,&@1);	goto yyreturn; }
-	|	error	 			{ YYABORT; }
+prog	:	END_OF_INPUT			{ Status = 0; YYACCEPT; }
+	|	'\n'				{ Status = 2; yyresult = xxvalue(NULL,2,NULL); YYACCEPT; }
+	|	expr_or_assign_or_help '\n'	{ Status = 3; yyresult = xxvalue($1,3,&@1); YYACCEPT; }
+	|	expr_or_assign_or_help ';'	{ Status = 4; yyresult = xxvalue($1,4,&@1); YYACCEPT; }
+	|	error	 			{ Status = 1; YYABORT; }
 	;
 
 expr_or_assign_or_help  :    expr               { $$ = $1; }
@@ -438,26 +436,14 @@ expr_or_help  :    expr				    { $$ = $1; }
 	      |    expr_or_help '?' expr_or_help    { $$ = xxbinary($2,$1,$3); setId(@$); }
               ;
 
-expr_not_sym_or_assign	:	expr_not_sym	{ $$ = $1; }
-			|	equal_assign	{ $$ = $1; }
-			;
-
-equal_assign    :    expr_or_assign_or_help EQ_ASSIGN expr_or_assign_or_help    { $$ = xxbinary($2,$1,$3); setId(@$); }
-                ;
-
-expr	:	expr_not_sym			{ $$ = $1; }
-	|	SYMBOL				{ $$ = $1; }
-	;
-
-expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
+expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	STR_CONST			{ $$ = $1;	setId(@$); }
-	|	NULL_CONST			{ $$ = $1;	setId(@$); }
+	|	NULL_CONST			{ $$ = $1;	setId(@$); } 
+	|	PLACEHOLDER			{ $$ = $1;	setId(@$); }
+	|	SYMBOL				{ $$ = $1;	setId(@$); }
 
 	|	'{' exprlist '}'		{ $$ = xxexprlist($1,&@1,$2); setId(@$); }
-	|	'(' SYMBOL ')'			{ $$ = xxparen($1,$2);	setId(@$); }
-	|	'(' SYMBOL EQ_ASSIGN expr  ')'	{ $$ = xxbinary($3,$2,$4);
-						  $$ = xxparen($1,$$);	setId(@$); }
-	|	'(' expr_not_sym_or_assign ')'	{ $$ = xxparen($1,$2);	setId(@$); }
+	|	'(' expr_or_assign_or_help ')'	{ $$ = xxparen($1,$2);	setId(@$); }
 
 	|	'-' expr %prec UMINUS		{ $$ = xxunary($1,$2);	setId(@$); }
 	|	'+' expr %prec UMINUS		{ $$ = xxunary($1,$2);	setId(@$); }
@@ -483,23 +469,12 @@ expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	expr OR expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
-	|	expr PIPE3 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
-	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
-	|	expr PIPEBIND expr		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
-	|	'(' SYMBOL ')' SHORTFUN expr_or_assign_or_help
-						{ $$ = xxfirstformal0($2); 	modif_token( &@2, SYMBOL_FORMALS ) ;
-						  $$ = xxshortfun($$,$5,&@$); 	setId(@$); }
-	|	'(' SYMBOL EQ_ASSIGN expr ')' SHORTFUN expr_or_assign_or_help
-						{ $$ = xxfirstformal1($2,$4); 	modif_token( &@2, SYMBOL_FORMALS ) ; modif_token( &@3, EQ_FORMALS ) ;
-						$$ = xxshortfun($$,$7,&@$); 	setId(@$); }
-	|	'(' formlist ')' SHORTFUN expr_or_assign_or_help
-						{ $$ = xxshortfun($2,$5,&@$); 	setId(@$); }
+	|	expr PIPEBIND expr		{ $$ = xxpipebind($2,$1,$3);	setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
 						{ $$ = xxdefun($1,$3,$6,&@$); 	setId(@$); }
-	|	'@' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(R_FunctionSymbol,$3,$6,&@$); 	setId(@$); }
 	|	'\\' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(R_FunctionSymbol,$3,$6,&@$); 	setId(@$); }
 	|	expr '(' sublist ')'		{ $$ = xxfuncall($1,$3);  setId(@$); modif_token( &@1, SYMBOL_FUNCTION_CALL ) ; }
 	|	IF ifcond expr_or_assign_or_help 	{ $$ = xxif($1,$2,$3);	setId(@$); }
@@ -556,20 +531,13 @@ sub	:					{ $$ = xxsub0();	 }
 	|	STR_CONST EQ_ASSIGN expr_or_help    { $$ = xxsymsub1($1,$3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
 	|	NULL_CONST EQ_ASSIGN 		{ $$ = xxnullsub0(&@1); 	modif_token( &@2, EQ_SUB ) ; }
 	|	NULL_CONST EQ_ASSIGN expr_or_help   { $$ = xxnullsub1($3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
-	|       PLACEHOLDER                     { $$ = xxsub1($1, &@1);  }
-	|       SYMBOL EQ_ASSIGN PLACEHOLDER    { $$ = xxsymsub1($1,$3, &@1);      modif_token( &@2, EQ_SUB ) ; modif_token( &@1, SYMBOL_SUB ) ; }
-	|	STR_CONST EQ_ASSIGN PLACEHOLDER { $$ = xxsymsub1($1,$3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
-	|	NULL_CONST EQ_ASSIGN PLACEHOLDER { $$ = xxnullsub1($3, &@1); 	modif_token( &@2, EQ_SUB ) ; }	
 	;
 
 formlist:					{ $$ = xxnullformal(); }
-	|	not_null_formlist		{ $$ = $1; }
-	;
-
-not_null_formlist:	SYMBOL			{ $$ = xxfirstformal0($1); 	modif_token( &@1, SYMBOL_FORMALS ) ; }
+	|	SYMBOL				{ $$ = xxfirstformal0($1); 	modif_token( &@1, SYMBOL_FORMALS ) ; }
 	|	SYMBOL EQ_ASSIGN expr_or_help	{ $$ = xxfirstformal1($1,$3); 	modif_token( &@1, SYMBOL_FORMALS ) ; modif_token( &@2, EQ_FORMALS ) ; }
-	|	not_null_formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3);   modif_token( &@3, SYMBOL_FORMALS ) ; }
-	|	not_null_formlist ',' SYMBOL EQ_ASSIGN expr_or_help
+	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3);   modif_token( &@3, SYMBOL_FORMALS ) ; }
+	|	formlist ',' SYMBOL EQ_ASSIGN expr_or_help
 						{ $$ = xxaddformal1($1,$3,$5,&@3); modif_token( &@3, SYMBOL_FORMALS ) ; modif_token( &@4, EQ_FORMALS ) ;}
 	;
 
@@ -732,7 +700,7 @@ static void finish_mbcs_in_parse_context()
 	return;
 
     /* copy the context to a linear buffer */
-    char buf[nbytes + MB_CUR_MAX];
+    char buf[nbytes + R_MB_CUR_MAX];
 
     for(i = 0; i < nbytes; i++)
 	buf[i] = R_ParseContext[(first + i) % PARSE_CONTEXT_SIZE];
@@ -1131,7 +1099,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 {
     SEXP ans, sav_expr = expr;
     if (GenerateCode) {
-	if (isString(expr))
+	if (isString(expr) && expr != R_PlaceholderToken)
 	    expr = installTrChar(STRING_ELT(expr, 0));
 	PROTECT(expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
@@ -1213,96 +1181,102 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
-static SEXP fixup_pipe_rhs(SEXP, SEXP, SEXP);
-
-static SEXP R_OpenParenSymbol = NULL;
-static SEXP R_ifSymbol = NULL;
-static SEXP R_forSymbol = NULL;
-static SEXP R_whileSymbol = NULL;
-static SEXP R_repeatSymbol = NULL;
-
-static void check_for_right_assign(SEXP rhs)
+static void check_rhs(SEXP rhs)
 {
-    /* Right assignments after a final lambda expression will assign
-       in the local environment of the call, which is probably not
-       intended. To help, signal a warning if the body is an
-       assignment. */
-    SEXP body = CADDR(rhs);
-    SEXP R_AssignSymbol = install("<-"); /* should make this static */
-    if (TYPEOF(body) == LANGSXP && CAR(body) == R_AssignSymbol) {
-	SEXP var = CADR(body);
-	const char *vname = NULL;
-	if (TYPEOF(var) == SYMSXP)
-	    vname = CHAR(PRINTNAME(var));
-	else if (TYPEOF(var) == STRSXP && XLENGTH(var) == 1)
-	    vname = CHAR(STRING_ELT(var, 0));
-	if (vname != NULL)
-	    warning(_("unused assignment to local variable '%s'"),
-		    vname);
-    }
+    /* rule out syntactically special functions */
+    /* the IS_SPECIAL_SYMBOL bit is set in names.c */
+    SEXP fun = CAR(rhs);
+    if (TYPEOF(fun) == SYMSXP && IS_SPECIAL_SYMBOL(fun))
+	error("function '%s' not supported in RHS call of a pipe",
+	      CHAR(PRINTNAME(fun)));
 }
 
-static SEXP findPlaceholderCell(SEXP, SEXP);
-static SEXP wrapRHSBrace(SEXP, SEXP);
+static void checkTooManyPlaceholders(SEXP rhs, SEXP args)
+{
+    for (SEXP rest = args; rest != R_NilValue; rest = CDR(rest))
+	if (CAR(rest) == R_PlaceholderToken)
+	    errorcall(rhs, _("pipe placeholder may only appear once"));
+}
+
+static int checkForPlaceholderList(SEXP placeholder, SEXP list)
+{
+    for (; list != R_NilValue; list = CDR(list))
+	if (checkForPlaceholder(placeholder, CAR(list)))
+	    return TRUE;
+    return FALSE;
+}
+
+static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr)
+{
+    SEXP fun = CAR(expr);
+    if (fun == R_BracketSymbol ||
+	fun == R_Bracket2Symbol ||
+	fun == R_DollarSymbol) {    // allow @ as well??
+	/* If the RHS is a call to an extractor ([, [[, $), then
+	   recursively follow the chain of extractions to the
+	   expression for the object from which elements are being
+	   extracted. */
+	SEXP arg1 = CADR(expr);
+	SEXP phcell = arg1 == placeholder ?
+	    CDR(expr) :
+	    findExtractorChainPHCell(placeholder, rhs,  arg1);
+	/* If a placeholder is found, then check on the way back out
+	  that there are no other placeholders. */
+	if (phcell != NULL &&
+	    checkForPlaceholderList(placeholder, CDDR(expr)))
+	    errorcall(rhs, _("pipe placeholder may only appear once"));
+	return phcell;
+    }
+    else return NULL;
+}
 
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
-	/* allow x ==> x + 1 on RHS */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("==>")) {
+	if (TYPEOF(rhs) != LANGSXP)
+	    error(_("The pipe operator requires a function call as RHS"));
+
+	/* allow x => log(x) on RHS */
+	if (CAR(rhs) == R_PipeBindSymbol) {
 	    SEXP var = CADR(rhs);
 	    SEXP expr = CADDR(rhs);
-	    SEXP phcell = findPlaceholderCell(var, expr);
-	    if (phcell == NULL)
-		error(_("no placeholder found on RHS"));
-	    SETCAR(phcell, lhs);
-	    return expr;
-	}
-	    
-	/* allow for parenthesized RHS */
-	static SEXP R_ParenSymbol = NULL;
-	if (R_ParenSymbol == NULL)
-	    R_ParenSymbol = install("(");
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_ParenSymbol)
-	    return lang2(rhs, lhs);
-
-	/* allow for lambda as braces */
-	static SEXP R_BraceSymbol = NULL;
-	if (R_BraceSymbol == NULL)
-	    R_BraceSymbol = install("{");
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_BraceSymbol)
-	    return wrapRHSBrace(lhs, rhs);
-
-	/* allow for rhs lambda expressions */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol) {
-	    check_for_right_assign(rhs);
-	    return lang2(rhs, lhs);
+	    if (TYPEOF(var) != SYMSXP)
+		error(_("RHS variable must be a symbol"));
+	    SEXP alist = list1(R_MissingArg);
+	    SET_TAG(alist, var);
+	    SEXP fun = lang4(R_FunctionSymbol, alist, expr, R_NilValue);
+	    return lang2(fun, lhs);
 	}
 
-	if (TYPEOF(rhs) != LANGSXP)
-	    error(_("The pipe operator requires a function call "
-		    "or a function expression as RHS"));
+	/* check for placehilder in the RHS function */
+	if (checkForPlaceholder(R_PlaceholderToken, CAR(rhs)))
+	    error(_("pipe placeholder cannot be used in the RHS function"));
 
-	/* allow for a top-level placeholder */
-	SEXP phcell = findPlaceholderCell(R_PlaceholderToken, rhs);
+	/* allow for _$a[1]$b and the like */
+	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs);
 	if (phcell != NULL) {
-	    if (TAG(phcell) == R_NilValue)
-		error(_("pipe placeholder can only be used as a "
-			"named argument"));
 	    SETCAR(phcell, lhs);
 	    return rhs;
 	}
 
+	/* allow top-level placeholder */
+	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
+	    if (CAR(a) == R_PlaceholderToken) {
+#ifdef FORCE_NAMED_PLACEHOLDER
+		if (TAG(a) == R_NilValue)
+		    error(_("pipe placeholder can only be used as a "
+			    "named argument"));
+#endif
+		checkTooManyPlaceholders(rhs, CDR(a));
+		SETCAR(a, lhs);
+		return rhs;
+	    }
+	
+	check_rhs(rhs);
+	
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
-
-	/* rule out syntactically special functions */
-	/* the IS_SPECIAL_SYMBOL bit is set in names.c */
-	if (TYPEOF(fun) == SYMSXP && IS_SPECIAL_SYMBOL(fun))
-	    error("function '%s' not supported in RHS call of a pipe",
-		  CHAR(PRINTNAME(fun)));
-	
 	PRESERVE_SV(ans = lcons(fun, lcons(lhs, args)));
     }
     else {
@@ -1313,31 +1287,20 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     return ans;
 }
 
-static SEXP xxpipe2(SEXP lhs, SEXP rhs)
+static SEXP xxpipebind(SEXP fn, SEXP lhs, SEXP rhs)
 {
-    SEXP ans;
-    if (GenerateCode) {
-	/* allow for symbols or lambda expressions */
-	if (TYPEOF(rhs) == SYMSXP ||
-	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
-	    return lang2(rhs, lhs);
-		    
-	if (TYPEOF(rhs) != LANGSXP)
-	    error(_("The pipe operator requires a function call, a symbol, "
-		    "or an anonymous function expression as RHS"));
-
-	return fixup_pipe_rhs(R_PlaceholderToken, lhs, rhs);
+    static int use_pipebind = 0;
+    if (use_pipebind != 1) {
+	char *lookup = getenv("_R_USE_PIPEBIND_");
+	use_pipebind = ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
     }
-    RELEASE_SV(lhs);
-    RELEASE_SV(rhs);
-    return ans;
+
+    if (use_pipebind)
+	return xxbinary(fn, lhs, rhs);
+    else
+	error("'=>' is disabled; set '_R_USE_PIPEBIND_' envvar to a true value to enable it");
 }
 
-static SEXP xxshortfun(SEXP formals, SEXP body, YYLTYPE *lloc)
-{
-    return xxdefun(R_FunctionSymbol, formals, body, lloc);
-}
-    
 static SEXP xxparen(SEXP n1, SEXP n2)
 {
     SEXP ans;
@@ -1569,13 +1532,10 @@ void InitParser(void)
     INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
-#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
-    R_PlaceholderToken = ScalarString(mkChar("__"));
-#else
     R_PlaceholderToken = ScalarString(mkChar("_"));
-#endif
     MARK_NOT_MUTABLE(R_PlaceholderToken);
     R_PreserveObject(R_PlaceholderToken);
+    R_PipeBindSymbol = install("=>");
 }
 
 static void FinalizeSrcRefStateOnError(void *dummy)
@@ -1698,7 +1658,7 @@ static void ParseInit(void)
     EndOfFile = 0;
     xxcharcount = 0;
     npush = 0;
-    HavePlaceholder = FALSE;
+    HavePipeBind = FALSE;
 }
 
 static void initData(void)
@@ -1717,27 +1677,54 @@ static void ParseContextInit(void)
     initData();
 }
 
+static int checkForPipeBind(SEXP arg)
+{
+    if (! HavePipeBind)
+    	return FALSE;
+    else if (arg == R_PipeBindSymbol)
+	return TRUE;
+    else if (TYPEOF(arg) == LANGSXP)
+	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
+	    if (checkForPipeBind(CAR(cur)))
+		return TRUE;
+    return FALSE;
+}
+
 static SEXP R_Parse1(ParseStatus *status)
 {
+    Status = 1; /* safety */
     switch(yyparse()) {
-    case 0:                     /* End of file */
-	*status = PARSE_EOF;
-	if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+    case 0:
+	switch(Status) {
+	case 0:                     /* End of file */
+	    *status = PARSE_EOF;
+	    if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+	    break;
+	case 1:                     /* Error (currently unreachable) */
+	    *status = PARSE_ERROR;
+	    if (EndOfFile) *status = PARSE_INCOMPLETE;
+	    break;
+	case 2:                     /* Empty Line */
+	    *status = PARSE_NULL;
+	    break;
+	case 3:                     /* Valid expr '\n' terminated */
+	case 4:                     /* Valid expr ';' terminated */
+	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("invalid use of pipe placeholder"));
+	    if (checkForPipeBind(R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("invalid use of pipe bind symbol"));
+	    *status = PARSE_OK;
+	    break;
+	}
 	break;
     case 1:                     /* Syntax error / incomplete */
 	*status = PARSE_ERROR;
 	if (EndOfFile) *status = PARSE_INCOMPLETE;
 	break;
-    case 2:                     /* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:                     /* Valid expr '\n' terminated */
-    case 4:                     /* Valid expr ';' terminated */
-        if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr))
-	    errorcall(R_CurrentExpr,
-		      _("pipe placeholder may only appear in pipe"));
-	*status = PARSE_OK;
-	break;
+    case 2:
+	error(_("out of memory while parsing"));
     }
     return R_CurrentExpr;
 }
@@ -2290,7 +2277,6 @@ static void yyerror(const char *s)
 	"FUNCTION",	"'function'",
 	"EQ_ASSIGN",	"'='",
 	"RIGHT_ASSIGN",	"'->'",
-	"SHORTFUN",	"'=>'",
 	"LBB",		"'[['",
 	"FOR",		"'for'",
 	"IN",		"'in'",
@@ -2313,14 +2299,8 @@ static void yyerror(const char *s)
 	"NS_GET",	"'::'",
 	"NS_GET_INT",	"':::'",
 	"PIPE",         "'|>'",
-	"PIPE2",        "'>>'",
-	"PIPE3",        "'|>>'",
-	"PIPEBND",        "'==>'",
-#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
-	"PLACEHOLDER",  "__",
-#else
-	"PLACEHOLDER",  "_",
-#endif
+	"PIPEBIND",     "'=>'",
+	"PLACEHOLDER",  "'_'",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -2716,7 +2696,7 @@ static int mbcs_get_next2(int c, ucs_t *wc)
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
-	while(clen <= MB_CUR_MAX) {
+	while(clen <= R_MB_CUR_MAX) {
 	    res = mbtoucs(wc, s, clen);
 	    if(res >= 0) break;
 	    if(res == -1)
@@ -3453,11 +3433,7 @@ static int token(void)
  symbol:
 
     if (c == '.') return SymbolValue(c);
-#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
-    if (c == '_' && nextchar('_')) return Placeholder(c);
-#else
     if (c == '_') return Placeholder(c);
-#endif
     if(mbcslocale) {
 	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	mbcs_get_next(c, &wc);
@@ -3505,10 +3481,6 @@ static int token(void)
 	    yylval = install_and_save(">=");
 	    return GE;
 	}
-	else if (nextchar('>')) {
-	    yylval = install_and_save(">>");
-	    return PIPE2;
-	}
 	yylval = install_and_save(">");
 	return GT;
     case '!':
@@ -3520,16 +3492,13 @@ static int token(void)
 	return '!';
     case '=':
 	if (nextchar('=')) {
-	    if (nextchar('>')) {
-		yylval = install_and_save("==>");
-		return PIPEBIND;
-	    }
 	    yylval = install_and_save("==");
 	    return EQ;
 	}
 	else if (nextchar('>')) {
 	    yylval = install_and_save("=>");
-	    return SHORTFUN;
+	    HavePipeBind = TRUE;
+	    return PIPEBIND;
 	}		 
 	yylval = install_and_save("=");
 	return EQ_ASSIGN;
@@ -3563,10 +3532,6 @@ static int token(void)
 	    return OR2;
 	}
 	else if (nextchar('>')) {
-	    if (nextchar('>')) {
-		yylval = install_and_save("|>>");
-		return PIPE3;
-	    }
 	    yylval = install_and_save("|>");
 	    return PIPE;
 	}
@@ -3609,9 +3574,6 @@ static int token(void)
 	} else
 	    yylval = install_and_save("*");
 	return c;
-    case '_':
-        yylval = install_and_save("_");
-        return c;
     case '+':
     case '/':
     case '^':
@@ -3801,8 +3763,6 @@ static int yylex(void)
     case OR2:
     case AND2:
     case PIPE:
-    case PIPE2:
-    case PIPE3:
     case PIPEBIND:
     case SPECIAL:
     case FUNCTION:
@@ -3820,7 +3780,6 @@ static int yylex(void)
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
     case EQ_ASSIGN:
-    case SHORTFUN:
 	EatLines = 1;
 	break;
 
@@ -3853,6 +3812,7 @@ static int yylex(void)
 	/* indicate the end of an expression. */
 
     case SYMBOL:
+    case PLACEHOLDER:
     case STR_CONST:
     case NUM_CONST:
     case NULL_CONST:
@@ -4282,11 +4242,6 @@ static void growID( int target ){
     PS_SET_IDS(lengthgets2(PS_IDS, new_size));
 }
 
-static void NORET signal_ph_error(SEXP rhs, SEXP ph) {
-    errorcall(rhs, _("pipe placeholder must only appear as a top-level "
-		     "argument in the RHS call"));
-}
-    
 static int checkForPlaceholder(SEXP placeholder, SEXP arg)
 {
     if (! HavePlaceholder)
@@ -4298,82 +4253,4 @@ static int checkForPlaceholder(SEXP placeholder, SEXP arg)
 	    if (checkForPlaceholder(placeholder, CAR(cur)))
 		return TRUE;
     return FALSE;
-}
-
-static SEXP fixup_pipe_rhs(SEXP placeholder, SEXP lhs, SEXP rhs)
-{
-    if (checkForPlaceholder(placeholder, CAR(rhs)))
-	signal_ph_error(rhs, placeholder);
-
-    SEXP placeholder_cell = NULL;
-    for (SEXP cur = CDR(rhs); cur != R_NilValue; cur = CDR(cur)) {
-	SEXP arg = CAR(cur);
-	if (arg ==  placeholder) {
-	    if (placeholder_cell == NULL)
-		placeholder_cell = cur;
-	    else
-		errorcall(rhs, _("pipe placeholder may only appear once"));
-	}
-	else if (TYPEOF(arg) == LANGSXP &&
-		 checkForPlaceholder(placeholder, arg))
-	    signal_ph_error(rhs, placeholder);
-    }
-    if (placeholder_cell == NULL)
-	errorcall(rhs, _("no pipe placeholder in RHS call"));
-
-    SETCAR(placeholder_cell, lhs);
-    return rhs;
-}
-
-static SEXP findPlaceholderCell(SEXP placeholder, SEXP rhs)
-{
-    SEXP phcell = NULL;
-    int count = 0;
-    if (checkForPlaceholder(placeholder, CAR(rhs)))
-	signal_ph_error(rhs, placeholder);
-    for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
-	if (CAR(a) == placeholder) {
-	    if (phcell == NULL)
-		phcell = a;
-	    count++;
-	}
-	else if (checkForPlaceholder(placeholder, CAR(a)))
-	    signal_ph_error(rhs, placeholder);
-    if (count > 1)
-	errorcall(rhs, _("pipe placeholder may only appear once"));
-    return phcell;
-}
-
-static SEXP wrapRHSBrace(SEXP lhs, SEXP rhs)
-{
-    static SEXP R_CLNEQSymbol = NULL;
-    if (R_CLNEQSymbol == NULL)
-	R_CLNEQSymbol = install(":=");
-    if  (length(rhs) != 2)
-	errorcall(rhs, _("malformed pipe RHS"));
-
-    SEXP arg = CADR(rhs);
-
-    if (TYPEOF(arg) != LANGSXP)
-	errorcall(rhs, _("malformed pipe RHS"));
-
-    if (CAR(arg) != R_CLNEQSymbol)
-	return fixup_pipe_rhs(R_PlaceholderToken, lhs, arg);
-
-#ifndef LAMBDA_IN_BRACE
-    SEXP var = CADR(arg);
-    SEXP expr = CADDR(arg);
-    if (TYPEOF(expr) != LANGSXP)
-	errorcall(rhs, _("malformed pipe RHS"));
-    return fixup_pipe_rhs(var, lhs, expr);
-#else
-    PROTECT(lhs);
-    PROTECT(rhs);
-    SEXP v = CONS(R_MissingArg, R_NilValue);
-    SET_TAG(v, CADR(arg));
-    v = lang4(R_FunctionSymbol, v, CADDR(arg), R_NilValue);
-    v = lang2(v, lhs);
-    UNPROTECT(2);
-    return v;
-#endif
 }
