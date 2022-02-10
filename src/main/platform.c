@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2021 The R Core Team
+ *  Copyright (C) 1998--2022 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1255,6 +1255,7 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
+    int res;
 #ifdef Windows
     /* > 2GB files might be skipped otherwise */
     struct _stati64 sb;
@@ -1275,11 +1276,11 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 
 #ifdef Windows
-		    _stati64(p, &sb);
+		    res = _stati64(p, &sb);
 #else
-		    stat(p, &sb);
+		    res = stat(p, &sb);
 #endif
-		    if ((sb.st_mode & S_IFDIR) > 0) {
+		    if (!res && (sb.st_mode & S_IFDIR) > 0) {
 			if (not_dot) {
 			    if (idirs) {
 #define IF_MATCH_ADD_TO_ANS						\
@@ -1388,6 +1389,7 @@ static void list_dirs(const char *dnp, const char *nm,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
+    int res;
 #ifdef Windows
     /* > 2GB files might be skipped otherwise */
     struct _stati64 sb;
@@ -1414,11 +1416,11 @@ static void list_dirs(const char *dnp, const char *nm,
 	    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 #endif
 #ifdef Windows
-	    _stati64(p, &sb);
+	    res = _stati64(p, &sb);
 #else
-	    stat(p, &sb);
+	    res = stat(p, &sb);
 #endif
-	    if ((sb.st_mode & S_IFDIR) > 0) {
+	    if (!res && (sb.st_mode & S_IFDIR) > 0) {
 		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
 		    if(recursive) {
 			char nm2[PATH_MAX];

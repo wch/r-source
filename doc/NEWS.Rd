@@ -80,6 +80,9 @@
       \item \code{which()} now checks its \code{arr.ind} argument is
       TRUE rather coercing to logical and taking the first element --
       which gave incorrect results in package code.
+
+      \item \code{list.files(recursive = TRUE)} now shows all broken
+      symlinks (previously, some of them may have been omitted, \PR{18296}).
     }
   }
 }
