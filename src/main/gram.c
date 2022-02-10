@@ -3342,6 +3342,7 @@ static void checkTooManyPlaceholders(SEXP rhs, SEXP args)
 	    errorcall(rhs, _("pipe placeholder may only appear once"));
 }
 
+#ifdef ALLOW_EXTRACTOR_CHAINS
 static int checkForPlaceholderList(SEXP placeholder, SEXP list)
 {
     for (; list != R_NilValue; list = CDR(list))
@@ -3373,6 +3374,7 @@ static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr)
     }
     else return NULL;
 }
+#endif
 
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
@@ -3397,16 +3399,19 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	if (checkForPlaceholder(R_PlaceholderToken, CAR(rhs)))
 	    error(_("pipe placeholder cannot be used in the RHS function"));
 
+#ifdef ALLOW_EXTRACTOR_CHAINS
 	/* allow for _$a[1]$b and the like */
 	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs);
 	if (phcell != NULL) {
 	    SETCAR(phcell, lhs);
 	    return rhs;
 	}
+#endif
 
 	/* allow top-level placeholder */
 	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
 	    if (CAR(a) == R_PlaceholderToken) {
+#define FORCE_NAMED_PLACEHOLDER
 #ifdef FORCE_NAMED_PLACEHOLDER
 		if (TAG(a) == R_NilValue)
 		    error(_("pipe placeholder can only be used as a "
