@@ -5344,7 +5344,9 @@ LAPACK which can be used @emph{via} @option{--with-lapack}: however, the
 version of LAPACK it contains has
 @c 3.2.1 in Big Sur.
 often been seriously old (and is not used unless @option{--with-lapack}
-is specified).
+is specified).  Some @acronym{CRAN} builds of @R{} can be
+switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
+to use Accelerate's BLAS.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
@@ -5800,6 +5802,11 @@ As with Intel builds, the @code{Accelerate} library could be used
 @example
 --with-blas="-framework Accelerate"
 @end example
+
+@noindent
+Some @acronym{CRAN} builds of @R{} can be
+switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
+to use it.
 
 @c It is possible to build external C/C++ libraries containing both
 @c architectures which could then be used for building packages.  A typical
