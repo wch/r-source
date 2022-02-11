@@ -6,6 +6,19 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item The \code{formula} method of \code{aggregate()} now matches
+      the generic in naming its first argument \code{x} (resolving
+      \PR{18299} by Thomas Soeiro).
+
+      This means that calling \code{aggregate()} with a formula as a
+      named first argument requires name \code{formula} in earlier
+      versions of \R and name \code{x} now, so portable code should not
+      name the argument (code in many packages did).
+    }
+  }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{matrix(x, n, m)} now warns in more cases where
@@ -555,12 +568,9 @@
       extract their model components, thanks to Ben Bolker and Tim Taylor's
       R-devel post.
 
-      \item The \code{formula} method of \code{aggregate} now matches the
-      generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
-
       \item The \code{data.frame} method of \code{rbind()} now warns
-      when binding not-wholly-recycling vectors, in analogy to the default
-      method (for matrix).
+      when binding not-wholly-recycling vectors, by analogy to the default
+      method (for matrices).
     }
   }
 }
