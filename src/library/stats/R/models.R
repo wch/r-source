@@ -604,16 +604,16 @@ model.frame.default <-
 
 ## we don't assume weights are numeric or a vector, leaving this to the
 ## calling application
-model.weights <- function(x) x$"(weights)"
+model.weights <- function(x) .subset2(x, "(weights)")
 
 ## we do check that offsets are numeric.
 model.offset <- function(x) {
     offsets <- attr(attr(x, "terms"),"offset")
     if(length(offsets)) {
-	ans <- x$"(offset)" %||% 0
+	ans <- .subset2(x, "(offset)") %||% 0
 	for(i in offsets) ans <- ans+x[[i]]
     }
-    else ans <- x$"(offset)"
+    else ans <- .subset2(x, "(offset)")
     if(!is.null(ans) && !is.numeric(ans)) stop("'offset' must be numeric")
     ans
 }

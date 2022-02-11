@@ -81,6 +81,10 @@
       TRUE rather coercing to logical and taking the first element --
       which gave incorrect results in package code.
 
+      \item \code{model.weights()} and \code{model.offset()} more carefully
+      extract their model components, thanks to Ben Bolker and Tim Taylor's
+      R-devel post.
+
       \item \code{list.files(recursive = TRUE)} now shows all broken
       symlinks (previously, some of them may have been omitted, \PR{18296}).
     }
