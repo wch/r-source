@@ -57,11 +57,11 @@ match.arg <- function (arg, choices, several.ok = FALSE)
     ## handle each element of arg separately
     i <- pmatch(arg, choices, nomatch = 0L, duplicates.ok = TRUE)
     if (all(i == 0L))
-        stop(sprintf(ngettext(length(chs <- unique(choices[nzchar(choices)]),
+        stop(sprintf(ngettext(length(chs <- unique(choices[nzchar(choices)])),
                               "'arg' should be %s",
                               "'arg' should be one of %s"),
                      paste(dQuote(chs), collapse=", ")),
-             domain = NA))
+             domain = NA)
     i <- i[i > 0L]
     if (!several.ok && length(i) > 1) ## can this happen ??
         stop("there is more than one match in 'match.arg'")
