@@ -61,7 +61,7 @@ match.arg <- function (arg, choices, several.ok = FALSE)
                               "'arg' should be %s",
                               "'arg' should be one of %s"),
                      paste(dQuote(chs), collapse=", ")),
-             domain = NA)
+             domain = NA))
     i <- i[i > 0L]
     if (!several.ok && length(i) > 1) ## can this happen ??
         stop("there is more than one match in 'match.arg'")
