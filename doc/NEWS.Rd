@@ -571,6 +571,14 @@
       \item The \code{data.frame} method of \code{rbind()} now warns
       when binding not-wholly-recycling vectors, by analogy to the default
       method (for matrices).
+
+      \item \code{setAs()} finds the correct class for name \code{to}
+      when multiple packages define a class with that name. Thanks to
+      Gabor Csardi for the report.
+
+      \item Fix detaching a package when two classes of the same name
+      are present in method signatures for the same generic. Thanks to
+      Gabor Csardi for the report.
     }
   }
 }
