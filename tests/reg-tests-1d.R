@@ -5796,6 +5796,16 @@ stopifnot(exprs = {
 ## rbind.data.frame(.) did not warn in R <= 4.1.x
 
 
+## match.arg("",*) etc; PR#17959
+(m1 <- tryCmsg(match.arg("", choices = c("", "a"))))
+(m2 <- tryCmsg(match.arg("", choices = c("", "a", "b"))))
+stopifnot(!grepl(dQuote(""), m1), !grepl(dQuote(""), m2))
+if(englishMsgs)
+    stopifnot(grepl("'arg' should be ", m1),
+              grepl("'arg' should be one ", m2))
+## was  'arg' should be one of “”, “a” ( , “b” )
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

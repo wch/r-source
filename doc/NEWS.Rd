@@ -564,10 +564,6 @@
       statistic correctly, also when \code{is.unsorted(x)}, fixing
       \PR{18294}.
 
-      \item \code{model.weights()} and \code{model.offset()} more carefully
-      extract their model components, thanks to Ben Bolker and Tim Taylor's
-      R-devel post.
-
       \item The \code{data.frame} method of \code{rbind()} now warns
       when binding not-wholly-recycling vectors, by analogy to the default
       method (for matrices).
@@ -579,6 +575,9 @@
       \item Fix detaching a package when two classes of the same name
       are present in method signatures for the same generic. Thanks to
       Gabor Csardi for the report.
+
+      \item \code{match.arg("", c("", "a", "B"))} gives a better error
+      message, in part from \PR{17959}, thanks to Elin Waring.
     }
   }
 }
@@ -658,6 +657,10 @@
       \item \code{window(x, start, end)} no longer wrongly signals
       \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
       \PR{18291}.
+
+      \item \code{model.weights()} and \code{model.offset()} more carefully
+      extract their model components, thanks to Ben Bolker and Tim Taylor's
+      R-devel post.
 
       \item \code{list.files(recursive = TRUE)} now shows all broken
       symlinks (previously, some of them may have been omitted, \PR{18296}).
