@@ -368,6 +368,10 @@
       \item \command{R CMD check --as-cran} makes use of the
       environment variable \env{AUTORECONF}.  See the
       \dQuote{R Internals} manual §8 for further details.
+
+      \item \command{R CMD check --as-cran} has a workaround for a bug
+      in versions of \command{file} up to at least 5.41 which
+      mis-identify 2022 DBF files are executables.
     }
   }
 
