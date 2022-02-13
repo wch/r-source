@@ -4705,7 +4705,9 @@ add_dummies <- function(dir, Log)
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
-                status <- R_runR0(Rcmd, R_opts2,
+                status <- R_runR0(Rcmd,
+                                  if (use_valgrind) paste(R_opts2, "-d valgrind")
+                                  else R_opts2,
                                   c(jitstr,
                                     if(R_cdo_vignettes) elibs
                                     else character()),
@@ -5959,6 +5961,7 @@ add_dummies <- function(dir, Log)
             "      --run-donttest    do run \\donttest sections in the Rd files",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
+            "                        and when rebuilding vignettes",
             "      --timings         record timings for examples",
             "      --install-args=   command-line args to be passed to INSTALL",
             "      --test-dir=       look in this subdirectory for test scripts (default tests)",

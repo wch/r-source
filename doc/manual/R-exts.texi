@@ -9210,7 +9210,9 @@ It is possible to run all the examples, tests and vignettes covered by
 @end example
 
 @noindent
-or setting the environment variable @env{VALGRIND_OPTS}.
+or setting the environment variable @env{VALGRIND_OPTS}.  As from @R{}
+4.2.0, @option{--use-valgrind} also uses @command{valgrind} when
+re-building the vignettes.
 
 On macOS you may need to ensure that debugging symbols are made available
 (so @command{valgrind} reports line numbers in files).  This can usually
