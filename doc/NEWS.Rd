@@ -190,7 +190,7 @@
       \code{barplot(legend.text =)}, \code{boxplot()},
       \code{contour(drawlabels =)}, \code{polygon(border =)} and
       \code{methods::is(class2 =)} have more robust sanity checks on
-      some of their arguments.
+      their arguments.
 
       \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
       robust sanity check on the format of \code{\\alias{}} commands.
@@ -369,10 +369,6 @@
       environment variable \env{AUTORECONF}.  See the
       \dQuote{R Internals} manual §8 for further details.
 
-      \item \command{R CMD check --as-cran} has a workaround for a bug
-      in versions of \command{file} up to at least 5.41 which
-      mis-identify 2022 DBF files as executables.
-
       \item \command{R CMD check --use-valgrind} also uses
       \command{valgrind} when re-building vignettes as some non-Sweave
       vignettes unhelpfully comment out all their code when
@@ -510,8 +506,8 @@
       (\code{#c6}) with reports and \emph{augmented} patch #2904 by
       Suharto Anggono.
 
-      Note that \code{"R-base"} is no longer default domain e.g., for
-      top-level calls to \code{gettext()}; rather translation needs
+      Note that \code{"R-base"} is no longer the default domain e.g.,
+      for top-level calls to \code{gettext()}; rather translation needs
       explicit \code{domain = *} specification in such cases.
 
       \item \code{identical(attrib.as.set=FALSE)} now works correctly with
@@ -584,7 +580,7 @@
       when multiple packages define a class with that name. Thanks to
       Gabor Csardi for the report.
 
-      \item Fix for  detaching a package when two classes of the same name
+      \item Fix for detaching a package when two classes of the same name
       are present in method signatures for the same generic. Thanks to
       Gabor Csardi for the report.
 
@@ -600,6 +596,14 @@
       \item The default version of Bioconductor has been changed to
       3.14. (This is used by \code{setRepositories} and the menus in
       GUIs.)
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check --as-cran} has a workaround for a bug
+      in versions of \command{file} up to at least 5.41 which
+      mis-identify DBF files last changed in 2022 as executables.
     }
   }
 
@@ -658,6 +662,10 @@
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
 
+      \item \code{window(x, start, end)} no longer wrongly signals
+      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
+      \PR{18291}.
+
       \item \code{data()} now checks that its (rarely used) \code{list}
       argument is a character vector -- a couple of packages passed other
       types and gave incorrect results.
@@ -665,10 +673,6 @@
       \item \code{which()} now checks its \code{arr.ind} argument is
       TRUE rather coercing to logical and taking the first element --
       which gave incorrect results in package code.
-
-      \item \code{window(x, start, end)} no longer wrongly signals
-      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
-      \PR{18291}.
 
       \item \code{model.weights()} and \code{model.offset()} more carefully
       extract their model components, thanks to Ben Bolker and Tim Taylor's
