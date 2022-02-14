@@ -399,15 +399,17 @@
 
       \item The deprecated legacy S-compatibility macros \code{PROBLEM},
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
-      \code{RECOVER}, \dots{} are no longer defined by default in
+      \code{RECOVER}, \dots{} are no longer defined in
       \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
       calls to \code{Rf_error} and \code{Rf_warning} (defined in header
       \file{R_ext/Error.h} included by \file{R.h}).
 
+      Header \file{R_ext/RS.h} no longer includes \file{R_ext/Error.h}.
+
+      %% To be removed on Mar 1.
       For the time being the definitions can be reinstated by defining
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
-      any \R{} header.  Header \file{R_ext/RS.h} will no longer include
-      \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set to \code{1}.
+      any \R{} header.
 
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
@@ -433,9 +435,10 @@
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).
 
-      \item Use of the legacy header \file{S.h} (undocumented since
-      2016) now gives a compilation warning reported by
-      \command{R CMD check}. 
+      %% Deferred until Mar 15 waiting for packages to be adjusted.
+      %% \item Use of the legacy header \file{S.h} (undocumented since
+      %% 2016) now gives a compilation warning reported by
+      %% \command{R CMD check}, with suitable compilers.
     }
   }
 
@@ -581,7 +584,7 @@
       when multiple packages define a class with that name. Thanks to
       Gabor Csardi for the report.
 
-      \item Fix detaching a package when two classes of the same name
+      \item Fix for  detaching a package when two classes of the same name
       are present in method signatures for the same generic. Thanks to
       Gabor Csardi for the report.
 
