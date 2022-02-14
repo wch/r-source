@@ -179,11 +179,11 @@ recordGTreeForPatternResolution <- function(x) {
         gpar <- grid.Call(C_getGPar)
         attr(gpar$fill, "grob") <- x
         resolvedFill <- resolveFill(gpar$fill, 1)
-        if (inherits(resolvedFill, "GridResolvedPattern") ||
-            inherits(resolvedFill, "GridGTreePatternList")) {
-            gpar$fill <- resolvedFill
-        } else {
+        ## Resolution may generate NULL (e.g., if gTree has nothing to fill)
+        if (is.null(resolvedFill)) {
             gpar$fill <- "transparent"
+        } else {
+            gpar$fill <- resolvedFill
         }
         grid.Call(C_setGPar, gpar)
     }
