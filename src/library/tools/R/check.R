@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -4766,9 +4766,6 @@ add_dummies <- function(dir, Log)
         ## this is tailored to the FreeBSD/Linux 'file',
         ## see http://www.darwinsys.com/file/
         ## (Solaris has a different 'file' without --version)
-        ## Most systems are now on >= 5.03, but macOS 10.5 had 4.17
-        ## version 4.21 writes to stdout,
-        ## 4.23 to stderr and sets an error status code
         FILE <- "file"
         lines <- suppressWarnings(tryCatch(system2(FILE, "--version", TRUE, TRUE), error = function(e) "error"))
         ## a reasonable check -- it does not identify itself well
@@ -4781,6 +4778,18 @@ add_dummies <- function(dir, Log)
         }
         if (have_free_file) {
             checkingLog(Log, "for executable files")
+
+            ## There is a bug mis-identifying DBF files from 2022
+            ## https://bugs.astron.com/view.php?id=316
+            pretest <- function(f)
+            {
+                ## The format is (in bytes) the version mumber,
+                ## year-1900 of last change, month#, day, ...
+                z <-  readBin(f, raw(), 2L)
+                identical(z, as.raw(c(3, 122)))
+            }
+            allfiles <- allfiles[!sapply(allfiles, pretest)]
+
             ## Watch out for spaces in file names here
             ## Do in parallel for speed on Windows, but in batches
             ## since there may be a line-length limit.
@@ -4802,11 +4811,8 @@ add_dummies <- function(dir, Log)
                 known <- rep.int(FALSE, length(execs))
                 pexecs <- file.path(pkgname, execs)
                 ## known false positives
-                for(fp in  c("foreign/tests/datefactor.dta",
-                             "msProcess/inst/data[12]/.*.txt",
-                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid",
-                             "bayesLife/inst/ex-data/bayesLife.output/predictions/traj_country104.rda", # file 5.16
-                             "alm/inst/vign/cache/signposts1_c96f55a749822dd089b636087766def2.rdb" # Sparc Solaris, file 5.16
+                for(fp in  c("foreign/tests/datefactor.dta"
+                             ## "SunOS mc68020 pure executable not stripped"
                              ) )
                     known <- known | grepl(fp, pexecs)
                 execs <- execs[!known]

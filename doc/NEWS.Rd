@@ -14,6 +14,14 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check --as-cran} has a workaround for a bug
+      in versions of \command{file} up to at least 5.41 which
+      mis-identify DBF files last changed in 2022 as executables.
+    }
+  }
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The legacy S-compatibility macros \code{SINGLE_*} in
