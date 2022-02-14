@@ -42,6 +42,10 @@ match.arg(arg, choices, several.ok = FALSE)
   one element of \code{arg} has a match, all unabbreviated versions of
   matches are returned.
 }
+\section{Warning}{
+  The error messages given are liable to change and did so in \R 4.2.0.
+  Do not test them in packages.
+}
 \seealso{
   \code{\link{pmatch}},
   \code{\link{match.fun}},
