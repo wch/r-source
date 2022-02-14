@@ -759,11 +759,19 @@ Rd2HTML <-
     		}
     		switch(blocktag,
    		"\\value"=,
-     		"\\arguments"={
-    		    of1('<tr valign="top"><td><code>')
+     		"\\arguments"= {
+                    ## Argh.  Quite a few packages put the items in
+                    ## their value section inside \code.
+    		    of1('<tr valign="top"><td>')
     		    inPara <<- NA
-    		    writeContent(block[[1L]], tag)
-    		    of1('</code></td>\n<td>\n')
+                    if(identical(RdTags(block[[1L]])[1L], "\\code")) {
+                        writeContent(block[[1L]], tag)
+                    } else {
+                        of1('<code>')
+                        writeContent(block[[1L]], tag)
+                        of1('</code>')
+                    }
+    		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
     		    writeContent(block[[2L]], tag)
     		    leavePara(FALSE)
