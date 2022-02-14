@@ -4370,6 +4370,11 @@ unset (nothing is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
+@item _R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_
+Should running the @R{} code in the vignettes be skipped if vignette
+outputs are to be rebuilt (which will involve running that code).
+Default: false (but true for CRAN checking)
+
 @item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
 Prior to @R{} 3.6.0, re-building the vignette outputs was done in a
 single @R{} session which allowed accidental reliance of one vignette on
