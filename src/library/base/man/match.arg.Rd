@@ -1,6 +1,6 @@
 % File src/library/base/man/match.arg.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022R Core Team
 % Distributed under GPL 2 or later
 
 \name{match.arg}
@@ -40,6 +40,10 @@ match.arg(arg, choices, several.ok = FALSE)
   false, as per default.  When \code{several.ok} is true and more than
   one element of \code{arg} has a match, all unabbreviated versions of
   matches are returned.
+}
+\section{Warning}{
+  The error messages given are liable to change and will do so in \R 4.2.0.
+  Do not test them in packages.
 }
 \seealso{
   \code{\link{pmatch}},
