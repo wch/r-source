@@ -116,6 +116,8 @@ shtmlify <- function(s) {
     s
 }
 
+## <FIXME>
+## Unlike utils::URLencode(reserved = FALSE) ...
 ## URL encode anything other than alphanumeric, . - _ $ and reserved
 ## characters in URLs.
 urlify <- function(x) {
@@ -137,16 +139,21 @@ urlify <- function(x) {
                       paste0("%", toupper(as.character(charToRaw(x))),
                              collapse = ""),
                       "")
+        ## URL code points as per
+        ## <https://url.spec.whatwg.org/#valid-url-string>, with U+002D
+        ## (-) last.
         todo <- paste0("[^",
-                       "][!$&'()*+,;=:/?@ #",
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                       "abcdefghijklmnopqrstuvwxyz0123456789._~-",
+                       "abcdefghijklmnopqrstuvwxyz",
+                       "0123456789",
+                       "!$&'()*+,./:;=?@_~-",
                        "]")
         mixed <- ifelse(grepl(todo, chars), hex, chars)
         gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
     }
 }
 ## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
+## </FIXME>
 
 ## Ampersands should be escaped in proper HTML URIs
 escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
@@ -621,9 +628,15 @@ Rd2HTML <-
                	   if (length(block) > 1L
                	       && length(imgoptions <- .Rd_get_latex(block[[2]]))
 		       && startsWith(imgoptions, "options: ")) {
-		       # There may be escaped percent signs within
+		       ## There may be escaped percent signs within
 		       imgoptions <- gsub("\\%", "%", imgoptions, fixed=TRUE)
                        of1(sub("^options: ", "", imgoptions))
+                       ## Expert use may have forgotten alt ...
+                       if(!grepl("\\balt=", imgoptions)) {
+                           of1(' alt="')
+                           writeContent(block[[1L]], tag)
+                           of1('"')
+                       }
 	           } else {
 		       of1('alt="')
 		       writeContent(block[[length(block)]], tag)
@@ -761,10 +774,10 @@ Rd2HTML <-
     		switch(blocktag,
    		"\\value"=,
      		"\\arguments"= {
-                    ## Argh.  Quite a few packages put the items in
-                    ## their value section inside \code.
     		    of1('<tr valign="top"><td>')
     		    inPara <<- NA
+                    ## Argh.  Quite a few packages put the items in
+                    ## their value section inside \code.
                     if(identical(RdTags(block[[1L]])[1L], "\\code")) {
                         writeContent(block[[1L]], tag)
                     } else {
