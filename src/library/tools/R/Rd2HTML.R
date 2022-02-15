@@ -122,9 +122,10 @@ urlify <- function(x) {
     ## Like utils::URLencode(reserved = FALSE), but with '&' replaced by
     ## '&amp;' and hence directly usable for href attributes.
     ## See
+    ##   <https://url.spec.whatwg.org/#valid-url-string>
+    ##   RFC 3986 <https://tools.ietf.org/html/rfc3986>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
-    ##   RFC 3986 <http://tools.ietf.org/html/rfc3986>
 
     ## We do not want to mess with already-encoded URLs
     if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
