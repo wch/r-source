@@ -65,7 +65,7 @@ solve(a, b, \dots)
 
 \seealso{
   \code{\link{solve.qr}} for the \code{qr} method,
-  \code{\link{chol2inv}} for inverting from the Choleski factor
+  \code{\link{chol2inv}} for inverting from the Cholesky factor
   \code{\link{backsolve}}, \code{\link{qr.solve}}.
 }
 \examples{

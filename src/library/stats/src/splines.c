@@ -35,7 +35,7 @@
  *	------------------------
  *	A special LU decomposition for symmetric tridiagonal matrices
  *	is used for all computations, except for periodic splines where
- *	Choleski is more efficient.
+ *	Cholesky is more efficient.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -57,7 +57,7 @@
  *	derivative of the spline at the end-points to equal to zero.
  *
  *	There are n-2 unknowns (y[i]'' at x[2], ..., x[n-1]) and n-2
- *	equations to determine them.  Either Choleski or Gaussian
+ *	equations to determine them.  Either Cholesky or Gaussian
  *	elimination could be used.
  */
 
@@ -276,7 +276,7 @@ periodic_spline(R_xlen_t n, double *x, double *y, double *b, double *c, double *
 	C[i] = (y[i+1] - y[i])/B[i] - (y[i] - y[i-1])/B[i-1];
     }
 
-    /* Choleski decomposition */
+    /* Cholesky decomposition */
 
 #define L	b
 #define M	d
