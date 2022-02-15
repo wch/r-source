@@ -4724,7 +4724,7 @@ add_dummies <- function(dir, Log)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
-                    if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
+                    if(skip_run_maybe || !ran) errorLog(Log) else noteLog(Log)
                     if(keep > 0  && length(out) < keep) {
                         out <- utils::tail(out, keep)
                         printLog0(Log,

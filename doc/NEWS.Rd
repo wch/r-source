@@ -373,6 +373,11 @@
       \command{valgrind} when re-building vignettes as some non-Sweave
       vignettes unhelpfully comment out all their code when
       \command{R CMD check} runs vignettes.
+
+      \item Errors in re-building vignettes are reported by \command{R
+	CMD check} as \samp{ERROR} rather than \samp{WARNING} when
+      running vignettes has been skipped (as it frequently is in
+      \acronym{CRAN} checks and by \option{--as-cran}).
     }
   }
 
