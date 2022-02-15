@@ -455,7 +455,7 @@ add_dummies <- function(dir, Log)
         xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
         xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
                 else character()
-        dirs <- c(home, "/tmp",
+        dirs <- c(home, "/tmp", '/dev/shm',
                   ## taken from tools::R_user_dir, but package rappdirs
                   ## is similar with other possibilities on Windows.
                   if (.Platform$OS.type == "windows")
@@ -4724,10 +4724,13 @@ add_dummies <- function(dir, Log)
                                       out, useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
+                ltx_err <- any(grepl("^! LaTeX Error:", out, useBytes = TRUE))
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
-                    if(skip_run_maybe || !ran) errorLog(Log) else noteLog(Log)
+                    if(skip_run_maybe || !ran) {
+                        if(ltx_err) warningLog(Log) else errorLog(Log)
+                    } else noteLog(Log)
                     if(keep > 0  && length(out) < keep) {
                         out <- utils::tail(out, keep)
                         printLog0(Log,
