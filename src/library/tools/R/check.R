@@ -3533,6 +3533,9 @@ add_dummies <- function(dir, Log)
                                                  useBytes = TRUE)))
                 tokens <- gsub('["\']$', "", tokens,
                                perl = TRUE, useBytes = TRUE)
+                ## datasailr gets trailing )
+                tokens <- gsub('[)]$', "", tokens,
+                               perl = TRUE, useBytes = TRUE)
                 warns <- grep("^[-]W", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
                 ## Not sure -Wextra and -Weverything are portable, though
