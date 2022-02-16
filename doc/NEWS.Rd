@@ -200,6 +200,10 @@
       \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
 
       \item The HTML help system now uses HTML5 (wish of \PR{18149}).
+
+      \item The return value from \code{ks.test()} now has class
+      \code{c("ks.test", "htest")} -- packages using \code{try()} need
+      to take care to use \code{inherits()} and not \code{==} on the class.
     }
   }
 

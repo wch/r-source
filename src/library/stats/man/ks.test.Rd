@@ -109,7 +109,8 @@ ks.test(x, \dots)
   in \code{ks.test}.
 }
 \value{
-  A list with class \code{"htest"} containing the following components:
+  A list inheriting from classes \code{"ks.test"} and \code{"htest"}
+  containing the following components:
   \item{statistic}{the value of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{alternative}{a character string describing the alternative
