@@ -201,6 +201,14 @@
 
       \item The HTML help system now uses HTML5 (wish of \PR{18149}).
 
+      \item \code{ks.test()} now provides exact p-values also with ties
+      and MC p-values in the two-sample (Smirnov) case.  By Torsten
+      Hothorn.
+
+      \item \code{ks.test()} gains a formula interface, with \code{y ~ 1}
+      for the one-sample (Kolmogorov) test and \code{y ~ group} for the
+      two-sample (Smirnov) test.  By Torsten Hothorn.
+
       \item The return value from \code{ks.test()} now has class
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
