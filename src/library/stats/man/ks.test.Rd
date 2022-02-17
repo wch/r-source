@@ -124,7 +124,7 @@ ks.test(x, \dots)
   Marsaglia, Tsang and Wang (2003).
 
   Exact distributions for the two-sample (Smirnov) test are computed
-  by the algorithm proposed Schröer & Trenkler (1995).
+  by the algorithm proposed Schröer (1991) and Schröer & Trenkler (1995).
  
 }
 \references{
@@ -148,6 +148,11 @@ ks.test(x, \dots)
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \doi{10.18637/jss.v008.i18}.
+
+  Gunar Schröer (1991),
+  Computergestützte statistische Inferenz am Beispiel der
+  Kolmogorov-Smirnov Tests.
+  Diplomarbeit Universität Osnabrück.
 
   Gunar Schröer and Dietrich Trenkler (1995).
   Exact and Randomization Distributions of Kolmogorov-Smirnov Tests for

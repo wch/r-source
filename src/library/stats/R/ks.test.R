@@ -48,9 +48,9 @@ ks.test.default <-
             exact <- (n.x * n.y < 10000)
         if (!simulate.p.value) {
             METHOD <- paste(c("Asymptotic", "Exact")[exact + 1L], 
-                            "two-sample Smirnov test")
+                            "two-sample Kolmogorov-Smirnov test")
         } else {
-            METHOD <- "Monte-Carlo two-sample Smirnov test"
+            METHOD <- "Monte-Carlo two-sample Kolmogorov-Smirnov test"
         }
         TIES <- FALSE
         n <- n.x * n.y / (n.x + n.y)
@@ -170,7 +170,7 @@ function(formula, data, subset, na.action, ...)
     DNAME <- paste(names(mf), collapse = " by ") # works in all cases
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
-    if (! oneSample) { # two-sampl Smirnov test
+    if (! oneSample) { # Smirnov test
         g <- factor(mf[[-response]])
         if(nlevels(g) != 2L)
             stop("grouping factor must have exactly 2 levels")
@@ -199,8 +199,7 @@ function(q, m, n = length(z) - m, z = NULL,
          lower.tail = TRUE, log.p = FALSE) {
 
     ##
-    ## Distribution function Prob(D < q) for the two-sample Smirnov test
-    ## statistic
+    ## Distribution function Prob(D < q) for the Smirnov test statistic
     ##
     ##   D = sup_c | ECDF_x(c) - ECDF_y(c) | 	(two.sided)
     ##
