@@ -2357,6 +2357,13 @@ static void yyerror(const char *s)
                         snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected end of line"));
                                 break;
                 default:
+		  if (!strcmp(s + sizeof yyunexpected - 1, "PLACEHOLDER")) {
+		      /* cheat to avoid changing the parse error
+			 message for mis-use of _ */
+		      snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE,
+			       _("unexpected input"));
+		      break;
+		  }
                   snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected %s"),
                            yytname_translations[i+1]);
                                 break;
