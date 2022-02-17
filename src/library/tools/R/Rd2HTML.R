@@ -627,12 +627,15 @@ Rd2HTML <-
                    of1('" ')
                	   if (length(block) > 1L
                	       && length(imgoptions <- .Rd_get_latex(block[[2]]))
-		       && startsWith(imgoptions, "options: ")) {
+		       && startsWith(imgoptions[1L], "options: ")) {
 		       ## There may be escaped percent signs within
-		       imgoptions <- gsub("\\%", "%", imgoptions, fixed=TRUE)
+		       imgoptions <- gsub("\\%", "%",
+                                          paste(imgoptions,
+                                                collapse = " "),
+                                          fixed=TRUE)
                        of1(sub("^options: ", "", imgoptions))
                        ## Expert use may have forgotten alt ...
-                       if(!grepl("\\balt=", imgoptions)) {
+                       if(!grepl("\\balt *=", imgoptions)) {
                            of1(' alt="')
                            writeContent(block[[1L]], tag)
                            of1('"')
