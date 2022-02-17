@@ -1198,6 +1198,7 @@ static void checkTooManyPlaceholders(SEXP rhs, SEXP args)
 	    errorcall(rhs, _("pipe placeholder may only appear once"));
 }
 
+#define ALLOW_EXTRACTOR_CHAINS
 #ifdef ALLOW_EXTRACTOR_CHAINS
 static int checkForPlaceholderList(SEXP placeholder, SEXP list)
 {
