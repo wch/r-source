@@ -2236,7 +2236,9 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	    pkgname = translateChar(STRING_ELT(spkg, 0));
 	/* Sometimes pkgname is like 
 	      package:MoTBFs,
-	   so we need tp strip it off */
+	   so we need tp strip it off.
+	   This is independent of pprefix.
+	*/
 	if (strstr(pkgname, "package:"))  pkgname += 8;
 
 	while (check[0] != '\0') {
@@ -2251,13 +2253,41 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 		    arglen = strlen(check);
 		ignore = TRUE;
 		if (pkgname) {
+		    // a named package
 		    if (!strncmp(check, pkgname, arglen) && strlen(pkgname) == arglen)
 			ignore = FALSE;
-		    if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
+		    // 'this package' 
+		    else if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
 			/* package name specified in _R_CHECK_PACKAGE_NAME */
 			const char *envpname = getenv(cpname);
 			if (envpname && !strcmp(envpname, pkgname))
 			    ignore = FALSE;
+		    }
+		    // "all_base" , that is all standard packages.
+		    else if (!strncmp(check, "all_base", arglen) && arglen == 8) {
+			REprintf("package:all_base\n");
+			char *std[] = {
+			    "base",
+			    "compiler",
+			    // datasets has no code
+			    "grDevies",
+			    "graphics",
+			    "grid",
+			    "methods",
+			    "parallel",
+			    "splines",
+			    "stats",
+			    "stats4",
+			    "utils",
+			    "tools"
+			};
+			int nstd = sizeof(std)/sizeof(char *);
+			for (int i = 0; i < nstd; i++)
+			    if(!strcmp(std[i], pkgname)) {
+				REprintf("package:%s\n", std[i]);
+				ignore = FALSE;
+				break;
+			    }
 		    }
 		}
 		check += arglen;

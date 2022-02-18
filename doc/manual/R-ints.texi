@@ -4354,11 +4354,14 @@ terminate unconditionally instead of signalling an error (which is
 useful in pinpointing issues in code called from @code{try} or
 @code{tryCatch}), @samp{verbose} prints a very detailed diagnostic
 message, @samp{package:pkg} restricts the check to if/while statements
-executing in the namespace of package @samp{pkg},
+executing in the namespace of package @samp{pkg} (but @code{all_base}
+refers to all the stanaard packages),
 @samp{package:_R_CHECK_PACKAGE_NAME_} restricts the check to if/while
 statements executing in the package that is currently being checked by
 @code{R CMD check}, @samp{warn} causes R to report a warning instead of
-signalling an error.  Default: unset (a warning is reported), but
+signalling an error.  (More than one package specification can be given:
+a report, error or warning wwill be given if any are satisfied.)
+Default: unset (a warning is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
