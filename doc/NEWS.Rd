@@ -603,6 +603,9 @@
 
       \item \code{match.arg("", c("", "a", "B"))} gives a better error
       message, in part from \PR{17959}, thanks to Elin Waring.
+
+      \item \command{R CMD Sweave --clean} no longer removes existing
+      files or subdirectories (\PR{18242}).
     }
   }
 }

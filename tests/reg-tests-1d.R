@@ -5806,6 +5806,16 @@ if(englishMsgs)
 ## was  'arg' should be one of “”, “a” ( , “b” )
 
 
+## 'R CMD Sweave --clean' / tools::buildVignette(clean = TRUE)
+## should only remove *newly created* files/directories -- PR#18242
+owd <- setwd(tempdir())
+dir.create("subdir")
+writeLines(c('<<>>=', 'file.create("subdir/dummyfile")', '@'), "Sweave-test-2.Rnw")
+utils:::.Sweave(c("--clean", "Sweave-test-2.Rnw"), no.q = TRUE)
+stopifnot(dir.exists("subdir"))
+setwd(owd)
+## the pre-existing directory was removed in R <= 4.1.x
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
