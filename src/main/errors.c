@@ -2188,6 +2188,15 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
+/*
+  Currently called from
+
+  eval.c
+  by asLogicalNoNA with warnByDefault =  TRUE
+
+  coerce.c
+  by asLogical2 with warnByDefault =  FALSE
+ */
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
