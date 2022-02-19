@@ -6,9 +6,9 @@
 \name{chol}
 \alias{chol}
 \alias{chol.default}
-\title{The Choleski Decomposition}
+\title{The Cholesky Decomposition}
 \description{
-  Compute the Choleski factorization of a real symmetric
+  Compute the Cholesky factorization of a real symmetric
   positive-definite square matrix.
 }
 \usage{
@@ -25,7 +25,7 @@ chol(x, \dots)
   \item{tol}{A numeric tolerance for use with \code{pivot = TRUE}.}
 }
 \value{
-  The upper triangular factor of the Choleski decomposition, i.e., the
+  The upper triangular factor of the Cholesky decomposition, i.e., the
   matrix \eqn{R} such that \eqn{R'R = x} (see example).
 
   If pivoting is used, then two additional attributes
@@ -42,7 +42,7 @@ chol(x, \dots)
   error occurs.  If \code{x} is positive semi-definite (i.e., some zero
   eigenvalues) an error will also occur as a numerical tolerance is used.
 
-  If \code{pivot = TRUE}, then the Choleski decomposition of a positive
+  If \code{pivot = TRUE}, then the Cholesky decomposition of a positive
   semi-definite \code{x} can be computed.  The rank of \code{x} is
   returned as \code{attr(Q, "rank")}, subject to numerical errors.
   The pivot is returned as \code{attr(Q, "pivot")}.  It is no longer

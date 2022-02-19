@@ -1092,6 +1092,7 @@ static void SymbolShortcuts(void)
     R_DimNamesSymbol = install("dimnames");
     R_DimSymbol = install("dim");
     R_DollarSymbol = install("$");
+    R_AtsignSymbol = install("@");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
     R_EvalSymbol = install("eval");

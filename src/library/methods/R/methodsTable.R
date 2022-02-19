@@ -72,7 +72,8 @@
            next # empty environment, ignore
        isDef <- vapply(objsWhat, is, logical(1L), "MethodDefinition")
        if (any(isDef)) {
-           sig <- objsWhat[[utils::tail(which(isDef), 1L)]]@defined
+           obj <- objsWhat[[utils::tail(which(isDef), 1L)]]
+           sig <- obj@defined
        } else {
            sig <- anySig
        }

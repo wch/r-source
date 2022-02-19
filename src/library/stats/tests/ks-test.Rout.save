@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-02-08 r81672) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-02-14 r81736) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.3.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ds1 <- c(1.7,2,3,3,4,4,5,5,6,6)
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216)
 
-	One-sample Kolmogorov-Smirnov test
+	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  ds1
 D = 0.274, p-value = 0.4407
@@ -37,7 +37,7 @@ In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
 > # R >= 2.14.0 allows the equally invalid
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE)
 
-	One-sample Kolmogorov-Smirnov test
+	Exact one-sample Kolmogorov-Smirnov test
 
 data:  ds1
 D = 0.274, p-value = 0.3715
@@ -52,7 +52,7 @@ In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
 > ds2 <- rnorm(1000)
 > ks.test(ds2, "pnorm") # exact = FALSE is default for n = 1000
 
-	One-sample Kolmogorov-Smirnov test
+	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  ds2
 D = 0.019416, p-value = 0.8452
@@ -60,7 +60,7 @@ alternative hypothesis: two-sided
 
 > ks.test(ds2, "pnorm", exact = TRUE)
 
-	One-sample Kolmogorov-Smirnov test
+	Exact one-sample Kolmogorov-Smirnov test
 
 data:  ds2
 D = 0.019416, p-value = 0.8379
@@ -69,7 +69,7 @@ alternative hypothesis: two-sided
 > ## next two are still close
 > ks.test(round(ds2, 2), "pnorm")
 
-	One-sample Kolmogorov-Smirnov test
+	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 2)
 D = 0.019169, p-value = 0.856
@@ -80,7 +80,7 @@ In ks.test.default(round(ds2, 2), "pnorm") :
   ties should not be present for the Kolmogorov-Smirnov test
 > ks.test(round(ds2, 2), "pnorm", exact = TRUE)
 
-	One-sample Kolmogorov-Smirnov test
+	Exact one-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 2)
 D = 0.019169, p-value = 0.8489
@@ -92,7 +92,7 @@ In ks.test.default(round(ds2, 2), "pnorm", exact = TRUE) :
 > # now D has doubled, but p-values remain similar (if very different from ds2)
 > ks.test(round(ds2, 1), "pnorm")
 
-	One-sample Kolmogorov-Smirnov test
+	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 1)
 D = 0.03674, p-value = 0.1344
@@ -103,7 +103,7 @@ In ks.test.default(round(ds2, 1), "pnorm") :
   ties should not be present for the Kolmogorov-Smirnov test
 > ks.test(round(ds2, 1), "pnorm", exact = TRUE)
 
-	One-sample Kolmogorov-Smirnov test
+	Exact one-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 1)
 D = 0.03674, p-value = 0.1311
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.125   0.018   0.138 
+  0.284   0.017   0.294 

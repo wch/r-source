@@ -143,6 +143,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(Fisher_sim, 3),
     CALLDEF(chisq_sim, 4),
     CALLDEF(d2x2xk, 5),
+    CALLDEF(Smirnov_sim, 4),
 
     CALLDEF_MATH2_1(dchisq),
     CALLDEF_MATH2_1(dexp),

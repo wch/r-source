@@ -4354,21 +4354,30 @@ terminate unconditionally instead of signalling an error (which is
 useful in pinpointing issues in code called from @code{try} or
 @code{tryCatch}), @samp{verbose} prints a very detailed diagnostic
 message, @samp{package:pkg} restricts the check to if/while statements
-executing in the namespace of package @samp{pkg},
+executing in the namespace of package @samp{pkg} (but @code{all_base}
+refers to all the stanaard packages),
 @samp{package:_R_CHECK_PACKAGE_NAME_} restricts the check to if/while
 statements executing in the package that is currently being checked by
 @code{R CMD check}, @samp{warn} causes R to report a warning instead of
-signalling an error.  Default: unset (a warning is reported), but
+signalling an error.  (More than one package specification can be given:
+a report, error or warning wwill be given if any are satisfied.)
+Default: unset (a warning is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
 @item _R_CHECK_LENGTH_1_LOGIC2_
 Optionally check if an argument of the binary operators @code{&&} and
 @code{||} has length greater than one, checked only if it is used.  The
-format is the same as for @samp{_R_CHECK_LENGTH_1_CONDITION_}.  Default:
-unset (nothing is reported), but
+format is the same as for @samp{_R_CHECK_LENGTH_1_CONDITION_}, but false
+values or unset do not give a warning (use value @code{warn} for that).
+Default: unset (nothing is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
+
+@item _R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_
+Should running the @R{} code in the vignettes be skipped if vignette
+outputs are to be rebuilt (which will involve running that code).
+Default: false (but true for CRAN checking)
 
 @item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
 Prior to @R{} 3.6.0, re-building the vignette outputs was done in a
@@ -4427,14 +4436,13 @@ Check and report at the end of the check run if new files or directories
 are created in a selected set of directories during the check run.
 (This is confined to files owned by the user running the check process.)
 Currently the directories monitored are the home directory, @file{/tmp}
-(excluding @file{RtmpXXXXXX} dirs), @file{~/.cache} (recursively) and
-@file{~/.local/share} (recursively) or their equivalents on Windows and
-macOS (the directories in which the default settings for
-@code{tools::R_user_dir()} use a @file{R} subdirectory).  Additional
-directories can be specified in environment variable
-@env{_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_}, separated by
-semicolons.  Directories are reported with a trailing @samp{/} on all
-platforms.
+(excluding @file{RtmpXXXXXX} dirs), @file{/dav/shm}, @file{~/.cache}
+(recursively) and @file{~/.local/share} (recursively) or their
+equivalents on Windows and macOS (the directories in which the default
+settings for @code{tools::R_user_dir()} use a @file{R} subdirectory).
+Additional directories can be specified in environment variable
+@env{_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_}, separated by semicolons.
+Directories are reported with a trailing @samp{/} on all platforms.
 
 Environment variable @env{_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_} can
 specify an (extended regex) pattern of file paths not to be reported --

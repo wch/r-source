@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-02-14 r81736) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -887,31 +887,17 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 > ## Results differed by platform, but some gave incorrect results on string 10.
 > 
 > 
-> ## str() on large strings (in multibyte locales; changing locale may not work everywhere
-> oloc <- Sys.getlocale("LC_CTYPE")
-> mbyte.lc <- {
-+     if(.Platform$OS.type == "windows") # Windows Latin-9, but why not 1252?
-+ 	"English_United States.28605"
-+     else if(l10n_info()[["UTF-8"]])
-+ 	oloc
-+     else
-+ 	"en_US.UTF-8"
+> ## str() on large strings
+> if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
++   cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
++   .tmp <- capture.output(
++   str(cc) # failed in some R-devel versions
++   )
++   stopifnot(grepl("chr \"J.*reskog\"", .tmp))
++ 
++   print(nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")) # 5.1 M
++   print(str(L))
 + }
-> identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc) # "ok" if not
-[1] TRUE
-> cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
-> .tmp <- capture.output(
-+ str(cc) # failed in some R-devel versions
-+ )
-> stopifnot(grepl("chr \"J.*reskog\"", .tmp))
-> 
-> nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b") # 5.1 M
-[1] 5100000
-> stopifnot(system.time( str(L) )[[1L]] < 0.10) # Sparc Solaris needed 0.052
- chr "A.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E"| __truncated__
-> if(mbyte.lc != oloc) Sys.setlocale("LC_CTYPE", oloc)
-[1] "C"
-> ## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale
 > 
 > if(require("Matrix", .Library)) {
 +     M <- Matrix(diag(1:10), sparse=TRUE) # a "dsCMatrix"
@@ -941,8 +927,8 @@ standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x5505b40>
-<environment: 0x5537400>
+<bytecode: 0x563584d26070>
+<environment: 0x563584d1f778>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 

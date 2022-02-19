@@ -779,14 +779,18 @@ distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
 
+@noindent
+Mutliple licences can be specified separated by @samp{|} (surrounded by
+spaces) in which case the user can choose any of the alternatives.
+
 If a package license @emph{restricts} a base license (where permitted,
 e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
 terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
 the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
 respectively) should be appended to the corresponding individual license
-specification.  Note that several commonly used licenses do not permit
-restrictions: this includes GPL-2 and hence any specification which
-includes it.
+specification (preferably with the @samp{+} surrounded by spaces).  Note
+that several commonly used licenses do not permit restrictions: this
+includes GPL-2 and hence any specification which includes it.
 
 Examples of standardized specifications include
 @example
@@ -833,7 +837,8 @@ licensing rather than the body of a license, use a file named something
 like @file{LICENSE.note}.
 
 A few ``standard'' licenses are rather license templates which need
-additional information to be completed @emph{via} @samp{+ file LICENSE}.
+additional information to be completed @emph{via} @samp{+ file LICENSE}
+(with the @samp{+} surrounded by spaces)
 
 @node Package Dependencies, The INDEX file, Licensing, Package structure
 @subsection Package Dependencies
@@ -9210,7 +9215,9 @@ It is possible to run all the examples, tests and vignettes covered by
 @end example
 
 @noindent
-or setting the environment variable @env{VALGRIND_OPTS}.
+or setting the environment variable @env{VALGRIND_OPTS}.  As from @R{}
+4.2.0, @option{--use-valgrind} also uses @command{valgrind} when
+re-building the vignettes.
 
 On macOS you may need to ensure that debugging symbols are made available
 (so @command{valgrind} reports line numbers in files).  This can usually

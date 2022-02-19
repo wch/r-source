@@ -345,6 +345,37 @@ const char attribute_hidden *R_nativeEncoding(void)
     return native_enc;
 }
 
+#ifdef Win32
+static int defaultLocaleACP(const char *ctype)
+{
+    wchar_t wdefaultCP[6];
+    size_t n, r;
+    char defaultCP[6];
+
+    n = strlen(ctype) + 1;
+    wchar_t wctype[n];
+    r = mbstowcs(wctype, ctype, n);
+    if (r == (size_t)-1 || r >= n)
+	return 0;
+
+    /* It is not clear from the Microsoft documentation that GetLocaleInfoEx
+       accepts all locale names returned by setlocale(). Hopefully this will
+       get clarified. */
+    if (!GetLocaleInfoEx(wctype, LOCALE_IDEFAULTANSICODEPAGE, wdefaultCP,
+                         sizeof(wdefaultCP)))
+	return 0;
+
+    n = wcslen(wctype) + 1;
+    r = wcstombs(defaultCP, wdefaultCP, n);
+    if (r == (size_t)-1 || r >= n)
+	return 0;
+	     
+    if (!isdigit(defaultCP[0]))
+	return 0;
+    return atoi(defaultCP);
+}
+#endif
+
 /* retrieves information about the current locale and
    sets the corresponding variables (known_to_be_utf8,
    known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
@@ -408,7 +439,11 @@ void attribute_hidden R_check_locale(void)
 		localeCP = atoi(p+1);
 	    else if (!strcasecmp(p+1, "UTF-8") || !strcasecmp(p+1, "UTF8"))
 		localeCP = 65001;
-	}
+	} else if (strcmp(ctype, "C"))
+	    /* setlocale() will fill in the codepage automatically for
+	       "English", but not "en-US" */
+	    localeCP = defaultLocaleACP(ctype);
+
 	/* Not 100% correct, but CP1252 is a superset */
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
 	known_to_be_utf8 = utf8locale = (localeCP == 65001);
@@ -2037,9 +2072,17 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
 		CHAR(STRING_ELT(locale, 0)));
     }
-    UNPROTECT(1);
     R_check_locale();
+#ifdef Win32
+    if (localeCP && systemCP != localeCP) {
+	/* For now, don't warn for localeCP == 0, but it can cause problems
+	   as well. Keep in step with main.c. */
+	warning(_("using locale code page other than %d%s may cause problems"),
+	    systemCP, systemCP == 65001 ? " (\"UTF-8\")" : "");
+    }
+#endif
     invalidate_cached_recodings();
+    UNPROTECT(1);
     return ans;
 }
 

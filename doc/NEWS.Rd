@@ -6,6 +6,19 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item The \code{formula} method of \code{aggregate()} now matches
+      the generic in naming its first argument \code{x} (resolving
+      \PR{18299} by Thomas Soeiro).
+
+      This means that calling \code{aggregate()} with a formula as a
+      named first argument requires name \code{formula} in earlier
+      versions of \R and name \code{x} now, so portable code should not
+      name the argument (code in many packages did).
+    }
+  }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{matrix(x, n, m)} now warns in more cases where
@@ -177,7 +190,7 @@
       \code{barplot(legend.text =)}, \code{boxplot()},
       \code{contour(drawlabels =)}, \code{polygon(border =)} and
       \code{methods::is(class2 =)} have more robust sanity checks on
-      some of their arguments.
+      their arguments.
 
       \command{R CMD Rd2pdf} (used by \command{R CMD check}) has a more
       robust sanity check on the format of \code{\\alias{}} commands.
@@ -187,6 +200,18 @@
       \code{dpsifn()} is documented in \sQuote{Writing R Extensions}.
 
       \item The HTML help system now uses HTML5 (wish of \PR{18149}).
+
+      \item \code{ks.test()} now provides exact p-values also with ties
+      and MC p-values in the two-sample (Smirnov) case.  By Torsten
+      Hothorn.
+
+      \item \code{ks.test()} gains a formula interface, with \code{y ~ 1}
+      for the one-sample (Kolmogorov) test and \code{y ~ group} for the
+      two-sample (Smirnov) test.  By Torsten Hothorn.
+
+      \item The return value from \code{ks.test()} now has class
+      \code{c("ks.test", "htest")} -- packages using \code{try()} need
+      to take care to use \code{inherits()} and not \code{==} on the class.
     }
   }
 
@@ -355,6 +380,16 @@
       \item \command{R CMD check --as-cran} makes use of the
       environment variable \env{AUTORECONF}.  See the
       \dQuote{R Internals} manual §8 for further details.
+
+      \item \command{R CMD check --use-valgrind} also uses
+      \command{valgrind} when re-building vignettes as some non-Sweave
+      vignettes unhelpfully comment out all their code when
+      \command{R CMD check} runs vignettes.
+
+      \item Errors in re-building vignettes (unless there are LaTeX
+      errors) are reported by \command{R CMD check} as \samp{ERROR} rather
+      than \samp{WARNING} when running vignettes has been skipped (as it
+      frequently is in \acronym{CRAN} checks and by \option{--as-cran}).
     }
   }
 
@@ -377,15 +412,17 @@
 
       \item The deprecated legacy S-compatibility macros \code{PROBLEM},
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
-      \code{RECOVER}, \dots{} are no longer defined by default in
+      \code{RECOVER}, \dots{} are no longer defined in
       \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
       calls to \code{Rf_error} and \code{Rf_warning} (defined in header
       \file{R_ext/Error.h} included by \file{R.h}).
 
+      Header \file{R_ext/RS.h} no longer includes \file{R_ext/Error.h}.
+
+      %% To be removed on Mar 1.
       For the time being the definitions can be reinstated by defining
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
-      any \R{} header.  Header \file{R_ext/RS.h} will no longer include
-      \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set to \code{1}.
+      any \R{} header.
 
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
@@ -411,9 +448,10 @@
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).
 
-      \item Use of the legacy header \file{S.h} (undocumented since
-      2016) now gives a compilation warning reported by
-      \command{R CMD check}. 
+      %% Deferred until Mar 15 waiting for packages to be adjusted.
+      %% \item Use of the legacy header \file{S.h} (undocumented since
+      %% 2016) now gives a compilation warning reported by
+      %% \command{R CMD check}, with suitable compilers.
     }
   }
 
@@ -485,8 +523,8 @@
       (\code{#c6}) with reports and \emph{augmented} patch #2904 by
       Suharto Anggono.
 
-      Note that \code{"R-base"} is no longer default domain e.g., for
-      top-level calls to \code{gettext()}; rather translation needs
+      Note that \code{"R-base"} is no longer the default domain e.g.,
+      for top-level calls to \code{gettext()}; rather translation needs
       explicit \code{domain = *} specification in such cases.
 
       \item \code{identical(attrib.as.set=FALSE)} now works correctly with
@@ -551,16 +589,23 @@
       statistic correctly, also when \code{is.unsorted(x)}, fixing
       \PR{18294}.
 
-      \item \code{model.weights()} and \code{model.offset()} more carefully
-      extract their model components, thanks to Ben Bolker and Tim Taylor's
-      R-devel post.
-
-      \item The \code{formula} method of \code{aggregate} now matches the
-      generic in its first argument, fixing \PR{18299} by Thomas Soeiro.
-
       \item The \code{data.frame} method of \code{rbind()} now warns
-      when binding not-wholly-recycling vectors, in analogy to the default
-      method (for matrix).
+      when binding not-wholly-recycling vectors, by analogy to the default
+      method (for matrices).
+
+      \item \code{setAs()} finds the correct class for name \code{to}
+      when multiple packages define a class with that name. Thanks to
+      Gabor Csardi for the report.
+
+      \item Fix for detaching a package when two classes of the same name
+      are present in method signatures for the same generic. Thanks to
+      Gabor Csardi for the report.
+
+      \item \code{match.arg("", c("", "a", "B"))} gives a better error
+      message, in part from \PR{17959}, thanks to Elin Waring.
+
+      \item \command{R CMD Sweave --clean} no longer removes existing
+      files or subdirectories (\PR{18242}).
     }
   }
 }
@@ -571,6 +616,14 @@
       \item The default version of Bioconductor has been changed to
       3.14. (This is used by \code{setRepositories} and the menus in
       GUIs.)
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check --as-cran} has a workaround for a bug
+      in versions of \command{file} up to at least 5.41 which
+      mis-identify DBF files last changed in 2022 as executables.
     }
   }
 
@@ -629,6 +682,10 @@
       \item \code{qbeta(.001, .9, .009)} and similar cases now converge
       correctly thanks to Ben Bolker's report in \PR{17746}.
 
+      \item \code{window(x, start, end)} no longer wrongly signals
+      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
+      \PR{18291}.
+
       \item \code{data()} now checks that its (rarely used) \code{list}
       argument is a character vector -- a couple of packages passed other
       types and gave incorrect results.
@@ -637,9 +694,9 @@
       TRUE rather coercing to logical and taking the first element --
       which gave incorrect results in package code.
 
-      \item \code{window(x, start, end)} no longer wrongly signals
-      \dQuote{'start' cannot be after 'end'}, fixing \PR{17527} and
-      \PR{18291}.
+      \item \code{model.weights()} and \code{model.offset()} more carefully
+      extract their model components, thanks to Ben Bolker and Tim Taylor's
+      R-devel post.
 
       \item \code{list.files(recursive = TRUE)} now shows all broken
       symlinks (previously, some of them may have been omitted, \PR{18296}).

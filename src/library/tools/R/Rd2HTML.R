@@ -116,15 +116,18 @@ shtmlify <- function(s) {
     s
 }
 
+## <FIXME>
+## Unlike utils::URLencode(reserved = FALSE) ...
 ## URL encode anything other than alphanumeric, . - _ $ and reserved
 ## characters in URLs.
 urlify <- function(x) {
     ## Like utils::URLencode(reserved = FALSE), but with '&' replaced by
     ## '&amp;' and hence directly usable for href attributes.
     ## See
+    ##   <https://url.spec.whatwg.org/#valid-url-string>
+    ##   RFC 3986 <https://tools.ietf.org/html/rfc3986>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
-    ##   RFC 3986 <http://tools.ietf.org/html/rfc3986>
 
     ## We do not want to mess with already-encoded URLs
     if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
@@ -136,16 +139,21 @@ urlify <- function(x) {
                       paste0("%", toupper(as.character(charToRaw(x))),
                              collapse = ""),
                       "")
+        ## URL code points as per
+        ## <https://url.spec.whatwg.org/#valid-url-string>, with U+002D
+        ## (-) last.
         todo <- paste0("[^",
-                       "][!$&'()*+,;=:/?@ #",
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                       "abcdefghijklmnopqrstuvwxyz0123456789._~-",
+                       "abcdefghijklmnopqrstuvwxyz",
+                       "0123456789",
+                       "!$&'()*+,./:;=?@_~-",
                        "]")
         mixed <- ifelse(grepl(todo, chars), hex, chars)
         gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
     }
 }
 ## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
+## </FIXME>
 
 ## Ampersands should be escaped in proper HTML URIs
 escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
@@ -619,10 +627,19 @@ Rd2HTML <-
                    of1('" ')
                	   if (length(block) > 1L
                	       && length(imgoptions <- .Rd_get_latex(block[[2]]))
-		       && startsWith(imgoptions, "options: ")) {
-		       # There may be escaped percent signs within
-		       imgoptions <- gsub("\\%", "%", imgoptions, fixed=TRUE)
+		       && startsWith(imgoptions[1L], "options: ")) {
+		       ## There may be escaped percent signs within
+		       imgoptions <- gsub("\\%", "%",
+                                          paste(imgoptions,
+                                                collapse = " "),
+                                          fixed=TRUE)
                        of1(sub("^options: ", "", imgoptions))
+                       ## Expert use may have forgotten alt ...
+                       if(!grepl("\\balt *=", imgoptions)) {
+                           of1(' alt="')
+                           writeContent(block[[1L]], tag)
+                           of1('"')
+                       }
 	           } else {
 		       of1('alt="')
 		       writeContent(block[[length(block)]], tag)
@@ -759,11 +776,19 @@ Rd2HTML <-
     		}
     		switch(blocktag,
    		"\\value"=,
-     		"\\arguments"={
-    		    of1('<tr valign="top"><td><code>')
+     		"\\arguments"= {
+    		    of1('<tr valign="top"><td>')
     		    inPara <<- NA
-    		    writeContent(block[[1L]], tag)
-    		    of1('</code></td>\n<td>\n')
+                    ## Argh.  Quite a few packages put the items in
+                    ## their value section inside \code.
+                    if(identical(RdTags(block[[1L]])[1L], "\\code")) {
+                        writeContent(block[[1L]], tag)
+                    } else {
+                        of1('<code>')
+                        writeContent(block[[1L]], tag)
+                        of1('</code>')
+                    }
+    		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
     		    writeContent(block[[2L]], tag)
     		    leavePara(FALSE)

@@ -2188,6 +2188,15 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
+/*
+  Currently called from
+
+  eval.c
+  by asLogicalNoNA with warnByDefault =  TRUE
+
+  coerce.c
+  by asLogical2 with warnByDefault =  FALSE
+ */
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
@@ -2234,6 +2243,12 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	    }
 	if (spkg != R_NilValue)
 	    pkgname = translateChar(STRING_ELT(spkg, 0));
+	/* Sometimes pkgname is like 
+	      package:MoTBFs,
+	   so we need tp strip it off.
+	   This is independent of pprefix.
+	*/
+	if (strstr(pkgname, "package:"))  pkgname += 8;
 
 	while (check[0] != '\0') {
 	    if (!strncmp(pprefix, check, lpprefix)) {
@@ -2247,13 +2262,39 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 		    arglen = strlen(check);
 		ignore = TRUE;
 		if (pkgname) {
+		    // a named package
 		    if (!strncmp(check, pkgname, arglen) && strlen(pkgname) == arglen)
 			ignore = FALSE;
-		    if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
+		    // 'this package' 
+		    else if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
 			/* package name specified in _R_CHECK_PACKAGE_NAME */
 			const char *envpname = getenv(cpname);
 			if (envpname && !strcmp(envpname, pkgname))
 			    ignore = FALSE;
+		    }
+		    // "all_base" , that is all standard packages.
+		    else if (!strncmp(check, "all_base", arglen) && arglen == 8) {
+			char *std[] = {
+			    "base",
+			    "compiler",
+			    // datasets has no code
+			    "grDevies",
+			    "graphics",
+			    "grid",
+			    "methods",
+			    "parallel",
+			    "splines",
+			    "stats",
+			    "stats4",
+			    "utils",
+			    "tools"
+			};
+			int nstd = sizeof(std)/sizeof(char *);
+			for (int i = 0; i < nstd; i++)
+			    if(!strcmp(std[i], pkgname)) {
+				ignore = FALSE;
+				break;
+			    }
 		    }
 		}
 		check += arglen;
@@ -2273,7 +2314,8 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 		check++;
 	    } else
 		error("invalid value of %s", varname);
-	}
+	} // end of while (check[0] != '\0')
+ 
 	if (ignore) {
 	    abort = FALSE; /* err is FALSE */
 	    verbose = FALSE;
@@ -2583,7 +2625,13 @@ SEXP R_withCallingErrorHandler(SEXP (*body)(void *), void *bdata,
 
 SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
 {
+    /* check for handlers on the stack before proceeding (PR1826). */
     SEXP oldstk = R_ToplevelContext->handlerstack;
+    for (RCNTXT *cptr = R_GlobalContext;
+	 cptr != R_ToplevelContext;
+	 cptr = cptr->nextcontext)
+	if (cptr->handlerstack != oldstk)
+	    error("should not be called with handlers on the stack");
 
     R_HandlerStack = R_NilValue;
     do_addCondHands(call, op, args, rho);
@@ -2592,19 +2640,13 @@ SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
        restore the handler stack to the value when begincontext was
        called. This function should only be called in a context where
        there are no handlers on the stack. */
-#ifdef DODO
-    for (RCNTXT *cptr = R_GlobalContext;
-	 cptr != R_ToplevelContext;
-	 cptr = cptr->nextcontext)
-	if (cptr->handlerstack == R_NilValue)
-	    cptr->handlerstack = R_HandlerStack;
-#endif
     for (RCNTXT *cptr = R_GlobalContext;
 	 cptr != R_ToplevelContext;
 	 cptr = cptr->nextcontext)
 	if (cptr->handlerstack == oldstk)
 	    cptr->handlerstack = R_HandlerStack;
-	else error("should not be called with handlers on the stack");
+	else /* should not happen after the check above */
+	    error("should not be called with handlers on the stack");
 
     R_ToplevelContext->handlerstack = R_HandlerStack;
     return R_NilValue;

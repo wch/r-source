@@ -33,8 +33,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     (Non-\code{NULL} values are not implemented.)}
   \item{decreasing}{logical.  Should the sort order be increasing or
     decreasing? For the \code{"radix"} method, this can be a vector of
-    length equal to the number of arguments in \code{\dots}. For the
-    other methods, it must be length one.}
+    length equal to the number of arguments in \code{\dots} and the
+    elements are recycled as necessary.
+    For the other methods, it must be length one.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed

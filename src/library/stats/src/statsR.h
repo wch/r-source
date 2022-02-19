@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2019   The R Core Team.
+ *  Copyright (C) 2012-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -202,6 +202,8 @@ SEXP Fexact(SEXP x, SEXP pars, SEXP work, SEXP smult);
 SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB);
 SEXP chisq_sim(SEXP sr, SEXP sc, SEXP sB, SEXP E);
 SEXP d2x2xk(SEXP sK, SEXP sm, SEXP sn, SEXP st, SEXP srn);
+
+SEXP Smirnov_sim(SEXP sr, SEXP sc, SEXP sB, SEXP twosided);
 
 SEXP stats_signrank_free(void);
 SEXP stats_wilcox_free(void);

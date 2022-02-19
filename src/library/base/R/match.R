@@ -1,7 +1,7 @@
 #  File src/library/base/R/match.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,11 +57,13 @@ match.arg <- function (arg, choices, several.ok = FALSE)
     ## handle each element of arg separately
     i <- pmatch(arg, choices, nomatch = 0L, duplicates.ok = TRUE)
     if (all(i == 0L))
-	stop(gettextf("'arg' should be one of %s",
-                      paste(dQuote(choices), collapse = ", ")),
+        stop(sprintf(ngettext(length(chs <- unique(choices[nzchar(choices)])),
+                              "'arg' should be %s",
+                              "'arg' should be one of %s"),
+                     paste(dQuote(chs), collapse=", ")),
              domain = NA)
     i <- i[i > 0L]
-    if (!several.ok && length(i) > 1)
+    if (!several.ok && length(i) > 1) ## can this happen ??
         stop("there is more than one match in 'match.arg'")
     choices[i]
 }
