@@ -8530,8 +8530,9 @@ PRESS :[1] 798.939
 > yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
 > lmH <- lm(yh ~ xh)
 > im <- influence.measures(lmH)
+> is.inf <- apply(im$is.inf, 1, any)
 > plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
-> abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
+> abline(lmH); points(xh[is.inf], yh[is.inf], pch = 20, col = 2)
 > 
 > ## Irwin's data [Williams 1987]
 > xi <- 1:5
