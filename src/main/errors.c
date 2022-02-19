@@ -2625,7 +2625,13 @@ SEXP R_withCallingErrorHandler(SEXP (*body)(void *), void *bdata,
 
 SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
 {
+    /* check for handlers on the stack before proceeding (PR1826). */
     SEXP oldstk = R_ToplevelContext->handlerstack;
+    for (RCNTXT *cptr = R_GlobalContext;
+	 cptr != R_ToplevelContext;
+	 cptr = cptr->nextcontext)
+	if (cptr->handlerstack != oldstk)
+	    error("should not be called with handlers on the stack");
 
     R_HandlerStack = R_NilValue;
     do_addCondHands(call, op, args, rho);
@@ -2634,19 +2640,13 @@ SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
        restore the handler stack to the value when begincontext was
        called. This function should only be called in a context where
        there are no handlers on the stack. */
-#ifdef DODO
-    for (RCNTXT *cptr = R_GlobalContext;
-	 cptr != R_ToplevelContext;
-	 cptr = cptr->nextcontext)
-	if (cptr->handlerstack == R_NilValue)
-	    cptr->handlerstack = R_HandlerStack;
-#endif
     for (RCNTXT *cptr = R_GlobalContext;
 	 cptr != R_ToplevelContext;
 	 cptr = cptr->nextcontext)
 	if (cptr->handlerstack == oldstk)
 	    cptr->handlerstack = R_HandlerStack;
-	else error("should not be called with handlers on the stack");
+	else /* should not happen after the check above */
+	    error("should not be called with handlers on the stack");
 
     R_ToplevelContext->handlerstack = R_HandlerStack;
     return R_NilValue;
