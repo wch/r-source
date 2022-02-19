@@ -1213,7 +1213,8 @@ static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr)
     SEXP fun = CAR(expr);
     if (fun == R_BracketSymbol ||
 	fun == R_Bracket2Symbol ||
-	fun == R_DollarSymbol) {    // allow @ as well??
+	fun == R_DollarSymbol ||
+	fun == R_AtsignSymbol) {
 	/* If the RHS is a call to an extractor ([, [[, $), then
 	   recursively follow the chain of extractions to the
 	   expression for the object from which elements are being
