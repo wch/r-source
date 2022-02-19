@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -44,6 +44,11 @@ isFALSE(x)
   vector.  Evaluation proceeds only until the result is determined.  The
   longer form is appropriate for programming control-flow and typically
   preferred in \code{\link{if}} clauses.
+
+  Using vectors of more than one element will give a warning or error if
+  the environment variable \env{_R_CHECK_LENGTH_1_LOGIC2_} is set to
+  \code{warn} or \code{true} respectively.
+  
 
   \code{xor} indicates elementwise exclusive OR.
 
