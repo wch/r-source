@@ -780,7 +780,7 @@ copyright laws).
 @end itemize
 
 @noindent
-Mutliple licences can be specified separated by @samp{|} (surrounded by
+Multiple licences can be specified separated by @samp{|} (surrounded by
 spaces) in which case the user can choose any of the alternatives.
 
 If a package license @emph{restricts} a base license (where permitted,
