@@ -332,7 +332,7 @@ Rd2HTML <-
                   "\\samp"='&lsquo;<span class="samp">&#8288;',
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
-                  "\\verb"='<code style="white-space: pre;">')
+                  "\\verb"='<code style="white-space: pre;">&#8288;')
     HTMLRight <- c("\\acronym"='</span></abbr>',
     		   "\\donttest"="",
     		   "\\env"="</span>",
@@ -342,7 +342,7 @@ Rd2HTML <-
                    "\\samp"="&#8288;</span>&rsquo;",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;",
-                   "\\verb"="</code>")
+                   "\\verb"="&#8288;</code>")
 
     addParaBreaks <- function(x) {
 	if (isBlankLineRd(x) && isTRUE(inPara)) {
@@ -599,24 +599,28 @@ Rd2HTML <-
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
-                   enterPara(doParas)
-                   inEqn <<- TRUE
-                   of1("<i>")
-                   block <- block[[length(block)]];
-                   ## FIXME: space stripping needed: see Special.html
-                   writeContent(block, tag)
-                   of1("</i>")
-                   inEqn <<- FALSE
+                   block <- block[[length(block)]]
+                   if(length(block)) {
+                       enterPara(doParas)
+                       inEqn <<- TRUE
+                       of1("<i>")
+                       ## FIXME: space stripping needed: see Special.html
+                       writeContent(block, tag)
+                       of1("</i>")
+                       inEqn <<- FALSE
+                   }
                },
                "\\deqn" = {
-                   inEqn <<- TRUE
-                   leavePara(TRUE)
-                   of1('<p style="text-align: center;"><i>')
-                   block <- block[[length(block)]];
-                   writeContent(block, tag)
-                   of0('</i>')
-                   leavePara(FALSE)
-                   inEqn <<- FALSE
+                   block <- block[[length(block)]]
+                   if(length(block)) {
+                       inEqn <<- TRUE
+                       leavePara(TRUE)
+                       of1('<p style="text-align: center;"><i>')
+                       writeContent(block, tag)
+                       of0('</i>')
+                       leavePara(FALSE)
+                       inEqn <<- FALSE
+                   }
                },
                "\\figure" = {
                    enterPara(doParas)
