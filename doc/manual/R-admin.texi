@@ -488,7 +488,7 @@ be @samp{letter}.)
 
 There are some issues with making the PDF reference manual,
 @file{fullrefman.pdf} or @file{refman.pdf}.  The help files contain both
-ISO Latin1 characters (e.g.@: in @file{text.Rd}) and upright quotes,
+non-ASCII characters (e.g.@: in @file{text.Rd}) and upright quotes,
 neither of which are contained in the standard @LaTeX{} Computer Modern
 fonts.  We have provided four alternatives:
 
