@@ -36,8 +36,8 @@ ks.test(x, \dots)
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See \sQuote{Details} for the meaning of
     \code{NULL}.}
-  \item{simulate.p.value,simulate}{a logical indicating whether to
-    compute p-values by Monte Carlo simulation.}
+  \item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation.}
   \item{B}{an integer specifying the number of replicates used in the
     Monte Carlo test.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
