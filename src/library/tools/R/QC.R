@@ -5445,6 +5445,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
             e3 <- as.character(e[[3L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         if((as.character(e[[1L]])[1L] %in% ".Internal") &&
@@ -5452,6 +5453,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
             e3 <- as.character(e[[4L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         FALSE
