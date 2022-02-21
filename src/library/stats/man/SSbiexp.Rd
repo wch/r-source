@@ -73,7 +73,7 @@ datN <- data.frame(time = (0:600)/64)
 datN$conc <- predict(fm1, newdata=datN)
 plot(conc ~ time, data=datN) # perfect, no noise
 ## IGNORE_RDIFF_BEGIN
-## Fails by default (scaleOffset=0):
+## Fails by default (scaleOffset=0) on most platforms {also after increasing maxiter !}
 \dontrun{
         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, trace=TRUE)}
 \dontshow{try( # maxiter=10: store less garbage
