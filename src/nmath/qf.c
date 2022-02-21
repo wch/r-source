@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2015 The R Core Team
  *  Copyright (C) 2005 The R Foundation
+ *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ double qf(double p, double df1, double df2, int lower_tail, int log_p)
     if (df1 <= df2 && df2 > 4e5) {
 	if(!R_FINITE(df1)) /* df1 == df2 == Inf : */
 	    return 1.;
-	/* else */
+	/* else value for df2 == Inf : */
 	return qchisq(p, df1, lower_tail, log_p) / df1;
     }
-    if (df1 > 4e5) { /* and so  df2 < df1 */
+    else if (df1 > 4e5) { /* and so  df2 < df1 -- return value for df1 == Inf */
 	return df2 / qchisq(p, df2, !lower_tail, log_p);
     }
 
