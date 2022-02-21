@@ -212,6 +212,9 @@
       \item The return value from \code{ks.test()} now has class
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
+
+      \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
+      escapes on UTF-8 inputs which cannot be converted to \code{to}.
     }
   }
 
