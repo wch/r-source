@@ -4369,8 +4369,9 @@ submission checks.
 Optionally check if an argument of the binary operators @code{&&} and
 @code{||} has length greater than one, checked only if it is used.  The
 format is the same as for @samp{_R_CHECK_LENGTH_1_CONDITION_}, but false
-values or unset do not give a warning (use value @code{warn} for that).
-Default: unset (nothing is reported), but
+values or unset do not give a warning (use value @code{warn} for that),
+and any other values which do not include @code{warn} or @code{abort}
+give an error.  Default: unset (nothing is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
