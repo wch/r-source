@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2021  The R Core Team
+ *  Copyright (C) 1998-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@ double	Rf_gamma_cody(double);
 # define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
 # define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
 # define MATHLIB_WARNING5(fmt,x,x2,x3,x4,x5) warning(fmt,x,x2,x3,x4,x5)
+# define MATHLIB_WARNING6(fmt,x,x2,x3,x4,x5,x6) warning(fmt,x,x2,x3,x4,x5,x6)
 
 #include <R_ext/Arith.h>
 #define ML_POSINF	R_PosInf
