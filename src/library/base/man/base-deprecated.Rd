@@ -1,11 +1,12 @@
 % File src/library/base/man/base-deprecated.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
 \alias{base-deprecated}
 \alias{unix.time}% in 2016, for R 3.4.0 (moved here only for R 4.0.0)
+\alias{default.stringsAsFactors}% here for R 4.2.0
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !
@@ -15,6 +16,7 @@
 }
 \usage{
 unix.time(\dots)  ### -- use  system.time(...)  instead
+default.stringsAsFactors()
 }
 \arguments{
   \item{\dots}{(arguments)}

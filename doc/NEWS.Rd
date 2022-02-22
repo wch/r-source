@@ -478,6 +478,9 @@
       and environment variable \env{R_MAX_MEM_SIZE} are defunct.  The
       memory allocation limit was important for 32-bit builds,
       but these are no longer supported.
+
+      \item \code{default.stringsAsFactors()} is now formally deprecated,
+      where that was only mentioned on its regular help page, previously.
     }
   }
 

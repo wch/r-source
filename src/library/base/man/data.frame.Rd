@@ -6,7 +6,6 @@
 \name{data.frame}
 \title{Data Frames}
 \alias{data.frame}
-\alias{default.stringsAsFactors}
 \description{
   The function \code{data.frame()} creates data frames, tightly coupled
   collections of variables which share many of the properties of
@@ -17,8 +16,6 @@
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
            check.names = TRUE, fix.empty.names = TRUE,
            stringsAsFactors = FALSE)
-
-default.stringsAsFactors() # << this is deprecated !
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -105,12 +102,6 @@ default.stringsAsFactors() # << this is deprecated !
   not a column (by name or number).
 
   Names are removed from vector inputs not protected by \code{\link{I}}.
-
-  \code{default.stringsAsFactors} is a utility that takes
-  \code{\link{getOption}("stringsAsFactors")} and ensures the result is
-  \code{TRUE} or \code{FALSE} (or throws an error if the value is not
-  \code{NULL}).  This function is \bold{deprecated} now and will no longer
-  be available in the future.
 }
 \note{
   In versions of \R prior to 2.4.0 \code{row.names} had to be

@@ -48,3 +48,17 @@ unix.time <- function(...) {
     system.time(...)
 }
 ## </entry>
+
+## <entry>
+## Docu-deprecated in 4.1.0
+## Formally deprecated in 4.2.0
+default.stringsAsFactors <- function()
+{
+    .Deprecated("the `stringsAsFactors` argument explicitly")
+    val <- getOption("stringsAsFactors")
+    if(is.null(val)) val <- FALSE
+    if(!is.logical(val) || is.na(val) || length(val) != 1L)
+        stop('options("stringsAsFactors") not set to TRUE or FALSE')
+    val
+}
+## </entry>
