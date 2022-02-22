@@ -116,19 +116,31 @@ shtmlify <- function(s) {
     s
 }
 
-## <FIXME>
-## Unlike utils::URLencode(reserved = FALSE) ...
-## URL encode anything other than alphanumeric, . - _ $ and reserved
-## characters in URLs.
-urlify <- function(x) {
-    ## Like utils::URLencode(reserved = FALSE), but with '&' replaced by
-    ## '&amp;' and hence directly usable for href attributes.
-    ## See
-    ##   <https://url.spec.whatwg.org/#valid-url-string>
-    ##   RFC 3986 <https://tools.ietf.org/html/rfc3986>
-    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
-    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
-
+## URL encode for use in href attributes.
+urlify <- function(x, reserved = FALSE) {
+    ## When reserved is a logical, like
+    ##   utils::URLencode(x, reserved)
+    ## with '&' replaced by '&amp;' and hence directly usable for href
+    ## attributes.  Equivalently, one could use
+    ##   escapeAmpersand(utils::URLencode(x, reserved))
+    ## Alternatively, reserved can be a string giving the reserved chars
+    ## not to percent encode if it starts with a '^', and to percent
+    ## encode otherwise (perhaps utils::URLencode() should be enhanced
+    ## accordingly?).
+    ##
+    ## According to RFC 3986 <https://tools.ietf.org/html/rfc3986>, the
+    ## reserved characters are
+    ##   c(gendelims, subdelims)
+    ## with
+    ##   gendelims <- c(":", "/", "?", "#", "[", "]", "@")
+    ##   subdelims <- c("!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=")
+    ## The following is
+    ##   paste(c(gendelims, subdelims), collapse = "")
+    ## re-arranged for convenient use in regexp (negated) character
+    ## classes:
+    alldelims <- "][!$&'()*+,;=:/?@#"
+    ## See also <https://url.spec.whatwg.org/#valid-url-string>.
+    
     ## We do not want to mess with already-encoded URLs
     if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
         gsub("&", "&amp;", x, fixed = TRUE)
@@ -139,21 +151,25 @@ urlify <- function(x) {
                       paste0("%", toupper(as.character(charToRaw(x))),
                              collapse = ""),
                       "")
-        ## URL code points as per
-        ## <https://url.spec.whatwg.org/#valid-url-string>, with U+002D
-        ## (-) last.
+        reserved <- if(is.character(reserved)) {
+                        reserved <- paste(reserved, collapse = "")
+                        if(startsWith(reserved, "^"))
+                            substring(reserved, 2L)
+                        else      
+                            rawToChar(setdiff(charToRaw(alldelims),
+                                              charToRaw(reserved)))
+                    } else if(!reserved) {
+                        alldelims
+                    } else ""
         todo <- paste0("[^",
+                       reserved,
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                       "abcdefghijklmnopqrstuvwxyz",
-                       "0123456789",
-                       "!$&'()*+,./:;=?@_~-",
+                       "abcdefghijklmnopqrstuvwxyz0123456789._~-",
                        "]")
         mixed <- ifelse(grepl(todo, chars), hex, chars)
         gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
     }
 }
-## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
-## </FIXME>
 
 ## Ampersands should be escaped in proper HTML URIs
 escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
@@ -168,11 +184,14 @@ invalid_HTML_chars_re <-
 ## & -> %26F is OK, & -> &amp; is NOT OK with dynamic help
 topic2url <- function(x)
 {
-    if (config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_", "TRUE"))) utils::URLencode(x, reserved=TRUE)
-    else urlify(x)
+    if(config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_",
+                                        "TRUE")))
+        utils::URLencode(x, reserved = TRUE)
+    else
+        urlify(x, reserved = TRUE)
 }
-topic2filename <- function(x) gsub("%", "+", utils::URLencode(x, reserved=TRUE))
-
+topic2filename <- function(x)
+    gsub("%", "+", utils::URLencode(x, reserved = TRUE))
 
 ## Create HTTP redirect files for aliases; called only during package
 ## installation if static help files are enabled. Files are named
@@ -187,7 +206,9 @@ createRedirects <- function(file, Rdobj)
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     if (!linksToTopics) return(invisible()) # do nothing
     ## create a HTTP redirect for each 'alias' in .../pkg/help/
-    redirHTML <- sprintf("<!DOCTYPE html>\n<html><head><meta http-equiv='refresh' content='0; url=../html/%s'><title>HTTP redirect</title></head><body></body></html>\n", urlify(basename(file)))
+    redirHTML <-
+        sprintf("<!DOCTYPE html>\n<html><head><meta http-equiv='refresh' content='0; url=../html/%s'><title>HTTP redirect</title></head><body></body></html>\n",
+                urlify(basename(file), reserved = TRUE))
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
     aliasName <- function(i) trimws(Rdobj[[i]][[1]])
@@ -555,6 +576,7 @@ Rd2HTML <-
                "\\email" = if (length(block)) {
                    url <- lines2str(as.character(block))
                    enterPara(doParas)
+                   ## FIXME: urlify
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
                ## watch out for empty URLs (TeachingDemos had one)
