@@ -750,7 +750,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			       otherwise wchar_t (usually int).
 			       In any case Unicode points <= 0x10FFFF
 			    */
-			    snprintf(outbuf, 11, "\\u%08x", (unsigned int) ucs);
+			    snprintf(outbuf, 11, "\\U%08x", (unsigned int) ucs);
 			    outbuf += 10; outb -= 10;
 			}
 		    }
