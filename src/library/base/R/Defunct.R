@@ -1,7 +1,7 @@
 #  File src/library/base/R/Defunct.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -209,4 +209,10 @@
 ## Removed for 4.1.0
 ## .find.package <- function(...).Defunct("find.package")
 ## .path.package <- function(...).Defunct("path.package")
+## </entry>
+
+## <entry>
+## Deprecated in 3.4.0
+## Defunct in 4.2.0
+unix.time <- function(...) .Defunct("system.time")
 ## </entry>

@@ -481,6 +481,9 @@
 
       \item \code{default.stringsAsFactors()} is now formally deprecated,
       where that was only mentioned on its regular help page, previously.
+
+      \item \code{unix.time()} is defunct now; it had been deprecated since
+      \R 3.4.0.
     }
   }
 

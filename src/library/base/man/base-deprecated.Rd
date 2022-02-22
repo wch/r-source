@@ -5,7 +5,6 @@
 
 \name{base-deprecated}
 \alias{base-deprecated}
-\alias{unix.time}% in 2016, for R 3.4.0 (moved here only for R 4.0.0)
 \alias{default.stringsAsFactors}% here for R 4.2.0
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
@@ -15,12 +14,11 @@
   \R only, and may be defunct as soon as the next release.
 }
 \usage{
-unix.time(\dots)  ### -- use  system.time(...)  instead
 default.stringsAsFactors()
 }
-\arguments{
-  \item{\dots}{(arguments)}
-}
+%% \arguments{
+%%   \item{\dots}{(arguments)}
+%% }
 \details{
   Functions in standard packages other than the base package are listed in
   \code{help("pkg-deprecated")}, where \samp{pkg} is replaced by the

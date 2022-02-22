@@ -42,14 +42,6 @@
 ## consider keeping one (commented) entry here, for easier additions
 
 ## <entry>
-## Deprecated in 3.4.0
-unix.time <- function(...) {
-    .Deprecated("system.time")
-    system.time(...)
-}
-## </entry>
-
-## <entry>
 ## Docu-deprecated in 4.1.0
 ## Formally deprecated in 4.2.0
 default.stringsAsFactors <- function()
