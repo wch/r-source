@@ -2066,7 +2066,7 @@ add_dummies <- function(dir, Log)
         out1 <- if (length(out1) && length(out1a)) c(out1, "", out1a)
                 else c(out1, out1a)
 
-        out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- out8 <- out9 <- NULL
+        out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- out8 <- out9 <- out10 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
             Rcmd <- paste(opWarn_string, "\n",
@@ -2158,12 +2158,20 @@ add_dummies <- function(dir, Log)
             out9 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
 
+        if(R_check_code_class_is_string) {
+            Rcmd <- paste(opWarn_string, "\n",
+                          sprintf("tools:::.check_package_code_class_is_string(dir = \"%s\")\n",
+                                  pkgdir))
+            out10 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        }
+        
         t2 <- proc.time()
         print_time(t1, t2, Log)
 
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
-            length(out7) || length(out8) || length(out9)) {
+            length(out7) || length(out8) || length(out9) ||
+            length(out10)) {
             ini <- character()
             if(length(out4) ||
                (length(out8) &&
@@ -2225,6 +2233,10 @@ add_dummies <- function(dir, Log)
             }
             if (length(out9)) {
                 printLog0(Log, paste(c(ini, out9, ""), collapse = "\n"))
+                ini <- ""
+            }
+            if(length(out10)) {
+                printLog0(Log, paste(c(ini, out10, ""), collapse = "\n"))
                 ini <- ""
             }
         } else resultLog(Log, "OK")
@@ -6336,6 +6348,9 @@ add_dummies <- function(dir, Log)
     R_check_vignette_titles <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTE_TITLES_",
                                          "FALSE"))
+    R_check_code_class_is_string <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_CLASS_IS_STRING_",
+                                         "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -6408,6 +6423,7 @@ add_dummies <- function(dir, Log)
         R_check_things_in_temp_dir <- TRUE
         R_check_vignette_titles <- TRUE
         R_check_bogus_return <- TRUE
+        R_check_code_class_is_string <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
