@@ -33,7 +33,9 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save \
 	test-system.R test-system.Rout.save test-system2.c \
-	reg-large.R utf8.R reg-translation.R
+	reg-large.R utf8.R reg-translation.R iconv.R
+
+## iconv.R is not currently otherwise used.
 
 SUBDIRS = Embedding Examples
 SUBDIRS_WITH_NO_BUILD = Pkgs
