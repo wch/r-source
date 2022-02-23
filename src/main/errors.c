@@ -2192,10 +2192,10 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
   Currently called from
 
   eval.c
-  by asLogicalNoNA with warnByDefault =  TRUE
+  by asLogicalNoNA with warnByDefault = TRUE
 
   coerce.c
-  by asLogical2 with warnByDefault =  FALSE
+  by asLogical2 with warnByDefault = TRUE (was FALSE)
  */
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,

@@ -1794,7 +1794,7 @@ int asLogical2(SEXP x, int checking, SEXP call, SEXP rho)
 		msg,
 		msg,
 		"_R_CHECK_LENGTH_1_LOGIC2_",
-		FALSE /* by default do nothing */);
+		TRUE /* by default warn */);
 	}
 	switch (TYPEOF(x)) {
 	case LGLSXP:

@@ -2094,15 +2094,12 @@ stopifnot(exprs = {
 
 ## More strictness in '&&' and '||' :
 Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn") # only warn
+## warning is the default as from R 4.2.0
 tools::assertWarning(1 && 0:1)
 Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
 tools::assertError(0 || 0:1)
-if(is.na(oEV)) { # (by default)
-    Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
-    2 && 0:1 # should not even warn
+if(is.na(oEV)) {Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
 } else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
-
 
 ## polym() in "vector" case PR#17474
 fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
