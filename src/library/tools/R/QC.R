@@ -5595,11 +5595,11 @@ function(dir) {
     predicate <- function(e) {
         is.call(e) &&
             (length(e) >= 2L) &&
-            (as.character(e[[1L]]) == "if") &&
+            any(as.character(e[[1L]]) == "if") &&
             is.call(e <- e[[2L]]) &&
-            (as.character(e[[1L]]) %in% c("==", "!-")) &&
+            any(as.character(e[[1L]]) %in% c("==", "!-")) &&
             is.call(e2 <- e[[2L]]) &&
-            (as.character(e2[[1L]]) == "class") &&
+            any(as.character(e2[[1L]]) == "class") &&
             is.character(e[[3L]]) &&
             (length(e[[3L]] == 1L))
     }
