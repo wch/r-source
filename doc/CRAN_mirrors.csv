@@ -1,6 +1,6 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "0-Cloud [https]",0-Cloud,0-Cloud,https://cloud.r-project.org/,"Automatic redirection to servers worldwide, currently sponsored by Rstudio","cran # rstudio.com",1,us,"secure_mirror_from_master"
-"Algeria [https]",Algeria,Algiers,https://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Liés Kaddouri <lkaddouri # usthb.dz>",1,dz,
+"Algeria [https]",Algeria,Algiers,https://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Liés Kaddouri <lkaddouri # usthb.dz>",0,dz,
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Australia (Canberra) [https]",Australia,Canberra,https://cran.csiro.au/,CSIRO,"ben.tan # csiro.au, Jayesh.joshi # csiro.au, CSIROServiceDesk # csiro.au",1,au,"secure_mirror_from_master"
 "Australia (Melbourne 1) [https]",Australia,Melbourne,https://mirror.aarnet.edu.au/pub/CRAN/,AARNET,"<sysadmin # aarnet.edu.au>",1,au,"secure_mirror_from_master"
@@ -29,7 +29,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Guangzhou) [https]",China,Guangzhou,https://mirrors.e-ducation.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Lanzhou) [https]",China,Lanzhou,https://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
 "China (Nanjing) [https]",China,Nanjing,https://mirrors.nju.edu.cn/CRAN/,"eScience Center, Nanjing University","my # yaoge123.com",1,cn,"secure_mirror_from_master"
-"China (Shanghai 1) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",1,cn,"secure_mirror_from_master"
+"China (Shanghai 1) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",0,cn,"secure_mirror_from_master"
 "China (Shanghai 2) [https]",China,Shanghai,https://mirrors.sjtug.sjtu.edu.cn/cran/,"Shanghai Jiao Tong University","Alex Chi <iskyzh # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Shenzhen) [https]",China,Shenzhen,https://mirrors.sustech.edu.cn/CRAN/,"Southern University of Science and Technology (SUSTech)","cra # sustech.edu.cn",1,cn,"secure_mirror_from_master"
 "China (Xianyang) [https]",China,Xianyang,https://mirrors.nwafu.edu.cn/cran/,"Northwest A&F University (NWAFU)","dingyuxiao99 # nwafu.edu.cn",1,cn
