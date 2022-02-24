@@ -222,7 +222,7 @@
       to take care to use \code{inherits()} and not \code{==} on the class.
 
       \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
-      escapes on UTF-8 inputs which cannot be converted to \code{to}.
+      escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
     }
   }
 
@@ -488,7 +488,8 @@
       but these are no longer supported.
 
       \item \code{default.stringsAsFactors()} is now formally deprecated,
-      where that was only mentioned on its regular help page, previously.
+      where that was only mentioned on its regular help page,
+      previously.  So it now gives a warning if called.
 
       \item \code{unix.time()} is defunct now; it had been deprecated since
       \R 3.4.0.
