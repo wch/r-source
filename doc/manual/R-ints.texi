@@ -4519,6 +4519,20 @@ dimensions in a call to @code{matrix} gives a warning: setting this to a
 true value gives an error with a compact traceback.
 @c
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_CODE_CLASS_IS_STRING_
+Check if package code has @code{if()} condition which compare the class
+of an object to a string.
+See
+@uref{https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html}
+why this is a bad idea.
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_RD_VALIDATE_RD2HTML_
+Check the validity of the package HTML help pages using HTML tidy
+(@uref{https://www.html-tidy.org/}) (if available on the system path for
+executables). 
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4625,6 +4639,8 @@ _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
 _R_CHECK_BOGUS_RETURN_=true
 _R_CHECK_MATRIX_DATA_=TRUE
+_R_CHECK_CODE_CLASS_IS_STRING_=true
+_R_CHECK_RD_VALIDATE_RD2HTML_=true
 @end example
 
 @noindent
