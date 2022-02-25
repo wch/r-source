@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2021 The R Core Team
+# Changes Copyright (C) 1998-2022 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -287,7 +287,7 @@ default.stringsAsFactors <- function()
 {
     val <- getOption("stringsAsFactors")
     if(is.null(val)) val <- FALSE
-    if(!is.logical(val) || is.na(val) || length(val) != 1L)
+    if(length(val) != 1L || !is.logical(val) || is.na(val))
         stop('options("stringsAsFactors") not set to TRUE or FALSE')
     val
 }
