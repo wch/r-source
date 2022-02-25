@@ -624,6 +624,11 @@
 
       \item \command{R CMD Sweave --clean} no longer removes existing
       files or subdirectories (\PR{18242}).
+
+      \item Quartz device no longer splits polylines into subpaths. That
+      has caused narrowly-spaced lines with many points to always look
+      solid even when dashed line type was used due to dash phase
+      restarts.
     }
   }
 }
