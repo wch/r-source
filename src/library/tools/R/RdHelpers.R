@@ -119,15 +119,17 @@ function(x)
 
     ## Poor person's way to allow LaTeX to break lines at slashes and
     ## dashes:
-    y <- gsub("/", "\\out{\\slash{}}", fixed=TRUE,
-              gsub("-", "\\out{\\-}", x, fixed=TRUE))
+    y <- gsub("/", "\\out{\\slash{}}", fixed = TRUE,
+              gsub("-", "\\out{\\-}", x, fixed = TRUE))
+    ## In Rd, must backslash escape the percent character.
+    u <- gsub("%", "\\%", urlify_doi(x), fixed = TRUE)
 
     sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
             sprintf("doi: %s (URL: https://doi.org/%s)",
-                    x, x),
+                    x, u),
             sprintf("doi:\\out{\\nobreakspace{}}\\href{https://doi.org/%s}{%s}",
-                    x, y),
+                    u, y),
             sprintf("doi: \\href{https://doi.org/%s}{%s}",
-                    x, x)
+                    u, x)
             )
 }

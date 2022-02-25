@@ -34,7 +34,10 @@ function(meta)
         m <- gregexpr(pattern, v)
         dois <- c(dois, .gregexec_at_pos(pattern, v, m, 3L))
     }
-    doi_db(dois, rep.int("DESCRIPTION", length(dois)))
+    ## DOI names may contain ">", but we need this as a delimiter when
+    ## writing the names in <doi:name> style.  So at least ">" and hence
+    ## also "%" must be percent encoded ...
+    doi_db(utils::URLdecode(dois), rep.int("DESCRIPTION", length(dois)))
 }
 
 doi_db_from_package_citation <-
@@ -213,7 +216,8 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
     pos <- which(!ind)
     if(length(pos)) {
         doispos <- dois[pos]
-        urlspos <- paste0("https://doi.org/", doispos)
+        urlspos <- paste0("https://doi.org/",
+                          vapply(doispos, urlify_doi, ""))
         ## Do we need to percent encode parts of the DOI name?
         headers <- .fetch_headers(urlspos, doispos)
         results <- do.call(rbind,

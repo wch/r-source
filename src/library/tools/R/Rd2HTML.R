@@ -117,7 +117,7 @@ shtmlify <- function(s) {
 }
 
 ## URL encode for use in href attributes.
-urlify <- function(x, reserved = FALSE) {
+urlify <- function(x, reserved = FALSE, repeated = FALSE) {
     ## When reserved is a logical, like
     ##   utils::URLencode(x, reserved)
     ## with '&' replaced by '&amp;' and hence directly usable for href
@@ -141,8 +141,7 @@ urlify <- function(x, reserved = FALSE) {
     alldelims <- "][!$&'()*+,;=:/?@#"
     ## See also <https://url.spec.whatwg.org/#valid-url-string>.
     
-    ## We do not want to mess with already-encoded URLs
-    if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
+    if(!repeated && grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
         gsub("&", "&amp;", x, fixed = TRUE)
     } else {
         chars <- unlist(strsplit(x, ""))
@@ -151,24 +150,52 @@ urlify <- function(x, reserved = FALSE) {
                       paste0("%", toupper(as.character(charToRaw(x))),
                              collapse = ""),
                       "")
-        reserved <- if(is.character(reserved)) {
-                        reserved <- paste(reserved, collapse = "")
-                        if(startsWith(reserved, "^"))
+        if(is.character(reserved)) {
+            reserved <- paste(reserved, collapse = "")
+            reserved <- if(startsWith(reserved, "^"))
                             substring(reserved, 2L)
                         else      
                             rawToChar(setdiff(charToRaw(alldelims),
                                               charToRaw(reserved)))
-                    } else if(!reserved) {
-                        alldelims
-                    } else ""
+            escape <- any(charToRaw(reserved) == charToRaw("&"))
+        } else if(!reserved) {
+            reserved <- alldelims
+            escape <- TRUE
+        } else {
+            reserved <- ""
+            escape <- FALSE
+        }
         todo <- paste0("[^",
                        reserved,
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                        "abcdefghijklmnopqrstuvwxyz0123456789._~-",
                        "]")
-        mixed <- ifelse(grepl(todo, chars), hex, chars)
-        gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
+        x <- paste(ifelse(grepl(todo, chars), hex, chars), collapse = "")
+        if(escape)
+            x <- gsub("&", "&amp;", x, fixed = TRUE)
+        x
     }
+}
+
+urlify_email_address <- function(x) {
+    ## As per RFC 6068
+    ## <https://datatracker.ietf.org/doc/html/rfc6068#section-2> we must
+    ## percent encode
+    ##   "%"
+    ##   from gendelims:   c("/", "?", "#", "[", "]")  
+    ##   from subdelims:   c("&", ";", "=")
+    urlify(x, reserved = "][#?/&;=%", repeated = TRUE)
+}
+
+urlify_doi <- function(x) {
+    ## According to
+    ##   <https://www.doi.org/doi_handbook/2_Numbering.html#2.2>
+    ## a DOI name can "incorporate any printable characters from the
+    ## legal graphic characters of Unicode".  The subsequent
+    ##   <https://www.doi.org/doi_handbook/2_Numbering.html#htmlencoding>
+    ## discussed encoding issues but is a bit vague.
+    ## For now, percent encode all reserved characters but the slash.
+    urlify(x, reserved = "^/", repeated = TRUE)
 }
 
 ## Ampersands should be escaped in proper HTML URIs
@@ -577,7 +604,7 @@ Rd2HTML <-
                    url <- lines2str(as.character(block))
                    enterPara(doParas)
                    ## FIXME: urlify
-                   of0('<a href="mailto:', urlify(url), '">',
+                   of0('<a href="mailto:', urlify_email_address(url), '">',
                        htmlify(url), '</a>')},
                ## watch out for empty URLs (TeachingDemos had one)
                "\\url" = if(length(block)) {
