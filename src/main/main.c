@@ -759,7 +759,7 @@ void setup_Rmainloop(void)
     volatile int doneit;
     volatile SEXP baseNSenv;
     SEXP cmd;
-    char deferred_warnings[11][250];
+    char deferred_warnings[12][250];
     volatile int ndeferred_warnings = 0;
 
 #ifdef DEBUG_STACK_DETECTION 
@@ -903,7 +903,14 @@ void setup_Rmainloop(void)
 
     R_Is_Running = 1;
     R_check_locale();
-
+#ifdef Win32
+    if (localeCP && systemCP != localeCP)
+        /* For now, don't warn for localeCP == 0, but it can cause problems
+           as well. Keep in step with do_setlocale. */
+	snprintf(deferred_warnings[ndeferred_warnings++], 250,
+	          "Using locale code page other than %d%s may cause problems.",
+	          systemCP, systemCP == 65001 ? " (\"UTF-8\")" : "");
+#endif
     /* Initialize the global context for error handling. */
     /* This provides a target for any non-local gotos */
     /* which occur during error handling */

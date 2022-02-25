@@ -1143,8 +1143,6 @@ static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
     CGContextStrokePath(ctx);
 }
 
-#define max_segments 100
-
 static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
 {
     if (n < 2) return;
@@ -1156,22 +1154,17 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
     /* CGContextStrokeLineSegments turned out to be a bad idea due to
        Leopard restarting dashes for each segment.
        CGContextAddLineToPoint is fast enough. 
-       The only remaining problem is that Quartz seems to restart
-       dashes at segment breakup points. We should make the segments
-       break-up an optional feature and possibly fix the underlying
-       problem (software rendering).  
-    */
+       R < 4.2.0 broke up paths of more than 100 points, but that
+       causes issues with dashing since the phase is reset for all
+       subpaths, e.g: plot(log10(1:1e4), lty = 2, type="l")
+       so now we create one path and hope the rendering engine is
+       good enough. */
 
-    while (i < n) {
-        int j = i + max_segments;
-        if (j > n) j = n;
-        CGContextBeginPath(ctx);
-	if (i) i--; /* start at the last point of the preceding chunk */
-        CGContextMoveToPoint(ctx, x[i], y[i]);
-        while(++i < j)
-            CGContextAddLineToPoint(ctx, x[i], y[i]);
-        CGContextStrokePath(ctx);
-    }
+    CGContextBeginPath(ctx);
+    CGContextMoveToPoint(ctx, x[0], y[0]);
+    while(++i < n)
+	CGContextAddLineToPoint(ctx, x[i], y[i]);
+    CGContextStrokePath(ctx);
 }
 
 static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)

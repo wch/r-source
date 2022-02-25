@@ -1,6 +1,6 @@
 % File src/library/stats/man/deriv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013, 2017 R Core Team
+% Copyright 1995-2013, 2017, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deriv}
@@ -41,7 +41,8 @@ deriv3(expr, \dots)
     body) or \code{TRUE}, the latter indicating that a function with
     argument names \code{namevec} should be used.}
   \item{tag}{character; the prefix to be used for the locally created
-    variables in result.}
+    variables in result.  Must be no longer than 60 bytes when translated
+    to the native encoding.}
   \item{hessian}{a logical value indicating whether the second derivatives
     should be calculated and incorporated in the return value.}
   \item{\dots}{arguments to be passed to or from methods.}

@@ -32,6 +32,7 @@
 ## .check_package_code_assign_to_globalenv
 ## .check_package_code_attach
 ## .check_package_code_data_into_globalenv
+## .check_package_code_class_is_string
 ## .check_code_usage_in_package
 ## .check_bogus_return
 ## .check_dotInternal
@@ -5445,6 +5446,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
             e3 <- as.character(e[[3L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         if((as.character(e[[1L]])[1L] %in% ".Internal") &&
@@ -5452,6 +5454,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
             e3 <- as.character(e[[4L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         FALSE
@@ -5580,6 +5583,41 @@ function(x, ...)
 
     c("Found the following calls to data() loading into the global environment:",
       unlist(Map(.format_calls_in_file, x, names(x))))
+}
+
+### * .check_package_code_class_is_string
+
+## Could easily make this return something classed with suitable
+## format() and print() methods ...
+
+.check_package_code_class_is_string <-
+function(dir) {
+    predicate <- function(e) {
+        is.call(e) &&
+            (length(e) >= 2L) &&
+            (as.character(e[[1L]])[1L] == "if") &&
+            is.call(e <- e[[2L]]) &&
+            (as.character(e[[1L]])[1L] %in% c("==", "!-")) &&
+            is.call(e2 <- e[[2L]]) &&
+            (as.character(e2[[1L]])[1L] == "class") &&
+            is.character(e[[3L]]) &&
+            (length(e[[3L]] == 1L))
+    }
+    x <- Filter(length,
+                .find_calls_in_package_code(dir, predicate,
+                                            recursive = TRUE))
+    if(length(x)) {
+        s <- sprintf("File %s: %s",
+                     sQuote(rep.int(names(x), lengths(x))),
+                     vapply(unlist(x),
+                            function(e)
+                                sprintf("if (%s) ...", deparse1(e[[2L]])),
+                            ""))
+        writeLines(c("Found if() conditions comparing class() to string:",
+                     s,
+                     "Use inherits() (or maybe is()) instead."))
+    }
+    invisible(x)
 }
 
 ### * .check_packages_used

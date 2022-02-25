@@ -166,10 +166,10 @@
 {
     if (dir.exists(files)) {
         ## FIXME: outputEncoding
-        .pkg2tex(files, outfile, encoding = encoding, append = append,
-                 asChapter = FALSE, extraDirs = extraDirs,
-                 internals = internals, silent = silent,
-                 pkglist = pkglist)
+        .pkg2tex(files, outfile, internals = internals, asChapter = FALSE, 
+                 encoding = encoding, outputEncoding = outputEncoding,
+                 extraDirs = extraDirs, append = append,
+                 silent = silent, pkglist = pkglist)
     } else {
         files <- strsplit(files, "[[:space:]]+")[[1L]]
         latexdir <- tempfile("ltx")
@@ -179,8 +179,8 @@
             outfile <- file(outfile, if (append) "at" else "wt")
             on.exit(close(outfile))
         }
-        latexEncodings <- character()
-        hasFigures <- FALSE
+        latexEncodings <- character() # Record any encodings used in the output
+        hasFigures <- FALSE           # and whether graphics is used
         macros <- initialRdMacros(pkglist = pkglist)
         for(f in files) {
             if (!silent) cat("  ", basename(f), "\n", sep="")
@@ -264,7 +264,6 @@
             cnt <- 0L
             macros <- initialRdMacros(pkglist)
             for(f in names(Rd)) {
-##                bf <- basename(f)
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
                     message(".", appendLF=FALSE, domain=NA)
@@ -482,7 +481,7 @@
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2015 The R Core Team.",
+                .R_copyright_msg(1997),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
@@ -575,7 +574,8 @@ function(pkgdir, outfile, title, batch = FALSE,
             pkg_enc <- desc["Encoding"]
             if (!is.na(pkg_enc)) {
             	enc <- pkg_enc
-            	outputEncoding <- pkg_enc
+                ## FIXME: outputEncoding
+                ##   outputEncoding <- pkg_enc
             }
         }
     }
@@ -653,9 +653,11 @@ function(pkgdir, outfile, title, batch = FALSE,
     if (!only_meta) {
         if (nzchar(toc)) writeLines(toc, out)
         ## FIXME: outputEncoding
-        res <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
-                         extraDirs = OSdir, internals = internals,
-                         silent = batch, pkglist = pkglist)
+        res <- .Rdfiles2tex(files_or_dir, out, encoding = enc,
+                            outputEncoding = outputEncoding,
+                            append = TRUE, extraDirs = OSdir, 
+                            internals = internals, silent = batch,
+                            pkglist = pkglist)
         if(length(res)) {
             latexEncodings <- c(latexEncodings, res$latexEncodings)
             hasFigures <- res$hasFigures
@@ -816,7 +818,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     output <- ""
     enc <- "unknown"
     ## FIXME: outputEncoding
-    outenc <- "latin1"
+    outenc <- "UTF-8"
     index <- TRUE
     description <- TRUE
     internals <- FALSE
@@ -840,7 +842,7 @@ function(pkgdir, outfile, title, batch = FALSE,
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2011 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")

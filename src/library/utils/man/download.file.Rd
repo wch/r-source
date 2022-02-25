@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -183,10 +183,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \command{wget} (\url{https://www.gnu.org/software/wget/}) is commonly
   installed on Unix-alikes (but not macOS).  Windows binaries are
-  available from Cygwin, gnuwin32 and elsewhere.
+  available from MSYS2 and elsewhere.
 
   \command{curl} (\url{https://curl.se/}) is installed on macOS and
-  commonly on Unix-alikes.  Windows binaries are available at that URL.
+  increasingly commonly on Unix-alikes.  Windows binaries are available
+  at that URL.
 }
 \section{Setting Proxies}{
   For the Windows-only method \code{"wininet"}, the \sQuote{Internet

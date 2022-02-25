@@ -449,7 +449,7 @@ function(formula, data, subset, na.action, ...)
         stop("'formula' missing or incorrect")
     oneSampleOrPaired <- FALSE
     if (length(attr(terms(formula[-2L]), "term.labels")) != 1L)
-        if (formula[[3]] == 1L)
+        if (formula[[3L]] == 1L)
             oneSampleOrPaired <- TRUE
         else
             stop("'formula' missing or incorrect")

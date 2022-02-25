@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2022-02-17 r81752) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin21.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -551,14 +551,14 @@ W = 0.979, p-value = 0.011
 > 
 > ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long)))
 
-	One-sample Kolmogorov-Smirnov test
+	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  long
 D = 0.0661, p-value = 0.43
 alternative hypothesis: two-sided
 
 Warning message:
-In ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
+In ks.test.default(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
   ties should not be present for the Kolmogorov-Smirnov test
 > 
 > ##@section One- and two-sample tests

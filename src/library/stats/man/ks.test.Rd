@@ -1,18 +1,23 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
 \alias{ks.test}
+\alias{ks.test.default}
+\alias{ks.test.formula}
+\encoding{UTF-8}
 \title{Kolmogorov-Smirnov Tests}
 \description{
   Perform a one- or two-sample Kolmogorov-Smirnov test.
 }
 \usage{
-ks.test(x, y, \dots,
+ks.test(x, \dots)
+\method{ks.test}{default}(x, y, \dots,
         alternative = c("two.sided", "less", "greater"),
-        exact = NULL)
+        exact = NULL, simulate.p.value = FALSE, B = 2000)
+\method{ks.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x}{a numeric vector of data values.}
@@ -20,8 +25,9 @@ ks.test(x, y, \dots,
     naming a cumulative distribution function or an actual cumulative
     distribution function such as \code{pnorm}.  Only continuous CDFs
     are valid.}
-  \item{\dots}{parameters of the distribution specified (as a character
-    string) by \code{y}.}
+  \item{\dots}{for the default method, parameters of the distribution
+    specified (as a character string) by \code{y}.  Otherwise, further
+    arguments to be passed to or from methods.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"} (default), \code{"less"}, or
     \code{"greater"}.  You can specify just the initial letter of the
@@ -29,17 +35,33 @@ ks.test(x, y, \dots,
     See \sQuote{Details} for the meanings of the possible values.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See \sQuote{Details} for the meaning of
-    \code{NULL}.  Not available in the two-sample case for a one-sided
-    test or if ties are present.}
+    \code{NULL}.}
+  \item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation.}
+  \item{B}{an integer specifying the number of replicates used in the
+    Monte Carlo test.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    is a numeric variable giving the data values and \code{rhs} either
+    \code{1} for a one-sample test or a factor with two levels giving
+    the corresponding groups for a two-sample test.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
 }
 \details{
-  If \code{y} is numeric, a two-sample test of the null hypothesis
+  If \code{y} is numeric, a two-sample (Smirnov) test of the null hypothesis
   that \code{x} and \code{y} were drawn from the same \emph{continuous}
   distribution is performed.
 
   Alternatively, \code{y} can be a character string naming a continuous
   (cumulative) distribution function, or such a function.  In this case,
-  a one-sample test is carried out of the null that the distribution
+  a one-sample (Kolmogorov) test is carried out of the null that the distribution
   function which generated \code{x} is distribution \code{y} with
   parameters specified by \code{\dots}.
 
@@ -66,11 +88,13 @@ ks.test(x, y, \dots,
   for \code{y}), in contrast to \code{\link{t.test}} or
   \code{\link{wilcox.test}}.
 
-  Exact p-values are not available for the two-sample case if one-sided
-  or in the presence of ties.  If \code{exact = NULL} (the default), an
+  Exact p-values are not available for the one-sample case in the
+  presence of ties.
+  If \code{exact = NULL} (the default), an
   exact p-value is computed if the sample size is less than 100 in the
   one-sample case \emph{and there are no ties}, and if the product of
-  the sample sizes is less than 10000 in the two-sample case.
+  the sample sizes is less than 10000 in the two-sample case, with or
+  without ties (using the algorithm described in Schröer and Trenkler, 1995).
   Otherwise, asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
   exact p-values are obtained as described in Marsaglia, Tsang & Wang
@@ -78,14 +102,15 @@ ks.test(x, y, \dots,
   this can be slow for small p-values).  The formula of Birnbaum &
   Tingey (1951) is used for the one-sample one-sided case.
 
-  If a single-sample test is used, the parameters specified in
+  If a one-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
   There is some more refined distribution theory for the KS test with
   estimated parameters (see Durbin, 1973), but that is not implemented
   in \code{ks.test}.
 }
 \value{
-  A list with class \code{"htest"} containing the following components:
+  A list inheriting from classes \code{"ks.test"} and \code{"htest"}
+  containing the following components:
   \item{statistic}{the value of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{alternative}{a character string describing the alternative
@@ -97,6 +122,10 @@ ks.test(x, y, \dots,
 \source{
   The two-sided one-sample distribution comes \emph{via}
   Marsaglia, Tsang and Wang (2003).
+
+  Exact distributions for the two-sample (Smirnov) test are computed
+  by the algorithm proposed Schröer (1991) and Schröer & Trenkler (1995).
+ 
 }
 \references{
   Z. W. Birnbaum and Fred H. Tingey (1951).
@@ -119,13 +148,25 @@ ks.test(x, y, \dots,
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \doi{10.18637/jss.v008.i18}.
+
+  Gunar Schröer (1991),
+  Computergestützte statistische Inferenz am Beispiel der
+  Kolmogorov-Smirnov Tests.
+  Diplomarbeit Universität Osnabrück.
+
+  Gunar Schröer and Dietrich Trenkler (1995).
+  Exact and Randomization Distributions of Kolmogorov-Smirnov Tests for
+  Two or Three Samples.
+  \emph{Computational Statistics & Data Analysis}, \bold{20}(2),
+  185--202.
+  \doi{10.1016/0167-9473(94)00040-P}.
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
   normality.
 }
 \examples{
-require(graphics)
+require("graphics")
 
 x <- rnorm(50)
 y <- runif(30)
@@ -143,5 +184,13 @@ plot(ecdf(x2), add = TRUE, lty = "dashed")
 t.test(x, x2, alternative = "g")
 wilcox.test(x, x2, alternative = "g")
 ks.test(x, x2, alternative = "l")
+
+# with ties, example from Schröer and Trenkler (1995)
+# D = 3 / 7, p = 0.2424242
+ks.test(c(1, 2, 2, 3, 3), c(1, 2, 3, 3, 4, 5, 6), exact = TRUE)
+
+# formula interface, see ?wilcox.test
+ks.test(Ozone ~ Month, data = airquality,
+        subset = Month \%in\% c(5, 8))
 }
 \keyword{htest}

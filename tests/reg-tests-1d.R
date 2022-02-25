@@ -1,4 +1,3 @@
-
 ## Regression tests for R >= 3.4.0
 
 .pt <- proc.time()
@@ -6,6 +5,15 @@ tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
+##' get value of `expr` and keep warning as attribute (if there is one)
+getVaW <- function(expr) {
+    W <- NULL
+    withCallingHandlers(val <- expr,
+                        warning = function(w) {
+                            W <<- conditionMessage(w)
+                            invokeRestart("muffleWarning") })
+    structure(val, warning = W)
+}
 onWindows <- .Platform$OS.type == "windows"
 .M <- .Machine
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
@@ -2086,15 +2094,12 @@ stopifnot(exprs = {
 
 ## More strictness in '&&' and '||' :
 Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn") # only warn
+## warning is the default as from R 4.2.0
 tools::assertWarning(1 && 0:1)
 Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
 tools::assertError(0 || 0:1)
-if(is.na(oEV)) { # (by default)
-    Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
-    2 && 0:1 # should not even warn
+if(is.na(oEV)) {Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
 } else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
-
 
 ## polym() in "vector" case PR#17474
 fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
@@ -4955,11 +4960,10 @@ Encoding(x) <- "bytes"
 xu <- x
 Encoding(xu) <- "unknown"
 stopifnot(identical(Encoding(c(x, xu)), c("bytes", "unknown")))
+proc.time() - .pt; .pt <- proc.time()
 
 
-## Correctness tests for sorted ALTREP handling of unique/duplicated (PR#17993)
-
-
+## Correctness tests for sorted ALTREP handling of unique/duplicated (PR#17993) ------
 altrep_dup_test <- function(vec, nalast, fromlast, s3class) {
     svec_ar <- sort(vec, na.last = nalast)
     svec_std <- svec_ar
@@ -5060,7 +5064,6 @@ altreal_dup_multicheck(numeric(0), 0, 0, 0)
 altint_dup_multicheck(1L, 0)
 altreal_dup_multicheck(1.0, 0, 0, 0)
 
-
 ## s3 methods take precedence over altrep methods
 ## these methods are (very) wrong on purpose so there can be
 ## no doubt they are hit rather than the altrep code even in the sorted case
@@ -5074,6 +5077,8 @@ unique.fake_class <- function(x, incomparables = FALSE, ...) {
 
 altint_dup_multicheck(ivec, 0, s3class = "fake_class")
 altreal_dup_multicheck(dvec, 0, 0, 0, s3class = "fake_class")
+##----------------------------------- end of tests for sorted ALTREP ... (PR#17993) ------
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## in 4.1.0, encodeString() below would return unflagged UTF-8
@@ -5367,6 +5372,7 @@ for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
     stopifnot(all.equal(atx, 10^cumsum(c(-307, rep(63, 5))), tol=1e-13)) # Win64: 3.3e-14
 }
 ## the *first* plot looked ugly in R <= 4.1.0 and failed for a few days in R-devel
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## Error message for missing weave outputs, PR#18154:
@@ -5676,7 +5682,7 @@ tools::assertWarning(par(las = 1, list(cex = 2)))
 
 
 ## window(x, *) now uses fuzz also for 'start < end' -- PR#17527 & PR#18291
-## Start the time series from A.D. 1:
+## Start the time series from CE 1:
 (x2 <- ts(1:20, start = 1, frequency = 12))
 stopifnot(identical(end(x2), c(2,8)))
 (wx2 <- window(x2, start = c(2, 8), end = c(2, 8))) # always fine
@@ -5699,6 +5705,113 @@ tools::assertWarning(y2 <- window(x, start=c(2022,19), end=c(2022,20)))
 stopifnot(identical(end(y2), end(x)), y2 == x[length(x)])
 ## in R <= 4.1.2, wrongly signalled Error: 'start' cannot be after 'end'
 
+
+## print(smooth.spline()) failure when using special call
+f <- function(..., cv=FALSE) smooth.spline(..., cv=cv)
+x <- (1:23)/4
+(f(x, y=sin(x)))
+## gave an error in R <= 4.1.2
+
+
+## smooth.spline(x, y, [w, ], *)$cv.crit depending on sort()ed x -- PR#18294
+x <- 1:10
+e <- c(12, -16, 2:0, -49, -32, -9, -64, 60)/16
+y <- x^2 + e
+sspline_ <- function(x, y, w=NULL, cv=TRUE, ...)
+    smooth.spline(x, y, w=w, cv=cv, # see more: control.spar = list(trace=TRUE),
+                  keep.stuff=TRUE, keep.data=FALSE)
+noC <- function(x) { x$call <- NULL; x } # as the 'call's often differ
+i <- c(8:5, 3:4, 2:1, 9:10)# 10:1 is too special (a permutation which is its own inverse)
+ss   <- sspline_(x=x,    y=y   )
+ss.u <- sspline_(x=x[i], y=y[i])
+## was "Component “cv.crit”: Mean relative difference: 3099.013" :
+          all.equal(noC(ss), noC(ss.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ss), noC(ss.u), tol=1e-14)) ## now fixed
+## The same with __weights__  some of which exactly 0
+table(w <- pmax(0, abs(16*e)-1)) # 2 x 0
+ssw   <- sspline_(x=x,    y=y,    w=w   )
+ssw.u <- sspline_(x=x[i], y=y[i], w=w[i])
+          all.equal(noC(ssw), noC(ssw.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ssw), noC(ssw.u), tol=1e-14)) ## now fixed
+## was "Component “cv.crit”: Mean relative difference: 60.05904"
+## Now with  GCV instead of CV ====================
+## 1) no weights
+ssg   <- sspline_(x=x,    y=y   , cv=FALSE)
+ssg.u <- sspline_(x=x[i], y=y[i], cv=FALSE)
+          all.equal(noC(ssg), noC(ssg.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(ssg), noC(ssg.u), tol=1e-14)) ## now fixed
+## 2) with weights
+sswg   <- sspline_(x=x,    y=y,    w=w   , cv=FALSE)
+sswg.u <- sspline_(x=x[i], y=y[i], w=w[i], cv=FALSE)
+          all.equal(noC(sswg), noC(sswg.u), tol=0) # TRUE (!)
+stopifnot(all.equal(noC(sswg), noC(sswg.u), tol=1e-14)) ## now fixed
+## the same with 'x' that are almost identical  so will be collapsed (and weighted):
+x. <- c(1:2, (1- 1e-7)*4, 4:6, (1- 1e-9)*8, 8:10)
+ss3w   <- getVaW(sspline_(x=x.,    y=y   , w=w   ))
+ss3w.u <- getVaW(sspline_(x=x.[i], y=y[i], w=w[i]))
+          all.equal(noC(ss3w), noC(ss3w.u), tol=0) # TRUE (also previously)
+stopifnot(all.equal(noC(ss3w), noC(ss3w.u), tol=1e-14))
+## was  "Component “cv.crit”: Mean relative difference: 60.05904"
+if(englishMsgs)
+    stopifnot(attr(ss3w,"warning") ==
+              "cross-validation with non-unique 'x' values seems doubtful")
+## now with GCV :
+ss3gw   <- sspline_(x=x.,    y=y   , w=w   , cv=FALSE)
+ss3gw.u <- sspline_(x=x.[i], y=y[i], w=w[i], cv=FALSE)
+          all.equal(noC(ss3gw), noC(ss3gw.u), tol=0)  # TRUE (also previously)
+stopifnot(all.equal(noC(ss3gw), noC(ss3gw.u), tol=1e-14))
+## non-ordered 'x' gave wrong  $cv.crit in the nx=n case in R <= 4.1.2
+
+
+## aggregate(<formula>, *) method in lapply() etc -- ## PR18299
+L1 <- lapply(X = list(mtcars), FUN = aggregate, x = mpg ~ cyl, mean)
+mtcars |> aggregate(x = mpg ~ cyl, FUN = mean) -> m
+stopifnot(identical(L1[[1]], aggregate(mpg ~ cyl, mtcars, mean)),
+          is.data.frame(m), dim(m) == 3:2)
+## formula method different 1st arg than generic such that
+## both examples failed in  R <= 4.1.2
+
+
+## rbind.data.frame() : should warn when it does not fully recycle:
+df  <- data.frame(a = 1, b = 2)
+d22 <- data.frame(a = c(1, 3), b = c(2, 4))
+tools::assertWarning(r <- rbind(df, c(3, 4, 5)), verbose=TRUE)
+L <- FN <- c(cbind, data.frame) # <==> rbind() for  matrix and data.frame
+LC <- lapply(seq_along(FN), function(i)
+    tools::assertWarning(
+	       L[[i]] <<- rbind((FN[[i]])(a=1, b=2, c=3, d=4),
+                                5:7, -1, 8:9, integer(), 11:14, NULL, 21:28),
+	       verbose=TRUE))#   2    3   4       5        6     7      8
+stopifnot(exprs = {
+    all.equal(r, d22)
+    identical(lapply(L, class), list(c("matrix","array"), "data.frame"))
+    identical(dim(L[[1]]), dim(L[[2]]))
+    L[[1]] == L[[2]]  # a matrix of TRUE
+    unlist(lapply(LC, function(x) vapply(print(x), inherits, what="warning", NA)))
+    identical(lengths(LC), 1:2) #        ^^^^^   2 warnings in data.frame case
+})
+## rbind.data.frame(.) did not warn in R <= 4.1.x
+
+
+## match.arg("",*) etc; PR#17959
+(m1 <- tryCmsg(match.arg("", choices = c("", "a"))))
+(m2 <- tryCmsg(match.arg("", choices = c("", "a", "b"))))
+stopifnot(!grepl(dQuote(""), m1), !grepl(dQuote(""), m2))
+if(englishMsgs)
+    stopifnot(grepl("'arg' should be ", m1),
+              grepl("'arg' should be one ", m2))
+## was  'arg' should be one of “”, “a” ( , “b” )
+
+
+## 'R CMD Sweave --clean' / tools::buildVignette(clean = TRUE)
+## should only remove *newly created* files/directories -- PR#18242
+owd <- setwd(tempdir())
+dir.create("subdir")
+writeLines(c('<<>>=', 'file.create("subdir/dummyfile")', '@'), "Sweave-test-2.Rnw")
+utils:::.Sweave(c("--clean", "Sweave-test-2.Rnw"), no.q = TRUE)
+stopifnot(dir.exists("subdir"))
+setwd(owd)
+## the pre-existing directory was removed in R <= 4.1.x
 
 
 ## keep at end

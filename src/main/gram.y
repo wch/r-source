@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -203,6 +203,7 @@ SEXP		mkTrue(void);
 static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
+static int	Status = 1;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
@@ -414,11 +415,11 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 %%
 
-prog	:	END_OF_INPUT			{ YYACCEPT; }
-	|	'\n'				{ yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
-	|	expr_or_assign_or_help '\n'	{ yyresult = xxvalue($1,3,&@1);	goto yyreturn; }
-	|	expr_or_assign_or_help ';'	{ yyresult = xxvalue($1,4,&@1);	goto yyreturn; }
-	|	error	 			{ YYABORT; }
+prog	:	END_OF_INPUT			{ Status = 0; YYACCEPT; }
+	|	'\n'				{ Status = 2; yyresult = xxvalue(NULL,2,NULL); YYACCEPT; }
+	|	expr_or_assign_or_help '\n'	{ Status = 3; yyresult = xxvalue($1,3,&@1); YYACCEPT; }
+	|	expr_or_assign_or_help ';'	{ Status = 4; yyresult = xxvalue($1,4,&@1); YYACCEPT; }
+	|	error	 			{ Status = 1; YYABORT; }
 	;
 
 expr_or_assign_or_help  :    expr               { $$ = $1; }
@@ -1619,26 +1620,37 @@ static int checkForPipeBind(SEXP arg)
 
 static SEXP R_Parse1(ParseStatus *status)
 {
+    Status = 1; /* safety */
     switch(yyparse()) {
-    case 0:                     /* End of file */
-	*status = PARSE_EOF;
-	if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+    case 0:
+	switch(Status) {
+	case 0:                     /* End of file */
+	    *status = PARSE_EOF;
+	    if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+	    break;
+	case 1:                     /* Error (currently unreachable) */
+	    *status = PARSE_ERROR;
+	    if (EndOfFile) *status = PARSE_INCOMPLETE;
+	    break;
+	case 2:                     /* Empty Line */
+	    *status = PARSE_NULL;
+	    break;
+	case 3:                     /* Valid expr '\n' terminated */
+	case 4:                     /* Valid expr ';' terminated */
+	    if (checkForPipeBind(R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("pipe bind symbol may only appear "
+			    "in pipe expressions"));
+	    *status = PARSE_OK;
+	    break;
+	}
 	break;
     case 1:                     /* Syntax error / incomplete */
 	*status = PARSE_ERROR;
 	if (EndOfFile) *status = PARSE_INCOMPLETE;
 	break;
-    case 2:                     /* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:                     /* Valid expr '\n' terminated */
-    case 4:                     /* Valid expr ';' terminated */
-        if (checkForPipeBind(R_CurrentExpr))
-	    errorcall(R_CurrentExpr,
-		      _("pipe bind symbol may only appear "
-			"in pipe expressions"));
-	*status = PARSE_OK;
-	break;
+    case 2:
+	error(_("out of memory while parsing"));
     }
     return R_CurrentExpr;
 }
@@ -2739,6 +2751,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if (!octal)
 		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		if(octal > 0xff)
+		    error(_("exceeded maximum allowed octal value \\377 (line %d)"), ParseState.xxlineno);
 		c = octal;
 		oct_or_hex = TRUE;
 	    }
@@ -2916,12 +2930,16 @@ static int StringValue(int c, Rboolean forSymbol)
 	}
 	STEXT_PUSH(c);
 	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
-	else { /* have an 8-bit char in the current encoding */
+	else { 
+	    /* have an 8-bit char in the current encoding */
+	    /* FIXME: `wc` values will be wrong when native encoding differs
+	       from that indicated by `known_to_be*` */
+	    int res = 0;
 #ifdef WC_NOT_UNICODE
 	    ucs_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbtoucs(&wc, s, 2);
+	    res = (int) mbtoucs(&wc, s, 2);
 #else
 	    wchar_t wc;
 	    char s[2] = " ";
@@ -2929,8 +2947,9 @@ static int StringValue(int c, Rboolean forSymbol)
 	    /* This is not necessarily correct for stateful SBCS */
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
-	    mbrtowc(&wc, s, 2, &mb_st);
+	    res = (int) mbrtowc(&wc, s, 2, &mb_st);
 #endif
+	    if(res < 0) wc = 0xFFFD; /* placeholder for invalid encoding */
 	    WTEXT_PUSH(wc);
 	}
     }
@@ -3047,11 +3066,12 @@ static int RawStringValue(int c0, int c)
 	STEXT_PUSH(c);
 	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
 	else { /* have an 8-bit char in the current encoding */
+	    int res = 0;
 #ifdef WC_NOT_UNICODE
 	    ucs_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbtoucs(&wc, s, 2);
+	    res = (int) mbtoucs(&wc, s, 2);
 #else
 	    wchar_t wc;
 	    char s[2] = " ";
@@ -3059,8 +3079,9 @@ static int RawStringValue(int c0, int c)
 	    /* This is not necessarily correct for stateful SBCS */
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
-	    mbrtowc(&wc, s, 2, &mb_st);
+	    res = (int) mbrtowc(&wc, s, 2, &mb_st);
 #endif
+	    if(res < 0) wc = 0xFFFD; /* placeholder for invalid encoding */
 	    WTEXT_PUSH(wc);
 	}
     }

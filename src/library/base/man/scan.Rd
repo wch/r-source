@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -185,7 +185,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
 
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
-  carriage return and line feed.  It does not include form feed nor
+  carriage return and line feed (aka \dQuote{newline}, \code{"\n"}).  It
+  does not include form feed nor
   vertical tab, but in Latin-1 and Windows 8-bit locales (but not UTF-8)
   'space' includes the non-breaking space \samp{"\xa0"}.
 
@@ -220,8 +221,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
 
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep = "\\n", blank.lines.skip = FALSE)}
-  will give an empty final line if the file ends in a linefeed and not if
-  it does not.  This might not be what you expected; see also
+  will give an empty final line if the file ends in a line feed (\code{"\n"})
+  and not if it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
 
   If \code{comment.char} occurs (except inside a quoted character

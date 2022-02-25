@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -108,8 +108,15 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   managed by OS-specific facilities such as \command{locale-gen} and
   \command{locale -a} lists those currently enabled.
 
-  For Windows, Microsoft moves its documentation frequently so a Web
-  search is the best way to find current information.
+  For Windows, Microsoft moves its documentation frequently so a Web search
+  is the best way to find current information.  From \R 4.2, UCRT locale
+  names should be used.  The character set should match the system/ANSI
+  codepage (\code{l10n_info()$codepage} be the same as
+  \code{l10n_info()$system.codepage}).  Setting it to any other value
+  results in a warning and may cause encoding problems.  In \R 4.2 on recent
+  Windows the system codepage is 65001 and one should always use locale
+  names ending with \code{".UTF-8"} (except for \code{"C"} and \code{""}),
+  otherwise Windows may add a different character set.
 }
 
 % assume this just affects strtod/atof, scanf/printf and friends,
@@ -162,7 +169,7 @@ Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
 Sys.setlocale("LC_TIME", "de_DE")  # Many Unix-alikes
 Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # Linux, macOS, other Unix-alikes
 Sys.setlocale("LC_TIME", "de_DE.utf8")   # some Linux versions
-Sys.setlocale("LC_TIME", "German") # Windows
+Sys.setlocale("LC_TIME", "German.UTF-8") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
 .LC.categories # of length 9 on all platforms

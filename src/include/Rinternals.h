@@ -403,6 +403,7 @@ SEXP	R_RestartToken;     /* Marker for restarted function calls */
 
 /* Symbol Table Shortcuts */
 LibExtern SEXP	R_AsCharacterSymbol;/* "as.character" */
+LibExtern SEXP	R_AtsignSymbol;	    /* "@" */
 LibExtern SEXP	R_baseSymbol; // <-- backcompatible version of:
 LibExtern SEXP	R_BaseSymbol;	// "base"
 LibExtern SEXP	R_BraceSymbol;	    /* "{" */

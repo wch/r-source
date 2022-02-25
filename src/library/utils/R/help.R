@@ -113,25 +113,25 @@ print.help_files_with_topic <- function(x, ...)
         if (type == "html" && port > 0L) {
             path <- file.path(tempdir(), ".R/doc/html")
             dir.create(path, recursive = TRUE, showWarnings = FALSE)
-            out <- paste0('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n',
-                          '<html xmlns="http://www.w3.org/1999/xhtml">\n',
+            out <- paste0('<!DOCTYPE html>\n',
+                          '<html>\n',
                           '<head>\n<title>R: help</title>\n',
-                          '<meta http-equiv="Content-Type" content="text/html; charset=utf-8 />\n',
+                          '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n',
                           '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n',
                           '<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />\n',
                           '</head>\n<body>\n<div class="container">\n\n<hr>\n')
             out <- c(out, '<p>', msg, '</p><br>')
-            out <- c(out, '<table width="100%" summary="R Package list">\n',
-                     '<tr align="left" valign="top">\n',
+            out <- c(out, '<table width="100%">\n',
+                     '<tr style="text-align: left;" valign="top">\n',
                      '<td width="25%">Package</td><td>Library</td></tr>\n')
             pkgs <- basename(paths)
             links <- paste0('<a href="http://127.0.0.1:', port,
                             '/library/', pkgs, '/help/', topic, '">',
                             pkgs, '</a>')
-            out <- c(out, paste0('<tr align="left" valign="top">\n',
+            out <- c(out, paste0('<tr style="text-align: left;" valign="top">\n',
                                 '<td>', links, '</td><td>',
                                 dirname(paths), '</td></tr>\n'))
-            out <- c(out, "</table>\n</p>\n<hr>\n</div>\n</body>\n</html>")
+            out <- c(out, "</table>\n<hr>\n</div>\n</body>\n</html>")
             writeLines(out, file.path(path, "all.available.html"))
             browseURL(paste0("http://127.0.0.1:", port,
                              "/doc/html/all.available.html"),

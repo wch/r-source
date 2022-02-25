@@ -31,7 +31,7 @@ function()
 parse_URI_reference <-
 function(x)
 {
-    ## See RFC_3986 <http://www.ietf.org/rfc/rfc3986.txt>.
+    ## See RFC_3986 <https://tools.ietf.org/html/rfc3986>.
     re <- "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?"
     if(length(x)) {
         y <- do.call(rbind, regmatches(x, regexec(re, x)))

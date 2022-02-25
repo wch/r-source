@@ -42,9 +42,15 @@
 ## consider keeping one (commented) entry here, for easier additions
 
 ## <entry>
-## Deprecated in 3.4.0
-unix.time <- function(...) {
-    .Deprecated("system.time")
-    system.time(...)
+## Docu-deprecated in 4.1.0
+## Formally deprecated in 4.2.0
+default.stringsAsFactors <- function()
+{
+    .Deprecated("the `stringsAsFactors` argument explicitly")
+    val <- getOption("stringsAsFactors")
+    if(is.null(val)) val <- FALSE
+    if(!is.logical(val) || is.na(val) || length(val) != 1L)
+        stop('options("stringsAsFactors") not set to TRUE or FALSE')
+    val
 }
 ## </entry>

@@ -126,6 +126,7 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	    val = r * M_SQRT2;
         }
 	else { // p is very close to  0 or 1:  r > 5 <==> min(p,1-p) < exp(-25) = 1.3888..e-11
+	    // Wichura, p.478: minimax rational approx R_3(t) is for 5 <= t <= 27  (t :== r)
             r += -5.;
             val = (((((((r * 2.01033439929228813265e-7 +
                        2.71155556874348757815e-5) * r +

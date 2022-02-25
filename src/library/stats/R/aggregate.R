@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aggregate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -139,23 +139,25 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
 }
 
 aggregate.formula <-
-function(formula, data, FUN, ..., subset, na.action = na.omit)
+function(x, data, FUN, ..., subset, na.action = na.omit)
 {
-    if(missing(formula) || !inherits(formula, "formula"))
-        stop("'formula' missing or incorrect")
-    if(length(formula) != 3L)
-        stop("'formula' must have both left and right hand sides")
+    if(missing(x))
+        stop("argument 'x' is  missing -- it has been renamed from 'formula'")
+    if(!inherits(x, "formula")) stop("argument 'x' must be a formula")
+    if(length(x) != 3L)
+        stop("formula 'x' must have both left and right hand sides")
 
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- m$FUN <- NULL
+    names(m)[match("x", names(m))] <- "formula"
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
 
-    if (formula[[2L]] == ".") {
+    if (x[[2L]] == ".") {
         ## LHS is a dot, expand it ...
-        ##rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
+        ##rhs <- unlist(strsplit(deparse(x[[3L]]), " *[:+] *"))
         ## <NOTE>
         ## Note that this will not do quite the right thing in case the
         ## RHS contains transformed variables, such that
@@ -163,7 +165,7 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
         ## is non-empty ...
         ##lhs <- sprintf("cbind(%s)",
         ##              paste(setdiff(names(data), rhs), collapse = ","))
-        ## formula[[2L]] <- parse(text = lhs)[[1L]]
+        ## x[[2L]] <- parse(text = lhs)[[1L]]
         ## </NOTE>
 
         ## New logic May 2012 --pd
@@ -176,14 +178,14 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
         ## that it will NOT remove a variable from the expansion if a
         ## transformation of it is on the RHS of the formula.
 
-        rhs <- as.list(attr(terms(formula[-2L]),"variables")[-1])
+        rhs <- as.list(attr(terms(x[-2L]),"variables")[-1])
         lhs <- as.call(c(quote(cbind),
                          setdiff(lapply(names(data), as.name),
                                  rhs)
                          )
                        )
-        formula[[2L]] <- lhs
-        m[[2L]] <- formula
+        x[[2L]] <- lhs
+        m[[2L]] <- x
     }
     mf <- eval(m, parent.frame())
 

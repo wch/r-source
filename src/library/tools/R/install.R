@@ -1980,7 +1980,7 @@ if(FALSE) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2020 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -2502,7 +2502,7 @@ if(FALSE) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2020 The R Core Team.",
+                .R_copyright_msg(2000),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -2898,13 +2898,13 @@ if(FALSE) {
             if (f != " ")
                 cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                     sep = "", file = outcon)
-	    writeLines(c('<table width="100%" summary="Help pages">',
+	    writeLines(c('<table width="100%">',
 			 paste0('<tr><td style="width: 25%;"><a href="', MM[, 2L], '.html">',
 				MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>'),
 			 "</table>"), outcon)
        }
     } else if (nrow(M)) {
-	writeLines(c('<table width="100%" summary="Help pages">',
+	writeLines(c('<table width="100%">',
 		     paste0('<tr><td style="width: 25%;"><a href="', M[, 2L], '.html">',
 			    M$HTopic, '</a></td>\n<td>', M[, 3L],'</td></tr>'),
 		     "</table>"), outcon)

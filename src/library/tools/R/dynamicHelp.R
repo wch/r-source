@@ -27,6 +27,16 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
+    logHelpRequests <-
+        config_val_to_logical(Sys.getenv("_R_HTTPD_LOG_MESSAGES_", "FALSE"))
+    if (logHelpRequests) {
+        message(sprintf("HTTPD-REQUEST %s%s", path,
+                        if (is.null(query)) ""
+                        else { # query is a named chr vector 
+                            paste(paste(names(query), query, sep = "="),
+                                  collapse = ",")
+                        }))
+    }
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     .HTMLdirListing <- function(dir, base, up) {
@@ -168,11 +178,11 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search concepts"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
                        utils::URLencode(reQuote(s), reserved = TRUE),
-                       "&fields.concept=1&agrep=0\">",
+                       "&amp;fields.concept=1&amp;agrep=0\">",
                        shtmlify(substr(s, 1L, 80L)),
                        "</a>",
                        "</td><td style=\"text-align: right\">",
@@ -192,7 +202,7 @@ httpd <- function(path, query, ...)
             c(HTMLheader("Help search keywords"),
               c("",
                 "<table>",
-                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th></tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?category=",
                        keywords$Keyword,
@@ -260,10 +270,14 @@ httpd <- function(path, query, ...)
     mono <- function(text)
         paste0('<span class="samp">', text, "</span>")
 
-    error_page <- function(msg)
+    error_page <- function(msg) {
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-ERROR %s %s", path, paste(msg, collapse = " ")))
+        }
         list(payload =
              paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
-
+    }
+        
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
         return(list(file = file.path(R.home("doc"), "html", "R.css"),
@@ -378,7 +392,14 @@ httpd <- function(path, query, ...)
                                collapse = "\n")
 
             return(list(payload =
-                        paste0("<p>",
+                        paste0("<!DOCTYPE html>",
+                               "<html>",
+                               "<head>",
+                               "<title>R: help</title>",
+                               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+                               "</head>",
+                               "<body>",
+                                "<p>",
                                ## for languages with multiple plurals ....
                                sprintf(ngettext(length(paths),
                                                 "Help on topic '%s' was found in the following package:",
@@ -386,6 +407,8 @@ httpd <- function(path, query, ...)
                                                 ), topic),
                                "</p><dl>\n",
                                packages, "</dl>",
+                               "</body>",
+                               "</html>",
                                collapse = "\n")
                         ))
         }
@@ -509,7 +532,11 @@ httpd <- function(path, query, ...)
     } else if (grepl(DemoRegexp, path)) {
     	pkg <- sub(DemoRegexp, "\\1", path)
     	demo <- sub(DemoRegexp, "\\2", path)
-    	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-DEMO %s::%s", pkg, demo))
+        }
+        else
+            demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
 	return( list(payload = paste0("Demo '", pkg, "::", demo,
 				"' was run in the console.",
 				" To repeat, type 'demo(",

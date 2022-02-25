@@ -174,8 +174,8 @@ ls.diag <- function(ls.out)
 
     p <- ls.out$qr$rank
     n <- nrow(resids)
-    hatdiag <- rep.int(NA, n)
-    stats <- array(NA, dim = d0)
+    hatdiag <- rep.int(NA_real_, d0[1L])
+    stats <- array(NA_real_, dim = d0)
     colnames(stats) <- yname
     stdres <- studres <- dfits <- Cooks <- stats
 
