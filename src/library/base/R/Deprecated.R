@@ -46,7 +46,7 @@
 ## Formally deprecated in 4.2.0
 default.stringsAsFactors <- function()
 {
-    .Deprecated("the `stringsAsFactors` argument explicitly")
+    .Deprecated("`stringsAsFactors = FALSE`")
     val <- getOption("stringsAsFactors")
     if(is.null(val)) val <- FALSE
     if(length(val) != 1L || !is.logical(val) || is.na(val))
@@ -54,3 +54,4 @@ default.stringsAsFactors <- function()
     val
 }
 ## </entry>
+
