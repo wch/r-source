@@ -123,7 +123,9 @@ export(
        "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
        "xsplinePoints", "bezierPoints",
 
-       "grobCoords", "grobPoints", "emptyCoords", "isEmptyCoords",
+       "grobCoords", "grobPoints",
+       "gridCoords", "gridGrobCoords", "gridGTreeCoords",
+       "isEmptyCoords",
     
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob",
@@ -182,6 +184,9 @@ S3method("print", "viewport")
 S3method("print", "path")
 S3method("print", "gpar")
 S3method("print", "flatGridListing")
+S3method("print", "GridCoords")
+S3method("print", "GridGrobCoords")
+S3method("print", "GridGTreeCoords")
 
 ## S3 methods for exported generics in grid
 S3method("downViewport", "default")
@@ -226,8 +231,25 @@ S3method("gridList", "vpPath")
 S3method("gridList", "pop")
 S3method("gridList", "up")
 
+S3method("getX", "GridCoords")
+S3method("getX", "GridGrobCoords")
+S3method("getX", "GridGTreeCoords")
+S3method("getY", "GridCoords")
+S3method("getY", "GridGrobCoords")
+S3method("getY", "GridGTreeCoords")
+
+S3method("toDevice", "GridCoords")
+S3method("toDevice", "GridGrobCoords")
+S3method("toDevice", "GridGTreeCoords")
+S3method("fromDevice", "GridCoords")
+S3method("fromDevice", "GridGrobCoords")
+S3method("fromDevice", "GridGTreeCoords")
+
+S3method("isEmptyCoords", "GridCoords")
+S3method("isEmptyCoords", "GridGrobCoords")
+S3method("isEmptyCoords", "GridGTreeCoords")
+
 S3method("grobCoords", "grob")
-S3method("grobCoords", "gList")
 S3method("grobCoords", "gTree")
 S3method("grobCoords", "GridStroke")
 S3method("grobCoords", "GridFill")
@@ -249,7 +271,6 @@ S3method("grobPoints", "rect")
 S3method("grobPoints", "segments")
 S3method("grobPoints", "text")
 S3method("grobPoints", "xspline")
-S3method("grobPoints", "gList")
 S3method("grobPoints", "gTree")
 S3method("grobPoints", "GridStroke")
 S3method("grobPoints", "GridFill")

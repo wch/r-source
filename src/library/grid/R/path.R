@@ -99,7 +99,7 @@ grid.fillStroke <- function(...) {
 ## Other grob methods
 grobCoords.GridStroke <- function(x, closed, ...) {
     if (closed)
-        emptyCoords
+        emptyGrobCoords(x$name)
     else
         grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
                    closed, ...)
@@ -109,7 +109,7 @@ grobCoords.GridStroke <- function(x, closed, ...) {
 ## on the "child" grob so that it can perform any relevant set up
 grobPoints.GridStroke <- function(x, closed, ...) {
     if (closed)
-        emptyCoords
+        emptyGrobCoords(x$name)
     else
         grobCoords(x$grob, closed, ...)
 }
@@ -119,7 +119,7 @@ grobCoords.GridFill <- function(x, closed, ...) {
         grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
                    closed, ...)
     else
-        emptyCoords
+        emptyGrobCoords(x$name)
 }
 
 ## NOTE, like grobPoints.gList(), we need to call grobCoords()
@@ -128,7 +128,7 @@ grobPoints.GridFill <- function(x, closed, ...) {
     if (closed)
         grobCoords(x$grob, closed, ...)
     else
-        emptyCoords
+        emptyGrobCoords(x$name)
 }
 
 grobCoords.GridFillStroke <- function(x, closed, ...) {

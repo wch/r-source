@@ -240,8 +240,7 @@ resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
     if (!isEmptyCoords(pts)) {
         if (fill$group || length(pts) == 1) {
             ## Pattern is relative to bounding box of all shapes
-            x <- unlist(lapply(pts, function(p) p$x))
-            y <- unlist(lapply(pts, function(p) p$y))
+            bbox <- coordsBBox(pts)
         } else {
             ## Pattern is relative to bounding box of individual shapes
             if (index > length(pts)) {
@@ -256,19 +255,14 @@ resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
             if (!any(shapeIndex)) {
                 shapeIndex <- index
             }
-            x <- unlist(lapply(pts[shapeIndex], function(p) p$x))
-            y <- unlist(lapply(pts[shapeIndex], function(p) p$y))
+            bbox <- coordsBBox(pts, shapeIndex)
         }
-        left <- min(x)
-        bottom <- min(y)
-        width <- diff(range(x))
-        height <- diff(range(y))
         ## Temporary viewport for calculations, so do NOT record on grid DL
         ## Also, ensure NO mask and NO clip
         ## (at least initially) for resolution of pattern
         ## Also, set fill to "transparent"
         ## (to avoid this viewport picking up the fill being resolved)
-        pushViewport(viewport(left, bottom, width, height,
+        pushViewport(viewport(bbox$left, bbox$bottom, bbox$width, bbox$height,
                               default.units="in",
                               just=c("left", "bottom"),
                               clip="off", mask="none",
@@ -300,8 +294,7 @@ resolveFill.GridGrobPatternList <- function(fill, ...) {
             }
             if (fill[[which]]$group || length(pts) == 1) {
                 ## Pattern is relative to bounding box of all shapes
-                x <- unlist(lapply(pts, function(p) p$x))
-                y <- unlist(lapply(pts, function(p) p$y))
+                bbox <- coordsBBox(pts)
             } else {
                 ## Pattern is relative to bounding box of individual shapes
                 ## Individual shape may consist of more than one set of
@@ -311,19 +304,15 @@ resolveFill.GridGrobPatternList <- function(fill, ...) {
                 if (!any(shapeIndex)) {
                     shapeIndex <- i
                 }
-                x <- unlist(lapply(pts[shapeIndex], function(p) p$x))
-                y <- unlist(lapply(pts[shapeIndex], function(p) p$y))
+                bbox <- coordsBBox(pts, shapeIndex)
             }
-            left <- min(x)
-            bottom <- min(y)
-            width <- diff(range(x))
-            height <- diff(range(y))
             ## Temporary viewport for calculations, so do NOT record on grid DL
             ## Also, ensure NO mask and NO clip
             ## (at least initially) for resolution of pattern
             ## Also, set fill to "transparent"
             ## (to avoid this viewport picking up the fill being resolved)
-            pushViewport(viewport(left, bottom, width, height,
+            pushViewport(viewport(bbox$left, bbox$bottom,
+                                  bbox$width, bbox$height,
                                   default.units="in",
                                   just=c("left", "bottom"),
                                   clip="off", mask="none",
@@ -346,18 +335,14 @@ resolveFill.GridGrobPatternList <- function(fill, ...) {
 resolveGTreeFill <- function(fill, pts) {
     if (!isEmptyCoords(pts)) {
         ## Pattern is relative to bounding box of all shapes
-        x <- unlist(lapply(pts, function(p) p$x))
-        y <- unlist(lapply(pts, function(p) p$y))
-        left <- min(x)
-        bottom <- min(y)
-        width <- diff(range(x))
-        height <- diff(range(y))
+        bbox <- coordsBBox(pts)
         ## Temporary viewport for calculations, so do NOT record on grid DL
         ## Also, ensure NO mask and NO clip
         ## (at least initially) for resolution of pattern
         ## Also, set fill to "transparent"
         ## (to avoid this viewport picking up the fill being resolved)
-        pushViewport(viewport(left, bottom, width, height,
+        pushViewport(viewport(bbox$left, bbox$bottom,
+                              bbox$width, bbox$height,
                               default.units="in",
                               just=c("left", "bottom"),
                               clip="off", mask="none",
