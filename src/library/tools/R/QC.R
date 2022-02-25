@@ -5293,7 +5293,8 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".First.lib", ".onAttach", ".onLoad")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (as.character(z[[1L]]) == "function")) {
+           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
             calls <- c(calls, new)
@@ -5423,7 +5424,8 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".Last.lib", ".onDetach")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (as.character(z[[1L]]) == "function")) {
+           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
             calls <- c(calls, new)
