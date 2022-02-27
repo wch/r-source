@@ -21,8 +21,8 @@
       greater than one now gives a warning (and it is intended that will
       eventually become an error).
       
-      \item Calling \code{if} or \code{while} with a condition of length
-      greater than one will give an error rather than a
+      \item Calling \code{if()} or \code{while()} with a condition of
+      length greater than one will give an error rather than a
       warning. (Planned to be activated in mid-March.)
     }
   }
