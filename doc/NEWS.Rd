@@ -633,7 +633,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.2 patched}{
+\section{\Rlogo CHANGES IN R 4.1.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The default version of Bioconductor has been changed to
