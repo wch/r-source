@@ -574,6 +574,22 @@ function(x, tags)
     recurse(x)
 }
 
+### * .Rd_drop_nodes
+
+.Rd_drop_nodes <-
+function(x, predicate)
+{
+    recurse <- function(e) {
+        if(is.list(e)) {
+            a <- attributes(e)
+            e <- lapply(e[!vapply(e, predicate, NA)], recurse)
+            attributes(e) <- a
+        }
+        e
+    }
+    recurse(x)
+}
+
 ### * .Rd_find_nodes_with_tags
 
 .Rd_find_nodes_with_tags <-
@@ -584,6 +600,22 @@ function(x, tags)
         if(any(attr(e, "Rd_tag") == tags))
             nodes <<- c(nodes, list(e))
         if(is.list(e))
+            lapply(e, recurse)
+    }
+    lapply(x, recurse)
+    nodes
+}
+
+### * .Rd_find_nodes
+
+.Rd_find_nodes <-
+function(x, predicate)
+{
+    nodes <- list()
+    recurse <- function(e) {
+        if(predicate(e)) 
+            nodes <<- c(nodes, list(e))
+        if(is.list(e)) 
             lapply(e, recurse)
     }
     lapply(x, recurse)
@@ -830,6 +862,35 @@ function(x)
     trimws(x)
 }
 
+### * .Rd_has_Sexpr_needing_refman
+
+## Try to find out whether Rd has a Sexpr for which we build the refman.
+## For now, any install or render Sexpr which does not come from \PR or
+## \doi.
+
+.Rd_has_Sexpr_needing_refman <-
+function(x)
+{
+    found <- FALSE
+    predicate <- function(e) {
+        (any(attr(e, "Rd_tag") == "USERMACRO") &&
+         any(attr(e, "macro") %in% c("\\PR", "\\doi")))
+    }
+    recurse <- function(e) {
+        if(identical(attr(e, "Rd_tag"), "\\Sexpr") &&
+           any(getDynamicFlags(e)[c("install", "render")])) {
+            found <<- TRUE
+            return()
+        } else if(is.list(e) && !found) {
+            i <- which(vapply(e, predicate, NA))
+            if(length(i))
+                e <- e[-c(i, i + 1L)]
+            lapply(e, recurse)
+        }
+    }
+    recurse(x)
+    found
+}
 
 ### * fetchRdDB
 
