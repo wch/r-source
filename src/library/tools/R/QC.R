@@ -6169,40 +6169,43 @@ function(db, files)
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in%
-               c("library", "require", "loadNamespace", "requireNamespace")) {
-                if(length(e) >= 2L) {
-                    ## We need to remove '...': OTOH the argument could be NULL
-                    keep <- vapply(e,
-                                   function(x) deparse(x)[1L] != "...",
-                                   NA)
-                    mc <- match.call(baseenv()[[Call]], e[keep])
-                    if(!is.null(pkg <- mc$package)) {
-                        pkg <- sub('^"(.*)"$', '\\1', pkg)
-                        ## <NOTE>
-                        ## Using code analysis, we really don't know which
-                        ## package was called if character.only = TRUE and
-                        ## the package argument is not a string constant.
-                        ## (Btw, what if character.only is given a value
-                        ## which is an expression evaluating to TRUE?)
-                        dunno <- FALSE
-                        pos <- which(!is.na(pmatch(names(e),
-                                                   "character.only")))
-                        if(length(pos)
-                           && isTRUE(e[[pos]])
-                           && !identical(class(e[[2L]]), "character"))
+            if((Call %in%
+               c("library", "require", "loadNamespace", "requireNamespace"))
+               && (length(e) >= 2L)) {
+                ## We need to remove '...': OTOH the argument could be NULL
+                keep <- vapply(e,
+                               function(x) deparse(x)[1L] != "...",
+                               NA)
+                mc <- match.call(baseenv()[[Call]], e[keep])
+                if(!is.null(pkg <- mc$package)) {
+                    ## <NOTE>
+                    ## Using code analysis, we really don't know which
+                    ## package was called if character.only = TRUE and
+                    ## the package argument is not a string constant.
+                    ## (Btw, what if character.only is given a value
+                    ## which is an expression evaluating to TRUE?)
+                    dunno <- FALSE
+                    if((Call %in% c("loadNamespace",
+                                    "requireNamespace"))) {
+                        if(!identical(class(pkg), "character"))
                             dunno <- TRUE
-                        ## </NOTE>
-                        if(! dunno
-                           && pkg %notin% c(depends_suggests, common_names))
+                    } else {
+                        if(!identical(class(pkg), "character") &&
+                           isTRUE(mc$character.only))
+                            dunno <- TRUE
+                    }
+                    if(!dunno) {
+                        pkg <- as.character(pkg)
+                        if(pkg %notin% c(depends_suggests, common_names))
                             bad_exprs <<- c(bad_exprs, pkg)
                     }
                 }
             } else if(Call %in%  "::") {
+                pkg <- deparse(e[[2L]])
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in%  ":::") {
+                pkg <- deparse(e[[2L]])
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if((Call %in% "data" && length(e) >= 3L) ||
