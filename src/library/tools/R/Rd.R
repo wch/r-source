@@ -564,11 +564,12 @@ function(x)
 function(x, tags)
 {
     recurse <- function(e) {
-        if(is.list(e))
-            structure(lapply(e[is.na(match(RdTags(e), tags))], recurse),
-                      Rd_tag = attr(e, "Rd_tag"))
-        else
-            e
+        if(is.list(e)) {
+            a <- attributes(e)
+            e <- lapply(e[is.na(match(RdTags(e), tags))], recurse)
+            attributes(e) <- a
+        }
+        e
     }
     recurse(x)
 }
