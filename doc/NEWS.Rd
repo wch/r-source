@@ -23,7 +23,7 @@
       
       \item Calling \code{if()} or \code{while()} with a condition of
       length greater than one will give an error rather than a
-      warning. (Planned to be activated in mid-March.)
+      warning. (Planned to be activated in early March.)
     }
   }
 
