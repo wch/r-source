@@ -914,7 +914,7 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
         if (tag %in% c("\\examples", "\\usage")) {
-            of1("<pre>")
+            of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE
         } else {
@@ -924,11 +924,11 @@ Rd2HTML <-
     	if (length(section)) {
 	    ## There may be an initial \n, so remove that
 	    s1 <- section[[1L]][1L]
-	    if (RdTags(section)[1] == "TEXT" && s1 == "\n") section <- section[-1L]
+	    if (RdTags(section)[1] %in% c("TEXT", "RCODE") && s1 == "\n") section <- section[-1L]
 	    writeContent(section, tag)
 	}
 	leavePara(FALSE)
-	if (pre) of0("</pre>\n")
+	if (pre) of0("</code></pre>\n")
     	sectionLevel <<- save
     }
 
