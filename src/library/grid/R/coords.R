@@ -13,12 +13,14 @@
 ## Functions for creating coords data structures
 
 validCoords <- function(x) {
-    is.numeric(x$x) && is.numeric(x$y) && length(x$x) == length(x$y) &&
-        length(x) > 0
+    is.list(x) && length(x) > 0 &&
+        is.numeric(x$x) && is.numeric(x$y) && length(x$x) == length(x$y)
+        
 }
 
 validGrobCoords <- function(x) {
-    is.list(x) && length(x) > 0 && all(sapply(x, inherits, "GridCoords"))
+    is.list(x) && length(x) > 0 &&
+        all(sapply(x, inherits, "GridCoords"))
 }
 
 validGTreeCoords <- function(x) {
