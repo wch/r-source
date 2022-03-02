@@ -159,12 +159,12 @@ toDevice.GridCoords <- function(x) {
 
 toDevice.GridGrobCoords <- function(x) {
     pts <- lapply(x, toDevice)
-    gridGrobCoords(pts)
+    gridGrobCoords(pts, attr(x, "name"))
 }
 
 toDevice.GridGTreeCoords <- function(x) {
-    pts <- lapply(x$children[x$childrenOrder], toDevice)
-    gridGTreeCoords(pts)
+    pts <- lapply(x, toDevice)
+    gridGTreeCoords(pts, attr(x, "name"))
 }
 
 fromDevice <- function(x, trans) {
@@ -178,12 +178,12 @@ fromDevice.GridCoords <- function(x, trans) {
 
 fromDevice.GridGrobCoords <- function(x, trans) {
     pts <- lapply(x, fromDevice, trans)
-    gridGrobCoords(pts)
+    gridGrobCoords(pts, attr(x, "name"))
 }
 
 fromDevice.GridGTreeCoords <- function(x, trans) {
-    pts <- lapply(x$children[x$childrenOrder], fromDevice, trans)
-    gridGTreeCoords(pts)
+    pts <- lapply(x, fromDevice, trans)
+    gridGTreeCoords(pts, attr(x, "name"))
 }
 
 ################################################################################
