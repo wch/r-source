@@ -623,6 +623,10 @@
       has caused narrowly-spaced lines with many points to always look
       solid even when dashed line type was used due to dash phase
       restarts.
+
+      \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
+      again as before R 3.5.0, thanks to the report and patch in \PR{18284}
+      by Suharto Anggono.
     }
   }
 }
