@@ -53,20 +53,27 @@ as.formula(object, env = parent.frame())
   all the variables and factors appearing in the term.
 
   In addition to \code{+} and \code{:}, a number of other operators are
-  useful in model formulae.  The \code{*} operator denotes factor
-  crossing: \code{a*b} interpreted as \code{a+b+a:b}.  The \code{^}
+  useful in model formulae.
+ \itemize{
+  \item The \code{*} operator denotes factor crossing: \code{a*b} is
+  interpreted as \code{a + b + a:b}.
+  \item The \code{^}
   operator indicates crossing to the specified degree.  For example
   \code{(a+b+c)^2} is identical to \code{(a+b+c)*(a+b+c)} which in turn
   expands to a formula containing the main effects for \code{a},
   \code{b} and \code{c} together with their second-order interactions.
-  The \code{\%in\%} operator indicates that the terms on its left are
+  \item The \code{\%in\%} operator indicates that the terms on its left are
   nested within those on the right.  For example \code{a + b \%in\% a}
-  expands to the formula \code{a + a:b}.  The \code{-} operator removes
-  the specified terms, so that \code{(a+b+c)^2 - a:b} is identical to
-  \code{a + b + c + b:c + a:c}.  It can also used to remove the
-  intercept term: when fitting a linear model \code{y ~ x - 1} specifies
-  a line through the origin.  A model with no intercept can be also
-  specified as \code{y ~ x + 0} or \code{y ~ 0 + x}.
+  expands to the formula \code{a + a:b}.
+  \item The \code{/} operator provides a shorthand, so that
+  \code{a / b} is equivalent to \code{a + b \%in\% a}.
+  \item The \code{-} operator removes the specified terms, hence
+  \code{(a+b+c)^2 - a:b} is identical to \code{a + b + c + b:c + a:c}.
+  It can also used to remove the intercept term: when fitting a linear
+  model \code{y ~ x - 1} specifies a line through the origin.
+  A model with no intercept can be also specified as \code{y ~ x + 0}
+  or \code{y ~ 0 + x}.
+ }
 
   While formulae usually involve just variable and factor
   names, they can also involve arithmetic expressions.

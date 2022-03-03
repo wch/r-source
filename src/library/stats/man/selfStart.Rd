@@ -74,8 +74,8 @@ selfStart(model, initial, parameters, template)
 ## self-starting logistic model
 
 ## The "initializer" (finds initial values for parameters from data):
-initLogis <- function(mCall, data, LHS) {
-    xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+initLogis <- function(mCall, data, LHS, ...) {
+    xy <- sortedXyData(mCall[["x"]], LHS, data)
     if(nrow(xy) < 4)
         stop("too few distinct input values to fit a logistic model")
     z <- xy[["y"]]
@@ -87,14 +87,18 @@ initLogis <- function(mCall, data, LHS) {
     pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
                      data = xy,
                      start = list(xmid = aux[[1L]], scal = aux[[2L]]),
-                     algorithm = "plinear"))
-    setNames(pars[c(".lin", "xmid", "scal")], nm = mCall[c("Asym", "xmid", "scal")])
+                     algorithm = "plinear", ...))
+    setNames(pars [c(".lin", "xmid", "scal")],
+             mCall[c("Asym", "xmid", "scal")])
 }
 
-SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
-                     initial = initLogis,
-                     parameters = c("Asym", "xmid", "scal"))
-
+mySSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
+                       initial = initLogis,
+                       parameters = c("Asym", "xmid", "scal"))
+\dontshow{## IGNORE_RDIFF_BEGIN}
+getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
+           data = subset(ChickWeight, Chick == 1))
+\dontshow{## IGNORE_RDIFF_END}
 
 # 'first.order.log.model' is a function object defining a first order
 # compartment model

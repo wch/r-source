@@ -3271,3 +3271,16 @@ quote(`$`(`$`(1, if(L) 2), 3))
 quote(`$`(1 + repeat 2, 3))
 quote(`=`(`$`(1, `$`(2, repeat 3)), 4))
 ## these were really bad in  R <= 4.1.x
+
+
+## Deparsing of !  -- PR#18284
+## no parens in 3.5.0 <= R <= 4.1.x:
+quote(1 +  `!`(2) + 3) -> x; x
+quote(1 + +`!`(2) + 3)
+quote(1 + `!`(!2) + 3)
+quote(1 + `!`(if(L) 2) + 3)
+## ok in 3.5.0 <= R <= 4.1.x:
+quote(`&`(a < !b, d))
+## deparse--parse roundtrip is stable (basically)
+stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
+## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}

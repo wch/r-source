@@ -1,7 +1,7 @@
 #  File src/library/base/R/Deprecated.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,11 +46,12 @@
 ## Formally deprecated in 4.2.0
 default.stringsAsFactors <- function()
 {
-    .Deprecated("the `stringsAsFactors` argument explicitly")
+    .Deprecated("`stringsAsFactors = FALSE`")
     val <- getOption("stringsAsFactors")
     if(is.null(val)) val <- FALSE
-    if(!is.logical(val) || is.na(val) || length(val) != 1L)
+    if(length(val) != 1L || !is.logical(val) || is.na(val))
         stop('options("stringsAsFactors") not set to TRUE or FALSE')
     val
 }
 ## </entry>
+

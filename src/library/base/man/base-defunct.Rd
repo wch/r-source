@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -65,6 +65,7 @@
 \alias{is.real}
 \alias{.find.package}
 \alias{.path.package}
+\alias{unix.time}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -157,6 +158,9 @@ is.real(x)
 # Defunct in 3.1.0, removed for 4.1.0
 .find.package(\dots)
 .path.package(\dots)
+
+# Defunct in 4.2.0
+unix.time(\dots)  ### -- use  system.time(...)  instead
 }
 \details{
   Some of these have stubs which report that they are defunct, but most
@@ -274,6 +278,9 @@ is.real(x)
   \code{.find.package} and \code{.path.package} were internal-only
   versions prior to \R 2.13.0, and since deprecated wrappers for
   \code{\link{find.package}} and \code{\link{path.package}}.
+
+  \code{unix.time} has been an \dQuote{alias} for
+  \code{\link{system.time}}, for historical S compatibility.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

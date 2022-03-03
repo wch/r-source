@@ -21,9 +21,9 @@
       greater than one now gives a warning (and it is intended that will
       eventually become an error).
       
-      \item Calling \code{if} or \code{while} with a condition of length
-      greater than one will give an error rather than a
-      warning. (Planned to be activated in mid-March.)
+      \item Calling \code{if()} or \code{while()} with a condition of
+      length greater than one will give an error rather than a
+      warning. (Planned to be activated in early March.)
     }
   }
 
@@ -430,11 +430,6 @@
 
       Header \file{R_ext/RS.h} no longer includes \file{R_ext/Error.h}.
 
-      %% To be removed on Mar 1.
-      For the time being the definitions can be reinstated by defining
-      macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
-      any \R{} header.
-
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
       rather than the C header \file{float.h} (now possible as C++11 is
@@ -459,10 +454,9 @@
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).
 
-      %% Deferred until Mar 15 waiting for packages to be adjusted.
-      %% \item Use of the legacy header \file{S.h} (undocumented since
-      %% 2016) now gives a compilation warning reported by
-      %% \command{R CMD check}, with suitable compilers.
+      \item The header \file{S.h} which has been unsupported since Jan
+      2016 has been removed.   Use \file{R.h} instead.
+      [Scheduled for Mar 15.]
     }
   }
 
@@ -629,11 +623,15 @@
       has caused narrowly-spaced lines with many points to always look
       solid even when dashed line type was used due to dash phase
       restarts.
+
+      \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
+      again as before R 3.5.0, thanks to the report and patch in \PR{18284}
+      by Suharto Anggono.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.2 patched}{
+\section{\Rlogo CHANGES IN R 4.1.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The default version of Bioconductor has been changed to

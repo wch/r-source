@@ -45,9 +45,9 @@ isFALSE(x)
   control-flow and typically preferred in \code{\link{if}} clauses.
 
   Using vectors of more than one element in \code{&&} or \code{||} will
-  give an error if the environment variable
-  \env{_R_CHECK_LENGTH_1_LOGIC2_} is set to a true value: this is
-  intended to become the default in future.
+  give a warning (as from \R 4.2.0), or an error if the environment
+  variable \env{_R_CHECK_LENGTH_1_LOGIC2_} is set to a true value (this
+  is intended to become the default in future).
 
   \code{xor} indicates elementwise exclusive OR.
 

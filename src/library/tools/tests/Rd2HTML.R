@@ -36,6 +36,7 @@ stopifnot(exprs = {
 ## \usage: keep quoted "\\\\dots", but _do_ translate formal \dots arg
 Rdsnippet <- tempfile()
 writeLines(r"(\name{foo}\title{foo}\usage{
+## keep this comment to ensure a newline at the end
 foo(arg = "\\\\dots", \dots)
 })", Rdsnippet)
 Rdobj <- parse_Rd(Rdsnippet)
