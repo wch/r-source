@@ -1,6 +1,6 @@
 % File src/library/base/man/sys.source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sys.source}
@@ -20,9 +20,10 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
   \item{file}{a character string naming the file to be read from}
   \item{envir}{an \R object specifying the environment in which the
     expressions are to be evaluated.  May also be a list or an integer.
-    The default value \code{NULL} corresponds to evaluation in the base
+    The default \code{\link{baseenv}()} corresponds to evaluation in the base
     environment.  This is probably not what you want; you should
-    typically supply an explicit \code{envir} argument.}
+    typically supply an explicit \code{envir} argument, see the
+    \sQuote{Note}.}
   \item{chdir}{logical; if \code{TRUE}, the \R working directory is
     changed to the directory containing \code{file} for evaluating.}
   \item{keep.source}{logical.  If \code{TRUE}, functions keep
@@ -39,15 +40,16 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
   For large files, \code{keep.source = FALSE} may save quite a bit of
   memory. Disabling only parse data via \code{keep.parse.data = FALSE}
   can already save a lot.
-%%FIXME:  the following paragraph should be somewhere it's likely to be seen
+}
+\section{Note on \code{envir}}{
   In order for the code being evaluated to use the correct environment
   (for example, in global assignments), source code in packages should
   call \code{\link{topenv}()}, which will return the namespace, if any,
   the environment set up by \code{sys.source}, or the global environment
   if a saved image is being used.
 }
-\seealso{\code{\link{source}}, and \code{\link{library}} which uses
-  \code{sys.source}.
+\seealso{\code{\link{source}}, and \code{\link{loadNamespace}} which
+  is called from \code{\link{library}(.)} and uses \code{sys.source(.)}.
 }
 \examples{
 ## a simple way to put some objects in an environment
