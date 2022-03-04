@@ -18,12 +18,13 @@
       name the argument (code in many packages did).
 
       \item Calling \code{&&} or \code{||} with an argument of length
-      greater than one now gives a warning (and it is intended that will
-      eventually become an error).
+      greater than one now gives a warning (and it is intended that it
+      will eventually become an error).
       
       \item Calling \code{if()} or \code{while()} with a condition of
-      length greater than one will give an error rather than a
-      warning. (Planned to be activated in early March.)
+      length greater than one gives an error rather than a warning.
+      Consequently, environment variable
+      \env{_R_CHECK_LENGTH_1_CONDITION_} no longer has any effect.
     }
   }
 

@@ -4344,18 +4344,21 @@ Default: false (but true for CRAN submission checks).
 @c use on a check farm.
 
 @item _R_CHECK_LENGTH_1_CONDITION_
-Optionally check if the condition in @code{if} and @code{while}
-statements has length greater than one.  For a true value (@samp{T},
-@samp{True}, @samp{TRUE} or @samp{true}), give an error.  For a false
-value (@samp{F}, @samp{False}, @samp{FALSE} or @samp{false}) or when
-unset, print a warning.  Any other non-true non-empty value needs to be
-a list of commands separated by commas: @samp{abort} causes R to
-terminate unconditionally instead of signalling an error (which is
-useful in pinpointing issues in code called from @code{try} or
-@code{tryCatch}), @samp{verbose} prints a very detailed diagnostic
-message, @samp{package:pkg} restricts the check to if/while statements
-executing in the namespace of package @samp{pkg} (but @code{all_base}
-refers to all the standard packages),
+No longer in use: conditions of length greater than one in @code{if} or
+@code{while} statements are now an error.
+
+@item _R_CHECK_LENGTH_1_LOGIC2_
+Optionally check if an argument of the binary operators @code{&&} and
+@code{||} has length greater than one, the right-hand side being checked
+only if it is used.  For a false value (@samp{F}, @samp{False},
+@samp{FALSE} or @samp{false}) or when unset, print a warning.  Any other
+non-true non-empty value needs to be a list of commands separated by
+commas: @samp{abort} causes R to terminate unconditionally instead of
+signalling an error (which is useful in pinpointing issues in code
+called from @code{try} or @code{tryCatch}), @samp{verbose} prints a very
+detailed diagnostic message, @samp{package:pkg} restricts the check to
+if/while statements executing in the namespace of package @samp{pkg}
+(but @code{all_base} refers to all the standard packages),
 @samp{package:_R_CHECK_PACKAGE_NAME_} restricts the check to if/while
 statements executing in the package that is currently being checked by
 @code{R CMD check}, @samp{warn} causes R to report a warning instead of
@@ -4364,14 +4367,6 @@ a report, error or warning will be given if any are satisfied.)
 Default: unset (a warning is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
-
-@item _R_CHECK_LENGTH_1_LOGIC2_
-Optionally check if an argument of the binary operators @code{&&} and
-@code{||} has length greater than one, the right-hand side being checked
-only if it is used.  The format is the same as for
-@samp{_R_CHECK_LENGTH_1_CONDITION_}.  Default: unset (a warning is
-reported), but @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for
-the CRAN submission checks.
 
 @item _R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_
 Should running the @R{} code in the vignettes be skipped if vignette
