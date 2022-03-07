@@ -312,8 +312,8 @@ grobPoints.circle <- function(x, closed, ..., n=100) {
     if (closed) {
         cx <- convertX(x$x, "in", valueOnly=TRUE)
         cy <- convertY(x$y, "in", valueOnly=TRUE)
-        r <- min(convertWidth(x$r, "in", valueOnly=TRUE),
-                 convertHeight(x$r, "in", valueOnly=TRUE))
+        r <- pmin(convertWidth(x$r, "in", valueOnly=TRUE),
+                  convertHeight(x$r, "in", valueOnly=TRUE))
         t <- seq(0, 2*pi, length.out=n+1)[-(n+1)]
         ## Recycle via cbind()
         circs <- cbind(cx, cy, r)
