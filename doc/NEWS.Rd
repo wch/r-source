@@ -628,6 +628,9 @@
       \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
       again as before R 3.5.0, thanks to the report and patch in \PR{18284}
       by Suharto Anggono.
+
+      \item \code{as.list(f)} for a \code{factor} \code{f} now keeps
+      \code{names(f)}, fixing \PR{18309}.
     }
   }
 }
