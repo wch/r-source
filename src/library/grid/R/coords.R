@@ -53,10 +53,11 @@ print.GridCoords <- function(x, indent="", ...) {
         head(x$y, 3), dots, paste0("[", length(x$y), " values]\n"))    
 }
 
-gridGrobCoords <- function(x, name) {
+gridGrobCoords <- function(x, name, rule = NULL) {
     if (validGrobCoords(x)) {
         class(x) <- "GridGrobCoords"
         attr(x, "name") <- name
+        attr(x, "rule") <- rule
         x
     } else
         stop("Invalid grob coordinates")
@@ -68,7 +69,13 @@ print.GridGrobCoords <- function(x, indent="", ...) {
     } else {
         names <- names(x)
     }
-    cat(paste0(indent, "grob"), attr(x, "name"), "\n")
+    rule <- attr(x, "rule")
+    if (is.null(rule)) {
+        fillrule <- ""
+    } else {
+        fillrule <- paste0(" (fill: ", rule, ")")
+    }
+    cat(paste0(indent, "grob"), attr(x, "name"), fillrule, "\n")
     for (i in seq_along(x)) {
         cat(paste0(indent, coordPrintIndent, "shape"), names[i], "\n")
         print(x[[i]], indent=paste0(indent, coordPrintIndent, coordPrintIndent))
@@ -159,7 +166,7 @@ toDevice.GridCoords <- function(x) {
 
 toDevice.GridGrobCoords <- function(x) {
     pts <- lapply(x, toDevice)
-    gridGrobCoords(pts, attr(x, "name"))
+    gridGrobCoords(pts, attr(x, "name"), attr(x, "rule"))
 }
 
 toDevice.GridGTreeCoords <- function(x) {
@@ -178,7 +185,7 @@ fromDevice.GridCoords <- function(x, trans) {
 
 fromDevice.GridGrobCoords <- function(x, trans) {
     pts <- lapply(x, fromDevice, trans)
-    gridGrobCoords(pts, attr(x, "name"))
+    gridGrobCoords(pts, attr(x, "name"), attr(x, "rule"))
 }
 
 fromDevice.GridGTreeCoords <- function(x, trans) {
@@ -244,13 +251,15 @@ grobCoords.grob <- function(x, closed, ...) {
     pts <- grobPoints(x, closed, ...)
     if (vpgrob && !isEmptyCoords(pts)) {
         ## Calc locations on device
-        pts <- gridGrobCoords(lapply(pts, toDevice), x$name)
+        pts <- gridGrobCoords(lapply(pts, toDevice), x$name,
+                              attr(pts, "rule"))
     }
     # Same context clean up as drawGrob()
     postDraw(x)
     if (vpgrob && !isEmptyCoords(pts)) {
         ## Transform back to locations
-        pts <- gridGrobCoords(lapply(pts, fromDevice, trans), x$name)
+        pts <- gridGrobCoords(lapply(pts, fromDevice, trans), x$name,
+                              attr(pts, "rule"))
     }
     pts
 }
@@ -369,6 +378,12 @@ grobPoints.polyline <- function(x, closed, ...) {
     }    
 }
 
+## NOTE that grid.polygon() does not provide ability to set fill rule
+## (and neither does dev->polygon());  some devices allow a global
+## device fill rule (!), e.g., pdf(), postscript(), windows(),
+## but we can't do anything about that.
+## If you want proper control, use grid.path() instead
+## (which does have a fill rule arg).
 grobPoints.polygon <- function(x, closed, ...) {
     if (closed) {
         ## polygonGrob() ensures that x/y same length
@@ -425,9 +440,10 @@ grobPoints.pathgrob <- function(x, closed, ...) {
             if (hasMultiple) {
                 gridGrobCoords(lapply(split(as.data.frame(pts), pathId),
                                   function(z) do.call(gridCoords, z)),
-                               x$name)
+                               x$name, x$rule)
             } else {
-                gridGrobCoords(list("1"=do.call(gridCoords, pts)), x$name)
+                gridGrobCoords(list("1"=do.call(gridCoords, pts)),
+                               x$name, x$rule)
             }
         } else {
             if (is.null(x$id)) {
@@ -446,12 +462,13 @@ grobPoints.pathgrob <- function(x, closed, ...) {
                 names(pts) <- gsub("[.][0-9]+$", "", names(pts))
                 gridGrobCoords(lapply(pts,
                                   function(z) do.call(gridCoords, z)),
-                               x$name)
+                               x$name, x$rule)
             } else {
                 pts <- split(as.data.frame(pts), id)
                 names(pts) <- rep(1, length(pts))
                 gridGrobCoords(lapply(pts,
-                                  function(z) do.call(gridCoords, z)), x$name)
+                                  function(z) do.call(gridCoords, z)),
+                               x$name, x$rule)
             }
         }
     } else {
