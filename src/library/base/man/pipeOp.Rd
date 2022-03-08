@@ -28,9 +28,9 @@
   To avoid ambiguities, functions in \code{rhs} calls may not be
   syntactically special, such as \code{+} or \code{if}.
   
-  It is also possible to use named argument with the placeholder
-  \code{_} to specify where the \code{lhs} is to be inserted.
-  The placeholder can only appear once on the \code{rhs}.
+  It is also possible to use a named argument with the placeholder
+  \code{_} in the \code{rhs} call to specify where the \code{lhs} is to
+  be inserted.  The placeholder can only appear once on the \code{rhs}.
   
   Pipe notation allows a nested sequence of calls to be written in a way
   that may make the sequence of processing steps easier to follow.
