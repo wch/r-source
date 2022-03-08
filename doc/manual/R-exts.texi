@@ -780,7 +780,7 @@ copyright laws).
 @end itemize
 
 @noindent
-Mutliple licences can be specified separated by @samp{|} (surrounded by
+Multiple licences can be specified separated by @samp{|} (surrounded by
 spaces) in which case the user can choose any of the alternatives.
 
 If a package license @emph{restricts} a base license (where permitted,
@@ -9117,7 +9117,8 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on a common CPU type or supported versions
-of macOS or Solaris you can use @code{valgrind}
+of FreeBSD or Solaris@footnote{The macOS support is for long-obsolete
+versions.} you can use @code{valgrind}
 (@uref{https://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
@@ -9237,11 +9238,12 @@ threaded programs.
 @node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Checking memory access
 @subsection Using the Address Sanitizer
 
+@c https://github.com/google/sanitizers/wiki/AddressSanitizer
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
-FreeBSD, with some support for Intel macOS, NetBSD and Windows, but not
-with the toolchains normally used with @R{}. (There is a faster variant,
+FreeBSD, with some support for Intel macOS but not
+with the toolchain normally used with @R{}. (There is a faster variant,
 HWASAN, for @cputype{aarch64} only.)  On some platforms the runtime
 library, @pkg{libasan}, needs to be installed separately, and for
 checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and

@@ -4344,33 +4344,27 @@ Default: false (but true for CRAN submission checks).
 @c use on a check farm.
 
 @item _R_CHECK_LENGTH_1_CONDITION_
-Optionally check if the condition in @code{if} and @code{while}
-statements has length greater than one.  For a true value (@samp{T},
-@samp{True}, @samp{TRUE} or @samp{true}), give an error.  For a false
-value (@samp{F}, @samp{False}, @samp{FALSE} or @samp{false}) or when
-unset, print a warning.  Any other non-true non-empty value needs to be
-a list of commands separated by commas: @samp{abort} causes R to
-terminate unconditionally instead of signalling an error (which is
-useful in pinpointing issues in code called from @code{try} or
-@code{tryCatch}), @samp{verbose} prints a very detailed diagnostic
-message, @samp{package:pkg} restricts the check to if/while statements
-executing in the namespace of package @samp{pkg} (but @code{all_base}
-refers to all the stanaard packages),
+No longer in use: conditions of length greater than one in @code{if} or
+@code{while} statements are now an error.
+
+@item _R_CHECK_LENGTH_1_LOGIC2_
+Optionally check if an argument of the binary operators @code{&&} and
+@code{||} has length greater than one, the right-hand side being checked
+only if it is used.  For a false value (@samp{F}, @samp{False},
+@samp{FALSE} or @samp{false}) or when unset, print a warning.  Any other
+non-true non-empty value needs to be a list of commands separated by
+commas: @samp{abort} causes R to terminate unconditionally instead of
+signalling an error (which is useful in pinpointing issues in code
+called from @code{try} or @code{tryCatch}), @samp{verbose} prints a very
+detailed diagnostic message, @samp{package:pkg} restricts the check to
+if/while statements executing in the namespace of package @samp{pkg}
+(but @code{all_base} refers to all the standard packages),
 @samp{package:_R_CHECK_PACKAGE_NAME_} restricts the check to if/while
 statements executing in the package that is currently being checked by
 @code{R CMD check}, @samp{warn} causes R to report a warning instead of
 signalling an error.  (More than one package specification can be given:
-a report, error or warning wwill be given if any are satisfied.)
+a report, error or warning will be given if any are satisfied.)
 Default: unset (a warning is reported), but
-@samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
-submission checks.
-
-@item _R_CHECK_LENGTH_1_LOGIC2_
-Optionally check if an argument of the binary operators @code{&&} and
-@code{||} has length greater than one, checked only if it is used.  The
-format is the same as for @samp{_R_CHECK_LENGTH_1_CONDITION_}, but false
-values or unset do not give a warning (use value @code{warn} for that).
-Default: unset (nothing is reported), but
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
@@ -4520,6 +4514,20 @@ dimensions in a call to @code{matrix} gives a warning: setting this to a
 true value gives an error with a compact traceback.
 @c
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_CODE_CLASS_IS_STRING_
+Check if package code has @code{if()} condition which compare the class
+of an object to a string.
+See
+@uref{https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html}
+why this is a bad idea.
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_RD_VALIDATE_RD2HTML_
+Check the validity of the package HTML help pages using HTML tidy
+(@uref{https://www.html-tidy.org/}) (if available on the system path for
+executables). 
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4626,6 +4634,8 @@ _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
 _R_CHECK_BOGUS_RETURN_=true
 _R_CHECK_MATRIX_DATA_=TRUE
+_R_CHECK_CODE_CLASS_IS_STRING_=true
+_R_CHECK_RD_VALIDATE_RD2HTML_=true
 @end example
 
 @noindent

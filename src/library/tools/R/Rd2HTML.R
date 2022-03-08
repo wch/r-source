@@ -116,21 +116,32 @@ shtmlify <- function(s) {
     s
 }
 
-## <FIXME>
-## Unlike utils::URLencode(reserved = FALSE) ...
-## URL encode anything other than alphanumeric, . - _ $ and reserved
-## characters in URLs.
-urlify <- function(x) {
-    ## Like utils::URLencode(reserved = FALSE), but with '&' replaced by
-    ## '&amp;' and hence directly usable for href attributes.
-    ## See
-    ##   <https://url.spec.whatwg.org/#valid-url-string>
-    ##   RFC 3986 <https://tools.ietf.org/html/rfc3986>
-    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
-    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
-
-    ## We do not want to mess with already-encoded URLs
-    if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
+## URL encode for use in href attributes.
+urlify <- function(x, reserved = FALSE, repeated = FALSE) {
+    ## When reserved is a logical, like
+    ##   utils::URLencode(x, reserved)
+    ## with '&' replaced by '&amp;' and hence directly usable for href
+    ## attributes.  Equivalently, one could use
+    ##   escapeAmpersand(utils::URLencode(x, reserved))
+    ## Alternatively, reserved can be a string giving the reserved chars
+    ## not to percent encode if it starts with a '^', and to percent
+    ## encode otherwise (perhaps utils::URLencode() should be enhanced
+    ## accordingly?).
+    ##
+    ## According to RFC 3986 <https://tools.ietf.org/html/rfc3986>, the
+    ## reserved characters are
+    ##   c(gendelims, subdelims)
+    ## with
+    ##   gendelims <- c(":", "/", "?", "#", "[", "]", "@")
+    ##   subdelims <- c("!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=")
+    ## The following is
+    ##   paste(c(gendelims, subdelims), collapse = "")
+    ## re-arranged for convenient use in regexp (negated) character
+    ## classes:
+    alldelims <- "][!$&'()*+,;=:/?@#"
+    ## See also <https://url.spec.whatwg.org/#valid-url-string>.
+    
+    if(!repeated && grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
         gsub("&", "&amp;", x, fixed = TRUE)
     } else {
         chars <- unlist(strsplit(x, ""))
@@ -139,21 +150,53 @@ urlify <- function(x) {
                       paste0("%", toupper(as.character(charToRaw(x))),
                              collapse = ""),
                       "")
-        ## URL code points as per
-        ## <https://url.spec.whatwg.org/#valid-url-string>, with U+002D
-        ## (-) last.
+        if(is.character(reserved)) {
+            reserved <- paste(reserved, collapse = "")
+            reserved <- if(startsWith(reserved, "^"))
+                            substring(reserved, 2L)
+                        else      
+                            rawToChar(setdiff(charToRaw(alldelims),
+                                              charToRaw(reserved)))
+            escape <- any(charToRaw(reserved) == charToRaw("&"))
+        } else if(!reserved) {
+            reserved <- alldelims
+            escape <- TRUE
+        } else {
+            reserved <- ""
+            escape <- FALSE
+        }
         todo <- paste0("[^",
+                       reserved,
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                       "abcdefghijklmnopqrstuvwxyz",
-                       "0123456789",
-                       "!$&'()*+,./:;=?@_~-",
+                       "abcdefghijklmnopqrstuvwxyz0123456789._~-",
                        "]")
-        mixed <- ifelse(grepl(todo, chars), hex, chars)
-        gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
+        x <- paste(ifelse(grepl(todo, chars), hex, chars), collapse = "")
+        if(escape)
+            x <- gsub("&", "&amp;", x, fixed = TRUE)
+        x
     }
 }
-## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
-## </FIXME>
+
+urlify_email_address <- function(x) {
+    ## As per RFC 6068
+    ## <https://datatracker.ietf.org/doc/html/rfc6068#section-2> we must
+    ## percent encode
+    ##   "%"
+    ##   from gendelims:   c("/", "?", "#", "[", "]")  
+    ##   from subdelims:   c("&", ";", "=")
+    urlify(x, reserved = "][#?/&;=%", repeated = TRUE)
+}
+
+urlify_doi <- function(x) {
+    ## According to
+    ##   <https://www.doi.org/doi_handbook/2_Numbering.html#2.2>
+    ## a DOI name can "incorporate any printable characters from the
+    ## legal graphic characters of Unicode".  The subsequent
+    ##   <https://www.doi.org/doi_handbook/2_Numbering.html#htmlencoding>
+    ## discussed encoding issues but is a bit vague.
+    ## For now, percent encode all reserved characters but the slash.
+    urlify(x, reserved = "^/", repeated = TRUE)
+}
 
 ## Ampersands should be escaped in proper HTML URIs
 escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
@@ -168,11 +211,14 @@ invalid_HTML_chars_re <-
 ## & -> %26F is OK, & -> &amp; is NOT OK with dynamic help
 topic2url <- function(x)
 {
-    if (config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_", "TRUE"))) utils::URLencode(x, reserved=TRUE)
-    else urlify(x)
+    if(config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_",
+                                        "TRUE")))
+        utils::URLencode(x, reserved = TRUE)
+    else
+        urlify(x, reserved = TRUE)
 }
-topic2filename <- function(x) gsub("%", "+", utils::URLencode(x, reserved=TRUE))
-
+topic2filename <- function(x)
+    gsub("%", "+", utils::URLencode(x, reserved = TRUE))
 
 ## Create HTTP redirect files for aliases; called only during package
 ## installation if static help files are enabled. Files are named
@@ -187,7 +233,9 @@ createRedirects <- function(file, Rdobj)
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     if (!linksToTopics) return(invisible()) # do nothing
     ## create a HTTP redirect for each 'alias' in .../pkg/help/
-    redirHTML <- sprintf("<!DOCTYPE html>\n<html><head><meta http-equiv='refresh' content='0; url=../html/%s'><title>HTTP redirect</title></head><body></body></html>\n", urlify(basename(file)))
+    redirHTML <-
+        sprintf("<!DOCTYPE html>\n<html><head><meta http-equiv='refresh' content='0; url=../html/%s'><title>HTTP redirect</title></head><body></body></html>\n",
+                urlify(basename(file), reserved = TRUE))
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
     aliasName <- function(i) trimws(Rdobj[[i]][[1]])
@@ -332,7 +380,7 @@ Rd2HTML <-
                   "\\samp"='&lsquo;<span class="samp">&#8288;',
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
-                  "\\verb"='<code style="white-space: pre;">')
+                  "\\verb"='<code style="white-space: pre;">&#8288;')
     HTMLRight <- c("\\acronym"='</span></abbr>',
     		   "\\donttest"="",
     		   "\\env"="</span>",
@@ -342,7 +390,7 @@ Rd2HTML <-
                    "\\samp"="&#8288;</span>&rsquo;",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;",
-                   "\\verb"="</code>")
+                   "\\verb"="&#8288;</code>")
 
     addParaBreaks <- function(x) {
 	if (isBlankLineRd(x) && isTRUE(inPara)) {
@@ -555,7 +603,8 @@ Rd2HTML <-
                "\\email" = if (length(block)) {
                    url <- lines2str(as.character(block))
                    enterPara(doParas)
-                   of0('<a href="mailto:', urlify(url), '">',
+                   ## FIXME: urlify
+                   of0('<a href="mailto:', urlify_email_address(url), '">',
                        htmlify(url), '</a>')},
                ## watch out for empty URLs (TeachingDemos had one)
                "\\url" = if(length(block)) {
@@ -599,24 +648,28 @@ Rd2HTML <-
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
-                   enterPara(doParas)
-                   inEqn <<- TRUE
-                   of1("<i>")
-                   block <- block[[length(block)]];
-                   ## FIXME: space stripping needed: see Special.html
-                   writeContent(block, tag)
-                   of1("</i>")
-                   inEqn <<- FALSE
+                   block <- block[[length(block)]]
+                   if(length(block)) {
+                       enterPara(doParas)
+                       inEqn <<- TRUE
+                       of1("<i>")
+                       ## FIXME: space stripping needed: see Special.html
+                       writeContent(block, tag)
+                       of1("</i>")
+                       inEqn <<- FALSE
+                   }
                },
                "\\deqn" = {
-                   inEqn <<- TRUE
-                   leavePara(TRUE)
-                   of1('<p style="text-align: center;"><i>')
-                   block <- block[[length(block)]];
-                   writeContent(block, tag)
-                   of0('</i>')
-                   leavePara(FALSE)
-                   inEqn <<- FALSE
+                   block <- block[[length(block)]]
+                   if(length(block)) {
+                       inEqn <<- TRUE
+                       leavePara(TRUE)
+                       of1('<p style="text-align: center;"><i>')
+                       writeContent(block, tag)
+                       of0('</i>')
+                       leavePara(FALSE)
+                       inEqn <<- FALSE
+                   }
                },
                "\\figure" = {
                    enterPara(doParas)
@@ -861,7 +914,7 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
         if (tag %in% c("\\examples", "\\usage")) {
-            of1("<pre>")
+            of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE
         } else {
@@ -871,11 +924,11 @@ Rd2HTML <-
     	if (length(section)) {
 	    ## There may be an initial \n, so remove that
 	    s1 <- section[[1L]][1L]
-	    if (RdTags(section)[1] == "TEXT" && s1 == "\n") section <- section[-1L]
+	    if (RdTags(section)[1] %in% c("TEXT", "RCODE") && s1 == "\n") section <- section[-1L]
 	    writeContent(section, tag)
 	}
 	leavePara(FALSE)
-	if (pre) of0("</pre>\n")
+	if (pre) of0("</code></pre>\n")
     	sectionLevel <<- save
     }
 

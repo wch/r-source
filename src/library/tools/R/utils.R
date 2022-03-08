@@ -825,8 +825,8 @@ function(x, predicate = NULL, recursive = FALSE)
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
-    else
-        function(e) is.call(e) && predicate(e)
+    else ## no check predicate returns a scalar, so any() added for 4.2.0
+        function(e) is.call(e) && any(predicate(e))
 
     if(!recursive) return(Filter(f, x))
 
@@ -2404,7 +2404,7 @@ function(fun, args = list(), opts = character(), env = character(),
             x[i] <- y["CRAN"]
         c(x, y[match(names(y), names(x), 0L) == 0L])
     }
-    
+
     tfi <- tempfile("runri")
     tfo <- tempfile("runro")
     wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),

@@ -283,15 +283,6 @@ as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
 
-default.stringsAsFactors <- function()
-{
-    val <- getOption("stringsAsFactors")
-    if(is.null(val)) val <- FALSE
-    if(!is.logical(val) || is.na(val) || length(val) != 1L)
-        stop('options("stringsAsFactors") not set to TRUE or FALSE')
-    val
-}
-
 ## in case someone passes 'nm'
 as.data.frame.character <-
     function(x, ..., stringsAsFactors = FALSE)

@@ -38,17 +38,16 @@ isFALSE(x)
   \code{!} indicates logical negation (NOT).
 
   \code{&} and \code{&&} indicate logical AND and \code{|} and \code{||}
-  indicate logical OR.  The shorter form performs elementwise
+  indicate logical OR.  The shorter forms performs elementwise
   comparisons in much the same way as arithmetic operators.  The longer
-  form evaluates left to right examining only the first element of each
-  vector.  Evaluation proceeds only until the result is determined.  The
-  longer form is appropriate for programming control-flow and typically
-  preferred in \code{\link{if}} clauses.
+  forms evaluates left to right, proceeding only until the result is
+  determined.  The longer form is appropriate for programming
+  control-flow and typically preferred in \code{\link{if}} clauses.
 
-  Using vectors of more than one element will give a warning or error if
-  the environment variable \env{_R_CHECK_LENGTH_1_LOGIC2_} is set to
-  \code{warn} or \code{true} respectively.
-  
+  Using vectors of more than one element in \code{&&} or \code{||} will
+  give a warning (as from \R 4.2.0), or an error if the environment
+  variable \env{_R_CHECK_LENGTH_1_LOGIC2_} is set to a true value (this
+  is intended to become the default in future).
 
   \code{xor} indicates elementwise exclusive OR.
 

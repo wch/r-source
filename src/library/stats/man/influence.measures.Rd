@@ -1,6 +1,6 @@
 % File src/library/stats/man/influence.measures.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{influence.measures}
@@ -228,8 +228,9 @@ lmH <- lm(yh ~ xh)
 \donttest{summary(lmH)}
 im <- influence.measures(lmH)
 \donttest{ im }
+is.inf <- apply(im$is.inf, 1, any)
 plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
-abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
+abline(lmH); points(xh[is.inf], yh[is.inf], pch = 20, col = 2)
 
 ## Irwin's data [Williams 1987]
 xi <- 1:5

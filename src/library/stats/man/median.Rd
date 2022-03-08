@@ -1,6 +1,6 @@
 % File src/library/stats/man/median.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{median}
@@ -36,7 +36,7 @@ median(x, na.rm = FALSE, \dots)
 
   If there are no values or if \code{na.rm = FALSE} and there are \code{NA}
   values the result is \code{NA} of the same type as \code{x} (or more
-  generally the result of \code{x[FALSE][NA]}).
+  generally the result of \code{x[NA_integer_]}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

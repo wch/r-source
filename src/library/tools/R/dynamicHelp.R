@@ -27,6 +27,16 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
+    logHelpRequests <-
+        config_val_to_logical(Sys.getenv("_R_HTTPD_LOG_MESSAGES_", "FALSE"))
+    if (logHelpRequests) {
+        message(sprintf("HTTPD-REQUEST %s%s", path,
+                        if (is.null(query)) ""
+                        else { # query is a named chr vector 
+                            paste(paste(names(query), query, sep = "="),
+                                  collapse = ",")
+                        }))
+    }
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     .HTMLdirListing <- function(dir, base, up) {
@@ -260,10 +270,14 @@ httpd <- function(path, query, ...)
     mono <- function(text)
         paste0('<span class="samp">', text, "</span>")
 
-    error_page <- function(msg)
+    error_page <- function(msg) {
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-ERROR %s %s", path, paste(msg, collapse = " ")))
+        }
         list(payload =
              paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
-
+    }
+        
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
         return(list(file = file.path(R.home("doc"), "html", "R.css"),
@@ -518,7 +532,11 @@ httpd <- function(path, query, ...)
     } else if (grepl(DemoRegexp, path)) {
     	pkg <- sub(DemoRegexp, "\\1", path)
     	demo <- sub(DemoRegexp, "\\2", path)
-    	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-DEMO %s::%s", pkg, demo))
+        }
+        else
+            demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
 	return( list(payload = paste0("Demo '", pkg, "::", demo,
 				"' was run in the console.",
 				" To repeat, type 'demo(",

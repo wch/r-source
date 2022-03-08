@@ -13,22 +13,19 @@
 \ProvidesPackage{Rd}{}
 
 \RequirePackage{ifthen}
-\newboolean{Rd@has@ae}
-\newboolean{Rd@use@ae}
 \newboolean{Rd@use@hyper}
 \setboolean{Rd@use@hyper}{true}
 \newboolean{Rd@has@times}
 \newboolean{Rd@use@times}
-\newboolean{Rd@use@cm-super}
 \newboolean{Rd@has@lm}
 \newboolean{Rd@use@lm}
 \newboolean{Rd@use@beramono}
 \newboolean{Rd@use@inconsolata}
-\DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
+\DeclareOption{ae}{}        % no-op, retained for backward compatibility
 \DeclareOption{hyper}{\setboolean{Rd@use@hyper}{true}}
 \DeclareOption{times}{\setboolean{Rd@use@times}{true}}
 \DeclareOption{lm}{\setboolean{Rd@use@lm}{true}}
-\DeclareOption{cm-super}{\setboolean{Rd@use@cm-super}{true}}
+\DeclareOption{cm-super}{}  % no-op, retained for backward compatibility
 \DeclareOption{beramono}{\setboolean{Rd@use@beramono}{true}}
 \DeclareOption{inconsolata}{\setboolean{Rd@use@inconsolata}{true}}
 \ProcessOptions
@@ -279,22 +276,17 @@
 \newcommand{\sQuote}[1]{`#1'}
 \newcommand{\dQuote}[1]{``#1''}
 
-\IfFileExists{ae.sty}{\setboolean{Rd@has@ae}{true}}{}
-\ifthenelse{\boolean{Rd@use@ae}\and\boolean{Rd@has@ae}}{%
-  \usepackage[T1]{fontenc}
-  \usepackage{ae}
-  \input{t1aett.fd}
-  \DeclareFontShape{T1}{aett}{bx}{n}{<->ssub*aett/m/n}{}}{}
+%% load fontenc (with ec fonts) unless we detect that we are not running pdfTeX
+\IfFileExists{iftex.sty}{\RequirePackage{iftex}}{}
+\@ifpackageloaded{iftex}{\ifPDFTeX\usepackage[T1]{fontenc}\fi}{%
+  \usepackage[T1]{fontenc}}
+
 \IfFileExists{times.sty}{\setboolean{Rd@has@times}{true}}{}
 \ifthenelse{\boolean{Rd@use@times}\and\boolean{Rd@has@times}}{%
-  \usepackage[T1]{fontenc}
   \usepackage{times}}{}
 \IfFileExists{lmodern.sty}{\setboolean{Rd@has@lm}{true}}{}
 \ifthenelse{\boolean{Rd@use@lm}\and\boolean{Rd@has@lm}}{%
-  \usepackage[T1]{fontenc}
   \usepackage{lmodern}}{}
-\ifthenelse{\boolean{Rd@use@cm-super}}{%
-  \usepackage[T1]{fontenc}}{}
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
 %% it appears that all versions of zi4.sty support [noupquote],

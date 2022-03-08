@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2021  The R Core Team.
+ *  Copyright (C) 1995--2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2191,11 +2191,10 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
   Currently called from
 
-  eval.c
-  by asLogicalNoNA with warnByDefault =  TRUE
+  (Formerly eval.c by asLogicalNoNA with warnByDefault = TRUE.)
 
   coerce.c
-  by asLogical2 with warnByDefault =  FALSE
+  by asLogical2 with warnByDefault = TRUE (was FALSE)
  */
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,

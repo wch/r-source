@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -74,13 +74,13 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     hypothesis.}
   \item{method}{the character string
     \code{"Fisher's Exact Test for Count Data"}.}
-  \item{data.name}{a character string giving the names of the data.}
+  \item{data.name}{a character string giving the name(s) of the data.}
 }
 \details{
   If \code{x} is a matrix, it is taken as a two-dimensional contingency
   table, and hence its entries should be nonnegative integers.
-  Otherwise, both \code{x} and \code{y} must be vectors of the same
-  length.  Incomplete cases are removed, the vectors are coerced into
+  Otherwise, both \code{x} and \code{y} must be vectors or factors of the same
+  length.  Incomplete cases are removed, vectors are coerced into
   factor objects, and the contingency table is computed from these.
 
   For \eqn{2 \times 2}{2 by 2} cases, p-values are obtained directly
@@ -137,6 +137,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   Simulation is done conditional on the row and column marginals, and
   works only if the marginals are strictly positive.  (A C translation
   of the algorithm of Patefield (1981) is used.)
+  Note that the default number of replicates (\code{B = 2000}) implies a
+  minimum p-value of about 0.0005 (\eqn{1/(B+1)}).
 }
 \references{
   Agresti, A. (1990).

@@ -334,6 +334,10 @@ test-UTF-8:
 	@$(ECHO) "running regression tests for UTF-8 <--> int conversion (slow)"
 	@$(R2) < $(srcdir)/utf8.R > utf8.Rout 2>&1 || (mv utf8.Rout utf8.Rout.fail && exit 1)
 
+test-Iconv:
+	@$(ECHO) "running regression tests for iconv()"
+	@$(R2) < $(srcdir)/iconv.R > iconv.Rout 2>&1 || (mv iconv.Rout iconv.Rout.fail && exit 1)
+
 test-Conditions:
 	@$(ECHO) "running unit tests for the condition system"
 	@rm -f $(test-out-cond)
@@ -519,5 +523,5 @@ INSTFILES = README \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  encodings.R utf8-regex.R PCRE.R CRANtools.R \
-	  timezone.R conditions.R \
+	  timezone.R conditions.R iconv.R \
 	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv

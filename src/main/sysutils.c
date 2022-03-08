@@ -727,7 +727,35 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 		    }
 		    goto next_char;
-		}  else if(strcmp(sub, "byte") == 0) {
+		} else if(fromUTF8 && streql(sub, "c99")) {
+		    if(outb < 11) {
+			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+			goto top_of_loop;
+		    }
+		    wchar_t wc;
+		    ssize_t clen = utf8toucs(&wc, inbuf);
+		    if(clen > 0 && inb >= clen) {
+			R_wchar_t ucs;
+			if (IS_HIGH_SURROGATE(wc))
+			    ucs = utf8toucs32(wc, inbuf);
+			else
+			    ucs = (R_wchar_t) wc;
+			inbuf += clen; inb -= clen;
+			if(ucs < 65536) {
+			    // gcc 7 objects to this with unsigned int
+			    snprintf(outbuf, 7, "\\u%04x", (unsigned short) ucs);
+			    outbuf += 6; outb -= 6;
+			} else {
+			    /* R_wchar_t is unsigned int on Windows, 
+			       otherwise wchar_t (usually int).
+			       In any case Unicode points <= 0x10FFFF
+			    */
+			    snprintf(outbuf, 11, "\\U%08x", (unsigned int) ucs);
+			    outbuf += 10; outb -= 10;
+			}
+		    }
+		    goto next_char;
+		} else if(strcmp(sub, "byte") == 0) {
 		    if(outb < 5) {
 			R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 			goto top_of_loop;

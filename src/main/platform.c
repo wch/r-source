@@ -2072,9 +2072,12 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
 		CHAR(STRING_ELT(locale, 0)));
     }
+#ifdef Win32
+    int oldCP = localeCP;
+#endif
     R_check_locale();
 #ifdef Win32
-    if (localeCP && systemCP != localeCP) {
+    if (localeCP && systemCP != localeCP && oldCP != localeCP) {
 	/* For now, don't warn for localeCP == 0, but it can cause problems
 	   as well. Keep in step with main.c. */
 	warning(_("using locale code page other than %d%s may cause problems"),

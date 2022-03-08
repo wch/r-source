@@ -8530,8 +8530,9 @@ PRESS :[1] 798.939
 > yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
 > lmH <- lm(yh ~ xh)
 > im <- influence.measures(lmH)
+> is.inf <- apply(im$is.inf, 1, any)
 > plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
-> abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
+> abline(lmH); points(xh[is.inf], yh[is.inf], pch = 20, col = 2)
 > 
 > ## Irwin's data [Williams 1987]
 > xi <- 1:5
@@ -15895,8 +15896,8 @@ Contrast 1 Contrast 2 Contrast 3
 > ## self-starting logistic model
 > 
 > ## The "initializer" (finds initial values for parameters from data):
-> initLogis <- function(mCall, data, LHS) {
-+     xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+> initLogis <- function(mCall, data, LHS, ...) {
++     xy <- sortedXyData(mCall[["x"]], LHS, data)
 +     if(nrow(xy) < 4)
 +         stop("too few distinct input values to fit a logistic model")
 +     z <- xy[["y"]]
@@ -15908,14 +15909,24 @@ Contrast 1 Contrast 2 Contrast 3
 +     pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
 +                      data = xy,
 +                      start = list(xmid = aux[[1L]], scal = aux[[2L]]),
-+                      algorithm = "plinear"))
-+     setNames(pars[c(".lin", "xmid", "scal")], nm = mCall[c("Asym", "xmid", "scal")])
++                      algorithm = "plinear", ...))
++     setNames(pars [c(".lin", "xmid", "scal")],
++              mCall[c("Asym", "xmid", "scal")])
 + }
 > 
-> SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
-+                      initial = initLogis,
-+                      parameters = c("Asym", "xmid", "scal"))
-> 
+> mySSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
++                        initial = initLogis,
++                        parameters = c("Asym", "xmid", "scal"))
+> ## Don't show: 
+> ## IGNORE_RDIFF_BEGIN
+> ## End(Don't show)
+> getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
++            data = subset(ChickWeight, Chick == 1))
+     Asym      xmid      scal 
+937.02983  35.22296  11.40521 
+> ## Don't show: 
+> ## IGNORE_RDIFF_END
+> ## End(Don't show)
 > 
 > # 'first.order.log.model' is a function object defining a first order
 > # compartment model

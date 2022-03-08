@@ -42,25 +42,6 @@
 extern "C" {
 #endif
 
-/* S Like Error Handling */
-
-#if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
-
-#include <R_ext/Error.h>	/* for Rf_error and Rf_warning */
-    
-#define R_PROBLEM_BUFSIZE	4096
-/* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(snprintf)(R_problem_buf, R_PROBLEM_BUFSIZE,
-#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(snprintf)(R_problem_buf, R_PROBLEM_BUFSIZE,
-#define ERROR			),Rf_error(R_problem_buf);}
-#define RECOVER(x)		),Rf_error(R_problem_buf);}
-#define WARNING(x)		),Rf_warning(R_problem_buf);}
-#define LOCAL_EVALUATOR		/**/
-#define NULL_ENTRY		/**/
-#define WARN			WARNING(NULL)
-
-#endif
-
 /* S Like Memory Management */
 
 extern void *R_chk_calloc(R_SIZE_T, R_SIZE_T);

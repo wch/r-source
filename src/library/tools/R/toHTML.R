@@ -256,10 +256,13 @@ makeHelpTable <- function(help, depth=2) {
              '<col style="width:  2%;" />',
              '<col style="width: 74%;" />')
     pkg <- help[, "Package"]
-    root <- paste0(strrep("../", depth), "library/", pkg, "/html/")
+    ## Target could be ../library/pkg/help/topic or ../library/pkg/html/filename.html
+    ## We only have topic, so can only do the former. Topics may contain
+    ## special characters, so need to be encoded.
+    root <- paste0(strrep("../", depth), "library/", pkg, "/help/")
     topic <- help[, "Topic"]
     Title <- help[, "Title"]
-    links <- paste0('<a href="', root, topic, '.html">',
+    links <- paste0('<a href="', root, topic2url(topic), '">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
     lines <- paste0('<tr><td style="text-align: right; vertical-align: top;">', links,

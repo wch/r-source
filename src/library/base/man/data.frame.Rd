@@ -1,12 +1,11 @@
 % File src/library/base/man/data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data.frame}
 \title{Data Frames}
 \alias{data.frame}
-\alias{default.stringsAsFactors}
 \description{
   The function \code{data.frame()} creates data frames, tightly coupled
   collections of variables which share many of the properties of
@@ -17,8 +16,6 @@
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
            check.names = TRUE, fix.empty.names = TRUE,
            stringsAsFactors = FALSE)
-
-default.stringsAsFactors() # << this is deprecated !
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -79,8 +76,8 @@ default.stringsAsFactors() # << this is deprecated !
   generic function, methods can be written to change the behaviour of
   arguments according to their classes: \R comes with many such methods.
   Character variables passed to \code{data.frame} are converted to
-  factor columns unless protected by \code{\link{I}} or argument
-  \code{stringsAsFactors} is false.  If a list or data
+  factor columns if not protected by \code{\link{I}} and argument
+  \code{stringsAsFactors} is true.  If a list or data
   frame or matrix is passed to \code{data.frame} it is as if each
   component or column had been passed as a separate argument (except for
   matrices protected by \code{\link{I}}).
@@ -105,12 +102,6 @@ default.stringsAsFactors() # << this is deprecated !
   not a column (by name or number).
 
   Names are removed from vector inputs not protected by \code{\link{I}}.
-
-  \code{default.stringsAsFactors} is a utility that takes
-  \code{\link{getOption}("stringsAsFactors")} and ensures the result is
-  \code{TRUE} or \code{FALSE} (or throws an error if the value is not
-  \code{NULL}).  This function is \bold{deprecated} now and will no longer
-  be available in the future.
 }
 \note{
   In versions of \R prior to 2.4.0 \code{row.names} had to be
@@ -138,15 +129,15 @@ default.stringsAsFactors() # << this is deprecated !
 }
 \examples{
 L3 <- LETTERS[1:3]
-fac <- sample(L3, 10, replace = TRUE)
-(d <- data.frame(x = 1, y = 1:10, fac = fac))
+char <- sample(L3, 10, replace = TRUE)
+(d <- data.frame(x = 1, y = 1:10, char = char))
 ## The "same" with automatic column names:
 data.frame(1, 1:10, sample(L3, 10, replace = TRUE))
 
 is.data.frame(d)
 
-## do not convert to factor, using I() :
-(dd <- cbind(d, char = I(letters[1:10])))
+## enable automatic conversion of character arguments to factor columns:
+(dd <- data.frame(d, fac = letters[1:10], stringsAsFactors = TRUE))
 rbind(class = sapply(dd, class), mode = sapply(dd, mode))
 
 stopifnot(1:10 == row.names(d))  # {coercion}

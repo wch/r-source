@@ -32,6 +32,7 @@
 ## .check_package_code_assign_to_globalenv
 ## .check_package_code_attach
 ## .check_package_code_data_into_globalenv
+## .check_package_code_class_is_string
 ## .check_code_usage_in_package
 ## .check_bogus_return
 ## .check_dotInternal
@@ -5292,7 +5293,8 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".First.lib", ".onAttach", ".onLoad")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (as.character(z[[1L]]) == "function")) {
+           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
             calls <- c(calls, new)
@@ -5422,7 +5424,8 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".Last.lib", ".onDetach")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (as.character(z[[1L]]) == "function")) {
+           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
             calls <- c(calls, new)
@@ -5445,6 +5448,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
             e3 <- as.character(e[[3L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         if((as.character(e[[1L]])[1L] %in% ".Internal") &&
@@ -5452,6 +5456,7 @@ function(dir)
         if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
             e3 <- as.character(e[[4L]])
             if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+            ## maybe this should use any()
             return(e3 != pkgname)
         }
         FALSE
@@ -5580,6 +5585,41 @@ function(x, ...)
 
     c("Found the following calls to data() loading into the global environment:",
       unlist(Map(.format_calls_in_file, x, names(x))))
+}
+
+### * .check_package_code_class_is_string
+
+## Could easily make this return something classed with suitable
+## format() and print() methods ...
+
+.check_package_code_class_is_string <-
+function(dir) {
+    predicate <- function(e) {
+        is.call(e) &&
+            (length(e) >= 2L) &&
+            (as.character(e[[1L]])[1L] == "if") &&
+            is.call(e <- e[[2L]]) &&
+            (as.character(e[[1L]])[1L] %in% c("==", "!-")) &&
+            is.call(e2 <- e[[2L]]) &&
+            (as.character(e2[[1L]])[1L] == "class") &&
+            is.character(e[[3L]]) &&
+            (length(e[[3L]] == 1L))
+    }
+    x <- Filter(length,
+                .find_calls_in_package_code(dir, predicate,
+                                            recursive = TRUE))
+    if(length(x)) {
+        s <- sprintf("File %s: %s",
+                     sQuote(rep.int(names(x), lengths(x))),
+                     vapply(unlist(x),
+                            function(e)
+                                sprintf("if (%s) ...", deparse1(e[[2L]])),
+                            ""))
+        writeLines(c("Found if() conditions comparing class() to string:",
+                     s,
+                     "Use inherits() (or maybe is()) instead."))
+    }
+    invisible(x)
 }
 
 ### * .check_packages_used
@@ -6129,40 +6169,43 @@ function(db, files)
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in%
-               c("library", "require", "loadNamespace", "requireNamespace")) {
-                if(length(e) >= 2L) {
-                    ## We need to remove '...': OTOH the argument could be NULL
-                    keep <- vapply(e,
-                                   function(x) deparse(x)[1L] != "...",
-                                   NA)
-                    mc <- match.call(baseenv()[[Call]], e[keep])
-                    if(!is.null(pkg <- mc$package)) {
-                        pkg <- sub('^"(.*)"$', '\\1', pkg)
-                        ## <NOTE>
-                        ## Using code analysis, we really don't know which
-                        ## package was called if character.only = TRUE and
-                        ## the package argument is not a string constant.
-                        ## (Btw, what if character.only is given a value
-                        ## which is an expression evaluating to TRUE?)
-                        dunno <- FALSE
-                        pos <- which(!is.na(pmatch(names(e),
-                                                   "character.only")))
-                        if(length(pos)
-                           && isTRUE(e[[pos]])
-                           && !identical(class(e[[2L]]), "character"))
+            if((Call %in%
+               c("library", "require", "loadNamespace", "requireNamespace"))
+               && (length(e) >= 2L)) {
+                ## We need to remove '...': OTOH the argument could be NULL
+                keep <- vapply(e,
+                               function(x) deparse(x)[1L] != "...",
+                               NA)
+                mc <- match.call(baseenv()[[Call]], e[keep])
+                if(!is.null(pkg <- mc$package)) {
+                    ## <NOTE>
+                    ## Using code analysis, we really don't know which
+                    ## package was called if character.only = TRUE and
+                    ## the package argument is not a string constant.
+                    ## (Btw, what if character.only is given a value
+                    ## which is an expression evaluating to TRUE?)
+                    dunno <- FALSE
+                    if((Call %in% c("loadNamespace",
+                                    "requireNamespace"))) {
+                        if(!identical(class(pkg), "character"))
                             dunno <- TRUE
-                        ## </NOTE>
-                        if(! dunno
-                           && pkg %notin% c(depends_suggests, common_names))
+                    } else {
+                        if(!identical(class(pkg), "character") &&
+                           isTRUE(mc$character.only))
+                            dunno <- TRUE
+                    }
+                    if(!dunno) {
+                        pkg <- as.character(pkg)
+                        if(pkg %notin% c(depends_suggests, common_names))
                             bad_exprs <<- c(bad_exprs, pkg)
                     }
                 }
             } else if(Call %in%  "::") {
+                pkg <- deparse(e[[2L]])
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in%  ":::") {
+                pkg <- deparse(e[[2L]])
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if((Call %in% "data" && length(e) >= 3L) ||

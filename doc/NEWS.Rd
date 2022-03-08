@@ -16,6 +16,15 @@
       named first argument requires name \code{formula} in earlier
       versions of \R and name \code{x} now, so portable code should not
       name the argument (code in many packages did).
+
+      \item Calling \code{&&} or \code{||} with an argument of length
+      greater than one now gives a warning (and it is intended that it
+      will eventually become an error).
+      
+      \item Calling \code{if()} or \code{while()} with a condition of
+      length greater than one gives an error rather than a warning.
+      Consequently, environment variable
+      \env{_R_CHECK_LENGTH_1_CONDITION_} no longer has any effect.
     }
   }
 
@@ -212,6 +221,9 @@
       \item The return value from \code{ks.test()} now has class
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
+
+      \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
+      escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
     }
   }
 
@@ -419,11 +431,6 @@
 
       Header \file{R_ext/RS.h} no longer includes \file{R_ext/Error.h}.
 
-      %% To be removed on Mar 1.
-      For the time being the definitions can be reinstated by defining
-      macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
-      any \R{} header.
-
       \item Header \file{R_ext/Constants.h} (included by \file{R.h})
       when included from C++ now includes the C++ header \file{cfloat}
       rather than the C header \file{float.h} (now possible as C++11 is
@@ -448,10 +455,9 @@
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).
 
-      %% Deferred until Mar 15 waiting for packages to be adjusted.
-      %% \item Use of the legacy header \file{S.h} (undocumented since
-      %% 2016) now gives a compilation warning reported by
-      %% \command{R CMD check}, with suitable compilers.
+      \item The header \file{S.h} which has been unsupported since Jan
+      2016 has been removed.   Use \file{R.h} instead.
+      [Scheduled for Mar 15.]
     }
   }
 
@@ -475,6 +481,13 @@
       and environment variable \env{R_MAX_MEM_SIZE} are defunct.  The
       memory allocation limit was important for 32-bit builds,
       but these are no longer supported.
+
+      \item \code{default.stringsAsFactors()} is now formally deprecated,
+      where that was only mentioned on its regular help page,
+      previously.  So it now gives a warning if called.
+
+      \item \code{unix.time()} is defunct now; it had been deprecated since
+      \R 3.4.0.
     }
   }
 
@@ -606,11 +619,23 @@
 
       \item \command{R CMD Sweave --clean} no longer removes existing
       files or subdirectories (\PR{18242}).
+
+      \item Quartz device no longer splits polylines into subpaths. That
+      has caused narrowly-spaced lines with many points to always look
+      solid even when dashed line type was used due to dash phase
+      restarts.
+
+      \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
+      again as before R 3.5.0, thanks to the report and patch in \PR{18284}
+      by Suharto Anggono.
+
+      \item \code{as.list(f)} for a \code{factor} \code{f} now keeps
+      \code{names(f)}, fixing \PR{18309}.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.2 patched}{
+\section{\Rlogo CHANGES IN R 4.1.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The default version of Bioconductor has been changed to

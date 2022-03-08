@@ -1557,8 +1557,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
         mg <- findMethods(fg)
         sigsg <- findMethodSignatures(methods = mg)
         newSigs <- is.na(match(names(mg), mnames))
-        mg <- mg[newSigs]
-        mdefs <- c(mdefs, mg[newSigs])
+        ## mdefs <- c(mdefs, mg[newSigs])
         sigs <- rbind(sigs, sigsg[newSigs,])
         mnames <- c(mnames, names(mg)[newSigs])
       }

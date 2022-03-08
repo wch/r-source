@@ -2094,13 +2094,12 @@ stopifnot(exprs = {
 
 ## More strictness in '&&' and '||' :
 Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn") # only warn
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn")# is the default as from R 4.2.0
+## but may have been set more stringently
 tools::assertWarning(1 && 0:1)
 Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
 tools::assertError(0 || 0:1)
-if(is.na(oEV)) { # (by default)
-    Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
-    2 && 0:1 # should not even warn
+if(is.na(oEV)) {Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
 } else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
 
 
@@ -5815,6 +5814,17 @@ utils:::.Sweave(c("--clean", "Sweave-test-2.Rnw"), no.q = TRUE)
 stopifnot(dir.exists("subdir"))
 setwd(owd)
 ## the pre-existing directory was removed in R <= 4.1.x
+
+
+## as.list(<named_factor>): PR#18309
+f <- gl(3,2,12, letters[1:3])
+nf <- LETTERS[seq_along(f)]
+names(f) <- nf ; f
+str(lf <- as.list(f))
+stopifnot(identical(nf, names(f)),
+          identical(nf, names(lf)))
+## In R <= 4.1.x, the length-1 factor components where named instead
+
 
 
 ## keep at end
