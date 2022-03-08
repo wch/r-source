@@ -224,6 +224,12 @@
 
       \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
+
+      \item In a forward pipe \code{|>} expression it is now possible to
+      use a named argument with the placeholder \code{_} in
+      the \code{rhs} call to specify where the \code{lhs} is to be
+      inserted.  The placeholder can only appear once on the \code{rhs}.
+
     }
   }
 
