@@ -57,13 +57,14 @@ mtcars |> head()                      # same as head(mtcars)
 mtcars |> head(2)                     # same as head(mtcars, 2)
 mtcars |> subset(cyl == 4) |> nrow()  # same as nrow(subset(mtcars, cyl == 4))
 
-# passing the lhs into an argument other than the first, either:
+# to pass the lhs into an argument other than the first, either
+# use the _ placeholder with a named argument:
+mtcars |> subset(cyl == 4) |> lm(mpg ~ disp, data = _)
+# or use an anonymous function:
 mtcars |> subset(cyl == 4) |> (function(d) lm(mpg ~ disp, data = d))()
 mtcars |> subset(cyl == 4) |> (\(d) lm(mpg ~ disp, data = d))()
-# or explicitly naming the argument(s) before the "one":
+# or explicitly name the argument(s) before the "one":
 mtcars |> subset(cyl == 4) |> lm(formula = mpg ~ disp)
-# or use the _ placeholder with a named argument:
-mtcars |> subset(cyl == 4) |> lm(mpg ~ disp, data = _)
 
 # the pipe operator is implemented as a syntax transformation:
 quote(mtcars |> subset(cyl == 4) |> nrow())
