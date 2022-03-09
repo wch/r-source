@@ -59,21 +59,21 @@ h <- convertHeight(stringHeight("test"), "in", valueOnly=TRUE)
 check(coords[[1]], list(x=c(0, 0, w, w), y=c(0, h, h, 0)))
       
 coords <- grobCoords(textGrob("test"), closed=FALSE)
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 
 ## All emptyCoords
 coords <- grobCoords(moveToGrob())
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 
 coords <- grobCoords(lineToGrob())
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 
 coords <- grobCoords(nullGrob())
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 
 coords <- grobCoords(clipGrob())
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 
 coords <- grobCoords(rasterGrob(matrix(1)))
-check(coords, emptyCoords)
+check(coords[[1]], emptyCoords)
 

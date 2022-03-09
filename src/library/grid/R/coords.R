@@ -206,20 +206,20 @@ emptyGTreeCoords <- function(name) {
     gridGTreeCoords(list(emptyGrobCoords("0")), name)
 }
 
-isEmptyCoords <- function(x) {
+isEmptyCoords <- function(coords) {
     UseMethod("isEmptyCoords")
 }
 
-isEmptyCoords.GridCoords <- function(x) {
+isEmptyCoords.GridCoords <- function(coords) {
     identical(coords, emptyCoords) 
 }
 
-isEmptyCoords.GridGrobCoords <- function(x) {
-    all(sapply(x, identical, emptyCoords))
+isEmptyCoords.GridGrobCoords <- function(coords) {
+    all(sapply(coords, identical, emptyCoords))
 }
 
-isEmptyCoords.GridGTreeCoords <- function(x) {
-    all(sapply(x, isEmptyCoords))    
+isEmptyCoords.GridGTreeCoords <- function(coords) {
+    all(sapply(coords, isEmptyCoords))    
 }
 
 ################################################################################
@@ -569,7 +569,7 @@ grobPoints.text <- function(x, closed, ...) {
 grobPoints.points <- function(x, closed, ...) {
     closed <- as.logical(closed)
     if (is.na(closed)) 
-        error("Closed must not be a missing value")
+        stop("Closed must not be a missing value")
     pts <- grid.Call(C_pointsPoints, x$x, x$y, x$pch, x$size, closed)
     if (is.null(pts) ||
         all(sapply(pts, is.null))) {

@@ -1,7 +1,8 @@
 useDynLib("grid", .registration = TRUE, .fixes = "C_")
 
 import(grDevices)
-importFrom(utils, str)
+importFrom(utils,
+           str, head)
 
 export(
        "arcCurvature", "arrow",
@@ -125,6 +126,7 @@ export(
 
        "grobCoords", "grobPoints",
        "gridCoords", "gridGrobCoords", "gridGTreeCoords",
+       "emptyCoords", "emptyGrobCoords", "emptyGTreeCoords",
        "isEmptyCoords",
     
        "grid.xaxis", "grid.yaxis",

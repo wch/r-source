@@ -18,7 +18,8 @@ linearGradient(colours = c("black", "white"),
                x1 = unit(0, "npc"), y1 = unit(0, "npc"),  
                x2 = unit(1, "npc"), y2 = unit(1, "npc"),
                default.units = "npc",
-               extend = c("pad", "repeat", "reflect", "none")) 
+               extend = c("pad", "repeat", "reflect", "none"),
+               group = TRUE) 
 radialGradient(colours = c("black", "white"),
                stops = seq(0, 1, length.out = length(colours)),
                cx1 = unit(.5, "npc"), cy1 = unit(.5, "npc"),
@@ -26,13 +27,15 @@ radialGradient(colours = c("black", "white"),
                cx2 = unit(.5, "npc"), cy2 = unit(.5, "npc"),
                r2 = unit(.5, "npc"),
                default.units = "npc",
-               extend = c("pad", "repeat", "reflect", "none")) 
+               extend = c("pad", "repeat", "reflect", "none"),
+               group = TRUE) 
 pattern(grob,
         x = 0.5, y = 0.5, width = 1, height = 1,
         default.units = "npc",
         just="centre", hjust=NULL, vjust=NULL,
         extend = c("pad", "repeat", "reflect", "none"),
-        gp = gpar(fill="transparent")) 
+        gp = gpar(fill="transparent"),
+        group = TRUE) 
 }
 \arguments{
   \item{colours}{Two or more colours for the gradient to transition between.}
@@ -53,6 +56,9 @@ pattern(grob,
   \item{just, hjust, vjust}{The justification of the tile relative to
     its location.}
   \item{gp}{Default graphical parameter settings for the tile.}
+  \item{group}{A logical indicating whether the gradient or pattern is
+    relative to the bounding box of the grob or whether
+    it is relative to individual shapes within the grob.}
 }
 \details{
   Use these functions to define a gradient fill or pattern fill and
@@ -72,6 +78,18 @@ pattern(grob,
   To create a tiling pattern, provide a simple grob (like a circle),
   specify the location and size of the pattern to include the simple
   grob, and specify \code{extend="repeat"}.
+
+  On viewports, gradients and patterns are relative to the entire
+  viewport, unless \code{group = FALSE}, in which case they are
+  relative to individual grobs as they are drawn.
+  On gTrees, gradients and patterns are relative to a bounding
+  box around all of the children of the gTree,
+  unless \code{group = FALSE}, in which case they are
+  relative to individual children as they are drawn.
+  On grobs, gradients and patterns are relative to a bounding
+  box around all of the shapes that are drawn by the grob,
+  unless \code{group = FALSE}, in which case they are
+  relative to individual shapes.
 }
 \section{Warning}{
   Gradient fills and pattern fills are not supported on all graphics
