@@ -320,7 +320,7 @@ function(q, m, n = length(z) - m, z = NULL,
         diag
     }
     ret[IND] <- sapply(stat[IND], pfun)
-    if (any(is.na(ret[IND]))) {
+    if (any(!is.finite(ret[IND]))) {
         warning("computation of exact probability failed, returning Monte Carlo approximation")
         return(psmirnov(q = q, m = n.x, n = n.y, z = z, 
                         two.sided = two.sided, exact = FALSE, 
