@@ -97,6 +97,10 @@ grid.fillStroke <- function(...) {
 
 ################################
 ## Other grob methods
+
+## NOTE, we need to create a gTree to include any 'gp' and 'vp' settings
+## (and cannot just call grobCoords(x) because, although 'x' is a gTree
+##  is has no children - the "child" is x$grob)
 grobCoords.GridStroke <- function(x, closed, ...) {
     if (closed)
         emptyGrobCoords(x$name)
@@ -122,8 +126,6 @@ grobCoords.GridFill <- function(x, closed, ...) {
         emptyGrobCoords(x$name)
 }
 
-## NOTE, like grobPoints.gList(), we need to call grobCoords()
-## on the "child" grob so that it can perform any relevant set up
 grobPoints.GridFill <- function(x, closed, ...) {
     if (closed)
         grobCoords(x$grob, closed, ...)
@@ -136,8 +138,6 @@ grobCoords.GridFillStroke <- function(x, closed, ...) {
                      closed, ...)
 }
 
-## NOTE, like grobPoints.gList(), we need to call grobCoords()
-## on the "child" grob so that it can perform any relevant set up
 grobPoints.GridFillStroke <- function(x, closed, ...) {
     grobCoords(x$grob, closed, ...)
 }
