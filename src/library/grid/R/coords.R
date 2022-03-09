@@ -265,6 +265,11 @@ grobCoords.grob <- function(x, closed, ...) {
 }
 
 ## "gTree"s
+grobCoords.gList <- function(x, closed, ...) {
+    gridGTreeCoords(lapply(x, grobCoords, closed, ...),
+                    grobName())
+}
+
 grobCoords.gTree <- function(x, closed, ...) {
     vp <- x$vp
     trans <- current.transform()
@@ -604,6 +609,14 @@ grobPoints.null <- function(x, closed, ...) {
 ## and they must call grobCoords() rather than grobPoints()
 ## on those children so that the children can perform any
 ## relevant set up
+
+grobPoints.gList <- function(x, closed, ...) {
+    if (length(x) > 0) {
+        gridGTreeCoords(lapply(x, grobCoords, closed, ...), grobName())
+    } else {
+        emptyGTreeCoords(grobName())
+    }
+}
 
 grobPoints.gTree <- function(x, closed, ...) {
     if (length(x$children) > 0) {
