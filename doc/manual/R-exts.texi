@@ -14872,9 +14872,15 @@ included in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h}
 includes (but see the comments for @code{cospi}).
 @end deftypefun
 
-@deftypefun double tanpi (double @var{x})
-Computes @code{tan(pi * x)} accurately, notably for (half) integer @var{x}.
+@deftypefun double Rtanpi (double @var{x})
+Computes @code{tan(pi * x)} accurately, notably for integer @var{x}, giving
+@var{NaN} for half integer @var{x} and exactly +1 or -1 for (non half)
+quarter integers.
+@end deftypefun
 
+@deftypefun double tanpi (double @var{x})
+Computes @code{tan(pi * x)} accurately for integer @var{x} with possibly
+platform dependent behavior for half (and quarter) integers.
 This might be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes
 (but see the comments for @code{cospi}).

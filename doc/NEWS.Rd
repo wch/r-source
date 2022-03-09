@@ -457,6 +457,9 @@
       \item \code{rmultinom} has been documented in \sQuote{Writing R
 	Extensions} §6 so is now part of the \R API.
 
+      \item Similarly, \code{Rtanpi}, called from \R level \code{tanpi()}
+      is now part of the \R API.
+
       \item The long-deprecated, undocumented and non-API entry point
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).

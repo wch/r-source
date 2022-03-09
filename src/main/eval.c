@@ -4675,11 +4675,7 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 
 	{"cospi", NULL, cospi},
 	{"sinpi", NULL, sinpi},
-#ifndef HAVE_TANPI
-	{"tanpi", NULL, tanpi}
-#else
 	{"tanpi", NULL, Rtanpi}
-#endif
     };
 
 static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
