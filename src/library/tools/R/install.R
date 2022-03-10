@@ -1134,7 +1134,7 @@ if(FALSE) {
                             ## installation-time patches created for R
                             ## 4.2/UCRT should have been incorporated into
                             ## packages
-                            message("WARNING: package still has an installation time-patch")
+                            message("WARNING: package still has an installation-time patch")
                         have_patch <- nzchar(Sys.which("patch"))
                         if (!have_patch)
                             stop("patch utility is needed for installation-time patching")
