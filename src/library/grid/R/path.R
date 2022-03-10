@@ -12,7 +12,7 @@ as.path <- function(x, gp=gpar(), rule=c("winding", "evenodd")) {
 ## Stroke the outline of a path defined by a grob
 drawDetails.GridStroke <- function(x, recording) {
     path <- function() {
-        grid.draw(x$grob, recording=FALSE)
+        grid.draw(x$path, recording=FALSE)
     }
     grid.Call.graphics(C_stroke, path)
 }
@@ -22,12 +22,15 @@ strokeGrob <- function(x, ...) {
 }
 
 strokeGrob.grob <- function(x, name=NULL, gp=gpar(), vp=NULL, ...) {
-    stroke <- gTree(grob=x, name=name, gp=gp, vp=vp, cl="GridStroke")
+    ## grob() rather than gTree() because a "path" only produces
+    ## a single shape
+    ## (e.g., pattern fills should ALWAYS be resolved)
+    stroke <- grob(path=x, name=name, gp=gp, vp=vp, cl="GridStroke")
     stroke
 }
 
 strokeGrob.GridPath <- function(x, name=NULL, vp=NULL, ...) {
-    stroke <- gTree(grob=x$grob, name=name, gp=x$gp, vp=vp, cl="GridStroke")
+    stroke <- grob(path=x$grob, name=name, gp=x$gp, vp=vp, cl="GridStroke")
     stroke
 }
 
@@ -38,7 +41,7 @@ grid.stroke <- function(...) {
 ## Fill the outline of a path defined by a grob
 drawDetails.GridFill <- function(x, recording) {
     path <- function() {
-        grid.draw(x$grob, recording=FALSE)
+        grid.draw(x$path, recording=FALSE)
     }
     grid.Call.graphics(C_fill, path, .ruleIndex(x$rule))
 }
@@ -49,14 +52,14 @@ fillGrob <- function(x, ...) {
 
 fillGrob.grob <- function(x, rule=c("winding", "evenodd"),
                           name=NULL, gp=gpar(), vp=NULL, ...) {
-    fill <- gTree(grob=x, rule=match.arg(rule),
-                  name=name, gp=gp, vp=vp, cl="GridFill")
+    fill <- grob(path=x, rule=match.arg(rule),
+                 name=name, gp=gp, vp=vp, cl="GridFill")
     fill
 }
 
 fillGrob.GridPath <- function(x, name=NULL, vp=NULL, ...) {
-    fill <- gTree(grob=x$grob, rule=x$rule,
-                  name=name, gp=x$gp, vp=vp, cl="GridFill")
+    fill <- grob(path=x$grob, rule=x$rule,
+                 name=name, gp=x$gp, vp=vp, cl="GridFill")
     fill
 }
 
@@ -69,7 +72,7 @@ grid.fill <- function(...) {
 ## Stroke and fill the outline of a path defined by a grob
 drawDetails.GridFillStroke <- function(x, recording) {
     path <- function() {
-        grid.draw(x$grob, recording=FALSE)
+        grid.draw(x$path, recording=FALSE)
     }
     grid.Call.graphics(C_fillStroke, path, .ruleIndex(x$rule))
 }
@@ -80,14 +83,14 @@ fillStrokeGrob <- function(x, ...) {
 
 fillStrokeGrob.grob <- function(x, rule=c("winding", "evenodd"),
                                 name=NULL, gp=gpar(), vp=NULL, ...) {
-    fillStroke <- gTree(grob=x, rule=match.arg(rule),
-                        name=name, gp=gp, vp=vp, cl="GridFillStroke")
+    fillStroke <- grob(path=x, rule=match.arg(rule),
+                       name=name, gp=gp, vp=vp, cl="GridFillStroke")
     fillStroke
 }
 
 fillStrokeGrob.GridPath <- function(x, name=NULL, vp=NULL, ...) {
-    fillStroke <- gTree(grob=x$grob, rule=x$rule,
-                        name=name, gp=x$gp, vp=vp, cl="GridFillStroke")
+    fillStroke <- grob(path=x$grob, rule=x$rule,
+                       name=name, gp=x$gp, vp=vp, cl="GridFillStroke")
     fillStroke
 }
 
@@ -105,7 +108,7 @@ grobCoords.GridStroke <- function(x, closed, ...) {
     if (closed)
         emptyGrobCoords(x$name)
     else
-        grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+        grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
                    closed, ...)
 }
 
@@ -115,12 +118,12 @@ grobPoints.GridStroke <- function(x, closed, ...) {
     if (closed)
         emptyGrobCoords(x$name)
     else
-        grobCoords(x$grob, closed, ...)
+        grobCoords(x$path, closed, ...)
 }
 
 grobCoords.GridFill <- function(x, closed, ...) {
     if (closed)
-        grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+        grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
                    closed, ...)
     else
         emptyGrobCoords(x$name)
@@ -128,17 +131,17 @@ grobCoords.GridFill <- function(x, closed, ...) {
 
 grobPoints.GridFill <- function(x, closed, ...) {
     if (closed)
-        grobCoords(x$grob, closed, ...)
+        grobCoords(x$path, closed, ...)
     else
         emptyGrobCoords(x$name)
 }
 
 grobCoords.GridFillStroke <- function(x, closed, ...) {
-    grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+    grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
                      closed, ...)
 }
 
 grobPoints.GridFillStroke <- function(x, closed, ...) {
-    grobCoords(x$grob, closed, ...)
+    grobCoords(x$path, closed, ...)
 }
 

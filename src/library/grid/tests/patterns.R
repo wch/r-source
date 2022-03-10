@@ -534,8 +534,8 @@ rects <- gTree(children=gList(rectGrob(width=unit(2, "mm"),
 checkerBoard <- pattern(rects,
                         width=unit(4, "mm"), height=unit(4, "mm"),
                         extend="repeat")
-grid.fill(textGrob("test", gp=gpar(cex=10)),
-          gp=gpar(fontface="bold", fill=checkerBoard))
+grid.fill(textGrob("test", gp=gpar(fontface="bold", cex=10)),
+          gp=gpar(fill=checkerBoard))
 HersheyLabel("stroked path based on text
 filled with checkerboard pattern", y=.8)
     
@@ -572,8 +572,8 @@ final circle is red")
 
 ## Text (path) filled with pattern
 grid.newpage()
-grid.fill(textGrob("test", gp=gpar(cex=10)),
-          gp=gpar(fontface="bold", fill=linearGradient(2:3)))
+grid.fill(textGrob("test", gp=gpar(fontface="bold", cex=10)),
+          gp=gpar(fill=linearGradient(2:3)))
 HersheyLabel("stroked path based on text
 filled with linear gradient", y=.8)
     
