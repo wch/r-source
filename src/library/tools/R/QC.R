@@ -5722,29 +5722,33 @@ function(package, dir, lib.loc = NULL)
                     ## (BTW, what if character.only is given a value
                     ## which is an expression evaluating to TRUE?)
                     dunno <- FALSE
-                    if(isTRUE(mc$character.only)
-                       && !identical(class(pkg), "character"))
-                        dunno <- TRUE
+                    if((Call %in% c("loadNamespace",
+                                    "requireNamespace"))) {
+                        if(!identical(class(pkg), "character"))
+                            dunno <- TRUE
+                    } else {
+                        if(!identical(class(pkg), "character") &&
+                           isTRUE(mc$character.only))
+                            dunno <- TRUE
+                    }
                     ## </NOTE>
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
                     if(!dunno) {
-                        if (Call %in% c("loadNamespace", "requireNamespace")) {
-                            if (identical(class(pkg), "character")) {
-                                pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
-                                if(! pkg %in%
-                                   c(imports, depends_suggests, common_names))
-                                    bad_imps <<- c(bad_imps, pkg)
-                            }
-                       } else {
-                           pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                        pkg <- as.character(pkg)
+                        if(Call %in% c("loadNamespace",
+                                       "requireNamespace")) {
+                            if(pkg %notin%
+                               c(imports, depends_suggests, common_names))
+                                bad_imps <<- c(bad_imps, pkg)
+                        } else {
                             if(pkg %notin% c(depends_suggests, common_names))
                                 bad_exprs <<- c(bad_exprs, pkg)
                             if(pkg %in% depends)
                                 bad_deps <<- c(bad_deps, pkg)
-                           ## assume calls to itself are to clusterEvalQ etc
-                           else if (pkg != pkg_name)
-                               bad_prac <<- c(bad_prac, pkg)
+                            ## assume calls to itself are to clusterEvalQ etc
+                            else if (pkg != pkg_name)
+                                bad_prac <<- c(bad_prac, pkg)
                         }
                     }
                 }

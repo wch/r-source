@@ -31,11 +31,8 @@ next
 }
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
-    Conditions of length greater than one are currently accepted with a
-    warning, but only the first element is used.  An error is signalled
-    instead when the environment variable \env{_R_CHECK_LENGTH_1_CONDITION_}
-    is set to true (and will become the default in \R 4.3.0).  Other types
-    are coerced to logical if possible, ignoring any class.
+    Other types are coerced to logical if possible, ignoring any class.
+    (As from \R 4.2.0, conditions of length greater than one are an error.) 
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and

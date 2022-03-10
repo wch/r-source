@@ -1,6 +1,6 @@
 % File src/library/base/man/list.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list}
@@ -63,7 +63,8 @@ alist(\dots)
   constituent elements is returned.  \code{as.list} is generic, and as
   the default method calls \code{\link{as.vector}(mode = "list")} for a
   non-list, methods for \code{as.vector} may be invoked.  \code{as.list}
-  turns a factor into a list of one-element factors.  Attributes may
+  turns a factor into a list of one-element factors, keeping
+  \code{\link{names}}.  Other attributes may
   be dropped unless the argument already is a list or expression.  (This
   is inconsistent with functions such as \code{\link{as.character}}
   which always drop attributes, and is for efficiency since lists can be

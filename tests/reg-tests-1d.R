@@ -2102,6 +2102,7 @@ tools::assertError(0 || 0:1)
 if(is.na(oEV)) {Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
 } else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
 
+
 ## polym() in "vector" case PR#17474
 fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
          data = iris)
@@ -5813,6 +5814,28 @@ utils:::.Sweave(c("--clean", "Sweave-test-2.Rnw"), no.q = TRUE)
 stopifnot(dir.exists("subdir"))
 setwd(owd)
 ## the pre-existing directory was removed in R <= 4.1.x
+
+
+## as.list(<named_factor>): PR#18309
+f <- gl(3,2,12, letters[1:3])
+nf <- LETTERS[seq_along(f)]
+names(f) <- nf ; f
+str(lf <- as.list(f))
+stopifnot(identical(nf, names(f)),
+          identical(nf, names(lf)))
+## In R <= 4.1.x, the length-1 factor components where named instead
+
+
+## More accurate tanpi() {calling R's API Rtanpi()}:
+k <- -999:999
+tools::assertWarning(m <- cbind(k/4, tanpi(k/4), deparse.level=2),
+                     verbose=TRUE) # NaNs produced for the half integers
+head(m, 12) ## the non-half quarters give +/- 1; integers give exact 0 :
+pm1 <- c(1,-1) # +/- 1
+stopifnot(tanpi(outer(pm1/4, k, `+`)) == pm1,
+          m[k %% 4 == 0, "tanpi(k/4)"] == 0)
+## in R <= 4.1.x, tanpi(<int> +- 1/4 ) values typically were off (by +/- 2^-53)
+
 
 
 ## keep at end

@@ -18,12 +18,13 @@
       name the argument (code in many packages did).
 
       \item Calling \code{&&} or \code{||} with an argument of length
-      greater than one now gives a warning (and it is intended that will
-      eventually become an error).
+      greater than one now gives a warning (and it is intended that it
+      will eventually become an error).
       
       \item Calling \code{if()} or \code{while()} with a condition of
-      length greater than one will give an error rather than a
-      warning. (Planned to be activated in early March.)
+      length greater than one gives an error rather than a warning.
+      Consequently, environment variable
+      \env{_R_CHECK_LENGTH_1_CONDITION_} no longer has any effect.
     }
   }
 
@@ -223,6 +224,12 @@
 
       \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
+
+      \item In a forward pipe \code{|>} expression it is now possible to
+      use a named argument with the placeholder \code{_} in
+      the \code{rhs} call to specify where the \code{lhs} is to be
+      inserted.  The placeholder can only appear once on the \code{rhs}.
+
     }
   }
 
@@ -450,6 +457,9 @@
       \item \code{rmultinom} has been documented in \sQuote{Writing R
 	Extensions} §6 so is now part of the \R API.
 
+      \item Similarly, \code{Rtanpi}, called from \R level \code{tanpi()}
+      is now part of the \R API.
+
       \item The long-deprecated, undocumented and non-API entry point
       \code{call_R} is no longer declared in \file{R_ext/RS.h} (included
       by \file{R.h}).
@@ -627,6 +637,9 @@
       \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
       again as before R 3.5.0, thanks to the report and patch in \PR{18284}
       by Suharto Anggono.
+
+      \item \code{as.list(f)} for a \code{factor} \code{f} now keeps
+      \code{names(f)}, fixing \PR{18309}.
     }
   }
 }

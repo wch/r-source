@@ -5258,18 +5258,7 @@ contain spaces).
 Do not use @env{R_HOME} in makefiles except when passing them to the shell.
 Specifically, do not use @env{R_HOME} in the argument to @code{include},
 as @env{R_HOME} can contain spaces. Quoting the argument to @code{include}
-does not help.  GNU @command{make}'s @code{include} accepts spaces when
-escaped using backslashes (GNU @command{make} syntax required):
-
-@example
-## WARNING: requires GNU make (allowed on Windows)
-sp =
-sp +=
-sq = $(subst $(sp),\ ,$1)
-include $(call sq,$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf)
-@end example
- 
-A portable and the recommended way to avoid the problem of spaces in
+does not help. A portable and the recommended way to avoid the problem of spaces in
 @code{$@{R_HOME@}} is using option @code{-f} of @command{make}.  This is
 easy to do with recursive invocation of @command{make}, which is also the
 only usual situation when @env{R_HOME} is needed in the argument for
@@ -14872,9 +14861,15 @@ included in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h}
 includes (but see the comments for @code{cospi}).
 @end deftypefun
 
-@deftypefun double tanpi (double @var{x})
-Computes @code{tan(pi * x)} accurately, notably for (half) integer @var{x}.
+@deftypefun double Rtanpi (double @var{x})
+Computes @code{tan(pi * x)} accurately, notably for integer @var{x}, giving
+@var{NaN} for half integer @var{x} and exactly +1 or -1 for (non half)
+quarter integers.
+@end deftypefun
 
+@deftypefun double tanpi (double @var{x})
+Computes @code{tan(pi * x)} accurately for integer @var{x} with possibly
+platform dependent behavior for half (and quarter) integers.
 This might be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes
 (but see the comments for @code{cospi}).

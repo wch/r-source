@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020 The R Core Team.
- *  Copyright (C) 2003--2020 The R Foundation
+ *  Copyright (C) 1998--2022 The R Core Team.
+ *  Copyright (C) 2003--2022 The R Foundation
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -114,8 +114,8 @@ static CONST int lw = 0;
 
 static double R_ValueOfNA(void)
 {
-    /* The gcc shipping with Fedora 9 gets this wrong without
-     * the volatile declaration. Thanks to Marc Schwartz. */
+    /* The gcc (3.2.1?) shipping with Red Hat Linux 9 gets this wrong
+     * without the volatile declaration. Thanks to Marc Schwartz. */
     volatile ieee_double x;
     x.word[hw] = 0x7ff00000;
     x.word[lw] = 1954;
@@ -1312,11 +1312,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	*/
     case 47: return MATH1(cospi);
     case 48: return MATH1(sinpi);
-#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
-    case 49: return MATH1(Rtanpi);
-#else
-    case 49: return MATH1(tanpi);
-#endif
+    case 49: return MATH1(Rtanpi);// our own in any case
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));
@@ -1639,8 +1635,11 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
-	double digits = 0;
-	if(PRIMVAL(op) == 10004) digits = 6.0; // for signif()
+#define SET_DEFAULT_digits_			\
+	double digits = 0.; /* round() */	\
+	if(PRIMVAL(op) == 10004) /* signif() */	\
+	    digits = 6.
+	SET_DEFAULT_digits_;
 	PROTECT(args = list2(CAR(args), ScalarReal(digits))); nprotect++;
     }
 
@@ -1663,9 +1662,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(CAR(args) == R_MissingArg ||
 	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
 		error(_("argument \"%s\" is missing, with no default"), "x");
-	    double digits = 0.0; // round()
-	    if(PRIMVAL(op) == 10004) // signif()
-		digits = 6.0;
+	    SET_DEFAULT_digits_;
 	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
 	} else {
 	    /* If named, do argument matching by name */

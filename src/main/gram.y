@@ -185,6 +185,10 @@ static SEXP	NewList(void);
 static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective();
+static int      checkForPlaceholder(SEXP placeholder, SEXP arg);
+
+static int HavePlaceholder = FALSE; 
+attribute_hidden SEXP R_PlaceholderToken = NULL;
 
 static int HavePipeBind = FALSE; 
 static SEXP R_PipeBindSymbol = NULL;
@@ -387,6 +391,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 /* no longer used: %token COLON_ASSIGN */
 %token		SLOT
 %token		PIPE
+%token          PLACEHOLDER
 %token          PIPEBIND
 
 /* This is the precedence table, low to high */
@@ -434,6 +439,7 @@ expr_or_help  :    expr				    { $$ = $1; }
 expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	STR_CONST			{ $$ = $1;	setId(@$); }
 	|	NULL_CONST			{ $$ = $1;	setId(@$); } 
+	|	PLACEHOLDER			{ $$ = $1;	setId(@$); }
 	|	SYMBOL				{ $$ = $1;	setId(@$); }
 
 	|	'{' exprlist '}'		{ $$ = xxexprlist($1,&@1,$2); setId(@$); }
@@ -1093,7 +1099,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 {
     SEXP ans, sav_expr = expr;
     if (GenerateCode) {
-	if (isString(expr))
+	if (isString(expr) && expr != R_PlaceholderToken)
 	    expr = installTrChar(STRING_ELT(expr, 0));
 	PROTECT(expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
@@ -1177,9 +1183,6 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 
 static void check_rhs(SEXP rhs)
 {
-    if (TYPEOF(rhs) != LANGSXP)
-	error(_("The pipe operator requires a function call as RHS"));
-
     /* rule out syntactically special functions */
     /* the IS_SPECIAL_SYMBOL bit is set in names.c */
     SEXP fun = CAR(rhs);
@@ -1188,12 +1191,22 @@ static void check_rhs(SEXP rhs)
 	      CHAR(PRINTNAME(fun)));
 }
 
+static void checkTooManyPlaceholders(SEXP rhs, SEXP args)
+{
+    for (SEXP rest = args; rest != R_NilValue; rest = CDR(rest))
+	if (CAR(rest) == R_PlaceholderToken)
+	    errorcall(rhs, _("pipe placeholder may only appear once"));
+}
+
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
+	if (TYPEOF(rhs) != LANGSXP)
+	    error(_("The pipe operator requires a function call as RHS"));
+
 	/* allow x => log(x) on RHS */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_PipeBindSymbol) {
+	if (CAR(rhs) == R_PipeBindSymbol) {
 	    SEXP var = CADR(rhs);
 	    SEXP expr = CADDR(rhs);
 	    if (TYPEOF(var) != SYMSXP)
@@ -1204,6 +1217,21 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	    return lang2(fun, lhs);
 	}
 
+	/* check for placehilder in the RHS function */
+	if (checkForPlaceholder(R_PlaceholderToken, CAR(rhs)))
+	    error(_("pipe placeholder cannot be used in the RHS function"));
+
+	/* allow top-level placeholder */
+	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
+	    if (CAR(a) == R_PlaceholderToken) {
+		if (TAG(a) == R_NilValue)
+		    error(_("pipe placeholder can only be used as a "
+			    "named argument"));
+		checkTooManyPlaceholders(rhs, CDR(a));
+		SETCAR(a, lhs);
+		return rhs;
+	    }
+	
 	check_rhs(rhs);
 	
         SEXP fun = CAR(rhs);
@@ -1463,6 +1491,9 @@ void InitParser(void)
     INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
+    R_PlaceholderToken = ScalarString(mkChar("_"));
+    MARK_NOT_MUTABLE(R_PlaceholderToken);
+    R_PreserveObject(R_PlaceholderToken);
     R_PipeBindSymbol = install("=>");
 }
 
@@ -1637,10 +1668,12 @@ static SEXP R_Parse1(ParseStatus *status)
 	    break;
 	case 3:                     /* Valid expr '\n' terminated */
 	case 4:                     /* Valid expr ';' terminated */
+	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr))
+		errorcall(R_CurrentExpr,
+			  _("invalid use of pipe placeholder"));
 	    if (checkForPipeBind(R_CurrentExpr))
 		errorcall(R_CurrentExpr,
-			  _("pipe bind symbol may only appear "
-			    "in pipe expressions"));
+			  _("invalid use of pipe bind symbol"));
 	    *status = PARSE_OK;
 	    break;
 	}
@@ -2226,6 +2259,7 @@ static void yyerror(const char *s)
 	"NS_GET_INT",	"':::'",
 	"PIPE",         "'|>'",
 	"PIPEBIND",     "'=>'",
+	"PLACEHOLDER",  "'_'",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -2277,6 +2311,13 @@ static void yyerror(const char *s)
                         snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected end of line"));
                                 break;
                 default:
+		  if (!strcmp(s + sizeof yyunexpected - 1, "PLACEHOLDER")) {
+		      /* cheat to avoid changing the parse error
+			 message for mis-use of _ */
+		      snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE,
+			       _("unexpected input"));
+		      break;
+		  }
                   snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected %s"),
                            yytname_translations[i+1]);
                                 break;
@@ -3220,6 +3261,16 @@ static int SymbolValue(int c)
     return SYMBOL;
 }
 
+static int Placeholder(int c)
+{
+    DECLARE_YYTEXT_BUFP(yyp);
+    YYTEXT_PUSH(c, yyp);
+    YYTEXT_PUSH('\0', yyp);
+    HavePlaceholder = TRUE;
+    PRESERVE_SV(yylval = R_PlaceholderToken);
+    return PLACEHOLDER;
+}
+
 static void setParseFilename(SEXP newname) {
     SEXP class;
     
@@ -3348,6 +3399,7 @@ static int token(void)
  symbol:
 
     if (c == '.') return SymbolValue(c);
+    if (c == '_') return Placeholder(c);
     if(mbcslocale) {
 	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	mbcs_get_next(c, &wc);
@@ -3726,6 +3778,7 @@ static int yylex(void)
 	/* indicate the end of an expression. */
 
     case SYMBOL:
+    case PLACEHOLDER:
     case STR_CONST:
     case NUM_CONST:
     case NULL_CONST:
@@ -4153,4 +4206,17 @@ static void growID( int target ){
     
     int new_size = (1 + new_count)*2;
     PS_SET_IDS(lengthgets2(PS_IDS, new_size));
+}
+
+static int checkForPlaceholder(SEXP placeholder, SEXP arg)
+{
+    if (! HavePlaceholder)
+    	return FALSE;
+    else if (arg == placeholder)
+	return TRUE;
+    else if (TYPEOF(arg) == LANGSXP)
+	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
+	    if (checkForPlaceholder(placeholder, CAR(cur)))
+		return TRUE;
+    return FALSE;
 }
