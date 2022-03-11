@@ -101,47 +101,74 @@ grid.fillStroke <- function(...) {
 ################################
 ## Other grob methods
 
+flattenCoords <- function(coords, name, rule) {
+    UseMethod("flattenCoords")
+}
+
+flattenCoords.GridGrobCoords <- function(coords, name, rule) {
+    names(coords) <- rep("1", length(coords))
+    attr(coords, "rule") <- rule
+    coords
+}
+
+flattenCoords.GridGTreeCoords <- function(coords, name, rule) {
+    childCoords <- lapply(coords, flattenCoords, name, rule)
+    coords <- do.call(c, childCoords)
+    names(coords) <- rep("1", length(coords))
+    gridGrobCoords(coords, name, rule)
+}   
+
 ## NOTE, we need to create a gTree to include any 'gp' and 'vp' settings
 ## (and cannot just call grobCoords(x) because, although 'x' is a gTree
 ##  is has no children - the "child" is x$grob)
 grobCoords.GridStroke <- function(x, closed, ...) {
-    if (closed)
+    if (closed) {
         emptyGrobCoords(x$name)
-    else
-        grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
-                   closed, ...)
+    } else {
+        coords <- grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
+                             closed, ...)
+        flattenCoords(coords, x$name, NULL)
+    }
 }
 
 ## NOTE, like grobPoints.gList(), we need to call grobCoords()
 ## on the "child" grob so that it can perform any relevant set up
 grobPoints.GridStroke <- function(x, closed, ...) {
-    if (closed)
+    if (closed) {
         emptyGrobCoords(x$name)
-    else
-        grobCoords(x$path, closed, ...)
+    } else {
+        coords <- grobCoords(x$path, closed, ...)
+        flattenCoords(coords, x$name, NULL)
+    }
 }
 
 grobCoords.GridFill <- function(x, closed, ...) {
-    if (closed)
-        grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
-                   closed, ...)
-    else
+    if (closed) {
+        coords <- grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
+                             closed, ...)
+        flattenCoords(coords, x$name, x$rule)
+    } else {
         emptyGrobCoords(x$name)
+    }
 }
 
 grobPoints.GridFill <- function(x, closed, ...) {
-    if (closed)
-        grobCoords(x$path, closed, ...)
-    else
+    if (closed) {
+        coords <- grobCoords(x$path, closed, ...)
+        flattenCoords(coords, x$name, x$rule)
+    } else {
         emptyGrobCoords(x$name)
+    }
 }
 
 grobCoords.GridFillStroke <- function(x, closed, ...) {
-    grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
-                     closed, ...)
+    coords <- grobCoords(gTree(children=gList(x$path), gp=x$gp, vp=x$vp),
+                         closed, ...)
+    flattenCoords(coords, x$name, x$rule)    
 }
 
 grobPoints.GridFillStroke <- function(x, closed, ...) {
-    grobCoords(x$path, closed, ...)
+    coords <- grobCoords(x$path, closed, ...)
+    flattenCoords(coords, x$name, x$rule)
 }
 

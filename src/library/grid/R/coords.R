@@ -227,6 +227,10 @@ isEmptyCoords.GridGTreeCoords <- function(coords) {
 ##   Do drawing set up then calculate points
 
 grobCoords <- function(x, closed, ...) {
+    ## Want to bail out early if 'closed' is not specified
+    ## because errors in the middle of calculating grobCoords()
+    ## can leave you in a BAD place
+    force(closed)
     UseMethod("grobCoords")
 }
 
