@@ -83,6 +83,8 @@ ks.test.default <-
             "greater" = psmirnov(STATISTIC, m = n.x, n = n.y, z = w, exact = exact,
                                  simulate = simulate.p.value, B = B,
                                  two.sided = FALSE, lower.tail = FALSE))
+        ### match MC p-values to those reported by chisq.test
+        if (simulate.p.value) PVAL <- (1 + (PVAL * B)) / (B + 1)
     } else { ## one-sample case
         if(is.character(y)) # avoid matching anything in this function
             y <- get(y, mode = "function", envir = parent.frame())
@@ -223,7 +225,7 @@ function(q, m, n = length(z) - m, z = NULL,
         q <- as.double(q)
     else stop("argument 'q' must be numeric")
     ret <- rep(0, length(q))
-    ret[is.na(q) | q < 0 | q > 1] <- NA
+    ret[is.na(q) | q < -1 | q > 1] <- NA
     IND <- which(!is.na(ret))
     if (!length(IND)) return(ret)
     if (m < 1) stop("not enough 'x' data")
