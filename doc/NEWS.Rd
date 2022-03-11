@@ -20,7 +20,7 @@
       \item Calling \code{&&} or \code{||} with an argument of length
       greater than one now gives a warning (and it is intended that it
       will eventually become an error).
-      
+
       \item Calling \code{if()} or \code{while()} with a condition of
       length greater than one gives an error rather than a warning.
       Consequently, environment variable
@@ -640,6 +640,10 @@
 
       \item \code{as.list(f)} for a \code{factor} \code{f} now keeps
       \code{names(f)}, fixing \PR{18309}.
+
+      \item \code{qbeta(.001, .9, .009)} and analogous \code{qf()} calls now
+      return a correct value instead of \code{NaN} or wrongly \code{1}, all
+      with a warning; thanks to the report by Ludger Goeminne in \PR{18302}.
     }
   }
 }
