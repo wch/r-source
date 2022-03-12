@@ -55,8 +55,9 @@ A special debt is owed to John Chambers who has graciously contributed
 advice and encouragement in the early days of R and later became a
 member of the core team.
 
-Stefano Iacus (a former member of R Core) and Simon Urbanek developed
-the macOS port, including the R.app GUI, toolchains and packaging.
+Stefano Iacus (up to 2014, a former member of R Core) and Simon
+Urbanek developed the macOS port, including the R.app GUI, toolchains
+and packaging.
 
 The Windows port was originally developed by Guido Masarotto (for a
 while a member of R Core) and Brian Ripley, then further by Duncan
