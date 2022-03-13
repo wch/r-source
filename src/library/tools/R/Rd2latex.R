@@ -170,7 +170,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 		## avoid conversion to guillemets
 		x <- fsub("<<", "<{}<", x)
 		x <- fsub(">>", ">{}>", x)
-		x <- fsub(",,", ",{},", x) # ,, is a ligature in the ae font.
+		x <- fsub(",,", ",{},", x) # ,, is a ligature in the ec and lmodern fonts.
 		## cat(sprintf("\ntexify out: '%s'\n", x))
 	    }
 	}

@@ -527,15 +527,6 @@ This is a large installation, obtainable from
 @uref{https://www.ctan.org/tex-archive/fonts/ps-type1/cm-super/}
 and its mirrors.  These type-1 fonts have poor hinting and so are
 nowhere near as readable on-screen as the other three options.
-
-@item ae
-A package to use composites of Computer Modern fonts.  This works well
-most of the time, and its PDF is more readable on-screen than the
-previous two options.  There are three fonts for which it will need to
-use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and
-@file{tcrm1000.600pk}.  Unfortunately, if those files are not available,
-Acrobat Reader will substitute completely incorrect glyphs so you need
-to examine the logs carefully.
 @end table
 
 The default can be overridden by setting the environment variable
