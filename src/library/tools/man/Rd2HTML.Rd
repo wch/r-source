@@ -19,7 +19,9 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
-        stylesheet = "R.css", ...)
+        stylesheet = "R.css",
+        mathjax3 = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js",
+        ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "",
@@ -52,6 +54,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       notes below.}
   \item{stylesheet}{character: a URL for a stylesheet to be used in the header
       of the HTML output page.}
+  \item{mathjax3}{character: a URL pointing to a Mathjax 3 installation.
+      Mathjax may be used to typeset mathematics if the URL is
+      accessible, provided the help page does not already use the
+      \code{\link[mathjaxr]{mathjaxr}} package to do so. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to
