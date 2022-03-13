@@ -619,7 +619,7 @@ inRbuildignore <- function(files, pkgdir) {
 	if (needRefman) {
 	    messageLog(Log, "building the PDF package manual")
 	    dir.create("build", showWarnings = FALSE)
-	    ..Rd2pdf(c("--force", "--no-preview",
+	    ..Rd2pdf(c("--force", "--no-preview", "--quiet",
 	               paste0("--output=", build_refman_path),
 	               pkgdir), quit = FALSE)
         }

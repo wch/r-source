@@ -413,6 +413,13 @@
       errors) are reported by \command{R CMD check} as \samp{ERROR} rather
       than \samp{WARNING} when running vignettes has been skipped (as it
       frequently is in \acronym{CRAN} checks and by \option{--as-cran}).
+
+      \item \command{R CMD Rd2pdf} gains a \option{--quiet} option that is
+      used by \command{R CMD build} when building the PDF package manual.
+
+      \item \command{R CMD Rd2pdf} now always runs LaTeX in batch mode,
+      consistent with Texinfo \eqn{\ge}{>=} 6.7. The \option{--batch}
+      option is ignored.
     }
   }
 

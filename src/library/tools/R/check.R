@@ -4801,7 +4801,7 @@ add_dummies <- function(dir, Log)
             tlim <- get_timeout(Sys.getenv("_R_CHECK_PKGMAN_ELAPSED_TIMEOUT_",
                                 Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             topdir <- pkgdir
-            Rd2pdf_opts <- "--batch --no-preview"
+            Rd2pdf_opts <- "--no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
             man_file <- paste0(pkgname, "-manual.pdf ")
