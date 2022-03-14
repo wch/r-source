@@ -51,10 +51,17 @@ finaliseGroup <- function(x) {
 groupIndex <- 18
 
 ## Record group definition (in 'grid' state)
-recordGroup <- function(name, ref, closedPoints, openPoints) {
+recordGroup <- function(name, ref, coords) {
     devState <- get(".GRID.STATE", envir=.GridEvalEnv)[[dev.cur() - 1]]
     devStateGroups <- devState[[groupIndex]]
     cvp <- current.viewport()
+    if (coords) {
+        closedPoints <- groupPoints(x, TRUE)
+        openPoints <- groupPoints(x, FALSE)
+    } else {
+        closedPoints <- emptyGrobCoords(name)
+        openPoints <- emptyGrobCoords(name)
+    }
     group <- list(ref=ref,
                   ## Record location, size, angle for re-use in
                   ## different viewport
@@ -127,9 +134,9 @@ viewportTranslate <- function(group, device=TRUE, ...) {
         useTranslate(group, device=device)
 }
 
-groupRotate <- function(r=0) {
+groupRotate <- function(r=0, device=TRUE) {
     ## Account for devices that have origin at top-left
-    if (!.devUp()) r <- -r
+    if (device && !.devUp()) r <- -r
     rotate <- diag(3)
     theta <- r/180*pi
     costheta <- cos(theta)
@@ -141,20 +148,20 @@ groupRotate <- function(r=0) {
     rotate    
 }
 
-defnRotate <- function(group, inverse=FALSE, ...) {
+defnRotate <- function(group, inverse=FALSE, device=TRUE, ...) {
     if (inverse) {
-        groupRotate(-group$r)
+        groupRotate(-group$r, device)
     } else {
-        groupRotate(group$r)
+        groupRotate(group$r, device)
     }
 }
 
-useRotate <- function(group, inverse=FALSE, ...) {
+useRotate <- function(group, inverse=FALSE, device=TRUE, ...) {
     r <- current.rotation()
     if (inverse) {
-        groupRotate(-r)
+        groupRotate(-r, device)
     } else {
-        groupRotate(r)
+        groupRotate(r, device)
     }    
 }
 
@@ -162,7 +169,7 @@ viewportRotate <- function(group, device=TRUE, ...) {
     r <- current.rotation()
     if (r != group$r) {
         defnTranslate(group, inverse=TRUE, device=device) %*%
-            groupRotate(r - group$r) %*%
+            groupRotate(r - group$r, device=device) %*%
             defnTranslate(group, device=device)
     } else {
         diag(3)
@@ -196,13 +203,15 @@ viewportScale <- function(group, device=TRUE, ...) {
         defnTranslate(group, device=device)
 }
 
-groupShear <- function(sx=0, sy=0) {
-    ## Account for devices that have origin at top-left
-    if (!.devUp()) { sx <- -sx; sy <- -sy }
+groupShear <- function(sx=0, sy=0, device=TRUE) {
     shear <- diag(3)
     shear[1, 2] <- sy
     shear[2, 1] <- sx
     shear        
+}
+
+zeroShear <- function(device=TRUE) {
+    groupShear(device=device)
 }
 
 groupFlip <- function(flipX=FALSE, flipY=FALSE) {
@@ -214,17 +223,26 @@ groupFlip <- function(flipX=FALSE, flipY=FALSE) {
     flip
 }
 
+noFlip <- function() {
+    groupFlip()
+}
+
 viewportTransform <- function(group,
                               shear=groupShear(),
                               flip=groupFlip(),
                               device=TRUE,
                               ...) {
     r <- current.rotation()
+    ## Account for devices that have origin at top-left
+    if (device && !.devUp()) {
+        shear[1, 2] <- -shear[1, 2]
+        shear[2, 1] <- -shear[2, 1]
+    }
     defnTranslate(group, inverse=TRUE, device=device) %*%
         flip %*%
         useScale(group) %*%
         shear %*%
-        groupRotate(r - group$r) %*%
+        groupRotate(r - group$r, device=TRUE) %*%
         useTranslate(group, device=device)
 }
 
@@ -234,7 +252,7 @@ drawDetails.GridGroup <- function(x, recording) {
     grp <- finaliseGroup(x)
     ref <- .defineGroup(grp$src, grp$op, grp$dst)
     ## Record group to allow later reuse
-    recordGroup(x$name, ref, groupPoints(x, TRUE), groupPoints(x, FALSE))
+    recordGroup(x$name, ref, x$coords)
     if (is.null(ref))
         warning("Group definition failed")
     else 
@@ -244,6 +262,7 @@ drawDetails.GridGroup <- function(x, recording) {
 groupGrob <- function(src,
                       op = "over",
                       dst = NULL,
+                      coords = TRUE,
                       name = NULL, gp=gpar(), vp=NULL) {
     
     if (!is.grob(src))
@@ -252,7 +271,7 @@ groupGrob <- function(src,
         stop("Invalid destination")
     ## Check valid 'op'
     .opIndex(op)
-    group <- gTree(src=src, op=op, dst=dst,
+    group <- gTree(src=src, op=op, dst=dst, coords=coords,
                    name=name, gp=gp, vp=vp, cl="GridGroup")
     group
 }
@@ -260,8 +279,9 @@ groupGrob <- function(src,
 grid.group <- function(src,
                        op = "over",
                        dst = NULL,
+                       coords = TRUE, 
                        name = NULL, gp=gpar(), vp=NULL) {
-    grid.draw(groupGrob(src, op, dst, name, gp, vp))
+    grid.draw(groupGrob(src, op, dst, coords, name, gp, vp))
 }
 
 ##########################
@@ -270,12 +290,13 @@ grid.group <- function(src,
 drawDetails.GridDefine <- function(x, recording) {
     group <- finaliseGroup(x)
     ref <- .defineGroup(group$src, group$op, group$dst)
-    recordGroup(x$name, ref, groupPoints(x, TRUE), groupPoints(x, FALSE))
+    recordGroup(x$name, ref, x$coords)
 }
     
 defineGrob <- function(src,
                        op = "over",
                        dst = NULL,
+                       coords = TRUE,
                        name = NULL, gp=gpar(), vp=NULL) {
     if (!is.grob(src))
         stop("Invalid source")
@@ -283,7 +304,7 @@ defineGrob <- function(src,
         stop("Invalid destination")
     ## Check valid 'op'
     .opIndex(op)
-    group <- gTree(src=src, op=op, dst=dst,
+    group <- gTree(src=src, op=op, dst=dst, coords=coords,
                    name=name, gp=gp, vp=vp, cl="GridDefine")
     group
 }
@@ -291,8 +312,9 @@ defineGrob <- function(src,
 grid.define <- function(src,
                         op = "over",
                         dst = NULL,
+                        coords = TRUE,
                         name = NULL, gp=gpar(), vp=NULL) {
-    grid.draw(defineGrob(src, op, dst, name, gp, vp))
+    grid.draw(defineGrob(src, op, dst, coords, name, gp, vp))
 }
 
 drawDetails.GridUse <- function(x, recording) {
