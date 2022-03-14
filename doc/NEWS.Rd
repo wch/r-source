@@ -31,7 +31,7 @@
       \itemize{
 	\item Support for 32-bit builds has been dropped.
 	\item UTF-8 locales are used where available.
-	\item The default locations for tne \R installation and personal
+	\item The default locations for the \R installation and personal
 	library folder have been changed.
       }
 
