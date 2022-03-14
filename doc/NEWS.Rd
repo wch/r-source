@@ -27,9 +27,16 @@
       \env{_R_CHECK_LENGTH_1_CONDITION_} no longer has any effect.
 
       \item Windows users should consult the WINDOWS section below for
-      some profound changes to the build, notably in the use of
-      UTF-8 encoding and in the default locations for \R installation
-      and a personal library folder.
+      some profound changes including
+      \itemize{
+	\item Support for 32-bit builds has been dropped.
+	\item UTF-8 locales are used where available.
+	\item The default locations for tne \R installation and personal
+	library folder have been changed.
+      }
+
+      Thanks to Tomas Kalibera for months of work on the Windows port
+      for this release.
     }
   }
 
