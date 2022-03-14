@@ -74,6 +74,8 @@ were new in LAPACK 3.6.0 and added in R 3.3.0.
 
 dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
 
+dcombssq.f was patched in R 3.6.3 (see R-admin).
+
 -------------------------------------------------
 
 For 'base' R addition of a new .Call()able Lapack routine,
