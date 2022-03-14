@@ -485,7 +485,6 @@
 
       \item The header \file{S.h} which has been unsupported since Jan
       2016 has been removed.   Use \file{R.h} instead.
-      [Scheduled for Mar 15.]
     }
   }
 
