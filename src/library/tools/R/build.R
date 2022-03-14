@@ -580,14 +580,29 @@ inRbuildignore <- function(files, pkgdir) {
                            os = c("unix", "windows"), step = 1)
     	if (!length(db)) return(FALSE)
 
-    	# Strip the pkgdir off the names
+    	## Strip the pkgdir off the names
     	names(db) <- substring(names(db),
                                nchar(file.path(pkgdir, "man")) + 2L)
 
-	containsSexprs <-
-            which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
-	if (!length(containsSexprs)) return(FALSE)
-
+        btinfo <- do.call(rbind,
+                          lapply(db, .Rd_get_Sexpr_build_time_info))
+        if(!any(btinfo[, "\\Sexpr"])) {
+            return(FALSE)
+        } else {
+            ## <FIXME>
+            ## Remove eventually.
+            ## If we only have Sexprs we never process when building,
+            ## for now create an empty partial db to make older versions
+            ## of the CRAN incoming check code happy.
+            if(!any(btinfo[, c("build", "later")])) {
+                dir.create("build", showWarnings = FALSE)
+                saveRDS(structure(list(), names = character()),
+                        build_partial_Rd_db_path, version = 2L)
+                return(FALSE)
+            }
+            ## </FIXME>
+        }
+                    
 	messageLog(Log, "installing the package to process help pages")
 
         dir.create(libdir, mode = "0755", showWarnings = FALSE)
@@ -597,13 +612,16 @@ inRbuildignore <- function(files, pkgdir) {
 
         temp_install_pkg(pkgdir, libdir)
 
-	containsBuildSexprs <-
-            which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
+        containsBuildSexprs <- which(btinfo[, "build"])
 
 	if (length(containsBuildSexprs)) {
-	    for (i in containsBuildSexprs)
+	    for (i in containsBuildSexprs) {
 		db[[i]] <- prepare_Rd(db[[i]], stages = "build",
                                       stage2 = FALSE, stage3 = FALSE)
+                ## There could be build Sexprs giving install/render
+                ## Sexprs ...
+                btinfo[i, ] <- .Rd_get_Sexpr_build_time_info(db[[i]])
+            }
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings = FALSE)
@@ -612,10 +630,7 @@ inRbuildignore <- function(files, pkgdir) {
 	}
 	needRefman <- manual &&
             parse_description_field(desc, "BuildManual", TRUE) &&
-            any(vapply(db,
-                       function(Rd)
-                           any(getDynamicFlags(Rd)[c("install", "render")]),
-                       NA))
+            any(btinfo[, "later"])
 	if (needRefman) {
 	    messageLog(Log, "building the PDF package manual")
 	    dir.create("build", showWarnings = FALSE)
