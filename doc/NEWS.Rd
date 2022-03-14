@@ -1143,7 +1143,7 @@
       \code{l10n_info()} reports an additional element, the name of the
       encoding as reported by the OS (which may differ from the
       encoding part (if any) of the result from
-      \code{Sys.getlocale("LC_CTYPE")}.
+      \code{Sys.getlocale("LC_CTYPE")}).
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
       to find \emph{all} disjoint matches and all substrings
