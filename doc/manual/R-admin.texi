@@ -4110,10 +4110,10 @@ On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
 build @R{}.
 
-LAPACK 3.9.0 has a bug in which the DCOMBSSQ subroutine has a bug that
-may cause NA to be interpreted as zero. This is fixed in the @R{} 3.6.3
-and later sources, but if you use an external LAPACK, you may need to
-fix it there.
+LAPACK 3.9.0 (and proably earlier) had a bug in which the DCOMBSSQ
+subroutine may cause NA to be interpreted as zero. This is fixed in the
+@R{} 3.6.3 and later sources, but if you use an external LAPACK, you may
+need to fix it there. (The bug was corrected in 3.10.0.)
 
 The code (in @code{dlapack.f}) should read
 @example
