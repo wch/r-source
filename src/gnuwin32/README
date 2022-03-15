@@ -2,7 +2,7 @@ R @FULLVERSION@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-64-bit versions of Windows XP and later on x86_64 chips.  
+64-bit versions of Windows 7 and later on x86_64 chips.  
 It is designed to be as close as possible to the
 implementation on Unix, but see the list of differences below.  The
 port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
@@ -120,8 +120,7 @@ copy with a user's settings can be put in her HOME directory or in the
 working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
 HOME, then the Windows "personal" directory (typically
-'C:\Users\username\My Documents' on recent versions of Windows and
-'C:\Documents and Settings\username\My Documents' on XP) then
+'C:\Users\username\My Documents' on recent versions of Windows) then
 {HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
 This also applies to .Renviron and other uses of 'HOME' in our
 documentation.)  The file contains a description of the settings that

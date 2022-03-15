@@ -25,7 +25,7 @@ all:
 	    -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" $${page}.in >$${page}.html; \
 	done
-	$(CP) md5sum.txt md5sum.txt.$(RPREFIX)
+	$(CP) md5sum.txt md5sum.$(RPREFIX).txt
 	$(CP) $(R_HOME)/SVN-REVISION SVN-REVISION.$(RPREFIX)
 	$(CP) release.html release.htm
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
