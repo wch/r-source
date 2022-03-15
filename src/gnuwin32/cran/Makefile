@@ -16,7 +16,7 @@ all:
 	$(CP) ../installer/$(RPREFIX)-win*.exe .
 	($(ECHO) 'cat(md5sum("$(RPREFIX)-win.exe"), "*$(RPREFIX)-win.exe")' \
          | $(R_EXE) R_DEFAULT_PACKAGES=tools > md5sum.txt)
-	$(CP) ../../../doc/html/rw-FAQ.html .	
+	$(CP) ../../../doc/html/rw-FAQ.html rw-FAQ.$(RPREFIX).html
 	@for page in index rdevel rpatched rtest release; do \
 	  $(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	    -e s/@RVER@/$(RVER)/g \
