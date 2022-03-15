@@ -5342,7 +5342,9 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wnested-anon-types\\]",
                              "warning: .* is not needed and will not be emitted",
                              "warning: .* \\[-Wnon-literal-null-conversion\\]",
-                             "warning: .* \\[-Wignored-optimization-argument\\]"
+                             "warning: .* \\[-Wignored-optimization-argument\\]",
+                             ## LLVM clang 14, at least
+                             "warning: .* \\[-Wbitwise-instead-of-logical\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
