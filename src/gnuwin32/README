@@ -2,8 +2,8 @@ R @FULLVERSION@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows XP and later (including 64-bit versions of Windows) on ix86
-and x86_64 chips.  It is designed to be as close as possible to the
+64-bit versions of Windows XP and later on x86_64 chips.  
+It is designed to be as close as possible to the
 implementation on Unix, but see the list of differences below.  The
 port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
 
@@ -23,16 +23,12 @@ and a file doc\html\rw-FAQ.html.
 Usage
 =====
 
-There are two versions of the R executable in @RWVER@\bin\i386 (32-bit) 
-and @RWVER@\bin\x64 (64-bit).  By default only the first is
-installed on 32-bit versions of Windows, and both on 64-bit OSes.
-
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window.  It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\@RWVER@\bin\i386\Rgui.exe (or x64\Rgui.exe) and adding the
+...\@RWVER@\bin\x64\Rgui.exe and adding the
 arguments in the Target field.  Set the 'Start in' field of the
 shortcut to the directory you want to use as the working directory
 (where workspaces and files are saved to and loaded from).  The
