@@ -12,7 +12,6 @@ SIZEMB = $(shell du -m ../installer/$(RPREFIX)-win.exe | cut -f1)
 R_EXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --no-echo
 
 all:
-	$(CP) ../../../doc/html/CHANGES.html CHANGES.$(RPREFIX).html
 	$(CP) ../../../doc/html/NEWS.html NEWS.$(RPREFIX).html
 	$(CP) ../installer/$(RPREFIX)-win*.exe .
 	($(ECHO) 'cat(md5sum("$(RPREFIX)-win.exe"), "*$(RPREFIX)-win.exe")' \
@@ -26,6 +25,8 @@ all:
 	    -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" $${page}.in >$${page}.html; \
 	done
+	$(CP) md5sum.txt md5sum.txt.$(RPREFIX)
+	$(CP) $(R_HOME)/SVN-REVISION SVN-REVISION.$(RPREFIX)
 	$(CP) release.html release.htm
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
@@ -40,4 +41,4 @@ all:
 
 
 clean:
-	$(RM) -R *.html *.htm ReadMe README* *.exe md5sum.txt NEWS.* CHANGES.* target.cmd
+	$(RM) -R *.html *.htm ReadMe README* *.exe SVN-REVISION.* md5sum.* NEWS.* CHANGES.* target.cmd
