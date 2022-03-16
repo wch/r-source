@@ -298,7 +298,7 @@ Rd2HTML <-
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, fragment=FALSE,
              stylesheet = "R.css",
-             mathjax3 = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js",
+             texmath = getOption("help.htmlmath"),
              ...)
 {
     ## Is this package help, as opposed to from Rdconv or similar?
@@ -653,31 +653,31 @@ Rd2HTML <-
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
                    block <-
-                       if (doMathjax) block[[1L]]
+                       if (doTexMath) block[[1L]]
                        else block[[length(block)]]
                    if(length(block)) {
                        enterPara(doParas)
-                       inEqn <<- !doMathjax
-                       if (doMathjax) of1('<code class="mathjax">') # safer than of1('\\(') etc.
+                       inEqn <<- !doTexMath
+                       if (doTexMath) of1('<code class="reqn">') # safer than of1('\\(') etc.
                        else of1("<i>")
                        ## FIXME: space stripping needed: see Special.html
                        writeContent(block, tag)
-                       if (doMathjax) of1('</code>') # of1('\\)')
+                       if (doTexMath) of1('</code>') # of1('\\)')
                        else of1("</i>")
                        inEqn <<- FALSE
                    }
                },
                "\\deqn" = {
                    block <-
-                       if (doMathjax) block[[1L]]
+                       if (doTexMath) block[[1L]]
                        else block[[length(block)]]
                    if(length(block)) {
-                       inEqn <<- !doMathjax
+                       inEqn <<- !doTexMath
                        leavePara(TRUE)
-                       if (doMathjax) of1('<div style="text-align: center;"><code class="mathjax">')
+                       if (doTexMath) of1('<div style="text-align: center;"><code class="reqn">')
                        else of1('<p style="text-align: center;"><i>')
                        writeContent(block, tag)
-                       if (doMathjax) of1('</code></div>\n')
+                       if (doTexMath) of1('</code></div>\n')
                        else of0('</i>')
                        leavePara(FALSE)
                        inEqn <<- FALSE
@@ -982,25 +982,31 @@ Rd2HTML <-
         }
         return(FALSE)
     }
-    ## Check if mathjax URL is accessible, once per session
-    ## (otherwise skip mathjax)
-    url_accessible <- function(url)
-    {
-        stopifnot(length(url) == 1)
-        dest <- file.path(tempdir(), basename(url))
-        if (file.exists(dest)) return(TRUE)
-        status <- tryCatch({
-            suppressWarnings(utils::download.file(url = url,
-                                                  destfile = dest, cacheOK = TRUE, 
-                                                  quiet = TRUE, mode = "w"))
-        }, error = identity)
-        if (inherits(status, "error")) return(FALSE)
-        return (status == 0)
-    }
-    
-    doMathjax <- enhancedHTML && !uses_mathjaxr(Rd) &&
-        length(mathjax3) == 1 && url_accessible(mathjax3)
+    if (is.null(texmath)) texmath <- "katex"
+    doTexMath <- enhancedHTML && !uses_mathjaxr(Rd) &&
+        texmath %in% c("katex", "mathjax")
 
+    ## KaTeX / Mathjax resources (if they are used)
+    if (doTexMath && texmath == "katex") {
+        KATEX_JS <-
+            if (dynamic && FALSE) ".../katex.js" # TBD
+            else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+        KATEX_CSS <- if (dynamic && FALSE) ".../katex.css" # TBD
+                     else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
+        KATEX_CONFIG <-
+            if (dynamic) "/doc/html/katex-config.js"
+            else "../../../doc/html/katex-config.js"
+    }
+    if (doTexMath && texmath == "mathjax") {
+        MATHJAX_JS <-
+            if (dynamic && requireNamespace("mathjaxr", quietly = TRUE))
+                "/library/mathjaxr/doc/mathjax/es5/tex-chtml-full.js"
+            else
+                "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+        MATHJAX_CONFIG <-
+            if (dynamic) "/doc/html/mathjax-config.js"
+            else "../../../doc/html/mathjax-config.js"
+    }
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
     if (fragment) {
@@ -1026,20 +1032,16 @@ Rd2HTML <-
 	    mime_canonical_encoding(outputEncoding),
 	    '" />\n')
         of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
-        if (doMathjax) {
-            if (dynamic) {
-                of0('<script type="text/javascript" src="/doc/html/mathjax-opts.js"></script>')
+        if (doTexMath) {
+            if (texmath == "katex") {
+                of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
+                    '<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n',
+                    '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
             }
-            else {
-                of0('<script>\n',
-                    paste(readLines(file.path(R.home(),
-                                              "doc/html/mathjax-opts.js")),
-                          collapse = "\n"),
-                    '</script>')
+            else if (texmath == "mathjax") {
+                of0('<script type="text/javascript" src="', urlify(MATHJAX_CONFIG), '"></script>\n',
+                    '<script type="text/javascript" async src="', urlify(MATHJAX_JS), '"></script>\n')
             }
-            of0('<script type="text/javascript" async\n',
-                '  src="', mathjax3, '">\n',
-                '</script>\n')
         }
 	of0('<link rel="stylesheet" type="text/css" href="',
 	    urlify(stylesheet),
@@ -1051,13 +1053,6 @@ Rd2HTML <-
 	if (nchar(package))
 	    of0(' {', package, '}')
 	of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
-
-        ## if (doMathjax) of1("\\[\n\\newcommand{\\code}{\\texttt}\n\\]\n\n")
-        if (doMathjax)
-            of0('<code class="mathjax" style="display:none;">\n',
-                '\\newcommand{\\code}{\\texttt}\n',
-                '\\newcommand{\\R}{\\textsf{R}}\n',
-                '</code>\n\n')
 
 	of1("<h2>")
 	inPara <- NA

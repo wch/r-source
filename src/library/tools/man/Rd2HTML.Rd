@@ -20,7 +20,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
         stylesheet = "R.css",
-        mathjax3 = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js",
+        texmath = getOption("help.htmlmath"),
         ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
@@ -54,10 +54,14 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       notes below.}
   \item{stylesheet}{character: a URL for a stylesheet to be used in the header
       of the HTML output page.}
-  \item{mathjax3}{character: a URL pointing to a Mathjax 3 installation.
-      Mathjax may be used to typeset mathematics if the URL is
-      accessible, provided the help page does not already use the
-      \code{\link[mathjaxr]{mathjaxr}} package to do so. }
+  \item{texmath}{character: controls how mathematics in \verb{\eqn} and
+      \verb{\deqn} commands are typeset in HTML output. Useful values
+      are \code{"katex"} and \code{"mathjax"} to use
+      \href{https://katex.org/}{KaTeX} or
+      \href{https://www.mathjax.org/}{MathJax} respectively, otherwise
+      basic substitutions are used. May be ignored under certain
+      circumstances, e.g., if the help page already uses macros from the
+      \code{\link[mathjaxr]{mathjaxr}} package. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to
