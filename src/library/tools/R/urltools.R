@@ -490,9 +490,19 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                 ## 301s. 
                 ## (Alternatively, could try reporting the 301 but no
                 ## new location.)
-                if(nzchar(parse_URI_reference(loc)[1L, "scheme"]))
+                newParts <- parse_URI_reference(loc)
+                if(nzchar(newParts[1L, "scheme"])) {
                     newLoc <- loc
-                ## (Note also that fragments would need extra care.)
+                    ## Handle fragments. If the new URL does have one,
+                    ## use it. Otherwise, if the old has one, use that.
+                    ## (From section 7.1.2).
+                    if (newParts[1L, "fragment"] == "") {
+                        uParts <- parse_URI_reference(u)
+                        if (nzchar(uFragment <- uParts[1L, "fragment"])) {
+                            newLoc <- paste0(newLoc, "#", uFragment)
+                        }
+                    }
+                }
             }
         }
         ##
