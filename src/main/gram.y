@@ -2746,6 +2746,13 @@ static int skipBytesByChar(char *c, int min) {
 } while(0)
 #define CTEXT_POP() ct--
 
+/* Bidi formatting could confuse the code */
+#define BIDI_CHECK(wc) do {                                           \
+	if((wc) >= 0x202A && (wc) <= 0x2069 &&                        \
+	  !((wc) > 0x202E && (wc) < 0x2066))                          \
+	    error(_("bidi formatting not allowed (line %d), use escapes instead (\\u%04x)"),  \
+		  ParseState.xxlineno, (wc));                         \
+} while(0)
 
 /* forSymbol is true when parsing backticked symbols */
 static int StringValue(int c, Rboolean forSymbol)
@@ -2952,6 +2959,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    int i, clen;
 	    ucs_t wc;
 	    clen = mbcs_get_next2(c, &wc);
+	    BIDI_CHECK(wc);
 	    WTEXT_PUSH(wc);
 	    ParseState.xxbyteno += clen-1;
 	    
@@ -3091,6 +3099,7 @@ static int RawStringValue(int c0, int c)
 	    int i, clen;
 	    ucs_t wc;
 	    clen = mbcs_get_next2(c, &wc);
+	    BIDI_CHECK(wc);
 	    WTEXT_PUSH(wc);
 	    ParseState.xxbyteno += clen-1;
 	    

@@ -9,6 +9,9 @@ relErr <- function(target, current) {
     if(length(target) < n) target <- rep_len(target, n)
     sum(abs(target - current)) / sum(abs(target))
 }
+lseq <- function(from, to, length) ## purpose: equidistant on log scale
+    2^seq(log2(from), log2(to), length.out = length)
+
 
 a <- 25; b <- 6
 x <- 2^-(300:200)
@@ -121,17 +124,17 @@ stopifnot(print(mean(abs(relE))) < 3e-15, # 5.331e-16; was 6.0897e-16, then 5.46
 p1 <- exp(lp1)
 qp1. <- qbeta(p1, a,b)
 ## --> many cases that need "too many" Newton steps (on x0 scale: rather use log(x)-scale!)
-## TODO? maybe change log_q_cut = -5 to ~ -4 or so
+## TODO? maybe change log_q_cut = -5 to ~ -2 (for this example; it really should depend on (a,b) ..
 
 relE. <- 1 - qp1./x1
 stopifnot(all.equal(qp1, qp1., tol=8*.Machine$double.eps),
-	  print(mean(abs(relE.))) < 2e-15,  # 3.9572e-16; was 4.0781e-16
+	  print(mean(abs(relE.))) < 2e-15,  # 3.9023e-16 was 3.9572e-16,  4.0781e-16
 	  print(max (abs(relE.))) < 7e-15 ) # 1.1102e-15; was 1.3323e-15
 proc.time() - .pt; .pt <- proc.time()
 
 
 a <- 43779; b <- 0.06728; x <- -exp(901/256)
-(qx <- qbeta(x , a,b, log=TRUE)) ## 157 iter. in log_x scale, now fast in orig.scale
+(qx <- qbeta(x , a,b, log=TRUE)) ## now 3 N iter. in x-scale; had 157 iter. in log_x scale
 ## 0.9993614
 (pq <- pbeta(qx, a,b, log=TRUE)) ## = -33.7686
 stopifnot(print(abs(1 - pq/x)) < 1e-15) # rel.err ~  8.88e-16 "perfect"
@@ -150,7 +153,7 @@ stopifnot(all.equal(p., x., tol = 1e-15))
 
 ## very different picture at the *other tail*:
 (q2 <- qbeta(x., b,a, log=TRUE)) ## 0.0006386087
-stopifnot(all.equal(pbeta(q2, b,a, log=TRUE), x., tol= 1e-13)) # Lx 64b: 2.37e-15
+stopifnot(all.equal(x., pbeta(q2, b,a, log=TRUE), tol= 1e-13)) # Lx 64b: 2.37e-15
 
 curve(pbeta(x, b,a, log=TRUE), 1e-30, .5, n=1025, log="x")
 # Flip vertically and use log scale ==> "close" to  -x. = 2.160156e-15
@@ -394,7 +397,7 @@ chk_relE(qbetShRelErr(0.01, from=.01, to=50), 8e-16, 1e-14) #  1.264e-16 4.885e-
 chk_relE(qbetShRelErr(0.01,  0.02, xI = c(1.48001, 3.58184)), 8e-16, 1e-15) # -- warn.  bump ~ [1.6, 3.6]
 chk_relE(qbetShRelErr(0.015, 0.02, xI = c(2.19952, 7.50192)), 8e-16, 1e-15) # -- warn. bump ~ [2.2, 7.5]
 chk_relE(qbetShRelErr(0.018, 0.02, xI = c(3.6472, 16.8828)), 8e-16, 1e-15) # -- warn.
-chk_relE(qbetShRelErr(0.02, 0.03, to=7), 8e-16, 1e-15) ## 9.736e-17 6.661e-16 ; had 2 bumps [1.847, 1.982] and [2.994, 5.57]
+chk_relE(qbetShRelErr(0.02, 0.03, to=7), 8e-16, 2e-15) ## 9.736e-17 6.661e-16 ; had 2 bumps [1.847, 1.982] and [2.994, 5.57]
 chk_relE(qbetShRelErr(0.022, 0.03 , xI = c(2.9354, 6.94593)), 8e-16, 1e-15) # had warnings
 chk_relE(qbetShRelErr(0.022, 0.035, xI = c(1.88914, 1.95886,  3.59804, 4.9232)), 8e-16, 1e-15) # -- 2 bumps !
 chk_relE(qbetShRelErr(0.022, 0.035, xI = c(1.85814, 1.96273,  3.59029, 4.94258)), 8e-16, 1e-15)# - 2 bumps !
@@ -436,21 +439,50 @@ options(warn = 1)# warnings allowed, happen immediately
 qbeta(.99, 1/100, 1/200)# *does* warn and gives 1 (but should *NOT* use 575 Newton steps!)
 ##                                                  =============== FIXME !!!!!!!!!!!!!!
 ## *and* should not warn, the warning would apply to the *other* tail only !
-qbeta(.01, 1/200, 1/100)# 4.283133e-301 {and *does* warn; ok}
+qbeta(.01, 1/200, 1/100)# 4.283133e-301 {and *does* warn; ok} *and* uses (practically almost) the same 575 N steps
 ##--------- "zoom in": the last one uses 997 Newton steps (FIXME!)
 pX <- .98 + c(1, 3, 6:8)*1e-4
 (qbX <- qbeta(pX, 1/100, 1/200))
 stopifnot(qbX == 1) # correctly
-## however, here we *could* get accuracy, here, only those >= 0.9807 "fail"
+## however, here we *could* get accuracy, here -- by "swap_tail", only those >= 0.9807 "fail":
 signif(qbX <- qbeta(pX, 1/200, 1/100, lower.tail=FALSE), 5)
 ## 9.5896e-306 1.2718e-306 5.9092e-308 1.0386e-299 9.7579e-300
 ## "swap tail": 1-.9807
-qbeta(.0193, 1/200, 1/100) # warning .. not accurate
+qbeta(.0193, 1/200, 1/100) #  1.038564e-299 + warning .. not accurate
 
-
+## PR#18302  (about qf(),  really about qbeta())  ====================
+options(warn=2) # no warnings
+qq <- qf(-37.4, df1 = 227473.5, df2 = 2.066453, log.p = TRUE)
+stopifnot(all.equal(0.027519098277, qq, tol=2e-11))
+x <- lseq(1e-300, 1, 1000) # 1e-300  2e-300 .... 0.25.. 0.50.. 1.0
+q2L <- qf(log(x), df1 = 23e4, df2 = 2, log.p=TRUE)
+stopifnot(all.equal(log(x), pf(q2L, df1=23e4, df2=2, log.p=TRUE)))
+xN <-  -300+ (-27:7)/2
+qb. <- qbeta(xN,  1, 115000, lower.tail=FALSE, log.p=TRUE)
+pqb <- pbeta(qb., 1, 115000, lower.tail=FALSE, log.p=TRUE)
+stopifnot(all.equal(xN, pqb, tol=1e-14))
+          all.equal(xN, pqb, tol=0) # ... 1.86e-16
+x <- seq(-700, 0, by=1/2); x <- x[x < 0] # x == 0 <==> qf = +Inf
+qfx <- qf(x, df1 = 23e4, df2 = 2, log.p=TRUE) # gave 71 warnings
+stopifnot(0 < qfx, qfx < 2) # and even
+stopifnot(all.equal(x, pf(qfx, df1 = 23e4, df2 = 2, log.p=TRUE)))
+          all.equal(x, pf(qfx, df1 = 23e4, df2 = 2, log.p=TRUE), tol=0) # 5.6e-15
+## log.p=FALSE [default] cases that failed (or gave warnings)
+ps <- lseq(1e-300, 0.1, 1001)
+qf.  <- qf(ps , df1 = 227473.5, df2 = 2.06)
+pqpf <- pf(qf., df1 = 227473.5, df2 = 2.06)
+          all.equal(ps, pqpf, tol = 0) # rel.diff. 7.41309e-16
+stopifnot(all.equal(ps, pqpf, tol = 8e-15))
+qps <- qbeta(ps,  1.03, 115000, lower.tail = FALSE)# works (35 u-Newton steps)
+pqp <- pbeta(qps, 1.03, 115000, lower.tail = FALSE)
+          all.equal(ps, pqp, tol = 0) # rel.diff. 1.150378e-15
+stopifnot(all.equal(ps, pqp, tol = 1e-14))
+## NB: there are *still* gaps for other df-pairs -- but *only* from pbeta() bpser underflow problems there
 
 
 ### pbeta()  warnings  /// close to underflow situation ----
+
+options(warn=1) # immediate warnings
 
 ## b = 1 ==> pbeta(x,a,1)  =  x^a  (mathematically, not quite numerically)
 
@@ -459,13 +491,21 @@ x <- 1e-311*2^(-2:5)
 a <- 9.9999e-16
 ##==> all work via  apser():
 all.equal(x^a, pbeta(x, a, 1), tol=0)               # 1.11e-16 -- perfect
-all.equal(a*log(x), pbeta(x, a, 1, log=TRUE), tol=0)# 3.5753e-14 -- less perfect
+all.equal(a*log(x), pbeta(x, a, 1, log=TRUE), tol=0)# 3.5753e-13 -- less perfect
 
 ## only very slightly larger a:
 a <- 1e-15
-all.equal(x^a, pbeta(x, a, 1), tol=0)# warnings !   # 7.12208e-13
-## this gives *TWO* warnings per pbeta() !! --- no longer [pbeta / toms708.c fixed]
-all.equal(a*log(x), pbeta(x, a, 1, log=TRUE), tol=0)# 0.853 ... catastrophic!
+all.equal(x^a, p <- pbeta(x, a, 1), tol=0)# bgrat() underflow warnings # 7.12208e-13
+## numbers are very close to 1 ==> not such a problem
+cbind(x, "x^a" = x^a, pbeta = p, relE = p/(x^a) - 1,
+      "1-x^a (expm1)" = -expm1(a*log(x)), "1-pb" = 1-p,
+      ## interestingly, even this does *not* improve the situation:
+      "pb_upp" = pbeta(x, a, 1, lower.tail=FALSE))
+
+all.equal(a*log(x), pL <- pbeta(x, a, 1, log=TRUE), tol=0)#
+## 0.853 ... catastrophic! -- it's off for x <= 8e-311 :
+cbind(x, "a*log" = a*log(x), pbetaL = pL, relE = pL/(a*log(x)) - 1)
+
 
 ## pbeta(*, log.p=TRUE)  now underflows to -Inf too often
 ##                       If it does it *should* give a warning, at least!

@@ -26,7 +26,7 @@
 
 /* 
    This is a legacy header and no longer documented.
-   Code using it should be converted to use R.h
+   Code using it must be converted to use R.h
 */
 
 // #warning is not strictly portable, but nothing is ....

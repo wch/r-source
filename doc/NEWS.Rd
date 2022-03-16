@@ -17,14 +17,26 @@
       versions of \R and name \code{x} now, so portable code should not
       name the argument (code in many packages did).
 
-      \item Calling \code{&&} or \code{||} with an argument of length
-      greater than one now gives a warning (and it is intended that it
-      will eventually become an error).
-      
+      \item Calling \code{&&} or \code{||} with either argument of
+      length greater than one now gives a warning (which it is intended
+      will become an error).
+
       \item Calling \code{if()} or \code{while()} with a condition of
       length greater than one gives an error rather than a warning.
       Consequently, environment variable
       \env{_R_CHECK_LENGTH_1_CONDITION_} no longer has any effect.
+
+      \item Windows users should consult the WINDOWS section below for
+      some profound changes including
+      \itemize{
+	\item Support for 32-bit builds has been dropped.
+	\item UTF-8 locales are used where available.
+	\item The default locations for the \R installation and personal
+	library folder have been changed.
+      }
+
+      Thanks to Tomas Kalibera for months of work on the Windows port
+      for this release.
     }
   }
 
@@ -216,13 +228,13 @@
 
       \item \code{ks.test()} gains a formula interface, with \code{y ~ 1}
       for the one-sample (Kolmogorov) test and \code{y ~ group} for the
-      two-sample (Smirnov) test.  By Torsten Hothorn.
+      two-sample (Smirnov) test.  Contributed by Torsten Hothorn.
 
       \item The return value from \code{ks.test()} now has class
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
 
-      \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
+      \item \code{iconv()} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
 
       \item In a forward pipe \code{|>} expression it is now possible to
@@ -230,6 +242,10 @@
       the \code{rhs} call to specify where the \code{lhs} is to be
       inserted.  The placeholder can only appear once on the \code{rhs}.
 
+      \item The included LAPACK sources have been updated to version 3.10.0,
+      except for the four Fortran 77 routines which 3.10.0 has
+      re-implemented in Fortran 90 (where the older versions have been
+      retained as the \R build process does not support Fortran 90).
     }
   }
 
@@ -273,12 +289,6 @@
       Windows Server 1903).  As a part of this change, R uses UCRT as
       the C runtime.  UCRT should be installed manually on systems older
       than Windows 10 or Windows Server 2016 before installing \R.
-
-      \item As a temporary measure to ease the transition from MSVCRT to
-      UCRT, \R is applying patches to some \acronym{CRAN} and
-      Bioconductor packages at installation time.  See
-      \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}.
-      This measure is intended to end before \R 4.2.0 is released.
 
       \item The default personal library on Windows, folder
       \file{R\\win-library\\x.y} where \file{x.y} stands for \R release
@@ -408,6 +418,13 @@
       errors) are reported by \command{R CMD check} as \samp{ERROR} rather
       than \samp{WARNING} when running vignettes has been skipped (as it
       frequently is in \acronym{CRAN} checks and by \option{--as-cran}).
+
+      \item \command{R CMD Rd2pdf} gains a \option{--quiet} option that is
+      used by \command{R CMD build} when building the PDF package manual.
+
+      \item \command{R CMD Rd2pdf} now always runs LaTeX in batch mode,
+      consistent with Texinfo \eqn{\ge}{>=} 6.7. The \option{--batch}
+      option is ignored.
     }
   }
 
@@ -466,7 +483,6 @@
 
       \item The header \file{S.h} which has been unsupported since Jan
       2016 has been removed.   Use \file{R.h} instead.
-      [Scheduled for Mar 15.]
     }
   }
 
@@ -640,6 +656,10 @@
 
       \item \code{as.list(f)} for a \code{factor} \code{f} now keeps
       \code{names(f)}, fixing \PR{18309}.
+
+      \item \code{qbeta(.001, .9, .009)} and analogous \code{qf()} calls now
+      return a correct value instead of \code{NaN} or wrongly \code{1}, all
+      with a warning; thanks to the report by Ludger Goeminne in \PR{18302}.
     }
   }
 }
@@ -1121,7 +1141,7 @@
       \code{l10n_info()} reports an additional element, the name of the
       encoding as reported by the OS (which may differ from the
       encoding part (if any) of the result from
-      \code{Sys.getlocale("LC_CTYPE")}.
+      \code{Sys.getlocale("LC_CTYPE")}).
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
       to find \emph{all} disjoint matches and all substrings

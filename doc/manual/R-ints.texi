@@ -4786,13 +4786,14 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is only needed for the maintainer-only script
+Perl version 5 is needed for the maintainer-only script
 @file{tools/help2man.pl}.
 @findex Perl
 
 @item
-Makeinfo version 4.7 or later is needed to build the Info files for the
-@R{} manuals written in the @acronym{GNU} Texinfo system.
+@command{texinfo} version 5.1 or later is needed to build the HTML, PDF
+and Info files for the @R{} manuals written in the @acronym{GNU} Texinfo
+system.  And that requires Perl.
 @findex makeinfo
 @end itemize
 

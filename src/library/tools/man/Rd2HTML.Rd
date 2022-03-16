@@ -19,7 +19,9 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
-        stylesheet = "R.css", ...)
+        stylesheet = "R.css",
+        texmath = getOption("help.htmlmath"),
+        ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "",
@@ -52,6 +54,14 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       notes below.}
   \item{stylesheet}{character: a URL for a stylesheet to be used in the header
       of the HTML output page.}
+  \item{texmath}{character: controls how mathematics in \verb{\eqn} and
+      \verb{\deqn} commands are typeset in HTML output. Useful values
+      are \code{"katex"} and \code{"mathjax"} to use
+      \href{https://katex.org/}{KaTeX} or
+      \href{https://www.mathjax.org/}{MathJax} respectively, otherwise
+      basic substitutions are used. May be ignored under certain
+      circumstances, e.g., if the help page already uses macros from the
+      \code{\link[mathjaxr]{mathjaxr}} package. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to

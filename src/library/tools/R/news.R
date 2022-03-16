@@ -358,7 +358,7 @@ function(f, pdf_file)
              outputEncoding = "UTF-8", writeEncoding = FALSE,
              macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-        "\\usepackage[ae,hyper]{Rd}\n",
+        "\\usepackage[hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
         "\\usepackage{graphicx}\n",
         "\\setkeys{Gin}{width=0.7\\textwidth}\n",

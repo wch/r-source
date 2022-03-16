@@ -43,6 +43,8 @@
   </ul>
 </div>
 
+<p>If you want to double-check that the package you have downloaded matches the package distributed by CRAN, you can compare the <a href="https://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="https://cran.r-project.org/bin/windows/base/md5sum.@RWVER@.txt">fingerprint</a> on the master server.</p>
+
 <p>This is a combined Windows 32/64 bit binary build R including
 patches up to @DATE@ (r@SVNREVISION@).</p>
 

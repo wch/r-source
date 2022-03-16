@@ -36,20 +36,9 @@
 
     extra <-
         if(.Platform$OS.type == "windows") {
-
-            # CRAN_UCRT and BIOC_UCRT repositories have binary builds of
-            # packages needing compilation, and hence packages for which
-            # MSVCRT builds will be incompatible with UCRT build of R. 
-            # (BIOC_UCRT currently only covers Bioconductor packages needed
-            # as dependencies by CRAN packages).
-            # This is a temporary measure during transition from MSVCRT to
-            # UCRT, to be removed/updated in several days.
-
             list(unzip = "internal",
                  editor = if(length(grep("Rgui", commandArgs(), TRUE))) "internal" else "notepad",
-                 repos = c(CRAN_UCRT = "https://www.r-project.org/nosvn/winutf8/ucrt3/CRAN",
-                           BIOC_UCRT = "https://www.r-project.org/nosvn/winutf8/ucrt3/BIOC",
-                           CRAN = "@CRAN@"),
+                 repos = c(CRAN = "@CRAN@"),
                  askYesNo = if (.Platform$GUI == "Rgui") askYesNoWinDialog
                  )
         } else

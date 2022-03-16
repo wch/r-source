@@ -74,15 +74,17 @@ ks.test.default <-
         if (TIES)
             z <- w
         PVAL <- switch(alternative,
-            "two.sided" = psmirnov(STATISTIC, m = n.x, n = n.y, z = w, exact = exact, 
+            "two.sided" = psmirnov(STATISTIC, sizes = c(n.x, n.y), z = w, exact = exact, 
                                    simulate = simulate.p.value, B = B,
                                    lower.tail = FALSE),
-            "less" = psmirnov(STATISTIC, m = n.x, n = n.y, z = w,  exact = exact,
+            "less" = psmirnov(STATISTIC, sizes = c(n.x, n.y), , z = w, exact = exact,
                               simulate = simulate.p.value, B = B,
                               two.sided = FALSE, lower.tail = FALSE),
-            "greater" = psmirnov(STATISTIC, m = n.x, n = n.y, z = w, exact = exact,
+            "greater" = psmirnov(STATISTIC, sizes = c(n.x, n.y), , z = w, exact = exact,
                                  simulate = simulate.p.value, B = B,
                                  two.sided = FALSE, lower.tail = FALSE))
+        ### match MC p-values to those reported by chisq.test
+        if (simulate.p.value) PVAL <- (1 + (PVAL * B)) / (B + 1)
     } else { ## one-sample case
         if(is.character(y)) # avoid matching anything in this function
             y <- get(y, mode = "function", envir = parent.frame())
@@ -192,9 +194,38 @@ function(formula, data, subset, na.action, ...)
     y
 }
 
+rsmirnov <- 
+function(n, sizes, z = NULL, two.sided = TRUE) {
+
+    if (n < 0)
+        stop("invalid arguments")
+    if (n == 0L) return(numeric(0))
+    n <- floor(n)
+
+    if (length(sizes) != 2L)
+        stop("argument 'sizes' must be a vector of length 2") 
+    n.x <- sizes[1L]
+    n.y <- sizes[2L]
+    if (n.x < 1) stop("not enough 'x' data")
+    if (n.y < 1) stop("not enough 'y' data")
+    n.x <- floor(n.x)
+    n.y <- floor(n.y)
+
+    if (is.null(z)) {
+        rt <- rep(1, length = n.x + n.y)
+    } else {
+        rt <- table(z)
+    }
+    ret <- .Call(C_Smirnov_sim,
+                 as.integer(rt),
+                 as.integer(c(n.x, n.y)),
+                 as.integer(n),
+                 as.integer(two.sided))
+    return(ret)
+}
 
 psmirnov <-
-function(q, m, n = length(z) - m, z = NULL, 
+function(q, sizes, z = NULL, 
          two.sided = TRUE, exact = TRUE, simulate = FALSE, B = 2000,
          lower.tail = TRUE, log.p = FALSE) {
 
@@ -223,28 +254,27 @@ function(q, m, n = length(z) - m, z = NULL,
         q <- as.double(q)
     else stop("argument 'q' must be numeric")
     ret <- rep(0, length(q))
-    ret[is.na(q) | q < 0 | q > 1] <- NA
+    ret[is.na(q) | q < -1 | q > 1] <- NA
     IND <- which(!is.na(ret))
     if (!length(IND)) return(ret)
-    if (m < 1) stop("not enough 'x' data")
-    if (n < 1) stop("not enough 'y' data")
-    n.x <- floor(m)
-    n.y <- floor(n)
+
+    if (length(sizes) != 2L)
+        stop("argument 'sizes' must be a vector of length 2") 
+    n.x <- sizes[1L]
+    n.y <- sizes[2L]
+    if (n.x < 1) stop("not enough 'x' data")
+    if (n.y < 1) stop("not enough 'y' data")
+    n.x <- floor(n.x)
+    n.y <- floor(n.y)
     N <- n.x + n.y
     n <- n.x * n.y / (n.x + n.y)
 
+    ### always return MC prob when asked to
+    exact <- exact && !simulate
+
     if (!exact) {
         if (simulate) {
-            if (is.null(z)) {
-                rt <- rep(1, length = N)
-            } else {
-                rt <- table(z)
-            }
-            Dsim <- .Call(C_Smirnov_sim,
-                          as.integer(rt),
-                          as.integer(c(n.x, n.y)),
-                          as.integer(B),
-                          as.integer(two.sided))
+            Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
             ### need P(D < q)
             ret[IND] <- ecdf(Dsim)(q - sqrt(.Machine$double.eps)) 
             if (log.p & lower.tail)
@@ -322,7 +352,7 @@ function(q, m, n = length(z) - m, z = NULL,
     ret[IND] <- sapply(stat[IND], pfun)
     if (any(!is.finite(ret[IND]))) {
         warning("computation of exact probability failed, returning Monte Carlo approximation")
-        return(psmirnov(q = q, m = n.x, n = n.y, z = z, 
+        return(psmirnov(q = q, sizes = c(n.x, n.y), z = z,
                         two.sided = two.sided, exact = FALSE, 
                         simulate = TRUE, B = B,
                         lower.tail = lower.tail, log.p = log.p))
@@ -340,10 +370,10 @@ function(q, m, n = length(z) - m, z = NULL,
 }
 
 qsmirnov <-
-function(p, m, n = length(z) - m, z = NULL, two.sided = TRUE, ...)
+function(p, sizes, z = NULL, two.sided = TRUE, ...)
 {
-    n.x <- floor(m)
-    n.y <- floor(n)
+    n.x <- floor(sizes[1])
+    n.y <- floor(sizes[2])
     if (n.x * n.y < 1e4) {
         ### note: The support is also OK in case of ties
         stat <- sort(unique(c(outer(0:n.x/n.x, 0:n.y/n.y, "-"))))
@@ -351,7 +381,7 @@ function(p, m, n = length(z) - m, z = NULL, two.sided = TRUE, ...)
         stat <- (-1e4):1e4 / (1e4 + 1)
     }
     if (two.sided) stat <- abs(stat)
-    prb <- psmirnov(stat, m = n.x, n = n.y, z = z, 
+    prb <- psmirnov(stat, sizes = sizes, z = z, 
                     two.sided = TRUE, log.p = FALSE, ...)
     if (is.null(p)) return(list(stat = stat, prob = prb))
     if (is.numeric(p)) 

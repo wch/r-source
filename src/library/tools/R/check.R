@@ -4801,7 +4801,7 @@ add_dummies <- function(dir, Log)
             tlim <- get_timeout(Sys.getenv("_R_CHECK_PKGMAN_ELAPSED_TIMEOUT_",
                                 Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             topdir <- pkgdir
-            Rd2pdf_opts <- "--batch --no-preview"
+            Rd2pdf_opts <- "--no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
             man_file <- paste0(pkgname, "-manual.pdf ")
@@ -4838,8 +4838,7 @@ add_dummies <- function(dir, Log)
                 unlink(build_dir, recursive = TRUE)
                 ## for Windows' sake: errors can make it unwritable
                 build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-                checkingLog(Log, "PDF version of manual without hyperrefs or index")
-                ## Also turn off hyperrefs.
+                checkingLog(Log, "PDF version of manual without index")
                 Sys.setenv(R_RD4PDF = "times")
                 ## --force is used for the case when pdf file was created by
                 ## the previous run (seen with MiKTeX on Windows)
@@ -5342,7 +5341,9 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wnested-anon-types\\]",
                              "warning: .* is not needed and will not be emitted",
                              "warning: .* \\[-Wnon-literal-null-conversion\\]",
-                             "warning: .* \\[-Wignored-optimization-argument\\]"
+                             "warning: .* \\[-Wignored-optimization-argument\\]",
+                             ## LLVM clang 14, at least
+                             "warning: .* \\[-Wbitwise-instead-of-logical\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")

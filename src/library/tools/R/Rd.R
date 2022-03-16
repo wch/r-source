@@ -622,6 +622,51 @@ function(x, predicate)
     nodes
 }
 
+### * .Rd_get_Sexpr_build_time_info
+
+## Determine whether Rd has \Sexprs which R CMD build needs to handle at
+## build stage (expand into the partial Rd db), "later" (build
+## refman.pdf) or "never" (\Sexprs from \PR or \doi can always safely
+## be expanded).
+
+.Rd_get_Sexpr_build_time_info <-
+function(x)
+{
+    y <- getDynamicFlags(x)
+    if(!y["\\Sexpr"])
+        c("\\Sexpr" = FALSE,
+          build = FALSE,
+          later = FALSE,
+          never = FALSE)
+    else if(!any(y[c("install", "render")]))
+        c("\\Sexpr" = TRUE,
+          build = TRUE,
+          later = FALSE,
+          never = FALSE)
+    else {
+        nodes <- .Rd_find_nodes_with_tags(x, "\\Sexpr")
+        btinfo <-
+            vapply(nodes,
+                   function(e) {
+                       flags <- getDynamicFlags(e)
+                       if(flags["build"])
+                           "build"
+                       else if(flags["install"] &&
+                               (length(s <- as.character(e)) == 1L) &&
+                               (startsWith(s, "tools:::Rd_expr_PR(") ||
+                                startsWith(s, "tools:::Rd_expr_doi(")))
+                           "never"
+                       else
+                           "later"
+                   },
+                   "")
+        c("\\Sexpr" = TRUE,
+          y["build"],
+          later = any(btinfo == "later"),
+          never = any(btinfo == "never"))
+    }
+}
+
 ### * .Rd_get_argument_names
 
 .Rd_get_argument_names <-
@@ -860,36 +905,6 @@ function(x)
     x <- gsub("---", "--", x, fixed=TRUE)
     ## Also remove leading and trailing whitespace.
     trimws(x)
-}
-
-### * .Rd_has_Sexpr_needing_refman
-
-## Try to find out whether Rd has a Sexpr for which we build the refman.
-## For now, any install or render Sexpr which does not come from \PR or
-## \doi.
-
-.Rd_has_Sexpr_needing_refman <-
-function(x)
-{
-    found <- FALSE
-    predicate <- function(e) {
-        (any(attr(e, "Rd_tag") == "USERMACRO") &&
-         any(attr(e, "macro") %in% c("\\PR", "\\doi")))
-    }
-    recurse <- function(e) {
-        if(identical(attr(e, "Rd_tag"), "\\Sexpr") &&
-           any(getDynamicFlags(e)[c("install", "render")])) {
-            found <<- TRUE
-            return()
-        } else if(is.list(e) && !found) {
-            i <- which(vapply(e, predicate, NA))
-            if(length(i))
-                e <- e[-c(i, i + 1L)]
-            lapply(e, recurse)
-        }
-    }
-    recurse(x)
-    found
 }
 
 ### * fetchRdDB

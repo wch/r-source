@@ -7220,15 +7220,25 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         names(Rdb) <-
             substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
         containsBuildSexprs <-
-            any(vapply(Rdb,
-                       function(Rd) any(getDynamicFlags(Rd)["build"]),
-                       NA))
-        if(containsBuildSexprs &&
-           !file.exists(file.path(dir, "build", "partial.rdb")))
-            out$missing_manual_rdb <- TRUE
+            which(vapply(Rdb,
+                         function(Rd) any(getDynamicFlags(Rd)["build"]),
+                         NA))
+        if(length(containsBuildSexprs)) {
+            built_file <- file.path(dir, "build", "partial.rdb")
+            if(!file.exists(built_file))
+                out$missing_manual_rdb <- TRUE
+            else {
+                ## Merge in the partial db: there could be build Sexprs
+                ## giving install/render Sexprs ...
+                built <- readRDS(built_file)
+                pos <- match(names(Rdb), names(built), 0L)
+                Rdb[pos > 0L] <- built[pos]
+            }
+        }
         needRefMan <-
             any(vapply(Rdb,
-                       function(Rd) any(getDynamicFlags(Rd)[c("install", "render")]),
+                       function(Rd)
+                           any(.Rd_get_Sexpr_build_time_info(Rd)["later"]),
                        NA))
         if(needRefMan &&
            !file.exists(file.path(dir, "build",

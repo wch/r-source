@@ -17,7 +17,8 @@ INSTFILES = \
 	NEWS.2.html NEWS.3.html \
 	R.css Rlogo.svg Rlogo.pdf Search.html SearchOn.html \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
-	about.html packages-head-utf8.html
+	about.html packages-head-utf8.html  \
+	mathjax-config.js katex-config.js
 NON_SVN_INSTFILES = resources.html NEWS.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes
 OBJECTS = index.html

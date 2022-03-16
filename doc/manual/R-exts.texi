@@ -11320,8 +11320,6 @@ should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
 such a block has caused compilation errors.}).
 
-Legacy header @file{S.h} cannot be used with C++.
-
 @subsection External C++ code
 
 Quite a lot of external C++ software is header-only (e.g.@: most of the
@@ -13873,14 +13871,6 @@ char *S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 which changes the allocation size from @var{old} to @var{new} units, and
 zeroes the additional units.
 
-@c For compatibility with later versions of @Sl{}, header @file{S.h}
-@c (only) defines wrapper macros equivalent to
-
-@c @example
-@c type* Salloc(long @var{n}, int @var{type})
-@c type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
-@c @end example
-
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
 it, by noting the current position with a call to @code{vmaxget} and
@@ -14099,11 +14089,6 @@ These essentially read in (or create) @code{.Random.seed} and write it
 out after use.
 
 These are defined in header @file{R_ext/Random.h}.
-
-@c File @file{S.h} defines @code{seed_in} and @code{seed_out} for
-@c @Sl{}-compatibility rather than @code{GetRNGstate} and
-@c @code{PutRNGstate}.  These take a @code{long *} argument which is
-@c ignored.
 
 The random number generator is private to @R{}; there is no way to
 select the kind of RNG nor set the seed except by evaluating calls to the
@@ -15687,8 +15672,6 @@ currently includes
 @quotation
 @multitable @columnfractions 0.30 0.55
 @item @file{R.h} @tab includes many other files
-@item @file{S.h} @tab different version for code ported from @Sl{}
-(unsupported since 2016)
 @item @file{Rinternals.h} @tab definitions for using @R{}'s internal
 structures
 @item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the
@@ -15731,7 +15714,7 @@ The following headers are included by @file{R.h}:
 @item @file{R_ext/Error.h} @tab error signaling
 @item @file{R_ext/Memory.h} @tab memory allocation
 @item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
-@item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and
+@item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and the former
 @file{S.h}, including @code{F77_CALL} etc.
 @item @file{R_ext/Random.h} @tab random number generation
 @item @file{R_ext/Utils.h} @tab sorting and other utilities

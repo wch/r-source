@@ -297,7 +297,9 @@ Rd2HTML <-
              Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, fragment=FALSE,
-             stylesheet = "R.css", ...)
+             stylesheet = "R.css",
+             texmath = getOption("help.htmlmath"),
+             ...)
 {
     ## Is this package help, as opposed to from Rdconv or similar?
     ## Used to decide whether redirect files should be created when
@@ -306,6 +308,8 @@ Rd2HTML <-
     if (missing(no_links) && is.null(Links) && !dynamic) no_links <- TRUE
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
+    enhancedHTML <-
+        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
     version <- ""
     if(!identical(package, "")) {
         if(length(package) > 1L) {
@@ -648,25 +652,33 @@ Rd2HTML <-
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
-                   block <- block[[length(block)]]
+                   block <-
+                       if (doTexMath) block[[1L]]
+                       else block[[length(block)]]
                    if(length(block)) {
                        enterPara(doParas)
-                       inEqn <<- TRUE
-                       of1("<i>")
+                       inEqn <<- !doTexMath
+                       if (doTexMath) of1('<code class="reqn">') # safer than of1('\\(') etc.
+                       else of1("<i>")
                        ## FIXME: space stripping needed: see Special.html
                        writeContent(block, tag)
-                       of1("</i>")
+                       if (doTexMath) of1('</code>') # of1('\\)')
+                       else of1("</i>")
                        inEqn <<- FALSE
                    }
                },
                "\\deqn" = {
-                   block <- block[[length(block)]]
+                   block <-
+                       if (doTexMath) block[[1L]]
+                       else block[[length(block)]]
                    if(length(block)) {
-                       inEqn <<- TRUE
+                       inEqn <<- !doTexMath
                        leavePara(TRUE)
-                       of1('<p style="text-align: center;"><i>')
+                       if (doTexMath) of1('<div style="text-align: center;"><code class="reqn">')
+                       else of1('<p style="text-align: center;"><i>')
                        writeContent(block, tag)
-                       of0('</i>')
+                       if (doTexMath) of1('</code></div>\n')
+                       else of0('</i>')
                        leavePara(FALSE)
                        inEqn <<- FALSE
                    }
@@ -949,6 +961,52 @@ Rd2HTML <-
 
     Rd <- prepare_Rd(Rd, defines = defines, stages = stages,
                      fragment = fragment, ...)
+    ## Check if man page already uses mathjaxr package
+    ## (then skip mathjax processing)
+    uses_mathjaxr <- function(rd)
+    {
+        done <- TRUE
+        ## go through one by one until we hit \description
+        for (frag in rd) {
+            if (attr(frag, "Rd_tag") == "\\description") {
+                done <- FALSE
+                break
+            }
+        }
+        if (done) return(FALSE)
+        ## go through one by one until we hit \loadmathjax
+        for (subfrag in frag) {
+            if (attr(subfrag, "Rd_tag") == "USERMACRO" &&
+                attr(subfrag, "macro") == "\\loadmathjax")
+                return(TRUE)
+        }
+        return(FALSE)
+    }
+    if (is.null(texmath)) texmath <- "katex"
+    doTexMath <- enhancedHTML && !uses_mathjaxr(Rd) &&
+        texmath %in% c("katex", "mathjax")
+
+    ## KaTeX / Mathjax resources (if they are used)
+    if (doTexMath && texmath == "katex") {
+        KATEX_JS <-
+            if (dynamic && FALSE) ".../katex.js" # TBD
+            else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+        KATEX_CSS <- if (dynamic && FALSE) ".../katex.css" # TBD
+                     else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
+        KATEX_CONFIG <-
+            if (dynamic) "/doc/html/katex-config.js"
+            else "../../../doc/html/katex-config.js"
+    }
+    if (doTexMath && texmath == "mathjax") {
+        MATHJAX_JS <-
+            if (dynamic && requireNamespace("mathjaxr", quietly = TRUE))
+                "/library/mathjaxr/doc/mathjax/es5/tex-chtml-full.js"
+            else
+                "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+        MATHJAX_CONFIG <-
+            if (dynamic) "/doc/html/mathjax-config.js"
+            else "../../../doc/html/mathjax-config.js"
+    }
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
     if (fragment) {
@@ -974,7 +1032,17 @@ Rd2HTML <-
 	    mime_canonical_encoding(outputEncoding),
 	    '" />\n')
         of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
-
+        if (doTexMath) {
+            if (texmath == "katex") {
+                of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
+                    '<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n',
+                    '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
+            }
+            else if (texmath == "mathjax") {
+                of0('<script type="text/javascript" src="', urlify(MATHJAX_CONFIG), '"></script>\n',
+                    '<script type="text/javascript" async src="', urlify(MATHJAX_JS), '"></script>\n')
+            }
+        }
 	of0('<link rel="stylesheet" type="text/css" href="',
 	    urlify(stylesheet),
 	    '" />\n',
