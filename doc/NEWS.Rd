@@ -290,12 +290,6 @@
       the C runtime.  UCRT should be installed manually on systems older
       than Windows 10 or Windows Server 2016 before installing \R.
 
-      \item As a temporary measure to ease the transition from MSVCRT to
-      UCRT, \R is applying patches to some \acronym{CRAN} and
-      Bioconductor packages at installation time.  See
-      \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}.
-      This measure is intended to end before \R 4.2.0 is released.
-
       \item The default personal library on Windows, folder
       \file{R\\win-library\\x.y} where \file{x.y} stands for \R release
       \file{x.y.z}, is now a subdirectory of Local Application Data

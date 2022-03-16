@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -1080,17 +1080,12 @@ if(FALSE) {
         if (preclean) run_clean()
 
         if (WINDOWS) {
-            # Installation-time patching is enabled as a temporary measure
+            # Installation-time patching was enabled as a temporary measure
             # during the transition from MSVCRT to UCRT, when packages with
-            # many reverse dependencies have to be update to link. To
-            # disable this feature, switch it_patches_base below to "no".
+            # many reverse dependencies had to be updated to link.
 
-            # Users may locally disable this feature by setting
-            # _R_INSTALL_TIME_PATCHES_ to "no", or provide a local directory
-            # with their own patches.
-
-            it_patches_base <- Sys.getenv("_R_INSTALL_TIME_PATCHES_",
-                "https://www.r-project.org/nosvn/winutf8/ucrt3/")
+            # URL or a local directory with patches: ("no" to no patching)
+            it_patches_base <- Sys.getenv("_R_INSTALL_TIME_PATCHES_", "no")
 
             # The patches are identified by package name. An index is used
             # to map the name to a directory with patches for a given
