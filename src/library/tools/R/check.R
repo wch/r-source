@@ -4838,8 +4838,7 @@ add_dummies <- function(dir, Log)
                 unlink(build_dir, recursive = TRUE)
                 ## for Windows' sake: errors can make it unwritable
                 build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-                checkingLog(Log, "PDF version of manual without hyperrefs or index")
-                ## Also turn off hyperrefs.
+                checkingLog(Log, "PDF version of manual without index")
                 Sys.setenv(R_RD4PDF = "times")
                 ## --force is used for the case when pdf file was created by
                 ## the previous run (seen with MiKTeX on Windows)
