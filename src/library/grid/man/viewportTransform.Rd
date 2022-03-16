@@ -25,20 +25,21 @@
   when a \code{grid.define()}d group is \code{grid.use()}d.
 }
 \usage{
-viewportTransform(group, shear=groupShear(), flip=groupFlip(), \dots) 
-viewportTranslate(group, \dots)
-viewportScale(group, \dots)
-viewportRotate(group, \dots)
-defnTranslate(group, inverse=FALSE, \dots)
+viewportTransform(group, shear=groupShear(), flip=groupFlip(),
+                  device=TRUE, \dots) 
+viewportTranslate(group, device=TRUE, \dots)
+viewportScale(group, device=TRUE, \dots)
+viewportRotate(group, device=TRUE, \dots)
+defnTranslate(group, inverse=FALSE, device=TRUE, \dots)
 defnScale(group, inverse=FALSE, \dots)
-defnRotate(group, inverse=FALSE, \dots)
-useTranslate(group, inverse=FALSE, \dots)
+defnRotate(group, inverse=FALSE, device=TRUE, \dots)
+useTranslate(group, inverse=FALSE, device=TRUE, \dots)
 useScale(group, inverse=FALSE, \dots)
-useRotate(group, inverse=FALSE, \dots)
+useRotate(group, inverse=FALSE, device=TRUE, \dots)
 groupTranslate(dx=0, dy=0)
-groupRotate(r=0)
+groupRotate(r=0, device=TRUE)
 groupScale(sx=1, sy=1)
-groupShear(sx=0, sy=0)
+groupShear(sx=0, sy=0, device=TRUE)
 groupFlip(flipX=FALSE, flipY=FALSE)
 }
 \arguments{
@@ -52,7 +53,10 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   \item{dx, dy}{The translation to apply.}
   \item{r}{The rotation to apply.}
   \item{sx, sy}{The scaling (or shear) to apply.}
-  \item{flipX, flipY}{Whether to negate the x-scaling or y-scaling (logical).}
+  \item{flipX, flipY}{Whether to negate the x-scaling or y-scaling
+    (logical).}
+  \item{device}{A logical indicating whether transformation should be
+    relative to the device or relative to the current viewport.}
   \item{\dots}{Arguments passed on to lower-level transformation functions.}
 }
 \value{

@@ -2587,7 +2587,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     } else if (trace) {
         result = tracePts;
     }
-    UNPROTECT(1); /* tracePts */
+    UNPROTECT(2); /* tracePts and currentgp */
     return result;
 }
 
@@ -5310,7 +5310,7 @@ SEXP L_stringMetric(SEXP label)
     SET_VECTOR_ELT(result, 1, descent);
     SET_VECTOR_ELT(result, 2, width);    
     vmaxset(vmax);
-    UNPROTECT(5);
+    UNPROTECT(6);
     return result;
 }
 

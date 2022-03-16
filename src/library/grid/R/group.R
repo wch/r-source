@@ -51,16 +51,16 @@ finaliseGroup <- function(x) {
 groupIndex <- 18
 
 ## Record group definition (in 'grid' state)
-recordGroup <- function(name, ref, coords) {
+recordGroup <- function(x, ref) {
     devState <- get(".GRID.STATE", envir=.GridEvalEnv)[[dev.cur() - 1]]
     devStateGroups <- devState[[groupIndex]]
     cvp <- current.viewport()
-    if (coords) {
+    if (x$coords) {
         closedPoints <- groupPoints(x, TRUE)
         openPoints <- groupPoints(x, FALSE)
     } else {
-        closedPoints <- emptyGrobCoords(name)
-        openPoints <- emptyGrobCoords(name)
+        closedPoints <- emptyGrobCoords(x$name)
+        openPoints <- emptyGrobCoords(x$name)
     }
     group <- list(ref=ref,
                   ## Record location, size, angle for re-use in
@@ -78,10 +78,10 @@ recordGroup <- function(name, ref, coords) {
                   openPoints=openPoints)
     if (is.null(devStateGroups)) {
         grps <- list(group)
-        names(grps) <- name
+        names(grps) <- x$name
         devStateGroups <- grps
     } else {
-        devStateGroups[[name]] <- group
+        devStateGroups[[x$name]] <- group
     }
     grid.Call.graphics(C_setGridState,
                        as.integer(groupIndex - 1),
@@ -210,10 +210,6 @@ groupShear <- function(sx=0, sy=0, device=TRUE) {
     shear        
 }
 
-zeroShear <- function(device=TRUE) {
-    groupShear(device=device)
-}
-
 groupFlip <- function(flipX=FALSE, flipY=FALSE) {
     flip <- diag(3)
     if (flipX)
@@ -221,10 +217,6 @@ groupFlip <- function(flipX=FALSE, flipY=FALSE) {
     if (flipY)
         flip[2, 2] <- -1
     flip
-}
-
-noFlip <- function() {
-    groupFlip()
 }
 
 viewportTransform <- function(group,
@@ -252,7 +244,7 @@ drawDetails.GridGroup <- function(x, recording) {
     grp <- finaliseGroup(x)
     ref <- .defineGroup(grp$src, grp$op, grp$dst)
     ## Record group to allow later reuse
-    recordGroup(x$name, ref, x$coords)
+    recordGroup(x, ref)
     if (is.null(ref))
         warning("Group definition failed")
     else 
@@ -290,7 +282,7 @@ grid.group <- function(src,
 drawDetails.GridDefine <- function(x, recording) {
     group <- finaliseGroup(x)
     ref <- .defineGroup(group$src, group$op, group$dst)
-    recordGroup(x$name, ref, x$coords)
+    recordGroup(x, ref)
 }
     
 defineGrob <- function(src,
@@ -374,13 +366,19 @@ grobPoints.GridGroup <- function(x, closed, ...) {
     groupPoints(x, closed, ...)
 }
 
-## A group definition does not draw anything so no coords
+## A group definition does not draw anything BUT coords
+## may be needed to resolve pattern fill
 grobCoords.GridDefine <- function(x, closed, ...) {
-    emptyGrobCoords
+    if (is.null(x$dst))
+        children <- gList(x$src)
+    else
+        children <- gList(x$src, x$dst)
+    grobCoords(gTree(children=children, gp=x$gp, vp=x$vp),
+               closed, ...)
 }
 
 grobPoints.GridDefine <- function(x, closed, ...) {
-    emptyGrobCoords
+    groupPoints(x, closed, ...)
 }
 
 ## A group use retrieves points from group definition
@@ -408,14 +406,14 @@ usePoints <- function(x, closed, ...) {
     group <- lookupGroup(x$group)
     if (is.null(group)) {
         warning(paste0("Unknown group: ", x$group))
-        emptyGrobCoords
+        emptyGrobCoords(x$name)
     } else {
         transform <- x$transform(group, device=FALSE)
         if (!is.matrix(transform) ||
             !is.numeric(transform) ||
             !all(dim(transform) == 3)) {
             warning("Invalid transform")
-            emptyGrobCoords
+            emptyGrobCoords(x$name)
         }
         ## Apply inverse of viewport transform
         ## (because grobCoords() are supposed to be relative to

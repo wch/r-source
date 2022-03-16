@@ -577,3 +577,838 @@ grid.fill(textGrob("test", gp=gpar(fontface="bold", cex=10)),
 HersheyLabel("stroked path based on text
 filled with linear gradient", y=.8)
     
+################################################################################
+## Points
+
+## Points filled with gradient
+grid.newpage()
+grid.points(1:9/10, 1:9/10, default.units="npc",
+            pch=21, gp=gpar(fill=linearGradient()))
+HersheyLabel("points (pch=21)
+filled with linear gradient
+(gradient based on ALL points)", y=.8)
+
+## Points filled with gradient (point not filled)
+grid.newpage()
+grid.points(1:9/10, 1:9/10, default.units="npc",
+            pch=1, gp=gpar(fill=linearGradient()))
+HersheyLabel("points (pch=1)
+filled with linear gradient
+(fill ignored)", y=.8)
+
+## Individual points filled with gradient (gradient recycled)
+grid.newpage()
+grid.points(1:3/4, 1:3/4, default.units="npc",
+            pch=21, gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("points (pch=21)
+filled with linear gradient
+(gradient based on EACH point)", y=.8)
+
+## Individual points filled with individual gradients
+grid.newpage()
+gradients <- lapply(2:4, function(x) linearGradient(c(x, "white"), group=FALSE))
+grid.points(1:3/4, 1:3/4, default.units="npc",
+            pch=21, gp=gpar(fill=gradients))
+HersheyLabel("points (pch=21)
+filled with linear gradient
+(different gradient for EACH point)", y=.8)
+
+## points inheriting single gradient
+grid.newpage()
+pushViewport(viewport(gp=gpar(fill=linearGradient())))
+grid.points(1:2, 1:2, default.units="in", pch=21)
+HersheyLabel("points (pch=21)
+filled with linear gradient
+gradient inherited from viewport
+(so gradient relative to viewport)")
+
+## points inheriting multiple gradients
+grid.newpage()
+pushViewport(viewport(gp=gpar(fill=list(linearGradient(1:2),
+                                        radialGradient(3:4)))))
+grid.points(1:2, 1:2, default.units="in", pch=21)
+HersheyLabel("points (pch=21)
+filled with multiple linear gradients
+gradients inherited from viewport
+(so gradients relative to viewport)")
+
+## points recycling inherited multiple gradients
+grid.newpage()
+pushViewport(viewport(gp=gpar(fill=list(linearGradient(1:2),
+                                        radialGradient(3:4)))))
+grid.points(1:9/10, 1:9/10, default.units="npc", pch=21)
+HersheyLabel("points (pch=21)
+filled with linear gradients
+gradients inherited from viewport
+(so gradient relative to viewport)
+more points than gradients
+(so gradients recycled)")
+
+## points recycling inherited multiple gradients with group=FALSE
+## so pattern just passed through and resolved relative to points grob
+grid.newpage()
+pushViewport(viewport(gp=gpar(fill=list(linearGradient(1:2, group=FALSE),
+                                        radialGradient(3:4, group=FALSE)))))
+grid.points(1:9/10, 1:9/10, default.units="npc", pch=21)
+HersheyLabel("points (pch=21)
+filled with linear gradients
+group=FALSE
+gradients inherited from viewport
+(but unresolved so resolved on EACH point)
+more points than gradients
+(so gradients recycled)")
+
+## Using tracing to check that fills are not being resolved more than necessary
+trace(grid:::resolveFill.GridPattern, print=FALSE,
+      function(...) cat("*** RESOLVE:  Viewport pattern resolved\n"))
+trace(grid:::resolveFill.GridPatternList, print=FALSE,
+      function(...) cat("*** RESOLVE:  Viewport pattern list resolved\n"))
+trace(grid:::resolveFill.GridGrobPattern, print=FALSE,
+      function(...) cat("*** RESOLVE:  Grob pattern resolved\n"))
+trace(grid:::resolveFill.GridGrobPatternList, print=FALSE,
+      function(...) cat("*** RESOLVE:  Grob pattern list resolved\n"))
+doTrace <- function(head, f) {
+    traceOutput <- capture.output(f())    
+    HersheyLabel(paste(head, paste(traceOutput, collapse="\n"), sep="\n"))
+}
+
+grid.newpage()
+doTrace("points grob (pch=21)\nwith gradient\nONE resolve",
+        function() {
+            grid.points(1:9/10, 1:9/10, default.units="npc",
+                        pch=21,
+                        gp=gpar(fill=linearGradient()))
+        })
+
+grid.newpage()
+doTrace("points grob (pch=1)\nwith gradient\nONE resolve\n(even though unused)",
+        function() {
+            grid.points(1:9/10, 1:9/10, default.units="npc",
+                        pch=1, gp=gpar(fill=linearGradient()))
+        })
+
+grid.newpage()
+doTrace("points grob (pch=21)\nwith gradient (group=FALSE)\nTHREE resolves\n(resolve per point)",
+        function() {
+            grid.points(1:3/4, 1:3/4, default.units="npc",
+                        pch=21, gp=gpar(fill=linearGradient(group=FALSE)))
+        })
+
+grid.newpage()
+gradients <- lapply(2:4, function(x) linearGradient(c(x, "white"), group=FALSE))
+doTrace("points grob (pch=21)\nwith gradient list (group=FALSE)\nONE resolve\n(all gradients resolved at once)",
+        function() {
+            grid.points(1:3/4, 1:3/4, default.units="npc",
+                        pch=21, gp=gpar(fill=gradients))
+        })
+
+grid.newpage()
+doTrace("points grob (pch=21)\nwith inherited gradient\nONE resolve\n(gradient resolved when vp pushed)",
+        function() {
+            pushViewport(viewport(gp=gpar(fill=linearGradient())))
+            grid.points(1:2, 1:2, default.units="in", pch=21)
+        })
+
+grid.newpage()
+doTrace("points grob (pch=21)\nwith inherited gradient list\nTWO resolves\n(gradient list resolved when vp pushed\nAND gradient list resolved when points drawn\n[no-op because already resolved])",
+        function() {
+            pushViewport(viewport(gp=gpar(fill=list(linearGradient(1:2),
+                                                    radialGradient(3:4)))))
+            grid.points(1:2, 1:2, default.units="in", pch=21)
+        })
+
+grid.newpage()
+doTrace("points grob (pch=21)\nwith inherited gradient list\nAND recycling of gradients\nTWO resolves\n(gradient list resolved when vp pushed\nAND gradient list resolved when points drawn\n[no-op because already resolved])",
+        function() {
+            pushViewport(viewport(gp=gpar(fill=list(linearGradient(1:2),
+                                                    radialGradient(3:4)))))
+            grid.points(1:9/10, 1:9/10, default.units="npc", pch=21)
+        })
+
+## Individual points filled with individual gradients
+## *some* group = TRUE and *some* group = FALSE
+grid.newpage()
+gradients <- lapply(2:4, function(x) linearGradient(c(x, "white"),
+                                                    group = x %% 2))
+grid.points(1:3/4, 1:3/4, default.units="npc",
+            pch=21, gp=gpar(fill=gradients))
+HersheyLabel("points (pch=21)
+filled with linear gradient
+(different gradient for EACH point)
+first and third resolved on individual points
+second resolved on ALL points", y=.8)
+
+## Points filled with pattern (recycled), multiple pch
+grid.newpage()
+grid.points(1:3/4, 1:3/4, default.units="npc",
+            pch=21:23, gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("points (pch=21:23)
+single gradient (group=FALSE)
+each different point gets its own gradient", y=.8)
+
+################################################################################
+## Rects
+grid.newpage()
+grid.rect(x=1:3/4, y=1:3/4, width=.2, height=.2,
+          gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.rect(x=1:3/4, y=1:3/4, width=.2, height=.2,
+          gp=gpar(fill=list(linearGradient(group=FALSE),
+                            radialGradient(group=FALSE),
+                            linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Circles
+grid.newpage()
+grid.circle(x=1:3/4, y=1:3/4, r=.1,
+            gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.circle(x=1:3/4, y=1:3/4, r=.1,
+            gp=gpar(fill=list(linearGradient(group=FALSE),
+                              radialGradient(group=FALSE),
+                              linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Polygons
+grid.newpage()
+grid.polygon(x=c(.2, .4, .3,
+                 .4, .6, .5,
+                 .6, .8, .7),
+             y=c(.2, .2, .4,
+                 .4, .4, .6,
+                 .6, .6, .8),
+             id=rep(1:3, each=3),
+             gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.polygon(x=c(.2, .4, .3,
+                 .4, .6, .5,
+                 .6, .8, .7),
+             y=c(.2, .2, .4,
+                 .4, .4, .6,
+                 .6, .6, .8),
+             id=rep(1:3, each=3),
+             gp=gpar(fill=list(linearGradient(group=FALSE),
+                               radialGradient(group=FALSE),
+                               linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Segments
+grid.newpage()
+grid.segments(x0=c(.2, .4, .6),
+              y0=c(.2, .5, .8),
+              x1=c(.4, .6, .8),
+              y1=c(.2, .5, .8),
+              gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.segments(x0=c(.2, .4, .6),
+              y0=c(.2, .5, .8),
+              x1=c(.4, .6, .8),
+              y1=c(.2, .5, .8),
+             gp=gpar(fill=list(linearGradient(group=FALSE),
+                               radialGradient(group=FALSE),
+                               linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Xsplines
+grid.newpage()
+grid.xspline(x=c(.2, .4, .3,
+                 .4, .6, .5,
+                 .6, .8, .7),
+             y=c(.2, .2, .4,
+                 .4, .4, .6,
+                 .6, .6, .8),
+             id=rep(1:3, each=3),
+             shape=-1, open=FALSE,
+             gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.xspline(x=c(.2, .4, .3,
+                 .4, .6, .5,
+                 .6, .8, .7),
+             y=c(.2, .2, .4,
+                 .4, .4, .6,
+                 .6, .6, .8),
+             id=rep(1:3, each=3),
+             shape=-1, open=FALSE,
+             gp=gpar(fill=list(linearGradient(group=FALSE),
+                               radialGradient(group=FALSE),
+                               linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Lines
+##
+## NOTE that polylines are handled by same underlying C code
+grid.newpage()
+grid.lines(x=c(.2, .4, .3),
+           y=c(.2, .2, .4),
+           gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.lines(x=c(.2, .4, .3),
+           y=c(.2, .2, .4),
+           gp=gpar(fill=list(linearGradient(group=FALSE),
+                             radialGradient(group=FALSE),
+                             linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## MoveTo/LineTo
+grid.newpage()
+grid.move.to(x=.2, y=.2)
+grid.line.to(x=.4, y=.4,
+             gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.move.to(x=.2, y=.2)
+grid.line.to(x=.4, y=.4,
+             gp=gpar(fill=list(linearGradient(group=FALSE),
+                               radialGradient(group=FALSE),
+                               linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Paths
+
+## Pattern fill on single path consisting of distinct shapes
+grid.newpage()
+grid.path(c(.2, .2, .4, .4, .6, .6, .8, .8),
+          c(.2, .4, .4, .2, .6, .8, .8, .6),
+          id=rep(1:2, each=4),
+          gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE
+single path", y=.8)
+
+## Pattern fill on multiple paths, each consisting of distinct shapes
+grid.newpage()
+grid.path(c(.2, .2, .4, .4,
+            .25, .25, .35, .35,
+            .6, .6, .8, .8,
+            .65, .65, .75, .75),
+          c(.2, .4, .4, .2,
+            .25, .35, .35, .25,
+            .6, .8, .8, .6,
+            .65, .75, .75, .65),
+          rule="evenodd",
+          id=rep(1:4, each=4),
+          pathId=rep(1:2, each=8),
+          gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE
+multiple paths", y=.8)
+
+## Same thing, list of patterns
+grid.newpage()
+grid.path(c(.2, .2, .4, .4,
+            .25, .25, .35, .35,
+            .6, .6, .8, .8,
+            .65, .65, .75, .75),
+          c(.2, .4, .4, .2,
+            .25, .35, .35, .25,
+            .6, .8, .8, .6,
+            .65, .75, .75, .65),
+          rule="evenodd",
+          id=rep(1:4, each=4),
+          pathId=rep(1:2, each=8),
+          gp=gpar(fill=list(linearGradient(group=FALSE),
+                            radialGradient(group=FALSE))))
+HersheyLabel("mulitple gradient fills
+group = FALSE
+multiple paths", y=.8)
+
+################################################################################
+## Raster
+grid.newpage()
+grid.raster(matrix(1:4/5, ncol=2),
+            interpolate=FALSE,
+            width=.5, height=.5,
+            gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.raster(matrix(1:4/5, ncol=2),
+            interpolate=FALSE,
+            width=.5, height=.5,
+            gp=gpar(fill=list(linearGradient(group=FALSE),
+                              radialGradient(group=FALSE),
+                              linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Text
+grid.newpage()
+grid.text(letters[1:3], x=1:3/4, y=1:3/4, 
+          gp=gpar(fontfamily="HersheySans",
+                  fill=linearGradient(group=FALSE)))
+HersheyLabel("single gradient fill
+group = FALSE", y=.8)
+
+grid.newpage()
+grid.text(letters[1:3], x=1:3/4, y=1:3/4, 
+          gp=gpar(fontfamily="HersheySans",
+                  fill=list(linearGradient(group=FALSE),
+                            radialGradient(group=FALSE),
+                            linearGradient())))
+HersheyLabel("list of gradient fills
+linear (group=FALSE)
+radial (group=FALSE)
+linear (group=TRUE)", y=.8)
+
+################################################################################
+## Arrows
+grid.newpage()
+grid.segments(x0=c(.2, .4, .6),
+              y0=c(.2, .5, .8),
+              x1=c(.4, .6, .8),
+              y1=c(.2, .5, .8),
+              arrow=arrow(type="closed"),
+              gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("Lines with (closed) arrows
+gradient fill disallowed on arrow", y=.8)
+
+grid.newpage()
+grid.xspline(x=c(.2, .4, .3,
+                 .4, .6, .5,
+                 .6, .8, .7),
+             y=c(.2, .2, .4,
+                 .4, .4, .6,
+                 .6, .6, .8),
+             id=rep(1:3, each=3),
+             shape=-1,
+             arrow=arrow(type="closed"),
+             gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("Lines with (closed) arrows
+gradient fill disallowed on arrow", y=.8)
+
+grid.newpage()
+grid.lines(x=c(.2, .4, .3),
+           y=c(.2, .2, .4),
+           arrow=arrow(type="closed"),
+           gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("Lines with (closed) arrows
+gradient fill disallowed on arrow", y=.8)
+
+grid.newpage()
+grid.move.to(x=.2, y=.2)
+grid.line.to(x=.4, y=.4,
+             arrow=arrow(type="closed"),
+             gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("Lines with (closed) arrows
+gradient fill disallowed on arrow", y=.8)
+
+################################################################################
+## Test more complex coords from more complex grobs (gTrees)
+
+################################################################################
+## grobCoords() also used when resolving patterns to generate a bbox
+## for temporary viewport (so the pattern is resolved relative to the
+## grob bbox).  Hence ...
+##
+## grid/R/patterns.R
+library(grid)
+
+## Test gTree with pattern fill
+## Children are distinct rectangles, pattern is resolved on gTree
+## so relative to bbox around both rectangles
+gt <- gTree(children=gList(rectGrob(1/3, width=.2, height=.2),
+                           rectGrob(2/3, width=.2, height=.2)),
+            gp=gpar(fill=linearGradient()))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with two rects
+fill resolved on bbox of both rects", y=.8)
+
+## Test gTree with pattern fill with children that push vp
+## (to test that the resolution happens in the gTree context
+##  NOT the child's vp context)
+## Both rects should be filled with gradient that fills whole page
+gt <- gTree(children=gList(rectGrob(),
+                           rectGrob(vp=viewport(width=.5, height=.5))),
+            gp=gpar(fill=linearGradient()))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with two rects
+one rect has vp
+fill resolved on gTree
+both rects same fill")
+
+## Test gTree with pattern fill with children with pattern fill
+## Left rect gets its own gradient;  right rect gets gradient
+## relative to both rects
+gt <- gTree(children=gList(rectGrob(1/3, width=.2, height=.2,
+                                    gp=gpar(fill=linearGradient())),
+                           rectGrob(2/3, width=.2, height=.2)),
+            gp=gpar(fill=linearGradient()))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with pattern fill
+one rect also has pattern fill
+one rect has gTree pattern fill
+(resolved on both rects)
+one rect has its own pattern fill", y=.8)
+
+## Test gTree with pattern fill with gTree as child
+## (same result as first gTree test)
+gt <- gTree(children=gList(gTree(children=gList(rectGrob(1/3,
+                                                         width=.2,
+                                                         height=.2),
+                                                rectGrob(2/3,
+                                                         width=.2,
+                                                         height=.2)))),
+            gp=gpar(fill=linearGradient()))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with pattern fill
+child is gTree with children
+pattern resolved on parent gTree" ,y=.8)
+
+## Test gTree with gTree with pattern fill as child
+## (same result as first gTree test)
+gt <- gTree(children=gList(gTree(children=gList(rectGrob(1/3,
+                                                         width=.2,
+                                                         height=.2),
+                                                rectGrob(2/3,
+                                                         width=.2,
+                                                         height=.2)),
+                                 gp=gpar(fill=linearGradient()))))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree child gTree
+child gTree has pattern fill
+pattern resolved on child gTree" ,y=.8)
+
+## Test gTree with pattern fill with group = FALSE
+## (so pattern fill is resolved separately on each child)
+gt <- gTree(children=gList(rectGrob(1/3, width=.2, height=.2),
+                           rectGrob(2/3, width=.2, height=.2)),
+            gp=gpar(fill=linearGradient(group=FALSE)))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with pattern fill
+with group=FALSE
+pattern resolved on each child rect", y=.8)
+
+################################################################################
+## groups and (stroked and filled) paths generate gTrees to calculate
+## grobCoords(), so they are affected.  Hence ...
+##
+## grid/R/group.R
+## grid/R/path.R
+library(grid)
+r1 <- rectGrob(x=0, y=0, width=.5, height=.5, just=c("left", "bottom"))
+r2 <- rectGrob(x=1, y=1, width=.75, height=.75, just=c("right", "top"),
+               gp=gpar(fill="black"))
+
+## Path with hole filled with pattern
+grid.newpage()
+grid.fill(gTree(children=gList(r1, r2)),
+          rule="evenodd",
+          gp=gpar(fill=linearGradient()))
+HersheyLabel("path from two rects
+pattern fill resolved on bbox of both rects", y=.8)
+
+## Remove r2 from r1 with "group" and fill with gradient
+## (bbox is from BOTH rects, hence whole page)
+grid.newpage()
+grid.group(r2, "clear", r1, gp=gpar(fill=linearGradient()))
+HersheyLabel("group of two rects
+big rect takes bite out of small rect
+pattern fill resolved on bbox of both rects", y=.8)
+
+## NOTE that setting 'gp' on group use has no effect on group
+## (graphical parameter settings were fixed at group definition)
+grid.newpage()
+grid.define(r1, name="r1")
+pushViewport(viewport(x=1, y=1))
+grid.use("r1", gp=gpar(fill=linearGradient()))
+upViewport()
+HersheyLabel("group use with pattern fill
+pattern IGNORED", y=.2)
+
+## BUT if put the fill on the grob in the group it works ?
+grid.newpage()
+grid.define(editGrob(r1, gp=gpar(fill=linearGradient())), name="r1")
+pushViewport(viewport(x=1, y=1))
+grid.use("r1")
+upViewport()
+HersheyLabel("group use imposes transformation
+rect within group has pattern fill
+pattern resolved on rect on use", y=.2)
+## ... even with scaling (as well as translation) transformation
+grid.newpage()
+grid.define(editGrob(r1, gp=gpar(fill=linearGradient())), name="r1")
+pushViewport(viewport(x=1, y=1, width=.5, height=.5))
+grid.use("r1")
+upViewport()
+HersheyLabel("group use imposes transformation AND scaling
+rect within group has pattern fill
+pattern resolved on rect on use", y=.2)
+
+################################################################################
+## Tests of gTree with LIST of patterns
+
+## gTree with LIST of patterns, group = TRUE
+## Test gTree with pattern fill with group = FALSE
+## (so pattern fill is resolved separately on each child)
+gt <- gTree(children=gList(rectGrob(1:2/3, 1/3, width=.2, height=.2),
+                           rectGrob(1:2/3, 2/3, width=.2, height=.2)),
+            gp=gpar(fill=list(linearGradient(), radialGradient())))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=TRUE
+patterns resolved on gTree
+each SHAPE within each child gets different pattern", y=.8)
+
+## gTree with LIST of patterns, group = FALSE
+gt <- gTree(children=gList(rectGrob(1:2/3, 1/3, width=.2, height=.2),
+                           rectGrob(1:2/3, 2/3, width=.2, height=.2)),
+            gp=gpar(fill=list(linearGradient(group=FALSE),
+                              radialGradient(group=FALSE))))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=FALSE
+patterns resolved on children
+each SHAPE within each child RESOLVES different pattern", y=.8)
+
+## gTree with LIST of patterns, group = mix of TRUE/FALSE
+gt <- gTree(children=gList(rectGrob(1:2/3, 1/3, width=.2, height=.2),
+                           rectGrob(1:2/3, 2/3, width=.2, height=.2)),
+            gp=gpar(fill=list(linearGradient(group=TRUE),
+                              radialGradient(group=FALSE))))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=TRUE and FALSE
+patterns resolved on gTree AND children
+each SHAPE within each child gets OR resolves different pattern", y=.8)
+
+## gTree with LIST of patterns, group = TRUE
+## but NO children that have a fill!
+gt <- gTree(children=gList(segmentsGrob(0, 0:1, 1, 1:0)),
+            gp=gpar(fill=list(linearGradient(),
+                              radialGradient())))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=TRUE
+BUT no children that have a fill
+patterns resolved on gTree
+no (pattern) fill", y=.8)
+
+## gTree with LIST of patterns, group = FALSE
+## but NO children that have a fill!
+gt <- gTree(children=gList(segmentsGrob(0, 0:1, 1, 1:0)),
+            gp=gpar(fill=list(linearGradient(group=FALSE),
+                              radialGradient(group=FALSE))))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=FALSE
+BUT no children that have a fill
+patterns resolved on children
+no (pattern) fill", y=.8)
+
+## gTree with LIST of patterns, group = mix of TRUE/FALSE
+## and MIX of children that have a fill!
+## (all combinations of group and child-has-fill)
+gt <- gTree(children=gList(segmentsGrob(0, 0:1, 1, 1:0),
+                           rectGrob(1:2/3, 2/3, width=.2, height=.2)),
+            gp=gpar(fill=list(linearGradient(group=TRUE),
+                              radialGradient(group=FALSE))))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with LIST of pattern fills
+with group=FALSE
+BUT no children that have a fill
+patterns resolved on children
+no (pattern) fill", y=.8)
+
+################################################################################
+## More groups and (stroked and filled) paths 
+library(grid)
+r1 <- rectGrob(x=0, y=0, width=.5, height=.5, just=c("left", "bottom"))
+r2 <- rectGrob(x=1, y=1, width=.75, height=.75, just=c("right", "top"),
+               gp=gpar(fill="black"))
+
+## Path with hole filled with pattern, group = FALSE
+## Path is a "single shape" so result should be same as group = TRUE
+grid.newpage()
+grid.fill(gTree(children=gList(r1, r2)),
+          rule="evenodd",
+          gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("path from two rects
+group = FALSE
+pattern fill resolved on bbox of both rects", y=.8)
+
+## Remove r2 from r1 with "group" and fill with gradient, group = FALSE
+## Gradient should be applied to individual rects
+grid.newpage()
+grid.group(r2, "clear", r1, gp=gpar(fill=linearGradient(group=FALSE)))
+HersheyLabel("group of two rects
+group = FALSE
+big rect takes bite out of small rect
+pattern fill resolved on each rect", y=.8)
+
+## fill on the grob in the group
+grid.newpage()
+grid.define(r2, "clear",
+            editGrob(r1, gp=gpar(fill=linearGradient())),
+            name="r1")
+pushViewport(viewport(x=1, y=1))
+grid.use("r1")
+upViewport()
+HersheyLabel("group use imposes transformation
+rect within group has pattern fill
+pattern resolved on rect on use", y=.2)
+## ... even with scaling (as well as translation) transformation
+grid.newpage()
+grid.define(r2, "clear",
+            editGrob(r1, gp=gpar(fill=linearGradient())),
+            name="r1")
+pushViewport(viewport(x=1, y=1, width=.5, height=.5))
+grid.use("r1")
+upViewport()
+HersheyLabel("group use imposes transformation AND scaling
+rect within group has pattern fill
+pattern resolved on rect on use", y=.2)
+
+## fill on the grob in the group, group = FALSE
+grid.newpage()
+grid.define(r2, "clear",
+            editGrob(r1, gp=gpar(fill=linearGradient(group=FALSE))),
+            name="gt")
+pushViewport(viewport(x=1, y=1))
+grid.use("gt")
+upViewport()
+HersheyLabel("group use imposes transformation
+rect within group has pattern fill
+group = FALSE (no effect)
+pattern resolved on rect on use", y=.2)
+## ... even with scaling (as well as translation) transformation, group=FALSE
+grid.newpage()
+grid.define(r2, "clear",
+            editGrob(r1, gp=gpar(fill=linearGradient(group=FALSE))),
+            name="gt")
+pushViewport(viewport(x=1, y=1, width=.5, height=.5))
+grid.use("gt")
+upViewport()
+HersheyLabel("group use imposes transformation AND scaling
+rect within group has pattern fill
+group = FALSE (no effect)
+pattern resolved on rect on use", y=.2)
+
+## Test gTree with pattern fill with children that push vp, group = FALSE
+## SO child with vp should get different fill
+gt <- gTree(children=gList(rectGrob(),
+                           rectGrob(vp=viewport(width=.5, height=.5))),
+            gp=gpar(fill=linearGradient(group=FALSE)))
+grid.newpage()
+grid.draw(gt)
+HersheyLabel("gTree with two rects
+one rect has vp
+fill resolved on each rect
+rects get different fill")
+
+## gTree with group as child, fill resolved on gTree bbox
+## (so needs group bbox)
+grid.newpage()
+group <- groupGrob(r1)
+gt <- gTree(children=gList(r2, group),
+            gp=gpar(fill=linearGradient()))
+grid.draw(gt)
+HersheyLabel("gTree has group as child
+gTree has pattern fill
+pattern resolved on gTree", y=.2)
+
+## gTree with group USE as child, fill resolved on gTree bbox
+## (so needs group USE bbox)
+grid.newpage()
+r3 <- rectGrob(width=.5, height=.5)
+group <- grid.define(r1, name="r")
+use <- useGrob("r", vp=viewport(1, 1))
+gt <- gTree(children=gList(r3, use),
+            gp=gpar(fill=linearGradient()))
+grid.rect(.25, .25, .75, .75, just=c("left", "bottom"),
+          gp=gpar(col=NA, fill=linearGradient()))
+grid.draw(gt)
+HersheyLabel("gTree has group USE as child
+gTree has pattern fill
+pattern resolved on gTree
+(rect behind shows correct gradient)", y=.2)
+
+## Check grobCoords() from transform with skew produces same outline
+grid.newpage()
+c <- circleGrob(r=c(.3, .4))
+pts <- grobCoords(c, closed=TRUE)
+p <- pathGrob(c(pts[[1]]$x, pts[[2]]$x),
+              c(pts[[1]]$y, pts[[2]]$y),
+              default.units="in",
+              id=rep(1:2, each=100),
+              rule="evenodd",
+              gp=gpar(fill="grey"))
+grid.draw(p)
+grid.define(p, name="path")
+use <- useGrob("path",
+               transform=function(group, ...)
+                   viewportTransform(group,
+                                     shear=groupShear(.5),
+                                     ...))
+newPts <- grobCoords(use, closed=TRUE)
+newPath <- circleGrob(c(newPts[[1]][[1]][[1]]$x, newPts[[1]][[1]][[2]]$x),
+                      c(newPts[[1]][[1]][[1]]$y, newPts[[1]][[1]][[2]]$y),
+                      default.units="in",
+                      r=unit(.5, "mm"),
+                      gp=gpar(col="red", fill="red"))
+grid.draw(use)
+grid.draw(newPath)
+
