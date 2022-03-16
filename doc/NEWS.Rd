@@ -18,8 +18,8 @@
       name the argument (code in many packages did).
 
       \item Calling \code{&&} or \code{||} with either argument of
-      length greater than one now gives a warning (and it is intended
-      that it will become an error).
+      length greater than one now gives a warning (which it is intended
+      will become an error).
 
       \item Calling \code{if()} or \code{while()} with a condition of
       length greater than one gives an error rather than a warning.
@@ -228,13 +228,13 @@
 
       \item \code{ks.test()} gains a formula interface, with \code{y ~ 1}
       for the one-sample (Kolmogorov) test and \code{y ~ group} for the
-      two-sample (Smirnov) test.  By Torsten Hothorn.
+      two-sample (Smirnov) test.  Contributed by Torsten Hothorn.
 
       \item The return value from \code{ks.test()} now has class
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
 
-      \item \code{iconv} now allows \code{sub = "c99"} to use C99-style
+      \item \code{iconv()} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
 
       \item In a forward pipe \code{|>} expression it is now possible to
@@ -242,6 +242,10 @@
       the \code{rhs} call to specify where the \code{lhs} is to be
       inserted.  The placeholder can only appear once on the \code{rhs}.
 
+      \item The included LAPACK sources have been updated to version 3.10.0,
+      except for the four Fortran 77 routines which 3.10.0 has
+      re-implemented in Fortran 90 (where the older versions have been
+      retained as the \R build process does not support Fortran 90).
     }
   }
 
