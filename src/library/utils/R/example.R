@@ -20,11 +20,25 @@
 example <-
 function(topic, package = NULL, lib.loc = NULL,
          character.only = FALSE, give.lines = FALSE, local = FALSE,
-	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
-         ask = getOption("example.ask"),
+	 type = c("console", "html"), echo = TRUE, verbose = getOption("verbose"),
+         setRNG = FALSE, ask = getOption("example.ask"),
 	 prompt.prefix = abbreviate(topic, 6),
 	 run.dontrun = FALSE, run.donttest = interactive())
 {
+    type <- match.arg(type)
+    html <- type == "html" ## only two options for now
+    if (html) {
+        enhancedHTML <- str2logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
+        ## silently ignore (but note in documentation)
+        if (!interactive() || !enhancedHTML || !requireNamespace("knitr", quietly = TRUE))
+            html <- FALSE
+    }
+    if (html)
+    {
+        port <- tools::startDynamicHelp(NA)
+        if (port <= 0L) html <- FALSE # silently fall back to console output
+        else if (!is.null(lib.loc)) lib.loc <- NULL
+    }
     if (!character.only) {
         topic <- substitute(topic)
         if(!is.character(topic)) topic <- deparse(topic)[1L]
@@ -40,6 +54,20 @@ function(topic, package = NULL, lib.loc = NULL,
     if(verbose) cat("Found file =", sQuote(file), "\n")
     packagePath <- dirname(dirname(file))
     pkgname <- basename(packagePath)
+
+    ## At this point, we are ready to invoke HTML help if requested
+    if (html)
+    {
+        query <- if (local) "" else "?local=FALSE"
+        browser <- if (.Platform$GUI == "AQUA") {
+                       get("aqua.browser", envir = as.environment("tools:RGUI"))
+                   } else getOption("browser")
+        browseURL(paste0("http://127.0.0.1:", port,
+                         "/library/", pkgname, "/Example/", topic, query),
+                  browser)
+        return(invisible())
+    }
+
     lib <- dirname(packagePath)
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf, commentDontrun = !run.dontrun,

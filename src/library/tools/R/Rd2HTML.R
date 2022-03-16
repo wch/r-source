@@ -926,6 +926,8 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
         if (tag %in% c("\\examples", "\\usage")) {
+            if (dynamic && enhancedHTML && tag == "\\examples")
+                of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>", name))
             of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE

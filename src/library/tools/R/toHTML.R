@@ -236,7 +236,7 @@ makeDemoTable <- function(demos, depth=2) {
 	    link <- c('<a href="', root, 'demo/', file, '">',
 			  pkg, "::", topic, '</a>')
 	    runlink <- c(' <a href="', root, 'Demo/', topic,
-	                 '">(Run demo in console)</a>')
+	                 '">(Run demo)</a>')
 	} else {
 	    link <- c(pkg, "::", topic)
 	    runlink <- ""
