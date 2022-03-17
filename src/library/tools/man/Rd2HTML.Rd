@@ -19,7 +19,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
-        stylesheet = "R.css",
+        stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
         texmath = getOption("help.htmlmath"),
         ...)
 
