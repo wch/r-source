@@ -19,14 +19,14 @@
   affine transformations (see the Details section).
 }
 \usage{
-groupGrob(src, op = "over", dst = NULL,
+groupGrob(src, op = "over", dst = NULL, coords = TRUE,
           name = NULL, gp=gpar(), vp=NULL) 
-grid.group(src, op = "over", dst = NULL,
+grid.group(src, op = "over", dst = NULL, coords = TRUE,
            name = NULL, gp=gpar(), vp=NULL)
 
-defineGrob(src, op = "over", dst = NULL,
+defineGrob(src, op = "over", dst = NULL, coords = TRUE,
            name = NULL, gp=gpar(), vp=NULL) 
-grid.define(src, op = "over", dst = NULL,
+grid.define(src, op = "over", dst = NULL, coords = TRUE,
             name = NULL, gp=gpar(), vp=NULL)
 
 useGrob(group, transform=viewportTransform,
@@ -39,6 +39,8 @@ grid.use(group, transform=viewportTransform,
   \item{src}{A grob.}
   \item{op}{The name of a compositing operator (see Details).}
   \item{dst}{A grob.}
+  \item{coords}{A logical indicating whether grob coordinates should be
+    calculated for the group.}
   \item{group}{A character identified referring to the name of a defined group.}
   \item{transform}{A function that returns an affine transformation
     matrix; see \code{\link{viewportTransform}}.}

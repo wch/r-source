@@ -255,6 +255,17 @@
       bumped to \code{15} and so packages that provide graphics devices
       should be reinstalled.
 
+      \item the \pkg{grid} package now allows the user to specify a
+      \dQuote{vector} of pattern fills.  The \code{fill} argument
+      to \code{gpar()} accepts a list of gradients and/or patterns and
+      the functions \code{linearGradient()}, \code{radialGradient()},
+      and \code{pattern()} have a new \code{group} argument.
+      
+      Points grobs (data symbols) can now also have a pattern fill.
+
+      The \code{grobCoords()} function now returns a more informative
+      and complex result.
+
       \item The \pkg{grid} package has new functions for drawing
       isolated groups: \code{grid.group()}, \code{grid.define()}, and
       \code{grid.use()}.  These functions add compositing operators and

@@ -95,9 +95,15 @@ validGP <- function(gpars) {
           gpars$fill <- NULL
       } else {
           ## fill can be a simple colour (NA, integer, string)
-          ## OR a "GridPattern"
-          if (!is.pattern(gpars$fill))
+          ## OR a "GridPattern" OR a list of "GridPattern"s
+          if (!is.pattern(gpars$fill)) {
+              if (is.list(gpars$fill)) {
+                  if (!all(sapply(gpars$fill, is.pattern)))
+                      stop("'fill' gpar list components must all be patterns")
+                  class(gpars$fill) <- "GridPatternList"
+              }
               check.length("fill")
+          }
       }
   }
   # lty converted in C code
@@ -234,9 +240,24 @@ set.gpar <- function(gp, grob=NULL) {
       if (is.null(grob)) {
           class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
       } else {
-          class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
-          attr(gp$fill, "grob") <- grob
+          if (inherits(grob, "gTree")) {
+              class(gp$fill) <- c("GridGTreePattern", class(gp$fill))
+          } else {
+              class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+          }
       }
+  } else if (is.list(gp$fill)) {
+      if (is.null(grob)) {
+          ## Silently use just first pattern
+          gp$fill <- gp$fill[[1]]
+          class(gp$fill) <- c("GridViewportPatternList", class(gp$fill))
+      } else {
+          if (inherits(grob, "gTree")) {
+              class(gp$fill) <- c("GridGTreePatternList", class(gp$fill))
+          } else {
+              class(gp$fill) <- c("GridGrobPatternList", class(gp$fill))
+          }
+      }      
   }
   # All other gpars
   temp[names(gp)] <- gp

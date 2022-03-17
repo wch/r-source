@@ -88,6 +88,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(textBounds, 7),
     LCALLDEF(xsplineBounds, 8),
     LCALLDEF(xsplinePoints, 8),
+    LCALLDEF(pointsPoints, 5),
     LCALLDEF(stringMetric, 1),
     LCALLDEF(stroke, 1),
     LCALLDEF(fill, 2),

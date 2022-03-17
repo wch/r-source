@@ -5,12 +5,17 @@ is.pattern <- function(x) {
     inherits(x, "GridPattern")
 }
 
+is.patternList <- function(x) {
+    inherits(x, "GridPatternList")
+}
+
 linearGradient <- function(colours = c("black", "white"),
                            stops = seq(0, 1, length.out = length(colours)),
                            x1 = unit(0, "npc"), y1 = unit(0, "npc"),  
                            x2 = unit(1, "npc"), y2 = unit(1, "npc"),
                            default.units = "npc",
-                           extend = c("pad", "repeat", "reflect", "none")) {
+                           extend = c("pad", "repeat", "reflect", "none"),
+                           group = TRUE) {
 
     nstops <- max(length(colours), length(stops))
     if (nstops < 1)
@@ -34,7 +39,7 @@ linearGradient <- function(colours = c("black", "white"),
     grad <- list(x1 = x1, y1 = y1,
                  x2 = x2, y2 = y2,
                  stops = as.numeric(stops), colours = colours,
-                 extend = match.arg(extend))
+                 extend = match.arg(extend), group = as.logical(group))
     class(grad) <- c("GridLinearGradient", "GridPattern")
     grad
 }
@@ -46,7 +51,8 @@ radialGradient <- function(colours = c("black", "white"),
                            cx2 = unit(.5, "npc"), cy2 = unit(.5, "npc"),
                            r2 = unit(.5, "npc"),
                            default.units = "npc",
-                           extend = c("pad", "repeat", "reflect", "none")) {
+                           extend = c("pad", "repeat", "reflect", "none"),
+                           group = TRUE) {
 
     nstops <- max(length(colours), length(stops))
     if (nstops < 1)
@@ -75,7 +81,7 @@ radialGradient <- function(colours = c("black", "white"),
     grad <- list(cx1 = cx1, cy1 = cy1, r1=r1,
                  cx2 = cx2, cy2 = cy2, r2=r2,
                  stops = as.numeric(stops), colours = colours,
-                 extend = match.arg(extend))
+                 extend = match.arg(extend), group = as.logical(group))
     class(grad) <- c("GridRadialGradient", "GridPattern")
     grad
 }
@@ -90,7 +96,8 @@ pattern <- function(grob,
                     default.units = "npc",
                     just="centre", hjust=NULL, vjust=NULL,
                     extend = c("pad", "repeat", "reflect", "none"),
-                    gp = gpar(fill="transparent")) {
+                    gp = gpar(fill="transparent"),
+                    group = TRUE) {
 
     if (! is.unit(x))
         x <- unit(x, default.units)
@@ -124,9 +131,62 @@ pattern <- function(grob,
     pat <- list(f=patternFun,
                 x=x, y=y, width=width, height=height,
                 hjust=hjust, vjust=vjust,
-                extend=match.arg(extend))
+                extend = match.arg(extend), group = as.logical(group))
     class(pat) <- c("GridTilingPattern", "GridPattern")
     pat
+}
+
+################################################################################
+## Pattern resolution
+
+## If CURRENT gp$fill is a pattern then need to attach
+## "built" grob (post makeContent() call) to gp$fill for (subsequent)
+## resolution of the pattern
+## NOTE that this is NOT just for grob$gp$fill because inherited
+## gp$fill may be an unresolved pattern
+## NOTE that can indiscriminately attach grob to both resolved
+## and unresolved patterns because resolved patterns will just ignore
+## attached grob
+recordGrobForPatternResolution <- function(x) {
+    gpar <- grid.Call(C_getGPar)
+    if (is.pattern(gpar$fill)) {
+        attr(gpar$fill, "grob") <- x
+        class(gpar$fill) <- c("GridGrobPattern", class(gpar$fill))
+        grid.Call(C_setGPar, gpar)
+    } else if (is.patternList(gpar$fill)) {
+        attr(gpar$fill, "grob") <- x
+        class(gpar$fill) <- c("GridGrobPatternList", class(gpar$fill))
+        grid.Call(C_setGPar, gpar)
+    }
+}
+
+## If gTree has a pattern in gp$fill AND gp$fill$group then attach
+## "built" gTree (post makeContent() call) to gp$fill for resolution
+## of the pattern AND resolve the pattern
+## (if gTree has a LIST of patterns in gp$fill, this may resolve
+##  *some* patterns in the list)
+## NOTE that this IS with gp$fill because inherited fills pass through
+## (see below)
+## NOTE that patterns within pattern list that are unresolved
+## will get grob attached to list and get resolved in drawing of
+## gTree children
+## NOTE that inherited patterns SHOULD pass through untouched
+## (if group is TRUE inherited pattern should already be resolved
+##  and if group is FALSE inherited pattern should be passed through)
+recordGTreeForPatternResolution <- function(x) {
+    if ((is.pattern(x$gp$fill) && x$gp$fill$group) ||
+        is.patternList(x$gp$fill)) { 
+        gpar <- grid.Call(C_getGPar)
+        attr(gpar$fill, "grob") <- x
+        resolvedFill <- resolveFill(gpar$fill, 1)
+        ## Resolution may generate NULL (e.g., if gTree has nothing to fill)
+        if (is.null(resolvedFill)) {
+            gpar$fill <- "transparent"
+        } else {
+            gpar$fill <- resolvedFill
+        }
+        grid.Call(C_setGPar, gpar)
+    }
 }
 
 resolvedPattern <- function(pattern, ref) {
@@ -136,55 +196,191 @@ resolvedPattern <- function(pattern, ref) {
 }
 
 ## Called when drawing a grob
-resolveFill <- function(fill) {
+resolveFill <- function(fill, ...) {
     UseMethod("resolveFill")
 }
 
 ## Simple fills include an R colour (integer or string) or NA
 ## These just pass through
-resolveFill.default <- function(fill) {
+resolveFill.default <- function(fill, ...) {
     fill
 }
 
 ## A pattern fill that has already been resolved
-resolveFill.GridResolvedPattern <- function(fill) {
+resolveFill.GridResolvedPattern <- function(fill, ...) {
     fill
 }
 
 ## A pattern fill that needs resolving
 ## (a grid::GridPattern)
-## This will handle viewports
-resolveFill.GridPattern <- function(fill) {
+## This will handle viewports (with a single pattern)
+resolveFill.GridPattern <- function(fill, ...) {
     resolvePattern(fill)
 }
 
-## This will handle grobs
-resolveFill.GridGrobPattern <- function(fill) {
+## This will handle viewports (with a list of patterns)
+resolveFill.GridPatternList <- function(fill, ...) {
+    ## NOTE that some patterns may be resolved, but others may not
+    ## (so we cannot mark the entire list as resolved)
+    resolvedPatterns <- lapply(fill,
+                               function(x) {
+                                   if (x$group)
+                                       resolvePattern(x)
+                                   else
+                                       x
+                               })
+    class(resolvedPatterns) <- class(fill)
+    resolvedPatterns
+}
+
+## This will handle grobs (with a single pattern)
+resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
     ## All predrawing has been done
     pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
     if (!isEmptyCoords(pts)) {
-        x <- unlist(lapply(pts, function(p) p$x))
-        y <- unlist(lapply(pts, function(p) p$y))
-        left <- min(x)
-        bottom <- min(y)
-        width <- diff(range(x))
-        height <- diff(range(y))
+        if (fill$group || length(pts) == 1) {
+            ## Pattern is relative to bounding box of all shapes
+            bbox <- coordsBBox(pts)
+        } else {
+            ## Pattern is relative to bounding box of individual shapes
+            if (index > length(pts)) {
+                warning("grob drawing produces more shapes than grob coords
+(recycling coords)")
+                index <- (index - 1) %% length(pts) + 1
+            }
+            ## Individual shape may consist of more than one set of
+            ## coordinates (e.g., single path consists of distinct shapes)
+            shapeIndex <- names(pts) %in% index
+            ## Fallback if 'pts' does not have names to identify shapes
+            if (!any(shapeIndex)) {
+                shapeIndex <- index
+            }
+            bbox <- coordsBBox(pts, shapeIndex)
+        }
         ## Temporary viewport for calculations, so do NOT record on grid DL
         ## Also, ensure NO mask and NO clip
         ## (at least initially) for resolution of pattern
-        pushViewport(viewport(left, bottom, width, height,
+        ## Also, set fill to "transparent"
+        ## (to avoid this viewport picking up the fill being resolved)
+        pushViewport(viewport(bbox$left, bbox$bottom, bbox$width, bbox$height,
                               default.units="in",
                               just=c("left", "bottom"),
-                              clip="off", mask="none"),
+                              clip="off", mask="none",
+                              gp=gpar(fill="transparent")),
                      recording=FALSE)
         pattern <- resolvePattern(fill)
         popViewport(recording=FALSE)
         pattern
     } else {
-        warning("Gradient fill applied to object with no inside")
+        warning("Pattern fill applied to object with no inside")
         ## Set fill to transparent
         "transparent"
     }
+}
+
+## This will handle grobs (with a list of patterns)
+resolveFill.GridGrobPatternList <- function(fill, ...) {
+    ## All predrawing has been done
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    if (!isEmptyCoords(pts)) {
+        resolvedFills <- vector("list", length(pts))
+        for (i in seq_along(pts)) {
+            ## Recycle patterns if necessary
+            which <- (i - 1) %% length(fill) + 1
+            ## Only resolve if not already resolved
+            if (inherits(fill[[which]], "GridResolvedPattern")) {
+                resolvedFills[[i]] <- fill[[which]]
+                next
+            }
+            if (fill[[which]]$group || length(pts) == 1) {
+                ## Pattern is relative to bounding box of all shapes
+                bbox <- coordsBBox(pts)
+            } else {
+                ## Pattern is relative to bounding box of individual shapes
+                ## Individual shape may consist of more than one set of
+                ## coordinates (e.g., single path consists of distinct shapes)
+                shapeIndex <- names(pts) %in% i
+                ## Fallback if 'pts' does not have names to identify shapes
+                if (!any(shapeIndex)) {
+                    shapeIndex <- i
+                }
+                bbox <- coordsBBox(pts, shapeIndex)
+            }
+            ## Temporary viewport for calculations, so do NOT record on grid DL
+            ## Also, ensure NO mask and NO clip
+            ## (at least initially) for resolution of pattern
+            ## Also, set fill to "transparent"
+            ## (to avoid this viewport picking up the fill being resolved)
+            pushViewport(viewport(bbox$left, bbox$bottom,
+                                  bbox$width, bbox$height,
+                                  default.units="in",
+                                  just=c("left", "bottom"),
+                                  clip="off", mask="none",
+                                  gp=gpar(fill="transparent")),
+                         recording=FALSE)
+            pattern <- resolvePattern(fill[[which]])
+            popViewport(recording=FALSE)
+            resolvedFills[[i]] <- pattern
+        }
+        class(resolvedFills) <- c("GridResolvedPatternList",
+                                  class(fill))
+        resolvedFills
+    } else {
+        warning("Pattern fill applied to object with no inside")
+        ## Set fill to transparent
+        "transparent"
+    }
+}
+
+resolveGTreeFill <- function(fill, pts) {
+    if (!isEmptyCoords(pts)) {
+        ## Pattern is relative to bounding box of all shapes
+        bbox <- coordsBBox(pts)
+        ## Temporary viewport for calculations, so do NOT record on grid DL
+        ## Also, ensure NO mask and NO clip
+        ## (at least initially) for resolution of pattern
+        ## Also, set fill to "transparent"
+        ## (to avoid this viewport picking up the fill being resolved)
+        pushViewport(viewport(bbox$left, bbox$bottom,
+                              bbox$width, bbox$height,
+                              default.units="in",
+                              just=c("left", "bottom"),
+                              clip="off", mask="none",
+                              gp=gpar(fill="transparent")),
+                     recording=FALSE)
+        pattern <- resolvePattern(fill)
+        popViewport(recording=FALSE)
+        pattern
+    } 
+}
+
+## This will handle gTrees (with a single pattern)
+## This should ONLY be called if fill$group is TRUE
+## (see recordGTreeForPatternResolution())
+resolveFill.GridGTreePattern <- function(fill, index=1, ...) {
+    ## All predrawing has been done
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    resolveGTreeFill(fill, pts)
+}
+
+## This will handle gTrees (with a list of patterns)
+## For each fill ...
+##   if fill$group resolve relative to gTree bbox
+##   else pass through
+## (similar to resolveFill.GridPatternList() for viewports)
+resolveFill.GridGTreePatternList <- function(fill, ...) {
+    ## All predrawing has been done
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    resolveOneFill <- function(x) {
+        if (x$group) {
+            resolveGTreeFill(x, pts)
+        } else {
+            x
+        }
+    }
+    resolvedFills <- lapply(fill, resolveOneFill)
+    class(resolvedFills) <- class(fill)
+    resolvedFills
 }
 
 resolvePattern <- function(pattern) {
