@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ stopRd <- function(block, Rdfile, ...)
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
     else {
-        Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
+        Rdfile <- basename(Rdfile) # Rdfile could be an absolute path (Rbuild tempdir)
         Rdfile <- paste0(Rdfile, ":")
     }
 
@@ -66,7 +66,7 @@ warnRd <- function(block, Rdfile, ...)
         if(missing(Rdfile) || is.null(Rdfile))
             ""
         else
-            paste0(sub("^man/", "", Rdfile), # for consistency with earlier reports
+            paste0(basename(Rdfile), # Rdfile could be an absolute path (Rbuild tempdir)
                    ":")
     msg <- if (is.null(srcref))
         paste0(Rdfile, " ", ...)
@@ -201,19 +201,21 @@ replaceRdSrcrefs <- function(Rd, srcref) {
     Rd
 }
 
-processRdChunk <- function(code, stage, options, env, Rdfile, macros)
+processRdChunk <- function(code, stage, options, env, macros)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
     codesrcref <- attr(code, "srcref")
+    Rdfile <- attr(codesrcref, "srcfile")$filename
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
     if (stage == options$stage) {
         #  The code below is very similar to RWeaveLatexRuncode, but simplified
 
         # Results as a character vector for now; convert to list later
         res <- character(0)
-        code <- code[RdTags(code) != "COMMENT"]
+        code <- code[RdTags(code) != "COMMENT"]  # list attributes are lost here
 	chunkexps <- tryCatch(parse(text = code), error = identity)
-	if (inherits(chunkexps, "error")) stopRd(code, Rdfile, chunkexps)
+	if (inherits(chunkexps, "error"))
+            stopRd(code, Rdfile, conditionMessage(chunkexps))
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
@@ -262,8 +264,8 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
 	    if (inherits(err, "error")) {
-	    	code <- replaceRdSrcrefs(code, codesrcref)
-	    	stopRd(code, Rdfile, err$message)
+	    	attr(code, "srcref") <- codesrcref  # restore for error location
+	    	stopRd(code, Rdfile, conditionMessage(err))
 	    }
 
 	    if(length(output) && (options$results != "hide")) {

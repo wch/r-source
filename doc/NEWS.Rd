@@ -425,6 +425,10 @@
       \item \command{R CMD Rd2pdf} now always runs LaTeX in batch mode,
       consistent with Texinfo \eqn{\ge}{>=} 6.7. The \option{--batch}
       option is ignored.
+
+      \item \command{R CMD build} and \command{R CMD check} now include
+      the Rd file name and line numbers in the error message of an
+      \verb{\Sexpr} evaluation failure.
     }
   }
 
