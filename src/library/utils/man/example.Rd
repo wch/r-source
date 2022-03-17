@@ -14,7 +14,8 @@
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
         character.only = FALSE, give.lines = FALSE, local = FALSE,
-        echo = TRUE, verbose = getOption("verbose"),
+        type = c("console", "html"), echo = TRUE, 
+        verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6),
         run.dontrun = FALSE, run.donttest = interactive())
@@ -35,6 +36,11 @@ example(topic, package = NULL, lib.loc = NULL,
     source code are returned as a character vector.}
   \item{local}{logical: if \code{TRUE} evaluate locally, if \code{FALSE}
     evaluate in the workspace.}
+  \item{type}{character: whether to show output in the console or a
+    browser (using the dynamic help system). The latter is honored only
+    in interactive sessions and if the \code{\link[knitr]{knitr}}
+    package is installed. Several other arguments are silently ignored
+    in that case, including \code{setRNG} and \code{lib.loc}.}
   \item{echo}{logical;  if \code{TRUE}, show the \R input when sourcing.}
   \item{verbose}{logical;  if \code{TRUE}, show even more when running
     example code.}

@@ -297,7 +297,7 @@ Rd2HTML <-
              Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, fragment=FALSE,
-             stylesheet = "R.css",
+             stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
              texmath = getOption("help.htmlmath"),
              ...)
 {
@@ -926,6 +926,8 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
         if (tag %in% c("\\examples", "\\usage")) {
+            if (dynamic && enhancedHTML && tag == "\\examples")
+                of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>", name))
             of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE

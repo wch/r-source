@@ -315,6 +315,7 @@ httpd <- function(path, query, ...)
     demoRegexp <- "^/library/([^/]*)/demo$"
     demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
     DemoRegexp <- "^/library/([^/]*)/Demo/([^/]*)$"
+    ExampleRegexp <- "^/library/([^/]*)/Example/([^/]*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     sessionRegexp <- "^/session/"
@@ -535,13 +536,16 @@ httpd <- function(path, query, ...)
         if (logHelpRequests) {
             message(sprintf("HTTPD-DEMO %s::%s", pkg, demo))
         }
-        else
-            demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
-	return( list(payload = paste0("Demo '", pkg, "::", demo,
-				"' was run in the console.",
-				" To repeat, type 'demo(",
-				pkg, "::", demo,
-				")' in the console.")) )
+        else return(demo2html(demo, pkg))
+    } else if (grepl(ExampleRegexp, path)) {
+    	pkg <- sub(ExampleRegexp, "\\1", path)
+    	topic <- sub(ExampleRegexp, "\\2", path)
+        if (logHelpRequests) {
+            message(sprintf("HTTPD-EXAMPLE %s::%s", pkg, topic))
+        }
+        else return(example2html(topic, pkg,
+                                 env = if (identical(query["local"], "FALSE")) .GlobalEnv
+                                       else NULL))
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
         if(identical(names(query), c("objects", "port")))

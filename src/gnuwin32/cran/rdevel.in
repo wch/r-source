@@ -33,19 +33,18 @@
 
 <body>
 
-<h1>R-devel build for Windows (64 bit)</h1>
+<h1>R-devel build for Windows (UCRT 64-bit UTF-8)</h1>
 
 <div class="download">
   <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(@SIZEMB@ megabytes, 64 bit)</span></p>
   <ul>
-    <!-- Links to github do not work from frames as used on CRAN  -->
-    <!-- <li>This build of R-Devel uses the gcc gcc 8.3.0 toolchain from rtools40.  -->
-    <!--   For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.</li> -->
-    <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
+    <li><a href="../../windows/base/README.@RWVER@">README on the Windows binary distribution</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
 </div>
 
+<p>This build requires UCRT, which is part of Windows since Windows 10 and Windows Server 2016. 
+On older systems, UCRT has to be installed manually from <a href="https://support.microsoft.com/en-us/topic/update-for-universal-c-runtime-in-windows-c0514201-7fe6-95a3-b0a5-287930f3560c">here</a>.</p>
 
 <p>If you want to double-check that the package you have downloaded matches the package distributed by CRAN, you can compare the <a href="https://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="https://cran.r-project.org/bin/windows/base/md5sum.@RWVER@.txt">fingerprint</a> on the master server.</p>
 
@@ -61,14 +60,14 @@ them on the r-devel mailing list---but only if they persist for a few days.</p>
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">Does
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#Does-R-run-under-Windows-Vista_003f">Does
   R run under my version of Windows?</a></li>
-  <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
 </ul>
   
 <p>Please see the <a
 href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
-general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
+general information about R and the <a href="../../windows/base/rw-FAQ.@RWVER@.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
 
