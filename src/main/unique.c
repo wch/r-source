@@ -191,7 +191,7 @@ static hlen chash(SEXP x, R_xlen_t indx, HashData *d)
    another process.
 
    Hash values are int, For 64bit pointers, we do (upper ^ lower) */
-static R_INLINE hlen PTRHASH(void *x)
+static R_INLINE unsigned int PTRHASH(void *x)
 {
     intptr_t z = (intptr_t) x;
     unsigned int z1 = (unsigned int)(z & 0xffffffff), z2 = 0;
@@ -2322,7 +2322,7 @@ static int hash_address(SEXP x, int K)
 
     HashData d = { .K = K };
 
-    int val = scatter(PTRHASH(x), &d);
+    int val = (int) scatter(PTRHASH(x), &d);
     if (val == NA_INTEGER) val = 0;
     if (val < 0) val = -val;
     return val;
