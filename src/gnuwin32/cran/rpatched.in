@@ -38,7 +38,7 @@
 <div class="download">
   <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(@SIZEMB@ megabytes, 32/64 bit)</span></p>
   <ul>
-    <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
+    <li><a href="../../windows/base/README.@RWVER@">README on the Windows binary distribution</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
 </div>
@@ -54,15 +54,15 @@ in this version against the official release before reporting them. </p>
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">Does
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#Does-R-run-under-Windows-Vista_003f">Does
   R run under my version of Windows?</a></li>
-  <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
-  <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32_002dbit-or-64_002dbit-R_003f">Should I run 32-bit or 64-bit R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#Should-I-run-32_002dbit-or-64_002dbit-R_003f">Should I run 32-bit or 64-bit R?</a></li>
 </ul>
   
 <p>Please see the <a
 href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
-general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
+general information about R and the <a href="../../windows/base/rw-FAQ.@RWVER@.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
 

@@ -41,7 +41,7 @@
     <!-- Links to github do not work from frames as used on CRAN  -->
     <!-- <li>This build of R-Devel uses the gcc gcc 8.3.0 toolchain from rtools40.  -->
     <!--   For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.</li> -->
-    <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
+    <li><a href="../../windows/base/README.@RWVER@">README on the Windows binary distribution</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
 </div>
@@ -61,14 +61,14 @@ them on the r-devel mailing list---but only if they persist for a few days.</p>
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">Does
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#Does-R-run-under-Windows-Vista_003f">Does
   R run under my version of Windows?</a></li>
-  <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.@RWVER@.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
 </ul>
   
 <p>Please see the <a
 href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
-general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
+general information about R and the <a href="../../windows/base/rw-FAQ.@RWVER@.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
 
