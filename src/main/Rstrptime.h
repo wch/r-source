@@ -1289,12 +1289,14 @@ R_strptime (const char *buf, const char *format, stm *tm,
 #if defined(HAVE_WCSTOD)
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
-	n = mbstowcs(NULL, buf, 1000);
+	// GCC 12 does not ignore third arg, contradicting the man page
+	// but seems content with 0 rather than 1000.
+	n = mbstowcs(NULL, buf, 0); 
 	if(n > 1000) error(_("input string is too long"));
 	n = mbstowcs(wbuf, buf, 1000);
 	if(n == -1) error(_("invalid multibyte input string"));
 
-	n = mbstowcs(NULL, format, 1000);
+	n = mbstowcs(NULL, format, 0); // ditto
 	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
 	if(n == -1) error(_("invalid multibyte format string"));
