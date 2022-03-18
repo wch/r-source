@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{numeric}
@@ -28,7 +28,7 @@ is.numeric(x)
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  \code{numeric} is identical to \code{\link{double}} (and \code{real}).
+  \code{numeric} is identical to \code{\link{double}}.
   It creates a double-precision vector of the specified length with each
   element equal to \code{0}.
 
