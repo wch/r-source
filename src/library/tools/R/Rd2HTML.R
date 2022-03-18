@@ -926,8 +926,9 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
         if (tag %in% c("\\examples", "\\usage")) {
-            if (dynamic && enhancedHTML && tag == "\\examples")
-                of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>", name))
+            if (dynamic && enhancedHTML && tag == "\\examples" && !is.null(firstAlias))
+                of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>",
+                            firstAlias))
             of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE
@@ -1021,7 +1022,8 @@ Rd2HTML <-
     } else {
         if (create_redirects) createRedirects(out, Rd)
 	name <- htmlify(Rd[[2L]][[1L]])
-
+        firstAlias <-
+            trimws(Rd[[ which(sections == "\\alias")[1] ]][[1]])
         of0('<!DOCTYPE html>',
             "<html>",
 	    '<head><title>')
