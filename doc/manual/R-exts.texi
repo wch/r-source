@@ -13868,8 +13868,11 @@ char *S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 @end example
 
 @noindent
-which changes the allocation size from @var{old} to @var{new} units, and
-zeroes the additional units.
+which (for @code{@var{new} > @var{old}}) changes the allocation size
+from @var{old} to @var{new} units, and zeroes the additional units.  NB:
+these calls are best avoided as @code{long} is insufficient for large
+memory allocations on 64-bit Windows (where it is limited to 2^31-1
+bytes).
 
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
@@ -13999,29 +14002,6 @@ or might otherwise be interpreted as a format.)
 
 These are defined in header @file{R_ext/Error.h} included by
 @file{R.h}.
-
-If @code{STRICT_R_HEADERS} is not defined there was also an
-@Sl{}-compatibility interface included in @file{R_ext/RS.h}.  This is
-hidden as from @R{} 4.2.0: define @code{R_LEGACY_S_DEFS} to @code{1}
-before including any @R{} headers to continue to use them.
-
-That interface used calls of the form
-
-@example
-@group
-PROBLEM ...... ERROR
-MESSAGE ...... WARN
-PROBLEM ...... RECOVER(NULL_ENTRY)
-MESSAGE ...... WARNING(NULL_ENTRY)
-@end group
-@end example
-
-@noindent
-the last two being the forms available in all @Sl{} versions.  Here
-@samp{......} is a set of arguments to @code{printf}, so can be a string
-or a format string followed by arguments separated by commas.  (There is
-a length limit of 4095 bytes on the whole message, with silent
-truncation from @R{} 4.1.2, unchecked earlier.)
 
 @menu
 * Error signaling from Fortran::
