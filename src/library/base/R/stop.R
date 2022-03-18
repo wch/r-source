@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -125,16 +125,17 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en", domain= "R")
+Sys.setLanguage <- function(lang, unset = "en")
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
-              grepl("^[a-z][a-z]", lang))
+              lang == "C" || grepl("^[a-z][a-z]", lang))
     curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
     if(is.na(curLang) || !nzchar(curLang))
         curLang <- unset # "factory" default
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
         warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
-    ok. <- isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
+    ok. <- capabilities("NLS") &&
+        isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
     invisible(structure(curLang, ok = ok && ok.))
 }

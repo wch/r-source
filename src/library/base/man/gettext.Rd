@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", domain= "R")
+Sys.setLanguage(lang, unset = "en")
 
 }
 \arguments{
@@ -89,10 +89,12 @@ Sys.setLanguage(lang, unset = "en", domain= "R")
   name: your system may have a \command{man} page for it.  With a
   non-\code{NULL} \code{dirname} it specifies where to look for message
   catalogues: with \code{dirname = NULL} it returns the current location.
+  If NLS is not enabled, \code{bindtextdomain(*,*)} returns \code{NULL}.
   %%
   The special case \code{bindtextdomain(NULL)} calls C level
   \code{textdomain(textdomain(NULL))} for the purpose of flushing (i.e.,
-  emptying) the cache of already translated strings.
+  emptying) the cache of already translated strings, it returns \code{TRUE}
+  when NLS is enabled.
 }
 \value{
   For \code{gettext}, a character vector, one element per string in
@@ -105,10 +107,11 @@ Sys.setLanguage(lang, unset = "en", domain= "R")
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
 
-  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting
-  with \code{\link{attributes}} \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
-  indicating success and \code{\link{attr}(*, "dir")} specifying the result
-  of the last \code{bindtextdomain()} called from \code{Sys.setLanguage()}.
+  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting with
+  attribute \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
+  indicating success.
+  Note that currently, using a non-existing language \code{lang} is still
+  set and no translation will happen, without any \code{\link{message}}.
 }
 \seealso{
   \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
