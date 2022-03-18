@@ -3875,6 +3875,8 @@ For @cputype{ix86} and @cputype{x86_64} most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
 
+Another descendant project is BLIS (@uref{https://github.com/flame/blis}).
+
 @node MKL, Shared BLAS, OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
