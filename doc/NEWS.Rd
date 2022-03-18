@@ -675,6 +675,10 @@
       \item \code{qbeta(.001, .9, .009)} and analogous \code{qf()} calls now
       return a correct value instead of \code{NaN} or wrongly \code{1}, all
       with a warning; thanks to the report by Ludger Goeminne in \PR{18302}.
+
+      \item \code{plot.lm()} failed to produce the plot of residuals vs.
+      factor levels (i.e., \code{which=5} when leverages are constant)
+      for models with character predictors (\PR{17840}).
     }
   }
 }

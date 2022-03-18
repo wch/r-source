@@ -214,15 +214,12 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	    if(missing(caption)) # set different default
 		caption[[5L]] <- "Constant Leverage:\n Residuals vs Factor Levels"
             ## plot against factor-level combinations instead
-            aterms <- attributes(terms(x))
-            ## classes w/o response
-            dcl <- aterms$dataClasses[ -aterms$response ]
-            facvars <- names(dcl)[dcl %in% c("factor", "ordered")]
-            mf <- model.frame(x)[facvars]# better than x$model
-            if(ncol(mf) > 0) {
+            if(nf <- length(xlev <- x$xlevels)) {
+                facvars <- names(xlev)
+                mf <- model.frame(x)[facvars]  # better than x$model
                 dm <- data.matrix(mf)
                 ## #{levels} for each of the factors:
-                nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
+                nlev <- unname(lengths(xlev))
                 ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
                 facval <- (dm-1) %*% ff
                 xx <- facval # for use in do.plot section.
@@ -232,7 +229,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
                 axis(1, at = ff[1L]*(1L:nlev[1L] - 1/2) - 1/2,
-                     labels = x$xlevels[[1L]])
+                     labels = xlev[[1L]])
                 mtext(paste(facvars[1L],":"), side = 1, line = 0.25, adj=-.05)
                 abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
                 panel(facval, rs, ...)
