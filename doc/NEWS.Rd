@@ -679,6 +679,9 @@
       \item \code{plot.lm()} failed to produce the plot of residuals vs.
       factor levels (i.e., \code{which=5} when leverages are constant)
       for models with character predictors (\PR{17840}).
+
+      \item \code{interaction.plot(..., xtick = TRUE)} misplaced the
+      x-axis line (\PR{18305}).
     }
   }
 }
