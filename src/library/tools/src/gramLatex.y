@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -160,6 +160,8 @@ static SEXP R_LatexTagSymbol = NULL;
 #define YYSTYPE		SEXP
 
 %}
+/* token-table is needed for yytname[] to be defined in recent bison versions */
+%token-table
 
 %token		END_OF_INPUT ERROR
 %token		MACRO

@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -607,13 +607,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   179,   179,   180,   181,   184,   185,   186,   187,   189,
-     190,   192,   193,   194,   195,   196,   197,   199,   199,   203,
-     205,   206
+       0,   181,   181,   182,   183,   186,   187,   188,   189,   191,
+     192,   194,   195,   196,   197,   198,   199,   201,   201,   205,
+     207,   208
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || 0
+#if YYDEBUG || YYERROR_VERBOSE || 1
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
