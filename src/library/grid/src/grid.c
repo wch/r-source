@@ -3871,9 +3871,11 @@ static int symbolNumCoords(int pch, Rboolean closed) {
     case 2:	/* S triangle - point up */
         break;
     case 3: /* S plus */
-        if (!closed) result = 2; break;
+        if (!closed) result = 2;
+	break;
     case 4: /* S times */
-        if (!closed) result = 2; break;
+        if (!closed) result = 2;
+	break;
     case 5: /* S diamond */
     case 6: /* S triangle - point down */
         break;
@@ -3884,7 +3886,8 @@ static int symbolNumCoords(int pch, Rboolean closed) {
             result = 2;
         break;
     case 8: /* S plus and times superimposed */
-        if (!closed) result = 4; break;
+        if (!closed) result = 4;
+	break;
     case 9: /* S diamond and plus superimposed */
         if (closed) 
             result = 1;
@@ -3898,7 +3901,8 @@ static int symbolNumCoords(int pch, Rboolean closed) {
             result = 2;
         break;
     case 11: /* S superimposed triangles */
-        if (closed) result = 2; break;
+        if (closed) result = 2;
+	break;
     case 12: /* S square and plus superimposed */
         if (closed) 
             result = 1;
@@ -3912,7 +3916,8 @@ static int symbolNumCoords(int pch, Rboolean closed) {
             result = 2;
         break;
     case 14: /* S square and point-up triangle superimposed */
-        if (closed) result = 2; break;
+        if (closed) result = 2;
+	break;
     case 15: /* S filled square */
     case 16: /* S filled octagon (circle) */
     case 17: /* S filled point-up triangle */
