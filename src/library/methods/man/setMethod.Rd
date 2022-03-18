@@ -35,11 +35,11 @@ setMethod(f, signature=character(), definition,
       \code{where}: where to store the definition; should be the
       default, the namespace for the package.
 
-  \code{valueClass}{ Obsolete. }
+  \code{valueClass}: obsolete.
 
-  \code{sealed}{ prevents the method being redefined, but should never
+  \code{sealed}: prevents the method being redefined, but should never
     be needed when the method is defined in the source code of a
-    package.}
+    package.
 }
 }
 \value{
