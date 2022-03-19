@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -154,9 +154,13 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
     if (temp == NULL) { // ~name
 	strcpy(buff, home);
     } else { // ~name/path
-	size_t len = strlen(home) + 1 + strlen(s2) + 1;
+	// ask snprintf to compute the length, as GCC 12 complains otherwise.
+	size_t len = snprintf(NULL, 0, "%s/%s", home, s2);
+	// buff is passed from R_ExpandFileName, uses static array of
+	// size PATH_MAX.
+	// FIXME: warn or error on over-long result?
 	if (len >= PATH_MAX) return s;
-	(void)snprintf(buff, len, "%s/%s", home, s2);
+	(void)snprintf(buff, len,  "%s/%s", home, s2);
     }
 
     return buff;
