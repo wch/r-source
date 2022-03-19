@@ -1289,8 +1289,9 @@ R_strptime (const char *buf, const char *format, stm *tm,
 #if defined(HAVE_WCSTOD)
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
-	// GCC 12 does not ignore third arg, contradicting the man page
+	// GCC 12 does not ignore third arg, contradicting the glibc man page
 	// but seems content with 0 rather than 1000.
+	// (Not mentioned by C99/C11).
 	n = mbstowcs(NULL, buf, 0); 
 	if(n > 1000) error(_("input string is too long"));
 	n = mbstowcs(wbuf, buf, 1000);

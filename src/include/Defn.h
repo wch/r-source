@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2021  The R Core Team.
+ *  Copyright (C) 1998--2022  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -950,9 +950,13 @@ extern int putenv(char *string);
 
 /* Maximal length in bytes of an entire path name.
    POSIX has required this to be at least 255/256, and X/Open at least 1024.
-   Solaris has 1024, Linux glibc has 4192.
+   Solaris, macOS, *BSD have 1024, Linux glibc has 4192.
    File names are limited to FILENAME_MAX bytes (usually the same as PATH_MAX)
    or NAME_MAX (often 255/256).
+
+   POSIX requires PATH_MAX to be defined in limits.h (included above)
+   if independent of the file path (file system?).  However, if it can
+   vary by filepath, it is required to be undefined there.
  */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)
