@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2021-10-21 r81085) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -820,4 +818,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.125   0.123   1.454 
+  3.481   0.135   3.613 

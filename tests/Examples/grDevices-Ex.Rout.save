@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-11-29 r81261) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3549,15 +3549,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2021-11-28" "2021-11-29" "2021-11-30" "2021-12-01" "2021-12-02"
-[6] "2021-12-03"
+[1] "2022-03-17" "2022-03-18" "2022-03-19" "2022-03-20" "2022-03-21"
+[6] "2022-03-22"
 > pretty(Sys.time(), n = 10)
- [1] "2021-11-30 16:08:37 NZDT" "2021-11-30 16:08:38 NZDT"
- [3] "2021-11-30 16:08:39 NZDT" "2021-11-30 16:08:40 NZDT"
- [5] "2021-11-30 16:08:41 NZDT" "2021-11-30 16:08:42 NZDT"
- [7] "2021-11-30 16:08:43 NZDT" "2021-11-30 16:08:44 NZDT"
- [9] "2021-11-30 16:08:45 NZDT" "2021-11-30 16:08:46 NZDT"
-[11] "2021-11-30 16:08:47 NZDT"
+ [1] "2022-03-19 21:26:43 GMT" "2022-03-19 21:26:44 GMT"
+ [3] "2022-03-19 21:26:45 GMT" "2022-03-19 21:26:46 GMT"
+ [5] "2022-03-19 21:26:47 GMT" "2022-03-19 21:26:48 GMT"
+ [7] "2022-03-19 21:26:49 GMT" "2022-03-19 21:26:50 GMT"
+ [9] "2022-03-19 21:26:51 GMT" "2022-03-19 21:26:52 GMT"
+[11] "2022-03-19 21:26:53 GMT"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4044,40 +4044,6 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
-> X11Fonts()
-$serif
-[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$sans
-[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Times
-[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Helvetica
-[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrTimes
-[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrHelvetica
-[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Arial
-[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Mincho
-[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> X11Fonts("mono")
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
-> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -4337,7 +4303,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  42.004 0.516 44.6 0 0 
+Time elapsed:  83.971 1.605 86.106 0 0 
 > grDevices::dev.off()
 null device 
           1 

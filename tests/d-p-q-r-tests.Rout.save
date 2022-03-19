@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -108,13 +108,13 @@ Type 'q()' to quit R.
 + }
 m= 10 ; n= 7 :
 Time    user  system elapsed 
-Time   0.005   0.000   0.004 
+Time   0.009   0.000   0.010 
 m= 15 ; n= 0 :
 Time    user  system elapsed 
-Time   0.001   0.000   0.002 
+Time   0.004   0.000   0.004 
 m= 999 ; n= 0 :
 Time    user  system elapsed 
-Time   0.117   0.000   0.117 
+Time   0.259   0.000   0.261 
 > 
 > ##__ 4. Negative Binomial __
 > 
@@ -878,5 +878,5 @@ Time   0.117   0.000   0.117
 > ## ==        ~~~                    ~~~~  ~~~               ~~~~~~~~~~~~~~~
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.166 0.019 1.19 0 0 
+Time elapsed:  2.3 0.036 2.351 0 0 
 > 
