@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv BioC_mirrors.csv \
 	KEYWORDS KEYWORDS.db THANKS NEWS.0 NEWS.1 NEWS.2 NEWS.3
-DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 \
+DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux \
   NEWS.Rd NEWS.2.Rd NEWS.3.Rd
 INSTFILES2 = NEWS.rds NEWS NEWS.pdf NEWS.2.rds NEWS.3.rds
 NON_SVN_INSTFILES = FAQ RESOURCES NEWS NEWS.pdf
@@ -39,15 +39,20 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-## R.1 last: currently needs perl (which is *not* checked at configure time);
+## man pages last: currently needs perl (which is *not* checked at configure time);
 ## NB: need NEWS.rds for 'news()' which is run in 'make check'
-docs: NEWS.rds NEWS html/NEWS.html NEWS.pdf NEWS.2.rds NEWS.3.rds R.1
+docs: NEWS.rds NEWS html/NEWS.html NEWS.pdf NEWS.2.rds NEWS.3.rds R.1 Rscript.1
 	@(cd manual && $(MAKE) $@)
 
 R.1:
 	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=R.1 \
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R
+
+Rscript.1:
+	@$(HELP2MAN) --no-info --output=Rscript.1 \
+	  --name="front end for scripting with R" \
+	  $(top_builddir)/bin/Rscript
 
 NEWS.rds: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\", \
@@ -133,7 +138,7 @@ install-man: installdirs R.1 Rscript.1
 	@rm -f $(DESTDIR)$(mandir)/man1/R.1
 	@$(INSTALL_DATA) R.1 $(DESTDIR)$(mandir)/man1
 	@rm -f $(DESTDIR)$(mandir)/man1/Rscript.1
-	@@$(INSTALL_DATA) ${srcdir}/Rscript.1 $(DESTDIR)$(mandir)/man1
+	@$(INSTALL_DATA) Rscript.1 $(DESTDIR)$(mandir)/man1
 install-message:
 	@$(ECHO) "installing $(subdir) ..."
 ## installed from srcdir, including to builddir
@@ -174,7 +179,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(INSTFILES) R.1; \
+	  rm -f $(INSTFILES) R.1 Rscript.1; \
 	fi
 	-@rm -f $(INSTFILES2) NEWS.2.rds NEWS.2.html NEWS.2.pdf \
 	  NEWS.3.rds NEWS.3.html NEWS.3.pdf
@@ -185,7 +190,7 @@ distclean: clean
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(NON_SVN_INSTFILES); \
 	fi
-	-@rm -f Makefile R.1
+	-@rm -f Makefile R.1 Rscript.1
 maintainer-clean: distclean
 
 

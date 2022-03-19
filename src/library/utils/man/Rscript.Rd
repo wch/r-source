@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -11,7 +11,8 @@
   other scripting applications.
 }
 \usage{
-\special{Rscript [options] [-e expr [-e expr2 ...] | file] [args]}
+\special{Rscript [options] file [args]}
+\special{Rscript [options] -e expr [-e expr2 ...] [args]}
 }
 \arguments{
   \item{options}{a list of options, all beginning with \samp{--}.  These
@@ -58,7 +59,7 @@
     }
   }
 
-  Spaces are allowed in \code{expression} and \code{file} (but will need
+  Spaces are allowed in \code{expr} and \code{file} (but will need
   to be protected from the shell in use, if any, for example by
   enclosing the argument in quotes).
 
