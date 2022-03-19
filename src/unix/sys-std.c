@@ -498,9 +498,13 @@ attribute_hidden
 char *R_ExpandFileName_readline(const char *s, char *buff)
 {
     char *s2 = tilde_expand_word(s);
+    size_t len = strlen(s2);
 
     strncpy(buff, s2, PATH_MAX);
-    if(strlen(s2) >= PATH_MAX) buff[PATH_MAX-1] = '\0';
+    if(len >= PATH_MAX) {
+	buff[PATH_MAX-1] = '\0';
+	warning(_("expanded path length %d would be too long for\n%s\n"), len, s);
+    }
     free(s2);
     return buff;
 }

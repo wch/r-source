@@ -246,6 +246,9 @@
       except for the four Fortran 77 routines which 3.10.0 has
       re-implemented in Fortran 90 (where the older versions have been
       retained as the \R build process does not support Fortran 90).
+
+      \item \code{path.expand()} and other uses of tilde expansion now
+      warn if a path would be too long if expanded.
     }
   }
 

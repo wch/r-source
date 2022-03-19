@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,10 +94,17 @@ const char *R_ExpandFileName(const char *s)
 	    }
 	}
     }
-    if(HaveHOME > 0 && strlen(UserHOME) + strlen(s+1) < PATH_MAX) {
-	strcpy(newFileName, UserHOME);
-	strcat(newFileName, s+1);
-	return newFileName;
+    if(HaveHOME > 0) {
+	size_t len = strlen(UserHOME) + strlen(s+1);
+	if(len < PATH_MAX) {
+	    strcpy(newFileName, UserHOME);
+	    strcat(newFileName, s+1);
+	    return newFileName;
+	} else {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+		    len, s);
+	    return s;
+	}
     } else return s;
 }
 

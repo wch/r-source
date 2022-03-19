@@ -1,6 +1,6 @@
 % File src/library/base/man/path.expand.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{path.expand}
@@ -42,6 +42,11 @@ path.expand(path)
 \value{
   A character vector of possibly expanded path names: where the home
   directory is unknown or none is specified the path is returned unchanged.
+
+  %% Currently truncates with readline, returns unchanged on Windows and
+  %% Unix without readline.
+  If the expansion would exceed the maximum path length the result may
+  be truncated or the path may be returned unchanged.
 }
 \seealso{
   \code{\link{basename}}, \code{\link{normalizePath}}, \code{\link{file.path}}.

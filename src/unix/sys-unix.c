@@ -158,9 +158,12 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 	size_t len = snprintf(NULL, 0, "%s/%s", home, s2);
 	// buff is passed from R_ExpandFileName, uses static array of
 	// size PATH_MAX.
-	// FIXME: warn or error on over-long result?
-	if (len >= PATH_MAX) return s;
-	(void)snprintf(buff, len,  "%s/%s", home, s2);
+	if (len >= PATH_MAX) {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+		       len, s);
+	    return s;
+	}
+	(void)snprintf(buff, len + 1,  "%s/%s", home, s2);
     }
 
     return buff;
