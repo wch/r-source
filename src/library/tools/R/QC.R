@@ -7219,6 +7219,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(length(Rdb)) {
         names(Rdb) <-
             substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
+        Rdb0 <- Rdb
         containsBuildSexprs <-
             which(vapply(Rdb,
                          function(Rd) any(getDynamicFlags(Rd)["build"]),
@@ -7294,7 +7295,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 },
                 names(x), x)
         }
-        bad <- lapply(Rdb,
+        bad <- lapply(Rdb0,
                       function(Rd) {
                           grep("https?://(dx[.])?doi[.]org/10",
                                .get_urls_from_Rd(Rd),
