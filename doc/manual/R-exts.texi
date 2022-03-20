@@ -4915,14 +4915,18 @@ all @R{} platforms.
 Under no circumstances should your compiled code ever call @code{abort}
 or @code{exit}@footnote{or where supported the variants @code{_Exit} and
 @code{_exit}.}: these terminate the user's @R{} process, quite possibly
-losing all unsaved work.  One usage that could call @code{abort}
-is the @code{assert} macro in C or C++ functions, which should never be
-active in production code.  The normal way to ensure that is to define
-the macro @code{NDEBUG}, and @command{R CMD INSTALL} does so as part of
-the compilation flags.  If you wish to use @code{assert} during
-development. you can include @code{-UNDEBUG} in @code{PKG_CPPFLAGS}.
-Note that your own @file{src/Makefile} or makefiles in sub-directories
-may also need to define @code{NDEBUG}.
+losing all unsaved work.  One usage that could call @code{abort} is the
+@code{assert} macro in C or C++ functions, which should never be active
+in production code.  The normal way to ensure that is to define the
+macro @code{NDEBUG}, and @command{R CMD INSTALL} does so as part of the
+compilation flags.  Beware of including headers (including from other
+packages) which could undefine it, now or in future versions.  If you
+wish to use @code{assert} during development. you can include
+@code{-UNDEBUG} in @code{PKG_CPPFLAGS} or @code{#undef} it in your
+headers or code files.  Note that your own @file{src/Makefile} or
+makefiles in sub-directories may also need to define @code{NDEBUG}.
+@c RcppArmadillo undefined NDEBUG and compiled in assert calls
+@c on macOS in 2022-03.
 
 This applies not only to your own code but to any external software you
 compile in or link to.
@@ -4939,7 +4943,7 @@ as @code{rand}, @code{drand48} and @code{random}@footnote{This and
 @code{srandom} are in any case not portable.  They are in POSIX but not
 in the C99 standard, and not available on Windows.}, but rather use the
 interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
-particular, if more than one package initializes the system RNG (e.g.@:
+particular, if more than one package initializes a system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.
 
 Nor should the C++11 random number library be used, nor any other
@@ -5031,7 +5035,7 @@ check service at
 It is bad practice for package code to alter the search path using
 @code{library}, @code{require} or @code{attach} and this often does not
 work as intended.  For alternatives, see @ref{Suggested packages} and
-@code{with}.
+@code{with()}.
 
 @item
 Examples can be run interactively @emph{via} @code{example} as well as
@@ -5069,7 +5073,7 @@ third-party software.
 @item
 The @command{ar} utility is often used in makefiles to make static
 libraries.  Its modifier @code{u} is defined by POSIX but is disabled in
-GNU @command{ar} on some recent Linux distributions which use
+GNU @command{ar} on some Linux distributions which use
 `deterministic mode'.  The safest way to make a static library is to first
 remove any existing file of that name then use @command{ar -cr} and then
 @command{ranlib} if needed (which is system-dependent: on most
