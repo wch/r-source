@@ -54,9 +54,6 @@
       \item Function \code{file_test()} in package \pkg{utils} gains
       tests for symlinks, readability and writability.
 
-      \item On Windows, \code{download.file(method = "auto")} and
-      \code{url(method = "default")} now follow Unix in using
-      \code{"libcurl"} for all except \samp{file://} URIs.
 
       \item \code{capabilities("libxml")} is now false.
 
@@ -95,13 +92,6 @@
 
       \item \code{nclass.FD()} gains a \code{digits} option.
 
-      \item \R on Windows now uses the system memory allocator.  Doug
-      Lea's allocator was used since \R 1.2.0 to mitigate performance
-      limitations seen with system allocators on earlier versions of
-      Windows.
-
-      \code{memory.limit()} and \code{memory.size()} are now stubs on
-      Windows (as on Unix-alikes).
 
       \item The R Mathlib internal C function \code{bd0()} (called
       indirectly from a dozen probability density and distribution
@@ -320,6 +310,9 @@
       tailored to \file{Rtools42}, the newly recommended 64-bit
       \command{gcc} 10.3 MinGW-W64 UCRT toolchain.
 
+      \item \file{Rtools42} by default uses security features ASLR and DEP
+      and hence also CRAN builds of \R and packages do.
+
       \item \R now supports files \file{Makevars.ucrt},
       \file{Makefile.ucrt}, \file{configure.ucrt} and
       \file{cleanup.ucrt} in packages, which are used in preference to
@@ -331,11 +324,9 @@
       \item \code{R.version} gains new field \code{crt} (only on Windows) to
       denote the C runtime. The value is \code{"ucrt"}.
 
-      \item \R now supports installation-time patching of packages.
-      Patches may be installed from a supplied URL or a local directory
-      or disabled.  Patches are included into the installed packages for
-      reference.  This experimental feature may be removed in the
-      future.
+      \item On Windows, \code{download.file(method = "auto")} and
+      \code{url(method = "default")} now follow Unix in using
+      \code{"libcurl"} for all except \samp{file://} URIs.
 
       \item \file{Rtools42} include an unpatched Msys2 build of GNU
       \command{tar}.  Paths including drive letters can be made to work
@@ -354,6 +345,12 @@
       Windows conventions.  Use \code{shell.exec(R.home())} from \R{} to
       open the \R installation directory in Explorer (\PR{17842}).
 
+      \item \R now supports installation-time patching of packages.
+      Patches may be installed from a supplied URL or a local directory
+      or disabled.  Patches are included into the installed packages for
+      reference.  This experimental feature may be removed in the
+      future.
+
       \item \code{libcurl} is now required for building from source.
 
       \item The clipboard connection now works also with text in other
@@ -364,6 +361,18 @@
       \item The internal case-changing functions are now used by default
       on Windows -- this circumvents problems (for example with E acute)
       of the UCRT Windows' runtime.
+
+      \item \R on Windows now uses the system memory allocator.  Doug
+      Lea's allocator was used since \R 1.2.0 to mitigate performance
+      limitations seen with system allocators on earlier versions of
+      Windows.
+
+      \item \code{memory.limit()} and \code{memory.size()} are now stubs on
+      Windows (as on Unix-alikes).
+
+      \item Applications embedding \R on Windows can now use additional
+      callbacks, which have so far only been available only on Unix
+      (\PR{18286}).
     }
   }
 
