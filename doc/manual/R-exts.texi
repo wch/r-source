@@ -5085,6 +5085,10 @@ them without.
 Note that on some systems @command{ar -cr} must have at least one file
 specified.
 
+The @code{s} modifier (to replace a separate call to @command{ranlib})
+is required by X/OPEN but not POSIX, so @command{ar -crs} is not
+portable.
+
 @item
 The @command{strip} utility is platform-specific (and @acronym{CRAN}
 prohibits removing debug symbols).  For example the options
