@@ -253,6 +253,7 @@ httpd <- function(path, query, ...)
                "ps" = "application/postscript", # in GLMMGibbs, mclust
                "sgml" = "text/sgml",    # in RGtk2
                "xml" = "text/xml",      # in RCurl
+               "js" = "text/javascript",  # for katex etc
                "text/plain")
     }
 
