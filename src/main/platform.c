@@ -1268,6 +1268,7 @@ SEXP attribute_hidden do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
+// A filenamw cannot be that long, but avoid GCC warnings
 #define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
@@ -2368,7 +2369,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* This is true iff winCairo.dll is available */
     struct stat sb;
-    char path[1000];
+    char path[1000]; // R_HomeDir() should be at most 260 chars
     snprintf(path, 1000, "%s/library/grDevices/libs/%s/winCairo.dll",
 	     R_HomeDir(), R_ARCH);
     LOGICAL(ans)[i++] = stat(path, &sb) == 0;
@@ -2820,7 +2821,9 @@ static int do_copy(const char* from, const char* name, const char* to,
 	return 1;
     }
     struct stat sb;
-    int nfail = 0, res;
+    int nfail = 0, res; // we only use nfail == 0
+    size_t len;
+    // After POSIX clarification, PATH_MAX would do
     char dest[PATH_MAX + 1], this[PATH_MAX + 1];
 
     int mask;
@@ -2831,11 +2834,13 @@ static int do_copy(const char* from, const char* name, const char* to,
     mask = 0777;
 #endif
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
-    if (strlen(from) + strlen(name) >= PATH_MAX) {
+    // We use snprintf to compute lengths to pacify GCC 12
+    len = snprintf(NULL, 0, "%s%s", from, name);
+    if (len >= PATH_MAX) {
 	warning(_("over-long path"));
 	return 1;
     }
-    snprintf(this, PATH_MAX+1, "%s%s", from, name);
+    snprintf(this, len+1, "%s%s", from, name);
     /* Here we want the target not the link */
     stat(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
@@ -2844,11 +2849,12 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char p[PATH_MAX + 1];
 
 	if (!recursive) return 1;
-	if (strlen(to) + strlen(name) >= PATH_MAX) {
+	len = snprintf(NULL, 0, "%s%s", to, name);
+	if (len >= PATH_MAX) {
 	    warning(_("over-long path"));
 	    return 1;
 	}
-	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
+	snprintf(dest, len+1, "%s%s", to, name);
 	/* If a directory does not have write permission for the user,
 	   we will fail to create files in that directory, so defer
 	   setting mode */
@@ -2875,12 +2881,13 @@ static int do_copy(const char* from, const char* name, const char* to,
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		if (strlen(name) + strlen(de->d_name) + 1 >= PATH_MAX) {
+		len = snprintf(NULL, 0, "%s/%s", name, de->d_name);
+		if (len >= PATH_MAX) {
 		    warning(_("over-long path"));
 		    closedir(dir);
 		    return 1;
 		}
-		snprintf(p, PATH_MAX+1, "%s/%s", name, de->d_name);
+		snprintf(p, len+1, "%s/%s", name, de->d_name);
 		nfail += do_copy(from, p, to, over, recursive,
 				 perms, dates, depth);
 	    }
@@ -2895,13 +2902,13 @@ static int do_copy(const char* from, const char* name, const char* to,
 	FILE *fp1 = NULL, *fp2 = NULL;
 
 	nfail = 0;
-	size_t nc = strlen(to);
-	if (nc + strlen(name) >= PATH_MAX) {
+	len = snprintf(NULL, 0, "%s%s", to, name);
+	if (len >= PATH_MAX) {
 	    warning(_("over-long path"));
 	    nfail++;
 	    goto copy_error;
 	}
-	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
+	snprintf(dest, len+1, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
 	    /* REprintf("copying %s to %s\n", this, dest); */
 	    if ((fp1 = R_fopen(this, "rb")) == NULL ||
@@ -2917,6 +2924,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		fclose(fp2);
 		error("could not allocate copy buffer");
 	    }
+	    size_t nc;
 	    while ((nc = fread(buf, 1, APPENDBUFSIZE, fp1)) == APPENDBUFSIZE)
 		if (    fwrite(buf, 1, APPENDBUFSIZE, fp2)  != APPENDBUFSIZE) {
 		    nfail++;
