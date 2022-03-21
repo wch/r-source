@@ -6833,7 +6833,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     	    else Sys.unsetenv("_R_RD_MACROS_PACKAGE_DIR_"))
     Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
 
-    pg <- dir("man", pattern = "[.][Rd]d$", full.names = TRUE)
+    pg <- dir(file.path(dir, "man"), pattern = "[.][Rr]d$", full.names = TRUE)
     bad <- character()
     for (f in pg) {
         ## Kludge for now

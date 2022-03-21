@@ -305,9 +305,13 @@ if(okA) {
   Dlns <- readLines(DN); i <- grep("^LazyData:", Dlns)
   Dlns[i] <- paste0(Dlns[i], ",") ## adding a ","
   writeLines(Dlns, con = DN)
+  ## do not test installation failure in myLib as previous pkgA would be removed
+  ## from there (because no.q=TRUE causes do_exit_on_error() to be called twice)
+  ## and if getNamespaceInfo("pkgA", "path") no longer exists,
+  ## sessionInfo() fails in the "exSexpr" test below
   instEXPR <- quote(
-      tools:::.install_packages(c("--clean", "--library=myLib", pkgApath), no.q = TRUE)
-  )   ##      -----------------                                 ----
+      tools:::.install_packages(c("--clean", paste0("--library=", tempdir()), pkgApath), no.q = TRUE)
+  )   ##      -----------------                                               ----
   if(interactive()) { ## << "FIXME!"  This (sink(.) ..) fails, when run via 'make'.
     ## install.packages() should give "the correct" error but we cannot catch it
     ## One level lower is not much better, needing sink() as capture.output() fails

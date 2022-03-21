@@ -630,7 +630,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 {
     warnRd <- function(block, Rdfile, ..., level = 0L)
     {
-        Rdfile <- sub("^man/", "", Rdfile)
+        Rdfile <- sub("^\\./man/", "", Rdfile)
         srcref <- attr(block, "srcref")
         msg <- if (is.null(srcref))
             paste0("file '", Rdfile, "': ", ...)
