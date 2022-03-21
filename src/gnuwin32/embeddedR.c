@@ -36,9 +36,9 @@ extern int UserBreak;
 
 /* calls into the R DLL */
 extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
-extern void R_DefParams(Rstart), R_SetParams(Rstart), R_setStartTime();
+extern void R_SetParams(Rstart), R_setStartTime();
 extern void ProcessEvents(void);
-extern int R_ReplDLLdo1();
+extern int R_DefParamsEx(Rstart, int), R_ReplDLLdo1();
 
 
 /* simple input, simple output */
@@ -91,7 +91,7 @@ int Rf_initialize_R(int argc, char **argv)
     }
 
     R_setStartTime();
-    R_DefParams(Rp);
+    R_DefParamsEx(Rp, RSTART_VERSION);
     if((RHome = get_R_HOME()) == NULL) {
 	fprintf(stderr,
 		"R_HOME must be set in the environment or Registry\n");

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -333,7 +333,7 @@ int Rf_initialize_R(int ac, char **av)
     process_system_Renviron();
 
     R_setStartTime();
-    R_DefParams(Rp);
+    R_DefParamsEx(Rp, RSTART_VERSION);
     /* Store the command line arguments before they are processed
        by the R option handler.
      */

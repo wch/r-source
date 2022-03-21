@@ -44,6 +44,8 @@ extern "C" {
 typedef enum {RGui, RTerm, LinkDLL} UImode;
 #endif
 
+#define RSTART_VERSION 1 /* version 1 introduced in R 4.2.0 */
+
 /* Startup Actions */
 typedef enum {
     SA_NORESTORE,/* = 0 */
@@ -71,15 +73,24 @@ typedef struct
     R_SIZE_T max_vsize;
     R_SIZE_T max_nsize;
     R_SIZE_T ppsize;
-    int NoRenviron;
-
+    Rboolean NoRenviron : 16;
+	/* RstartVersion has been added in R 4.2.0. Earlier, NoRenviron was an
+	   int (normally 32-bit like Rboolean), so on most machines the
+	   version would become 0 when setting NoRenviron to FALSE in
+	   R_DefParams by R older than 4.2.0. To be safe, embedding
+	   applications should be compiled using the same version of R they
+	   embed, as shown in rtest.c and WRE, and definitely recompiled with
+	   R 4.2.0.
+	*/
+    int RstartVersion : 16;
+    
 #ifdef Win32
     char *rhome;               /* R_HOME */
     char *home;                /* HOME  */
 
     int (*ReadConsole) (const char *, unsigned char *, int, int);
     void (*WriteConsole) (const char *, int);
-    void (*CallBack) (void);
+    void (*CallBack) (void);   /* ProcessEvents under Unix */
     void (*ShowMessage) (const char *);
     int (*YesNoCancel) (const char *);
 	/* Return value here is expected to be 1 for Yes, -1 for No and
@@ -87,24 +98,43 @@ typedef struct
 	*/
     void (*Busy) (int);
     UImode CharacterMode;
+	/* The following field has been added in R 2.5.0 */
     void (*WriteConsoleEx) (const char *, int, int);
 	/* used only if WriteConsole is NULL */
+
+	/* The following field has been added in R 4.0.0. */
     Rboolean EmitEmbeddedUTF8;
 	/* R may embed UTF-8 sections into strings otherwise in current native
 	   encoding, escaped by UTF8in and UTF8out (rgui_UTF8.h). The setting
-	   currently has no effect in Rgui (always enabled) and in Rterm (never
-	   enabled). The setting has no effect when UTF-8 is the native
-	   encoding, which it is from R 4.2 on recent Windows systems when
-	   the embedding application/front-end uses UTF-8 as the active code
-	   page (system encoding) via its fusion manifest.
+	   has no effect in Rgui (escaping happens iff the system codepage is 
+	   not UTF-8) neither in Rterm (never enabled). For UTF-8 to be the
+	   system codepage, the embeddeding application must set UTF-8 as the
+	   active code page (system encoding) via its fusion manifest. When
+	   using version 0 of the structure, this field must be initialized
+	   by the embedding application/front-end.
 	*/
+
+	/* The following fields have been added in R 4.2.0 and are only
+	   available with RstarVersion 1.
+	*/
+    void (*CleanUp)(SA_TYPE, int, int);
+    void (*ClearerrConsole)(void);
+    void (*FlushConsole)(void);
+    void (*ResetConsole) (void);
+    void (*Suicide) (const char *s);
 #endif
 } structRstart;
 
 typedef structRstart *Rstart;
 
-void R_DefParams(Rstart);
+void R_DefParams(Rstart); /* only for RstartVersion 0 */
+int R_DefParamsEx(Rstart, int);
+    /* New code should always use R_DefParamsEx(Rstart, RSTART_VERSION) to
+       inform R about the version of the structure used. R_DefParams(Rstart)
+       only supports version 0 of the structure.
+    */
 void R_SetParams(Rstart);
+void R_DefCallbacks(Rstart, int);
 void R_SetWin32(Rstart);
 void R_SizeFromEnv(Rstart);
 void R_common_command_line(int *, char **, Rstart);

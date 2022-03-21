@@ -80,7 +80,7 @@ int main (int argc, char **argv)
     }
 
     R_setStartTime();
-    R_DefParams(Rp);
+    R_DefParamsEx(Rp, RSTART_VERSION);
     if((RHome = get_R_HOME()) == NULL) {
 	fprintf(stderr, 
 		"R_HOME must be set in the environment or Registry\n");
@@ -89,6 +89,7 @@ int main (int argc, char **argv)
     Rp->rhome = RHome;
     Rp->home = getRUser();
     Rp->CharacterMode = LinkDLL;
+    Rp->EmitEmbeddedUTF8 = FALSE;
     Rp->ReadConsole = myReadConsole;
     Rp->WriteConsole = NULL; /* for illustration purposes we use more flexible WriteConsoleEx */
     Rp->WriteConsoleEx = myWriteConsoleEx;

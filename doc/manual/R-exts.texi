@@ -16652,7 +16652,7 @@ int main (int argc, char **argv)
     @}
 
     R_setStartTime();
-    R_DefParams(Rp);
+    R_DefParamsEx(Rp, RSTART_VERSION);
     if((RHome = get_R_HOME()) == NULL) @{
         fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
         exit(1);
@@ -16660,6 +16660,7 @@ int main (int argc, char **argv)
     Rp->rhome = RHome;
     Rp->home = getRUser();
     Rp->CharacterMode = LinkDLL;
+    Rp->EmitEmbeddedUTF8 = FALSE;
     Rp->ReadConsole = myReadConsole;
     Rp->WriteConsole = myWriteConsole;
     Rp->CallBack = myCallBack;
@@ -16710,11 +16711,15 @@ administrative install and
 selected during installation (as it is by default).
 
 @findex R_DefParams
+@findex R_DefParamsEx
 @findex R_SetParams
 @item
 Define startup conditions and callbacks @emph{via} the @code{Rstart} structure.
 @code{R_DefParams} sets the defaults, and @code{R_SetParams} sets
-updated values.
+updated values. @code{R_DefParamsEx} takes an extra argument, the version
+number of the @code{Rstart} structure provided (@code{RSTART_VERSION} refers
+to the current version) and returns a non-zero status when that version is
+not supported by @R{}.
 
 @item
 Record the command-line arguments used by

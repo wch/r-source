@@ -73,6 +73,7 @@
  R_ConsoleIob
  R_CurrentExpr
  R_Decode2Long
+ R_DefCallbacks
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol

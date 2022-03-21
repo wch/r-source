@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2015   The R Core Team
+  Copyright (C) 1997-2022   The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -147,8 +147,15 @@ void R_SaveGlobalEnv(void)
  *  INITIALIZATION HELPER CODE
  */
 
-void R_DefParams(Rstart Rp)
+/* RstartVersion is the version of the passed Rstart structure to fill in.
+   Returns 0 on success, a negative number if the version is too old,
+   a positive number if it is too new. */
+int R_DefParamsEx(Rstart Rp, int RstartVersion)
 {
+    Rp->RstartVersion = RstartVersion;
+    if (RstartVersion < 0) return -1;
+    if (RstartVersion > 1) return 1;
+    
     Rp->R_Quiet = FALSE;
     Rp->R_NoEcho = FALSE;
     Rp->R_Interactive = TRUE;
@@ -165,6 +172,19 @@ void R_DefParams(Rstart Rp)
     Rp->ppsize = R_PPSSIZE;
     Rp->NoRenviron = FALSE;
     R_SizeFromEnv(Rp);
+
+    if (RstartVersion > 0) {
+#ifdef Win32
+	Rp->EmitEmbeddedUTF8 = FALSE;
+	R_DefCallbacks(Rp, RstartVersion);
+#endif
+    }
+    return 0;
+}
+
+void R_DefParams(Rstart Rp)
+{
+    R_DefParamsEx(Rp, 0); /* version 0 for now supported */
 }
 
 #define Max_Nsize 50000000	/* about 1.4Gb 32-bit, 2.8Gb 64-bit */
