@@ -600,13 +600,13 @@ doc/html/prism.css
    Downloaded from https://prismjs.com/download.html
 
    Prism (https://github.com/PrismJS/prism) is Copyright (c) 2012 Lea
-   Verou and is distributed under the MIT license (see the source
+   Verou and is distributed under the MIT license (see the above
    files for a copy).
 
 doc/html/katex/*
 doc/html/katex/fonts/*
 
-   Downloaded from https://prismjs.com/download.html
+   Downloaded from https://github.com/KaTeX/KaTeX/releases
 
    KaTeX (https://github.com/KaTeX/KaTeX) is Copyright (c) 2013-2020
    Khan Academy and other contributors, and is distributed under the
