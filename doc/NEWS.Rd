@@ -237,8 +237,9 @@
       re-implemented in Fortran 90 (where the older versions have been
       retained as the \R build process does not support Fortran 90).
 
-      \item \code{path.expand()} and other uses of tilde expansion now
-      warn if a path would be too long if expanded.
+      \item \code{path.expand()} and most other uses of tilde expansion now
+      warn if a path would be too long if expanded.  (An exception is
+      \code{file.exists()}, which silently returns false.)
     }
   }
 

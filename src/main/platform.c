@@ -1571,7 +1571,11 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 	    // returns NULL if not translatable
 	    const char *p = translateCharFP2(STRING_ELT(file, i));
-	    LOGICAL(ans)[i] = p && R_FileExists(p);
+	    /* Package XML sends arbitrarily long strings to file.exists! */
+	    if (!p || strlen(p) > PATH_MAX)
+		LOGICAL(ans)[i] = FALSE;
+	    else
+		LOGICAL(ans)[i] = R_FileExists(p);
 #endif
 	} else LOGICAL(ans)[i] = FALSE;
     }
