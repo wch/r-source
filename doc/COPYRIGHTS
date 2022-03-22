@@ -593,6 +593,26 @@ src/gnuwin32/installer/R.bmp
    The design of the current logo is based on the previous logo that
    was included in the R source from 1998 to 2016.
 
+
+doc/html/prism.js
+doc/html/prism.css
+
+   Downloaded from https://prismjs.com/download.html
+
+   Prism (https://github.com/PrismJS/prism) is Copyright (c) 2012 Lea
+   Verou and is distributed under the MIT license (see the source
+   files for a copy).
+
+doc/html/katex/*
+doc/html/katex/fonts/*
+
+   Downloaded from https://prismjs.com/download.html
+
+   KaTeX (https://github.com/KaTeX/KaTeX) is Copyright (c) 2013-2020
+   Khan Academy and other contributors, and is distributed under the
+   MIT license. See doc/html/katex/LICENSE for a copy.
+
+
 	---------------------------------------------------
 
 Binary distributions of R may include compiled code from the PCRE2

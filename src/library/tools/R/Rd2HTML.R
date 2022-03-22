@@ -992,9 +992,9 @@ Rd2HTML <-
     ## KaTeX / Mathjax resources (if they are used)
     if (doTexMath && texmath == "katex") {
         KATEX_JS <-
-            if (dynamic && FALSE) ".../katex.js" # TBD
+            if (dynamic) "/doc/html/katex/katex.js"
             else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
-        KATEX_CSS <- if (dynamic && FALSE) ".../katex.css" # TBD
+        KATEX_CSS <- if (dynamic) "/doc/html/katex/katex.css"
                      else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
         KATEX_CONFIG <-
             if (dynamic) "/doc/html/katex-config.js"
