@@ -1493,4 +1493,3 @@ Prism.languages.r = {
 	 */
 	Prism.hooks.add('complete', hook);
 }());
-
