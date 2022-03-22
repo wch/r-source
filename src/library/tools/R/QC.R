@@ -5293,7 +5293,7 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".First.lib", ".onAttach", ".onLoad")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (length(w <- as.character(z[[1L]])) == 1L) &&
            (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
@@ -5424,7 +5424,7 @@ function(file, encoding = NA)
            (length(y <- as.character(e[[2L]])) == 1L) &&
            (y %in% c(".Last.lib", ".onDetach")) &&
 	   (is.call(z <- e[[3L]])) &&
-           (length(w <- as.character(z[[1L]])) == 1L) &&            
+           (length(w <- as.character(z[[1L]])) == 1L) &&
            (w == "function")) {
             new <- list(z)
             names(new) <- as.character(y)
@@ -7192,7 +7192,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         p <- strsplit(meta[field], " *, *")[[1L]]
         p2 <- grep("^(multicore|snow|igraph0|doSNOW)( |\\(|$)", p, value = TRUE)
         uses <- c(uses, p2)
-        p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS)( |\\(|$)", p, value = TRUE)
+        p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS|mzR|xcms|MSnbase)( |\\(|$)",
+                   p, value = TRUE)
         BUGS <- c(BUGS, p2)
     }
     if (length(uses))
