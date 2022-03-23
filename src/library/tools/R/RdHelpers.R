@@ -16,6 +16,12 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+Rd_escape_specials <-
+function(x)
+{
+    gsub("([%{}])", "\\\\\\1", x)
+}
+
 Rd_expr_PR <-
 function(x)
 {
@@ -36,9 +42,10 @@ Rd_package_title <-
 function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
+    
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Title"]
+    Rd_escape_specials(desc["Title"])
 }
 
 Rd_package_description <-
@@ -47,7 +54,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Description"]
+    Rd_escape_specials(desc["Description"])
 }
 
 Rd_package_author <-
@@ -56,7 +63,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Author"]
+    Rd_escape_specials(desc["Author"])
 }
 
 Rd_package_maintainer <-
@@ -65,7 +72,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
-    desc["Maintainer"]
+    Rd_escape_specials(desc["Maintainer"])
 }
 
 Rd_package_DESCRIPTION <-
@@ -81,7 +88,7 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	if (pkg != desc[["Package"]])
 	    stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
 	desc <- desc[names(desc) != "Built"] # Probably a stale value
-	tabular(paste0(names(desc), ":"), unlist(desc))
+	tabular(paste0(names(desc), ":"), Rd_escape_specials(unlist(desc)))
     }
 }
 
@@ -116,13 +123,16 @@ function(x)
 {
     ## Be nice ...
     x <- .canonicalize_doi(x)
+    
+    ## Escape special chars
+    x <- gsub("([%{}])", "\\\\\\1", x)
 
     ## Poor person's way to allow LaTeX to break lines at slashes and
     ## dashes:
     y <- gsub("/", "\\out{\\slash{}}", fixed = TRUE,
               gsub("-", "\\out{\\-}", x, fixed = TRUE))
-    ## In Rd, must backslash escape the percent character.
-    u <- gsub("%", "\\%", urlify_doi(x), fixed = TRUE)
+    ## In Rd, must escape the percent character and others.
+    u <- Rd_escape_specials(urlify_doi(x))
 
     sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
             sprintf("doi: %s (URL: https://doi.org/%s)",
