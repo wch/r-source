@@ -57,9 +57,7 @@ Sys.setLanguage(lang, unset = "en")
   \code{evalq()} example, % and more in ../../../../tests/reg-translation.R
   the domain is set to \code{"R-pkg"}.  Otherwise there is no default
   domain and messages are not translated unless \code{domain} is provided
-  explicitly.  Note in particular that \code{.onAttach}
-  and \code{\link{.onLoad}} are not called from the package namespace, so
-  messages there should always provide a domain explicitly.
+  explicitly.
 
   If a suitable domain is found, each character string is offered for
   translation, and replaced by its translation into the current language
