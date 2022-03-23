@@ -77,7 +77,7 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   functions.  For example, the \code{groupShear()} function can be
   used to specify a shear transform to \code{viewportTransform()}.
 
-  It is also possible to define any function that returns a 4x4 matrix
+  It is also possible to define any function that returns a 3x3 matrix
   and use it as the \code{transform} argument to
   \code{\link{grid.use}}, but the results will probably be
   device-dependent may be \emph{very} difficult

@@ -317,7 +317,10 @@ drawDetails.GridUse <- function(x, recording) {
         transform <- x$transform(group)
         if (!is.matrix(transform) ||
             !is.numeric(transform) ||
-            !all(dim(transform) == 3)) {
+            !all(dim(transform) == 3) ||
+            transform[1, 3] != 0 ||
+            transform[2, 3] != 0 ||
+            transform[3, 3] != 1) {
             warning("Invalid transform (nothing drawn)")
             return()
         }
