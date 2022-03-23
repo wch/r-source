@@ -651,13 +651,14 @@ function(x)
                        flags <- getDynamicFlags(e)
                        if(flags["build"])
                            "build"
-                       else if(flags["install"] &&
-                               (length(s <- as.character(e)) == 1L) &&
-                               (startsWith(s, "tools:::Rd_expr_PR(") ||
-                                startsWith(s, "tools:::Rd_expr_doi(")))
-                           "never"
-                       else
-                           "later"
+                       else if(flags["install"]) {
+                           s <- trimws(paste(as.character(e),
+                                             collapse = ""))
+                           if(startsWith(s, "tools:::Rd_expr_PR(") ||
+                              startsWith(s, "tools:::Rd_expr_doi("))
+                               return("never")
+                       }
+                       "later"
                    },
                    "")
         c("\\Sexpr" = TRUE,
