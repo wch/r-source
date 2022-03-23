@@ -8565,8 +8565,8 @@ function(x, ...)
                 paste(c("Found the following \\keyword or \\concept entries",
                         "which likely give several index terms:",
                         unlist(y)),
-                      collapse = "\n"),
-            if(length(y <- x$Rd_URLs_which_should_use_doi))
+                      collapse = "\n"))),
+      fmt(c(if(length(y <- x$Rd_URLs_which_should_use_doi))
                 paste(c("Found the following URLs which should use \\doi (with the DOI name only):",
                         unlist(y)),
                       collapse = "\n")))
