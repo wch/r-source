@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -452,8 +452,14 @@ round.Date <- function(x, ...)
 }
 
 ## must avoid truncating forwards dates prior to 1970-01-01.
-trunc.Date <- function(x, ...)
-    round(x - 0.4999999)
+trunc.Date <- function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
+{
+    units <- match.arg(units)
+    if (units == "months" || units == "years")
+        as.Date(trunc.POSIXt(x, units, ...))
+    else
+        round(x - 0.4999999)
+}
 
 rep.Date <- function(x, ...)
 {

@@ -240,6 +240,10 @@
       \item \code{path.expand()} and most other uses of tilde expansion now
       warn if a path would be too long if expanded.  (An exception is
       \code{file.exists()}, which silently returns false.)
+
+      \item \code{trunc(<Date>, *)} now reacts to \code{units = "months"} or
+      \code{"years"} in consistency with the \code{POSIXt} method, thanks to
+      Dirk Eddelbuettel's proposal in \PR{18099}.
     }
   }
 
@@ -254,7 +258,7 @@
       to \code{gpar()} accepts a list of gradients and/or patterns and
       the functions \code{linearGradient()}, \code{radialGradient()},
       and \code{pattern()} have a new \code{group} argument.
-      
+
       Points grobs (data symbols) can now also have a pattern fill.
 
       The \code{grobCoords()} function now returns a more informative
