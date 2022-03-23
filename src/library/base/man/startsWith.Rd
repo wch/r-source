@@ -12,9 +12,10 @@ startsWith(x, prefix)
   endsWith(x, suffix)
 }
 \arguments{
-  \item{x}{vector of \code{\link{character}} string whose \dQuote{starts}
-    are considered.}
-  \item{prefix, suffix}{\code{\link{character}} vector (often of length one).}
+  \item{x}{\code{\link{character}} vector whose \dQuote{starts} or
+    \dQuote{ends} are considered.}
+  \item{prefix, suffix}{\code{\link{character}} vector, typically of length
+    one, i.e., a string.}
 }
 \details{
   \code{startsWith()} is equivalent to but much faster than
@@ -24,7 +25,7 @@ startsWith(x, prefix)
   where \code{prefix} is not to contain special regular expression
   characters (and for \code{grepl}, \code{x} does not contain missing
   values, see below).
- 
+
   The code has an optimized branch for the most common usage in which
   \code{prefix} or \code{suffix} is of length one, and is further
   optimized in a UTF-8 or 8-byte locale if that is an ASCII string.
