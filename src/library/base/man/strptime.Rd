@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -17,7 +17,8 @@
 }
 \usage{
 \method{format}{POSIXct}(x, format = "", tz = "", usetz = FALSE, \dots)
-\method{format}{POSIXlt}(x, format = "", usetz = FALSE, \dots)
+\method{format}{POSIXlt}(x, format = "", usetz = FALSE,
+       digits = getOption("digits.secs"), \dots)
 
 \method{as.character}{POSIXt}(x, \dots)
 
@@ -43,6 +44,7 @@ strptime(x, format, tz = "")
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}
+  \item{digits}{integer determining the \code{format()}ing of seconds when needed.}
 }
 \details{
   The \code{format} and \code{as.character} methods and \code{strftime}
@@ -59,6 +61,11 @@ strptime(x, format, tz = "")
   calling \code{\link{as.POSIXlt}} (so they also work for class
   \code{"\link{Date}"}).  Note that only that conversion depends on the
   time zone.
+  Since \R version 4.2.0, that \code{as.POSIXlt()} conversion now treats
+  the non-finite numeric \code{-Inf}, \code{Inf}, \code{NA} and \code{NaN}
+  differently (where previously all were treated as \code{NA}) and also
+  the \code{format()} method for \code{POSIXlt} now treats these different
+  non-finite times and dates analogously to type \code{\link{double}}.
 
   The usual vector re-cycling rules are applied to \code{x} and
   \code{format} so the answer will be of length of the longer of these
@@ -244,7 +251,6 @@ strptime(x, format, tz = "")
   \samp{"2010-02-30 08:00"}) all the components of the result are
   \code{NA}.  (NB: this does means exactly what it says -- if it is an
   invalid time, not just a time that does not exist in some time zone.)
-  %% One of Master B Diggs moments of infamy
 }
 
 \section{Printing years}{
@@ -347,7 +353,8 @@ strptime(x, format, tz = "")
   For links to versions available on-line see (at the time of writing)
   \url{https://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{https://www.qsl.net/g1smd/isopdf.htm}; for information on the
-  current official version, see \url{https://www.iso.org/iso/iso8601}.
+  current official version, see \url{https://www.iso.org/iso/iso8601} and
+  \url{https://en.wikipedia.org/wiki/ISO_8601}.
 
   The POSIX 1003.1 standard, which is in some respects stricter than ISO 8601.
 }
@@ -403,6 +410,11 @@ strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
 ## to use them for input (they are matched case-insensitively):
 format(seq.Date(as.Date('1978-01-01'), by = 'day', len = 7), "\%a")
 format(seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "\%b")
+
+format(.POSIXct(Inf)) # "Inf"  (was  NA  in R <= 4.1.x)
+notF <- c(-Inf,Inf,NaN,NA)
+(fF <- format(.POSIXct(notF))) # was all  NA, now the last is still NA (not "NA")
+stopifnot(identical(as.character(notF), fF))
 }}
 \keyword{utilities}
 \keyword{chron}

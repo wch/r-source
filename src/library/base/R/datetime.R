@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -380,15 +380,15 @@ length.POSIXlt <- function(x) length(unclass(x)[[1L]])
     .POSIXlt(lapply(unclass(x), `length<-`, value),
              attr(x, "tzone"), oldClass(x))
 
-format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
+format.POSIXlt <- function(x, format = "", usetz = FALSE,
+                           digits = getOption("digits.secs"), ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")
     if(any(f0 <- format == "")) {
         ## need list [ method here.
 	times <- unlist(unclass(x)[1L:3L])[f0]
-	secs <- x$sec[f0]; secs <- secs[!is.na(secs)]
-        np <- getOption("digits.secs")
-        np <- if(is.null(np)) 0L else min(6L, np)
+	secs <- x$sec[f0]; secs <- secs[is.finite(secs)]
+        np <- if(is.null(digits)) 0L else min(6L, digits)
         if(np >= 1L)
             for (i in seq_len(np)- 1L)
                 if(all( abs(secs - round(secs, i)) < 1e-6 )) {
@@ -396,7 +396,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
                     break
                 }
 	format[f0] <-
-	    if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
+	    if(all(times[is.finite(times)] == 0)) "%Y-%m-%d"
 	    else if(np == 0L) "%Y-%m-%d %H:%M:%S"
 	    else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
@@ -1501,4 +1501,3 @@ rep.difftime <- function(x, ...)
 
 as.vector.POSIXlt <- function(x, mode = "any")
     as.vector(as.list(x), mode)
-    

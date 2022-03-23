@@ -699,6 +699,12 @@
 
       \item \code{interaction.plot(..., xtick = TRUE)} misplaced the
       x-axis line (\PR{18305}).
+
+      \item Not strictly fixing a bug, \code{format()}ing and
+      \code{print()}ing of non-finite \code{Date} and \code{POSIXt} values
+      \code{NaN} and \eqn{\pm}{+/-}\code{Inf} no longer show as \code{NA}
+      but the respective string, e.g., \code{Inf}, in consistency with
+      numeric vector's behaviour, fulfilling the wish of \PR{18308}.
     }
   }
 }
