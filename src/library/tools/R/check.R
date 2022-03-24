@@ -4907,16 +4907,32 @@ add_dummies <- function(dir, Log)
         if(!length(db))
             return()
         checkingLog(Log, "HTML version of manual")
+        bad <- FALSE
         out <- tempfile()
         on.exit(unlink(out))
-        results <- tidy_validate_db(lapply(db,
-                                           function(x) {
-                                               Rd2HTML(x, out)
-                                               tidy_validate(out)
-                                           }),
-                                    names(db))
-        if(NROW(results)) {
+        results <- lapply(db,
+                          function(x)
+                              tryCatch({
+                                  Rd2HTML(x, out)
+                                  tidy_validate(out)
+                              },
+                              error = identity))
+        names(results) <- names(db)
+        ind <- vapply(results, inherits, NA, "error")
+        if(any(ind)) {
+            bad <- TRUE
             noteLog(Log)
+            printLog0(Log,
+                      c("Encountered the following conversion/validation errors:\n",
+                        paste(unlist(lapply(results[ind],
+                                            conditionMessage)),
+                              collapse = "\n"),
+                        "\n"))
+            results <- results[!ind]
+        }
+        results <- tidy_validate_db(results, names(results))
+        if(NROW(results)) {
+            if(!bad) noteLog(Log) else printLog0(Log, "\n")
             printLog0(Log,
                       c("Found the following problems:\n",
                         sprintf("%s:%s:%s: %s\n",
@@ -4925,7 +4941,7 @@ add_dummies <- function(dir, Log)
                                 results[, "col"],
                                 results[, "msg"])))
         } else {
-            resultLog(Log, "OK")
+            if(!bad) resultLog(Log, "OK")
         }
     }
 
