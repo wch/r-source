@@ -654,6 +654,13 @@ getOption(x, default = NULL)
     \item{\code{help_type}:}{default for an argument of
     \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
+    \item{\code{help.htmlmath}:}{default for the \code{texmath} argument
+      of \code{\link{Rd2HTML}}, controlling how LaTeX-like mathematical
+      equations are displayed in R help pages (if enabled). Useful
+      values are \code{"katex"} (equivalent to \code{NULL}, the default)
+      and \code{"mathjax"}; for all other values basic substitutions are
+      used. }
+
     \item{\code{HTTPUserAgent}:}{string used as the \sQuote{user agent} in
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}
       and \code{\link{curlGetHeaders}}, or \code{NULL} when requests will

@@ -32,7 +32,8 @@
                  gettext("<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>")
              else
                  gettext("<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"))
-    list(payload = paste(c(HTMLheader("R example", Rhome = Rhome),
+    list(payload = paste(c(HTMLheader("R example", Rhome = Rhome,
+                                      logo = FALSE, up = NULL, top = NULL),
                            msg, "\n</div></body></html>"),
                          collapse = "\n"))
 }
@@ -52,7 +53,7 @@
             with(header.info,
             {
                 ## Note: sprintf() return 0-length output with 0-length input
-                c(sprintf("<h2>%s: %s</h2>", Name, Title),
+                c(sprintf("<h2>%s</h2>", Title),
                   sprintf("<p>Aliases: %s</p>",
                           paste(sprintf("<a href='../help/%s'>%s</a>", Aliases, Aliases),
                                 collapse = " ")),
@@ -63,16 +64,22 @@
                   )
             })
         }
+    ## Not really important, but to be consistent with help pages
+    pkgversion <- utils::packageDescription(package, fields = "Version")
+    footer.lines <-
+        sprintf('<hr /><div style="text-align: center;">[Package <em>%s</em> version %s <a href="../html/00Index.html">Index</a>]</div>', package, pkgversion)
     rhtml <-
         c(HTMLheader(title = sprintf("%s '%s::%s'",
                                      switch(type, demo = "Demo for", example = "Examples for"),
                                      package, topic),
-                     Rhome = Rhome),
+                     Rhome = Rhome,
+                     logo = FALSE, up = NULL, top = NULL),
           header.lines,
           "\n\n<!--begin.rcode\n",
           codelines,
           "\nend.rcode-->\n\n",
-          "</body></html>")
+          footer.lines,
+          "</div></body></html>")
     knitr::opts_knit$set(upload.fun = knitr::image_uri)
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
                           knitr.table.format = "html",
@@ -88,7 +95,7 @@ example2html <- function(topic, package, Rhome = "", env = NULL)
 {
     ## topic must be character (no NSE), and package must be specified
     enhancedHTML <-
-        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
     if (!enhancedHTML || !requireNamespace("knitr", quietly = TRUE)) {
         ## Don't display in HTML (run in console instead)
         utils::example(topic, package = package, character.only = TRUE, ask = FALSE)
@@ -117,7 +124,7 @@ example2html <- function(topic, package, Rhome = "", env = NULL)
 demo2html <- function(topic, package, Rhome = "", env = NULL)
 {
     enhancedHTML <-
-        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
     if (!enhancedHTML || !requireNamespace("knitr", quietly = TRUE)) {
         ## Don't display in HTML (run in console instead)
         utils::demo(topic, package = package, character.only = TRUE, ask = FALSE)

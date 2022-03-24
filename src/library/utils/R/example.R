@@ -28,7 +28,7 @@ function(topic, package = NULL, lib.loc = NULL,
     type <- match.arg(type)
     html <- type == "html" ## only two options for now
     if (html) {
-        enhancedHTML <- str2logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
+        enhancedHTML <- str2logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
         ## silently ignore (but note in documentation)
         if (!interactive() || !enhancedHTML || !requireNamespace("knitr", quietly = TRUE))
             html <- FALSE

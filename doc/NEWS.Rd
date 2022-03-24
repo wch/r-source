@@ -244,6 +244,17 @@
       \item \code{trunc(<Date>, *)} now reacts to \code{units = "months"} or
       \code{"years"} in consistency with the \code{POSIXt} method, thanks to
       Dirk Eddelbuettel's proposal in \PR{18099}.
+
+      \item The HTML help system has several new features: LaTeX-like
+      math can be typeset using either \href{https://katex.org/}{KaTeX}
+      or \href{https://www.mathjax.org/}{MathJax}, usage and example
+      code are highlighted using \href{https://prismjs.com}{Prism}, and
+      for dynamic help the output of examples and demos can be shown
+      within the browser if the \CRANpkg{knitr} package is
+      installed. These features can be disabled by setting the
+      environment variable \code{_R_HELP_ENABLE_ENHANCED_HTML_} to a
+      false value.
+
     }
   }
 

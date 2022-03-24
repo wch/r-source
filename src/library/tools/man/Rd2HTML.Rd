@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2020 R Core Team
+% Copyright 2008-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -56,12 +56,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       of the HTML output page.}
   \item{texmath}{character: controls how mathematics in \verb{\eqn} and
       \verb{\deqn} commands are typeset in HTML output. Useful values
-      are \code{"katex"} and \code{"mathjax"} to use
+      are \code{"katex"} (default) and \code{"mathjax"} to use
       \href{https://katex.org/}{KaTeX} or
       \href{https://www.mathjax.org/}{MathJax} respectively, otherwise
       basic substitutions are used. May be ignored under certain
       circumstances, e.g., if the help page already uses macros from the
-      \code{\link[mathjaxr]{mathjaxr}} package. }
+      \code{\link[mathjaxr]{mathjaxr}} package.
+    }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to

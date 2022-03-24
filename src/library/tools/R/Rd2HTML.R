@@ -309,7 +309,7 @@ Rd2HTML <-
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     enhancedHTML <-
-        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
     version <- ""
     if(!identical(package, "")) {
         if(length(package) > 1L) {
