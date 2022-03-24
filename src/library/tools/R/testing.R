@@ -539,19 +539,16 @@ testInstalledPackage <-
     nfail <- 0L ## allow for later running all tests even if some fail.
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
-        Rfile <- sub("\\.Rin$", ".R", f)
-        message("  Creating ", sQuote(Rfile), domain = NA)
+        message("  Processing ", sQuote(f), domain = NA)
         if (!is.null(Log))
-            cat("  Creating ", sQuote(Rfile), "\n", sep = "", file = Log)
+            cat("  Processing ", sQuote(f), "\n", sep = "", file = Log)
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                     "CMD BATCH --no-timing --vanilla --no-echo", f)
+                     "CMD BATCH --no-timing --vanilla --no-echo", shQuote(f))
         if (system(cmd)) {
-            warning("creation of ", sQuote(Rfile), " failed", domain = NA)
-            if (!is.null(Log))
-                cat("Warning: creation of ", sQuote(Rfile), " failed\n",
-                    sep = "", file = Log)
-        } else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
-        if (nfail > 0) return(nfail)
+            nfail <- nfail + 1L
+            file.rename(paste0(f, ".Rout"), paste0(f, ".Rout.fail"))
+            if (stop_on_error) return(1L)
+        }
     }
 
     Rfiles <- dir(".", pattern="\\.[rR]$")

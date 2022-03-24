@@ -4253,7 +4253,9 @@ add_dummies <- function(dir, Log)
                         lines <- readLines(f, warn = FALSE)
                         f <- file.path(test_dir, sub("out\\.fail$", "", f))
                         src_files <- dir(".", pattern = "\\.[rR]$")
-                        if (basename(f) %notin% src_files) {
+                        if (endsWith(basename(f), ".Rin.R")) {
+                            f <- sub("\\.R$", "", f)
+                        } else if (basename(f) %notin% src_files) {
                             f <- sub("R$", "r", f) # This assumes only one of foo.r and foo.R exists.
                             if (basename(f) %notin% src_files)
                                 f <- sub("r$", "[rR]", f) # Just in case the test script got deleted somehow, show the pattern.
@@ -4274,7 +4276,9 @@ add_dummies <- function(dir, Log)
                         if (R_check_suppress_RandR_message)
                             lines <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                                 lines, useBytes = TRUE)
-                        printLog(Log, sprintf("Running the tests in %s failed.\n",
+                        printLog(Log, sprintf(paste(if(endsWith(f, ".Rin")) "Processing"
+                                                    else "Running the tests in",
+                                                    "%s failed.\n"),
                                               sQuote(f)))
                         printLog(Log, if(keep > 0L && keep < ll)
                                  sprintf("Last %i lines of output:\n", keep)

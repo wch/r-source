@@ -716,6 +716,10 @@
       \code{NaN} and \eqn{\pm}{+/-}\code{Inf} no longer show as \code{NA}
       but the respective string, e.g., \code{Inf}, in consistency with
       numeric vector's behaviour, fulfilling the wish of \PR{18308}.
+
+      \item \command{R CMD check} no longer runs test scripts generated
+      from corresponding \file{.Rin} files twice and now signals an
+      ERROR if processing an \file{.Rin} script fails.
     }
   }
 }
