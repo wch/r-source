@@ -33,7 +33,7 @@
 
 <body>
 
-<h1>R-devel build for Windows (UCRT 64-bit UTF-8)</h1>
+<h1>R-devel build for Windows</h1>
 
 <div class="download">
   <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(@SIZEMB@ megabytes, 64 bit)</span></p>
