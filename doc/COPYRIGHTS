@@ -34,7 +34,6 @@ src/include/Rdefines.h
 src/include/Rgraphics.h
 src/include/Rinternals.h
 src/include/Rmath.h
-src/include/S.h
 src/include/R_ext/*.h
 
 Note that it does not apply to the header files such as Rembedded.h
