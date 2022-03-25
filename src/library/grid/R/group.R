@@ -117,7 +117,7 @@ defnTranslate <- function(group, inverse=FALSE, device=TRUE, ...) {
     }
 }
 
-useTranslate <- function(group, inverse=FALSE, device=TRUE, ...) {
+useTranslate <- function(inverse=FALSE, device=TRUE, ...) {
     cvp <- current.viewport()
     xy <- deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
                     unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
@@ -131,7 +131,7 @@ useTranslate <- function(group, inverse=FALSE, device=TRUE, ...) {
 
 viewportTranslate <- function(group, device=TRUE, ...) {
     defnTranslate(group, inverse=TRUE, device=device) %*%
-        useTranslate(group, device=device)
+        useTranslate(device=device)
 }
 
 groupRotate <- function(r=0, device=TRUE) {
@@ -156,7 +156,7 @@ defnRotate <- function(group, inverse=FALSE, device=TRUE, ...) {
     }
 }
 
-useRotate <- function(group, inverse=FALSE, device=TRUE, ...) {
+useRotate <- function(inverse=FALSE, device=TRUE, ...) {
     r <- current.rotation()
     if (inverse) {
         groupRotate(-r, device)
@@ -166,14 +166,11 @@ useRotate <- function(group, inverse=FALSE, device=TRUE, ...) {
 }
 
 viewportRotate <- function(group, device=TRUE, ...) {
-    r <- current.rotation()
-    if (r != group$r) {
-        defnTranslate(group, inverse=TRUE, device=device) %*%
-            groupRotate(r - group$r, device=device) %*%
-            defnTranslate(group, device=device)
-    } else {
-        diag(3)
-    }
+    defnTranslate(group, inverse=TRUE, device=device) %*%
+        defnRotate(group, inverse=TRUE, device=device) %*%
+        useRotate(device=device) %*%
+        ## NOTE: NOT useTranslate() because we are ONLY rotating
+        defnTranslate(group, device=device)
 }
 
 groupScale <- function(sx=1, sy=1) {
@@ -184,22 +181,28 @@ groupScale <- function(sx=1, sy=1) {
 }
 
 defnScale <- function(group, inverse=FALSE, ...) {
-    diag(1)
+    if (inverse) {
+        groupScale(1/group$wh[1], 1/group$wh[2])
+    } else {
+        groupScale(group$wh[1], group$wh[2])
+    }
 }
 
-useScale <- function(group, inverse=FALSE, ...) {
+useScale <- function(inverse=FALSE, ...) {
     wh <- c(convertX(unit(1, "npc"), "in", valueOnly=TRUE),
             convertY(unit(1, "npc"), "in", valueOnly=TRUE))
     if (inverse) {
-        groupScale(group$wh[1]/wh[1], group$wh[2]/wh[2])
+        groupScale(1/wh[1], 1/wh[2])
     } else {
-        groupScale(wh[1]/group$wh[1], wh[2]/group$wh[2])
+        groupScale(wh[1], wh[2])
     }
 }
 
 viewportScale <- function(group, device=TRUE, ...) {
     defnTranslate(group, inverse=TRUE, device=device) %*%
-        useScale(group) %*%
+        defnScale(group, inverse=TRUE) %*%
+        useScale() %*%
+        ## NOTE: NOT useTranslate() because we are ONLY scaling
         defnTranslate(group, device=device)
 }
 
@@ -224,18 +227,19 @@ viewportTransform <- function(group,
                               flip=groupFlip(),
                               device=TRUE,
                               ...) {
-    r <- current.rotation()
     ## Account for devices that have origin at top-left
     if (device && !.devUp()) {
         shear[1, 2] <- -shear[1, 2]
         shear[2, 1] <- -shear[2, 1]
     }
     defnTranslate(group, inverse=TRUE, device=device) %*%
+        defnRotate(group, inverse=TRUE, device=device) %*%
+        defnScale(group, inverse=TRUE) %*%
         flip %*%
-        useScale(group) %*%
+        useScale() %*%
         shear %*%
-        groupRotate(r - group$r, device=TRUE) %*%
-        useTranslate(group, device=device)
+        useRotate(device=device) %*%
+        useTranslate(device=device)
 }
 
 ##########################

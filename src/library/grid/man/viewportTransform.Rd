@@ -33,9 +33,9 @@ viewportRotate(group, device=TRUE, \dots)
 defnTranslate(group, inverse=FALSE, device=TRUE, \dots)
 defnScale(group, inverse=FALSE, \dots)
 defnRotate(group, inverse=FALSE, device=TRUE, \dots)
-useTranslate(group, inverse=FALSE, device=TRUE, \dots)
-useScale(group, inverse=FALSE, \dots)
-useRotate(group, inverse=FALSE, device=TRUE, \dots)
+useTranslate(inverse=FALSE, device=TRUE, \dots)
+useScale(inverse=FALSE, \dots)
+useRotate(inverse=FALSE, device=TRUE, \dots)
 groupTranslate(dx=0, dy=0)
 groupRotate(r=0, device=TRUE)
 groupScale(sx=1, sy=1)
@@ -78,9 +78,10 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   used to specify a shear transform to \code{viewportTransform()}.
 
   It is also possible to define any function that returns a 3x3 matrix
+  (as long as the last column contains 0, 0, and 1)
   and use it as the \code{transform} argument to
   \code{\link{grid.use}}, but the results will probably be
-  device-dependent may be \emph{very} difficult
+  device-dependent, may be \emph{very} difficult
   to predict.
 }
 \author{Paul Murrell}

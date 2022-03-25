@@ -318,6 +318,10 @@ grobPoints <- function(x, closed, ...) {
     UseMethod("grobPoints")
 }
 
+grobPoints.grob <- function(x, closed, ...) {
+    emptyGrobCoords(x$name)
+}
+
 grobPoints.move.to <- function(x, closed, ...) {
     emptyGrobCoords(x$name)
 }
