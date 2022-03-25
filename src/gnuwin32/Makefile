@@ -314,7 +314,6 @@ distclean: cleaninstaller distcleaninstaller clean0
 	done
 	$(RM) ../../SVN-REVISION.bak
 	$(RM) ../../doc/manual/rw-FAQ
-	$(MAKE) -C cran clean
 	$(RM) -R ../library/.vignettes # it gets left behind if there is an error
 	$(RM) -R ../../share/locale # relic of earlier versions
 	$(RM) MkRules Rpwd.exe # do this last of all
@@ -404,11 +403,6 @@ rinstaller:
 	@$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
 	@$(MAKE) -C installer clean
 
-crandir:
-ifeq "$(WIN)" "64"
-	$(MAKE) -C cran all
-endif
-
 distribution:
 	@$(MK) all
 	@$(MK) cairodevices
@@ -416,7 +410,6 @@ distribution:
 	@$(MK) vignettes
 	@$(MK) manuals
 	@$(MK) rinstaller
-	@$(MK) crandir
 	@$(RM) -f ../../SVN-REVISION.bak
 
 ## Builds what is needed in a 32-bit build to copy to 64/32-bit installer
