@@ -241,14 +241,14 @@
       warn if a path would be too long if expanded.  (An exception is
       \code{file.exists()}, which silently returns false.)
 
-      \item \code{trunc(<Date>, *)} now reacts to \code{units = "months"} or
-      \code{"years"} in consistency with the \code{POSIXt} method, thanks to
-      Dirk Eddelbuettel's proposal in \PR{18099}.
+      \item \code{trunc(<Date>, *)} now supports \code{units = "months"}
+      or \code{"years"} for consistency with the \code{POSIXt} method,
+      thanks to Dirk Eddelbuettel's proposal in \PR{18099}.
 
       \item The HTML help system has several new features: LaTeX-like
       math can be typeset using either \href{https://katex.org/}{KaTeX}
       or \href{https://www.mathjax.org/}{MathJax}, usage and example
-      code are highlighted using \href{https://prismjs.com}{Prism}, and
+      code is highlighted using \href{https://prismjs.com}{Prism}, and
       for dynamic help the output of examples and demos can be shown
       within the browser if the \CRANpkg{knitr} package is
       installed. These features can be disabled by setting the
@@ -264,7 +264,7 @@
       bumped to \code{15} and so packages that provide graphics devices
       should be reinstalled.
 
-      \item the \pkg{grid} package now allows the user to specify a
+      \item The \pkg{grid} package now allows the user to specify a
       \dQuote{vector} of pattern fills.  The \code{fill} argument
       to \code{gpar()} accepts a list of gradients and/or patterns and
       the functions \code{linearGradient()}, \code{radialGradient()},
@@ -326,8 +326,9 @@
       tailored to \file{Rtools42}, the newly recommended 64-bit
       \command{gcc} 10.3 MinGW-W64 UCRT toolchain.
 
-      \item \file{Rtools42} by default uses security features ASLR and DEP
-      and hence also CRAN builds of \R and packages do.
+      \item \file{Rtools42} by default uses the Windows security
+      features ASLR and DEP; hence CRAN builds of \R and packages also
+      do.
 
       \item \R now supports files \file{Makevars.ucrt},
       \file{Makefile.ucrt}, \file{configure.ucrt} and
@@ -337,14 +338,14 @@
       be removed in the future once support for older versions of \R
       would no longer be needed.
 
-      \item \code{R.version} gains new field \code{crt} (only on Windows) to
-      denote the C runtime. The value is \code{"ucrt"}.
+      \item \code{R.version} gains a new field \code{crt} (only on
+      Windows) to denote the C runtime.  The value is \code{"ucrt"}.
 
       \item On Windows, \code{download.file(method = "auto")} and
       \code{url(method = "default")} now follow Unix in using
       \code{"libcurl"} for all except \samp{file://} URIs.
 
-      \item \file{Rtools42} include an unpatched Msys2 build of GNU
+      \item \file{Rtools42} includes an unpatched Msys2 build of GNU
       \command{tar}.  Paths including drive letters can be made to work
       by adding \option{--force-local} to environment variable
       \env{TAR_OPTIONS}.  (\file{Rtools40} and earlier included a
@@ -371,7 +372,7 @@
 
       \item The clipboard connection now works also with text in other
       than the current native encoding (\PR{18267}, with Hiroaki
-      Yutani).  Text is always pasted in UTF16-LE to the clipboard and
+      Yutani).  Text is always pasted to the clipboard  in UTF16-LE and
       the \code{encoding} argument is ignored.
 
       \item The internal case-changing functions are now used by default
@@ -599,10 +600,10 @@
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
 
-      \item Determining the correct translation domain in non-base
-      packages, addressing the combination of \PR{18092} and \PR{17998}
-      (\code{#c6}) with reports and \emph{augmented} patch #2904 by
-      Suharto Anggono.
+      \item Improved determination the correct translation domain in
+      non-base packages, addressing the combination of \PR{18092} and
+      \PR{17998} (\code{#c6}) with reports and \emph{augmented} patch
+      #2904 by Suharto Anggono.
 
       Note that \code{"R-base"} is no longer the default domain e.g.,
       for top-level calls to \code{gettext()}; rather translation needs
@@ -630,9 +631,9 @@
       with parentheses when needed; thanks to Duncan Murdoch's \PR{18232}
       and Lionel Henry's patches there.
 
-      \item \code{remove.packages()} no longer tries to uninstall priority
-      \code{base} packages, thanks to a report and suggestions by Colin Fay
-      in \PR{18227}.
+      \item \code{remove.packages()} no longer tries to uninstall
+      \code{Priority: base} packages, thanks to a report and suggestions
+      by Colin Fay in \PR{18227}.
 
       \item \code{win.metafile()} now has \code{xpinch} and
       \code{ypinch} arguments so that the user can override Windows'
@@ -685,13 +686,13 @@
       \item \code{match.arg("", c("", "a", "B"))} gives a better error
       message, in part from \PR{17959}, thanks to Elin Waring.
 
-      \item \command{R CMD Sweave --clean} no longer removes existing
-      files or subdirectories (\PR{18242}).
+      \item \command{R CMD Sweave --clean} no longer removes
+      pre-existing files or subdirectories (\PR{18242}).
 
-      \item Quartz device no longer splits polylines into subpaths. That
-      has caused narrowly-spaced lines with many points to always look
-      solid even when dashed line type was used due to dash phase
-      restarts.
+      \item The \code{quartz()} device no longer splits polylines into
+      subpaths. That has caused narrowly-spaced lines with many points
+      to always look solid even when dashed line type was used due to
+      dash phase restarts.
 
       \item Deparsing constructs such as \code{quote(1 + `!`(2) + 3)} works
       again as before R 3.5.0, thanks to the report and patch in \PR{18284}
@@ -712,10 +713,11 @@
       x-axis line (\PR{18305}).
 
       \item Not strictly fixing a bug, \code{format()}ing and
-      \code{print()}ing of non-finite \code{Date} and \code{POSIXt} values
-      \code{NaN} and \eqn{\pm}{+/-}\code{Inf} no longer show as \code{NA}
-      but the respective string, e.g., \code{Inf}, in consistency with
-      numeric vector's behaviour, fulfilling the wish of \PR{18308}.
+      \code{print()}ing of non-finite \code{Date} and \code{POSIXt}
+      values \code{NaN} and \eqn{\pm}{+/-}\code{Inf} no longer show as
+      \code{NA} but the respective string, e.g., \code{Inf}, for
+      consistency with numeric vector's behaviour, fulfilling the wish
+      of \PR{18308}.
 
       \item \command{R CMD check} no longer runs test scripts generated
       from corresponding \file{.Rin} files twice and now signals an
