@@ -1,7 +1,0 @@
-R-@FULLVERSION@ for Windows
-===================
-This directory contains a binary distribution of R-@RVER@ to run on
-Windows 7 or later on x64 CPUs. 
-
-See 'README.@RWVER@' for further instructions and
-'NEWS' for the new features of this version.

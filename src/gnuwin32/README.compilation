@@ -20,7 +20,6 @@ where all the customization is done.  This is included by all
 Makefile.win files in directories above this one and
 
 ./Makefile
-./cran/Makefile
 ./fixed/Makefile
 ./front-ends/Makefile
 ./getline/Makefile
@@ -42,7 +41,7 @@ front-ends/Makefile:
 - A resource compiler is used to compile in version information, an
   icon and a manifest.  Also done for version information in all the
   other DLLs under bin and modules (R.dll Rblas.dll Rgraphapp.dll
-  Riconv.dll Rlapack.dll internet.dll lapack.dll).
+  Riconv.dll Rlapack.dll lapack.dll).
 
 - LINKFLAGS includes flags for the stack size and to allow addressing
   over 2GB for 32-bit executables.
