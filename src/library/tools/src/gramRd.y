@@ -595,10 +595,6 @@ static Rboolean isComment(SEXP elt)
            !strcmp(CHAR(STRING_ELT(a, 0)), "COMMENT");
 }
 
-static Rboolean needsEscaping(char c) {
-    return strchr("%{}", c) != NULL;
-}
-
 static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 {
     SEXP ans, value, nextarg;
@@ -679,11 +675,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 		error(_("Not enough arguments passed to user macro '%s'"),
 		        CHAR(STRING_ELT(macro,0)));
     	    const char *arg = CHAR(STRING_ELT(ans, which));
-    	    for (size_t ii = strlen(arg); ii > 0; ii--) {
-    		xxungetc(arg[ii-1]);
-    		if (needsEscaping(arg[ii-1]))
-    		    xxungetc('\\');
-	    };
+    	    for (size_t ii = strlen(arg); ii > 0; ii--) xxungetc(arg[ii-1]);
     	    c--;
 	} else
     	    xxungetc(*(c-1));
