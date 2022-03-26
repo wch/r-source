@@ -6,6 +6,14 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.2.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The \code{formula} method of \code{aggregate()} now matches
