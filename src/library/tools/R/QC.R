@@ -7215,9 +7215,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
 
     ## Check for missing build/{partial.rdb,pkgname.pdf}
     ## copy code from build.R
-    Rdb <- .build_Rd_db(dir, stages = NULL,
-                        os = c("unix", "windows"), step = 1)
-    if(length(Rdb)) {
+    Rdb <- tryCatch(.build_Rd_db(dir, stages = NULL,
+                                 os = c("unix", "windows"), step = 1),
+                    error = identity)
+    if(!inherits(Rdb, "error") && length(Rdb)) {
         names(Rdb) <-
             substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
         Rdb0 <- Rdb
