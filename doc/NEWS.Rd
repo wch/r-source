@@ -6,9 +6,43 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{NEW FEATURES}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Calling \code{&&} or \code{||} with either argument of
+      length greater than one is now an error.
+      [Delayed until ca 200 packages have been updated.]
+    }
+  }
+    
+
+    \subsection{NEW FEATURES}{
     \itemize{
       \item Placeholder.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item A system installation of LAPACK 3.10.0 or later will be
+      preferred to the version in the \R Sources. [In progress.]
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \code{USE_FC_LEN_T} is the default: this uses the
+      correct prototypes for Fortran BLAS/LAPACK routines called from
+      C/C++, and requires adjustment of most such calls -- see
+      \sQuote{Writing R Extensions}.  [In progress.]
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The deprecated S-compatibility macros \code{DOUBLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) have been
+      removed.
+      [Scheduled for Apr 23.]
     }
   }
 }
