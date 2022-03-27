@@ -674,10 +674,10 @@ Rd2HTML <-
                    if(length(block)) {
                        inEqn <<- !doTexMath
                        leavePara(TRUE)
-                       if (doTexMath) of1('<div style="text-align: center;"><code class="reqn">')
+                       if (doTexMath) of1('<p style="text-align: center;"><code class="reqn">')
                        else of1('<p style="text-align: center;"><i>')
                        writeContent(block, tag)
-                       if (doTexMath) of1('</code></div>\n')
+                       if (doTexMath) of1('</code>\n')
                        else of0('</i>')
                        leavePara(FALSE)
                        inEqn <<- FALSE
