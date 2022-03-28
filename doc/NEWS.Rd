@@ -10,7 +10,7 @@
     \itemize{
       \item Calling \code{&&} or \code{||} with either argument of
       length greater than one is now an error.
-      [Delayed until ca 200 packages have been updated.]
+      [Postponed until ca 200 packages have been updated.]
     }
   }
     
@@ -24,7 +24,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item A system installation of LAPACK 3.10.0 or later will be
-      preferred to the version in the \R Sources. [In progress.]
+      preferred to the version in the \R sources. [In progress.]
     }
   }
 
@@ -33,7 +33,7 @@
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions}.  [In progress.]
+      \sQuote{Writing R Extensions}.  [Scheduled for Apr 27.]
     }
   }
 
@@ -642,7 +642,7 @@
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
 
-      \item Improved determination the correct translation domain in
+      \item Improved determination of the correct translation domain in
       non-base packages, addressing the combination of \PR{18092} and
       \PR{17998} (\code{#c6}) with reports and \emph{augmented} patch
       #2904 by Suharto Anggono.
