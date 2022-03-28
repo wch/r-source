@@ -985,7 +985,14 @@ Rd2HTML <-
         }
         return(FALSE)
     }
+    ## Both katex and mathjax need custom config scripts. For dynamic
+    ## HTML these are in /doc/html/*-config.js (as well as the main
+    ## katex script and CSS), but for static HTML, the appropriate
+    ## relative path is not computable in general. So, for static HTML
+    ## we only support katex, using a CDN for the main files and
+    ## embedding the config in the output file itself
     if (is.null(texmath)) texmath <- "katex"
+    if (texmath == "mathjax" && !dynamic) texmath <- "katex"
     doTexMath <- enhancedHTML && !uses_mathjaxr(Rd) &&
         texmath %in% c("katex", "mathjax")
 
@@ -998,7 +1005,12 @@ Rd2HTML <-
                      else "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
         KATEX_CONFIG <-
             if (dynamic) "/doc/html/katex-config.js"
-            else "../../../doc/html/katex-config.js"
+            else c("const macros = { \"\\\\R\": \"\\\\textsf{R}\", \"\\\\code\": \"\\\\texttt\"};", 
+                   "function processMathHTML() {",
+                   "    var l = document.getElementsByClassName('reqn');", 
+                   "    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }", 
+                   "    return;",
+                   "}")
     }
     if (doTexMath && texmath == "mathjax") {
         MATHJAX_JS <-
@@ -1049,7 +1061,8 @@ Rd2HTML <-
         if (doTexMath) {
             if (texmath == "katex") {
                 of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
-                    '<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n',
+                    if (dynamic) paste0('<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n')
+                    else paste0('<script type="text/javascript">\n', paste(KATEX_CONFIG, collapse = "\n"), '</script>\n'),
                     '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
             }
             else if (texmath == "mathjax") {
