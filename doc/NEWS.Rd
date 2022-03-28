@@ -511,6 +511,11 @@
       \item \command{R CMD build} and \command{R CMD check} now include
       the Rd file name and line numbers in the error message of an
       \verb{\Sexpr} evaluation failure.
+
+      \item For packages using the \verb{\doi} Rd macro (now an
+      install-time \verb{\Sexpr}) but no other dynamic Rd content,
+      \command{R CMD build} now produces a smaller tarball and is
+      considerably faster -- skipping temporary package installation.
     }
   }
 
