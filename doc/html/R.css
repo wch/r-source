@@ -1,8 +1,6 @@
 @media screen {
     body {
-	font-family: sans-serif;
 	line-height: 1.4;
-	font-size: 1rem;
     }
     .container {
 	/* width: 100%; */
@@ -19,7 +17,7 @@
     margin-left: 2%;
 } 	
 
-.katex { font-size: 1.2em; }
+.katex { font-size: 1.1em; }
 
 code.reqn { color: black; }
 
