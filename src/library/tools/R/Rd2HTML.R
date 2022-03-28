@@ -212,7 +212,7 @@ invalid_HTML_chars_re <-
 topic2url <- function(x)
 {
     if(config_val_to_logical(Sys.getenv("_R_HELP_USE_URLENCODE_",
-                                        "TRUE")))
+                                        "FALSE")))
         utils::URLencode(x, reserved = TRUE)
     else
         urlify(x, reserved = TRUE)
@@ -928,7 +928,7 @@ Rd2HTML <-
         if (tag %in% c("\\examples", "\\usage")) {
             if (dynamic && enhancedHTML && tag == "\\examples" && !is.null(firstAlias))
                 of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>",
-                            firstAlias))
+                            topic2url(firstAlias)))
             of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE
