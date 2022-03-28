@@ -1368,11 +1368,15 @@ and use a UTF-8 or Latin-1 locale.
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
+[The rest of this paragraph is only relevant after release.]
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on 32- or 64-bit Windows (Windows 7 and later 
-are tested; XP is known to fail some tests) on @cputype{ix86} and 
-@cputype{x86_64} @acronym{CPU}s.
+from @acronym{CRAN} to run on 64-bit Windows.
+
+R is best tested on current versions of Windows 10 and Windows Server 2022
+with UTF-8 as the charset encoding. It runs on older versions of Windows,
+but normally with other charset encoding and may require manual installation
+of the Universal C Runtime (UCRT). 
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).  If it does not also support
@@ -1381,16 +1385,15 @@ conversion to short name equivalents (a.k.a. DOS 8.3 names), then @R{}
 
 Installation is @emph{via} the installer
 @file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
-follow the instructions.  When installing on a 64-bit version of Windows
-the options will include 32- or 64-bit versions of @R{} (and the default is
-to install both).  You can uninstall @R{} from the Control Panel.
+follow the instructions. You can uninstall @R{} from the Control Panel.
 
 You will be asked to choose a language for installation: that choice
 applies to both installation and un-installation but not to running @R{}
 itself.
 
 See the @uref{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
-Windows @acronym{FAQ}} for more details on the binary installer.
+Windows @acronym{FAQ}} for more details on the binary installer and for
+information on use on older Windows systems.
 
 @menu
 * Building from source::
@@ -1401,9 +1404,10 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @node Building from source, Checking the build, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-It is possible to use other toolchains (including that used for @R{}
-3.6.3, `MSYS2' and `MXE' (M cross environment)) to build @R{}, but this
-manual only documents that used for binary distributions of @R{} 4.0.x.
+It is possible to use other 64-bit toolchains (including `MSYS2') with UCRT
+support to build @R{}, but this manual only documents that used for binary
+distributions of @R{} 4.2.x.  When using other toolchains, makefiles of @R{}
+and packages may need to be adapted.
 
 @menu
 * The Windows toolset::
@@ -1414,23 +1418,23 @@ manual only documents that used for binary distributions of @R{} 4.0.x.
 @subsection The Windows toolset
 
 The binary distribution of @R{} is currently built with tools
-distributed in @file{rtools40-x86_64.exe}. The webpage
-@uref{https://cran.r-project.org/bin/windows/Rtools/} describes how to
-install the toolset and has links to example scripts to build and
-package @R{}.
+from @uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html}.
+@uref{https://cran.r-project.org/bin/windows/base/howto-R-4.2.html}
+describes how to install the toolset and build @R{} and @R{} packages.
 
-This toolset was modified (by Jeroen Ooms) from
-@uref{https://www.msys2.org/, the 'MSYS2' project}, which uses compilers
-(GCC version 8.3.0) and runtime libraries from
-@uref{http://mingw-w64.org/,the `Mingw-w64' project}@footnote{Capitalization
-of this project's name is inconsistent even on its own webpages.} and
-provides a package manager (@samp{pacman}) for components and additional
-libraries.
+The toolset includes compilers (GCC version 10.3.0 with selected additional
+patches) and runtime libraries from @uref{http://mingw-w64.org/,the
+`MinGW-w64' project} and a number of pre-compiled static libraries and
+headers used by @R{} and @R{} packages, compiled by
+@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates by Tomas
+Kalibera).  The toolset also includes build tools from the
+@uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
+packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
 
-The toolsets used for 64-bit Windows from 2008--20 were based on
-Mingw-w64.  The assistance of Yu Gong at a crucial step in porting @R{}
+The toolsets used for 64-bit Windows from 2008--22 were based on
+MinGW-w64.  The assistance of Yu Gong at a crucial step in porting @R{}
 to Mingw-w64 is gratefully acknowledged, as well as help from Kai Tietz,
-the lead developer of the Mingw-w64 project.
+the lead developer of the Mingw-w64 project and from Martin Storsjo.
 
 @node LaTeX on Windows,  , The Windows toolset, Building from source
 @subsection @LaTeX{}
