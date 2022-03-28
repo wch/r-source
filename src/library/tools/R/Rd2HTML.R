@@ -1013,10 +1013,10 @@ Rd2HTML <-
     if (enhancedHTML) {
         PRISM_JS <- 
             if (dynamic) "/doc/html/prism.js"
-            else "../../../doc/html/prism.js"
+            else NULL # "../../../doc/html/prism.js"
         PRISM_CSS <- 
             if (dynamic) "/doc/html/prism.css"
-            else "../../../doc/html/prism.css"
+            else NULL # "../../../doc/html/prism.css"
     }
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
@@ -1045,7 +1045,7 @@ Rd2HTML <-
 	    '" />\n')
         of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
         ## include CSS from prismjs.com for code highlighting
-        if (enhancedHTML) of0('<link href="', urlify(PRISM_CSS), '" rel="stylesheet" />')
+        if (enhancedHTML && length(PRISM_CSS) == 1L) of0('<link href="', urlify(PRISM_CSS), '" rel="stylesheet" />\n')
         if (doTexMath) {
             if (texmath == "katex") {
                 of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
@@ -1087,7 +1087,7 @@ Rd2HTML <-
 		']</div>')
 	of0('\n</div>\n')
         ## include JS from prismjs.com for code highlighting
-        if (enhancedHTML) of0('<script src="', urlify(PRISM_JS), '"></script>\n')
+        if (enhancedHTML && length(PRISM_JS) == 1L) of0('<script src="', urlify(PRISM_JS), '"></script>\n')
         of0('</body></html>\n')
     }
     invisible(out)
