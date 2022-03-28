@@ -198,8 +198,8 @@ Error in assertWarning(ff()) :
 +     year = 1964,
 +     title = "An Analysis of Transformations",
 +     journal = "Journal of the Royal Statistical Society, Series B",
-+     volume = 26,
-+     pages = "211-252"))
++     volume = 26, number = 2, pages = "211--243",
++     doi = "10.1111/j.2517-6161.1964.tb00553.x"))
 > 
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
@@ -211,7 +211,9 @@ Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 <URL: https://www.R-project.org>.
 
 [2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
-of the Royal Statistical Society, Series B_, *26*, 211-252.
+of the Royal Statistical Society, Series B_, *26*(2), 211-243. doi:
+10.1111/j.2517-6161.1964.tb00553.x (URL:
+https://doi.org/10.1111/j.2517-6161.1964.tb00553.x).
 > 
 > 
 > 
