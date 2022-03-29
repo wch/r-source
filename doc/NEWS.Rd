@@ -401,8 +401,7 @@
       browsers have removed support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
 
-      \item \R can now be built with \samp{DEFS = -DSTRICT_R_HEADERS},
-      but not yet some of the recommended packages.
+      \item \R can now be built with \samp{DEFS = -DSTRICT_R_HEADERS} .
     }
   }
 
