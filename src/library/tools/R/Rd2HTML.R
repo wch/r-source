@@ -215,7 +215,7 @@ topic2url <- function(x)
                                         "FALSE")))
         utils::URLencode(x, reserved = TRUE)
     else
-        urlify(x, reserved = TRUE)
+        vapply(x, urlify, "", reserved = TRUE) # to vectorize (used in toHTML.R)
 }
 topic2filename <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
