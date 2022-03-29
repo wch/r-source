@@ -42,13 +42,6 @@
 #else
 #include <float.h>  /* Defines the RHSs, C99 and later */
 #endif
-/*
-  The SINGLE_* defines were deprecated in R 4.1.3 and defunct in R 4.2.0.
-#define SINGLE_EPS     FLT_EPSILON
-#define SINGLE_BASE    FLT_RADIX
-#define SINGLE_XMIN    FLT_MIN
-#define SINGLE_XMAX    FLT_MAX
-*/
 
 // The DOUBLE_* defines were deprecated in R 4.2.0
 #define DOUBLE_DIGITS  DBL_MANT_DIG
