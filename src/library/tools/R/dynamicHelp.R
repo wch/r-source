@@ -17,6 +17,87 @@
 #  https://www.R-project.org/Licenses/
 
 
+## Helper function used to declare mime-type for files served by
+## dynamic help, and for base64-encoded files embedded in example
+## output (see code2html.R).
+
+mime_type <- function(path, ext = NULL)
+{
+    stopifnot(length(path) == 1L)
+    if (missing(ext)) ext <- file_ext(path)
+    switch(ext,
+           "css" = "text/css",
+           "js" = "text/javascript",  # for katex etc
+           "sgml" = "text/sgml",    # in RGtk2
+           "xml" = "text/xml",      # in RCurl (RFC 7303 recommends "application/xml") 
+           "html" = "text/html",
+           "htm" = "text/html",
+           "xhtml" = "application/xhtml+xml",
+           "php" = "application/x-httpd-php",
+           "epub" = "application/epub+zip",
+           "csv" = "text/csv",
+           "json" = "application/json",
+           "jsonld"  = "application/ld+json",
+           "mjs" = "text/javascript",
+
+           ## common <img> types (see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+           "gif" = "image/gif",     # in R2HTML
+           "jpg" = "image/jpeg",
+           "jpeg" = "image/jpeg",
+           "png" = "image/png",
+           "svg" = "image/svg+xml",
+           "apng" = "image/apng",
+           "avif" = "image/avif",
+           "webp" = "image/webp",
+           "bmp" = "image/bmp",
+           "ico" = "image/x-icon",
+           "tiff" = "image/tiff",
+           "tif" = "image/tiff",
+
+           "pdf" = "application/pdf",
+           "eps" =,
+           "ps" = "application/postscript", # in GLMMGibbs, mclust
+
+           ## fonts
+           "eot" = "application/vnd.ms-fontobject",
+           "otf" = "font/otf",
+           "ttf" = "font/ttf",
+           "woff" = "font/woff",
+           "woff2" = "font/woff2",
+
+           ## media
+           "aac" = "audio/aac",
+           "avi" = "video/x-msvideo",
+           "cda" = "application/x-cdf",
+           "mid" = "audio/x-midi",
+           "midi" = "audio/x-midi",
+           "mp3" = "audio/mpeg",
+           "mp4" = "video/mp4",
+           "mpeg" = "video/mpeg",
+           "oga" = "audio/ogg",
+           "ogv" = "video/ogg",
+           "ogx" = "application/ogg",
+           "opus" = "audio/opus",
+           "3gp" = "video/3gpp",
+           "3g2" = "video/3gpp2",
+           "wav" = "audio/wav",
+           "weba" = "audio/webm",
+           "webm" = "video/webm",
+
+           ## archive / compression
+           "bz" = "application/x-bzip",
+           "bz2" = "application/x-bzip2",
+           "gz" = "application/gzip",
+           "rar" = "application/vnd.rar",
+           "zip" = "application/zip",
+           "7z" = "application/x-7z-compressed",
+           "tar" = "application/x-tar",
+
+           ## default
+           "text/plain")
+}
+
+
 ## This may be asked for
 ##  R.css, favicon.ico
 ##  searches with path = "/doc/html/Search"
@@ -238,25 +319,6 @@ httpd <- function(path, query, ...)
         list(file = file)
     }
 
-    mime_type <- function(path) {
-        ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
-        if(n <- length(ext)) ext <- ext[n] else ""
-        switch(ext,
-               "css" = "text/css",
-               "gif" = "image/gif",     # in R2HTML
-               "jpg" = "image/jpeg",
-               "png" = "image/png",
-               "svg" = "image/svg+xml",
-               "html" = "text/html",
-               "pdf" = "application/pdf",
-               "eps" =,
-               "ps" = "application/postscript", # in GLMMGibbs, mclust
-               "sgml" = "text/sgml",    # in RGtk2
-               "xml" = "text/xml",      # in RCurl
-               "js" = "text/javascript",  # for katex etc
-               "text/plain")
-    }
-
     charsetSetting <- function(pkg) {
     	encoding <- read.dcf(system.file("DESCRIPTION", package=pkg),
                              "Encoding")
@@ -284,7 +346,8 @@ httpd <- function(path, query, ...)
         return(list(file = file.path(R.home("doc"), "html", "R.css"),
                     "content-type" = "text/css"))
     else if(path == "/favicon.ico")
-        return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
+        return(list(file = file.path(R.home("doc"), "html", "favicon.ico"),
+                    "content-type" = "image/x-icon"))
     else if(path == "/NEWS")
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html"),
                      "content-type" = "text/html"))

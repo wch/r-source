@@ -21,7 +21,7 @@
 
 
 ## Decisions to be made:
-## - knitr opts to use
+## - knitr opts to use; being minimal lets users decide
 ## - whether to evaluate globally or locally
 
 .code2html_payload_console <- function(type, topic, package, enhancedHTML = TRUE, Rhome = "")
@@ -80,9 +80,13 @@
           "\nend.rcode-->\n\n",
           footer.lines,
           "</div></body></html>")
-    knitr::opts_knit$set(upload.fun = knitr::image_uri)
+    figdir <- tempfile(pattern = package, fileext = topic)
+    on.exit(unlink(figdir, recursive = TRUE))
+    knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", xfun::base64_encode(x)),
+                         unnamed.chunk.label = sprintf("%s-%s-%s", type, package, topic))
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
                           knitr.table.format = "html",
+                          fig.path = file.path(figdir, "fig-"),
                           fig.width = 9, fig.height = 7,
                           dpi = 96)
     out <- knitr::knit(text = rhtml, quiet = TRUE,
@@ -90,7 +94,7 @@
     ## the paste() doesn't seem necessary, but just to be safe
     list(payload = paste(out, collapse = "\n"))
 }
-    
+
 example2html <- function(topic, package, Rhome = "", env = NULL)
 {
     ## topic must be character (no NSE), and package must be specified
