@@ -33,7 +33,7 @@
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions}.  [Scheduled for Apr 27.]
+      \sQuote{Writing R Extensions}.  [In progress.]
     }
   }
 
