@@ -1419,7 +1419,7 @@ and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from @uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html}.
-@uref{https://cran.r-project.org/bin/windows/base/howto-R-4.2.html}
+@uref{https://cran.r-project.org/bin/windows/base/howto-R-devel.html}
 describes how to install the toolset and build @R{} and @R{} packages.
 
 The toolset includes compilers (GCC version 10.3.0 with selected additional
