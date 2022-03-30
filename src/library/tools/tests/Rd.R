@@ -20,6 +20,16 @@ withCallingHandlers(
 stopifnot(is.null(warn))
 stopifnot("\\Sexpr" %in% tools:::RdTags(rd2))
 
+
+## \Sexpr[stage=build, results=hide]{ <a dozen "empty" lines> }
+tf <- textConnection("RdTeX", "w")
+Rd2latex("Rd-Sexpr-hide-empty.Rd", tf, stages="build")
+tex <- textConnectionValue(tf); close(tf); rm(tf)
+(H2end <- tex[grep("^Hello", tex):length(tex)])
+stopifnot((n <- length(H2end)) <= 4, # currently '3'; was 13 in R < 4.2.0
+          H2end[-c(1L,n)] == "")     # also had \\AsIs{ .. }  " "  "   "
+
+
 ## checkRd() gives file name and correct line number of \Sexpr[results=rd] chunk
 stopifnot(grepl("Rd-Sexpr-warning.Rd:5:",
                 print(checkRd("Rd-Sexpr-warning.Rd", stages = "build")),
