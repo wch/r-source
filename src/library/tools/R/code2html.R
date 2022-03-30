@@ -85,7 +85,6 @@
     knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", xfun::base64_encode(x)),
                          unnamed.chunk.label = sprintf("%s-%s-%s", type, package, topic))
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
-                          knitr.table.format = "html",
                           fig.path = file.path(figdir, "fig-"),
                           fig.width = 9, fig.height = 7,
                           dpi = 96)
