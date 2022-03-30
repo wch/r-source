@@ -1416,9 +1416,11 @@ and packages may need to be adapted.
 @subsection The Windows toolset
 
 The binary distribution of @R{} is currently built with tools
-from @uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html}.
-@uref{https://cran.r-project.org/bin/windows/base/howto-R-4.2.html}
-describes how to install the toolset and build @R{} and @R{} packages.
+from
+@uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html,Rtools42
+for Windows}. See 
+@uref{https://cran.r-project.org/bin/windows/base/howto-R-4.2.html, Building
+R and packages} for more details on how to use it.
 
 The toolset includes compilers (GCC version 10.3.0 with selected additional
 patches) and runtime libraries from @uref{http://mingw-w64.org/,the
@@ -2112,11 +2114,10 @@ containing either or both architectures (32- and 64-bit).
 additional tools are needed if the package does not contain compiled
 code, and @code{install.packages(type="source")} will work for such
 packages. Those with compiled code need the tools (see @ref{The Windows
-toolset}) to be on the path: this can be set from within an @R{} session
-by something like
-@example
-Sys.setenv(PATH=paste("C:\\rtools40\\usr\\bin", Sys.getenv("PATH"), sep=";"))
-@end example
+toolset}). The tools are found automatically by @R{} when installed by
+the toolset installer. See
+@uref{https://cran.r-project.org/bin/windows/base/howto-R-4.2.html,Building
+R and packages} for more details.
 
 Occasional permission problems after unpacking source packages have been
 seen on some systems: these have been circumvented by setting the
