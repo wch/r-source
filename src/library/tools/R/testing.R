@@ -696,11 +696,12 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         message("running tests of plotting Latin-1", domain = NA)
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
-        runone("reg-plot-latin1", TRUE, inC=FALSE)
-        message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
-                appendLF = FALSE, domain = NA)
-        res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
-        if(res != 0L) message("DIFFERED") else message("OK")
+        if (runone("reg-plot-latin1", TRUE, inC=FALSE) == 0L) {
+            message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
+                    appendLF = FALSE, domain = NA)
+            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
+            if(res != 0L) message("DIFFERED") else message("OK")
+        }
     }
 
     if (scope %in% c("devel", "both")) {
