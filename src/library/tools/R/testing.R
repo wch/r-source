@@ -650,6 +650,8 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             Sys.setenv(R_DEFAULT_PACKAGES="")
             Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
+            if (inC)
+              Sys.setenv(LC_CTYPE="C")
             ## ignore all 'extra' (incl. 'inC')  and hope
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
