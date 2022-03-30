@@ -622,6 +622,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 "p-qbeta-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
+    useDiff <- nzchar(Sys.which("diff"))  # only check once
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
         f <- paste0(f, ".R")
@@ -665,7 +666,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             message(gettextf("  comparing %s to %s ...",
                              sQuote(outfile), sQuote(savefile)),
                     appendLF = FALSE, domain = NA)
-            res <- Rdiff(outfile, savefile, TRUE)
+            res <- Rdiff(outfile, savefile, useDiff)
             if (!res) message(" OK")
             else if (!diffOK) return(1L)
         }
