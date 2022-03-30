@@ -144,6 +144,11 @@ ks.test(x, \dots)
     function}.
   SIAM.
 
+  W. Feller (1948).
+  On the Kolmogorov-Smirnov limit theorems for empirical distributions.
+  \emph{The Annals of Mathematical Statistics}, \bold{19}(2), 177--189.
+  \doi{10.1214/aoms/1177730243}.
+
   George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003).
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
@@ -162,6 +167,8 @@ ks.test(x, \dots)
   \doi{10.1016/0167-9473(94)00040-P}.
 }
 \seealso{
+  \code{\link{psmirnov}}.
+  
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
   normality.
 }
