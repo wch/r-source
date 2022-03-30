@@ -163,8 +163,8 @@ LTO_OPT =
 # MAIN_LD =
 # MAIN_LDFLAGS =
 # MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
-# don't have this: would 'mkdir -p' do?
-# MKINSTALLDIRS = $(R_HOME)/bin/mkinstalldirs
+# assume suitable mkdir on PATH (e.g. from Msys2)
+MKINSTALLDIRS = mkdir -p
 NM = $(BINPREF)nm
 ## There is no ObjC support in the recommended toolchain,
 ## but if a toolchain had support, this it what it would be.

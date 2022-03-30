@@ -2,8 +2,8 @@
 #
 # ${R_HOME}/tests/Makefile.install
 
-## Keep in step with Makefile.install.win
-
+## Keep in step with Makefile.install
+ 
 srcdir = .
 top_srcdir = ..
 
@@ -16,13 +16,14 @@ check-all: check-devel test-Recommended
 include $(top_builddir)/etc$(R_ARCH)/Makeconf
 include Makefile.common
 
-
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
-R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
-R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
-R3 = $(top_builddir)/bin/R CMD check
-RDIFF = $(top_builddir)/bin/R CMD Rdiff
-RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
+R = $(R_HOME)/$(BINDIR)/Rterm --vanilla LANGUAGE=en LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
+R2 = $(R_HOME)/$(BINDIR)/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
+R3 = $(R_HOME)/$(BINDIR)/Rcmd check
+RDIFF = $(R_HOME)/$(BINDIR)/R CMD Rdiff
+RVAL_IF_DIFF=0
+## suppress fancy quotes for diff-ing
+RDCONV = LC_ALL=C $(R_HOME)/$(BINDIR)/Rcmd Rdconv
 MK = $(MAKE)
 
 all-basic-tests = BasePackages Specific Reg Internet
