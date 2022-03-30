@@ -212,7 +212,7 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
     n.y <- floor(n.y)
 
     if (is.null(z)) {
-        rt <- rep(1, length = n.x + n.y)
+        rt <- rep.int(1, n.x + n.y)
     } else {
         rt <- table(z)
     }
@@ -225,8 +225,8 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
 }
 
 psmirnov <-
-function(q, sizes, z = NULL, 
-         two.sided = TRUE, exact = TRUE, simulate = FALSE, B = 2000,
+function(q, sizes, z = NULL, two.sided = TRUE,
+         exact = TRUE, simulate = FALSE, B = 2000,
          lower.tail = TRUE, log.p = FALSE) {
 
     ##
@@ -253,7 +253,7 @@ function(q, sizes, z = NULL,
     if (is.numeric(q)) 
         q <- as.double(q)
     else stop("argument 'q' must be numeric")
-    ret <- rep(0, length(q))
+    ret <- rep.int(0, length(q))
     ret[is.na(q) | q < -1 | q > 1] <- NA
     IND <- which(!is.na(ret))
     if (!length(IND)) return(ret)
@@ -325,7 +325,7 @@ function(q, sizes, z = NULL,
     TIES <- if (!is.null(z))
         c(diff(sort(z)) != 0, TRUE)
     else
-        rep(TRUE, N)
+        rep.int(TRUE, N)
 
     ### see stats/src/ks.c line 103ff
     stat <- (0.5 + floor(as.double(q) * n.x * n.y - 1e-7)) / (n.x * n.y);
@@ -370,7 +370,8 @@ function(q, sizes, z = NULL,
 }
 
 qsmirnov <-
-function(p, sizes, z = NULL, two.sided = TRUE, ...)
+function(p, sizes, z = NULL, two.sided = TRUE,
+         exact = TRUE, simulate = FALSE, B = 2000)
 {
     n.x <- floor(sizes[1])
     n.y <- floor(sizes[2])
@@ -381,13 +382,14 @@ function(p, sizes, z = NULL, two.sided = TRUE, ...)
         stat <- (-1e4):1e4 / (1e4 + 1)
     }
     if (two.sided) stat <- abs(stat)
-    prb <- psmirnov(stat, sizes = sizes, z = z, 
-                    two.sided = TRUE, log.p = FALSE, ...)
+    prb <- psmirnov(stat, sizes = sizes, z = z, two.sided = two.sided,
+                    exact = exact, simulate = simulate, B = B,
+                    log.p = FALSE, lower.tail = TRUE)
     if (is.null(p)) return(list(stat = stat, prob = prb))
     if (is.numeric(p)) 
         p <- as.double(p)
     else stop("argument 'p' must be numeric")
-    ret <- rep(0, length(p))
+    ret <- rep.int(0, length(p))
     ret[is.na(p) | p < 0 | p > 1] <- NA
     IND <- which(!is.na(ret))
     if (!length(IND)) return(ret)

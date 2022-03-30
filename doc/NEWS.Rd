@@ -224,6 +224,10 @@
       \code{c("ks.test", "htest")} -- packages using \code{try()} need
       to take care to use \code{inherits()} and not \code{==} on the class.
 
+      \item New functions \code{psmirnov()}, \code{qsmirnov()} and
+      \code{rsmirnov()} in package \pkg{stats} implementing the
+      asymptotic and exact distributions of the two-sample Smirnov statistic.
+      
       \item \code{iconv()} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
 
