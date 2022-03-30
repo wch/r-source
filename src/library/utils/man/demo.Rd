@@ -13,7 +13,8 @@
 \usage{
 demo(topic, package = NULL, lib.loc = NULL,
      character.only = FALSE, verbose = getOption("verbose"),
-     echo = TRUE, ask = getOption("demo.ask"),
+     type = c("console", "html"), echo = TRUE,
+     ask = getOption("demo.ask"),
      encoding = getOption("encoding"))
 }
 \arguments{
@@ -33,6 +34,11 @@ demo(topic, package = NULL, lib.loc = NULL,
     character string.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
+  \item{type}{character: whether to show output in the console or a
+    browser (using the dynamic help system). The latter is honored only
+    in interactive sessions and if the \code{\link[knitr]{knitr}}
+    package is installed. Several other arguments are silently ignored
+    in that case, including \code{lib.loc}.}
   \item{echo}{a logical.  If \code{TRUE}, show the \R input when sourcing.}
   \item{ask}{a logical (or \code{"default"}) indicating if
     \code{\link{devAskNewPage}(ask = TRUE)} should be called before
@@ -47,13 +53,14 @@ demo(topic, package = NULL, lib.loc = NULL,
     declared encoding, that takes preference.}
 }
 \details{
-  If no topics are given, \code{demo} lists the available demos.  The
-  corresponding information is returned in an object of class
-  \code{"packageIQR"}.
+  If no topics are given, \code{demo} lists the available demos.  For
+  \code{type = "console"}, the corresponding information is returned in
+  an object of class \code{"packageIQR"}.
 }
 \seealso{
   \code{\link{source}} and \code{\link{devAskNewPage}} which
-are called by \code{demo}.
+  are called by \code{demo}. \code{\link{example}} to run code
+  in the Examples section of help pages.
 }
 
 \examples{

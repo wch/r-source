@@ -33,11 +33,15 @@ function(topic, package = NULL, lib.loc = NULL,
         if (!interactive() || !enhancedHTML || !requireNamespace("knitr", quietly = TRUE))
             html <- FALSE
     }
-    if (html)
-    {
+    if (html) {
         port <- tools::startDynamicHelp(NA)
         if (port <= 0L) html <- FALSE # silently fall back to console output
-        else if (!is.null(lib.loc)) lib.loc <- NULL
+        else {
+            if (!is.null(lib.loc)) lib.loc <- NULL
+            browser <- if (.Platform$GUI == "AQUA") {
+                           get("aqua.browser", envir = as.environment("tools:RGUI"))
+                       } else getOption("browser")
+        }
     }
     if (!character.only) {
         topic <- substitute(topic)
@@ -56,18 +60,13 @@ function(topic, package = NULL, lib.loc = NULL,
     pkgname <- basename(packagePath)
 
     ## At this point, we are ready to invoke HTML help if requested
-    if (html)
-    {
+    if (html) {
         query <- if (local) "" else "?local=FALSE"
-        browser <- if (.Platform$GUI == "AQUA") {
-                       get("aqua.browser", envir = as.environment("tools:RGUI"))
-                   } else getOption("browser")
         browseURL(paste0("http://127.0.0.1:", port,
                          "/library/", pkgname, "/Example/", topic, query),
                   browser)
         return(invisible())
     }
-
     lib <- dirname(packagePath)
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf, commentDontrun = !run.dontrun,
