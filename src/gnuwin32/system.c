@@ -53,21 +53,21 @@
 #include "win-nls.h"
 
 /* Callbacks also available under Unix */
-static void (*_ptr_Busy) (int);
-static void (*_ptr_CleanUp) (SA_TYPE, int, int);
-static void (*_ptr_ClearerrConsole) (void);
-static void (*_ptr_FlushConsole) (void);
-static void (*_ptr_ProcessEvents) (void); /* aka CallBack on Windows */
-static int  (*_ptr_ReadConsole) (const char *, unsigned char *, int, int);
-static void (*_ptr_ResetConsole) (void);
-static void (*_ptr_ShowMessage) (const char *s);
-static void (*_ptr_Suicide) (const char *s);
-static void (*_ptr_WriteConsole) (const char *, int);
-static void (*_ptr_WriteConsoleEx) (const char *, int, int);
+static void (*ptr_Busy) (int);
+static void (*ptr_CleanUp) (SA_TYPE, int, int);
+static void (*ptr_ClearerrConsole) (void);
+static void (*ptr_FlushConsole) (void);
+static void (*ptr_ProcessEvents) (void); /* aka CallBack on Windows */
+static int  (*ptr_ReadConsole) (const char *, unsigned char *, int, int);
+static void (*ptr_ResetConsole) (void);
+static void (*ptr_ShowMessage) (const char *s);
+static void (*ptr_Suicide) (const char *s);
+static void (*ptr_WriteConsole) (const char *, int);
+static void (*ptr_WriteConsoleEx) (const char *, int, int);
 
 /* Windows-specific callbacks */
 static int R_YesNoCancel(const char *s);
-static int (*_ptr_YesNoCancel)(const char *s);
+static int (*ptr_YesNoCancel)(const char *s);
 
 /* Default implementations of callbacks added in version 1 of structRstart */
 static void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast);
@@ -161,7 +161,7 @@ void R_ProcessEvents(void)
 	UserBreak = FALSE;
 	onintr();
     }
-    _ptr_ProcessEvents();
+    ptr_ProcessEvents();
     if(R_Tcl_do) R_Tcl_do();
 }
 
@@ -177,7 +177,7 @@ void R_WaitEvent(void)
 
 void R_Suicide(const char *s)
 {
-    _ptr_Suicide(s); /* should not return */
+    ptr_Suicide(s); /* should not return */
     exit(2); 
 }
 
@@ -211,7 +211,7 @@ static void Rstd_Suicide(const char *s)
  * thread
  *
  * All works in this way:
- * R_ReadConsole calls _ptr_ReadConsole which points to:
+ * R_ReadConsole calls ptr_ReadConsole which points to:
  * case 1: GuiReadConsole
  * case 2 and 3: ThreadedReadConsole
  * case 4: FileReadConsole
@@ -237,7 +237,7 @@ R_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	      int addtohistory)
 {
     R_ProcessEvents();
-    return _ptr_ReadConsole(prompt, buf, len, addtohistory);
+    return ptr_ReadConsole(prompt, buf, len, addtohistory);
 }
 
 	/* Write a text buffer to the console. */
@@ -246,16 +246,16 @@ R_ReadConsole(const char *prompt, unsigned char *buf, int len,
 void R_WriteConsole(const char *buf, int len)
 {
     R_ProcessEvents();
-    if (_ptr_WriteConsole) _ptr_WriteConsole(buf, len);
-    else _ptr_WriteConsoleEx(buf, len, 0);
+    if (ptr_WriteConsole) ptr_WriteConsole(buf, len);
+    else ptr_WriteConsoleEx(buf, len, 0);
 }
 
 
 void R_WriteConsoleEx(const char *buf, int len, int otype)
 {
     R_ProcessEvents();
-    if (_ptr_WriteConsole) _ptr_WriteConsole(buf, len);
-    else _ptr_WriteConsoleEx(buf, len, otype);
+    if (ptr_WriteConsole) ptr_WriteConsole(buf, len);
+    else ptr_WriteConsoleEx(buf, len, otype);
 }
 
 
@@ -415,7 +415,7 @@ TermWriteConsole(const char *buf, int len)
 
 void R_ResetConsole(void)
 {
-    _ptr_ResetConsole();
+    ptr_ResetConsole();
 }
 
 static void Rstd_ResetConsole(void)
@@ -426,7 +426,7 @@ static void Rstd_ResetConsole(void)
 
 void R_FlushConsole(void)
 {
-    _ptr_FlushConsole();
+    ptr_FlushConsole();
 }
 
 static void Rstd_FlushConsole(void)
@@ -440,7 +440,7 @@ static void Rstd_FlushConsole(void)
 
 void R_ClearerrConsole(void)
 {
-    _ptr_ClearerrConsole();
+    ptr_ClearerrConsole();
 }
 
 static void Rstd_ClearerrConsole(void)
@@ -464,7 +464,7 @@ static void CharBusy(int which)
 
 void R_Busy(int which)
 {
-    _ptr_Busy(which);
+    ptr_Busy(which);
 }
 
 
@@ -485,7 +485,7 @@ void R_Busy(int which)
 
 void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
-    _ptr_CleanUp(saveact, status, runLast); /* should not return */
+    ptr_CleanUp(saveact, status, runLast); /* should not return */
     exit(status);
 }
 
@@ -695,12 +695,12 @@ int R_ChooseFile(int new, char *buf, int len)
 
 void R_ShowMessage(const char *s)
 {
-    _ptr_ShowMessage(s);
+    ptr_ShowMessage(s);
 }
 
 static int R_YesNoCancel(const char *s)
 {
-    return _ptr_YesNoCancel(s);
+    return ptr_YesNoCancel(s);
 }
 
 static void char_message(const char *s)
@@ -841,28 +841,28 @@ void R_SetWin32(Rstart Rp)
 	                   (Rp->EmitEmbeddedUTF8 == TRUE);
     }
 
-    _ptr_CleanUp = Rstd_CleanUp;
-    _ptr_ClearerrConsole = Rstd_ClearerrConsole;
-    _ptr_FlushConsole = Rstd_FlushConsole;
-    _ptr_ResetConsole = Rstd_ResetConsole;
-    _ptr_Suicide = Rstd_Suicide;
+    ptr_CleanUp = Rstd_CleanUp;
+    ptr_ClearerrConsole = Rstd_ClearerrConsole;
+    ptr_FlushConsole = Rstd_FlushConsole;
+    ptr_ResetConsole = Rstd_ResetConsole;
+    ptr_Suicide = Rstd_Suicide;
 
     if (Rp->RstartVersion == 1) {
-	_ptr_CleanUp = Rp->CleanUp;
-	_ptr_ClearerrConsole = Rp->ClearerrConsole;
-	_ptr_FlushConsole = Rp->FlushConsole;
-	_ptr_ResetConsole = Rp->ResetConsole;
-	_ptr_Suicide = Rp->Suicide;
+	ptr_CleanUp = Rp->CleanUp;
+	ptr_ClearerrConsole = Rp->ClearerrConsole;
+	ptr_FlushConsole = Rp->FlushConsole;
+	ptr_ResetConsole = Rp->ResetConsole;
+	ptr_Suicide = Rp->Suicide;
     }
 
     EmitEmbeddedUTF8 = Rp->EmitEmbeddedUTF8;
-    _ptr_ReadConsole = Rp->ReadConsole;
-    _ptr_WriteConsole = Rp->WriteConsole;
-    _ptr_WriteConsoleEx = Rp->WriteConsoleEx;
-    _ptr_ProcessEvents = Rp->CallBack;
-    _ptr_ShowMessage = Rp->ShowMessage;
-    _ptr_YesNoCancel = Rp->YesNoCancel;
-    _ptr_Busy = Rp->Busy;
+    ptr_ReadConsole = Rp->ReadConsole;
+    ptr_WriteConsole = Rp->WriteConsole;
+    ptr_WriteConsoleEx = Rp->WriteConsoleEx;
+    ptr_ProcessEvents = Rp->CallBack;
+    ptr_ShowMessage = Rp->ShowMessage;
+    ptr_YesNoCancel = Rp->YesNoCancel;
+    ptr_Busy = Rp->Busy;
     /* Process R_HOME/etc/Renviron.site, then
        .Renviron or ~/.Renviron, if it exists.
        Only used here in embedded versions */
@@ -1089,11 +1089,11 @@ int cmdlineoptions(int ac, char **av)
 	Rp->Busy = GuiBusy;
     }
 
-    _ptr_ShowMessage = Rp->ShowMessage; /* used here */
-    _ptr_WriteConsole = Rp->WriteConsole;
+    ptr_ShowMessage = Rp->ShowMessage; /* used here */
+    ptr_WriteConsole = Rp->WriteConsole;
     /* Rp->WriteConsole is guaranteed to be set above,
        so we know WriteConsoleEx is not used */
-    _ptr_ProcessEvents = Rp->CallBack;
+    ptr_ProcessEvents = Rp->CallBack;
 
     /* process environment variables
      * precedence:  command-line, .Renviron, inherited
