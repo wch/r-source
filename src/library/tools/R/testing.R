@@ -651,8 +651,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             Sys.setenv(R_DEFAULT_PACKAGES="")
             Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
-            if (inC)
-              Sys.setenv(LC_CTYPE="C")
+            ## FIXME: the above are currently not restored after testing
+            if (inC) { # breaks reg-plot-latin1, so restore between tests
+                oenv <- Sys.getenv("LC_CTYPE", unset = NA)
+                on.exit(if (is.na(oenv)) Sys.unsetenv("LC_CTYPE")
+                        else Sys.setenv(LC_CTYPE=oenv), add = TRUE)
+                Sys.setenv(LC_CTYPE="C")
+            }
             ## ignore all 'extra' (incl. 'inC')  and hope
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
