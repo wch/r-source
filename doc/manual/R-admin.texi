@@ -3373,7 +3373,9 @@ vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
 (including @pkg{url} and some of the font packages such as @pkg{times},
-@pkg{helvetic}, @pkg{ec} and @pkg{cm-super}) and others such as
+@pkg{helvetic}, @pkg{ec} or @pkg{cm-super} for the manuals, as well as
+@pkg{fancyvrb}, @pkg{natbib} and @pkg{parskip} for the base vignettes)
+and others such as
 @pkg{hyperref} and @pkg{inconsolata} are desirable (and without them you
 may need to change @R{}'s defaults: @pxref{Making the manuals}).  Note
 that package @pkg{hyperref} (currently) requires packages
