@@ -43,7 +43,7 @@ h1 {
     background: white;
     color: rgb(55%, 55%, 55%);
     font-family: monospace;
-    font-size: x-large;
+    font-size: 1.4em; /* x-large; */
     text-align: center;
 }
 
@@ -51,7 +51,7 @@ h2 {
     background: white;
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
-    font-size: large;
+    font-size: 1.2em; /* large; */
     text-align: center;
 }
 
@@ -59,7 +59,7 @@ h3 {
     background: white;
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
-    font-size: large;
+    font-size: 1.2em; /* large; */
 }
 
 h4 {
@@ -67,7 +67,7 @@ h4 {
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
     font-style: italic;
-    font-size: large;
+    font-size: 1.2em; /* large; */
 }
 
 h5 {
