@@ -1,27 +1,30 @@
 @media screen {
     body {
-	line-height: 1.4;
+	font-size: 18px;
     }
     .container {
-	/* width: 100%; */
-	padding-right: 20px;
-	padding-left: 20px;
+	padding-right: 10px;
+	padding-left: 10px;
 	margin-right: auto;
 	margin-left: auto;
-	max-width: 1000px;
+	max-width: 900px;
     }
 }
 
-.rimage img { /* from knitr */
+.rimage img { /* from knitr - for examples and demos */
     width: 96%;
     margin-left: 2%;
 } 	
 
 .katex { font-size: 1.1em; }
 
-code.reqn { color: black; }
+code {
+    color: inherit;
+    background: inherit;
+}
 
 body {
+    line-height: 1.4;
     background: white;
     color: black;
 }
