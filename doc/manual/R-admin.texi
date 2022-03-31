@@ -3585,7 +3585,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.265.b01-1.fc32.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-6.fc34.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3623,7 +3623,7 @@ Java 8 aka 1.8.0).
 
 `Non-server' Oracle distributions of Java as from version 11 are of a
 full JDK.  However, Linux distributions can be confusing: for example
-Fedora 32 had
+Fedora 34 had
 @example
 java-1.8.0-openjdk
 java-1.8.0-openjdk-devel
@@ -3631,12 +3631,13 @@ java-openjdk
 java-openjdk-devel
 java-11-openjdk
 java-11-openjdk-devel
+java-17-openjdk
+java-17-openjdk-devel
 java-latest-openjdk
 java-latest-openjdk-devel
 @end example
 @noindent
-where the @code{-devel} RPMs are needed to complete the JDK.  (At the
-time of writing @code{java-openjdk} was Java 14.)  Debian/Ubuntu use
+where the @code{-devel} RPMs are needed to complete the JDK. Debian/Ubuntu use
 @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
@@ -5495,13 +5496,13 @@ Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 but not 9, 10, 12--16 or 18 which
+long-term support, e.g.@: 11 or 17 but not  12--16 or 18 which
 have/had a 6-month lifetime.  (Note that these sources may use unusual
 designations for Intel macOS builds such as @code{x86 64-bit} and
 @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf}
+(e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
 To use Java (specifically, package @CRANpkg{rJava}) with a
@@ -5525,7 +5526,7 @@ need some help, e.g.@: by setting environment variable @env{JAVA_HOME}.
 To select a build from @uref{https://adoptium.net, Adoptium}
 set e.g.@:
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-11.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-17.jdk/Contents/Home
 @end example
 @noindent
 in @file{config.site}.  For Java 17 from @uref{https://jdk.java.net/},

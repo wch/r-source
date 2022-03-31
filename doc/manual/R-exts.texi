@@ -5150,7 +5150,7 @@ OpenJDK including FreeBSD and most Linux distributions).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 (announced 18 19 20)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 (announced 19 20)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
