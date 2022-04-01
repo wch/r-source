@@ -251,6 +251,26 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
 } ## {Rdiff}
 
+.is.writeable <- function(dir)
+{
+    # see packages2.R for comment on unreliability of file.access
+    ok <- TRUE
+    fn <- file.path(dir, paste0("_test_dir_", Sys.getpid()))
+    res <- try(dir.create(fn, showWarnings = FALSE))
+    if(inherits(res, "try-error") || !res)
+        ok <- FALSE
+    else
+        unlink(fn, recursive = TRUE)
+    if (ok) {
+        fn <- file.path(dir, paste0("_test_file_", Sys.getpid()))
+        res <- try(file.create(fn, showWarnings = FALSE))
+        if(inherits(res, "try-error") || !res)
+            ok <- FALSE
+        else
+            unlink(fn)
+    }
+    ok
+}
 
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
@@ -258,6 +278,8 @@ testInstalledPackages <-
              types = c("examples", "tests", "vignettes"),
              srcdir = NULL, Ropts = "", ...)
 {
+    if (!.is.writeable(outDir))
+        stop("directory ", sQuote(outDir), " is not writeable ", domain = NA)
     ow <- options(warn = 1)
     on.exit(ow)
     scope <- match.arg(scope)
@@ -315,6 +337,7 @@ testInstalledPackage <-
     owd <- setwd(outDir)
     on.exit(setwd(owd))
     strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
+    useDiff <- nzchar(Sys.which("diff"))
 
     if ("examples" %in% types) {
         message(gettextf("Testing examples for package %s", sQuote(pkg)),
@@ -348,8 +371,8 @@ testInstalledPackage <-
                                     sQuote(outfile), sQuote(basename(savefile))),
                            appendLF = FALSE, domain = NA)
                    cmd <-
-                       sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
-                               outfile, savefile)
+                       sprintf("invisible(tools::Rdiff('%s','%s',%s,TRUE))",
+                               outfile, savefile, as.character(useDiff))
                    out <- R_runR(cmd, "--vanilla --no-echo")
                    if(length(out)) {
                        if(strict)
@@ -371,8 +394,8 @@ testInstalledPackage <-
                             sQuote(outfile), sQuote(basename(prevfile))),
                             appendLF = FALSE, domain = NA)
                     cmd <-
-                        sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
-                                outfile, prevfile)
+                        sprintf("invisible(tools::Rdiff('%s','%s',%s,TRUE))",
+                                outfile, prevfile, as.character(useDiff))
                     out <- R_runR(cmd, "--vanilla --no-echo")
                     if(length(out)) {
                         message(" NOTE")
@@ -680,6 +703,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
 
     owd <- setwd(file.path(R.home(), "tests"))
     on.exit(setwd(owd), add=TRUE)
+    if (!.is.writeable("."))
+        stop("directory ", sQuote(file.path(R.home(), "tests")),
+              " is not writeable ", domain = NA)
 
     if (scope %in% c("basic", "both")) {
         message("running strict specific tests", domain = NA)

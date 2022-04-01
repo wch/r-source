@@ -1348,7 +1348,7 @@ tools::testInstalledBasic("internet")
 It is possible to test the installed packages (but not their
 package-specific tests) by @code{testInstalledPackages} even if
 @command{make install-tests} was not run. The outputs are written under the
-current directory.
+current directory unless a different one is specified by @code{outDir}.
 
 Note that the results may depend on the language set for times and
 messages: for maximal similarity to reference results you may want to
@@ -1504,37 +1504,38 @@ run in parallel.
 The Windows installer contains a set of test files used when building
 @R{}.
 
-The toolset needs to be installed to run these tests (the @command{diff}
-utility is required). 
+The toolset is not needed to run these tests, but more comprehensive
+analysis of errors will be given if @command{diff} is in the path.
 
 Launch either @code{Rgui} or @code{Rterm} (preferred), preferably with
 @option{--vanilla}.  Then run
 
 @example
-Sys.setenv(LC_COLLATE = "C", LC_CTYPE="C", LANGUAGE = "en")
-library("tools")
-testInstalledBasic("both")
-testInstalledPackages(scope = "base", errorsAreFatal = FALSE)
-testInstalledPackages(scope = "recommended", errorsAreFatal = FALSE)
+Sys.setenv(LC_COLLATE = "C", LC_TIME="C", LANGUAGE = "en")
+tools::testInstalledBasic("both")
+tools::testInstalledPackages(scope = "base")
+tools::testInstalledPackages(scope = "recommended")
 @end example
 
 @noindent
-runs the basic tests and then all the tests on the standard and
-recommended packages.  These tests can be run from anywhere: they write
-some of their results in the @file{tests} folder of the @R{} home
-directory (as given by @code{R.home()}) and under the current directory.
-For this to work, one normally needs to install @R{} to a directory other
-than the default @file{C:\Program Files}. The installer allows
-to install @R{} without Administrator privileges, see the
-@uref{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
-Windows @acronym{FAQ}} for more details.
+runs the basic tests and then all the tests on the standard and recommended
+packages.  These tests can be run from anywhere: @code{testInstalledBasic}
+writes results in the @file{tests} folder of the @R{} home directory (as
+given by @code{R.home()}) and @code{testInstalledPackages} under the current
+directory unless a different one is specified by @code{outDir}.
 
-The results of @code{example(md5sums)} when testing @pkg{tools} will
+For the @file{tests} folder to be writeable, one normally needs to install
+@R{} to a directory other than the default @file{C:\Program Files}.  The
+installer also allows to install @R{} without Administrator privileges, see
+the @uref{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
+@acronym{FAQ}} for more details.
+
+The results of @code{example(md5sums)} when testing @pkg{tools} may
 differ from the reference output as some files are installed with
 Windows' CRLF line endings. Also, expect differences in
 @file{reg-plot-latin1.pdf}.
 
-One may also run tests from the toolset shell (e.g.  @command{bash}) similarly
+One can also run tests from the toolset shell (e.g.  @command{bash}) similarly
 to a Unix-like installation.  Move to the home directory of the @R{}
 installation (as given by @command{R RHOME} or from @R{} as @code{R.home()})
 and run
@@ -1547,7 +1548,7 @@ cd tests
 ../bin/R CMD make check-all
 @end example
 
-Remember that @LaTeX{} needs to be on the @env{PATH}.
+Remember that @LaTeX{} needs to be on the path.
 
 @node Installing R under macOS, Running R, Installing R under Windows, Top
 @chapter Installing R under macOS
