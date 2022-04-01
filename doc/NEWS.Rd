@@ -33,7 +33,11 @@
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions}.  [In progress.]
+      \sQuote{Writing R Extensions} §6.6.1.
+
+      [In progress: setting environment variable
+      \env{_R_INSTALL_USE_FC_LEN_T_} to a true value enables this
+      \emph{pro tem}.]
     }
   }
 
