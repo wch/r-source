@@ -5169,7 +5169,7 @@ option @option{--without-static-cairo} to the @command{configure} call
 
 As from Command Line Tools version 12,
 @option{-Wno-implicit-function-declaration} needs to be included in
-@code{CFLAGS} to configure @R{} up to 4.0.2 and earlier as well as some
+@code{CFLAGS} to configure @R{} 4.0.2 and earlier as well as some
 external software.
 
 @menu
@@ -5186,7 +5186,9 @@ A more recent Fortran compiler for Catalina and later is available at
 manual.
 
 For Big Sur and later there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.1-bigsur-intel/gfortran-Intel-11.1-BigSur.dmg}..
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
+and for Monterey there is
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-monterey-intel/gfortran-Intel-11.2-Monterey.dmg}.
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
