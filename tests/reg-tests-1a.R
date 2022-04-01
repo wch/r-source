@@ -12,6 +12,7 @@ envLst <- c(t(outer(c("R_ENVIRON","R_PROFILE"), c("","_USER"), paste0)),
 cbind(Sys.getenv(envLst))
 .libPaths()
 
+(have_cat <- nzchar(Sys.which("cat")))
 assertError <- tools::assertError
 
 ## regression test for PR#376
@@ -353,14 +354,16 @@ stopifnot(identical(it, as.integer(rowSums(outer(tt, X, ">=")))),
 	  is.na(it[ina]))
 
 
+if (have_cat) {
 ## fix
-oo <- options(editor="touch") # not really changing anything
+oo <- options(editor="cat") # not really changing anything
 fix(pi)
 if(!is.numeric(pi) || length(pi)!=1 ||
    !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
       stop("OOPS:  fix() is broken ...")
 rm(pi); options(oo)
 ## end of moved from fix.Rd
+}
 
 
 ## format
@@ -1833,6 +1836,7 @@ stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
 
+if (have_cat) {
 ## Formerly undocumented line limit in system(intern=TRUE)
 ## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
 tmp <- tempfile()
@@ -1841,6 +1845,7 @@ cat(long, "\n", sep="", file=tmp)
 junk <- system(paste("cat", shQuote(tmp)), intern = TRUE)
 stopifnot(length(junk) == 1L, nchar(junk[1]) == 200L)
 ## and split truncated on 1.6.1
+}
 
 
 ## missing group generics for `difftime' (related to PR#2345)

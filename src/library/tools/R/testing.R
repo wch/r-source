@@ -622,6 +622,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 "p-qbeta-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
+    useDiff <- nzchar(Sys.which("diff"))  # only check once
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
         f <- paste0(f, ".R")
@@ -650,8 +651,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             Sys.setenv(R_DEFAULT_PACKAGES="")
             Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
-            if (inC)
-              Sys.setenv(LC_CTYPE="C")
+            ## FIXME: the above are currently not restored after testing
+            if (inC) { # breaks reg-plot-latin1, so restore between tests
+                oenv <- Sys.getenv("LC_CTYPE", unset = NA)
+                on.exit(if (is.na(oenv)) Sys.unsetenv("LC_CTYPE")
+                        else Sys.setenv(LC_CTYPE=oenv), add = TRUE)
+                Sys.setenv(LC_CTYPE="C")
+            }
             ## ignore all 'extra' (incl. 'inC')  and hope
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
@@ -665,7 +671,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             message(gettextf("  comparing %s to %s ...",
                              sQuote(outfile), sQuote(savefile)),
                     appendLF = FALSE, domain = NA)
-            res <- Rdiff(outfile, savefile, TRUE)
+            res <- Rdiff(outfile, savefile, useDiff)
             if (!res) message(" OK")
             else if (!diffOK) return(1L)
         }
@@ -696,11 +702,12 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         message("running tests of plotting Latin-1", domain = NA)
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
-        runone("reg-plot-latin1", TRUE, inC=FALSE)
-        message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
-                appendLF = FALSE, domain = NA)
-        res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
-        if(res != 0L) message("DIFFERED") else message("OK")
+        if (runone("reg-plot-latin1", TRUE, inC=FALSE) == 0L) {
+            message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
+                    appendLF = FALSE, domain = NA)
+            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
+            if(res != 0L) message("DIFFERED") else message("OK")
+        }
     }
 
     if (scope %in% c("devel", "both")) {
