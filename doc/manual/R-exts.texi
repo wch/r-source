@@ -6354,53 +6354,47 @@ An installed file named @file{CITATION} will be used by the
 subdirectory of the package sources.)
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
-declared encoding, or in @acronym{ASCII} if none is declared).  If no
-such file is present, @code{citation} auto-generates citation
-information from the package @file{DESCRIPTION} metadata, and an example
-of what that would look like as a @file{CITATION} file can be seen in
-recommended package @CRANpkg{nlme} (see below): recommended packages
-@CRANpkg{boot}, @CRANpkg{cluster} and @CRANpkg{mgcv} have further
-examples.
-
-A @file{CITATION} file will contain calls to function @code{bibentry}.
-
+declared encoding, or in @acronym{ASCII} if none is declared).
+It will contain calls to function @code{bibentry}.
 Here is that for @CRANpkg{nlme}:
 
 @example
-year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
+## R package reference generated from DESCRIPTION metadata
+citation(auto = meta)
 
-bibentry(bibtype = "Manual",
-         title = "@{nlme@}: Linear and Nonlinear Mixed Effects Models",
-         author = c(person("Jose", "Pinheiro"),
-                    person("Douglas", "Bates"),
-                    person("Saikat", "DebRoy"),
-                    person("Deepayan", "Sarkar"),
-                    person("R Core Team")),
-         year = year,
-         note = note,
-         url = "https://CRAN.R-project.org/package=nlme")
+## NLME book
+bibentry(bibtype = "Book",
+         title = "Mixed-Effects Models in S and S-PLUS",
+         author = c(person(c("Jos@'e", "C."), "Pinheiro"),
+                    person(c("Douglas", "M."), "Bates")),
+         year = "2000", publisher = "Springer", address = "New York",
+         doi = "10.1007/b98882")
 @end example
 
-Note the way that information that may need to be updated is picked up
+Note how the first call auto-generates citation information
 from object @code{meta}, a parsed version of the @file{DESCRIPTION} file
 -- it is tempting to hardcode such information, but it normally then
-gets outdated.  See @code{?bibentry} for further details of the
-information which can be provided.
+gets outdated.  How the first entry would look like as a @code{bibentry}
+call can be seen from
+@code{print(citation("@var{pkgname}", auto = TRUE), style = "R")}
+for any installed package.  Auto-generated information is
+returned by default if no @file{CITATION} file is present.
 
+See @code{?bibentry} for further details of the
+information which can be provided.
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
 text representation to be used for printing @emph{via} the
 @code{textVersion} argument to @code{bibentry}.  E.g., earlier versions
-of @CRANpkg{nlme} additionally used
+of @CRANpkg{nlme} additionally used something like
 
 @example
          textVersion =
-         paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
+         paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy, ",
                 "Deepayan Sarkar and the R Core Team (",
-                year,
+                sub("-.*", "", meta$Date),
                 "). nlme: Linear and Nonlinear Mixed Effects Models. ",
-                note, ".")
+                sprintf("R package version %s", meta$Version), ".")
 @end example
 
 The @file{CITATION} file should itself produce no output when
