@@ -490,7 +490,7 @@ There are some issues with making the PDF reference manual,
 @file{fullrefman.pdf} or @file{refman.pdf}.  The help files contain both
 non-ASCII characters (e.g.@: in @file{text.Rd}) and upright quotes,
 neither of which are contained in the standard @LaTeX{} Computer Modern
-fonts.  We have provided four alternatives:
+fonts.  We have provided the following alternatives:
 
 @table @code
 @item times
@@ -536,10 +536,10 @@ and stored in @file{etc/Renviron}, but can still be overridden when the
 manuals are built, using @command{make -e}.)  The usual@footnote{on a
 Unix-alike, @samp{inconsolata} is omitted if not found by
 @command{configure}.}  default value for @env{R_RD4PDF} is
-@samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
-hyperlinks (e.g.@: for printing the manual) or do not have @LaTeX{}
-package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
-@LaTeX{} package @pkg{inconsolata} installed.
+@samp{times,inconsolata,hyper}: omit @samp{inconsolata} if you do not have
+@LaTeX{} package @pkg{inconsolata} installed. As from @R{} 4.2.0,
+@samp{hyper} is always enabled (with a fallback if @LaTeX{} package
+@pkg{hyperref} is not installed).
 
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
 @file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example, if
@@ -3374,7 +3374,9 @@ vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
 (including @pkg{url} and some of the font packages such as @pkg{times},
-@pkg{helvetic}, @pkg{ec} and @pkg{cm-super}) and others such as
+@pkg{helvetic}, @pkg{ec} or @pkg{cm-super} for the manuals, as well as
+@pkg{fancyvrb}, @pkg{natbib} and @pkg{parskip} for the base vignettes)
+and others such as
 @pkg{hyperref} and @pkg{inconsolata} are desirable (and without them you
 may need to change @R{}'s defaults: @pxref{Making the manuals}).  Note
 that package @pkg{hyperref} (currently) requires packages
