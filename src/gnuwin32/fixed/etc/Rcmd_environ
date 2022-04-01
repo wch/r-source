@@ -36,5 +36,6 @@ R_BZIPCMD=${R_BZIPCMD-'bzip2'}
 SED=${SED-sed}
 
 # INSTALLER-BUILD:R_RTOOLS42_PATH="${RTOOLS42_HOME:-c:/rtools42}/x86_64-w64-mingw32.static.posix/bin;${RTOOLS42_HOME:-c:/rtools42}/usr/bin"
-# INSTALLER-BUILD:PATH="${R_CUSTOM_TOOLS_PATH:-${R_RTOOLS42_PATH}};${PATH}"
+#   trailing slash to protect against trailing backslash in PATH
+# INSTALLER-BUILD:PATH="${R_CUSTOM_TOOLS_PATH:-${R_RTOOLS42_PATH}};${PATH}/"
 
