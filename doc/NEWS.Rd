@@ -421,7 +421,8 @@
       \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions}.
+      \sQuote{Writing R Extensions} §6.6.2.   (This has been supported
+      since \R 3.6.2.)
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
@@ -608,7 +609,7 @@
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
 
-      \item Improved determination the correct translation domain in
+      \item Improved determination of the correct translation domain in
       non-base packages, addressing the combination of \PR{18092} and
       \PR{17998} (\code{#c6}) with reports and \emph{augmented} patch
       #2904 by Suharto Anggono.
