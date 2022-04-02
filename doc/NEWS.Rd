@@ -37,7 +37,8 @@
 
       [In progress: setting environment variable
       \env{_R_INSTALL_USE_FC_LEN_T_} to a true value enables this
-      \emph{pro tem}.]
+      \emph{pro tem}.  This is set by \command{R CMD check --as-cran}
+      when it installs a package.]
     }
   }
 
@@ -467,7 +468,8 @@
       \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions}.
+      \sQuote{Writing R Extensions} §6.6.2.   (This has been supported
+      since \R 3.6.2.)
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
