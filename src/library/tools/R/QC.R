@@ -7230,7 +7230,9 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     Rdb <- tryCatch(.build_Rd_db(dir, stages = NULL,
                                  os = c("unix", "windows"), step = 1),
                     error = identity)
-    if(!inherits(Rdb, "error") && length(Rdb)) {
+    if(inherits(Rdb, "error"))
+        out$Rd_db_build_error <- conditionMessage(Rdb)
+    else if(length(Rdb)) {
         names(Rdb) <-
             substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
         Rdb0 <- Rdb
@@ -8376,6 +8378,11 @@ function(x, ...)
       },
       if(length(y <- x$missing_vignette_index)) {
           "Package has a VignetteBuilder field but no prebuilt vignette index."
+      },
+      if(length(y <- x$Rd_db_build_error)) {
+          paste(c("Reading Rd files failed with",
+                  paste0("  ", y)),
+                collapse = "\n")
       },
       fmt(c(if(length(y <- x$missing_manual_rdb)) {
                 "Package has help file(s) containing build-stage \\Sexpr{} expressions but no 'build/partial.rdb' file."
