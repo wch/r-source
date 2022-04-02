@@ -1,7 +1,7 @@
 #  File src/library/tools/R/checktools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2020 The R Core Team
+#  Copyright (C) 2013-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 check_packages_in_dir <-
 function(dir,
+         pfiles = Sys.glob("*.tar.gz"),
          check_args = character(), check_args_db = list(),
          reverse = NULL,
          check_env = character(),
@@ -45,7 +46,6 @@ function(dir,
                   class = "check_packages_in_dir")
     }
 
-    pfiles <- Sys.glob("*.tar.gz")
     if(!length(pfiles)) {
         message("no packages to check")
         return(invisible(.check_packages_in_dir_retval(dir, pfiles)))

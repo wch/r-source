@@ -1,6 +1,6 @@
 % File src/library/tools/man/check_packages_in_dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2020 R Core Team
+% Copyright 2013-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{check_packages_in_dir}
@@ -17,6 +17,7 @@
 }
 \usage{
 check_packages_in_dir(dir,
+                      pfiles = Sys.glob("*.tar.gz"),
                       check_args = character(),
                       check_args_db = list(),
                       reverse = NULL,
@@ -42,6 +43,9 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE, ...)
 \arguments{
   \item{dir}{a character string giving the path to the directory with
     the source \file{.tar.gz} files to be checked.}
+  \item{pfiles}{(optional) character vector of tarball files to be
+    checked.  Useful for choosing a subset of the \file{*.tar.gz} files in
+    \code{dir}.}
   \item{check_args}{a character vector with arguments to be passed to
     \command{R CMD check}, or a list of length two of such character
     vectors to be used for checking packages and reverse dependencies,
