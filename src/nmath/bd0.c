@@ -341,14 +341,6 @@ void attribute_hidden ebd0(double x, double M, double *yh, double *yl)
 #ifdef DEBUG_bd0
 	REprintf(" 4. after ADD1(- M*fg):       yl,yh = (%13g, %13g); yl+yh= %g\n\n", *yl, *yh, (*yl)+(*yh));
 #endif
-    // after 11 calls to ADD1(), each adding a fractional part in  [-0.5, 0.5) :
-    if(fabs(*yl) > 11 * 0.5)
-#ifdef MATHLIB_STANDALONE
-	MATHLIB_ERROR("ending ebd0(..): yl=%g: |yl| >  11 * 0.5 -- should never happen! compiler error?", *yl);
-#else
-	error("ending ebd0(x=%g, M=%g): yl=%g: |yl| >  %d * 0.5 -- should never happen! compiler error?",
-	      x, M, *yl, 11);
-#endif
 }
 
 #undef ADD1
