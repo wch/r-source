@@ -2259,8 +2259,10 @@ add_dummies <- function(dir, Log)
             t2 <- proc.time()
             print_time(t1, t2, Log)
             if (length(out)) {
-                if(length(grep("^prepare.*Dropping empty section", out,
-                               invert = TRUE)))
+                if(length(grep(paste("^prepare.*Dropping empty section",
+                                     "^check.*\\item.*must have non-empty label",
+                                     sep = "|"),
+                               out, invert = TRUE)))
                     warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
