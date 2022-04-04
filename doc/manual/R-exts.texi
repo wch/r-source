@@ -16791,6 +16791,10 @@ executables default to 2Mb, and Visual C++ ones to 1Mb.  The latter
 stack sizes are too small for a number of @R{} applications, so
 general-purpose front-ends should use a larger stack size.
 
+Applications embedding @R{} 4.2.0 and newer should use UCRT as the C runtime
+and opt in for UTF-8 as the active code page in their manifest, as all
+frontends shipped with @R{} do.  This will allow the embedded @R{} to use
+UTF-8 as its native encoding on recent Windows systems.
 
 @node Finding R_HOME,  , Calling R.dll directly, Embedding R under Windows
 @subsection Finding R_HOME
