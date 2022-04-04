@@ -37,6 +37,9 @@
       Using 3.10.0 gives some different signs in SVDs, seen in the
       \file{lapack.R} test.
 
+      Packages using LAPACK will need to be reinstalled if this changes
+      to using an external library.
+
       [In progress. Not supported for static liblapack.a.]
     }
   }
