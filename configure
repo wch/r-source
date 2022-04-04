@@ -4675,7 +4675,6 @@ else $as_nop
   use_blas=unset
 fi
 
-# default is "no" except on macOS
 
 ## LAPACK.
 
@@ -4692,7 +4691,6 @@ else $as_nop
   use_lapack=unset
 fi
 
-# default is "no" except on macOS
 
 ## Readline.
 
@@ -26654,7 +26652,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26657: \"$ac_link\") >&5
+(eval echo $as_me:26655: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26730,7 +26728,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26733: \"$ac_link\") >&5
+(eval echo $as_me:26731: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
