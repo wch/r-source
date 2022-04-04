@@ -424,26 +424,29 @@ socketTimeout(socket, timeout = -1)
 
   When writing to a text connection, the connections code always assumes its
   input is in native encoding, so e.g.  \code{\link{writeLines}} has to
-  convert text to native encoding.  \code{\link{writeLines}} does not do the
-  conversion when \code{useBytes=TRUE} (for expert use only), but the
-  connections code still behaves as if the text was in native encoding, so
-  any attempt to convert encoding (\code{encoding} argument other than
-  \code{""} and \code{"native.enc"}) in connections will produce incorrect
-  results.
+  convert text to native encoding.  The native encoding is UTF-8 on most
+  systems (since R 4.2 also on recent Windows) and can represent all
+  characters.  \code{\link{writeLines}} does not do the conversion when
+  \code{useBytes=TRUE} (for expert use only, only useful on systems with native
+  encoding other than UTF-8), but the connections code still behaves as if
+  the text was in native encoding, so any attempt to convert encoding
+  (\code{encoding} argument other than \code{""} and \code{"native.enc"}) in
+  connections will produce incorrect results.
 
-  When reading from a text connection, the connections code, after
-  re-encoding based on the \code{encoding} argument, returns text that is
-  assumed to be in native encoding; an encoding mark is only added by
-  functions that read from the connection, so e.g.  \code{\link{readLines}}
-  can be instructed to mark the text as \code{"UTF-8"} or \code{"latin1"},
-  but \code{\link{readLines}} does no further conversion.  To allow reading
-  text in \code{"UTF-8"} on a system that cannot represent all such
-  characters in native encoding (currently only Windows), a connection can
-  be internally configured to return the read text in UTF-8 even though it
-  is not the native encoding; currently \code{\link{readLines}} and
-  \code{\link{scan}} use this feature when given a connection that is not
-  yet open and, when using the feature, they unconditionally mark the text
-  as \code{"UTF-8"}.
+  When reading from a text connection, the connections code re-encodes the
+  input to native encoding (from the encoding given by the \code{encoding}
+  argument).  On systems where UTF-8 is not the native encoding, one can
+  read text not representable in the native encoding using
+  \code{\link{readLines}} and \code{\link{scan}} by providing them with an
+  unopened connection that has been created with the \code{encoding}
+  argument specifying the input encoding.  \code{\link{readLines}} and
+  \code{\link{scan}} would then instruct the connections code to convert the
+  text to UTF-8 (instead of native encoding) and they will return it marked
+  as \code{"UTF-8"}.  Finally and for expert use only, one may disable
+  re-encoding of input by specifying \code{""} or \code{"native.enc"} as
+  \code{encoding} for the connection, but then mark the text as being
+  \code{"UTF-8"} or \code{"latin1"} via the \code{encoding} argument
+  of \code{\link{readLines}} and \code{\link{scan}}.
 
   Re-encoding only works for connections in text mode: reading from a
   connection with re-encoding specified in binary mode will read the
