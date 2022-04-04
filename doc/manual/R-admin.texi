@@ -3905,12 +3905,12 @@ Another descendant project is BLIS (@uref{https://github.com/flame/blis}).
 @node MKL, Shared BLAS, OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
-Linux, there is Intel's Math Kernel Library.  You are strongly
-encouraged to read the MKL User's Guide, which is installed with the
-library, before attempting to link to MKL.  This includes a `link line
-advisor' which will suggest appropriate incantations: its use is
-recommended.  Or see
-@uref{https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl/link-line-advisor.html}.
+Linux, there is Intel's Math Kernel Library@footnote{Sometimes known as
+`Intel oneAPI Math Kernel Library'.}.  You are strongly encouraged to
+read the documentation which is installed with the library, before
+attempting to link to MKL.  This includes a `link line advisor' which
+will suggest appropriate incantations: its use is recommended.  Or see
+@uref{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.vpt6qp}.
 
 There are also versions of MKL for macOS@footnote{The issue for macOS
 has been the use of double-complex routines.} and Windows, but when
@@ -3919,7 +3919,7 @@ for @R{} on those platforms.
 
 The MKL interface has changed several times but has been stable in
 recent years: the following examples have been used with versions 10.3
-to 2020.2, for GCC compilers on @cputype{x86_64}.
+to 2022.0.2, for GCC compilers on @cputype{x86_64}.
 
 To use a sequential version of MKL we used
 
@@ -3932,7 +3932,7 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 
 @noindent
 The option @option{--with-lapack} is used since MKL contains a tuned
-copy of LAPACK (often older than the current version) as well as
+copy of LAPACK (often older than the current version) as well as the
 @acronym{BLAS} (@pxref{LAPACK}), although this can be omitted.
 
 Threaded MKL may be used by replacing the line defining the variable
@@ -3977,14 +3977,14 @@ for instructions on how to create a custom version of MKL which excludes the
 FFTW3 wrappers.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
-It was reported in 2015 that
+@c It was reported in 2015 that
 
-@example
---with-blas='-mkl=parallel' --with-lapack
-@end example
+@c @example
+@c --with-blas='-mkl=parallel' --with-lapack
+@c @end example
 
-@noindent
-worked with the Intel 2015.3 compilers on Centos 6.
+@c @noindent
+@c worked with the Intel 2015.3 compilers on Centos 6.
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
@@ -4066,7 +4066,14 @@ which is used.
 @subsection LAPACK
 
 @cindex LAPACK library
-Provision is made for using an external LAPACK library, principally to
+
+If when building @R{} a system LAPACK library is found of version
+3.10.0 or later it will be used instead of compiling the LAPACK code in
+the package sources.  This can be circumvented by configuring @R{} with
+@option{--without-lapack}.  Using a static @file{liblapack.a} is not
+supported.
+
+Provision is made for specifying an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
 as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ATLAS and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
@@ -5363,7 +5370,7 @@ non-Apple toolchains @code{CPPFLAGS} needed to contain
 @uref{https://releases.llvm.org} though.}  This also includes a full
 LAPACK which can be used @emph{via} @option{--with-lapack}: however, the
 version of LAPACK it contains has
-@c 3.2.1 in Big Sur.
+@c 3.2.1 in Monterey.
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
@@ -5372,7 +5379,7 @@ to use Accelerate's BLAS.
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
-usually fails with the Accelerate BLAS.
+has often failed with the Accelerate BLAS.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
