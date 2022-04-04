@@ -4675,7 +4675,6 @@ else $as_nop
   use_blas=unset
 fi
 
-# default is "no" except on macOS
 
 ## LAPACK.
 
@@ -4692,7 +4691,6 @@ else $as_nop
   use_lapack=unset
 fi
 
-# default is "no" except on macOS
 
 ## Readline.
 
@@ -26654,7 +26652,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26657: \"$ac_link\") >&5
+(eval echo $as_me:26655: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26730,7 +26728,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26733: \"$ac_link\") >&5
+(eval echo $as_me:26731: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -43392,9 +43390,131 @@ fi
 
 
 ## LAPACK.
-## The default has already been set on macOS: otherwise it is "no"
-## and so this test fails.
-if test "${use_lapack}" = "yes"; then
+## The default is "unset"
+if test "${use_lapack}" = "unset"; then
+
+
+
+acx_lapack_ok=no
+
+acx_lapack_save_LIBS="${LIBS}"
+LIBS="-lblas ${FLIBS} ${LIBS}"
+
+if test "${r_cv_prog_fc_append_underscore}" = yes; then
+  lapack=dpstrf_
+  ilaver=ilaver_
+else
+  lapack=dpstrf
+  ilaver=ilaver
+fi
+as_ac_Lib=`printf "%s\n" "ac_cv_lib_lapack_${lapack}" | $as_tr_sh`
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in -llapack" >&5
+printf %s "checking for ${lapack} in -llapack... " >&6; }
+if eval test \${$as_ac_Lib+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-llapack  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char ${lapack} ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return ${lapack} ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  eval "$as_ac_Lib=yes"
+else $as_nop
+  eval "$as_ac_Lib=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+eval ac_res=\$$as_ac_Lib
+	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+printf "%s\n" "$ac_res" >&6; }
+if eval test \"x\$"$as_ac_Lib"\" = x"yes"
+then :
+  acx_lapack_ok=yes
+fi
+
+
+if test "${acx_lapack_ok}" = yes; then
+  LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
+fi
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if LAPACK version >= 3.10.0" >&5
+printf %s "checking if LAPACK version >= 3.10.0... " >&6; }
+if test ${r_cv_lapack_ver+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_lapack_ver=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+extern void ${ilaver}(int *major, int *minor, int *patch);
+
+#include <stdlib.h>
+#include <stdio.h>
+int main() {
+  int major, minor, patch;
+  ${ilaver}(&major, &minor, &patch);
+  printf("%d.%d.%d, so ", major, minor, patch);
+  if (major < 3 || (major == 3 && minor < 10)) exit(1);
+  exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_lapack_ver=yes
+else $as_nop
+  r_cv_lapack_ver=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_lapack_ver" >&5
+printf "%s\n" "$r_cv_lapack_ver" >&6; }
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_lapack_ver}" = no; then
+ acx_lapack_ok=no
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+  LAPACK_LIBS=-llapack
+fi
+
+
+
+elif test "${use_lapack}" = "yes"; then
 
 
 
@@ -43417,6 +43537,8 @@ fi
 
 # We cannot use LAPACK if BLAS is not found
 if test "x${acx_blas_ok}" != xyes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: cannot use --with-lapack without --with-blas" >&5
+printf "%s\n" "$as_me: cannot use --with-lapack without --with-blas" >&6;}
   acx_lapack_ok=noblas
 fi
 
@@ -43536,6 +43658,8 @@ LIBS="${acx_lapack_save_LIBS}"
 fi
 if test "${acx_lapack_ok}" != "yes"; then
   LAPACK_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRlapack"
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: using internal LAPACK sources" >&5
+printf "%s\n" "$as_me: using internal LAPACK sources" >&6;}
 fi
 
  if test "${acx_lapack_ok}" = "yes"; then

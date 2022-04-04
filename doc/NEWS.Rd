@@ -10,7 +10,7 @@
     \itemize{
       \item Calling \code{&&} or \code{||} with either argument of
       length greater than one is now an error.
-      [Postponed until ca 200 packages have been updated.]
+      [Postponed until most of ca 160 packages have been updated.]
     }
   }
     
@@ -21,10 +21,23 @@
     }
   }
 
-  \subsection{INSTALLATION}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item A system installation of LAPACK 3.10.0 or later will be
-      preferred to the version in the \R sources. [In progress.]
+      preferred to the version in the \R sources.
+
+      \command{configure} option \option{--with-lapack=no} (equivalently
+      \option{--without-lapack}) forces compilation of the internal
+      LAPACK sources.
+
+      If \option{--with-lapack} is not specified, a system
+      \code{liblapack} is looked for and used if it reports version
+      3.10.0 or later.
+
+      Using 3.10.0 gives some different signs in SVDs, seen in the
+      \file{lapack.R} test.
+
+      [In progress. Not supported for static liblapack.a.]
     }
   }
 
