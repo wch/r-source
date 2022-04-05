@@ -165,7 +165,6 @@
              silent = FALSE, pkglist = NULL)
 {
     if (dir.exists(files)) {
-        ## FIXME: outputEncoding
         .pkg2tex(files, outfile, internals = internals, asChapter = FALSE, 
                  encoding = encoding, outputEncoding = outputEncoding,
                  extraDirs = extraDirs, append = append,
@@ -574,8 +573,6 @@ function(pkgdir, outfile, title, silent = FALSE,
             pkg_enc <- desc["Encoding"]
             if (!is.na(pkg_enc)) {
             	enc <- pkg_enc
-                ## FIXME: outputEncoding
-                ##   outputEncoding <- pkg_enc
             }
         }
     }
@@ -652,7 +649,6 @@ function(pkgdir, outfile, title, silent = FALSE,
           dir.exists(file.path(pkgdir, "latex")))) only_meta <- TRUE
     if (!only_meta) {
         if (nzchar(toc)) writeLines(toc, out)
-        ## FIXME: outputEncoding
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc,
                             outputEncoding = outputEncoding,
                             append = TRUE, extraDirs = OSdir, 
@@ -817,7 +813,6 @@ function(pkgdir, outfile, title, silent = FALSE,
     out_ext <- "pdf"
     output <- ""
     enc <- "unknown"
-    ## FIXME: outputEncoding
     outenc <- "UTF-8"
     index <- TRUE
     description <- TRUE
