@@ -501,9 +501,8 @@ come out rather wide: this can be overcome by using @emph{in addition}
 either of the options @code{inconsolata} (on a Unix-alike only if found
 by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
-will need a recent version of the appropriate @LaTeX{} package
-@pkg{inconsolata}@footnote{Instructions on how to install the latest
-version are at
+will need the @LaTeX{} package @pkg{inconsolata}@footnote{Instructions
+on how to install the latest version are at
 @uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
 @pkg{bera} installed.)
 
@@ -521,12 +520,12 @@ part of a @TeX{} distribution, but can obtained from
 mirrors.  This uses fonts rather similar to Computer Modern, but is not
 so good on-screen as @code{times}.
 
-@item cm-super
-Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
-This is a large installation, obtainable from
-@uref{https://www.ctan.org/tex-archive/fonts/ps-type1/cm-super/}
-and its mirrors.  These type-1 fonts have poor hinting and so are
-nowhere near as readable on-screen as the other three options.
+@c @item cm-super
+@c Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
+@c This is a large installation, obtainable from
+@c @uref{https://www.ctan.org/tex-archive/fonts/ps-type1/cm-super/}
+@c and its mirrors.  These type-1 fonts have poor hinting and so are
+@c nowhere near as readable on-screen as the other three options.
 @end table
 
 The default can be overridden by setting the environment variable
@@ -570,9 +569,9 @@ make mobi
 This requires @command{ebook-convert} from
 @uref{https://calibre-ebook.com/download, @command{Calibre}}, or from
 most Linux distributions.  If necessary the path to
-@command{ebook-convert} can be set as make macro @env{EBOOK} to by
-editing @file{doc/manual/Makefile} (which contains a commented value
-suitable for macOS) or using @command{make -e}.
+@command{ebook-convert} can be set as make macro @env{EBOOK} by editing
+@file{doc/manual/Makefile} (which contains a commented value suitable
+for macOS) or using @command{make -e}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -3373,13 +3372,12 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
-(including @pkg{url} and some of the font packages such as @pkg{times},
-@pkg{helvetic}, @pkg{ec} or @pkg{cm-super} for the manuals, as well as
-@pkg{fancyvrb}, @pkg{natbib} and @pkg{parskip} for the base vignettes)
-and others such as
-@pkg{hyperref} and @pkg{inconsolata} are desirable (and without them you
-may need to change @R{}'s defaults: @pxref{Making the manuals}).  Note
-that package @pkg{hyperref} (currently) requires packages
+(including @pkg{url} and some of the font packages such as @pkg{times}
+and @pkg{helvetic} for the manuals, as well as @pkg{fancyvrb},
+@pkg{natbib} and @pkg{parskip} for the base vignettes) and others such
+as @pkg{hyperref} and @pkg{inconsolata} are desirable (and without them
+you may need to change @R{}'s defaults: @pxref{Making the manuals}).
+Note that package @pkg{hyperref} (currently) requires packages
 @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For distributions
 based on TeX Live the simplest approach may be to install collections
 @pkg{collection-latex}, @pkg{collection-fontsrecommended},
@@ -4915,30 +4913,32 @@ Recent versions have (optional when built) OpenMP support.@footnote{This
 also needs the OpenMP runtime which has sometimes been distributed
 separately.}
 
-There is a project called @command{flang}
-(@uref{https://github.com/flang-compiler/flang})) to develop a
-Fortran compiler similar to clang but based on the Portland Group's front
-end.  This needs something like
-@example
-FC=/usr/local/flang/bin/flang
-LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
-@end example
+@c This was about 'Classic Flang'.  The newer version is not
+@c yet able to compile Fortran.
+@c There is a project called @command{flang}
+@c (@uref{https://github.com/flang-compiler/flang})) to develop a
+@c Fortran compiler similar to clang but based on the Portland Group's front
+@c end.  This needs something like
+@c @example
+@c FC=/usr/local/flang/bin/flang
+@c LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
+@c @end example
 
-Note that @command{flang} accepts all the flags which @command{clang}
-does (the driver is a modified version of @command{clang}, and
-@command{flang} is a symbolic link to @command{clang}), but does not
-implement all of them for Fortran compilation: it also accepts most
-PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
-few diagnostics even with @option{-Wall -pedantic}.
+@c Note that @command{flang} accepts all the flags which @command{clang}
+@c does (the driver is a modified version of @command{clang}, and
+@c @command{flang} is a symbolic link to @command{clang}), but does not
+@c implement all of them for Fortran compilation: it also accepts most
+@c PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
+@c few diagnostics even with @option{-Wall -pedantic}.
 
-@command{flang}'s Fortran runtime is compiled against OpenMP and it
-seems this conflicts with using OpenMP in @R{}.  So it may be necessary
-to disable the latter by configuring @R{} using @option{--disable-openmp}.
+@c @command{flang}'s Fortran runtime is compiled against OpenMP and it
+@c seems this conflicts with using OpenMP in @R{}.  So it may be necessary
+@c to disable the latter by configuring @R{} using @option{--disable-openmp}.
 
-It is not clear what architectures @command{flang} intends to support:
-our experiments were done on @cputype{x86_64}.  At the time of writing
-binary `releases' were available for that platform (called by them
-@cputype{x86}) and @cputype{ppc64le}.
+@c It is not clear what architectures @command{flang} intends to support:
+@c our experiments were done on @cputype{x86_64}.  At the time of writing
+@c binary `releases' were available for that platform (called by them
+@c @cputype{x86}) and @cputype{ppc64le}.
 
 
 @node Intel compilers,  , Clang, Linux
@@ -5397,19 +5397,18 @@ obtained by the Unix TeX Live installation scripts.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 7.5GB, but a much smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages to build @R{}, e.g.@: for the 2021 version we
-needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
-helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about
-370MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
-increased this to about 600MB.}  @samp{TeX Live Utility} (available
-@emph{via} the MacTeX front page) provides a graphical means to manage
-@TeX{} packages.  MacTeX 2021 requires Mojave or later: for earlier
-macOS versions see the instructions@footnote{which amount to installing
-MacTeX 2020 (whose LaTeX packages are frozen) or TeXLive 2021 (which has
-been tried and has current updates).} on the MacTeX front page.  It
-contains executables which run natively on both @cputype{x86_64} and
-@cputype{arm64}.
+need to add some packages to build @R{}, e.g.@: for the 2022 version we
+needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install helvetic
+inconsolata texinfo} .} @pkg{helvetic}, @pkg{inconsolata} and
+@pkg{texinfo} which brought this to about 310MB.@footnote{Adding all the
+packages needed to check @acronym{CRAN} increased this to about 600MB.}
+@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
+provides a graphical means to manage @TeX{} packages.  MacTeX 2021
+requires Mojave or later: for earlier macOS versions see the
+instructions@footnote{which amount to installing MacTeX 2020 (whose
+LaTeX packages are frozen) or TeXLive 2021 (which has been tried and has
+current updates).} on the MacTeX front page.  It contains executables
+which run natively on both @cputype{x86_64} and @cputype{arm64}.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
