@@ -10,12 +10,11 @@
     \itemize{
       \item Calling \code{&&} or \code{||} with either argument of
       length greater than one is now an error.
-      [Postponed until most of ca 160 packages have been updated.]
+      [Schedulesd for May 2.]
     }
   }
-    
 
-    \subsection{NEW FEATURES}{
+  \subsection{NEW FEATURES}{
     \itemize{
       \item Placeholder.
     }
@@ -34,8 +33,8 @@
       \code{liblapack} is looked for and used if it reports version
       3.10.0 or later.
 
-      Using 3.10.0 gives some different signs in SVDs, seen in the
-      \file{lapack.R} test.
+      Using 3.10.0 may give some different signs in SVDs (seen in the
+      \file{lapack.R} test).
 
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
