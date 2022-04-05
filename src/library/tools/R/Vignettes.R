@@ -439,7 +439,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            engine <- engines[i]
+            engine <- vignetteEngine(engines[i])
             outputI <- find_vignette_product(name, by = "weave", dir = docdir, engine = engine)
             outputs[i] <- outputI
         }
@@ -451,7 +451,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            engine <- engines[i]
+            engine <- vignetteEngine(engines[i])
             sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir, engine = engine)
             sources[[file]] <- sourcesI
         }
