@@ -10,7 +10,7 @@
     \itemize{
       \item Calling \code{&&} or \code{||} with either argument of
       length greater than one is now an error.
-      [Schedulesd for May 2.]
+      [Scheduled for May 2.]
     }
   }
 

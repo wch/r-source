@@ -2276,7 +2276,7 @@ all: $(SHLIB) clean
 @noindent
 which give @command{make} to clean in parallel with compiling the code.
 Not only does this lead to hard-to-debug installation errors, it wipes
-out all the evidence of any error (from a parallel moke or not).  It is
+out all the evidence of any error (from a parallel make or not).  It is
 much better to leave cleaning to the end user using the facilities in
 the previous paragraph.
 
