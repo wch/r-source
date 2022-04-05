@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2021 The R Core Team
+#  Copyright (C) 2011-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ read_symbols_from_object_file <- function(f)
     if(!nzchar(nm)) {
         ## reasonable to assume nm is on the path
         nm <- Sys.which("nm")
-        if(!nzchar(nm)) nm <- shQuote(nm)
+        if(nzchar(nm)) nm <- shQuote(nm)
     }
     if(!nzchar(nm)) {
         warning("this requires 'nm' to be on the PATH")
