@@ -442,6 +442,7 @@ socketTimeout(socket, timeout = -1)
   argument specifying the input encoding.  \code{\link{readLines}} and
   \code{\link{scan}} would then instruct the connections code to convert the
   text to UTF-8 (instead of native encoding) and they will return it marked
+  (aka declared, see \code{\link{Encoding}})
   as \code{"UTF-8"}.  Finally and for expert use only, one may disable
   re-encoding of input by specifying \code{""} or \code{"native.enc"} as
   \code{encoding} for the connection, but then mark the text as being
