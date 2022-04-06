@@ -375,17 +375,38 @@ grobPoints.GridGroup <- function(x, closed, ...) {
 
 ## A group definition does not draw anything BUT coords
 ## may be needed to resolve pattern fill
-grobCoords.GridDefine <- function(x, closed, ...) {
-    if (is.null(x$dst))
-        children <- gList(x$src)
+## AND group definition may be a sibling of a group use
+## in which case the group use needs definition coordinates
+definePoints <- function(x, closed, ...) {
+    ## Record definition so GridUse can find it,
+    ## including calculating coordinates
+    ## (no actual drawing required)
+    recordGroup(x, "ignored")
+    ## Access the stored coordinates
+    ## (for the case when the definition itself needs them,
+    ##  e.g., for bbox to resolve pattern fill)
+    group <- lookupGroup(x$name)
+    if (closed)
+        group$closedPoints
     else
-        children <- gList(x$src, x$dst)
-    grobCoords(gTree(children=children, gp=x$gp, vp=x$vp),
+        group$openPoints
+}
+
+grobCoords.GridDefineChild <- function(x, closed, ...) {
+    definePoints(x, closed, ...)
+}
+
+grobCoords.GridDefine <- function(x, closed, ...) {
+    ## Create gTree to get automatic enforcement of 'gp' and 'vp'
+    ## BUT avoid infinite loop by setting temporary class
+    ## on GridUse grob
+    class(x) <- c("GridDefineChild", class(x))
+    grobCoords(gTree(children=gList(x), gp=x$gp, vp=x$vp),
                closed, ...)
 }
 
 grobPoints.GridDefine <- function(x, closed, ...) {
-    groupPoints(x, closed, ...)
+    definePoints(x, closed, ...)
 }
 
 ## A group use retrieves points from group definition
