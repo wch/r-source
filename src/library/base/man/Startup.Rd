@@ -139,8 +139,11 @@
   constructs that have the same behavior as in a Unix shell.  Hence,
   expansions of variables should be in double quotes (e.g. 
   \code{"${HOME}"}, in case they may contain a backslash) and literals
-  including a backslash should be in single quotes.  It is ok to mix text in
-  single and double quotes, see examples below.
+  including a backslash should be in single quotes. If a variable value
+  may end in a backslash, such as \code{PATH} on Windows, it may be
+  necessary to protect the following quote from it, e.g. \code{"${PATH}/"}.
+  It is recommended to use forward slashes instead of backslashes.
+  It is ok to mix text in single and double quotes, see examples below.
 
   On systems with sub-architectures (mainly Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
