@@ -48,9 +48,12 @@ deviceIsInteractive <- local({
     }
 })
 
+
+`%||%` <- function(L,R) if(is.null(L)) R else L
+
 dev.list <- function()
 {
-    n <- if(exists(".Devices")) get(".Devices") else list("null device")
+    n <- get0(".Devices") %||% list("null device")
     n <- unlist(n)
     i <- seq_along(n)[n != ""]
     names(i) <- n[i]
@@ -290,10 +293,9 @@ dev.new <- function(..., noRStudioGD = FALSE)
         ## then in the grDevices namespace.
         ## We could restrict the search to functions, but the C
         ## code in devices.c does not.
-        dev <- if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)
-        else if(exists(dev, asNamespace("grDevices")))
-            get(dev, asNamespace("grDevices"))
-        else stop(gettextf("device '%s' not found", dev), domain=NA)
+        dev <- get0(dev, .GlobalEnv) %||%
+               get0(dev, asNamespace("grDevices")) %||%
+            stop(gettextf("device '%s' not found", dev), domain=NA)
     }
     ## only include named args in the devices's arglist
     a <- list(...)
@@ -367,7 +369,7 @@ dev.capabilities <- function(what = NULL)
           length(capabilities) == ncap &&
           all(sapply(capabilities, class) == "integer")))
         stop("Invalid capabilities - alert the device maintainer")
-    
+
     z <- vector("list", ncap)
     names(z) <- c("semiTransparency",
                   "transparentBackground",
@@ -436,7 +438,7 @@ dev.capabilities <- function(what = NULL)
         z[[12]] <- NA
     else 
         z[[12]] <- as.logical(capabilities[[12]])
-    
+
     if (!is.null(what)) z[charmatch(what, names(z), 0L)] else z
 }
 
