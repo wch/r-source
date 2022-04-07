@@ -23,7 +23,7 @@
 #include "xmalloc.h"
 
 /* fake definition */
-extern void Rf_error(const char *str);
+extern void Rf_error(const char *str, ...);
 #define assert(a) R_assert(a)
 
 static void assert(int expr)
