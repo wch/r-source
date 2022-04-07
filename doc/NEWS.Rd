@@ -793,6 +793,12 @@
       \item \command{R CMD check} no longer runs test scripts generated
       from corresponding \file{.Rin} files twice and now signals an
       ERROR if processing an \file{.Rin} script fails.
+
+      \item \code{tools::Rd2txt()} used for plain-text help pages now renders
+      \verb{\href}s (if \code{tools::Rd2txt_options(showURLs = TRUE)})
+      and \verb{\url}s with percent-encoding and standards-compliant
+      delimiting style (angle brackets and no \samp{URL: } prefix).
+      \verb{\email} is now rendered with a \samp{mailto:} prefix.
     }
   }
 }
