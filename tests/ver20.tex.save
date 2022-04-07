@@ -18,7 +18,7 @@ This is the description
 
 In code, all that needs to be escaped is percent, backslash and unpaired
 braces: \code{\% \bsl{} \{}. Unescaped: \code{\$ \# \_ \textasciicircum{} \textasciitilde{} < > |}, and as a
-pair, \code{\{...\}}.  If we escape: \code{ \_ \# \$ \& \{ \} \bsl{} }
+pair, \code{\{...\}}.  If we escape: \code{ \bsl{}\_ \bsl{}\# \bsl{}\$ \bsl{}\& \{ \} \bsl{} }
 And some backslashes: \code{\bsl{} \bsl{} \bsl{}\bsl{} \bsl{}\bsl{}} should
 give one, one, two, two backslashes.
 
