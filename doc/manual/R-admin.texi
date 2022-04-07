@@ -3904,10 +3904,11 @@ Another descendant project is BLIS (@uref{https://github.com/flame/blis}).
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library@footnote{Sometimes known as
-`Intel oneAPI Math Kernel Library'.}.  You are strongly encouraged to
-read the documentation which is installed with the library, before
-attempting to link to MKL.  This includes a `link line advisor' which
-will suggest appropriate incantations: its use is recommended.  Or see
+`Intel oneAPI Math Kernel Library' or even `oneMKL'.}.  You are
+encouraged to read the documentation which is installed with the
+library, before attempting to link to MKL.  This includes a `link line
+advisor' which will suggest appropriate incantations: its use is
+recommended.  Or see
 @uref{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.vpt6qp}.
 
 There are also versions of MKL for macOS@footnote{The issue for macOS

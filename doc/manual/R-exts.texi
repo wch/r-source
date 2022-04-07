@@ -2274,7 +2274,7 @@ all: $(SHLIB) clean
 @end example
 
 @noindent
-which give @command{make} to clean in parallel with compiling the code.
+which asks @command{make} to clean in parallel with compiling the code.
 Not only does this lead to hard-to-debug installation errors, it wipes
 out all the evidence of any error (from a parallel make or not).  It is
 much better to leave cleaning to the end user using the facilities in
@@ -5990,6 +5990,14 @@ on macOS (and @file{ext/} exists there but with different content from
 @command{g++}-based platforms).  Header @file{bits/stdc++.h} is both not
 portable and not recommended for end-user code even on platforms which
 include it.
+
+@item
+Be careful if using @code{malloc} or @code{calloc}.  First, their return
+value must always be checked to see if the allocation succeeded -- it is
+almost always easier to use @R{}'s @code{Calloc}, which does check.
+Second, the first argument is of type @code{size_t} and recent compilers
+are warning about passing signed arguments (which could get promoted to
+ridiculously large values).
 
 @end itemize
 
