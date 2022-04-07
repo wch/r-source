@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2021 The R Core Team
+#  Copyright (C) 2019-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -132,11 +132,11 @@ function(x)
               gsub("-", "\\out{\\-}", x, fixed = TRUE))
 
     sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
-            sprintf("doi: %s (URL: https://doi.org/%s)",
+            sprintf("doi:%s <https://doi.org/%s>",  # same format as showURLs=TRUE
                     x, u),
-            sprintf("doi:\\out{\\nobreakspace{}}\\href{https://doi.org/%s}{%s}",
+            sprintf("\\href{https://doi.org/%s}{doi:%s}",
                     u, y),
-            sprintf("doi: \\href{https://doi.org/%s}{%s}",
+            sprintf("\\href{https://doi.org/%s}{doi:%s}",
                     u, x)
             )
 }
