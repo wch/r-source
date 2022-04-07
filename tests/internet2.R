@@ -61,7 +61,9 @@ httpget <- function (url, port = 80)
 if(nzchar(Sys.getenv("http_proxy")) || nzchar(Sys.getenv("HTTP_PROXY"))) {
     cat("http proxy is set, so skip test of http over sockets\n")
 } else {
-    f <- httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
+## 2022-04-07: now redirects to https://
+##    f <- httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
+    f <- httpget("http://httpbin.org/get")
     str(f)
-    if (length(f) != 100L) stop("Data not fetched via socket")
+    if (!length(grep('"headers":', f))) stop("Data not fetched via socket")
 }
