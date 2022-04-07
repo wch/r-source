@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2020 The R Core Team
+ *  Copyright (C) 2015-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -412,7 +412,6 @@ static void putdashes(int *pold, int new)
 }
 
 # ifdef Win32
-// ------- Windows progress bar -----------
 #include <ga.h>
 
 /* We could share this window with internet.c, then re-positioning
@@ -432,28 +431,37 @@ static void doneprogressbar(void *data)
     winprogressbar *pbar = data;
     hide(pbar->wprog);
 }
+# endif // Win32
 
 static
 int progress(void *clientp, double dltotal, double dlnow,
 	     double ultotal, double ulnow)
 {
+    CURL *hnd = (CURL *) clientp;
+    long status;
+    curl_easy_getinfo(hnd, CURLINFO_RESPONSE_CODE, &status);
+
+# ifdef Win32
     static int factor = 1;
+# endif
+
     // we only use downloads.  dltotal may be zero.
-    if (dltotal > 0.) {
+    if ((status < 300) && (dltotal > 0.)) {
 	if (total == 0.) {
 	    total = dltotal;
 	    char *type = NULL;
-	    CURL *hnd = (CURL *) clientp;
 	    curl_easy_getinfo(hnd, CURLINFO_CONTENT_TYPE, &type);
+	    REprintf("Content type '%s'", type ? type : "unknown");
 	    if (total > 1024.0*1024.0)
 		// might be longer than long, and is on 64-bit windows
 		REprintf(" length %0.0f bytes (%0.1f MB)\n",
 			 total, total/1024.0/1024.0);
 	    else if (total > 10240)
-		REprintf("Content length %d bytes (%d KB)\n",
+		REprintf(" length %d bytes (%d KB)\n",
 			 (int)total, (int)(total/1024));
 	    else
-		REprintf("Content length %d bytes\n", (int)total);
+		REprintf(" length %d bytes\n", (int)total);
+# ifdef Win32
 	    R_FlushConsole();
 	    if(R_Interactive) {
 		if (total > 1e9) factor = total/1e6; else factor = 1;
@@ -476,42 +484,15 @@ int progress(void *clientp, double dltotal, double dlnow,
     }
     R_ProcessEvents();
     return 0;
-}
-
 # else
-// ------- Unix-alike progress bar -----------
 
-static
-int progress(void *clientp, double dltotal, double dlnow,
-	     double ultotal, double ulnow)
-{
-    CURL *hnd = (CURL *) clientp;
-    long status;
-    curl_easy_getinfo(hnd, CURLINFO_RESPONSE_CODE, &status);
-
-    // we only use downloads.  dltotal may be zero.
-    if ((status < 300) && (dltotal > 0.)) {
-	if (total == 0.) {
-	    total = dltotal;
-	    char *type = NULL;
-	    curl_easy_getinfo(hnd, CURLINFO_CONTENT_TYPE, &type);
-	    REprintf("Content type '%s'", type ? type : "unknown");
-	    if (total > 1024.0*1024.0)
-		// might be longer than long, and is on 64-bit windows
-		REprintf(" length %0.0f bytes (%0.1f MB)\n",
-			 total, total/1024.0/1024.0);
-	    else if (total > 10240)
-		REprintf(" length %d bytes (%d KB)\n",
-			 (int)total, (int)(total/1024));
-	    else
-		REprintf(" length %d bytes\n", (int)total);
 	    if (R_Consolefile) fflush(R_Consolefile);
 	}
 	putdashes(&ndashes, (int)(50*dlnow/total));
     }
     return 0;
+# endif
 }
-# endif // Win32
 #endif // HAVE_LIBCURL
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
