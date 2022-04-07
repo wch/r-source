@@ -208,7 +208,7 @@ Error in assertWarning(ff()) :
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-<URL: https://www.R-project.org>.
+<https://www.R-project.org>.
 
 [2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
 of the Royal Statistical Society, Series B_, *26*(2), 211-243. doi:

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -599,16 +599,17 @@ Rd2txt <-
                    else writeContent(block,tag)
                },
                "\\email" = {
-                   put("<email: ", lines2str(as.character(block)), ">")
+                   # for legibility, do not URLencode: some use ". at ." etc
+                   put("<mailto:", lines2str(as.character(block)), ">")
                },
                "\\url" = {
-                   put("<URL: ", lines2str(as.character(block)), ">")
+                   put("<", utils::URLencode(lines2str(as.character(block))), ">")
                },
                "\\href" = {
                    opts <- Rd2txt_options()
                    writeContent(block[[2L]], tag)
                    if (opts$showURLs)
-  			put(" (URL: ", lines2str(as.character(block[[1L]])), ")")
+  			put(" <", utils::URLencode(lines2str(as.character(block[[1L]]))), ">")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
