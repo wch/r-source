@@ -41,3 +41,13 @@ stopifnot(grepl("Rd-Sexpr-warning.Rd:5:",
 stopifnot(startsWith(msg, "Rd-Sexpr-error.Rd:4-7:"),
           length(checkRd("Rd-Sexpr-error.Rd", stages = NULL)) == 0)
 ## file name and line numbers were missing in R < 4.2.0
+
+
+## \doi with hash symbol or Rd specials
+rd <- parse_Rd("doi.Rd")
+writeLines(out <- capture.output(Rd2txt(rd, stages = "build")))
+stopifnot(grepl("10.1000/456#789", out[5], fixed = TRUE),
+          grepl("doi.org/10.1000/456%23789", out[5], fixed = TRUE),
+          grepl("10.1000/{}", out[7], fixed = TRUE),
+          grepl("doi.org/10.1000/%7B%7D", out[7], fixed = TRUE))
+## R < 4.2.0 failed to encode the hash and lost {}
