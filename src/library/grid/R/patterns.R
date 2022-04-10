@@ -236,7 +236,8 @@ resolveFill.GridPatternList <- function(fill, ...) {
 ## This will handle grobs (with a single pattern)
 resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
     ## All predrawing has been done
-    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    ## ('return' is just for GridDefine grobs)
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE, return=TRUE)
     if (!isEmptyCoords(pts)) {
         if (fill$group || length(pts) == 1) {
             ## Pattern is relative to bounding box of all shapes
@@ -281,7 +282,7 @@ resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
 ## This will handle grobs (with a list of patterns)
 resolveFill.GridGrobPatternList <- function(fill, ...) {
     ## All predrawing has been done
-    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE, return=TRUE)
     if (!isEmptyCoords(pts)) {
         resolvedFills <- vector("list", length(pts))
         for (i in seq_along(pts)) {
@@ -359,7 +360,7 @@ resolveGTreeFill <- function(fill, pts) {
 ## (see recordGTreeForPatternResolution())
 resolveFill.GridGTreePattern <- function(fill, index=1, ...) {
     ## All predrawing has been done
-    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE, return=TRUE)
     resolveGTreeFill(fill, pts)
 }
 
@@ -370,7 +371,7 @@ resolveFill.GridGTreePattern <- function(fill, index=1, ...) {
 ## (similar to resolveFill.GridPatternList() for viewports)
 resolveFill.GridGTreePatternList <- function(fill, ...) {
     ## All predrawing has been done
-    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE, return=TRUE)
     resolveOneFill <- function(x) {
         if (x$group) {
             resolveGTreeFill(x, pts)

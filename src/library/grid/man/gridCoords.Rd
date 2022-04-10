@@ -21,8 +21,8 @@ gridCoords(x, y)
 gridGrobCoords(x, name, rule = NULL)
 gridGTreeCoords(x, name)
 emptyCoords
-emptyGrobCoords
-emptyGTreeCoords
+emptyGrobCoords(name)
+emptyGTreeCoords(name)
 isEmptyCoords(coords)
 }
 \arguments{

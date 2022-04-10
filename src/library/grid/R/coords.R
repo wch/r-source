@@ -155,6 +155,7 @@ coordsBBox <- function(x, subset = NULL) {
 ## Support functions for calculating gTree coords
 
 toDevice <- function(x) {
+    if (isEmptyCoords(x)) return(x)
     UseMethod("toDevice")
 }
 

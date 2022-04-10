@@ -25,21 +25,20 @@
   when a \code{grid.define()}d group is \code{grid.use()}d.
 }
 \usage{
-viewportTransform(group, shear=groupShear(), flip=groupFlip(),
-                  device=TRUE, \dots) 
-viewportTranslate(group, device=TRUE, \dots)
-viewportScale(group, device=TRUE, \dots)
-viewportRotate(group, device=TRUE, \dots)
-defnTranslate(group, inverse=FALSE, device=TRUE, \dots)
-defnScale(group, inverse=FALSE, \dots)
-defnRotate(group, inverse=FALSE, device=TRUE, \dots)
-useTranslate(inverse=FALSE, device=TRUE, \dots)
-useScale(inverse=FALSE, \dots)
-useRotate(inverse=FALSE, device=TRUE, \dots)
+viewportTransform(group, shear=groupShear(), flip=groupFlip(), device=TRUE) 
+viewportTranslate(group, device=TRUE)
+viewportScale(group, device=TRUE)
+viewportRotate(group, device=TRUE)
+defnTranslate(group, inverse=FALSE, device=TRUE)
+defnScale(group, inverse=FALSE)
+defnRotate(group, inverse=FALSE, device=TRUE)
+useTranslate(inverse=FALSE, device=TRUE)
+useScale(inverse=FALSE)
+useRotate(inverse=FALSE, device=TRUE)
 groupTranslate(dx=0, dy=0)
 groupRotate(r=0, device=TRUE)
 groupScale(sx=1, sy=1)
-groupShear(sx=0, sy=0, device=TRUE)
+groupShear(sx=0, sy=0)
 groupFlip(flipX=FALSE, flipY=FALSE)
 }
 \arguments{
@@ -57,7 +56,6 @@ groupFlip(flipX=FALSE, flipY=FALSE)
     (logical).}
   \item{device}{A logical indicating whether transformation should be
     relative to the device or relative to the current viewport.}
-  \item{\dots}{Arguments passed on to lower-level transformation functions.}
 }
 \value{
   An affine transformation matrix.
@@ -81,8 +79,9 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   (as long as the last column contains 0, 0, and 1)
   and use it as the \code{transform} argument to
   \code{\link{grid.use}}, but the results will probably be
-  device-dependent, may be \emph{very} difficult
-  to predict.
+  device-dependent, and may be \emph{very} difficult
+  to predict.  The function will be called with two arguments:
+  \code{group} and \code{device}.
 }
 \author{Paul Murrell}
 \seealso{

@@ -4055,13 +4055,22 @@ SEXP gridSymbol(double x, double y, int pch, double size,
     else if(pch > maxchar)
 	    warning(_("pch value '%d' is invalid in this locale"), pch);
     else {
-	double GSTR_0 = fromDeviceWidth(size, GE_INCHES, dd);
+	double GSTR_0;
+        if (draw) {
+            GSTR_0 = fromDeviceWidth(size, GE_INCHES, dd);
+        } else {
+            GSTR_0 = size;
+        }
 
 	switch(pch) {
 
 	case 0: /* S square */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
@@ -4107,9 +4116,14 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 2:	/* S triangle - point up */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
@@ -4127,8 +4141,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 3: /* S plus */
-	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+	    xc = M_SQRT2*RADIUS*GSTR_0;
+	    yc = M_SQRT2*RADIUS*GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
@@ -4153,8 +4171,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 4: /* S times */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
@@ -4179,8 +4201,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 5: /* S diamond */
-	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = M_SQRT2 * RADIUS * GSTR_0;
+	    yc = M_SQRT2 * RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
@@ -4200,9 +4226,14 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 6: /* S triangle - point down */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
@@ -4220,8 +4251,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 7:	/* S square and times superimposed */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
@@ -4261,8 +4296,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 8: /* S plus and times superimposed */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
@@ -4284,8 +4323,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                     UNPROTECT(2);
                 }
             }
-            xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
-            yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+            xc = M_SQRT2*RADIUS*GSTR_0;
+            yc = M_SQRT2*RADIUS*GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
@@ -4310,8 +4353,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 9: /* S diamond and plus superimposed */
-	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = M_SQRT2 * RADIUS * GSTR_0;
+	    yc = M_SQRT2 * RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
@@ -4351,8 +4398,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 10: /* S hexagon (circle) and plus superimposed */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 gc->fill = R_TRANWHITE;
                 gc->patternFill = R_NilValue;
@@ -4392,10 +4443,15 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 11: /* S superimposed triangles */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    yc = 0.5 * (yc + r);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
@@ -4425,8 +4481,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 12: /* S square and plus superimposed */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y, x+xc, y, gc, dd);
                 GELine(x, y-yc, x, y+yc, gc, dd);
@@ -4485,8 +4545,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
                     UNPROTECT(1);
                 }
             }
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
                 GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
@@ -4511,8 +4575,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 14: /* S square and point-up triangle superimposed */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y+yc;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
@@ -4545,8 +4613,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 15: /* S filled square */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
 	    xx[0] = x-xc; yy[0] = y-yc;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x+xc; yy[2] = y+yc;
@@ -4590,9 +4662,14 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 17: /* S filled point-up triangle */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
@@ -4611,8 +4688,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 18: /* S filled diamond */
-	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * GSTR_0;
+	    yc = RADIUS * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
@@ -4698,8 +4779,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case  22: /* squares */
-	    xc = toDeviceWidth(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * SQRC * GSTR_0;
+	    yc = RADIUS * SQRC * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
             if (draw) {
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
             } else {
@@ -4720,8 +4805,12 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 23: /* diamonds */
-	    xc = toDeviceWidth(RADIUS * DMDC * GSTR_0, GE_INCHES, dd);
-	    yc = toDeviceHeight(RADIUS * DMDC * GSTR_0, GE_INCHES, dd);
+	    xc = RADIUS * DMDC * GSTR_0;
+	    yc = RADIUS * DMDC * GSTR_0;
+            if (draw) {
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+            }
 	    xx[0] = x	  ; yy[0] = y-yc;
 	    xx[1] = x+xc; yy[1] = y;
 	    xx[2] = x	  ; yy[2] = y+yc;
@@ -4739,9 +4828,14 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 24: /* triangle (point up) */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
@@ -4758,9 +4852,14 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	case 25: /* triangle (point down) */
 	    xc = RADIUS * GSTR_0;
-	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
-	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
-	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    r = TRC0 * xc;
+	    yc = TRC2 * xc;
+	    xc = TRC1 * xc;
+            if (draw) {
+                r = toDeviceHeight(r, GE_INCHES, dd);
+                yc = toDeviceHeight(yc, GE_INCHES, dd);
+                xc = toDeviceWidth(xc, GE_INCHES, dd);
+            }
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
@@ -4965,7 +5064,7 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
         UNPROTECT(2); /* result and resultNames */
     }
     vmaxset(vmax);
-    UNPROTECT(2); 
+    UNPROTECT(1); 
     return result;
 }
 

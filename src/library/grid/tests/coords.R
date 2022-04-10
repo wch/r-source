@@ -161,7 +161,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=0)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS, 1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
-y <- c(1 + RADIUS, 1 - RADIUS, 1 - RADIUS, 1 + RADIUS)
+y <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -181,7 +181,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=2)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y <- c(1 - TRC0*RADIUS, 1 + TRC2*RADIUS, 1 + TRC2*RADIUS)
+y <- c(1 + TRC0*RADIUS, 1 - TRC2*RADIUS, 1 - TRC2*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -195,7 +195,7 @@ coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 y1 <- c(1, 1)
 x2 <- c(1, 1)
-y2 <- c(1 + sqrt(2)*RADIUS, 1 - sqrt(2)*RADIUS)
+y2 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -207,9 +207,9 @@ coords <- grobCoords(grob, closed=TRUE)
 stopifnot(isEmptyCoords(coords))
 coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
-y1 <- c(1 + RADIUS, 1 - RADIUS)
+y1 <- c(1 - RADIUS, 1 + RADIUS)
 x2 <- c(1 - RADIUS, 1 + RADIUS)
-y2 <- c(1 - RADIUS, 1 + RADIUS)
+y2 <- c(1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -219,7 +219,7 @@ mapply(check,
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=5)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - sqrt(2)*RADIUS, 1, 1 + sqrt(2)*RADIUS, 1)
-y <- c(1, 1 - sqrt(2)*RADIUS, 1, 1 + sqrt(2)*RADIUS)
+y <- c(1, 1 + sqrt(2)*RADIUS, 1, 1 - sqrt(2)*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -229,7 +229,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=6)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y <- c(1 + TRC0*RADIUS, 1 - TRC2*RADIUS, 1 - TRC2*RADIUS)
+y <- c(1 - TRC0*RADIUS, 1 + TRC2*RADIUS, 1 + TRC2*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -239,15 +239,15 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=7)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS, 1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
-y <- c(1 + RADIUS, 1 - RADIUS, 1 - RADIUS, 1 + RADIUS)
+y <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
 coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
-y1 <- c(1 + RADIUS, 1 - RADIUS)
+y1 <- c(1 - RADIUS, 1 + RADIUS)
 x2 <- c(1 - RADIUS, 1 + RADIUS)
-y2 <- c(1 - RADIUS, 1 + RADIUS)
+y2 <- c(1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -259,13 +259,13 @@ coords <- grobCoords(grob, closed=TRUE)
 stopifnot(isEmptyCoords(coords))
 coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
-y1 <- c(1 + RADIUS, 1 - RADIUS)
+y1 <- c(1 - RADIUS, 1 + RADIUS)
 x2 <- c(1 - RADIUS, 1 + RADIUS)
-y2 <- c(1 - RADIUS, 1 + RADIUS)
+y2 <- c(1 + RADIUS, 1 - RADIUS)
 x3 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 y3 <- c(1, 1)
 x4 <- c(1, 1)
-y4 <- c(1 + sqrt(2)*RADIUS, 1 - sqrt(2)*RADIUS)
+y4 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -278,7 +278,7 @@ mapply(check,
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=9)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - sqrt(2)*RADIUS, 1, 1 + sqrt(2)*RADIUS, 1)
-y <- c(1, 1 - sqrt(2)*RADIUS, 1, 1 + sqrt(2)*RADIUS)
+y <- c(1, 1 + sqrt(2)*RADIUS, 1, 1 - sqrt(2)*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -286,7 +286,7 @@ coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 y1 <- c(1, 1)
 x2 <- c(1, 1)
-y2 <- c(1 + sqrt(2)*RADIUS, 1 - sqrt(2)*RADIUS)
+y2 <- c(1 - sqrt(2)*RADIUS, 1 + sqrt(2)*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -304,7 +304,7 @@ coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
 y1 <- c(1, 1)
 x2 <- c(1, 1)
-y2 <- c(1 + RADIUS, 1 - RADIUS)
+y2 <- c(1 - RADIUS, 1 + RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -314,13 +314,13 @@ mapply(check,
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=11)
 coords <- grobCoords(grob, closed=TRUE)
 x1 <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y1 <- c(1 + TRC0*RADIUS,
-        1 - .5*(TRC2*RADIUS + TRC0*RADIUS),
-        1 - .5*(TRC2*RADIUS + TRC0*RADIUS))
-x2 <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y2 <- c(1 - TRC0*RADIUS, 
+y1 <- c(1 - TRC0*RADIUS,
         1 + .5*(TRC2*RADIUS + TRC0*RADIUS),
         1 + .5*(TRC2*RADIUS + TRC0*RADIUS))
+x2 <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
+y2 <- c(1 + TRC0*RADIUS, 
+        1 - .5*(TRC2*RADIUS + TRC0*RADIUS),
+        1 - .5*(TRC2*RADIUS + TRC0*RADIUS))
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -332,7 +332,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=12)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS, 1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
-y <- c(1 + RADIUS, 1 - RADIUS, 1 - RADIUS, 1 + RADIUS)
+y <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -340,7 +340,7 @@ coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
 y1 <- c(1, 1)
 x2 <- c(1, 1)
-y2 <- c(1 + RADIUS, 1 - RADIUS)
+y2 <- c(1 - RADIUS, 1 + RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -356,9 +356,9 @@ mapply(check,
             "3"=list(x=3 + RADIUS, y=3)))
 coords <- grobCoords(grob, closed=FALSE)
 x1 <- c(1 - RADIUS, 1 + RADIUS)
-y1 <- c(1 + RADIUS, 1 - RADIUS)
+y1 <- c(1 - RADIUS, 1 + RADIUS)
 x2 <- c(1 - RADIUS, 1 + RADIUS)
-y2 <- c(1 - RADIUS, 1 + RADIUS)
+y2 <- c(1 + RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -368,9 +368,9 @@ mapply(check,
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=14)
 coords <- grobCoords(grob, closed=TRUE)
 x1 <- c(1 - RADIUS, 1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
-y1 <- c(1 + RADIUS, 1 - RADIUS, 1 - RADIUS, 1 + RADIUS)
+y1 <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS, 1 - RADIUS)
 x2 <- c(1, 1 + RADIUS, 1 - RADIUS)
-y2 <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
+y2 <- c(1 + RADIUS, 1 - RADIUS, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x1, y=y1), "1"=list(x=x2, y=y2),
@@ -382,7 +382,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=15)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS, 1 + RADIUS, 1 + RADIUS, 1 - RADIUS)
-y <- c(1 + RADIUS, 1 + RADIUS, 1 - RADIUS, 1 - RADIUS)
+y <- c(1 - RADIUS, 1 - RADIUS, 1 + RADIUS, 1 + RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -402,7 +402,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=17)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y <- c(1 - TRC0*RADIUS, 1 + TRC2*RADIUS, 1 + TRC2*RADIUS)
+y <- c(1 + TRC0*RADIUS, 1 - TRC2*RADIUS, 1 - TRC2*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -412,7 +412,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=18)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS, 1, 1 + RADIUS, 1)
-y <- c(1, 1 - RADIUS, 1, 1 + RADIUS)
+y <- c(1, 1 + RADIUS, 1, 1 - RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -452,7 +452,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=22)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1 - RADIUS*SQRC, 1 - RADIUS*SQRC, 1 + RADIUS*SQRC, 1 + RADIUS*SQRC)
-y <- c(1 + RADIUS*SQRC, 1 - RADIUS*SQRC, 1 - RADIUS*SQRC, 1 + RADIUS*SQRC)
+y <- c(1 - RADIUS*SQRC, 1 + RADIUS*SQRC, 1 + RADIUS*SQRC, 1 - RADIUS*SQRC)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -462,7 +462,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=23)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + RADIUS*DMDC, 1, 1 - RADIUS*DMDC)
-y <- c(1 + RADIUS*DMDC, 1, 1 - RADIUS*DMDC, 1)
+y <- c(1 - RADIUS*DMDC, 1, 1 + RADIUS*DMDC, 1)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -472,7 +472,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=24)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y <- c(1 - TRC0*RADIUS, 1 + TRC2*RADIUS, 1 + TRC2*RADIUS)
+y <- c(1 + TRC0*RADIUS, 1 - TRC2*RADIUS, 1 - TRC2*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
@@ -482,7 +482,7 @@ stopifnot(isEmptyCoords(coords))
 grob <- pointsGrob(1:3, 1:3, size=unit(1, "in"), default.units="in", pch=25)
 coords <- grobCoords(grob, closed=TRUE)
 x <- c(1, 1 + TRC1*RADIUS, 1 - TRC1*RADIUS)
-y <- c(1 + TRC0*RADIUS, 1 - TRC2*RADIUS, 1 - TRC2*RADIUS)
+y <- c(1 - TRC0*RADIUS, 1 + TRC2*RADIUS, 1 + TRC2*RADIUS)
 mapply(check,
        coords,
        list("1"=list(x=x, y=y), "2"=list(x=x+1, y=y+1), "3"=list(x=x+2, y=y+2)))
