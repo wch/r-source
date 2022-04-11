@@ -68,7 +68,7 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	    PROTECT(vec);
 	    PROTECT(val = allocVector(INTSXP, 2));
 	    INTEGER(val)[0] = NA_INTEGER;
-	    INTEGER(val)[1] = n;
+	    INTEGER(val)[1] = n; // +n:  compacted *and* automatic row names
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	    UNPROTECT(2); /* vec, val */
 	    return ans;
@@ -504,6 +504,9 @@ SEXP attribute_hidden do_comment(SEXP call, SEXP op, SEXP args, SEXP env)
     return getAttrib(CAR(args), R_CommentSymbol);
 }
 
+/* *Not* called from  class(.) <- v,  nor  oldClass(.) <- v,  but
+ * e.g. from  attr(x, "class") <- value   plus our own C, e.g. ./connections.c
+ */
 SEXP classgets(SEXP vec, SEXP klass)
 {
     if (isNull(klass) || isString(klass)) {
@@ -562,10 +565,10 @@ SEXP classgets(SEXP vec, SEXP klass)
 	    }
 #endif
 	}
-	return R_NilValue;
     }
-    error(_("attempt to set invalid 'class' attribute"));
-    return R_NilValue;/*- just for -Wall */
+    else
+	error(_("attempt to set invalid 'class' attribute"));
+    return R_NilValue;
 }
 
 /* oldClass<-(), primitive */
@@ -1165,18 +1168,23 @@ SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
-{
+SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
+{ 
     SEXP ans;
-    checkArity(op, args);
-    check1arg(args, call, "x");
     /* DispatchOrEval internal generic: dim */
-    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 1))
+    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, /* argsevald: */ 1))
 	return(ans);
     PROTECT(args = ans);
     ans = getAttrib(CAR(args), R_DimSymbol);
     UNPROTECT(1);
     return ans;
+}
+
+SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    check1arg(args, call, "x");
+    return R_dim(call, op, args, env);
 }
 
 SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)

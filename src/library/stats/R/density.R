@@ -50,14 +50,12 @@ density.default <-
     if(has.wts <- !is.null(weights)) {
         if(length(weights) != N)
             stop("'x' and 'weights' have unequal length")
-        some.na <- FALSE
     }
     x.na <- is.na(x)
     if (any(x.na)) {
         if (na.rm) {
             N <- length(x <- x[!x.na])
             if(has.wts) {
-                some.na <- TRUE
                 trueD <- isTRUE(all.equal(1, sum(weights)))
                 weights <- weights[!x.na]
                 if(trueD) ## keep weights summing to one

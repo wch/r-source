@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -64,7 +64,7 @@ format(x, \dots)
   \item{na.encode}{logical: should \code{NA} strings be encoded?  Note
     this only applies to elements of character vectors, not to numerical,
     complex nor logical \code{NA}s, which are always encoded as \code{"NA"}.}
-  % because Mr Gorjanc won't read, PR#12318
+  % see PR#12318
 
   \item{scientific}{Either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
