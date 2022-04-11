@@ -160,7 +160,8 @@ Windows XP is no longer supported.
 
 We only test on versions of Windows currently supported by Microsoft,
 recently mainly 64-bit Windows Server 2008 R2 (based on Windows 7), Windows
-10, Windows Server 2016 and Windows Server 2022.
+10, Windows Server 2016 and Windows Server 2022. We have tested that R runs
+and passes its tests also on Windows 11.
 
 For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
@@ -668,13 +669,13 @@ use multiple CPUs or multiple threads.
 
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
-@section Does R run under Windows Vista/7/8/10/Server 2008/2016/2022?
+@section Does R run under Windows Vista/7/8/10/11/Server 2008/2016/2022?
 
 R 4.2 code base still conservatively uses Windows Vista and later features
 when available, so it should still run on Vista, but this is not tested (see
 Q2.2), and the code is tuned for newer systems. Some performance
 work-arounds for old Windows systems past their end of support may be
-removed, such as a custom memory allocator.
+removed, such as a custom memory allocator removed in R 4.2.
 
 Since 4.2, R allows to use UTF-8 as the native encoding, but this requires
 recent Windows (see Q2.2).
