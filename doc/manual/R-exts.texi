@@ -7824,7 +7824,7 @@ requires that the new macro not have been previously defined, whereas
 @code{\renewcommand} allows existing macros (including all built-in
 ones) to be replaced.  (This test is disabled by default, but may be
 enabled by setting the environment variable
-@env{_WARN_DUPLICATE_RD_MACROS_} to a true value.)
+@env{_R_WARN_DUPLICATE_RD_MACROS_} to a true value.)
 
 Also as in @LaTeX{}, the new macro may be defined to take arguments,
 and numeric placeholders such as @code{#1} are used in the macro
