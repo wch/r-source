@@ -462,9 +462,10 @@ respectively.
 @subsection How can R be installed (Windows)
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
-a base distribution and add-on packages from @CRAN{} to run on Windows
-7 and later (including 64-bit versions of Windows) on ix86 and x86_64
-chips. The Windows version of R was created by Robert Gentleman and
+a base distribution and add-on packages from @CRAN{} to run on 64-bit
+versions of Windows 7 and later on x86_64 chips (R 4.1.3 was the last version
+of R to support 32-bit Windows).
+The Windows version of R was created by Robert Gentleman and
 Guido Masarotto, Brian D. Ripley and Duncan Murdoch made substantial 
 contributions and it is now being maintained by
 other members of the R Core team.
