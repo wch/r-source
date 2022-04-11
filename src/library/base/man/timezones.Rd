@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -28,7 +28,7 @@ OlsonNames(tzdir = NULL)
 
 \arguments{
   \item{location}{logical: defunct: ignored, with a warning for false values.}
-  
+
   \item{tzdir}{The time-zone database to be used: the default is to try
     known locations until one is found.}
 }
@@ -52,7 +52,7 @@ OlsonNames(tzdir = NULL)
   override the OS setting or if the \sQuote{try} does not get this
   right, it should be set before the \R process is started or (probably
   early enough) in file \code{\link{.Rprofile}}).
-  
+
   %% glibc silently uses UTC but uses the invalid name as the
   %% abbreviations.  tzcode as used by R warns and uses UTC.
   If \env{TZ} is set but invalid, most platforms default to \samp{UTC},
@@ -183,15 +183,14 @@ OlsonNames(tzdir = NULL)
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
   perhaps the system time zone) are loaded from the currently selected
   \file{zoneinfo} database.
-#ifdef windows
 
+  \emph{On Windows only:}
   An attempt is made (once only per session) to map Windows' idea of the
   current time zone to a location, following a version of
   \url{http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml}
   with additional values deduced from the Windows Registry and documentation.
   It can be overridden by setting the \env{TZ} environment variable
   before any date-times are used in the session.
-#endif
 
   Most platforms support time zones of the form \samp{Etc/GMT+n} and
   \samp{Etc/GMT-n} (possibly also without prefix \samp{Etc/}), which
@@ -229,7 +228,7 @@ OlsonNames(tzdir = NULL)
   (abbreviated) time-zone names which can be as low as 6 (as required by
   POSIX).  Some OSes allow the setting of time zones with names which
   exceed their limit, and that can crash the \R session.
-  
+
   \code{OlsonNames} tries to find an Olson database in known locations.
   It might not succeed (when it returns an empty vector with a warning)
   and even if it does it might not locate the database used by the
@@ -255,10 +254,8 @@ OlsonNames(tzdir = NULL)
   Incorrect results will never be an \R issue, so please ensure that you
   have the courtesy not to blame \R for them.
 }
-% Unlike Tony Plate and John Pfuntner
 
-#ifdef unix
-\section{How the system time zone is found}{
+\section{How the system time zone is found -- on Unix-alikes}{
   This section is of background interest for users of a Unix-alike, but
   may help if an \code{NA} value is returned unexpectedly.
 
@@ -302,7 +299,6 @@ OlsonNames(tzdir = NULL)
   file in the database.  This is deliberate as they may be from
   different dates.)
 }
-#endif
 
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
