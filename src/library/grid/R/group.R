@@ -23,7 +23,14 @@ finaliseGroup <- function(x) {
         ## Current viewport layout and scales are preserved so that
         ## locations and dimensions of viewports and grobs in x$src
         ## retain their original meaning.
-        pushViewport(viewport(mask="none",
+        ##
+        ## Justification of the current viewport must also be preserved
+        ## so that transformation on group use is calculated correctly.
+        hjust <- resolveHJust(cvp$just, cvp$hjust)
+        vjust <- resolveVJust(cvp$just, cvp$vjust)
+        pushViewport(viewport(hjust, vjust,
+                              just=c(hjust, vjust),
+                              mask="none",
                               layout=cvp$layout,
                               xscale=cvp$xscale, yscale=cvp$yscale),
                      recording=FALSE)
@@ -33,7 +40,11 @@ finaliseGroup <- function(x) {
     if (is.grob(x$dst)) {
         destination <- function() {
             cvp <- current.viewport()
-            pushViewport(viewport(mask="none",
+            hjust <- resolveHJust(cvp$just, cvp$hjust)
+            vjust <- resolveVJust(cvp$just, cvp$vjust)
+            pushViewport(viewport(hjust, vjust,
+                                  just=c(hjust, vjust),
+                                  mask="none",
                                   layout=cvp$layout,
                                   xscale=cvp$xscale, yscale=cvp$yscale),
                          recording=FALSE)
