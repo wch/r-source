@@ -6256,7 +6256,7 @@ need to add
 
 @example
 #ifndef ENABLE_NLS
-#define dngettext(pkg, String, StringP, N) (N > 1 ? StringP : String)
+#define dngettext(pkg, String, StringP, N) (N == 1 ? String : StringP)
 #endif
 @end example
 
