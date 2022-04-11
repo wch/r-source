@@ -4781,6 +4781,10 @@ increase the optimization levels to @option{-O3}: however for many
 versions of the compilers this has caused problems in at least one
 @acronym{CRAN} package.
 
+Do not use @option{-O3} with @command{gcc} 11.0 or 11.1: it mis-compiles
+code including in package @CRANpkg{MASS} resulting in plausible but
+incorrect results.
+
 For platforms with both 64- and 32-bit support, it is likely that
 
 @example
