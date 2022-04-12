@@ -859,7 +859,8 @@ being taken first from the
 @option{--arch} command-line option@footnote{with possible values
 @samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
 installation default (which is 32-bit for a combined 32/64 bit @R{}
-installation).
+installation). @R{} 4.2.0 follows the scheme, but supports and includes
+only 64-bit builds.
 
 @menu
 * Multilib::
@@ -1432,8 +1433,8 @@ packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
 
 The toolsets used for 64-bit Windows from 2008--22 were based on
 MinGW-w64.  The assistance of Yu Gong at a crucial step in porting @R{}
-to Mingw-w64 is gratefully acknowledged, as well as help from Kai Tietz,
-the lead developer of the Mingw-w64 project and from Martin Storsjo.
+to MinGW-w64 is gratefully acknowledged, as well as help from Kai Tietz,
+the lead developer of the MinGW-w64 project and from Martin Storsjo.
 
 @node LaTeX on Windows,  , The Windows toolset, Building from source
 @subsection @LaTeX{}
@@ -2098,7 +2099,8 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 @code{update.packages} and @code{library}.
 
 Windows binary packages for @R{} are distributed as a single binary
-containing either or both architectures (32- and 64-bit).
+containing either or both architectures (32- and 64-bit). From @R{} 4.2.0,
+they always contain only the 64-bit architecture.
 
 @c A few of the binary packages need other software to be installed on your
 @c system.
@@ -2131,7 +2133,8 @@ the building service offered at
 
 For almost all packages @command{R CMD INSTALL} will attempt to install
 both 32- and 64-bit builds of a package if run from a 32/64-bit install
-of @R{}.  It will report success if the installation of the architecture
+of @R{} (only 64-bit builds and installs are supported since @R{} 4.2.0).
+It will report success if the installation of the architecture
 of the running @command{R} succeeded, whether or not the other
 architecture was successfully installed.  The exceptions are packages
 with a non-empty @file{configure.win} script or which make use of
