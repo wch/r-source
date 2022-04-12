@@ -927,7 +927,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-4.0.0\bin\x64
+c:\Program Files\R\R-4.2.0\bin\x64
 @end example
 
 @noindent
@@ -1169,7 +1169,7 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (4.x.?) version will be stored in a separate area,
-so for R 4.0.? the files are in @file{bin/windows/contrib/4.0}.
+so for R 4.2.? the files are in @file{bin/windows/contrib/4.2}.
 
 @c Note that the binary versions on CRAN are unsupported: see
 @c @uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.0/@/ReadMe},
@@ -1263,7 +1263,7 @@ replaced.
 @section Loading a package fails.
 
 Is the package installed for this version of R?   Packages need to have
-prepared for R 4.0.0 or later.
+prepared for R 4.2.0 or later.
 
 You can tell the version the package was compiled for by looking at the
 @samp{Built:} line in its @file{DESCRIPTION} file.
@@ -1271,7 +1271,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.0/@/ReadMe} for a
+@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.2/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1307,7 +1307,7 @@ MY_TCLTK=c:/Tcl/bin
 @noindent
 @strong{but} current versions do not by default contain any extra
 extensions (although they may be downloaded via the @code{Teacup}
-facility) and this only works for 32-bit R.
+facility) and this only worked for 32-bit R.
 
 As only 64-bit builds are provided as of R 4.2, the Tcl/Tk bundle used is
 now also 64-bit only.  The older combined 32-bit/64-bit bundle for R 4.1
@@ -1791,23 +1791,22 @@ and Administration' manual.  Then you can use
 @end example
 @noindent
 to make @file{foo.dll}.  Use @command{...\bin\x64\R CMD SHLIB --help} for
-further options, or see @code{?SHLIB}.  (Replace @code{x64} by
-@code{i386} for 64-bit R.)
+further options, or see @code{?SHLIB}.
 
-If you want to use Visual C++, Borland C++ or other compilers, see the
-appropriate section in @file{README.packages}.
+@c If you want to use Visual C++, Borland C++ or other compilers, see the
+@c appropriate section in @file{README.packages}.
 
 
 
 @node How do I debug code that I have compiled and dyn.load-ed?, How do I include C++ code?, How do I include compiled C code?, Building from Source
 @section How do I debug code that I have compiled and dyn.load-ed?
 
-Debugging under Windows is often a fraught process, and sometimes does
-not work at all.  If all you need is a @emph{just-in-time} debugger to
-catch crashes, consider (32-bit) @code{Dr. Mingw} from the
-@code{mingw-utils} bundle on @uref{http://www.mingw.org}.  That will be
-able to pinpoint the error, most effectively if you build a version of R
-with debugging information as described below.
+@c Debugging under Windows is often a fraught process, and sometimes does
+@c not work at all.  If all you need is a @emph{just-in-time} debugger to
+@c catch crashes, consider (32-bit) @code{Dr. Mingw} from the
+@c @code{mingw-utils} bundle on @uref{http://www.mingw.org}.  That will be
+@c able to pinpoint the error, most effectively if you build a version of R
+@c with debugging information as described below.
 
 First, build a version of the R system with debugging information by
 
@@ -1824,6 +1823,12 @@ Rcmd INSTALL --debug mypkg
 @end example
 
 @noindent
+See the `R Installation and Administration' manual (for the version of R you
+want to install) and @uref{https://cran.r-project.org/bin/windows/Rtools/}
+for links to detailed information on how to build R and R packages from
+source using corresponding versions of Rtools and for additional hints for
+debugging on Windows.
+
 You will need a suitable version of @command{gdb} which matches your
 compiler.  Then you can debug by
 
@@ -1953,7 +1958,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2015-08-13    
+@set LASTEDIT 2022-04-12
 @ifhtml
 @html
 <hr WIDTH="100%">
