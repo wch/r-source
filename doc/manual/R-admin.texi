@@ -4066,11 +4066,12 @@ which is used.
 
 @cindex LAPACK library
 
-Provision is made for specifying an external LAPACK library, principally to
-cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ATLAS and MKL
-on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
-is required.  This can only be done if @option{--with-blas} has been used.
+Provision is made for specifying an external LAPACK library, principally
+to cope with @acronym{BLAS} libraries which contain a copy of LAPACK
+(such as @code{Accelerate} on macOS and some builds of ATLAS, MKL and
+OpenBLAS on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK
+version 3.2 is required.  This can only be done if @option{--with-blas}
+has been used.
 
 However, the likely performance gains are thought to be small (and may
 be negative).  The default is not to search for a suitable LAPACK
@@ -4080,9 +4081,11 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK: this is simplest with a dynamic
+the ATLAS-optimized subset of LAPACK.  This is simplest with a dynamic
 ATLAS library which contains a full LAPACK, when @option{--with-lapack}
-suffices.
+suffices. Similarly, OpenBLAS can be built to contain an optimized
+subset of LAPACK or a full LAPACK (the latter seeming to be the
+default).
 
 A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
