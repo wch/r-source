@@ -4084,11 +4084,9 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  This is simplest with a dynamic
-ATLAS library which contains a full LAPACK, when @option{--with-lapack}
-suffices. Similarly, OpenBLAS can be built to contain an optimized
-subset of LAPACK or a full LAPACK (the latter seeming to be the
-default).
+the ATLAS-optimized subset of LAPACK.  Similarly, OpenBLAS can be built
+to contain an optimized subset of LAPACK or a full LAPACK (the latter
+seeming to be the default).
 
 A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
@@ -4099,22 +4097,12 @@ does not contain LAPACK.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK sources (or in the posted corrections to those
-sources).  In particular, bugs in @code{DGEEV} and @code{DGESDD} have
-resulted in error messages such as
-
-@example
-DGEBRD gave error code -10
-@end example
-
-@noindent
-.  Other potential problems are incomplete versions of the libraries,
-seen several times in Linux distributions over the years.
+sources), seen several times in Linux distributions over the years.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
 because it is necessary on some platforms and because some users want to
-experiment with claimed performance improvements.  Reporting problems
-where it is used unnecessarily will simply irritate the @R{} helpers.
+experiment with claimed performance improvements.
 
 Note too the comments about @acronym{ISO}/@acronym{IEC}@tie{}60559
 compliance in the section of external @acronym{BLAS}: these apply
@@ -4146,7 +4134,7 @@ build @R{}.
 LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
 subroutine may cause NA to be interpreted as zero. This is fixed in the
 @R{} 3.6.3 and later sources, but if you use an external LAPACK, you may
-need to fix it there. (The bug was corrected in 3.10.0.)
+need to fix it there. (The bug was corrected in 3.9.1.)
 
 The code (in @code{dlapack.f}) should read
 @example
