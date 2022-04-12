@@ -49,7 +49,7 @@
       \sQuote{Writing R Extensions} §6.6.1.
 
       [In progress: scheduled for May 5 if enough packages are
-      corrrected before then.
+      corrected before then.
     
       Setting environment variable \env{_R_INSTALL_USE_FC_LEN_T_} to a
       true value enables this \emph{pro tem}.  This is set by \command{R
