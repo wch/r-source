@@ -1279,13 +1279,10 @@ You can tell the version the package was compiled for by looking at the
 
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
-give an informative message about a certain DLL not being found.
-
-@c See
-@c @uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.2/@/ReadMe} for a
-@c listing of some of these packages (notably @code{RGtk2},
-@c @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
-@c of the packages connecting to databases).
+give an informative message about a certain DLL not being found. See
+@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.2/@/ReadMe} for a
+listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
+@code{rggobi}, @code{rJava}, @code{rjags} and some of the packages connecting to databases).
 
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages
