@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2021
-@set FAQ_DATE @value{FAQ_YEAR}-11-25
+@set FAQ_YEAR 2022
+@set FAQ_DATE @value{FAQ_YEAR}-04-12
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -3270,21 +3270,19 @@ actually used memory as well as unused memory that cannot be released.
 @node How can I enable secure https downloads in R?, How can I get CRAN package binaries for outdated versions of R?, Why is R apparently not releasing memory?, R Miscellanea
 @section How can I enable secure https downloads in R?
 
-@c This should be re-phrased for 3.3.0.
+From R 4.2.0, @code{"libcurl"} download method is always available and used
+for @acronym{HTTPS} by default on all platforms.  No specific setup from the
+user is needed and the following only refers to older versions of R.
 
 When R transfers files over @acronym{HTTP} (e.g., using the
 @code{install.packages()} or @code{download.file()} function), a
 download method is chosen based on the @option{download.file.method}
-option.  There are several methods available and the default behavior if
-no option is explicitly specified is to use R's internal @acronym{HTTP}
-implementation.  In most circumstances this internal method will not
-support @acronym{HTTPS} URLs so you will need to override the default:
-this is done automatically for such URLs as from R 3.2.2.
+option. 
 
-R versions 3.2.0 and greater include two download methods
-(@code{"libcurl"} and @code{"wininet"}) that both support
-@acronym{HTTPS} connections: we recommend that you use these methods.
-The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is:
+R versions 3.2.0 supported two download methods (@code{"libcurl"} and
+@code{"wininet"}) that both supported @acronym{HTTPS} connections, but one
+had to choose them explicitly, which could be done by adding this code to
+@file{.Rprofile} or @file{Rprofile.site}:
 
 @example
 options(download.file.method = "wininet", url.method = "wininet")
@@ -3294,16 +3292,20 @@ options(download.file.method = "libcurl", url.method = "libcurl")
 @end example
 
 @noindent
-(Method @code{"wininet"} is the default on Windows as from R 3.2.2.)
+The default behavior if no option was explicitly specified was to use R's
+internal @acronym{HTTP} implementation.  In most circumstances this internal
+method did not support @acronym{HTTPS} URLs and hence that explicit override
+was needed, but this was done automatically for such URLs as from R 3.2.2. 
+Method @code{"wininet"} was the default on Windows as from R 3.2.2.
 
 Note that the @code{"libcurl"} method may or may not have been compiled
 in.  In the case that it was not, i.e.@: @code{capabilities("libcurl") ==
-FALSE}, we recommend method @code{"wget"} on Linux and @code{"curl"} on
+FALSE}, we recommended method @code{"wget"} on Linux and @code{"curl"} on
 macOS.  It is possible that system versions of @code{"libcurl"},
 @command{wget} or @command{curl} may have been compiled without
 @acronym{HTTPS} support, but this is unlikely.  As from R 3.3.0
 @code{"libcurl"} with @acronym{HTTPS} support is required except on
-Windows.
+Windows. As from R 4.2.0, it is required also on Windows.
 
 @node How can I get CRAN package binaries for outdated versions of R?,  , How can I enable secure https downloads in R?, R Miscellanea
 @section How can I get CRAN package binaries for outdated versions of R?
