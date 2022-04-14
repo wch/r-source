@@ -5837,17 +5837,27 @@ stopifnot(tanpi(outer(pm1/4, k, `+`)) == pm1,
 ## in R <= 4.1.x, tanpi(<int> +- 1/4 ) values typically were off (by +/- 2^-53)
 
 
-## plot.lm(which = 5), when leverages are constant,
-## failed for character predictors in R <= 4.1.x -- PR#17840
+## plot.lm(which = 5), when leverages are constant -- PR#17840
 dd <-  expand.grid(a = factor(1:3), b = factor(1:2), c = as.character(1:2),
                    stringsAsFactors = FALSE)
 dd$y <- rnorm(nrow(dd))
 plot(lm(y~a+b+c, dd), which = 5)  # gave Error: non-conformable arguments
 plot(lm(y~  b+c, dd), which = 5)  # gave Error: 'x' and 'y' lengths differ
-tryCatch(
+r <- tryCatch(
 plot(lm(y~    c, dd), which = 5)  # gave empty plot, noting missing factors
-, message = function(m)
-    stopifnot(!grepl("no factor predictors", conditionMessage(m), fixed=TRUE)))
+       , message = conditionMessage)
+stopifnot("plot(<lm>, which=5) gave message and no plot" = is.null(r))
+## failed for character predictors in R <= 4.1.x
+
+
+## very small size hashed environments
+n <- 123
+l <- setNames(vector("list", n), seq_len(n))
+ehLs <- lapply(1:6, function(sz) list2env(l, hash=TRUE, size = sz))
+(nch <- vapply(ehLs, \(.) env.profile(.)$nchains, 0))# gave  1 2 3 4 109 109
+stopifnot(nch >= 24) # seeing  106 .. 106 111
+## hashed environments did not grow for size <= 4 in  R <= 4.1.x
+
 
 
 ## keep at end

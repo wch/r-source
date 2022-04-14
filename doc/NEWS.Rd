@@ -50,7 +50,7 @@
 
       [In progress: scheduled for May 5 if enough packages are
       corrected before then.
-    
+
       Setting environment variable \env{_R_INSTALL_USE_FC_LEN_T_} to a
       true value enables this \emph{pro tem}.  This is set by \command{R
 	CMD check --as-cran} when it installs a package.]
@@ -63,6 +63,13 @@
       \file{R_ext/Constants.h} (included by \file{R.h}) have been
       removed.
       [Scheduled for Apr 23.]
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Hashed \code{environment}s with sizes less than 5 now can grow,
+      too. (Reported to R-devel by Duncan Garmonsway.)
     }
   }
 }
@@ -293,7 +300,7 @@
       \item New functions \code{psmirnov()}, \code{qsmirnov()} and
       \code{rsmirnov()} in package \pkg{stats} implementing the
       asymptotic and exact distributions of the two-sample Smirnov statistic.
-      
+
       \item \code{iconv()} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
 
