@@ -22,8 +22,8 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item A system installation of LAPACK 3.10.0 or later will be
-      preferred to the version in the \R sources.
+      \item A system installation of generic LAPACK 3.10.0 or later will
+      be preferred to the version in the \R sources.
 
       \command{configure} option \option{--with-lapack=no} (equivalently
       \option{--without-lapack}) forces compilation of the internal
@@ -31,7 +31,7 @@
 
       If \option{--with-lapack} is not specified, a system
       \code{liblapack} is looked for and used if it reports version
-      3.10.0 or later.
+      3.10.0 or later and does not contain BLAS routines.
 
       Using 3.10.0 may give some different signs in SVDs (seen in the
       \file{lapack.R} test).

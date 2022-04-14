@@ -3076,6 +3076,7 @@ AC_SUBST(LAPACK_LIBS)
 ## New for R 4.2.0
 ## Look for system -llapack of version at least 3.10.0.
 ## We have to test with a system BLAS.
+## We don't want an external lapack which contains a BLAS.
 AC_DEFUN([R_LAPACK_SYSTEM_LIB],
 [AC_REQUIRE([R_PROG_FC_FLIBS])
 AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
@@ -3083,21 +3084,31 @@ AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
 acx_lapack_ok=no
 
 acx_lapack_save_LIBS="${LIBS}"
-LIBS="-lblas ${FLIBS} ${LIBS}"
 
 dnl Generic LAPACK library?
 if test "${r_cv_prog_fc_append_underscore}" = yes; then
+  dgemm=dgemm_
   lapack=dpstrf_
   ilaver=ilaver_
 else
+  dgemm=dgemm
   lapack=dpstrf
   ilaver=ilaver
 fi
+acx_lapack_ok=yes
+LIBS="${FLIBS} ${LIBS}"
+AC_CHECK_LIB(lapack, ${dgemm}, [acx_lapack_ok=no])
+if test "${acx_lapack_ok}" = no; then
+  AC_MSG_NOTICE([Not using liblapack as it contains BLAS routines])
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
 AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes])
+fi
 
 if test "${acx_lapack_ok}" = yes; then
   LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
-fi
 
 AC_CACHE_CHECK([if LAPACK version >= 3.10.0], [r_cv_lapack_ver],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -3121,6 +3132,7 @@ LIBS="${acx_lapack_save_LIBS}"
 
 if test "${r_cv_lapack_ver}" = no; then
  acx_lapack_ok=no
+fi
 fi
 
 if test "${acx_lapack_ok}" = yes; then

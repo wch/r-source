@@ -2937,6 +2937,7 @@ if test "${acx_blas_ok}" = "yes"; then
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
     *Accelerate*)  r_blas=Accelerate ;;
+    *-lfexiblas*)  r_blas=FlexiBlas ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac

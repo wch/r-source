@@ -43398,15 +43398,75 @@ if test "${use_lapack}" = "unset"; then
 acx_lapack_ok=no
 
 acx_lapack_save_LIBS="${LIBS}"
-LIBS="-lblas ${FLIBS} ${LIBS}"
 
 if test "${r_cv_prog_fc_append_underscore}" = yes; then
+  dgemm=dgemm_
   lapack=dpstrf_
   ilaver=ilaver_
 else
+  dgemm=dgemm
   lapack=dpstrf
   ilaver=ilaver
 fi
+acx_lapack_ok=yes
+LIBS="${FLIBS} ${LIBS}"
+as_ac_Lib=`printf "%s\n" "ac_cv_lib_lapack_${dgemm}" | $as_tr_sh`
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -llapack" >&5
+printf %s "checking for ${dgemm} in -llapack... " >&6; }
+if eval test \${$as_ac_Lib+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-llapack  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char ${dgemm} ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return ${dgemm} ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  eval "$as_ac_Lib=yes"
+else $as_nop
+  eval "$as_ac_Lib=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+eval ac_res=\$$as_ac_Lib
+	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+printf "%s\n" "$ac_res" >&6; }
+if eval test \"x\$"$as_ac_Lib"\" = x"yes"
+then :
+  acx_lapack_ok=no
+fi
+
+if test "${acx_lapack_ok}" = no; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Not using liblapack as it contains BLAS routines" >&5
+printf "%s\n" "$as_me: Not using liblapack as it contains BLAS routines" >&6;}
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
 as_ac_Lib=`printf "%s\n" "ac_cv_lib_lapack_${lapack}" | $as_tr_sh`
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in -llapack" >&5
 printf %s "checking for ${lapack} in -llapack... " >&6; }
@@ -43457,10 +43517,10 @@ then :
   acx_lapack_ok=yes
 fi
 
+fi
 
 if test "${acx_lapack_ok}" = yes; then
   LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
-fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if LAPACK version >= 3.10.0" >&5
 printf %s "checking if LAPACK version >= 3.10.0... " >&6; }
@@ -43506,6 +43566,7 @@ LIBS="${acx_lapack_save_LIBS}"
 
 if test "${r_cv_lapack_ver}" = no; then
  acx_lapack_ok=no
+fi
 fi
 
 if test "${acx_lapack_ok}" = yes; then
