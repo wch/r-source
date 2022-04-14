@@ -1263,7 +1263,7 @@ with option @option{-fc-prototypes-external}, e.g.@: that (at the time
 of writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}
 in C.
 
-@c This worked in 2019 but with Fedora 32 does not export dpotrf from dlapack.o
+@c This worked in 2019 but with Fedora 32 did not export dpotrf from dlapack.o
 On some systems it is possible to build the BLAS, LINPACK and LAPACK
 support as static libraries containing intermediate-level code that LTO
 will compile for all objects linked against these libraries, by
@@ -3766,6 +3766,14 @@ of the reference BLAS, and then use @command{update-alternatives} to
 switch between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
 
+Fedora 33 and later offer `FlexiBLAS', a similar mechanism for switching
+the BLAS (and LAPACK) in use
+(@uref{https://www.mpi-magdeburg.mpg.de/projects/flexiblas}).  However,
+rather than overriding @code{libblas}, this requires option
+@option{--with-blas=flexiblas}.  If installed, there are `backends' for
+the reference BLAS, ATLAS and serial, threaded and OpenMP builds of
+OpenBLAS and BLIS.
+
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
 locations.
@@ -3820,13 +3828,11 @@ or, as on @cputype{x86_64} Fedora where a path needs to be specified,
 @end example
 @noindent
 Distributed ATLAS libraries cannot be tuned to your machine and so are a
-compromise: for example Fedora tunes @cputype{x86_64} for CPUs with SSE3
-extensions, and separate @samp{atlas-sse2} and @samp{atlas-sse3}
-@cputype{i686} RPMs are available.@footnote{There were others for earlier
-versions of ATLAS, and are for non-Intel architectures.  The only way to
-see exactly which CPUs the distributed libraries have been tuned for is
-to read the @file{atlas.spec} file: at the time of writing
-@samp{HAMMER64SSE3} and @samp{Corei264AVX} for @cputype{x86_64} Fedora.}
+compromise: for example Fedora tunes@footnote{The only way to see
+exactly which CPUs the distributed libraries have been tuned for is to
+read the @file{atlas.spec} file.} @cputype{x86_64} RPMs for CPUs with
+SSE3 extensions, and separate RPMs may be available for specific CPU
+families.
 
 Note that building @R{} on Linux against distributed shared libraries
 may need @samp{-devel} or @samp{-dev} packages installed.
@@ -3865,14 +3871,14 @@ for some later CPUs.
 This can be used by configuring @R{} with something like
 
 @example
---with-blas="-lopenblas"
+--with-blas="openblas"
 @end example
 
 @noindent
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
-Some platforms provide multiple builds of OpenBLAS: for example Fedora 32
+Some platforms provide multiple builds of OpenBLAS: for example Fedora 34
 has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
@@ -3890,8 +3896,7 @@ libopenblaso.so
 respectively, each of which can be used as a shared BLAS.  For the
 second and third the number of threads is controlled by
 @env{OPENBLAS_NUM_THREADS} and @env{OMP_NUM_THREADS} (as usual for
-OpenMP) respectively. There is also a Fedora RPM @samp{openblas-Rblas}
-to replace @file{libRblas.so} in their distribution of @R{}.
+OpenMP) respectively.
 
 Note that building @R{} on Linux against distributed libraries may need
 @samp{-devel} or @samp{-dev} packages installed.
@@ -4327,7 +4332,8 @@ running @R{} to override the default.  It is also used to set the
 paper size when making PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
-is unset.  (If the (Debian Linux) program @command{paperconf} is found
+is unset.  (If the program @command{paperconf} is found, present in many
+Linux distributions,
 @enindex PAPERSIZE
 or the environment variable @env{PAPERSIZE} is set, these are used to
 produce the default.)
@@ -4460,7 +4466,8 @@ well as its equivalence to the @code{Rcomplex} C structure defined in
 @command{gfortran}@tie{}10 by default gives a compilation error for the
 previously widespread practice of passing a Fortran array element where
 an array is expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}. @command{gfortran}@tie{}12
+errors in more cases of this.
 
 @node Compile and load flags, Maintainer mode, Using Fortran, Configuration on a Unix-alike
 @section Compile and load flags
@@ -4788,7 +4795,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 32 we used
+on @cputype{x86_64} with Fedora 34 we used
 
 @example
 CC="gcc -m32"
@@ -5360,7 +5367,7 @@ to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
 @code{-D__ACCELERATE__}: not needed for @command{clang} from
-@uref{https://releases.llvm.org} though.}  This also includes a full
+@uref{https://releases.llvm.org}.}  This also includes a full
 LAPACK which can be used @emph{via} @option{--with-lapack}: however, the
 version of LAPACK it contains has
 @c 3.2.1 in Monterey.
@@ -5372,7 +5379,7 @@ to use Accelerate's BLAS.
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
-has often failed with the Accelerate BLAS.
+has often failed with the Accelerate BLAS on Intel macOS.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
