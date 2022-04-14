@@ -2931,13 +2931,13 @@ if test "${acx_blas_ok}" = "yes"; then
     *-latlas*) r_blas=ATLAS ;;
     *-lgoto*) r_blas=Goto ;;
     *-lopenblas*) r_blas=OpenBLAS ;;
-    *-lacml*) r_blas=ACML ;;
     *-lmkl*) r_blas=MKL ;;
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
     *Accelerate*)  r_blas=Accelerate ;;
     *-lfexiblas*)  r_blas=FlexiBlas ;;
+    *-lblis*)  r_blas=BLIS ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac

@@ -3906,7 +3906,18 @@ For @cputype{ix86} and @cputype{x86_64} most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
 
-Another descendant project is BLIS (@uref{https://github.com/flame/blis}).
+Another descendant project is BLIS
+(@uref{https://github.com/flame/blis}).  This has (in Fedora) shared
+libraries
+@example
+libblis.so
+libblisp.so
+libbliso.so
+@end example
+@noindent
+(@code{p} for `threads', @code{o} for OpenMP as for OpenBLAS) which can
+also be used as a shared BLAS.  The Fedora builds do not include LAPACK
+in the BLIS libraries.
 
 @node MKL, Shared BLAS, OpenBLAS, BLAS
 @subsubsection Intel MKL
