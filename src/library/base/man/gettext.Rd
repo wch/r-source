@@ -49,20 +49,25 @@ Sys.setLanguage(lang, unset = "en")
     empty.}
 }
 \details{
-  If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
+  If \code{domain} is \code{NULL} (the default) in \code{gettext}
+  or \code{ngettext}, the domain is inferred.  If \code{gettext}
   or \code{ngettext}  is called from a function in the namespace of
   package \pkg{pkg} including called via \code{\link{stop}()},
   \code{\link{warning}()}, or \code{\link{message}()} from the function,
   or, say, evaluated as if called from that namespace, see the
   \code{evalq()} example, % and more in ../../../../tests/reg-translation.R
   the domain is set to \code{"R-pkg"}.  Otherwise there is no default
-  domain and messages are not translated unless \code{domain} is provided
-  explicitly.
+  domain and messages are not translated.
 
-  If a suitable domain is found, each character string is offered for
+  Setting \code{domain = NA} in \code{gettext} or \code{ngettext}
+  suppresses any translation.
+
+  \code{""} does not match any domain.  In \code{gettext} or \code{ngettext},
+  \code{domain = ""} is effectively the same as \code{domain = NA}.
+
+  If the domain is found, each character string is offered for
   translation, and replaced by its translation into the current language
-  if one is found.  The value (logical) \code{NA} suppresses any
-  translation.
+  if one is found.
 
   The \emph{language} to be used for message translation is determined by
   your OS default and/or the locale setting at \R's startup, see
@@ -91,7 +96,7 @@ Sys.setLanguage(lang, unset = "en")
   %%
   The special case \code{bindtextdomain(NULL)} calls C level
   \code{textdomain(textdomain(NULL))} for the purpose of flushing (i.e.,
-  emptying) the cache of already translated strings, it returns \code{TRUE}
+  emptying) the cache of already translated strings; it returns \code{TRUE}
   when NLS is enabled.
 }
 \value{
@@ -182,10 +187,10 @@ if(capabilities("NLS")) withAutoprint({
 })
 ## IGNORE_RDIFF_END
 ## Here, we reset to the *original* setting before the full example started:
- if(nzchar(thisLang)) { ## reset to previous and check
+if(nzchar(thisLang)) { ## reset to previous and check
   Sys.setLanguage(thisLang)
   stopifnot(identical(errMsg(1 + "2"), err))
-}  # else staying at 'de' ..
+} # else staying at 'de' ..
 }
 \keyword{ utilities }
 \keyword{ character }
