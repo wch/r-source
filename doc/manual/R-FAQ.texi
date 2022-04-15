@@ -54,11 +54,16 @@ FORTRAN
 doi:@tie{}@url{https://doi.org/\d\, \d\}
 @end macro
 
+@macro Rcopyright{year}
+Copyright @copyright{} \year\--@value{FAQ_YEAR} R Core Team
+@end macro
+
 @titlepage
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
 @subtitle Version @value{FAQ_VERSION}
 @author Kurt Hornik
+@author and the R Core Team
 @end titlepage
 
 @ifinfo
@@ -66,7 +71,7 @@ doi:@tie{}@url{https://doi.org/\d\, \d\}
 R FAQ                            @*
 Frequently Asked Questions on R  @*
 Version @value{FAQ_VERSION}      @*
-Kurt Hornik                      @*
+Kurt Hornik and the R Core Team  @*
 
 @sp 2
 @end ifinfo
@@ -75,7 +80,7 @@ Kurt Hornik                      @*
 @html
 <h2>Frequently Asked Questions on R</h2>
 <h3 style="text-align: center;">Version @value{FAQ_VERSION}</h3>
-<h3 style="text-align: center;">Kurt Hornik</h3>
+<h3 style="text-align: center;">Kurt Hornik and the R Core Team</h3>
 <hr>
 @end html
 @end ifhtml
@@ -119,8 +124,8 @@ questions about R.
 @node Legalese, Obtaining this document, Introduction, Introduction
 @section Legalese
 
-This document is copyright @copyright{} 1998--@value{FAQ_YEAR} by Kurt
-Hornik.
+Copyright @copyright{} 1998--2020 Kurt Hornik @*
+@Rcopyright{2021}
 
 This document is free software; you can redistribute it and/or modify it
 under the terms of the @acronym{GNU} General Public License as published
@@ -167,14 +172,14 @@ subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
 
-In publications, please refer to this @acronym{FAQ} as Hornik
+In publications, please refer to this @acronym{FAQ} as Hornik and R Core Team
 (@value{FAQ_YEAR}), ``The R @acronym{FAQ}'', and give the above,
 @emph{official} @acronym{URL}:
 
 @example
 @group
 @@Misc@{,
-  author        = @{Kurt Hornik@},
+  author        = @{Kurt Hornik and the R Core Team@},
   title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{FAQ_YEAR}@},
   url           = @{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
@@ -192,17 +197,15 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 @node Feedback,  , Notation, Introduction
 @section Feedback
 
-Feedback via email to @email{Kurt.Hornik@@R-project.org} is of course
-most welcome.
+Feedback via email to @email{R-devel@@R-project.org} is most welcome.
 
-In particular, note that I do not have access to Windows or Mac
-systems.  Features specific to the Windows and macOS ports of R are
+Features specific to the Windows and macOS ports of R are
 described in the
 @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
 @url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}''}.  If you have information on Mac or Windows
-systems that you think should be added to this document, please let me
+systems that you think should be added to this document, please let us
 know.
 
 @c <FIXME>
@@ -479,7 +482,7 @@ See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer packagea to run on macOS 10.13 (`High Sierra') or later,
+Apple installer package to run on macOS 10.13 (`High Sierra') or later,
 and another which runs only on `Apple Silicon' Macs under macOS 11 (`Big
 Sur') or later.  Once downloaded and executed, the installer will
 install the current release of R and R.app, the macOS @acronym{GUI}.
@@ -2267,7 +2270,7 @@ somerows <- mat[index, , drop = FALSE]
 @node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellanea
 @section How does autoloading work?
 
-Autoloading is rarwly used since packages became lazy-loaded.
+Autoloading is rarely used since packages became lazy-loaded.
 
 R has a special environment called @code{.AutoloadEnv}.  Using
 @kbd{autoload(@var{name}, @var{pkg})}, where @var{name} and
