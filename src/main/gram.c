@@ -5022,11 +5022,9 @@ static int StringValue(int c, Rboolean forSymbol)
 			octal = 8 * octal + c - '0';
 		    } else {
 			xxungetc(c);
-			CTEXT_POP();
 		    }
 		} else {
 		    xxungetc(c);
-		    CTEXT_POP();
 		}
 		if (!octal)
 		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
