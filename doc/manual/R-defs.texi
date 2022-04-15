@@ -1,5 +1,5 @@
 @documentlanguage en
-@documentencoding ISO-8859-1
+@documentencoding UTF-8
 
 @macro R{}
 R
