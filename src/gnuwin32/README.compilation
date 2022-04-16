@@ -43,8 +43,7 @@ front-ends/Makefile:
   other DLLs under bin and modules (R.dll Rblas.dll Rgraphapp.dll
   Riconv.dll Rlapack.dll lapack.dll).
 
-- LINKFLAGS includes flags for the stack size and to allow addressing
-  over 2GB for 32-bit executables.
+- LINKFLAGS includes flags for the stack size.
 
 A resource compiler is used to add version information to the DLLs
 under directories bin and modules.
@@ -74,101 +73,38 @@ Makevars file.
 Cross-compilation
 =================
 
-Linux distributions including Fedora, Debian and Ubuntu provide
-cross-compilers and many cross-compiled libraries for both 32- and
-64-bit Windows.  For example, on Fedora 32 for a 64-bit build one
-might install the RPMs
+Versions of R prior to 4.2.0 could be cross-compiled using the tools
+provided by Linux distributions including Fedora, Debian and Ubuntu.
+However, these do not (at the time of writing) support UCRT-based builds.
 
-mingw64-binutils
-mingw64-bzip2
-mingw64-cairo
-mingw64-cpp
-mingw64-crt
-mingw64-filesystem
-mingw64-gcc
-mingw64-gcc-c++ (not needed for R, but needed for cairo, icu and libtiff)
-mingw64-gcc-gfortran
-mingw64-headers
-mingw64-libgomp
-mingw64-libpng
-mingw64-libjpeg-turbo
-mingw64-libtiff
-mingw64-pcre2
-mingw64-pkg-config
-mingw64-readline
-mingw64-tcl
-mingw64-termcap
-mingw64-tk
-mingw64-winpthreads
-mingw64-xz-libs
-mingw64-zlib
+https://cran.r-project.org/bin/windows/base/howto-R-devel.html
+describes how to obtain a suitable cross-compilation toolchain for
+x86_64 Linux (based on glibc).  Look at the section entitled something
+like
 
-or install the mingw32- variants for a 32-bit build.  At the time of
-writing this used GCC 9.2.1.
+'Setting up MXE build from pre-built tarballs',
 
-To build all the compiled code, set BINPREF in MkRules.local, e.g. to
+and follow the instructions, which install the toolchain under a place
+it (and we) call MXE_ROOT.  (To build R only the
+'rtools42-toolchain-libs-base' version is required.)
 
-WIN = 64
-BINPREF64 = /usr/bin/x86_64-w64-mingw32-
+You will also need to fetch the pre-built Tcl/Tk as described in the
+section 'Building R from source using a toolchain tarball'.  The default
+location for the latter is R_HOME/Tcl.
 
-or
+To build all the compiled code, edit MkRules.local to something like
 
-WIN = 32
-BINPREF = /usr/bin/i686-w64-mingw32-
+MXE_ROOT = wherever you put it, or /usr/lib/mxe (which was set as a symlink)
+BINPREF64 = $(MXE_ROOT)/usr/bin/x86_64-w64-mingw32.static.posix-
+EXT_LIBS = $(MXE_ROOT)/usr/x86_64-w64-mingw32.static.posix
+#CURL_CA_BUNDLE = /etc/pki/tls/certs/ca-bundle.crt
+TEXI2ANY=/usr/bin/texi2any
 
 Setting LTO is supported.
 
 Then in this directory
 
-make MkRules rbuild rpackages-cross
-
-To make the cairo devices, set something like
-
-USE_CAIRO = TRUE
-CAIRO_CPPFLAGS = -I/usr/x86_64-w64-mingw32/sys-root/mingw/include/cairo
-CAIRO_LIBS = "-lcairo -lpixman-1 -lpng -lz -lgdi32 -lmsimg32"
-
-in MkRules.local and run
-
-make cairodevices
-
-
-This will link to the DLLs of external software and for libgomp and
-pthreads (for OpenMP).
-
-For a more static build, install
-
-mingw64-bzip2-static
-mingw64-libpng-static
-mingw64-libjpeg-turbo-static
-mingw64-libtiff-static
-mingw64-pcre2-static
-mingw64-winpthreads-static
-mingw64-xz-libs-static
-mingw64-zlib-static
-
-and remove the corresponding libfoo.dll.a files from
-/usr/x86_64-w64-mingw32/sys-root/mingw/lib, and libgomp.dll.a.  (The
-build still uses DLLs for libgcc_s_seh and Tcl/Tk).  For a static
-build of the Cairo devices one would need other RPMs like
-
-mingw64-cairo-static
-mingw64-fontconfig-static
-mingw64-freetype-static
-mingw64-pixman-static
-
-Rather than remove the .dll.a files, one could experiment with -Wl,-Bstatic.
-
-There are curl and ICU libraries for optional features.  Settings for
-Fedora's libs (DLL versions):
-
-USE_LIBCURL = YES
-CURL_LIBS = -lcurl
-
-USE_ICU = YES
-ICU_LIBS = -licuuc -licui18n -licudata
-
-There is a static version for curl but not ICU.
+make MkRules rbuild rpackages-cross cairodevices
 
 
 Cross-building packages
@@ -176,14 +112,14 @@ Cross-building packages
 
 There is experimental minimal support for cross-building packages.
 
-Copy {bin,etc}/{i386,x64} from this build to a standard Linux build.
+Copy {bin,etc}/x64 from this build to a standard Linux build of R.
 
-Edit the copy of etc/*/Makeconf to have
+Edit the copy of etc/x64/Makeconf to have
 
 R_WIN = /path/to/top/directory/of/this/build
 R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
 
-Set the environment variable R_CROSS_BUILD to i386 or x64.
+Set the environment variable R_CROSS_BUILD to x64.
 
 Use R CMD INSTALL as usual. (This does not do a staged install nor
 test loading.)  --use-LTO is supported if LTO_OPT was set.
@@ -191,7 +127,7 @@ test loading.)  --use-LTO is supported if LTO_OPT was set.
 R CMD INSTALL --build will produce a zipped installation.
 
 Should a package require external libraries, these can be placed under
-LOCAL_SOFT as defined in etc/*/Makeconf in the copy.
+LOCAL_SOFT as defined in etc/x64/Makeconf in the copy.
 
 
 
