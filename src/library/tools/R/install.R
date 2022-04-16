@@ -165,7 +165,7 @@ if(FALSE) {
     WINDOWS <- .Platform$OS.type == "windows"
     cross <- Sys.getenv("R_CROSS_BUILD")
     have_cross <- nzchar(cross)
-    if(have_cross && !cross %in% c("i386", "x64"))
+    if(have_cross && !cross %in% "x64")
         stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
     if (have_cross) {
         WINDOWS <- TRUE
@@ -178,7 +178,7 @@ if(FALSE) {
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
     cross <- Sys.getenv("R_CROSS_BUILD")
-    if(have_cross && !cross %in% c("i386", "x64"))
+    if(have_cross && !cross %in% "x64")
         stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
     test_archs <- rarch
     if (have_cross) {
