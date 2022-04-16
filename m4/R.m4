@@ -2644,6 +2644,7 @@ if test "${acx_blas_ok}" = no; then
 			     [], [-latlas])])
 fi
 
+dnl Unable to find a URL for PhiPACK in 2022 ....
 dnl BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for PhiPACK])
@@ -2654,6 +2655,21 @@ if test "${acx_blas_ok}" = no; then
                                             BLAS_LIBS="-lsgemm -ldgemm -lblas"],
 			                   [], [-lblas])],
 			     [], [-lblas])])
+fi
+
+dnl BLAS in Apple Accelerate?  Based on ax_blas.m4 #37
+if test $acx_blas_ok = no; then
+  case "${host_os}" in
+    darwin*)
+      AC_MSG_NOTICE([searching for Accelerate])
+      save_LIBS="$LIBS"; LIBS="-framework Accelerate $LIBS"
+      AC_MSG_CHECKING([for $dgemm in -framework Accelerate])
+      AC_LINK_IFELSE([AC_LANG_CALL([], [$dgemm])],
+	              [acx_blas_ok=yes;BLAS_LIBS="-framework Accelerate"])
+      AC_MSG_RESULT($acx_blas_ok)
+      LIBS="$save_LIBS"
+    ;;
+  esac
 fi
 
 dnl BLAS in Sun Performance library?

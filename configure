@@ -42773,6 +42773,50 @@ fi
 
 fi
 
+if test $acx_blas_ok = no; then
+  case "${host_os}" in
+    darwin*)
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: searching for Accelerate" >&5
+printf "%s\n" "$as_me: searching for Accelerate" >&6;}
+      save_LIBS="$LIBS"; LIBS="-framework Accelerate $LIBS"
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $dgemm in -framework Accelerate" >&5
+printf %s "checking for $dgemm in -framework Accelerate... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char $dgemm ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return $dgemm ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  acx_blas_ok=yes;BLAS_LIBS="-framework Accelerate"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $acx_blas_ok" >&5
+printf "%s\n" "$acx_blas_ok" >&6; }
+      LIBS="$save_LIBS"
+    ;;
+  esac
+fi
+
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: searching for Sun Performance library" >&5
