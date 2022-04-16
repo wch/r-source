@@ -2621,11 +2621,17 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 dnl Taken from 2008 version of ax_blas.m4
-# BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
+# BLAS in OpenBLAS library? (https://www.openblas.net/)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for OpenBLAS])
         AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"])
+fi
+
+# BLAS in BLIS library? (https://github.com/flame/blis)
+if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for BLIS])
+        AC_CHECK_LIB(blis, $sgemm, [acx_blas_ok=yes BLAS_LIBS="-lblis"])
 fi
 
 dnl BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)

@@ -22,6 +22,9 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
+      \item The possible libraries searched for by
+      \option{--with-blas} now includes BLIS.
+
       \item A system installation of generic LAPACK 3.10.0 or later will
       be preferred to the version in the \R sources.
 

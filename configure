@@ -42403,7 +42403,7 @@ fi
 
 fi
 
-# BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
+# BLAS in OpenBLAS library? (https://www.openblas.net/)
 if test "${acx_blas_ok}" = no; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: searching for OpenBLAS" >&5
 printf "%s\n" "$as_me: searching for OpenBLAS" >&6;}
@@ -42456,6 +42456,62 @@ if eval test \"x\$"$as_ac_Lib"\" = x"yes"
 then :
   acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"
+fi
+
+fi
+
+# BLAS in BLIS library? (https://github.com/flame/blis)
+if test "${acx_blas_ok}" = no; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: searching for BLIS" >&5
+printf "%s\n" "$as_me: searching for BLIS" >&6;}
+        as_ac_Lib=`printf "%s\n" "ac_cv_lib_blis_$sgemm" | $as_tr_sh`
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $sgemm in -lblis" >&5
+printf %s "checking for $sgemm in -lblis... " >&6; }
+if eval test \${$as_ac_Lib+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lblis  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char $sgemm ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return $sgemm ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  eval "$as_ac_Lib=yes"
+else $as_nop
+  eval "$as_ac_Lib=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+eval ac_res=\$$as_ac_Lib
+	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+printf "%s\n" "$ac_res" >&6; }
+if eval test \"x\$"$as_ac_Lib"\" = x"yes"
+then :
+  acx_blas_ok=yes BLAS_LIBS="-lblis"
 fi
 
 fi
