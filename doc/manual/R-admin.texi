@@ -3729,12 +3729,6 @@ single-threaded ones): this can lead to hard-to-track-down incorrect
 results or segfaults.
 @c Seen for OpenBLAS 0.3.2 in 2018.
 
-@strong{NOTE:} BLAS and LAPACK libraries built with
-@command{gfortran}@tie{}9 and later (and versions 8.4, 7.5 and later in
-those series) require calls from C/C++ to handle `hidden' character
-lengths --- @R{} itself does so but many packages used not to and some
-have segfaulted.
-
 There is a tendency for re-distributors of @R{} to use `enhanced' linear
 algebra libraries without explaining their downsides.
 
@@ -3792,16 +3786,19 @@ between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
 
 Fedora 33 and later offer `FlexiBLAS', a similar mechanism for switching
-the BLAS (and LAPACK) in use
+the BLAS in use
 (@uref{https://www.mpi-magdeburg.mpg.de/projects/flexiblas}).  However,
 rather than overriding @code{libblas}, this requires configuring @R{}
-with option @option{--with-blas=flexiblas}.  `Wrappers' are available
-for the reference BLAS, ATLAS and serial, threaded and OpenMP builds of
-OpenBLAS and BLIS.
+with option @option{--with-blas=flexiblas}.  `Backend' wrappers are
+available for the reference BLAS, ATLAS and serial, threaded and OpenMP
+builds of OpenBLAS and BLIS.  This can be controlled from a running @R{}
+session by package @CRANpkg{flexiblas}.  Apparently undocumented:
+FlexiBLAS on Feodra provides a complete LAPACK, but not the enhanced
+routines from ATLAS or OpenBLAS.
 
 @menu
 * ATLAS::
-* OpenBLAS::
+* OpenBLAS and BLIS::
 * MKL::
 * Shared BLAS::
 @end menu
@@ -4113,7 +4110,7 @@ routines so are not used by a default @command{configure} run.
 Provision is made for specifying an external LAPACK library with option
 @option{--with-lapack}, principally to cope with @acronym{BLAS}
 libraries which contain a copy of LAPACK (such as @code{Accelerate} on
-macOS and some builds of ATLAS, MKL and OpenBLAS on
+macOS and some builds of ATLAS, FlexiBLAS, MKL and OpenBLAS on
 @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2 is
 required.  This can only be done if @option{--with-blas} has been used.
 
@@ -4143,8 +4140,8 @@ practice its main uses are without a value,
 
 @itemize
 @item
-with an `enhanced' BLAS such as ATLAS, MKL or OpenBLAS which contains a
-full BLAS (to avoid possible conflicts), or
+with an `enhanced' BLAS such as ATLAS, FlexiBLAS, MKL or OpenBLAS which
+contains a full LAPACK (to avoid possible conflicts), or
 
 @item
 on Debian/Ubuntu systems to select the system @code{liblapack} which can
@@ -4163,6 +4160,14 @@ meant that on Sun Sparc using the Oracle compilers the flag
 On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
 build @R{}.
+
+BLAS and LAPACK libraries built with @command{gfortran}@tie{}9 and later
+(and versions 8.4, 7.5 and later in those series) require calls from
+C/C++ to handle `hidden' character lengths --- @R{} itself does so but
+many packages used not to and some have segfaulted.  This has been
+largely circumented by using the Fortran flag
+@option{-fno-optimize-sibling-calls} (currently set by
+@command{configure} if it detects @command{gfortran}@tie{}7 or later).
 
 LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
 subroutine may cause NA to be interpreted as zero. This is fixed in the
@@ -5419,6 +5424,9 @@ to use Accelerate's BLAS.
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
+
+@code{sessionInfo()} does not detect the use of Accelerate for either
+BLAS or LAPACK.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
