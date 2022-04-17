@@ -653,9 +653,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     checkEmail <- function(block) {
         pattern <- .make_RFC_2822_email_address_regexp()
         if(length(block)) {
-            address <- lines2str(.Rd_deparse(block[[1L]], tag = FALSE))
+            address <- lines2str(.Rd_deparse(block, tag = FALSE))
             if(!grepl(pattern, address))
-                warnRd(block[[1L]], Rdfile, level = 7,
+                warnRd(block, Rdfile, level = 7,
                        "invalid email address: ", address)
         }
     }
@@ -665,7 +665,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             u <- .Rd_deparse(block, tag = FALSE)
         else
             u <- .Rd_deparse(block[[1L]], tag = FALSE)
-        u <- trimws(lines2str(u))
+        u <- lines2str(u)
         parts <- parse_URI_reference(u)
         if(nzchar(s <- parts[, "scheme"])) {
             if(is.na(match(s, c(IANA_URI_scheme_db$URI_Scheme,
