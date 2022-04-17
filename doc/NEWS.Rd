@@ -69,6 +69,14 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} does more checking of package Rd
+      files, warning about invalid email addresses and (some) invalid
+      URIs and noting empty \samp{\item} labels in description lists. 
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Hashed \code{environment}s with sizes less than 5 now can grow,
