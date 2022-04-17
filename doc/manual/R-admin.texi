@@ -3793,7 +3793,7 @@ with option @option{--with-blas=flexiblas}.  `Backend' wrappers are
 available for the reference BLAS, ATLAS and serial, threaded and OpenMP
 builds of OpenBLAS and BLIS.  This can be controlled from a running @R{}
 session by package @CRANpkg{flexiblas}.  Apparently undocumented:
-FlexiBLAS on Feodra provides a complete LAPACK, but not the enhanced
+FlexiBLAS on Fedora provides a complete LAPACK, but not the enhanced
 routines from ATLAS or OpenBLAS.
 
 @menu
@@ -4165,7 +4165,7 @@ BLAS and LAPACK libraries built with @command{gfortran}@tie{}9 and later
 (and versions 8.4, 7.5 and later in those series) require calls from
 C/C++ to handle `hidden' character lengths --- @R{} itself does so but
 many packages used not to and some have segfaulted.  This has been
-largely circumented by using the Fortran flag
+largely circumvented by using the Fortran flag
 @option{-fno-optimize-sibling-calls} (currently set by
 @command{configure} if it detects @command{gfortran}@tie{}7 or later).
 

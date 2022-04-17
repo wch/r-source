@@ -27,7 +27,7 @@ La_library()
   the vendor/version.
 
   The detection does not work on Windows, nor for the Accelerate
-  framwork on macOS, nor in the rare (and unsupported case) of a static
+  framework on macOS, nor in the rare (and unsupported case) of a static
   external library.
 
   It is possible to build \R against an enhanced BLAS which contains
