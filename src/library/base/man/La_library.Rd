@@ -26,8 +26,13 @@ La_library()
   the shared object file will be given and its path/name may indicate
   the vendor/version.
 
-  The detection does not work on Windows, nor in the rare (and
-  unsupported case) of a static external library.
+  The detection does not work on Windows, nor for the Accelerate
+  framwork on macOS, nor in the rare (and unsupported case) of a static
+  external library.
+
+  It is possible to build \R against an enhanced BLAS which contains
+  some but not all LAPACK routines, in which case this function reports
+  the library containing routine \code{ILAVER}.
 }
 \seealso{
   \code{\link{extSoftVersion}} for versions of other third-party software

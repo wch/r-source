@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2020 R Core Team
+% Copyright 2014-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -59,7 +59,8 @@ extSoftVersion()
   an external BLAS implementation that had been copied, hard-linked or
   renamed by the system administrator.  For an external BLAS, a shared
   object file will be given and its path/name may indicate the
-  vendor/version. The detection does not work on Windows.
+  vendor/version. The detection does not work on Windows nor for the
+  Accelerate framework on macOS.
 }
 \seealso{
   \code{\link{libcurlVersion}} for the version of \code{libCurl}.
