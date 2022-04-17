@@ -49555,7 +49555,7 @@ ac_compiler_gnu=$ac_cv_fc_compiler_gnu
 
 ## The next two are needed to get IBM's xlf* and Intel's ifc
 ## to accept these extensions (but neither are current).
-## They set FCFLAGS_F9x used in etc/Makeconf.in
+## They set FCFLAGS_f9x used in etc/Makeconf.in
 ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
@@ -49669,7 +49669,6 @@ ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest
 ac_compiler_gnu=$ac_cv_fc_compiler_gnu
 
 ## We probably should be calling AC_FC_FREEFORM: adds to FCFLAGS
-## We could call AC_FC_FIXEDFORM: adds to FCFLAGS
 
   OPENMP_FCFLAGS=
   # Check whether --enable-openmp was given.
