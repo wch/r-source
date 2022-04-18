@@ -1,22 +1,26 @@
 The reference BLAS sources are part of the netlib LAPACK distribution.
-This goes way back in R and were moved to this directory in 2006.  The
-netlib sources have been commented and re-indented since.
+They goes way back in R and were moved to this directory in 2006.  The
+netlib sources had been commented and extensively re-formatted since.
 
-Routine ZHER2K was patched in 2013 in c62981 (the netlib sources have
-not been).
+Various double and complex routines were patched in 2006 in c53001.
+Routine ZHER2K was patched in 2013 in c62981.
+In all cases to avoid optimizations which set x*0 = 0 even if x was Inf or NaN.
+This patching was redone in 2022.
+
+comples*16 was changed to double complex, as that is what is used in R.
 
 File blas.f contains
-dasum daxpy dcopy ddot dgbmv dgemm dgemv dger dnrm2 drot drotg drotm
-drotmg dsbmv dscal dsdot dspmv dspr2 dspr dswap dsymm dsymv dsyr2
-dsyr2k dsyr dsyrk dtbmv dtbsv dtpmv dtpsv dtrmm dtrmv dtrsm dtrsv
-idamax lsame
+dasum daxpy dcopy ddot dgbmv dgemm dgemv dger drot drotm drotmg dsbmv
+dscal dsdot dspmv dspr2 dspr dswap dsymm dsymv dsyr2 dsyr2k dsyr dsyrk
+dtbmv dtbsv dtpmv dtpsv dtrmm dtrmv dtrsm dtrsv idamax lsame
 
-In LAPACK 3.10.0 dnrm2 and drotg were re-written in F90 using min/maxexponent.
+In LAPACK 3.10.0 dnrm2 and drotg were re-written in F90 using min/maxexponent,
+so blas2.f90 contains those routines.
 
 File cmplxblas.f contains
-dcabs1 dzasum dznrm2 izamax zaxpy zcopy zdotc zdotu zdrot zdscal zgbmv
-zgemm zgemv zgerc zgeru zhbmv zhemm zhemv zher2 zher2k zher zherk
-zhpmv zhpr2 zhpr zrotg zscal zswap zsymm zsyr2k zsyrk ztbmv ztbsv
-ztpmv ztpsv ztrmm ztrmv ztrsm ztrsv
+dcabs1 dzasum izamax zaxpy zcopy zdotc zdotu zdrot zdscal zgbmv zgemm
+zgemv zgerc zgeru zhbmv zhemm zhemv zher2 zher2k zher zherk zhpmv
+zhpr2 zhpr zscal zswap zsymm zsyr2k zsyrk ztbmv ztbsv ztpmv ztpsv
+ztrmm ztrmv ztrsm ztrsv
 
-Ditto znrm2 and zrotg
+cmplxblas2.f90 contains dznrm2 and zrotg

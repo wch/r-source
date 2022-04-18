@@ -16,15 +16,13 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item The included BLAS sources have been updated to those
+      included in LAPACK version 3.10.0,
     }
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The possible libraries searched for by
-      \option{--with-blas} now includes BLIS.
-
       \item A system installation of generic LAPACK 3.10.0 or later will
       be preferred to the version in the \R sources.
 
@@ -81,6 +79,16 @@
     \itemize{
       \item Hashed \code{environment}s with sizes less than 5 now can grow,
       too. (Reported to R-devel by Duncan Garmonsway.)
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.2.0 patched}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The libraries searched for by \option{--with-blas} (without
+      a value) now include BLIS (after OpenBLAS but before ATLAS).  And
+      on macOS, the Accelerate framework (after ATLAS).
     }
   }
 }

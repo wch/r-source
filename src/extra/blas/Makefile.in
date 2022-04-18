@@ -10,11 +10,16 @@ subdir = src/extra/blas
 R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
+.SUFFIXES:
+.SUFFIXES: .c .f .f90 .d .o
+.f90.o:
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
+ALL_FCLAGS = $(ALL_FFLAGS_LO)
 
-SOURCES = blas00.c blas.f cmplxblas.f
+SOURCES = blas00.c blas.f cmplxblas.f blas2.f90 cmplxblas2.f90
 
 @BUILD_LTO_CHECK_FALSE@Rblas_la = libRblas$(R_DYLIB_EXT)
 @BUILD_LTO_CHECK_TRUE@Rblas_la = libRblas.a
@@ -33,7 +38,12 @@ R:
 	@$(MAKE) $(Rblas_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
-blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+blas2.o: blas2.f90
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
+cmplxblas2.o: cmplxblas2.f90
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
+
+blas_OBJS=blas.o blas2.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o cmplxblas2.o
 @USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
 	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
 	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_TRUE@$(AR) -cr $(Rblas_la) $(blas_OBJS)

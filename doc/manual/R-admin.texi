@@ -3481,7 +3481,8 @@ tell you what other libraries are required for linking, for example by
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
-(2016) the resulting build did not pass its checks.).
+the resulting build did not complete its checks, nor did @R{} built
+against the version supplied by Fedora.)
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may

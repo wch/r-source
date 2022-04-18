@@ -16,7 +16,8 @@ M_ARCH ?=
 AS_ARCH ?=
 RC_ARCH ?=
 DT_ARCH ?=
-WIN ?= 64
+## only WIN=64 is supported from R 4.2.0
+WIN = 64
 USE_ICU ?= YES
 ICU_PATH ?= 
 ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
@@ -154,6 +155,10 @@ SORT=sort
 	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
 
 .f.o:
+	$(FC) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+## used in src/extra/blas
+.f90.o:
 	$(FC) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
 ## $($*-LINKFLAGS) is used for Rgui Rterm and Rscript
