@@ -15,7 +15,7 @@ zlalsd.f	zlange.f	zlanhe.f	zlanhs.f	zlantr.f
 zlaqge.f	zlaqp2.f	zlaqps.f	zlaqr0.f	zlaqr1.f
 zlaqr2.f	zlaqr3.f	zlaqr4.f	zlaqr5.f	zlarcm.f
 zlarf.f		zlarfb.f	zlarfg.f	zlarft.f	zlarfx.f
-zlartg.f	zlascl.f	zlaset.f	zlasr.f		zlassq.f
+zlascl.f	zlaset.f	zlasr.f
 zlaswp.f	zlasyf.f	zlatdf.f	zlatrd.f	zlatrs.f
 zlauu2.f	zlauum.f	zpotf2.f	zpotrf.f	zpotrf2.f
 zpotri.f	zrot.f		zstedc.f	zsteqr.f	zsymv.f
