@@ -128,6 +128,10 @@
       \code{"octmode"} objects now fulfils the important basic rule
       \code{as.character(x)[j] === as.character(x[j])}.
 
+      \item The set utility functions, notably \code{intersect()} have been
+      tweaked to be more consistent and symmetric in their two set
+      arguments, also preserving a common \code{mode}.
+
       \item \code{substr(ch, start,end) <- new} now e.g., preserves
       \code{names(ch)}; ditto for \code{substring()}, thanks to a patch
       from Brodie Gaslam.
