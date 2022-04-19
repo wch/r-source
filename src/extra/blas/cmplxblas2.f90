@@ -100,15 +100,15 @@ function DZNRM2( n, x, incx )
    real(wp), parameter :: one  = 1.0_wp
    real(wp), parameter :: maxN = huge(0.0_wp)
 !  ..
-!  .. Blue's ccaling constants ..
+!  .. Blue's scaling constants ..
    real(wp), parameter :: tsml = real(radix(0._wp), wp)**ceiling( &
        (minexponent(0._wp) - 1) * 0.5_wp)
    real(wp), parameter :: tbig = real(radix(0._wp), wp)**floor( &
        (maxexponent(0._wp) - digits(0._wp) + 1) * 0.5_wp)
    real(wp), parameter :: ssml = real(radix(0._wp), wp)**( - floor( &
-       (minexponent(0._wp) - 1) * 0.5_wp))
+       (minexponent(0._wp) - digits(0._wp)) * 0.5_wp))
    real(wp), parameter :: sbig = real(radix(0._wp), wp)**( - ceiling( &
-       (maxexponent(0._wp) - digits(0._wp) + 1) * 0.5_wp))
+       (maxexponent(0._wp) + digits(0._wp) - 1) * 0.5_wp))
 !  ..
 !  .. Scalar Arguments ..
    integer :: incx, n
@@ -220,7 +220,7 @@ end function
 !  ZROTG constructs a plane rotation
 !     [  c         s ] [ a ] = [ r ]
 !     [ -conjg(s)  c ] [ b ]   [ 0 ]
-!  where c is real, s ic complex, and c**2 + conjg(s)*s = 1.
+!  where c is real, s is complex, and c**2 + conjg(s)*s = 1.
 !
 !> \par Purpose:
 !  =============
@@ -237,8 +237,8 @@ end function
 !>    r = sgn(a)*sqrt(|a|**2 + |b|**2)
 !>    c = a / r
 !>    s = b / r
-!> the same as in ZROTG when |a| > |b|.  When |b| >= |a|, the
-!> sign of c and s will be different from those computed by ZROTG
+!> the same as in DROTG when |a| > |b|.  When |b| >= |a|, the
+!> sign of c and s will be different from those computed by DROTG
 !> if the signs of a and b are not the same.
 !>
 !> \endverbatim
@@ -267,7 +267,7 @@ end function
 !>
 !> \param[out] S
 !> \verbatim
-!>          S is DOUBLE PRECISION
+!>          S is DOUBLE COMPLEX
 !>          The scalar s.
 !> \endverbatim
 !
