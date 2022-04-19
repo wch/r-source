@@ -792,7 +792,7 @@ install.packages <-
         if (Ncpus > 1L && nrow(update) > 1L) {
             tlim_cmd <- character()
             if(tlim > 0) {
-                if(nzchar(timeout <- Sys.which("timeout"))) {
+                if(nzchar(timeout <- Sys.which(Sys.getenv("R_TIMEOUT", "timeout")))) {
                     ## SIGINT works better and is used for system.
                     tlim_cmd <- c(shQuote(timeout), "-s INT", tlim)
                 } else

@@ -340,7 +340,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   installs \emph{via} the OS's \command{timeout} command.  (The one
   tested is from GNU \pkg{coreutils}, commonly available on Linux but
   not other Unix-alikes.  If no such command is available the timeout
-  request is ignored, with a warning.)  For parallel installs a
+  request is ignored, with a warning. On Windows, one needs to specify
+  a suitable \command{timeout} command via environment variable
+  \env{R_TIMEOUT}, because \file{c:/Windows/system32/timeout.exe} is
+  not.)  For parallel installs a
   \samp{Error 124} message from \command{make} indicates that timeout
   occurred.
 
