@@ -17,7 +17,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item The included BLAS sources have been updated to those
-      included in LAPACK version 3.10.0,
+      included in LAPACK version 3.10.1,
     }
   }
 
@@ -34,11 +34,14 @@
       \code{liblapack} is looked for and used if it reports version
       3.10.0 or later and does not contain BLAS routines.
 
-      Using 3.10.0 may give some different signs in SVDs (seen in the
-      \file{lapack.R} test).
+      Using 3.10.x may give some different signs in SVDs.
 
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
+
+      \item The included LAPACK sources have been updated to include
+      the four Fortran 90 routines rather than their Fortran 77
+      predecessors.  This may give some different signs in SVDs.
     }
   }
 
@@ -71,7 +74,7 @@
     \itemize{
       \item \command{R CMD check} does more checking of package Rd
       files, warning about invalid email addresses and (some) invalid
-      URIs and noting empty \samp{\item} labels in description lists. 
+      URIs and noting empty \samp{\item} labels in description lists.
     }
   }
 
@@ -89,6 +92,8 @@
       \item The libraries searched for by \option{--with-blas} (without
       a value) now include BLIS (after OpenBLAS but before ATLAS).  And
       on macOS, the Accelerate framework (after ATLAS).
+
+      \item The included LAPACK sources have been updated to 3.10.1.
     }
   }
 }
