@@ -34,7 +34,8 @@
       \code{liblapack} is looked for and used if it reports version
       3.10.0 or later and does not contain BLAS routines.
 
-      Using 3.10.x may give some different signs in SVDs.
+      Using 3.10.x may give some different signs from earlier versions
+      in SVDs or eigendecompositions.
 
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.

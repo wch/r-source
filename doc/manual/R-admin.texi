@@ -4173,7 +4173,8 @@ largely circumvented by using the Fortran flag
 LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
 subroutine may cause NA to be interpreted as zero. This is fixed in the
 @R{} 3.6.3 and later sources, but if you use an external LAPACK, you may
-need to fix it there. (The bug was corrected in 3.9.1.)
+need to fix it there. (The bug was corrected in 3.9.1 and the routine
+removed in 3.10.1.)
 
 The code (in @code{dlapack.f}) should read
 @example
