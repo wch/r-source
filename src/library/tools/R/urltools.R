@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2021 The R Core Team
+#  Copyright (C) 2015-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,9 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+## See RFC 3986 <https://tools.ietf.org/html/rfc3986> and
+## <https://url.spec.whatwg.org/>.
 
 get_IANA_URI_scheme_db <-
 function()
@@ -32,7 +35,6 @@ function()
 parse_URI_reference <-
 function(x)
 {
-    ## See RFC_3986 <https://tools.ietf.org/html/rfc3986>.
     re <- "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?"
     if(length(x)) {
         y <- do.call(rbind, regmatches(x, regexec(re, x)))
