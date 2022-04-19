@@ -122,7 +122,9 @@ R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
 Set the environment variable R_CROSS_BUILD to x64.
 
 Use R CMD INSTALL as usual. (This does not do a staged install nor
-test loading.)  --use-LTO is supported if LTO_OPT was set.
+test loading.)  --use-LTO is supported if LTO_OPT was set.  Use a
+separate library tree (-l) as these are Windows and not Linux
+binaries.
 
 R CMD INSTALL --build will produce a zipped installation.
 
