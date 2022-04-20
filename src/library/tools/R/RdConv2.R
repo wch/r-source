@@ -426,7 +426,7 @@ prepare_Rd <-
         Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, ...),
                               list(f = Rd, enc = encoding, frag = fragment)))
     } else if(inherits(Rd, "connection")) {
-        Rdfile <- summary(Rd)
+        Rdfile <- summary(Rd)$description
         Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
     } else Rdfile <- attr(Rd, "Rdfile")
     srcref <- attr(Rd, "srcref")
