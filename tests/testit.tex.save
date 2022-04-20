@@ -15,8 +15,8 @@ Escaped backslash \code{\bsl{}x}.
 
 \code{\%\{\}}
 
-\LinkA{a link}{a link} and one to a known destination:
-\LinkA{weighted.mean}{weighted.mean}
+\LinkA{a link}{a link} and some to known destinations:
+\LinkA{weighted.mean}{weighted.mean}, \code{\LinkA{\textbraceleft{\textbraceright{}}{Paren}}
 
 var in \var{text}.
 

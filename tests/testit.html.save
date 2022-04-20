@@ -32,8 +32,8 @@ foo(<var>x</var>, <var>y</var>)
 </p>
 <p><code>%{}</code>
 </p>
-<p>a link and one to a known destination:
-weighted.mean
+<p>a link and some to known destinations:
+weighted.mean, <code>{</code>
 </p>
 <p>var in <var>text</var>.
 </p>

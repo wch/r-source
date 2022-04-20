@@ -12,8 +12,8 @@ foo(\var{x}, \var{y})
 
   \code{\%\{\}}
   
-  \link{a link} and one to a known destination:
-  \link[stats]{weighted.mean}
+  \link{a link} and some to known destinations:
+  \link[stats]{weighted.mean}, \code{\link[=Paren]{\{}}
   
   var in \var{text}.
   
