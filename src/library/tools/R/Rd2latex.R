@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -243,13 +243,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 
     latex_escape_name <- function(x)
     {
-        x <- psub("([$#_&])", "\\\\\\1", x) #- escape them
-        x <- fsub("{", "\\textbraceleft{}", x)
-        x <- fsub("}", "\\textbraceright{}", x)
+        x <- fsub("\\", "\\textbackslash", x)
+        x <- psub("([$#_&{}])", "\\\\\\1", x) #- escape them
+        x <- fsub("\\textbackslash", "\\textbackslash{}", x)
         x <- fsub("^", "\\textasciicircum{}", x)
         x <- fsub("~", "\\textasciitilde{}", x)
         x <- fsub("%", "\\Rpercent{}", x)
-        x <- fsub("\\\\", "\\textbackslash{}", x)
         ## avoid conversion to guillemets
         x <- fsub("<<", "<{}<", x)
         x <- fsub(">>", ">{}>", x)
