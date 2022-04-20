@@ -654,7 +654,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         pattern <- .make_RFC_2822_email_address_regexp()
         if(length(block)) {
             address <- lines2str(.Rd_deparse(block, tag = FALSE))
-            if(!grepl(pattern, address))
+            if(!grepl(re_anchor(pattern), address))
                 warnRd(block, Rdfile, level = 7,
                        "invalid email address: ", address)
         }
