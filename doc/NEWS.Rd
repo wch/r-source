@@ -347,6 +347,9 @@
       or \code{"years"} for consistency with the \code{POSIXt} method,
       thanks to Dirk Eddelbuettel's proposal in \PR{18099}.
 
+      \item \code{list2DF()} now checks that its arguments are of the
+      same length, rather than use recycling.
+
       \item The HTML help system has several new features: LaTeX-like
       math can be typeset using either \href{https://katex.org/}{KaTeX}
       or \href{https://www.mathjax.org/}{MathJax}, usage and example
