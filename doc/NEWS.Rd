@@ -17,7 +17,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item The included BLAS sources have been updated to those
-      included in LAPACK version 3.10.1,
+      shipped with LAPACK version 3.10.1,
     }
   }
 
@@ -65,9 +65,7 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The deprecated S-compatibility macros \code{DOUBLE_*} in
-      \file{R_ext/Constants.h} (included by \file{R.h}) have been
-      removed.
-      [Scheduled for Apr 23.]
+      \file{R_ext/Constants.h} (included by \file{R.h}) have been removed.
     }
   }
 
@@ -76,6 +74,14 @@
       \item \command{R CMD check} does more checking of package Rd
       files, warning about invalid email addresses and (some) invalid
       URIs and noting empty \samp{\item} labels in description lists.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{default.stringsAsFactors()} is defunct,
+
+      [Scheduled for May 7.]
     }
   }
 
