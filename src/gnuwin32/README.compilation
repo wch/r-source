@@ -43,8 +43,7 @@ front-ends/Makefile:
   other DLLs under bin and modules (R.dll Rblas.dll Rgraphapp.dll
   Riconv.dll Rlapack.dll lapack.dll).
 
-- LINKFLAGS includes flags for the stack size and to allow addressing
-  over 2GB for 32-bit executables.
+- LINKFLAGS includes flags for the stack size.
 
 A resource compiler is used to add version information to the DLLs
 under directories bin and modules.
@@ -74,5 +73,63 @@ Makevars file.
 Cross-compilation
 =================
 
-The instructions which were here were for R <= 4.1, and have not yet
-been rewriten for the UCRT-based build used for 4.2.
+Versions of R prior to 4.2.0 could be cross-compiled using the tools
+provided by Linux distributions including Fedora, Debian and Ubuntu.
+However, these do not (at the time of writing) support UCRT-based builds.
+
+https://cran.r-project.org/bin/windows/base/howto-R-devel.html
+describes how to obtain a suitable cross-compilation toolchain for
+x86_64 Linux (based on glibc).  Look at the section entitled something
+like
+
+'Setting up MXE build from pre-built tarballs',
+
+and follow the instructions, which install the toolchain under a place
+it (and we) call MXE_ROOT.  (To build R only the
+'rtools42-toolchain-libs-base' version is required.)
+
+You will also need to fetch the pre-built Tcl/Tk as described in the
+section 'Building R from source using a toolchain tarball'.  The default
+location for the latter is R_HOME/Tcl.
+
+To build all the compiled code, edit MkRules.local to something like
+
+MXE_ROOT = wherever you put it, or /usr/lib/mxe (which was set as a symlink)
+BINPREF64 = $(MXE_ROOT)/usr/bin/x86_64-w64-mingw32.static.posix-
+EXT_LIBS = $(MXE_ROOT)/usr/x86_64-w64-mingw32.static.posix
+#CURL_CA_BUNDLE = /etc/pki/tls/certs/ca-bundle.crt
+TEXI2ANY=/usr/bin/texi2any
+
+Setting LTO is supported.
+
+Then in this directory
+
+make MkRules rbuild rpackages-cross cairodevices
+
+
+Cross-building packages
+=======================
+
+There is experimental minimal support for cross-building packages.
+
+Copy {bin,etc}/x64 from this build to a standard Linux build of R.
+
+Edit the copy of etc/x64/Makeconf to have
+
+R_WIN = /path/to/top/directory/of/this/build
+R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
+
+Set the environment variable R_CROSS_BUILD to x64.
+
+Use R CMD INSTALL as usual. (This does not do a staged install nor
+test loading.)  --use-LTO is supported if LTO_OPT was set.  Use a
+separate library tree (-l) as these are Windows and not Linux
+binaries.
+
+R CMD INSTALL --build will produce a zipped installation.
+
+Should a package require external libraries, these can be placed under
+LOCAL_SOFT as defined in etc/x64/Makeconf in the copy.
+
+
+
