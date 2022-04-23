@@ -5,6 +5,18 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.2.0 patched}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The libraries searched for by \option{--with-blas} (without
+      a value) now include BLIS (after OpenBLAS but before ATLAS).  And
+      on macOS, the Accelerate framework (after ATLAS).
+
+      \item The included LAPACK sources have been updated to 3.10.1.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.2.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -231,7 +243,7 @@
       \item New functions \code{psmirnov()}, \code{qsmirnov()} and
       \code{rsmirnov()} in package \pkg{stats} implementing the
       asymptotic and exact distributions of the two-sample Smirnov statistic.
-      
+
       \item \code{iconv()} now allows \code{sub = "c99"} to use C99-style
       escapes for UTF-8 inputs which cannot be converted to encoding \code{to}.
 

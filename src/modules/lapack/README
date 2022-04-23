@@ -21,6 +21,7 @@ dir.create('dble')
 foo <- scan('dble.txt', "")
 file.copy(file.path("SRC", foo), 'dble')
 file.copy(file.path("INSTALL", 'ilaver.f'), 'dble')
+file.copy(file.path("INSTALL", 'droundup_lwork.f'), 'dble')
 system('cpp SRC/iparam2stage.F > dble/iparam2stage.f')
 system("cat dble/* > dlapack.f")
 

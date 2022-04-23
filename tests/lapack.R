@@ -102,6 +102,7 @@ rcond(A, "I")
 rcond(A, "1")
 
 eigen(A)
+## The signs of the 'u' and 'v' components can vary in the next two
 svd(A)
 La.svd(A)
 

@@ -2621,11 +2621,17 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 dnl Taken from 2008 version of ax_blas.m4
-# BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
+# BLAS in OpenBLAS library? (https://www.openblas.net/)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for OpenBLAS])
         AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"])
+fi
+
+# BLAS in BLIS library? (https://github.com/flame/blis)
+if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for BLIS])
+        AC_CHECK_LIB(blis, $sgemm, [acx_blas_ok=yes BLAS_LIBS="-lblis"])
 fi
 
 dnl BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
@@ -2638,6 +2644,7 @@ if test "${acx_blas_ok}" = no; then
 			     [], [-latlas])])
 fi
 
+dnl Unable to find a URL for PhiPACK in 2022 ....
 dnl BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for PhiPACK])
@@ -2648,6 +2655,21 @@ if test "${acx_blas_ok}" = no; then
                                             BLAS_LIBS="-lsgemm -ldgemm -lblas"],
 			                   [], [-lblas])],
 			     [], [-lblas])])
+fi
+
+dnl BLAS in Apple Accelerate?  Based on ax_blas.m4 #37
+if test $acx_blas_ok = no; then
+  case "${host_os}" in
+    darwin*)
+      AC_MSG_NOTICE([searching for Accelerate])
+      save_LIBS="$LIBS"; LIBS="-framework Accelerate $LIBS"
+      AC_MSG_CHECKING([for $dgemm in -framework Accelerate])
+      AC_LINK_IFELSE([AC_LANG_CALL([], [$dgemm])],
+	              [acx_blas_ok=yes;BLAS_LIBS="-framework Accelerate"])
+      AC_MSG_RESULT($acx_blas_ok)
+      LIBS="$save_LIBS"
+    ;;
+  esac
 fi
 
 dnl BLAS in Sun Performance library?
@@ -3034,6 +3056,7 @@ fi
 
 # We cannot use LAPACK if BLAS is not found
 if test "x${acx_blas_ok}" != xyes; then
+  AC_MSG_NOTICE([cannot use --with-lapack without --with-blas])
   acx_lapack_ok=noblas
 fi
 

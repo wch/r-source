@@ -7230,7 +7230,8 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>          The dimension of the array WORK.  LWORK >= max(1,N).
+*>          The dimension of the array WORK.
+*>          LWORK >= 1, if MIN(M,N) = 0, and LWORK >= N, otherwise.
 *>          For optimum performance LWORK >= N*NB, where NB is
 *>          the optimal blocksize.
 *>
@@ -7310,10 +7311,9 @@
 *
 *     Test the input arguments
 *
+      K = MIN( M, N )
       INFO = 0
       NB = ILAENV( 1, 'ZGEQRF', ' ', M, N, -1, -1 )
-      LWKOPT = N*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -7321,19 +7321,25 @@
          INFO = -2
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -4
-      ELSE IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
-         INFO = -7
+      ELSE IF( .NOT.LQUERY ) THEN
+         IF( LWORK.LE.0 .OR. ( M.GT.0 .AND. LWORK.LT.MAX( 1, N ) ) )
+     $      INFO = -7
       END IF
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'ZGEQRF', -INFO )
          RETURN
       ELSE IF( LQUERY ) THEN
+         IF( K.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            LWKOPT = N*NB
+         END IF
+         WORK( 1 ) = LWKOPT
          RETURN
       END IF
 *
 *     Quick return if possible
 *
-      K = MIN( M, N )
       IF( K.EQ.0 ) THEN
          WORK( 1 ) = 1
          RETURN
@@ -8335,8 +8341,9 @@
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
-      DOUBLE PRECISION   DLAMCH, ZLANGE
-      EXTERNAL           LSAME, DLAMCH, ZLANGE, DISNAN
+      DOUBLE PRECISION   DLAMCH, ZLANGE, DROUNDUP_LWORK
+      EXTERNAL           LSAME, DLAMCH, ZLANGE, DISNAN, 
+     $                   DROUNDUP_LWORK
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          INT, MAX, MIN, SQRT
@@ -8672,7 +8679,7 @@
          MAXWRK = MAX( MAXWRK, MINWRK )
       END IF
       IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = MAXWRK
+         WORK( 1 ) = DROUNDUP_LWORK( MAXWRK )
          IF( LWORK.LT.MINWRK .AND. .NOT. LQUERY ) THEN
             INFO = -12
          END IF
@@ -10268,7 +10275,7 @@
 *
 *     Return optimal workspace in WORK(1)
 *
-      WORK( 1 ) = MAXWRK
+      WORK( 1 ) = DROUNDUP_LWORK( MAXWRK )
 *
       RETURN
 *
@@ -27176,7 +27183,6 @@
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *
-      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM
       INTEGER            LDA, M, N
@@ -27194,17 +27200,14 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   SUM, VALUE, TEMP
-*     ..
-*     .. Local Arrays ..
-      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
+      DOUBLE PRECISION   SCALE, SUM, VALUE, TEMP
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ, DCOMBSSQ
+      EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -27256,19 +27259,13 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
-*        SSQ(1) is scale
-*        SSQ(2) is sum-of-squares
-*        For better accuracy, sum each column separately.
 *
-         SSQ( 1 ) = ZERO
-         SSQ( 2 ) = ONE
+         SCALE = ZERO
+         SUM = ONE
          DO 90 J = 1, N
-            COLSSQ( 1 ) = ZERO
-            COLSSQ( 2 ) = ONE
-            CALL ZLASSQ( M, A( 1, J ), 1, COLSSQ( 1 ), COLSSQ( 2 ) )
-            CALL DCOMBSSQ( SSQ, COLSSQ )
+            CALL ZLASSQ( M, A( 1, J ), 1, SCALE, SUM )
    90    CONTINUE
-         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
+         VALUE = SCALE*SQRT( SUM )
       END IF
 *
       ZLANGE = VALUE
@@ -27405,7 +27402,6 @@
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *
-      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
       INTEGER            LDA, N
@@ -27423,17 +27419,14 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   ABSA, SUM, VALUE
-*     ..
-*     .. Local Arrays ..
-      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
+      DOUBLE PRECISION   ABSA, SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ, DCOMBSSQ
+      EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, SQRT
@@ -27503,48 +27496,31 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
-*        SSQ(1) is scale
-*        SSQ(2) is sum-of-squares
-*        For better accuracy, sum each column separately.
 *
-         SSQ( 1 ) = ZERO
-         SSQ( 2 ) = ONE
-*
-*        Sum off-diagonals
-*
+         SCALE = ZERO
+         SUM = ONE
          IF( LSAME( UPLO, 'U' ) ) THEN
             DO 110 J = 2, N
-               COLSSQ( 1 ) = ZERO
-               COLSSQ( 2 ) = ONE
-               CALL ZLASSQ( J-1, A( 1, J ), 1,
-     $                      COLSSQ( 1 ), COLSSQ( 2 ) )
-               CALL DCOMBSSQ( SSQ, COLSSQ )
+               CALL ZLASSQ( J-1, A( 1, J ), 1, SCALE, SUM )
   110       CONTINUE
          ELSE
             DO 120 J = 1, N - 1
-               COLSSQ( 1 ) = ZERO
-               COLSSQ( 2 ) = ONE
-               CALL ZLASSQ( N-J, A( J+1, J ), 1,
-     $                      COLSSQ( 1 ), COLSSQ( 2 ) )
-               CALL DCOMBSSQ( SSQ, COLSSQ )
+               CALL ZLASSQ( N-J, A( J+1, J ), 1, SCALE, SUM )
   120       CONTINUE
          END IF
-         SSQ( 2 ) = 2*SSQ( 2 )
-*
-*        Sum diagonal
-*
+         SUM = 2*SUM
          DO 130 I = 1, N
             IF( DBLE( A( I, I ) ).NE.ZERO ) THEN
                ABSA = ABS( DBLE( A( I, I ) ) )
-               IF( SSQ( 1 ).LT.ABSA ) THEN
-                  SSQ( 2 ) = ONE + SSQ( 2 )*( SSQ( 1 ) / ABSA )**2
-                  SSQ( 1 ) = ABSA
+               IF( SCALE.LT.ABSA ) THEN
+                  SUM = ONE + SUM*( SCALE / ABSA )**2
+                  SCALE = ABSA
                ELSE
-                  SSQ( 2 ) = SSQ( 2 ) + ( ABSA / SSQ( 1 ) )**2
+                  SUM = SUM + ( ABSA / SCALE )**2
                END IF
             END IF
   130    CONTINUE
-         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
+         VALUE = SCALE*SQRT( SUM )
       END IF
 *
       ZLANHE = VALUE
@@ -27666,7 +27642,6 @@
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *
-      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM
       INTEGER            LDA, N
@@ -27684,17 +27659,14 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   SUM, VALUE
-*     ..
-*     .. Local Arrays ..
-      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
+      DOUBLE PRECISION   SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ, DCOMBSSQ
+      EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -27746,20 +27718,13 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
-*        SSQ(1) is scale
-*        SSQ(2) is sum-of-squares
-*        For better accuracy, sum each column separately.
 *
-         SSQ( 1 ) = ZERO
-         SSQ( 2 ) = ONE
+         SCALE = ZERO
+         SUM = ONE
          DO 90 J = 1, N
-            COLSSQ( 1 ) = ZERO
-            COLSSQ( 2 ) = ONE
-            CALL ZLASSQ( MIN( N, J+1 ), A( 1, J ), 1,
-     $                   COLSSQ( 1 ), COLSSQ( 2 ) )
-            CALL DCOMBSSQ( SSQ, COLSSQ )
+            CALL ZLASSQ( MIN( N, J+1 ), A( 1, J ), 1, SCALE, SUM )
    90    CONTINUE
-         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
+         VALUE = SCALE*SQRT( SUM )
       END IF
 *
       ZLANHS = VALUE
@@ -27914,7 +27879,6 @@
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *
-      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
       INTEGER            LDA, M, N
@@ -27933,17 +27897,14 @@
 *     .. Local Scalars ..
       LOGICAL            UDIAG
       INTEGER            I, J
-      DOUBLE PRECISION   SUM, VALUE
-*     ..
-*     .. Local Arrays ..
-      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
+      DOUBLE PRECISION   SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ, DCOMBSSQ
+      EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -28084,56 +28045,38 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
-*        SSQ(1) is scale
-*        SSQ(2) is sum-of-squares
-*        For better accuracy, sum each column separately.
 *
          IF( LSAME( UPLO, 'U' ) ) THEN
             IF( LSAME( DIAG, 'U' ) ) THEN
-               SSQ( 1 ) = ONE
-               SSQ( 2 ) = MIN( M, N )
+               SCALE = ONE
+               SUM = MIN( M, N )
                DO 290 J = 2, N
-                  COLSSQ( 1 ) = ZERO
-                  COLSSQ( 2 ) = ONE
-                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1,
-     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
-                  CALL DCOMBSSQ( SSQ, COLSSQ )
+                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1, SCALE, SUM )
   290          CONTINUE
             ELSE
-               SSQ( 1 ) = ZERO
-               SSQ( 2 ) = ONE
+               SCALE = ZERO
+               SUM = ONE
                DO 300 J = 1, N
-                  COLSSQ( 1 ) = ZERO
-                  COLSSQ( 2 ) = ONE
-                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1,
-     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
-                  CALL DCOMBSSQ( SSQ, COLSSQ )
+                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1, SCALE, SUM )
   300          CONTINUE
             END IF
          ELSE
             IF( LSAME( DIAG, 'U' ) ) THEN
-               SSQ( 1 ) = ONE
-               SSQ( 2 ) = MIN( M, N )
+               SCALE = ONE
+               SUM = MIN( M, N )
                DO 310 J = 1, N
-                  COLSSQ( 1 ) = ZERO
-                  COLSSQ( 2 ) = ONE
-                  CALL ZLASSQ( M-J, A( MIN( M, J+1 ), J ), 1,
-     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
-                  CALL DCOMBSSQ( SSQ, COLSSQ )
+                  CALL ZLASSQ( M-J, A( MIN( M, J+1 ), J ), 1, SCALE,
+     $                         SUM )
   310          CONTINUE
             ELSE
-               SSQ( 1 ) = ZERO
-               SSQ( 2 ) = ONE
+               SCALE = ZERO
+               SUM = ONE
                DO 320 J = 1, N
-                  COLSSQ( 1 ) = ZERO
-                  COLSSQ( 2 ) = ONE
-                  CALL ZLASSQ( M-J+1, A( J, J ), 1,
-     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
-                  CALL DCOMBSSQ( SSQ, COLSSQ )
+                  CALL ZLASSQ( M-J+1, A( J, J ), 1, SCALE, SUM )
   320          CONTINUE
             END IF
          END IF
-         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
+         VALUE = SCALE*SQRT( SUM )
       END IF
 *
       ZLANTR = VALUE
@@ -34974,8 +34917,6 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
-*
 *> \ingroup complex16OTHERauxiliary
 *
 *> \par Further Details:
@@ -34992,10 +34933,9 @@
 *  =====================================================================
       SUBROUTINE ZLARTG( F, G, CS, SN, R )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CS
@@ -35050,7 +34990,7 @@
          FS = FS*SAFMN2
          GS = GS*SAFMN2
          SCALE = SCALE*SAFMN2
-         IF( SCALE.GE.SAFMX2 )
+         IF( SCALE.GE.SAFMX2 .AND. COUNT .LT. 20 )
      $      GO TO 10
       ELSE IF( SCALE.LE.SAFMN2 ) THEN
          IF( G.EQ.CZERO.OR.DISNAN( ABS( G ) ) ) THEN
@@ -36220,17 +36160,14 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
-*
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASSQ( N, X, INCX, SCALE, SUMSQ )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
