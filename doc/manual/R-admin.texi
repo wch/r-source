@@ -3481,7 +3481,8 @@ tell you what other libraries are required for linking, for example by
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
-(2016) the resulting build did not pass its checks.).
+the resulting build did not complete its checks, nor did @R{} built
+against the version supplied by Fedora.)
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
@@ -3683,29 +3684,73 @@ these variables.
 * Caveats::
 @end menu
 
+The linear algebra routines in @R{} make use of @acronym{BLAS} (Basic
+Linear Algebra Subprograms, @uref{https://www.netlib.org/blas/faq.html})
+routines, and most make use of routines from @acronym{LAPACK} (Linear
+Algebra PACKage, @uref{https://www.netlib.org/lapack}).  The @R{}
+sources contain reference (Fortran) implementations of these, but they
+can be replaced by external libraries, usually those tuned for speed on
+specific CPUs.  These libraries normally contain all of the BLAS
+routines and some tuned LAPACK routines and perhaps the rest of LAPACK
+from the reference implementation.  Because of the way linking works,
+using an external BLAS library may necessitate using the version of
+LAPACK it contains.
+
+Note that the alternative implementations will not give identical
+numeric results.  Some differences may be benign (such the signs of SVDs
+and eigenvectors), but the optimized routines can be less accurate and
+(particularly for LAPACK) can be from older versions with fewer
+corrections.  However, @R{} relies on
+@acronym{ISO}/@acronym{IEC}@tie{}60559 compliance.  This can be broken
+if for example the code assumes that terms with a zero factor are always
+zero and do not need to be computed---whereas @code{x*0} can be
+@code{NaN}.  The internal BLAS has been extensively patched to avoid
+this whereas MKL's documentation has warned
+@quotation
+LAPACK routines assume that input matrices do not contain IEEE 754
+special values such as INF or NaN values. Using these special values may
+cause LAPACK to return unexpected results or become unstable.
+@end quotation
+
+Some of the external libraries are multi-threaded.  One issue is
+that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
+problems, and you may want to disable profiling if you use a
+multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
+@acronym{BLAS} can result in taking more @acronym{CPU} time and even
+more elapsed time (occasionally dramatically so) than using a similar
+single-threaded @acronym{BLAS}.  On a machine running other tasks, there
+can be contention for CPU caches that reduces the effectiveness of the
+optimization of cache use by a @acronym{BLAS} implementation: some
+people warn that this is especially problematic for hyperthreaded CPUs.
+
+BLAS and LAPACK routines may be used inside threaded code, for example
+in OpenMP sections in packages such as @CRANpkg{mgcv}.  The reference
+implementations are thread-safe but external ones may not be (even
+single-threaded ones): this can lead to hard-to-track-down incorrect
+results or segfaults.
+@c Seen for OpenBLAS 0.3.2 in 2018.
+
+There is a tendency for re-distributors of @R{} to use `enhanced' linear
+algebra libraries without explaining their downsides.
+
+
 @node BLAS, LAPACK, Linear algebra, Linear algebra
 @subsection BLAS
 
-The linear algebra routines in @R{} can make use of enhanced
-@acronym{BLAS} (Basic Linear Algebra Subprograms,
-@uref{https://www.netlib.org/blas/faq.html}) routines.  However,
-these have to be explicitly requested at configure time: @R{} provides
-an internal @acronym{BLAS} which is well-tested and will be adequate for
-most uses of @R{}.
+An external BLAS library has to be explicitly requested at configure
+time.
 
 You can specify a particular @acronym{BLAS} library @emph{via} a value
-for the configuration option @option{--with-blas} and not to use an
-external @acronym{BLAS} library by @option{--without-blas} (the
-default).  If @option{--with-blas} is given with no @code{=}, its value
-is taken from the
+for the configuration option @option{--with-blas}.  If this is given
+with no @code{=}, its value is taken from the
 @enindex BLAS_LIBS
 environment variable @env{BLAS_LIBS}, set for example in
 @file{config.site}.  If neither the option nor the environment variable
 supply a value, a search is made for a suitable@footnote{The search
-includes OpenBLAS, ATLAS and a generic @file{libblas}, plus some
-platform-specific choices (see below).} @acronym{BLAS}.  If the value is
-not obviously a linker command (starting with a dash or giving the path
-to a library), it is prefixed by @samp{-l}, so
+order is currently OpenBLAS, BLIS, ATLAS, platform-specific choices (see
+below) and finally a generic @file{libblas}.} @acronym{BLAS}.  If the
+value is not obviously a linker command (starting with a dash or giving
+the path to a library), it is prefixed by @samp{-l}, so
 
 @example
 --with-blas="foo"
@@ -3722,83 +3767,44 @@ well as @code{LSAME}), and appears to be usable.  However, an external
 position-independent code), and that is not checked.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
-(@code{sunperf} on Solaris@footnote{Using the Oracle Developer Studio
-@command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{Accelerate} on macOS).  The correct incantation for these is often
+(@code{Accelerate} on macOS, @code{sunperf} on Solaris@footnote{Using
+the Oracle Developer Studio @command{cc} and @command{f95} compilers},
+@code{libessl} on IBM).  The correct incantation for these is often
 found @emph{via} @option{--with-blas} with no value on the appropriate
 platforms.
-
-Some of the external @acronym{BLAS}es are multi-threaded.  One issue is
-that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
-problems, and you may want to disable profiling if you use a
-multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
-@acronym{BLAS} can result in taking more @acronym{CPU} time and even
-more elapsed time (occasionally dramatically so) than using a similar
-single-threaded @acronym{BLAS}.  On a machine running other tasks, there
-can be contention for CPU caches that reduces the effectiveness of the
-optimization of cache use by a @acronym{BLAS} implementation: some
-people warn that this is especially problematic for hyperthreaded CPUs.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
 @strong{not} used (it is the default on all platforms except AIX), then
 all @acronym{BLAS}-using packages must also be.  So if @R{} is re-built
 to use an enhanced @acronym{BLAS} then packages such as
-@CRANpkg{quantreg} will need to be re-installed; they may be under other
-circumstances.
-
-@R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
-external @acronym{BLAS}.  This can be broken if for example the code
-assumes that terms with a zero factor are always zero and do not need to
-be computed---whereas @code{x*0} can be @code{NaN}.  This is checked in
-the test suite.
-
-External @acronym{BLAS} implementations often make less use of
-extended-precision floating-point registers (where available) and will
-almost certainly re-order computations.  This can result in less
-accuracy than using a reference @acronym{BLAS}, and may result in
-different solutions, e.g.@: different signs in SVD and
-eigendecompositions.
+@CRANpkg{quantreg} will need to be re-installed.
 
 Debian/Ubuntu systems provide a system-specific way to switch the BLAS
-in use.  Build @R{} with @option{-with-blas} to select the OS version
-of the reference BLAS, and then use @command{update-alternatives} to
-switch between the available BLAS libraries.  See
+in use: Build @R{} with @option{-with-blas} to select the OS version of
+the reference BLAS, and then use @command{update-alternatives} to switch
+between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
 
 Fedora 33 and later offer `FlexiBLAS', a similar mechanism for switching
-the BLAS (and LAPACK) in use
+the BLAS in use
 (@uref{https://www.mpi-magdeburg.mpg.de/projects/flexiblas}).  However,
-rather than overriding @code{libblas}, this requires option
-@option{--with-blas=flexiblas}.  If installed, there are `backends' for
-the reference BLAS, ATLAS and serial, threaded and OpenMP builds of
-OpenBLAS and BLIS.
-
-The URIs for several of these BLAS have been subject to frequent
-gratuitous changes, so you will need to search for their current
-locations.
-
-BLAS (and LAPACK) routines may be used inside threaded code, for example
-in OpenMP sections in packages such as @pkg{mgcv}.  The reference
-implementations are thread-safe but external ones may not be (even
-single-threaded ones): this can lead to hard-to-track-down incorrect
-results or segfaults.
-@c Seen for OpenBLAS 0.3.2 in 2018.
-
-@strong{NOTE:} BLAS libraries built with @command{gfortran}@tie{}9 (and
-later and versions 8.4, 7.5 and later in those series) require calls
-from C/C++ to handle `hidden' character lengths --- @R{} itself does so
-but many packages do not and some segfault. (This applies also to
-external LAPACK libraries.)
+rather than overriding @code{libblas}, this requires configuring @R{}
+with option @option{--with-blas=flexiblas}.  `Backend' wrappers are
+available for the reference BLAS, ATLAS and serial, threaded and OpenMP
+builds of OpenBLAS and BLIS.  This can be controlled from a running @R{}
+session by package @CRANpkg{flexiblas}.  Apparently undocumented:
+FlexiBLAS on Fedora provides a complete LAPACK, but not the enhanced
+routines from ATLAS or OpenBLAS.
 
 @menu
 * ATLAS::
-* OpenBLAS::
+* OpenBLAS and BLIS::
 * MKL::
 * Shared BLAS::
 @end menu
 
-@node ATLAS, OpenBLAS, BLAS, BLAS
+@node ATLAS, OpenBLAS and BLIS, BLAS, BLAS
 @subsubsection ATLAS
 
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
@@ -3810,8 +3816,8 @@ ATLAS static libraries (they seem to work on @cputype{ix86} platforms,
 but not always on @cputype{x86_64} ones).
 
 ATLAS contains replacements for a small number of LAPACK routines, but
-can be built to merge these with LAPACK sources to include a full LAPACK
-library.
+can be built to merge these with the reference LAPACK sources to include
+a full LAPACK library.
 
 Recent versions of ATLAS can be built as a single shared library, either
 @code{libsatlas} or @code{libtatlas} (serial or threaded respectively):
@@ -3860,11 +3866,11 @@ compile-time flag specifies 4 threads.)
 @c http://math-atlas.sourceforge.net/atlas_install/node21.html
 
 
-@node OpenBLAS, MKL, ATLAS, BLAS
+@node OpenBLAS and BLIS, MKL, ATLAS, BLAS
 @subsubsection OpenBLAS and BLIS
 
 Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors
-and OSes, which was frozen in mid-2010.  OpenBLAS
+and OSes, which was frozen in 2010.  OpenBLAS
 (@uref{https://www.openblas.net/}) is a descendant project with support
 for some later CPUs.
 
@@ -3898,11 +3904,14 @@ second and third the number of threads is controlled by
 @env{OPENBLAS_NUM_THREADS} and @env{OMP_NUM_THREADS} (as usual for
 OpenMP) respectively.
 
+These and their Debian equivalents contain a complete LAPACK
+implementation.
+
 Note that building @R{} on Linux against distributed libraries may need
 @samp{-devel} or @samp{-dev} packages installed.
 
 @c https://wiki.debian.org/DebianScience/LinearAlgebraLibraries
-For @cputype{ix86} and @cputype{x86_64} most distributed libraries
+For @cputype{ix86} and @cputype{x86_64} CPUs most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
 
@@ -3919,13 +3928,13 @@ libbliso.so
 also be used as a shared BLAS.  The Fedora builds do not include LAPACK
 in the BLIS libraries.
 
-@node MKL, Shared BLAS, OpenBLAS, BLAS
+@node MKL, Shared BLAS, OpenBLAS and BLIS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library@footnote{Sometimes known as
 `Intel oneAPI Math Kernel Library' or even `oneMKL'.}.  You are
 encouraged to read the documentation which is installed with the
-library, before attempting to link to MKL.  This includes a `link line
+library before attempting to link to MKL.  This includes a `link line
 advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
 @uref{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.vpt6qp}.
@@ -3937,7 +3946,7 @@ for @R{} on those platforms.
 
 The MKL interface has changed several times but has been stable in
 recent years: the following examples have been used with versions 10.3
-to 2022.0.2, for GCC compilers on @cputype{x86_64}.
+to 2022.0.2, for GCC compilers on @cputype{x86_64} CPUs.
 
 To use a sequential version of MKL we used
 
@@ -4062,7 +4071,7 @@ on @cputype{x86_64} Fedora will change the @acronym{BLAS} used to
 multithreaded OpenBLAS.  A similar link works for most versions of the
 OpenBLAS (provided the appropriate @file{lib} directory is in the
 run-time library path or @command{ld.so} cache).  It can also be used
-for a single-library ATLAS, so on @cputype{x86_64} Fedora
+for a single-library ATLAS, so on @cputype{x86_64} Fedora either of
 
 @example
 ln -s /usr/lib64/atlas/libsatlas.so.3 @var{R_HOME}/lib/libRblas.so
@@ -4085,54 +4094,51 @@ which is used.
 
 @cindex LAPACK library
 
-Provision is made for specifying an external LAPACK library, principally
-to cope with @acronym{BLAS} libraries which contain a copy of LAPACK
-(such as @code{Accelerate} on macOS and some builds of ATLAS, MKL and
-OpenBLAS on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK
-version 3.2 is required.  This can only be done if @option{--with-blas}
-has been used.
+The default is to compile the LAPACK source included with @R{}.
+However, the compiled routines may or may not be used if the selected
+BLAS contains some or all LAPACK routines -- this depends on how dynamic
+linking works on the platform.
+
+Provision is made for specifying an external LAPACK library with option
+@option{--with-lapack}, principally to cope with @acronym{BLAS}
+libraries which contain a copy of LAPACK (such as @code{Accelerate} on
+macOS and some builds of ATLAS, FlexiBLAS, MKL and OpenBLAS on
+@cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2 is
+required.  This can only be done if @option{--with-blas} has been used.
 
 However, the likely performance gains are thought to be small (and may
 be negative).  The default is not to search for a suitable LAPACK
 library, and this is definitely @strong{not} recommended.  You can
 specify a specific LAPACK library or a search for a generic library by
-the configuration option @option{--with-lapack}.  The default for
-@option{--with-lapack} is to check the @acronym{BLAS} library and then
-look for an external library @samp{-llapack}.  Sites searching for the
-fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  Similarly, OpenBLAS can be built
-to contain an optimized subset of LAPACK or a full LAPACK (the latter
+the configuration option @option{--with-lapack} without a value.  The
+default for @option{--with-lapack} is to check the @acronym{BLAS}
+library (for function @code{DPSTRF}) and then look for an external
+library @samp{-llapack}.  Sites searching for the fastest possible
+linear algebra may want to build a LAPACK library using the
+ATLAS-optimized subset of LAPACK.  Similarly, OpenBLAS can be built to
+contain an optimized subset of LAPACK or a full LAPACK (the latter
 seeming to be the default).
 
 A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
 @enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
-is specified (as the default value is @code{no}) and the @acronym{BLAS} library
-does not contain LAPACK.
+is specified and the @acronym{BLAS} library does not contain LAPACK.
 
-If you do use @option{--with-lapack}, be aware of potential problems
-with bugs in the LAPACK sources (or in the posted corrections to those
-sources), seen several times in Linux distributions over the years.
+Please bear in mind that using @option{--with-lapack} is provided
+@strong{only} because it is necessary on some platforms and because some
+users want to experiment with claimed performance improvements.  In
+practice its main uses are without a value,
 
-Please @strong{do} bear in mind that using @option{--with-lapack} is
-`definitely @strong{not} recommended': it is provided @strong{only}
-because it is necessary on some platforms and because some users want to
-experiment with claimed performance improvements.
+@itemize
+@item
+with an `enhanced' BLAS such as ATLAS, FlexiBLAS, MKL or OpenBLAS which
+contains a full LAPACK (to avoid possible conflicts), or
 
-Note too the comments about @acronym{ISO}/@acronym{IEC}@tie{}60559
-compliance in the section of external @acronym{BLAS}: these apply
-equally to an external LAPACK, and for example the Intel MKL
-documentation has said
-@quotation
-LAPACK routines assume that input matrices do not contain IEEE 754
-special values such as INF or NaN values. Using these special values may
-cause LAPACK to return unexpected results or become unstable.
-@end quotation
-
-We rely on limited support in LAPACK for matrices with @math{2^{31}} or
-more elements: it is possible that an external LAPACK will not have that
-support.
+@item
+on Debian/Ubuntu systems to select the system @code{liblapack} which can
+be switched by the `alternatives' mechanism.
+@end itemize
 
 
 @node Caveats,  , LAPACK, Linear algebra
@@ -4147,10 +4153,19 @@ On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
 build @R{}.
 
+BLAS and LAPACK libraries built with @command{gfortran}@tie{}9 and later
+(and versions 8.4, 7.5 and later in those series) require calls from
+C/C++ to handle `hidden' character lengths --- @R{} itself does so but
+many packages used not to and some have segfaulted.  This has been
+largely circumvented by using the Fortran flag
+@option{-fno-optimize-sibling-calls} (currently set by
+@command{configure} if it detects @command{gfortran}@tie{}7 or later).
+
 LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
 subroutine may cause NA to be interpreted as zero. This is fixed in the
 @R{} 3.6.3 and later sources, but if you use an external LAPACK, you may
-need to fix it there. (The bug was corrected in 3.9.1.)
+need to fix it there. (The bug was corrected in 3.9.1 and the routine
+removed in 3.10.1.)
 
 The code (in @code{dlapack.f}) should read
 @example
@@ -4170,6 +4185,17 @@ The code (in @code{dlapack.f}) should read
       RETURN
 @end example
 (The inner ELSE clause was missing in LAPACK 3.9.0.)
+
+If you do use an external LAPACK, be aware of potential problems with
+other bugs in the LAPACK sources (or in the posted corrections to those
+sources), seen several times in Linux distributions over the years.  We
+have even seen distributions with missing LAPACK routines from their
+@code{liblapack}.
+
+We rely on limited support in LAPACK for matrices with @math{2^{31}} or
+more elements: it is possible that an external LAPACK will not have that
+support.
+
 
 @node Configuration on a Unix-alike, Platform notes, Essential and useful other programs under a Unix-alike, Top
 @appendix Configuration on a Unix-alike
@@ -5391,6 +5417,9 @@ to use Accelerate's BLAS.
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
+
+@code{sessionInfo()} does not detect the use of Accelerate for either
+BLAS or LAPACK.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
