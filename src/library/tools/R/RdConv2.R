@@ -922,7 +922,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                 if((blocktag %in% c("\\describe", "\\arguments",
                                     "\\value")) &&
                     isBlankRd(block[[1L]]))
-                    warnRd(block[[1L]], Rdfile, level = 7,
+                    warnRd(block, Rdfile, level = 7,
                            "\\item in ", blocktag,
                            " must have non-empty label")
     		switch(blocktag,
