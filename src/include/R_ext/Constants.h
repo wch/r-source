@@ -43,11 +43,12 @@
 #include <float.h>  /* Defines the RHSs, C99 and later */
 #endif
 
-// The DOUBLE_* defines were deprecated in R 4.2.0
+/* The DOUBLE_* defines were deprecated in R 4.2.0 and removed in 4.3.0.
 #define DOUBLE_DIGITS  DBL_MANT_DIG
 #define DOUBLE_EPS     DBL_EPSILON
 #define DOUBLE_XMAX    DBL_MAX
 #define DOUBLE_XMIN    DBL_MIN
+*/
 #endif
 
 #endif /* R_EXT_CONSTANTS_H_ */
