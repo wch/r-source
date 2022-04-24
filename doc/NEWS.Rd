@@ -17,7 +17,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item The included BLAS sources have been updated to those
-      shipped with LAPACK version 3.10.1,
+      shipped with LAPACK version 3.10.1.
     }
   }
 
