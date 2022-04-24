@@ -661,6 +661,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     }
 
     checkURL <- function(block, tag) {
+        pattern <- .make_RFC_2822_email_address_regexp()        
         if(tag == "\\url")
             u <- .Rd_deparse(block, tag = FALSE)
         else
@@ -669,7 +670,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         parts <- parse_URI_reference(u)
         if(nzchar(s <- parts[, "scheme"])) {
             if(is.na(match(s, c(IANA_URI_scheme_db$URI_Scheme,
-                                "javascript"))))
+                                "javascript"))) ||
+               ((s == "mailto") &&
+                !grepl(re_anchor(pattern), parts[, "path"])))
                 warnRd(block, Rdfile, level = 7,
                        "invalid URL: ", u)
         }
