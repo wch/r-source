@@ -5809,7 +5809,7 @@ No Fortran compiler has been released for this architecture although
 there are ports under development.  We used the fork of
 @command{gfortran} from @url{https://github.com/iains/gcc-darwin-arm64}
 of which there are binary distributions at
-@uref{https://mac.r-project.org/libs-arm64/} and
+@uref{https://mac.r-project.org/tools/} and
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.  It
 seems some of these have been built using the SDK path for Xcode and not
 that for the Command Line Tools which causes some problems@footnote{such
@@ -5818,7 +5818,13 @@ link: to fix that change the symbolic link
 @file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
 @file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
 appropriate path can be found by running @command{xcrun
--show-sdk-path}).
+-show-sdk-path}).  (The distribution at
+@uref{https://mac.r-project.org/tools/} includes a script
+@example
+/opt/R/arm64/gfortran/bin/gfortran-update-sdk
+@end example
+@noindent
+to do this.)
 
 A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
@@ -5864,6 +5870,7 @@ FC="/opt/R/arm64/gfortran/bin/gfortran -mtune=native"
 CXX="clang++ -target arm64-apple-macos11"
 CFLAGS="-falign-functions=8 -g -O2 -Wall -pedantic"
 CPPFLAGS=-I/opt/R/arm64/include
+FFLAGS="-g -O2 -mmacosx-version-min=11.0"
 LDFLAGS=-L/opt/R/arm64/lib
 R_LD_LIBRARY_PATH=/opt/R/arm64/lib
 @end example
