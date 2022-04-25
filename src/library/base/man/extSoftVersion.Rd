@@ -71,7 +71,7 @@ extSoftVersion()
 
   \code{\link{grSoftVersion}} for third-party graphics software.
 
-  \code{\link{tclVersion}} for the version of Tcl/Tk.
+  \code{\link{tclVersion}} in package \pkg{txltk} for the version of Tcl/Tk.
   
   \code{\link{pcre_config}} for PCRE configuration options.
 }
