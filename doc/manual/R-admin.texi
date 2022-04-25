@@ -5832,12 +5832,9 @@ supports both @cputype{arm64} and @cputype{x86_64} builds.
 
 Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
-to get Tcl/Tk is to install
-@uref{https://mac.r-project.org/libs-arm64/tcltk-8.6.11-xft-darwin20.4-arm64.pkg}
-which bundles Tcl, Tk and Tktable, but you may already have these
-installed by the @R{} binary package installer.)  These unpack into
-@file{/opt/R/arm64}: it is simplest to first create that directory and
-adjust its ownership if desired:
+to get Tcl/Tk is to install if from the @R{} binary package installer.)
+These unpack into @file{/opt/R/arm64}: it is simplest to first create
+that directory and adjust its ownership if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64
