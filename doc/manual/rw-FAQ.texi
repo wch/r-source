@@ -113,7 +113,7 @@ builds of R are provided.
 * What does 'DLL attempted to change FPU control word' mean?::  
 * Other strange crashes.::      
 * Why does R never use more than 50% of my CPU?::  
-* Does R run under Windows Vista?::  
+* Does R run under Windows 7?::  
 * Quotes don't come out right on the console/terminal/pager::  
 * There is no tilde on my keyboard::  
 * Can I use R on 64-bit Windows?::  
@@ -144,10 +144,12 @@ bugs, be careful if you use it.
 
 Current binary versions of R are known to run on Windows 7 or later. R 4.1
 is the last version that supported 32-bit versions: @xref{Can I use R on 64-bit Windows?}.
-R 4.2.0 requires the Universal C Runtime (UCRT), which is included in
+Windows Vista is no longer supported.
+
+R 4.2.0 and later require the Universal C Runtime (UCRT), which is included in
 Windows 10 and Windows Server 2016 or newer. On earlier versions of Windows,
 UCRT has to be installed before installing R. UCRT is available for Windows since
-Windows Vista SP2 and Windows Server 2008 SP2. Windows XP is no longer supported.
+Windows Vista SP2 and Windows Server 2008 SP2. 
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
@@ -157,10 +159,9 @@ Windows Vista SP2 and Windows Server 2008 SP2. Windows XP is no longer supported
 @c Server 2008 R2 went end of life 2020-01-14
 
 We only test on versions of Windows currently supported by Microsoft,
-recently mainly Windows Server 2008 R2 (based on Windows 7), Windows 10,
-Windows Server 2016, Windows Server 2022 and Windows 11.  The most thorough
-testing is done via CRAN packages checks: for R 4.2 this has been on
-Windows Server 2022.
+recently mainly Windows 10, Windows Server 2022 and Windows 11.  The most
+thorough testing is done via CRAN packages checks: for R 4.3 this has been
+on Windows Server 2022.
 
 For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
@@ -609,7 +610,7 @@ that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
 `Macro Magic' and `JS Pager'.
 
-R 4.2 uses UCRT as the C runtime instead of MSVCRT. No such problems have
+R 4.2 and later use UCRT as the C runtime instead of MSVCRT. No such problems have
 been reported so far.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
@@ -649,7 +650,7 @@ beyond the measures already taken.  The only solution we know of is for
 the user to replace the buggy system component that is causing the
 error.
 
-@node Why does R never use more than 50% of my CPU?, Does R run under Windows Vista?, Other strange crashes., Installation and Usage
+@node Why does R never use more than 50% of my CPU?, Does R run under Windows 7?, Other strange crashes., Installation and Usage
 @section Why does R never use more than 50% of my CPU?
 
 This is a misreading of Windows' confusing Task Manager.  R's
@@ -668,12 +669,12 @@ packages, which needs to be selected by user. Some contributed R packages
 use multiple CPUs or multiple threads.
 
 
-@node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
-@section Does R run under Windows Vista/7/8/10/11/Server 2008/2016/2022?
+@node Does R run under Windows 7?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
+@section Does R run under Windows 7/8/10/11/Server 2012/2016/2022?
 
-R 4.2 code base still conservatively uses features of Windows Vista and
-later only when available, and otherwise fall back to older features, so it
-might still run on Vista, but this is not tested (see Q2.2), and the code
+R 4.3 code base still conservatively uses features of Windows 7 and
+later only when available, and otherwise falls back to older features, so it
+might still run on 7, but this is not tested (see Q2.2), and the code
 is tuned for newer systems.  Some performance work-arounds for old Windows
 systems past their end of support may be removed, such as a custom memory
 allocator removed in R 4.2.
@@ -779,10 +780,10 @@ more reliable with these OSes (but still not 100% correct).
 @c this on for all programs.  R runs correctly with DEP enabled.
 
 
-@node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows Vista?, Installation and Usage
+@node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows 7?, Installation and Usage
 @section Quotes don't come out right on the console/terminal/pager.
 
-R 4.2 uses UTF-8 as the native encoding on recent Windows (see Q2.2) and
+R and later 4.2 use UTF-8 as the native encoding on recent Windows (see Q2.2) and
 this should make also this previously reported problem disappear.  With
 this feature, R automatically uses the 65001 code page (UTF-8).  When using
 @code{RTerm} from the @code{Windows Command Prompt} (@file{cmd.exe}) or
@@ -803,7 +804,7 @@ encodings: this can be changed via @command{chcp}, with @command{chcp
 1252} being appropriate for Western European (including English)
 locales.  The other is that the default raster fonts only include
 directional single quotes and not directional double quotes (which will
-probably be rendered as a filled rectangle). In R 4.2
+probably be rendered as a filled rectangle). In R 4.2 and later
 on recent versions of Windows where UTF-8 is the native encoding,
 @command{Rterm} will automatically switch the console codepage to UTF-8.
 
@@ -934,7 +935,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-4.2.0\bin\x64
+c:\Program Files\R\R-4.3.0\bin\x64
 @end example
 
 @noindent
@@ -1026,7 +1027,7 @@ Suitable versions of Windows support what it calls `East Asian'
 languages, but e.g.@: Western installations of Windows often do not have
 such support.  So we need to assume that your copy of Windows does.
 
-R 4.2 on recent versions of Windows (see Q2.2) uses UTF-8 as the native
+R 4.2 and later on recent versions of Windows (see Q2.2) use UTF-8 as the native
 encoding.  It is thus possible to use characters outside of the system
 locale code page in R, including the command-line front-end
 @command{Rterm.exe} (and @command{Rgui.exe}, where limited support has
@@ -1035,7 +1036,7 @@ which have the required glyphs, such as @code{NSimFun} for Asian languages.
 Use @code{l10n_info()} from R to check whether R is really running in UTF-8
 as native encoding.
 
-With R 4.2 on earlier versions of Windows and with earlier versions of R,
+With R 4.2 and later on earlier versions of Windows and with earlier versions of R,
 the following content still applies.
 
 Both @command{Rterm.exe} and @command{Rgui.exe} support single- and
@@ -1068,7 +1069,7 @@ When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. @code{Lucida Console} or
 @code{Consolas}, not the OEM raster fonts) and a suitable codepage
 (which for the Windows Cmd shell can be done using @command{chcp}). In R 4.2
-on recent versions of Windows where UTF-8 is the native encoding,
+and later on recent versions of Windows where UTF-8 is the native encoding,
 @command{Rterm} will automatically switch the console codepage to UTF-8.
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
@@ -1176,7 +1177,7 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (4.x.?) version will be stored in a separate area,
-so for R 4.2.? the files are in @file{bin/windows/contrib/4.2}.
+so for R 4.3.? the files are in @file{bin/windows/contrib/4.3}.
 
 @c Note that the binary versions on CRAN are unsupported: see
 @c @uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.0/@/ReadMe},
@@ -1247,7 +1248,7 @@ if @code{update.packages} offers to update packages for you in a library
 where you do not have write permission.
 
 There can be additional security issues under Windows Vista and later:
-@xref{Does R run under Windows Vista?}.
+@xref{Does R run under Windows 7?}.
 
 @c In particular, the detection
 @c that a standard user has suitable permissions appears to be unreliable
@@ -1280,7 +1281,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found. See
-@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.2/@/ReadMe} for a
+@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
 @code{rggobi}, @code{rJava}, @code{rjags} and some of the packages connecting to databases).
 
@@ -1300,7 +1301,7 @@ value of @env{MY_TCLTK}, and that this is set up correctly (with
 8.5.x nor 8.4.x, and you do need the architecture to match, that is a
 32-bit or 64-bit build of Tcl/Tk to match the R build in use.  (There is
 no guarantee that a 64-bit build will work: it depends on the layout it
-uses and R 4.2 uses a different layout from previous versions.)
+uses and R 4.2 and later use a different layout from previous versions.)
 
 In the past several package authors have suggested using ActiveTcl
 (@uref{https://www.activestate.com/@/Products/@/activetcl/}) as a way to
@@ -1319,7 +1320,7 @@ facility) and this only worked for 32-bit R.
 
 As only 64-bit builds are provided as of R 4.2, the Tcl/Tk bundle used is
 now also 64-bit only.  The older combined 32-bit/64-bit bundle for R 4.1
-cannot be used with R 4.2, because it has a different directory layout even
+cannot be used with R 4.2 and later, because it has a different directory layout even
 for the 64-bit part.
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
