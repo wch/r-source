@@ -9928,12 +9928,12 @@ Security measures may prevent running a @acronym{CRAN} binary
 distribution of @R{} under @command{lldb} or attaching this as a
 debugger
 (@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
-although both were possible on High Sierra.  This can also affect
-locally compiled builds, where attaching to an interactive @R{} session
-under Big Sur or Monterey worked in 2021 after giving administrator
-permission @emph{via} a popup-up.  (To debug in what Apple deems a
-non-interactive session, e.g. logged in remotely, see @command{man
-DevToolsSecurity}.)
+although both were possible on High Sierra and are again from @R{}
+4.2.0.  This can also affect locally compiled builds, where attaching to
+an interactive @R{} session under Big Sur or Monterey worked in 2022
+after giving administrator permission @emph{via} a popup-up.  (To debug
+in what Apple deems a non-interactive session, e.g. logged in remotely,
+see @command{man DevToolsSecurity}.)
 
 Debugging a local build of @R{} on macOS can raise additional hurdles as
 environment variables such as @env{DYLD_FALLBACK_LIBRARY_PATH} are not
@@ -9965,7 +9965,7 @@ a command that is to be debugged, at a terminal
 
 @example
 ps -ef | grep exec/R
-# identify the pid @var{pid} for the next command
+# identify the pid @var{pid} for the next command: it is the second item
 lldb -p @var{pid}
 (lldb) continue
 @end example
