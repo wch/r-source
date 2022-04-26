@@ -5082,6 +5082,7 @@ Sur) and 12 (Monterey).
 * Building R.app::
 * Building binary packages::
 * `Apple Silicon'::
+* Installer::
 @end menu
 
 @node Prerequisites, Cairo graphics, macOS, macOS
@@ -5755,7 +5756,7 @@ have version @code{5.0.0}).
 The @acronym{CRAN} binary packages are built with the Apple compiler on High
 Sierra, which avoids the first two and any issues with C++ libraries.
 
-@node `Apple Silicon',  , Building binary packages, macOS
+@node `Apple Silicon', Installer, Building binary packages, macOS
 @subsection @samp{arm64} aka `Apple Silicon'
 
 @menu
@@ -5823,12 +5824,9 @@ supports both @cputype{arm64} and @cputype{x86_64} builds.
 
 Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
-to get Tcl/Tk is to install
-@uref{https://mac.r-project.org/libs-arm64/tcltk-8.6.11-xft-darwin20.4-arm64.pkg}
-which bundles Tcl, Tk and Tktable, but you may already have these
-installed by the @R{} binary package installer.)  These unpack into
-@file{/opt/R/arm64}: it is simplest to first create that directory and
-adjust its ownership if desired:
+to get Tcl/Tk is to install if from the @R{} binary package installer.)
+These unpack into @file{/opt/R/arm64}: it is simplest to first create
+that directory and adjust its ownership if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64
@@ -5921,6 +5919,15 @@ If building software or installing source packages with @command{cmake}
 (or a non-Apple @command{make}) ensure it contains the @cputype{arm64}
 architecture (use @command{file} to be sure).  Running compilers from an
 @cputype{x86_64} executable will generate @cputype{x86_64} code @dots{}.
+
+@node Installer,  , `Apple Silicon', macOS
+@subsection Installer
+
+The scripts for the @acronym{CRAN} packaging of @R{} can be found under
+@uref{https://svn.r-project.org/R-dev-web/trunk/QA/Simon/R4}: start
+with the @file{README} file in that directory.
+
+
 
 @c @node Solaris, FreeBSD, macOS, Platform notes
 @c @section Solaris
