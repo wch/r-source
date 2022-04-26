@@ -88,6 +88,7 @@
   \code{\link{R.version}} and \code{\link{Sys.info}} give more details
   about the OS.  In particular, \code{R.version$platform} is the
   canonical name of the platform under which \R was compiled.
+  \code{\link{osVersion}} may give more details about the platform \R is running on.
 
   \code{\link{.Machine}} for details of the arithmetic used, and
   \code{\link{system}} for invoking platform-specific system commands.

@@ -56,6 +56,8 @@ version
   code is running on: use \code{.Platform$OS.type} instead.  Slightly
   different versions of the OS may report different values of
   \code{R.version$os}, as may different versions of \R.
+  Alternatively, \code{\link[utils]{osVersion}} typically contains more
+  details about the platform \R is running on.
 
   \code{R.version.string} is a copy of \code{R.version$version.string}
   for simplicity and backwards compatibility.
@@ -78,6 +80,7 @@ version
 \seealso{
   \code{\link{sessionInfo}} which provides additional information;
   \code{\link{getRversion}} typically used inside R code,
+  \code{\link{osVersion}},
   \code{\link{.Platform}}, \code{\link{Sys.info}}.
 }
 \examples{
