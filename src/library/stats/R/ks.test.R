@@ -276,7 +276,7 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         if (simulate) {
             Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
             ### need P(D < q)
-            ret[IND] <- ecdf(Dsim)(q - sqrt(.Machine$double.eps)) 
+            ret[IND] <- ecdf(Dsim)(q[IND] - sqrt(.Machine$double.eps)) 
             if (log.p & lower.tail)
                 return(log(ret))
             if (!log.p & lower.tail)
