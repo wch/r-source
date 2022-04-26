@@ -4527,7 +4527,8 @@ Default: false (but true for CRAN submission checks).
 Check the validity of the package HTML help pages using HTML tidy
 (@uref{https://www.html-tidy.org/}) (if available on the system path for
 executables). 
-Default: false (but true for CRAN submission checks).
+Default: false (but true for CRAN submission checks). @option{-as-cran}
+can be overridden by seting this variable to a false value. 
 @end vtable
 
 The following variables control checks for undeclared/unconditional use

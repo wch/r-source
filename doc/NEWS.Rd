@@ -15,6 +15,15 @@
       \item The included LAPACK sources have been updated to 3.10.1.
     }
   }
+  \subsection{UTILiTIES}{
+    \itemize{
+      \item Setting environment variable
+      \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to false value will override
+      \command{R CMD check --as-cran} and turn off HTML validation.
+      This provides a way to circumvent a problematic \command{tidy} such
+      as the 2006 version that ships with macOS.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.2.0}{
