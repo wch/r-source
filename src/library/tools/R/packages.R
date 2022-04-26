@@ -26,7 +26,7 @@ function(dir = ".", fields = NULL,
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
- 
+
     paths <- ""
     if(is.logical(subdirs) && subdirs) {
         owd <- setwd(dir)
@@ -57,7 +57,7 @@ function(dir = ".", fields = NULL,
                                                          latestOnly)
         if(NROW(desc))
             db <- rbind(db, desc)
-    
+
     }
 
     np <- .write_repository_package_db(db, dir, rds_compress)
@@ -83,7 +83,7 @@ function(db, dir, rds_compress)
        rownames(db) <- db[, "Package"]
        saveRDS(db, file.path(dir, "PACKAGES.rds"), compress = rds_compress)
    }
-   
+
    invisible(np)
 }
 
@@ -91,7 +91,7 @@ function(db, dir, rds_compress)
 function(desc, path, addFiles, addPaths, latestOnly)
 {
     desc <- Filter(length, desc)
-    
+
     if(length(desc)) {
         Files <- names(desc)
         fields <- names(desc[[1L]])
@@ -100,7 +100,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
         if(addFiles) desc <- cbind(desc, File = Files)
         if(addPaths) desc <- cbind(desc, Path = path)
         if(latestOnly) desc <- .remove_stale_dups(desc)
-        
+
         ## Standardize licenses or replace by NA.
         license_info <- analyze_licenses(desc[, "License"])
             desc[, "License"] <-
@@ -120,7 +120,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
     type <- match.arg(type)
     ## FIXME: might the source pattern be more general?
     ## was .tar.gz prior to 2.10.0
- 
+
     ret = switch(type,
                  "source" = "_.*\\.tar\\.[^_]*$",
                  "mac.binary" = "_.*\\.tgz$",
@@ -148,8 +148,9 @@ function(dir, fields = NULL,
 
     if(!length(files))
         return(list())
+    type <- match.arg(type)
     db <- .process_package_files_for_repository_db(files,
-                                                   type, 
+                                                   type,
                                                    fields,
                                                    verbose,
                                                    validate)
@@ -165,7 +166,7 @@ function(files, type, fields, verbose, validate = FALSE)
     ## PACKAGES file:
     fields <- unique(c(.get_standard_repository_db_fields(type), fields))
     ## files was without path at this point in original code,
-    ## use filetbs instead to compute pkg names and set db names 
+    ## use filetbs instead to compute pkg names and set db names
     filetbs <- basename(files)
     packages <- sapply(strsplit(filetbs, "_", fixed = TRUE), `[`, 1L)
     db <- vector(length(files), mode = "list")
