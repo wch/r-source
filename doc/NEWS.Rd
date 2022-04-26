@@ -497,6 +497,12 @@
       install-time \verb{\Sexpr}) but no other dynamic Rd content,
       \command{R CMD build} now produces a smaller tarball and is
       considerably faster -- skipping temporary package installation.
+
+      \item \command{R CMD check} can optionally (but included in
+      \option{--as-cran}) validate the HTML produced from the packages
+      \file{.Rd} files.  See
+      \url{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/index.html}
+      : this needs a fairly recent version of HTML tidy to be available.
     }
   }
 
