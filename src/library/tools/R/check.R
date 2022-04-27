@@ -6421,9 +6421,10 @@ add_dummies <- function(dir, Log)
     R_check_code_class_is_string <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CODE_CLASS_IS_STRING_",
                                          "FALSE"))
+
+    tmp <- Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_", "unset")
     R_check_Rd_validate_Rd2HTML <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_",
-                                         "FALSE"))
+        if(tmp == "unset") NA else config_val_to_logical(tmp)
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -6496,7 +6497,8 @@ add_dummies <- function(dir, Log)
         R_check_vignette_titles <- TRUE
         R_check_bogus_return <- TRUE
         R_check_code_class_is_string <- TRUE
-        R_check_Rd_validate_Rd2HTML <- TRUE
+        if(is.na(R_check_Rd_validate_Rd2HTML))
+            R_check_Rd_validate_Rd2HTML <- TRUE
 
         ## Temporary until it becomes the default.
         ## Only used when check does the installation itself.
@@ -6891,7 +6893,7 @@ add_dummies <- function(dir, Log)
                 check_pkg_manual(pkgdir, desc["Package"])
         }
 
-        if(!extra_arch && do_manual && R_check_Rd_validate_Rd2HTML)
+        if(!extra_arch && do_manual && isTRUE(R_check_Rd_validate_Rd2HTML))
             check_Rd2HTML(pkgdir)
 
         if (!is_base_pkg && check_incoming && no_examples &&

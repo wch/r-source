@@ -9,15 +9,20 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Calling \code{&&} or \code{||} with either argument of
-      length greater than one is now an error.
-      [Scheduled for not later than May 2.]
+      length greater than one is now an error.  Environment variable
+      \env{_R_CHECK_LENGTH_1_LOGIC2_} can still be set to get a verbose
+      report (although that is likely to be removed before release).
+
+      The default error report is of the form
+\preformatted{    'length = 4' in coercion to 'logical(1)'}
     }
   }
 
   \subsection{NEW FEATURES}{
     \itemize{
       \item The included BLAS sources have been updated to those
-      shipped with LAPACK version 3.10.1.
+      shipped with LAPACK version 3.10.1.  This makes some
+      (platform-dependent) changes to package check output.
     }
   }
 
@@ -42,7 +47,7 @@
 
       \item The included LAPACK sources have been updated to include
       the four Fortran 90 routines rather than their Fortran 77
-      predecessors.  This may give some different signs in SVDs.
+      predecessors.  This too may give some different signs.
     }
   }
 
@@ -101,6 +106,15 @@
       on macOS, the Accelerate framework (after ATLAS).
 
       \item The included LAPACK sources have been updated to 3.10.1.
+    }
+  }
+  \subsection{UTILiTIES}{
+    \itemize{
+      \item Setting environment variable
+      \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to false value will override
+      \command{R CMD check --as-cran} and turn off HTML validation.
+      This provides a way to circumvent a problematic \command{tidy} such
+      as the 2006 version that ships with macOS.
     }
   }
 }
@@ -585,6 +599,12 @@
       install-time \verb{\Sexpr}) but no other dynamic Rd content,
       \command{R CMD build} now produces a smaller tarball and is
       considerably faster -- skipping temporary package installation.
+
+      \item \command{R CMD check} can optionally (but included in
+      \option{--as-cran}) validate the HTML produced from the packages
+      \file{.Rd} files.  See
+      \url{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/index.html}
+      : this needs a fairly recent version of HTML tidy to be available.
     }
   }
 

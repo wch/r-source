@@ -2191,15 +2191,13 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
   Currently called from
 
-  (Formerly eval.c by asLogicalNoNA with warnByDefault = TRUE.)
-
   coerce.c
-  by asLogical2 with warnByDefault = TRUE (was FALSE)
+  by asLogical2 with errByDefault = TRUE
  */
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
-                  const char *varname, Rboolean warnByDefault)
+                  const char *varname, Rboolean errByDefault)
 {
     /* disable GC so that use of this temporary checking code does not
        introduce new PROTECT errors e.g. in asLogical() use */
@@ -2359,10 +2357,10 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
     }
     if (abort)
 	R_Suicide(rawmsg);
-    else if (err)
-	errorcall(call, errmsg);
-    else if (warn || warnByDefault)
+    else if (warn)
 	warningcall(call, warnmsg);
+    else if (err || errByDefault)
+	errorcall(call, errmsg);
     vmaxset(vmax);
     UNPROTECT(nprotect);
     R_GCEnabled = enabled;
