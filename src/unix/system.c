@@ -170,6 +170,9 @@ static char* unescape_arg(char *p, char* avp) {
 	} else if(*q == '~' && *(q+1) == 'n' && *(q+2) == '~') {
 	    q += 2;
 	    *p++ = '\n';
+	} else if(*q == '~' && *(q+1) == 't' && *(q+2) == '~') {
+	    q += 2;
+	    *p++ = '\t';
 	} else *p++ = *q;
     }
     return p;
