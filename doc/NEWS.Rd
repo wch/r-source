@@ -15,13 +15,26 @@
       \item The included LAPACK sources have been updated to 3.10.1.
     }
   }
-  \subsection{UTILiTIES}{
+  \subsection{UTILITIES}{
     \itemize{
       \item Setting environment variable
       \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to false value will override
       \command{R CMD check --as-cran} and turn off HTML validation.
       This provides a way to circumvent a problematic \command{tidy} such
       as the 2006 version that ships with macOS.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Writing to a clipboard connection on Windows works again, fixing
+      a regression in \R 4.2.0 (\PR{18332}).  Re-using a closed clipboard
+      connection on Windows no longer issues a spurious warning about an
+      ignored encoding argument.
+
+      \item \code{getlocale} on Windows no longer attempts to query an
+      unsupported category from the OS, even when requested at R level,
+      which may cause crashes when \R 4.2.0 (which uses UCRT) is
+      embedded (reported by Kevin Ushey).
     }
   }
 }
