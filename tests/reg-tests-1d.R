@@ -5859,6 +5859,17 @@ stopifnot(nch >= 24) # seeing  106 .. 106 111
 ## hashed environments did not grow for size <= 4 in  R <= 4.1.x
 
 
+## as.character.Rd(deparse = TRUE) with curly braces in TEXT -- PR#18324
+rd <- tools::parse_Rd(textConnection(txt0 <- r"(\link[=Paren]{\{})"),
+                      fragment = TRUE)
+cat(txt1 <- paste0(as.character(rd, deparse = TRUE), collapse = ""))
+stopifnot(identical(paste0(txt0, "\n"), txt1))
+## failed to re-escape curly brace in R <= 4.2.x
+## curly braces used for grouping tokens are not escaped:
+rdgroup <- tools::parse_Rd(textConnection(r"(a {b} c)"), fragment = TRUE)
+stopifnot(identical(as.character(rdgroup, deparse = TRUE),
+                    as.character(rdgroup, deparse = FALSE)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -95,6 +95,10 @@
     \itemize{
       \item Hashed \code{environment}s with sizes less than 5 now can grow,
       too. (Reported to R-devel by Duncan Garmonsway.)
+
+      \item \code{as.character(<Rd>, deparse = TRUE)} failed to
+      re-escape curly braces in LaTeX-like text.
+      (Reported by Hadley Wickham in \PR{18324}.)
     }
   }
 }

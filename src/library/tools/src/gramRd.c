@@ -4611,7 +4611,7 @@ SEXP deparseRd(SEXP e, SEXP state)
 		break;
 	    case LBRACE:
 	    case RBRACE:
-		if (quoteBraces)
+		if (quoteBraces || parseState.xxmode == LATEXLIKE)
 		    escape = TRUE;
 		else if (!parseState.xxinRString && !parseState.xxinEqn && (parseState.xxmode == RLIKE || parseState.xxmode == VERBATIM)) {
 		    if (*c == LBRACE) parseState.xxbraceDepth++;
