@@ -4364,9 +4364,8 @@ statements executing in the package that is currently being checked by
 @code{R CMD check}, @samp{warn} causes R to report a warning instead of
 signalling an error.  (More than one package specification can be given:
 a report, error or warning will be given if any are satisfied.)
-Default: unset (a warning is reported), but
-@samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
-submission checks.
+Default: unset (a warning is reported), but equivalent to
+@samp{abort,verbose} for the CRAN submission checks.
 
 @item _R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_
 Should running the @R{} code in the vignettes be skipped if vignette
