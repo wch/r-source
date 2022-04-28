@@ -1559,38 +1559,24 @@ Remember that @LaTeX{} needs to be on the path.
 @end macro
 
 [The rest of this paragraph is only relevant after release.]
+@c
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}.pkg} and @file{R-@value{VERSIONno}-arm64.pkg}.
 The first runs on macOS 10.13 and later on @cputype{x86_64} (Intel) CPU
-(High Sierra, Mojave, Catalina, Big Sur, Monterey, @dots{}).  It can
-also be installed on @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs
-running Big Sur or later using `Rosetta' emulation@footnote{You may be
-asked to install Rosetta at first use --
-@url{https://support.apple.com/en-us/HT211861} -- which may need
-administrator privileges.}, as can @acronym{CRAN} binary packages.
-Package @file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for
-`Apple Silicon' Macs and runs @emph{only} on those (under macOS 11 or
-later, Big Sur, Monterey, @dots{}).
+(High Sierra, Mojave, Catalina, Big Sur, Monterey, @dots{}).  Package
+@file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for `Apple
+Silicon' (aka `M1') Macs and runs on macOS 11 or later (Big Sur,
+Monterey, @dots{}).
 
-Installers for R-patched and R-devel are usually available from
-@uref{https://mac.R-project.org}.  (Some of these packages are
-unsigned/not notarized: to install those Control/right/two-finger click,
-select @samp{Open With} and @samp{Installer}.)
-
-For some older versions of the OS you can in principle (it is little
-tested) install @R{} from the sources (see @ref{macOS}).
-
-Those with a @cputype{arm64} Mac have a choice of build.  The
-@cputype{x86_64} build is a little better supported (for example, more
-binary packages are available from @acronym{CRAN} and only
-@cputype{x86_64} from some other repositories).  Rosetta emulation works
-really well, with a very few reports of problems with binary packages
-solved by re-compilation.  The `native' build is a little faster (and
-for some tasks, considerably so) but may give different numerical
-results from the far more common @cputype{x86_64} platforms (on macOS
-and other OSes) as ARM hardware lacks extended-precision floating-point
-operations.
+@file{R-@value{VERSIONno}.pkg} also be installed on `Apple Silicon' CPUs
+using `Rosetta' emulation@footnote{You may be asked to install Rosetta
+at first use -- @url{https://support.apple.com/en-us/HT211861} -- which
+may need administrator privileges.}, but the native build is preferred.
+It is a little faster (and for some tasks, considerably so) but may give
+different numerical results from the more common @cputype{x86_64}
+platforms (on Windows, Linux, @dots{} as well as macOS) as ARM hardware
+lacks extended-precision floating-point operations.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
@@ -1629,7 +1615,14 @@ If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
 current version of the OS.
 
-For building @R{} from source, see @ref{macOS}.
+Installers for R-patched and R-devel are usually available from
+@uref{https://mac.R-project.org}.  (Some of these packages may be
+unsigned/not notarized: to install those Control/right/two-finger click,
+select @samp{Open With} and @samp{Installer}.)
+
+For building @R{} from source, see @ref{macOS}.  This can in princiole
+bs done for some older versions of the OS (it is little tested).
+
 
 
 @menu
@@ -1760,6 +1753,7 @@ pkgutil --files org.r-project.x86_64.texinfo
 @end example
 
 @noindent
+(For the `Apple Silicon' build, replace @code{x86_64} by @code{arm54}.)
 These are paths relative to @file{/}, the root of the file system.
 @c Maybe too dangerous for naive users.
 @c file.remove removes empty directories on Unix.
