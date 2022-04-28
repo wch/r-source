@@ -4364,7 +4364,7 @@ message, @samp{package:pkg} restricts the check to @code{&&} and
 executing in the package that is currently being checked by @code{R CMD
 check}.  (More than one package specification can be given: an error or
 warning will be given if any are satisfied.)  Default: unset (an error
-is thrown), but currently
+is thrown), but previously
 @samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
 submission checks.
 
