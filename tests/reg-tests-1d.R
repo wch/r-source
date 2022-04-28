@@ -3240,17 +3240,20 @@ stopifnot(exprs = { is.matrix(M) ; dim(M) == c(5,3)
 ## all but the first 4 cases worked already in R <= 3.6.1
 
 
-## two-arg Rd macros (PR#17627)
+## multi-arg Rd macros (PR#17627 and PR#18324#c4)
 parse_Rd_txt <- function(ch) tools::parse_Rd(textConnection(ch), fragment = TRUE)
 rd1 <- parse_Rd_txt(t1 <- "\\if{html}{\\out{<hr>}}")
 rd2 <- parse_Rd_txt(t2 <- "\\href{https://www.r-project.org}{some text}")
+rd3 <- parse_Rd_txt(t3 <- "\\ifelse{a}{b}{c}")
 (tx1 <- paste(as.character(rd1), collapse = ""))
 (tx2 <- paste(as.character(rd2), collapse = ""))
+(tx3 <- paste(as.character(rd3), collapse = ""))
 stopifnot(exprs = {
     identical(paste0(t1,"\n"), tx1)
     identical(paste0(t2,"\n"), tx2)
+    identical(paste0(t3,"\n"), tx3)
 })
-## had duplicated braces in R < 4.0.0
+## had duplicated braces in R < 4.0.0 (if, href) / R < 4.3.0 (ifelse)
 
 
 ## power.t.test() failure for very small (unreasonable) n;  R-devel m.list Oct.4, 2019
