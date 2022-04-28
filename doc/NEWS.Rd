@@ -11,7 +11,8 @@
       \item Calling \code{&&} or \code{||} with either argument of
       length greater than one is now an error.  Environment variable
       \env{_R_CHECK_LENGTH_1_LOGIC2_} can still be set to get a verbose
-      report (although that is likely to be removed before release).
+      report (although that is likely to be removed before release, and
+      is no longer set by \command{R CMD check --as-cran}).
 
       The default error report is of the form
 \preformatted{    'length = 4' in coercion to 'logical(1)'}
