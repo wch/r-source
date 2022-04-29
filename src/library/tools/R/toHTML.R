@@ -68,7 +68,7 @@ function(x, ...)
         result <- c(result,
 		    paste0('<h2>', htmlify(x$title), ' in package &lsquo;',
 			   htmlify(pkg), '&rsquo;</h2>'),
-		    '<table cols="2" width="100%">',
+		    '<table cols="2" style="width: 100%;">',
 		    paste0('<tr>\n',
 			   ' <td style="text-align: left; vertical-align: top; width: 10%;">\n',
 			   htmlify(out[[pkg]][, "Item"]),
@@ -184,7 +184,7 @@ function(x, ...)
 # is depth 3
 
 makeVignetteTable <- function(vignettes, depth=2) {
-    out <- c('<table width="100%">',
+    out <- c('<table style="width: 100%;">',
              '<col style="width: 22%;" />',
              '<col style="width:  2%;" />',
              '<col style="width: 50%;" />',
@@ -203,13 +203,13 @@ makeVignetteTable <- function(vignettes, depth=2) {
 		  if (nchar(Outfile)) Outfile else File, '">',
 		  pkg, "::", topic, '</a>')
 	line <- c('<tr><td style="text-align: right; vertical-align: top;">', link,
-		    '</td>\n<td></td><td valign="top">', Title,
-		    '</td>\n<td valign="top">',
+		    '</td>\n<td></td><td style="vertical-align: top;">', Title,
+		    '</td>\n<td style="vertical-align: top;">',
 		    if (nchar(Outfile))
 			c('<a href="', root, Outfile,'">', vignette_type(Outfile), '</a>'),
-		    '</td>\n<td valign="top">',
+		    '</td>\n<td style="vertical-align: top;">',
 		    '<a href="', root, File,'">source</a>',
-		    '</td>\n<td valign="top" style="white-space: nowrap">',
+		    '</td>\n<td style="vertical-align: top; white-space: nowrap">',
 		    if (nchar(R))
 		    	c('<a href="', root, R,'">R code</a>'),
 		    '</td></tr>')
@@ -219,7 +219,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 }
 
 makeDemoTable <- function(demos, depth=2) {
-    out <- c('<table width="100%">',
+    out <- c('<table style="width: 100%;">',
              '<col style="width: 22%;" />',
              '<col style="width:  2%;" />',
              '<col style="width: 54%;" />',
@@ -242,8 +242,8 @@ makeDemoTable <- function(demos, depth=2) {
 	    runlink <- ""
 	}
 	line <- c('<tr><td style="text-align: right; vertical-align: top;">', link,
-		    '</td>\n<td></td><td valign="top">', Title,
-		    '</td>\n<td valign="top" style="white-space: nowrap">', runlink,
+		    '</td>\n<td></td><td style="vertical-align: top;">', Title,
+		    '</td>\n<td style="vertical-align: top; white-space: nowrap">', runlink,
 		    '</td></tr>')
 	out <- c(out, paste(line, collapse=''))
      }
@@ -251,7 +251,7 @@ makeDemoTable <- function(demos, depth=2) {
 }
 
 makeHelpTable <- function(help, depth=2) {
-    out <- c('<table width="100%">',
+    out <- c('<table style="width: 100%;">',
              '<col style="width: 22%;" />',
              '<col style="width:  2%;" />',
              '<col style="width: 74%;" />')
@@ -266,7 +266,7 @@ makeHelpTable <- function(help, depth=2) {
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
     lines <- paste0('<tr><td style="text-align: right; vertical-align: top;">', links,
-		    '</td>\n<td></td><td valign="top">', Title,
+		    '</td>\n<td></td><td style="vertical-align: top;">', Title,
 		    '</td></tr>')
     c(out, lines, '</table>')
 }

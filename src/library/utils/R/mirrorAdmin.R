@@ -31,10 +31,10 @@ function(mirrors = NULL, file = "mirrors.html",
         m <- mirrors[mirrors$Country == country,]
         z <- c(z, paste0("<dt>", country, "</dt>"),
                "<dd>",
-               "<table border=0 width=\"90%\">")
+               "<table border=0 style=\"width: 90%;\">")
         for(k in seq_len(nrow(m))) {
             z <- c(z, "<tr>",
-                   "<td width=\"45%\">",
+                   "<td style=\"width: 45%;\">",
                    sprintf("<a href=\"%s\" target=\"_top\">%s</a>",
                            m$URL[k], m$URL[k]),
                    "</td>\n",
