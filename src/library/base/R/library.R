@@ -348,7 +348,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             else canMaskEnv <- NULL
 
             if (attach.required)
-                .getRequiredPackages2(pkgInfo, quietly = quietly)
+                .getRequiredPackages2(pkgInfo, quietly = quietly, lib.loc = lib.loc)
 
             cr <- conflictRules(package)
             if (missing(mask.ok))

@@ -133,6 +133,10 @@
       unsupported category from the OS, even when requested at R level,
       which may cause crashes when \R 4.2.0 (which uses UCRT) is
       embedded (reported by Kevin Ushey).
+
+      \item \code{library()} now passes its \code{lib.loc} argument when
+      requiring \code{Depends} packages; reported (with fix) in \PR{18331}
+      by Mikael Jagan.
     }
   }
 }
