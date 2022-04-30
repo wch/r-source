@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2021   The R Core Team
+ *  Copyright (C) 2004-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -890,6 +890,22 @@ static void storekey(control c, int k)
     p->numkeys++;
 }
 
+static void storekeys(control c, const char *str)
+{
+    if (strlen(str) == 0) return; 
+    if(isUnicodeWindow(c)) {
+	size_t sz = (strlen(str) + 1) * sizeof(wchar_t);
+	wchar_t *wcs = (wchar_t*) R_alloc(strlen(str) + 1, sizeof(wchar_t));
+	memset(wcs, 0, sz);
+	mbstowcs(wcs, str, sz-1);
+	int i;
+	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
+    } else {
+	const char *ch;
+	for (ch = str; *ch; ch++) storekey(c, (unsigned char) *ch);
+    }
+}
+
 static void storetab(control c)
 {
     ConsoleData p = getdata(c);
@@ -912,7 +928,7 @@ void set_completion_available(int x)
 static void performCompletion(control c)
 {
     ConsoleData p = getdata(c);
-    int i, alen, alen2, max_show = 10, cursor_position = CURCOL - prompt_wid;
+    int i, alen, max_show = 10, cursor_position = CURCOL - prompt_wid;
     wchar_t *partial_line = LINE(NUMLINES - 1) + prompt_wid;
     const char *additional_text;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
@@ -992,7 +1008,6 @@ static void performCompletion(control c)
 
     alen = length(VECTOR_ELT(ans, POSSIBLE));
     additional_text = CHAR(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
-    alen2 = strlen(additional_text);
     if (alen) {
 	/* make a copy of the current string first */
 	wchar_t p1[wcslen(LINE(NUMLINES - 1)) + 1];
@@ -1013,8 +1028,7 @@ static void performCompletion(control c)
 	p->wipe_completion = 1;
     }
 
-    if (alen2)
-	for (i = 0; i < alen2; i++) storekey(c, additional_text[i]);
+    storekeys(c, additional_text);
     return;
 }
 
@@ -1055,16 +1069,7 @@ void consolecmd(control c, const char *cmd)
     }
     storekey(c, BEGINLINE);
     storekey(c, KILLRESTOFLINE);
-    if(isUnicodeWindow(c)) {
-	size_t sz = (strlen(cmd) + 1) * sizeof(wchar_t);
-	wchar_t *wcs = (wchar_t*) R_alloc(strlen(cmd) + 1, sizeof(wchar_t));
-	memset(wcs, 0, sz);
-	mbstowcs(wcs, cmd, sz-1);
-	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
-    } else {
-	const char *ch;
-	for (ch = cmd; *ch; ch++) storekey(c, (unsigned char) *ch);
-    }
+    storekeys(c, cmd);
     storekey(c, '\n');
 /* if we are editing we save the actual line
    FIXME: not right if Unicode */
