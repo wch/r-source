@@ -113,7 +113,7 @@ make.packages.html <-
             writeLines(paste0("<a href=\"#pkgs-", nm, "\">", nm, "</a>"), out)
             writeLines("</p>\n", out)
         }
-        cat('<table width="100%">\n', file = out)
+        cat('<table style="width: 100%;">\n', file = out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"> <td></td>\n", sep = "", file = out)
@@ -121,8 +121,8 @@ make.packages.html <-
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
-                cat('<tr style="text-align: left;" valign="top" id="lib-', i, '">\n',
-                    '<td width="25%"><a href="', lib0, '/', i,
+                cat('<tr style="text-align: left; vertical-align: top;" id="lib-', i, '">\n',
+                    '<td style="width: 25%;"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>",
                     gsub("&", "&amp;", title), "</td></tr>\n",
                     file = out, sep = "")

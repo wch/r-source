@@ -121,14 +121,14 @@ print.help_files_with_topic <- function(x, ...)
                           '<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />\n',
                           '</head>\n<body>\n<div class="container">\n\n<hr>\n')
             out <- c(out, '<p>', msg, '</p><br>')
-            out <- c(out, '<table width="100%">\n',
-                     '<tr style="text-align: left;" valign="top">\n',
-                     '<td width="25%">Package</td><td>Library</td></tr>\n')
+            out <- c(out, '<table style="width: 100%;">\n',
+                     '<tr style="text-align: left; vertical-align: top;">\n',
+                     '<td style="width: 25%;">Package</td><td>Library</td></tr>\n')
             pkgs <- basename(paths)
             links <- paste0('<a href="http://127.0.0.1:', port,
                             '/library/', pkgs, '/help/', topic, '">',
                             pkgs, '</a>')
-            out <- c(out, paste0('<tr style="text-align: left;" valign="top">\n',
+            out <- c(out, paste0('<tr style="text-align: left; vertical-align: top;">\n',
                                 '<td>', links, '</td><td>',
                                 dirname(paths), '</td></tr>\n'))
             out <- c(out, "</table>\n<hr>\n</div>\n</body>\n</html>")

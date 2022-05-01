@@ -842,7 +842,7 @@ Rd2HTML <-
     		switch(blocktag,
    		"\\value"=,
      		"\\arguments"= {
-    		    of1('<tr valign="top"><td>')
+    		    of1('<tr style="vertical-align: top;"><td>')
     		    inPara <<- NA
                     ## Argh.  Quite a few packages put the items in
                     ## their value section inside \code.
@@ -1074,7 +1074,7 @@ Rd2HTML <-
 	    urlify(stylesheet),
 	    '" />\n',
 	    '</head><body><div class="container">\n\n',
-	    '<table width="100%">',
+	    '<table style="width: 100%;">',
             '<tr><td>',
             name)
 	if (nchar(package))
