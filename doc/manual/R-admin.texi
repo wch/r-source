@@ -849,7 +849,7 @@ to select a sub-architecture to check.
 
 Sub-architectures are also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
-@file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.  For
+@file{@var{@file{@var{R_HOME}/bin/x64}.  For
 backwards compatibility there are executables
 @file{@var{R_HOME}/bin/R.exe} and @file{@var{R_HOME}/bin/Rscript.exe}:
 these will run an executable from one of the subdirectories, which one
@@ -2656,25 +2656,8 @@ package from a tarball which has been tested on another platform one
 might use
 
 @example
-.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} --build > @var{pkg}.log 2>&1
-.../bin/i386/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkg}.log @var{pkg}
-.../bin/x64/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkg}.log @var{pkg}
+.../bin/x64/Rcmd INSTALL -l @var{libdir} @var{tarball} --build > @var{pkg}.log 2>&1
 @end example
-
-@noindent
-where one might want to run the second and third lines in a different
-shell with different settings for environment variables and the path (to
-find external software, notably for Gtk+).
-
-@command{R CMD INSTALL} can do a @code{i386} install and then add the
-@code{x64} DLL from a single command by
-
-@example
-R CMD INSTALL --merge-multiarch -l @var{libdir} @var{tarball}
-@end example
-
-@noindent
-and @option{--build} can be added to zip up the installation.
 
 @node Internationalization, Choosing between 32- and 64-bit builds, Add-on packages, Top
 @chapter Internationalization and Localization
@@ -3556,7 +3539,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.19 and 8.6.11 have been tested (including
+Versions of Tcl/Tk up to 8.5.19 and 8.6.12 have been tested (including
 most versions of 8.4.x, but not recently).
 
 Note that the @file{tk.h} header includes@footnote{This is true even for

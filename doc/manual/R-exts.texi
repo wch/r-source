@@ -3143,7 +3143,7 @@ library) you can set it in the environment: also you can use the check
 and build environment files (as specified by the environment variables
 @env{R_CHECK_ENVIRON} and @env{R_BUILD_ENVIRON}; if unset,
 files@footnote{On systems which use sub-architectures,
-architecture-specific versions such as @file{~/.R/check.Renviron.i386}
+architecture-specific versions such as @file{~/.R/check.Renviron.x64}
 take precedence.}  @file{~/.R/check.Renviron} and
 @file{~/.R/build.Renviron} are used) to set environment variables when
 using these utilities.
@@ -3452,7 +3452,7 @@ sub-architecture.)  This will run the loading tests, examples and
 and give an error if any fail.  Where environment variables (including
 perhaps @env{PATH}) need to be set differently for each
 sub-architecture, these can be set in architecture-specific files such
-as @file{@var{R_HOME}/etc/i386/Renviron.site}.
+as @file{@var{R_HOME}/etc/x64/Renviron.site}.
 
 An alternative approach is to use @command{R CMD check --no-multiarch}
 to check the primary sub-architecture, and then to use something like
@@ -9928,12 +9928,12 @@ Security measures may prevent running a @acronym{CRAN} binary
 distribution of @R{} under @command{lldb} or attaching this as a
 debugger
 (@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
-although both were possible on High Sierra.  This can also affect
-locally compiled builds, where attaching to an interactive @R{} session
-under Big Sur or Monterey worked in 2021 after giving administrator
-permission @emph{via} a popup-up.  (To debug in what Apple deems a
-non-interactive session, e.g. logged in remotely, see @command{man
-DevToolsSecurity}.)
+although both were possible on High Sierra and are again from @R{}
+4.2.0.  This can also affect locally compiled builds, where attaching to
+an interactive @R{} session under Big Sur or Monterey worked in 2022
+after giving administrator permission @emph{via} a popup-up.  (To debug
+in what Apple deems a non-interactive session, e.g. logged in remotely,
+see @command{man DevToolsSecurity}.)
 
 Debugging a local build of @R{} on macOS can raise additional hurdles as
 environment variables such as @env{DYLD_FALLBACK_LIBRARY_PATH} are not

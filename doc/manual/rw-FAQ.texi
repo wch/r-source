@@ -1863,7 +1863,7 @@ been loaded.  So a way to examine the function @code{tukeyline} in
 package @code{stats} might be
 
 @example
-     gdb ../../../../bin/i386/Rgui.exe
+     gdb ../../../../bin/x64/Rgui.exe
      (gdb) break WinMain
      (gdb) run
      [ stops with R.dll loaded ]
