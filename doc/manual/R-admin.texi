@@ -1620,8 +1620,8 @@ Installers for R-patched and R-devel are usually available from
 unsigned/not notarized: to install those Control/right/two-finger click,
 select @samp{Open With} and @samp{Installer}.)
 
-For building @R{} from source, see @ref{macOS}.  This can in princiole
-bs done for some older versions of the OS (it is little tested).
+For building @R{} from source, see @ref{macOS}.  This can in principle
+be done for some older versions of the OS (it is little tested).
 
 
 
