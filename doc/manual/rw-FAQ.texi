@@ -221,9 +221,9 @@ field, which implements the default behavior.
 (If your account was not the one used for installation, you may need to
 copy the shortcut before editing it.) 
 
-On some systems with R prior to 4.2 you will have two shortcuts, one for 32-bit with a label
-starting @code{R i386} and one for 64-bit starting @code{R x64}
-(@pxref{Should I run 32-bit or 64-bit R?})
+On some systems with R prior to 4.2 you will have two shortcuts, one for
+32-bit with a label starting @code{R i386} and one for 64-bit starting
+@code{R x64} (@pxref{Should I run 32-bit or 64-bit R?})
 
 You may also want to add command-line arguments at the end of the
 Target field (@emph{after} any final double quote, and separated by a
@@ -1864,7 +1864,7 @@ been loaded.  So a way to examine the function @code{tukeyline} in
 package @code{stats} might be
 
 @example
-     gdb ../../../../bin/i386/Rgui.exe
+     gdb ../../../../bin/x64/Rgui.exe
      (gdb) break WinMain
      (gdb) run
      [ stops with R.dll loaded ]
