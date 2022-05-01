@@ -849,7 +849,7 @@ to select a sub-architecture to check.
 
 Sub-architectures are also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
-@file{@var{@file{@var{R_HOME}/bin/x64}}}.  For
+@file{@var{R_HOME}/bin/x64}.  For
 backwards compatibility there are executables
 @file{@var{R_HOME}/bin/R.exe} and @file{@var{R_HOME}/bin/Rscript.exe}:
 these will run an executable from one of the subdirectories, which one
