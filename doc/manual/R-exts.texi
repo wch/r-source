@@ -11097,6 +11097,14 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 @CRANpkg{zoo}.
 
+@strong{NB}: this mechanism is fragile, as changes to the interface
+provided by @pkg{packA} have to be recognised by @pkg{packB}.  The
+consequences of not doing so have included serious corruption to the
+memory pool of the @R{} session.  Either @pkg{packB} has to depend on
+the exact version of @pkg{packA} or there needs to be a mechanism for
+@pkg{packB} to test at runtime the version of @pkg{packA} it is linked
+to matches that it was compiled against.
+
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
 @cindex Creating shared objects
