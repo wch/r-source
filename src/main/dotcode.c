@@ -2579,6 +2579,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#define NO_CALL_R
+
 #ifndef NO_CALL_R
 // call_R was deprecated in R 2.15.0 and removed from RS.h in R 4.2.0
 
