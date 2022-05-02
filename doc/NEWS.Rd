@@ -59,8 +59,7 @@
       C/C++, and requires adjustment of most such calls -- see
       \sQuote{Writing R Extensions} §6.6.1.
 
-      [In progress: scheduled for May 5 if enough packages are
-      corrected before then.
+      [In progress: scheduled for May 7.
 
       Setting environment variable \env{_R_INSTALL_USE_FC_LEN_T_} to a
       true value enables this \emph{pro tem}.  This is set by \command{R
@@ -116,7 +115,7 @@
   \subsection{UTILITIES}{
     \itemize{
       \item Setting environment variable
-      \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to false value will override
+      \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to a false value will override
       \command{R CMD check --as-cran} and turn off HTML validation.
       This provides a way to circumvent a problematic \command{tidy} such
       as the 2006 version that ships with macOS.
