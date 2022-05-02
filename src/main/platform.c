@@ -1985,6 +1985,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP locale = CADR(args), ans;
     int cat;
     const char *p;
+    Rboolean warned = FALSE;
 
     checkArity(op, args);
     cat = asInteger(CAR(args));
@@ -2045,12 +2046,15 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dt_invalidate_locale();
 	break;
 #ifdef Win32
-    case 7: /* LC_MESSAGES */
-	/* LC_MESSAGES is defined, but by libintl only for gettext/dgettext */
-	warning(_("LC_MESSAGES exists on Windows but is not operational"));
+    case 7: /* LC_MESSAGES (defined in gnuintl.h only for (d)gettext) */
     case 8: /* LC_PAPER */
     case 9: /* LC_MEASUREMENT */
+	warning(_("%s does not exist on Windows"),
+	    (cat == 7) ? "LC_MESSAGES" :
+	    (cat == 8) ? "LC_PAPER"    :
+	                 "LC_MEASUREMENT");
 	p = NULL;
+	warned = TRUE;
 	break;
 #else /* not Win32 */
 # ifdef LC_MESSAGES
@@ -2080,8 +2084,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  {
 	SET_STRING_ELT(ans, 0, mkChar(""));
-	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
-		CHAR(STRING_ELT(locale, 0)));
+	if (!warned)
+	    warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
+	            CHAR(STRING_ELT(locale, 0)));
     }
 #ifdef Win32
     int oldCP = localeCP;
