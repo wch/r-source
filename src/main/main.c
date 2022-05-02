@@ -756,6 +756,40 @@ static uintptr_t almostFillStack() {
 }
 #endif
 
+#ifdef Win32
+static void invalid_parameter_handler(
+    const wchar_t* expression,
+    const wchar_t* function,
+    const wchar_t* file,
+    unsigned int line,
+    uintptr_t reserved)
+{
+    /* printf("Invalid param %ls %ls %ls:%u... \n",
+              expression, function, file, line); */
+    R_OutputCon = 2;
+    R_ErrorCon = 2;
+    REprintf(" ----------- FAILURE REPORT -------------- \n");
+    REprintf(" --- failure: %s ---\n", "invalid parameter passed to a C runtime function");
+    REprintf(" --- srcref --- \n");
+    SrcrefPrompt("", R_getCurrentSrcref());
+    REprintf("\n");
+    REprintf(" --- call from context --- \n");
+    PrintValue(R_GlobalContext->call);
+    REprintf(" --- R stacktrace ---\n");
+    printwhere();
+    REprintf(" --- function from context --- \n");
+    if (R_GlobalContext->callfun != NULL &&
+        TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+        PrintValue(R_GlobalContext->callfun);
+    REprintf(" --- function search by body ---\n");
+    if (R_GlobalContext->callfun != NULL &&
+        TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+        findFunctionForBody(R_ClosureExpr(R_GlobalContext->callfun));
+    REprintf(" ----------- END OF FAILURE REPORT -------------- \n");
+    R_Suicide("invalid parameter passed to a C runtime function"); 
+}
+#endif
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;
@@ -763,6 +797,14 @@ void setup_Rmainloop(void)
     SEXP cmd;
     char deferred_warnings[12][250];
     volatile int ndeferred_warnings = 0;
+
+#ifdef Win32
+    {
+	char *p = getenv("_R_WIN_CHECK_INVALID_PARAMETERS_");
+	if (p && StringTrue(p))
+	    _set_invalid_parameter_handler(invalid_parameter_handler);
+    }
+#endif
 
 #ifdef DEBUG_STACK_DETECTION 
     /* testing stack base and size detection */
