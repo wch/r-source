@@ -117,8 +117,9 @@
       \item Setting environment variable
       \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to a false value will override
       \command{R CMD check --as-cran} and turn off HTML validation.
-      This provides a way to circumvent a problematic \command{tidy} such
-      as the 2006 version that ships with macOS.
+      This provides a way to circumvent a problematic \command{tidy}.
+
+      The 2006 version that ships with macOS is always skipped.
     }
   }
   \subsection{BUG FIXES}{
