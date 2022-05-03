@@ -5527,6 +5527,11 @@ which is in the @file{bin} directory of a binary installation of @R{},
 usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
+@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
+a version in @file{/usr/bin/tidy} dating from 2006 which is far too
+old and is skipped.  Up-to-date versions can be installed from
+@uref{http://binaries.html-tidy.org/}. 
+
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
 that if you install tools from the sources they will by default be
