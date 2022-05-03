@@ -994,9 +994,18 @@ next_char:
 	    warning(_("unable to translate '%s' to native encoding"), 
 		    cbuff->data);
 	    return 1;
-	} else
-	    error(_("unable to translate '%s' to native encoding"),
-		  cbuff->data);
+	} else {
+	    char err_buff[256];
+	    if (strlen(cbuff->data) > 255) {
+		strncpy(err_buff, cbuff->data, 252);
+		err_buff[252] = '\0';
+		mbcsTruncateToValid(err_buff);
+		strcat(err_buff, "...");
+	    } else
+		strcpy(err_buff, cbuff->data);
+	    R_FreeStringBuffer(cbuff);
+	    error(_("unable to translate '%s' to native encoding"), err_buff);
+	}
     }
     return 0;
 }
