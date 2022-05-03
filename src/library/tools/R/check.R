@@ -4888,10 +4888,23 @@ add_dummies <- function(dir, Log)
     }
 
     check_Rd2HTML <- function(pkgdir) {
-        if(!nzchar(Sys.which("tidy")) ||
-           !startsWith(system2("tidy", "--version", stdout = TRUE),
-                       "HTML Tidy"))
+        ## require HTML Tidy, and not macOS's ancient version.
+        msg <- ""
+        OK <- nzchar(Sys.which("/usr/bin/tidy"))
+        if(OK) {
+            ver <- system2("tidy", "--version", stdout = TRUE)
+            OK <- startsWith(ver, "HTML Tidy")
+            if(OK) {
+                OK <- !grepl('Apple Inc. build 2649', ver)
+                if(!OK) msg <- ": 'tidy' is Apple's too old build"
+                ## Maybe we should also check version,
+                ## but e.g. Ubuntu 16.04 does not show one.
+            } else msg <- ": 'tidy' is not NTML Tidy"
+        } else msg <- ": no command 'tidy' found"
+        if(!OK) {
+            messageLog(Log, "skipping checking HTML version of manual", msg)
             return()
+        }
         db <- Rd_db(dir = pkgdir)
         if(!length(db))
             return()

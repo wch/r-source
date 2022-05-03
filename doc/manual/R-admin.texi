@@ -1620,8 +1620,8 @@ Installers for R-patched and R-devel are usually available from
 unsigned/not notarized: to install those Control/right/two-finger click,
 select @samp{Open With} and @samp{Installer}.)
 
-For building @R{} from source, see @ref{macOS}.  This can in princiole
-bs done for some older versions of the OS (it is little tested).
+For building @R{} from source, see @ref{macOS}.  This can in principle
+be done for some older versions of the OS (it is little tested).
 
 
 
@@ -1753,7 +1753,7 @@ pkgutil --files org.r-project.x86_64.texinfo
 @end example
 
 @noindent
-(For the `Apple Silicon' build, replace @code{x86_64} by @code{arm54}.)
+(For the `Apple Silicon' build, replace @code{x86_64} by @code{arm64}.)
 These are paths relative to @file{/}, the root of the file system.
 @c Maybe too dangerous for naive users.
 @c file.remove removes empty directories on Unix.
@@ -2211,9 +2211,9 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
 @samp{CXX17} and @samp{CXX20} variants
 
-So for example on Mojave or later you could select a specific
-non-Apple build of @command{clang} for both C and C++ with extensive
-checking by having in @file{~/.R/Makevars}
+So for example on Mojave or later you could select a specific LLVM
+@command{clang} for both C and C++ with extensive checking by having in
+@file{~/.R/Makevars}
 @example
 CC = /usr/local/clang/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
@@ -4977,6 +4977,9 @@ separately.}
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
 
+There have been no recent reports on the use of Intel compilers: this
+section is left in case it provides helpful hints.
+
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux.  Brian Ripley used version 9.0 of the compilers for
 @cputype{x86_64} on Fedora Core 5 with
@@ -5039,17 +5042,14 @@ SAFE_FFLAGS=-axsse2
 @section macOS
 @cindex macOS
 
-The main instructions here are for Intel 64-bit (@cputype{x86_64})
-builds on 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big
-Sur) and 12 (Monterey).
-@c @R{} can in principle be built for 10.6--10.12, although this is little
-@c tested and it may be necessary to install later versions of software
-@c such as @code{libcurl} and an older version@footnote{For example, from
-@c @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.} of
-@c @command{gfortran}.
+The instructions here are for Intel 64-bit (@cputype{x86_64})
+builds on macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big
+Sur) and 12 (Monterey), or `Apple Silicon' (@cputype{arm64}) builds on
+macOS 11 (Big Sur) and 12 (Monterey).
 
 @menu
 * Prerequisites::
+* Fortran compilers::
 * Cairo graphics::
 * Other C/C++ compilers::
 * Other libraries::
@@ -5058,12 +5058,32 @@ Sur) and 12 (Monterey).
 * Frameworks::
 * Building R.app::
 * Building binary packages::
-* `Apple Silicon'::
+* Building for Intel on arm64::
 * Installer::
 @end menu
 
-@node Prerequisites, Cairo graphics, macOS, macOS
+@node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
+
+The Intel compenents install into @file{/usr/local/lib}, the
+@cputype{arm64} ones into @file{/opt/R/arm64} which may not exist so it
+it is simplest to first create that directory and adjust its ownership
+if desired:
+
+@example
+sudo mkdir -p /opt/R/arm64
+sudo chown -R myaccount /opt/R
+@end example
+@noindent
+and add @file{/opt/R/arm64/bin} to your path.
+
+Define an appropiate variable in your Terminal:
+@example
+set LOCAL=/usr/local # Intel
+set LOCAL=/opt/R/arm64 # Apple Silicon
+@end example
+@noindent
+to use the code snippets here.
 
 The following are essential to build @R{}:
 
@@ -5083,40 +5103,47 @@ The Command Line Tools provide C and C++ compilers derived from LLVM's
 versioning (so Apple clang 13 is unrelated to LLVM clang 13).
 
 @item
-A Fortran compiler. An installer for @command{gfortran} is available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg}.@footnote{This
-is said to be for Mojave and later but works well enough on High
-Sierra.}  This installs into @file{/usr/local/gfortran}.
+A Fortran compiler. @xref{Fortran compilers}.
 
 @item
-Binary components @code{pcre2} and @code{xz} (for @code{liblzma}) from
-@uref{https://mac.r-project.org/bin/darwin17/x86_64/}.  For example
+Binary components @code{pcre2}@footnote{If compiling it from source on
+@cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to
+be built without JIT support (the default) as the @R{} build segfaults
+if that is enabled, so do run @code{make check} on your build.} and
+@code{xz} (for @code{liblzma}) from
+@uref{https://mac.r-project.org/bin/}.  There is an @R{} script there to
+help with installing all the needed components.  (At the time of writing
+@code{install.libs("r-base-dev")} installed neither @code{readline5} nor
+those needed to support Pango.)
+
+Or this can be done manually, by for example
 @example
 curl -OL https://mac.r-project.org/bin/darwin17/x86_64/pcre2-10.39-darwin.17-x86_64.tar.xz
 sudo tar -xvzf pcre2-10.39-darwin.17-x86_64.tar.gz -C /
 curl -OL https://mac.r-project.org/bin/darwin17/x86_64/xz-5.2.5-darwin.17-x86_64.tar.xz
 sudo tar -xvzf xz-5.2.5-darwin.17-x86_64.tar.xz -C /
 @end example
-(Messages like @samp{usr/local/: Can't restore time} should be ignored.)
+@noindent
+(@command{sudo} is not needed if your account owns @file{/usr/local} or
+@file{/opt/R/arm64} as appropriate.)
+
+Messages like @samp{usr/local/: Can't restore time} should be ignored.
 @end itemize
 @noindent
-(there is an @R{} script at @uref{https://mac.r-project.org/bin/} to
-help with this) and desirable
+and desirable
 @itemize
 @item
-GNU @code{readline5} from
-@uref{https://mac.r-project.org/bin/darwin17/x86_64/},@footnote{For
-licence reasons this is version 5.2 of @code{readline}: for those who
-want a more recent version it is straightforward to compile it from its
-sources.}.  If @code{readline} is not present, the emulation in Apple's
-version of @code{libedit} (aka @code{editline}) will be used: if you
-wish to avoid that, configure with @option{--without-readline}.
+Component @code{readline5}.@footnote{For licence reasons this is version
+5.2 of @code{readline}: for those who want a more recent version it is
+straightforward to compile it from its sources.}  If @code{readline} is
+not present, the emulation in Apple's version of @code{libedit} (aka
+@code{editline}) will be used: if you wish to avoid that, configure with
+@option{--without-readline}.
 
 @item
-Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff}
-from @uref{https://mac.r-project.org/bin/darwin17/x86_64/} and
-@code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
-for the full range of bitmapped graphics devices.  (Some builds of
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
+@code{zlib-system-stub} from @uref{https://mac.r-project.org/bin//} for
+the full range of bitmapped graphics devices.  (Some builds of
 @code{tiff} may require @code{libwebp} and/or @code{openjpeg}.)
 
 @item
@@ -5127,12 +5154,9 @@ location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
-@noindent
-although without this linked versions under @file{/usr/X11} will be
-found.  (It seems that for some versions of macOS/XQuartz
-@file{/usr/X11} may exist but be a link to a non-existent directory:
-reinstalling XQuartz might help.)  Be wary of pre-release versions of
-XQuartz, which may be offered as an update.
+
+Be wary of pre-release versions of XQuartz, which may be offered as an
+update.
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5143,6 +5167,8 @@ apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
+@item A Tcl/Tk installation,  @xref{ Tcl/Tk headers and libraries}.
+
 @item
 Support for Cairo-based graphics devices. @xref{Cairo graphics}.
 
@@ -5151,23 +5177,23 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
+@command{perl} (currently version 5.18 (High Sierra) -- 5.30 is a
 default part of macOS but it has been announced that it may not be in
 future).
 @c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
-@uref{https://mac.r-project.org/bin/darwin17/x86_64/}.
+@uref{https://mac.r-project.org/bin//}.
 @end itemize
 
-To build @R{} itself from the sources with the compilers in the Command
-Line Tools (or Xcode) and @command{gfortran} from the installer
-mentioned above, use a file @file{config.site} containing
+To build @R{} itself from the sources with the C/C++ compilers in the
+Command Line Tools (or Xcode) and @command{gfortran} from one of the
+installers mentioned below, use a file @file{config.site} containing
 @example
 CC=clang
 OBJC=$CC
-FC=/usr/local/gfortran/bin/gfortran
+FC="$LOCAL/gfortran/bin/gfortran -mtune=native"
 CXX=clang++
 @end example
 @noindent
@@ -5176,17 +5202,27 @@ and configure by something like
 ./configure -C \
 --enable-R-shlib --enable-memory-profiling \
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
---with-tcl-config=/usr/local/lib/tclConfig.sh \
---with-tk-config=/usr/local/lib/tkConfig.sh \
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+--with-tcl-config=$LOCAL/lib/tclConfig.sh \
+--with-tk-config=$LOCAL/lib/tkConfig.sh \
+PKG_CONFIG_PATH=$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
-(See below for Tcl/Tk, including other options.)
+(See below for other options for Tcl/Tk.)  For an @cputype{arm64} build
+further flags are desirable in @file{config.site}:
+@example
+CFLAGS="-falign-functions=8 -g -O2"
+FFLAGS="-g -O2 -mmacosx-version-min=11.0"
+@end example
+@noindent
+(the first flag in @code{CFLAGS} has been needed to inter-work with the
+@command{gfortran} without segfaulting in some packages, and some builds
+of @command{gfortran} target the current versionn of macOS (unlike
+@command{clang}, causing linker warnings).
 
 To install packages using compiled code one needs the Command Line Tools
-(or Xcode) and appropriate compilers, e.g.@: Fortran and the C/C++
-compilers from those tools.  Some packages have further requirements
-such as @command{pkg-config}.
+(or Xcode) and appropriate compilers, e.g.@: the C/C++ compilers from
+those tools and/or @command{gfortran}. Some packages have further
+requirements such as component @command{pkgconfig}.
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client, @command{svn} version 1.10, used to be part of
@@ -5197,36 +5233,36 @@ the Command Line Tools.}.  A more recent client can be obtained from
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
 tar xf subversion-1.14.0-darwin15.6.tar.gz
-sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
+sudo cp subversion-1.14.0-darwin15.6/svn $LOCAL/bin
 @end example
 
-If you have a build@footnote{For example, some Homebrew
-distributions.} of @code{cairo} with dynamic libraries, you can add
-option @option{--without-static-cairo} to the @command{configure} call
-(it probably would work anyway).
+If building software or installing source packages with @command{cmake}
+(or a non-Apple @command{make}) for `Apple Silicon' ensure it contains
+the @cputype{arm64} architecture (use @command{file} to be sure).
+Running Apple compilers from an @cputype{x86_64} executable will
+generate @cputype{x86_64} code @dots{}.
 
-As from Command Line Tools version 12,
-@option{-Wno-implicit-function-declaration} needs to be included in
-@code{CFLAGS} to configure @R{} 4.0.2 and earlier as well as some
-external software.
+@c If you have a build@footnote{For example, some Homebrew
+@c distributions.} of @code{cairo} with dynamic libraries, you can add
+@c option @option{--without-static-cairo} to the @command{configure} call
+@c (it probably would work anyway).
+
+Updating an @cputype{arm64} build will often fail because of the bug
+described at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab
+initio} builds work.
+
+
+@c As from Command Line Tools version 12,
+@c @option{-Wno-implicit-function-declaration} needs to be included in
+@c @code{CFLAGS} to configure @R{} 4.0.2 and earlier as well as some
+@c external software.
 
 @menu
-* Note for Catalina and later users::
+* Note for Catalina and later::
 @end menu
 
-@node Note for Catalina and later users,  , Prerequisites, Prerequisites
-@subsubsection Note for Catalina and later users
-
-A more recent Fortran compiler for Catalina and later is available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg}.
-(That does not run on High Sierra.)  This supports the option
-@option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
-manual.
-
-For Big Sur and later there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
-and for Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-monterey-intel/gfortran-Intel-11.2-Monterey.dmg}.
+@node Note for Catalina and later,  , Prerequisites, Prerequisites
+@subsubsection Note for Catalina and later
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
@@ -5243,20 +5279,47 @@ If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
 
-Should one want to build @R{} for Intel on an @cputype{arm64} Big Sur
-Mac, add the target for the C and C++ compilers:
+@node Fortran compilers, Cairo graphics, Prerequisites, macOS
+@subsection Fortran compilers
 
+An installer for Intel @command{gfortran} which runs on High Sierra or
+later is available at
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg}. This
+installs into @file{/usr/local/gfortran}.
+
+A more recent Fortran compiler for (Intel) Catalina and later is
+available at
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg}.
+(That does not run on High Sierra.)  This supports the option
+@option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
+manual.
+
+For Intel Big Sur and later there is
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
+and for Intel Monterey there is
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey-intel/gfortran-Intel-11.3-Monterey.dmg}.
+
+
+For @cputype{arm64}, we use the fork of @command{gfortran} from
+@url{https://github.com/iains/gcc-darwin-arm64} of which there are
+binary distributions at @uref{https://mac.r-project.org/tools/} and
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.  It
+seems some of these have been built using the SDK path for Xcode and not
+that for the Command Line Tools which causes some problems@footnote{such
+as being unable to find @code{-lm}.} when using the Fortran compiler to
+link: to fix that change the symbolic link
+@file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
+@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
+appropriate path can be found by running @command{xcrun
+-show-sdk-path}).  (The distribution from
+@uref{https://mac.r-project.org/tools/} includes a script at
 @example
-CC="clang -arch x86_64
-OBJC=$CC
-CXX="clang++ -arch x86_64"
+/opt/R/arm64/gfortran/bin/gfortran-update-sdk
 @end example
-
 @noindent
-and install the Fortran compiler and external software as described
-above.
+to do this.)
 
-@node Cairo graphics, Other C/C++ compilers, Prerequisites, macOS
+@node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
 
 @cindex Cairo
@@ -5278,7 +5341,7 @@ components @code{cairo}, @code{fontconfig}, @code{freetype},
 @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH}).  Some static
 builds of @code{fontconfig} need @code{libxml2} (from component
 @code{xml2}) and others @code{expat}, supplied by macOS but needing a
-file @file{/usr/local/lib/pkgconfig/expat.pc} along the lines of
+file @file{$LOCAL/lib/pkgconfig/expat.pc} along the lines of
 @example
 Name: expat
 Version: 2.2.8
@@ -5296,7 +5359,7 @@ If you have XQuartz 2.7.x installed (not 2.8.x) and ensure XQuartz's
 @code{pkg-config} files are found first on its configuration path, Cairo
 will be linked dynamically.  This can be done by setting something like
 @example
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
 or by appending that variable to the @command{configure} command.  (Note
@@ -5329,23 +5392,23 @@ what is missing.  At the time of writing using pre-built components
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://github.com/llvm/llvm-project/releases/}. In particular,
-these include support for OpenMP which Apple builds of @command{clang}
-do not.
+@uref{https://github.com/llvm/llvm-project/releases/} (at the time of
+writing only for Intel). In particular, these include support for OpenMP
+which Apple @command{clang} does not.
 
 Suppose one of these distributions is installed under
-@file{/usr/local/clang}. Use a file @file{config.site} containing
+@file{/usr/local/llvm}. Use a file @file{config.site} containing
 @example
-CC=/usr/local/clang/bin/clang
+CC=/usr/local/llvm/bin/clang
 OBJC=$CC
 FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/clang/bin/clang++
-LDFLAGS="-L/usr/local/clang/lib -L/usr/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+CXX=/usr/local/llvm/bin/clang++
+LDFLAGS="-L/usr/local/llvm/lib -L/uar/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/llvm/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/llvm/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5357,9 +5420,9 @@ rather than the system ones.
 
 For Mojave and later the system paths need to be specified @emph{via}
 @example
-CC="/usr/local/clang/bin/clang -isysroot
+CC="/usr/local/llvm/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/clang/bin/clang++ -isysroot
+CXX="/usr/local/llvm/bin/clang++ -isysroot
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent
@@ -5377,8 +5440,7 @@ use @command{gcc} to build the @code{quartz()} device, so
 @subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{https://mac.r-project.org/bin/darwin17/x86_64/} or
-@uref{https://mac.R-project.org/libs/}.
+are available from @uref{https://mac.r-project.org/bin//}.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5440,21 +5502,26 @@ inconsolata texinfo} .} @pkg{helvetic}, @pkg{inconsolata} and
 @pkg{texinfo} which brought this to about 310MB.@footnote{Adding all the
 packages needed to check @acronym{CRAN} increased this to about 600MB.}
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  MacTeX 2021
-requires Mojave or later: for earlier macOS versions see the
+provides a graphical means to manage @TeX{} packages.  MacTeX 2021/2
+require Mojave or later: for earlier macOS versions see the
 instructions@footnote{which amount to installing MacTeX 2020 (whose
-LaTeX packages are frozen) or TeXLive 2021 (which has been tried and has
-current updates).} on the MacTeX front page.  It contains executables
+LaTeX packages are frozen) or TeXLive 2022 (which has been tried and has
+current updates).} on the MacTeX front page.  They contains executables
 which run natively on both @cputype{x86_64} and @cputype{arm64}.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
 @uref{https://www.tug.org/mactex/morepackages.html}, including for High
 Sierra) and @command{qpdf} (from
-@uref{https://mac.r-project.org/bin/darwin17/x86_64/}, a version of
+@uref{https://mac.r-project.org/bin//}, a version of
 which is in the @file{bin} directory of a binary installation of @R{},
 usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
+
+@command{R CMD check --as-cran} also make use of `HTML Tidy'.  macOS has
+a version in @file{/usr/bin/tidy} dating from 2006 which is far too
+old and is skipped.  Up-to-date versions can be installed from
+@uref{http://binaries.html-tidy.org/}. 
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
@@ -5471,24 +5538,24 @@ path.
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
 
-If you plan to use the @code{tcltk} package for @R{}, you need to
+If you plan to use the @code{tcltk} package for @R{}, you will need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
-Unix-alikes), which is installed under @file{/usr/local/lib} as part of
-the @acronym{CRAN} binary for @R{}.@footnote{Just that component can be
-selected from the installer for @R{}: at the `Installation Type' screen
-select `Customise' and then just the `Tcl/Tk 8.6.6' component.}
-This may need @command{configure} options
+Unix-alikes), which is installed under @file{$LOCAL/lib} as part of the @acronym{CRAN} binary for
+@R{}.@footnote{Just that component can be selected from the installer
+for @R{}: at the `Installation Type' screen select `Customise' and then
+just the `Tcl/Tk 8.6.11' component.}  This may need @command{configure}
+options
 @example
---with-tcltk=/usr/local/lib
+--with-tcltk=$LOCAL/lib
 @end example
 or
 @example
---with-tcl-config=/usr/local/lib/tclConfig.sh
---with-tk-config=/usr/local/lib/tkConfig.sh
+--with-tcl-config=$LOCAL/lib/tclConfig.sh
+--with-tk-config=$LOCAL/lib/tkConfig.sh
 @end example
 Note that this requires a matching@footnote{At the time of writing the
-Intel distribution used 2.7.11 and the @cputype{arm64} used 2.8.1.}
+Intel distribution used 2.7.11 and the @cputype{arm64} one used 2.8.1.}
 XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
@@ -5531,32 +5598,28 @@ installed at first use.  Check if a JRE is installed by running
 installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
 Java.} this should prompt you to install it.@footnote{Not at the time of
-writing for @cputype{arm64}.} You can also install directly a recent
-Java from
-@uref{https://www.oracle.com/java/technologies/javase-downloads.html,
-Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
-available, e.g.@: from @uref{https://adoptium.net, Adoptium},
+writing for @cputype{arm64}.}  Builds of OpenJDK may also be available,
+e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 but not  12--16 or 18 which
-have/had a 6-month lifetime.  (Note that these sources may use unusual
-designations for Intel macOS builds such as @code{x86 64-bit} and
-@code{x64}.)
+long-term support, e.g.@: 11 or 17 but not 12--16 or 18 which have/had a
+6-month lifetime.  (Note that these sources may use unusual designations
+for Intel macOS builds such as @code{x86 64-bit} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
-To use Java (specifically, package @CRANpkg{rJava}) with a
-@acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@cputype{arm64} macOS, install an Intel build of a Java JRE from one of
-the sites linked above, then run @command{sudo R CMD javareconf}.
-
-To see what compatible versions of Java are currently installed, run
-@command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
-environment variable @env{JAVA_HOME} to choose between these, both when
-@R{} is built from the sources and when @command{R CMD javareconf} is
-run.
+To see what compatible versions of Java are currently installed, run the
+appropriate one of
+@example
+/usr/libexec/java_home -V -a x86_64
+/usr/libexec/java_home -V -a arm64
+@end example
+@noindent
+If needed, set the environment variable @env{JAVA_HOME} to choose
+between these, both when @R{} is built from the sources and when
+@command{R CMD javareconf} is run.
 
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used to install packages @CRANpkg{rJava} and
@@ -5571,8 +5634,8 @@ set e.g.@:
 JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-17.jdk/Contents/Home
 @end example
 @noindent
-in @file{config.site}.  For Java 17 from @uref{https://jdk.java.net/},
-use
+in @file{config.site}.  For Java 17 from @uref{https://jdk.java.net/}
+(which is no longer available), use
 @example
 JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
 @end example
@@ -5583,23 +5646,16 @@ is from @uref{https://adoptium.net, Adoptium} (who call the architecture
 @cputype{aarch64}): this installs into an Apple-standard location and so
 works with @command{/usr/bin/java}. Other builds are available from
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
-and from OpenJDK at @uref{https://jdk.java.net/17/}, for which
+and from OpenJDK at @uref{https://jdk.java.net/}, for which
 @env{JAVA_HOME} may need to be set both when configuring @R{} and at
 runtime.
 
+To use Java (specifically, binary package @CRANpkg{rJava}) with a
+@acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
+@cputype{arm64} macOS, install an Intel build of a Java JRE from one of
+the sites linked above, then run @command{sudo R CMD javareconf}.
 
-@c A Oracle JDK can be
-@c specified explicitly by something like
-@c @example
-@c JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
-@c JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-@c JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
-@c JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
-@c @end example
-@c @noindent
-@c in @file{config.site}.
-
-@c jdk.java.net no longer has Java 11 LTS builds.
+@c jdk.java.net no longer has Java 11 nor 17 LTS builds.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
@@ -5642,7 +5698,7 @@ to @command{pkg-config}).
 
 Building the @Rapp{} GUI console is a separate project, using Xcode.
 Before compiling @Rapp{} make sure the current version of @R{} is
-installed in @file{/Library/Frameworks/R.framework} and working at the
+installed in @file{/Library/Frameworks/R.framework} and is working at the
 command-line (this can be a binary install).
 
 The current sources can be checked out by
@@ -5664,7 +5720,7 @@ See also the @file{INSTALL} file in the checkout or directly at
 application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
-@node Building binary packages, `Apple Silicon', Building R.app, macOS
+@node Building binary packages, Building for Intel on arm64, Building R.app, macOS
 @subsection Building binary packages
 
 @acronym{CRAN} macOS binary packages are distributed as tarballs with
@@ -5686,6 +5742,8 @@ CXX="clang++ -mmacosx-version-min=10.13"
 FC="/usr/local/gfortran/bin/gfortran -mmacosx-version-min=10.13"
 @end example
 
+For @cputype{arm64}, use the flag @option{-mmacosx-version-min=11.0}.
+
 @item
 Using the flag @option{-Werror=partial-availability} can help trigger
 compilation errors on functionality not in High Sierra.
@@ -5694,11 +5752,11 @@ compilation errors on functionality not in High Sierra.
 Check that any compiled code is not dynamically linked to libraries only
 on your machine, for example by using @command{otool -L} or
 @command{objdump -macho -dylibs-used}.  This can include C++ and Fortran
-run-time libraries under @file{/usr/local}: one can use
-@command{install_name_tool} to point these at system versions or those
-shipped with @R{}, for example
+run-time libraries under @file{/usr/local/lib} or
+@file{/opt/R/arm64/lib}: one can use @command{install_name_tool} to
+point these at system versions or those shipped with @R{}, for example
 @example
-install_name_tool -change /usr/local/clang/lib/libc++.1.dylib \
+install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 /usr/lib/libc++.1.dylib \
 @var{pkg}.so
 
@@ -5719,156 +5777,157 @@ build OS, but not against earlier ones.  It may be possible to
 circumvent that by static linking to @file{libc++.a} and
 @file{libc++abi.a} by something like
 @example
-SHLIB_CXXLD = /usr/local/clang/bin/clang
-PKG_LIBS = /usr/local/clang/lib/libc++.a /usr/local/clang/lib/libc++abi.a
+SHLIB_CXXLD = /usr/local/llvm/bin/clang
+PKG_LIBS = /usr/local/llvm/lib/libc++.a /usr/local/llvm/lib/libc++abi.a
 @end example
 @noindent
 in @file{src/Makevars}.  It would also be possible to static link the
 Fortran runtime libraries @file{/usr/local/gfortran/lib/libgfortran.a}
 and @file{/usr/local/gfortran/lib/libquadmath.a} should the Fortran
-compiler have later versions (but @command{gfortran} 8, 9, 10 and 11 all
-have version @code{5.0.0}).
+compiler have later versions (but @command{gfortran} 8--12 all
+have version @code{5}).
 @end itemize
 @noindent
-The @acronym{CRAN} binary packages are built with the Apple compiler on High
-Sierra, which avoids the first two and any issues with C++ libraries.
+The @acronym{CRAN} binary packages are built with the Apple compiler on
+the oldest supported version of macOS, which avoids the first two and
+any issues with C++ libraries.
 
-@node `Apple Silicon', Installer, Building binary packages, macOS
-@subsection @samp{arm64} aka `Apple Silicon'
+@c @node `Apple Silicon', Building for Intel on arm64, Building binary packages, macOS
+@c @subsection @samp{arm64} aka `Apple Silicon'
 
-@menu
-* Native builds::
-@end menu
+@c @menu
+@c * Native builds::
+@c @end menu
 
-In November 2020 Apple launched Macs using `Apple Silicon': this architecture
-has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
-@cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
-known as `M1', Apple's name for their (first-generation) CPU.
+@c In November 2020 Apple launched Macs using `Apple Silicon': this architecture
+@c has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
+@c @cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
+@c known as `M1', Apple's name for their (first-generation) CPU.
 
-It is possible to build and run @R{} and almost all packages for
-@cputype{x86_64} using `Rosetta' emulation.  To do so, install all the
-prerequisites and other software described above, but include the flag
-@option{-arch x86_64} for @command{clang} and @command{clang++}, for
-example with a @file{config.site} file containing
+@c It is possible to build and run @R{} and almost all packages for
+@c @cputype{x86_64} using `Rosetta' emulation.  To do so, install all the
+@c prerequisites and other software described above, but include the flag
+@c @option{-arch x86_64} for @command{clang} and @command{clang++}, for
+@c example with a @file{config.site} file containing
 
-@example
-CC="clang -arch x86_64"
-OBJC=$CC
-CXX="clang++ -arch x86_64"
-FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
-@end example
+@c @example
+@c CC="clang -arch x86_64"
+@c OBJC=$CC
+@c CXX="clang++ -arch x86_64"
+@c FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
+@c @end example
 
-To correctly set the architecture (which will be auto-detected as
-@code{aarch64}), use something like
+@c To correctly set the architecture (which will be auto-detected as
+@c @code{aarch64}), use something like
 
-@example
-/path/to/configure --build=x86_64-apple-darwin20
-@end example
+@c @example
+@c /path/to/configure --build=x86_64-apple-darwin20
+@c @end example
 
-@node Native builds,  , `Apple Silicon', `Apple Silicon'
-@subsubsection Native builds
+@c @node Native builds,  , `Apple Silicon', `Apple Silicon'
+@c @subsubsection Native builds
 
-This section follows the @acronym{CRAN} distribution in using
-@file{/opt/R/arm64} rather than @file{/usr/local}: this largely allows
-natively-compiled software to co-exist with compiled-for-Intel software
-(although the C/C++ compilers and linker will still search
-@file{/usr/local/include} and @file{/usr/local/lib}).
+@c This section follows the @acronym{CRAN} distribution in using
+@c @file{/opt/R/arm64} rather than @file{/usr/local}: this largely allows
+@c natively-compiled software to co-exist with compiled-for-Intel software
+@c (although the C/C++ compilers and linker will still search
+@c @file{/usr/local/include} and @file{/usr/local/lib}).
 
-No Fortran compiler has been released for this architecture although
-there are ports under development.  We used the fork of
-@command{gfortran} from @url{https://github.com/iains/gcc-darwin-arm64}
-of which there are binary distributions at
-@uref{https://mac.r-project.org/tools/} and
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.  It
-seems some of these have been built using the SDK path for Xcode and not
-that for the Command Line Tools which causes some problems@footnote{such
-as being unable to find @code{-lm}.} when using the Fortran compiler to
-link: to fix that change the symbolic link
-@file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
-@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
-appropriate path can be found by running @command{xcrun
--show-sdk-path}).  (The distribution at
-@uref{https://mac.r-project.org/tools/} includes a script
-@example
-/opt/R/arm64/gfortran/bin/gfortran-update-sdk
-@end example
-@noindent
-to do this.)
+@c No Fortran compiler has been released for this architecture although
+@c there are ports under development.  We used the fork of
+@c @command{gfortran} from @url{https://github.com/iains/gcc-darwin-arm64}
+@c of which there are binary distributions at
+@c @uref{https://mac.r-project.org/tools/} and
+@c @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.  It
+@c seems some of these have been built using the SDK path for Xcode and not
+@c that for the Command Line Tools which causes some problems@footnote{such
+@c as being unable to find @code{-lm}.} when using the Fortran compiler to
+@c link: to fix that change the symbolic link
+@c @file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
+@c @file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
+@c appropriate path can be found by running @command{xcrun
+@c -show-sdk-path}).  (The distribution at
+@c @uref{https://mac.r-project.org/tools/} includes a script
+@c @example
+@c /opt/R/arm64/gfortran/bin/gfortran-update-sdk
+@c @end example
+@c @noindent
+@c to do this.)
 
-A release of XQuartz 2.8.1 is available @emph{via}
-@uref{https://www.xquartz.org/releases/}: this is dual-architecture so
-supports both @cputype{arm64} and @cputype{x86_64} builds.
+@c A release of XQuartz 2.8.1 is available @emph{via}
+@c @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
+@c supports both @cputype{arm64} and @cputype{x86_64} builds.
 
-Binary builds of the prerequisites are available at
-@uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
-to get Tcl/Tk is to install if from the @R{} binary package installer.)
-These unpack into @file{/opt/R/arm64}: it is simplest to first create
-that directory and adjust its ownership if desired:
+@c Binary builds of the prerequisites are available at
+@c @uref{https://mac.r-project.org/bin/darwin20/arm64/}.  (The simplest way
+@c to get Tcl/Tk is to install if from the @R{} binary package installer.)
+@c These unpack into @file{/opt/R/arm64}: it is simplest to first create
+@c that directory and adjust its ownership if desired:
 
-@example
-sudo mkdir -p /opt/R/arm64
-sudo chown -R myaccount /opt/R
-@end example
+@c @example
+@c sudo mkdir -p /opt/R/arm64
+@c sudo chown -R myaccount /opt/R
+@c @end example
 
-@noindent
-Then components can be downloaded and unpacked, for example
+@c @noindent
+@c Then components can be downloaded and unpacked, for example
 
-@example
-curl -OL https://mac.r-project.org/libs-arm64/jpeg-9d-darwin.20-arm64.tar.gz
-tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
-@end example
+@c @example
+@c curl -OL https://mac.r-project.org/libs-arm64/jpeg-9d-darwin.20-arm64.tar.gz
+@c tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
+@c @end example
 
-@noindent
-using @command{sudo} if necessary.  (There is an @R{} script at
-@uref{https://mac.r-project.org/bin/} to help with this.)
+@c @noindent
+@c using @command{sudo} if necessary.  (There is an @R{} script at
+@c @uref{https://mac.r-project.org/bin/} to help with this.)
 
-If compiling from source, @code{pcre2} (at least up to version 10.39)
-needs to be built without JIT support (the default) as the @R{} build
-segfaults if that is enabled, so do run @code{make check} on your build.
+@c If compiling from source, @code{pcre2} (at least up to version 10.39)
+@c needs to be built without JIT support (the default) as the @R{} build
+@c segfaults if that is enabled, so do run @code{make check} on your build.
 
-Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
-@file{config.site} something like
+@c Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
+@c @file{config.site} something like
 
-@example
-CC="clang -target arm64-apple-macos11"
-OBJC=$CC
-FC="/opt/R/arm64/gfortran/bin/gfortran -mtune=native"
-CXX="clang++ -target arm64-apple-macos11"
-CFLAGS="-falign-functions=8 -g -O2 -Wall -pedantic"
-CPPFLAGS=-I/opt/R/arm64/include
-FFLAGS="-g -O2 -mmacosx-version-min=11.0"
-LDFLAGS=-L/opt/R/arm64/lib
-R_LD_LIBRARY_PATH=/opt/R/arm64/lib
-@end example
+@c @example
+@c CC="clang -target arm64-apple-macos11"
+@c OBJC=$CC
+@c FC="/opt/R/arm64/gfortran/bin/gfortran -mtune=native"
+@c CXX="clang++ -target arm64-apple-macos11"
+@c CFLAGS="-falign-functions=8 -g -O2 -Wall -pedantic"
+@c CPPFLAGS=-I/opt/R/arm64/include
+@c FFLAGS="-g -O2 -mmacosx-version-min=11.0"
+@c LDFLAGS=-L/opt/R/arm64/lib
+@c R_LD_LIBRARY_PATH=/opt/R/arm64/lib
+@c @end example
 
-@noindent
-(the first flag in @code{CFLAGS} is needed to inter-work with the
-current @command{gfortran} without segfaulting in some packages).  Then
-configure @R{} using something like
+@c @noindent
+@c (the first flag in @code{CFLAGS} is needed to inter-work with the
+@c current @command{gfortran} without segfaulting in some packages).  Then
+@c configure @R{} using something like
 
-@example
-/path/to/configure --enable-R-shlib --enable-memory-profiling \
-  --with-tcl-config=/opt/R/arm64/lib/tclConfig.sh \
-  --with-tk-config=/opt/R/arm64/lib/tkConfig.sh \
-  PKG_CONFIG_PATH=/opt/R/arm64/lib/pkgconfig:/usr/lib/pkgconfig \
-  JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
-@end example
+@c @example
+@c /path/to/configure --enable-R-shlib --enable-memory-profiling \
+@c   --with-tcl-config=/opt/R/arm64/lib/tclConfig.sh \
+@c   --with-tk-config=/opt/R/arm64/lib/tkConfig.sh \
+@c   PKG_CONFIG_PATH=/opt/R/arm64/lib/pkgconfig:/usr/lib/pkgconfig \
+@c   JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
+@c @end example
 
-Updating a build may fail because of the bug
-described at @uref{https://openradar.appspot.com/FB8914243} but
-@emph{ab initio} builds work.
+@c Updating a build may fail because of the bug
+@c described at @uref{https://openradar.appspot.com/FB8914243} but
+@c @emph{ab initio} builds work.
 
-As with Intel builds, the @code{Accelerate} library could be used
-@emph{via} the configuration option
+@c As with Intel builds, the @code{Accelerate} library could be used
+@c @emph{via} the configuration option
 
-@example
---with-blas="-framework Accelerate"
-@end example
+@c @example
+@c --with-blas="-framework Accelerate"
+@c @end example
 
-@noindent
-Some @acronym{CRAN} builds of @R{} can be
-switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
-to use it.
+@c @noindent
+@c Some @acronym{CRAN} builds of @R{} can be
+@c switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
+@c to use it.
 
 @c It is possible to build external C/C++ libraries containing both
 @c architectures which could then be used for building packages.  A typical
@@ -5886,18 +5945,44 @@ to use it.
 @c will be usable for both @cputype{arm64} and @cputype{x86_64} builds.
 
 @c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
-According to Apple, C/C++ code intended only for this architecture can
-be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
-@code{__aarch64__} : you may want to also condition on @code{__APPLE__}
-as those macros are defined on other OSes, at least for @command{clang}
-and @command{gcc} (@code{__aarch64__}).
+@c According to Apple, C/C++ code intended only for this architecture can
+@c be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
+@c @code{__aarch64__} : you may want to also condition on @code{__APPLE__}
+@c as those macros are defined on other OSes, at least for @command{clang}
+@c and @command{gcc} (@code{__aarch64__}).
 
-If building software or installing source packages with @command{cmake}
-(or a non-Apple @command{make}) ensure it contains the @cputype{arm64}
-architecture (use @command{file} to be sure).  Running compilers from an
-@cputype{x86_64} executable will generate @cputype{x86_64} code @dots{}.
+@c If building software or installing source packages with @command{cmake}
+@c (or a non-Apple @command{make}) ensure it contains the @cputype{arm64}
+@c architecture (use @command{file} to be sure).  Running compilers from an
+@c @cputype{x86_64} executable will generate @cputype{x86_64} code @dots{}.
 
-@node Installer,  , `Apple Silicon', macOS
+@node Building for Intel on arm64, Installer, Building binary packages, macOS
+@subsection Building for Intel on @samp{arm64}
+
+Should one want to build @R{} for Intel on an @cputype{arm64} Big Sur
+Mac, add the target for the C and C++ compilers:
+
+@example
+CC="clang -arch x86_64
+OBJC=$CC
+CXX="clang++ -arch x86_64"
+FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
+@end example
+
+@noindent
+and install the Fortran compiler and external software described above
+for Intel builds (and have @file{/usr/local/bin} before
+@file{/opt/R/arm64/bin} in your path).
+
+To set the correct architecture (which will be auto-detected as
+@code{aarch64}), use something like
+
+@example
+/path/to/configure --build=x86_64-apple-darwin20
+@end example
+
+
+@node Installer,  , Building for Intel on arm64, macOS
 @subsection Installer
 
 The scripts for the @acronym{CRAN} packaging of @R{} can be found under
