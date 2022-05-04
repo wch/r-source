@@ -137,6 +137,14 @@
       \item \code{library()} now passes its \code{lib.loc} argument when
       requiring \code{Depends} packages; reported (with fix) in \PR{18331}
       by Mikael Jagan.
+
+      \item Accent keys now work in GraphApp Unicode windows, which are used
+      by Rgui whenever running in a multibyte locale (so also in UTF-8,
+      hence fixing a regression in \R 4.2.0 for users of systems where \R
+      4.1 used a single-byte locale).
+
+      \item Completion in Rgui on Windows now works also with non-ASCII
+      characters.
     }
   }
 }
