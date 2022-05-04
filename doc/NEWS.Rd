@@ -36,6 +36,14 @@
       unsupported category from the OS, even when requested at R level,
       which may cause crashes when \R 4.2.0 (which uses UCRT) is
       embedded (reported by Kevin Ushey).
+
+      \item Accent keys now work in GraphApp Unicode windows, which are used
+      by Rgui whenever running in a multibyte locale (so also in UTF-8,
+      hence fixing a regression in \R 4.2.0 for users of systems where \R
+      4.1 used a single-byte locale).
+
+      \item Completion in Rgui on Windows now works also with non-ASCII
+      characters.
     }
   }
 }
