@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004, 2009	The R Foundation
-   Copyright (C) 2013		The R Core Team
+   Copyright (C) 2013-2022	The R Core Team
 
    Changes for R, Chris Jackson, 2004
    Handle find-and-replace modeless dialogs
@@ -545,31 +545,65 @@ static long handle_message(HWND hwnd, UINT message,
 		    wchar_t wcs_in[3];
 		    wchar_t wcs_out[3];
 		    wcs_in[0] = wcs[0];
-		    wcs_in[1] = deadkey;
+		    /* convert an accent to a combining version */
+		    switch(deadkey) {
+		    case 0x5e:          /* circumflex */
+			wcs_in[1] = 0x302;  break;
+		    case 0x60:          /* grave accent */
+			wcs_in[1] = 0x300;  break;
+		    case 0xa8:          /* diaeresis */
+			wcs_in[1] = 0x308;  break;
+		    case 0xb4:          /* acute accent */
+			wcs_in[1] = 0x301;  break;
+		    case 0xb8:          /* cedilla */
+			wcs_in[1] = 0x327;  break;
+		    case 0x2c7:         /* caron */
+			wcs_in[1] = 0x30c;  break;
+		    case 0xaf:          /* macron */
+			wcs_in[1] = 0x304;  break;
+		    case 0x2d8:         /* breve */
+			wcs_in[1] = 0x306;  break;
+		    case 0x2dd:         /* double accute */
+			wcs_in[1] = 0x30b;  break;
+		    case 0x2db:         /* ogonek */
+			wcs_in[1] = 0x328;  break;
+		    case 0x7e:          /* tilde */
+			wcs_in[1] = 0x303;  break;
+		    case 0x2e:          /* dot above */
+			wcs_in[1] = 0x307;  break;
+		    default:
+			wcs_in[1] = deadkey;
+			break;
+		    }
 		    wcs_in[2] = L'\0';
 		    /* from accent char to unicode */
-		    if (FoldStringW(MAP_PRECOMPOSED, wcs_in, 3, wcs_out, 3))
+		    int nchars = FoldStringW(MAP_PRECOMPOSED, wcs_in, 3,
+		                             wcs_out, 3);
+		    if (nchars == 2)
 			handle_char(obj, wcs_out[0]);
+		    else if (nchars == 3 && wcs_in[0] == L' ' &&
+			     wcs_out[0] == wcs_in[0] &&
+			     wcs_out[1] == wcs_in[1])
+			/* accent followed by space prints the accent */
+			handle_char(obj, deadkey);
+		    else if (nchars > 2) {
+			/* accent followed by non-composable character, 
+			   matches R 4.1 behavior with non-Unicode Window */
+			handle_char(obj, deadkey);
+			handle_char(obj, wcs_out[0]);
+		    }
 		    /* deadchar convert failure to skip. */
 		} else
 		    handle_char(obj, wcs[0]);
 		deadkey = L'\0';
 	    } else {
-		switch(wcs[0]) {
-		case 0x5e:          /* circumflex */
-		    deadkey = 0x302;  break;
-		case 0x60:          /* grave accent */
-		    deadkey = 0x300;  break;
-		case 0xa8:          /* diaeresis */
-		    deadkey = 0x308;  break;
-		case 0xb4:          /* acute accent */
-		    deadkey = 0x301;  break;
-		case 0xb8:          /* cedilla */
-		    deadkey = 0x327;  break;
-		default:
+		if (deadkey == wcs[0]) {
+		    /* when an accent key is pressed twice, emit non-combining
+		       version of it */
+		    handle_char(obj, deadkey);
+		    deadkey = L'\0';
+		} else
 		    deadkey = wcs[0];
-		    break;
-		}
 	    }
 	}
 	break;
