@@ -24,6 +24,11 @@
       \item The included BLAS sources have been updated to those
       shipped with LAPACK version 3.10.1.  This makes some
       (platform-dependent) changes to package check output.
+
+      \item The parser now signals \emph{classed} errors, notably in case
+      of the pipe op, \code{|>}.  The error object and message now give
+      line and column numbers, mostly as proposed and provided by Duncan
+      Murdoch in \PR{18328}.
     }
   }
 

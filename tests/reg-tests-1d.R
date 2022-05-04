@@ -5872,6 +5872,45 @@ stopifnot(identical(paste0(txt0, "\n"), txt1))
 rdgroup <- tools::parse_Rd(textConnection(r"(a {b} c)"), fragment = TRUE)
 stopifnot(identical(as.character(rdgroup, deparse = TRUE),
                     as.character(rdgroup, deparse = FALSE)))
+##
+
+
+## Errors from parsing (notably with |> ) now return *classed* errors with line numbers
+## From  PR#18328 - by Duncan Murdoch
+txts <- setNames(, c(
+    "f <- function(x, x) {}"
+  , "123 |> str"
+  , "123 |> return()"
+  , "123 |> `+`(_, 4)"
+  , "123 |> (_ + 4)"
+  , "123 |> f(a = _, b = _)"
+  , "123 |> (\\(x) foo(bar = _))()"
+  , "123 |> x => log(x)"
+  , "'\\uh'"
+  , "'\\Uh'"
+  , "'\\xh'"
+  , "'\\c'"
+  , "'\\0'"
+  , "'\\U{badf00d}"
+  , "'\\Ubadf00d"
+))
+errs <- lapply(txts, function(ch) tryCatch(parse(text = ch), error=identity))
+## nicely print them
+msgs <- lapply(errs, `[[`, "message") ; str(msgs)
+(cls <- t(sapply(errs, class)))
+uerrs <- unname(errs) # (speed)
+nL <- vapply(uerrs, `[[`, 0L, "lineno")
+nC <- vapply(uerrs, `[[`, 0L, "colno")
+stopifnot(exprs = {
+    vapply(uerrs, inherits, NA, what = "error")
+    vapply(uerrs, inherits, NA, what = "parseError")
+    nL == 1L
+    nC == c(18L, rep(8L, 6), 10L, rep(3L, 5), 12L, 10L)
+    ## see all "<l>:<n>" strings as part of the message:
+    mapply(grepl, paste(nL, nC, sep = ":"), msgs)
+})
+## gave just simpleError s; no line:column numbers in R <= 4.2.0
+
 
 
 ## keep at end

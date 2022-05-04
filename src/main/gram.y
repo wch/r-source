@@ -238,6 +238,19 @@ static SrcRefState ParseState;
 #define PS_IDS              VECTOR_ELT(ParseState.sexps, 5)
 #define PS_SVS              VECTOR_ELT(ParseState.sexps, 6)
 
+/* These definitions are for error conditions */
+#define NO_VALUE 0
+#define STRING_VALUE 1
+#define INT_VALUE 2
+#define UINT_VALUE 3
+#define CHAR_VALUE 4
+#define UCS_VALUE 5
+
+static void NORET raiseParseError(const char *, SEXP, int, 
+                                  const void *, YYLTYPE *, const char *);
+static void NORET raiseLexError(const char *, int,
+                                const void *, const char *);
+
 /* Memory protection in the parser
 
    The generated code of the parser keeps semantic values (SEXPs) on its
@@ -301,13 +314,15 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	clen = utf8clen((char) c);
 	for(i = 1; i < clen; i++) {
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    if(c == R_EOF) raiseLexError("unexpectedEOF", NO_VALUE, NULL,
+                                         _("EOF whilst reading MBCS char (%s:%d:%d)"));
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
 	mbs_init(&mb_st);
 	res = (int) mbrtowc(wc, s, clen, &mb_st);
-	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
+	if(res == -1) raiseLexError("invalidMBCS", NO_VALUE, NULL,
+                          _("invalid multibyte character in parser (%s:%d:%d)"));
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= R_MB_CUR_MAX) {
@@ -315,10 +330,12 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    res = (int) mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1)
-		error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
+		raiseLexError("invalidMBCS", NO_VALUE, NULL, 
+                    _("invalid multibyte character in parser (%s:%d:%d)"));
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    if(c == R_EOF) raiseLexError("unexpectedEOF", NO_VALUE, NULL,
+                               _("EOF whilst reading MBCS char (%s:%d:%d)"));
 	    s[clen++] = (char) c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -360,8 +377,8 @@ static SEXP	xxrepeat(SEXP, SEXP);
 static SEXP	xxnxtbrk(SEXP);
 static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
-static SEXP	xxpipe(SEXP, SEXP);
-static SEXP	xxpipebind(SEXP, SEXP, SEXP);
+static SEXP	xxpipe(SEXP, SEXP, YYLTYPE *);
+static SEXP	xxpipebind(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -469,8 +486,8 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr OR expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
-	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
-	|	expr PIPEBIND expr		{ $$ = xxpipebind($2,$1,$3);	setId(@$); }
+	|	expr PIPE expr			{ $$ = xxpipe($1,$3,&@3);       setId(@$); }
+	|	expr PIPEBIND expr		{ $$ = xxpipebind($2,$1,$3,&@2);	setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
@@ -555,7 +572,8 @@ static int (*ptr_getc)(void);
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext ;
 #define YYTEXT_PUSH(c, bp) do { \
     if ((bp) - yytext >= sizeof(yytext) - 1){ \
-		error(_("input buffer overflow at line %d"), ParseState.xxlineno); \
+		raiseLexError("bufferOverflow", NO_VALUE, NULL, \
+		    _("input buffer overflow (%s:%d:%d)")); \
 	} \
     *(bp)++ = ((char)c);			\
 } while(0) ;
@@ -636,15 +654,15 @@ static int add_mbcs_byte_to_parse_context()
     int c;
 
     if (EndOfFile)
-	error(_("invalid multibyte character in parser at line %d"),
-	      ParseState.xxlineno);
+	raiseLexError("invalidMBCS", NO_VALUE, NULL, 
+	    _("invalid multibyte character in parser (%s:%d:%d)"));
     if(npush)
 	c = pushback[--npush];
     else
 	c = ptr_getc();
     if (c == EOF) 
-	error(_("invalid multibyte character in parser at line %d"),
-	      ParseState.xxlineno);
+	raiseLexError("invalidMBCS", NO_VALUE, NULL,
+	    _("invalid multibyte character in parser (%s:%d:%d)"));
     
     R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
     R_ParseContext[R_ParseContextLast] = (char) c;
@@ -719,8 +737,8 @@ static void finish_mbcs_in_parse_context()
 	    res = (int) mbrtowc(&wc, buf + i, nbytes - i, &mb_st);
 	}	   
 	if (res == -1)
-	    error(_("invalid multibyte character in parser at line %d"),
-		  ParseState.xxlineno);
+	    raiseLexError("invalidMBCS", NO_VALUE, NULL,
+	        _("invalid multibyte character in parser (%s:%d:%d)"));
 	i += res - 1;
     }
 }
@@ -1181,58 +1199,65 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
-static void check_rhs(SEXP rhs)
+static void check_rhs(SEXP rhs, YYLTYPE *lloc)
 {
     /* rule out syntactically special functions */
     /* the IS_SPECIAL_SYMBOL bit is set in names.c */
     SEXP fun = CAR(rhs);
     if (TYPEOF(fun) == SYMSXP && IS_SPECIAL_SYMBOL(fun))
-	error("function '%s' not supported in RHS call of a pipe",
-	      CHAR(PRINTNAME(fun)));
+	raiseParseError("unsupportedInPipe", rhs, STRING_VALUE,
+	           CHAR(PRINTNAME(fun)), lloc, 
+	           _("function '%s' not supported in RHS call of a pipe (%s:%d:%d)"));
 }
 
-static void checkTooManyPlaceholders(SEXP rhs, SEXP args)
+static void checkTooManyPlaceholders(SEXP rhs, SEXP args, YYLTYPE *lloc)
 {
     for (SEXP rest = args; rest != R_NilValue; rest = CDR(rest))
 	if (CAR(rest) == R_PlaceholderToken)
-	    errorcall(rhs, _("pipe placeholder may only appear once"));
+	    raiseParseError("tooManyPlaceholders", rhs, NO_VALUE, NULL, lloc,
+	                    "pipe placeholder may only appear once (%s:%d:%d)");
 }
 
-static SEXP xxpipe(SEXP lhs, SEXP rhs)
+static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 {
     SEXP ans;
     if (GenerateCode) {
 	if (TYPEOF(rhs) != LANGSXP)
-	    error(_("The pipe operator requires a function call as RHS"));
+	    raiseParseError("RHSnotFnCall", rhs, NO_VALUE, NULL, lloc_rhs,
+	                    _("The pipe operator requires a function call as RHS (%s:%d:%d)"));
 
 	/* allow x => log(x) on RHS */
 	if (CAR(rhs) == R_PipeBindSymbol) {
 	    SEXP var = CADR(rhs);
 	    SEXP expr = CADDR(rhs);
 	    if (TYPEOF(var) != SYMSXP)
-		error(_("RHS variable must be a symbol"));
+		raiseParseError("notASymbol", var, NO_VALUE, NULL, lloc_rhs,
+		                _("RHS variable must be a symbol (%s:%d:%d)"));
 	    SEXP alist = list1(R_MissingArg);
 	    SET_TAG(alist, var);
 	    SEXP fun = lang4(R_FunctionSymbol, alist, expr, R_NilValue);
 	    return lang2(fun, lhs);
 	}
 
-	/* check for placehilder in the RHS function */
+	/* check for placeholder in the RHS function */
 	if (checkForPlaceholder(R_PlaceholderToken, CAR(rhs)))
-	    error(_("pipe placeholder cannot be used in the RHS function"));
+	    raiseParseError("placeholderInRHSFn",R_NilValue, 
+	                    NO_VALUE, NULL, lloc_rhs,
+	                    _("pipe placeholder cannot be used in the RHS function (%s:%d:%d)"));
 
 	/* allow top-level placeholder */
 	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
 	    if (CAR(a) == R_PlaceholderToken) {
 		if (TAG(a) == R_NilValue)
-		    error(_("pipe placeholder can only be used as a "
-			    "named argument"));
-		checkTooManyPlaceholders(rhs, CDR(a));
+		    raiseParseError("placeholderNotNamed", rhs, 
+		                    NO_VALUE, NULL, lloc_rhs,
+	                    _("pipe placeholder can only be used as a named argument (%s:%d:%d)"));
+		checkTooManyPlaceholders(rhs, CDR(a), lloc_rhs);
 		SETCAR(a, lhs);
 		return rhs;
 	    }
 	
-	check_rhs(rhs);
+	check_rhs(rhs, lloc_rhs);
 	
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
@@ -1246,7 +1271,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     return ans;
 }
 
-static SEXP xxpipebind(SEXP fn, SEXP lhs, SEXP rhs)
+static SEXP xxpipebind(SEXP fn, SEXP lhs, SEXP rhs, YYLTYPE *lloc_bind)
 {
     static int use_pipebind = 0;
     if (use_pipebind != 1) {
@@ -1257,7 +1282,9 @@ static SEXP xxpipebind(SEXP fn, SEXP lhs, SEXP rhs)
     if (use_pipebind)
 	return xxbinary(fn, lhs, rhs);
     else
-	error("'=>' is disabled; set '_R_USE_PIPEBIND_' envvar to a true value to enable it");
+	raiseParseError("pipebindDisabled", R_NilValue, 
+	                NO_VALUE, NULL, lloc_bind,
+		_("'=>' is disabled; set '_R_USE_PIPEBIND_' envvar to a true value to enable it (%s:%d:%d)"));
 }
 
 static SEXP xxparen(SEXP n1, SEXP n2)
@@ -1331,7 +1358,10 @@ static SEXP TagArg(SEXP arg, SEXP tag, YYLTYPE *lloc)
     case SYMSXP:
 	return lang2(arg, tag);
     default:
-	error(_("incorrect tag type at line %d"), lloc->first_line); return R_NilValue/* -Wall */;
+	raiseParseError("badTagType", R_NilValue, 
+	                NO_VALUE, NULL, lloc, 
+	                _("incorrect tag type (%s:%d:%d)"));
+	                return R_NilValue/* -Wall */;
     }
 }
 
@@ -1668,12 +1698,22 @@ static SEXP R_Parse1(ParseStatus *status)
 	    break;
 	case 3:                     /* Valid expr '\n' terminated */
 	case 4:                     /* Valid expr ';' terminated */
-	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr))
-		errorcall(R_CurrentExpr,
-			  _("invalid use of pipe placeholder"));
-	    if (checkForPipeBind(R_CurrentExpr))
-		errorcall(R_CurrentExpr,
-			  _("invalid use of pipe bind symbol"));
+	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr)) {
+	        YYLTYPE lloc;
+	        lloc.first_line = ParseState.xxlineno;
+	        if (Status == 3) lloc.first_line--;
+		raiseParseError("invalidPlaceholder", R_CurrentExpr,
+		                NO_VALUE, NULL, &lloc,
+			  _("invalid use of pipe placeholder (%s:%d:%d)"));
+            }
+	    if (checkForPipeBind(R_CurrentExpr)) {
+	        YYLTYPE lloc;
+	        lloc.first_line = ParseState.xxlineno;
+	        if (Status == 3) lloc.first_line--;
+		raiseParseError("invalidPipeBind", R_CurrentExpr, 
+		                NO_VALUE, NULL, &lloc,
+			  _("invalid use of pipe bind symbol (%s:%d:%d)"));
+	    }
 	    *status = PARSE_OK;
 	    break;
 	}
@@ -2031,7 +2071,8 @@ static void IfPush(void)
 	*contextp=='('    ||
 	*contextp == 'i') {
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error(_("contextstack overflow"));
+	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
+	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = 'i';
     }
 
@@ -2338,8 +2379,9 @@ static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == _new) {
-	    error(_("repeated formal argument '%s' on line %d"), EncodeChar(PRINTNAME(_new)),
-								 lloc->first_line);
+	    raiseParseError("repeatedFormal", R_NilValue, 
+	                    STRING_VALUE, EncodeChar(PRINTNAME(_new)), lloc,
+	    _("repeated formal argument '%s' (%s:%d:%d)"));
 	}
 	formlist = CDR(formlist);
     }
@@ -2654,22 +2696,27 @@ static int mbcs_get_next2(int c, ucs_t *wc)
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    if(c == R_EOF) raiseLexError("EOFinMBCS", NO_VALUE, NULL,
+	                               _("EOF whilst reading MBCS char (%s:%d:%d"));
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
 	res = mbtoucs(wc, s, clen);
-	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
+	if(res == -1) raiseLexError("invalidMultibyteCharacter",
+	                            NO_VALUE, NULL,
+	                            _("invalid multibyte character (%s:%d:%d)"));
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= R_MB_CUR_MAX) {
 	    res = mbtoucs(wc, s, clen);
 	    if(res >= 0) break;
 	    if(res == -1)
-		error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
+		raiseLexError("invalidMultibyte", NO_VALUE, NULL,
+		    _("invalid multibyte character (%s:%d:%d)"));
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    if(c == R_EOF) raiseLexError("EOFinMultibyte", NO_VALUE, NULL,
+	        _("EOF whilst reading MBCS char (%s:%d:%d)"));
 	    s[clen++] = c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -2750,8 +2797,8 @@ static int skipBytesByChar(char *c, int min) {
 #define BIDI_CHECK(wc) do {                                           \
 	if((wc) >= 0x202A && (wc) <= 0x2069 &&                        \
 	  !((wc) > 0x202E && (wc) < 0x2066))                          \
-	    error(_("bidi formatting not allowed (line %d), use escapes instead (\\u%04x)"),  \
-		  ParseState.xxlineno, (wc));                         \
+	    raiseLexError("bidiNotAllowed", UCS_VALUE, &wc,           \
+	        _("bidi formatting not allowed, use escapes instead (\\u%04x) (%s:%d:%d)")); \
 } while(0)
 
 /* forSymbol is true when parsing backticked symbols */
@@ -2796,9 +2843,11 @@ static int StringValue(int c, Rboolean forSymbol)
 		    xxungetc(c);
 		}
 		if (!octal)
-		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		    raiseLexError("nulNotAllowed", NO_VALUE, NULL,
+                        _("nul character not allowed (%s:%d:%d)"));
 		if(octal > 0xff)
-		    error(_("exceeded maximum allowed octal value \\377 (line %d)"), ParseState.xxlineno);
+		    raiseLexError("invalidOctal", INT_VALUE, &octal,
+                        _("\\%o exceeds maximum allowed octal value \\377 (%s:%d:%d)"));
 		c = octal;
 		oct_or_hex = TRUE;
 	    }
@@ -2814,14 +2863,16 @@ static int StringValue(int c, Rboolean forSymbol)
 			CTEXT_POP();
 			if (i == 0) { /* was just \x */
 			    *ct = '\0';
-			    errorcall(R_NilValue, _("'\\x' used without hex digits in character string starting \"%s\""), currtext);
+			    raiseLexError("badHex", NO_VALUE, NULL,
+			        _("'\\x' used without hex digits in character string (%s:%d:%d)"));
 			}
 			break;
 		    }
 		    val = 16*val + ext;
 		}
 		if (!val)
-		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		    raiseLexError("nulNotAllowed", NO_VALUE, NULL,
+                        _("nul character not allowed (%s:%d:%d)"));
 		c = val;
 		oct_or_hex = TRUE;
 	    }
@@ -2830,7 +2881,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		Rboolean delim = FALSE;
 
 		if(forSymbol) 
-		    error(_("\\uxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno);
+		    raiseLexError("unicodeInBackticks", NO_VALUE, NULL, 
+		        _("\\uxxxx sequences not supported inside backticks (%s:%d:%d)"));
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
@@ -2845,7 +2897,8 @@ static int StringValue(int c, Rboolean forSymbol)
 			CTEXT_POP();
 			if (i == 0) { /* was just \u */
 			    *ct = '\0';
-			    errorcall(R_NilValue, _("'\\u' used without hex digits in character string starting \"%s\""), currtext);
+			    raiseLexError("badUnicodeHex", NO_VALUE, NULL,
+			        _("'\\u' used without hex digits in character string (%s:%d:%d)"));
 			}
 			break;
 		    }
@@ -2853,12 +2906,13 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if(delim) {
 		    if((c = xxgetc()) != '}')
-			error(_("invalid \\u{xxxx} sequence (line %d)"),
-			      ParseState.xxlineno);
+			raiseLexError("invalidUnicode", NO_VALUE, NULL, 
+			    _("invalid \\u{xxxx} sequence (line %d)"));
 		    else CTEXT_PUSH(c);
 		}
 		if (!val)
-		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+		    raiseLexError("nulNotAllowed", NO_VALUE, NULL,
+                        _("nul character not allowed (%s:%d:%d)"));
 		WTEXT_PUSH(val); /* this assumes wchar_t is Unicode */
 		use_wcs = TRUE;
 		continue;
@@ -2867,7 +2921,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		unsigned int val = 0; int i, ext;
 		Rboolean delim = FALSE;
 		if(forSymbol) 
-		    error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno);
+		    raiseLexError("unicodeInBackticks", NO_VALUE, NULL, 
+		        _("\\Uxxxxxxxx sequences not supported inside backticks (%s:%d:%d)"));
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
@@ -2882,7 +2937,8 @@ static int StringValue(int c, Rboolean forSymbol)
 			CTEXT_POP();
 			if (i == 0) { /* was just \U */
 			    *ct = '\0';
-			    errorcall(R_NilValue, _("'\\U' used without hex digits in character string starting \"%s\""), currtext);
+			    raiseLexError("badUnicodeHex", NO_VALUE, NULL,
+			        _("'\\U' used without hex digits in character string (%s:%d:%d)"));
 			}
 			break;
 		    }
@@ -2890,20 +2946,20 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if(delim) {
 		    if((c = xxgetc()) != '}')
-			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"),
-			      ParseState.xxlineno);
+			raiseLexError("invalidUnicode", NO_VALUE, NULL,
+			    _("invalid \\U{xxxxxxxx} sequence (%s:%d:%d)"));
 		    else CTEXT_PUSH(c);
 		}
 		if (!val)
-		    error(_("nul character not allowed (line %d)"),
-			  ParseState.xxlineno);
+		    raiseLexError("nulNotAllowed", NO_VALUE, NULL,
+                        _("nul character not allowed (%s:%d:%d)"));
 		if (val > 0x10FFFF) {
 		    if(delim)
-			error(_("invalid \\U{xxxxxxxx} value %6x (line %d)"),
-			      val, ParseState.xxlineno);
+			raiseLexError("invalidUnicode", INT_VALUE, &val,
+			    _("invalid \\U{xxxxxxxx} value %6x (%s:%d:%d)"));
 		    else
-			error(_("invalid \\Uxxxxxxxx value %6x (line %d)"),
-			      val, ParseState.xxlineno);
+			raiseLexError("invalidUnicode", INT_VALUE, &val,
+			    _("invalid \\Uxxxxxxxx value %6x (%s:%d:%d)"));
 		}
 #ifdef Win32
 		if (0x010000 <= val && val <= 0x10FFFF) {   /* Need surrogate pair in Windows */
@@ -2948,20 +3004,23 @@ static int StringValue(int c, Rboolean forSymbol)
 		case ' ':
 		case '\n':
 		    break;
-		default:
-		    *ct = '\0';
-		    errorcall(R_NilValue, _("'\\%c' is an unrecognized escape in character string starting \"%s\""), c, currtext);
+		default: {
+		    char ch[2];
+		    ch[0] = (char) c;
+		    ch[1] = '\0';
+		    raiseLexError("unrecognizedEscape", STRING_VALUE, ch,
+		        _("'\\%s' is an unrecognized escape in character string (%s:%d:%d)"));
+		  }
 		}
 	    }
 	} else if(mbcslocale) {
-	    int i, clen;
 	    ucs_t wc;
-	    clen = mbcs_get_next2(c, &wc);
+	    int clen = mbcs_get_next2(c, &wc);
 	    BIDI_CHECK(wc);
 	    WTEXT_PUSH(wc);
 	    ParseState.xxbyteno += clen-1;
 	    
-	    for(i = 0; i < clen - 1; i++){
+	    for(int i = 0; i < clen - 1; i++){
 		STEXT_PUSH(c);
 		c = xxgetc();
 		if (c == R_EOF) break;
@@ -3025,11 +3084,14 @@ static int StringValue(int c, Rboolean forSymbol)
     } else {
 	if(use_wcs) {
 	    if(oct_or_hex)
-		error(_("mixing Unicode and octal/hex escapes in a string is not allowed"));
+		raiseLexError("mixedEscapes", NO_VALUE, NULL,
+		    _("mixing Unicode and octal/hex escapes in a string is not allowed (%s:%d:%d)"));
 	    if(wcnt < 10000)
 		PRESERVE_SV(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else
-		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno);
+		raiseLexError("UnicodeTooLong", NO_VALUE, NULL,
+		    _("string containing Unicode escapes not in this locale\n"
+		      "is too long (max 10000 chars) (%s:%d:%d)"));
 	} else
 	    PRESERVE_SV(yylval = mkString2(stext,  bp - stext - 1, oct_or_hex));
 	UNPROTECT(1); /* release stext */
@@ -3065,8 +3127,8 @@ static int RawStringValue(int c0, int c)
     case '{': delim = '}'; break;
     case '|': delim = '|'; break;
     default:
-	error(_("malformed raw string literal at line %d"),
-	      ParseState.xxlineno);
+	raiseLexError("invalidRawLiteral", NO_VALUE, NULL,
+	    _("malformed raw string literal (%s:%d:%d)"));
     }
 
     PROTECT_WITH_INDEX(R_NilValue, &sti);
@@ -3157,11 +3219,14 @@ static int RawStringValue(int c0, int c)
         snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
     if(use_wcs) {
 	if(oct_or_hex)
-	    error(_("mixing Unicode and octal/hex escapes in a string is not allowed"));
+	    raiseLexError("mixedEscapes", NO_VALUE, NULL,
+	        _("mixing Unicode and octal/hex escapes in a string is not allowed (%s:%d:%d)"));
 	if(wcnt < 10000)
 	    PRESERVE_SV(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	else
-	    error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno);
+	    raiseLexError("UnicodeTooLong", NO_VALUE, NULL,
+		    _("string containing Unicode escapes not in this locale\n"
+		      "is too long (max 10000 chars) (%s:%d:%d)"));
     } else
 	PRESERVE_SV(yylval = mkString2(stext,  bp - stext - 1, oct_or_hex));
     UNPROTECT(1); /* release stext */
@@ -3798,27 +3863,31 @@ static int yylex(void)
 
     case LBB:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
-	    error(_("contextstack overflow at line %d"), ParseState.xxlineno);
+	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
+	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = '[';
 	*++contextp = '[';
 	break;
 
     case '[':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error(_("contextstack overflow at line %d"), ParseState.xxlineno);
+	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
+	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;
 	break;
 
     case LBRACE:
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error(_("contextstack overflow at line %d"), ParseState.xxlineno);
+	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
+	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;
 	EatLines = 1;
 	break;
 
     case '(':
 	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
-	    error(_("contextstack overflow at line %d"), ParseState.xxlineno);
+	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
+	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;
 	break;
 
@@ -3908,7 +3977,8 @@ static void recordParents( int parent, yyltype * childs, int nchilds){
 			continue ;
 		/*  This shouldn't happen... */
 		if (loc.id < 0 || loc.id > identifier) {
-		    error(_("internal parser error at line %d"),  ParseState.xxlineno);
+		    raiseLexError("internalError", NO_VALUE, NULL,
+		        _("internal parser error (%s:%d:%d)"));
 		}
 		ID_PARENT( loc.id ) = parent;
 	}
@@ -4226,4 +4296,129 @@ static int checkForPlaceholder(SEXP placeholder, SEXP arg)
 	    if (checkForPlaceholder(placeholder, CAR(cur)))
 		return TRUE;
     return FALSE;
+}
+
+static const char* getFilename() {
+    SEXP srcfile = PS_SRCFILE;
+    if (!srcfile || TYPEOF(srcfile) != ENVSXP)
+	return "<input>";
+    srcfile = findVar(install("filename"), srcfile);
+    if (TYPEOF(srcfile) != STRSXP || !strlen(CHAR(STRING_ELT(srcfile, 0))))
+	return "<input>";
+    else
+	return CHAR(STRING_ELT(srcfile, 0));
+}
+
+/* raiseParseError creates a "parseError: condition object and
+   signals an error.  
+     "value" is optional; use valuetype = NO_VALUE to skip 
+   other args will always be passed.
+   Args appear in the order
+     [value], filename, lineno, colno
+   in the sprintf call for the format.
+*/
+static void NORET raiseParseError(const char *subclassname,
+                             SEXP call,
+                             int valuetype,
+                             const void *value,
+                             YYLTYPE *lloc,
+                             const char *format)
+{
+    int nextra = 4, 
+        lineno = lloc->first_line,
+        colno  = lloc->first_column;
+    const char *filename = getFilename();
+    
+    SEXP cond;
+    switch(valuetype) {
+        case NO_VALUE: 
+	    cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    filename, lineno, colno);
+            break;
+             case CHAR_VALUE:
+            cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    *(const char *)value,
+				    filename, lineno, colno);
+            break;
+        case STRING_VALUE:
+            cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    (const char *)value,
+				    filename, lineno, colno);
+            break;
+        case INT_VALUE:
+            cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    *(const int *)value,
+				    filename, lineno, colno);
+            break;  
+        case UINT_VALUE:
+            cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    *(const unsigned int *)value,
+				    filename, lineno, colno);
+            break; 
+        case UCS_VALUE:
+            cond = R_makeErrorCondition(call, "parseError", subclassname,
+				    nextra, format, 
+				    *(const ucs_t *)value,
+				    filename, lineno, colno);
+            break; 
+    }
+				    
+    PROTECT(cond);
+    switch(valuetype) {
+      case NO_VALUE:
+	R_setConditionField(cond, 2, "value", R_NilValue);
+	break;
+      case STRING_VALUE:
+	R_setConditionField(cond, 2, "value", mkString((const char *)value));
+	break;
+      case INT_VALUE:
+	R_setConditionField(cond, 2, "value", ScalarInteger(*(int*)value));
+	break;      
+      case UINT_VALUE:
+	R_setConditionField(cond, 2, "value", ScalarInteger(*(unsigned int*)value));
+	break;
+      case CHAR_VALUE: {
+	char c[2];
+	c[0] = *(char *)value;
+	c[1] = '\0';
+	R_setConditionField(cond, 2, "value", mkString(c));
+	break;
+      }
+      case UCS_VALUE: {
+	ucs_t wc[2];
+	wc[0] = *(ucs_t *)value;
+	wc[1] = '\0';
+	R_setConditionField(cond, 2, "value", mkStringUTF8(wc, 1));
+	break;
+      }
+    }
+      
+    R_setConditionField(cond, 3, "filename", mkString(getFilename()));
+    R_setConditionField(cond, 4, "lineno", ScalarInteger(lineno));
+    R_setConditionField(cond, 5, "colno",  ScalarInteger(colno));
+    
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
+/* This function is for lexer errors; it gets the location
+   from the ParseState, but is otherwise the same as
+   raiseParseError.
+*/
+static void NORET raiseLexError(const char *subclassname,
+                             int valuetype,
+                             const void *value,
+                             const char *format)
+{
+    YYLTYPE lloc;
+    lloc.first_line   = ParseState.xxlineno;
+    lloc.first_column = ParseState.xxcolno;
+    raiseParseError(subclassname, R_NilValue, 
+                    valuetype, value,
+                    &lloc, format);
 }
