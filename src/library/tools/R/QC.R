@@ -5602,7 +5602,7 @@ function(dir) {
                 return(Recall(e[[2L]]))
             else if(s %in% c("||", "&&", "|", "&"))
                 return(Recall(e[[2L]]) || Recall(e[[3L]]))
-            else if(s %in% c("==", "!-") &&
+            else if(s %in% c("==", "!=") &&
                     is.call(e2 <- e[[2L]]) &&
                     (as.character(e2[[1L]])[1L] == "class") &&
                     is.character(e[[3L]]) &&
