@@ -5594,20 +5594,32 @@ function(x, ...)
 
 .check_package_code_class_is_string <-
 function(dir) {
-    predicate <- function(e) {
-        is.call(e) &&
-            (length(e) >= 2L) &&
-            (as.character(e[[1L]])[1L] == "if") &&
-            is.call(e <- e[[2L]]) &&
-            (as.character(e[[1L]])[1L] %in% c("==", "!-")) &&
-            is.call(e2 <- e[[2L]]) &&
-            (as.character(e2[[1L]])[1L] == "class") &&
-            is.character(e[[3L]]) &&
-            (length(e[[3L]] == 1L))
+    funA <- function(e) {
+        if(is.call(e) &&
+           (length(e) >= 2L) &&
+           (length(s <- as.character(e[[1L]])) == 1L)) {
+            if(s %in% c("(", "!"))
+                return(Recall(e[[2L]]))
+            else if(s %in% c("||", "&&", "|", "&"))
+                return(Recall(e[[2L]]) || Recall(e[[3L]]))
+            else if(s %in% c("==", "!-") &&
+                    is.call(e2 <- e[[2L]]) &&
+                    (as.character(e2[[1L]])[1L] == "class") &&
+                    is.character(e[[3L]]) &&
+                    (length(e[[3L]] == 1L)))
+                return(TRUE)
+        }
+        FALSE
+    }
+    funB <- function(e) {
+        if(is.call(e) &&
+           (length(e) >= 2L) &&
+           (as.character(e[[1L]])[1L] == "if"))
+            return(funA(e[[2L]]))
+        FALSE
     }
     x <- Filter(length,
-                .find_calls_in_package_code(dir, predicate,
-                                            recursive = TRUE))
+                .find_calls_in_package_code(dir, funB, recursive = TRUE))
     if(length(x)) {
         s <- sprintf("File %s: %s",
                      sQuote(rep.int(names(x), lengths(x))),
