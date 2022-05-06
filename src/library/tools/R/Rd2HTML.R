@@ -979,8 +979,8 @@ Rd2HTML <-
         if (done) return(FALSE)
         ## go through one by one until we hit \loadmathjax
         for (subfrag in frag) {
-            if (attr(subfrag, "Rd_tag") == "USERMACRO" &&
-                attr(subfrag, "macro") == "\\loadmathjax")
+            if (identical(attr(subfrag, "Rd_tag"), "USERMACRO") &&
+                identical(attr(subfrag, "macro"), "\\loadmathjax"))
                 return(TRUE)
         }
         return(FALSE)
