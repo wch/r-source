@@ -5912,6 +5912,21 @@ stopifnot(exprs = {
 ## gave just simpleError s; no line:column numbers in R <= 4.2.0
 
 
+## fisher.test() with "too full" table:  PR#18336
+d <- matrix(c(1,0,5,2,1,90
+             ,2,1,0,2,3,89
+             ,0,0,0,1,0,14
+             ,0,0,0,0,0, 5
+             ,0,0,0,0,0, 2
+             ,0,0,0,0,0, 2
+              ), nrow=6, byrow = TRUE)
+(r <- tryCid(fisher.test(d)))
+stopifnot(inherits(r, "error"))
+if(englishMsgs)
+    stopifnot(grepl("hash key .* > INT_MAX", conditionMessage(r)))
+## gave a seg.fault in R <= 4.2.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

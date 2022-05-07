@@ -144,6 +144,10 @@
 
       \item Completion in Rgui on Windows now works also with non-ASCII
       characters.
+
+      \item \code{fisher.test(d)} no longer segfaults for \dQuote{large}
+      \code{d}; fixing \PR{18336} by preventing/detecting an integer
+      overflow reliably.
     }
   }
 }
