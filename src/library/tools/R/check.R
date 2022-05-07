@@ -6513,9 +6513,6 @@ add_dummies <- function(dir, Log)
         if(is.na(R_check_Rd_validate_Rd2HTML))
             R_check_Rd_validate_Rd2HTML <- TRUE
 
-        ## Temporary until it becomes the default.
-        ## Only used when check does the installation itself.
-        Sys.setenv("_R_INSTALL_USE_FC_LEN_T_" = "TRUE")
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.

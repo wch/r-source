@@ -63,12 +63,6 @@
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
       \sQuote{Writing R Extensions} §6.6.1.
-
-      [In progress: scheduled for May 7.
-
-      Setting environment variable \env{_R_INSTALL_USE_FC_LEN_T_} to a
-      true value enables this \emph{pro tem}.  This is set by \command{R
-	CMD check --as-cran} when it installs a package.]
     }
   }
 
