@@ -6,7 +6,7 @@
 \name{base-deprecated}
 \alias{base-deprecated}
 %------ Eventually move entries to ---->> ./base-defunct.Rd
-\alias{default.stringsAsFactors}% here for R 4.2.0
+%%\alias{default.stringsAsFactors}% here for R 4.2.0
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !

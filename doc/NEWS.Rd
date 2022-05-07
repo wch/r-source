@@ -84,8 +84,6 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{default.stringsAsFactors()} is defunct,
-
-      [Scheduled for May 7.]
     }
   }
 
