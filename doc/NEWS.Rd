@@ -22,7 +22,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item The included BLAS sources have been updated to those
-      shipped with LAPACK version 3.10.1.  This makes some
+      shipped with LAPACK version 3.10.1.  This causes some
       (platform-dependent) changes to package check output.
 
       \item The parser now signals \emph{classed} errors, notably in case
@@ -60,9 +60,9 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \code{USE_FC_LEN_T} is the default: this uses the
-      correct prototypes for Fortran BLAS/LAPACK routines called from
-      C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions} §6.6.1.
+      correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
+      routines called from C/C++, and requires adjustment of most such
+      calls -- see \sQuote{Writing R Extensions} §6.6.1.
     }
   }
 
