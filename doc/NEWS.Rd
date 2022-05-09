@@ -471,7 +471,7 @@
       \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
-      \sQuote{Writing R Extensions} §6.6.2.   (This has been supported
+      \sQuote{Writing R Extensions} §6.6.1.   (This has been supported
       since \R 3.6.2.)
 
       \item Package installation speed for packages installed with

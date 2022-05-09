@@ -5470,6 +5470,12 @@ are only retained if environment variable
 @node Encoding issues, Portable C and C++ code, Check timing, Writing portable packages
 @subsection Encoding issues
 
+The issues in this subsection have been much alleviated by the change in
+@R{} 4.2.0 to running the Windows port of @R{} in a UTF-8 locale where
+available.  However, Windows users might be running an earlier version
+of @R{} an earlier version of Windows which does not support UTF-8
+locales.
+
 Care is needed if your package contains non-@acronym{ASCII} text, and in
 particular if it is intended to be used in more than one locale.  It is
 possible to mark the encoding used in the @file{DESCRIPTION} file and in
@@ -9967,7 +9973,7 @@ a command that is to be debugged, at a terminal
 
 @example
 ps -ef | grep exec/R
-# identify the pid @var{pid} for the next command
+# identify the pid @var{pid} for the next command: it is the second item
 lldb -p @var{pid}
 (lldb) continue
 @end example
@@ -10423,8 +10429,8 @@ environment variable, but with lowest priority: note that it does not
 include the directory from which the DLL was loaded.  It is possible to
 add a single path with quite high priority @emph{via} the @code{DLLpath}
 argument to @code{dyn.load}.  This is (by default) used by
-@code{library.dynam} to include the package's @file{libs/i386} or
-@file{libs/x64} directory in the DLL search path.
+@code{library.dynam} to include the package's @file{libs/x64} directory
+in the DLL search path.
 
 
 @node Registering native routines, Creating shared objects, dyn.load and dyn.unload, System and foreign language interfaces
@@ -14381,7 +14387,9 @@ void rmsg_ (char *msg, size_t msg_len);
 (where @code{size_t} applies to version 8 and later).  We could re-write
 that portably in C as
 @example
-#define USE_FC_LEN_T
+#ifndef USE_FC_LEN_T
+# define USE_FC_LEN_T
+#endif
 #include <Rconfig.h> // included by R.h, so define USE_FC_LEN_T early
 
 void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
@@ -14398,7 +14406,9 @@ could just assume that @code{msg} is nul-terminated (not guaranteed, but
 people have been getting away with it for many years), so the complete C
 side might be
 @example
-#define USE_FC_LEN_T
+#ifndef USE_FC_LEN_T
+# define USE_FC_LEN_T
+#endif
 #include <Rconfig.h>
 
 #ifdef FC_LEN_T
@@ -14416,6 +14426,8 @@ void F77_NAME(rmsg)(char *msg)
 @}
 #endif
 @end example
+@noindent
+(@code{USE_FC_LEN_T} will be the default as from @R{} 4.3.0.)
 
 
 An alternative is to use Fortran 2003 features to set up the Fortran
@@ -14479,7 +14491,9 @@ Alternatively, do as @R{} does as from version 3.6.2 and pass
 the character length(s) from C to Fortran. A portable way to do this is
 @example
 // before any R headers, or define in PKG_CPPFLAGS
-#define USE_FC_LEN_T
+#ifndef  USE_FC_LEN_T
+# define USE_FC_LEN_T
+#endif
 #include <Rconfig.h>
 #include <R_ext/BLAS.h>
 #ifndef FCONE
@@ -14492,7 +14506,8 @@ the character length(s) from C to Fortran. A portable way to do this is
 @noindent
 (Note there is no comma before or between the @code{FCONE} invocations.)
 It is strongly recommended that packages which call from C/C++
-BLAS/LAPACK routines with character arguments adopt this approach.
+BLAS/LAPACK routines with character arguments adopt this approach:
+packages not using will fail to install as from @R{} 4.3.0.
 
 @node Fortran LOGICAL, Passing functions, Fortran character strings, Calling C from Fortran and vice versa
 @subsection Fortran LOGICAL
