@@ -6009,7 +6009,7 @@ function(x, ...)
     ignore_unused_imports <-
         config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_",
                                          "FALSE"))
-
+                                        # ^^^^^ rather "TRUE" ??
     c(character(),
       if(length(xx <- x$imports)) {
           if(length(xx) > 1L) {
@@ -6245,7 +6245,7 @@ function(db, files)
                      },
                      error = function(e) {
                          ## so ignore 'invalid multibyte character' errors.
-                         msg <- .massage_file_parse_error_message(conditionMessage(e))
+                         msg <- .massage_file_parse_error(e)
                          if(!startsWith(msg, "invalid multibyte character"))
                          {
                              parse_errors <<- c(parse_errors, f)
@@ -9170,10 +9170,22 @@ function(cls)
 }
 
 ### ** .massage_file_parse_error_message
-
 .massage_file_parse_error_message <-
 function(x)
     sub("^[^:]+:[[:space:]]*", "", x)
+
+## get rid of "file/name" where file/name maybe "<text>"
+## new *classed* parseError messages look like
+##    "function '(' not supported in RHS call of a pipe (filename:1:8)"
+.massage_file_parse_error <- function(e) { # 'e' : the error itself
+    msg <- conditionMessage(e)
+    if(inherits(e, "parseError"))
+        ## get rid of 'file name:'
+        sub("\\([^:]+:(.*)\\)", "(\\1)", msg)
+    else ## old version: == .massage_file_parse_error_message(msg)
+        sub("^[^:]+:[[:space:]]*", "", msg)
+}
+
 
 ### ** .package_env
 
