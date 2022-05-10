@@ -1,7 +1,7 @@
 #  File src/library/utils/R/linkhtml.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ make.packages.html <-
     }
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
-    out <- file(f.tg, open = "a")
+    out <- file(f.tg, open = "a", encoding = "UTF-8")
     on.exit(close(out))
     if(WINDOWS) {
         rh <- chartr("\\", "/", R.home())
