@@ -95,6 +95,9 @@
       \item \code{as.character(<Rd>, deparse = TRUE)} failed to
       re-escape curly braces in LaTeX-like text.
       (Reported by Hadley Wickham in \PR{18324}.)
+
+      \item \code{R CMD Stangle}: improved message about \sQuote{Output}
+      files.
     }
   }
 }
