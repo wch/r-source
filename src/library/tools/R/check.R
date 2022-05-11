@@ -5329,6 +5329,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wanalyzer-file-leak\\]",
                              ": warning: .*\\[-Wanalyzer-use-after-free\\]",
                              ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]",
+                             ": warning: .*\\[-Wint-in-bool-context\\]",
                              ## gcc and clang
                              ": warning: .*\\[-Wpointer-sign\\]",
                              ## gcc and clang reports on use of #warning
