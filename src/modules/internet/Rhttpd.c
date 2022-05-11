@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2021 The R Core Team.
+ *  Copyright (C) 2009-2022 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -554,8 +554,11 @@ static void process_request_(void *ptr)
     char *query = 0, *s;
     SEXP sHeaders = R_NilValue;
     int code = 200;
+    const void *vmax = NULL;
+
     DBG(Rprintf("process request for %p\n", (void*) c));
     if (!c || !c->url) return; /* if there is not enough to process, bail out */
+    vmax = vmaxget();
     s = c->url;
     while (*s && *s != '?') s++; /* find the query part */
     if (*s) {
@@ -604,13 +607,14 @@ static void process_request_(void *ptr)
 	 */
 
 	if (TYPEOF(x) == STRSXP && LENGTH(x) > 0) { /* string means there was an error */
-	    const char *s = CHAR(STRING_ELT(x, 0));
+	    const char *s = translateChar(STRING_ELT(x, 0));
 	    send_http_response(c, " 500 Evaluation error\r\nConnection: close\r\nContent-type: text/plain\r\n\r\n");
 	    DBG(Rprintf("respond with 500 and content: %s\n", s));
 	    if (c->method != METHOD_HEAD)
 		send_response(c->sock, s, strlen(s));
 	    c->attr |= CONNECTION_CLOSE; /* force close */
 	    UNPROTECT(7);
+	    vmaxset(vmax);
 	    return;
 	}
 
@@ -619,7 +623,7 @@ static void process_request_(void *ptr)
 	    if (LENGTH(x) > 1) {
 		SEXP sCT = VECTOR_ELT(x, 1); /* second element is content type if present */
 		if (TYPEOF(sCT) == STRSXP && LENGTH(sCT) > 0)
-		    ct = CHAR(STRING_ELT(sCT, 0));
+		    ct = translateChar(STRING_ELT(sCT, 0));
 		if (LENGTH(x) > 2) { /* third element is headers vector */
 		    sHeaders = VECTOR_ELT(x, 2);
 		    if (TYPEOF(sHeaders) != STRSXP)
@@ -631,7 +635,7 @@ static void process_request_(void *ptr)
 	    y = VECTOR_ELT(x, 0);
 	    if (TYPEOF(y) == STRSXP && LENGTH(y) > 0) {
 		char buf[64];
-		const char *cs = CHAR(STRING_ELT(y, 0)), *fn = 0;
+		const char *cs = translateChar(STRING_ELT(y, 0)), *fn = 0;
 		if (code == 200)
 		    send_http_response(c, " 200 OK\r\nContent-type: ");
 		else {
@@ -642,17 +646,17 @@ static void process_request_(void *ptr)
 		if (sHeaders != R_NilValue) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
-			const char *hs = CHAR(STRING_ELT(sHeaders, i));
+			const char *hs = translateChar(STRING_ELT(sHeaders, i));
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
 		}
 		/* special content - a file: either list(file="") or list(c("*FILE*", "")) - the latter will go away */
 		if (TYPEOF(xNames) == STRSXP && LENGTH(xNames) > 0 &&
-		    !strcmp(CHAR(STRING_ELT(xNames, 0)), "file"))
+		    !strcmp(translateChar(STRING_ELT(xNames, 0)), "file"))
 		    fn = cs;
 		if (LENGTH(y) > 1 && !strcmp(cs, "*FILE*"))
-		    fn = CHAR(STRING_ELT(y, 1));
+		    fn = translateChar(STRING_ELT(y, 1));
 		if (fn) {
 		    char *fbuf;
 		    FILE *f = fopen(fn, "rb");
@@ -661,6 +665,7 @@ static void process_request_(void *ptr)
 			send_response(c->sock, "\r\nContent-length: 0\r\n\r\n", 23);
 			UNPROTECT(7);
 			fin_request(c);
+			vmaxset(vmax);
 			return;
 		    }
 		    fseek(f, 0, SEEK_END);
@@ -678,6 +683,7 @@ static void process_request_(void *ptr)
 				    UNPROTECT(7);
 				    c->attr |= CONNECTION_CLOSE;
 				    fclose(f);
+				    vmaxset(vmax);
 				    return;
 				}
 				send_response(c->sock, fbuf, rd);
@@ -688,12 +694,14 @@ static void process_request_(void *ptr)
 			    UNPROTECT(7);
 			    c->attr |= CONNECTION_CLOSE;
 			    fclose(f);
+			    vmaxset(vmax);
 			    return;
 			}
 		    }
 		    fclose(f);
 		    UNPROTECT(7);
 		    fin_request(c);
+		    vmaxset(vmax);
 		    return;
 		}
 		sprintf(buf, "\r\nContent-length: %u\r\n\r\n", (unsigned int) strlen(cs));
@@ -702,6 +710,7 @@ static void process_request_(void *ptr)
 		    send_response(c->sock, cs, strlen(cs));
 		UNPROTECT(7);
 		fin_request(c);
+		vmaxset(vmax);
 		return;
 	    }
 	    if (TYPEOF(y) == RAWSXP) {
@@ -717,7 +726,7 @@ static void process_request_(void *ptr)
 		if (sHeaders != R_NilValue) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
-			const char *hs = CHAR(STRING_ELT(sHeaders, i));
+			const char *hs = translateChar(STRING_ELT(sHeaders, i));
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
@@ -728,6 +737,7 @@ static void process_request_(void *ptr)
 		    send_response(c->sock, (char*) cs, LENGTH(y));
 		UNPROTECT(7);
 		fin_request(c);
+		vmaxset(vmax);
 		return;
 	    }
 	}
@@ -735,6 +745,7 @@ static void process_request_(void *ptr)
     }
     send_http_response(c, " 500 Invalid response from R\r\nConnection: close\r\nContent-type: text/plain\r\n\r\nServer error: invalid response from R\r\n");
     c->attr |= CONNECTION_CLOSE; /* force close */
+    vmaxset(vmax);
 }
 
 /* wrap the actual call with ToplevelExec since we need to have a guaranteed
@@ -1358,9 +1369,14 @@ void in_R_HTTPDStop(void)
 SEXP R_init_httpd(SEXP sIP, SEXP sPort)
 {
     const char *ip = 0;
+    const void *vmax = NULL;
+
     if (sIP != R_NilValue && (TYPEOF(sIP) != STRSXP || LENGTH(sIP) != 1))
 	Rf_error("invalid bind address specification");
+    vmax = vmaxget();
     if (sIP != R_NilValue)
-	ip = CHAR(STRING_ELT(sIP, 0));
-    return ScalarInteger(in_R_HTTPDCreate(ip, asInteger(sPort)));
+	ip = translateChar(STRING_ELT(sIP, 0));
+    SEXP ans = ScalarInteger(in_R_HTTPDCreate(ip, asInteger(sPort)));
+    vmaxset(vmax);
+    return ans;
 }
