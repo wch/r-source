@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004--2008	The R Foundation
-   Copyright (C) 2013--2021	The R Core Team
+   Copyright (C) 2013--2022	The R Core Team
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
@@ -111,10 +111,16 @@ static HWND hModelessDlg = NULL;
 int myMessageBox(HWND h, const char *text, const char *caption, UINT type)
 {
     if(localeCP != GetACP()) {
-	wchar_t wc[1000], wcaption[100];
-	mbstowcs(wcaption, caption, 100);
-	mbstowcs(wc, text, 1000);
-	return MessageBoxW(h, wc, wcaption, type);
+	int ntext = mbstowcs(NULL, text, 0);
+	int ncaption = mbstowcs(NULL, caption, 0);
+
+	if (ntext >= 0 && ncaption >= 0) {
+	    wchar_t wc[ntext+1], wcaption[ncaption+1];
+	    mbstowcs(wcaption, caption, ncaption+1);
+	    mbstowcs(wc, text, ntext+1);
+	    return MessageBoxW(h, wc, wcaption, type);
+	} else
+	    return 0;
     } else
 	return MessageBoxA(h, text, caption, type);
 }
