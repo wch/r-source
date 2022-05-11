@@ -933,6 +933,7 @@ static void performCompletion(control c)
     const char *additional_text;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
+    const void *vmax = NULL;
 
     if(!completion_available) {
 	storetab(c);
@@ -994,6 +995,7 @@ static void performCompletion(control c)
     for(i = 0; i < length(cmdexpr); i++)
 	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
     UNPROTECT(2);
+    PROTECT(ans);
 
     /* ans has the form list(addition, possible), where 'addition' is
        unique additional text if any, and 'possible' is a character
@@ -1006,8 +1008,10 @@ static void performCompletion(control c)
 #define ADDITION 0
 #define POSSIBLE 1
 
+    vmax = vmaxget();
     alen = length(VECTOR_ELT(ans, POSSIBLE));
-    additional_text = CHAR(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
+    /* could translate directly to wchar_t */
+    additional_text = translateChar(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
     if (alen) {
 	/* make a copy of the current string first */
 	wchar_t p1[wcslen(LINE(NUMLINES - 1)) + 1];
@@ -1020,14 +1024,15 @@ static void performCompletion(control c)
 
 	for (i = 0; i < min(alen, max_show); i++) {
             consolewrites(c, "\n");
-	    consolewrites(c, CHAR(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
+	    consolewrites(c, translateChar(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
 	}
 	if (alen > max_show)
 	    consolewrites(c, "\n[...truncated]");
 	consolewrites(c, "\n");
 	p->wipe_completion = 1;
     }
-
+    vmaxset(vmax);
+    UNPROTECT(1); /* ans */
     storekeys(c, additional_text);
     return;
 }
