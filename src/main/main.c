@@ -757,15 +757,13 @@ static uintptr_t almostFillStack() {
 #endif
 
 #ifdef Win32
-static void invalid_parameter_handler(
+static void invalid_parameter_handler_abort(
     const wchar_t* expression,
     const wchar_t* function,
     const wchar_t* file,
     unsigned int line,
     uintptr_t reserved)
 {
-    /* printf("Invalid param %ls %ls %ls:%u... \n",
-              expression, function, file, line); */
     R_OutputCon = 2;
     R_ErrorCon = 2;
     REprintf(" ----------- FAILURE REPORT -------------- \n");
@@ -788,6 +786,19 @@ static void invalid_parameter_handler(
     REprintf(" ----------- END OF FAILURE REPORT -------------- \n");
     R_Suicide("invalid parameter passed to a C runtime function"); 
 }
+
+extern void _invoke_watson(const wchar_t*, const wchar_t*, const wchar_t*,
+    unsigned int, uintptr_t);
+
+static void invalid_parameter_handler_watson(
+    const wchar_t* expression,
+    const wchar_t* function,
+    const wchar_t* file,
+    unsigned int line,
+    uintptr_t reserved)
+{
+    _invoke_watson(expression, function, file, line, reserved);    
+}
 #endif
 
 void setup_Rmainloop(void)
@@ -802,7 +813,9 @@ void setup_Rmainloop(void)
     {
 	char *p = getenv("_R_WIN_CHECK_INVALID_PARAMETERS_");
 	if (p && StringTrue(p))
-	    _set_invalid_parameter_handler(invalid_parameter_handler);
+	    _set_invalid_parameter_handler(invalid_parameter_handler_abort);
+	else if (p && !strcmp(p, "watson"))
+	    _set_invalid_parameter_handler(invalid_parameter_handler_watson);
     }
 #endif
 
