@@ -654,9 +654,9 @@ static void process_request_(void *ptr)
 		/* special content - a file: either list(file="") or list(c("*FILE*", "")) - the latter will go away */
 		if (TYPEOF(xNames) == STRSXP && LENGTH(xNames) > 0 &&
 		    !strcmp(translateChar(STRING_ELT(xNames, 0)), "file"))
-		    fn = cs;
+		    fn = cs; /* translateCharFP2 not exported */
 		if (LENGTH(y) > 1 && !strcmp(cs, "*FILE*"))
-		    fn = translateChar(STRING_ELT(y, 1));
+		    fn = translateChar(STRING_ELT(y, 1)); /* translateCharFP2 not exported */
 		if (fn) {
 		    char *fbuf;
 		    FILE *f = fopen(fn, "rb");
