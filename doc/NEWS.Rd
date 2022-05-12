@@ -149,6 +149,8 @@
       \item \code{fisher.test(d)} no longer segfaults for \dQuote{large}
       \code{d}; fixing \PR{18336} by preventing/detecting an integer
       overflow reliably.
+
+      \item Rgui no longer truncates usage information with \option{--help}.
     }
   }
 }
