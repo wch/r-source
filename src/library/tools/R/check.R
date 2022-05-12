@@ -4890,7 +4890,10 @@ add_dummies <- function(dir, Log)
     check_Rd2HTML <- function(pkgdir) {
         ## require HTML Tidy, and not macOS's ancient version.
         msg <- ""
-        OK <- nzchar(Sys.which("/usr/bin/tidy"))
+        if(.Platform$OS.type == "windows")
+            OK <- nzchar(Sys.which("tidy"))
+        else
+            OK <- nzchar(Sys.which("/usr/bin/tidy"))
         if(OK) {
             ver <- system2("tidy", "--version", stdout = TRUE)
             OK <- startsWith(ver, "HTML Tidy")
