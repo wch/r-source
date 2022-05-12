@@ -44,6 +44,8 @@
 
       \item Completion in Rgui on Windows now works also with non-ASCII
       characters.
+
+      \item Rgui no longer truncates usage information with \option{--help}.
     }
   }
 }
