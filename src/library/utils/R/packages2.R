@@ -871,9 +871,15 @@ install.packages <-
                 tss <- sub("[.]ts$", "", dir(".", pattern = "[.]ts$"))
                 failed <- pkgs[!pkgs %in% tss]
 		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
-                warning(gettextf("installation of one or more packages failed,\n  probably %s",
-                                 paste(sQuote(failed), collapse = ", ")),
-                        domain = NA)
+                n <- length(failed)
+                if (n == 1L)
+                    warning(gettextf("installation of package %s failed",
+                                     sQuote(failed)), domain = NA)
+                else if (n > 1L)
+                     warning(gettextf( "installation of %s packages failed,\n  probably %s",
+                                      n,
+                                      paste(sQuote(failed), collapse = ", ")),
+                             domain = NA)
             }
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)
