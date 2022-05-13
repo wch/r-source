@@ -49,6 +49,10 @@
       characters.
 
       \item Rgui no longer truncates usage information with \option{--help}.
+
+      \item \code{tk_choose.files()} with \code{multi=FALSE} misbehaved
+      on paths containing spaces (\PR{18334}) (regression introduced in
+      R 4.0.0). 
     }
   }
 }
