@@ -48,6 +48,10 @@
       \item Completion in Rgui on Windows now works also with non-ASCII
       characters.
 
+      \item \code{fisher.test(d)} no longer segfaults for \dQuote{large}
+      \code{d}; fixing \PR{18336} by preventing/detecting an integer
+      overflow reliably.
+
       \item Rgui no longer truncates usage information with \option{--help}.
 
       \item \code{tk_choose.files()} with \code{multi=FALSE} misbehaved
