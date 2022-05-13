@@ -5927,6 +5927,26 @@ if(englishMsgs)
 ## gave a seg.fault in R <= 4.2.0
 
 
+## Testing fix for PR#18344 [ tar() warning about illegal uid/gid ]:
+sys <- Sys.info() # Only 'root' can create files with illegal uid/gid
+if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root") {
+    dir.create(mdir <- file.path(tempdir(),"stuff"))
+    for(f in letters[1:3])
+        writeLines("first line", file.path(mdir, f))
+    owd <- setwd(tempdir())
+    system(paste("chown 654321 stuff/a")) ## system(paste("chgrp 123456 stuff/b"))
+    r <- tryCatch( tar('stuff.tar', "stuff"), warning = identity)
+    stopifnot(inherits(r, "warning"))
+    if(englishMsgs)
+        stopifnot(grepl("^invalid uid ", conditionMessage(r)))
+    ## cat("Inside directory ", getwd(),":\n"); system("ls -l stuff.tar")
+    setwd(owd)# go back
+} else
+    message("You are not root, hence cannot change uid / gid to invalid values")
+## gave 2 warnings per wrong file; the first being    In sprintf(gettext(....):
+##    "one argument not used by format 'invalid uid value replaced .... 'nobody''"
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

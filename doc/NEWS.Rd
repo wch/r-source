@@ -154,6 +154,10 @@
       overflow reliably.
 
       \item Rgui no longer truncates usage information with \option{--help}.
+
+      \item \code{tar(., files=*)} now produces the warning about invalid
+      uid or gid of files correctly, fixing \PR{18344}, reported by
+      Martin Morgan.
     }
   }
 }
