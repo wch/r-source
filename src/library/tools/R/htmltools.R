@@ -1,6 +1,6 @@
 tidy_validate <-
-function(f) {
-    z <- suppressWarnings(system2("tidy", c("-qe", f),
+function(f, tidy = "tidy") {
+    z <- suppressWarnings(system2(tidy, c("-qe", f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
     s <- readLines(f, warn = FALSE)
@@ -33,7 +33,7 @@ function(files, verbose = interactive()) {
                             }),
                      files)
 }
-    
+
 tidy_validate_R_httpd_path <-
 function(path) {
     y <- httpd(path, query = NULL)
@@ -56,7 +56,7 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
 {
     if(!missing(dir))
         return(tidy_validate_package_Rd_files_from_dir(dir, auto, verbose))
-    
+
     if(!length(package)) return(NULL)
 
     n <- 3L
@@ -89,7 +89,7 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
 tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
 
     if(!length(dir)) return(NULL)
-    
+
     out <- tempfile()
     on.exit(unlink(out))
 

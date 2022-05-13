@@ -17,6 +17,9 @@
   }
   \subsection{UTILITIES}{
     \itemize{
+      \item The (full path to) the command \command{tidy} to be used for
+      HTML validation can be set by environment variable \env{R_TIDYCMD}.
+
       \item Setting environment variable
       \env{_R_CHECK_RD_VALIDATE_RD2HTML_} to a false value will override
       \command{R CMD check --as-cran} and turn off HTML validation.

@@ -4890,9 +4890,10 @@ add_dummies <- function(dir, Log)
     check_Rd2HTML <- function(pkgdir) {
         ## require HTML Tidy, and not macOS's ancient version.
         msg <- ""
-        OK <- nzchar(Sys.which("tidy")) # we currently use the one on the path
+        Tidy <- Sys.getenv("R_TIDYCMD", "tidy")
+        OK <- nzchar(Sys.which(Tidy))
         if(OK) {
-            ver <- system2("tidy", "--version", stdout = TRUE)
+            ver <- system2(Tidy, "--version", stdout = TRUE)
             OK <- startsWith(ver, "HTML Tidy")
             if(OK) {
                 OK <- !grepl('Apple Inc. build 2649', ver)
@@ -4931,7 +4932,7 @@ add_dummies <- function(dir, Log)
                           function(x)
                               tryCatch({
                                   Rd2HTML(x, out)
-                                  tidy_validate(out)
+                                  tidy_validate(out, tidy = Tidy)
                               },
                               error = identity))
         names(results) <- names(db)
