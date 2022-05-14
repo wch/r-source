@@ -875,11 +875,17 @@ install.packages <-
                 if (n == 1L)
                     warning(gettextf("installation of package %s failed",
                                      sQuote(failed)), domain = NA)
-                else if (n > 1L)
-                     warning(gettextf( "installation of %s packages failed,\n  probably %s",
-                                      n,
-                                      paste(sQuote(failed), collapse = ", ")),
-                             domain = NA)
+                else if (n > 1L) {
+                    msg <- paste(sQuote(failed), collapse = ", ")
+                    if(nchar(msg) < 40)
+                        warning(gettextf( "installation of %s packages failed:  %s",
+                                         n, msg),
+                                domain = NA)
+                    else
+                        warning(gettextf( "installation of %s packages failed:\n  %s",
+                                         n, msg),
+                                domain = NA)
+                     }
             }
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)
