@@ -878,11 +878,11 @@ install.packages <-
                 else if (n > 1L) {
                     msg <- paste(sQuote(failed), collapse = ", ")
                     if(nchar(msg) < 40)
-                        warning(gettextf( "installation of %s packages failed:  %s",
+                        warning(gettextf( "installation of %d packages failed:  %s",
                                          n, msg),
                                 domain = NA)
                     else
-                        warning(gettextf( "installation of %s packages failed:\n  %s",
+                        warning(gettextf( "installation of %d packages failed:\n  %s",
                                          n, msg),
                                 domain = NA)
                      }
