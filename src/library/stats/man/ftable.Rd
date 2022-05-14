@@ -1,6 +1,6 @@
 % File src/library/stats/man/ftable.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ftable}
@@ -54,7 +54,7 @@ ftable(x, \dots)
   If the first argument is of class \code{"table"}, it represents a
   contingency table and is used as is; if it is a flat table of class
   \code{"ftable"}, the information it contains is converted to the usual
-  array representation using \code{as.ftable}.  Otherwise, the arguments
+  array representation using \code{\link{as.table}}.  Otherwise, the arguments
   should be \R objects which can be interpreted as factors (including
   character strings), or a list (or data frame) whose components can be
   so interpreted, which are cross-tabulated using \code{\link{table}}.

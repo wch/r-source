@@ -100,7 +100,7 @@ In the simplest usage of \texttt{noweb}, the options (if present) of
 the code chunks give the names of source code files, and the tool
 \texttt{notangle} can be used to extract the code chunks from the
 \texttt{noweb} file. Multiple code chunks can have the same name, the
-corresponding code chunks are the concatenated when the source code is
+corresponding code chunks are then concatenated when the source code is
 extracted. \texttt{noweb} has some additional mechanisms to
 cross-reference code chunks (the \verb|[[...]]| operator, etc.),
 Sweave does currently not use nor support these features, so they are
