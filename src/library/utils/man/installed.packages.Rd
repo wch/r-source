@@ -25,7 +25,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
     character vector or \code{NULL} (default).  If non-null, used to
     select packages; \code{"high"} is equivalent to
     \code{c("base", "recommended")}.  To select all packages without an
-    assigned priority use \code{priority = NA_character_}.}
+    assigned priority use \code{priority = NA_character_}.
   }
   \item{noCache}{Do not use cached information, nor cache it.}
 
