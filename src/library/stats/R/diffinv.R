@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## Cppyright (C) 2003-2017  R Core Team
-## Copyright     1997-1999  Adrian Trapletti
+#  Copyright (C) 1995-2022 The R Core Team
+## Copyright    1997-1999  Adrian Trapletti
 ## This version distributed under GPL (version 2 or later)
 
 diffinv <- function (x, ...) { UseMethod("diffinv") }
@@ -73,10 +73,31 @@ diffinv.ts <- function (x, lag = 1, differences = 1, xi, ...)
     ts(y, frequency = frequency(x), end = end(x))
 }
 
-toeplitz <- function (x)
+toeplitz <- function (x, r = NULL, symmetric = is.null(r))
 {
     if(!is.vector(x)) stop("'x' is not a vector")
     n <- length(x)
-    A <- matrix(raw(), n, n)
-    matrix(x[abs(col(A) - row(A)) + 1L], n, n)
+    if(symmetric) {
+        d <- c(n,n)
+        array(x[abs(.col(d) - .row(d)) + 1L], d)
+    } else {
+        stopifnot(is.vector(r))
+        nc <- length(r)
+        if(n && nc && x[1L] != r[1L])
+            warning("x[1] != r[1]; using x[1] for diagonal")
+        ## toeplitz2(c(if(nc >= 2L) r[nc:2L], x), n, nc) :
+        d <- c(n, nc)
+        array(c(if(nc >= 2L) r[nc:2L], x)[nc - .col(d) + .row(d)], d)
+    }
+}
+
+## compute [nrow x ncol] matrix T , w/  T[i,j] :=  x[i - j + ncol]
+toeplitz2 <- function(x, nrow = length(x) +1L - ncol, ncol = length(x) +1L - nrow)
+{
+    if(!is.vector(x)) stop("'x' is not a vector")
+    if(!missing(nrow)) stopifnot(length(nrow) == 1L, nrow >= 0)
+    if(!missing(ncol)) stopifnot(length(ncol) == 1L, ncol >= 0)
+    stopifnot(length(x) >= nrow + ncol - 1L)
+    d <- c(nrow, ncol)
+    array(x[ncol - .col(d) + .row(d)], d)
 }

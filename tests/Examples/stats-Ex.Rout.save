@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-04-19 r82216) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-05-16 r82363) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -17761,8 +17761,8 @@ attr(,".Environment")
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: toeplitz
-> ### Title: Form Symmetric Toeplitz Matrix
-> ### Aliases: toeplitz
+> ### Title: Create Symmetric and Asymmetric Toeplitz Matrix
+> ### Aliases: toeplitz toeplitz2
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -17775,6 +17775,80 @@ attr(,".Environment")
 [3,]    3    2    1    2    3
 [4,]    4    3    2    1    2
 [5,]    5    4    3    2    1
+> 
+> T. <- toeplitz (1:5, 11:13) # with a  *Warning* x[1] != r[1]
+Warning in toeplitz(1:5, 11:13) : x[1] != r[1]; using x[1] for diagonal
+> T2 <- toeplitz2(c(13:12, 1:5), 5, 3)# this is the same matrix:
+> stopifnot(identical(T., T2))
+> 
+> # Matrix of character (could also have logical, raw, complex ..) {also warning}:
+> noquote(toeplitz(letters[1:4], LETTERS[20:26]))
+Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
+  x[1] != r[1]; using x[1] for diagonal
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+[1,] a    U    V    W    X    Y    Z   
+[2,] b    a    U    V    W    X    Y   
+[3,] c    b    a    U    V    W    X   
+[4,] d    c    b    a    U    V    W   
+> 
+> ## A convolution/smoother weight matrix :
+> m <- 17
+> k <- length(wts <- c(76, 99, 60, 20, 1))
+> n <- m-k+1
+> ## Convolution
+> W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
+> ## Don't show: 
+> hadM <- isNamespaceLoaded("Matrix")
+> ## End(Don't show)
+> ## "display" nicely :
+> if(requireNamespace("Matrix"))
++    print(Matrix::Matrix(W))    else {
++    colnames(W) <- paste0(",", if(m <= 9) 1:9 else c(1:9, letters[seq_len(m-9)]))
++    print(W)
++ }
+Loading required namespace: Matrix
+17 x 13 sparse Matrix of class "dgCMatrix"
+                                            
+ [1,] 76  .  .  .  .  .  .  .  .  .  .  .  .
+ [2,] 99 76  .  .  .  .  .  .  .  .  .  .  .
+ [3,] 60 99 76  .  .  .  .  .  .  .  .  .  .
+ [4,] 20 60 99 76  .  .  .  .  .  .  .  .  .
+ [5,]  1 20 60 99 76  .  .  .  .  .  .  .  .
+ [6,]  .  1 20 60 99 76  .  .  .  .  .  .  .
+ [7,]  .  .  1 20 60 99 76  .  .  .  .  .  .
+ [8,]  .  .  .  1 20 60 99 76  .  .  .  .  .
+ [9,]  .  .  .  .  1 20 60 99 76  .  .  .  .
+[10,]  .  .  .  .  .  1 20 60 99 76  .  .  .
+[11,]  .  .  .  .  .  .  1 20 60 99 76  .  .
+[12,]  .  .  .  .  .  .  .  1 20 60 99 76  .
+[13,]  .  .  .  .  .  .  .  .  1 20 60 99 76
+[14,]  .  .  .  .  .  .  .  .  .  1 20 60 99
+[15,]  .  .  .  .  .  .  .  .  .  .  1 20 60
+[16,]  .  .  .  .  .  .  .  .  .  .  .  1 20
+[17,]  .  .  .  .  .  .  .  .  .  .  .  .  1
+> ## Don't show: 
+> if(!hadM) unloadNamespace("Matrix")
+> ## End(Don't show)
+> ## scale W to have column sums 1:
+> W. <- W / sum(wts)
+> all.equal(rep(1, ncol(W.)), colSums(W.))
+[1] TRUE
+> ## Visualize "mass-preserving" convolution
+> x <- 1:n; f <- function(x) exp(-((x - .4*n)/3)^2)
+> y <- f(x) + rep_len(3:-2, n)/10
+> ## Smoothing convolution:
+> y.hat <- W. %*% y # y.hat := smoothed(y) ("mass preserving" -> longer than y)
+> stopifnot(length(y.hat) == m, m == n + (k-1))
+> plot(x,y, type="b", xlim=c(1,m)); curve(f(x), 1,n, col="gray", lty=2, add=TRUE)
+> lines(1:m, y.hat, col=2, lwd=3)
+> rbind(sum(y), sum(y.hat)) ## mass preserved
+         [,1]
+[1,] 6.149807
+[2,] 6.149807
+> 
+> ## And, yes, convolve(y, *) does the same when called appropriately:
+> all.equal(c(y.hat), convolve(y, rev(wts/sum(wts)), type="open"))
+[1] TRUE
 > 
 > 
 > 

@@ -29,6 +29,9 @@
       of the pipe op, \code{|>}.  The error object and message now give
       line and column numbers, mostly as proposed and provided by Duncan
       Murdoch in \PR{18328}.
+
+      \item \code{toeplitz()} is now generalized for asymmetric cases, also
+      with \code{toeplitz2()} variant.
     }
   }
 
@@ -96,6 +99,10 @@
       re-escape curly braces in LaTeX-like text.
       (Reported by Hadley Wickham in \PR{18324}.)
 
+      \item \code{library()} now passes its \code{lib.loc} argument when
+      requiring \code{Depends} packages; reported (with fix) in \PR{18331}
+      by Mikael Jagan.
+
       \item \code{R CMD Stangle}: improved message about \sQuote{Output}
       files.
     }
@@ -136,10 +143,6 @@
       unsupported category from the OS, even when requested at R level,
       which may cause crashes when \R 4.2.0 (which uses UCRT) is
       embedded (reported by Kevin Ushey).
-
-      \item \code{library()} now passes its \code{lib.loc} argument when
-      requiring \code{Depends} packages; reported (with fix) in \PR{18331}
-      by Mikael Jagan.
 
       \item Accent keys now work in GraphApp Unicode windows, which are used
       by Rgui whenever running in a multibyte locale (so also in UTF-8,
