@@ -1167,22 +1167,23 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
-AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
-AC_CACHE_VAL([r_cv_have_gfortran7],
-[r_cv_have_gfortran7=no
-if test "x${GFC}" = xyes; then
-  gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
-  if test ${gfortran_version_maj} -ge 7; then
-    r_cv_have_gfortran7=yes
-  fi
-fi])
+## No longer used once all packages are passing char lengths.
+dnl AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
+dnl AC_CACHE_VAL([r_cv_have_gfortran7],
+dnl [r_cv_have_gfortran7=no
+dnl if test "x${GFC}" = xyes; then
+dnl   gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+dnl   if test ${gfortran_version_maj} -ge 7; then
+dnl     r_cv_have_gfortran7=yes
+dnl   fi
+dnl fi])
 
-if test "x${r_cv_have_gfortran7}" = xyes; then
-  AC_MSG_RESULT([yes])
-  R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
-else
-  AC_MSG_RESULT([no])
-fi
+dnl if test "x${r_cv_have_gfortran7}" = xyes; then
+dnl   AC_MSG_RESULT([yes])
+dnl   R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
+dnl else
+dnl   AC_MSG_RESULT([no])
+dnl fi
 
 ### type for Fortran 'hidden' character lengths, if any
 AC_MSG_CHECKING([for type of 'hidden' Fortran character lengths])
