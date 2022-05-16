@@ -186,7 +186,7 @@ $(RPREFIX)-win.exe: R.iss
 uuidgen.exe: uuidgen.o
 	$(CC) -o $@ $< -lole32
 
-# currently use about 3500: allow for EXTRA_PKGS
+# currently use about 4200: allow for EXTRA_PKGS
 uuids: uuidgen.exe
 	./uuidgen 10000 > $@
 
