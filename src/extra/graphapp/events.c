@@ -530,7 +530,35 @@ static long handle_message(HWND hwnd, UINT message,
 	handle_keydown(LOWORD(wParam));
 	handle_virtual_keydown(obj, LOWORD(wParam));
 
-	if(obj->flags & UseUnicode) {
+	if((obj->flags & UseUnicode) && LOWORD(wParam) == VK_PACKET) {
+	    /* This handling of VK_PACKET is inspired by gdkevents-win32.c.
+	       Handling the WM_CHAR messages, instead, would be more reliable,
+	       but Unicode windows were designed to not handle those, so it
+	       would require bigger changes. VK_PACKET messages are used
+	       e.g. by Dasher via SendInput/KEYEVENTF_UNICODE. */
+	    int result;
+	    BYTE sta[256];
+	    wchar_t wcs[3];
+	    static wchar_t high = L'\0';
+
+	    GetKeyboardState(sta);
+	    result = ToUnicodeEx(VK_PACKET, HIWORD(lParam), sta,
+			         wcs, /* 3 */ sizeof(wcs)/sizeof(wchar_t),
+			         1, 0);
+	    if (result == 1) {
+		if (IsSurrogatePairsHi(wcs[0]))
+		    high = wcs[0];
+		else if (IsSurrogatePairsLo(wcs[0]) && high != L'\0') {
+		    /* Surrogate pairs block */
+		    handle_char(obj, L'?');
+		    handle_char(obj, L'?');
+		    high = L'\0';
+		} else {
+		    handle_char(obj, wcs[0]);
+		    high = L'\0';
+		}
+	    }
+	} else if(obj->flags & UseUnicode) {
 	    BYTE           sta[256];
 	    wchar_t        wcs[3];
 	    HKL            dwhkl;
