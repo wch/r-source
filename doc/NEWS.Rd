@@ -174,7 +174,12 @@
 
       \item \code{tk_choose.files()} with \code{multi=FALSE} misbehaved
       on paths containing spaces (\PR{18334}) (regression introduced in
-      R 4.0.0). 
+      R 4.0.0).
+
+      \item Text injection from external applications via \code{SendInput}
+      now works in GraphApp Unicode windows, fixing a regression in \R 4.2.0
+      for users of systems where \R 4.1 used a single-byte locale but \R
+      4.2.0 uses UTF-8.
     }
   }
 }
