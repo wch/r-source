@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2020  The R Core Team
+ *  Copyright (C) 1999-2022  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -487,7 +487,7 @@ static const char *trChar(SEXP x)
     }
 }
 
-static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
+static void cat_newline(SEXP labels, size_t *width, int lablen, int ntot)
 {
     Rprintf("\n");
     *width = 0;
@@ -550,7 +550,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ifile;
     Rconnection con;
     int append;
-    int i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
+    int i, iobj, n, nobjs, sepw, lablen, ntot, nlsep, nlines;
+    size_t width, pwidth;
     char buf[512];
     const char *p = "";
 
@@ -582,14 +583,16 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "fill");
     if (isLogical(fill)) {
 	if (asLogical(fill) == 1)
-	    pwidth = R_print.width;
+	    pwidth = R_print.width; /* R_MIN_WIDTH_OPT..R_MAX_WIDTH_OPT, >0 */
 	else
-	    pwidth = INT_MAX;
-    }
-    else pwidth = asInteger(fill);
-    if(pwidth <= 0) {
-	warning(_("non-positive 'fill' argument will be ignored"));
-	pwidth = INT_MAX;
+	    pwidth = SIZE_MAX;
+    } else {
+	int ipwidth = asInteger(fill);
+        if(ipwidth <= 0) {
+	    warning(_("non-positive 'fill' argument will be ignored"));
+	    pwidth = SIZE_MAX;
+	} else
+	    pwidth = ipwidth;
     }
     args = CDR(args);
 
@@ -674,7 +677,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    for (i = 0; i < n; i++, ntot++) {
 		Rprintf("%s", p);
-		width += (int)(w + sepw);
+		width += (w + sepw);
 		if (i < (n - 1)) {
 		    cat_printsep(sepr, ntot);
 		    if (isString(s))
@@ -684,11 +687,9 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 			strncpy(buf, p, 511); buf[511] = '\0';
 			p = buf;
 		    }
-		    w = (int) strlen(p);
+		    w = strlen(p);
 		    cat_sepwidth(sepr, &sepw, ntot);
-		    /* This is inconsistent with the version above.
-		       As from R 2.3.0, fill <= 0 is ignored. */
-		    if ((width + w + sepw > pwidth) && pwidth) {
+		    if (width + w + sepw > pwidth) {
 			cat_newline(labs, &width, lablen, nlines);
 			nlines++;
 		    }
@@ -696,7 +697,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    if ((pwidth != INT_MAX) || nlsep)
+    if ((pwidth != SIZE_MAX) || nlsep)
 	Rprintf("\n");
 
     /* end the context after anything that could raise an error but before
