@@ -681,6 +681,8 @@ function(x)
 function(f)
 {
     md <- readLines(f, encoding = "UTF-8", warn = FALSE)
+    ## Maybe complain?
+    if(!length(md)) return()
 
     ## Handle YAML header.
     if(md[1L] == "---") {
