@@ -63,7 +63,7 @@
   \subsection{FORTRAN FLAGS}{
     \itemize{
       \item The flag \option{-fno-optimize-sibling-calls} is no longer
-      forced for \command{gfortran} 7 and later.  It sbould no longer be
+      forced for \command{gfortran} 7 and later.  It should no longer be
       needed now \code{USE_FC_LEN_T} is the default.  (Unless perhaps
       packages call Fortran code from C/C++ without using \R{}'s headers
       and without allowing for \sQuote{hidden} character-length arguments.)
