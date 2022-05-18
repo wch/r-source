@@ -13,11 +13,13 @@ toeplitz2(x, nrow = length(x) +1 - ncol, ncol = length(x) +1 - nrow)
 }
 \arguments{
   \item{x}{for \code{toeplitz(x, *)}: the first column of the Toeplitz matrix;
-  for \code{toeplitz2(x, *)} it is the upper-and-left border of the
-  Toeplitz matrix, i.e., from top-right to bottom-left, such that
-  \code{T[i,j] == x[i-j + ncol]}.}
+    for \code{toeplitz2(x, *)} it is the upper-and-left border of the
+    Toeplitz matrix, i.e., from top-right to bottom-left, such that
+    \code{T[i,j] == x[i-j + ncol]}.}
   \item{r}{the first row of the target Toeplitz matrix; only needed in
     asymmetric cases.}
+  \item{symmetric}{optional \code{\link{logical}} indicating if the
+    matrix should be symmetric.}% hard-wired to TRUE up to 2022.
   \item{nrow, ncol}{the number of rows and columns; only one needs to be specified.}
 }
 \description{
