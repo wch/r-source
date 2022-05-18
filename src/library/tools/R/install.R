@@ -1714,7 +1714,7 @@ if(FALSE) {
 	    if (build_help) {
 		## This is used as the default outputEncoding for latex
 		outenc <- desc["Encoding"]
-		if (is.na(outenc)) outenc <- "latin1" # or ASCII
+		if (is.na(outenc)) outenc <- "UTF-8"
 		.convertRdfiles(pkg_dir, instdir,
 				types = build_help_types,
 				outenc = outenc)
