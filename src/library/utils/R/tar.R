@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -562,11 +562,11 @@ tar <- function(tarfile, files = NULL,
         close(inf)
     }
     if (invalid_uid)
-        warning(gettextf("invalid uid value replaced by that for user 'nobody'", uid),
-                domain = NA, call. = FALSE)
+        warning("invalid uid value replaced by that for user 'nobody'",
+                call. = FALSE)
     if (invalid_gid)
-        warning(gettextf("invalid gid value replaced by that for user 'nobody'", uid),
-                domain = NA, call. = FALSE)
+        warning("invalid gid value replaced by that for user 'nobody'",
+                call. = FALSE)
     ## trailer is two blocks of nuls.
     block <- raw(512L)
     writeBin(block, con)

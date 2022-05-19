@@ -54,6 +54,10 @@
 
       \item Rgui no longer truncates usage information with \option{--help}.
 
+      \item \code{tar(., files=*)} now produces the warning about invalid
+      uid or gid of files correctly, fixing \PR{18344}, reported by
+      Martin Morgan.
+
       \item \code{tk_choose.files()} with \code{multi=FALSE} misbehaved
       on paths containing spaces (\PR{18334}) (regression introduced in
       R 4.0.0).
