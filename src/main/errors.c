@@ -2821,11 +2821,12 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
        probably do better, but for now report 'subscript' as NA in the
        condition objec. */
     SEXP ssub = ScalarInteger(subscript >= 0 ? subscript + 1 : NA_INTEGER);
+    PROTECT(ssub);
 
     R_setConditionField(cond, 2, "object", x);
     R_setConditionField(cond, 3, "subscript", ssub);
     R_setConditionField(cond, 4, "index", sindex);
-    UNPROTECT(1); /* cond */
+    UNPROTECT(2); /* cond, ssub */
 
     return cond;
 }
