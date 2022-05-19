@@ -4110,7 +4110,10 @@ dependencies in the @file{NAMESPACE} file (but they still need to be
 recorded in the @file{DESCRIPTION} file).  Evaluating @code{foo::f} will
 cause package @pkg{foo} to be loaded, but not attached, if it was not
 loaded already---this can be an advantage in delaying the loading of a
-rarely used package.
+rarely used package.  However, if @pkg{foo} is listed only in
+@samp{Suggests} or @samp{Enhances} this also delays the check that it is
+installed: it is good practice to use such imports conditionally (e.g.@:
+@emph{via} @code{requireNamespace("@var{foo}", quietly = TRUE)}).
 
 Using @code{foo:::f} instead of @code{foo::f} allows access to
 unexported objects.  This is generally not recommended, as the
