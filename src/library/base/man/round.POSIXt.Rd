@@ -8,7 +8,7 @@
 \alias{trunc.POSIXt}
 \alias{round.Date}
 \alias{trunc.Date}
-\title{Round / Truncate Data-Time Objects}
+\title{Round / Truncate Date-Time Objects}
 \description{
   Round or truncate date-time objects.
 }
