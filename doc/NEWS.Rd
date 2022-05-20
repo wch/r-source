@@ -180,6 +180,11 @@
       now works in GraphApp Unicode windows, fixing a regression in \R 4.2.0
       for users of systems where \R 4.1 used a single-byte locale but \R
       4.2.0 uses UTF-8.
+
+      \item Performance of \code{txtProgressBar} in Rgui when running in a
+      multi-byte locale has been improved (fixing a performance regression
+      in \R 4.2.0 for users of systems where \R 4.1 used a single-byte
+      locale).
     }
   }
 }
