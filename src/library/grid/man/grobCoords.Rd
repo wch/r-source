@@ -6,6 +6,7 @@
 \name{grobCoords}
 \alias{grobCoords}
 \alias{grobPoints}
+\alias{isClosed}
 \title{Calculate Points on the Perimeter of a Grob}
 \description{
   These functions calculate points along the perimeter (or length) of
@@ -14,12 +15,17 @@
 \usage{
 grobCoords(x, closed, \dots)
 grobPoints(x, closed, \dots)
+isClosed(x, \dots)
 }
 \arguments{
   \item{x}{A grob object.}
   \item{closed}{Whether we are asking for points along the perimeter of
     a closed object or points along the length of an open object.
-    Some grobs (e.g., X-splines) can do both.}
+    Some grobs (e.g., X-splines) can do both.
+
+    This defaults to \code{TRUE} except for known cases that are not
+    closed (e.g., lines and segments).
+  }
   \item{\dots}{Arguments to be used by methods.}
 }
 \details{
@@ -33,6 +39,11 @@ grobPoints(x, closed, \dots)
   
   Custom grobs can write their own methods for \code{grobPoints}
   (see \code{\link{gridCoords}}).
+
+  The \code{isClosed} function returns \code{TRUE} or \code{FALSE}
+  to indicate whether a grob is a closed shape.  The default response
+  is \code{TRUE}, unless a method has been defined otherwise
+  (e.g., for lines and line segments).
 }
 \value{
   Either a \code{"GridGrobCoords"} object

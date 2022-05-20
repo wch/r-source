@@ -1,4 +1,11 @@
 
+Changes from grid_4.2.* to grid_4.3.0:
+-------------------------------------
+
+1.  New isClosed() function so can provide (sensible) default for 'closed'
+    argument in grobCoords().
+
+
 Changes from grid_4.1.* to grid_4.2.0:
 -------------------------------------
 

@@ -224,18 +224,52 @@ isEmptyCoords.GridGTreeCoords <- function(coords) {
 }
 
 ################################################################################
+## Determine default 'closed' value
+isClosed <- function(x, ...) {
+    UseMethod("isClosed")
+}
+
+isClosedTRUE <- function(x, ...) {
+    TRUE
+}
+
+isClosedFALSE <- function(x, ...) {
+    FALSE
+}
+
+isClosed.default <- isClosedTRUE
+
+isClosed.move.to <- isClosedFALSE
+isClosed.line.to <- isClosedFALSE
+isClosed.lines <- isClosedFALSE
+isClosed.polyline <- isClosedFALSE
+isClosed.segments <- isClosedFALSE
+isClosed.beziergrob <- isClosedFALSE
+
+isClosed.xspline <- function(x, ...) {
+    if (x$open)
+        FALSE
+    else
+        TRUE
+}
+
+isClosed.points <- function(x, ...) {
+    switch(as.character(x$pch),
+           "3"=, ## plus
+           "4"=, ## times
+           "8"=FALSE, ## plus-times
+           TRUE)
+}
+
+################################################################################
 ## grobCoords()
 ##   Do drawing set up then calculate points
 
 grobCoords <- function(x, closed, ...) {
-    ## Want to bail out early if 'closed' is not specified
-    ## because errors in the middle of calculating grobCoords()
-    ## can leave you in a BAD place
-    force(closed)
     UseMethod("grobCoords")
 }
 
-grobCoords.grob <- function(x, closed, ...) {
+grobCoords.grob <- function(x, closed=isClosed(x), ...) {
     vp <- x$vp
     trans <- current.transform()
     # Same set up as drawGrob()
@@ -270,12 +304,12 @@ grobCoords.grob <- function(x, closed, ...) {
 }
 
 ## "gTree"s
-grobCoords.gList <- function(x, closed, ...) {
+grobCoords.gList <- function(x, closed=isClosed(x), ...) {
     gridGTreeCoords(lapply(x, grobCoords, closed, ...),
                     grobName())
 }
 
-grobCoords.gTree <- function(x, closed, ...) {
+grobCoords.gTree <- function(x, closed=isClosed(x), ...) {
     vp <- x$vp
     trans <- current.transform()
     # Same set up as drawGTree()
@@ -331,7 +365,7 @@ grobPoints.line.to <- function(x, closed, ...) {
     emptyGrobCoords(x$name)
 }
 
-grobPoints.circle <- function(x, closed, ..., n=100) {
+grobPoints.circle <- function(x, closed=TRUE, ..., n=100) {
     if (closed) {
         cx <- convertX(x$x, "in", valueOnly=TRUE)
         cy <- convertY(x$y, "in", valueOnly=TRUE)
@@ -353,7 +387,7 @@ grobPoints.circle <- function(x, closed, ..., n=100) {
     }
 }
 
-grobPoints.lines <- function(x, closed, ..., n=100) {
+grobPoints.lines <- function(x, closed=FALSE, ..., n=100) {
     if (closed) {
         emptyGrobCoords(x$name)
     } else {
@@ -363,7 +397,7 @@ grobPoints.lines <- function(x, closed, ..., n=100) {
     }
 }
 
-grobPoints.polyline <- function(x, closed, ...) {
+grobPoints.polyline <- function(x, closed=FALSE, ...) {
     if (closed) {
         emptyGrobCoords(x$name)
     } else {
@@ -398,7 +432,7 @@ grobPoints.polyline <- function(x, closed, ...) {
 ## but we can't do anything about that.
 ## If you want proper control, use grid.path() instead
 ## (which does have a fill rule arg).
-grobPoints.polygon <- function(x, closed, ...) {
+grobPoints.polygon <- function(x, closed=TRUE, ...) {
     if (closed) {
         ## polygonGrob() ensures that x/y same length
         xx <- convertX(x$x, "in", valueOnly=TRUE)
@@ -435,7 +469,7 @@ xyListFromMatrix <- function(m, xcol, ycol) {
            })
 }
 
-grobPoints.pathgrob <- function(x, closed, ...) {
+grobPoints.pathgrob <- function(x, closed=TRUE, ...) {
     if (closed) {
         ## pathGrob() ensures that x/y same length
         xx <- convertX(x$x, "in", valueOnly=TRUE)
@@ -490,7 +524,7 @@ grobPoints.pathgrob <- function(x, closed, ...) {
     }
 }
 
-grobPoints.rect <- function(x, closed, ...) {
+grobPoints.rect <- function(x, closed=TRUE, ...) {
     if (closed) {
         hjust <- resolveHJust(x$just, x$hjust)
         vjust <- resolveVJust(x$just, x$vjust)
@@ -510,7 +544,7 @@ grobPoints.rect <- function(x, closed, ...) {
     }
 }
 
-grobPoints.segments <- function(x, closed, ...) {
+grobPoints.segments <- function(x, closed=FALSE, ...) {
     if (closed) {
         emptyGrobCoords(x$name)
     } else {
@@ -526,7 +560,7 @@ grobPoints.segments <- function(x, closed, ...) {
     }
 }
 
-grobPoints.xspline <- function(x, closed, ...) {
+grobPoints.xspline <- function(x, closed=!x$open, ...) {
     if ((closed && !x$open) ||
         (!closed && x$open)) {
         ## xsplinePoints() takes care of multiple X-splines
@@ -552,7 +586,7 @@ grobPoints.xspline <- function(x, closed, ...) {
 ## beziergrob covered by splinegrob (via makeContent)
 
 ## Just return a bounding box for the text (if closed=TRUE)
-grobPoints.text <- function(x, closed, ...) {
+grobPoints.text <- function(x, closed=TRUE, ...) {
     if (closed) {
         bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
                             x$x, x$y,
@@ -575,7 +609,7 @@ grobPoints.text <- function(x, closed, ...) {
     }
 }
 
-grobPoints.points <- function(x, closed, ...) {
+grobPoints.points <- function(x, closed=TRUE, ...) {
     closed <- as.logical(closed)
     if (is.na(closed)) 
         stop("Closed must not be a missing value")
@@ -619,7 +653,7 @@ grobPoints.null <- function(x, closed, ...) {
 ## on those children so that the children can perform any
 ## relevant set up
 
-grobPoints.gList <- function(x, closed, ...) {
+grobPoints.gList <- function(x, closed=TRUE, ...) {
     if (length(x) > 0) {
         gridGTreeCoords(lapply(x, grobCoords, closed, ...), grobName())
     } else {
@@ -627,7 +661,7 @@ grobPoints.gList <- function(x, closed, ...) {
     }
 }
 
-grobPoints.gTree <- function(x, closed, ...) {
+grobPoints.gTree <- function(x, closed=TRUE, ...) {
     if (length(x$children) > 0) {
         pts <- lapply(x$children[x$childrenOrder], grobCoords, closed, ...)
         gridGTreeCoords(unname(pts), x$name)

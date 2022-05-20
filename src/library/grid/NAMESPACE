@@ -127,7 +127,7 @@ export(
        "grobCoords", "grobPoints",
        "gridCoords", "gridGrobCoords", "gridGTreeCoords",
        "emptyCoords", "emptyGrobCoords", "emptyGTreeCoords",
-       "isEmptyCoords",
+       "isEmptyCoords", "isClosed",
     
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob",
@@ -529,3 +529,14 @@ S3method("fillGrob", "grob")
 S3method("fillGrob", "GridPath")
 S3method("fillStrokeGrob", "grob")
 S3method("fillStrokeGrob", "GridPath")
+
+S3method("isClosed", "default")
+S3method("isClosed", "move.to")
+S3method("isClosed", "line.to")
+S3method("isClosed", "lines")
+S3method("isClosed", "polyline")
+S3method("isClosed", "segments")
+S3method("isClosed", "beziergrob")
+S3method("isClosed", "xspline")
+S3method("isClosed", "points")
+
