@@ -5,7 +5,7 @@ options(timeout = max(600, getOption('timeout')))
 
 .ptime <- proc.time()
 
-## look up CRAN mirror in the same way the functions do.
+## look up CRAN mirror in the same way the functions do (uses R_CRAN_WEB)
 mirror <- tools:::CRAN_baseurl_for_web_area()
 message("Using CRAN mirror ",  sQuote(mirror))
 
@@ -15,9 +15,11 @@ foo <- tryCatch(readLines(paste0(mirror, "/web/packages")),
                 error = function(e) {
                     message(conditionMessage(e))
                     cat("Time elapsed: ", proc.time() - .ptime,"\n")
-                    ## q("no")
+                    q("no")
                 })
 
+## This should probably test the mirror, but that might be file:// and has
+## already been tested.
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) {
 } else withVisible({
