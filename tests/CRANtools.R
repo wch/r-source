@@ -1,7 +1,7 @@
 ### This needs a local CRAN mirror or Internet access
 
 ## This may need to download, so increase the timeout.
-options(timeout = max(600, getOption('timeout')))
+options(warn = 1L, timeout = max(600, getOption('timeout')))
 
 .ptime <- proc.time()
 
@@ -11,19 +11,23 @@ options(timeout = max(600, getOption('timeout')))
 mirror <- tools:::CRAN_baseurl_for_web_area()
 message("Using CRAN mirror ",  sQuote(mirror))
 
-## Sanity check: we use /web/packages/packages.rds,
-## but partial mirrors for package installation only need src/contrib,
-options(warn = 1L)
-foo <- tryCatch(readLines(paste0(mirror, "/web/packages")),
-                error = function(e) {
+## Sanity check: the examples use /web/packages/packages.rds and
+## web/checks/check_*.rds,
+## but partial mirrors for package installation only need src/contrib.
+## This would fail with a file:// mirror but provide a cheap check
+## of the availability of a https:// one.
+if(!startsWith(mirror, "file://")) {
+    foo <- tryCatch(readLines(paste0(mirror, "/web/packages")),
+                    error = function(e) {
                     message(conditionMessage(e))
+                    ## and bail out
                     cat("Time elapsed: ", proc.time() - .ptime,"\n")
-                    ## and bail out:
                     q("no")
-                })
+    })
+}
 
-## no longer conditionalized:
-    library(tools)
-    example("CRAN_package_db", run.donttest = TRUE)
+## no longer conditionalized on Internet access
+library(tools)
+example("CRAN_package_db", run.donttest = TRUE)
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -1,6 +1,6 @@
 % File src/library/tools/man/CRANtools.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2016-2017 R Core Team
+% Copyright 2016-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CRANtools}
@@ -79,10 +79,9 @@ summarize_CRAN_check_status(packages,
 \section{Which CRAN?}{
   The main functions access a \acronym{CRAN} mirror specified by the
   environment variable \env{R_CRAN_WEB}, defaulting to one specified in
-  the \file{repositories} file (see \code{\link{setRepositories}}): if
+  the \code{"repos"} option (see also code{\link{setRepositories}}): if
   that specifies \code{@CRAN@} (the default) then
-  \url{https://CRAN.R-project.org} is used.  (Note that
-  \code{\link{options}("repos")} is not consulted.)
+  \url{https://CRAN.R-project.org} is used.
 
   Note that these access parts of \acronym{CRAN} under
   \file{web/contrib} and \file{web/packages} so if you have specified a
