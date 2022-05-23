@@ -15,16 +15,12 @@ foo <- tryCatch(readLines(paste0(mirror, "/web/packages")),
                 error = function(e) {
                     message(conditionMessage(e))
                     cat("Time elapsed: ", proc.time() - .ptime,"\n")
+                    ## and bail out:
                     q("no")
                 })
 
-## This should probably test the mirror, but that might be file:// and has
-## already been tested.
-if(.Platform$OS.type == "unix" &&
-   is.null(nsl("cran.r-project.org"))) {
-} else withVisible({
+## no longer conditionalized:
     library(tools)
     example("CRAN_package_db", run.donttest = TRUE)
-})
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
