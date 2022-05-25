@@ -127,6 +127,7 @@ typedef struct {
     int currentMask;
     int numGroups;
     cairo_pattern_t **groups;
+    cairo_pattern_t *nullGroup;
 
     double fontscale;
 } X11Desc;
