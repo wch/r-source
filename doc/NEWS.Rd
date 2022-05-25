@@ -69,7 +69,7 @@
       and without allowing for \sQuote{hidden} character-length arguments.)
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \code{USE_FC_LEN_T} is the default: this uses the
@@ -190,6 +190,10 @@
       multi-byte locale has been improved (fixing a performance regression
       in \R 4.2.0 for users of systems where \R 4.1 used a single-byte
       locale).
+
+      \item \code{sort(x, partial = ind, *)} no works correctly notably for
+      the non-default \code{na.last = FALSE} or \code{TRUE}, fixing
+      \PR{18335}, reported by James Edwards.
     }
   }
 }

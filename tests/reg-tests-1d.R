@@ -5947,6 +5947,57 @@ if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root") {
 ##    "one argument not used by format 'invalid uid value replaced .... 'nobody''"
 
 
+## sort(x, partial, *) notably for na.last=FALSE and TRUE -- PR#18335
+chkSortP <- function(x, partial) {
+    stopifnot(partial == as.integer(partial),
+              1 <= partial, partial <= length(x))
+    nok <- sum(!is.na(x))
+    if(anyNA(x) && any(partial > nok)) ## cannot use na.last=NA
+         Ls <- c(   FALSE,TRUE)
+    else Ls <- c(NA,FALSE,TRUE)
+    S <- lapply(Ls, function(v) sort(x, na.last=v))
+    P <- lapply(Ls, function(v) sort(x, na.last=v, partial=partial))
+    ok1 <- identical(lapply(S, `[`, partial),
+                     lapply(P, `[`, partial))
+    ## test "ones below" and "ones above" the (min and max) partials
+    mip <- min(partial)
+    map <- max(partial)
+    noNA <- function(u) u[!is.na(u)]
+    chkPord <- function(y) {
+        n <- length(y)
+        all(noNA(y[if(mip > 1) 1L:(mip-1L)]) <= noNA(y[mip])) &&
+        all(noNA(y[if(map < n)  (map+1L):n]) >= noNA(y[map]))
+    }
+    ok1 && all(vapply(P, chkPord, logical(1)))
+}
+
+x <- c(7, 2, 4, 5, 3, 6, NA)
+x1 <- c( 2,3,1, NA)
+x2 <- c(NA,3,1, NA)
+x14 <- c(7, 2, 0, 8, -1, -2, 9, 4, 5, 3, 6, 1, NA,NA)
+stopifnot(exprs = {
+    chkSortP(x, partial = 3)
+    chkSortP(x, partial = c(3,5))
+    chkSortP(x1, partial = 3)
+    chkSortP(x1, partial = 4)
+    chkSortP(x1, partial = 3:4)
+    chkSortP(x2, partial = 4)
+    chkSortP(x2, partial = 3)
+    chkSortP(x2, partial = 2:4)
+    sapply(seq_along(x14), function(p) chkSortP(x14, partial = p))
+    chkSortP(x14, partial = c(10, 13))
+    chkSortP(x14, partial = c(2, 14))
+})
+set.seed(17)
+for(i in 1:128) { # tested for 1:12800
+    x <- runif(rpois(1, 100))
+    x[sample(length(x), 12)] <- NA
+    p <- sample(seq_along(x), size = max(1L, rpois(1, 3)))
+    stopifnot(chkSortP(x, partial = p))
+}
+## several of these failed for na.last=FALSE and TRUE
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
