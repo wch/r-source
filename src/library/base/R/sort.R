@@ -52,6 +52,7 @@
     }
 })
 ## temporary, for sort.int and sort.list captured as S4 default methods
+## .doWrap introduced in r74405 | 2018-03-14   replaced by .doSoftWrap in r74504 | 2018-04-02
 .doWrap <- .doSortWrap
 
 sort <- function(x, decreasing = FALSE, ...)
@@ -134,10 +135,12 @@ sort.int <-
 	    stop("unsupported options for partial sorting")
         if(!all(is.finite(partial))) stop("non-finite 'partial'")
         y <- if(length(partial) <= 10L) {
-            partial <- .Internal(qsort(partial, FALSE))
-            .Internal(psort(x, partial))
-        } else if (is.double(x)) .Internal(qsort(x, FALSE))
-        else .Internal(sort(x, FALSE))
+		 partial <- .Internal(qsort(partial, FALSE))
+		 .Internal(psort(x, partial))
+	     } else if(is.double(x))
+                 .Internal(qsort(x, FALSE))
+	     else
+                 .Internal(sort(x, FALSE))
     } else {
         nms <- names(x)
 	switch(method,
