@@ -115,6 +115,11 @@
 
       \item \code{R CMD Stangle}: improved message about \sQuote{Output}
       files.
+
+      \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
+      only used for checking \file{.Rd} cross-references in \command{R CMD
+      check} (as documented) and not for other uses looking for a CRAN
+      mirror.
     }
   }
 }

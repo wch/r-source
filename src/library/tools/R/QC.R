@@ -4502,7 +4502,8 @@ function(package, dir, lib.loc = NULL)
 
     unknown <- unique(unknown)
     if (length(unknown)) {
-        repos <- .get_standard_repository_URLs()
+        ## respect _R_CHECK_XREFS_REPOSITORIES_ for this use
+        repos <- .get_standard_repository_URLs(ForXrefs = TRUE)
         ## Also allow for additionally specified repositories.
         aurls <- pkgInfo[["DESCRIPTION"]]["Additional_repositories"]
         if(!is.na(aurls)) {
