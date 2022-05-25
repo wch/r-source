@@ -9,8 +9,10 @@
 \alias{CRAN_check_results}
 \alias{CRAN_check_details}
 \alias{CRAN_check_issues}
-\alias{CRAN_memtest_notes}
+%% \alias{CRAN_memtest_notes}
 \alias{summarize_CRAN_check_status}
+\alias{R_CRAN_WEB}
+\alias{R_CRAN_SRC}
 \description{
   Tools for obtaining information about current packages in the
   \acronym{CRAN} package repository, and their check status.
@@ -66,8 +68,8 @@ summarize_CRAN_check_status(packages,
   identifier for the issue) and \code{href} (a URL with information on
   the issue).
 
-  \code{CRAN_memtest_notes()} is now deprecated, with its functionality
-  integrated into that of \code{CRAN_check_issues()}.
+  %% \code{CRAN_memtest_notes()} is now deprecated, with its functionality
+  %% integrated into that of \code{CRAN_check_issues()}.
 }
 
 \value{
@@ -79,14 +81,20 @@ summarize_CRAN_check_status(packages,
 \section{Which CRAN?}{
   The main functions access a \acronym{CRAN} mirror specified by the
   environment variable \env{R_CRAN_WEB}, defaulting to one specified in
-  the \code{"repos"} option (see also code{\link{setRepositories}}): if
-  that specifies \code{@CRAN@} (the default) then
-  \url{https://CRAN.R-project.org} is used.
+  the \code{"repos"} option if (strangely) it has entries for CRAN
+  \emph{and} all three Bioconductor repositories.  Otherwise the entry in the
+  \file{repositories} file (see \code{\link{setRepositories}}) is used:
+  if that specifies \code{@CRAN@} (the default) or does not contain an
+  entry for CRAN then \url{https://CRAN.R-project.org} is used.
 
-  Note that these access parts of \acronym{CRAN} under
+  Note that these functions access parts of \acronym{CRAN} under
   \file{web/contrib} and \file{web/packages} so if you have specified a
   mirror of just \file{src/contrib} for installing packages you will
   need to set \env{R_CRAN_WEB} to point to a full mirror.
+
+  Internal functions \code{CRAN_aliases_db}, \code{CRAN_archive_db},
+  \code{CRAN_current_db} and \code{CRAN_rdxrefs_db} (used by \command{R
+  CMD check}) use \env{R_CRAN_SRC} rather than \env{R_CRAN_WEB}.
 }
 
 %% Tested in tests/CRANtools.R

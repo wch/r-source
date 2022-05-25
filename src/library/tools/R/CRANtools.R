@@ -234,14 +234,14 @@ function(flavors = NULL)
     db
 }
 
-## Deprecated in 3.4.1
-CRAN_memtest_notes <-
-function()
-{
-    .Deprecated("CRAN_check_issues")
-    read_CRAN_object(CRAN_baseurl_for_web_area(),
-                     "web/checks/memtest_notes.rds")
-}
+## Deprecated in 3.4.1, removed in 4.2.0
+## CRAN_memtest_notes <-
+## function()
+## {
+##     .Deprecated("CRAN_check_issues")
+##     read_CRAN_object(CRAN_baseurl_for_web_area(),
+##                      "web/checks/memtest_notes.rds")
+## }
 
 CRAN_check_issues <-
 function()
@@ -604,7 +604,7 @@ function(packages)
 {
     repos <- getOption("repos")
     ## Alternatively, use .get_standard_repository_URLs()
-    
+
     a <- utils::available.packages(filters = list(), repos = repos)
 
     v <- read_CRAN_object(CRAN_baseurl_for_src_area(),
@@ -756,7 +756,7 @@ CRAN_package_check_URL <- function(p)
             p)
 
 BioC_package_db <-
-function()     
+function()
 {
     urls <- .get_standard_repository_URLs()
     urls <- urls[startsWith(names(urls), "BioC")]

@@ -33,7 +33,7 @@ Type 'q()' to quit R.
 > ### Name: CRANtools
 > ### Title: CRAN Package Repository Tools
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
-> ###   CRAN_check_issues CRAN_memtest_notes summarize_CRAN_check_status
+> ###   CRAN_check_issues summarize_CRAN_check_status
 > 
 > ### ** Examples
 > 
