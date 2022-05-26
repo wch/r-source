@@ -1276,7 +1276,8 @@ function(reverse = FALSE, recursive = FALSE)
 .get_standard_repository_URLs <-
 function(ForXrefs = FALSE)
  {
-     if(nzchar(repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")))
+     if(ForXrefs &&
+        nzchar(repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")))
          return(.expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]]))
 
      nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")

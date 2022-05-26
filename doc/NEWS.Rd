@@ -115,11 +115,6 @@
 
       \item \code{R CMD Stangle}: improved message about \sQuote{Output}
       files.
-
-      \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
-      only used for checking \file{.Rd} cross-references in \command{R CMD
-      check} (as documented) and not for other uses looking for a CRAN
-      mirror.
     }
   }
 }
@@ -194,6 +189,11 @@
       \item \code{sort(x, partial = ind, *)} no works correctly notably for
       the non-default \code{na.last = FALSE} or \code{TRUE}, fixing
       \PR{18335}, reported by James Edwards.
+
+      \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
+      only used for checking \file{.Rd} cross-references in \command{R CMD
+      check} (as documented) and not for other uses looking for a CRAN
+      mirror.
     }
   }
 }
