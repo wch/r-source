@@ -71,6 +71,11 @@
       multi-byte locale has been improved (fixing a performance regression
       in \R 4.2.0 for users of systems where \R 4.1 used a single-byte
       locale).
+
+      \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
+      only used for checking \file{.Rd} cross-references in \command{R CMD
+      check} (as documented) and not for other uses looking for a CRAN
+      mirror.
     }
   }
 }
