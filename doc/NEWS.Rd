@@ -178,7 +178,7 @@
 
       \item Text injection from external applications via \code{SendInput}
       now works in GraphApp Unicode windows, fixing a regression in \R 4.2.0
-      for users of systems where \R 4.1 used a single-byte locale but \R
+      for Rgui users of systems where \R 4.1 used a single-byte locale but \R
       4.2.0 uses UTF-8.
 
       \item Performance of \code{txtProgressBar} in Rgui when running in a
@@ -194,6 +194,13 @@
       only used for checking \file{.Rd} cross-references in \command{R CMD
       check} (as documented) and not for other uses looking for a CRAN
       mirror.
+
+      \item The script editor in Rgui now works also on systems using UTF-8
+      as the native encoding.  Users of the script editor have to convert
+      their scripts with non-ASCII characters to UTF-8 before reading them
+      in \R 4.2.1 or newer (on recent Windows where UTF-8 is used).  This
+      fixes a regression in \R 4.2.0, which prevented some operations with
+      scripts when they contained non-ASCII characters.
     }
   }
 }
