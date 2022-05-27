@@ -39,6 +39,9 @@
    add newscrollbar, field_no_border
    add extended selections, pass on de-selections
 
+   Copyright (C) 2022  The R Core Team
+
+   use RichEdit20W to work in UTF-8 
  */
 
 #include "internal.h"
@@ -988,7 +991,10 @@ textbox newrichtextarea(const char *text, rect r)
     textbox obj;
     if (!LoadLibrary("riched20.dll")) /* RichEdit version 2.0, not included in Win95 */
 	LoadLibrary("riched32.dll");  /* RichEdit version 1.0 */
-    obj = newchildwin(RICHEDIT_CLASS, NULL,
+
+    /* RichEdit20A uses the non-UTF-8 ANSI encoding even when Rgui uses UTF-8
+       as ACP via its manifest. */
+    obj = newchildwin("RichEdit20W", NULL,
 		      WS_HSCROLL | ES_AUTOHSCROLL |
 		      WS_VSCROLL | ES_AUTOVSCROLL |
 		      ES_LEFT | ES_MULTILINE | ES_NOHIDESEL,

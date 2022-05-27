@@ -1,5 +1,6 @@
 /* Copyright (C) 1999, 2000 Guido Masarotto
    Copyright (C) 2004, The R Foundation
+   Copyright (C) 2004-2022  The R Core Team
 
    Generalized version of widgets in buttons.c
 
@@ -163,9 +164,11 @@ int getlinelength(textbox t)
 void getcurrentline(textbox t, char *line, int length)
 {
     long currentline = sendmessage(t->handle, EM_LINEFROMCHAR, -1, 0);
-    *((LPWORD) line) = length*sizeof(WCHAR)+2; /* set first word of buffer to line length in TCHARs as required by EM_GETLINE */
+    /* set first word of buffer to line length in TCHARs as required by EM_GETLINE */
+    WORD blength = length*MB_CUR_MAX + 1 + sizeof(WORD);
+    *((LPWORD) line) = blength;
     sendmessage(t->handle, EM_GETLINE, currentline, line);
-    /* line[length] = 0; */
+    line[blength - 1] = '\0';
 }
 
 /* Copy the current selection in the editor to a buffer */

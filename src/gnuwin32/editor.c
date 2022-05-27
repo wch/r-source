@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2020  The R Core Team
+ *  Copyright (C) 1999-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -469,8 +469,10 @@ static void editorreplace(control m)
 static void editorrunline(textbox t)
 {
     int length = getlinelength(t); /* return character num */
-    char *line = malloc(length * sizeof(WCHAR) + 2); /* Extra space for null and word length in getcurrentline */
-    memset(line, 0, length * sizeof(WCHAR) + 2);
+    /* Extra space for null and word length in getcurrentline */
+    size_t alength = length * MB_CUR_MAX + 1 + sizeof(WORD);
+    char *line = malloc(alength);
+    memset(line, 0, alength);
     getcurrentline(t, line, length);
     consolecmd(RConsole, line);
     free(line);
