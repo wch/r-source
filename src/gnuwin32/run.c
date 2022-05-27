@@ -1031,7 +1031,9 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nm, ans;
     int i, n;
+    const void *vmax = NULL;
 
+    vmax = vmaxget();
     checkArity(op, args);
     nm = CAR(args);
     if(!isString(nm))
@@ -1042,13 +1044,14 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(nm, i) == NA_STRING) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    const char *this = CHAR(STRING_ELT(nm, i));
+	    const char *this = translateChar(STRING_ELT(nm, i));
 	    char *that = expandcmd(this, 1);
 	    SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
 	    free(that);
 	}
     }
     setAttrib(ans, R_NamesSymbol, nm);
+    vmaxset(vmax);
     UNPROTECT(1);
     return ans;
 }
