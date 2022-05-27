@@ -340,33 +340,21 @@ was installed.
 @section What's the best way to upgrade?
 
 That's a matter of taste. For most people the best thing to do is to
-uninstall R (see the previous Q), install the new version, and then there
-are two options what to do with the library.
+uninstall R (see the previous Q), install the new version, and then handle
+the library.
 
-The simpler but more resource intensive one is to install all required
-packages again with the new version of R and then delete the old library
-once you no longer need it e.g. for reference. Sometimes, this is necessary
-when there is a change in R that makes the installed packages incompatible,
-such as when upgrading from R 4.1 to R 4.2 (installed packages with native
-code/DLLs are incompatible). Also, installing packages can be very fast when
-they are distributed in binary form (e.g. from CRAN or Bioconductor).
+For those with a personal library (folder @file{R\win-library\@var{x.y}} of
+your @file{$@{LOCALAPPDATA@}} directory in R since 4.2.0, or of your home
+directory with earlier versions of R), nothing has to be done when the
+major and minor version of R (@var{x.y}) stays the same, but it may still be
+an opportunity to run @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
-A previously recommended option was to copy any
-installed packages to the library folder in the new installation, run
-@code{update.packages(checkBuilt=TRUE, ask=FALSE)} in the new R and then
-delete anything left of the old installation.  Different versions of R
-are quite deliberately installed in parallel folders so you can keep old
-versions around if you wish. This would often work, but not e.g. when
-upgrading from R 4.1 to R 4.2, in that case one could do this only for
-packages without native code/DLLs.
-
-For those with a personal library (folder @file{R\win-library\@var{x.y}}
-of your @file{$@{LOCALAPPDATA@}} directory in R since 4.2.0, or of your home
-directory with earlier versions of R),
-you will need to update that too when the minor version of R
-changes (e.g.@: from 4.0.2 to 4.1.0).  A simple way to do so is to
-copy (say) @file{R\win-library\4.0} to @file{R\win-library\4.1} before
-running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
+When the minor or even major version of R changes, one has to install all
+required packages again.  The new version of R will use a different location
+for the personal library and the old personal library will be left intact
+(it may be deleted manually when no longer needed).  Installed packages
+should not be copied from the old library to the new one, because they may
+be incompatible with the new version of R.
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
