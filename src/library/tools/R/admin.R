@@ -91,7 +91,8 @@ function(dir, outDir, builtStamp=character())
     ## particularly when using multiple package repositories where the
     ## initial ones in the list replace (incompatible) binary packages
     ## provided in the repositories later.
-    ## To be removed, possibly before relase of R 4.2.
+    ##
+    ## No longer checker on installation and to be removed, soon.
 
     ExperimentalWindowsRuntime <- NULL
     if(.Platform$OS.type == "windows") {
