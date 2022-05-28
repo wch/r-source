@@ -30,59 +30,65 @@
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item Writing to a clipboard connection on Windows works again, fixing
-      a regression in \R 4.2.0 (\PR{18332}).  Re-using a closed clipboard
-      connection on Windows no longer issues a spurious warning about an
-      ignored encoding argument.
-
-      \item \code{getlocale} on Windows no longer attempts to query an
-      unsupported category from the OS, even when requested at R level,
-      which may cause crashes when \R 4.2.0 (which uses UCRT) is
-      embedded (reported by Kevin Ushey).
-
-      \item Accent keys now work in GraphApp Unicode windows, which are used
-      by Rgui whenever running in a multibyte locale (so also in UTF-8,
-      hence fixing a regression in \R 4.2.0 for users of systems where \R
-      4.1 used a single-byte locale).
-
-      \item Completion in Rgui on Windows now works also with non-ASCII
-      characters.
-
       \item \code{fisher.test(d)} no longer segfaults for \dQuote{large}
       \code{d}; fixing \PR{18336} by preventing/detecting an integer
       overflow reliably.
 
-      \item Rgui no longer truncates usage information with \option{--help}.
-
-      \item \code{tar(., files=*)} now produces the warning about invalid
-      uid or gid of files correctly, fixing \PR{18344}, reported by
+      \item \code{tar(., files=*)} now produces correctly the warning
+      about invalid uid or gid of files, fixing \PR{18344}, reported by
       Martin Morgan.
 
-      \item \code{tk_choose.files()} with \code{multi=FALSE} misbehaved
-      on paths containing spaces (\PR{18334}) (regression introduced in
-      R 4.0.0).
-
-      \item Text injection from external applications via \code{SendInput}
-      now works in GraphApp Unicode windows, fixing a regression in \R 4.2.0
-      for Rgui users of systems where \R 4.1 used a single-byte locale but \R
-      4.2.0 uses UTF-8.
-
-      \item Performance of \code{txtProgressBar} in Rgui when running in a
-      multi-byte locale has been improved (fixing a performance regression
-      in \R 4.2.0 for users of systems where \R 4.1 used a single-byte
-      locale).
+      \item \code{tk_choose.files()} with \code{multi = FALSE}
+      misbehaved on paths containing spaces (\PR{18334}) (regression
+      introduced in R 4.0.0).
 
       \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
       only used for checking \file{.Rd} cross-references in \command{R CMD
       check} (as documented) and not for other uses looking for a CRAN
       mirror.
+    }
+  }
 
-      \item The script editor in Rgui now works also on systems using UTF-8
-      as the native encoding.  Users of the script editor have to convert
-      their scripts with non-ASCII characters to UTF-8 before reading them
-      in \R 4.2.1 or newer (on recent Windows where UTF-8 is used).  This
-      fixes a regression in \R 4.2.0, which prevented some operations with
-      scripts when they contained non-ASCII characters.
+  \subsection{BUG FIXES on Windows}{
+    \itemize{
+      \item Writing to a clipboard connection works again, fixing a
+      regression in \R 4.2.0 (\PR{18332}).  Re-using a closed clipboard
+      connection longer issues a spurious warning about an ignored
+      encoding argument.
+
+      \item C function \code{getlocale} no longer attempts to query an
+      unsupported category from the OS, even when requested at R level,
+      which may cause crashes when \R 4.2.0 (which uses UCRT) is
+      embedded (reported by Kevin Ushey).
+
+      \item Accent keys now work in GraphApp Unicode windows, which are
+      used by \command{Rgui} whenever running in a multibyte locale (so
+      also in UTF-8, hence fixing a regression in \R 4.2.0 for users of
+      systems where \R 4.1 used a single-byte locale).
+
+      \item Completion in \command{Rgui} now works also with
+      non-ASCII characters.
+
+      \item \command{Rgui} no longer truncates usage information with
+      \option{--help}.
+
+     \item Text injection from external applications via
+      \code{SendInput} now works in GraphApp Unicode windows, fixing a
+      regression in \R 4.2.0 for \command{Rgui} users of systems where
+      \R 4.1 used a single-byte locale but \R 4.2.0 uses UTF-8.
+
+      \item Performance of \code{txtProgressBar()} in \command{Rgui} when
+      running in a multi-byte locale has been improved (fixing a
+      performance regression in \R 4.2.0 for users of systems where \R
+      4.1 used a single-byte locale).
+
+      \item The script editor in \command{Rgui} now works also on
+      systems using UTF-8 as the native encoding.  Users of the script
+      editor have to convert their scripts with non-ASCII characters to
+      UTF-8 before reading them in \R 4.2.1 or newer (on recent Windows
+      where UTF-8 is used).  This fixes a regression in \R 4.2.0, which
+      prevented some operations with scripts when they contained
+      non-ASCII characters.
     }
   }
 }
