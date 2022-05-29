@@ -30,8 +30,8 @@
       line and column numbers, mostly as proposed and provided by Duncan
       Murdoch in \PR{18328}.
 
-      \item \code{toeplitz()} is now generalized for asymmetric cases, also
-      with \code{toeplitz2()} variant.
+      \item \code{toeplitz()} is now generalized for asymmetric cases,
+      with a \code{toeplitz2()} variant.
     }
   }
 
@@ -87,7 +87,10 @@
 
       \item The depreated legacy typedefs of \code{Sint} and
       \code{Sfloat} in header \file{R.h} can be excluded by defining
-      macro \code{NO_S_TYPEDEFS} before including the header.
+      macro \code{NO_S_TYPEDEFS} before including the header.  This is
+      defined when using \command{R CMD CHECK --as-cran} or by defining the
+      environment variable \env{_R_NO_S_TYPEDEFS_} to a true value when
+      running \command{R CMD CHECK}.
     }
   }
 

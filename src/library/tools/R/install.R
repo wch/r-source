@@ -2707,8 +2707,8 @@ if(FALSE) {
                   else if(isFALSE(use_lto)) c("LTO=", "LTO_FC=")
                   )
 
-##    if(config_val_to_logical(Sys.getenv("_R_INSTALL_USE_FC_LEN_T_", "FALSE")))
-##         makeargs <- c(makeargs, "XDEFS=-DUSE_FC_LEN_T")
+    if(config_val_to_logical(Sys.getenv("_R_NO_S_TYPEDEFS_", "FALSE")))
+         makeargs <- c(makeargs, "XDEFS=-DNO_S_TYPEDEFS")
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))
     if (dry_run) {
