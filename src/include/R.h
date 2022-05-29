@@ -81,10 +81,12 @@
 /* for PROBLEM ... R_Calloc, R_Realloc, R_Free, Memcpy, F77_xxxx */
 
 
+#ifndef NO_S_TYPEDEFS
 typedef double Sfloat;
 typedef int Sint;
-#define SINT_MAX INT_MAX
-#define SINT_MIN INT_MIN
+# define SINT_MAX INT_MAX
+# define SINT_MIN INT_MIN
+#endif
 
 #ifdef __cplusplus
 extern "C" {
