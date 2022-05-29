@@ -28,6 +28,15 @@
       The 2006 version that ships with macOS is always skipped.
     }
   }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The undocumented legacy declarations of \code{Sint},
+      \code{Sfloat}, \code{SINT_MAX} and \code{SINT_MIN} in header
+      \file{R.h} are deprecated.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{fisher.test(d)} no longer segfaults for \dQuote{large}

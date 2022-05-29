@@ -59,7 +59,7 @@ delim_match(SEXP x, SEXP delims)
 
     char c;
     const char *s, *delim_start, *delim_end;
-    Sint n, i, pos, start, end, delim_depth;
+    int n, i, pos, start, end, delim_depth;
     int lstart, lend;
     Rboolean is_escaped, equal_start_and_end_delims;
     SEXP ans, matchlen;

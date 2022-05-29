@@ -3446,6 +3446,12 @@ any package in a UTF-8 locale (if one is available).  Beware that
 although a @code{C} locale is rarely used at a console, it may be the
 default if logging in remotely or for batch jobs.
 
+Often @command{R CMD check} will need to consult a CRAN repository to
+check details of uninstalled packages.  Normally this defaults to the
+CRAN main site, but a mirror can be specified by setting environment
+variables @env{R_CRAN_WEB} and (rarely needed) @env{R_CRAN_SRC} to the
+URL of a CRAN mirror.
+
 @quotation Multiple sub-architectures
 On systems which support multiple sub-architectures (principally
 Windows), @command{R CMD check} will install and check a package which
