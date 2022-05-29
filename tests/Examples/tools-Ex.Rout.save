@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-05-02 r82300) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-05-29 r82419) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -33,7 +33,7 @@ Type 'q()' to quit R.
 > ### Name: CRANtools
 > ### Title: CRAN Package Repository Tools
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
-> ###   CRAN_check_issues summarize_CRAN_check_status
+> ###   CRAN_check_issues summarize_CRAN_check_status R_CRAN_WEB R_CRAN_SRC
 > 
 > ### ** Examples
 > 
@@ -204,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x557729e22760>
+<environment: 0x12a8be408>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -956,7 +956,7 @@ An illustration of lexical scoping.
 > 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/home/Hornik/.cache/R/FOO"
+[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1096,7 +1096,7 @@ sqrt(x) is
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.242 0.009 0.251 0 0 
+Time elapsed:  0.135 0.011 0.147 0 0 
 > grDevices::dev.off()
 null device 
           1 

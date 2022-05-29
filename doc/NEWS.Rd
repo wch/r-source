@@ -104,7 +104,7 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item \code{default.stringsAsFactors()} is defunct,
+      \item \code{default.stringsAsFactors()} is defunct.
     }
   }
 
