@@ -4027,12 +4027,16 @@ rm(p)
 # (wrong in R 4.0.0; reported by Gabor Csardi)
 
 
-## make sure there is n aliasing in assignments with partial matching
+## make sure there is no aliasing in assignments with partial matching
 v <- list(misc = c(1))
 v$mi[[1]] <- 2
 stopifnot(v$misc == 1)
+## check compiled code also (PR18349)
+v <- list(misc = c(1))
+eval(compiler::compile(quote(v$mi[[1]] <- 2)))
+stopifnot(v$misc == 1)
 rm(v)
-# defensive reference counts needed; missing in R 4.0.0
+## defensive reference counts needed; missing in R 4.0.0
 
 
 ## round() & signif() with one / wrong (named) argument(s):
