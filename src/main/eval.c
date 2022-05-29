@@ -7309,7 +7309,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (dispatched)
 	    SETSTACK(-1, value);
 	else
-	    SETSTACK(-1, R_subset3_dflt(x, PRINTNAME(symbol), R_NilValue));
+	    SETSTACK(-1, R_subset3_dflt(x, PRINTNAME(symbol), call));
 	R_Visible = TRUE;
 	NEXT();
       }
