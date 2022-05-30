@@ -88,9 +88,9 @@
       \item The deprecated legacy typedefs of \code{Sint} and
       \code{Sfloat} in header \file{R.h} can be excluded by defining
       macro \code{NO_S_TYPEDEFS} before including the header.  This is
-      defined when using \command{R CMD CHECK --as-cran} or by defining the
+      defined when using \command{R CMD check --as-cran} or by defining the
       environment variable \env{_R_NO_S_TYPEDEFS_} to a true value when
-      running \command{R CMD CHECK}.
+      running \command{R CMD check}.
 
       If these are excluded, \file{R.h} no longer includes
       \file{limits.h} nor \file{climits}.
