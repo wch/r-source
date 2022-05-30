@@ -114,6 +114,9 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
+    if (TYPEOF(v) == PROMSXP) {
+	if (PRVALUE(v) != R_UnboundValue) { if (a) Rprintf(","); Rprintf("VAL"); a = 1; }
+    }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
@@ -143,9 +146,18 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (IS_ASCII(v)) Rprintf("[ASCII] ");
 	if (IS_CACHED(v)) Rprintf("[cached] ");
 	Rprintf("\"%s\"", CHAR(v));
+	if (v == R_NaString) Rprintf(" [NA]");
     }
-    if (TYPEOF(v) == SYMSXP)
-	Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+    if (TYPEOF(v) == SYMSXP) {
+	if (v == R_UnboundValue)
+	    Rprintf("[unbound value]");
+	else if (v == R_MissingArg)
+	    Rprintf("[missing argument]");
+	else if (v == R_RestartToken)
+	    Rprintf("[restart token]");
+	else
+	    Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+    }
     if (TYPEOF(v) == EXTPTRSXP)
 	Rprintf("<%p>", R_ExternalPtrAddr(v));
     switch (TYPEOF(v)) { /* for native vectors print the first elements in-line */
