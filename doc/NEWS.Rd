@@ -51,6 +51,10 @@
       misbehaved on paths containing spaces (\PR{18334}) (regression
       introduced in R 4.0.0).
 
+      \item \code{sort(x, partial = ind, *)} now works correctly notably for
+      the non-default \code{na.last = FALSE} or \code{TRUE}, fixing
+      \PR{18335} reported by James Edwards.
+
       \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
       only used for checking \file{.Rd} cross-references in \command{R CMD
       check} (as documented) and not for other uses looking for a CRAN

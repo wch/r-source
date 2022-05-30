@@ -133,6 +133,14 @@ sort.int <-
         if(index.return || decreasing || isfact || method != "shell")
 	    stop("unsupported options for partial sorting")
         if(!all(is.finite(partial))) stop("non-finite 'partial'")
+	if(has.na && !is.na(na.last))
+	    partial <-
+		if(na.last) ## NA's will be appended; rm entries matching NA:
+		    partial[partial <= length(x)]
+		else { ## NA's will be prepended
+		    k <- sum(ina)
+		    partial[partial > k] - k
+		}
         y <- if(length(partial) <= 10L) {
             partial <- .Internal(qsort(partial, FALSE))
             .Internal(psort(x, partial))
