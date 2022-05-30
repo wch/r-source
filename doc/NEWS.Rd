@@ -207,7 +207,7 @@
       \item \command{Rgui} no longer truncates usage information with
       \option{--help}.
 
-     \item Text injection from external applications via
+      \item Text injection from external applications via
       \code{SendInput} now works in GraphApp Unicode windows, fixing a
       regression in \R 4.2.0 for \command{Rgui} users of systems where
       \R 4.1 used a single-byte locale but \R 4.2.0 uses UTF-8.
