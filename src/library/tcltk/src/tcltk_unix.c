@@ -109,14 +109,15 @@ static void RTcl_setupProc(ClientData clientData, int flags)
 {
     Tcl_SetMaxBlockTime(&timeout);
 }
-static void RTcl_eventProc(RTcl_Event *evPtr, int flags)
+static int RTcl_eventProc(Tcl_Event *evPtr, int flags)
 {
     fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
 
     if (readMask==NULL)
-	return;
+	return TRUE;
 
     R_runHandlers(R_InputHandlers, readMask);
+    return TRUE;
 }
 static void RTcl_checkProc(ClientData clientData, int flags)
 {
@@ -126,7 +127,7 @@ static void RTcl_checkProc(ClientData clientData, int flags)
 	return;
 
     evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event));
-    evPtr->proc = (Tcl_EventProc*) RTcl_eventProc;
+    evPtr->proc = RTcl_eventProc;
 
     Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD);
 }
