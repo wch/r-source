@@ -85,7 +85,7 @@
       \file{R_ext/Constants.h} (included by \file{R.h}) have been
       removed.
 
-      \item The depreated legacy typedefs of \code{Sint} and
+      \item The deprecated legacy typedefs of \code{Sint} and
       \code{Sfloat} in header \file{R.h} can be excluded by defining
       macro \code{NO_S_TYPEDEFS} before including the header.  This is
       defined when using \command{R CMD CHECK --as-cran} or by defining the
