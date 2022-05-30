@@ -91,6 +91,9 @@
       defined when using \command{R CMD CHECK --as-cran} or by defining the
       environment variable \env{_R_NO_S_TYPEDEFS_} to a true value when
       running \command{R CMD CHECK}.
+
+      If these are excluded, \file{R.h} no longer includes
+      \file{limits.h} nor \file{climits}.
     }
   }
 
