@@ -233,12 +233,15 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
     if (verify) {
+#ifdef Win32
+	struct curl_tlssessioninfo *tls_backend_info = NULL;
+	CURLcode ret = curl_easy_getinfo(hnd, CURLINFO_TLS_SSL_PTR,
+	                                 &tls_backend_info);
+	if (!ret && tls_backend_info->backend == CURLSSLBACKEND_SCHANNEL)
+	    capath = NULL;
+#endif
 	if (capath && capath[0])
 	    curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
-#ifdef Win32
-	else
-	    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
-#endif
     } else {
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
