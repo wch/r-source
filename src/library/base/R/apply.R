@@ -24,7 +24,7 @@ apply <- function(X, MARGIN, FUN, ..., simplify = TRUE)
 
     ## Ensure that X is an array object
     dl <- length(dim(X))
-    if(!dl) stop("dim(X) must have a positive length")
+    if(!dl) stop("dim(%s) must have a positive length", "X")
     if(is.object(X))
 	X <- if(dl == 2L) as.matrix(X) else as.array(X)
     ## now record dim as coercion can change it
@@ -37,7 +37,8 @@ apply <- function(X, MARGIN, FUN, ..., simplify = TRUE)
 
     if (is.character(MARGIN)) {
         if(is.null(dnn <- names(dn))) # names(NULL) is NULL
-           stop("'X' must have named dimnames")
+           stop("'%s' must have named dimnames", "X")
+
         MARGIN <- match(MARGIN, dnn)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
