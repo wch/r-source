@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2013  The R Core Team
+ *  Copyright (C) 2000--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,8 +56,14 @@ static int Tcl_lock = 0; /* reentrancy guard */
 
 static void TclSpinLoop(void *data)
 {
+    /* Defensively limit the number of events to avoid infinite loops.
+       An infinite loop has been seen with an R handler that refuses to
+       run recursively (internal http server). Such a handler would
+       return without reading from the connection, so checkProc would
+       create an event for it again, etc. */
+    int max_ev = 100;
     /* Tcl_ServiceAll is not enough here, for reasons that escape me */
-    while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
+    while (Tcl_DoOneEvent(TCL_DONT_WAIT) && max_ev) max_ev--;
 }
 
 //extern Rboolean R_isForkedChild;
