@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2018   The R Core Team.
+ *  Copyright (C) 2001-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -114,13 +114,14 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     /* it is easier if we first have a record per column */
     PROTECT(retval = allocMatrixNA(STRSXP, LENGTH(what), nret));
 
-    /* These used to use [:blank:] but that can match \xa0 as part of
-       a UTF-8 character (and is nbspace on Windows). */
-    tre_regcomp(&blankline, "^[[:blank:]]*$", REG_NOSUB & REG_EXTENDED);
-    tre_regcomp(&trailblank, "[ \t]+$", REG_EXTENDED);
-    tre_regcomp(&contline, "^[[:blank:]]+", REG_EXTENDED);
-    tre_regcomp(&regline, "^[^:]+:[[:blank:]]*", REG_EXTENDED);
-    tre_regcomp(&eblankline, "^[[:space:]]+\\.[[:space:]]*$", REG_EXTENDED);
+    /* These used to use [:blank:] and [:space:] but those are locale-dependent
+       and :blank: can match \xa0 as part of a UTF-8 character
+       (and is nbspace on Windows). */
+    tre_regcompb(&blankline, "^[ \t]*$", REG_NOSUB & REG_EXTENDED);
+    tre_regcompb(&trailblank, "[ \t]+$", REG_EXTENDED);
+    tre_regcompb(&contline, "^[ \t]+", REG_EXTENDED);
+    tre_regcompb(&regline, "^[^:]+:[ \t]*", REG_EXTENDED);
+    tre_regcompb(&eblankline, "^[ \f\n\r\t\v]+\\.[ \f\n\r\t\v]*$", REG_EXTENDED);
 
     k = 0;
     lastm = -1; /* index of the field currently being recorded */
