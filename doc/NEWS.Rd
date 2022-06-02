@@ -10,7 +10,8 @@
     \itemize{
       \item The libraries searched for by \option{--with-blas} (without
       a value) now include BLIS (after OpenBLAS but before ATLAS).  And
-      on macOS, the Accelerate framework (after ATLAS).
+      on macOS, the Accelerate framework (after ATLAS).  (This is
+      patterned after the \code{AX_BLAS} macro from the Autoconf Archive.)
 
       \item The included LAPACK sources have been updated to 3.10.1.
     }
@@ -63,7 +64,7 @@
       \item The search for a \acronym{CRAN} mirror when checking
       packages now uses \code{getOption("repos")} if that specifies a
       \acronym{CRAN} mirror, even when it does not also specify all three
-      Bioconductor repositiotries (as was previously reauired).
+      Bioconductor repositiotries (as was previously required).
     }
   }
 
@@ -90,7 +91,7 @@
       \item \command{Rgui} no longer truncates usage information with
       \option{--help}.
 
-     \item Text injection from external applications via
+      \item Text injection from external applications via
       \code{SendInput} now works in GraphApp Unicode windows, fixing a
       regression in \R 4.2.0 for \command{Rgui} users of systems where
       \R 4.1 used a single-byte locale but \R 4.2.0 uses UTF-8.
