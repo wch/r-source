@@ -7,7 +7,8 @@ options(warn = 1L, timeout = max(600, getOption('timeout')))
 
 ## Look up CRAN mirror in the same way the functions do.
 ## Uses R_CRAN_WEB if set, otherwise getOption('repos')["CRAN"]
-## and if that is unset, https://CRAN.R-project.org
+## then the (possibly local) 'repositories' file
+## and if still unset, https://CRAN.R-project.org
 mirror <- tools:::CRAN_baseurl_for_web_area()
 message("Using CRAN mirror ",  sQuote(mirror))
 

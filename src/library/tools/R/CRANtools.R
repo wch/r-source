@@ -237,7 +237,7 @@ function(flavors = NULL)
     db
 }
 
-## Deprecated in 3.4.1, removed in 4.2.0
+## Deprecated in 3.4.1, removed in 4.3.0
 ## CRAN_memtest_notes <-
 ## function()
 ## {
