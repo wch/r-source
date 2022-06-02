@@ -2188,12 +2188,7 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
-/*
-  Currently called from
-
-  coerce.c
-  by asLogical2 with errByDefault = TRUE
- */
+#if 0
 void attribute_hidden
 R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
@@ -2365,7 +2360,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
     UNPROTECT(nprotect);
     R_GCEnabled = enabled;
 }
-
+#endif
 
 /* These functions are to be used in error messages, and available for others to use in the API
    GetCurrentSrcref returns the first non-NULL srcref after skipping skip of them.  If it

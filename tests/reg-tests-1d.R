@@ -2092,17 +2092,6 @@ stopifnot(exprs = {
 ## nextn(214e7) hang in infinite loop; nextn(<large>) gave NA  in R <= 3.5.1
 
 
-## More strictness in '&&' and '||' :
-Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn")# is the default as from R 4.2.0
-## but may have been set more stringently
-tools::assertWarning(1 && 0:1)
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
-tools::assertError(0 || 0:1)
-if(is.na(oEV)) {Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
-} else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
-
-
 ## polym() in "vector" case PR#17474
 fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
          data = iris)

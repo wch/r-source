@@ -760,10 +760,6 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
     } while (FALSE)
 #endif /* USE_RINTERNALS */
 
-void R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
-        const char *errmsg, const char *warnmsg, const char *varname,
-        Rboolean warnByDefault);
-
 const char * Rf_translateCharFP(SEXP);
 const char * Rf_translateCharFP2(SEXP);
 const char * Rf_trCharUTF8(SEXP);
@@ -1585,7 +1581,7 @@ extern0 int R_PCRE_limit_recursion;
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 /* Internal type coercions */
-int Rf_asLogical2(SEXP x, int checking, SEXP call, SEXP rho);
+int Rf_asLogical2(SEXP x, int checking, SEXP call);
 
 
 typedef enum { iSILENT, iWARN, iERROR } warn_type;

@@ -2187,18 +2187,8 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
     }
 
     int len = length(s);
-    if (len > 1) {
-//	/* PROTECT(s) needed as per PR#15990.  call gets protected by
-//	   warningcall(). Now "s" is protected by caller and also
-//	   R_BadValueInRCode disables GC. */
-//	R_BadValueInRCode(s, call, rho,
-//	    "the condition has length > 1",
-//	    _("the condition has length > 1"),
-//	    _("the condition has length > 1 and only the first element will be used"),
-//	    "_R_CHECK_LENGTH_1_CONDITION_",
-//	    TRUE /* by default issue warning */);
+    if (len > 1)
 	errorcall(call, _("the condition has length > 1"));
-    }
     if (len > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {
@@ -6094,8 +6084,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
 	    SETSTACK(-1, ScalarLogical(asLogical2(			\
 					   val, /*checking*/ 1,		\
-					   VECTOR_ELT(constants, callidx),	\
-					   rho)));			\
+					   VECTOR_ELT(constants, callidx) \
+					   )));				\
 	}								\
     } while(0)
 
