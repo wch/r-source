@@ -1295,6 +1295,18 @@ function(ForXrefs = FALSE)
      repos
 }
 
+.get_CRAN_repository_URL <-
+function()
+ {
+     repos <- getOption("repos")
+     if(!is.null(repos) && !is.na(cr <- repos["CRAN"]) && (cr != "@CRAN@"))
+         return(cr)
+     cr <- .get_repositories()["CRAN", "URL"]
+     ## That might not contain an entry for CRAN
+     if(is.na(cr) || cr == "@CRAN@") cr <- "https://CRAN.R-project.org"
+     cr
+ }
+
 ### ** .get_standard_repository_db_fields
 
 .get_standard_repository_db_fields <-

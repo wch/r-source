@@ -1,7 +1,7 @@
 
-R version 4.2.0 Patched (2022-05-12 r82348) -- "Vigorous Calisthenics"
+R version 4.2.0 Patched (2022-06-01 r82440) -- "Vigorous Calisthenics"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.4.0 (64-bit)
+Platform: aarch64-apple-darwin21.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -34,6 +34,7 @@ Type 'q()' to quit R.
 > ### Title: CRAN Package Repository Tools
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
 > ###   CRAN_check_issues CRAN_memtest_notes summarize_CRAN_check_status
+> ###   R_CRAN_WEB R_CRAN_SRC
 > 
 > ### ** Examples
 > 
@@ -204,7 +205,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x11b9225c8>
+<environment: 0x125130660>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1096,7 +1097,7 @@ sqrt(x) is
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.162 0.015 0.18 0 0 
+Time elapsed:  0.149 0.013 0.163 0 0 
 > grDevices::dev.off()
 null device 
           1 

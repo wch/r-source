@@ -49,16 +49,21 @@
 
       \item \code{tk_choose.files()} with \code{multi = FALSE}
       misbehaved on paths containing spaces (\PR{18334}) (regression
-      introduced in R 4.0.0).
+      introduced in \R 4.0.0).
 
       \item \code{sort(x, partial = ind, *)} now works correctly notably for
       the non-default \code{na.last = FALSE} or \code{TRUE}, fixing
       \PR{18335} reported by James Edwards.
 
       \item Environment variable \env{_R_CHECK_XREFS_REPOSITORIES_} is
-      only used for checking \file{.Rd} cross-references in \command{R CMD
-      check} (as documented) and not for other uses looking for a CRAN
-      mirror.
+      only used for checking \file{.Rd} cross-references in \command{R
+      CMD check} (as documented) and not for other uses looking for a
+      \acronym{CRAN} mirror.
+
+      \item The search for a \acronym{CRAN} mirror when checking
+      packages now uses \code{getOption("repos")} if that specifies a
+      \acronym{CRAN} mirror, even when it does not also specify all three
+      Bioconductor repositiotries (as was previously reauired).
     }
   }
 
@@ -439,7 +444,7 @@
       \command{gcc} 10.3 MinGW-W64 UCRT toolchain.
 
       \item \file{Rtools42} by default uses the Windows security
-      features ASLR and DEP; hence CRAN builds of \R and packages also
+      features ASLR and DEP; hence \acronym{CRAN} builds of \R and packages also
       do.
 
       \item \R now supports files \file{Makevars.ucrt},

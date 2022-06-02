@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2014-2019 The R Core Team
+#  Copyright (C) 2014-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## exported
 summarize_CRAN_check_status <-
 function(packages, results = NULL, details = NULL, issues = NULL)
 {
@@ -193,13 +194,13 @@ function(db = CRAN_package_db(),
 
 CRAN_baseurl_for_src_area <-
 function()
-    Sys.getenv("R_CRAN_SRC", .get_standard_repository_URLs()[1L])
+    Sys.getenv("R_CRAN_SRC", .get_CRAN_repository_URL())
 
 ## This allows for partial local mirrors, or to look at a
 ## more-freqently-updated mirror.
 CRAN_baseurl_for_web_area <-
 function()
-    Sys.getenv("R_CRAN_WEB", .get_standard_repository_URLs()[1L])
+    Sys.getenv("R_CRAN_WEB", .get_CRAN_repository_URL())
 
 read_CRAN_object <-
 function(cran, path)
@@ -210,6 +211,7 @@ function(cran, path)
     readRDS(con)
 }
 
+## exported
 CRAN_check_results <-
 function(flavors = NULL)
 {
@@ -220,6 +222,7 @@ function(flavors = NULL)
     db
 }
 
+## exported
 CRAN_check_details <-
 function(flavors = NULL)
 {
@@ -243,6 +246,7 @@ function()
                      "web/checks/memtest_notes.rds")
 }
 
+## exported
 CRAN_check_issues <-
 function()
     read_CRAN_object(CRAN_baseurl_for_web_area(),
@@ -604,7 +608,7 @@ function(packages)
 {
     repos <- getOption("repos")
     ## Alternatively, use .get_standard_repository_URLs()
-    
+
     a <- utils::available.packages(filters = list(), repos = repos)
 
     v <- read_CRAN_object(CRAN_baseurl_for_src_area(),
@@ -756,7 +760,7 @@ CRAN_package_check_URL <- function(p)
             p)
 
 BioC_package_db <-
-function()     
+function()
 {
     urls <- .get_standard_repository_URLs()
     urls <- urls[startsWith(names(urls), "BioC")]

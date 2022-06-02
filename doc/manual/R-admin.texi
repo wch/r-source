@@ -334,7 +334,10 @@ make check-all
 @noindent
 see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
-are only run completely if the recommended packages are installed.
+are only run completely if the recommended packages are installed.  If
+you have a local CRAN mirror, these checks can be speeded by by either
+setting environment variable @env{R_CRAN_WEB} to its URL, or having a
+file @file{.R/repositories} specifying it (see @code{?setRepositories}).
 
 If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -5065,7 +5068,7 @@ macOS 11 (Big Sur) and 12 (Monterey).
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Intel compenents install into @file{/usr/local/lib}, the
+The Intel components install into @file{/usr/local/lib}, the
 @cputype{arm64} ones into @file{/opt/R/arm64} which may not exist so it
 it is simplest to first create that directory and adjust its ownership
 if desired:
@@ -5077,7 +5080,7 @@ sudo chown -R myaccount /opt/R
 @noindent
 and add @file{/opt/R/arm64/bin} to your path.
 
-Define an appropiate variable in your Terminal:
+Define an appropriate variable in your Terminal:
 @example
 set LOCAL=/usr/local # Intel
 set LOCAL=/opt/R/arm64 # Apple Silicon
@@ -5216,7 +5219,7 @@ FFLAGS="-g -O2 -mmacosx-version-min=11.0"
 @noindent
 (the first flag in @code{CFLAGS} has been needed to inter-work with the
 @command{gfortran} without segfaulting in some packages, and some builds
-of @command{gfortran} target the current versionn of macOS (unlike
+of @command{gfortran} target the current version of macOS (unlike
 @command{clang}, causing linker warnings).
 
 To install packages using compiled code one needs the Command Line Tools
@@ -5518,7 +5521,7 @@ which is in the @file{bin} directory of a binary installation of @R{},
 usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
-@command{R CMD check --as-cran} also make use of `HTML Tidy'.  macOS has
+@command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
 a version in @file{/usr/bin/tidy} dating from 2006 which is far too
 old and is skipped.  Up-to-date versions can be installed from
 @uref{http://binaries.html-tidy.org/}. 
