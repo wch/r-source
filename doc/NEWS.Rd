@@ -25,10 +25,10 @@
       shipped with LAPACK version 3.10.1.  This causes some
       (platform-dependent) changes to package check output.
 
-      \item The parser now signals \emph{classed} errors, notably in case
-      of the pipe op, \code{|>}.  The error object and message now give
-      line and column numbers, mostly as proposed and provided by Duncan
-      Murdoch in \PR{18328}.
+      \item The parser now signals \emph{classed} errors, notably in
+      case of the pipe operator, \code{|>}.  The error object and
+      message now give line and column numbers, mostly as proposed and
+      provided by Duncan Murdoch in \PR{18328}.
 
       \item \code{toeplitz()} is now generalized for asymmetric cases,
       with a \code{toeplitz2()} variant.
@@ -37,6 +37,13 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
+
+      \item The included LAPACK sources have been updated to include the
+      four Fortran 90 routines rather than their Fortran 77
+      predecessors.  This may give some different signs in SVDs or
+      eigendecompositions..  (This completes the transition to LAPACK
+      3.10.x begun in \R 4.2.0.)
+
       \item A system installation of generic LAPACK 3.10.0 or later will
       be preferred to the version in the \R sources.
 
@@ -48,15 +55,8 @@
       \code{liblapack} is looked for and used if it reports version
       3.10.0 or later and does not contain BLAS routines.
 
-      Using 3.10.x may give some different signs from earlier versions
-      in SVDs or eigendecompositions.
-
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
-
-      \item The included LAPACK sources have been updated to include
-      the four Fortran 90 routines rather than their Fortran 77
-      predecessors.  This too may give some different signs.
     }
   }
 
@@ -64,9 +64,10 @@
     \itemize{
       \item The flag \option{-fno-optimize-sibling-calls} is no longer
       forced for \command{gfortran} 7 and later.  It should no longer be
-      needed now \code{USE_FC_LEN_T} is the default.  (Unless perhaps
-      packages call Fortran code from C/C++ without using \R{}'s headers
-      and without allowing for \sQuote{hidden} character-length arguments.)
+      needed now using \sQuote{hidden} character-length arguments is the
+      default even for packages.  (Unless perhaps packages call Fortran
+      code from C/C++ without using \R{}'s headers and without allowing
+      for these arguments.)
     }
   }
 
@@ -92,8 +93,8 @@
       environment variable \env{_R_NO_S_TYPEDEFS_} to a true value when
       running \command{R CMD check}.
 
-      If these are excluded, \file{R.h} no longer includes
-      \file{limits.h} nor \file{climits}.
+      If these are excluded, \file{R.h} no longer includes header
+      \file{limits.h} (nor \file{climits} from C++).
     }
   }
 
@@ -113,8 +114,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Hashed \code{environment}s with sizes less than 5 now can grow,
-      too. (Reported to R-devel by Duncan Garmonsway.)
+      \item Hashed \code{environment}s with sizes less than 5 can now grow.
+      (Reported to R-devel by Duncan Garmonsway.)
 
       \item \code{as.character(<Rd>, deparse = TRUE)} failed to
       re-escape curly braces in LaTeX-like text.
@@ -135,7 +136,8 @@
     \itemize{
       \item The libraries searched for by \option{--with-blas} (without
       a value) now include BLIS (after OpenBLAS but before ATLAS).  And
-      on macOS, the Accelerate framework (after ATLAS).
+      on macOS, the Accelerate framework (after ATLAS).  (This is
+      patterned after the \code{AX_BLAS} macro from the Autoconf Archive.)
 
       \item The included LAPACK sources have been updated to 3.10.1.
     }
@@ -188,7 +190,7 @@
       \item The search for a \acronym{CRAN} mirror when checking
       packages now uses \code{getOption("repos")} if that specifies a
       \acronym{CRAN} mirror, even when it does not also specify all three
-      Bioconductor repositiotries (as was previously reauired).
+      Bioconductor repositiotries (as was previously required).
     }
   }
 
