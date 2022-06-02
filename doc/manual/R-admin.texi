@@ -334,7 +334,10 @@ make check-all
 @noindent
 see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
-are only run completely if the recommended packages are installed.
+are only run completely if the recommended packages are installed.  If
+you have a local CRAN mirror, these checks can be speeded by by either
+setting environment variable @env{R_CRAN_WEB} to its URL, or having a
+file @file{.R/repositories} specifying it (see @code{?setRepositories}).
 
 If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created

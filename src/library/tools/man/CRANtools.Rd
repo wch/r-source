@@ -81,8 +81,7 @@ summarize_CRAN_check_status(packages,
 \section{Which CRAN?}{
   The main functions access a \acronym{CRAN} mirror specified by the
   environment variable \env{R_CRAN_WEB}, defaulting to one specified in
-  the \code{"repos"} option if (strangely) it has entries for CRAN
-  \emph{and} all three Bioconductor repositories.  Otherwise the entry in the
+  the \code{"repos"} option.  Otherwise the entry in the
   \file{repositories} file (see \code{\link{setRepositories}}) is used:
   if that specifies \code{@CRAN@} (the default) or does not contain an
   entry for CRAN then \url{https://CRAN.R-project.org} is used.
