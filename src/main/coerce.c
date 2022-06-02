@@ -1783,13 +1783,9 @@ int asLogical2(SEXP x, int checking, SEXP call)
     if (isVectorAtomic(x)) {
 	if (XLENGTH(x) < 1)
 	    return NA_LOGICAL;
-	if (checking && XLENGTH(x) > 1) {
-	    char msg[128];
-	    snprintf(msg, 128,
-		     _("'length = %lld' in coercion to '%s'"),
-		    (long long) XLENGTH(x), "logical(1)");
-	    errorcall(call, msg);
-	}
+	if (checking && XLENGTH(x) > 1)
+	    errorcall(call, _("'length = %lld' in coercion to '%s'"),
+		      (long long) XLENGTH(x), "logical(1)");
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    return LOGICAL_ELT(x, 0);
