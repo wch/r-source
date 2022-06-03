@@ -197,7 +197,7 @@ function()
     Sys.getenv("R_CRAN_SRC", .get_CRAN_repository_URL())
 
 ## This allows for partial local mirrors, or to look at a
-## more-freqently-updated mirror.
+## more-freqently-updated mirror.  Exposed as utils::findCRANmirror
 CRAN_baseurl_for_web_area <-
 function()
     Sys.getenv("R_CRAN_WEB", .get_CRAN_repository_URL())

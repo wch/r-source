@@ -6,6 +6,21 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.2.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item New function \code{utils::findCRANmirror()} to find out if a
+      \acronym{CRAN} mirror has been selected, otherwise fallback to
+      the main site.  This behaves in the same way as
+      \code{tools::CRAN_package_db()} and is intended for packages
+      wishing to access \acronym{CRAN} for purposes other than
+      installing packages.
+
+      The need for this was shown by a day when the main \acronym{CRAN}
+      website was offline and a dozen or so packages which had its URL
+      hardcoded failed their checks.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The libraries searched for by \option{--with-blas} (without

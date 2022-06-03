@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -996,6 +996,11 @@ setRepositories <-
     }
 }
 
+findCRANmirror <- function(type = c("src", "web"))
+{
+    e <- paste0("R_CRAN_", toupper(type))
+    Sys.getenv(e, tools:::.get_CRAN_repository_URL())
+}
 
 
 ## used in some BioC packages and their support in tools.
