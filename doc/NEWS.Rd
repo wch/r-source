@@ -25,7 +25,7 @@
       (platform-dependent) changes to package check output.
 
       \item The parser now signals \emph{classed} errors, notably in
-      case of the pipe operator, \code{|>}.  The error object and
+      case of the pipe operator \code{|>}.  The error object and
       message now give line and column numbers, mostly as proposed and
       provided by Duncan Murdoch in \PR{18328}.
 
@@ -63,10 +63,11 @@
     \itemize{
       \item The flag \option{-fno-optimize-sibling-calls} is no longer
       forced for \command{gfortran} 7 and later.  It should no longer be
-      needed now using \sQuote{hidden} character-length arguments is the
-      default even for packages.  (Unless perhaps packages call Fortran
-      code from C/C++ without using \R{}'s headers and without allowing
-      for these arguments.)
+      needed now using \sQuote{hidden} character-length arguments when
+      calling BLAS/LAPACK routines from C/C++ is the default even for
+      packages.  (Unless perhaps packages call Fortran code from C/C++
+      without using \R{}'s headers and without allowing for these
+      arguments.)
     }
   }
 
@@ -74,7 +75,7 @@
     \itemize{
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
-      routines called from C/C++, and requires adjustment of most such
+      routines called from C/C++, and requires adjustment of many such
       calls -- see \sQuote{Writing R Extensions} §6.6.1.
     }
   }
@@ -94,12 +95,14 @@
 
       If these are excluded, \file{R.h} no longer includes header
       \file{limits.h} (nor \file{climits} from C++).
+
+      [This is intended to become the default before release.]
     }
   }
 
   \subsection{UTILITIES}{
     \itemize{
-      \item \command{R CMD check} does more checking of package Rd
+      \item \command{R CMD check} does more checking of package \file{.Rd}
       files, warning about invalid email addresses and (some) invalid
       URIs and noting empty \samp{\item} labels in description lists.
     }
@@ -131,6 +134,21 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.2.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item New function \code{utils::findCRANmirror()} to find out if a
+      \acronym{CRAN} mirror has been selected, otherwise fallback to
+      the main site.  This behaves in the same way as
+      \code{tools::CRAN_package_db()} and is intended for packages
+      wishing to access \acronym{CRAN} for purposes other than
+      installing packages.
+
+      The need for this was shown by a day when the main \acronym{CRAN}
+      website was offline and a dozen or so packages which had its URL
+      hardcoded failed their checks.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The libraries searched for by \option{--with-blas} (without
