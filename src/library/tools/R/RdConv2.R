@@ -788,7 +788,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     		   unknown <- allow %w/o% c("", "latex", "example", "text",
                                             "html", "TRUE", "FALSE")
     		   if (length(unknown))
-    		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
+    		       warnRd(block, Rdfile, level = 7, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])
                    if (tag == "\\ifelse")
                        checkContent(block[[3L]])
@@ -925,7 +925,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                 if((blocktag %in% c("\\describe", "\\arguments",
                                     "\\value")) &&
                     isBlankRd(block[[1L]]))
-                    warnRd(block, Rdfile, level = 7,
+                    warnRd(block, Rdfile, level = 5,
                            "\\item in ", blocktag,
                            " must have non-empty label")
     		switch(blocktag,
@@ -1038,7 +1038,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                  "seealso", "examples", "author", "encoding"))
     for(tag in intersect(sections[duplicated(sections)], unique_tags))
         warnRd(Rd, Rdfile, level = 5,
-               sprintf("multiple sections named '%s' are not allowed", tag))
+               sprintf("Multiple sections named '%s' are not allowed", tag))
 
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])
