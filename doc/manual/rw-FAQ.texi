@@ -771,7 +771,7 @@ more reliable with these OSes (but still not 100% correct).
 @node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows 7?, Installation and Usage
 @section Quotes don't come out right on the console/terminal/pager.
 
-R and later 4.2 use UTF-8 as the native encoding on recent Windows (see Q2.2) and
+R 4.2 and later use UTF-8 as the native encoding on recent Windows (see Q2.2) and
 this should make also this previously reported problem disappear.  With
 this feature, R automatically uses the 65001 code page (UTF-8).  When using
 @code{RTerm} from the @code{Windows Command Prompt} (@file{cmd.exe}) or
