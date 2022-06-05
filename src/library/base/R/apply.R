@@ -1,7 +1,7 @@
 #  File src/library/base/R/apply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ apply <- function(X, MARGIN, FUN, ..., simplify = TRUE)
 
     ## Ensure that X is an array object
     dl <- length(dim(X))
-    if(!dl) stop("dim(%s) must have a positive length", "X")
+    if(!dl) stop("dim(X) must have a positive length")
     if(is.object(X))
 	X <- if(dl == 2L) as.matrix(X) else as.array(X)
     ## now record dim as coercion can change it
@@ -37,7 +37,7 @@ apply <- function(X, MARGIN, FUN, ..., simplify = TRUE)
 
     if (is.character(MARGIN)) {
         if(is.null(dnn <- names(dn))) # names(NULL) is NULL
-           stop("'%s' must have named dimnames", "X")
+           stop("'X' must have named dimnames")
 
         MARGIN <- match(MARGIN, dnn)
         if (anyNA(MARGIN))

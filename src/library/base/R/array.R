@@ -1,7 +1,7 @@
 #  File src/library/base/R/array.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ function(x, MARGIN)
 {
     ## Ensure that x is an array object
     dl <- length(dim(x))
-    if(!dl) stop("dim(%s) must have a positive length", "x")
+    if(!dl) stop("dim(x) must have a positive length")
     if(is.object(x))
         x <- if(dl == 2L) as.matrix(x) else as.array(x)
     ## now record dim as coercion can change it
@@ -128,7 +128,7 @@ function(x, MARGIN)
 
     if (is.character(MARGIN)) {
         if(is.null(dnn <- names(dn))) # names(NULL) is NULL
-           stop("'%s' must have named dimnames", "x")
+           stop("'x' must have named dimnames")
         MARGIN <- match(MARGIN, dnn)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
