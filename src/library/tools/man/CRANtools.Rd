@@ -40,10 +40,10 @@ summarize_CRAN_check_status(packages,
     (default), or a subset of this.}
 }
 \details{
-  \code{CRAN_package_db()} returns a character data frame with most
-  \file{DESCRIPTION} metadata for the current packages in the CRAN
-  package repository, including in particular the Description and
-  Maintainer information not provided by
+  \code{CRAN_package_db()} returns a data frame with character columns
+  containing most \file{DESCRIPTION} metadata for the current packages
+  in the CRAN package repository, including in particular the
+  Description and Maintainer information not provided by
   \code{utils::\link{available.packages}()}.
 
   \code{CRAN_check_results()} returns a data frame with the basic
@@ -61,12 +61,10 @@ summarize_CRAN_check_status(packages,
 
   \code{CRAN_check_issues()} returns a character frame with additional
   check issues (including the memory-access check results made available
-  from \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/} and the
-  without-long-double check results from
-  \url{https://www.stats.ox.ac.uk/pub/bdr/noLD/}), as a character frame
-  with variables \code{Package}, \code{Version}, \code{kind} (an
-  identifier for the issue) and \code{href} (a URL with information on
-  the issue).
+  from \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/}) as a
+  character frame with variables \code{Package}, \code{Version},
+  \code{kind} (an identifier for the issue) and \code{href} (a URL with
+  information on the issue).
 
   \code{CRAN_memtest_notes()} is now deprecated, with its functionality
   integrated into that of \code{CRAN_check_issues()}.
@@ -86,6 +84,9 @@ summarize_CRAN_check_status(packages,
   if that specifies \code{@CRAN@} (the default) or does not contain an
   entry for CRAN then \url{https://CRAN.R-project.org} is used.
 
+  The mirror to be used is reported by
+  \code{utils::\link{findCRANmirror}("web")}.
+  
   Note that these functions access parts of \acronym{CRAN} under
   \file{web/contrib} and \file{web/packages} so if you have specified a
   mirror of just \file{src/contrib} for installing packages you will
@@ -98,8 +99,8 @@ summarize_CRAN_check_status(packages,
 
 %% Tested in tests/CRANtools.R
 \examples{\donttest{
-## This can be rather slow, especially with a non-local CRAN mirror
-## and would fail (slowly) without Internet access in that case.
+## This can be rather slow  with a non-local CRAN mirror
+## and might fail (slowly) without Internet access in that case.
 
 set.seed(11)  # but the packages chosen will change as soon as CRAN does.
 pdb <- CRAN_package_db()
