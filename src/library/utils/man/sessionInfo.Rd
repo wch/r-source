@@ -79,7 +79,7 @@ osVersion
   Where \R was compiled under macOS 10.x (as the \acronym{CRAN} Intel
   distributions have been) but running under \sQuote{Big Sur} or later,
   macOS reports itself as \samp{10.16} (which \R recognizes as
-  \sQuote{Big Sur/Monterey}) and not \samp{11.x} or \samp{12.x}.
+  \sQuote{Big Sur ...}) and not \samp{11.x} or later.
 }
 \note{
   The information on \sQuote{loaded} packages and namespaces is the
