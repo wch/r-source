@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,14 +69,15 @@
                                       "15" = "Catalina",
                                       ## used for early pre-releases of Big Sur
                                       ## and still reported by Xcode 10's SDK
-                                      "16" = "Big Sur/Monterey",
+                                      "16" = "Big Sur ...",
                                       ""),
                                ver)
-                   else if(ver1[1L] <= "12")
+                   else if(ver1[1L] <= "13")
                         sprintf("macOS %s %s",
                                switch(ver1[1L],
                                       "11" = "Big Sur",
-                                      "12" = "Monterey"),
+                                      "12" = "Monterey",
+                                      "13" = "Ventura"),
                                ver)
                    else
                        sprintf("macOS %s", ver)

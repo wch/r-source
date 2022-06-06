@@ -1567,10 +1567,10 @@ The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}.pkg} and @file{R-@value{VERSIONno}-arm64.pkg}.
 The first runs on macOS 10.13 and later on @cputype{x86_64} (Intel) CPU
-(High Sierra, Mojave, Catalina, Big Sur, Monterey, @dots{}).  Package
+(High Sierra, Mojave, Catalina, Big Sur, Monterey, Ventura, @dots{}).  Package
 @file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for `Apple
 Silicon' (aka `M1') Macs and runs on macOS 11 or later (Big Sur,
-Monterey, @dots{}).
+Monterey, Ventura, @dots{}).
 
 @file{R-@value{VERSIONno}.pkg} also be installed on `Apple Silicon' CPUs
 using `Rosetta' emulation@footnote{You may be asked to install Rosetta
@@ -5054,10 +5054,10 @@ SAFE_FFLAGS=-axsse2
 @section macOS
 @cindex macOS
 
-The instructions here are for Intel 64-bit (@cputype{x86_64})
-builds on macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big
-Sur) and 12 (Monterey), or `Apple Silicon' (@cputype{arm64}) builds on
-macOS 11 (Big Sur) and 12 (Monterey).
+The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
+macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big Sur), 12
+(Monterey) and 13 (Ventura), or `Apple Silicon' (@cputype{arm64}) builds
+on macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura).
 
 @menu
 * Prerequisites::
