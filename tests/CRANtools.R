@@ -1,4 +1,5 @@
-### This needs a local CRAN mirror or Internet access
+### This needs a local (partial) CRAN mirror or Internet access
+## Specifically, needs web/packages/packages.rds and web/checks/*.rds
 
 ## This may need to download, so increase the timeout.
 options(warn = 1L, timeout = max(600, getOption('timeout')))
@@ -15,7 +16,7 @@ message("Using CRAN mirror ",  sQuote(mirror))
 ## Sanity check: the examples use /web/packages/packages.rds and
 ## web/checks/check_*.rds,
 ## but partial mirrors for package installation only need src/contrib.
-## This would fail with a file:// mirror but provide a cheap check
+## This would fail with a file:// mirror but provides a cheap check
 ## of the availability of a https:// one.
 if(!startsWith(mirror, "file://")) {
     foo <- tryCatch(readLines(paste0(mirror, "/web/packages")),
