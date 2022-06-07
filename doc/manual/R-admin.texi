@@ -5406,7 +5406,8 @@ what is missing.  At the time of writing using pre-built components
 Other distributions of @command{clang} may be available from
 @uref{https://github.com/llvm/llvm-project/releases/} (at the time of
 writing only for Intel). In particular, these include support for OpenMP
-which Apple @command{clang} does not.
+which Apple @command{clang} does not.  Some of these have included
+support for the ASAN and UBSAN sanitizers.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/llvm}. Use a file @file{config.site} containing
