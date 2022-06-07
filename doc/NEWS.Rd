@@ -8,9 +8,9 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item Calling \code{&&} or \code{||} with either argument of
-      length greater than one is now always an error, with a report of the
-      form
+      \item Calling \code{&&} or \code{||} with LHS or (if evaluated) RHS of
+      length greater than one is now always an error, with a report of
+      the form
 \preformatted{    'length = 4' in coercion to 'logical(1)'}
 
       Environment variable \env{_R_CHECK_LENGTH_1_LOGIC2_} no longer has
