@@ -2260,7 +2260,7 @@ add_dummies <- function(dir, Log)
             print_time(t1, t2, Log)
             if (length(out)) {
                 if(length(grep(paste("^prepare.*Dropping empty section",
-                                     "^check.*\\item.*must have non-empty label",
+                                     "^checkRd: \\(-",
                                      sep = "|"),
                                out, invert = TRUE)))
                     warningLog(Log)
