@@ -701,6 +701,18 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                            warnRd(block, Rdfile, level = -3,
                                   "Apparent non-ASCII contents ", msg3)
                    }
+                   if(tag == "TEXT") {
+                       pat <- "([^\\]|^)\\\\[#$&_^~]"
+                       if(grepl(pat, block)) {
+                           txt <- sub("^[^\\]*", "",
+                                      unlist(regmatches(block,
+                                                        gregexpr(pat,
+                                                                 block))))
+                           warnRd(block, Rdfile, level = -1,
+                                  "Escaped LaTeX specials: ",
+                                  paste(txt, collapse = " "))
+                       }
+                   }
                    ## check if this renders as non-whitespace
                    if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                },
