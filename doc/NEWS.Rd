@@ -207,7 +207,7 @@
       \item The search for a \acronym{CRAN} mirror when checking
       packages now uses \code{getOption("repos")} if that specifies a
       \acronym{CRAN} mirror, even when it does not also specify all three
-      Bioconductor repositiotries (as was previously required).
+      Bioconductor repositories (as was previously required).
     }
   }
 
