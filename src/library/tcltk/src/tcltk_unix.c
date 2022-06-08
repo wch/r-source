@@ -52,29 +52,27 @@ typedef struct {
 static void (* OldHandler)(void);
 static int OldRwait;
 static int Tcl_loaded = 0;
-static int Tcl_lock = 0; /* reentrancy guard */
 
 static void TclSpinLoop(void *data)
 {
-    /* Defensively limit the number of events to avoid infinite loops.
-       An infinite loop has been seen with an R handler that refuses to
-       run recursively (internal http server). Such a handler would
-       return without reading from the connection, so checkProc would
-       create an event for it again, etc. */
-    int max_ev = 100;
-    /* Tcl_ServiceAll is not enough here, for reasons that escape me */
-    while (Tcl_DoOneEvent(TCL_DONT_WAIT) && max_ev) max_ev--;
+    /* In the past, Tcl_ServiceAll() wasn't enough and we used
+
+	  while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
+
+       but that seems no longer needed and causes infinite recursion
+       with R handlers that have a re-entrancy guard, when TclSpinLoop
+       is invoked from such a handler (seen with Rhttp server). */
+
+    Tcl_ServiceAll();
 }
 
 //extern Rboolean R_isForkedChild;
 static void TclHandler(void)
 {
-    if (!R_isForkedChild && !Tcl_lock 
-	&& Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
-	Tcl_lock = 1;
+    if (!R_isForkedChild)
+	/* there is a reentrancy guard in Tcl_ServiceAll */
 	(void) R_ToplevelExec(TclSpinLoop, NULL);
-	Tcl_lock = 0;
-    }
+    
     OldHandler();
 }
 
@@ -85,7 +83,7 @@ static void addTcl(void)
     OldHandler = R_PolledEvents;
     OldRwait = R_wait_usec;
     R_PolledEvents = TclHandler;
-    if ( R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
+    if (R_wait_usec > 1000 || R_wait_usec == 0) R_wait_usec = 1000;
 }
 
 #ifdef UNUSED
