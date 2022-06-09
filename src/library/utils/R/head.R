@@ -41,12 +41,27 @@ checkHT <- function(n, d) {
     stop(msg, domain = NA)
 }
 
+# This function ensure that n can be coerced to an integer
+nHT <- function(n){
+    # There is no need for the 'NAs introduced by coercion' message
+    # because we'll throw an error in case of NA
+    n <- suppressWarnings({
+        # as.integer is vectorized so this will work on any n, whatever the dim
+        as.integer(n)
+    })
+    if (anyNA(n)) {
+         stop("invalid 'n' - as.integer(n) returns one or more NA")
+    }
+    n
+}
+
 
 head <- function(x, ...) UseMethod("head")
 
 head.default <- function(x, n = 6L, ...)
 {
     checkHT(n, dx <- dim(x))
+    n <- nHT(n)
     if(!is.null(dx))
         head.array(x, n, ...)
     else if(length(n) == 1L) {
@@ -64,6 +79,7 @@ head.matrix <-
 head.array <- function(x, n = 6L, ...)
 {
     checkHT(n, d <- dim(x))
+    n <- nHT(n)
     args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
     ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
     ii <- which(!is.na(n[seq_along(d)]))
@@ -97,6 +113,7 @@ tail <- function(x, ...) UseMethod("tail")
 tail.default <- function (x, n = 6L, keepnums = FALSE, addrownums, ...)
 {
     checkHT(n, dx <- dim(x))
+    n <- nHT(n)
     if(!is.null(dx))
         tail.array(x, n=n, keepnums=keepnums, addrownums=addrownums, ...)
     else if(length(n) == 1L) {
@@ -121,6 +138,7 @@ tail.array <- function(x, n = 6L, keepnums = TRUE, addrownums, ...)
     }
 
     checkHT(n, d <- dim(x))
+    n <- nHT(n)
     ## non-specified dimensions (ie length(n) < length(d) or n[i] is NA) will stay missing / empty:
     ii <- which(!is.na(n[seq_along(d)]))
     sel <- lapply(ii, function(i) {
@@ -181,6 +199,7 @@ tail.ftable <- function(x, n = 6L, keepnums = FALSE, addrownums, ...) {
 tail.function <- function(x, n = 6L, ...)
 {
     checkHT(n, dim(x))
+    n <- nHT(n)
     lines <- as.matrix(deparse(x))
     dimnames(lines) <- list(seq_along(lines),"")
     noquote(tail(lines, n=n))
