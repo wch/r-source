@@ -2384,7 +2384,7 @@ and so on, and also in @code{PKG_LIBS} (but see below for Fortran).
 C/C++ code that needs to be conditioned on the use of OpenMP can be used
 inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
 (including Apple's for macOS and some others using
-@command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
+@command{clang}@footnote{Default builds of LLVM @command{clang} 3.8.0 and
 later have support for OpenMP, but the @code{libomp} run-time library
 may not be installed.}) have no OpenMP support at all, not even
 @file{omp.h}.
@@ -2452,8 +2452,8 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @option{-fopenmp}).
 
 @c http://openmp.org/wp/openmp-compilers-tools/
-@c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
-@c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
+@c LLVM clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
+@c LLVM clang 3.9.x reports 201111 but has all but offloading support of 4.0.
 There is nothing@footnote{In most implementations the @code{_OPENMP}
 macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
@@ -5676,7 +5676,7 @@ Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
 compilability of C/C++ code.  Compilers from the GCC, @command{clang},
 Intel and Oracle Developer Studio suites have been used with @R{}, and
-both @command{clang} and Oracle have more than one implementation of C++
+both LLVM @command{clang} and Oracle have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive
 empirical checking impossible, and regrettably compilers are patchy at
 best on warning about non-standard code.
@@ -5831,12 +5831,12 @@ strerror strlen strncmp strtol tan trunc
 @end example
 @noindent
 This problem is less common than it used to be, but in 2019
-@command{clang} did not have @code{bind} in the main namespace.  Also
+LLVM @command{clang} did not have @code{bind} in the main namespace.  Also
 seen has been type @code{size_t} defined only in the @code{std} namespace.
 @c with g++ on Solaris 10.
 
 @item
-@c including clang as from 4.0.0
+@c including LLVM clang as from 4.0.0
 Some C++ compilers refuse to compile constructs such as
 @example
       if(ptr > 0) @{ ....@}
@@ -5871,7 +5871,7 @@ name.
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
 examples include @code{ulong} on several OSes, @code{index_t} and
-@code{single} on Solaris and @code{thread} using @command{clang++} from
+@code{single} on Solaris and @code{thread} using LLVM @command{clang++} from
 version 9.  (Note that these may conflict with other uses as
 identifiers, e.g.@: defining a C++ function called @code{single}.)
 @c as done by package Emcdf in June 2017.
@@ -5966,7 +5966,7 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
-removed in C++17, and @command{clang} 9 and later warn about
+removed in C++17, and LLVM @command{clang} 9 and later warn about
 them. Examples include @code{bind1st}/@code{bind2nd} (use
 @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
@@ -13844,7 +13844,7 @@ header files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++}.  As from
+with many problem reports involving @command{clang++}.  As from LLVM
 @command{clang} 13.0.0, the remapping of @code{match} breaks the
 subsequent inclusion of @file{omp.h}.}, and can be eliminated by
 defining @code{R_NO_REMAP} (before including any @R{} headers) and
