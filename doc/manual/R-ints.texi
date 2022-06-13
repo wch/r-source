@@ -4467,7 +4467,7 @@ second pass including the @code{\donttest} sections, (for the main
 architecture only).  Only for the first pass are the results compared
 to any @file{.Rout.save} file and timings analysed.  Overridden by
 @option{--run-donttest}.
-Default: false unless @option{-as-cran} is specified (which can be
+Default: false unless @option{--as-cran} is specified (which can be
 overridden by setting @samp{_R_CHECK_DONTTEST_EXAMPLES_=false}).
 
 @item _R_CHECK_XREFS_PKGS_ARE_DECLARED_
@@ -4503,12 +4503,12 @@ why this is a bad idea.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_RD_VALIDATE_RD2HTML_
-Check the validity of the package HTML help pages using HTML tidy
+Check the validity of the package HTML help pages using HTML Tidy
 (@uref{https://www.html-tidy.org/}) (if a suitable version is available
 on the system path for executables or its path is specified by
 environment variable @env{R_TIDYCMD}).  macOS users are advised to
 install 5.8.0 or later from @uref{http://binaries.html-tidy.org/}.
-Default: false (but true for CRAN submission checks). @option{-as-cran}
+Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
 @end vtable
 
