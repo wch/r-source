@@ -63,6 +63,8 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab \verb{\method} not valid outside a code block\cr
     7 \tab Tag \verb{\method} is only valid in \verb{\usage}\cr
     7 \tab Tag \verb{\dontrun} is only valid in \verb{\examples}\cr
+    7 \tab Invalid email address: \ldots\cr
+    7 \tab Invalid URL: \ldots\cr
     5 \tab Must have a \var{tag name}\cr
     5 \tab Only one \var{tag name} is allowed\cr
     5 \tab Tag \var{tag name} must not be empty\cr
@@ -71,6 +73,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     3 \tab Empty section \var{tag name}\cr
     -1 \tab Non-ASCII contents without declared encoding\cr
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
+    -1 \tab Escaped LaTeX specials: \ldots\cr
     -3 \tab Tag \verb{\ldots} is invalid in a code block\cr
     -3 \tab Apparent non-ASCII contents without declared encoding\cr
     -3 \tab Apparent non-ASCII contents in second part of \verb{\enc}\cr

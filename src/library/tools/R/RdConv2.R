@@ -656,7 +656,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             address <- lines2str(.Rd_deparse(block, tag = FALSE))
             if(!grepl(re_anchor(pattern), address))
                 warnRd(block, Rdfile, level = 7,
-                       "invalid email address: ", address)
+                       "Invalid email address: ", address)
         }
     }
 
@@ -674,7 +674,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                ((s == "mailto") &&
                 !grepl(re_anchor(pattern), parts[, "path"])))
                 warnRd(block, Rdfile, level = 7,
-                       "invalid URL: ", u)
+                       "Invalid URL: ", u)
         }
     }
             
