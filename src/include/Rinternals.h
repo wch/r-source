@@ -595,6 +595,7 @@ cetype_t Rf_getCharCE(SEXP);
 SEXP Rf_mkCharCE(const char *, cetype_t);
 SEXP Rf_mkCharLenCE(const char *, int, cetype_t);
 const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
+const char *Rf_reEnc3(const char *x, const char *fromcode, const char *tocode, int subst);
 
 #ifdef __MAIN__
 #undef extern
@@ -997,6 +998,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define protect			Rf_protect
 #define readS3VarsFromFrame	Rf_readS3VarsFromFrame
 #define reEnc			Rf_reEnc
+#define reEnc3			Rf_reEnc3
 #define rownamesgets		Rf_rownamesgets
 #define S3Class                 Rf_S3Class
 #define ScalarComplex		Rf_ScalarComplex

@@ -1174,22 +1174,25 @@ next_char:
     *outbuf = '\0';
     Riconv_close(obj);
     if (mustWork && failed) {
+	const void *vmax = vmaxget();
+	const char *native_buf = reEnc(cbuff->data, CE_UTF8, CE_NATIVE, 2);
 	if (mustWork == 2) {
 	    warning(_("unable to translate '%s' to UTF-8"),
-		    cbuff->data);
+		    native_buf);
 	    return 1;
 	} else {
 	    char err_buff[256];
-	    if (strlen(cbuff->data) > 255) {
-		strncpy(err_buff, cbuff->data, 252);
+	    if (strlen(native_buf) > 255) {
+		strncpy(err_buff, native_buf, 252);
 		err_buff[252] = '\0';
 		mbcsTruncateToValid(err_buff);
 		strcat(err_buff, "...");
 	    } else
-		strcpy(err_buff, cbuff->data);
+		strcpy(err_buff, native_buf);
 	    R_FreeStringBuffer(cbuff);
 	    error(_("unable to translate '%s' to UTF-8"), err_buff);
 	}
+	vmaxset(vmax);
     }
     return 0;
 }
@@ -1336,76 +1339,33 @@ next_char:
     return p;
 }
 
-
-#include <R_ext/GraphicsEngine.h>
-/* This may return a R_alloc-ed result, so the caller has to manage the
-   R_alloc stack */
-const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
+static int reEncodeIconv(const char *x, R_StringBuffer *cbuff,
+                         const char *fromcode, const char *tocode, int subst)
 {
     void * obj;
     const char *inbuf;
-    char *outbuf, *p;
-    size_t inb, outb, res, top;
-    char *tocode = NULL, *fromcode = NULL;
-    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-
-    /* We can only encode from Symbol to UTF-8 */
-    if(ce_in == ce_out || ce_out == CE_SYMBOL ||
-       ce_in == CE_ANY || ce_out == CE_ANY) return x;
-    if(ce_in == CE_SYMBOL) {
-	if(ce_out == CE_UTF8) {
-	    size_t nc = 3*strlen(x)+1; /* all in BMP */
-	    p = R_alloc(nc, 1);
-	    Rf_AdobeSymbol2utf8(p, x, nc, TRUE);
-	    return p;
-	} else return x;
-    }
-    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return x;
-    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return x;
-    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return x;
-    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return x;
-
-    if(strIsASCII(x)) return x;
-
-    switch(ce_in) {
-    /* Looks like CP1252 is treated as Latin-1 by iconv (on Windows) */
-    case CE_NATIVE: fromcode = ""; break;
-#ifdef Win32
-    case CE_LATIN1: fromcode = "CP1252"; break;
-#else
-    case CE_LATIN1: fromcode = "latin1"; break; /* FIXME: allow CP1252? */
-#endif
-    case CE_UTF8:   fromcode = "UTF-8"; break;
-    default: return x;
-    }
-
-    switch(ce_out) {
-    /* avoid possible misidentification of CP1250 as LATIN-2 (on Windows, ??) */
-    case CE_NATIVE: tocode = ""; break;
-    case CE_LATIN1: tocode = "latin1"; break;
-    case CE_UTF8:   tocode = "UTF-8"; break;
-    default: return x;
-    }
+    char *outbuf;
+    size_t inb, outb, res;
 
     obj = Riconv_open(tocode, fromcode);
-    if(obj == (void *)(-1)) return x;
-    R_AllocStringBuffer(0, &cbuff);
+    if(obj == (void *)(-1)) return 1;
+    R_AllocStringBuffer(0, cbuff);
 top_of_loop:
     inbuf = x; inb = strlen(inbuf);
-    outbuf = cbuff.data; top = outb = cbuff.bufsize - 1;
+    outbuf = cbuff->data; outb = cbuff->bufsize - 3;
     /* First initialize output */
     Riconv (obj, NULL, NULL, &outbuf, &outb);
 next_char:
     /* Then convert input  */
     res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
     if(res == -1 && errno == E2BIG) {
-	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
 	switch(subst) {
 	case 1: /* substitute hex */
 	    if(outb < 5) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 		goto top_of_loop;
 	    }
 	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
@@ -1415,7 +1375,7 @@ next_char:
 	    break;
 	case 2: /* substitute . */
 	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 		goto top_of_loop;
 	    }
 	    *outbuf++ = '.'; inbuf++; outb--; inb--;
@@ -1423,7 +1383,7 @@ next_char:
 	    break;
 	case 3: /* substitute ? */
 	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 		goto top_of_loop;
 	    }
 	    *outbuf++ = '?'; inbuf++; outb--; inb--;
@@ -1436,7 +1396,66 @@ next_char:
     }
     Riconv_close(obj);
     *outbuf = '\0';
-    res = (top-outb)+1; /* strlen(cbuff.data) + 1; */
+    return 0;
+}
+
+#include <R_ext/GraphicsEngine.h>
+
+/* returns 1 when no conversion is needed and in case of error, 0 otherwise */
+static int reEncode(const char *x, R_StringBuffer *cbuff,
+                    cetype_t ce_in, cetype_t ce_out, int subst)
+{
+    char *tocode = NULL, *fromcode = NULL;
+
+    /* We can only encode from Symbol to UTF-8 */
+    if(ce_in == ce_out || ce_out == CE_SYMBOL ||
+       ce_in == CE_ANY || ce_out == CE_ANY) return 1;
+    if(ce_in == CE_SYMBOL) {
+	if(ce_out == CE_UTF8) {
+	    size_t nc = 3*strlen(x)+1; /* all in BMP */
+	    R_AllocStringBuffer(nc, cbuff);
+	    Rf_AdobeSymbol2utf8(cbuff->data, x, cbuff->bufsize, TRUE);
+	    return 0;
+	} else return 1;
+    }
+
+    if(strIsASCII(x)) return 1;
+    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return 1;
+    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return 1;
+    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return 1;
+    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return 1;
+
+    switch(ce_in) {
+    case CE_NATIVE: fromcode = ""; break;
+#ifdef HAVE_ICONV_CP1252
+    case CE_LATIN1: fromcode = "CP1252"; break;
+#else
+    case CE_LATIN1: fromcode = "latin1"; break;
+#endif
+    case CE_UTF8:   fromcode = "UTF-8"; break;
+    default: return 1;
+    }
+
+    switch(ce_out) {
+    case CE_NATIVE: tocode = ""; break;
+    case CE_LATIN1: tocode = "latin1"; break; /* ?? CP1252 */
+    case CE_UTF8:   tocode = "UTF-8"; break;
+    default: return 1;
+    }
+
+    return reEncodeIconv(x, cbuff, fromcode, tocode, subst);
+}
+
+/* This may return a R_alloc-ed result, so the caller has to manage the
+   R_alloc stack */
+const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
+{
+    char *p;
+    int res;
+
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    if (reEncode(x, &cbuff, ce_in, ce_out, subst)) return x;
+    res = strlen(cbuff.data) + 1;
     p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
@@ -1448,95 +1467,37 @@ next_char:
 void reEnc2(const char *x, char *y, int ny,
 	    cetype_t ce_in, cetype_t ce_out, int subst)
 {
-    void * obj;
-    const char *inbuf;
-    char *outbuf;
-    size_t inb, outb, res, top;
-    char *tocode = NULL, *fromcode = NULL;
+    int res;
+
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-
-    strncpy(y, x, ny);
-    y[ny - 1] = '\0';
-
-    if(ce_in == ce_out || ce_in == CE_ANY || ce_out == CE_ANY) return;
-    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return;
-    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return;
-    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return;
-    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return;
-
-    if(strIsASCII(x)) return;
-
-    switch(ce_in) {
-    /* Looks like CP1252 is treated as Latin-1 by iconv */
-    case CE_NATIVE: fromcode = ""; break;
-    case CE_LATIN1: fromcode = "CP1252"; break;
-    case CE_UTF8:   fromcode = "UTF-8"; break;
-    default: return;
+    if (reEncode(x, &cbuff, ce_in, ce_out, subst)) {
+	strncpy(y, x, ny);
+	y[ny - 1] = '\0';
+	return;
     }
-
-    switch(ce_out) {
-    /* avoid possible misidentification of CP1250 as LATIN-2 (??) */
-    case CE_NATIVE: tocode = ""; break;
-    case CE_LATIN1: tocode = "latin1"; break;
-    case CE_UTF8:   tocode = "UTF-8"; break;
-    default: return;
-    }
-
-    obj = Riconv_open(tocode, fromcode);
-    if(obj == (void *)(-1)) return;
-    R_AllocStringBuffer(0, &cbuff);
-top_of_loop:
-    inbuf = x; inb = strlen(inbuf);
-    outbuf = cbuff.data; top = outb = cbuff.bufsize - 1;
-    /* First initialize output */
-    Riconv (obj, NULL, NULL, &outbuf, &outb);
-next_char:
-    /* Then convert input  */
-    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
-    if(res == -1 && errno == E2BIG) {
-	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
-	goto top_of_loop;
-    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
-	switch(subst) {
-	case 1: /* substitute hex */
-	    if(outb < 5) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
-		goto top_of_loop;
-	    }
-	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
-	    outbuf += 4; outb -= 4;
-	    inbuf++; inb--;
-	    goto next_char;
-	    break;
-	case 2: /* substitute . */
-	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
-		goto top_of_loop;
-	    }
-	    *outbuf++ = '.'; inbuf++; outb--; inb--;
-	    goto next_char;
-	    break;
-	case 3: /* substitute ? */
-	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
-		goto top_of_loop;
-	    }
-	    *outbuf++ = '?'; inbuf++; outb--; inb--;
-	    goto next_char;
-	    break;
-	default: /* skip byte */
-	    inbuf++; inb--;
-	    goto next_char;
-	}
-    }
-    Riconv_close(obj);
-    *outbuf = '\0';
-    res = (top-outb)+1; /* strlen(cbuff.data) + 1; */
+    res = strlen(cbuff.data) + 1;
     if (res > ny) error("converted string too long for buffer");
     memcpy(y, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
 }
 #endif
+
+/* A version that works with arbitrary iconv encodings, used for getting
+   escaped invalid characters for error messages. */
+const char *reEnc3(const char *x,
+                   const char *fromcode, const char *tocode, int subst)
+{
+    char *p;
+    int res;
+
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    if (reEncodeIconv(x, &cbuff, fromcode, tocode, subst)) return x;
+    res = strlen(cbuff.data) + 1;
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
 
 void attribute_hidden
 invalidate_cached_recodings(void)

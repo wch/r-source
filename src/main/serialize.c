@@ -1646,6 +1646,23 @@ static char *native_fromcode(R_inpstream_t stream)
     return from;
 }
 
+static void invalid_utf8_warning(const char *buf, const char *from)
+{
+    const void *vmax = vmaxget();
+    const char *native_buf;
+
+    if (utf8Valid(buf)) {
+	native_buf = reEnc3(buf, "UTF-8", "", 1);
+	warning(_("input string '%s' cannot be translated from '%s' to UTF-8, but is valid UTF-8"),
+		native_buf, from);
+    } else {
+	native_buf = reEnc(reEnc3(buf, from, "UTF-8", 1), CE_UTF8, CE_NATIVE, 2);
+	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
+		native_buf, from);
+    }
+    vmaxset(vmax);
+}
+
 /* Read string into pre-allocated buffer, convert encoding if necessary, and
    return a CHARSXP */
 static SEXP
@@ -1695,9 +1712,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	if (known_to_be_utf8) {
 	    /* nat2nat_obj is converting to UTF-8, no need to use nat2utf8_obj */
 	    stream->nat2utf8_obj = (void *)-1;
-	    char *from = native_fromcode(stream);
-	    warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
-	            buf, from);
+	    invalid_utf8_warning(buf, native_fromcode(stream));
 	}
     }
     /* try converting to UTF-8 */
@@ -1716,9 +1731,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	SEXP ans = ConvertChar(stream->nat2utf8_obj, buf, length, CE_UTF8);
 	if (ans != R_NilValue)
 	    return ans;
-	char *from = native_fromcode(stream);
-	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s' ?"),
-	        buf, from);
+	invalid_utf8_warning(buf, native_fromcode(stream));
     }
     /* no translation possible */
     return mkCharLenCE(buf, length, CE_NATIVE); 
