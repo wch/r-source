@@ -504,7 +504,7 @@ m4/openmp.m4
 
   Under GPL-3 with the Autoconf Configure Script Exception, version 3.0.
 
-tools/config.quess
+tools/config.guess
 tools/config.sub
 
    Copyright 1992-2019 Free Software Foundation.  
