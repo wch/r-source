@@ -1,6 +1,7 @@
 
 const macros = {
     "\\R": "\\textsf{R}",
+    "\\mbox": "\\text",
     "\\code": "\\texttt"
 };
 
