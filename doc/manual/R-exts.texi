@@ -3395,7 +3395,7 @@ Administration' manual' for further details.
 Optionally (including by @command{R CMD check --as-cran}) the HTML
 version of the manual is created and checked for compliance with the
 HTML5 standard.  This requires a recent version@footnote{for the most
-comprensive chacking this should be 5.8.0 or later: any for which
+comprehensive checking this should be 5.8.0 or later: any for which
 @command{tidy --version} does not report a version number will be too
 old -- this includes the 2006 version shipped with macOS.} of `HTML
 Tidy', either on the path or at a location specified by environment
