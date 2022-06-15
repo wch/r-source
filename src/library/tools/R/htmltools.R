@@ -1,6 +1,6 @@
 tidy_validate <-
 function(f, tidy = "tidy") {
-    z <- suppressWarnings(system2(tidy, c("-qe", f),
+    z <- suppressWarnings(system2(tidy, c("-language en", "-qe", f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
     s <- readLines(f, warn = FALSE)

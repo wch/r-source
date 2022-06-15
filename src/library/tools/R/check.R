@@ -4900,7 +4900,7 @@ add_dummies <- function(dir, Log)
                 if(!OK) msg <- ": 'tidy' is Apple's too old build"
                 ## Maybe we should also check version,
                 ## but e.g. Ubuntu 16.04 does not show one.
-            } else msg <- ": 'tidy' is not NTML Tidy"
+            } else msg <- ": 'tidy' is not HTML Tidy"
         } else msg <- ": no command 'tidy' found"
         if(!OK) {
             messageLog(Log, "skipping checking HTML version of manual", msg)
