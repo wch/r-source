@@ -763,6 +763,7 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 const char * Rf_translateCharFP(SEXP);
 const char * Rf_translateCharFP2(SEXP);
 const char * Rf_trCharUTF8(SEXP);
+const char * Rf_trCharUTF82(SEXP);
 
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
@@ -1763,6 +1764,7 @@ void R_RestoreHashCount(SEXP rho);
 # define translateCharFP	Rf_translateCharFP
 # define translateCharFP2	Rf_translateCharFP2
 # define trCharUTF8      	Rf_trCharUTF8
+# define trCharUTF82      	Rf_trCharUTF82
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
