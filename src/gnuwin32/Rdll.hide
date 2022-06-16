@@ -401,6 +401,8 @@
  Rf_stringSuffix
  Rf_strmat2intmat
  Rf_substituteList
+ Rf_translateCharFP2
+ Rf_trCharUTF8
  Rf_trCharUTF82
  Rf_tspgets
  Rf_ucstomb
