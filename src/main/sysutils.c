@@ -996,19 +996,21 @@ next_char:
     }
     *outbuf = '\0';
     if (mustWork && failed) {
+	/* copy to truncate and in case of error prevent memory leak */
+	char err_buff[256];
+	if (strlen(cbuff->data) > 255) {
+	    strncpy(err_buff, cbuff->data, 252);
+	    err_buff[252] = '\0';
+	    mbcsTruncateToValid(err_buff);
+	    strcat(err_buff, "...");
+	} else
+	    strcpy(err_buff, cbuff->data);
+
 	if (mustWork == 2) {
 	    warning(_("unable to translate '%s' to native encoding"),
-		    cbuff->data);
+		    err_buff);
 	    return 1;
 	} else {
-	    char err_buff[256];
-	    if (strlen(cbuff->data) > 255) {
-		strncpy(err_buff, cbuff->data, 252);
-		err_buff[252] = '\0';
-		mbcsTruncateToValid(err_buff);
-		strcat(err_buff, "...");
-	    } else
-		strcpy(err_buff, cbuff->data);
 	    R_FreeStringBuffer(cbuff);
 	    error(_("unable to translate '%s' to native encoding"), err_buff);
 	}
@@ -1176,19 +1178,22 @@ next_char:
     if (mustWork && failed) {
 	const void *vmax = vmaxget();
 	const char *native_buf = reEnc(cbuff->data, CE_UTF8, CE_NATIVE, 2);
+
+	/* copy to truncate and in case of error prevent memory leak */
+	char err_buff[256];
+	if (strlen(native_buf) > 255) {
+	    strncpy(err_buff, native_buf, 252);
+	    err_buff[252] = '\0';
+	    mbcsTruncateToValid(err_buff);
+	    strcat(err_buff, "...");
+	} else
+	    strcpy(err_buff, native_buf);
+
 	if (mustWork == 2) {
 	    warning(_("unable to translate '%s' to UTF-8"),
-		    native_buf);
+		    err_buff);
 	    return 1;
 	} else {
-	    char err_buff[256];
-	    if (strlen(native_buf) > 255) {
-		strncpy(err_buff, native_buf, 252);
-		err_buff[252] = '\0';
-		mbcsTruncateToValid(err_buff);
-		strcat(err_buff, "...");
-	    } else
-		strcpy(err_buff, native_buf);
 	    R_FreeStringBuffer(cbuff);
 	    error(_("unable to translate '%s' to UTF-8"), err_buff);
 	}
