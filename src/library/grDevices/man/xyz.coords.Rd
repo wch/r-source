@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xyz.coords.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2016, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xyz.coords}
@@ -38,7 +38,8 @@ xyz.coords(x, y = NULL, z = NULL,
   }
   \item{xlab, ylab, zlab}{names for the x, y and z variables to be extracted.}
   \item{log}{character, \code{"x"}, \code{"y"}, \code{"z"} or combinations.
-    Sets negative values to \code{\link{NA}} and gives a warning.}
+    Sets negative values to \code{\link{NA}} and gives a warning of class
+    \code{"log_le_0"}.}
   \item{recycle}{logical; if \code{TRUE}, recycle (\code{\link{rep}}) the
     shorter ones of \code{x}, \code{y} or \code{z} if their lengths differ.}
   \item{setLab}{logical indicating if the resulting \code{xlab} and
@@ -67,5 +68,8 @@ xyz.coords(y ~ x1 + x2, y = NULL, z = NULL)
 xyz.coords(data.frame(x = -1:9, y = 2:12, z = 3:13), y = NULL, z = NULL,
            log = "xy")
 ##> Warning message: 2 x values <= 0 omitted ...
+## Suppress this specific warning:
+suppressWarnings(xyz.coords(x = -1:9, y = 2:12, z = 3:13, log = "xy"),
+                 classes = "log_le_0")
 }
 \keyword{dplot}

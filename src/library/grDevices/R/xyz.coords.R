@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/xyz.coords.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -107,18 +107,22 @@ xy.coords <-
 	log <- strsplit(log, NULL)[[1L]]
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- as.integer(sum(ii))
-	    warning(sprintf(ngettext(n,
+	    warning(warningCondition(sprintf(ngettext(n,
                                      "%d x value <= 0 omitted from logarithmic plot",
                                      "%d x values <= 0 omitted from logarithmic plot"),
-                            n), domain = NA)
+				     n),
+				     coord = "x", class = c("log_le_0", "plot_coords")),
+		    domain=NA)
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
 	    n <- as.integer(sum(ii))
-	    warning(sprintf(ngettext(n,
+	    warning(warningCondition(sprintf(ngettext(n,
                                      "%d y value <= 0 omitted from logarithmic plot",
                                      "%d y values <= 0 omitted from logarithmic plot"),
-                            n), domain = NA)
+				     n),
+				     coord = "y", class = c("log_le_0", "plot_coords")),
+		    domain=NA)
 	    y[ii] <- NA
 	}
     }
@@ -236,26 +240,32 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	log <- strsplit(log, NULL)[[1L]]
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- sum(ii)
-            warning(sprintf(ngettext(n,
+            warning(warningCondition(sprintf(ngettext(n,
                                      "%d x value <= 0 omitted from logarithmic plot",
                                      "%d x values <= 0 omitted from logarithmic plot"),
-                            n), domain = NA)
+				     n),
+				     coord = "x", class = c("log_le_0", "plot_coords")),
+		    domain=NA)
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
 	    n <- sum(ii)
-            warning(sprintf(ngettext(n,
+	    warning(warningCondition(sprintf(ngettext(n,
                                      "%d y value <= 0 omitted from logarithmic plot",
                                      "%d y values <= 0 omitted from logarithmic plot"),
-                            n), domain = NA)
+				     n),
+				     coord = "y", class = c("log_le_0", "plot_coords")),
+		    domain=NA)
 	    y[ii] <- NA
 	}
 	if("z" %in% log && any(ii <- z <= 0 & !is.na(z))) {
 	    n <- sum(ii)
-            warning(sprintf(ngettext(n,
+            warning(warningCondition(sprintf(ngettext(n,
                                      "%d z value <= 0 omitted from logarithmic plot",
                                      "%d z values <= 0 omitted from logarithmic plot"),
-                            n), domain = NA)
+				     n),
+				     coord = "z", class = c("log_le_0", "plot_coords")),
+		    domain=NA)
 	    z[ii] <- NA
 	}
     }
