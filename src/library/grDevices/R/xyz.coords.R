@@ -111,8 +111,7 @@ xy.coords <-
                                      "%d x value <= 0 omitted from logarithmic plot",
                                      "%d x values <= 0 omitted from logarithmic plot"),
 				     n),
-				     coord = "x", class = c("log_le_0", "plot_coords")),
-		    domain=NA)
+				     coord = "x", class = c("log_le_0", "plot_coords")))
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
@@ -121,8 +120,7 @@ xy.coords <-
                                      "%d y value <= 0 omitted from logarithmic plot",
                                      "%d y values <= 0 omitted from logarithmic plot"),
 				     n),
-				     coord = "y", class = c("log_le_0", "plot_coords")),
-		    domain=NA)
+				     coord = "y", class = c("log_le_0", "plot_coords")))
 	    y[ii] <- NA
 	}
     }
@@ -244,8 +242,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
                                      "%d x value <= 0 omitted from logarithmic plot",
                                      "%d x values <= 0 omitted from logarithmic plot"),
 				     n),
-				     coord = "x", class = c("log_le_0", "plot_coords")),
-		    domain=NA)
+				     coord = "x", class = c("log_le_0", "plot_coords")))
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
@@ -254,8 +251,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
                                      "%d y value <= 0 omitted from logarithmic plot",
                                      "%d y values <= 0 omitted from logarithmic plot"),
 				     n),
-				     coord = "y", class = c("log_le_0", "plot_coords")),
-		    domain=NA)
+				     coord = "y", class = c("log_le_0", "plot_coords")))
 	    y[ii] <- NA
 	}
 	if("z" %in% log && any(ii <- z <= 0 & !is.na(z))) {
@@ -264,8 +260,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
                                      "%d z value <= 0 omitted from logarithmic plot",
                                      "%d z values <= 0 omitted from logarithmic plot"),
 				     n),
-				     coord = "z", class = c("log_le_0", "plot_coords")),
-		    domain=NA)
+				     coord = "z", class = c("log_le_0", "plot_coords")))
 	    z[ii] <- NA
 	}
     }

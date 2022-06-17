@@ -90,7 +90,7 @@ with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 xy.coords(1:3, 1:2, recycle = TRUE) # otherwise error "lengths differ"
 xy.coords(-2:10, log = "y")
 ##> xlab: "Index"  \\\  warning: 3 y values <= 0 omitted ..
-op <- options(warn = 2)# ==> warnings are errors
+op <- options(warn = 2)# ==> warnings would be errors, we suppress the one "we know":
 suppressWarnings(xy.coords(-2:10, log = "y"), classes="log_le_0") -> xy
 options(op) # revert
 stopifnot(is.list(xy), identical (1:13 +0,  xy$x),
