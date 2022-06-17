@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.2.0 patched}{
+\section{\Rlogo CHANGES IN R 4.2.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item New function \code{utils::findCRANmirror()} to find out if a
