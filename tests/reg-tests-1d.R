@@ -5991,6 +5991,11 @@ for(i in 1:128) { # tested for 1:12800
 ## several of these failed for na.last=FALSE and TRUE
 
 
+## head(letters, "7") should not silently do nonsense; PR#18357
+assertErrV( head(letters, "3") )
+## returned complete 'letters' w/o a warning
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

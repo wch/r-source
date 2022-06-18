@@ -134,6 +134,11 @@
 
       \item \code{R CMD Stangle}: improved message about \sQuote{Output}
       files.
+
+      \item \code{head(x, n)} and \code{tail(x, n)} now signal an error if
+      \code{n} is not numeric, instead of incidentally \dQuote{working}
+      sometimes returning all of \code{x}.  Reported and discussed by Colin
+      Fay, in \PR{18357}.
     }
   }
 }
