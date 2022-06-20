@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-06-16 r82498) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-06-18 r82503) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -389,7 +389,8 @@ $allowed
  [1]   0  10  20  30  40  50  60  70  80  90 100
 >
 > plot(10*(0:10), log = "y"); (pu <- par("usr"))
-Warning: 1 y value <= 0 omitted from logarithmic plot
+Warning in xy.coords(x, y, xlabel, ylabel, log) :
+  1 y value <= 0 omitted from logarithmic plot
 [1]  0.60 11.40  0.96  2.04
 > aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))  # y axis
 [1]  10  20  50 100
@@ -4117,7 +4118,8 @@ $ylab
 NULL
 
 > xy.coords(-2:10, log = "y")
-Warning: 3 y values <= 0 omitted from logarithmic plot
+Warning in xy.coords(-2:10, log = "y") :
+  3 y values <= 0 omitted from logarithmic plot
 $x
  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13
 
@@ -4277,7 +4279,8 @@ $zlab
 >
 > xyz.coords(data.frame(x = -1:9, y = 2:12, z = 3:13), y = NULL, z = NULL,
 +            log = "xy")
-Warning: 2 x values <= 0 omitted from logarithmic plot
+Warning in xyz.coords(data.frame(x = -1:9, y = 2:12, z = 3:13), y = NULL,  :
+  2 x values <= 0 omitted from logarithmic plot
 $x
  [1] NA NA  1  2  3  4  5  6  7  8  9
 
