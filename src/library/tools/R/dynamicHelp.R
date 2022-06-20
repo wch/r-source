@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -106,6 +106,14 @@ mime_type <- function(path, ext = NULL)
 ##  Running demos, using path "/Demo/*"
 ##  html help, either by topic, /library/<pkg>/help/<topic> (pkg=NULL means any)
 ##             or by file, /library/<pkg>/html/<file>.html
+##
+##  As any R function, httpd() needs to produce R strings valid in their
+##  declared encoding (or valid in the native encoding if they have no
+##  encoding flag).  The C code of the server converts the response strings
+##  which are given as R strings to UTF-8, and hence the Content-type
+##  charset specified in the responses returned by httpd() must also be UTF-8
+##  (for errors and results passed as strings inside a list, this must be in
+##  sync with Rhttpd.c). 
 httpd <- function(path, query, ...)
 {
     logHelpRequests <-
@@ -544,9 +552,10 @@ httpd <- function(path, query, ...)
         outfile <- tempfile("Rhttpd")
         Rd2HTML(utils:::.getHelpFile(file.path(path, helpdoc)),
                 out = outfile, package = dirpath,
-                dynamic = TRUE)
+                dynamic = TRUE, outputEncoding = "UTF-8")
         on.exit(unlink(outfile))
-        return(list(payload = paste(readLines(outfile), collapse = "\n")))
+        return(list(payload = paste(readLines(file(outfile, encoding="UTF-8")),
+                                    collapse = "\n")))
     } else if (grepl(docRegexp, path)) {
         ## ----------------------- package doc directory ---------------------
     	pkg <- sub(docRegexp, "\\1", path)

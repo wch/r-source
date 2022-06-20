@@ -587,14 +587,23 @@ static void process_request_(void *ptr)
 
 	/* the result is expected to have one of the following forms:
 
-	   a) character vector of length 1 => error (possibly from try),
-	      will create 500 response
+	  a) character vector of length 1 => error (possibly from try),
+	     will create 500 response
+
+	      the string must specify charset UTF-8 and the server will
+	      convert it to UTF-8 (must be in sync with dynamicHelp.R)
+
 
 	  b) list(payload[, content-type[, headers[, status code]]])
 
 	      payload: can be a character vector of length one or a
 	      raw vector. if the character vector is named "file" then
-	      the content of a file of that name is the payload
+	      the content of a file of that name is the payload (the file
+	      will be served byte-by-byte and the headers must specify
+	      the charset of the file). if the character vector is not named
+	      "file", it will be converted to UTF-8 (and hence the vector
+	      itself must specify charset UTF-8, must be in sync with
+	      dynamicHelp.R)
 
 	      content-type: must be a character vector of length one
 	      or NULL (if present, else default is "text/html")
@@ -607,9 +616,9 @@ static void process_request_(void *ptr)
 	 */
 
 	if (TYPEOF(x) == STRSXP && LENGTH(x) > 0) { /* string means there was an error */
-	    const char *s = translateChar(STRING_ELT(x, 0));
+	    const char *s = translateCharUTF8(STRING_ELT(x, 0));
 	    send_http_response(c, " 500 Evaluation error\r\nConnection: close\r\nContent-type: text/plain\r\n\r\n");
-	    DBG(Rprintf("respond with 500 and content: %s\n", s));
+	    DBG(Rprintf("respond with 500 and content: %s\n", translateChar(STRING_ELT(x, 0))));
 	    if (c->method != METHOD_HEAD)
 		send_response(c->sock, s, strlen(s));
 	    c->attr |= CONNECTION_CLOSE; /* force close */
@@ -623,7 +632,7 @@ static void process_request_(void *ptr)
 	    if (LENGTH(x) > 1) {
 		SEXP sCT = VECTOR_ELT(x, 1); /* second element is content type if present */
 		if (TYPEOF(sCT) == STRSXP && LENGTH(sCT) > 0)
-		    ct = translateChar(STRING_ELT(sCT, 0));
+		    ct = translateCharUTF8(STRING_ELT(sCT, 0));
 		if (LENGTH(x) > 2) { /* third element is headers vector */
 		    sHeaders = VECTOR_ELT(x, 2);
 		    if (TYPEOF(sHeaders) != STRSXP)
@@ -635,7 +644,7 @@ static void process_request_(void *ptr)
 	    y = VECTOR_ELT(x, 0);
 	    if (TYPEOF(y) == STRSXP && LENGTH(y) > 0) {
 		char buf[64];
-		const char *cs = translateChar(STRING_ELT(y, 0)), *fn = 0;
+		const char *cs = translateCharUTF8(STRING_ELT(y, 0)), *fn = 0;
 		if (code == 200)
 		    send_http_response(c, " 200 OK\r\nContent-type: ");
 		else {
@@ -646,7 +655,7 @@ static void process_request_(void *ptr)
 		if (sHeaders != R_NilValue) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
-			const char *hs = translateChar(STRING_ELT(sHeaders, i));
+			const char *hs = translateCharUTF8(STRING_ELT(sHeaders, i));
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
@@ -654,7 +663,7 @@ static void process_request_(void *ptr)
 		/* special content - a file: either list(file="") or list(c("*FILE*", "")) - the latter will go away */
 		if (TYPEOF(xNames) == STRSXP && LENGTH(xNames) > 0 &&
 		    !strcmp(translateChar(STRING_ELT(xNames, 0)), "file"))
-		    fn = cs; /* translateCharFP2 not exported */
+		    fn = translateChar(STRING_ELT(y, 0)); /* translateCharFP2 not exported */
 		if (LENGTH(y) > 1 && !strcmp(cs, "*FILE*"))
 		    fn = translateChar(STRING_ELT(y, 1)); /* translateCharFP2 not exported */
 		if (fn) {
@@ -726,7 +735,7 @@ static void process_request_(void *ptr)
 		if (sHeaders != R_NilValue) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
-			const char *hs = translateChar(STRING_ELT(sHeaders, i));
+			const char *hs = translateCharUTF8(STRING_ELT(sHeaders, i));
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
