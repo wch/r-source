@@ -5994,6 +5994,8 @@ for(i in 1:128) { # tested for 1:12800
 ## head(letters, "7") should not silently do nonsense; PR#18357
 assertErrV( head(letters, "3") )
 ## returned complete 'letters' w/o a warning
+stopifnot(identical("a", head(letters, TRUE)))
+## keep treating <logical> n  as integer
 
 
 
