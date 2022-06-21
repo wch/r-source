@@ -32,7 +32,7 @@ checkHT <- function(n, d) {
     len <- length(n)
     msg <- if(len == 0 || all(is.na(n)))
         gettext("invalid 'n' - must contain at least one non-missing element, got none.")
-    else if(!is.numeric(n))
+    else if(!(is.numeric(n) || is.logical(n)))
         gettext("invalid 'n' - must be numeric, possibly NA.")
     else if(is.null(d) && len > 1L)
         gettextf("invalid 'n' - must have length one when dim(x) is NULL, got %d", len)
