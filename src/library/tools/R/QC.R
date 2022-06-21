@@ -7249,7 +7249,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 ## Merge in the partial db: there could be build Sexprs
                 ## giving install/render Sexprs ...
                 built <- readRDS(built_file)
-                pos <- match(names(Rdb), names(built), 0L)
+                pos <- match(basename(names(Rdb)), names(built), 0L)
                 Rdb[pos > 0L] <- built[pos]
             }
         }
