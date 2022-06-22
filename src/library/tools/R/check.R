@@ -3912,16 +3912,15 @@ add_dummies <- function(dir, Log)
                 ## defensive about the prompt ...
                 chunks <- strsplit(txt,
                                    "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n", useBytes = TRUE)[[1L]]
-                                       if((ll <- length(chunks)) >= 2) {
-                                           printLog(Log,
-                                                    "The error most likely occurred in:\n\n")
-                                           printLog0(Log, chunks[ll], "\n")
-                                       } else {
-                                           ## most likely error before the first example
-                                           ## so show all the output.
-                                           printLog(Log, "The error occurred in:\n\n")
-                                           printLog0(Log, txt, "\n")
-                                       }
+                if((ll <- length(chunks)) >= 2) {
+                    printLog(Log, "The error most likely occurred in:\n\n")
+                    printLog0(Log, chunks[ll], "\n")
+                } else {
+                    ## most likely error before the first example
+                    ## so show all the output.
+                    printLog(Log, "The error occurred in:\n\n")
+                    printLog0(Log, txt, "\n")
+                }
                 return(FALSE)
             }
 
