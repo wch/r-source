@@ -301,6 +301,9 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     ## do not want missing values substituted here
     r <- z$residuals
     f <- z$fitted.values
+    if (!is.null(z$offset)) {
+        f <- f - z$offset
+    }
     w <- z$weights
     if (is.null(w)) {
         mss <- if (attr(z$terms, "intercept"))
