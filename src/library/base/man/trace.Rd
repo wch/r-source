@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright (C) 1995-2020 R Core Team
+% Copyright (C) 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -332,11 +332,10 @@ untrace(expression(ar.yw, ar.yw.default), where = ar)
 \dontrun{
 ## trace calls to the function lm() that come from
 ## the nlme package.
-## (The function nlme is in that package, and the package
-## has a namespace, so the where= argument must be used
-## to get the right version of lm)
-
-trace(lm, exit = recover, where = asNamespace("nlme"))
+trace("lm", where = asNamespace("nlme"))
+      lm    (len ~ log(dose) * supp, ToothGrowth) -> fit1  # NOT traced
+nlme::lmList(len ~ log(dose) | supp, ToothGrowth) -> fit2  # traced
+untrace("lm", where = asNamespace("nlme"))
 }
 %%}% only if 'methods'
 }
