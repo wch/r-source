@@ -171,6 +171,7 @@ version.tex: $(top_srcdir)/VERSION $(SVN_REV)
 
 ## compact whatever manuals have been built -- needs qpdf and ghostscript
 compact-pdf:
+	@echo 'compacting PDF manuals in doc/manual'
 	../../bin$(R_ARCH)/Rscript -e 'tools::compactPDF(".", gs_quality="ebook")'
 
 ## Unlike Unix, we don't check dates
