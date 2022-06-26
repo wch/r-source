@@ -778,6 +778,9 @@ function(dir, outDir, keep.source = TRUE)
                           outVignetteDir),
                  domain = NA)
     }
+
+    compactPDF(outVignetteDir, gs_quality = "ebook")
+
     ## Need to change out of this dir before we delete it,
     ## at least on Windows.
     setwd(cwd)

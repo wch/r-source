@@ -3369,6 +3369,9 @@ based on TeX Live the simplest approach may be to install collections
 default): Fedora uses names like @pkg{texlive-collection-fontsextra} and
 Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
+Programs @command{qpdf} and ghostscript (@command{gs}) are desirable as
+these will be used to compact the installed PDF vignettes.
+
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
@@ -5513,13 +5516,12 @@ LaTeX packages are frozen) or TeXLive 2022 (which has been tried and has
 current updates).} on the MacTeX front page.  They contains executables
 which run natively on both @cputype{x86_64} and @cputype{arm64}.
 
-Checking packages thoroughly requires @command{ghostscript} (part of the
-full MacTeX distribution or separately from
+Checking packages thoroughly requires ghostscript (part of the full
+MacTeX distribution or separately from
 @uref{https://www.tug.org/mactex/morepackages.html}, including for High
-Sierra) and @command{qpdf} (from
-@uref{https://mac.r-project.org/bin//}, a version of
-which is in the @file{bin} directory of a binary installation of @R{},
-usually
+Sierra) and @command{qpdf} (from @uref{https://mac.r-project.org/bin//},
+a version of which is in the @file{bin} directory of a binary
+installation of @R{}, usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
 @command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
