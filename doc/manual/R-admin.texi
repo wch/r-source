@@ -560,6 +560,16 @@ or
 @noindent
 to hyperlink both text and page number.
 
+Any generated PDF manuals can be compacted by
+
+@example
+make compact-pdf
+@end example
+
+@noindent
+provided @command{qpdf} and @command{gs} are available (see
+@code{?tools::compactPDF} for how to specify them if not on the path).
+
 Ebook versions of most of the manuals in one or both of @file{.epub} and
 @file{.mobi} formats can be made by running in @file{doc/manual} one of
 @example
@@ -3370,7 +3380,8 @@ default): Fedora uses names like @pkg{texlive-collection-fontsextra} and
 Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
 Programs @command{qpdf} and ghostscript (@command{gs}) are desirable as
-these will be used to compact the installed PDF vignettes.
+these will be used to compact the installed PDF vignettes and any PDF
+manuals..
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time

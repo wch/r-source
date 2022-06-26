@@ -169,6 +169,10 @@ version.tex: $(top_srcdir)/VERSION $(SVN_REV)
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "$${v}") > $@
 
+## compact whatever manuals have been built -- needs qpdf and ghostscript
+compact-pdf:
+	../../bin$(R_ARCH)/Rscript -e 'tools::compactPDF(".", gs_quality="ebook")'
+
 ## Unlike Unix, we don't check dates
 %-pkg.tex: FORCE
 	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
