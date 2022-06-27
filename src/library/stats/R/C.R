@@ -42,7 +42,7 @@ C <- function(object, contr, how.many, ...)
 	contrasts(object) <- contr
     else {
 	if(is.character(contr)) contr <- get(contr, mode = "function")
-	if(is.function(contr)) contr <- contr(nlevels(object), ...)
+	if(is.function(contr)) contr <- contr(levels(object), ...)
 	contrasts(object, how.many) <- contr
     }
     object

@@ -139,6 +139,10 @@
       \code{n} is not numeric, instead of incidentally \dQuote{working}
       sometimes returning all of \code{x}.  Reported and discussed by Colin
       Fay, in \PR{18357}.
+
+      \item \code{C()} and \code{`contrasts<-`()} now preserve factor
+      level names when given a function object (as opposed a function
+      name which did preserve names). Reported in \PR{17616}.
     }
   }
 }
