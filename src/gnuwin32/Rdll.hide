@@ -409,6 +409,7 @@
  Rf_unbindVar
  Rf_usemethod
  Rf_utf8toucs
+ Rf_wtransChar2
  Rf_vectorIndex
  Rf_yychar
  Rf_yylval

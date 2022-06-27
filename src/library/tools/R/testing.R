@@ -175,9 +175,13 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## (Keeps the end markers, but that's ok.)
         if (nullPointers) {
             ## remove pointer addresses from listings
-            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
+            ## useBytes=TRUE as some tests intentionally use invalid strings
+            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt,
+                        useBytes = TRUE)
             ## standardize hashtable, pro tem
-            txt <- sub("<hashtable.*>", "<hashtable output>", txt)
+            ## useBytes=TRUE as some tests intentionally use invalid strings
+            txt <- sub("<hashtable.*>", "<hashtable output>", txt,
+                       useBytes = TRUE)
         }
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- .canonicalize_quotes(txt)
@@ -198,7 +202,8 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
     clean2 <- function(txt)
     {
-        eoh <- grep("^> options\\(warn = 1\\)$", txt)
+        ## useBytes=TRUE as some tests intentionally use invalid strings        
+        eoh <- grep("^> options\\(warn = 1\\)$", txt, useBytes = TRUE)
         if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
 

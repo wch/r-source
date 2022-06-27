@@ -36,6 +36,9 @@
       e.g., \code{plot(x,y, log="y")} now signal a \emph{classed} warning
       about negative values of y (where \code{log(.)} is \code{NA}).
       Such a warning can be specifically suppressed or caught otherwise.
+
+      \item Regular expression functions now check more thoroughly whether
+      their inputs are valid strings (in their encoding, e.g. UTF-8).
     }
   }
 

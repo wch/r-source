@@ -764,6 +764,7 @@ const char * Rf_translateCharFP(SEXP);
 const char * Rf_translateCharFP2(SEXP);
 const char * Rf_trCharUTF8(SEXP);
 const char * Rf_trCharUTF82(SEXP);
+const wchar_t * Rf_wtransChar2(SEXP);
 
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
@@ -1781,6 +1782,7 @@ void R_RestoreHashCount(SEXP rho);
 # define WarningMessage		Rf_WarningMessage
 # define wcstoutf8		Rf_wcstoutf8
 # define wtransChar		Rf_wtransChar
+# define wtransChar2		Rf_wtransChar2
 # define yychar			Rf_yychar
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
