@@ -140,6 +140,9 @@
       sometimes returning all of \code{x}.  Reported and discussed by Colin
       Fay, in \PR{18357}.
 
+      \item \code{summary.lm()} now gives the correct F-statistic when
+      the model contains an offset. Reported in \PR{18008}.
+      
       \item \code{C()} and \code{`contrasts<-`()} now preserve factor
       level names when given a function object (as opposed a function
       name which did preserve names). Reported in \PR{17616}.
