@@ -53,6 +53,8 @@ static void (* OldHandler)(void);
 static int OldRwait;
 static int Tcl_loaded = 0;
 
+#define R_TCL_SPIN_MAX 5
+
 static void TclSpinLoop(void *data)
 {
     /* In the past, Tcl_ServiceAll() wasn't enough and we used
@@ -61,9 +63,20 @@ static void TclSpinLoop(void *data)
 
        but that seems no longer needed and causes infinite recursion
        with R handlers that have a re-entrancy guard, when TclSpinLoop
-       is invoked from such a handler (seen with Rhttp server). */
+       is invoked from such a handler (seen with Rhttp server).
 
-    Tcl_ServiceAll();
+       However, handling certain Tcl events tend to generate further 
+       events (closing a window is typically followed by a WM event
+       saying that the window is now closed, etc.), so we run 
+       Tcl_ServiceAll() a small number of times to try and clear the 
+       queue. Otherwise, the processing of such "knock-on" events would
+       have to wait until the next polling event.
+    */
+
+    int i = R_TCL_SPIN_MAX;
+	
+    while (i-- && Tcl_ServiceAll())
+        ;
 }
 
 //extern Rboolean R_isForkedChild;
