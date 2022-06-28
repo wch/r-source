@@ -78,7 +78,7 @@
     the smallest positive power of \code{double.base} that overflows.  Normally
     \code{1024}.}
   \item{integer.max}{the largest integer which can be represented.
-    Always \eqn{2^31 - 1 = 2147483647}.}
+    Always \eqn{2^{31} - 1 = 2147483647}{2^31 - 1 = 2147483647}.}
   \item{sizeof.long}{the number of bytes in a C \code{long} type:
     \code{4} or \code{8} (most 64-bit systems, but not Windows).}
   \item{sizeof.longlong}{the number of bytes in a C \code{long long}
