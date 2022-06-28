@@ -877,6 +877,8 @@ getVignetteEncoding <-  function(file, ...)
                 poss <- poss[poss < start[1L]]
             if(length(poss)) {
         	poss <- lines[poss[1L]]
+                poss <- gsub("%.*", "", poss, useBytes = TRUE) # strip off comment which
+                                                               # may be non-ASCII
         	res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
                             poss)               # This line should be ASCII.
 		## see Rd2latex.R.
