@@ -203,6 +203,9 @@ strptime(x, format, tz = "")
   When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
   for that time zone --- but it is not guaranteed to succeed.
+
+  The definition of \sQuote{whitespace} for \code{\%n} and \code{\%t}
+  is platform-dependent: for most it does not include non-breaking spaces.
   
   Not in the standards and less widely implemented are
   \describe{
