@@ -4559,7 +4559,7 @@ Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the checking of
 examples, tests or vignettes.  These can be used on their own, or
 with a false value to override @env{_R_CHECK_DEPENDS_ONLY_}.
 @c
-Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset..
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset.
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended

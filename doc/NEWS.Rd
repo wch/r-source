@@ -156,7 +156,7 @@
 \section{\Rlogo CHANGES IN R 4.2.1 patched}{
     \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item THe PDF manuals (if built) can be compacted by the new
+      \item The PDF manuals (if built) can be compacted by the new
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
     }
