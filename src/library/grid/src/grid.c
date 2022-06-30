@@ -2179,7 +2179,7 @@ SEXP L_moveTo(SEXP x, SEXP y)
     REAL(prevloc)[1] = REAL(devloc)[1];
     REAL(devloc)[0] = xx;
     REAL(devloc)[1] = yy;
-    UNPROTECT(2);
+    UNPROTECT(3);
     return R_NilValue;
 }
 
@@ -2248,7 +2248,7 @@ SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow)
 	}
 	GEMode(0, dd);
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return R_NilValue;
 }
 
@@ -2358,6 +2358,7 @@ SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow)
 	vmaxset(vmax);
     }
     GEMode(0, dd);
+    UNPROTECT(1);  /* currentgp */
     return R_NilValue;
 }
 
