@@ -27,7 +27,7 @@ contrasts(x, how.many = NULL) <- value
   \item{value}{either a numeric matrix (or a sparse or dense matrix of a
     class extending \code{\link[Matrix:dMatrix-class]{dMatrix}} from
     package \CRANpkg{Matrix})  whose columns give coefficients for
-    contrasts in the levels of \code{x}, or the (quoted) name of a
+    contrasts in the levels of \code{x}, or (the quoted name of) a
     function which computes such matrices.}
 }
 \details{
