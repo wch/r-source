@@ -1792,38 +1792,6 @@ add_dummies <- function(dir, Log)
             }
         }
 
-        ## Valid NEWS.Rd?
-        nfile <- file.path("inst", "NEWS.Rd")
-        if(file.exists(nfile)) {
-            ## Catch all warning and error messages.
-            ## We use the same construction in at least another place,
-            ## so maybe factor out a common utility function
-            ##   .try_catch_all_warnings_and_errors
-            ## eventually.
-            ## For testing package NEWS.Rd files, we really need a real
-            ## QC check function eventually ...
-            .warnings <- NULL
-            .error <- NULL
-            withCallingHandlers(tryCatch(.build_news_db_from_package_NEWS_Rd(nfile),
-                                         error = function(e)
-                                         .error <<- conditionMessage(e)),
-                                warning = function(e) {
-                                    .warnings <<- c(.warnings,
-                                                    conditionMessage(e))
-                                    tryInvokeRestart("muffleWarning")
-                                })
-            msg <- c(.warnings, .error)
-            if(length(msg)) {
-                if(!any) warningLog(Log)
-                any <- TRUE
-                printLog(Log, "Problems with news in 'inst/NEWS.Rd':\n")
-                printLog0(Log,
-                          paste0("  ",
-                                 unlist(strsplit(msg, "\n", fixed = TRUE)),
-                                 collapse = "\n"),
-                          "\n")
-            }
-        }
 
         ## Valid CITATION metadata?
         if (file.exists(file.path("inst", "CITATION"))) {
@@ -1864,6 +1832,71 @@ add_dummies <- function(dir, Log)
             wrapLog("Most likely 'inst/CITATION' should be used instead.\n")
         }
 
+        ## Valid package news?
+        ## This used to only look at inst/NEWS.Rd and warn about
+        ## problems found in these.  For simplicity, when adding support
+        ## for checking news in md or plain text, consistently only NOTE
+        ## problems.
+        ## Gather errors and warnings when reading the news.  We
+        ## currently report all these together.
+        .messages <- NULL
+        .ehandler <- function(e) {
+            .messages <<- conditionMessage(e)
+        }
+        .whandler <- function(e) {
+            .messages <<- c(.messages, conditionMessage(e))
+            tryInvokeRestart("muffleWarning")
+        }
+        ## (Could also gather the conditions, and get the messages from
+        ## these.)
+
+        nread <- NULL
+        if(file.exists(nfile <- file.path("inst", "NEWS.Rd")))
+            nread <- .build_news_db_from_package_NEWS_Rd
+        else if(file.exists(nfile <- "NEWS.md") &&
+                ## The news in md reader needs commonmark and xml2.
+                requireNamespace("commonmark", quietly = TRUE) &&
+                requireNamespace("xml2", quietly = TRUE))
+            nread <- .build_news_db_from_package_NEWS_md
+        else if(file.exists(nfile <- "NEWS") &&
+                config_val_to_logical(Sys.getenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_",
+                                                 "FALSE")))
+            nread <- .news_reader_default
+
+        if(!is.null(nread)) {
+            bad <- FALSE
+            news <- withCallingHandlers(tryCatch(nread(nfile),
+                                                 error = .ehandler),
+                                        warning = .whandler)
+            if(length(.messages)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log,
+                         sprintf("Problems with news in '%s':\n", nfile))
+                bad <- TRUE
+                printLog0(Log,
+                          paste0("  ",
+                                 unlist(strsplit(.messages, "\n", fixed = TRUE)),
+                                 collapse = "\n"),
+                          "\n")
+            } else {
+                ## No complaints from the reader, but did it actually
+                ## read anything?
+                if(!inherits(news, "news_db") || !nrow(news)) {
+                    if(!any) noteLog(Log)
+                    any <- TRUE
+                    if(!bad)
+                        printLog(Log,
+                                 sprintf("Problems with news in '%s':\n",
+                                         nfile))
+                    bad <- TRUE
+                    printLog(Log, "No news entries found.\n")
+                }
+                ## Could also check whether the current package version
+                ## has a corresponding news entry.
+            }
+        }
+                    
         if(!any) resultLog(Log, "OK")
     }
 
@@ -6496,6 +6529,7 @@ add_dummies <- function(dir, Log)
         prev <- Sys.getenv("_R_CHECK_MATRIX_DATA_",  NA_character_)
         if(is.na(prev)) Sys.setenv("_R_CHECK_MATRIX_DATA_" = "TRUE")
         Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
+        Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
