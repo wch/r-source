@@ -91,8 +91,6 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
 .news_reader_default <-
 function(file)
 {
-    verbose <- getOption("verbose")
-
     .collapse <- function(s) paste(s, collapse = "\n")
 
     lines <- readLines(file, warn = FALSE)
@@ -243,9 +241,9 @@ function(file)
     out <- lapply(chunks, do_chunk)
     ## Now assemble pieces.
     reporter <- function(x) {
-        if(verbose)
-            message(gettextf("Cannot process chunk/lines:\n%s",
-                             .collapse(x)))
+        warning(gettextf("Cannot process chunk/lines:\n%s",
+                         .collapse(paste0("  ", x))),
+                domain = NA, call. = FALSE)
         NULL
     }
     finisher <- function(x) {
@@ -554,8 +552,9 @@ function(file)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n",
-		paste(unique(nms[!ind]), collapse = "  "))
+        warning(gettextf("Cannot extract version info from the following section titles:\n%s",
+                         paste0("  ", unique(nms[!ind]), collapse = "\n")),
+                domain = NA, call. = FALSE)
     .make_news_db(cbind(ifelse(ind,
 			       sub(re_v, "\\1", nms, ignore.case = TRUE),
 			       NA_character_),
@@ -594,7 +593,7 @@ function(x)
                              substr(sub("^[[:space:]]*", "",
                                         .Rd_deparse(x)),
                                     1L, 60L)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
             pos <- pos[1L]
         }
 
@@ -614,7 +613,7 @@ function(x)
                              substr(sub("^[[:space:]]*", "",
                                         .Rd_deparse(x)),
                                     1L, 60L)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
             return(matrix(character(), 0L, 2L,
                           dimnames = list(NULL, c("Text", "HTML"))))
         }
@@ -817,8 +816,9 @@ function(f)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n",
-                paste(unique(nms[!ind]), collapse = "  "))
+        warning(gettextf("Cannot extract version info from the following section titles:\n%s",
+                         paste0("  ", unique(nms[!ind]), collapse = "\n")),
+                domain = NA, call. = FALSE)
 
     .make_news_db(cbind(ifelse(ind,
                                sub(re_v, "\\2", nms, ignore.case = TRUE),
