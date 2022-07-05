@@ -6010,6 +6010,9 @@ stopifnot(exprs = {
     identical(quote(c(a = 1, 2)[[]]), E$call)
 })
 ## [[]]  matched '2' as which has name ""
+E <- tryCid(xx[[]] <- v)
+stopifnot(inherits(E, "MissingSubscriptError"))
+## using new error class
 
 
 

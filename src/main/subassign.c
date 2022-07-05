@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021   The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1579,6 +1579,14 @@ static void NORET errorNotSubsettable(SEXP x)
     UNPROTECT(1); /* cond; not reached */
 }
 
+static void NORET errorMissingSubscript(SEXP x)
+{
+    SEXP call = R_CurrentExpression; /* behave like error() */
+    SEXP cond = R_makeMissingSubscriptError(x, call);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
 SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
@@ -1835,7 +1843,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error(_("more elements supplied than there are to replace"));
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
-	    error(_("[[ ]] with missing subscript"));
+	    errorMissingSubscript(x);
 	if (nsubs == 1) {
 	    offset = OneIndex(x, thesub, xlength(x), 0, &newname,
 			      recursed ? len-1 : -1, R_NilValue);
