@@ -5998,6 +5998,20 @@ stopifnot(identical("a", head(letters, TRUE)))
 ## keep treating <logical> n  as integer
 
 
+## x[[]] should give error in all cases;  PR#18367
+(E <- tryCid(c(a = 1, 2)[[]]))
+xx <- c(a = 1, 2:3)
+E2 <- tryCid(xx[[]])
+stopifnot(exprs = {
+    inherits(E, "error")
+    inherits(E, "MissingSubscriptError")
+    identical(class(E), class(E2))
+    identical("missing subscript", conditionMessage(E2))
+    identical(quote(c(a = 1, 2)[[]]), E$call)
+})
+## [[]]  matched '2' as which has name ""
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

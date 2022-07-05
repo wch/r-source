@@ -2066,6 +2066,8 @@ SEXP R_makeErrorCondition(SEXP call,
 			  int nextra, const char *format, ...);
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError1(SEXP call);
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix);
 SEXP R_makeCStackOverflowError(SEXP call, intptr_t usage);

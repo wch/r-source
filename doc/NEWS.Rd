@@ -145,10 +145,14 @@
 
       \item \code{summary.lm()} now gives the correct F-statistic when
       the model contains an offset. Reported in \PR{18008}.
-      
+
       \item \code{C()} and \code{`contrasts<-`()} now preserve factor
       level names when given a function object (as opposed a function
       name which did preserve names). Reported in \PR{17616}.
+
+      \item \code{c(a=1, 2)[[]]} no longer matches \code{2} but rather
+      signals a \emph{classed} error.  Reported and analysed by David Vaughan in
+      \PR{18367}, a duplicate of \PR{18004}, by Jan Meis et al.
     }
   }
 }

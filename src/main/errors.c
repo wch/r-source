@@ -2791,8 +2791,26 @@ SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
 				     R_MSG_ob_nonsub, type2char(TYPEOF(x)));
     PROTECT(cond);
     R_setConditionField(cond, 2, "object", x);
-    UNPROTECT(1); /* cond */
+    UNPROTECT(1);
     return cond;
+}
+
+attribute_hidden
+SEXP R_makeMissingSubscriptError(SEXP x, SEXP call)
+{
+    SEXP cond = R_makeErrorCondition(call, "MissingSubscriptError", NULL, 1,
+				     R_MSG_miss_subs);
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "object", x);
+    UNPROTECT(1);
+    return cond;
+}
+
+attribute_hidden
+SEXP R_makeMissingSubscriptError1(SEXP call) // "1" arg.: no 'x'
+{
+    return R_makeErrorCondition(call, "MissingSubscriptError", NULL, 0,
+				R_MSG_miss_subs);
 }
 
 attribute_hidden

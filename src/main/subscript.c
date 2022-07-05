@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,6 +58,16 @@ static void NORET ECALL_OutOfBounds(SEXP x, int subscript,
     PROTECT(cond);
     R_signalErrorCondition(cond, call);
     UNPROTECT(2); /* sindex, cond; not reached */
+}
+
+static void NORET ECALL_MissingSubs(SEXP call) // no x
+{
+    if (call == R_NilValue)
+	call = R_CurrentExpression;
+    SEXP cond = R_makeMissingSubscriptError1(call);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
 }
 
 static void NORET ECALL_OutOfBoundsCHAR(SEXP x, int subscript,
@@ -308,6 +318,9 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	vmaxset(vmax);
 	break;
     case SYMSXP:
+	if (s == R_MissingArg) {
+	    ECALL_MissingSubs(call);
+	}
 	vmax = vmaxget();
 	for (R_xlen_t i = 0; i < xlength(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING &&

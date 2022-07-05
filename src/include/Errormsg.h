@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2000--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *                2000-8      the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 /* Used in ../main/sub*.c */
 #define R_MSG_subs_o_b	_("subscript out of bounds")
 #define R_MSG_ob_nonsub _("object of type '%s' is not subsettable")
+#define R_MSG_miss_subs _("missing subscript")
 
 /*---- Packaged Error & Warning Messages ---- 
  *---- ================================= ----*/
