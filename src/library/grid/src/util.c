@@ -206,6 +206,15 @@ void textRect(double x, double y, SEXP text, int i,
 					 gc, dd),
 			     GE_INCHES, dd);
     }
+    /* 'w' and 'h' may be non-finite, e.g., if font not found,
+     * in which case, return zero-width/height rectangle */
+    if (!R_FINITE(w) || !R_FINITE(h)) { 
+        if (!R_FINITE(w))
+            w = 0;
+        if (!R_FINITE(h))
+            h = 0;
+        warning(_("Unable to calculate text width/height (using zero)"));
+    }
     location(0, 0, bl);
     location(w, 0, br);
     location(w, h, tr);

@@ -8,6 +8,9 @@ Changes from grid_4.2.* to grid_4.3.0:
 2.  Bug fix:  grid.display.list(TRUE) incorrectly initialised the 'grid'
     display list.  Thanks to Kaiguang Zhao for the bug report.
 
+3.  Bug fix:  fix for "polygon edge not found" (at least when font
+    cannot be found).  Fixes ggplot2 issue 2252 (hopefully).
+
 
 Changes from grid_4.1.* to grid_4.2.0:
 -------------------------------------
