@@ -2375,12 +2375,18 @@ example
 CFLAGS = -g -O -mtune=native
 ## @r{for C++ code}
 CXXFLAGS = -g -O -mtune=native
+## @r{for C++11 code}
+CXX11FLAGS = -g -O -mtune=native
 ## @r{for fixed-form Fortran code}
 FFLAGS = -g -O -mtune=native
 @end example
 
+@noindent
+Note that if you have specified a non-default C++ standard, you need to
+set the flag(s) appropriate to that standard.
+
 Another use is to override the settings in a binary installation of R.
-For example, to use a different Fortran compiler on macOS
+For example, to use a different Fortran compiler on Intel macOS
 
 @example
 FC = /usr/local/gfortran/bin/gfortran
