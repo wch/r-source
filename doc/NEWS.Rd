@@ -159,11 +159,17 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.2.1 patched}{
-    \subsection{INSTALLATION on a UNIX-ALIKE}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The PDF manuals (if built) can be compacted by the new
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
+      \code{NaN} in its final steps, thus fixing \PR{18360}.
     }
   }
 }
