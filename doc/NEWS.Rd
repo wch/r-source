@@ -38,7 +38,7 @@
       Such a warning can be specifically suppressed or caught otherwise.
 
       \item Regular expression functions now check more thoroughly whether
-      their inputs are valid strings (in their encoding, e.g. UTF-8).
+      their inputs are valid strings (in their encoding, e.g.\sspace{}in UTF-8).
     }
   }
 
@@ -104,7 +104,7 @@
       If these are excluded, \file{R.h} no longer includes header
       \file{limits.h} (nor \file{climits} from C++).
 
-      [This is intended to become the default before release.]
+      [This is scheduled to become the default on 2022-08-01.]
     }
   }
 
