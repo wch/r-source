@@ -14,7 +14,7 @@ function processMathHTML() {
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body><div class="container">
 
-<table width="100%"><tr><td>ver20</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table style="width: 100%;"><tr><td>ver20</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>Johnson &amp; Johnson,  $ _  ### ^ ~</h2>
 
@@ -27,15 +27,15 @@ function processMathHTML() {
 <h3>Arguments</h3>
 
 <table>
-<tr valign="top"><td><code>foo</code></td>
+<tr style="vertical-align: top;"><td><code>foo</code></td>
 <td>
 <p>item 1</p>
 </td></tr>
-<tr valign="top"><td><code>bar</code></td>
+<tr style="vertical-align: top;"><td><code>bar</code></td>
 <td>
 <p>space, the item 2</p>
 </td></tr>
-<tr valign="top"><td><code>bah</code></td>
+<tr style="vertical-align: top;"><td><code>bah</code></td>
 <td>
 <p>newline, then item 3</p>
 </td></tr>

@@ -14,7 +14,7 @@ function processMathHTML() {
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body><div class="container">
 
-<table width="100%"><tr><td>testit</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table style="width: 100%;"><tr><td>testit</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>An Rd Regression Test</h2>
 
