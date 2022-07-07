@@ -5,8 +5,8 @@
 \begin{Description}\relax
 
 \Tabular{rl}{
-\Rhref{https://example.org/a&b#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
-& \url{https://example.org/a&b#c}
+\Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
+& \url{https://example.org/a\&b\#c}
 }
 \end{Description}
 %

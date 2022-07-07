@@ -203,8 +203,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         }
         ## cleanup URL
         url <- lines2str(url)
-        ## escape % for LaTeX
+        ## escape special characters for LaTeX
+        url <- fsub("\\", "\\\\", url)
+        ## support \href inside \tabular
         url <- fsub("%", "\\%",  url)
+        url <- fsub("#", "\\#",  url)
+        url <- fsub("&", "\\&",  url)  # needs hyperref >= 6.78n (2008-12-26)
     	of0(tag, "{", url, "}")
         if (tag == "\\Rhref") {
             of1("{")

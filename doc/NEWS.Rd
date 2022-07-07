@@ -170,10 +170,14 @@
       directory \file{doc/manual}).
     }
   }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
+
+      \item \code{tools::Rd2latex()} now escapes hashes and ampersands
+      when writing URLs, fixing LaTeX errors with such URLs in \verb{\tabular}.
     }
   }
 }
