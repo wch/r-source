@@ -1,5 +1,9 @@
 _A_n _R_d _R_e_g_r_e_s_s_i_o_n _T_e_s_t
 
+_D_e_s_c_r_i_p_t_i_o_n:
+
+       linked text in \tabular  <https://example.org/a&b#c> 
+      
 _U_s_a_g_e:
 
      \x \y %{}

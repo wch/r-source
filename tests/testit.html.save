@@ -18,6 +18,21 @@ function processMathHTML() {
 
 <h2>An Rd Regression Test</h2>
 
+<h3>Description</h3>
+
+
+<table>
+<tr>
+ <td style="text-align: right;">
+    <a href="https://example.org/a&amp;b#c">linked text in <code style="white-space: pre;">&#8288;\tabular&#8288;</code></a>
+    </td><td style="text-align: left;"> <a href="https://example.org/a&amp;b#c">https://example.org/a&amp;b#c</a>
+  </td>
+</tr>
+
+</table>
+
+
+
 <h3>Usage</h3>
 
 <pre><code class='language-R'>\x \y %{}

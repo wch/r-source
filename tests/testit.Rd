@@ -2,6 +2,12 @@
 \name{testit}
 \title{An Rd Regression Test}
 \alias{\{}
+\description{
+  \tabular{rl}{
+    \href{https://example.org/a&b#c}{linked text in \verb{\tabular}}
+    \tab \url{https://example.org/a&b#c}
+  }
+}
 \usage{
 \\x \\y \%\{\}
 
