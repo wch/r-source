@@ -113,6 +113,10 @@
       \item \command{R CMD check} does more checking of package \file{.Rd}
       files, warning about invalid email addresses and (some) invalid
       URIs and noting empty \samp{\item} labels in description lists.
+      
+      \item \command{R CMD check} now also reports problems when reading
+      package news in md (file \file{NEWS.md}) and (optionally) plain
+      text (file \file{NEWS}) formats.
     }
   }
 
