@@ -25,10 +25,27 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Copyright (C) 2022  The R Core Team
+   
+   avoid stack corruption on long lines  
+*/
+
 #include "internal.h"
 #include <stdarg.h>
 
 #define COMPRESS_WHITESPACE 0
+
+static size_t max_line_size(const char *s)
+{
+    size_t size = 0;
+    size_t i;
+
+    for(i = 0; s[i]; i++) {
+	if (s[i] == '\t') size += 8;
+	else size++;
+    }
+    return size + 1;
+}
 
 static const char *get_next_line(char *line, int width, const char *s)
 {
@@ -98,9 +115,12 @@ static const char *get_next_line(char *line, int width, const char *s)
 int textheight(int width, const char *s)
 {
     int y;
-    char line[256];
+    size_t size;
     int height;
+    char *line;
 
+    size = max_line_size(s);
+    line = (char *)malloc(size * sizeof(char));
     height = getheight(current->fnt);
 
     for(y=0; s; y+=height)
@@ -108,6 +128,7 @@ int textheight(int width, const char *s)
 	s = get_next_line(line, width, s);
     }
 
+    free(line);
     return y;
 }
 
@@ -283,10 +304,15 @@ const char *drawtext(rect r, int alignment, const char *s)
     int u = 0;
     rect clip;
     const char *remains;
-    char line[256];
+    char *line;
+    size_t size;
+
 
     initapp(0,0);
     if (! s) return (char *) NULL;
+    size = max_line_size(s);
+    line = (char *)malloc(size * sizeof(char));
+
     if (! current->fnt)
 	current->fnt = SystemFont;
 
@@ -326,6 +352,7 @@ const char *drawtext(rect r, int alignment, const char *s)
 	remains = draw_text_left(line, r, line_height, u, s);
 
     setcliprect(clip);
+    free(line);
     return remains;
 }
 
