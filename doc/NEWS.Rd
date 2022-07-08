@@ -158,6 +158,10 @@
       signals a \emph{classed} error.  Reported and analysed by David Vaughan in
       \PR{18367}, a duplicate of \PR{18004}, by Jan Meis et al.
       \code{x[[]] <- v} gives an error of the same class \code{"MissingSubscriptError"}.
+
+      %% possibly back port to 4.2.z branch
+      \item The \code{relist()} function of \pkg{utils} now supports
+      \code{NULL} elements in the skeleton (\PR{15854}).
     }
   }
 }
