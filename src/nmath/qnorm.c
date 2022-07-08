@@ -1,9 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000--2020 The R Core Team
+ *  Copyright (C) 2000--2022 The R Core Team
  *  Copyright (C) 1998       Ross Ihaka
- *  based on AS 111 (C) 1977 Royal Statistical Society
- *  and   on AS 241 (C) 1988 Royal Statistical Society
+ *  based on AS 241 (C) 1988 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,17 +28,10 @@
  *
  *	Compute the quantile function for the normal distribution.
  *
- *	For small to moderate probabilities, algorithm referenced
- *	below is used to obtain an initial approximation which is
- *	polished with a final Newton step.
- *
- *	For very large arguments, an algorithm of Wichura is used.
+ *	The algorithm AS 241 of Wichura is used,
+ *      and has been improved for the very extreme tail (and log_p=TRUE)
  *
  *  REFERENCE
- *
- *	Beasley, J. D. and S. G. Springer (1977).
- *	Algorithm AS 111: The percentage points of the normal distribution,
- *	Applied Statistics, 26, 118-121.
  *
  *      Wichura, M.J. (1988).
  *      Algorithm AS 241: The Percentage Points of the Normal Distribution.
