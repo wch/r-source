@@ -1090,7 +1090,7 @@ choose for @code{CXX14STD} a flag@footnote{This was a valid option for
 compilers.  For earlier versions of @command{g++} one could try
 @option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support,
 @option{-std=c++17} or @option{-std=c++1z} for support for C++17 and
-@option{-std=c++20} or @option{-std=c++2a} for support for C++20..  The
+@option{-std=c++20} or @option{-std=c++2a} for support for C++20.  The
 inferred values can be overridden in file @file{config.site} or on the
 @command{configure} command line: user-supplied values will be tested by
 compiling some C++11/14/17/20 code.
@@ -1746,7 +1746,7 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
 
 The installation consists of up to four Apple packages:@footnote{At the
 time of writing: use @command{pkgutil --pkgs | grep -i org.r-project} to
-check..} for the Intel build, @code{org.R-project.R.fw.pkg},
+check.} for the Intel build, @code{org.R-project.R.fw.pkg},
 @code{org.R-project.R.GUI.pkg}, @code{org.r-project.x86_64.tcltk.x11}
 and @code{org.r-project.x86_64.texinfo}. You can use @code{sudo pkgutil
 --forget} if you want the Apple Installer to forget about the package
@@ -3387,7 +3387,7 @@ Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
 Programs @command{qpdf} and ghostscript (@command{gs}) are desirable as
 these will be used to compact the installed PDF vignettes and any PDF
-manuals..
+manuals.
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
@@ -3526,11 +3526,13 @@ At the time of writing a full installation on Fedora Linux used the
 following packages and their development versions, and this may provide
 a useful checklist for other systems:
 @example
-bzip2 cairo fontconfig freetype fribidi glib2 harfbuzz libX11 libXext
-libXt libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses
-pango pkgconf-pkg-config pcre2 readline tcl tk xz zlib
+bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
+glibc harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng
+libtiff libtirpc libxcrypt ncurses pango pkgconf-pkg-config pcre2
+readline tcl tk xz zlib
 @end example
-
+@noindent
+plus, preferably a TeX installation and Java.
 
 @menu
 * Tcl/Tk::
