@@ -102,9 +102,9 @@
       running \command{R CMD check}.
 
       If these are excluded, \file{R.h} no longer includes header
-      \file{limits.h} (nor \file{climits} from C++).
+      \file{limits.h} from C nor \file{climits} from C++.
 
-      [This is scheduled to become the default on 2022-08-01.]
+      [This is scheduled to become the default on 2022-08-10.]
     }
   }
 
