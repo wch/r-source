@@ -6015,6 +6015,12 @@ stopifnot(inherits(E, "MissingSubscriptError"))
 ## using new error class
 
 
+## PR#18375, use PRIMNAME not *VAL in message:
+(M <- tryCmsg(date > 1))
+stopifnot(grepl("(>)", M, fixed=TRUE))
+## showed '(6)' previously
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
