@@ -113,7 +113,7 @@
       \item \command{R CMD check} does more checking of package \file{.Rd}
       files, warning about invalid email addresses and (some) invalid
       URIs and noting empty \samp{\item} labels in description lists.
-      
+
       \item \command{R CMD check} now also reports problems when reading
       package news in md (file \file{NEWS.md}) and (optionally) plain
       text (file \file{NEWS}) formats.
@@ -174,7 +174,7 @@
       directory \file{doc/manual}).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
@@ -182,6 +182,10 @@
 
       \item \code{tools::Rd2latex()} now escapes hashes and ampersands
       when writing URLs, fixing LaTeX errors with such URLs in \verb{\tabular}.
+
+      \item When \code{isGeneric(f, fdef=*)} is used with mismatching
+      names, the warning is better understandable; reported (with fix) in
+      \PR{18370} by Gabe Becker.
     }
   }
 }

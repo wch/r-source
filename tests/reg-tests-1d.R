@@ -6021,6 +6021,15 @@ stopifnot(grepl("(>)", M, fixed=TRUE))
 ## showed '(6)' previously
 
 
+## isGeneric() with wrong name -- correct warning msg (PR#18370)
+setGeneric("size", function(x) standardGeneric("size"))
+tryCatch(stopifnot(!isGeneric("haha", fdef = size)),
+         warning = conditionMessage) -> msg
+msg; if(englishMsgs)
+    stopifnot(grepl("name .size. instead of .haha.", msg))
+## msg was confusing
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
