@@ -16,7 +16,7 @@ model.weights(x)
 \alias{model.response}
 \alias{model.weights}
 \arguments{
- \item{frame, x, data}{A model frame.}
+ \item{frame, x, data}{a model frame, see \code{\link{model.frame}}.}
  \item{component}{literal character string or name.  The name of a
    component to extract, such as \code{"weights"} or \code{"subset"}.}
  \item{type}{One of \code{"any"}, \code{"numeric"} or \code{"double"}.
