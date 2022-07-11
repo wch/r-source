@@ -52,8 +52,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
 }
 
 installFoundDepends <- function(depPkgList, ...) {
-
-    .Defunct("'installFoundDepends()' is defunct")
+    .Defunct()
 }
 ## <entry/>
 
