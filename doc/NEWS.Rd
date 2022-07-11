@@ -157,6 +157,7 @@
       \item \code{c(a=1, 2)[[]]} no longer matches \code{2} but rather
       signals a \emph{classed} error.  Reported and analysed by David Vaughan in
       \PR{18367}, a duplicate of \PR{18004}, by Jan Meis et al.
+      For consistency, \code{NULL[[]]} is also erronous now.
       \code{x[[]] <- v} gives an error of the same class \code{"MissingSubscriptError"}.
 
       %% possibly back port to 4.2.z branch

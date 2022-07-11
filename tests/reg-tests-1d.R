@@ -5998,16 +5998,21 @@ stopifnot(identical("a", head(letters, TRUE)))
 ## keep treating <logical> n  as integer
 
 
-## x[[]] should give error in all cases;  PR#18367
+## x[[]] should give error in all cases, even for NULL;  PR#18367
 (E <- tryCid(c(a = 1, 2)[[]]))
 xx <- c(a = 1, 2:3)
 E2 <- tryCid(xx[[]])
+EN <- tryCid(NULL[[]]) # <=> c()[[]]
 stopifnot(exprs = {
     inherits(E, "error")
     inherits(E, "MissingSubscriptError")
-    identical(class(E), class(E2))
-    identical("missing subscript", conditionMessage(E2))
     identical(quote(c(a = 1, 2)[[]]), E$call)
+    identical(class(E), class(E2))
+    identical(class(E), class(EN))
+    identical(msg <- "missing subscript", conditionMessage(E2))
+    identical(msg, conditionMessage(EN))
+    (nm <- c("call","object")) %in% names(EN)
+    identical(EN[nm], list(call = quote(NULL[[]]), object = NULL))
 })
 ## [[]]  matched '2' as which has name ""
 E <- tryCid(xx[[]] <- pi)

@@ -101,6 +101,17 @@ static void NORET errorcallNotSubsettable(SEXP x, SEXP call)
     UNPROTECT(1); /* cond; not reached */
 }
 
+static void NORET errorcallMissingSubs(SEXP x, SEXP call)
+{
+    if (call == R_NilValue)
+	call = R_CurrentExpression;
+    SEXP cond = R_makeMissingSubscriptError(x, call);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
+
 SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     if (x == R_NilValue)
@@ -964,20 +975,23 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     x = CAR(args);
 
-    /* This code was intended for compatibility with S, */
-    /* but in fact S does not do this.	Will anyone notice? */
-
-    if (x == R_NilValue) {
-	UNPROTECT(1); /* args */
-	return x;
-    }
-
     /* Get the subscripting and dimensioning information */
     /* and check that any array subscripting is compatible. */
 
     subs = CDR(args);
     if(0 == (nsubs = length(subs)))
 	errorcall(call, _("no index specified"));
+
+    /* This code was intended for compatibility with S, */
+    /* but in fact S does not do this.	Will anyone notice? */
+    if (x == R_NilValue) {
+	UNPROTECT(1); /* args */
+	if(CAR(subs) == R_MissingArg)
+	    errorcallMissingSubs(x, call);
+	// else
+	return x;
+    }
+
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
     if(nsubs > 1 && nsubs != ndims)
@@ -1145,7 +1159,7 @@ SEXP attribute_hidden dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho)
     if (isObject(x)) {
         if (bracket_op == NULL)
             bracket_op = R_Primitive("[[");
-        PROTECT(args = list2(x, ScalarReal(i + 1)));
+        PROTECT(args = list2(x, ScalarReal((double)i + 1)));
         x_elt = do_subset2(call, bracket_op, args, rho);
         UNPROTECT(1);
     } else {
