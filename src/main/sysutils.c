@@ -870,6 +870,7 @@ typedef enum {
     NT_FROM_UTF8   = 1, /* need to translate from UTF8 */
     NT_FROM_LATIN1 = 2, /* need to translate from latin1 */
     NT_FROM_NATIVE = 3, /* need to translate from native encoding */
+    NT_FROM_ASCII  = 4, /* need to translate from ASCII */
 } nttype_t;
 
 /* Decides whether translation to native encoding is needed. */
@@ -1255,6 +1256,7 @@ static R_INLINE nttype_t wneedsTranslation(SEXP x)
 {
     if (IS_BYTES(x))
 	error(_("translating strings with \"bytes\" encoding is not allowed"));
+    if (IS_ASCII(x)) return NT_FROM_ASCII;
     if (IS_UTF8(x)) return NT_FROM_UTF8;
     if (IS_LATIN1(x) || latin1locale) return NT_FROM_LATIN1;
     if (utf8locale) return NT_FROM_UTF8;
@@ -1267,6 +1269,16 @@ static const wchar_t *wcopyAndFreeStringBuffer(R_StringBuffer *cbuff)
     wchar_t *p = (wchar_t *) R_alloc(res, sizeof(wchar_t));
     memcpy(p, cbuff->data, res * sizeof(wchar_t));
     R_FreeStringBuffer(cbuff);
+    return p;
+}
+
+static const wchar_t *wfromASCII(const char *src, size_t len)
+{
+    size_t i;
+    wchar_t *p = (wchar_t *) R_alloc(len + 1, sizeof(wchar_t));
+    for (i = 0; i < len; i++)
+	p[i] = (wchar_t) src[i];
+    p[i] = L'\0';
     return p;
 }
 
@@ -1394,6 +1406,8 @@ const wchar_t *wtransChar(SEXP x)
 {
     CHECK_CHARSXP(x);
     nttype_t t = wneedsTranslation(x);
+    if (t == NT_FROM_ASCII)
+	return wfromASCII(CHAR(x), LENGTH(x));
 
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     translateToWchar(CHAR(x), &cbuff, t, 0);
@@ -1405,6 +1419,8 @@ const wchar_t *wtransChar2(SEXP x)
 {
     CHECK_CHARSXP(x);
     nttype_t t = wneedsTranslation(x);
+    if (t == NT_FROM_ASCII)
+	return wfromASCII(CHAR(x), LENGTH(x));
 
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     if (translateToWchar(CHAR(x), &cbuff, t, 2)) {
