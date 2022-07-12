@@ -2573,7 +2573,8 @@ add_dummies <- function(dir, Log)
                 if(file.info(sv <- file.path("data", "datalist"))$isdir) {
                     warn <- TRUE
                     msgs <- c(msgs, sprintf("%s is a directory\n",
-                                            sQuote("data/datalist"), "\n"))
+                                            sQuote("data/datalist")),
+                              "\n")
                 }  else {
                     ## Now check it has the right format:
                     ## it is read in list_data_in_pkg()
