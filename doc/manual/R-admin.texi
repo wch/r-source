@@ -4793,6 +4793,9 @@ sources is normally straightforward with the most common compilers and
 libraries.@footnote{For example, @code{glibc}: other C libraries such as
 @code{musl} have been used but are not routinely tested.}
 
+This section is about the GCC compilers:
+@command{gcc}/@command{gfortran}/@command{g++}.
+
 Recall that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
 developer version.  The latter usually has the same name but with the
@@ -4835,8 +4838,9 @@ versions of the compilers this has caused problems in at least one
 @acronym{CRAN} package.
 
 Do not use @option{-O3} with @command{gcc} 11.0 or 11.1: it mis-compiles
-code including in package @CRANpkg{MASS} resulting in plausible but
-incorrect results.
+code resulting in plausible but
+incorrect results.  (This was seen in package @CRANpkg{MASS} but has
+been worked around there as from version 3.1-57.)
 
 For platforms with both 64- and 32-bit support, it is likely that
 
