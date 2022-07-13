@@ -617,7 +617,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(useBytes) {
 			for (j = 0; j < ntok; j++) {
 			    bf[0] = buf[j];
-			    SET_STRING_ELT(t, j, mkChar(bf));
+			    SET_STRING_ELT(t, j, mkCharCE(bf, CE_BYTES));
 			}
 		    } else {
 			for (j = 0; j < ntok; j++) {
@@ -709,7 +709,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
 			if (useBytes)
-			    SET_STRING_ELT(t, j, mkChar(pt));
+			    SET_STRING_ELT(t, j, mkCharCE(pt, CE_BYTES));
 			else if (use_UTF8)
 			    SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 			else
@@ -720,7 +720,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkChar(bufp));
+			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_BYTES));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
@@ -837,7 +837,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp++;
 		    }
 		    if (useBytes)
-			SET_STRING_ELT(t, j, mkChar(pt));
+			SET_STRING_ELT(t, j, mkCharCE(pt, CE_BYTES));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 		    else
@@ -845,7 +845,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkChar(bufp));
+			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_BYTES));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
@@ -1037,13 +1037,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp++;
 		    }
 		    if (useBytes)
-			SET_STRING_ELT(t, j, mkChar(pt));
+			SET_STRING_ELT(t, j, mkCharCE(pt, CE_BYTES));
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkChar(bufp));
+			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_BYTES));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
 		}
@@ -2155,7 +2155,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		                                        useBytes, use_UTF8)) >= 0);
 		strcpy(u, s);
 		if (useBytes)
-		    SET_STRING_ELT(ans, i, mkChar(cbuf));
+		    SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_BYTES));
 		else if (use_UTF8)
 		    SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 		else
@@ -2259,7 +2259,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       for (j = offset ; s[j] ; j++) *u++ = s[j];
 	       *u = '\0';
 	       if (useBytes)
-		   SET_STRING_ELT(ans, i, mkChar(cbuf));
+		   SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_BYTES));
 	       else if (use_UTF8)
 		   SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 	       else
@@ -2329,7 +2329,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = '\0';
 		if (useBytes)
-		    SET_STRING_ELT(ans, i, mkChar(cbuf));
+		    SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_BYTES));
 		else
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 	    }

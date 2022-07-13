@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -153,6 +153,9 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   will often be in UTF-8 with a marked encoding (e.g., if there is a
   UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
   Such strings can be re-encoded by \code{\link{enc2native}}.
+  If \code{useBytes = TRUE} or any of the inputs is marked as
+  \code{"bytes"}, a non-ASCII substituted result will be marked as
+  \code{"bytes"}.
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or
@@ -206,17 +209,23 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   expression engine, and \code{fixed = TRUE} faster still (especially
   when each pattern is matched only a few times).
 
-  If you are working in a single-byte locale and have marked UTF-8
-  strings that are representable in that locale, convert them first as
-  just one UTF-8 string will force all the matching to be done in
-  Unicode, which attracts a penalty of around \eqn{3\times{}}{3x} for
-  the default POSIX 1003.2 mode.
+  If you are working with texts with non-ASCII characters, which can be
+  easily turned into ASCII (e.g.  by substituting fancy quotes), doing so is
+  likely to improve performance.
 
-  If you can make use of \code{useBytes = TRUE}, the strings will not be
-  checked before matching, and the actual matching will be faster.
-  Often byte-based matching suffices in a UTF-8 locale since byte
-  patterns of one character never match part of another.  Character ranges
-  may produce unexpected results.
+  If you are working in a single-byte locale (though not common since \R 4.2)
+  and have marked UTF-8 strings that are representable in that locale,
+  convert them first as just one UTF-8 string will force all the matching to
+  be done in Unicode, which attracts a penalty of around \eqn{3\times{}}{3x}
+  for the default POSIX 1003.2 mode.
+
+  While \code{useBytes = TRUE} will improve performance further, because the
+  strings will not be checked before matching and the actual matching will
+  be faster, it can produce unexpected results as is best avoided.  With
+  \code{fixed = TRUE} and \code{useBytes = FALSE}, optimizations are in
+  place to take advantage of that byte-based matching for such patterns
+  suffices in UTF-8.  With \code{useBytes = TRUE}, character ranges may
+  produce unexpected results.
 
   PCRE-based matching by default used to put additional effort into
   \sQuote{studying} the compiled pattern when \code{x}/\code{text} has

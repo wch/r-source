@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -82,6 +82,10 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   Latin-1 locale.)
   For \code{perl = TRUE, useBytes = FALSE} all non-ASCII strings in a
   multibyte locale are translated to UTF-8.
+
+  If \code{useBytes = TRUE} or any element of \code{x} or \code{split} is
+  marked as \code{"bytes"} (see \code{\link{Encoding}}), all non-ASCII
+  character strings in the result will be marked as \code{"bytes"}.
 }
 
 \seealso{

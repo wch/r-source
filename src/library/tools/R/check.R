@@ -320,7 +320,7 @@ add_dummies <- function(dir, Log)
         text <- paste(..., collapse = " ")
         ## strwrap expects paras separated by blank lines.
         ## Perl's wrap split on \n
-        text <- strsplit(text, "\n", useBytes = TRUE)[[1L]]
+        text <- strsplit(text, "\n")[[1L]]
         printLog(Log, paste(strwrap(text), collapse = "\n"), "\n")
     }
 

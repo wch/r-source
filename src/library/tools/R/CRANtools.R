@@ -103,7 +103,7 @@ function(packages, results = NULL, details = NULL, issues = NULL)
                          sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
                          sprintf("  %s",
                                  gsub("\n", "\n  ", tmp$Output,
-                                      perl = TRUE, useBytes = TRUE)),
+                                      perl = TRUE)),
                          sprintf("See: %s",
                                  paste(sprintf("<https://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
                                                flavors,
