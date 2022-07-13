@@ -202,11 +202,15 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
     clean2 <- function(txt)
     {
-        ## useBytes=TRUE as some tests intentionally use invalid strings        
+        ## useBytes=TRUE as some tests intentionally use invalid strings
         eoh <- grep("^> options\\(warn = 1\\)$", txt, useBytes = TRUE)
         if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
 
+    if (useDiff && !nzchar(Sys.which("diff"))) {
+        warning("'diff' is not available so useDiff = FALSE will be used")
+        useDiff <- FALSE
+    }
     left <- clean(readLines(from))
     right <- clean(readLines(to))
     if (forEx) {

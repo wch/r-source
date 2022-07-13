@@ -39,6 +39,10 @@
 
       \item Regular expression functions now check more thoroughly whether
       their inputs are valid strings (in their encoding, e.g.\sspace{}in UTF-8).
+
+      \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
+      of an external \command{diff} command and switches to
+      \code{useDiff = FALSE} if none is found.
     }
   }
 

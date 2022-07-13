@@ -16,8 +16,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 }
 \arguments{
   \item{from, to}{filepaths to be compared}
-  \item{useDiff}{should \command{diff} always be used to compare
-    results?}
+  \item{useDiff}{should \command{diff} be used to compare results?
+    Overidden to false if the command is not available.}
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
     exclude the header.}
   \item{nullPointers}{logical: should the displayed addresses of
@@ -41,8 +41,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   consecutive spaces), otherwise \command{diff -bw} is called on the
   edited files.  (This tries to ignore all differences in whitespace:
   note that flag \option{-w} is not required by POSIX but is supported
-  by GNU, Solaris and FreeBSD versions.)  NB: the code does not check if
-  \command{diff} is available.
+  by GNU, Solaris and FreeBSD versions -- macOS uses an old GNU version.)
 
   This can compare uncompressed PDF files, ignoring differences in
   creation and modification dates.  However, non-ASCII text may not be
