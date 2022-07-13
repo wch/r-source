@@ -45,10 +45,11 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 
   This can compare uncompressed PDF files, ignoring differences in
   creation and modification dates.  However, non-ASCII text may not be
-  handled in UTF-8 locales, and it cannot check if the PDF files really
-  are uncompressed.
+  handled in UTF-8 locales, and it does not check if the PDF files really
+  are uncompressed.  Using \code{useDiff = TRUE} is likely to be more
+  successful if a \command{diff} command is available.
 
-  Mainly for use in examples, text from marker
+  Mainly for use in examples and tests, text from marker
   \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)
   \samp{> ## IGNORE_RDIFF_END} is ignored.
 }
@@ -62,7 +63,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 }
 
 \seealso{
-  The shell script run as \command{R CMD Rdiff}.
+  The shell script run as \command{R CMD Rdiff}, which uses
+  \code{useDiff = TRUE}.
 }
 
 \keyword{utilities}
