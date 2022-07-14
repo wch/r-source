@@ -41,15 +41,15 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   consecutive spaces), otherwise \command{diff -bw} is called on the
   edited files.  (This tries to ignore all differences in whitespace:
   note that flag \option{-w} is not required by POSIX but is supported
-  by GNU, Solaris and FreeBSD versions.)  NB: the code does not check if
-  \command{diff} is available.
+  by GNU, Solaris and FreeBSD versions -- macOS uses an old GNU version.)
 
   This can compare uncompressed PDF files, ignoring differences in
   creation and modification dates.  However, non-ASCII text may not be
-  handled in UTF-8 locales, and it cannot check if the PDF files really
-  are uncompressed.
+  handled in UTF-8 locales, and it does not check if the PDF files really
+  are uncompressed.  This is unlikely to be supported in future versions
+  of \R.
 
-  Mainly for use in examples, text from marker
+  Mainly for use in examples and tests, text from marker
   \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)
   \samp{> ## IGNORE_RDIFF_END} is ignored.
 }
@@ -63,7 +63,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 }
 
 \seealso{
-  The shell script run as \command{R CMD Rdiff}.
+  The shell script run as \command{R CMD Rdiff}, which uses
+  \code{useDiff = TRUE}.
 }
 
 \keyword{utilities}
