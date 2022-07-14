@@ -3946,6 +3946,8 @@ add_dummies <- function(dir, Log)
                 ## defensive about the prompt ...
                 chunks <- strsplit(txt,
                                    "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n", useBytes = TRUE)[[1L]]
+                ## convert "bytes" to string, with <xx> for invalid bytes
+                chunks <- iconv(chunks, sub="byte")
                 if((ll <- length(chunks)) >= 2) {
                     printLog(Log, "The error most likely occurred in:\n\n")
                     printLog0(Log, chunks[ll], "\n")
