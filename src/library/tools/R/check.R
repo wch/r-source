@@ -1896,7 +1896,7 @@ add_dummies <- function(dir, Log)
                 ## has a corresponding news entry.
             }
         }
-                    
+
         if(!any) resultLog(Log, "OK")
     }
 
@@ -5429,7 +5429,7 @@ add_dummies <- function(dir, Log)
                               value = TRUE, useBytes = TRUE, invert = TRUE)
 
                 ## Filter out boost/armadillo header warnings
-                ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-Wtautological-overlap-compare\\]"
+                ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-W(tautological-overlap-compare|class-memaccess)\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## Filter out Eigen header warnings
