@@ -54,7 +54,7 @@ package_dependencies(packages = NULL, db = NULL, which = "strong",
 \examples{
 \donttest{
 myPkgs <- c("MASS", "Matrix", "KernSmooth", "class", "cluster", "codetools")
-pdb <- available.packages()
+pdb <- available.packages(repos = findCRANmirror("web"))
 system.time(
 dep1 <- package_dependencies(myPkgs, db = pdb) # all arguments at default
 ) # very fast
