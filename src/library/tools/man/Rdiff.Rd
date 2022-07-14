@@ -43,11 +43,12 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   note that flag \option{-w} is not required by POSIX but is supported
   by GNU, Solaris and FreeBSD versions -- macOS uses an old GNU version.)
 
-  This can compare uncompressed PDF files, ignoring differences in
-  creation and modification dates.  However, non-ASCII text may not be
-  handled in UTF-8 locales, and it does not check if the PDF files really
-  are uncompressed.  Using \code{useDiff = TRUE} is likely to be more
-  successful if a \command{diff} command is available.
+  %% Unreliable with 2022-07 gsub changes.
+  %% This can compare uncompressed PDF files, ignoring differences in
+  %% creation and modification dates.  However, non-ASCII text may not be
+  %% handled in UTF-8 locales, and it does not check if the PDF files really
+  %% are uncompressed.  Using \code{useDiff = TRUE} is likely to be more
+  %% successful if a \command{diff} command is available.
 
   Mainly for use in examples and tests, text from marker
   \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)

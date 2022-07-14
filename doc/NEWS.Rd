@@ -48,12 +48,12 @@
       non-ASCII results as \code{"bytes"} when \code{useBytes = TRUE} or any
       input is marked as \code{"bytes"}.
 
-      \item Performance of \code{grep}, \code{sub}, \code{gsub} and
+      \item The performance of \code{grep}, \code{sub}, \code{gsub} and
       \code{strsplit} has been improved, particularly with \code{perl =
       TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
-      performance reasons should no longer be needed and is discouraged. It
-      may lead to incorrect results and newly also to runtime errors thanks
-      to the previous change item.
+      performance reasons should no longer be needed and is discouraged.
+      It may lead to incorrect results and newly also to runtime errors
+      thanks to the previous item.
     }
   }
 
@@ -138,6 +138,9 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{default.stringsAsFactors()} is defunct.
+
+      \item Use of \code{tools::Rdiff} for uncompressed PDF files is no
+      longer documented: support may be removed entirely in future.
     }
   }
 
