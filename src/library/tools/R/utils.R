@@ -253,9 +253,11 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 
 ### ** lines2str
 lines2str <-
-function(txt, sep = "")
-    trimws(gsub("\n", sep, paste(txt, collapse = sep),
-                fixed = TRUE, useBytes = TRUE))
+function(txt, sep = "") {
+    bytes <- gsub("\n", sep, paste(txt, collapse = sep),
+                  fixed = TRUE, useBytes = TRUE)
+    trimws(iconv(bytes, to = "UTF-8", sub = "byte"))
+}
 
 
 ### * LaTeX utilities
