@@ -1283,16 +1283,12 @@ stopifnot(!is.na(cut(x, "5 hours")))
 ## summary() on data frames with invalid names -- in UTF-8 locale
 DF <- data.frame(a = 1:3, b = 4:6)
 nm <- names(DF) <- c("\xca", "\xcb")
-nmb <- nm
-Encoding(nmb) <- "bytes"
 cn <- gsub(" ", "", colnames(summary(DF)), useBytes = TRUE)
-stopifnot(identical(cn, nmb))
+stopifnot(identical(cn, nm))
 m <- as.matrix(DF)
 DF <- data.frame(a = 1:3, m=I(m))
 cn <- gsub(" ", "", colnames(summary(DF)), useBytes = TRUE)
-cnexp <- c("a", paste("m.", nm, sep="", collapse=""))
-Encoding(cnexp) <- "bytes"
-stopifnot(identical(cn, cnexp))
+stopifnot(identical(cn, c("a", paste("m.", nm, sep="", collapse=""))))
 ##  Had NAs in < 2.12.0
 
 

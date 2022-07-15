@@ -97,23 +97,19 @@ txt2[ot != sub("[b-e]",".", txt2, ignore.case = TRUE)]
 
 eq <- function(a, b) a == b
 (r1 <- gsub(pat, "ef", txt))
-r1b <- r1
-Encoding(r1b) <- "bytes"
-stopifnot(eq(r1b, gsub(pat, "ef", txt, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
 stopifnot(eq(r1, gsub(pat, "ef", txt, fixed = TRUE)))
-stopifnot(eq(r1b, gsub(pat, "ef", txt, fixed = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(eq(r1, gsub(pat, "ef", txt, perl = TRUE)))
-stopifnot(eq(r1b, gsub(pat, "ef", txt, perl = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, perl = TRUE, useBytes = TRUE)))
 
 pat <- substr(pat, 1, 1)
 (r1 <- gsub(pat, "gh", txt))
-r1b <- r1
-Encoding(r1b) <- "bytes"
-stopifnot(eq(r1b, gsub(pat, "gh", txt, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, useBytes = TRUE)))
 stopifnot(eq(r1, gsub(pat, "gh", txt, fixed = TRUE)))
-stopifnot(eq(r1b, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(eq(r1, gsub(pat, "gh", txt, perl = TRUE)))
-stopifnot(eq(r1b, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
 
 
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"))
@@ -130,33 +126,22 @@ stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
 gsub("\\b", "|", "The quick brown fox")
 
 (z <- strsplit(txt, pat)[[1]])
-zb <- z
-Encoding(zb) <- "bytes"
-
-stopifnot(eq(zb, strsplit(txt, pat, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, useBytes = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, pat, fixed = TRUE)[[1]]))
-stopifnot(eq(zb, strsplit(txt, pat, fixed = TRUE, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, fixed = TRUE, useBytes = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, pat, perl = TRUE)[[1]]))
-stopifnot(eq(zb, strsplit(txt, pat, perl = TRUE, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, perl = TRUE, useBytes = TRUE)[[1]]))
 
 (z <- strsplit(txt, "[a-c]")[[1]])
-zb <- z
-Encoding(zb) <- "bytes"
-
-stopifnot(eq(zb, strsplit(txt, "[a-c]", useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, "[a-c]", useBytes = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE)[[1]]))
-stopifnot(eq(zb, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)[[1]]))
 
 ## strsplit did not useBytes correctly in POSIX mode in R < 4.2 as
 ## MBCS would still be interpreted
 x <- "\xf1\xa1_\xc5\xa2"
-Encoding(x) <- "bytes"
-split.a <- c("\xf1\xa1", "\xc5\xa2")
-Encoding(split.a) <- "bytes"
-split.a <- list(split.a)
-split.b <- c("\xf1", "_\xc5\xa2")
-Encoding(split.b) <- "bytes"
-split.b <- list(split.b)
+split.a <- list(c("\xf1\xa1", "\xc5\xa2"))
+split.b <- list(c("\xf1", "_\xc5\xa2"))
 stopifnot(identical(strsplit(x, "_", useBytes=TRUE, perl=TRUE), split.a),
           identical(strsplit(x, "\xa1", useBytes=TRUE, perl=TRUE), split.b),
           identical(strsplit(x, "_", useBytes=TRUE), split.a),
@@ -169,11 +154,11 @@ Encoding(xu) <- "unknown"
 x98 <- "\x98"
 Encoding(x98) <- "bytes"
 split.a <- c("\xf0", "\x9f", "\x98", "\x80")
-Encoding(split.a) <- "bytes"
+Encoding(split.a) <- "unknown"
 split.b <- c("\xf0", "\x98")
-Encoding(split.b) <- "bytes"
+Encoding(split.b) <- "unknown"
 split.c <- c("\xf0\x9f", "\x80")
-Encoding(split.c) <- "bytes"
+Encoding(split.c) <- "unknown"
 ## Are two character vectors truly identical?
 identichr <- function(x, y) {
     if (is.character(x) &&
