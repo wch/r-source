@@ -75,10 +75,12 @@ enc2utf8(x)
   preserve UTF-8 encoding on systems with Unicode wide characters.  With
   their \code{fixed} and \code{perl} options, \code{\link{strsplit}},
   \code{\link{sub}} and \code{gsub} will give a marked UTF-8 result if
-  any of the inputs are UTF-8.  \code{\link{strsplit}}, \code{\link{sub}} 
-  and \code{gsub} will mark their result \code{"bytes"} if it is non-ASCII
-  and any of the inputs are marked \code{"bytes"} or \code{useBytes = TRUE}
-  was used.
+  any of the inputs are UTF-8.
+
+ %% \code{\link{strsplit}}, \code{\link{sub}} 
+ %%  and \code{gsub} will mark their result \code{"bytes"} if it is non-ASCII
+ %%  and any of the inputs are marked \code{"bytes"} or \code{useBytes = TRUE}
+ %% was used.
 
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
   as bytes if any of the corresponding inputs is marked as bytes, and

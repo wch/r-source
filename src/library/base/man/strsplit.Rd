@@ -83,9 +83,9 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   For \code{perl = TRUE, useBytes = FALSE} all non-ASCII strings in a
   multibyte locale are translated to UTF-8.
 
-  If \code{useBytes = TRUE} or any element of \code{x} or \code{split} is
-  marked as \code{"bytes"} (see \code{\link{Encoding}}), all non-ASCII
-  character strings in the result will be marked as \code{"bytes"}.
+%%  If \code{useBytes = TRUE} or any element of \code{x} or \code{split} is
+%%  marked as \code{"bytes"} (see \code{\link{Encoding}}), all non-ASCII
+%%  character strings in the result will be marked as \code{"bytes"}.
 }
 
 \seealso{

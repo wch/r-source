@@ -46,18 +46,6 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
    positions for all MBCSs.)
 */
 
-/* Mark results of gsub, sub, strsplit as "bytes" when using bytes and creating
-   a replacement or split happened. If 0, mark as native, possibly creating an
-   invalid string (pre-82587 behavior). */
-static int markBytesResultIfNew = 1;
-
-/* Mark results of gsub, sub, strsplit as "bytes" when using bytes and simply
-   copying the original string value (replacement, split did not happen. If 0,
-   mark as native (pre-82589 behavior). The intention of 82589 was to avoid
-   type instability caused by 82587. Both these options are experimental and
-   are intended to disappear. */
-static int markBytesResultIfOld = 1;
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -205,6 +193,22 @@ static SEXP mkCharWLenASCII(const wchar_t *wc, int nc, Rboolean maybe_ascii)
 
 static SEXP markBytesOld(SEXP x, Rboolean useBytes)
 {
+    /* Mark results of gsub, sub, strsplit as "bytes" when using bytes and
+       replacement, split did not happen. If 0, keep their original encoding
+       flag (pre-82589 behavior, see markBytesResultIfNew).
+
+       The intention of 82589 was to avoid encoding flag instability caused by
+       82587, e.g. in gsub(weird_thing, "", useBytes=TRUE). The options is
+       experimental and intended to disappear.
+
+       Currently the default is the old behavior.
+    */
+    static int markBytesResultIfOld = -1;
+
+    if (markBytesResultIfOld == -1) {
+	char *p = getenv("_R_REGEX_MARK_OLD_RESULT_AS_BYTES_");
+	markBytesResultIfOld = (p && StringTrue(p)) ? 1 : 0;
+    }
     if (!markBytesResultIfOld ||
         !useBytes || IS_ASCII(x) || IS_BYTES(x) || x == NA_STRING)
 
@@ -215,6 +219,19 @@ static SEXP markBytesOld(SEXP x, Rboolean useBytes)
 
 static SEXP mkBytesNew(const char *name)
 {
+    /* Mark results of gsub, sub, strsplit as "bytes" when using bytes and
+       creating a replacement or split happened. If 0, mark as native/unknown,
+       possibly creating an invalid string (pre-82587 behavior). This option is
+       experimental and intended to disappear.
+
+       Currently the default is the old behavior.
+    */
+    static int markBytesResultIfNew = -1;
+
+    if (markBytesResultIfNew == -1) {
+	char *p = getenv("_R_REGEX_MARK_NEW_RESULT_AS_BYTES_");
+	markBytesResultIfNew = (p && StringTrue(p)) ? 1 : 0;
+    }
     return mkCharCE(name, markBytesResultIfNew ? CE_BYTES : CE_NATIVE);
 }
 

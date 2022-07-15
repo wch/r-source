@@ -153,9 +153,9 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   will often be in UTF-8 with a marked encoding (e.g., if there is a
   UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
   Such strings can be re-encoded by \code{\link{enc2native}}.
-  If \code{useBytes = TRUE} or any of the inputs is marked as
-  \code{"bytes"}, a non-ASCII substituted result will be marked as
-  \code{"bytes"}.
+%%  If \code{useBytes = TRUE} or any of the inputs is marked as
+%%  \code{"bytes"}, a non-ASCII substituted result will be marked as
+%%  \code{"bytes"}.
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or

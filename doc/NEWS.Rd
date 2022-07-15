@@ -44,16 +44,11 @@
       of an external \command{diff} command and switches to
       \code{useDiff = FALSE} if none is found.
 
-      \item \code{sub}, \code{gsub} and \code{strsplit} now mark their
-      non-ASCII results as \code{"bytes"} when \code{useBytes = TRUE} or any
-      input is marked as \code{"bytes"}.
-
       \item The performance of \code{grep}, \code{sub}, \code{gsub} and
       \code{strsplit} has been improved, particularly with \code{perl =
       TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
       performance reasons should no longer be needed and is discouraged.
-      It may lead to incorrect results and newly also to runtime errors
-      thanks to the previous item.
+      It may lead to incorrect results.
     }
   }
 
