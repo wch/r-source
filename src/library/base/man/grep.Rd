@@ -221,11 +221,11 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   While \code{useBytes = TRUE} will improve performance further, because the
   strings will not be checked before matching and the actual matching will
-  be faster, it can produce unexpected results as is best avoided.  With
+  be faster, it can produce unexpected results so is best avoided.  With
   \code{fixed = TRUE} and \code{useBytes = FALSE}, optimizations are in
-  place to take advantage of that byte-based matching for such patterns
-  suffices in UTF-8.  With \code{useBytes = TRUE}, character ranges may
-  produce unexpected results.
+  place that take advantage of byte-based matching working for such patterns
+  in UTF-8.  With \code{useBytes = TRUE}, character ranges, wildcards,
+  and other regular expression patterns may produce unexpected results.
 
   PCRE-based matching by default used to put additional effort into
   \sQuote{studying} the compiled pattern when \code{x}/\code{text} has
