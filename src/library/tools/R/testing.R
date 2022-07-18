@@ -202,6 +202,11 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
 
+    if (useDiff && !nzchar(Sys.which("diff"))) {
+        warning("'diff' is not available so useDiff = FALSE will be used")
+        useDiff <- FALSE
+    }
+
     left <- clean(readLines(from))
     right <- clean(readLines(to))
     if (forEx) {

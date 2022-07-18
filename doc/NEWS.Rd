@@ -6,9 +6,17 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.2.1 patched}{
-    \subsection{INSTALLATION on a UNIX-ALIKE}{
+  \subsection{NEW FEATURES}{
     \itemize{
-      \item THe PDF manuals (if built) can be compacted by the new
+      \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
+      of an external \command{diff} command and switches to
+      \code{useDiff = FALSE} if none is found.
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The PDF manuals (if built) can be compacted by the new
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
     }
