@@ -14491,6 +14491,12 @@ void cmsg(const char *msg)
 @}
 @end example
 
+@noindent
+If you use @code{bind} to a C function as here, the only way to check
+that the bound definition is correct is to compile the package with LTO
+(which requires compatible C and Fortran compilers, usually
+@command{gcc} and @command{gfortran}).
+
 Passing a variable-length string from C to Fortran is trickier, but
 @uref{https://software.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
@@ -14501,9 +14507,10 @@ along the lines of
      +     a, lda, b, ldb, beta, c, ldc)
      +     bind(C, name = 'Cdgemm')
         use iso_c_binding, only : c_char, c_int, c_double
-        character(c_char):: transa, transb
-        integer(c_int):: m, n, k, lda, ldb, ldc
-        real(c_double):: alpha, beta, a(lda,*), b(ldb,*), c(ldc,*)
+        character(c_char), intent(in) :: transa, transb
+        integer(c_int), intent(in) :: m, n, k, lda, ldb, ldc
+        real(c_double), intent(in) :: alpha, beta, a(lda, *), b(ldb, *)
+        real(c_double), intent(out) ::  c(ldc, *)
         call dgemm(transa, transb, m, n, k, alpha,
      +             a, lda, b, ldb, beta, c, ldc)
       end subroutine c_dgemm
