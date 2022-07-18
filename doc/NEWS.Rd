@@ -40,10 +40,6 @@
       \item Regular expression functions now check more thoroughly whether
       their inputs are valid strings (in their encoding, e.g.\sspace{}in UTF-8).
 
-      \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
-      of an external \command{diff} command and switches to
-      \code{useDiff = FALSE} if none is found.
-
       \item The performance of \code{grep}, \code{sub}, \code{gsub} and
       \code{strsplit} has been improved, particularly with \code{perl =
       TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
@@ -181,6 +177,14 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.2.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
+      of an external \command{diff} command and switches to
+      \code{useDiff = FALSE} if none is found.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The PDF manuals (if built) can be compacted by the new
