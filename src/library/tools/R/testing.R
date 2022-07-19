@@ -143,6 +143,10 @@ massageExamples <-
 }
 
 ## compares 2 files
+## 2022-07: it is reasonable to assume that almost all users will
+## have diff (it is part of Rtools), and currently only GNU diff
+## (from 2022 on macOS) and FreeBSD versions semm to be in use.
+## So the support without diff is minimal.
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
                   nullPointers = TRUE, Log = FALSE)
 {
@@ -215,34 +219,34 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
         right <- clean2(right)
     }
-    if (!useDiff && (length(left) == length(right))) {
-        ## The idea is to emulate diff -b, as documented by POSIX:
-        ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
-        bleft  <- gsub("[[:space:]]*$", "", left)
-        bright <- gsub("[[:space:]]*$", "", right)
-        bleft  <- gsub("[[:space:]]+", " ", bleft)
-        bright <- gsub("[[:space:]]+", " ", bright)
-        if(all(bleft == bright))
-            return(if(Log) list(status = 0L, out = character()) else 0L)
-        cat("\n")
-        diff <- bleft != bright
-        ## FIXME do run lengths here
-        for(i in which(diff))
-            cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
-                sep = "")
-        if (Log) {
-            i <- which(diff)
-            out <- paste0(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i])
-            list(status = 1L, out = out)
-        } else 1L
-    } else {
-        ## FIXME: use C code, or something like merge?
-        ## The files can be very big.
-        out <- character()
-        if(!useDiff) {
-            cat("\nfiles differ in number of lines:\n")
+    if (!useDiff) {
+        if(length(left) == length(right)) {
+            ## The idea is to emulate diff -b, as documented by POSIX:
+            ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+            bleft  <- gsub("[[:space:]]*$", "", left)
+            bright <- gsub("[[:space:]]*$", "", right)
+            bleft  <- gsub("[[:space:]]+", " ", bleft)
+            bright <- gsub("[[:space:]]+", " ", bright)
+            if(all(bleft == bright))
+                return(if(Log) list(status = 0L, out = character()) else 0L)
+            cat("\n")
+            diff <- bleft != bright
+            ## FIXME do run lengths here
+            for(i in which(diff))
+                cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
+                    sep = "")
+            if (Log) {
+                i <- which(diff)
+                out <- paste0(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i])
+                list(status = 1L, out = out)
+            } else invisible(1L)
+        } else { ## no diff, different lengths
             out <- "files differ in number of lines"
+            if (Log) list(status = 2L, out = out)
+            else {message(out); invisible(2L)}
         }
+    } else {
+        out <- character()
         a <- tempfile("Rdiffa")
         writeLines(left, a)
         b <- tempfile("Rdiffb")

@@ -58,8 +58,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   below) and \code{out}, a character vector of descriptions of
   differences, possibly of zero length.
 
-  Otherwise, a status indicator, \code{0L} if and only if no differences
-  were found.
+  Otherwise, a status indicator (invisibly), \code{0L} if and only if no
+  differences were found.
 }
 
 \seealso{
