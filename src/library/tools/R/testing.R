@@ -223,20 +223,20 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
 
     useDiff0 <- useDiff
-    if (useDiff && !nzchar(Sys.which("diff"))) {
-        warning("'diff' is not available so useDiff = FALSE will be used")
-        useDiff <- FALSE
-    }
 
     left <- readLines(from)
     right <- readLines(to)
     asPDF <- length(left) >= 1L && startsWith(left[1L], "%PDF")
+    if (useDiff && !nzchar(Sys.which("diff"))) {
+        if(!asPDF)
+            warning("'diff' is not available so useDiff = FALSE will be used")
+        useDiff <- FALSE
+    }
 
-    left <- clean(left); right <- clean(right)
     if(asPDF) {
         if(!useDiff) {
             out <- if(!useDiff0) "comparing PDF files requires useDiff = TRUE"
-            else "comparing PDF files requires 'diff'"
+                   else "comparing PDF files requires 'diff'"
             if (Log) return(list(status = 0L, out = out))
             else {message(out); return(invisible(0L))}
         }
