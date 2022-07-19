@@ -350,25 +350,23 @@ no-segfault.Rout: no-segfault.R
 	@R_LIBS_SITE=no-such-dir $(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@$(ECHO) "$(ECHO_T) OK"
 
-test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
+## Not run by any other target
+test-Rd:
 	@$(ECHO) "testing Rd conversion"
-	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
-	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html 2> /dev/null
-	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
-	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
-	@diff -bw testit.txt $(srcdir)/testit.txt.save
-	@diff -bw testit.html $(srcdir)/testit.html.save
-	@diff -bw testit.tex $(srcdir)/testit.tex.save
-	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver20.Rd > ver20.txt
-	@$(RDCONV) -t html $(srcdir)/ver20.Rd > ver20.html
-	@$(RDCONV) -t latex $(srcdir)/ver20.Rd > ver20.tex
-	@$(RDCONV) -t example $(srcdir)/ver20.Rd > ver20-Ex.R
-	@diff -bw ver20.txt $(srcdir)/ver20.txt.save
-	@diff -bw ver20.html $(srcdir)/ver20.html.save
-	@diff -bw ver20.tex $(srcdir)/ver20.tex.save
-	@diff -bw ver20-Ex.R $(srcdir)/ver20-Ex.R.save
+	@for name in testit ver20; do \
+	  $(RDCONV) -t txt     -o $${name}.txt  $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t html    -o $${name}.html $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t latex   -o $${name}.tex  $(srcdir)/$${name}.Rd || exit 1; \
+	  $(RDCONV) -t example -o $${name}-Ex.R $(srcdir)/$${name}.Rd || exit 1; \
+	  diff -U 0 -b $(srcdir)/$${name}.txt.save  $${name}.txt;  \
+	  diff -U 0 -b $(srcdir)/$${name}.html.save $${name}.html; \
+	  diff -U 0 -b $(srcdir)/$${name}.tex.save  $${name}.tex;  \
+	  diff -U 0 -b $(srcdir)/$${name}-Ex.R.save $${name}-Ex.R; \
+	  $(top_builddir)/bin/R CMD Rd2pdf --quiet --no-preview --force \
+	    --output=$${name}.pdf $(srcdir)/$${name}.Rd || $(ECHO); \
+	done
 
+## The following 6 tests are covered by test-Packages
 test-DocFiles:
 	@$(ECHO) "checking Rd usage sections"
 	@for p in $(R_PKGS_BASE); do \
