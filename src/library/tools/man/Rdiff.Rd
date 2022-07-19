@@ -50,6 +50,10 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   %% are uncompressed.  Using \code{useDiff = TRUE} is likely to be more
   %% successful if a \command{diff} command is available.
 
+  There is limited support for comparing PDF files produced by
+  \code{pdf(compress = FALSE)}, mainly for use in \command{make check}
+  -- this requires a \command{diff} command and \code{useDiff = TRUE}.
+
   Mainly for use in examples and tests, text from marker
   \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)
   \samp{> ## IGNORE_RDIFF_END} is ignored.

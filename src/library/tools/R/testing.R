@@ -201,7 +201,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## platforms.
         txt <- txt[!grepl('options(pager = "console")', txt,
                           fixed = TRUE, useBytes = TRUE)]
-        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^/CreationDate |^/ModDate |^/Producer |^End.Don\'t show)'
+        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^End.Don\'t show)'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
     clean2 <- function(txt)
@@ -210,19 +210,47 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         eoh <- grep("^> options\\(warn = 1\\)$", txt, useBytes = TRUE)
         if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
+    trimPDF <- function(txt)
+    {
+        ## drop the PDF header
+        if (length(txt) < 2L || !startsWith(txt[1L], "%PDF"))
+            stop("not a PDF file")
+        ## drop second line if comment, often non-ASCII
+        txt <- if(startsWith(txt[1L], "%")) txt[-(1:2)] else txt[-1L]
+        ## Remove variable parts of the header
+        pat <- '(^/CreationDate |^/ModDate |^/Producer)'
+        txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
+    }
 
+    useDiff0 <- useDiff
     if (useDiff && !nzchar(Sys.which("diff"))) {
         warning("'diff' is not available so useDiff = FALSE will be used")
         useDiff <- FALSE
     }
-    left <- clean(readLines(from))
-    right <- clean(readLines(to))
-    if (forEx) {
-        left <- clean2(left)
-        ## remove lines from R CMD check --timings
-        left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
-        right <- clean2(right)
+
+    left <- readLines(from)
+    right <- readLines(to)
+    asPDF <- length(left) >= 1L && startsWith(left[1L], "%PDF")
+
+    left <- clean(left); right <- clean(right)
+    if(asPDF) {
+        if(!useDiff) {
+            out <- if(!useDiff0) "comparing PDF files requires useDiff = TRUE"
+            else "comparing PDF files requires 'diff'"
+            if (Log) return(list(status = 0L, out = out))
+            else {message(out); return(invisible(0L))}
+        }
+        left <- trimPDF(left); right <- trimPDF(right)
+    } else {
+        left <- clean(left); right <- clean(right)
+        if (forEx) {
+            left <- clean2(left)
+            ## remove lines from R CMD check --timings
+            left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
+            right <- clean2(right)
+        }
     }
+
     if (!useDiff) {
         if(length(left) == length(right)) {
             ## The idea is to emulate diff -b, as documented by POSIX:
