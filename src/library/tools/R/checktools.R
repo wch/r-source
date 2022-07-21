@@ -647,6 +647,17 @@ function(dir, logs = NULL, ...)
 
     results <- lapply(logs, function(log, ...) {
         lines <- read_check_log(log, ...)
+
+        ## Re-encode to UTF-8 using the session charset info.
+        re <- "^\\* using session charset: "
+        pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
+        enc <- if(length(pos))
+                   sub(re, "", lines[pos[1L]], useBytes = TRUE)
+               else ""
+        lines <- iconv(lines, enc, "UTF-8", sub = "byte")
+        if(any(bad <- !validUTF8(lines)))
+            lines[bad] <- iconv(lines[bad], to = "ASCII", sub = "byte")
+        
         ## See analyze_lines() inside analyze_check_log():
         pos <- which(startsWith(lines, "* loading checks for arch"))
         pos <- pos[pos < length(lines)]
@@ -666,13 +677,12 @@ function(dir, logs = NULL, ...)
         if(length(pos))
             lines <- lines[-pos]
         re <- "^\\*\\*? ((checking|creating|running examples for arch|running tests for arch) .*) \\.\\.\\.( (\\[[^ ]*\\]))?( (NOTE|WARNING|ERROR)|)$"
-        m <- regexpr(re, lines, perl = TRUE, useBytes = TRUE)
+        m <- regexpr(re, lines, perl = TRUE)
         ind <- (m > 0L)
         ## Note that we use WARN instead of WARNING for the summary.
         status <-
             if(any(ind)) {
-                status <- sub(re, "\\6", lines[ind],
-                              perl = TRUE, useBytes = TRUE)
+                status <- sub(re, "\\6", lines[ind], perl = TRUE)
                 if(any(status == "")) "FAILURE"
                 else if(any(status == "ERROR")) "ERROR"
                 else if(any(status == "WARNING")) "WARNING"
@@ -725,18 +735,18 @@ function(log, drop = TRUE, ...)
         }
     }
 
-    ## <FIXME>
-    ## Remove eventually.
-    len <- length(lines)
-    end <- lines[len]
-    if(length(end) &&
-       grepl(re <- "^(\\*.*\\.\\.\\.)(\\* elapsed time.*)$", end,
-             perl = TRUE, useBytes = TRUE)) {
-        lines <- c(lines[seq_len(len - 1L)],
-                   sub(re, "\\1", end, perl = TRUE, useBytes = TRUE),
-                   sub(re, "\\2", end, perl = TRUE, useBytes = TRUE))
-    }
-    ## </FIXME
+    ## ## <FIXME>
+    ## ## Remove eventually.
+    ## len <- length(lines)
+    ## end <- lines[len]
+    ## if(length(end) &&
+    ##    grepl(re <- "^(\\*.*\\.\\.\\.)(\\* elapsed time.*)$", end,
+    ##          perl = TRUE, useBytes = TRUE)) {
+    ##     lines <- c(lines[seq_len(len - 1L)],
+    ##                sub(re, "\\1", end, perl = TRUE, useBytes = TRUE),
+    ##                sub(re, "\\2", end, perl = TRUE, useBytes = TRUE))
+    ## }
+    ## ## </FIXME
 
     lines
 }
@@ -757,8 +767,8 @@ function(log, drop_ok = TRUE, ...)
              Flags = flags, Chunks = chunks)
 
     ## Alternatives for left and right quotes.
-    lqa <- paste0("'|", intToUtf8(0x2018))
-    rqa <- paste0("'|", intToUtf8(0x2019))
+    lqa <- "'|\u2018"
+    rqa <- "'|\u2019"
     ## Group when used ...
 
     if(is.character(drop_ok)) {
@@ -772,26 +782,16 @@ function(log, drop_ok = TRUE, ...)
     lines <- read_check_log(log, ...)
 
     ## Re-encode to UTF-8 using the session charset info.
-    ## All regexp computations will be done using perl = TRUE and
-    ## use useBytes = TRUE for matching and extracting ASCII content.
     re <- "^\\* using session charset: "
     pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
     if(length(pos)) {
-        enc <- sub(re, "", lines[pos[1L]])
+        enc <- sub(re, "", lines[pos[1L]], useBytes = TRUE)
         lines <- iconv(lines, enc, "UTF-8", sub = "byte")
         ## If the check log uses ASCII, there should be no non-ASCII
         ## characters in the message lines: could check for this.
-        if(any(bad <- !validEnc(lines)))
+        if(any(bad <- !validUTF8(lines)))
             lines[bad] <- iconv(lines[bad], to = "ASCII", sub = "byte")
-    } else {
-        ## In case of a fundamental immediate problem which renders
-        ## further checking pointless, we currently do not provide the
-        ## header information with the session charset.  (Perhaps this
-        ## should be changed.)
-        if(!any(grepl("^\\* checking ", lines,
-                      perl = TRUE, useBytes = TRUE)))
-            return()
-    }
+    } else return()
 
     package <- "???"
     version <- ""
@@ -800,12 +800,12 @@ function(log, drop_ok = TRUE, ...)
     header <- lines
     re <- sprintf("^\\* this is package (%s)(.*)(%s) version (%s)(.*)(%s)$",
                   lqa, rqa, lqa, rqa)
-    pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
+    pos <- grep(re, lines, perl = TRUE)
     if(length(pos)) {
         pos <- pos[1L]
         txt <- lines[pos]
-        package <- sub(re, "\\2", txt, perl = TRUE, useBytes = TRUE)
-        version <- sub(re, "\\5", txt, perl = TRUE, useBytes = TRUE)
+        package <- sub(re, "\\2", txt, perl = TRUE)
+        version <- sub(re, "\\5", txt, perl = TRUE)
         header <- lines[seq_len(pos - 1L)]
         lines <- lines[-seq_len(pos)]
     } else {
@@ -819,24 +819,20 @@ function(log, drop_ok = TRUE, ...)
         ## package name nevertheless, as it is better than nothing.
         re <- sprintf("^\\* checking for file (%s)(.*)/DESCRIPTION(%s).*$",
                       lqa, rqa)
-        pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
+        pos <- grep(re, lines, perl = TRUE)
         if(length(pos)) {
             pos <- pos[1L]
             txt <- lines[pos]
-            package <- sub(re, "\\2", txt, perl = TRUE, useBytes = TRUE)
+            package <- sub(re, "\\2", txt, perl = TRUE)
             header <- lines[seq_len(pos - 1L)]
-        } else if(!any(grepl("^\\* checking ", lines,
-                             perl = TRUE, useBytes = TRUE)))
+        } else if(!any(startsWith(lines, "* checking ")))
             return()
     }
     ## Get check options from header.
     re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
-    flags <-
-        if(length(pos <- grep(re, header,
-                              perl = TRUE, useBytes = TRUE))) {
-            sub(re, "\\2", header[pos[1L]],
-                perl = TRUE, useBytes = TRUE)
-        } else ""
+    flags <- if(length(pos <- grep(re, header, perl = TRUE))) {
+                 sub(re, "\\2", header[pos[1L]], perl = TRUE)
+             } else ""
 
     ## Get footer.
     len <- length(lines)
@@ -849,8 +845,7 @@ function(log, drop_ok = TRUE, ...)
         ## Not really new style, or failure ... argh.
         ## Some check systems explicitly record the elapsed time in the
         ## last line:
-        if(grepl("^\\* elapsed time ", lines[len],
-                 perl = TRUE, useBytes = TRUE)) {
+        if(startsWith(lines[len], "* elapsed time ")) {
             lines <- lines[-len]
             len <- len - 1L
             while(grepl("^[[:space:]]*$", lines[len])) {
@@ -912,7 +907,7 @@ function(log, drop_ok = TRUE, ...)
         ##   ** running tests for arch
         ## So let's drop everything up to the first such entry.
         re <- "^\\*\\*? ((checking|creating|running examples for arch|running tests for arch) .*) \\.\\.\\.( (\\[[^ ]*\\]))?( (.*)|)$"
-        ind <- grepl(re, lines, perl = TRUE, useBytes = TRUE)
+        ind <- grepl(re, lines, perl = TRUE)
         csi <- cumsum(ind)
         ind <- (csi > 0)
         chunks <-
@@ -923,10 +918,8 @@ function(log, drop_ok = TRUE, ...)
                        ##   _R_CHECK_VIGNETTE_TIMING_=yes
                        ## will result in a different chunk format ...
                        line <- s[1L]
-                       check <- sub(re, "\\1", line,
-                                    perl = TRUE, useBytes = TRUE)
-                       status <- sub(re, "\\6", line,
-                                     perl = TRUE, useBytes = TRUE)
+                       check <- sub(re, "\\1", line, perl = TRUE)
+                       status <- sub(re, "\\6", line, perl = TRUE)
                        if(status == "") status <- "FAILURE"
                        list(check = check,
                             status = status,
@@ -988,27 +981,27 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
     ## Now some cleanups.
 
     ## Alternatives for left and right quotes.
-    lqa <- paste0("'|", intToUtf8(0x2018))
-    rqa <- paste0("'|", intToUtf8(0x2019))
+    lqa <- "'|\u2018"
+    rqa <- "'|\u2019"
     ## Group when used ...
 
     checks <- db[, "Check"]
     checks <- sub(sprintf("checking whether package (%s).*(%s) can be installed",
                           lqa, rqa),
                   "checking whether package can be installed",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     checks <- sub("creating .*-Ex.R", "checking examples creation",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     checks <- sub("creating .*-manual\\.tex", "checking manual creation",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     checks <- sub("checking .*-manual\\.tex", "checking manual",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     checks <- sub(sprintf("checking package vignettes in (%s)inst/doc(%s)",
                           lqa, rqa),
                   "checking package vignettes",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     checks <- sub("^checking *", "",
-                  checks, perl = TRUE, useBytes = TRUE)
+                  checks, perl = TRUE)
     db[, "Check"] <- checks
     ## In fact, for tabulation purposes it would even be more convenient
     ## to shorten the check names ...
