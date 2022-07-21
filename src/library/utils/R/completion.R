@@ -1362,8 +1362,8 @@ fileCompletions <- function(token)
 .CompletionEnv <- new.env(hash = FALSE)
 
 ## needed to save some overhead in .win32consoleCompletion
-assign("linebuffer", "", env = .CompletionEnv)
-assign("end", 1, env = .CompletionEnv)
+assign("linebuffer", "", envir = .CompletionEnv)
+assign("end", 1, envir = .CompletionEnv)
 
 assign("settings",
        list(ops = TRUE, ns = TRUE,
@@ -1372,18 +1372,18 @@ assign("settings",
             help = TRUE, argdb = TRUE, fuzzy = FALSE,
             files = TRUE, # FIXME: deprecate in favour of quotes
             quotes = TRUE),
-       env = .CompletionEnv)
+       envir = .CompletionEnv)
 
 assign("options",
        list(package.suffix = "::",
             funarg.suffix = "=",
             function.suffix = "("),
-       env = .CompletionEnv)
+       envir = .CompletionEnv)
 
 ## These keeps track of attached packages and available help topics.
 ## Needs updating only when packages are attached.
-assign("attached_packages", character(0), env = .CompletionEnv)
-assign("help_topics", character(0), env = .CompletionEnv)
+assign("attached_packages", character(0), envir = .CompletionEnv)
+assign("help_topics", character(0), envir = .CompletionEnv)
 
 
 .FunArgEnv <- new.env(hash = TRUE, parent = emptyenv())
