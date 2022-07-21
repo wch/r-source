@@ -47,8 +47,8 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
   \item{\dots}{currently disregarded.}
 }
 \details{
-  If \code{y} is a matrix, \code{offset} can be a numeirc matrix of the
-  same dimentsions, in which case each column is applied to the
+  If \code{y} is a matrix, \code{offset} can be a numeric matrix of the
+  same dimensions, in which case each column is applied to the
   corresponding column of \code{y}.
 }
 \value{

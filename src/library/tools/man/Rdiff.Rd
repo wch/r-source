@@ -17,7 +17,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 \arguments{
   \item{from, to}{filepaths to be compared}
   \item{useDiff}{should \command{diff} be used to compare results?
-    Overidden to false if the command is not available.}
+    Overridden to false if the command is not available.}
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
     exclude the header.}
   \item{nullPointers}{logical: should the displayed addresses of

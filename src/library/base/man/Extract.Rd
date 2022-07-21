@@ -100,7 +100,7 @@ x$name <- value
   \code{$} is that the \code{[} can select more than one element whereas
   the other two select a single element.
 
-  Note that \code{x[[]]} is always erroronous.
+  Note that \code{x[[]]} is always erroneous.
   % even for \code{\link{NULL}}, where otherwise all subsetting returns \code{NULL}.
 
   The default methods work somewhat differently for atomic vectors,
