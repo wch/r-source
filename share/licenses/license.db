@@ -264,3 +264,5 @@ Abbrev: ACM
 URL: https://www.acm.org/publications/policies/software-copyright-notice
 FOSS: no
 Restricts_use: yes
+Note: Only appropriate for packages containing pre-2013 ACM code or
+ depend on others which do.
