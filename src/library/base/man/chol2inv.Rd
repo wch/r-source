@@ -31,7 +31,7 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 }
 \source{
   This is an interface to the LAPACK routine \code{DPOTRI}.
-  LAPACK is from \url{https://www.netlib.org/lapack/} and its guide is listed
+  LAPACK is from \url{https://netlib.org/lapack/} and its guide is listed
   in the references.
 }
 \references{
@@ -39,7 +39,7 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
   \emph{LAPACK Users' Guide}. Third Edition.
   SIAM.
   Available on-line at
-  \url{https://www.netlib.org/lapack/lug/lapack_lug.html}.
+  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
 
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide}.

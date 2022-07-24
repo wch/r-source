@@ -109,7 +109,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \emph{Journal of the Royal Statistical Society Series B}, \bold{30},
   582--598.
   \doi{10.1111/j.2517-6161.1968.tb00759.x}.
-  \url{https://www.jstor.org/stable/2984263}.
+  %% \url{https://www.jstor.org/stable/2984263}.
 
   Patefield, W. M. (1981).
   Algorithm AS 159: An efficient method of generating r x c tables

@@ -3687,9 +3687,9 @@ these variables.
 @end menu
 
 The linear algebra routines in @R{} make use of @acronym{BLAS} (Basic
-Linear Algebra Subprograms, @uref{https://www.netlib.org/blas/faq.html})
+Linear Algebra Subprograms, @uref{https://netlib.org/blas/faq.html})
 routines, and most make use of routines from @acronym{LAPACK} (Linear
-Algebra PACKage, @uref{https://www.netlib.org/lapack}).  The @R{}
+Algebra PACKage, @uref{https://netlib.org/lapack}).  The @R{}
 sources contain reference (Fortran) implementations of these, but they
 can be replaced by external libraries, usually those tuned for speed on
 specific CPUs.  These libraries normally contain all of the BLAS

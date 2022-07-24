@@ -74,7 +74,7 @@ p.adjust.methods
   \emph{Journal of the Royal Statistical Society Series B}, \bold{57},
   289--300.
   \doi{10.1111/j.2517-6161.1995.tb02031.x}.
-  \url{https://www.jstor.org/stable/2346101}.
+  %% \url{https://www.jstor.org/stable/2346101}.
 
   Benjamini, Y., and Yekutieli, D. (2001).
   The control of the false discovery rate in multiple testing under

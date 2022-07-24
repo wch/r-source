@@ -116,7 +116,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   There is a short discussion of these additional arguments with some
   example code available at
-  \url{http://www.stat.ucdavis.edu/~duncan/R/dynload/}.
+  \url{https://www.stat.ucdavis.edu/~duncan/R/dynload/}.
 #endif
 #ifdef windows
 

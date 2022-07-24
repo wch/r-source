@@ -44,7 +44,7 @@ Seatbelts
   Durbin, J. and Koopman, S. J. (2001).
   \emph{Time Series Analysis by State Space Methods}.
   Oxford University Press.
-  \url{http://www.ssfpack.com/dkbook/}
+  %% \url{http://www.ssfpack.com/dkbook/}
 }
 \references{
   Harvey, A. C. and Durbin, J. (1986).

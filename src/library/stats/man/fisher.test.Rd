@@ -89,7 +89,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   FORTRAN subroutine FEXACT which implements the network developed by
   Mehta and Patel (1983, 1986) and improved by Clarkson, Fan and Joe (1993).
   The FORTRAN code can be obtained from
-  \url{https://www.netlib.org/toms/643}.  Note this fails (with an error
+  \url{https://netlib.org/toms/643}.  Note this fails (with an error
   message) when the entries of the table are too large.  (It transposes
   the table if necessary so it has no more rows than columns.  One
   constraint is that the product of the row marginals be less than

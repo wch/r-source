@@ -55,7 +55,7 @@ norm(x, type = c("O", "I", "F", "M", "2"))
 \source{
   Except for \code{norm = "2"}, the LAPACK routine \code{DLANGE}.
 
-  LAPACK is from \url{https://www.netlib.org/lapack/}.
+  LAPACK is from \url{https://netlib.org/lapack/}.
 }
 \references{
   Anderson, E., \emph{et al} (1994).

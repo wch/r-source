@@ -15363,7 +15363,7 @@ For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and Schryer on NetLib at
-@uref{https://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
+@uref{https://netlib.org/slatec/src/} for IEC 60559 arithmetic
 (required by @R{}).
 
 @node Re-encoding, Condition handling and cleanup code, Utility functions, The R API

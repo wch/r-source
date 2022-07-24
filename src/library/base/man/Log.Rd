@@ -85,7 +85,7 @@ expm1(x)
   \code{log1p} and \code{expm1} may be taken from the operating system,
   but if not available there then they are based on the Fortran subroutine
   \code{dlnrel} by W. Fullerton of Los Alamos Scientific Laboratory (see
-  \url{https://www.netlib.org/slatec/fnlib/dlnrel.f}) and (for small x) a
+  \url{https://netlib.org/slatec/fnlib/dlnrel.f}) and (for small x) a
   single Newton step for the solution of \code{log1p(y) = x}
   respectively.
 }
