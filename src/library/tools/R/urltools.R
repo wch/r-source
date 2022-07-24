@@ -697,15 +697,36 @@ function(x, ...)
     y
 }
 
-.fetch_headers_via_base <- function(urls, verbose = FALSE, ids = urls)
+.fetch_headers_via_base <-
+function(urls, verbose = FALSE, ids = urls)
     Map(function(u, verbose, i) {
             if(verbose) message(sprintf("processing %s", i))
             tryCatch(curlGetHeaders(u), error = identity)
         },
         urls, verbose, ids)
 
-.fetch_headers_via_curl <- function(urls, verbose = FALSE, pool = NULL) {
+.fetch_headers_via_curl <-
+function(urls, verbose = FALSE, pool = NULL) {
+    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool)
+    ind <- !vapply(out, inherits, NA, "error")
+    if(any(ind))
+        out[ind] <- lapply(out[ind],
+                           function(x) {
+                               y <- strsplit(rawToChar(x$headers),
+                                             "(?<=\r\n)",
+                                             perl = TRUE)[[1L]]
+                               attr(y, "status") <- x$status_code
+                               y
+                           })
+    out
+}
 
+
+.curl_multi_run_worker <-
+function(urls, nobody = FALSE, verbose = FALSE, pool = NULL)
+{
+    ## Use 'nobody = TRUE' to fetch only headers.
+    
     .progress_bar <- function(length, msg = "") {
         bar <- new.env(parent = baseenv())
         if(is.null(length)) {
@@ -735,14 +756,15 @@ function(x, ...)
     if(is.null(pool))
         pool <- curl::new_pool()
 
-    hs <- vector("list", length(urls))
+    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")    
 
-    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")
-    for(i in seq_along(hs)) {
+    out <- vector("list", length(urls))
+
+    for(i in seq_along(out)) {
         u <- urls[[i]]
         h <- curl::new_handle(url = u)
         curl::handle_setopt(h,
-                            nobody = TRUE,
+                            nobody = nobody,
                             cookiesession = 1L,
                             followlocation = 1L,
                             http_version = 2L,
@@ -759,14 +781,14 @@ function(x, ...)
         handle_result <- local({
             i <- i
             function(x) {
-                hs[[i]] <<- x
+                out[[i]] <<- x
                 bar$update()
             }
         })
         handle_error <- local({
             i <- i
             function(x) {
-                hs[[i]] <<-
+                out[[i]] <<-
                     structure(list(message = x),
                               class = c("curl_error", "error", "condition"))
                 bar$update()
@@ -780,21 +802,9 @@ function(x, ...)
 
     curl::multi_run(pool = pool)
    
-    out <- vector("list", length(hs))
-    for(i in seq_along(out)) {
-        if(inherits(hs[[i]], "error")) {
-            out[[i]] <- hs[[i]]
-        } else {
-            out[[i]] <- strsplit(rawToChar(hs[[i]]$headers),
-                                 "(?<=\r\n)",
-                                 perl = TRUE)[[1L]]
-            attr(out[[i]], "status") <- hs[[i]]$status_code
-        }
-    }
-        
     out
 }
-    
+
 .curl_GET_status <-
 function(u, verbose = FALSE)
 {
