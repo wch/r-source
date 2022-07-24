@@ -4498,7 +4498,7 @@ Default: false (but true for CRAN submission checks).
 Check if package code has @code{if()} condition which compare the class
 of an object to a string.
 See
-@uref{https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html}
+@uref{https://blog.r-project.org/2019/11/09/when-you-think-class.-think-again/index.html}
 why this is a bad idea.
 Default: false (but true for CRAN submission checks).
 
@@ -4510,6 +4510,13 @@ environment variable @env{R_TIDYCMD}).  macOS users are advised to
 install 5.8.0 or later from @uref{http://binaries.html-tidy.org/}.
 Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
+
+@item _R_CHECK_RD_MATH_RENDERING_
+Check whether HTML math rendering via KaTeX works (if package
+@CRANpkg{katex} is available).
+See 
+@uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/index.html}.
+Default: false.
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
