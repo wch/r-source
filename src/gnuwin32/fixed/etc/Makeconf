@@ -219,7 +219,7 @@ R_XTRA_CFLAGS =
 ## Allow next to be overriden for cross-builds.
 R_XTRA_CPPFLAGS ?= -I"$(R_HOME)/include" -DNDEBUG
 R_XTRA_CXXFLAGS = 
-R_XTRA_FFLAGS =  @GF7OPTS@
+R_XTRA_FFLAGS =
 
 ifneq "$(LTO_OPT)" ""
 LTO = $(LTO_OPT)

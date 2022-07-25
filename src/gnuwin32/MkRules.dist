@@ -174,9 +174,6 @@
 #   should no longer be needed for newer versions of GCC and the recommended
 #   gcc 10.3 toolchain)
 #
-# See MkRules.rules where -fno-optimize-sibling-calls is optionally added to
-# work around issues with gfortran/legacy calls from C.
-#
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support

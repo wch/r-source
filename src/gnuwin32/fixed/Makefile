@@ -40,7 +40,6 @@ ifeq "$(WIN)" "64"
 	  -e "s|@OPENMP@|$(OPENMP)|" \
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
-	  -e "s|@GF7OPTS@|$(GF7OPTS)|" \
 	  -e "s|LTO =|LTO = $(LTO)|" \
 	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
@@ -59,7 +58,6 @@ else
 	  -e "s|@OPENMP@|$(OPENMP)|" \
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
-	  -e "s|@GF7OPTS@|$(GF7OPTS)|" \
 	  -e "s|LTO =|LTO = $(LTO)|" \
 	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf

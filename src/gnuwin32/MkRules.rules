@@ -116,7 +116,7 @@ RESCOMP=$(BINPREF)windres $(RC_ARCH)
 SHLIB_LD=$(CC)
 SHLIB_LDFLAGS=-shared
 
-## If the Fortran compiler is gfortran >= 7, add
+## If the Fortran compiler is gfortran >= 7, R used to add
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
@@ -125,12 +125,15 @@ SHLIB_LDFLAGS=-shared
 ## restrictive, and has been added after the breakages were discovered.
 ## However, it is documented that this option may be removed in the future.
 ## https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90329
+##
+## -fno-optimize-sibling-calls is no longer forced once all packages are
+## passing char lengths.
 
-GFVER = $(shell echo "__GNUC__" | $(FC) -E -P -)
-GF7OPTS =
-ifneq ($(GFVER),"")
-GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
-endif
+## GF7OPTS =
+## GFVER = $(shell echo "__GNUC__" | $(FC) -E -P -)
+## ifneq ($(GFVER),"")
+## GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
+## endif
 
 ifneq "$(LTO)" ""
 AR = $(BINPREF)gcc-ar
