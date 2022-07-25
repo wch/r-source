@@ -4164,13 +4164,14 @@ On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
 build @R{}.
 
-BLAS and LAPACK libraries built with @command{gfortran}@tie{}9 and later
-(and versions 8.4, 7.5 and later in those series) require calls from
-C/C++ to handle `hidden' character lengths --- @R{} itself does so but
-many packages used not to and some have segfaulted.  This has been
-largely circumvented by using the Fortran flag
-@option{-fno-optimize-sibling-calls} (currently set by
-@command{configure} if it detects @command{gfortran}@tie{}7 or later).
+BLAS and LAPACK libraries built with recent versions of
+@command{gfortran} require calls from C/C++ to handle `hidden' character
+lengths --- @R{} itself does so but many packages used not to and some
+have segfaulted.  This was largely circumvented by using the Fortran
+flag @option{-fno-optimize-sibling-calls} (formerly set by
+@command{configure} if it detected @command{gfortran}@tie{}7 or later):
+however use of the @R{} headers which include those character-length
+arguments is no longer optional in packages.
 
 LAPACK 3.9.0 (and probably earlier) had a bug in which the DCOMBSSQ
 subroutine may cause NA to be interpreted as zero. This is fixed in the
