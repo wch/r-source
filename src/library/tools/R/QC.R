@@ -3894,6 +3894,11 @@ function(dfile, dir)
             status$miss_extension <- status$components[ind]
             ok <- FALSE
         }
+        if(any(ind <- status$components %in% "ACM") &&
+           !(db["Package"] %in% c("akima", "tripack"))) {
+            status$ACM <- status$components[ind]
+            ok <- FALSE
+        }
         ## Could always return the analysis results and not print them
         ## if ok, but it seems more standard to only return trouble.
         if(!ok)
@@ -3945,6 +3950,9 @@ function(x, ...)
       if(length(y <- x$miss_extension)) {
           c(gettext("License components which are templates and need '+ file LICENSE':"),
             paste0("  ", y))
+      },
+      if(length(y <- x$ACM)) {
+          gettext("Uses ACM license: only appropriate for pre-2013 ACM TOMS code")
       }
       )
 }
