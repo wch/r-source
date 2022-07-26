@@ -499,7 +499,7 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    // ASCII matching will do for ASCII Xfix except in non-UTF-8 MBCS
 	    Rboolean need_translate = TRUE;
-	    if (strIsASCII(CHAR(el)) && (utf8locale || !mbcslocale))
+	    if (IS_ASCII(el) && (utf8locale || !mbcslocale))
 		need_translate = FALSE;
 	    cp y0 = need_translate ? translateCharUTF8(el) : CHAR(el);
 	    int ylen = (int) strlen(y0);
@@ -690,7 +690,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		   FIXME: could re-encode to UTF-8 rather than to native.
 		 */
 		venc = getCharCE(v_el);
-		if (venc != ienc && !strIsASCII(v_ss)) {
+		if (venc != ienc && !IS_ASCII(v_el)) {
 		    ss = translateChar(el);
 		    slen = strlen(ss);
 		    v_ss = translateChar(v_el);
@@ -942,7 +942,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    const char *s = CHAR(el);
-	    if (strIsASCII(s)) {
+	    if (IS_ASCII(el)) {
 		if(strlen(s) > minlen) {
 		    R_AllocStringBuffer(strlen(s)+1, &cbuff);
 		    SET_STRING_ELT(ans, i, stripchars(s, minlen, usecl));

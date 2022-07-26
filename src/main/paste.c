@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -104,7 +104,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sep = STRING_ELT(sep, 0);
 	csep = translateChar(sep);
 	u_sepw = sepw = (int) strlen(csep); // will be short
-	sepASCII = strIsASCII(csep);
+	sepASCII = IS_ASCII(sep);
 	sepKnown = ENC_KNOWN(sep) > 0;
 	sepUTF8 = IS_UTF8(sep);
 	sepBytes = IS_BYTES(sep);
@@ -228,7 +228,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		    const char *s = use_Bytes ? CHAR(cs) : translateChar(cs);
 		    strcpy(buf, s);
 		    buf += strlen(s);
-		    allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		    allKnown = allKnown && (IS_ASCII(cs) || (ENC_KNOWN(cs)> 0));
 		    anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 		}
 	    }
@@ -272,7 +272,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    csep = translateChar(sep);
 	sepw = (int) strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
-	allKnown = anyKnown || strIsASCII(csep);
+	allKnown = anyKnown || IS_ASCII(sep);
 	R_xlen_t pwidth = 0;
 	const void *vmax = vmaxget();
 	for (R_xlen_t i = 0; i < nx; i++)
@@ -293,16 +293,16 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += sepw;
 	    }
 	    const char *s;
+	    SEXP el = STRING_ELT(ans, i);
 	    if(use_UTF8)
-		s = translateCharUTF8(STRING_ELT(ans, i));
+		s = translateCharUTF8(el);
 	    else /* already translated */
-		s = CHAR(STRING_ELT(ans, i));
+		s = CHAR(el);
 	    strcpy(buf, s);
 	    while (*buf)
 		buf++;
-	    allKnown = allKnown &&
-		(strIsASCII(s)  || (ENC_KNOWN(STRING_ELT(ans, i)) > 0));
-	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i)) > 0);
+	    allKnown = allKnown && (IS_ASCII(el) || (ENC_KNOWN(el) > 0));
+	    anyKnown = anyKnown || (ENC_KNOWN(el) > 0);
 	    if(use_UTF8) vmaxset(vmax);
 	}
 	UNPROTECT(1);

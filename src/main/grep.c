@@ -621,8 +621,10 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			continue;
 		    }
 		}
-		if (!useBytes && (use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
-		/* split into individual characters (not bytes) */
+		if (!useBytes && (use_UTF8 || mbcslocale) &&
+		    !IS_ASCII(STRING_ELT(x, i))) {
+
+		    /* split into individual characters (not bytes) */
 		    char bf[20 /* > R_MB_CUR_MAX */];
 		    const char *p = buf;
 		    size_t used;
