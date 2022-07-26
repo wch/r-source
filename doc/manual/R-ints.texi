@@ -4498,7 +4498,7 @@ Default: false (but true for CRAN submission checks).
 Check if package code has @code{if()} condition which compare the class
 of an object to a string.
 See
-@uref{https://blog.r-project.org/2019/11/09/when-you-think-class.-think-again/index.html}
+@uref{https://blog.r-project.org/2019/11/09/when-you-think-class.-think-again/}
 why this is a bad idea.
 Default: false (but true for CRAN submission checks).
 
@@ -4515,7 +4515,7 @@ can be overridden by setting this variable to a false value.
 Check whether HTML math rendering via KaTeX works (if package
 @CRANpkg{katex} is available).
 See 
-@uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/index.html}.
+@uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/}.
 Default: false.
 @end vtable
 
