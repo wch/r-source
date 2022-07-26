@@ -3689,7 +3689,7 @@ these variables.
 The linear algebra routines in @R{} make use of @acronym{BLAS} (Basic
 Linear Algebra Subprograms, @uref{https://netlib.org/blas/faq.html})
 routines, and most make use of routines from @acronym{LAPACK} (Linear
-Algebra PACKage, @uref{https://netlib.org/lapack}).  The @R{}
+Algebra PACKage, @uref{https://netlib.org/lapack/}).  The @R{}
 sources contain reference (Fortran) implementations of these, but they
 can be replaced by external libraries, usually those tuned for speed on
 specific CPUs.  These libraries normally contain all of the BLAS
@@ -5336,7 +5336,7 @@ manual.
 For Intel Big Sur and later there is
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
 and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey-intel/gfortran-Intel-11.3-Monterey.dmg}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey/gfortran-Intel-11.3-Monterey.dmg}.
 
 
 For @cputype{arm64}, we use the fork of @command{gfortran} from
@@ -5605,7 +5605,7 @@ Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
 distribution but these were often not at all recent versions of Tcl/Tk.
 It is better to install Tcl/Tk 8.6.x from the sources@footnote{Configure
 Tk with @option{--enable-aqua}.} or a binary distribution from
-@uref{https://www.activestate.com/activetcl/downloads}.  For the latter,
+@uref{https://www.activestate.com/products/tcl/}.  For the latter,
 configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -6025,7 +6025,7 @@ To set the correct architecture (which will be auto-detected as
 @subsection Installer
 
 The scripts for the @acronym{CRAN} packaging of @R{} can be found under
-@uref{https://svn.r-project.org/R-dev-web/trunk/QA/Simon/R4}: start
+@uref{https://svn.r-project.org/R-dev-web/trunk/QA/Simon/R4/}: start
 with the @file{README} file in that directory.
 
 

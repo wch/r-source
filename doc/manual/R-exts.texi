@@ -1709,7 +1709,7 @@ summarize, the full power of Autoconf is available for your extension
 package (including variable substitution, searching for libraries,
 etc.).  Background and useful tips on Autoconf and related tools
 (including @command{pkg-config} described below) can be found at
-@uref{https://autotools.io/}.
+@uref{https://autotools.info/}.
 
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -2367,7 +2367,7 @@ DLL.
 There is some support for packages which wish to use
 OpenMP@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/wiki/OpenMP},
-@uref{https://hpc.llnl.gov/training/tutorials/openmp-tutorial}}.  The
+@uref{https://hpc-tutorials.llnl.gov/openmp/}}.  The
 @command{make} macros
 
 @example
@@ -3605,7 +3605,7 @@ The @option{--compact-vignettes} option will run
 subdirectories) to losslessly compress them.  This is not enabled by
 default (it can be selected by environment variable
 @env{_R_BUILD_COMPACT_VIGNETTES_}) and needs @command{qpdf}
-(@uref{http://qpdf.sourceforge.net/}) to be available.
+(@uref{https://qpdf.sourceforge.io/}) to be available.
 
 It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
@@ -4828,7 +4828,7 @@ for accounts ported from Mojave or earlier it is usually
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
-@command{gfortran}@footnote{@uref{http://fortranwiki.org/fortran/show/Modernizing+Old+Fortran}
+@command{gfortran}@footnote{@uref{https://fortranwiki.org/fortran/show/Modernizing+Old+Fortran}
 may help explain some of the warnings from @command{gfortran -Wall
 -pedantic}.}  can be used with options @option{-Wall -pedantic} to alert
 you to potential problems.  This is particularly important for C++,
@@ -5213,7 +5213,7 @@ if(substr(jv, 1L, 2L) == "1.") @{
 Java 9 changed the format of this string (which used to be something
 like @samp{1.8.0_292-b10}); Java 11 gave @code{jv} as @samp{11+28}
 whereas Java 11.0.11 gives @samp{11.0.11+9}.
-(@uref{https://openjdk.java.net/jeps/322} details the current scheme.
+(@uref{https://openjdk.org:443/jeps/322} details the current scheme.
 Note that it is necessary to allow for pre-releases like
 @samp{11-ea+22}.)
 
@@ -5659,7 +5659,7 @@ which do not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
-@uref{https://www.cplusplus.com/reference/} or
+@uref{https://cplusplus.com/reference/} or
 @uref{https://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
@@ -9171,7 +9171,7 @@ mechanism can be helpful in isolating memory protect problems.
 If you have access to Linux on a common CPU type or supported versions
 of FreeBSD or Solaris@footnote{The macOS support is for long-obsolete
 versions.} you can use @code{valgrind}
-(@uref{https://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+(@uref{https://valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
 
@@ -14498,7 +14498,7 @@ that the bound definition is correct is to compile the package with LTO
 @command{gcc} and @command{gfortran}).
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://software.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
+@uref{https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of

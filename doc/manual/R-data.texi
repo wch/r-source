@@ -1137,7 +1137,7 @@ or (more recently) @file{.syd}.
 @findex read.octave
 
 Octave is a numerical linear algebra system
-(@uref{https://www.gnu.org/software/octave/}), and function @code{read.octave} in
+(@uref{https://octave.org/}), and function @code{read.octave} in
 package @CRANpkg{foreign} can read in files in Octave text data format
 created using the Octave command @command{save -ascii}, with support for
 most of the common types of variables, including the standard atomic

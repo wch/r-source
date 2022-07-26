@@ -566,7 +566,7 @@ may be a delay of up to 2 weeks until the Fedora RPM becomes publicly
 available, as it must pass through the Fedora review process.
 RPMs for a selection of R packages are also provided by Fedora.  The
 Extra Packages for Enterprise Linux (EPEL) project
-(@url{https://fedoraproject.org/wiki/EPEL}) provides ports of the Fedora
+(@url{https://docs.fedoraproject.org/en-US/epel/}) provides ports of the Fedora
 RPMs for RedHat Enterprise Linux and compatible distributions (e.g.,
 Centos, Scientific Linux, Oracle Linux).
 
