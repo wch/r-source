@@ -62,9 +62,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{destfile}.
 
   The \code{url} must start with a scheme such as \samp{http://},
-  \samp{https://}, \samp{ftp://} or \samp{file://}.  Which methods
-  support which schemes varies by \R version, but \code{method = "auto"}
-  will try to find a method which supports the scheme.
+  \samp{https://} or \samp{file://}.  Which methods support which
+  schemes varies by \R version, but \code{method = "auto"} will try to
+  find a method which supports the scheme.
 
   For \code{method = "auto"} (the default) the \code{"internal"} method
   is used for \samp{file://} URLs, and \code{"libcurl"} for all others.
@@ -259,7 +259,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   What happens to the destination file(s) in the case of error depends
   on the method and \R{} version. Currently the \code{"internal"},
   \code{"wininet"} and \code{"libcurl"} methods will remove the file if
-  there the URL is unavailable except when \code{mode} specifies
+  the URL is unavailable except when \code{mode} specifies
   appending when the file should be unchanged.
 }
 \seealso{

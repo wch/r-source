@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
@@ -104,7 +104,8 @@ browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
   Which URL schemes are accepted is platform-specific: expect
   \samp{http://}, \samp{https://} and \samp{ftp://} to work, but
   \samp{mailto:} may or may not (and if it does may not use the user's
-  preferred email client).
+  preferred email client).  However, modern browsers are unlikely to handle
+  \samp{ftp://}.
   
   For the \samp{file://} scheme the format accepted (if any) can depend on
   both browser and OS.
