@@ -457,13 +457,11 @@ Rd2txt <-
          ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
         li[["UTF-8"]]
 
-    if(!isFALSE(getOption("useFancyQuotes")) &&
-       use_fancy_quotes) {
-        ## On Windows, Unicode literals are translated to local code page
-    	LSQM <- intToUtf8("0x2018") # Left single quote
-    	RSQM <- intToUtf8("0x2019") # Right single quote
-    	LDQM <- intToUtf8("0x201c") # Left double quote
-    	RDQM <- intToUtf8("0x201d") # Right double quote
+    if(!isFALSE(getOption("useFancyQuotes")) && use_fancy_quotes) {
+    	LSQM <- "\u2018"                # Left single quote
+    	RSQM <- "\u2019"                # Right single quote
+    	LDQM <- "\u201c"                # Left double quote
+    	RDQM <- "\u201d"                # Right double quote
     } else {
         LSQM <- RSQM <- "'"
         LDQM <- RDQM <- '"'
