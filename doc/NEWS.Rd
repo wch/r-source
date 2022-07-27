@@ -130,8 +130,9 @@
     \itemize{
       \item \code{default.stringsAsFactors()} is defunct.
 
-      \item Use of \code{tools::Rdiff} for uncompressed PDF files is no
-      longer documented: support may be removed entirely in future.
+      \item Support in \code{tools::Rdiff} for uncompressed PDF files is
+      further reduced (see its help page): support may be removed
+      entirely in future.
     }
   }
 
@@ -156,8 +157,9 @@
       sometimes returning all of \code{x}.  Reported and discussed by Colin
       Fay, in \PR{18357}.
 
-      \item \code{summary.lm()} now gives the correct F-statistic when
-      the model contains an offset. Reported in \PR{18008}.
+      \item The \code{"lm"} method for \code{summary()} now gives the
+      correct F-statistic when the model contains an offset.  Reported in
+      \PR{18008}.
 
       \item \code{C()} and \code{`contrasts<-`()} now preserve factor
       level names when given a function object (as opposed a function
@@ -182,6 +184,8 @@
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
       of an external \command{diff} command and switches to
       \code{useDiff = FALSE} if none is found.
+
+      This allows \command{R CMD Rdiff} to always work.
     }
   }
 
