@@ -2,6 +2,12 @@
 \name{testit}
 \title{An Rd Regression Test}
 \alias{\{}
+\description{
+  \tabular{rl}{
+    \href{https://example.org/a&b#c}{linked text in \verb{\tabular}}
+    \tab \url{https://example.org/a&b#c}
+  }
+}
 \usage{
 \\x \\y \%\{\}
 
@@ -12,8 +18,8 @@ foo(\var{x}, \var{y})
 
   \code{\%\{\}}
   
-  \link{a link} and one to a known destination:
-  \link[stats]{weighted.mean}
+  \link{a link} and some to known destinations:
+  \link[stats]{weighted.mean}, \code{\link[=Paren]{\{}}
   
   var in \var{text}.
   

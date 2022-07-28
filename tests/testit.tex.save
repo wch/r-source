@@ -2,6 +2,14 @@
 \HeaderA{testit}{An Rd Regression Test}{testit}
 \aliasB{\{}{testit}{.Rlbrace.}
 %
+\begin{Description}\relax
+
+\Tabular{rl}{
+\Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
+& \url{https://example.org/a\&b\#c}
+}
+\end{Description}
+%
 \begin{Usage}
 \begin{verbatim}
 \x \y %{}
@@ -15,8 +23,8 @@ Escaped backslash \code{\bsl{}x}.
 
 \code{\%\{\}}
 
-\LinkA{a link}{a link} and one to a known destination:
-\LinkA{weighted.mean}{weighted.mean}
+\LinkA{a link}{a link} and some to known destinations:
+\LinkA{weighted.mean}{weighted.mean}, \code{\LinkA{\{}{Paren}}
 
 var in \var{text}.
 

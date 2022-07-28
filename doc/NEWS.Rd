@@ -23,6 +23,13 @@
       directory \file{doc/manual}).
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{tools::Rd2latex()} now escapes hashes and ampersands
+      when writing URLs, fixing LaTeX errors with such URLs in \verb{\tabular}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.2.1}{
