@@ -192,6 +192,16 @@ stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
 ## Case, where log.p=TRUE was fine, but log.p=FALSE (default) gave NaN:
 lp <- 40:406
 stopifnot(all.equal(lp, -pt(qt(exp(-lp), 1.2), 1.2, log=TRUE), tolerance = 4e-16))
+## Other log.p cases, giving NaN (all but 1.1) in R <= 4.2.1 (still inaccurate)
+q <- exp(seq(200, 500, by=1/2))
+for(df in c(1.001, 1 + (1:10)/100)) {
+    pq  <- pt(q,  df = df, log = TRUE)
+    qpq <- qt(pq, df = df, log = TRUE)
+    cat("df = ", df, ": all.equal(., tol=0): "); print(all.equal(q,qpq, tol=0)) # ~0.17!
+    ## plot(lp, 1-qpq/q, main=paste0("relErr(qt(., df=",df,"))"), type="l")
+    stopifnot(all.equal(q,qpq, tol = 0.2)) # Lnx 64b: 1.001 shows 0.179
+    if(any(ina <- is.na(qpq))) { cat("NaN in q-range: [", range(q[ina]),"]\n") }
+}
 
 
 ## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
