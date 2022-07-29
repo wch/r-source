@@ -45,6 +45,10 @@
       TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
       performance reasons should no longer be needed and is discouraged.
       It may lead to incorrect results.
+
+      \item \code{apropos()} gains option \code{dot_internals} which is
+      used by the completion (\code{help(rcompgen)}) engine to also see
+      \pkg{base} internals such as \code{.POSIXct()}.
     }
   }
 

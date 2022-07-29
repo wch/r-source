@@ -1,12 +1,13 @@
 % File src/library/utils/man/apropos.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{apropos}
 \title{Find Objects by (Partial) Name}
 \usage{
-apropos(what, where = FALSE, ignore.case = TRUE, mode = "any")
+apropos(what, where = FALSE, ignore.case = TRUE,
+        dot_internals=FALSE, mode = "any")
 
 find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 }
@@ -20,6 +21,8 @@ find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
     search list should also be returned}
   \item{ignore.case}{logical indicating if the search should be
     case-insensitive, \code{TRUE} by default.}
+  \item{dot_internals}{logical indicating if the search result should show
+    \pkg{base} internal objects, \code{FALSE} by default.}
   \item{mode}{character; if not \code{"any"}, only objects whose
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
@@ -42,8 +45,8 @@ find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
   always case-sensitive.
 
   Unlike the default behaviour of \code{\link{ls}}, names which
-  begin with a \samp{.} are included (and these are often
-  \sQuote{internal} objects --- as from \R 3.4.0 most such are excluded).
+  begin with a \samp{.} are included, but base \sQuote{internal} objects
+  are included only when \code{dot_internals} is true.
 }
 \author{Originally, Kurt Hornik and Martin Maechler (May 1997).}
 \value{
