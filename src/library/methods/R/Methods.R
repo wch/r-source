@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -290,8 +290,9 @@ isGeneric <-
 	    TRUE
     }
     else {
-        warning(gettextf("function %s appears to be a generic function, but with generic name %s",
-                         sQuote(f), sQuote(gen)),
+        warning(gettextf(
+	    "fdef appears to be a generic function, but with generic name %s instead of %s",
+			 sQuote(gen), sQuote(f)),
                 domain = NA)
         FALSE
     }

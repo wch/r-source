@@ -31,6 +31,10 @@
 
       \item \code{tools::Rd2latex()} now escapes hashes and ampersands
       when writing URLs, fixing LaTeX errors with such URLs in \verb{\tabular}.
+
+      \item When \code{isGeneric(f, fdef=*)} is used with mismatching
+      names, the warning is better understandable; reported (with fix) in
+      \PR{18370} by Gabe Becker.
     }
   }
 }
