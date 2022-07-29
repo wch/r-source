@@ -4801,7 +4801,8 @@ directory or elsewhere, for example,
 Linux is the main development platform for @R{}, so compilation from the
 sources is normally straightforward with the most common compilers and
 libraries.@footnote{For example, @code{glibc}: other C libraries such as
-@code{musl} have been used but are not routinely tested.}
+@code{musl} (as used by Alpine Linux) have been used but are not
+routinely tested.}
 
 This section is about the GCC compilers:
 @command{gcc}/@command{gfortran}/@command{g++}.
