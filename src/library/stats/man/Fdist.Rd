@@ -1,6 +1,6 @@
 % File src/library/stats/man/Fdist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{FDist}
@@ -49,19 +49,26 @@ rf(n, df1, df2, ncp)
   arguments are used.
 }
 \details{
-  The F distribution with \code{df1 =} \eqn{n_1}{n1} and \code{df2 =}
-  \eqn{n_2}{n2} degrees of freedom has density
+  The F distribution with \code{df1 =} \eqn{\nu_1}{n1} and \code{df2 =}
+  \eqn{\nu_2}{n2} degrees of freedom has density
   \deqn{
-    f(x) = \frac{\Gamma(n_1/2 + n_2/2)}{\Gamma(n_1/2)\Gamma(n_2/2)}
-    \left(\frac{n_1}{n_2}\right)^{n_1/2} x^{n_1/2 -1}
-    \left(1 + \frac{n_1 x}{n_2}\right)^{-(n_1 + n_2) / 2}%
+    f(x) = \frac{\Gamma(\nu_1/2 + \nu_2/2)}{\Gamma(\nu_1/2)\Gamma(\nu_2/2)}
+    \left(\frac{\nu_1}{\nu_2}\right)^{\nu_1/2} x^{\nu_1/2 -1}
+    \left(1 + \frac{\nu_1 x}{\nu_2}\right)^{-(\nu_1 + \nu_2) / 2}%
   }{f(x) = \Gamma((n1 + n2)/2) / (\Gamma(n1/2) \Gamma(n2/2))
     (n1/n2)^(n1/2) x^(n1/2 - 1)
     (1 + (n1/n2) x)^-(n1 + n2)/2}
   for \eqn{x > 0}.
 
+  The F distribution's cumulative distribution function (cdf),
+  \eqn{F_{\nu_1,\nu_2}}{F_{n1,n2}} fulfills (Abramowitz & Stegun 26.6.2, p.946)
+  \eqn{F_{\nu_1,\nu_2}(qF) = 1 - I_x(\nu_2/2, \nu_1/2) = I_{1-x}(\nu_1/2, \nu_2/2),}{%
+       F_{n1,n2}(qF)   = 1 - I_x(n2/2, n1/2)   = I_{1-x}(n1/2, n2/2),}  where
+  \eqn{x := \frac{\nu_2}{\nu_2 + \nu_1*qF}}{x := n2/(n2 + n1*qF)},  and
+  \eqn{I_x(a,b)} is the incomplete beta function; in \R, \eqn{=} \code{\link{pbeta}(x, a,b)}.
+
   It is the distribution of the ratio of the mean squares of
-  \eqn{n_1}{n1} and \eqn{n_2}{n2} independent standard normals, and hence
+  \eqn{\nu_1}{n1} and \eqn{\nu_2}{n2} independent standard normals, and hence
   of the ratio of two independent chi-squared variates each divided by its
   degrees of freedom.  Since the ratio of a normal and the root
   mean-square of \eqn{m} independent normals has a Student's \eqn{t_m}
@@ -123,9 +130,16 @@ stopifnot(all.equal(2*pt(x,nu) - 1, pf(x^2, 1,nu)),
 # check this is the same as the density of F_{1,m}
 all.equal(df(x^2, 1, 5), dt(x, 5)/x)
 
-## Identity:  qf(2*p - 1, 1, df) == qt(p, df)^2  for  p >= 1/2
+## Identity (F <-> t):  qf(2*p - 1, 1, df) == qt(p, df)^2  for  p >= 1/2
 p <- seq(1/2, .99, length.out = 50); df <- 10
 rel.err <- function(x, y) ifelse(x == y, 0, abs(x-y)/mean(abs(c(x,y))))
-\donttest{quantile(rel.err(qf(2*p - 1, df1 = 1, df2 = df), qt(p, df)^2), .90)  # ~= 7e-9}
+stopifnot(all.equal(qf(2*p - 1, df1 = 1, df2 = df),
+                    qt(p, df)^2))
+
+## Identity (F <-> Beta <-> incompl.beta):
+n1 <- 7 ; n2 <- 12; qF <- c((0:4)/4, 1.5, 2:16)
+x <- n2/(n2 + n1*qF)
+stopifnot(all.equal(pf(qF, n1, n2, lower.tail=FALSE),
+                    pbeta(x, n2/2, n1/2)))
 }
 \keyword{distribution}
