@@ -7,13 +7,10 @@ const macros = {
 
 function processMathHTML()
 {
-    var l = document.getElementsByClassName('reqn');
-    for (let e of l) {
-	katex.render(e.textContent, e,
-		     {
-			 throwOnError: false,
-			 macros
-		     });
+    var i, l = document.getElementsByClassName('reqn');
+    var opts = { throwOnError: false, macros: macros };
+    for (i = 0; i < l.length; i++) {
+	katex.render(l[i].textContent, l[i], opts);
     }
     return;
 }
