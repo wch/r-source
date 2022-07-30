@@ -4513,7 +4513,7 @@ can be overridden by setting this variable to a false value.
 
 @item _R_CHECK_RD_MATH_RENDERING_
 Check whether HTML math rendering via KaTeX works (if package
-@CRANpkg{katex} is available).
+@CRANpkg{V8} is available).
 See 
 @uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/}.
 Default: false.

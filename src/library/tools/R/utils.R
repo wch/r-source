@@ -1718,6 +1718,26 @@ function(parent = parent.frame())
              hash=TRUE, parent=parent)
 }
 
+### ** .make_KaTeX_checker
+
+.make_KaTeX_checker <- local({
+    fun <- NULL
+    ctx <- NULL
+    function() {
+        if(is.null(fun) && requireNamespace("V8", quietly = TRUE)) {
+            dir <- file.path(R.home(), "doc", "html")
+            ctx <<- V8::v8("window")
+            ctx$source(file.path(dir, "katex-config.js")) # defines
+                                        # additional 'macros' 
+            ctx$source(file.path(dir, "katex", "katex.js"))
+            ctx$eval("var checkopts = {throwOnError: true, macros: macros};")
+            ctx$eval("function checkTex(s) { return katex.renderToString(s, checkopts); }")
+            fun <<- function(tex) ctx$call('checkTex', tex)
+        }
+        fun
+    }
+})
+
 ### ** nonS3methods [was .make_S3_methods_stop_list ]
 
 nonS3methods <- function(package)

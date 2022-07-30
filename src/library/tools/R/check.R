@@ -5019,20 +5019,12 @@ add_dummies <- function(dir, Log)
         }
 
         if(i2) {
-            if(!requireNamespace("katex", quietly = TRUE)) {
+            if(is.null(.katex <- .make_KaTeX_checker())) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
-                          "Skipping checking math rendering: package 'katex' unavailable\n")
+                          "Skipping checking math rendering: package 'V8' unavailable\n")
             } else {
-                .katex <- function(s) {
-                    katex::katex_html(s, preview = FALSE,
-                                      ## Keep this in sync with
-                                      ## 'doc/html/katex-config.js'.
-                                      macros = list("\\R" = "\\textsf{R}",
-                                                    "\\code" = "\\texttt",
-                                                    "\\mbox" = "\\text"))
-                }
                 results <- lapply(eq[, 3L],
                                   function(s)
                                       tryCatch(.katex(s), error = identity))
