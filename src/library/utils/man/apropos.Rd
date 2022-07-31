@@ -7,7 +7,7 @@
 \title{Find Objects by (Partial) Name}
 \usage{
 apropos(what, where = FALSE, ignore.case = TRUE,
-        dot_internals=FALSE, mode = "any")
+        dot_internals = FALSE, mode = "any")
 
 find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 }

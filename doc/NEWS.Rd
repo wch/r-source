@@ -46,9 +46,12 @@
       performance reasons should no longer be needed and is discouraged.
       It may lead to incorrect results.
 
-      \item \code{apropos()} gains option \code{dot_internals} which is
-      used by the completion (\code{help(rcompgen)}) engine to also see
-      \pkg{base} internals such as \code{.POSIXct()}.
+      \item \code{apropos()} gains an argument \code{dot_internals} which
+      is used by the completion (\code{help(rcompgen)}) engine to also
+      see \pkg{base} internals such as \code{.POSIXct()}.
+
+      \item Support in \code{tools::Rdiff()} for comparing uncompressed
+      PDF files is further reduced -- see its help page.
     }
   }
 
@@ -77,6 +80,15 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \code{USE_FC_LEN_T} is the default: this uses the
+      correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
+      routines called from C/C++, and requires adjustment of many such
+      calls -- see \sQuote{Writing R Extensions} §6.6.1.
+    }
+  }
+
   \subsection{FORTRAN FLAGS}{
     \itemize{
       \item The flag \option{-fno-optimize-sibling-calls} is no longer
@@ -89,15 +101,6 @@
     }
   }
 
-  \subsection{PACKAGE INSTALLATION}{
-    \itemize{
-      \item \code{USE_FC_LEN_T} is the default: this uses the
-      correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
-      routines called from C/C++, and requires adjustment of many such
-      calls -- see \sQuote{Writing R Extensions} §6.6.1.
-    }
-  }
-
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The deprecated S-compatibility macros \code{DOUBLE_*} in
@@ -105,16 +108,11 @@
       removed.
 
       \item The deprecated legacy typedefs of \code{Sint} and
-      \code{Sfloat} in header \file{R.h} can be excluded by defining
-      macro \code{NO_S_TYPEDEFS} before including the header.  This is
-      defined when using \command{R CMD check --as-cran} or by defining the
-      environment variable \env{_R_NO_S_TYPEDEFS_} to a true value when
-      running \command{R CMD check}.
+      \code{Sfloat} in header \file{R.h} are no longer defined, and that
+      header no longer includes header \file{limits.h} from C nor
+      \file{climits} from C++.
 
-      If these are excluded, \file{R.h} no longer includes header
-      \file{limits.h} from C nor \file{climits} from C++.
-
-      [This is scheduled to become the default on 2022-08-10.]
+      [This has been postponed to 2022-08-10, after the CRAN summer shutdown.]
     }
   }
 
@@ -133,11 +131,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{default.stringsAsFactors()} is defunct.
-
-      \item Support in \code{tools::Rdiff} for uncompressed PDF files is
-      further reduced (see its help page): support may be removed
-      entirely in future.
-    }
+   }
   }
 
   \subsection{BUG FIXES}{
