@@ -81,6 +81,9 @@ uninstall:
 	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
 	  rm -f "$(DESTDIR)$(rdocdir)/html/$${f}"; \
 	done
+	@for d in $(INSTDIRS); do \
+	  rm -rf "$(DESTDIR)$(rdocdir)/html/$${d}"; \
+	done
 	@rmdir "$(DESTDIR)$(rdocdir)/html" 2>/dev/null \
 	  || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"
 
