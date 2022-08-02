@@ -5011,30 +5011,25 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           "Skipping checking math rendering: package 'V8' unavailable\n")
             } else {
-                results <- lapply(eq[, 3L],
-                                  function(s)
-                                      tryCatch(.katex(s), error = identity))
-                ind <- vapply(results, inherits, NA, "error")
+                results <- lapply(eq[, 3L], .katex)
+                msg <- vapply(results, `[[`, "", "error")
+                ind <- nzchar(msg)
                 if(any(ind)) {
                     if(!any) noteLog(Log)
                     any <- TRUE
-                    msg <- vapply(results[ind], conditionMessage, "")
-                    ## Ideally the messages would already be marked as
-                    ## UTF-8.
-                    Encoding(msg) <- "UTF-8"
-                    msg <- sub("^ParseError: KaTeX parse error: (.*) at position.*:",
+                    msg <- msg[ind]
+                    msg <- sub("^KaTeX parse error: (.*) at position.*:",
                                "\\1 in",
                                msg)
-                    msg <- sub("^ParseError: KaTeX parse error: ", "", msg)
+                    msg <- sub("^KaTeX parse error: ", "", msg)
                     ## KaTeX uses
                     ##   COMBINING LOW LINE  (U+0332)
                     ##   HORIZONTAL ELLIPSIS (U+2026)
                     ## for formatting parse errors.  These will not work
-                    ## in non-UTF-8 locales, so change as necessary ...
-                    if(!l10n_info()[["UTF-8"]]) {
-                        msg <- gsub("\u2026", "...", msg)
-                        msg <- gsub("\u0332", "", msg)
-                    }
+                    ## in non-UTF-8 locales and not well in UTF-8 ones,
+                    ## so change as necessary ... 
+                    msg <- gsub("\u2026", "...", msg)
+                    msg <- gsub("\u0332", "", msg)
                     l1 <- eq[ind, 5L]
                     l2 <- eq[ind, 6L]
                     tst <- (l1 == l2)
@@ -5064,7 +5059,7 @@ add_dummies <- function(dir, Log)
                         recursive = TRUE)
         allfiles <- sub("^./","", allfiles)
         ## this is tailored to the FreeBSD/Linux 'file',
-        ## see http://www.darwinsys.com/file/
+        ## see <http://www.darwinsys.com/file/>
         ## (Solaris has a different 'file' without --version)
         FILE <- "file"
         lines <- suppressWarnings(tryCatch(system2(FILE, "--version", TRUE, TRUE), error = function(e) "error"))
@@ -5080,7 +5075,7 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "for executable files")
 
             ## There is a bug mis-identifying DBF files from 2022
-            ## https://bugs.astron.com/view.php?id=316
+            ## <https://bugs.astron.com/view.php?id=316>
             pretest <- function(f)
             {
                 ## The format is (in bytes) the version mumber,
