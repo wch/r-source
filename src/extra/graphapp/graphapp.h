@@ -6,7 +6,7 @@
  *  This header file is designed to be platform-independent.
  *
  *  Copyright 2006-8	The R Foundation
- *  Copyright 2013-20	The R Core Team
+ *  Copyright 2013-22	The R Core Team
  *
  */
 
@@ -265,6 +265,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define cuttext		GA_cuttext
 #define darker		GA_darker
 #define decrease_refcount	GAI_decrease_refcount
+#define default_font_charset	GAI_default_font_charset
 #define del_all_contexts	GAI_del_all_contexts
 #define del_context		GAI_del_context
 #define del_string		GAI_del_string
