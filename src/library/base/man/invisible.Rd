@@ -1,6 +1,6 @@
 % File src/library/base/man/invisible.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{invisible}
@@ -9,9 +9,9 @@
 \description{
   Return a (temporarily) invisible copy of an object.
 }
-\usage{invisible(x)}
+\usage{invisible(x = NULL)}
 \arguments{
-  \item{x}{an arbitrary \R object.}
+  \item{x}{an arbitrary \R object, by default \code{\link{NULL}}.}
 }
 \details{
   This function can be useful when it is desired to have functions

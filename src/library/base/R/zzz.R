@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ assign("forceAndCall", function(n, FUN, ...) NULL, envir = .ArgsEnv)
 assign("gc.time", function(on = TRUE) NULL, envir = .ArgsEnv)
 assign("globalenv", function() NULL, envir = .ArgsEnv)
 assign("interactive", function() NULL, envir = .ArgsEnv)
-assign("invisible", function(x) NULL, envir = .ArgsEnv)
+assign("invisible", function(x = NULL) NULL, envir = .ArgsEnv)
 assign("is.atomic", function(x) NULL, envir = .ArgsEnv)
 assign("is.call", function(x) NULL, envir = .ArgsEnv)
 assign("is.character", function(x) NULL, envir = .ArgsEnv)
