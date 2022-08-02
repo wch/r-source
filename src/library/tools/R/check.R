@@ -5039,14 +5039,16 @@ add_dummies <- function(dir, Log)
                     msg <- sub("^ParseError: KaTeX parse error: (.*) at position.*:",
                                "\\1 in",
                                msg)
+                    msg <- sub("^ParseError: KaTeX parse error: ", "", msg)
                     ## KaTeX uses
                     ##   COMBINING LOW LINE  (U+0332)
                     ##   HORIZONTAL ELLIPSIS (U+2026)
-                    ## for formatting parse errors.  For now, get rid of
-                    ## these, as they will not work in non-UTF-8 locales
-                    ## and not work well when turning check logs to HTML.
-                    msg <- gsub("\u2026", "...", msg)
-                    msg <- gsub("\u0332", "", msg)
+                    ## for formatting parse errors.  These will not work
+                    ## in non-UTF-8 locales, so change as necessary ...
+                    if(!l10n_info()[["UTF-8"]]) {
+                        msg <- gsub("\u2026", "...", msg)
+                        msg <- gsub("\u0332", "", msg)
+                    }
                     l1 <- eq[ind, 5L]
                     l2 <- eq[ind, 6L]
                     tst <- (l1 == l2)
