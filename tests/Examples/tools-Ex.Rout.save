@@ -638,6 +638,15 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
+> f <- tempfile()
+> writeLines(paste0("\\newcommand{\\Rlogo}{\\if{html}{\\figure{Rlogo.svg}{options: width=4em alt=\"R logo\"}}",
++                   "\\if{latex}{\\figure{Rlogo.pdf}{options: width=0.5in}}}"),
++ 	    f)
+> m <- loadRdMacros(f)
+> ls(m)
+[1] "\\Rlogo"
+> ls(parent.env(parent.env(m)))
+character(0)
 > 
 > 
 > 

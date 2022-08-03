@@ -61,12 +61,11 @@ if(.Platform$OS.type == "windows") {
 }
 
 library(tools)
-example(Rdutils, run.donttest = TRUE)
-example(fileutils, run.donttest = TRUE)
+example(Rd_db, run.donttest = TRUE)
+example(file_ext, run.donttest = TRUE)
 example(makevars_user, run.donttest = TRUE)
 ## results are location- and OS-specific
 example(parseLatex, run.donttest = TRUE) # charset-specific
-example(loadRdMacros, run.donttest = TRUE) # collation-specific
 
 ## part of example(buildVignettes) at one time
 gVigns <- pkgVignettes("grid")
