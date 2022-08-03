@@ -5922,7 +5922,10 @@ if(englishMsgs)
 
 ## Testing fix for PR#18344 [ tar() warning about illegal uid/gid ]:
 sys <- Sys.info() # Only 'root' can create files with illegal uid/gid
-if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root") {
+if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root"
+   ## not a "weakened root" {TODO: more reliable check}
+   && !identical(Sys.getenv("container"), "podman")
+   ) {
     dir.create(mdir <- file.path(tempdir(),"stuff"))
     for(f in letters[1:3])
         writeLines("first line", file.path(mdir, f))
