@@ -65,11 +65,12 @@ chkNlm <- function(nlL, estimate, tols, codes.wanted = 1:2)
     p <- length(estimate)
     n <- length(nlL)
     tols <- lapply(tols, rep_len, length.out = n)
+    cat("delta.estim.:\n")
+    print(d.est <- abs(vapply(nlL, `[[`, estimate, "estimate") - estimate))
     stopifnot(
         vapply(nlL, `[[`, pi, "minimum") <= tols$min,
         ##----
-        abs(vapply(nlL, `[[`, estimate, "estimate") - estimate) <=
-        rep(tols$est, each=p),
+        d.est <= rep(tols$est, each=p),
         ##----
         abs(vapply(nlL, `[[`, c(0,0), "gradient")) <= rep(tols$grad, each=p),
         ##----
@@ -90,12 +91,12 @@ chkNlm(l3.0, estimate = c(1,1),
 ## all converge here, too,  fgh now being best
 utils::str(l3.10 <- nlm3(x0 = c(-10, 10), ndigit = 14, gradtol = 1e-8))
 
-## These tolerances were plucked from thin air: reduced for 32-bit Linux
+## Tolerances loosened for 32-bit Linux and 64-bit Ubuntu 22.04.1 LTS :
 chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
        ##                  nl.f   nl.fg  nl.fgh
        tols = list(min = c(1e-9, 1e-20, 1e-16),
-                   est = c(2e-5,  1e-10, 1e-14),
-                   grad= c(1e-3,  6e-9 , 1e-12)),
+                   est = c(1e-4, 1e-10, 1e-14),
+                   grad= c(1e-3,  6e-9, 1e-12)),
        codes.wanted = if(Lb64) 1:2 else 1:3)
 
 ## all 3 fail to converge here
