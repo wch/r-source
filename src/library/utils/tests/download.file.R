@@ -72,23 +72,22 @@ tests <- function() {
     tmp1 <- tempfile()
     tmp2 <- tempfile()
     on.exit(unlink(c(tmp1, tmp2)), add = TRUE)
-    download.file(urls, c(tmp1, tmp2), quiet = TRUE,
-                  headers = c(foo = "bar", zzzz = "bee"))
-    h1 <- readLines(tmp1)
-    h2 <- readLines(tmp2)
-    stopifnot(any(grepl("Foo.*bar", h1)))
-    stopifnot(any(grepl("Zzzz.*bee", h1)))
-    stopifnot(any(grepl("Foo.*bar", h2)))
-    stopifnot(any(grepl("Zzzz.*bee", h2)))
+    status <- download.file(urls, c(tmp1, tmp2), quiet = TRUE,
+                            headers = c(foo = "bar", zzzz = "bee"))
+    if (status == 0L) {
+        h1 <- readLines(tmp1)
+        h2 <- readLines(tmp2)
+        stopifnot(any(grepl("Foo.*bar", h1)))
+        stopifnot(any(grepl("Zzzz.*bee", h1)))
+        stopifnot(any(grepl("Foo.*bar", h2)))
+        stopifnot(any(grepl("Zzzz.*bee", h2)))
+    }
   }
 
-  if (getOption("download.file.method", "") != "internal") {
-    cat("- HTTPS\n")
-    h <- get_headers(headers = c(foo = "bar", zzzz = "bee"),
-                     protocol = "https")
-    stopifnot(any(grepl("Foo.*bar", h)))
-    stopifnot(any(grepl("Zzzz.*bee", h)))
-  }
+  cat("- HTTPS\n")
+  h <- get_headers(headers = c(foo = "bar", zzzz = "bee"), protocol = "https")
+  stopifnot(any(grepl("Foo.*bar", h)))
+  stopifnot(any(grepl("Zzzz.*bee", h)))
 
   cat("- If headers not named, then error\n")
   ret <- tryCatch(
@@ -146,19 +145,14 @@ tests <- function() {
   stopifnot(any(grepl("Foo.*bar", h)))
   stopifnot(any(grepl("Zzzz.*bee", h)))
 
-  if (getOption("download.file.method", "") != "internal") {
-    cat("- HTTPS with url()\n")
-    h <- get_headers_url(headers = c(foo = "bar", zzzz = "bee"),
-                         protocol = "https")
-    stopifnot(any(grepl("Foo.*bar", h)))
-    stopifnot(any(grepl("Zzzz.*bee", h)))
-  }
+  cat("- HTTPS with url()\n")
+  h <- get_headers_url(headers = c(foo = "bar", zzzz = "bee"),
+                       protocol = "https")
+  stopifnot(any(grepl("Foo.*bar", h)))
+  stopifnot(any(grepl("Zzzz.*bee", h)))
 }
 
 main <- function() {
-##  cat("internal method\n")
-##  with_options(c(download.file.method = "internal"), tests())
-
     if (capabilities("libcurl")) {
         cat("\nlibcurl method\n")
         with_options(c(download.file.method = "libcurl"), tests())
