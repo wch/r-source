@@ -1,3 +1,4 @@
+// Used in tools:::.make_KaTeX_checker().
 function checkTex(s)
 {
     var opts = { throwOnError: true, macros: macros };
