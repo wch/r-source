@@ -1,6 +1,17 @@
 tidy_validate <-
 function(f, tidy = "tidy") {
-    z <- suppressWarnings(system2(tidy, c("-language en", "-qe", f),
+    z <- suppressWarnings(system2(tidy,
+                                  c("-language en", "-qe",
+                                    ## <FIXME>
+                                    ## HTML Tidy complains about empty
+                                    ## spans, which may be ok.
+                                    ## To suppress all such complaints:
+                                    ##   "--drop-empty-elements no",
+                                    ## To allow experimenting for now:
+                                    Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_OPTS_",
+                                               ""),
+                                    ## </FIXME>
+                                    f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
     s <- readLines(f, warn = FALSE)
