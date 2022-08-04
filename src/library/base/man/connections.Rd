@@ -280,8 +280,7 @@ socketTimeout(socket, timeout = -1)
   No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
 
-  All the methods attempt to follow redirected HTTP URLs, but the
-  \code{"internal"} method is unable to follow redirections to HTTPS URLs.
+  All the methods attempt to follow redirected HTTP and HTTPS URLs.
 
   Server-side cached data is always accepted.
 
