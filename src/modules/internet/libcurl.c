@@ -237,8 +237,15 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 	struct curl_tlssessioninfo *tls_backend_info = NULL;
 	CURLcode ret = curl_easy_getinfo(hnd, CURLINFO_TLS_SSL_PTR,
 	                                 &tls_backend_info);
-	if (!ret && tls_backend_info->backend == CURLSSLBACKEND_SCHANNEL)
+	if (!ret && tls_backend_info->backend == CURLSSLBACKEND_SCHANNEL) {
 	    capath = NULL;
+# if LIBCURL_VERSION_NUM >= 0x074600
+	    const char *rbe = getenv("R_LIBCURL_SSL_REVOKE_BEST_EFFORT");
+	    if (rbe && StringTrue(rbe)) 
+		curl_easy_setopt(hnd, CURLOPT_SSL_OPTIONS,
+				 CURLSSLOPT_REVOKE_BEST_EFFORT);
+# endif
+	}
 #endif
 	if (capath && capath[0])
 	    curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);

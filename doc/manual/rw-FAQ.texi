@@ -587,6 +587,11 @@ We have had several reports of this, although they do work for us on
 Internet (but this should result in informative error messages from the
 firewall program).
 
+(c) A MITM proxy (typically in enterprise environments) makes it impossible
+to validate that certificates haven't been revoked.  One can switch to only
+best effort revocation checks via an environment variable: see
+@code{?download.file}.
+
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
