@@ -57,7 +57,6 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-
       \item The included LAPACK sources have been updated to include the
       four Fortran 90 routines rather than their Fortran 77
       predecessors.  This may give some different signs in SVDs or
@@ -77,6 +76,11 @@
 
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
+
+      \item On \samp{aarch64} (aka \sampe{arm64}) platforms such as Macs with
+      \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
+      \option{-fPIC} by default (instead of \option{-fpic}), as desired in
+      \PR{18326}.
     }
   }
 
