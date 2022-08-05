@@ -1022,7 +1022,7 @@ initialRdMacros <- function(pkglist = NULL,
                                  p),
                         call. = FALSE)
             else if(dir.exists(file.path(fp, "help", "macros")))
-    	    	macros <- loadPkgRdMacros(system.file(package = p), macros)
+    	    	macros <- loadPkgRdMacros(fp, macros)
     	    else
     	    	warning(gettextf("No Rd macros in package '%s'.", p),
                         call. = FALSE)
@@ -1033,18 +1033,7 @@ initialRdMacros <- function(pkglist = NULL,
 }
 
 loadPkgRdMacros <- function(pkgdir, macros = NULL) {
-    ## this does get called on any directory,
-    ## e.g. a man directory in package 'diveMove'.
-    pkglist <- try(.read_description(file.path(pkgdir, "DESCRIPTION")),
-                   silent = TRUE)
-    if (inherits(pkglist, "try-error"))
-    	pkglist <-  try(.read_description(file.path(pkgdir, "DESCRIPTION.in")),
-                        silent = TRUE)
-    ## may check for 'macros' subdirectory?
-    if (inherits(pkglist, "try-error")) return(macros)
-
-    pkglist <- pkglist["RdMacros"]
-
+    pkglist <- .get_package_metadata(pkgdir)["RdMacros"]
     if (is.na(pkglist))
         pkglist <- NULL
 
