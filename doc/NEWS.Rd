@@ -172,6 +172,12 @@
       %% possibly back port to 4.2.z branch
       \item The \code{relist()} function of \pkg{utils} now supports
       \code{NULL} elements in the skeleton (\PR{15854}).
+
+      \item \code{poly(x, n)} now works again, now documented, when \code{x} is a
+      \code{"Date"} or \code{"POSIXct"} object, or of another class while
+      fulfilling \code{mode(x) == "numeric"}.  This also enables
+      \code{poly(x, *, raw=TRUE)} for such variables.  Reported by Michael
+      Chirico to R-devel.
     }
   }
 }
