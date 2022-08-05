@@ -581,7 +581,8 @@ for example @code{update.packages()} and the menu items on the Packages menu.
 We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible causes.
 
-(a) A proxy needs to be set up: see @code{?download.file}.
+(a) A proxy needs to be set up: see @code{?download.file}. Note that this is
+specific to the download method and the default method changed in \R 4.2.0.
 
 (b) Firewall settings are blocking the R executables from contacting the
 Internet (but this should result in informative error messages from the
