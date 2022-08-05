@@ -1,6 +1,6 @@
 % File src/library/utils/man/charClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2021 R Core Team
+% Copyright 2022 R Core Team
 % Distributed under GPL 2 or later
 \name{charClass}
 \alias{charClass}
@@ -70,8 +70,7 @@ charClass(x, class)
   functions are coded in Unicode points, but this is known to be true
   for all recent platforms.
 
-  In principle the classification could depend on the locale even on
-  one platform, but that seems no longer to be seen.
+  The classification may depend on the locale even on one platform.
 }
 \seealso{
   Character classes are used in \link{regular expression}s.
