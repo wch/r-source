@@ -13,15 +13,16 @@
 }
 \usage{
 loadRdMacros(file, macros = TRUE)
-loadPkgRdMacros(pkgdir, macros)
+loadPkgRdMacros(pkgdir, macros = NULL)
 }
 \arguments{
   \item{file}{
     A file in Rd format containing macro definitions.
   }
   \item{macros}{
-    \code{TRUE} or a previous set of macro definitions, in the format
+    optionally, a previous set of macro definitions, in the format
     expected by the \code{\link{parse_Rd}} \code{macros} argument. 
+    \code{loadPkgRdMacros} loads the system Rd macros by default.
   }
   \item{pkgdir}{
     The base directory of a source package or an installed package.
