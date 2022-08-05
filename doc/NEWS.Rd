@@ -217,6 +217,10 @@
       \item When \code{isGeneric(f, fdef=*)} is used with mismatching
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
+
+      \item \code{write.table}, \code{write.csv} and \code{write.csv2}
+      restore their numerical precision (internal equivalent of
+      \code{digits= 15}) after an interrupt (\PR{18384}).
     }
   }
 }
