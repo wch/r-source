@@ -1245,7 +1245,7 @@ local({
     out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
     names(out) <-
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
-    eval(substitute(function() {out}, list(out=out)), envir=NULL)
+    eval(substitute(function() {out}, list(out=out)), envir = topenv())
     })
 
 ### ** .get_standard_package_dependencies
