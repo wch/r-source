@@ -223,6 +223,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
 
+  On Windows with \code{method = "libcurl"}, when \R was linked with
+  \code{libcurl} with \code{Schannel} enabled, the connection fails if it
+  cannot be established that the certificate has not been revoked.  Some
+  MITM proxies present particularly in corporate environments do not work
+  with this behavior. It can be changed by setting environment variable
+  \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} to \code{TRUE}, with the
+  consequence of reducing security.
+
   Note that the root certificates used by \R may or may not be the same
   as used in a browser, and indeed different browsers may use different
   certificate bundles (there is typically a build option to choose

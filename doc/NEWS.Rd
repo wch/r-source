@@ -11,8 +11,13 @@
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
       of an external \command{diff} command and switches to
       \code{useDiff = FALSE} if none is found.
-
       This allows \command{R CMD Rdiff} to always work.
+
+      \item On Windows, environment variable
+      \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to only
+      best effort revocation checks with the default \code{"libcurl"}
+      download method.  This reduces security, but may be needed for
+      downloads to work with MITM proxies (\PR{18379}).
     }
   }
 
