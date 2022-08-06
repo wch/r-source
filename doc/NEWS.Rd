@@ -196,7 +196,7 @@
 
       \item On Windows, environment variable
       \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to only
-      best effort revocation checks with the default \code{"libcurl"}
+      best-effort revocation checks with the default \code{"libcurl"}
       download method.  This reduces security, but may be needed for
       downloads to work with MITM proxies (\PR{18379}).
     }
@@ -222,9 +222,9 @@
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
 
-      \item \code{write.table}, \code{write.csv} and \code{write.csv2}
-      restore their numerical precision (internal equivalent of
-      \code{digits= 15}) after an interrupt (\PR{18384}).
+      \item \code{write.table()}, \code{write.csv()} and
+      \code{write.csv2()} restore their numerical precision (internal
+      equivalent of \code{digits = 15}) after an interrupt (\PR{18384}).
     }
   }
 }
