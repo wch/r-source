@@ -84,6 +84,19 @@ typedef float CGFloat;
 #define CGFLOAT_DEFINED 1
 #endif
 
+typedef struct QuartzGradient {
+    CGGradientRef gradient;
+    CGPoint startPoint;
+    CGPoint endPoint;
+    CGGradientDrawingOptions options;
+    // Just not used for linear gradients
+    CGFloat startRadius;
+    CGFloat endRadius;
+    int type;
+} QGradient;
+
+typedef QGradient* QGradientRef;
+
 typedef struct QuartzSpecific_s {
     double        ps;
     double        scalex, scaley;  /* resolution correction: px/pt ratio */
@@ -109,6 +122,10 @@ typedef struct QuartzSpecific_s {
     CGFontRef     font;            /* currently used font */
 
     void*         userInfo;        /* pointer to a module-dependent space */
+
+    int numPatterns;
+    QGradientRef *gradients;
+    CGPatternRef **patterns;
 
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
@@ -346,6 +363,182 @@ static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
     return NULL;
 }
 
+/*
+ ***************************
+ * Patterns
+ *
+ ***************************
+ */
+
+/* Just a starting value */
+#define maxPatterns 64
+
+static void QuartzInitPatterns(QuartzDesc *xd)
+{
+    int i;
+    xd->numPatterns = maxPatterns;
+    /* Gradients and tiling patterns are different types so need 
+     * separate arrays */
+    xd->gradients = malloc(sizeof(QGradientRef) * xd->numPatterns);
+    xd->patterns = malloc(sizeof(CGPatternRef*) * xd->numPatterns);
+    for (i = 0; i < xd->numPatterns; i++) {
+        xd->gradients[i] = NULL;
+        xd->patterns[i] = NULL;
+    }
+}
+
+static int QuartzGrowPatterns(QuartzDesc *xd)
+{
+    int i, newMax = 2*xd->numPatterns;
+    void *tmp;
+    tmp = realloc(xd->gradients, sizeof(QGradientRef) * newMax);
+    if (!tmp) { 
+        warning(_("Quartz gradients exhausted (failed to increase maxPatterns)"));
+        return 0;
+    }
+    xd->gradients = tmp;
+    tmp = realloc(xd->patterns, sizeof(CGPatternRef) * newMax);
+    if (!tmp) { 
+        warning(_("Quartz patterns exhausted (failed to increase maxPatterns)"));
+        return 0;
+    }
+    xd->patterns = tmp;
+    for (i = xd->numPatterns; i < newMax; i++) {
+        xd->gradients[i] = NULL;
+        xd->patterns[i] = NULL;
+    }
+    xd->numPatterns = newMax;
+    return 1;
+}
+
+static void QuartzCleanPatterns(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->gradients[i] != NULL) {
+            CGGradientRelease(xd->gradients[i]->gradient);
+            free(xd->gradients[i]);
+            xd->gradients[i] = NULL;
+        }
+        if (xd->patterns[i] != NULL) {
+            CGPatternRelease(*(xd->patterns[i]));
+            xd->patterns[i] = NULL;
+        }
+    }    
+}
+
+static void QuartzDestroyPatterns(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->gradients[i] != NULL) {
+            CGGradientRelease(xd->gradients[i]->gradient);
+            free(xd->gradients[i]);
+        }
+    }    
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->patterns[i] != NULL) {
+            CGPatternRelease(*(xd->patterns[i]));
+        }
+    }    
+    free(xd->gradients);
+    free(xd->patterns);
+}
+
+static int QuartzNewPatternIndex(QuartzDesc *xd, Rboolean gradient)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if ((gradient && xd->gradients[i] == NULL) ||
+            (!gradient && xd->patterns[i] == NULL)) {
+            return i;
+        } else {
+            if (i == (xd->numPatterns - 1) &&
+                !QuartzGrowPatterns(xd)) {
+                return -1;
+            }
+        }
+    }    
+    /* Should never get here, but just in case */
+    warning(_("Quartz patterns exhausted"));
+    return -1;
+}
+
+static Rboolean QuartzGradientFill(SEXP pattern, QuartzDesc *xd) {
+    if (pattern == R_NilValue) {
+        return FALSE;
+    } else {
+        int index = INTEGER(pattern)[0];
+        QGradientRef quartz_gradient = xd->gradients[index];
+        return quartz_gradient != NULL &&
+            (quartz_gradient->type == R_GE_linearGradientPattern ||
+             quartz_gradient->type == R_GE_radialGradientPattern);
+    }
+}
+
+static void QuartzDrawGradientFill(CGContextRef ctx, SEXP pattern, 
+                                   QuartzDesc *xd) {
+    int index = INTEGER(pattern)[0];
+    QGradientRef quartz_gradient = xd->gradients[index];
+    switch (quartz_gradient->type) {
+    case R_GE_linearGradientPattern:
+        CGContextDrawLinearGradient(ctx, 
+                                    quartz_gradient->gradient,
+                                    quartz_gradient->startPoint, 
+                                    quartz_gradient->endPoint,
+                                    quartz_gradient->options);
+        break;
+    case R_GE_radialGradientPattern:
+        CGContextDrawRadialGradient(ctx, 
+                                    quartz_gradient->gradient,
+                                    quartz_gradient->startPoint, 
+                                    quartz_gradient->startRadius,
+                                    quartz_gradient->endPoint, 
+                                    quartz_gradient->endRadius,
+                                    quartz_gradient->options);
+        break;
+    }
+}
+
+static QGradientRef QuartzCreateGradient(SEXP gradient, int type, 
+                                         QuartzDesc *xd) {
+    int i;
+    unsigned int col;
+    QGradientRef quartz_gradient = malloc(sizeof(QGradient));
+    if (!quartz_gradient) error(_("Failed to create gradient"));
+    quartz_gradient->type = type;
+    quartz_gradient->startPoint.x = R_GE_linearGradientX1(gradient);
+    quartz_gradient->startPoint.y = R_GE_linearGradientY1(gradient);
+    quartz_gradient->endPoint.x = R_GE_linearGradientX2(gradient);
+    quartz_gradient->endPoint.y = R_GE_linearGradientY2(gradient);
+    CGColorSpaceRef colorspace;
+    size_t num_locations = R_GE_linearGradientNumStops(gradient);
+    CGFloat *locations; 
+    locations = malloc(sizeof(CGFloat) * num_locations);
+    if (!locations) error(_("Failed to create gradient"));
+    CGFloat *components;
+    components = malloc(sizeof(CGFloat) * num_locations * 4);
+    if (!components) error(_("Failed to create gradient"));
+    for (i = 0; i < num_locations; i++) {
+        locations[i] = R_GE_linearGradientStop(gradient, i);
+        col = R_GE_linearGradientColour(gradient, i);
+        components[i*4] = R_RED(col)/255;
+        components[i*4 + 1] = R_GREEN(col)/255;
+        components[i*4 + 2] = R_BLUE(col)/255;
+        components[i*4 + 3] = R_ALPHA(col)/255;
+    }
+    colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+    quartz_gradient->gradient = 
+        CGGradientCreateWithColorComponents(colorspace, 
+                                            components,
+                                            locations, 
+                                            num_locations);
+    free(locations);
+    free(components);
+    return quartz_gradient;
+}
+
+
 #pragma mark RGD API Function Prototypes
 
 static void     RQuartz_Close(pDevDesc);
@@ -466,6 +659,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     qd->gstate     = 0;
     qd->font       = NULL;
 
+    QuartzInitPatterns(qd);
+
     dev->deviceSpecific = qd;
     qd->dev             = dev;
 
@@ -519,6 +714,12 @@ static QuartzFunctions_t qfn = {
 QuartzFunctions_t *getQuartzAPI() {
     return &qfn;
 }
+
+/*
+ ***************************
+ * Fonts
+ ***************************
+ */
 
 /* old macOS versions has different names for some of the CGFont stuff */
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
@@ -812,6 +1013,7 @@ static void RQuartz_Close(DEVDESC)
 {
     XD;
     if (xd->close) xd->close(xd, xd->userInfo);
+    QuartzDestroyPatterns(xd);
 }
 
 static void RQuartz_Activate(DEVDESC)
@@ -1042,7 +1244,14 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     }
     CGContextBeginPath(ctx);
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
-    CGContextDrawPath(ctx, kCGPathFillStroke);
+    if (QuartzGradientFill(gc->patternFill, xd)) {
+        CGContextSaveGState(ctx);
+        CGContextClip(ctx);
+        QuartzDrawGradientFill(ctx, gc->patternFill, xd);
+        CGContextRestoreGState(ctx);
+    } else {
+        CGContextDrawPath(ctx, kCGPathFillStroke);
+    }
 }
 
 static void RQuartz_Raster(unsigned int *raster, int w, int h,
@@ -1290,7 +1499,24 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
 }
 
 static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
-    return R_NilValue;
+    DEVSPEC;
+    SEXP ref;
+    PROTECT(ref = allocVector(INTSXP, 1));
+    int index = 0;
+    int patternType = R_GE_patternType(pattern);
+    if (patternType == R_GE_linearGradientPattern) {
+        int index = QuartzNewPatternIndex(xd, 1);
+        if (index >= 0) {
+            QGradientRef quartz_gradient = 
+                QuartzCreateGradient(pattern, patternType, xd);
+            xd->gradients[index] = quartz_gradient;
+        } else {
+            warning("Radial gradients and tiling patterns not yet supported");
+        }
+    }
+    INTEGER(ref)[0] = index;
+    UNPROTECT(1);
+    return ref;
 }
 
 static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {} 
