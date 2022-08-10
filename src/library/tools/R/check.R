@@ -5027,7 +5027,7 @@ add_dummies <- function(dir, Log)
                     ##   HORIZONTAL ELLIPSIS (U+2026)
                     ## for formatting parse errors.  These will not work
                     ## in non-UTF-8 locales and not well in UTF-8 ones,
-                    ## so change as necessary ... 
+                    ## so change as necessary ...
                     msg <- gsub("\u2026", "...", msg)
                     msg <- gsub("\u0332", "", msg)
                     l1 <- eq[ind, 5L]
@@ -6580,7 +6580,7 @@ add_dummies <- function(dir, Log)
         ## allow this to be overridden if there is a problem elsewhere
         prev <- Sys.getenv("_R_CHECK_MATRIX_DATA_",  NA_character_)
         if(is.na(prev)) Sys.setenv("_R_CHECK_MATRIX_DATA_" = "TRUE")
-        Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
+##        Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
         Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE

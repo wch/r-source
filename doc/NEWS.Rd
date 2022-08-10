@@ -115,8 +115,6 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
-
-      [This has been postponed to 2022-08-10, after the CRAN summer shutdown.]
     }
   }
 

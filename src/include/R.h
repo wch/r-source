@@ -38,16 +38,10 @@
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cstdlib>
 # include <cstdio>
-# ifndef NO_S_TYPEDEFS
-#  include <climits>
-# endif
 # include <cmath>
 #else
 # include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
 # include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
-# ifndef NO_S_TYPEDEFS
-#   include <limits.h> /* for INT_MAX */
-# endif
 # include <math.h>
 #endif 
 /* 
@@ -84,13 +78,6 @@
 #include <R_ext/RS.h>
 /* for R_Calloc, R_Realloc, R_Free, Memcpy, F77_xxxx */
 
-
-#ifndef NO_S_TYPEDEFS
-typedef double Sfloat;
-typedef int Sint;
-# define SINT_MAX INT_MAX
-# define SINT_MIN INT_MIN
-#endif
 
 #ifdef __cplusplus
 extern "C" {
