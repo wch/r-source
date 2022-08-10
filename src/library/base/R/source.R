@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         from_file <- FALSE # true, if not stdin() nor from srcref
         srcfile <- NULL
         if(is.character(file)) {
+            if(!length(file) || file == "") stop("empty file/url name")
             have_encoding <- !missing(encoding) && encoding != "unknown"
             if(identical(encoding, "unknown")) {
                 enc <- utils::localeToCharset()
@@ -71,10 +72,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 stop("unable to find a plausible encoding")
             if(verbose)
                 cat(gettextf('encoding = "%s" chosen', encoding), "\n", sep = "")
-            if(file == "") {
-                file <- stdin()
-                srcfile <- "<stdin>"
-            } else {
+            {
                 filename <- file
                 file <- file(filename, "r", encoding = encoding)
                 on.exit(close(file))
@@ -108,9 +106,10 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 else
                     deparse1(substitute(file), "")
         }
+        if(verbose) { cat(sprintf(" --> from_file='%s'\n lines:", from_file)); str(lines) }
 
         exprs <- if (!from_file) {
-                     if (length(lines))  # there is a C-level test for this
+                     if (length(lines) && is.character(lines)) # there is a C-level test for this
                          .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
                      else expression()
                  } else

@@ -180,6 +180,9 @@
       fulfilling \code{mode(x) == "numeric"}.  This also enables
       \code{poly(x, *, raw=TRUE)} for such variables.  Reported by Michael
       Chirico to R-devel.
+
+      \item \code{source("")} and \code{source(character())} now give more
+      helpful error messages.
     }
   }
 }
