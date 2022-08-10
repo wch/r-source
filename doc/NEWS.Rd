@@ -44,6 +44,9 @@
       \item \code{write.table}, \code{write.csv} and \code{write.csv2}
       restore their numerical precision (internal equivalent of
       \code{digits = 15}) after an interrupt (\PR{18384}).
+
+      \item One can now read also byte \code{FF} from a clipboard connection
+      (\PR{18385}).
     }
   }
 }
