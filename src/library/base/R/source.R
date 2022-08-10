@@ -106,7 +106,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 else
                     deparse1(substitute(file), "")
         }
-        if(verbose) { cat(sprintf(" --> from_file='%s'\n lines:", from_file)); str(lines) }
+        if(verbose) { cat(sprintf(" --> from_file='%s'\n lines:", from_file)); utils::str(lines) }
 
         exprs <- if (!from_file) {
                      if (length(lines) && is.character(lines)) # there is a C-level test for this
