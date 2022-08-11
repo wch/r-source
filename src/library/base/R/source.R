@@ -50,7 +50,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         from_file <- FALSE # true, if not stdin() nor from srcref
         srcfile <- NULL
         if(is.character(file)) {
-            have_encoding <- !missing(encoding) && encoding != "unknown"
+            have_encoding <- !missing(encoding) && !identical(encoding, "unknown")
             if(identical(encoding, "unknown")) {
                 enc <- utils::localeToCharset()
                 encoding <- enc[length(enc)]
