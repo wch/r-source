@@ -4968,6 +4968,12 @@ add_dummies <- function(dir, Log)
             } else {
                 out <- tempfile()
                 on.exit(unlink(out))
+                if(installed) {
+                    ## May need libdir for stage=render Sexprs.
+                    libpaths <- .libPaths()
+                    .libPaths(c(libdir, libpaths))
+                    on.exit(.libPaths(libpaths), add = TRUE)
+                }
                 results <- lapply(db,
                                   function(x)
                                       tryCatch({
