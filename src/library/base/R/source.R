@@ -51,7 +51,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         srcfile <- NULL
         if(is.character(file)) {
             if(!length(file) || file == "") stop("empty file/url name")
-            have_encoding <- !missing(encoding) && encoding != "unknown"
+            have_encoding <- !missing(encoding) && !identical(encoding, "unknown")
             if(identical(encoding, "unknown")) {
                 enc <- utils::localeToCharset()
                 encoding <- enc[length(enc)]
