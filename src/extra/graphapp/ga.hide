@@ -22,6 +22,7 @@
  GAI_current_window
  GAI_dc
  GAI_decrease_refcount
+ GAI_default_font_charset
  GAI_del_all_contexts
  GAI_del_context
  GAI_del_string
