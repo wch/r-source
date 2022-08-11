@@ -261,7 +261,6 @@
                 return(invisible(character()))
             }
             cnt <- 0L
-            macros <- initialRdMacros(pkglist)
             for(f in names(Rd)) {
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
@@ -270,11 +269,9 @@
                 outfilename <- file.path(latexdir, out)
                 res <- Rd2latex(Rd[[f]],
 				  outfilename,
-				  encoding = encoding,
 				  outputEncoding = outputEncoding,
 				  defines = NULL,
-				  writeEncoding = !asChapter,
-				  macros = macros)
+				  writeEncoding = !asChapter)
                 latexEncodings <- c(latexEncodings,
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
