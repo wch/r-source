@@ -229,6 +229,11 @@
 
       \item One can now read also byte \code{FF} from a clipboard connection
       (\PR{18385}).
+
+      \item Non-ASCII characters are now properly displayed on Windows in
+      windows created using GraphApp via e.g.  \code{winDialogString} thanks
+      to a workaround for an at least surprising Windows behavior with UTF-8
+      as the system encoding (\PR{18382}).
     }
   }
 }
