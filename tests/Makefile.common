@@ -358,13 +358,17 @@ test-Rd:
 	  $(RDCONV) -t html    -o $${name}.html $(srcdir)/$${name}.Rd || exit 1; \
 	  $(RDCONV) -t latex   -o $${name}.tex  $(srcdir)/$${name}.Rd || exit 1; \
 	  $(RDCONV) -t example -o $${name}-Ex.R $(srcdir)/$${name}.Rd || exit 1; \
-	  diff -U 0 -b $(srcdir)/$${name}.txt.save  $${name}.txt;  \
-	  diff -U 0 -b $(srcdir)/$${name}.html.save $${name}.html; \
-	  diff -U 0 -b $(srcdir)/$${name}.tex.save  $${name}.tex;  \
-	  diff -U 0 -b $(srcdir)/$${name}-Ex.R.save $${name}-Ex.R; \
-	  $(top_builddir)/bin/R CMD Rd2pdf --quiet --no-preview --force \
-	    --output=$${name}.pdf $(srcdir)/$${name}.Rd || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}.txt.save  $${name}.txt  || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}.html.save $${name}.html || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}.tex.save  $${name}.tex  || $(ECHO); \
+	  diff -U 0 -b $(srcdir)/$${name}-Ex.R.save $${name}-Ex.R || $(ECHO); \
 	done
+	@$(ECHO) "running Rd2pdf"
+	@for name in testit ver20; do \
+	  $(RD2PDF) -o $${name}.pdf $(srcdir)/$${name}.Rd || exit 1; \
+	done
+	@$(RD2PDF) --no-index --output=Rd2.pdf $(srcdir)/Pkgs/pkgC/man \
+	  && rm -f Rd2.pdf || exit 1
 
 ## The following 6 tests are covered by test-Packages
 test-DocFiles:

@@ -1245,7 +1245,7 @@ local({
     out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
     names(out) <-
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
-    eval(substitute(function() {out}, list(out=out)), envir=NULL)
+    eval(substitute(function() {out}, list(out=out)), envir = topenv())
     })
 
 ### ** .get_standard_package_dependencies
@@ -1727,11 +1727,11 @@ function(parent = parent.frame())
         if(is.null(fun) && requireNamespace("V8", quietly = TRUE)) {
             dir <- file.path(R.home(), "doc", "html")
             ctx <<- V8::v8("window")
-            ctx$source(file.path(dir, "katex-config.js")) # defines
-                                        # additional 'macros' 
             ctx$source(file.path(dir, "katex", "katex.js"))
-            ctx$eval("var checkopts = {throwOnError: true, macros: macros};")
-            ctx$eval("function checkTex(s) { return katex.renderToString(s, checkopts); }")
+            ## Provides additional macros:
+            ctx$source(file.path(dir, "katex-config.js"))
+            ## Provides checkTex():
+            ctx$source(file.path(dir, "katex-check.js"))
             fun <<- function(tex) ctx$call('checkTex', tex)
         }
         fun

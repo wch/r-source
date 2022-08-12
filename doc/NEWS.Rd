@@ -57,7 +57,6 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-
       \item The included LAPACK sources have been updated to include the
       four Fortran 90 routines rather than their Fortran 77
       predecessors.  This may give some different signs in SVDs or
@@ -77,6 +76,11 @@
 
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
+
+      \item On \samp{aarch64} (aka \samp{arm64}) platforms such as Macs with
+      \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
+      \option{-fPIC} by default (instead of \option{-fpic}), as desired in
+      \PR{18326}.
     }
   }
 
@@ -111,8 +115,6 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
-
-      [This has been postponed to 2022-08-10, after the CRAN summer shutdown.]
     }
   }
 
@@ -172,6 +174,15 @@
       %% possibly back port to 4.2.z branch
       \item The \code{relist()} function of \pkg{utils} now supports
       \code{NULL} elements in the skeleton (\PR{15854}).
+
+      \item \code{poly(x, n)} now works again, now documented, when \code{x} is a
+      \code{"Date"} or \code{"POSIXct"} object, or of another class while
+      fulfilling \code{mode(x) == "numeric"}.  This also enables
+      \code{poly(x, *, raw=TRUE)} for such variables.  Reported by Michael
+      Chirico to R-devel.
+
+      \item \code{source("")} and \code{source(character())} now give more
+      helpful error messages.
     }
   }
 }
@@ -182,8 +193,13 @@
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
       of an external \command{diff} command and switches to
       \code{useDiff = FALSE} if none is found.
-
       This allows \command{R CMD Rdiff} to always work.
+
+      \item On Windows, environment variable
+      \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to only
+      best-effort revocation checks with the default \code{"libcurl"}
+      download method.  This reduces security, but may be needed for
+      downloads to work with MITM proxies (\PR{18379}).
     }
   }
 
@@ -206,6 +222,18 @@
       \item When \code{isGeneric(f, fdef=*)} is used with mismatching
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
+
+      \item \code{write.table()}, \code{write.csv()} and
+      \code{write.csv2()} restore their numerical precision (internal
+      equivalent of \code{digits = 15}) after an interrupt (\PR{18384}).
+
+      \item One can now read also byte \code{FF} from a clipboard connection
+      (\PR{18385}).
+
+      \item Non-ASCII characters are now properly displayed on Windows in
+      windows created using GraphApp via e.g.  \code{winDialogString} thanks
+      to a workaround for an at least surprising Windows behavior with UTF-8
+      as the system encoding (\PR{18382}).
     }
   }
 }

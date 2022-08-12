@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{source}
@@ -39,8 +39,8 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
 }
 \arguments{
   \item{file}{a \link{connection} or a character string giving the
-    pathname of the file or URL to read from.  \code{""} indicates the
-    connection \code{\link{stdin}()}.}
+    pathname of the file or URL to read from.  The \code{\link{stdin}()}
+    connection reads from the console when interactive.}
   \item{local}{\code{TRUE}, \code{FALSE} or an environment, determining
     where the parsed expressions are evaluated.  \code{FALSE} (the
     default) corresponds to the user's workspace (the global

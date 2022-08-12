@@ -18,7 +18,8 @@ INSTFILES = \
 	R.css Rlogo.svg Rlogo.pdf Search.html SearchOn.html \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
 	about.html packages-head-utf8.html  \
-	mathjax-config.js katex-config.js prism.css prism.js
+	mathjax-config.js katex-config.js katex-check.js \
+	prism.css prism.js
 INSTDIRS = katex
 NON_SVN_INSTFILES = resources.html NEWS.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes
@@ -79,6 +80,9 @@ uninstall:
 	@$(ECHO) "uninstalling $(subdir) ..."
 	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
 	  rm -f "$(DESTDIR)$(rdocdir)/html/$${f}"; \
+	done
+	@for d in $(INSTDIRS); do \
+	  rm -rf "$(DESTDIR)$(rdocdir)/html/$${d}"; \
 	done
 	@rmdir "$(DESTDIR)$(rdocdir)/html" 2>/dev/null \
 	  || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"

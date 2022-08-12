@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2019, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
@@ -290,7 +290,8 @@ text(1, 9.0, expression(
  "     second: {f * second}(x) "        == {f * second}(x)), adj = 0)
 
 
-plot(1:10, 1:10)
+## note the "{ .. }" trick to get "chained" equations:
+plot(1:10, 1:10, main = quote(1 <= {1 < 2}))
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
 text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)",
      cex = .8)

@@ -66,7 +66,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Italy (Milano) [https]",Italy,Milano,https://cran.mirror.garr.it/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it,"secure_mirror_from_master"
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
 "Japan (Tokyo) [https]",Japan,Tokyo,https://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
-"Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,
+"Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"
 "Korea (Busan) [https]",Korea,Busan,https://ftp.harukasan.org/CRAN/,"Information and Database Systems Laboratory, Pukyong National University","Jongmin Kim <jmkim # ftp.harukasan.org>",1,kr,
 "Korea (Gyeongsan-si) [https]",Korea,Gyeongsan-si,https://cran.yu.ac.kr/,"Yeungnam University","sysop # yu.ac.kr",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","bigdata # seoul.go.kr",1,kr,"secure_mirror_from_master"
@@ -100,7 +100,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (MI) [https]",USA,"Ann Arbor",https://repo.miserver.it.umich.edu/cran/,"MBNI, University of Michigan, Ann Arbor, MI","linux-mirrors # umich.edu",1,us,"secure_mirror_from_master"
-"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,
+"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,"secure_mirror_from_master"
 "USA (NC) [https]",USA,Durham,https://archive.linux.duke.edu/cran/,"Duke University, Durham, NC","csi-linux-admins # duke.edu",1,us
 "USA (OH) [https]",USA,Cleveland,https://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us,"secure_mirror_from_master"
 "USA (OR) [https]",USA,Corvallis,https://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us,"secure_mirror_from_master"

@@ -66,6 +66,7 @@ rect getcliprect(void);
 void setcliprect(rect r);
 PROTECTED void updatestatus(const char *text);
 PROTECTED font new_font_object(HFONT hf);
+UINT default_font_charset();
 
 #ifdef __cplusplus
 extern "C" {

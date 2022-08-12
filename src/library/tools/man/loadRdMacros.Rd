@@ -1,6 +1,6 @@
 % File src/library/tools/man/loadRdMacros.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2016 R Core Team
+% Copyright 2014, 2016, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loadRdMacros}
@@ -13,22 +13,23 @@
 }
 \usage{
 loadRdMacros(file, macros = TRUE)
-loadPkgRdMacros(pkgdir, macros)
+loadPkgRdMacros(pkgdir, macros = NULL)
 }
 \arguments{
   \item{file}{
     A file in Rd format containing macro definitions.
   }
   \item{macros}{
-    \code{TRUE} or a previous set of macro definitions, in the format
+    optionally, a previous set of macro definitions, in the format
     expected by the \code{\link{parse_Rd}} \code{macros} argument. 
+    \code{loadPkgRdMacros} loads the system Rd macros by default.
   }
   \item{pkgdir}{
     The base directory of a source package or an installed package.
   }
 }
 \details{
-  The files parsed by this function should contain only macro
+  The Rd files parsed by these functions should contain only macro
   definitions; a warning will be issued if anything else other than
   comments or white space is found.
 
@@ -63,16 +64,14 @@ Duncan Murdoch
 \code{\link{parse_Rd}}
 }
 \examples{
-\donttest{
 f <- tempfile()
-writeLines(paste0("\\\\newcommand{\\\\logo}{\\\\if{html}{\\\\figure{Rlogo.svg}{options: width=100}",
+writeLines(paste0("\\\\newcommand{\\\\Rlogo}{\\\\if{html}{\\\\figure{Rlogo.svg}{options: width=4em alt=\"R logo\"}}",
                   "\\\\if{latex}{\\\\figure{Rlogo.pdf}{options: width=0.5in}}}"),
 	    f)
 m <- loadRdMacros(f)
 ls(m)
-ls(parent.env(m))
+\donttest{ls(parent.env(m))}  % collation-specific
 ls(parent.env(parent.env(m)))
-}
 }
 \keyword{ utilities }
 \keyword{ documentation }

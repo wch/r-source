@@ -1153,7 +1153,8 @@ provided that the objects created do not depend on those packages except
 
 Extreme care is needed if top-level computations are made to depend on
 availability or not of other packages.  In particular this applies to
-@code{setMethods} and @code{setClass} calls.
+@code{setMethods} and @code{setClass} calls.  Nor should they depend on
+the availability of external resources such as downloads.
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of one or more @R{} objects: please
@@ -5193,7 +5194,7 @@ distributions).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 (announced 19 20)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 (announced 19 20 21)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
@@ -5212,7 +5213,7 @@ if(substr(jv, 1L, 2L) == "1.") @{
 @noindent
 Java 9 changed the format of this string (which used to be something
 like @samp{1.8.0_292-b10}); Java 11 gave @code{jv} as @samp{11+28}
-whereas Java 11.0.11 gives @samp{11.0.11+9}.
+whereas Java 11.0.11 gave @samp{11.0.11+9}.
 (@uref{https://openjdk.org:443/jeps/322} details the current scheme.
 Note that it is necessary to allow for pre-releases like
 @samp{11-ea+22}.)

@@ -46,6 +46,7 @@ R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R3 = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
+RD2PDF = $(top_builddir)/bin/R CMD Rd2pdf --quiet --no-preview --force
 MK = $(MAKE)
 
 all check test-all-basics test-all-devel: Makefile $(srcdir)/Makefile.common
@@ -94,6 +95,7 @@ clean:
 	-@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R testit.pdf
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R ver20.pdf
+	-@rm -Rf .Rd2pdf*
 	-@rm -Rf anRpackage myTst* myLib myLib_2
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout

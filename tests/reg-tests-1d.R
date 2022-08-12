@@ -5922,7 +5922,10 @@ if(englishMsgs)
 
 ## Testing fix for PR#18344 [ tar() warning about illegal uid/gid ]:
 sys <- Sys.info() # Only 'root' can create files with illegal uid/gid
-if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root") {
+if(sys[["sysname"]] == "Linux" & sys[["effective_user"]] == "root"
+   ## not a "weakened root" {TODO: more reliable check}
+   && !identical(Sys.getenv("container"), "podman")
+   ) {
     dir.create(mdir <- file.path(tempdir(),"stuff"))
     for(f in letters[1:3])
         writeLines("first line", file.path(mdir, f))
@@ -6034,6 +6037,23 @@ msg; if(englishMsgs)
     stopifnot(grepl("name .size. instead of .haha.", msg))
 ## msg was confusing
 
+
+### poly(<Date>,*) etc:  lm(... ~ poly(<Date>, .)) should work :
+d. <- data.frame(x = (1:20)/20, f = gl(4,5), D = .Date(17000 + c(1:7, 1:13 + 100)))
+cf0 <- c(Int=100, x=10, f = 5*(1:3))
+nD <- as.numeric(d.[,"D"])
+y0 <- model.matrix(~x+f, d.) %*% cf0  +   10*(nD - 17000) - 20*((nD - 17000)/10)^2
+set.seed(123)
+head(d. <- cbind(d., y = y0 + rnorm(20)))
+fm1  <- lm(y ~ x + f + poly(D,3), data = d.)
+fm1r <- lm(y ~ x + f + poly(D,2, raw=TRUE), data = d.)
+newd <- data.frame(x = seq(1/3, 1/2, length=5), f = gl(4,5)[5:9], D = .Date(17000 + 51:55))
+yhat <- unname(predict(fm1,  newdata = newd))
+yh.r <- unname(predict(fm1r, newdata = newd))
+cbind(yhat, yh.r)
+stopifnot(all.equal(yhat, c(96.8869, 92.3821, 81.9967, 71.2076, 60.0147), tol=1e-6), # 3e-7
+          all.equal(yh.r, c(97.7595, 93.0218, 82.3533, 71.2806, 59.8036), tol=1e-6))
+## poly(D, 3) failed since R 4.1.x,  poly(.., raw=TRUE) in all earlier R versions
 
 
 ## keep at end

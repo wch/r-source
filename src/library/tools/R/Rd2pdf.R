@@ -261,7 +261,6 @@
                 return(invisible(character()))
             }
             cnt <- 0L
-            macros <- initialRdMacros(pkglist)
             for(f in names(Rd)) {
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
@@ -270,11 +269,9 @@
                 outfilename <- file.path(latexdir, out)
                 res <- Rd2latex(Rd[[f]],
 				  outfilename,
-				  encoding = encoding,
 				  outputEncoding = outputEncoding,
 				  defines = NULL,
-				  writeEncoding = !asChapter,
-				  macros = macros)
+				  writeEncoding = !asChapter)
                 latexEncodings <- c(latexEncodings,
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
@@ -304,13 +301,18 @@
                 if (!length(files))
                     stop("this package has a ", sQuote("man"), " directory but no .Rd files",
                          domain = NA)
+                macros <- loadPkgRdMacros(pkgdir)
+                macros <- initialRdMacros(pkglist, macros)
            } else {
+                ## (Be nice and find Rd files & system macros also when 'pkgdir' is
+                ## not a package root directory.)
                 files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
                            Sys.glob(file.path(pkgdir, "*.rd")))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
                          domain = NA)
+                macros <- initialRdMacros(pkglist)
             }
             paths <- files
             ## Use a partial Rd db if there is one.
@@ -329,10 +331,6 @@
             if (!silent) message("Converting Rd files to LaTeX ",
                                  appendLF = FALSE, domain = NA)
             cnt <- 0L
-            macros <- loadPkgRdMacros(pkgdir, initialRdMacros())
-            ## (Be nice and give the system macros also when 'pkgdir' is
-            ## not a package root directory.)
-            macros <- initialRdMacros(pkglist, macros)
             for(i in seq_along(paths)) {
                 cnt <- cnt + 1L
                 if(!silent && cnt %% 10L == 0L)

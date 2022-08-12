@@ -5642,9 +5642,10 @@ writing for @cputype{arm64}.}  Builds of OpenJDK may also be available,
 e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 but not 12--16 or 18 which have/had a
-6-month lifetime.  (Note that these sources may use unusual designations
-for Intel macOS builds such as @code{x86 64-bit} and @code{x64}.)
+long-term support, e.g.@: 11 or 17 or (in 2023) 21 but not 12--16 nor
+18--20 which have/had a 6-month lifetime.  (Note that these sources may
+use unusual designations for Intel macOS builds such as @code{x86
+64-bit} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}

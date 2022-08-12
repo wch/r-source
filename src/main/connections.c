@@ -2472,7 +2472,7 @@ static void clp_close(Rconnection con)
     con->isopen = FALSE;
     if(con->canwrite)
 	clp_writeout(con);
-    if(this-> buff) free(this->buff);
+    if(this->buff) free(this->buff);
 }
 
 static int clp_fgetc_internal(Rconnection con)
@@ -2480,7 +2480,8 @@ static int clp_fgetc_internal(Rconnection con)
     Rclpconn this = con->private;
 
     if (this->pos >= this->len) return R_EOF;
-    return this->buff[this->pos++];
+    /* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
+    return (unsigned char)this->buff[this->pos++];
 }
 
 static double clp_seek(Rconnection con, double where, int origin, int rw)
