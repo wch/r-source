@@ -688,7 +688,7 @@ as.difftime <- function(tim, format = "%X", units = "auto", tz = "UTC")
 	if (units == "auto") stop("need explicit units for numeric conversion")
         if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
 	    stop("invalid units specified")
-        .difftime(tim, units = units)
+        .difftime(as.double(tim), units = units)
     }
 }
 
