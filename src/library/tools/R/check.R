@@ -1978,7 +1978,7 @@ add_dummies <- function(dir, Log)
                                     "Found the following apparent S3 methods"))
             if(!length(pos)) {
                 out1 <- out
-                out2 <- character()
+                out2 <-character()
             } else {
                 pos <- pos[1L]
                 out1 <- out[seq_len(pos - 1L)]
@@ -4851,7 +4851,10 @@ add_dummies <- function(dir, Log)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste0("--build-dir=", shQuote(build_dir)),
                       "--no-clean", "-o ", man_file , shQuote(topdir))
+            t1 <- proc.time()
             res <- run_Rcmd(args,  "Rdlatex.log", timeout = tlim)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste0(pkgname, "-manual.log"))
@@ -4966,6 +4969,7 @@ add_dummies <- function(dir, Log)
                             msg,
                             "\n"))
             } else {
+                t1 <- proc.time()
                 out <- tempfile()
                 on.exit(unlink(out))
                 if(installed) {
@@ -4983,6 +4987,8 @@ add_dummies <- function(dir, Log)
                                       error = identity))
                 names(results) <- names(db)
                 ind <- vapply(results, inherits, NA, "error")
+                t2 <- proc.time()
+                print_time(t1, t2, Log)
                 if(any(ind)) {
                     noteLog(Log)
                     any <- TRUE
@@ -5017,8 +5023,13 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           "Skipping checking math rendering: package 'V8' unavailable\n")
             } else {
+                ## would need re-arranging to report timings for this part
+                ## but seems typically < 1s
+##                t1 <- proc.time()
                 results <- lapply(eq[, 3L], .katex)
                 msg <- vapply(results, `[[`, "", "error")
+##                t2 <- proc.time()
+##                print_time(t1, t2, Log)
                 ind <- nzchar(msg)
                 if(any(ind)) {
                     if(!any) noteLog(Log)
@@ -5814,7 +5825,10 @@ add_dummies <- function(dir, Log)
     check_CRAN_incoming <- function(localOnly, pkgSize)
     {
         checkingLog(Log, "CRAN incoming feasibility")
+        t1 <- proc.time()
         res <- .check_package_CRAN_incoming(pkgdir, localOnly, pkgSize)
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
         if(length(res)) {
             bad <- FALSE
             out <- format(res)
@@ -6205,9 +6219,6 @@ add_dummies <- function(dir, Log)
             readRenviron(Renv)
     }
 
-    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
-    if (is.na(td0)) td0 <- Inf
-
     ## A user might have turned on JIT compilation.  That does not
     ## work well, so mostly disable it.
     jit <- Sys.getenv("R_ENABLE_JIT")
@@ -6544,7 +6555,8 @@ add_dummies <- function(dir, Log)
             message("'--as-cran' turns off '--extra-arch'")
             extra_arch <- FALSE
         }
-        Sys.setenv("_R_CHECK_TIMINGS_" = "10")
+        prev <- Sys.getenv("_R_CHECK_TIMINGS_", NA_character_)
+        if(is.na(prev)) Sys.setenv("_R_CHECK_TIMINGS_" = "10")
         Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
@@ -6618,6 +6630,9 @@ add_dummies <- function(dir, Log)
             Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
     }
 
+    ## needs to be after --as-cran
+    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    if (is.na(td0)) td0 <- Inf
 
     if (extra_arch) {
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
