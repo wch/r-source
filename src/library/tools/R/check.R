@@ -1752,7 +1752,7 @@ add_dummies <- function(dir, Log)
             ## </NOTE>
             if (!any(file.exists(file.path("src",
                                            c("Makefile", "Makefile.win",
-					     "Makefile.ucrt",
+                                             "Makefile.ucrt",
                                              "install.libs.R"))))) {
                 if (!length(dir("src", pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)"))) {
                     if (!any) warningLog(Log)
@@ -3159,7 +3159,7 @@ add_dummies <- function(dir, Log)
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
                                           "Makefile", "Makefile.win",
-					  "Makefile.ucrt")))
+                                          "Makefile.ucrt")))
         if(length(makefiles)) {
             checkingLog(Log, "for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS)")
             any <- FALSE
@@ -3207,7 +3207,7 @@ add_dummies <- function(dir, Log)
                                         c("Makevars", "Makevars.in",
                                           "Makevars.win", "Makevars.ucrt",
                                           "Makefile", "Makefile.win",
-					  "Makefile.ucrt")))
+                                          "Makefile.ucrt")))
 
         if(length(makefiles)) {
             checkingLog(Log, "use of PKG_*FLAGS in Makefiles")
@@ -4371,7 +4371,7 @@ add_dummies <- function(dir, Log)
             if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
-		if (length(.msg)) printLog0(Log, .msg, "\n")
+                if (length(.msg)) printLog0(Log, .msg, "\n")
                 msg <- ngettext(nb,
                                 "Package vignette without corresponding single PDF/HTML:\n",
                                 "Package vignettes without corresponding single PDF/HTML:\n", domain = NA)
@@ -5947,7 +5947,7 @@ add_dummies <- function(dir, Log)
                 setwd(srcd)
                 if (!file.exists("Makefile") &&
                     !file.exists("Makefile.win") &&
-		    !file.exists("Makefile.ucrt") &&
+                    !file.exists("Makefile.ucrt") &&
                     !(file.exists("Makefile.in") && spec_install)) {
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)
@@ -6109,9 +6109,6 @@ add_dummies <- function(dir, Log)
         else if (file.exists(Renv <- "~/.R/check.Renviron"))
             readRenviron(Renv)
     }
-
-    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
-    if (is.na(td0)) td0 <- Inf
 
     ## A user might have turned on JIT compilation.  That does not
     ## work well, so mostly disable it.
@@ -6519,6 +6516,9 @@ add_dummies <- function(dir, Log)
             Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
     }
 
+    ## needs to be after --as-cran
+    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    if (is.na(td0)) td0 <- Inf
 
     if (extra_arch) {
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
@@ -6971,7 +6971,7 @@ add_dummies <- function(dir, Log)
             ff <- ff[!(poss & dir)]
             patt <- Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_")
             if (nzchar(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
-	    ff <- ff[!is.na(ff)]
+            ff <- ff[!is.na(ff)]
             if (length(ff)) {
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",

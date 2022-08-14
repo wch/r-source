@@ -15,7 +15,7 @@
 
       \item On Windows, environment variable
       \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to only
-      best effort revocation checks with the default \code{"libcurl"}
+      best-effort revocation checks with the default \code{"libcurl"}
       download method.  This reduces security, but may be needed for
       downloads to work with MITM proxies (\PR{18379}).
     }
@@ -41,9 +41,9 @@
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
 
-      \item \code{write.table}, \code{write.csv} and \code{write.csv2}
-      restore their numerical precision (internal equivalent of
-      \code{digits = 15}) after an interrupt (\PR{18384}).
+      \item \code{write.table()}, \code{write.csv()} and
+      \code{write.csv2()} restore their numerical precision (internal
+      equivalent of \code{digits = 15}) after an interrupt (\PR{18384}).
 
       \item One can now read also byte \code{FF} from a clipboard connection
       (\PR{18385}).
@@ -52,6 +52,9 @@
       windows created using GraphApp via e.g.  \code{winDialogString} thanks
       to a workaround for an at least surprising Windows behavior with UTF-8
       as the system encoding (\PR{18382}).
+
+      \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
+      too late to have the intended effect.
     }
   }
 }
