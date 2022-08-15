@@ -190,9 +190,6 @@
 
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
-
-      \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
-      too late to have the intended effect.
     }
   }
 }
@@ -244,6 +241,9 @@
       windows created using GraphApp via e.g.  \code{winDialogString} thanks
       to a workaround for an at least surprising Windows behavior with UTF-8
       as the system encoding (\PR{18382}).
+
+      \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
+      too late to have the intended effect.
     }
   }
 }
