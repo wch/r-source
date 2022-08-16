@@ -427,6 +427,20 @@ static void QuartzCleanPatterns(QuartzDesc *xd)
     }    
 }
 
+static void QuartzReleasePattern(int i, QuartzDesc *xd)
+{
+    if (xd->gradients[i]) {
+        CGGradientRelease(xd->gradients[i]->gradient);
+        free(xd->gradients[i]);
+        xd->gradients[i] = NULL;
+    } else if (xd->patterns[i]) {
+        CGPatternRelease(*(xd->patterns[i]));
+        xd->patterns[i] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent pattern"));
+    }
+}
+
 static void QuartzDestroyPatterns(QuartzDesc *xd)
 {
     int i;
@@ -506,26 +520,53 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
     unsigned int col;
     QGradientRef quartz_gradient = malloc(sizeof(QGradient));
     if (!quartz_gradient) error(_("Failed to create gradient"));
-    quartz_gradient->type = type;
-    quartz_gradient->startPoint.x = R_GE_linearGradientX1(gradient);
-    quartz_gradient->startPoint.y = R_GE_linearGradientY1(gradient);
-    quartz_gradient->endPoint.x = R_GE_linearGradientX2(gradient);
-    quartz_gradient->endPoint.y = R_GE_linearGradientY2(gradient);
+    size_t num_locations;
     CGColorSpaceRef colorspace;
-    size_t num_locations = R_GE_linearGradientNumStops(gradient);
     CGFloat *locations; 
-    locations = malloc(sizeof(CGFloat) * num_locations);
-    if (!locations) error(_("Failed to create gradient"));
     CGFloat *components;
-    components = malloc(sizeof(CGFloat) * num_locations * 4);
-    if (!components) error(_("Failed to create gradient"));
-    for (i = 0; i < num_locations; i++) {
-        locations[i] = R_GE_linearGradientStop(gradient, i);
-        col = R_GE_linearGradientColour(gradient, i);
-        components[i*4] = R_RED(col)/255;
-        components[i*4 + 1] = R_GREEN(col)/255;
-        components[i*4 + 2] = R_BLUE(col)/255;
-        components[i*4 + 3] = R_ALPHA(col)/255;
+
+    quartz_gradient->type = type;
+    switch (type) {
+    case R_GE_linearGradientPattern:
+        quartz_gradient->startPoint.x = R_GE_linearGradientX1(gradient);
+        quartz_gradient->startPoint.y = R_GE_linearGradientY1(gradient);
+        quartz_gradient->endPoint.x = R_GE_linearGradientX2(gradient);
+        quartz_gradient->endPoint.y = R_GE_linearGradientY2(gradient);
+        num_locations = R_GE_linearGradientNumStops(gradient);
+        locations = malloc(sizeof(CGFloat) * num_locations);
+        if (!locations) error(_("Failed to create gradient"));
+        components = malloc(sizeof(CGFloat) * num_locations * 4);
+        if (!components) error(_("Failed to create gradient"));
+        for (i = 0; i < num_locations; i++) {
+            locations[i] = R_GE_linearGradientStop(gradient, i);
+            col = R_GE_linearGradientColour(gradient, i);
+            components[i*4] = R_RED(col)/255;
+            components[i*4 + 1] = R_GREEN(col)/255;
+            components[i*4 + 2] = R_BLUE(col)/255;
+            components[i*4 + 3] = R_ALPHA(col)/255;
+        }
+        break;
+    case R_GE_radialGradientPattern:
+        quartz_gradient->startPoint.x = R_GE_radialGradientCX1(gradient);
+        quartz_gradient->startPoint.y = R_GE_radialGradientCY1(gradient);
+        quartz_gradient->endPoint.x = R_GE_radialGradientCX2(gradient);
+        quartz_gradient->endPoint.y = R_GE_radialGradientCY2(gradient);
+        quartz_gradient->startRadius = R_GE_radialGradientR1(gradient);
+        quartz_gradient->endRadius = R_GE_radialGradientR2(gradient);
+        num_locations = R_GE_radialGradientNumStops(gradient);
+        locations = malloc(sizeof(CGFloat) * num_locations);
+        if (!locations) error(_("Failed to create gradient"));
+        components = malloc(sizeof(CGFloat) * num_locations * 4);
+        if (!components) error(_("Failed to create gradient"));
+        for (i = 0; i < num_locations; i++) {
+            locations[i] = R_GE_radialGradientStop(gradient, i);
+            col = R_GE_radialGradientColour(gradient, i);
+            components[i*4] = R_RED(col)/255;
+            components[i*4 + 1] = R_GREEN(col)/255;
+            components[i*4 + 2] = R_BLUE(col)/255;
+            components[i*4 + 3] = R_ALPHA(col)/255;
+        }
+        break;
     }
     colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
     quartz_gradient->gradient = 
@@ -1504,14 +1545,15 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     PROTECT(ref = allocVector(INTSXP, 1));
     int index = 0;
     int patternType = R_GE_patternType(pattern);
-    if (patternType == R_GE_linearGradientPattern) {
+    if (patternType == R_GE_linearGradientPattern ||
+        patternType == R_GE_radialGradientPattern) {
         int index = QuartzNewPatternIndex(xd, 1);
         if (index >= 0) {
             QGradientRef quartz_gradient = 
                 QuartzCreateGradient(pattern, patternType, xd);
             xd->gradients[index] = quartz_gradient;
         } else {
-            warning("Radial gradients and tiling patterns not yet supported");
+            warning("Tiling patterns not yet supported");
         }
     }
     INTEGER(ref)[0] = index;
@@ -1519,7 +1561,15 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     return ref;
 }
 
-static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {} 
+static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {
+    DEVSPEC;
+    /* NULL means release all patterns */
+    if (ref == R_NilValue) {
+        QuartzCleanPatterns(xd);
+    } else {
+        QuartzReleasePattern(INTEGER(ref)[0], xd);
+    }
+} 
 
 static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     return R_NilValue;
