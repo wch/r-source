@@ -524,7 +524,7 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
     CGColorSpaceRef colorspace;
     CGFloat *locations; 
     CGFloat *components;
-
+    
     quartz_gradient->type = type;
     switch (type) {
     case R_GE_linearGradientPattern:
@@ -544,6 +544,18 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
             components[i*4 + 1] = R_GREEN(col)/255;
             components[i*4 + 2] = R_BLUE(col)/255;
             components[i*4 + 3] = R_ALPHA(col)/255;
+        }
+        switch (R_GE_linearGradientExtend(gradient)) {
+        case R_GE_patternExtendNone:
+            quartz_gradient->options = 0;
+            break;
+        case R_GE_patternExtendRepeat:
+        case R_GE_patternExtendReflect:
+            warning(_("Unsupported gradient fill extend type; using 'pad'"));
+        case R_GE_patternExtendPad:
+            quartz_gradient->options = kCGGradientDrawsBeforeStartLocation |
+                kCGGradientDrawsAfterEndLocation;
+            break;
         }
         break;
     case R_GE_radialGradientPattern:
@@ -565,6 +577,18 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
             components[i*4 + 1] = R_GREEN(col)/255;
             components[i*4 + 2] = R_BLUE(col)/255;
             components[i*4 + 3] = R_ALPHA(col)/255;
+        }
+        switch (R_GE_radialGradientExtend(gradient)) {
+        case R_GE_patternExtendNone:
+            quartz_gradient->options = 0;
+            break;
+        case R_GE_patternExtendRepeat:
+        case R_GE_patternExtendReflect:
+            warning(_("Unsupported gradient fill extend type; using 'pad'"));
+        case R_GE_patternExtendPad:
+            quartz_gradient->options = kCGGradientDrawsBeforeStartLocation |
+                kCGGradientDrawsAfterEndLocation;
+            break;
         }
         break;
     }
@@ -1290,6 +1314,11 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
         CGContextClip(ctx);
         QuartzDrawGradientFill(ctx, gc->patternFill, xd);
         CGContextRestoreGState(ctx);
+        /* Still may need to draw the border */
+        if (R_ALPHA(gc->col) > 0) {
+            CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
+            CGContextDrawPath(ctx, kCGPathStroke);
+        }
     } else {
         CGContextDrawPath(ctx, kCGPathFillStroke);
     }
