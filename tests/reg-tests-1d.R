@@ -6056,6 +6056,14 @@ stopifnot(all.equal(yhat, c(96.8869, 92.3821, 81.9967, 71.2076, 60.0147), tol=1e
 ## poly(D, 3) failed since R 4.1.x,  poly(.., raw=TRUE) in all earlier R versions
 
 
+## as.difftime() tweaks: coerce to "double", keep names
+stopifnot(
+    identical(as.difftime(c(x = 1L), units="secs"),
+                .difftime(c(x = 1.), units="secs")))
+## integers where kept (and difftime arithmetic could overflow) in R <= 4.1.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
