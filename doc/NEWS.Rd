@@ -127,6 +127,13 @@
       \item \command{R CMD check} now also reports problems when reading
       package news in md (file \file{NEWS.md}) and (optionally) plain
       text (file \file{NEWS}) formats.
+
+      \item \env{_R_CHECK_TIMINGS_} defaults to a value from the
+      environment even for \command{R CMD check --as-cran}; this allows
+      for exceptionally fast or slow platforms.
+
+      It now applies to checking PDF and HTML versions of the manuals,
+      and \sQuote{checking CRAN incoming feasibility}.
     }
   }
 
@@ -175,11 +182,11 @@
       \item The \code{relist()} function of \pkg{utils} now supports
       \code{NULL} elements in the skeleton (\PR{15854}).
 
-      \item \code{poly(x, n)} now works again, now documented, when \code{x} is a
-      \code{"Date"} or \code{"POSIXct"} object, or of another class while
-      fulfilling \code{mode(x) == "numeric"}.  This also enables
-      \code{poly(x, *, raw=TRUE)} for such variables.  Reported by Michael
-      Chirico to R-devel.
+      \item \code{poly(x, n)} now works again (and is now documented)
+      when \code{x} is a \code{"Date"} or \code{"POSIXct"} object, or of
+      another class while fulfilling \code{mode(x) == "numeric"}.  This
+      also enables \code{poly(x, *, raw=TRUE)} for such variables.
+      Reported by Michael Chirico to R-devel.
 
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
@@ -234,6 +241,9 @@
       windows created using GraphApp via e.g.  \code{winDialogString} thanks
       to a workaround for an at least surprising Windows behavior with UTF-8
       as the system encoding (\PR{18382}).
+
+      \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
+      too late to have the intended effect.
     }
   }
 }

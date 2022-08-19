@@ -4106,7 +4106,7 @@ Times with an elapsed component over 10 mins are reported in minutes
 in elapsed seconds that should be reported: non-numerical values
 indicate that no report is required, a value of @samp{0} that a report
 is always required.
-Default: @code{""}. (@code{10} for CRAN checks.)
+Default: @code{""}. (@code{10} for CRAN checks unless set in the environment.)
 
 @item _R_CHECK_EXAMPLE_TIMING_THRESHOLD_
 If timings are being recorded, set the threshold in seconds for
