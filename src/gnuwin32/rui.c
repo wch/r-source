@@ -430,7 +430,7 @@ static Rboolean isdebuggerpresent(void)
 
 void breaktodebugger(void)
 {
-    asm("int $3");
+    __asm__("int $3");
 }
 
 static void menudebug(control m)

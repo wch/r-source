@@ -1001,17 +1001,17 @@ void fpu_setup(Rboolean start)
 #if defined(__ARM_ARCH) && defined(__ARM_32BIT_STATE) && defined(__ARM_FP)
     uint32_t fpscr;
 
-    asm volatile("vmrs %0, fpscr" : "=r"(fpscr));
+    __asm__ volatile("vmrs %0, fpscr" : "=r"(fpscr));
     /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
     fpscr = fpscr & 0xfcffffff;
-    asm volatile("vmsr fpscr, %0" : : "r"(fpscr));
+    __asm__ volatile("vmsr fpscr, %0" : : "r"(fpscr));
 #elif defined(__ARM_ARCH) && defined(__ARM_64BIT_STATE) && defined(__ARM_FP)
     uint64_t fpcr;
 
-    asm volatile("mrs %0, fpcr" : "=r"(fpcr));
+    __asm__ volatile("mrs %0, fpcr" : "=r"(fpcr));
     /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
     fpcr = fpcr & 0xfffffffffcffffff;
-    asm volatile("msr fpcr, %0" : : "r"(fpcr));
+    __asm__ volatile("msr fpcr, %0" : : "r"(fpcr));
 #endif
     } else {
 #ifdef __FreeBSD__
