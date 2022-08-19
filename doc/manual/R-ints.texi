@@ -4507,7 +4507,7 @@ Check the validity of the package HTML help pages using HTML Tidy
 (@uref{https://www.html-tidy.org/}) (if a suitable version is available
 on the system path for executables or its path is specified by
 environment variable @env{R_TIDYCMD}).  macOS users are advised to
-install 5.8.0 or later from @uref{http://binaries.html-tidy.org/}.
+install 5.8.0 or later from @uref{https://binaries.html-tidy.org/}.
 Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
 
@@ -4516,7 +4516,12 @@ Check whether HTML math rendering via KaTeX works (if package
 @CRANpkg{V8} is available).
 See 
 @uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/}.
-Default: false.
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_NEWS_IN_PLAIN_TEXT_
+Check whether @code{news()} can successfully read package news in plain
+text (file @file{NEWS}) format.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4526,7 +4531,7 @@ directory and setting @code{.libPaths()} to just that and
 installed somewhere other than @code{.Library}.  The temporary library
 is populated by symbolic links@footnote{under Windows, junction points,
 or copies if environment variable @env{R_WIN_NO_JUNCTIONS} has a
-non-empty value.} to installed packages not also in @code{.library}.
+non-empty value.} to installed packages not also in @code{.Library}.
 
 @vtable @code
 @item _R_CHECK_INSTALL_DEPENDS_
@@ -4625,6 +4630,8 @@ _R_CHECK_BOGUS_RETURN_=true
 _R_CHECK_MATRIX_DATA_=TRUE
 _R_CHECK_CODE_CLASS_IS_STRING_=true
 _R_CHECK_RD_VALIDATE_RD2HTML_=true
+_R_CHECK_RD_MATH_RENDERING_=true
+_R_CHECK_NEWS_IN_PLAIN_TEXT_=true
 @end example
 
 @noindent
