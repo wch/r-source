@@ -6060,7 +6060,14 @@ stopifnot(all.equal(yhat, c(96.8869, 92.3821, 81.9967, 71.2076, 60.0147), tol=1e
 stopifnot(
     identical(as.difftime(c(x = 1L), units="secs"),
                 .difftime(c(x = 1.), units="secs")))
-## integers where kept (and difftime arithmetic could overflow) in R <= 4.1.x
+## integers where kept (and difftime arithmetic could overflow) in R <= 4.2.x
+
+
+## ordered() with missing 'x' -- PR#18389
+factor( levels = c("a", "b"), ordered=TRUE) -> o1
+ordered(levels = c("a", "b")) -> o2
+stopifnot(identical(o1,o2))
+## the ordered() call has failed in R <= 4.2.x
 
 
 

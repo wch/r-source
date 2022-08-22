@@ -194,6 +194,10 @@
 
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
+
+      \item \code{ordered(levels = *)} (missing \code{x}) now works
+      analogously to \code{factor(, ordered=TRUE)}; reported (with fix)
+      by Achim Zeilis in \PR{18389}.
     }
   }
 }
