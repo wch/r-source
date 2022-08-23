@@ -3687,9 +3687,9 @@ these variables.
 @end menu
 
 The linear algebra routines in @R{} make use of @acronym{BLAS} (Basic
-Linear Algebra Subprograms, @uref{https://www.netlib.org/blas/faq.html})
+Linear Algebra Subprograms, @uref{https://netlib.org/blas/faq.html})
 routines, and most make use of routines from @acronym{LAPACK} (Linear
-Algebra PACKage, @uref{https://www.netlib.org/lapack}).  The @R{}
+Algebra PACKage, @uref{https://netlib.org/lapack/}).  The @R{}
 sources contain reference (Fortran) implementations of these, but they
 can be replaced by external libraries, usually those tuned for speed on
 specific CPUs.  These libraries normally contain all of the BLAS
@@ -4791,7 +4791,8 @@ directory or elsewhere, for example,
 Linux is the main development platform for @R{}, so compilation from the
 sources is normally straightforward with the most common compilers and
 libraries.@footnote{For example, @code{glibc}: other C libraries such as
-@code{musl} have been used but are not routinely tested.}
+@code{musl} (as used by Alpine Linux) have been used but are not
+routinely tested.}
 
 This section is about the GCC compilers:
 @command{gcc}/@command{gfortran}/@command{g++}.
@@ -5326,7 +5327,7 @@ manual.
 For Intel Big Sur and later there is
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
 and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey-intel/gfortran-Intel-11.3-Monterey.dmg}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey/gfortran-Intel-11.3-Monterey.dmg}.
 
 
 For @cputype{arm64}, we use the fork of @command{gfortran} from
@@ -5595,7 +5596,7 @@ Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
 distribution but these were often not at all recent versions of Tcl/Tk.
 It is better to install Tcl/Tk 8.6.x from the sources@footnote{Configure
 Tk with @option{--enable-aqua}.} or a binary distribution from
-@uref{https://www.activestate.com/activetcl/downloads}.  For the latter,
+@uref{https://www.activestate.com/products/tcl/}.  For the latter,
 configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -5631,9 +5632,10 @@ writing for @cputype{arm64}.}  Builds of OpenJDK may also be available,
 e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 but not 12--16 or 18 which have/had a
-6-month lifetime.  (Note that these sources may use unusual designations
-for Intel macOS builds such as @code{x86 64-bit} and @code{x64}.)
+long-term support, e.g.@: 11 or 17 or (in 2023) 21 but not 12--16 nor
+18--20 which have/had a 6-month lifetime.  (Note that these sources may
+use unusual designations for Intel macOS builds such as @code{x86
+64-bit} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}
@@ -6015,7 +6017,7 @@ To set the correct architecture (which will be auto-detected as
 @subsection Installer
 
 The scripts for the @acronym{CRAN} packaging of @R{} can be found under
-@uref{https://svn.r-project.org/R-dev-web/trunk/QA/Simon/R4}: start
+@uref{https://svn.r-project.org/R-dev-web/trunk/QA/Simon/R4/}: start
 with the @file{README} file in that directory.
 
 
