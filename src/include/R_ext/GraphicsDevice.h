@@ -788,6 +788,11 @@ struct _DevDesc {
 #else
     SEXP (*capabilities)();
 #endif
+#if R_USE_PROTOTYPES
+    void (*typeset)(SEXP span, double x, double y, pDevDesc dd);
+#else
+    void (*typeset)();
+#endif
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded

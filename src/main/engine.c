@@ -3820,3 +3820,31 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
     }
 }
 
+/*
+ * C API for graphics devices to interrogate gradient SEXPs
+ *
+ * MUST match R structures in ../library/grDevices/R/span.R
+ */
+#define span_text    0
+#define span_family  1
+#define span_weight  2
+#define span_style   3
+
+SEXP R_GE_spanText(SEXP span) {
+    return VECTOR_ELT(span, span_text);
+}
+SEXP R_GE_spanFamily(SEXP span) {
+    return VECTOR_ELT(span, span_family);
+}
+SEXP R_GE_spanWeight(SEXP span) {
+    return VECTOR_ELT(span, span_weight);
+}
+SEXP R_GE_spanStyle(SEXP span) {
+    return VECTOR_ELT(span, span_style);
+}
+
+void GETypeset(SEXP span, double x, double y, pGEDevDesc dd) {
+    if (dd->dev->deviceVersion >= R_GE_typeset) {
+        dd->dev->typeset(span, x, y, dd->dev);
+    }
+}

@@ -100,6 +100,9 @@ export(
 
        # Masks
        "as.mask",
+
+       # Typesetting
+       "grid.typeset", "typesetGrob",
     
        # Listing grobs and viewports
        "grid.ls",
@@ -208,6 +211,7 @@ S3method("drawDetails", "xspline")
 S3method("drawDetails", "rect")
 S3method("drawDetails", "segments")
 S3method("drawDetails", "text")
+S3method("drawDetails", "typesetgrob")
 
 S3method("editDetails", "default")
 S3method("editDetails", "xaxis")
@@ -371,6 +375,7 @@ S3method("validDetails", "text")
 S3method("validDetails", "xspline")
 S3method("validDetails", "beziergrob")
 S3method("validDetails", "rastergrob")
+S3method("validDetails", "typesetgrob")
 
 S3method("widthDetails", "arrows")
 S3method("widthDetails", "circle")

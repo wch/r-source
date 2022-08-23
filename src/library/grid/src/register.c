@@ -93,6 +93,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(stroke, 1),
     LCALLDEF(fill, 2),
     LCALLDEF(fillStroke, 2),
+    LCALLDEF(typeset, 3),
     {"validUnits", (DL_FUNC) &validUnits, 1},
     {"constructUnits", (DL_FUNC) &constructUnits, 3},
     {"asUnit", (DL_FUNC) &asUnit, 1},

@@ -85,12 +85,17 @@ extern "C" {
  *             - paths
  *             - luminance masks
  *             Added capabilities
+ * Version 16: For R 4.3.0
+ *             Added more advanced typesetting
+ *             - typeset
+ *             - glyphs
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
 #define R_GE_group       15
+#define R_GE_typeset     16
 
-#define R_GE_version R_GE_group
+#define R_GE_version R_GE_typeset
 
 int R_GE_getVersion(void);
 
@@ -650,6 +655,18 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_compositing           9
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
+
+/* Must match order in ../library/grDevices/R/span.R */
+#define R_GE_text_style_normal  1
+#define R_GE_text_style_italic  2
+#define R_GE_text_style_oblique 3
+
+SEXP R_GE_spanText(SEXP span);
+SEXP R_GE_spanFamily(SEXP span);
+SEXP R_GE_spanWeight(SEXP span);
+SEXP R_GE_spanStyle(SEXP span);
+
+void GETypeset(SEXP span, double x, double y, pGEDevDesc dd);
 
 #ifdef __cplusplus
 }

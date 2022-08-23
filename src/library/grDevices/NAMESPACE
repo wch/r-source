@@ -22,7 +22,8 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        recordPlot, replayPlot, rgb, rgb2hsv, savePlot,
        setEPS,
        setGraphicsEventEnv, setGraphicsEventHandlers,
-       setPS, 
+       setPS,
+       span,
        terrain.colors, 
        topo.colors, trans3d, Type1Font, .axisPars,
        xfig, xyTable, xy.coords, xyz.coords,
@@ -58,6 +59,8 @@ S3method("[", "raster")
 S3method("[<-", "raster")
 S3method("Ops", "raster")
 
+S3method("flatten", "character")
+         
 S3method("print", "raster")
 
 S3method(pretty, Date,   prettyDate)
