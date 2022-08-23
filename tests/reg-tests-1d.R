@@ -4047,7 +4047,7 @@ assertErrV(  round(x=1.12345, banana=3))
 ## (by Shane Mueller, to the R-devel m.list)
 
 
-## source(*, echo=TRUE) with srcref's and empty lines; PR#
+## source(*, echo=TRUE) with srcref's and empty lines; PR#17769
 exP <- parse(text=c("1;2+", "", "3"), keep.source=TRUE)
 r <- source(exprs=exP, echo=TRUE)
 stopifnot(identical(r, list(value = 5, visible = TRUE)))
@@ -6070,6 +6070,15 @@ stopifnot(identical(o1,o2))
 ## the ordered() call has failed in R <= 4.2.x
 
 
+## source() with multiple encodings
+if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
+    writeLines('x <- "fa\xE7ile"', tf <- tempfile(), useBytes = TRUE)
+    tools::assertError(source(tf, encoding = "UTF-8"))
+    source(tf, encoding = c("UTF-8", "latin1"))
+    ## in R 4.2.{0,1} gave Warning (that would now be an error):
+    ##   'length(x) = 2 > 1' in coercion to 'logical(1)'
+    if (l10n_info()$"UTF-8") stopifnot(identical(Encoding(x), "UTF-8"))
+}
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
