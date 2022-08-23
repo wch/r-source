@@ -1638,7 +1638,7 @@ have_tktable <- !isFALSE(suppressWarnings(tclRequire('Tktable')))
 Installing @samp{Tktable} needs a C compiler and the Tk headers (not
 necessarily installed with Tcl/Tk).  At the time of writing the latest
 sources (from 2008) were available from
-@uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz},
+@uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz/download},
 but needed patching for current Tk (8.6.11, but not 8.6.10) -- a patch
 can be found at @uref{https://www.stats.ox.ac.uk/pub/bdr/Tktable/}. For
 a system installation of Tk you may need to install Tktable as
@@ -5418,7 +5418,7 @@ often the size can be reduced substantially with no or minimal loss in
 quality. Not only do large files take up space: they can stress the PDF
 viewer and take many minutes to print (if they can be printed at all).
 
-@command{qpdf} (@uref{http://qpdf.sourceforge.net/}) can compress
+@command{qpdf} (@uref{https://qpdf.sourceforge.io/}) can compress
 losslessly.  It is fairly readily available (e.g.@: it has binaries for
 Windows and packages in Debian/Ubuntu/Fedora, and is installed as part
 of the @acronym{CRAN} macOS distribution of @R{}).  @command{R CMD
