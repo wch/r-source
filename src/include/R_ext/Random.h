@@ -58,7 +58,7 @@ typedef enum {
     ROUNDING,
     REJECTION
 } Sampletype;
-Sampletype R_sample_kind();
+Sampletype R_sample_kind(void);
 
 void GetRNGstate(void);
 void PutRNGstate(void);

@@ -209,7 +209,7 @@ typedef struct QuartzFunctons_s {
 
 /* FIXME: no longer used, remove in due course */
 /* from unix/aqua.c - loads grDevices if necessary and returns NULL on failure */
-QuartzFunctions_t *getQuartzFunctions();
+QuartzFunctions_t *getQuartzFunctions(void);
 
 /* type of a Quartz contructor */
 typedef QuartzDesc_t (*quartz_create_fn_t)(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par);

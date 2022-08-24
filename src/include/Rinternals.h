@@ -649,7 +649,7 @@ SEXP R_tryCatchError(SEXP (*)(void *), void *,        /* body closure*/
 		     SEXP (*)(SEXP, void *), void *); /* handler closure */
 SEXP R_withCallingErrorHandler(SEXP (*)(void *), void *, /* body closure*/
 			       SEXP (*)(SEXP, void *), void *); /* handler closure */
-SEXP R_MakeUnwindCont();
+SEXP R_MakeUnwindCont(void);
 void NORET R_ContinueUnwind(SEXP cont);
 SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
                      void (*cleanfun)(void *data, Rboolean jump),

@@ -42,7 +42,7 @@ typedef void   (*R_SockWriteRoutine)(int *sockp, char **buf, int *start, int *en
 typedef int    (*R_SockSelectRoutine)(int nsock, int *insockfd, int *ready, int *write, double timeout);
 
 typedef int    (*R_HTTPDCreateRoutine)(const char *ip, int port);
-typedef void   (*R_HTTPDStopRoutine)();
+typedef void   (*R_HTTPDStopRoutine)(void);
 
 typedef SEXP (*R_CurlRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
 
