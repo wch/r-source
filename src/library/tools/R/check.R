@@ -4789,7 +4789,7 @@ add_dummies <- function(dir, Log)
                                   timeout = tlim)
                 t2 <- proc.time()
                 print_time(t1, t2, Log)
-                Out <- readLines(outfile, warn = FALSE)
+                out <- readLines(outfile, warn = FALSE)
                 if(R_check_suppress_RandR_message)
                     out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                       out, useBytes = TRUE)
