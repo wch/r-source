@@ -68,8 +68,8 @@ Conj(z)
   complex values.  The modulus and argument are also called the \emph{polar
   coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y}, for
   \eqn{r = Mod(z) = \sqrt{x^2 + y^2}}{r = Mod(z) = \sqrt(x^2 + y^2)},
-  and \eqn{\phi = Arg(z)}, \eqn{x = r*\cos(\phi)}{x = r*cos(\phi)} and
-  \eqn{y = r*\sin(\phi)}{y = r*sin(\phi)}.  They are all
+  and \eqn{\phi = Arg(z)}, \eqn{x = r \cos(\phi)}{x = r*cos(\phi)} and
+  \eqn{y = r \sin(\phi)}{y = r*sin(\phi)}.  They are all
   \link{internal generic} \link{primitive} functions: methods can be
   defined for them
   individually or \emph{via} the \code{\link[=S3groupGeneric]{Complex}}
