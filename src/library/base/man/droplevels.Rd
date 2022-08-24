@@ -38,7 +38,7 @@
   columns; rather the default uses the same factor-specific
   \code{exclude} as the factor method itself.
 
-  The \code{except} argument follow the usual indexing rules.
+  The \code{except} argument follows the usual indexing rules.
 }
 
 \note{ This function was introduced in R 2.12.0.  It is primarily

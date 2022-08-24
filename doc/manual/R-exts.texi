@@ -10333,7 +10333,7 @@ the @code{.Call} or @code{.External} interfaces for such objects.  Any
 C/C++ code that includes @file{Rinternals.h} should be called @emph{via}
 @code{.Call} or @code{.External}.
 
-@code{.Fortran} is promarily intended for Fortran 77 code, and long
+@code{.Fortran} is primarily intended for Fortran 77 code, and long
 precedes any support for Fortran 9x.  Now current implementations of
 Fortran 9x support the Fortran 2003 module @code{iso_c_binding}, a
 better way to interface modern Fortran code to @R{} is to use @code{.C}

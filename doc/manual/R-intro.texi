@@ -5760,7 +5760,7 @@ provide certain symbols that may not be available
 in the standard fonts.  In particular, there are zodiac signs, cartographic
 symbols and astronomical symbols.
 @item
-Hershey fonts provide cyrillic and japanese (Kana and Kanji) characters.
+Hershey fonts provide Cyrillic and Japanese (Kana and Kanji) characters.
 @end itemize
 
 More information, including tables of Hershey characters can be obtained from
@@ -6702,7 +6702,7 @@ the current OS.
 
 Recent versions of @R{} have extensive facilities to read and write
 compressed files, often transparently.  Reading of files in @R{} is to a
-vey large extent done by @emph{connections}, and the @code{file}
+very large extent done by @emph{connections}, and the @code{file}
 function which is used to open a connection to a file (or a URL) and is
 able to identify the compression used from the `magic' header of the
 file.
