@@ -198,6 +198,10 @@
       \item \code{ordered(levels = *)} (missing \code{x}) now works
       analogously to \code{factor(, ordered=TRUE)}; reported (with fix)
       by Achim Zeilis in \PR{18389}.
+      
+      \item User-defined Rd macro definitions can now span multiple lines,
+      thanks to a patch from Duncan Murdoch. Previously, the Rd parser
+      silently ignored everything after the first line.
     }
   }
 }

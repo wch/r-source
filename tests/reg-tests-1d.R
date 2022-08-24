@@ -6080,6 +6080,20 @@ if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
     if (l10n_info()$"UTF-8") stopifnot(identical(Encoding(x), "UTF-8"))
 }
 
+
+## multi-line Rd macro definition
+rd <- tools::parse_Rd(textConnection(r"(
+\newcommand{\mylongmacro}{
+  \LaTeX
+}
+\mylongmacro
+)"), fragment = TRUE)
+tools::Rd2txt(rd, out <- textConnection(NULL, "w"), fragment = TRUE)
+stopifnot(any(as.character(rd) != "\n"),
+          identical(textConnectionValue(out)[2L], "LaTeX")); close(out)
+## empty output in R <= 4.2.x
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
