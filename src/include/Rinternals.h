@@ -573,7 +573,7 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 #endif
 SEXP R_tryEval(SEXP, SEXP, int *);
 SEXP R_tryEvalSilent(SEXP, SEXP, int *);
-SEXP R_GetCurrentEnv();
+SEXP R_GetCurrentEnv(void);
 
 Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean, int);
@@ -1198,7 +1198,7 @@ void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp
 void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
 void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
-const char *R_curErrorBuf(); // used by unix */
+const char *R_curErrorBuf(void); // used by unix */
 int (IS_SCALAR)(SEXP x, int type); // used by symengine */
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 
