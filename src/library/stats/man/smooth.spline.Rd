@@ -111,7 +111,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   Unless \code{lambda} has been specified instead of \code{spar},
   the computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
-  \eqn{\lambda = r * 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
+  \eqn{\lambda = r \cdot 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
   where
   \eqn{r = tr(X' W X) / tr(\Sigma)},
   \eqn{\Sigma} is the matrix given by
@@ -134,7 +134,6 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   or \sQuote{generalized} as determined by \code{cv}) is used to
   determine \eqn{\lambda}.
 
-  Note that from the above relation,
 %%  lam      = r * 256^(3s - 1)
 %%  log(lam) = log(r) + (3s - 1) * log(256)
 %% (log(lam) - log(r)) / log(256)  = 3s - 1
@@ -142,7 +141,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
 %%   = 1/3 + {log(lam) - log(r)} / {24 log(2)}
 %%   = 1/3 - log(r)/{24 log(2)} +  log(lam) / {24 log(2)}
 %%   =               s0         + 0.0601 * log(lam)
-  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{spar = s0 + 0.0601 * log(\lambda)},
+  Note that from the above relation,
+  \code{spar} is \eqn{s = s0 + 0.0601 \cdot \log\lambda}{spar = s0 + 0.0601 * log(\lambda)},
   which is intentionally \emph{different} from the S-PLUS implementation
   of \code{smooth.spline} (where \code{spar} is proportional to
   \eqn{\lambda}).  In \R's (\eqn{\log \lambda}{log \lambda}) scale, it makes more

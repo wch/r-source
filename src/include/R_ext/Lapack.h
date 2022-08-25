@@ -2405,7 +2405,7 @@ La_extern void
 F77_NAME(dgetc2)(int *n, double *a, int *lda, int
 	*ipiv, int *jpiv, int *info);
 
-typedef int (*L_fp)();
+typedef int (*L_fp)(double *, double *, double *);
 La_extern void
 F77_NAME(dggesx)(const char* jobvsl, const char* jobvsr, const char* sort, L_fp
 	delctg, const char* sense, int *n, double *a, int *lda,

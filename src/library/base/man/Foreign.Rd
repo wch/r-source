@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -132,10 +132,12 @@
   Fortran names containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
-  work if the Fortran 9x compiler used differs from the Fortran
-  compiler used when configuring \R, especially if the subroutine name
-  is not lower-case or includes an underscore.  It is possible to use
-  \code{.C} and do any necessary symbol-name translation yourself.
+  work if the Fortran 9x compiler used differs from the Fortran compiler
+  used when configuring \R, especially if the subroutine name is not
+  lower-case or includes an underscore.  The most portable way to call
+  Fortran 9x code from \R is to use \code{.C} and the Fortran 2003
+  module \code{iso_c_binding} to provide a C interface to the Fortran
+  code.
 }
 
 \section{Copying of arguments}{

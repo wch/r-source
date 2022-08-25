@@ -134,6 +134,10 @@
 
       It now applies to checking PDF and HTML versions of the manuals,
       and \sQuote{checking CRAN incoming feasibility}.
+
+      \item \command{R CMD check} can optionally (but included in
+      \option{--as-cran}) check whether HTML math rendering via KaTeX
+      works for the package \file{.Rd} files.
     }
   }
 
@@ -190,6 +194,14 @@
 
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
+
+      \item \code{ordered(levels = *)} (missing \code{x}) now works
+      analogously to \code{factor(, ordered=TRUE)}; reported (with fix)
+      by Achim Zeileis in \PR{18389}.
+      
+      \item User-defined Rd macro definitions can now span multiple lines,
+      thanks to a patch from Duncan Murdoch. Previously, the Rd parser
+      silently ignored everything after the first line.
     }
   }
 }

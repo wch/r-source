@@ -972,7 +972,7 @@ a glyph or as a @samp{\U@{xxxxxx@}} escape---for example, try
 @samp{"\U1f600"}, an emoji.  The width functions are of most importance
 in East Asian locale: their values differ between such locales.
 (Replacing the system functions provides a degree of
-plaform-independence (including to OS updates) but replaces it with a
+platform-independence (including to OS updates) but replaces it with a
 dependence on the @R{} version.)
 
 @menu

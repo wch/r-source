@@ -359,7 +359,7 @@ SEXP mc_prepare_cleanup()
      sKill = tools:SIGKILL, sDetach = TRUE, sShutdown = TRUE
        (clean_pids - finalizer on a private object in the package namespace)
 */
-static void restore_sig_handler();
+static void restore_sig_handler(void);
 
 SEXP mc_cleanup(SEXP sKill, SEXP sDetach, SEXP sShutdown)
 {

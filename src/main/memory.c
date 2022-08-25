@@ -242,7 +242,7 @@ static Rboolean gc_inhibit_release = FALSE;
 
 #ifdef R_MEMORY_PROFILING
 static void R_ReportAllocation(R_size_t);
-static void R_ReportNewPage();
+static void R_ReportNewPage(void);
 #endif
 
 #define GC_PROT(X) do { \
@@ -257,7 +257,7 @@ static void R_ReportNewPage();
 
 static void R_gc_internal(R_size_t size_needed);
 static void R_gc_no_finalizers(R_size_t size_needed);
-static void R_gc_lite();
+static void R_gc_lite(void);
 static void mem_err_heap(R_size_t size);
 static void mem_err_malloc(R_size_t size);
 

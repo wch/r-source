@@ -519,7 +519,7 @@ add_dummies <- function(dir, Log)
                     as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
                                "UTC", "%Y-%m-%dT%H:%M:%S")
                 }, error = function(e) NA)
-                if (is.na(now)) {
+                if(identical(NA, now)) {
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/etc/UTC",
                                                           warn = FALSE))
@@ -528,7 +528,7 @@ add_dummies <- function(dir, Log)
                                    "UTC", "%Y-%m-%dT%H:%M:%S")
                     }, error = function(e) NA)
                 }
-                if (FALSE && is.na(now)) { ## seems permanently stopped
+                if (FALSE && identical(NA, now)) { ## seems permanently stopped
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
                                                           warn = FALSE))
@@ -537,7 +537,7 @@ add_dummies <- function(dir, Log)
                                    "UTC", "%Y-%m-%dT%H:%M")
                     }, error = function(e) NA)
                 }
-                if (is.na(now)) {
+                if(identical(NA, now)) {
                     any <- TRUE
                     noteLog(Log, "unable to verify current time")
                 } else {
@@ -3707,7 +3707,10 @@ add_dummies <- function(dir, Log)
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
         env <- "R_DEFAULT_PACKAGES=NULL"
         env1 <- if(nzchar(arch)) env0 else character()
+        t1 <- proc.time()
         out <- R_runR0(Rcmd, opts, env1, arch = arch)
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
         if(length(st <- attr(out, "status"))) {
             errorLog(Log)
             wrapLog("Loading this package had a fatal error",
@@ -3729,7 +3732,10 @@ add_dummies <- function(dir, Log)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
+        t1 <- proc.time()
         out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
         if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("\nIt looks like this package",
@@ -3743,7 +3749,10 @@ add_dummies <- function(dir, Log)
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")",
                         pkgname, pkgname)
+        t1 <- proc.time()
         out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out)) ||
             length(attr(out, "status"))) {
             warningLog(Log)
@@ -3765,7 +3774,10 @@ add_dummies <- function(dir, Log)
             env2 <- Sys.getenv("_R_LOAD_CHECK_S4_EXPORTS_", "NA")
             env2 <- paste0("_R_LOAD_CHECK_S4_EXPORTS_=",
                            if(env2 == "all") env else pkgname)
+            t1 <- proc.time()
             out <- R_runR0(Rcmd, opts, c(env, env1, env2), arch = arch)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             any <- FALSE
             if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
                 warningLog(Log)
@@ -3807,9 +3819,12 @@ add_dummies <- function(dir, Log)
                         "whether the namespace can be unloaded cleanly")
             Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                             pkgname, pkgname)
+            t1 <- proc.time()
             out <- if (is_base_pkg && pkgname != "stats4")
                 R_runR0(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
             else R_runR0(Rcmd, opts, env1)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (any(grepl("^(Error|\\.onUnload failed)", out)) ||
                 length(attr(out, "status"))) {
                 warningLog(Log)
@@ -3830,7 +3845,10 @@ add_dummies <- function(dir, Log)
             env <- setRlibs(pkgdir = pkgdir, libdir = libdir,
                             self2 = FALSE, quote = TRUE)
             if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
+            t1 <- proc.time()
             out <- R_runR0(Rcmd, opts, env, arch = arch)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (any(startsWith(out, "Error"))) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -4938,6 +4956,7 @@ add_dummies <- function(dir, Log)
 
         eq <- .Rd_get_equations_from_Rd_db(db)
 
+        i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
         i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
         i2 <- (length(eq) && isTRUE(R_check_Rd_math_rendering))
         if(!i1 && !i2)
@@ -6627,6 +6646,7 @@ add_dummies <- function(dir, Log)
         R_check_code_class_is_string <- TRUE
         if(is.na(R_check_Rd_validate_Rd2HTML))
             R_check_Rd_validate_Rd2HTML <- TRUE
+        R_check_Rd_math_rendering <- TRUE
 
     } else {
         ## do it this way so that INSTALL produces symbols.rds

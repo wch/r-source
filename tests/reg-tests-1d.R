@@ -4047,7 +4047,7 @@ assertErrV(  round(x=1.12345, banana=3))
 ## (by Shane Mueller, to the R-devel m.list)
 
 
-## source(*, echo=TRUE) with srcref's and empty lines; PR#
+## source(*, echo=TRUE) with srcref's and empty lines; PR#17769
 exP <- parse(text=c("1;2+", "", "3"), keep.source=TRUE)
 r <- source(exprs=exP, echo=TRUE)
 stopifnot(identical(r, list(value = 5, visible = TRUE)))
@@ -6060,8 +6060,38 @@ stopifnot(all.equal(yhat, c(96.8869, 92.3821, 81.9967, 71.2076, 60.0147), tol=1e
 stopifnot(
     identical(as.difftime(c(x = 1L), units="secs"),
                 .difftime(c(x = 1.), units="secs")))
-## integers where kept (and difftime arithmetic could overflow) in R <= 4.1.x
+## integers where kept (and difftime arithmetic could overflow) in R <= 4.2.x
 
+
+## ordered() with missing 'x' -- PR#18389
+factor( levels = c("a", "b"), ordered=TRUE) -> o1
+ordered(levels = c("a", "b")) -> o2
+stopifnot(identical(o1,o2))
+## the ordered() call has failed in R <= 4.2.x
+
+
+## source() with multiple encodings
+if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
+    writeLines('x <- "fa\xE7ile"', tf <- tempfile(), useBytes = TRUE)
+    tools::assertError(source(tf, encoding = "UTF-8"))
+    source(tf, encoding = c("UTF-8", "latin1"))
+    ## in R 4.2.{0,1} gave Warning (that would now be an error):
+    ##   'length(x) = 2 > 1' in coercion to 'logical(1)'
+    if (l10n_info()$"UTF-8") stopifnot(identical(Encoding(x), "UTF-8"))
+}
+
+
+## multi-line Rd macro definition
+rd <- tools::parse_Rd(textConnection(r"(
+\newcommand{\mylongmacro}{
+  \LaTeX
+}
+\mylongmacro
+)"), fragment = TRUE)
+tools::Rd2txt(rd, out <- textConnection(NULL, "w"), fragment = TRUE)
+stopifnot(any(as.character(rd) != "\n"),
+          identical(textConnectionValue(out)[2L], "LaTeX")); close(out)
+## empty output in R <= 4.2.x
 
 
 ## keep at end
