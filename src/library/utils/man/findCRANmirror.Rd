@@ -17,7 +17,7 @@ findCRANmirror(type = c("src", "web"))
 }
 \details{
   Find out if a CRAN mirror has been selected for the current session.
-  If so, return its URL else return \samp{"https://CRAN.R-Project.org/"}.
+  If so, return its URL else return \samp{"https://CRAN.R-project.org"}.
 
   The mirror is looked for in several places.
   \itemize{

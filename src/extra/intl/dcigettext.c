@@ -149,7 +149,7 @@ extern int errno;
 # define tfind __tfind
 #else
 # if !defined HAVE_GETCWD
-char *getwd ();
+char *getwd (char *);
 #  define getcwd(buf, max) getwd (buf)
 # else
 #  if VMS
@@ -157,7 +157,7 @@ char *getwd ();
 #  else
 /* This is naughty if already declared, but harmful on Win64 */
 #   ifndef _WIN64
-char *getcwd ();
+char *getcwd (char *, size_t);
 #   endif
 #  endif
 # endif

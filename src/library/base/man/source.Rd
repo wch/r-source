@@ -144,7 +144,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   be read on Windows (or \emph{vice versa}).
 
   The rest of this paragraph applies if \code{file} is an actual
-  filename or URL (and not \code{""} nor a connection).  If
+  filename or URL (and not a connection).  If
   \code{encoding = "unknown"}, an attempt is made to guess the encoding:
   the result of \code{\link{localeToCharset}()} is used as a guide.  If
   \code{encoding} has two or more elements, they are tried in turn until
@@ -154,7 +154,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   in the result will be translated to the current encoding and marked as
   such (see \code{\link{Encoding}}).
 
-  If \code{file} is a connection (including one specified by \code{""}),
+  If \code{file} is a connection,
   it is not possible to re-encode the input inside \code{source}, and so
   the \code{encoding} argument is just used to mark character strings in the
   parsed input in Latin-1 and UTF-8 locales: see \code{\link{parse}}.

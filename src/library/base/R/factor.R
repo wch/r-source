@@ -305,7 +305,7 @@ Ops.factor <- function(e1, e2)
 
 ## ordered factors ...
 
-ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
+ordered <- function(x = character(), ...) factor(x, ..., ordered=TRUE)
 
 is.ordered <- function(x) inherits(x, "ordered")
 as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)

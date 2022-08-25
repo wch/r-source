@@ -542,19 +542,36 @@ static SEXP xxmarkup(SEXP header, SEXP body, int flag, YYLTYPE *lloc)
 
 static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
 {
-    SEXP ans, prev, thename, thedefn;
-    char buffer[128];
+    SEXP ans, prev, defnvals, val, thename, thedefn;
+    char buffer[128], *defnBuffer = NULL;
     const char *c;
-    int maxarg = 0;
+    int maxarg = 0, vlen, len = 0;
 #if DEBUGVALS
     Rprintf("xxnewcommand(cmd=%p, name=%p, defn=%p)", cmd, name, defn);
 #endif
     thename = CADR(name);
-    thedefn = CADR(defn);
-    if (TYPEOF(thedefn) == STRSXP)
-    	PROTECT(thedefn = mkString(CHAR(STRING_ELT(thedefn,0))));
-    else
+    /* 
+     * Multi-line definitions are parsed as multiple
+     * VERB items.  The macro handler can only handle
+     * one item, so we concatenate everything into
+     * one long string.
+     */
+    defnvals = CDR(defn);
+    while (!isNull(defnvals)) {
+        if (TYPEOF(val = CAR(defnvals)) == STRSXP) {
+            vlen = strlen(CHAR(STRING_ELT(val, 0)));
+            defnBuffer = R_Realloc(defnBuffer, len + vlen + 1, char);
+            strncpy(defnBuffer + len, CHAR(STRING_ELT(val, 0)), vlen + 1);
+            len += vlen;
+        }
+        defnvals = CDR(defnvals);
+    }
+    if (len != 0) {
+        PROTECT(thedefn = mkString(defnBuffer)); 
+        R_Free(defnBuffer);
+    } else
     	PROTECT(thedefn = mkString(""));
+    	
     if (warnDups) {
 	prev = findVar(installTrChar(STRING_ELT(thename, 0)), parseState.xxMacroList);
     	if (prev != R_UnboundValue && strcmp(CHAR(STRING_ELT(cmd,0)), "\\renewcommand")) {

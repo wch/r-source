@@ -35,11 +35,11 @@ C------------------------------------------------------------C
 c Args
       INTEGER N, LEN, IOPT
       INTEGER IA(N),IB(N), NN(N)
-      LOGICAL FLAG(N), isWard
       DOUBLE PRECISION CRIT(N), MEMBR(N),DISS(LEN), DISNN(N)
 c Var
       INTEGER IM, JJ, JM, I, NCL, J, IND, I2, J2, K, IND1, IND2
       DOUBLE PRECISION INF, DMIN, D12
+      LOGICAL FLAG(N), isWard
 c External function
       INTEGER IOFFST
 c

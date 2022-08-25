@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -37,7 +37,7 @@
 factor(x = character(), levels, labels = levels,
        exclude = NA, ordered = is.ordered(x), nmax = NA)
 
-ordered(x, \dots)
+ordered(x = character(), \dots)
 
 is.factor(x)
 is.ordered(x)

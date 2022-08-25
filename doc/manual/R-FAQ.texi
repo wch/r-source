@@ -573,7 +573,7 @@ Centos, Scientific Linux, Oracle Linux).
 See @url{https://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about RPMs for openSUSE.
 
-No other binary distributions are currently publically available via
+No other binary distributions are currently publicly available via
 @CRAN{}.
 
 @node What documentation exists for R?, Citing R, Are there Unix-like binaries for R?, R Basics

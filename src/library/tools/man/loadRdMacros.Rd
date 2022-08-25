@@ -65,10 +65,12 @@ Duncan Murdoch
 }
 \examples{
 f <- tempfile()
-writeLines(paste0(
-    r"(\newcommand{\Rlogo}{\if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}})",
-    r"(\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}})"
-), f)
+writeLines(r"(
+\newcommand{\Rlogo}{
+  \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
+  \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
+}
+)", f)
 m <- loadRdMacros(f)
 ls(m)
 \donttest{ls(parent.env(m))}  % collation-specific

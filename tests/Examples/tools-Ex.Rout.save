@@ -638,17 +638,22 @@ attr(,"match.length")
 > ### ** Examples
 > 
 > f <- tempfile()
-> writeLines(paste0(
-+     r"(\newcommand{\Rlogo}{\if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}})",
-+     r"(\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}})"
-+ ), f)
+> writeLines(r"(
++ \newcommand{\Rlogo}{
++   \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
++   \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
++ }
++ )", f)
 > m <- loadRdMacros(f)
 > ls(m)
 [1] "\\Rlogo"
 > ls(parent.env(parent.env(m)))
 character(0)
 > parse_Rd(textConnection(r"(\Rlogo)"), fragment = TRUE, macros = m)
-\if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
+
+  \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
+  \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
+
 > 
 > 
 > 
