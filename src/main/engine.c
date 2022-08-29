@@ -3821,7 +3821,7 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 }
 
 /*
- * C API for graphics devices to interrogate gradient SEXPs
+ * C API for graphics devices to interrogate span SEXPs
  *
  * MUST match R structures in ../library/grDevices/R/span.R
  */
@@ -3846,5 +3846,69 @@ SEXP R_GE_spanStyle(SEXP span) {
 void GETypeset(SEXP span, double x, double y, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
         dd->dev->typeset(span, x, y, dd->dev);
+    }
+}
+
+/*
+ * C API for graphics devices to interrogate font SEXPs
+ *
+ * MUST match R structures in ../library/grDevices/R/font.R
+ */
+#define font_family    0
+#define font_weight    1
+#define font_style     2
+#define font_size      3
+#define font_file      4
+#define font_index     5
+
+SEXP R_GE_fontFamily(SEXP font) {
+    return VECTOR_ELT(font, font_family);
+}
+SEXP R_GE_fontWeight(SEXP font) {
+    return VECTOR_ELT(font, font_weight);
+}
+SEXP R_GE_fontStyle(SEXP font) {
+    return VECTOR_ELT(font, font_style);
+}
+SEXP R_GE_fontSize(SEXP font) {
+    return VECTOR_ELT(font, font_size);
+}
+SEXP R_GE_fontFile(SEXP font) {
+    return VECTOR_ELT(font, font_file);
+}
+SEXP R_GE_fontIndex(SEXP font) {
+    return VECTOR_ELT(font, font_index);
+}
+
+/*
+ * C API for graphics devices to interrogate glyph info SEXPs
+ *
+ * MUST match R structures in ../library/grDevices/R/glyph.R
+ */
+#define glyph_glyph    0
+#define glyph_font     1
+#define glyph_index    2
+#define glyph_x        3
+#define glyph_y        4
+
+SEXP R_GE_glyphGlyph(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_glyph);
+}
+SEXP R_GE_glyphFont(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_font);
+}
+SEXP R_GE_glyphIndex(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_index);
+}
+SEXP R_GE_glyphXOffset(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_x);
+}
+SEXP R_GE_glyphYOffset(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_y);
+}
+
+void GERenderText(SEXP glyph, double x, double y, pGEDevDesc dd) {
+    if (dd->dev->deviceVersion >= R_GE_typeset) {
+        dd->dev->renderText(glyph, x, y, dd->dev);
     }
 }

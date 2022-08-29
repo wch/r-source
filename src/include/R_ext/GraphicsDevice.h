@@ -793,6 +793,11 @@ struct _DevDesc {
 #else
     void (*typeset)();
 #endif
+#if R_USE_PROTOTYPES
+    void (*renderText)(SEXP glyph, double x, double y, pDevDesc dd);
+#else
+    void (*renderText)();
+#endif
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
