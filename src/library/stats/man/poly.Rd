@@ -1,6 +1,6 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{poly}
@@ -22,7 +22,8 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   evaluate raw polynomials.
 }
 \arguments{
- \item{x, newdata}{a numeric vector at which to evaluate the
+ \item{x, newdata}{a numeric vector or an object with \code{\link{mode}}
+   \code{"numeric"} (such as a \code{\link{Date}}) at which to evaluate the
    polynomial. \code{x} can also be a matrix.  Missing values are not
    allowed in \code{x}.}
  \item{degree}{the degree of the polynomial.  Must be less than the

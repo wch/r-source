@@ -41,6 +41,12 @@
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
 
+      \item \code{poly(x, n)} now works again (and is now documented)
+      when \code{x} is a \code{"Date"} or \code{"POSIXct"} object, or of
+      another class while fulfilling \code{mode(x) == "numeric"}.  This
+      also enables \code{poly(x, *, raw=TRUE)} for such variables.
+      Reported by Michael Chirico to R-devel.
+
       \item \code{write.table()}, \code{write.csv()} and
       \code{write.csv2()} restore their numerical precision (internal
       equivalent of \code{digits = 15}) after an interrupt (\PR{18384}).
