@@ -182,23 +182,13 @@
       For consistency, \code{NULL[[]]} is also erroneous now.
       \code{x[[]] <- v} gives an error of the same class \code{"MissingSubscriptError"}.
 
-      %% possibly back port to 4.2.z branch
       \item The \code{relist()} function of \pkg{utils} now supports
       \code{NULL} elements in the skeleton (\PR{15854}).
-
-      \item \code{poly(x, n)} now works again (and is now documented)
-      when \code{x} is a \code{"Date"} or \code{"POSIXct"} object, or of
-      another class while fulfilling \code{mode(x) == "numeric"}.  This
-      also enables \code{poly(x, *, raw=TRUE)} for such variables.
-      Reported by Michael Chirico to R-devel.
-
-      \item \code{source("")} and \code{source(character())} now give more
-      helpful error messages.
 
       \item \code{ordered(levels = *)} (missing \code{x}) now works
       analogously to \code{factor(, ordered=TRUE)}; reported (with fix)
       by Achim Zeileis in \PR{18389}.
-      
+
       \item User-defined Rd macro definitions can now span multiple lines,
       thanks to a patch from Duncan Murdoch. Previously, the Rd parser
       silently ignored everything after the first line.
@@ -242,12 +232,21 @@
       names, the warning is better understandable; reported (with fix) in
       \PR{18370} by Gabe Becker.
 
+      \item \code{poly(x, n)} now works again (and is now documented)
+      when \code{x} is a \code{"Date"} or \code{"POSIXct"} object, or of
+      another class while fulfilling \code{mode(x) == "numeric"}.  This
+      also enables \code{poly(x, *, raw=TRUE)} for such variables.
+      Reported by Michael Chirico to R-devel.
+
       \item \code{write.table()}, \code{write.csv()} and
       \code{write.csv2()} restore their numerical precision (internal
       equivalent of \code{digits = 15}) after an interrupt (\PR{18384}).
 
       \item One can now read also byte \code{FF} from a clipboard connection
       (\PR{18385}).
+
+      \item \code{source("")} and \code{source(character())} now give more
+      helpful error messages.
 
       \item Non-ASCII characters are now properly displayed on Windows in
       windows created using GraphApp via e.g.  \code{winDialogString} thanks
