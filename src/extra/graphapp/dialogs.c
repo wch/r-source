@@ -871,7 +871,7 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
        Checking chrgText.cpMin and chrgText.cpMax is for safety only:
        returning 1 here by accident instead of 0 would lead to infinite loop
        during replace all. */
-    long res = (long) sendmessage (hwnd, EM_FINDTEXTEXW, w, &ft);
+    long res = (LONG) sendmessage (hwnd, EM_FINDTEXTEXW, w, &ft);
     if (res == -1 || (ft.chrgText.cpMin == -1 && ft.chrgText.cpMax == -1)) {
 	free(wwhat);
 	return 0;

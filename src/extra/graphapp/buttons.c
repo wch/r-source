@@ -912,7 +912,7 @@ void textselection(control obj, long *start, long *end)
 	return;
     if ((obj->kind != FieldObject) && (obj->kind != TextboxObject))
 	return;
-    sel = sendmessage(obj->handle, EM_GETSEL, 0, 0);
+    sel = (DWORD) sendmessage(obj->handle, EM_GETSEL, 0, 0);
     if (start) *start = LOWORD(sel);
     if (end) *end = HIWORD(sel);
 }
@@ -1169,7 +1169,7 @@ void setlistitem(listbox obj, int index)
 	if (index >= 0)
 	    sendmessage(obj->handle, LB_SETSEL, TRUE, MAKELPARAM(index, 0));
 	else {
-	    count = sendmessage(obj->handle, LB_GETCOUNT, 0, 0L);
+	    count = (INT) sendmessage(obj->handle, LB_GETCOUNT, 0, 0L);
 	    sendmessage(obj->handle, LB_SELITEMRANGE, FALSE, MAKELPARAM(0,count-1));
 	}
     case DroplistObject:
@@ -1188,12 +1188,12 @@ int isselected(listbox obj, int index)
     switch (obj->kind)
     {
     case ListboxObject:
-	return (index == sendmessage(obj->handle, LB_GETCURSEL, 0, 0L));
+	return (index == (INT) sendmessage(obj->handle, LB_GETCURSEL, 0, 0L));
     case MultilistObject:
-	return sendmessage(obj->handle, LB_GETSEL, index, 0L);
+	return (INT) sendmessage(obj->handle, LB_GETSEL, index, 0L);
     case DroplistObject:
     case DropfieldObject:
-	return (index == sendmessage(obj->handle, CB_GETCURSEL, 0, 0L));
+	return (index == (INT) sendmessage(obj->handle, CB_GETCURSEL, 0, 0L));
     default:
 	return 0;
     }
@@ -1208,16 +1208,16 @@ int getlistitem(listbox obj)
     switch (obj->kind)
     {
     case ListboxObject:
-	return sendmessage(obj->handle, LB_GETCURSEL, 0, 0L);
+	return (INT) sendmessage(obj->handle, LB_GETCURSEL, 0, 0L);
     case MultilistObject:
-	count = sendmessage(obj->handle, LB_GETCOUNT, 0, 0L);
+	count = (INT) sendmessage(obj->handle, LB_GETCOUNT, 0, 0L);
 	for (index=0; index < count; index++)
 	    if (isselected(obj, index))
 		return index;
 	return -1;
     case DroplistObject:
     case DropfieldObject:
-	return sendmessage(obj->handle, CB_GETCURSEL, 0, 0L);
+	return (INT) sendmessage(obj->handle, CB_GETCURSEL, 0, 0L);
     default:
 	return -1;
     }
@@ -1298,7 +1298,7 @@ void handle_control(HWND hwnd, UINT message)
 	/* Ignore all but selection-change events. */
 	if (message != LBN_SELCHANGE) return;
 
-	index = sendmessage(hwnd, LB_GETCURSEL, 0, 0L);
+	index = (INT) sendmessage(hwnd, LB_GETCURSEL, 0, 0L);
 	obj->value = index;
 	break;
 
@@ -1310,9 +1310,9 @@ void handle_control(HWND hwnd, UINT message)
 	/* Ignore all but selection-change events. */
 	if (message != LBN_SELCHANGE)
 	    return;
-	index = sendmessage(hwnd, LB_GETCARETINDEX, 0, 0L);
+	index = (INT) sendmessage(hwnd, LB_GETCARETINDEX, 0, 0L);
 	/* We do want to see de-selection events too
-	   if (! sendmessage(hwnd, LB_GETSEL, index, 0L))
+	   if (! (INT) sendmessage(hwnd, LB_GETSEL, index, 0L))
 	   return;*/
 	obj->value = index;
 	break;
@@ -1322,7 +1322,7 @@ void handle_control(HWND hwnd, UINT message)
 	/* Ignore all but selection-change events. */
 	if (message != CBN_SELCHANGE)
 	    return;
-	index = sendmessage(hwnd, CB_GETCURSEL, 0, 0L);
+	index = (INT) sendmessage(hwnd, CB_GETCURSEL, 0, 0L);
 	obj->value = index;
 	break;
 
