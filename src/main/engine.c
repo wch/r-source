@@ -3909,6 +3909,6 @@ SEXP R_GE_glyphYOffset(SEXP glyph) {
 
 void GERenderText(SEXP glyph, double x, double y, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
-        dd->dev->renderText(glyph, x, y, dd->dev);
+        dd->dev->glyph(glyph, x, y, dd->dev);
     }
 }

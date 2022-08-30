@@ -2350,3 +2350,192 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
     return capabilities;
 }
 
+/*
+ ***************************
+ * Typesetting
+ ***************************
+ */
+static void Cairo_Typeset(SEXP span, double x, double y, pDevDesc dd) {
+    warning(_("Text shaping not supported on Cairo devices"));
+}
+
+#ifdef HAVE_PANGOCAIRO
+
+static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    
+    SEXP character = R_GE_glyphGlyph(glyph); 
+    SEXP font = R_GE_glyphFont(glyph);
+    SEXP glyph_id = R_GE_glyphIndex(glyph);
+    SEXP x_offset = R_GE_glyphXOffset(glyph);
+    SEXP y_offset = R_GE_glyphYOffset(glyph);
+
+    double size = 12;
+    double rot = 0;
+
+    int n_glyphs = LENGTH(character);
+    int i;
+    
+    if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
+    }
+
+    for (i=0; i<n_glyphs; i++) {
+        SEXP f = VECTOR_ELT(font, i);
+        SEXP family = R_GE_fontFamily(f);
+        SEXP weight = R_GE_fontWeight(f);
+        SEXP style = R_GE_fontStyle(f);
+        
+        /* Generate temporary 'gc' */
+        R_GE_gcontext gc;
+        strncpy(gc.fontfamily, CHAR(STRING_ELT(family, 0)), 200);
+        if (REAL(weight)[0] > 400) {
+            if (INTEGER(style)[0] != R_GE_text_style_normal) {
+                gc.fontface = 4;
+            } else {
+                gc.fontface = 2;
+            }
+        } else {
+            if (INTEGER(style)[0] != R_GE_text_style_normal) {
+                gc.fontface = 3;
+            } else {
+                gc.fontface = 1;
+            }      
+        }
+        gc.ps = size;
+        gc.cex = 1;
+        gc.col = R_GE_str2col("black");
+
+        /* Could be cached */
+        int sl, wt;
+        switch (gc.fontface) {
+        case 1:
+            sl = CAIRO_FONT_SLANT_NORMAL;
+            wt = CAIRO_FONT_WEIGHT_NORMAL;
+            break;
+        case 2:
+            sl = CAIRO_FONT_SLANT_ITALIC;
+            wt = CAIRO_FONT_WEIGHT_NORMAL;
+            break;
+        case 3:
+            sl = CAIRO_FONT_SLANT_NORMAL;
+            wt = CAIRO_FONT_WEIGHT_BOLD;
+            break;
+        case 4:
+            sl = CAIRO_FONT_SLANT_ITALIC;
+            wt = CAIRO_FONT_WEIGHT_BOLD;
+            break;
+        }
+        cairo_select_font_face(xd->cc, gc.fontfamily, sl, wt);
+        cairo_set_font_size(xd->cc, size);
+        /* 
+        PangoFontDescription *desc = 
+            PG_getFont(&gc, 
+                       xd->fontscale, xd->basefontfamily, xd->symbolfamily);
+        PangoFontMap *map = pango_cairo_font_map_get_default();
+        PangoContext *context = pango_font_map_create_context(map);
+        pango_context_set_font_description(context, desc);
+        */
+
+        cairo_save(xd->cc);
+
+        double x_off = REAL(x_offset)[i];
+        double y_off = REAL(y_offset)[i];
+
+	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
+
+        cairo_glyph_t cairoGlyph;
+        cairoGlyph.index = INTEGER(glyph_id)[i];
+        cairoGlyph.x = x + x_off;
+        cairoGlyph.y = y + y_off;
+        if (!xd->appending) {
+            CairoColor(gc.col, xd);
+            cairo_show_glyphs(xd->cc, &cairoGlyph, 1);
+        } else {
+            cairo_glyph_path(xd->cc, &cairoGlyph, 1);
+        }
+
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, use temporary pattern as source and mask that */
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+                /* Release temporary pattern */
+                cairo_pattern_destroy(source);
+            }
+        }
+
+	cairo_restore(xd->cc);
+        /* 
+        g_object_unref(context);
+        pango_font_description_free(desc); 
+        */
+    }
+    
+}
+
+#else 
+
+static void Cairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
+{
+/*
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    const char *textstr;
+
+    if (!utf8Valid(str)) error("invalid string in Cairo_Text");
+
+    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
+	strcmp(xd->symbolfamily, "Symbol") != 0) {
+        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+    } else if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
+    if (R_ALPHA(gc->col) > 0) {
+	cairo_save(xd->cc);
+
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                cairo_push_group(xd->cc);
+            }
+        }
+
+	FT_getFont(gc, dd, xd->fontscale);
+	cairo_move_to(xd->cc, x, y);
+	if (hadj != 0.0 || rot != 0.0) {
+	    cairo_text_extents_t te;
+	    cairo_text_extents(xd->cc, textstr, &te);
+	    if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
+	    if (hadj != 0.0)
+		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
+	}
+        if (!xd->appending) {
+            CairoColor(gc->col, xd);
+            cairo_show_text(xd->cc, textstr);
+        } else {
+            cairo_text_path(xd->cc, textstr);
+        }
+
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+                cairo_pattern_destroy(source);
+            }
+        }
+
+	cairo_restore(xd->cc);
+    }
+*/
+}
+
+#endif

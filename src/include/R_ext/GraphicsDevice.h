@@ -794,9 +794,9 @@ struct _DevDesc {
     void (*typeset)();
 #endif
 #if R_USE_PROTOTYPES
-    void (*renderText)(SEXP glyph, double x, double y, pDevDesc dd);
+    void (*glyph)(SEXP glyph, double x, double y, pDevDesc dd);
 #else
-    void (*renderText)();
+    void (*glyph)();
 #endif
 
     /* Area for future expansion.

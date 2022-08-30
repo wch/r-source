@@ -528,6 +528,12 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->fill = Cairo_Fill;
     dd->fillStroke = Cairo_FillStroke;
     dd->capabilities = Cairo_Capabilities;
+    dd->typeset = Cairo_Typeset;
+#ifdef HAVE_PANGOCAIRO
+    dd->glyph = PangoCairo_Glyph;
+#else
+    dd->glyph = Cairo_Glyph;
+#endif
 
     dd->left = 0;
     dd->right = width;
@@ -552,7 +558,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->startfont = 1;
     dd->startgamma = 1;
     dd->displayListOn = FALSE;
-    dd->deviceVersion = R_GE_group;
+    dd->deviceVersion = R_GE_typeset;
 
     dd->deviceSpecific = (void *) xd;
 
