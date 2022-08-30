@@ -255,6 +255,9 @@
 
       \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
       too late to have the intended effect.
+
+      \item Find and replace operations work again in the script editor in
+      \command{Rgui} on Windows.
     }
   }
 }
