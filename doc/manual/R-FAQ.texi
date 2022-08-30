@@ -710,8 +710,11 @@ A moderated list for announcements on the availability of new or
 enhanced contributed packages.
 @item R-help
 The `main' R mailing list, for discussion about problems and solutions
-using R, announcements (not covered by `R-announce' and `R-packages')
-about the development of R and the availability of new code.
+encountered using R, including using R packages in the standard R distribution 
+and on CRAN;  announcements (not covered by `R-announce’ or `R-packages’); 
+the availability of new functionality for R and documentation of R; 
+and for posting nice examples and benchmarks. 
+@c about the development of R and the availability of new code.
 @c enhancements and patches to the source code and documentation of R,
 @c comparison and compatibility with S and @SPLUS{}, and for the posting of
 @c nice examples and benchmarks.

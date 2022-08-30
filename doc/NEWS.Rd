@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.2.1 patched}{
+\section{\Rlogo CHANGES IN R 4.2.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
@@ -53,6 +54,9 @@
 
       \item One can now read also byte \code{FF} from a clipboard connection
       (\PR{18385}).
+
+      \item \code{source("")} and \code{source(character())} now give more
+      helpful error messages.
 
       \item Non-ASCII characters are now properly displayed on Windows in
       windows created using GraphApp via e.g.  \code{winDialogString} thanks
