@@ -258,6 +258,12 @@
 
       \item Find and replace operations work again in the script editor in
       \command{Rgui} on Windows.
+
+      \item Computation of window size based on requested client size in
+      GraphApp when running in a multi-byte locale on Windows has been fixed
+      (regression in \R 4.2.0 for users of systems where \R 4.1 used a
+      single-byte locale).  \command{Rgui} again respects the number of
+      console rows and columns given in \file{Rconsole} file.
     }
   }
 }
