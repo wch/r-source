@@ -22,9 +22,9 @@
 /* We are assuming here that the R code has checked that 
  * span is a "RTextSpan"
  */
-static void typesetSpan(SEXP span, SEXP x, SEXP y, Rboolean draw) 
+static void typesetSpan(SEXP span, SEXP x, SEXP y, SEXP w, Rboolean draw) 
 {
-    double xx, yy;
+    double xx, yy, ww;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
@@ -56,16 +56,24 @@ static void typesetSpan(SEXP span, SEXP x, SEXP y, Rboolean draw)
     yy = transformYtoINCHES(y, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
     xx = toDeviceX(xx, GE_INCHES, dd);
     yy = toDeviceY(yy, GE_INCHES, dd);
+    if (ISNA(REAL(w)[0])) {
+        ww = NA_REAL;
+    } else {
+        /* Width is taken to be in inches by textshaping::shape_text() */
+	ww = transformWidthtoINCHES(w, 0, vpc, &gc,
+				    vpWidthCM, vpHeightCM,
+				    dd);
+    }
     if (R_FINITE(xx) && R_FINITE(yy))
-        GETypeset(span, xx, yy, dd);
+        GETypeset(span, xx, yy, ww, dd);
     if (draw) {
 	GEMode(0, dd);
     }
     UNPROTECT(1);
 }
 
-SEXP L_typeset(SEXP span, SEXP x, SEXP y) {
-    typesetSpan(span, x, y, TRUE);
+SEXP L_typeset(SEXP span, SEXP x, SEXP y, SEXP w) {
+    typesetSpan(span, x, y, w, TRUE);
     return R_NilValue;    
 }
 

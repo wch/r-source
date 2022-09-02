@@ -789,7 +789,7 @@ struct _DevDesc {
     SEXP (*capabilities)();
 #endif
 #if R_USE_PROTOTYPES
-    void (*typeset)(SEXP span, double x, double y, pDevDesc dd);
+    void (*typeset)(SEXP span, double x, double y, double w, pDevDesc dd);
 #else
     void (*typeset)();
 #endif

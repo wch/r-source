@@ -2355,7 +2355,8 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
  * Typesetting
  ***************************
  */
-static void Cairo_Typeset(SEXP span, double x, double y, pDevDesc dd) {
+static void Cairo_Typeset(SEXP span, double x, double y, double w, 
+                          pDevDesc dd) {
     warning(_("Text shaping not supported on Cairo devices"));
 }
 

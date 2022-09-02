@@ -3843,9 +3843,9 @@ SEXP R_GE_spanStyle(SEXP span) {
     return VECTOR_ELT(span, span_style);
 }
 
-void GETypeset(SEXP span, double x, double y, pGEDevDesc dd) {
+void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
-        dd->dev->typeset(span, x, y, dd->dev);
+        dd->dev->typeset(span, x, y, w, dd->dev);
     }
 }
 

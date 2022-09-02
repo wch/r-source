@@ -674,7 +674,7 @@ SEXP R_GE_spanFamily(SEXP span);
 SEXP R_GE_spanWeight(SEXP span);
 SEXP R_GE_spanStyle(SEXP span);
 
-void GETypeset(SEXP span, double x, double y, pGEDevDesc dd);
+void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd);
 
 /* Must match order in ../library/grDevices/R/glyph.R */
 SEXP R_GE_glyphGlyph(SEXP info);
