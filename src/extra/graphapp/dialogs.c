@@ -27,7 +27,9 @@
    Copyright (C) 2013--2022	The R Core Team
 
    Additions for R, Chris Jackson
-   Find and replace dialog boxes and dialog handlers */
+   Find and replace dialog boxes and dialog handlers.
+   Modify find and replace for RichEdit20W.
+*/
 
 /* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
@@ -840,11 +842,17 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
     long start, end;
     CHARRANGE sel;
     WPARAM w = 0;
-    FINDTEXTEX ft;
+    FINDTEXTEXW ft;
     sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
     start = sel.cpMin;
     end = sel.cpMax;
-    ft.lpstrText = what;
+
+    /* RichEdit20W (see newrichtextarea) requires a Unicode string. */
+    int nwhat = mbstowcs(NULL, what, 0);
+    wchar_t *wwhat = (wchar_t *) malloc((nwhat+1)*sizeof(wchar_t));
+    mbstowcs(wwhat, what, nwhat+1);
+    ft.lpstrText = wwhat;
+
     ft.chrgText.cpMin = start;
     ft.chrgText.cpMax = end;
     if (down) {
@@ -858,12 +866,20 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
     }
     if (matchcase) w = w | FR_MATCHCASE;
     if (wholeword) w = w | FR_WHOLEWORD;
-    if (sendmessage(hwnd, EM_FINDTEXTEX, w, &ft) == -1)
+    /* The cast is necessary, because EM_FINDTEXTEXW returns LONG (32-bit),
+       but the rest of the 64-bit LRESULT is undefined (not all 1s for -1).
+       Checking chrgText.cpMin and chrgText.cpMax is for safety only:
+       returning 1 here by accident instead of 0 would lead to infinite loop
+       during replace all. */
+    long res = (LONG) sendmessage (hwnd, EM_FINDTEXTEXW, w, &ft);
+    if (res == -1 || (ft.chrgText.cpMin == -1 && ft.chrgText.cpMax == -1)) {
+	free(wwhat);
 	return 0;
-    else {
+    } else {
 	sendmessage (hwnd, EM_EXSETSEL, 0, &(ft.chrgText));
-	sendmessage (hwnd, EM_SCROLLCARET, 0, 0) ;
+	sendmessage (hwnd, EM_SCROLLCARET, 0, 0);
     }
+    free(wwhat);
     return 1;
 }
 
@@ -873,20 +889,26 @@ static int richeditreplace(HWND hwnd, char *what, char *replacewith,
     /* If current selection is the find string, replace it and find next */
     long start, end;
     CHARRANGE sel;
-    char *buf;
+    wchar_t *wbuf;
     textbox t = find_by_handle(hwnd);
     if (t) {
 	sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
 	start = sel.cpMin;
 	end = sel.cpMax;
 	if (start < end) {
-	    buf = (char *) malloc(end - start + 1);
-	    sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
-	    if (!strcmp(buf, what)) {
+	    /* RichEdit20W (see newrichtextarea) produces a Unicode string. */
+	    int nwhat = mbstowcs(NULL, what, 0);
+	    wchar_t *wwhat = (wchar_t *) malloc((nwhat+1)*sizeof(wchar_t));
+	    mbstowcs(wwhat, what, nwhat+1);
+	    wbuf = (wchar_t *) malloc((end - start + 1)*sizeof(wchar_t));
+	    sendmessage(hwnd, EM_GETSELTEXT, 0, wbuf);
+
+	    if (!wcscmp(wbuf, wwhat)) {
 		checklimittext(t, strlen(replacewith) - strlen(what) + 2);
 		sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
 	    }
-	    free(buf);
+	    free(wwhat);	
+	    free(wbuf);
 	}
 	/* else just find next */
 	if (richeditfind(hwnd, what, matchcase, wholeword, down))

@@ -539,6 +539,7 @@ R_newunz(const char *description, const char *const mode)
        /* =================== second part ====================== */
 
 /* From minizip contribution to zlib 1.2.3, updated for 1.2.5 */
+/* cherry-picked fix for PR18390 */
 
 /* unzip.c -- IO for uncompress .zip files using zlib
    Version 1.01e, February 12th, 2005
@@ -1409,21 +1410,21 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
 	    {
 		uLong uL;
 
-		if(file_info.uncompressed_size == (ZPOS64_T)(unsigned long)-1)
+		if(file_info.uncompressed_size == MAXU32)
 		{
 		    if (unz64local_getLong64(s->filestream,
 					     &file_info.uncompressed_size) != UNZ_OK)
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info.compressed_size == (ZPOS64_T)(unsigned long)-1)
+		if(file_info.compressed_size == MAXU32)
 		{
 		    if (unz64local_getLong64(s->filestream,
 					     &file_info.compressed_size) != UNZ_OK)
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info_internal.offset_curfile == (ZPOS64_T)(unsigned long)-1)
+		if(file_info_internal.offset_curfile == MAXU32)
 		{
 		    /* Relative Header offset */
 		    if (unz64local_getLong64(s->filestream,
@@ -1431,7 +1432,9 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info.disk_num_start == (unsigned long)-1)
+		if(file_info.disk_num_start == 0xffff)
+		    /* minizip checks against MAXU32, but the specification
+		       says 0xffff, see also PR18390 */
 		{
 		    /* Disk Start Number */
 		    if (unz64local_getLong(s->filestream,&uL) != UNZ_OK)
