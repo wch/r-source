@@ -73,6 +73,10 @@
       (regression in \R 4.2.0 for users of systems where \R 4.1 used a
       single-byte locale).  \command{Rgui} again respects the number of
       console rows and columns given in \file{Rconsole} file.
+
+      \item \command{Rterm} support for \code{Alt+xxx} sequences has been
+      fixed to produce the corresponding character (only) once. This fixes
+      pasting text with tilde on Italian keyboard (PR#18391).
     }
   }
 }
