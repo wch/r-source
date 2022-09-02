@@ -349,8 +349,8 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
 	p->kbuf = NULL;
     }
     BM = NULL;
-    p->rows = rows;
-    p->cols = cols;
+    p->rows = rows; /* ROWS */
+    p->cols = cols; /* COLS */
     for (int i=0; i<numGuiColors; i++)
 	p->guiColors[i] = guiColors[i];
     p->f = f;

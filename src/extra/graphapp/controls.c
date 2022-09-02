@@ -784,7 +784,8 @@ char *GA_gettext(control obj)
 	len_msg = WM_GETTEXTLENGTH;
 	gettext_msg = WM_GETTEXT;
 	arg1 = 0;
-	arg2 = sendmessage(hwnd, len_msg, 0, 0L)+1;
+	/* FIXME: INT in wine/riched20, unsigned types in other */
+	arg2 = (LRESULT) sendmessage(hwnd, len_msg, 0, 0L)+1;
 	break;
     }
 
@@ -792,7 +793,8 @@ char *GA_gettext(control obj)
     if (obj->text)
 	discard(obj->text);
     /* Find the length of the string. */
-    length = sendmessage(obj->handle, len_msg, arg1, 0L);
+    /* FIXME: properly cast the result */
+    length = (LRESULT) sendmessage(obj->handle, len_msg, arg1, 0L);
     if (length == 0)
 	return (obj->text = new_string(NULL));
     /* Copy the text from the object. */

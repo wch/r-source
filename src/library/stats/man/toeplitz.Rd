@@ -65,7 +65,7 @@ W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
 ## "display" nicely :
 if(requireNamespace("Matrix"))
    print(Matrix::Matrix(W))    else {
-   colnames(W) <- paste0(",", if(m <= 9) 1:9 else c(1:9, letters[seq_len(m-9)]))
+   colnames(W) <- paste0(",", if(n <= 9) 1:n else c(1:9, letters[seq_len(n-9)]))
    print(W)
 }
 \dontshow{if(!hadM) unloadNamespace("Matrix")}% revert state
