@@ -470,7 +470,7 @@ function(file, out = stdout(), codify = FALSE)
         ## Re-order according to decreasing version.
         vchunks <- vchunks[order(as.numeric_version(names(vchunks)),
                                  decreasing = TRUE)]
-        dates <- sapply(vchunks, function(v) v$Date[1L])
+        dates <- vapply(vchunks, function(v) v$Date[1L], "")
         if(any(ind <- !is.na(dates)))
             names(vchunks)[ind] <-
                 sprintf("%s (%s)", names(vchunks)[ind], dates[ind])
@@ -852,7 +852,7 @@ function(x, ...)
     if(!length(vchunks))
         return(character())
 
-    dates <- sapply(vchunks, function(v) v$Date[1L])
+    dates <- vapply(vchunks, function(v) v$Date[1L], "")
     vheaders <-
         format(sprintf("Changes in version %s%s",
                        names(vchunks),
