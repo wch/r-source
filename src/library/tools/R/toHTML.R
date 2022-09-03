@@ -123,8 +123,11 @@ function(x, ...)
         vchunks[order(as.numeric_version(sub(" *patched", ".1",
                                              names(vchunks))),
                       decreasing = TRUE)]
-    vheaders <- sprintf("<h2>Changes in version %s</h2>",
-                        names(vchunks))
+    dates <- vapply(vchunks, function(v) v$Date[1L], "")
+    vheaders <- sprintf("<h2>Changes in version %s%s</h2>",
+                        names(vchunks),
+                        ifelse(is.na(dates), "",
+                               sprintf(" (%s)", dates)))
     c(HTMLheader(...),
       unlist(lapply(seq_along(vchunks),
                     function(i) {
@@ -167,7 +170,7 @@ function(x, ...)
                                              strict = FALSE),
                              decreasing = TRUE)]
 
-    dates <- sapply(vchunks, function(v) v$Date[1L])    
+    dates <- vapply(vchunks, function(v) v$Date[1L], "")
     vheaders <- sprintf("<h2>Changes in version %s%s</h2>",
                         names(vchunks),
                         ifelse(is.na(dates), "",
