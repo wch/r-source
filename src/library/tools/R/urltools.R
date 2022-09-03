@@ -470,9 +470,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         ## line of a response is the status-line, with "a possibly empty
         ## textual phrase describing the status code", so only look for
         ## a 301 status code in the first line.
-        if(grepl(" 301 ", h[1L], useBytes = TRUE) &&
-           !startsWith(u, "https://doi.org/") &&
-           !startsWith(u, "http://dx.doi.org/")) {
+        if(grepl(" 301 ", h[1L], useBytes = TRUE)) {
             ## Get the new location from the last consecutive 301
             ## obtained.
             h <- split(h, c(0L, cumsum(h == "\r\n")[-length(h)]))
@@ -611,6 +609,25 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
     pos <- which(schemes == "http" | schemes == "https")
     if(length(pos)) {
         urlspos <- urls[pos]
+        ## Check DOI URLs via the DOI handle API, as we nowadays do for
+        ## checking DOIs.
+        myparts <- parts[pos, , drop = FALSE]
+        ind <- (((myparts[, 2L] == "doi.org") | 
+                 (myparts[, 2L] == "dx.doi.org")) &
+                startsWith(myparts[, 3L], "/10.") &
+                !nzchar(myparts[, 4L]) &
+                !nzchar(myparts[, 5L]))
+        if(any(ind))
+            urlspos[ind] <- paste0("https://doi.org/api/handles",
+                                   myparts[ind, 3L])
+        ## Could also use regexps, e.g.
+        ##    pat <- "^https?://(dx[.])?doi.org/10[.]([^?#]+)$"
+        ##    ind <- grep(pat, urlspos)
+        ##    if(length(ind))
+        ##         urlspos[ind] <-
+        ##             paste0("https://doi.org/api/handles/10.",
+        ##                     sub(pat, "\\2", urlspos[ind]))
+        ## but using the parts is considerably faster ...
         headers <- .fetch_headers(urlspos)
         results <- do.call(rbind, Map(.check_http, urlspos, headers))
         status <- as.numeric(results[, 1L])
