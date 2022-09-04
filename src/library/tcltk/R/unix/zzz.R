@@ -41,31 +41,27 @@
         ## installed, and check libX11 is present since this is a
         ## common cause of problems with CRAN binary installs reported
         ## for Rcmdr.
-        if (file.exists("/usr/bin/otool")) {
-            ## otool is part of the OS nowadays, but in recent versions
-            ## is a stub requiring the CLT to be installed
-            DSO <- file.path(libname, pkgname, "libs", .Platform$r_arch, "tcltk.so")
-            out <- system2("/usr/bin/otool", c("-L", shQuote(DSO)), stdout = TRUE)
-            ind <- grep("libtk[.0-9]+[.]dylib", out)
-            if(length(ind)) {
-                this <- sub(" .*", "", sub("^\t", "", out[ind]))
-                if(!file.exists(this)) {
-                    ## one issue here is that libtk built from unpatched
-                    ## sources has wrong id, so we report what it is looking for
-                    ## (/opt/R/arm64/lib:/usr/X11R6/lib/libtk8.6.dylib is wrong)
-                    message("tcltk DLL is linked to ", shQuote(this))
-                    stop("Tcl/Tk libraries are missing: install the Tcl/Tk component from the R installer",
-                         domain = NA)
-                }
+        DSO <- file.path(libname, pkgname, "libs", .Platform$r_arch, "tcltk.so")
+        loads <- utils:::macDynLoads(DSO)
+        ind <- grep("libtk[.0-9]+[.]dylib", loads)
+        if (length(ind)) {
+            this <- loads[ind]
+            if (!file.exists(this)) {
+                ## one issue here is that libtk built from unpatched
+                ## sources has wrong id, so we report what it is looking for
+                ## (/opt/R/arm64/lib:/usr/X11R6/lib/libtk8.6.dylib is wrong)
+                message("tcltk DLL is linked to ", shQuote(this))
+                stop("Tcl/Tk libraries are missing: install the Tcl/Tk component from the R installer",
+                     domain = NA)
             }
-            ind <- grep("libX11[.][0-9]+[.]dylib", out)
-            if(length(ind)) {
-                this <- sub(" .*", "", sub("^\t", "", out[ind]))
-                if(!file.exists(this)) {
-                    message("tcltk DLL is linked to ", shQuote(this))
-                    stop("X11 library is missing: install XQuartz from www.xquartz.org",
-                         domain = NA)
-                }
+        }
+        ind <- grep("libX11[.][0-9]+[.]dylib", loads)
+        if (length(ind)) {
+            this <- loads[ind]
+            if (!file.exists(this)) {
+                message("tcltk DLL is linked to ", shQuote(this))
+                stop("X11 library is missing: install XQuartz from www.xquartz.org",
+                     domain = NA)
             }
         }
 
