@@ -5508,8 +5508,10 @@ add_dummies <- function(dir, Log)
                              "warning: .* is not needed and will not be emitted",
                              "warning: .* \\[-Wnon-literal-null-conversion\\]",
                              "warning: .* \\[-Wignored-optimization-argument\\]",
+                             ## thinkos like <- for = or == for =
+                             "warning: .* \\[-Wunused-comparison\\]",
                              ## LLVM clang 14, at least
-                             "warning: .* \\[-Wbitwise-instead-of-logical\\]"
+                             "warning: .* \\[-Wnon-literal-null-conversion\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
