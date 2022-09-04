@@ -589,7 +589,6 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     Rboolean isRawlist = FALSE;
-    Rboolean warned = FALSE;
 
     checkArity(op, args);
     if(isNull(x)) {  /* list locales */
@@ -1585,13 +1584,10 @@ static int reEncode(const char *x, R_StringBuffer *cbuff,
    R_alloc stack */
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
 {
-    char *p;
-    int res;
-
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     if (reEncode(x, &cbuff, ce_in, ce_out, subst)) return x;
-    res = strlen(cbuff.data) + 1;
-    p = R_alloc(res, 1);
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
@@ -1622,13 +1618,10 @@ void reEnc2(const char *x, char *y, int ny,
 const char *reEnc3(const char *x,
                    const char *fromcode, const char *tocode, int subst)
 {
-    char *p;
-    int res;
-
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     if (reEncodeIconv(x, &cbuff, fromcode, tocode, subst)) return x;
-    res = strlen(cbuff.data) + 1;
-    p = R_alloc(res, 1);
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
