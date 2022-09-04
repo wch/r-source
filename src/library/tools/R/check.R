@@ -5511,7 +5511,7 @@ add_dummies <- function(dir, Log)
                              ## thinkos like <- for = or == for =
                              "warning: .* \\[-Wunused-comparison\\]",
                              ## LLVM clang 14, at least
-                             "warning: .* \\[-Wnon-literal-null-conversion\\]"
+                             "warning: .* \\[-Wbitwise-instead-of-logical\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
