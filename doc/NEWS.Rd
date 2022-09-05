@@ -77,6 +77,10 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
+
+      \item The detection of dependent libraries for X11 and Tcl/Tk at
+      run-time on macOS no longer requires \code{otool} from the Apple
+      Developer Tools (PR#18400).
     }
   }
 }

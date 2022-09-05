@@ -16,21 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-check_for_XQuartz <- function()
-{
-    if (file.exists("/usr/bin/otool") &&
-        file.exists(DSO <- file.path(R.home("modules"), "R_de.so"))) {
-        out <- system2("/usr/bin/otool", c("-L", shQuote(DSO)), stdout = TRUE)
-        ind <- grep("libX11[.][0-9]+[.]dylib", out)
-        if(length(ind)) {
-            this <- sub(" .*", "", sub("^\t", "", out[ind]))
-            if(!file.exists(this))
-                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org",
-                     domain = NA)
-        }
-    }
-}
-
 dataentry <- function (data, modes)
 {
     check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
@@ -45,7 +30,8 @@ dataentry <- function (data, modes)
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
         stop("invalid 'modes' argument")
-    if (grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os))
+        check_for_XQuartz(file.path(R.home("modules"), "R_de.so"))
     .External2(C_dataentry, data, modes)
 }
 
@@ -67,7 +53,8 @@ View <- function (x, title)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
        !max(lengths(x)))
         stop("invalid 'x' argument")
-    if (grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os))
+        check_for_XQuartz(file.path(R.home("modules"), "R_de.so"))
     invisible(.External2(C_dataviewer, x, title))
 }
 
@@ -95,7 +82,8 @@ edit.data.frame <-
                                  | sapply(name, is.factor)))
         stop("can only handle vector and factor elements")
 
-    if (grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os))
+        check_for_XQuartz(file.path(R.home("modules"), "R_de.so"))
 
     factor.mode <- match.arg(factor.mode)
 
@@ -196,7 +184,8 @@ edit.matrix <-
        any(dim(name) < 1))
         stop("invalid input matrix")
 
-    if (grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os))
+        check_for_XQuartz(file.path(R.home("modules"), "R_de.so"))
 
     ## logical matrices will be edited as character
     logicals <- is.logical(name)
