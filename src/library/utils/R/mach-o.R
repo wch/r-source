@@ -140,7 +140,8 @@ check_for_XQuartz <- function(DSO)
     if (file.exists(DSO)) {
         loads <- macDynLoads(DSO)
         if (length(loads)) {
-            ind <- grep("libX11[.][0-9]+[.]dylib", loads)
+            ## only consider absolute paths (it could also be @xxx or relative)
+            ind <- grep("^/.*libX11[.][0-9]+[.]dylib", loads)
             if (length(ind)) {
                 this <- loads[ind]
                 if (!file.exists(this))

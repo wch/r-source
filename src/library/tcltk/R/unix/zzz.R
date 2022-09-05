@@ -43,7 +43,7 @@
         ## for Rcmdr.
         DSO <- file.path(libname, pkgname, "libs", .Platform$r_arch, "tcltk.so")
         loads <- utils:::macDynLoads(DSO)
-        ind <- grep("libtk[.0-9]+[.]dylib", loads)
+        ind <- grep("^/.*libtk[.0-9]+[.]dylib", loads)
         if (length(ind)) {
             this <- loads[ind]
             if (!file.exists(this)) {
@@ -55,7 +55,8 @@
                      domain = NA)
             }
         }
-        ind <- grep("libX11[.][0-9]+[.]dylib", loads)
+        ## we could use check_for_XQuartz(), but we already have the loads ...
+        ind <- grep("^/.*libX11[.][0-9]+[.]dylib", loads)
         if (length(ind)) {
             this <- loads[ind]
             if (!file.exists(this)) {
