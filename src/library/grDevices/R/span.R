@@ -19,14 +19,17 @@ flatten.character <- function(x, params) {
 span <- function(...,
                  family=NA,
                  weight=NA,
-                 style=NA) {
+                 style=NA,
+                 size=NA) {
     spanlist <- list(...)
     params <- data.frame(## CHAR
                          family=as.character(family),
                          ## REAL
                          weight=mapWeight(weight),
                          ## INTEGER
-                         style=mapStyle(style))
+                         style=mapStyle(style),
+                         ## REAL
+                         size=as.numeric(size))
     spans <- lapply(spanlist, flatten, params)
     result <- do.call(rbind, spans)
     if (nrow(result) < 1)

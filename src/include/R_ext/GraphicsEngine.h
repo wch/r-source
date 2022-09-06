@@ -673,6 +673,7 @@ SEXP R_GE_spanText(SEXP span);
 SEXP R_GE_spanFamily(SEXP span);
 SEXP R_GE_spanWeight(SEXP span);
 SEXP R_GE_spanStyle(SEXP span);
+SEXP R_GE_spanSize(SEXP span);
 
 void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd);
 

@@ -3829,6 +3829,7 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 #define span_family  1
 #define span_weight  2
 #define span_style   3
+#define span_size    4
 
 SEXP R_GE_spanText(SEXP span) {
     return VECTOR_ELT(span, span_text);
@@ -3841,6 +3842,9 @@ SEXP R_GE_spanWeight(SEXP span) {
 }
 SEXP R_GE_spanStyle(SEXP span) {
     return VECTOR_ELT(span, span_style);
+}
+SEXP R_GE_spanSize(SEXP span) {
+    return VECTOR_ELT(span, span_size);
 }
 
 void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd) {

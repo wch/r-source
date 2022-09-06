@@ -2372,7 +2372,6 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
     SEXP x_offset = R_GE_glyphXOffset(glyph);
     SEXP y_offset = R_GE_glyphYOffset(glyph);
 
-    double size = 12;
     double rot = 0;
 
     int n_glyphs = LENGTH(character);
@@ -2390,6 +2389,7 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
         SEXP family = R_GE_fontFamily(f);
         SEXP weight = R_GE_fontWeight(f);
         SEXP style = R_GE_fontStyle(f);
+        SEXP size = R_GE_fontSize(f);
         
         /* Generate temporary 'gc' */
         R_GE_gcontext gc;
@@ -2407,7 +2407,7 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
                 gc.fontface = 1;
             }      
         }
-        gc.ps = size;
+        gc.ps = REAL(size)[0];
         gc.cex = 1;
         gc.col = R_GE_str2col("black");
 
@@ -2432,7 +2432,7 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
             break;
         }
         cairo_select_font_face(xd->cc, gc.fontfamily, sl, wt);
-        cairo_set_font_size(xd->cc, size);
+        cairo_set_font_size(xd->cc, REAL(size)[0]);
         /* 
         PangoFontDescription *desc = 
             PG_getFont(&gc, 
