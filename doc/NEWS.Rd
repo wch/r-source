@@ -205,10 +205,15 @@
       This allows \command{R CMD Rdiff} to always work.
 
       \item On Windows, environment variable
-      \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to only
-      best-effort revocation checks with the default \code{"libcurl"}
-      download method.  This reduces security, but may be needed for
-      downloads to work with MITM proxies (\PR{18379}).
+      \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} can be used to switch to
+      only \sQuote{best-effort} SSL certificate revocation checks with
+      the default \code{"libcurl"} download method.  This reduces
+      security, but may be needed for downloads to work with MITM
+      proxies (\PR{18379}).
+
+      \item (macOS) The run-time check for libraries from XQuartz for
+      X11 and Tcl/Tk no longer uses \code{otool} from the Apple
+      Developer Tools (PR#18400).
     }
   }
 
@@ -248,10 +253,11 @@
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
 
-      \item Non-ASCII characters are now properly displayed on Windows in
-      windows created using GraphApp via e.g.  \code{winDialogString} thanks
-      to a workaround for an at least surprising Windows behavior with UTF-8
-      as the system encoding (\PR{18382}).
+      \item Non-ASCII characters are now properly displayed on Windows
+      in windows created using GraphApp via
+      e.g. \sspace{}\code{winDialogString} thanks to a workaround for an
+      at least surprising Windows behavior with UTF-8 as the system
+      encoding (\PR{18382}).
 
       \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
       too late to have the intended effect.
@@ -268,10 +274,6 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
-
-      \item The detection of dependent libraries for X11 and Tcl/Tk at
-      run-time on macOS no longer requires \code{otool} from the Apple
-      Developer Tools (PR#18400).
     }
   }
 }
