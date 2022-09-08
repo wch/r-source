@@ -5,8 +5,6 @@
 @setchapternewpage on
 @c %**end of header
 
-@c @documentencoding ISO-8859-1
-
 @syncodeindex fn vr
 
 @dircategory Programming
