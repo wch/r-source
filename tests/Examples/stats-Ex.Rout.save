@@ -17807,6 +17807,7 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 > W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
 > ## Don't show: 
 > hadM <- isNamespaceLoaded("Matrix")
+> ## IGNORE_RDIFF_BEGIN
 > ## End(Don't show)
 > ## "display" nicely :
 > if(requireNamespace("Matrix"))
@@ -17836,10 +17837,11 @@ Loading required namespace: Matrix
 [17,]  .  .  .  .  .  .  .  .  .  .  .  .  1
 > ## Don't show: 
 > if(!hadM) unloadNamespace("Matrix")
+> ## IGNORE_RDIFF_END
 > ## End(Don't show)
 > ## scale W to have column sums 1:
 > W. <- W / sum(wts)
-> all.equal(rep(1, ncol(W.)), colSums(W.))
+> all.equal(rep(1, ncol(W.)), colSums(W.), check.attributes = FALSE)
 [1] TRUE
 > ## Visualize "mass-preserving" convolution
 > x <- 1:n; f <- function(x) exp(-((x - .4*n)/3)^2)

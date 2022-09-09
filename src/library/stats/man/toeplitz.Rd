@@ -61,17 +61,19 @@ k <- length(wts <- c(76, 99, 60, 20, 1))
 n <- m-k+1
 ## Convolution
 W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
-\dontshow{hadM <- isNamespaceLoaded("Matrix")}
+\dontshow{hadM <- isNamespaceLoaded("Matrix")
+## IGNORE_RDIFF_BEGIN}
 ## "display" nicely :
 if(requireNamespace("Matrix"))
    print(Matrix::Matrix(W))    else {
    colnames(W) <- paste0(",", if(n <= 9) 1:n else c(1:9, letters[seq_len(n-9)]))
    print(W)
 }
-\dontshow{if(!hadM) unloadNamespace("Matrix")}% revert state
+\dontshow{if(!hadM) unloadNamespace("Matrix")% revert state
+## IGNORE_RDIFF_END}
 ## scale W to have column sums 1:
 W. <- W / sum(wts)
-all.equal(rep(1, ncol(W.)), colSums(W.))
+all.equal(rep(1, ncol(W.)), colSums(W.), check.attributes = FALSE)
 ## Visualize "mass-preserving" convolution
 x <- 1:n; f <- function(x) exp(-((x - .4*n)/3)^2)
 y <- f(x) + rep_len(3:-2, n)/10
