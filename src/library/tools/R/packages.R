@@ -352,9 +352,7 @@ function(packages = NULL, db = NULL, which = "strong",
          recursive = FALSE, reverse = FALSE,
          verbose = getOption("verbose"))
 {
-    ## <FIXME>
-    ## What about duplicated entries?
-    ## </FIXME>
+    packages1 <- unique(packages)
 
     if(is.null(db)) db <- utils::available.packages()
 
@@ -367,22 +365,16 @@ function(packages = NULL, db = NULL, which = "strong",
             fields <- unique(c(fields, recursive))
     }
 
-    ## For given packages which are not found in the db, return "list
-    ## NAs" (i.e., NULL entries), as opposed to character() entries
-    ## which indicate no dependencies.
-    out_of_db_packages <- character()
+    ind <- if(!is.character(recursive) && !recursive && !reverse && 
+              !is.null(packages)) {
+               ## For forward non-recursive depends, we can simplify
+               ## matters by subscripting the db right away---modulo
+               ## boundary cases.
+               match(packages1, db[, "Package"], nomatch = 0L)
+           } else !duplicated(db[, "Package"])
 
-    ## For forward non-recursive depends, we can simplify matters by
-    ## subscripting the db right away---modulo boundary cases.
-    if(!is.character(recursive) && !recursive && !reverse) {
-        if(!is.null(packages)) {
-            ind <- match(packages, db[, "Package"], nomatch = 0L)
-            db <- db[ind, , drop = FALSE]
-            out_of_db_packages <- packages[ind == 0L]
-        }
-    }
-
-    db <- as.data.frame(db[, c("Package", fields), drop = FALSE])
+    db <- as.data.frame(db[ind, c("Package", fields), drop = FALSE])
+    
     ## Avoid recomputing package dependency names in recursive
     ## invocations.
     for(f in fields) {
@@ -415,11 +407,9 @@ function(packages = NULL, db = NULL, which = "strong",
 
     if(!recursive && !reverse) {
         names(depends) <- db$Package
-        if(length(out_of_db_packages)) {
-            depends <-
-                c(depends,
-                  structure(vector("list", length(out_of_db_packages)),
-                            names = out_of_db_packages))
+        if(!is.null(packages)) {
+            depends <- depends[match(packages, names(depends))]
+            names(depends) <- packages
         }
         return(depends)
     }
@@ -462,17 +452,15 @@ function(packages = NULL, db = NULL, which = "strong",
 	      factor(matchP, levels = seq_along(all_packages)))
     if(is.null(packages)) {
         if(reverse) {
-            packages <- all_packages
+            packages1 <- all_packages
             p_L <- seq_along(all_packages)
         } else {
-            packages <- db$Package
-            p_L <- match(packages, all_packages)
+            packages1 <- db$Package
+            p_L <- match(packages1, all_packages)
         }
     } else {
-        p_L <- match(packages, all_packages, nomatch = 0L)
+        p_L <- match(packages1, all_packages, nomatch = 0L)
         if(any(ind <- (p_L == 0L))) {
-            out_of_db_packages <- packages[ind]
-            packages <- packages[!ind]
             p_L <- p_L[!ind]
         }
     }
@@ -495,13 +483,10 @@ function(packages = NULL, db = NULL, which = "strong",
     }
     depends <-
         split(all_packages[pos[, 2L]],
-              factor(all_packages[pos[, 1L]],
-                     levels = unique(packages)))
-    if(length(out_of_db_packages)) {
-        depends <-
-            c(depends,
-              structure(vector("list", length(out_of_db_packages)),
-                        names = out_of_db_packages))
+              factor(all_packages[pos[, 1L]], levels = packages1))
+    if(!is.null(packages)) {
+        depends <- depends[match(packages, names(depends))]
+        names(depends) <- packages
     }
     depends
 }

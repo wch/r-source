@@ -5,10 +5,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2022
-@set FAQ_DATE @value{FAQ_YEAR}-04-12
+@set FAQ_DATE @value{FAQ_YEAR}-09-08
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
-@documentencoding ISO-8859-1
 @c %**end of header
 
 @dircategory Programming
@@ -714,7 +713,7 @@ enhanced contributed packages.
 @item R-help
 The `main' R mailing list, for discussion about problems and solutions
 encountered using R, including using R packages in the standard R distribution 
-and on CRAN;  announcements (not covered by `R-announce’ or `R-packages’); 
+and on CRAN;  announcements (not covered by `R-announce' or `R-packages'); 
 the availability of new functionality for R and documentation of R; 
 and for posting nice examples and benchmarks. 
 @c about the development of R and the availability of new code.
@@ -3456,6 +3455,10 @@ documentation is seriously inadequate, so you don't need to report this.
 If the online argument list of a function disagrees with the manual, one
 of them must be wrong, so report the bug.
 
+See also ``Making sure it's a bug'' in
+@uref{https://www.r-project.org/bugs.html, Bug Reporting in R} for more
+information.
+
 @node How to report a bug,  , What is a bug?, R Bugs
 @section How to report a bug
 
@@ -3526,10 +3529,14 @@ the R-bugs repository by package maintainers, mentioning the package in
 the subject line.
 
 A bug report can be generated using the function @code{bug.report()}.
-For reports on R this will open the Web page at
+For reports on R this will open the R Bugzilla page at
 @url{https://bugs.R-project.org/}: for a contributed package it will open
 the package's bug tracker Web page or help you compose an email to the
-maintainer.
+maintainer.  Since 2016, only ``members'' (including all who have
+previously submitted bugs) can submit new bugs on the R Bugzilla.  See
+``Where to submit bug reports and patches'' on 
+@uref{https://www.r-project.org/bugs.html, Bug Reporting in R} for more
+information.
 
 There is a section of the bug repository for suggestions for
 enhancements for R labelled @samp{wishlist}.  Suggestions can be

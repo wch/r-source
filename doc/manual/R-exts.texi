@@ -3,9 +3,8 @@
 @setfilename R-exts.info
 @settitle Writing R Extensions
 @setchapternewpage on
+@documentencoding UTF-8
 @c %**end of header
-
-@c @documentencoding ISO-8859-1
 
 @c Put the functions in the variable index
 @syncodeindex fn vr

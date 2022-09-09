@@ -4,6 +4,7 @@
 @settitle R Installation and Administration
 @setchapternewpage on
 @defcodeindex en
+@documentencoding UTF-8
 @c %**end of header
 
 @syncodeindex fn vr

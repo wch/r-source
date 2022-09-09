@@ -4191,7 +4191,7 @@ static void reportInvalidString(SEXP cval, int actionWhenInvalid)
     R_ErrorCon = olderr;
 
     if (actionWhenInvalid == 3)
-	*(int *)0 = 1; /* crash */
+	R_Suicide("invalid string was created");
     else if (actionWhenInvalid > 0) {
 	const void *vmax = vmaxget();
 	const char *native_str;
@@ -4330,7 +4330,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 		   X = 0 ... just print
 		   X = 1 ... print + issue a warning
 		   X = 2 ... print + throw R error
-		   X = 3 ... print + crash R
+		   X = 3 ... print + abort R
 
 		   This is experimental and will be likely changed or
 		   removed.

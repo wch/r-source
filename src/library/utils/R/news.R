@@ -113,7 +113,7 @@ function(x, ...)
                                   decreasing = TRUE)])
         vchunks <- vchunks[pos]
 	if(length(vchunks)) {
-            dates <- sapply(vchunks, function(v) v$Date[1L])
+            dates <- vapply(vchunks, function(v) v$Date[1L], "")
             vstrings <- names(vchunks)
             ind <- vstrings != "R-devel"
             vstrings[ind] <- sprintf("version %s", vstrings[ind])

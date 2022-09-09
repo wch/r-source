@@ -59,11 +59,9 @@ iconvlist()
   Encoding \code{"ASCII"} is accepted, and on most systems \code{"C"}
   and \code{"POSIX"} are synonyms for ASCII.
 
-  Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
-  are ignored: they will always be translated as if from encoding
-  \code{from} even if declared otherwise.  \code{\link{enc2native}} and
-  \code{\link{enc2utf8}} provide alternatives which do take declared
-  encodings into account.
+  With \code{from = ""}, elements of \code{x} with a declared encoding
+  (UTF-8 or latin1, see \code{\link{Encoding}}) are converted from that
+  encoding.
 
   Note that implementations of \code{iconv} typically do not do much
   validity checking and will often mis-convert inputs which are invalid

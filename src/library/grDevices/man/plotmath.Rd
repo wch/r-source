@@ -171,6 +171,9 @@
   The special delimiters \code{lceil}, \code{lfloor}, \code{langle}
   (and their right-hand versions) are not scalable.
 
+  Note that \code{paste} does not insert spaces when juxtaposing, unlike
+  (by default) the \R function of that name.
+  
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
