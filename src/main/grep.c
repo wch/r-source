@@ -1177,10 +1177,10 @@ static int fgrep_one(const char *pat, const char *target,
 
 /* Returns the match position in bytes, for use in [g]sub.
    len is the length (strlen) of target.
-   patlen is the length (strlen) of pat.
+   patlen is the length (strlen) of pat. (FIXME: should be size_t)
 */
 
-static int fgrep_one_bytes(const char *pat, int patlen, const char *target,
+static int fgrep_one_bytes(const char *pat, size_t patlen, const char *target,
                            int len, Rboolean useBytes, Rboolean use_UTF8)
 {
     int i = -1;
@@ -2443,7 +2443,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (j = offset ; ws[j] ; j++) *u++ = ws[j];
 		*u = L'\0';
 		SET_STRING_ELT(ans, i,
-		               mkCharWLenASCII(cbuf, (u-cbuf),
+		               mkCharWLenASCII(cbuf, (int)(u-cbuf),
 		                               ascii_patrep && ascii_texti));
 	    }
 	    R_Free(cbuf);

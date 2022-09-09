@@ -635,10 +635,13 @@ httpd <- function(path, query, ...)
                                                        length(rle))),
                                  class = "rle")
                 news <- news(inverse.rle(rle)[-1L], package = pkg)
+            ## </FIXME>
             } else
                 news <- news(package = pkg)
-            ## </FIXME>
         }
+        if(!inherits(news, "news_db"))
+            return(error_page(gettextf("No NEWS found for package %s",
+                                       mono(pkg))))
     	formatted <- toHTML(news,
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")

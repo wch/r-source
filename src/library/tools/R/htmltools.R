@@ -14,6 +14,9 @@ function(f, tidy = "tidy") {
                                     f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
+    ## Strip trailing \r from HTML Tidy output on Windows:
+    z <- trimws(z, which = "right")
+    ## (Alternatively, replace '$' by '[ \t\r\n]+$' in the regexp below.)
     s <- readLines(f, warn = FALSE)
     m <- regmatches(z,
                     regexec("^line ([0-9]+) column ([0-9]+) - (.+)$",

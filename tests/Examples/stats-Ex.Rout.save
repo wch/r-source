@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-07-11 r82577) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-04 r82801) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.5.0 (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -5045,7 +5045,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x103cd3048>
+<bytecode: 0x130aa4fa0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7667,7 +7667,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x104e22748>
+<environment: 0x131f7fae8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12527,14 +12527,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x103da4b20>
-<environment: 0x103a8c830>
+<bytecode: 0x13092b5b8>
+<environment: 0x130937468>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x103da88e0>
-<environment: 0x103a8c830>
+<bytecode: 0x13092b468>
+<environment: 0x130937468>
 
 > 
 > 
@@ -16831,8 +16831,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x1043b4688>
-<environment: 0x1057f8de0>
+<bytecode: 0x1313c4000>
+<environment: 0x132ddbee8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17811,7 +17811,7 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 > ## "display" nicely :
 > if(requireNamespace("Matrix"))
 +    print(Matrix::Matrix(W))    else {
-+    colnames(W) <- paste0(",", if(m <= 9) 1:9 else c(1:9, letters[seq_len(m-9)]))
++    colnames(W) <- paste0(",", if(n <= 9) 1:n else c(1:9, letters[seq_len(n-9)]))
 +    print(W)
 + }
 Loading required namespace: Matrix
@@ -19342,7 +19342,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.839 0.237 3.084 0 0 
+Time elapsed:  2.837 0.226 3.07 0 0 
 > grDevices::dev.off()
 null device 
           1 

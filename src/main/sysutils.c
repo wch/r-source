@@ -580,7 +580,9 @@ write_one (unsigned int namescount, const char * const *names, void *data)
 SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args), si;
-    void * obj;
+    void * arg_obj = (iconv_t)-1;
+    void * latin1_obj = (iconv_t)-1;
+    void * utf8_obj = (iconv_t)-1;
     const char *inbuf;
     char *outbuf;
     const char *sub;
@@ -602,7 +604,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	int mark, toRaw;
 	const char *from, *to;
-	Rboolean isLatin1 = FALSE, isUTF8 = FALSE, fromUTF8 = FALSE;
+	Rboolean isLatin1 = FALSE, isUTF8 = FALSE;
 
 	args = CDR(args);
 	if(!isString(CAR(args)) || length(CAR(args)) != 1)
@@ -627,23 +629,12 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "toRaw");
 	/* some iconv's allow "UTF8", but libiconv does not */
 	if(streql(from, "UTF8") || streql(from, "utf8") ) from = "UTF-8";
-	if(streql(from, "UTF-8") || (streql(from, "") && known_to_be_utf8))
-	    fromUTF8 = TRUE;
 	if(streql(to, "UTF8") || streql(to, "utf8") ) to = "UTF-8";
-	/* Should we do something about marked CHARSXPs in 'from = ""'? */
 	if(streql(to, "UTF-8")) isUTF8 = TRUE;
 	if(streql(to, "latin1") || streql(to, "ISO_8859-1")
 	    || streql(to, "CP1252")) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_latin1) isLatin1 = TRUE;
 	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
-	obj = Riconv_open(to, from);
-	if(obj == (iconv_t)(-1))
-#ifdef Win32
-	    error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
-		  from, to, localeCP);
-#else
-	    error(_("unsupported conversion from '%s' to '%s'"), from, to);
-#endif
 	isRawlist = (TYPEOF(x) == VECSXP);
 	if(isRawlist) {
 	    if(toRaw)
@@ -653,10 +644,8 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SHALLOW_DUPLICATE_ATTRIB(ans, x);
 	    }
 	} else {
-	    if(TYPEOF(x) != STRSXP) {
-		Riconv_close(obj);
+	    if(TYPEOF(x) != STRSXP)
 		error(_("'x' must be a character vector"));
-	    }
 	    if(toRaw) {
 		PROTECT(ans = allocVector(VECSXP, LENGTH(x)));
 		SHALLOW_DUPLICATE_ATTRIB(ans, x);
@@ -670,16 +659,67 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (TYPEOF(si) == NILSXP) {
 		    if (!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
 		    continue;
-		} else if (TYPEOF(si) != RAWSXP) {
-		    Riconv_close(obj);
+		} else if (TYPEOF(si) != RAWSXP)
 		    error(_("'x' must be a character vector or a list of NULL or raw vectors"));
-		}
 	    } else {
 		si = STRING_ELT(x, i);
 		if (si == NA_STRING) {
 		    if(!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
 		    continue;
 		}
+	    }
+	    void * obj = (iconv_t)-1;
+	    Rboolean fromUTF8 = FALSE;
+
+	    /* With 'from = ""', encoding flags are used in preference
+	       of native encoding.
+
+	       FIXME: Should we go further and ignore "from" with any non-bytes,
+	              non-raw input? */
+	    if (!isRawlist && IS_UTF8(si) && streql(from, "")) {
+		if (utf8_obj == (iconv_t)-1) {
+		    utf8_obj = Riconv_open(to, "UTF-8");
+		    if(utf8_obj == (iconv_t)(-1))
+		#ifdef Win32
+			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
+			      "UTF-8", to, localeCP);
+		#else
+			error(_("unsupported conversion from '%s' to '%s'"),
+			      "UTF-8", to);
+		#endif
+		}
+		obj = utf8_obj;
+		fromUTF8 = TRUE;
+	    } else if (!isRawlist && IS_LATIN1(si) && streql(from, "")) {
+		if (latin1_obj == (iconv_t)-1) {
+		    latin1_obj = Riconv_open(to, "latin1");
+		    if(latin1_obj == (iconv_t)(-1))
+		#ifdef Win32
+			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
+			      "latin1", to, localeCP);
+		#else
+			error(_("unsupported conversion from '%s' to '%s'"),
+			      "latin1", to);
+		#endif
+		}
+		obj = latin1_obj;
+	    } else {
+		if (arg_obj == (iconv_t)-1) {
+		    arg_obj = Riconv_open(to, from);
+		    if(arg_obj == (iconv_t)(-1))
+		#ifdef Win32
+			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
+			      from, to, localeCP);
+		#else
+			error(_("unsupported conversion from '%s' to '%s'"),
+			      from, to);
+		#endif
+		}
+		obj = arg_obj;
+		fromUTF8 = streql(from, "UTF-8")
+		           || (streql(from, "") && known_to_be_utf8);
+		           /* FIXME: utf8locale? as Riconv doesn't handle
+		                     known_to_be_utf8 */
 	    }
 	top_of_loop:
 	    inbuf = isRawlist ? (const char *) RAW(si) : CHAR(si);
@@ -791,12 +831,15 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(isLatin1) ienc = CE_LATIN1;
 			else if(isUTF8) ienc = CE_UTF8;
 		    }
+		    /* FIXME: use "bytes" unless CE_NATIVE matches to? */
 		    SET_STRING_ELT(ans, i,
 				   mkCharLenCE(cbuff.data, (int) nout, ienc));
 		} else SET_STRING_ELT(ans, i, NA_STRING);
 	    }
 	}
-	Riconv_close(obj);
+	if (latin1_obj != (iconv_t)-1) Riconv_close(latin1_obj);
+	if (utf8_obj != (iconv_t)-1) Riconv_close(utf8_obj);
+	if (arg_obj != (iconv_t)-1) Riconv_close(arg_obj);
 	R_FreeStringBuffer(&cbuff);
     }
     UNPROTECT(1);
@@ -1541,13 +1584,10 @@ static int reEncode(const char *x, R_StringBuffer *cbuff,
    R_alloc stack */
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
 {
-    char *p;
-    int res;
-
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     if (reEncode(x, &cbuff, ce_in, ce_out, subst)) return x;
-    res = strlen(cbuff.data) + 1;
-    p = R_alloc(res, 1);
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
@@ -1578,13 +1618,10 @@ void reEnc2(const char *x, char *y, int ny,
 const char *reEnc3(const char *x,
                    const char *fromcode, const char *tocode, int subst)
 {
-    char *p;
-    int res;
-
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     if (reEncodeIconv(x, &cbuff, fromcode, tocode, subst)) return x;
-    res = strlen(cbuff.data) + 1;
-    p = R_alloc(res, 1);
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
