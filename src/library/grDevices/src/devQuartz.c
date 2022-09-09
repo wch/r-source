@@ -97,6 +97,21 @@ typedef struct QuartzGradient {
 
 typedef QGradient* QGradientRef;
 
+typedef struct QuartzPatternCallbackInfo {
+    CGLayerRef layer;
+    CGRect tile;
+} QPatternCallbackInfo;
+
+typedef QPatternCallbackInfo* QPatternCallbackInfoRef;
+
+typedef struct QuartzPattern {
+    CGPatternRef pattern;
+    CGLayerRef layer;
+    QPatternCallbackInfoRef info;
+} QPattern;
+
+typedef QPattern* QPatternRef;
+
 typedef struct QuartzSpecific_s {
     double        ps;
     double        scalex, scaley;  /* resolution correction: px/pt ratio */
@@ -123,9 +138,10 @@ typedef struct QuartzSpecific_s {
 
     void*         userInfo;        /* pointer to a module-dependent space */
 
-    int numPatterns;
-    QGradientRef *gradients;
-    CGPatternRef **patterns;
+    int           numPatterns;
+    QGradientRef  *gradients;
+    QPatternRef   *patterns;
+    int           appendingPattern;
 
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
@@ -365,6 +381,21 @@ static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
 
 /*
  ***************************
+ * Context switching
+ * Where should drawing go to ?
+ * Used by DEVSPEC and DRAWSPEC
+ */
+static CGContextRef QuartzGetCurrentContext(QuartzDesc *xd)
+{
+    if (xd->appendingPattern >= 0) {
+        return CGLayerGetContext(xd->patterns[xd->appendingPattern]->layer);
+    } else {
+        return xd->getCGContext(xd, xd->userInfo);
+    }
+}
+
+/*
+ ***************************
  * Patterns
  *
  ***************************
@@ -380,11 +411,12 @@ static void QuartzInitPatterns(QuartzDesc *xd)
     /* Gradients and tiling patterns are different types so need 
      * separate arrays */
     xd->gradients = malloc(sizeof(QGradientRef) * xd->numPatterns);
-    xd->patterns = malloc(sizeof(CGPatternRef*) * xd->numPatterns);
+    xd->patterns = malloc(sizeof(QPatternRef) * xd->numPatterns);
     for (i = 0; i < xd->numPatterns; i++) {
         xd->gradients[i] = NULL;
         xd->patterns[i] = NULL;
     }
+    xd->appendingPattern = -1;
 }
 
 static int QuartzGrowPatterns(QuartzDesc *xd)
@@ -397,7 +429,7 @@ static int QuartzGrowPatterns(QuartzDesc *xd)
         return 0;
     }
     xd->gradients = tmp;
-    tmp = realloc(xd->patterns, sizeof(CGPatternRef) * newMax);
+    tmp = realloc(xd->patterns, sizeof(QPatternRef) * newMax);
     if (!tmp) { 
         warning(_("Quartz patterns exhausted (failed to increase maxPatterns)"));
         return 0;
@@ -421,7 +453,10 @@ static void QuartzCleanPatterns(QuartzDesc *xd)
             xd->gradients[i] = NULL;
         }
         if (xd->patterns[i] != NULL) {
-            CGPatternRelease(*(xd->patterns[i]));
+            CGPatternRelease(xd->patterns[i]->pattern);
+            CGLayerRelease(xd->patterns[i]->layer);
+            free(xd->patterns[i]->info);
+            free(xd->patterns[i]);
             xd->patterns[i] = NULL;
         }
     }    
@@ -434,7 +469,10 @@ static void QuartzReleasePattern(int i, QuartzDesc *xd)
         free(xd->gradients[i]);
         xd->gradients[i] = NULL;
     } else if (xd->patterns[i]) {
-        CGPatternRelease(*(xd->patterns[i]));
+        CGPatternRelease(xd->patterns[i]->pattern);
+        CGLayerRelease(xd->patterns[i]->layer);
+        free(xd->patterns[i]->info);
+        free(xd->patterns[i]);
         xd->patterns[i] = NULL;
     } else {
         warning(_("Attempt to release non-existent pattern"));
@@ -452,7 +490,10 @@ static void QuartzDestroyPatterns(QuartzDesc *xd)
     }    
     for (i = 0; i < xd->numPatterns; i++) {
         if (xd->patterns[i] != NULL) {
-            CGPatternRelease(*(xd->patterns[i]));
+            CGPatternRelease(xd->patterns[i]->pattern);
+            CGLayerRelease(xd->patterns[i]->layer);
+            free(xd->patterns[i]->info);
+            free(xd->patterns[i]);
         }
     }    
     free(xd->gradients);
@@ -490,6 +531,16 @@ static Rboolean QuartzGradientFill(SEXP pattern, QuartzDesc *xd) {
     }
 }
 
+static Rboolean QuartzPatternFill(SEXP pattern, QuartzDesc *xd) {
+    if (pattern == R_NilValue) {
+        return FALSE;
+    } else {
+        int index = INTEGER(pattern)[0];
+        QPatternRef quartz_pattern = xd->patterns[index];
+        return quartz_pattern != NULL;
+    }
+}
+
 static void QuartzDrawGradientFill(CGContextRef ctx, SEXP pattern, 
                                    QuartzDesc *xd) {
     int index = INTEGER(pattern)[0];
@@ -512,6 +563,17 @@ static void QuartzDrawGradientFill(CGContextRef ctx, SEXP pattern,
                                     quartz_gradient->options);
         break;
     }
+}
+
+static void QuartzSetPatternFill(CGContextRef ctx, SEXP pattern, 
+                                  QuartzDesc *xd) {
+    int index = INTEGER(pattern)[0];
+    QPatternRef quartz_pattern = xd->patterns[index];
+    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern (NULL);
+    CGContextSetFillColorSpace(ctx, patternSpace);
+    CGColorSpaceRelease (patternSpace);
+    CGFloat alpha = 1;
+    CGContextSetFillPattern(ctx, quartz_pattern->pattern, &alpha);
 }
 
 static QGradientRef QuartzCreateGradient(SEXP gradient, int type, 
@@ -603,6 +665,59 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
     return quartz_gradient;
 }
 
+/* Called to draw the pattern.
+ * Will be passed the pattern layer via 'info' */
+static void QuartzPatternCallback(void *info, CGContextRef ctx) {
+    QPatternCallbackInfo *patternInfo = (QPatternCallbackInfo*) info;
+    CGLayerRef layer = patternInfo->layer;
+    CGRect tile = patternInfo->tile;
+    CGContextSaveGState(ctx);
+    CGContextClipToRect(ctx, tile);
+    CGPoint contextOrigin = CGPointMake(0 ,0);
+    CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
+    CGContextRestoreGState(ctx);
+}
+
+static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
+                                       QuartzDesc *xd) {
+    QPatternRef quartz_pattern = malloc(sizeof(QPattern));
+    if (!quartz_pattern) error(_("Failed to create pattern"));
+    double devWidth = QuartzDevice_GetScaledWidth(xd);
+    double devHeight = QuartzDevice_GetScaledHeight(xd);
+    CGSize size = CGSizeMake(devWidth, devHeight);
+    CGLayerRef layer = CGLayerCreateWithContext(ctx, size, NULL);
+    double x = R_GE_tilingPatternX(pattern);
+    double y = R_GE_tilingPatternY(pattern);
+    double width = R_GE_tilingPatternWidth(pattern);
+    double height = R_GE_tilingPatternHeight(pattern);
+    double xStep, yStep;
+    if (R_GE_tilingPatternExtend(pattern) == R_GE_patternExtendNone) {
+        xStep = 0;
+        yStep = 0;
+    } else {
+        if (R_GE_tilingPatternExtend(pattern) != R_GE_patternExtendRepeat) {
+            warning(_("Unsupported pattern extend mode;  using \"repeat\""));
+        }
+        xStep = width;
+        yStep = height;
+    }
+    CGRect bounds = CGRectMake(x, y, width, height);
+    CGPatternCallbacks callback = { 0, &QuartzPatternCallback, NULL };
+    QPatternCallbackInfoRef info = malloc(sizeof(QPatternCallbackInfo));
+    if (!info) error(_("Failed to create pattern"));
+    info->layer = layer;
+    info->tile = bounds;
+    quartz_pattern->info = info;
+    quartz_pattern->pattern = CGPatternCreate((void*) info,
+                                              bounds,
+                                              CGAffineTransformInvert(CGContextGetCTM(ctx)), 
+                                              xStep, yStep, /* xStep, yStep */
+                                              kCGPatternTilingNoDistortion,
+                                              true,
+                                              &callback);
+    quartz_pattern->layer = layer;
+    return quartz_pattern;
+}
 
 #pragma mark RGD API Function Prototypes
 
@@ -818,8 +933,8 @@ extern CGFontRef CGContextGetFont(CGContextRef);
 #define DEVDESC pDevDesc dd
 #define CTXDESC const pGEcontext gc, pDevDesc dd
 
-#define DEVSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = xd->getCGContext(xd, xd->userInfo)
-#define DRAWSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = xd->getCGContext(xd, xd->userInfo); xd->dirty = 1
+#define DEVSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = QuartzGetCurrentContext(xd)
+#define DRAWSPEC QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific; CGContextRef ctx = QuartzGetCurrentContext(xd); xd->dirty = 1
 #define XD QuartzDesc *xd = (QuartzDesc*) dd->deviceSpecific
 
 #pragma mark Quartz Font Cache
@@ -1112,6 +1227,8 @@ static void RQuartz_NewPage(CTXDESC)
         DRAWSPEC;
         if (!ctx) NOCTX;
         {
+            xd->appendingPattern = -1;
+
             CGRect bounds = CGRectMake(0, 0,
 				       QuartzDevice_GetScaledWidth(xd) * 72.0,
 				       QuartzDevice_GetScaledHeight(xd) * 72.0);
@@ -1320,6 +1437,10 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
             CGContextDrawPath(ctx, kCGPathStroke);
         }
     } else {
+        if (QuartzPatternFill(gc->patternFill, xd)) {
+            /* Override simple colour fill */
+            QuartzSetPatternFill(ctx, gc->patternFill, xd);
+        }
         CGContextDrawPath(ctx, kCGPathFillStroke);
     }
 }
@@ -1576,14 +1697,24 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     int patternType = R_GE_patternType(pattern);
     if (patternType == R_GE_linearGradientPattern ||
         patternType == R_GE_radialGradientPattern) {
-        int index = QuartzNewPatternIndex(xd, 1);
-        if (index >= 0) {
-            QGradientRef quartz_gradient = 
-                QuartzCreateGradient(pattern, patternType, xd);
-            xd->gradients[index] = quartz_gradient;
-        } else {
-            warning("Tiling patterns not yet supported");
-        }
+        index = QuartzNewPatternIndex(xd, 1);
+        QGradientRef quartz_gradient = 
+            QuartzCreateGradient(pattern, patternType, xd);
+        xd->gradients[index] = quartz_gradient;
+    } else {
+        index = QuartzNewPatternIndex(xd, 0);
+        int savedPattern = xd->appendingPattern;
+        xd->appendingPattern = index;
+        QPatternRef quartz_pattern = 
+            QuartzCreatePattern(pattern, ctx, xd);
+        xd->patterns[index] = quartz_pattern;
+
+        /* Play the pattern function to draw the pattern on the pattern layer*/
+        SEXP R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+
+        xd->appendingPattern = savedPattern;
     }
     INTEGER(ref)[0] = index;
     UNPROTECT(1);
