@@ -5719,9 +5719,12 @@ and @code{fabs} for double values, and when using C++ include
 
 @item
 It is an error (and make little sense, although has been seen) to call
-macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for integer
-arguments: a few compilers give a compilation error.  Function
-@code{finite} is obsolete, and some compilers will warn about its use.
+macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for
+integer arguments: a few compilers give a compilation error.  Function
+@code{finite} is obsolete, and some compilers will warn about its
+use@footnote{ at the time of writing @cputype{arm64} macOS both warned
+and did not supply a prototype in @file{math.h} which resulted in a
+compilation error.}.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
