@@ -710,7 +710,9 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
     quartz_pattern->info = info;
     quartz_pattern->pattern = CGPatternCreate((void*) info,
                                               bounds,
-                                              CGAffineTransformInvert(CGContextGetCTM(ctx)), 
+                                              /* Match pattern CTM to 
+                                               * device CTM */
+                                              CGContextGetCTM(ctx), 
                                               xStep, yStep, /* xStep, yStep */
                                               kCGPatternTilingNoDistortion,
                                               true,
