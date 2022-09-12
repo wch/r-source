@@ -3911,8 +3911,9 @@ SEXP R_GE_glyphYOffset(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_y);
 }
 
-void GERenderText(SEXP glyph, double x, double y, pGEDevDesc dd) {
+void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font,
+             double xoff, double yoff, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
-        dd->dev->glyph(glyph, x, y, dd->dev);
+        dd->dev->glyph(n, glyphs, x, y, xoff, yoff, font, dd->dev);
     }
 }

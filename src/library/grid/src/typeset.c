@@ -80,8 +80,10 @@ SEXP L_typeset(SEXP span, SEXP x, SEXP y, SEXP w) {
 /* We are assuming here that the R code has checked that 
  * info is a "RGlyphInfo"
  */
-static void renderGlyphs(SEXP glyph, SEXP x, SEXP y, Rboolean draw) 
+static void renderGlyphs(SEXP runs, SEXP glyphInfo, 
+                         SEXP x, SEXP y, Rboolean draw) 
 {
+    int i, nruns = LENGTH(runs);
     double xx, yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -114,15 +116,30 @@ static void renderGlyphs(SEXP glyph, SEXP x, SEXP y, Rboolean draw)
     yy = transformYtoINCHES(y, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
     xx = toDeviceX(xx, GE_INCHES, dd);
     yy = toDeviceY(yy, GE_INCHES, dd);
-    if (R_FINITE(xx) && R_FINITE(yy))
-        GERenderText(glyph, xx, yy, dd);
+    int *glyphs = INTEGER(R_GE_glyphIndex(glyphInfo));
+    double *glyphX = REAL(R_GE_glyphXOffset(glyphInfo));
+    double *glyphY = REAL(R_GE_glyphYOffset(glyphInfo));
+    if (R_FINITE(xx) && R_FINITE(yy)) {
+        int offset = 0;
+        for (i=0; i<nruns; i++) {
+            int runLength = INTEGER(runs)[i];
+            SEXP font = VECTOR_ELT(R_GE_glyphFont(glyphInfo), offset);
+            GEGlyph(runLength, 
+                    glyphs + offset, 
+                    glyphX + offset, 
+                    glyphY + offset, 
+                    font,
+                    xx, yy, dd);
+            offset = offset + runLength;
+        }
+    }
     if (draw) {
-	GEMode(0, dd);
+        GEMode(0, dd);
     }
     UNPROTECT(1);
 }
 
-SEXP L_glyph(SEXP glyph, SEXP x, SEXP y) {
-    renderGlyphs(glyph, x, y, TRUE);
+SEXP L_glyph(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y) {
+    renderGlyphs(runs, glyphInfo, x, y, TRUE);
     return R_NilValue;    
 }

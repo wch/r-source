@@ -2362,19 +2362,13 @@ static void Cairo_Typeset(SEXP span, double x, double y, double w,
 
 #ifdef HAVE_PANGOCAIRO
 
-static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd) 
+static void PangoCairo_Glyph(int n, int *glyphs, double *x, double *y,
+                             double xoff, double yoff, SEXP font, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
-    SEXP character = R_GE_glyphGlyph(glyph); 
-    SEXP font = R_GE_glyphFont(glyph);
-    SEXP glyph_id = R_GE_glyphIndex(glyph);
-    SEXP x_offset = R_GE_glyphXOffset(glyph);
-    SEXP y_offset = R_GE_glyphYOffset(glyph);
-
     double rot = 0;
 
-    int n_glyphs = LENGTH(character);
     int i;
     
     if (!xd->appending) {
@@ -2384,77 +2378,39 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
         }
     }
 
-    for (i=0; i<n_glyphs; i++) {
-        SEXP f = VECTOR_ELT(font, i);
-        SEXP family = R_GE_fontFamily(f);
-        SEXP weight = R_GE_fontWeight(f);
-        SEXP style = R_GE_fontStyle(f);
-        SEXP size = R_GE_fontSize(f);
+    SEXP family = R_GE_fontFamily(font);
+    SEXP weight = R_GE_fontWeight(font);
+    SEXP style = R_GE_fontStyle(font);
+    SEXP size = R_GE_fontSize(font);
+    int sl, wt;
+    char fontfamily[200];
+    strncpy(fontfamily, CHAR(STRING_ELT(family, 0)), 199);
+    if (REAL(weight)[0] > 400) {
+        wt = CAIRO_FONT_WEIGHT_BOLD;
+    } else {
+        wt = CAIRO_FONT_WEIGHT_NORMAL;
+    }
+    if (INTEGER(style)[0] != R_GE_text_style_normal) {
+        sl = CAIRO_FONT_SLANT_NORMAL;
+    } else {
+        sl = CAIRO_FONT_SLANT_ITALIC;
+    }
+
+    cairo_select_font_face(xd->cc, fontfamily, sl, wt);
+    cairo_set_font_size(xd->cc, REAL(size)[0]);
+
+    for (i=0; i<n; i++) {
         
-        /* Generate temporary 'gc' */
-        R_GE_gcontext gc;
-        strncpy(gc.fontfamily, CHAR(STRING_ELT(family, 0)), 200);
-        if (REAL(weight)[0] > 400) {
-            if (INTEGER(style)[0] != R_GE_text_style_normal) {
-                gc.fontface = 4;
-            } else {
-                gc.fontface = 2;
-            }
-        } else {
-            if (INTEGER(style)[0] != R_GE_text_style_normal) {
-                gc.fontface = 3;
-            } else {
-                gc.fontface = 1;
-            }      
-        }
-        gc.ps = REAL(size)[0];
-        gc.cex = 1;
-        gc.col = R_GE_str2col("black");
-
-        /* Could be cached */
-        int sl, wt;
-        switch (gc.fontface) {
-        case 1:
-            sl = CAIRO_FONT_SLANT_NORMAL;
-            wt = CAIRO_FONT_WEIGHT_NORMAL;
-            break;
-        case 2:
-            sl = CAIRO_FONT_SLANT_ITALIC;
-            wt = CAIRO_FONT_WEIGHT_NORMAL;
-            break;
-        case 3:
-            sl = CAIRO_FONT_SLANT_NORMAL;
-            wt = CAIRO_FONT_WEIGHT_BOLD;
-            break;
-        case 4:
-            sl = CAIRO_FONT_SLANT_ITALIC;
-            wt = CAIRO_FONT_WEIGHT_BOLD;
-            break;
-        }
-        cairo_select_font_face(xd->cc, gc.fontfamily, sl, wt);
-        cairo_set_font_size(xd->cc, REAL(size)[0]);
-        /* 
-        PangoFontDescription *desc = 
-            PG_getFont(&gc, 
-                       xd->fontscale, xd->basefontfamily, xd->symbolfamily);
-        PangoFontMap *map = pango_cairo_font_map_get_default();
-        PangoContext *context = pango_font_map_create_context(map);
-        pango_context_set_font_description(context, desc);
-        */
-
         cairo_save(xd->cc);
-
-        double x_off = REAL(x_offset)[i];
-        double y_off = REAL(y_offset)[i];
 
 	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 
         cairo_glyph_t cairoGlyph;
-        cairoGlyph.index = INTEGER(glyph_id)[i];
-        cairoGlyph.x = x + x_off;
-        cairoGlyph.y = y + y_off;
+        cairoGlyph.index = glyphs[i];
+        cairoGlyph.x = x[i] + xoff;
+        cairoGlyph.y = y[i] + yoff;
         if (!xd->appending) {
-            CairoColor(gc.col, xd);
+            CairoColor(R_GE_str2col("black"), xd);
             cairo_show_glyphs(xd->cc, &cairoGlyph, 1);
         } else {
             cairo_glyph_path(xd->cc, &cairoGlyph, 1);
@@ -2473,10 +2429,6 @@ static void PangoCairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
         }
 
 	cairo_restore(xd->cc);
-        /* 
-        g_object_unref(context);
-        pango_font_description_free(desc); 
-        */
     }
     
 }

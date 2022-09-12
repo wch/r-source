@@ -54,7 +54,16 @@ validDetails.glyphgrob <- function(x) {
 }
 
 drawDetails.glyphgrob <- function(x, recording=TRUE) {
-    grid.Call.graphics(C_glyph, x$glyph, x$x, x$y)
+    ## Calculate runs of glyphs
+    fontdf <- do.call(rbind, lapply(x$glyph$font,
+                                    function(x) do.call(data.frame, x)))
+    fontstring <- unlist(do.call(paste,
+                                 c(fontdf,
+                                   list(sep=":"))))
+    runs <- rle(fontstring)
+    grid.Call.graphics(C_glyph,
+                       as.integer(runs$lengths),
+                       x$glyph, x$x, x$y)
 }
 
 glyphGrob <- function(glyph,

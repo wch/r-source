@@ -684,7 +684,8 @@ SEXP R_GE_glyphIndex(SEXP info);
 SEXP R_GE_glyphXOffset(SEXP info);
 SEXP R_GE_glyphYOffset(SEXP info);
 
-void GERenderText(SEXP info, double x, double y, pGEDevDesc dd);
+void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font, 
+             double xoff, double yoff, pGEDevDesc dd);
 
 #ifdef __cplusplus
 }
