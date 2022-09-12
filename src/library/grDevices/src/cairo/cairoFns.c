@@ -2390,7 +2390,7 @@ static void PangoCairo_Glyph(int n, int *glyphs, double *x, double *y,
     } else {
         wt = CAIRO_FONT_WEIGHT_NORMAL;
     }
-    if (INTEGER(style)[0] != R_GE_text_style_normal) {
+    if (INTEGER(style)[0] == R_GE_text_style_normal) {
         sl = CAIRO_FONT_SLANT_NORMAL;
     } else {
         sl = CAIRO_FONT_SLANT_ITALIC;
