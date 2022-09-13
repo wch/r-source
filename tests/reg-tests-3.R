@@ -213,7 +213,7 @@ if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
 }
 
 if(require("Matrix", .Library)) {
-    M <- Matrix(diag(1:10), sparse=TRUE) # a "dsCMatrix"
+    M <- Matrix(diag(1:10), sparse=TRUE) # a "ddiMatrix"
     setClass("TestM", slots = c(M='numeric'))
     setMethod("+", c("TestM","TestM"), function(e1,e2) {
         e1@M + e2@M
@@ -221,7 +221,9 @@ if(require("Matrix", .Library)) {
     M+M # works the first time
     M+M # was error   "object '.Generic' not found"
     ##
-    as.Matrix <- function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
+    as.Matrix <- if(packageVersion("Matrix", .Library) >= "1.4.2") {
+                     as.matrix
+                 } else function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
     stopifnot(exprs = {
         identical(pmin(2,M), pmin(2, as.matrix(M)))
         identical(as.matrix(pmax(M, 7)),
