@@ -479,7 +479,7 @@ function(packages = NULL, db = NULL, which = "strong",
     ## When the number of packages is small enough, we can easily represent
     ## an edge from i to j by a single integer number. Finding duplicates in
     ## a vector of integers is much faster than in rows of a matrix.
-    shift <- 2^15
+    shift <- as.integer(2^15)  ## allows to fit two numbers to an integer
     if (max(pos) < shift)
         posunique <- function(p) p[!duplicated(p[,1L]*shift + p[,2L]),]
     else
