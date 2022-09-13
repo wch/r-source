@@ -331,6 +331,13 @@ function(ap)
     ## (Also works for data frame package repository dbs.)
     pkgs <- ap[ , "Package"]
     dup_pkgs <- pkgs[duplicated(pkgs)]
+    if (length(dup_pkgs) > 100) {
+        ## Some packages may be in multiple repositories in the same
+        ## version. Handle those specially for performance reasons.
+        ap <- ap[!duplicated(ap[, c("Package", "Version")]), , drop = FALSE]
+        pkgs <- ap[ , "Package"]
+        dup_pkgs <- pkgs[duplicated(pkgs)]
+    }
     stale_dups <- integer(length(dup_pkgs))
     i <- 1L
     for (dp in dup_pkgs) {
