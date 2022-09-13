@@ -52,6 +52,12 @@
 
       \item Support in \code{tools::Rdiff()} for comparing uncompressed
       PDF files is further reduced -- see its help page.
+
+      \item \code{qqplot(x, y, ...)} gains \code{conf.level} and
+      \code{conf.args} arguments for computing and plotting a confidence
+      band for the treatment function transforming the distribution of
+      \code{x} into the distribution of \code{y } (Switzer, 1976,
+      Biometrika). Contributed by Torsten Hothorn. 
     }
   }
 
