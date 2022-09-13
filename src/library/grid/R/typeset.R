@@ -61,6 +61,8 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
                                  c(fontdf,
                                    list(sep=":"))))
     runs <- rle(fontstring)
+    x$glyph$x <- unit(x$glyph$x, "bigpts")
+    x$glyph$y <- unit(x$glyph$y, "bigpts")
     grid.Call.graphics(C_glyph,
                        as.integer(runs$lengths),
                        x$glyph, x$x, x$y)
