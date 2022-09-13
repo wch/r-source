@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -467,6 +467,17 @@ function(packages = NULL, db = NULL, which = "strong",
     p_R <- tab[p_L]
     pos <- cbind(rep.int(p_L, lengths(p_R)), unlist(p_R))
     ctr <- 0L
+
+    ## posunique() speeds up computing "unique(pos)" in the following loop.
+    ## When the number of packages is small enough, we can easily represent
+    ## an edge from i to j by a single integer number. Finding duplicates in
+    ## a vector of integers is much faster than in rows of a matrix.
+    shift <- 2^15
+    if (max(pos) < shift)
+        posunique <- function(p) p[!duplicated(p[,1L]*shift + p[,2L]),]
+    else
+        posunique <- function(p) unique(p)
+
     repeat {
         if(verbose) cat("Cycle:", (ctr <- ctr + 1L))
         p_L <- split(pos[, 1L], pos[, 2L])
@@ -475,7 +486,10 @@ function(packages = NULL, db = NULL, which = "strong",
                            cbind(rep.int(i, length(k)),
                                  rep(k, each = length(i))),
                            p_L, tab[as.integer(names(p_L))]))
-        npos <- unique(rbind(pos, new))
+
+        ## could be just posunique(rbind(pos, new)), but computing this
+        ## iteratively is faster        
+        npos <- posunique(rbind(pos, posunique(new)))
         nnew <- nrow(npos) - nrow(pos)
         if(verbose) cat(" NNew:", nnew, "\n")
         if(!nnew) break
