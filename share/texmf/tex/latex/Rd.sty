@@ -41,7 +41,12 @@
 \RequirePackage{verbatim}        % small example code
 \RequirePackage{url}             % set urls
 \RequirePackage{textcomp}        % for \textquotesingle etc
+
 \RequirePackage{amsmath}         % for \lVert, \text etc, and KaTeX consistency
+\RequirePackage{amsfonts,amssymb}
+\IfFileExists{mathrsfs.sty}% assume that the rsfs font is installed
+  {\RequirePackage{mathrsfs}}%
+  {\usepackage[mathscr]{eucal}}% part of amsfonts
 
 
 \addtolength{\textheight}{12mm}
@@ -179,7 +184,7 @@
 %
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
-\newcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
+\renewcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
 %% as from R 2.12.0 set \file in monospaced font, not sans-serif
 \newcommand{\file}[1]{`\texttt{#1}'}
 
