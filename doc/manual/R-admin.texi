@@ -4987,6 +4987,11 @@ Recent versions have (optional when built) OpenMP support.@footnote{This
 also needs the OpenMP runtime which has sometimes been distributed
 separately.}
 
+It is recommended to use C flag @option{-Wno-strict-prototypes} with
+@command{clang} 15.0.0 and later.  Builds without
+@option{--enable-R-shlib} have needed @code{CPICFLAGS}. @code{FPICFLAGS}
+and @code{CXXFICFLAGS} overridden as @samp{-fPIC}.
+
 @c This was about 'Classic Flang'.  The newer version is not
 @c yet able to compile Fortran.
 @c There is a project called @command{flang}

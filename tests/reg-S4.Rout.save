@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -625,7 +625,7 @@ An object of class "foo"
 + 	      TRUE)
 + } else
 +     message("skipping tests requiring the Matrix package")
-<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
+<sparse>[ <logic> ]: .M.sub.i.logical() maybe inefficient
 > 
 > 
 > ## containing "array" ("matrix", "ts", ..)
@@ -1257,6 +1257,7 @@ Also defined by 'package2'
 +     setClass("C2", contains = "C")
 +     setClass("C3", contains = "C2")
 +     m <- matrix(c(0,0,2:0), 3,5, dimnames = list(NULL,NULL))
++     m2 <- matrix(c(0,0,2:0), 3,5)
 +     (mC <- as(m, "dgCMatrix"))
 +     (cc <- as(mC, "C"))
 +      c2 <- as(mC, "C2")
@@ -1264,9 +1265,9 @@ Also defined by 'package2'
 +     stopifnot(
 +         identical(capture.output(c2),
 +                   sub("C3","C2", capture.output(c3)))
-+       , identical(as(cc, "matrix"), m)
-+       , identical(as(c2, "matrix"), m)
-+       , identical(as(c3, "matrix"), m)
++       , identical(as(cc, "matrix"), m2) # changed for Matrix 1.5-x
++       , identical(as(c2, "matrix"), m2)
++       , identical(as(c3, "matrix"), m2)
 +     )
 +     invisible(lapply(c("Z","C","C2","C3"), removeClass))
 +  })
@@ -1277,6 +1278,7 @@ Also defined by 'package2'
 > setClass("C2", contains = "C")
 > setClass("C3", contains = "C2")
 > m <- matrix(c(0, 0, 2:0), 3, 5, dimnames = list(NULL, NULL))
+> m2 <- matrix(c(0, 0, 2:0), 3, 5)
 > (mC <- as(m, "dgCMatrix"))
 3 x 5 sparse Matrix of class "dgCMatrix"
               
@@ -1292,8 +1294,8 @@ Also defined by 'package2'
 > c2 <- as(mC, "C2")
 > c3 <- as(mC, "C3")
 > stopifnot(identical(capture.output(c2), sub("C3", "C2", capture.output(c3))), 
-+     identical(as(cc, "matrix"), m), identical(as(c2, "matrix"), m), identical(as(c3, 
-+         "matrix"), m))
++     identical(as(cc, "matrix"), m2), identical(as(c2, "matrix"), m2), identical(as(c3, 
++         "matrix"), m2))
 > invisible(lapply(c("Z", "C", "C2", "C3"), removeClass))
 > 
 > 

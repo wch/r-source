@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-09-12 r82842) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -763,7 +763,7 @@ x1     a b <NA>
 +     detach("package:Matrix")
 + }
 [1] 2.5
-as(<matrix>, "dgeMatrix") is deprecated since Matrix 1.4-2; do as(as(as(., "dMatrix"), "generalMatrix"), "unpackedMatrix") instead
+as(<matrix>, "dgeMatrix") is deprecated since Matrix 1.5-0; do as(as(as(., "dMatrix"), "generalMatrix"), "unpackedMatrix") instead
 [1] 2.5
 > 
 > ## Various arguments were not duplicated:  PR#15352 to 15354
@@ -930,8 +930,8 @@ standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x635abd0>
-<environment: 0x63542d8>
+<bytecode: 0x1500f1468>
+<environment: 0x1500e88d0>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
