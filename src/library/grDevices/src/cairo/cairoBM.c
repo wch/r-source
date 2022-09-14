@@ -529,11 +529,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->fillStroke = Cairo_FillStroke;
     dd->capabilities = Cairo_Capabilities;
     dd->typeset = Cairo_Typeset;
-#ifdef HAVE_PANGOCAIRO
-    dd->glyph = PangoCairo_Glyph;
-#else
     dd->glyph = Cairo_Glyph;
-#endif
 
     dd->left = 0;
     dd->right = width;

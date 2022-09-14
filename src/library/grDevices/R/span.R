@@ -13,23 +13,24 @@ flatten <- function(x, params) {
 flatten.character <- function(x, params) {
     if (length(x) < 1)
         stop("Invalid span text")
-    cbind(text=enc2utf8(x), params[1:length(x),])
+    
+    cbind(text=enc2utf8(x), params[1:min(nrow(params), length(x)),])
 }
 
 span <- function(...,
                  family=NA,
                  weight=NA,
                  style=NA,
-                 size=NA) {
+                 size=NA,
+                 file=NA,
+                 index=NA) {
     spanlist <- list(...)
-    params <- data.frame(## CHAR
-                         family=as.character(family),
-                         ## REAL
-                         weight=mapWeight(weight),
-                         ## INTEGER
-                         style=mapStyle(style),
-                         ## REAL
-                         size=as.numeric(size))
+    params <- data.frame(family=as.character(family), ## CHAR
+                         weight=mapWeight(weight), ## REAL
+                         style=mapStyle(style), ## INTEGER
+                         size=as.numeric(size), ## REAL
+                         file=as.character(file), ## CHAR
+                         index=as.integer(index)) ## INTEGER
     spans <- lapply(spanlist, flatten, params)
     result <- do.call(rbind, spans)
     if (nrow(result) < 1)

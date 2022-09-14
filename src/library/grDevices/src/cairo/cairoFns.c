@@ -2360,10 +2360,8 @@ static void Cairo_Typeset(SEXP span, double x, double y, double w,
     warning(_("Text shaping not supported on Cairo devices"));
 }
 
-#ifdef HAVE_PANGOCAIRO
-
-static void PangoCairo_Glyph(int n, int *glyphs, double *x, double *y,
-                             double xoff, double yoff, SEXP font, pDevDesc dd) 
+static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
+                        double xoff, double yoff, SEXP font, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
@@ -2396,6 +2394,12 @@ static void PangoCairo_Glyph(int n, int *glyphs, double *x, double *y,
         sl = CAIRO_FONT_SLANT_ITALIC;
     }
 
+    /* This could be made much cleverer with lower-level calls like
+     * cairo_ft_font_face_create_for_pattern(), which could then
+     * include the explicit font path, e.g., with ":file=<path_to_font_file>"
+     * (assuming FreeType is available on all platforms ...).
+     * See FT_getFont() and FC_getFont() code above.
+     */
     cairo_select_font_face(xd->cc, fontfamily, sl, wt);
     cairo_set_font_size(xd->cc, REAL(size)[0]);
 
@@ -2433,62 +2437,3 @@ static void PangoCairo_Glyph(int n, int *glyphs, double *x, double *y,
     
 }
 
-#else 
-
-static void Cairo_Glyph(SEXP glyph, double x, double y, pDevDesc dd)
-{
-/*
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    const char *textstr;
-
-    if (!utf8Valid(str)) error("invalid string in Cairo_Text");
-
-    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
-	strcmp(xd->symbolfamily, "Symbol") != 0) {
-        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
-    } else if (gc->fontface == 5 && !xd->usePUA) {
-        textstr = utf8Toutf8NoPUA(str);
-    } else {
-        textstr = str;
-    }
-    if (R_ALPHA(gc->col) > 0) {
-	cairo_save(xd->cc);
-
-        if (!xd->appending) {
-            if (xd->currentMask >= 0) {
-                cairo_push_group(xd->cc);
-            }
-        }
-
-	FT_getFont(gc, dd, xd->fontscale);
-	cairo_move_to(xd->cc, x, y);
-	if (hadj != 0.0 || rot != 0.0) {
-	    cairo_text_extents_t te;
-	    cairo_text_extents(xd->cc, textstr, &te);
-	    if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
-	    if (hadj != 0.0)
-		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
-	}
-        if (!xd->appending) {
-            CairoColor(gc->col, xd);
-            cairo_show_text(xd->cc, textstr);
-        } else {
-            cairo_text_path(xd->cc, textstr);
-        }
-
-        if (!xd->appending) {
-            if (xd->currentMask >= 0) {
-                cairo_pattern_t *source = cairo_pop_group(xd->cc);
-                cairo_pattern_t *mask = xd->masks[xd->currentMask];
-                cairo_set_source(xd->cc, source);
-                cairo_mask(xd->cc, mask);
-                cairo_pattern_destroy(source);
-            }
-        }
-
-	cairo_restore(xd->cc);
-    }
-*/
-}
-
-#endif

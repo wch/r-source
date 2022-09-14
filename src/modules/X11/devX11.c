@@ -2933,11 +2933,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->fillStroke = Cairo_FillStroke;
         dd->capabilities = Cairo_Capabilities;
         dd->typeset = Cairo_Typeset;
-#ifdef HAVE_PANGOCAIRO
-        dd->glyph = PangoCairo_Glyph;
-#else
         dd->glyph = Cairo_Glyph;
-#endif
 
         dd->deviceVersion = R_GE_typeset;
     } else

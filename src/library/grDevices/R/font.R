@@ -26,20 +26,23 @@ mapStyle <- function(x) {
     match(x, c("normal", "italic", "oblique"))
 }
 
-font <- function(family=NA, weight=NA, style=NA,
-                 size=12,
-                 file=NA, index=0) {
-    if (length(family) != 1 ||
-        length(weight) != 1 ||
-        length(style) != 1 ||
-        length(size) != 1 ||
-        length(file) != 1 ||
-        length(index) != 1)
-        stop("Must specify exactly one font")
-    if ((is.na(file) &&
-         (is.na(family) || is.na(weight) || is.na(style))) ||
-        is.na(size)) {
-        stop("Must specify at least one font")
+font <- function(family, weight, style,
+                 file, index=0,
+                 size=12) {
+    nofam <- missing(family)
+    nowt <- missing(weight)
+    nostyle <- missing(style)
+    nofile <- missing(file)
+    if (nofile) {
+        if (nofam || nowt || nostyle) {
+            stop("Must specify at least one font")
+        } else {
+            file <- NA
+        }
+    } else {
+        if (nofam) family <- "sans"
+        if (nowt) weight <- 400
+        if (nostyle) style <- "normal"
     }
     family <- as.character(family)
     weight <- mapWeight(weight)
@@ -47,9 +50,9 @@ font <- function(family=NA, weight=NA, style=NA,
     size <- as.numeric(size)
     file <- as.character(file)
     index <- as.numeric(index)
-    obj <- list(family=family, weight=weight, style=style,
-                size=size,
-                file=file, index=index)
-    class(obj) <- c("RFont")
+    obj <- data.frame(family=family, weight=weight, style=style,
+                      size=size,
+                      file=file, index=index)
+    class(obj) <- c("RFont", class(obj))
     obj
 }
