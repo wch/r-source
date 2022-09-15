@@ -237,7 +237,7 @@ fi])
 ## xdg-open is the freedesktop.org interface to kfmclient/gnome-open
 AC_DEFUN([R_PROG_BROWSER],
 [if test -z "${R_BROWSER}"; then
-  AC_PATH_PROGS(R_BROWSER, [firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open])
+  AC_PATH_PROGS(R_BROWSER, [xdg-open firefox mozilla epiphany galeon opera kfmclient gnome-moz-remote open lynx links])
 fi
 if test -z "${R_BROWSER}"; then
   warn_browser="I could not determine a browser"
@@ -255,7 +255,7 @@ AC_SUBST(R_BROWSER)
 ## the FreeBSD acroread port.
 AC_DEFUN([R_PROG_PDFVIEWER],
 [AC_PATH_PROGS(R_PDFVIEWER,
-               [${R_PDFVIEWER} acroread acroread4 xdg-open evince xpdf gv gnome-gv ggv okular kpdf open gpdf kghostview])
+               [${R_PDFVIEWER} xdg-open acroread acroread4 evince atril xpdf gv gnome-gv ggv okular kpdf open gpdf kghostview])
 if test -z "${R_PDFVIEWER}"; then
   warn_pdfviewer="I could not determine a PDF viewer"
   AC_MSG_WARN([${warn_pdfviewer}])
