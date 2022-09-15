@@ -481,7 +481,8 @@ function(packages = NULL, db = NULL, which = "strong",
     ## a vector of integers is much faster than in rows of a matrix.
     shift <- as.integer(2^15)  ## allows to fit two numbers to an integer
     if (max(pos) < shift)
-        posunique <- function(p) p[!duplicated(p[,1L]*shift + p[,2L]),]
+        posunique <- function(p)
+            p[!duplicated(p[,1L]*shift + p[,2L]), , drop = FALSE]
     else
         posunique <- function(p) unique(p)
 
@@ -495,7 +496,7 @@ function(packages = NULL, db = NULL, which = "strong",
                            p_L, tab[as.integer(names(p_L))]))
 
         ## could be just posunique(rbind(pos, new)), but computing this
-        ## iteratively is faster        
+        ## iteratively is faster
         npos <- posunique(rbind(pos, posunique(new)))
         nnew <- nrow(npos) - nrow(pos)
         if(verbose) cat(" NNew:", nnew, "\n")
