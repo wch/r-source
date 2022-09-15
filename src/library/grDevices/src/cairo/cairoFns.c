@@ -2401,7 +2401,10 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
      * See FT_getFont() and FC_getFont() code above.
      */
     cairo_select_font_face(xd->cc, fontfamily, sl, wt);
-    cairo_set_font_size(xd->cc, REAL(size)[0]);
+    /* Text size (in "points") MUST match the scale of the glyph 
+     * location (in "bigpts").  The latter depends on device dpi.
+     */
+    cairo_set_font_size(xd->cc, REAL(size)[0] / (72*dd->ipr[0]));
 
     for (i=0; i<n; i++) {
         
