@@ -722,11 +722,18 @@ as.double.difftime <- function(x, units = "auto", ...)
 as.data.frame.difftime <- as.data.frame.vector
 
 format.difftime <- function(x,...)
-    paste(format(unclass(x),...), units(x))
+{
+    if(length(x))
+        paste(format(unclass(x),...), units(x))
+    else
+        character()
+}
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(is.array(x) || length(x) > 1L) {
+    if(!length(x))
+        cat(class(x)[1L], "of length 0\n")
+    else if(is.array(x) || length(x) > 1L) {
         cat("Time differences in ", attr(x, "units"), "\n", sep = "")
         y <- unclass(x); attr(y, "units") <- NULL
 	print(y, digits=digits, ...)
