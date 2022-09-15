@@ -3112,7 +3112,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         av <- utils::installed.packages()[, dependencies, drop = FALSE]
         rn <- row.names(av)
         new <- strict0 <- strict
-        ex <- "bit" # since an update is promised.
+        ex <- character()
         repeat {
             new <- intersect(new, rn) # avoid NAs in the next line
             need <- unname(unlist(apply(av[new, , drop = FALSE], 1L,
