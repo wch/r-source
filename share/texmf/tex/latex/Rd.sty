@@ -172,11 +172,8 @@
 
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
-\ifx\textbackslash\undefined%-- e.g. for MM
-  \newcommand{\bsl}{\ifmmode\backslash\else$\backslash$\fi}
-\else
   \newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
-\fi
+
 %fails for index (but is not used there...)
 \newcommand{\SIs}{\relax\ifmmode\leftarrow\else$\leftarrow$\fi}
 \newcommand{\SIIs}{\relax\ifmmode<\leftarrow\else$<\leftarrow$\fi}
