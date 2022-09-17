@@ -5911,7 +5911,7 @@ run-time path to the library.
 @item
 Package authors commonly assume things are part of C/C++ when they are
 not: the most common example is POSIX@footnote{Although this is expected
-to be part of C23, full support of that is years away,} function
+to be part of C23, full support of that is years away.} function
 @code{strdup}.  The most common C library on Linux, @code{glibc}, will
 hide the declarations of such extensions unless a `feature-test macro'
 is defined @strong{before} (almost) any system header is included.  So
@@ -14021,7 +14021,7 @@ conveniently from an @code{on.exit} action in the calling @R{} function
 
 Do not assume that memory allocated by @code{R_Calloc}/@code{R_Realloc}
 comes from the same pool as used by @code{malloc}:@footnote{That was not
-the case on Windows prior to @R{} 4.2.0.}in particular do not use
+the case on Windows prior to @R{} 4.2.0.} in particular do not use
 @code{free} or @code{strdup} with it.
 
 Memory obtained by these macros should be aligned in the same way as
