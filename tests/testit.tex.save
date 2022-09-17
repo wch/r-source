@@ -2,7 +2,7 @@
 \HeaderA{testit}{An Rd Regression Test}{testit}
 \aliasB{\{}{testit}{.Rlbrace.}
 %
-\begin{Description}\relax
+\begin{Description}
 
 \Tabular{rl}{
 \Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
@@ -18,7 +18,7 @@ foo(x, y)
 \end{verbatim}
 \end{Usage}
 %
-\begin{Details}\relax
+\begin{Details}
 Escaped backslash \code{\bsl{}x}.
 
 \code{\%\{\}}
@@ -47,6 +47,10 @@ Yihui Xie's example:
 \end{description}
 
 \end{Details}
+%
+\begin{Value}
+[NULL]\\{}\dots
+\end{Value}
 %
 \begin{Examples}
 \begin{ExampleCode}

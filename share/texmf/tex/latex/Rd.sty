@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, https://www.R-project.org
-%%% Copyright (C) 2003-2014 The R Foundation
+%%% Copyright (C) 2003-2022 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -135,7 +135,7 @@
 
 \newenvironment{Rdsection}[1]{%
   \ifx\@empty#1\else\subsubsection*{#1}\fi
-  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item}
+  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item\relax}
   {\end{list}}
 
 \newenvironment{Arguments}{%

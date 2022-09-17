@@ -600,11 +600,11 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     	} else {
             title <- envTitles[tag]
             of0("%\n\\begin{", title, "}")
-            if(tag %in% c("\\author", "\\description", "\\details", "\\note",
-                          "\\references", "\\seealso", "\\source"))
-                of1("\\relax")
             extra <- sectionExtras[tag]
-            if(!is.na(extra)) of0("\n\\begin{", extra, "}")
+            if(!is.na(extra)) {
+                of0("\n\\begin{", extra, "}")
+                if(extra == "ldescription") of1("\\relax")
+            }
             if(tag %in% c("\\usage", "\\examples")) inCodeBlock <<- TRUE
             writeSectionInner(section, tag)
  	    inCodeBlock <<- FALSE

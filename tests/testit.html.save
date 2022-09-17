@@ -73,6 +73,12 @@ weighted.mean, <code>{</code>
 
 
 
+<h3>Value</h3>
+
+<p>[NULL]<br />...
+</p>
+
+
 <h3>Examples</h3>
 
 <pre><code class='language-R'>\x
