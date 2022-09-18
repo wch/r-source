@@ -1792,6 +1792,7 @@ R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
+R_STDCXX([23], [CXX23], [CXX20])
 
 ## Set default C++ compiler to C++14 if available, otherwise C++11
 ## Do not set if neither is available.

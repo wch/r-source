@@ -96,6 +96,10 @@
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
       routines called from C/C++, and requires adjustment of many such
       calls -- see \sQuote{Writing R Extensions} §6.6.1.
+
+      \item There is initial support for C++23 as several compilers are
+      now supporting \code{-std=c++2b} or similar.  There are as yet no
+      additional checks for C++23 features.
     }
   }
 

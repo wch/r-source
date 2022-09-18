@@ -2847,16 +2847,16 @@ there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017), and `C++20'
 (with many new features in December 2020) have been published since.
+The next revisions, `C++23' is expected in 2023 and several compiler
+already have partial support for the current drafts.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{201103L}, @code{201402L} and
-@code{201703L} are most commonly used for C++11, C++14 and C++17
-respectively, but some compilers set @code{1L}.  At the time of writing
-there was no official value for C++20, but some compilers are using
-@code{202002L}, others @code{201703L}.} of @code{__cplusplus} may help
-but some compilers use it to denote a standard which is partially
-supported and some the latest standard which is (almost) fully
-supported.
+the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
+and @code{202002L} are most commonly used for C++11, C++14, C++17 and
+C++20 respectively, but some compilers set @code{1L}.}  of
+@code{__cplusplus} may help but some compilers use it to denote a
+standard which is partially supported and some the latest standard which
+is (almost) fully supported.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives

@@ -4277,7 +4277,7 @@ fi
 
 ## R_STDCXX
 ## --------
-## Support for C++ standards (C++11, C++14, C++17, C++20), for use in packages.
+## Support for C++ standards (C++11, C++14, C++17, C++20, C++23), for use in packages.
 ## R_STDCXX(VERSION, PREFIX, DEFAULT)
 AC_DEFUN([R_STDCXX],
 [r_save_CXX="${CXX}"
