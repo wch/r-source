@@ -98,8 +98,9 @@
       calls -- see \sQuote{Writing R Extensions} §6.6.1.
 
       \item There is initial support for C++23 as several compilers are
-      now supporting \code{-std=c++2b} or similar.  There are as yet no
-      additional checks for C++23 features.
+      now supporting \code{-std=c++23} or \code{-std=c++2b} or similar.
+      There are as yet no additional \command{configure} checks for
+      C++23 features.
     }
   }
 
