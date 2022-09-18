@@ -203,6 +203,9 @@
       \item User-defined Rd macro definitions can now span multiple lines,
       thanks to a patch from Duncan Murdoch. Previously, the Rd parser
       silently ignored everything after the first line.
+
+      \item Plain-text help (\code{tools::Rd2txt()}) now preserves an
+      initial blank line for text following description list items.
     }
   }
 }
