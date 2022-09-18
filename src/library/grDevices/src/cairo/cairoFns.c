@@ -2414,8 +2414,8 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
 
         cairo_glyph_t cairoGlyph;
         cairoGlyph.index = glyphs[i];
-        cairoGlyph.x = x[i] + xoff;
-        cairoGlyph.y = y[i] - yoff;
+        cairoGlyph.x = xoff + x[i];
+        cairoGlyph.y = yoff - y[i];
         if (!xd->appending) {
             CairoColor(R_GE_str2col("black"), xd);
             cairo_show_glyphs(xd->cc, &cairoGlyph, 1);

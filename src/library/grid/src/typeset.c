@@ -113,8 +113,11 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     if (draw) {
 	GEMode(1, dd);
     }
-    xx = transformXtoINCHES(x, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
-    yy = transformYtoINCHES(y, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
+    transformLocn(x, y, 0, vpc, &gc,
+                  vpWidthCM, vpHeightCM,
+                  dd,
+                  transform,
+                  &xx, &yy);
     xx = toDeviceX(xx, GE_INCHES, dd);
     yy = toDeviceY(yy, GE_INCHES, dd);
     if (R_FINITE(xx) && R_FINITE(yy)) {
@@ -127,13 +130,12 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
         gx = (double *) R_alloc(n, sizeof(double));
         gy = (double *) R_alloc(n, sizeof(double));
         for (i=0; i<n; i++) {
-            transformLocn(glyphX, glyphY, i, vpc, &gc,
+            transformDimn(glyphX, glyphY, i, vpc, &gc,
                           vpWidthCM, vpHeightCM,
-                          dd,
-                          transform,
+                          dd, rotationAngle,
                           &(gx[i]), &(gy[i]));
-            gx[i] = toDeviceX(gx[i], GE_INCHES, dd);
-            gy[i] = toDeviceY(gy[i], GE_INCHES, dd);
+            gx[i] = toDeviceWidth(gx[i], GE_INCHES, dd);
+            gy[i] = toDeviceHeight(gy[i], GE_INCHES, dd);
         }
 
         int offset = 0;
