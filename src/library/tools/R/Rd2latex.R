@@ -543,7 +543,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                    },
                    "\\cr" = of1("\\\\{}"), ## might be followed by [
                { # default
-                   if (inList && !(tag == "TEXT" && isBlankRd(block))) {
+                   if (inList && tag != "COMMENT"
+                              && !(tag == "TEXT" && isBlankRd(block))) {
                        of1("\\end{ldescription}\n")
                        inList <- FALSE
                    }

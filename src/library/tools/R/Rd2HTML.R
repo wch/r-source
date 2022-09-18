@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -877,6 +877,7 @@ Rd2HTML <-
     	    },
     	    { # default
     	    	if (inlist && (blocktag %notin% c("\\itemize", "\\enumerate"))
+    	    	           && tag != "COMMENT"
     	    	           && !(tag == "TEXT" && isBlankRd(block))) {
     	    	    switch(blocktag,
     	    	    "\\arguments" =,
