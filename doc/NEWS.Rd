@@ -206,6 +206,9 @@
 
       \item Plain-text help (\code{tools::Rd2txt()}) now preserves an
       initial blank line for text following description list items.
+
+      \item \code{tools::Rd2latex()} now correctly handles optional text
+      outside \verb{\item}s of argument lists.
     }
   }
 }

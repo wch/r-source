@@ -6,7 +6,7 @@ This is the description
 \end{Description}
 %
 \begin{Arguments}
-\begin{ldescription}\relax
+\begin{ldescription}
 \item[\code{foo}] item 1
 \item[\code{bar}] space, the item 2
 \item[\code{bah}] newline, then item 3
