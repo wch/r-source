@@ -2906,6 +2906,7 @@ r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_cxx20_compiler="${CXX20} ${CXX20STD} ${R_XTRA_CXXFLAGS} ${CXX20FLAGS}"
+r_cxx23_compiler="${CXX23} ${CXX23STD} ${R_XTRA_CXXFLAGS} ${CXX23FLAGS}"
 r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${R_XTRA_FFLAGS} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -3042,6 +3043,7 @@ R is now configured for ${host}
   C++14 compiler:              ${r_cxx14_compiler}
   C++17 compiler:              ${r_cxx17_compiler}
   C++20 compiler:              ${r_cxx20_compiler}
+  C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
 
