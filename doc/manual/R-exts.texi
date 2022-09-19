@@ -2995,7 +2995,7 @@ A requirement of C++17 or later should always be declared in the
 @file{src/Makefile}) so this is shown on the package's summary pages on
 @acronym{CRAN} or similar.
 
-Attemps to specify an unknown C++ standard are silently ignored: recent
+Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
