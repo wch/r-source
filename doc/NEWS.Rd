@@ -234,6 +234,14 @@
       \item (macOS) The run-time check for libraries from XQuartz for
       X11 and Tcl/Tk no longer uses \code{otool} from the Apple
       Developer Tools (PR#18400).
+
+      \item The \LaTeX style for producing the PDF manuals, \file{Rd.sty},
+      now loads the standard \samp{amsmath}, \samp{amsfonts} and
+      \samp{amssymb} packages for greater coverage of math commands in
+      the Rd \verb{\eqn} and \verb{\deqn} macros.
+      The \verb{\mathscr} \LaTeX command is also provided (via the
+      \samp{mathrsfs} package, if available, or the \samp{amsfonts}
+      bundle otherwise), fulfilling the wish of \PR{18398}.
     }
   }
 
