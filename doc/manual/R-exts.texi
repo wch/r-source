@@ -2845,9 +2845,9 @@ from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
-supported.  Further revisions `C++17' (in December 2017), and `C++20'
+supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
-The next revisions, `C++23' is expected in 2023 and several compiler
+The next revisions, `C++23' is expected in 2023 and several compilers
 already have partial support for the current drafts.
 
 What standard a C++ compiler aims to support can be hard to determine:
@@ -2856,14 +2856,16 @@ and @code{202002L} are most commonly used for C++11, C++14, C++17 and
 C++20 respectively, but some compilers set @code{1L}.}  of
 @code{__cplusplus} may help but some compilers use it to denote a
 standard which is partially supported and some the latest standard which
-is (almost) fully supported.
+is (almost) fully supported.  On a Unix-alike @command{configure} will
+try to identify a compiler and flags for each of the standards: this
+relies heavily on the reported values of @code{__cplusplus}.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.
 
-Different versions of @R{} have specified different minimum C++
+Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
 standard it requires.  In order to specify C++11 code in a package,
 @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should include
@@ -2971,26 +2973,30 @@ back-compatibility @option{-std=gnu1y}.
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
 @c RHEL 7 (4.8, end of all support in 2028) are examples.
-C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
-specified in an analogous way (replacing @code{14} by @code{17} or
-@code{20}) but compiler/OS support is platform-dependent.  Some C++17
-and C++20 support is available with the default builds of @R{} on macOS
-and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support for
-C++17 needs version 7 or later: that is more recent than some
-still-current Linux distributions and the OpenCSW compilers for
-Solaris.
+C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
+from @R{} 4.3.0) can be specified in an analogous way (replacing
+@code{14} by @code{17}, @code{20}) or @code{23}) but compiler/OS support
+is platform-dependent.  Some C++17 and C++20 support is available with
+the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
+Much of @command{g++}'s support for C++17 needs version 7 or later: that
+is more recent than some still-current Linux distributions and the
+OpenCSW compilers for Solaris.
 
-Note that C++17 or C++20 `support' does not mean complete support: use
+Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://clang.llvm.org/cxx_status.html} to see if the
-features you want to use are widely implemented.
+@uref{https://clang.llvm.org/cxx_status.html} to see if the features you
+want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
 @file{src/Makefile}) so this is shown on the package's summary pages on
 @acronym{CRAN} or similar.
+
+Attemps to specify an unknown C++ standard are silently ignored: recent
+versions of @R{} throw an error for C++98 and for known standards for
+which no compiler+flags has been detected.
 
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup

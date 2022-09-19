@@ -92,15 +92,11 @@ CXX = $(BINPREF)g++ -std=gnu++11 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXXPICFLAGS =
-#CXX98 = $(BINPREF)g++ $(M_ARCH)
-#CXX98FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
-#CXX98PICFLAGS = 
-#CXX98STD = -std=gnu++98
 CXX11 = $(BINPREF)g++ $(M_ARCH)
 CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXX11PICFLAGS =
 CXX11STD = -std=gnu++11
-## these settings are for gcc >= 8
+## these settings are for GCC >= 10
 CXX14 = $(CXX11)
 CXX14FLAGS = $(CXX11FLAGS)
 CXX14PICFLAGS =
@@ -112,7 +108,13 @@ CXX17STD = -std=gnu++17
 CXX20 = $(CXX11)
 CXX20FLAGS = $(CXX11FLAGS)
 CXX20PICFLAGS =
-CXX20STD = -std=gnu++2a
+## g++ 8/9 used 2a, 10 supports 20.
+CXX20STD = -std=gnu++20
+CXX23 = $(CXX11)
+CXX23FLAGS = $(CXX11FLAGS)
+CXX23PICFLAGS =
+## g++ >= 11 allow 23
+CXX23STD = -std=gnu++2b
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
@@ -194,6 +196,8 @@ SHLIB_CXX17LD = $(CXX17)
 SHLIB_CXX17LDFLAGS = -shared
 SHLIB_CXX20LD = $(CXX20)
 SHLIB_CXX20LDFLAGS = -shared
+SHLIB_CXX23LD = $(CXX23)
+SHLIB_CXX23LDFLAGS = -shared
 SHLIB_EXT = .dll
 SHLIB_FCLD = $(FC)
 ## ideally -shared -static-libgfortran, but not for gcc 4.2.1

@@ -52,7 +52,7 @@ dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
 dnl  pass as a C++11, for example.
 dnl  If e.g. CXX11STD is set, test it first not last.
-dnl  Add support for C++20, with no new tests
+dnl  Add support for C++20 and C++23, with no new tests (nor does ax_cxx_compile_stdcxx.m4)
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
@@ -212,6 +212,8 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
