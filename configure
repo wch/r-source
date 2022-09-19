@@ -32578,6 +32578,8 @@ else $as_nop
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 compiler"
 #else
 
 
@@ -33362,6 +33364,8 @@ else $as_nop
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 compiler"
 #else
 
 
@@ -34153,6 +34157,8 @@ else $as_nop
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 compiler"
 #else
 
 
@@ -34943,6 +34949,8 @@ else $as_nop
 #error "This is not a C++ compiler"
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
+#elif __cplusplus >= 202002L
+# error "This is a C++20 compiler"
 #else
 
 
