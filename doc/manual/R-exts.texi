@@ -2846,25 +2846,27 @@ from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
-supported.  Further revisions `C++17' (in December 2017), and `C++20'
+supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
+The next revisions, `C++23' is expected in 2023: @R{} will support that
+from version 4.3.0.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{201103L}, @code{201402L} and
-@code{201703L} are most commonly used for C++11, C++14 and C++17
-respectively, but some compilers set @code{1L}.  At the time of writing
-there was no official value for C++20, but some compilers are using
-@code{202002L}, others @code{201703L}.} of @code{__cplusplus} may help
-but some compilers use it to denote a standard which is partially
-supported and some the latest standard which is (almost) fully
-supported.
+the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
+and @code{202002L} are most commonly used for C++11, C++14, C++17 and
+C++20 respectively, but some compilers set @code{1L}.}  of
+@code{__cplusplus} may help but some compilers use it to denote a
+standard which is partially supported and some the latest standard which
+is (almost) fully supported.  On a Unix-alike @command{configure} will
+try to identify a compiler and flags for each of the standards: this
+relies heavily on the reported values of @code{__cplusplus}.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.
 
-Different versions of @R{} have specified different minimum C++
+Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
 standard it requires.  In order to specify C++11 code in a package,
 @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should include
@@ -2985,13 +2987,17 @@ Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://clang.llvm.org/cxx_status.html} to see if the
-features you want to use are widely implemented.
+@uref{https://clang.llvm.org/cxx_status.html} to see if the features you
+want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
 @file{src/Makefile}) so this is shown on the package's summary pages on
 @acronym{CRAN} or similar.
+
+Attemps to specify an unknown C++ standard are silently ignored: recent
+versions of @R{} throw an error for C++98 and for known standards for
+which no compiler+flags has been detected.
 
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup
@@ -5415,7 +5421,7 @@ often the size can be reduced substantially with no or minimal loss in
 quality. Not only do large files take up space: they can stress the PDF
 viewer and take many minutes to print (if they can be printed at all).
 
-@command{qpdf} (@uref{http://qpdf.sourceforge.net/}) can compress
+@command{qpdf} (@uref{https://qpdf.sourceforge.io/}) can compress
 losslessly.  It is fairly readily available (e.g.@: it has binaries for
 Windows and packages in Debian/Ubuntu/Fedora, and is installed as part
 of the @acronym{CRAN} macOS distribution of @R{}).  @command{R CMD
@@ -10333,7 +10339,7 @@ the @code{.Call} or @code{.External} interfaces for such objects.  Any
 C/C++ code that includes @file{Rinternals.h} should be called @emph{via}
 @code{.Call} or @code{.External}.
 
-@code{.Fortran} is promarily intended for Fortran 77 code, and long
+@code{.Fortran} is primarily intended for Fortran 77 code, and long
 precedes any support for Fortran 9x.  Now current implementations of
 Fortran 9x support the Fortran 2003 module @code{iso_c_binding}, a
 better way to interface modern Fortran code to @R{} is to use @code{.C}
@@ -14514,9 +14520,10 @@ along the lines of
      +     a, lda, b, ldb, beta, c, ldc)
      +     bind(C, name = 'Cdgemm')
         use iso_c_binding, only : c_char, c_int, c_double
-        character(c_char):: transa, transb
-        integer(c_int):: m, n, k, lda, ldb, ldc
-        real(c_double):: alpha, beta, a(lda,*), b(ldb,*), c(ldc,*)
+        character(c_char), intent(in) :: transa, transb
+        integer(c_int), intent(in) :: m, n, k, lda, ldb, ldc
+        real(c_double), intent(in) :: alpha, beta, a(lda, *), b(ldb, *)
+        real(c_double), intent(out) ::  c(ldc, *)
         call dgemm(transa, transb, m, n, k, alpha,
      +             a, lda, b, ldb, beta, c, ldc)
       end subroutine c_dgemm
