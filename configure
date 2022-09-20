@@ -28696,7 +28696,11 @@ fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: ${fc_len_t}" >&5
 printf "%s\n" "${fc_len_t}" >&6; }
 
-if test "x${fc_len_t}" != "xunknown"; then
+if test "x${fc_len_t}" == "x" ; then
+  as_fn_error $? "FC_LEN_T must be non-empty." "$LINENO" 5
+fi
+
+if test "x${fc_len_t}" != "xunknown" ; then
 
 printf "%s\n" "#define FC_LEN_T ${fc_len_t}" >>confdefs.h
 

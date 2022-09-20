@@ -1195,7 +1195,11 @@ else
 fi
 AC_MSG_RESULT([${fc_len_t}])
 
-if test "x${fc_len_t}" != "xunknown"; then
+if test "x${fc_len_t}" == "x" ; then
+  AC_MSG_ERROR([FC_LEN_T must be non-empty.])
+fi
+
+if test "x${fc_len_t}" != "xunknown" ; then
    AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
                       [C type used for Fortran character lengths])
 fi
