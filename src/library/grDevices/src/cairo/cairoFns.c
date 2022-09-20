@@ -2360,8 +2360,8 @@ static void Cairo_Typeset(SEXP span, double x, double y, double w,
     warning(_("Text shaping not supported on Cairo devices"));
 }
 
-static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
-                        double xoff, double yoff, SEXP font, pDevDesc dd) 
+static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, 
+                        pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
@@ -2414,8 +2414,8 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
 
         cairo_glyph_t cairoGlyph;
         cairoGlyph.index = glyphs[i];
-        cairoGlyph.x = xoff + x[i];
-        cairoGlyph.y = yoff - y[i];
+        cairoGlyph.x = x[i];
+        cairoGlyph.y = y[i];
         if (!xd->appending) {
             CairoColor(R_GE_str2col("black"), xd);
             cairo_show_glyphs(xd->cc, &cairoGlyph, 1);

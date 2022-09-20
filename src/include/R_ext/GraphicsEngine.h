@@ -678,14 +678,13 @@ SEXP R_GE_spanSize(SEXP span);
 void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd);
 
 /* Must match order in ../library/grDevices/R/glyph.R */
-SEXP R_GE_glyphGlyph(SEXP info);
 SEXP R_GE_glyphFont(SEXP info);
 SEXP R_GE_glyphIndex(SEXP info);
 SEXP R_GE_glyphXOffset(SEXP info);
 SEXP R_GE_glyphYOffset(SEXP info);
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font, 
-             double xoff, double yoff, pGEDevDesc dd);
+             pGEDevDesc dd);
 
 #ifdef __cplusplus
 }

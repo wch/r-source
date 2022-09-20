@@ -84,13 +84,12 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
                          SEXP x, SEXP y, Rboolean draw) 
 {
     int i, n, nruns = LENGTH(runs);
-    double xx, yy, *gx, *gy;
+    double *gx, *gy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     const void *vmax;
     LViewportContext vpc;
     LTransform transform;
-    R_GE_gcontext gc;
     SEXP currentvp, currentgp;
     /* Get the current device 
      */
@@ -113,45 +112,29 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     if (draw) {
 	GEMode(1, dd);
     }
-    transformLocn(x, y, 0, vpc, &gc,
-                  vpWidthCM, vpHeightCM,
-                  dd,
-                  transform,
-                  &xx, &yy);
-    xx = toDeviceX(xx, GE_INCHES, dd);
-    yy = toDeviceY(yy, GE_INCHES, dd);
-    if (R_FINITE(xx) && R_FINITE(yy)) {
-        int *glyphs = INTEGER(R_GE_glyphIndex(glyphInfo));
-        SEXP glyphX = R_GE_glyphXOffset(glyphInfo);
-        SEXP glyphY = R_GE_glyphYOffset(glyphInfo);
-        n = LENGTH(glyphX);
+    int *glyphs = INTEGER(R_GE_glyphIndex(glyphInfo));
+    n = LENGTH(R_GE_glyphIndex(glyphInfo));
         
-        vmax = vmaxget();
-        gx = (double *) R_alloc(n, sizeof(double));
-        gy = (double *) R_alloc(n, sizeof(double));
-        for (i=0; i<n; i++) {
-            transformDimn(glyphX, glyphY, i, vpc, &gc,
-                          vpWidthCM, vpHeightCM,
-                          dd, rotationAngle,
-                          &(gx[i]), &(gy[i]));
-            gx[i] = toDeviceWidth(gx[i], GE_INCHES, dd);
-            gy[i] = toDeviceHeight(gy[i], GE_INCHES, dd);
-        }
-
-        int offset = 0;
-        for (i=0; i<nruns; i++) {
-            int runLength = INTEGER(runs)[i];
-            SEXP font = VECTOR_ELT(R_GE_glyphFont(glyphInfo), offset);
-            GEGlyph(runLength, 
-                    glyphs + offset, 
-                    gx + offset, 
-                    gy + offset, 
-                    font,
-                    xx, yy, dd);
-            offset = offset + runLength;
-        }
-        vmaxset(vmax);
+    vmax = vmaxget();
+    gx = (double *) R_alloc(n, sizeof(double));
+    gy = (double *) R_alloc(n, sizeof(double));
+    for (i=0; i<n; i++) {
+        gx[i] = toDeviceX(REAL(x)[i], GE_INCHES, dd);
+        gy[i] = toDeviceY(REAL(y)[i], GE_INCHES, dd);
     }
+
+    int offset = 0;
+    for (i=0; i<nruns; i++) {
+        int runLength = INTEGER(runs)[i];
+        SEXP font = VECTOR_ELT(R_GE_glyphFont(glyphInfo), offset);
+        GEGlyph(runLength, 
+                glyphs + offset, 
+                gx + offset, 
+                gy + offset, 
+                font, dd);
+        offset = offset + runLength;
+    }
+    vmaxset(vmax);
     if (draw) {
         GEMode(0, dd);
     }

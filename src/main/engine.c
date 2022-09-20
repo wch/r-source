@@ -3889,15 +3889,11 @@ SEXP R_GE_fontIndex(SEXP font) {
  *
  * MUST match R structures in ../library/grDevices/R/glyph.R
  */
-#define glyph_glyph    0
-#define glyph_font     1
-#define glyph_index    2
-#define glyph_x        3
-#define glyph_y        4
+#define glyph_index    0
+#define glyph_x        2
+#define glyph_y        3
+#define glyph_font     3
 
-SEXP R_GE_glyphGlyph(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_glyph);
-}
 SEXP R_GE_glyphFont(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_font);
 }
@@ -3911,9 +3907,9 @@ SEXP R_GE_glyphYOffset(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_y);
 }
 
-void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font,
-             double xoff, double yoff, pGEDevDesc dd) {
+void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font, 
+             pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
-        dd->dev->glyph(n, glyphs, x, y, xoff, yoff, font, dd->dev);
+        dd->dev->glyph(n, glyphs, x, y, font, dd->dev);
     }
 }

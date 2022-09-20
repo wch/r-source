@@ -1,13 +1,34 @@
 
 ## Generate object containing information about typeset glyphs
-
-glyphInfo <- function(glyph, font, index, x, y) {
-    glyph <- as.character(glyph)
-    if (!all(sapply(font, inherits, "RFont"))) stop("Invalid font(s)")
+## All x/y and width/height and anchors should be in "big" pts (1/72 inch)
+glyphInfo <- function(index, x, y, font, width, height, hAnchor, vAnchor) {
     index <- as.integer(index)
     x <- as.numeric(x)
     y <- as.numeric(y)
-    info <- data.frame(glyph, I(font), index, x, y)
+    if (!all(sapply(font, inherits, "RFont"))) stop("Invalid font(s)")
+    ## Check width/height
+    if (!(is.numeric(width) && is.numeric(height) &&
+          length(width) && length(height)))
+        stop("Width and height must be numeric (and not zero-length)")
+    ## Check anchors
+    if (missing(hAnchor))
+        hAnchor <- c(left=min(x))
+    if (missing(vAnchor))
+        vAnchor <- c(bottom=min(y))
+    if (!is.numeric(hAnchor) || !is.numeric(vAnchor))
+        stop("Anchors must be numeric")
+    hNames <- names(hAnchor)
+    vNames <- names(vAnchor)
+    if (length(unique(hNames)) != length(hAnchor) ||
+        length(unique(vNames)) != length(vAnchor))
+        stop("Every anchor must have a unique name")
+    if (!("left" %in% hNames && "bottom" %in% vNames))
+        stop('There must be anchors named "left" and "bottom"')
+    info <- data.frame(index, x, y, I(font))
+    attr(info, "width") <- width
+    attr(info, "height") <- height
+    attr(info, "hAnchor") <- hAnchor
+    attr(info, "vAnchor") <- vAnchor
     if (nrow(info) < 1)
         stop("Invalid glyph info")
     class(info) <- c("RGlyphInfo", "data.frame")
