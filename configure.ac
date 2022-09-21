@@ -758,6 +758,9 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
+dnl substitute FPIEFLAGS as needed, e.g. from config.site
+AC_SUBST(FPIEFLAGS)
+
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX

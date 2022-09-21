@@ -893,6 +893,7 @@ CXXCPP
 ac_ct_CXX
 CXXFLAGS
 CXX
+FPIEFLAGS
 ac_ct_FC
 FCFLAGS
 FC
@@ -8567,6 +8568,8 @@ F77=${FC}
 if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
+
+
 
 
 
@@ -26677,7 +26680,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26680: \"$ac_link\") >&5
+(eval echo $as_me:26683: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26753,7 +26756,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26756: \"$ac_link\") >&5
+(eval echo $as_me:26759: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28643,7 +28646,7 @@ else $as_nop
       call xerbla('abcde', -10)
       end
 EOF
-${FC} ${FFLAGS} -c conftestf.f 1>&5 2>&5
+${FC} ${FFLAGS} ${FPIEFLAGS} -c conftestf.f 1>&5 2>&5
 cat > conftest.c <<EOF
 /* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
