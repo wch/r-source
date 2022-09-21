@@ -2847,7 +2847,7 @@ there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
-The next revision, `C++23' is expected in 2023 and several compilers
+The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
 What standard a C++ compiler aims to support can be hard to determine:
@@ -2954,33 +2954,33 @@ using std::make_unique;
 #endif
 @end example
 
-Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
-which had only partial C++14 support, and the flag to obtain that
-support was not included in the default Windows build of @R{} --- one
-could try something like
+@c Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
+@c which had only partial C++14 support, and the flag to obtain that
+@c support was not included in the default Windows build of @R{} --- one
+@c could try something like
 
-@example
-CXX14="$(BINPREF)g++ $(M_ARCH)"
-CXX14FLAGS="-O2 -Wall" 
-CXX14STD=-std=gnu1y 
-@end example
+@c @example
+@c CXX14="$(BINPREF)g++ $(M_ARCH)"
+@c CXX14FLAGS="-O2 -Wall" 
+@c CXX14STD=-std=gnu1y 
+@c @end example
 
-@noindent
-in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
-from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
-back-compatibility @option{-std=gnu1y}.
+@c @noindent
+@c in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
+@c from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
+@c back-compatibility @option{-std=gnu1y}.
 
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
 @c RHEL 7 (4.8, end of all support in 2028) are examples.
 C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
 from @R{} 4.3.0) can be specified in an analogous way (replacing
-@code{14} by @code{17}, @code{20}) or @code{23}) but compiler/OS support
+@code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
 is platform-dependent.  Some C++17 and C++20 support is available with
 the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
-is more recent than some still-current Linux distributions and the
-OpenCSW compilers for Solaris.
+is more recent than some still-current Linux distributions and also than
+the OpenCSW compilers for Solaris.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
