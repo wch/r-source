@@ -2848,7 +2848,7 @@ there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
-The next revisions, `C++23' is expected in 2023: @R{} will support that
+The next revision, `C++23', is expected in 2023: @R{} will support that
 from version 4.3.0.
 
 What standard a C++ compiler aims to support can be hard to determine:
