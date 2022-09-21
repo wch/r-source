@@ -39,6 +39,11 @@
       \item The PDF manuals (if built) can be compacted by the new
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
+
+      \item There is now support for LLVM clang 15 on Linux, which
+      defaults to position-independent (PIE) executables whereas
+      \command{gfortran} does not.  See the \dQuote{R Installation and
+      Administration} manual for the setting required.
     }
   }
 
