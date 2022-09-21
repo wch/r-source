@@ -238,7 +238,7 @@ static double mktime00 (stm *tm)
     }
 
     /* weekday: Epoch day was a Thursday */
-    if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
+    if ((tm->tm_wday = ((day % 7) + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
 	+ (day + excess * 730485) * 86400.0;
@@ -474,7 +474,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     res->tm_sec = left % 60;
 
     /* weekday: 1970-01-01 was a Thursday */
-    if ((res->tm_wday = ((4 + day) % 7)) < 0) res->tm_wday += 7;
+    if ((res->tm_wday = (((day % 7) + 4) % 7)) < 0) res->tm_wday += 7;
 
     /* year & day within year */
     y = 1970;
@@ -1221,7 +1221,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int day = (int) floor(x_i);
 	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
 	    /* weekday: 1970-01-01 was a Thursday */
-	    if ((tm.tm_wday = ((4 + day) % 7)) < 0) tm.tm_wday += 7;
+	    if ((tm.tm_wday = (((day % 7) + 4) % 7)) < 0) tm.tm_wday += 7;
 
 	    /* year & day within year */
 	    int y = 1970, tmp, mon;
