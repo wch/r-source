@@ -7865,7 +7865,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
     odb <- read.dcf(con)
     close(con)
-    ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
+    ## For now (2022-09-22), PACKAGES.in is all ASCII, so there is no
     ## need to re-encode.  Eventually, it might be in UTF-8 ...
     entry <- odb[odb[, "Package"] == meta["Package"], ]
     entry <- entry[!is.na(entry) &

@@ -613,8 +613,7 @@ inRbuildignore <- function(files, pkgdir) {
         temp_install_pkg(pkgdir, libdir)
 
         containsBuildSexprs <- which(btinfo[, "build"])
-
-	if (length(containsBuildSexprs)) {
+	if(length(containsBuildSexprs)) {
 	    for (i in containsBuildSexprs) {
 		db[[i]] <- prepare_Rd(db[[i]], stages = "build",
                                       stage2 = FALSE, stage3 = FALSE)
@@ -628,6 +627,22 @@ inRbuildignore <- function(files, pkgdir) {
 	    ## version = 2L for maximal back-compatibility
 	    saveRDS(partial, build_partial_Rd_db_path, version = 2L)
 	}
+
+        containsLaterSexprs <- which(btinfo[, "later"])
+        if(length(containsLaterSexprs)) {
+	    for (i in containsLaterSexprs) {
+		db[[i]] <- prepare_Rd(db[[i]], stages = c("install", "render"),
+                                      stage2 = FALSE, stage3 = FALSE)
+            }
+            stage23 <- db[containsLaterSexprs]
+            dir.create("build", showWarnings = FALSE)
+            build_stage23_Rd_db_path <-
+                file.path("build", "stage23.rdb")
+            if(file.exists(build_stage23_Rd_db_path))
+                unlink(build_stage23_Rd_db_path)
+            saveRDS(stage23, build_stage23_Rd_db_path, version = 2L)
+        }
+        
 	needRefman <- manual &&
             parse_description_field(desc, "BuildManual", TRUE) &&
             any(btinfo[, "later"])
