@@ -102,7 +102,7 @@
       \item There is initial support for C++23 as several compilers are
       now supporting \code{-std=c++23} or \code{-std=c++2b} or similar.
       As for C++20, there no additional \command{configure} checks for
-      C++23 features beyond a check that the compoiler reports a
+      C++23 features beyond a check that the compiler reports a
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
     }
