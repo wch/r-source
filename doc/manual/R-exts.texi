@@ -2853,12 +2853,15 @@ already have extensive partial support for the current drafts.
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
 and @code{202002L} are most commonly used for C++11, C++14, C++17 and
-C++20 respectively, but some compilers set @code{1L}.}  of
-@code{__cplusplus} may help but some compilers use it to denote a
-standard which is partially supported and some the latest standard which
-is (almost) fully supported.  On a Unix-alike @command{configure} will
-try to identify a compiler and flags for each of the standards: this
-relies heavily on the reported values of @code{__cplusplus}.
+C++20 respectively, but some compilers set @code{1L}. For C++23 all that
+can currently be assumed is a value greater than that for C++20: for
+example @command{g++} 12 uses @code{202100L} and @command{clang++} (LLVM
+15, Apple 14) uses @code{202101L}.}  of @code{__cplusplus} may help but
+some compilers use it to denote a standard which is partially supported
+and some the latest standard which is (almost) fully supported.  On a
+Unix-alike @command{configure} will try to identify a compiler and flags
+for each of the standards: this relies heavily on the reported values of
+@code{__cplusplus}.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
