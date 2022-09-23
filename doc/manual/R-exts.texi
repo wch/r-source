@@ -3001,6 +3001,13 @@ Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
+The discussion above is about the standard @R{} ways of compiling C++:
+it will not apply to packages using @file{src/Makefile} or
+@command{configure} or building in a subdirectory that do not set the
+C++ standard.  And the default C++ standard varies widely and gets
+changed frequently by vendors -- for example Apple clang 14 defaults to
+C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
+
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup
 @subsection Using @command{cmake}
