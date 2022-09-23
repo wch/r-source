@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-09-04 r82801) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-12 r82839) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -5045,7 +5045,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x130aa4fa0>
+<bytecode: 0x117c48780>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7667,7 +7667,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x131f7fae8>
+<environment: 0x127e9c340>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12527,14 +12527,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x13092b5b8>
-<environment: 0x130937468>
+<bytecode: 0x11773df00>
+<environment: 0x11775d900>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x13092b468>
-<environment: 0x130937468>
+<bytecode: 0x11773ddb0>
+<environment: 0x11775d900>
 
 > 
 > 
@@ -14542,6 +14542,48 @@ X-squared = 12.173, df = 1, p-value = 0.0004848
 > ## (Note that the above uses ppoints() with a = 1/2, giving the
 > ## probability points for quantile type 5: so theoretically, using
 > ## qqline(qtype = 5) might be preferable.) 
+> 
+> ## Figure 1 in Switzer (1976), knee angle data
+> switzer <- data.frame(
++     angle = c(-31, -30, -25, -25, -23, -23, -22, -20, -20, -18,
++               -18, -18, -16, -15, -15, -14, -13, -11, -10, - 9,
++               - 8, - 7, - 7, - 7, - 6, - 6, - 4, - 4, - 3, - 2,
++               - 2, - 1,   1,   1,   4,   5,  11,  12,  16,  34,
++               -31, -20, -18, -16, -16, -16, -15, -14, -14, -14,
++               -14, -13, -13, -11, -11, -10, - 9, - 9, - 8, - 7,
++               - 7, - 6, - 6,  -5, - 5, - 5, - 4, - 2, - 2, - 2,
++                 0,   0,   1,   1,   2,   4,   5,   5,   6,  17),
++     sex = gl(2, 40, labels = c("Female", "Male")))
+> 
+> ks.test(angle ~ sex, data = switzer)
+
+	Exact two-sample Kolmogorov-Smirnov test
+
+data:  angle by sex
+D = 0.225, p-value = 0.212
+alternative hypothesis: two-sided
+
+> d <- with(switzer, split(angle, sex))
+> with(d, qqplot(Female, Male, pch = 19, xlim = c(-31, 31), ylim = c(-31, 31),
++                conf.level = 0.945, 
++                conf.args = list(col = "lightgrey", exact = TRUE))
++ )
+> abline(a = 0, b = 1)
+> 
+> ## agreement with ks.test
+> set.seed(1)
+> x <- rnorm(50)
+> y <- rnorm(50, mean = .5, sd = .95)
+> ex <- TRUE
+> ### p = 0.112
+> (pval <- ks.test(x, y, exact = ex)$p.value)
+[1] 0.1123852
+> ## 88.8% confidence band with bisecting line
+> ## touching the lower bound
+> qqplot(x, y, pch = 19, conf.level = 1 - pval, 
++        conf.args = list(exact = ex, col = "lightgrey"))
+> abline(a = 0, b = 1)
+> 
 > 
 > 
 > 
@@ -16831,8 +16873,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x1313c4000>
-<environment: 0x132ddbee8>
+<bytecode: 0x120c064d0>
+<environment: 0x121517578>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17807,6 +17849,7 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 > W <- toeplitz2(c(rep(0, m-k), wts, rep(0, m-k)), ncol=n)
 > ## Don't show: 
 > hadM <- isNamespaceLoaded("Matrix")
+> ## IGNORE_RDIFF_BEGIN
 > ## End(Don't show)
 > ## "display" nicely :
 > if(requireNamespace("Matrix"))
@@ -17836,10 +17879,11 @@ Loading required namespace: Matrix
 [17,]  .  .  .  .  .  .  .  .  .  .  .  .  1
 > ## Don't show: 
 > if(!hadM) unloadNamespace("Matrix")
+> ## IGNORE_RDIFF_END
 > ## End(Don't show)
 > ## scale W to have column sums 1:
 > W. <- W / sum(wts)
-> all.equal(rep(1, ncol(W.)), colSums(W.))
+> all.equal(rep(1, ncol(W.)), colSums(W.), check.attributes = FALSE)
 [1] TRUE
 > ## Visualize "mass-preserving" convolution
 > x <- 1:n; f <- function(x) exp(-((x - .4*n)/3)^2)
@@ -19342,7 +19386,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.837 0.226 3.07 0 0 
+Time elapsed:  2.963 0.236 3.21 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -356,10 +356,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if (missing(exclude))
                 exclude <- cr$exclude
 
-            ## If the namespace mechanism is available and the package
-            ## has a namespace, then the namespace loading mechanism
-            ## takes over.
-            if (packageHasNamespace(package, which.lib.loc)) {
+            ## The namespace loading mechanism takes over.
+
 		if (isNamespaceLoaded(package)) {
                     ## Already loaded.  Does the version match?
                     newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
@@ -416,9 +414,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     else
                         return(invisible(.packages()))
                 }
-            } else
-		stop(gettextf("package %s does not have a namespace and should be re-installed",
-			      sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",

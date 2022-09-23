@@ -52,6 +52,12 @@
 
       \item Support in \code{tools::Rdiff()} for comparing uncompressed
       PDF files is further reduced -- see its help page.
+
+      \item \code{qqplot(x, y, ...)} gains \code{conf.level} and
+      \code{conf.args} arguments for computing and plotting a confidence
+      band for the treatment function transforming the distribution of
+      \code{x} into the distribution of \code{y } (Switzer, 1976,
+      Biometrika). Contributed by Torsten Hothorn. 
     }
   }
 
@@ -90,6 +96,15 @@
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
       routines called from C/C++, and requires adjustment of many such
       calls -- see \sQuote{Writing R Extensions} §6.6.1.
+
+      %% g++ 11 supported c++23.
+      %% 2022-09 Recent LLVM (>= 13?) and Apple (>= 13?) clang support c++2b.
+      \item There is initial support for C++23 as several compilers are
+      now supporting \code{-std=c++23} or \code{-std=c++2b} or similar.
+      As for C++20, there no additional \command{configure} checks for
+      C++23 features beyond a check that the compiler reports a
+      \code{__cplusplus} value greater than that in the C++20 standard.
+      C++ feature tests should be used.
     }
   }
 
@@ -192,6 +207,12 @@
       \item User-defined Rd macro definitions can now span multiple lines,
       thanks to a patch from Duncan Murdoch. Previously, the Rd parser
       silently ignored everything after the first line.
+
+      \item Plain-text help (\code{tools::Rd2txt()}) now preserves an
+      initial blank line for text following description list items.
+
+      \item \code{tools::Rd2latex()} now correctly handles optional text
+      outside \verb{\item}s of argument lists.
     }
   }
 }
@@ -214,6 +235,14 @@
       \item (macOS) The run-time check for libraries from XQuartz for
       X11 and Tcl/Tk no longer uses \code{otool} from the Apple
       Developer Tools (PR#18400).
+
+      \item The \LaTeX style for producing the PDF manuals, \file{Rd.sty},
+      now loads the standard \samp{amsmath}, \samp{amsfonts} and
+      \samp{amssymb} packages for greater coverage of math commands in
+      the Rd \verb{\eqn} and \verb{\deqn} macros.
+      The \verb{\mathscr} \LaTeX command is also provided (via the
+      \samp{mathrsfs} package, if available, or the \samp{amsfonts}
+      bundle otherwise), fulfilling the wish of \PR{18398}.
     }
   }
 
@@ -222,6 +251,11 @@
       \item The PDF manuals (if built) can be compacted by the new
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
+
+      \item There is now support for LLVM clang 15 on Linux, which
+      defaults to position-independent (PIE) executables whereas
+      \command{gfortran} does not.  See the \dQuote{R Installation and
+      Administration} manual for the setting required.
     }
   }
 

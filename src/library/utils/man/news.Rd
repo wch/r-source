@@ -20,7 +20,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 \arguments{
   \item{query}{an expression for selecting news entries}
   \item{package}{a character string giving the name of an installed
-    add-on package, or \code{"R"} or \code{"R-3"} or \code{"R-2"}}.
+    add-on package, or \code{"R"} or \code{"R-3"} or \code{"R-2"}.}
   \item{lib.loc}{a character vector of directory names of R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.}

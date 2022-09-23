@@ -475,7 +475,7 @@ static const Deligature_escape _deligature_escape_tbl[NUM_DELIGATURED_ESCAPES] =
 /* A table of the ligatures present in the Hershey fonts.  Ligaturization
    is automatic; see g_cntrlify.c.  The eszet ligature, found only in
    HersheyGothic-German, is not listed here because it is not constructed
-   automatically; the user must request it, with either "\ss" or 'ß'.  The
+   automatically; the user must request it, with either "\ss" or 'ÃŸ'.  The
    table has the longer ligatures first because it is scanned from first to
    last, with strcmp().
 

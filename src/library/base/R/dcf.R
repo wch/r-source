@@ -73,13 +73,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ascii_blank <- " \t"
     ascii_space <- " \f\n\r\t\v"
 
-    ## This needs to be done in an 8-bit locale to prevent escaping of
-    ## invalid characters
-    ctype <-  Sys.getlocale("LC_CTYPE")
-    on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
-    Sys.setlocale("LC_CTYPE", "C")
-
-    lines <- readLines(file, skipNul = TRUE)
+    lines <- readLines(file, skipNul = TRUE, encoding = "bytes")
 
     ## Try to find out about invalid things: mostly, lines which do not
     ## start with blanks but have no ':' ...
@@ -133,6 +127,10 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
                                             collapse = "\n"),
                    c(1L, pos[-length(pos)] + 1L), pos)
     vals[fold] <- trimws(vals[fold])
+
+    ## for back-compatibility, but creates invalid strings
+    Encoding(vals) <- "unknown"
+    Encoding(tags) <- "unknown"
 
     out <- .assemble_things_into_a_data_frame(tags, vals, nums[pos])
 

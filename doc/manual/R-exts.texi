@@ -2845,25 +2845,27 @@ from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
-supported.  Further revisions `C++17' (in December 2017), and `C++20'
+supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
+The next revision, `C++23', is expected in 2023 and several compilers
+already have extensive partial support for the current drafts.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{201103L}, @code{201402L} and
-@code{201703L} are most commonly used for C++11, C++14 and C++17
-respectively, but some compilers set @code{1L}.  At the time of writing
-there was no official value for C++20, but some compilers are using
-@code{202002L}, others @code{201703L}.} of @code{__cplusplus} may help
-but some compilers use it to denote a standard which is partially
-supported and some the latest standard which is (almost) fully
-supported.
+the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
+and @code{202002L} are most commonly used for C++11, C++14, C++17 and
+C++20 respectively, but some compilers set @code{1L}.}  of
+@code{__cplusplus} may help but some compilers use it to denote a
+standard which is partially supported and some the latest standard which
+is (almost) fully supported.  On a Unix-alike @command{configure} will
+try to identify a compiler and flags for each of the standards: this
+relies heavily on the reported values of @code{__cplusplus}.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.
 
-Different versions of @R{} have specified different minimum C++
+Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
 standard it requires.  In order to specify C++11 code in a package,
 @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should include
@@ -2952,45 +2954,49 @@ using std::make_unique;
 #endif
 @end example
 
-Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
-which had only partial C++14 support, and the flag to obtain that
-support was not included in the default Windows build of @R{} --- one
-could try something like
+@c Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
+@c which had only partial C++14 support, and the flag to obtain that
+@c support was not included in the default Windows build of @R{} --- one
+@c could try something like
 
-@example
-CXX14="$(BINPREF)g++ $(M_ARCH)"
-CXX14FLAGS="-O2 -Wall" 
-CXX14STD=-std=gnu1y 
-@end example
+@c @example
+@c CXX14="$(BINPREF)g++ $(M_ARCH)"
+@c CXX14FLAGS="-O2 -Wall" 
+@c CXX14STD=-std=gnu1y 
+@c @end example
 
-@noindent
-in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
-from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
-back-compatibility @option{-std=gnu1y}.
+@c @noindent
+@c in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
+@c from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
+@c back-compatibility @option{-std=gnu1y}.
 
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
 @c RHEL 7 (4.8, end of all support in 2028) are examples.
-C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
-specified in an analogous way (replacing @code{14} by @code{17} or
-@code{20}) but compiler/OS support is platform-dependent.  Some C++17
-and C++20 support is available with the default builds of @R{} on macOS
-and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support for
-C++17 needs version 7 or later: that is more recent than some
-still-current Linux distributions and the OpenCSW compilers for
-Solaris.
+C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
+from @R{} 4.3.0) can be specified in an analogous way (replacing
+@code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
+is platform-dependent.  Some C++17 and C++20 support is available with
+the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
+Much of @command{g++}'s support for C++17 needs version 7 or later: that
+is more recent than some still-current Linux distributions and also than
+the OpenCSW compilers for Solaris.
 
-Note that C++17 or C++20 `support' does not mean complete support: use
+Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://clang.llvm.org/cxx_status.html} to see if the
-features you want to use are widely implemented.
+@uref{https://clang.llvm.org/cxx_status.html} to see if the features you
+want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
 @file{src/Makefile}) so this is shown on the package's summary pages on
 @acronym{CRAN} or similar.
+
+Attempts to specify an unknown C++ standard are silently ignored: recent
+versions of @R{} throw an error for C++98 and for known standards for
+which no compiler+flags has been detected.
 
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup
@@ -5719,9 +5725,12 @@ and @code{fabs} for double values, and when using C++ include
 
 @item
 It is an error (and make little sense, although has been seen) to call
-macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for integer
-arguments: a few compilers give a compilation error.  Function
-@code{finite} is obsolete, and some compilers will warn about its use.
+macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for
+integer arguments: a few compilers give a compilation error.  Function
+@code{finite} is obsolete, and some compilers will warn about its
+use@footnote{ at the time of writing @cputype{arm64} macOS both warned
+and did not supply a prototype in @file{math.h} which resulted in a
+compilation error.}.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
@@ -5910,7 +5919,7 @@ run-time path to the library.
 @item
 Package authors commonly assume things are part of C/C++ when they are
 not: the most common example is POSIX@footnote{Although this is expected
-to be part of C23, full support of that is years away,} function
+to be part of C23, full support of that is years away.} function
 @code{strdup}.  The most common C library on Linux, @code{glibc}, will
 hide the declarations of such extensions unless a `feature-test macro'
 is defined @strong{before} (almost) any system header is included.  So
@@ -14020,7 +14029,7 @@ conveniently from an @code{on.exit} action in the calling @R{} function
 
 Do not assume that memory allocated by @code{R_Calloc}/@code{R_Realloc}
 comes from the same pool as used by @code{malloc}:@footnote{That was not
-the case on Windows prior to @R{} 4.2.0.}in particular do not use
+the case on Windows prior to @R{} 4.2.0.} in particular do not use
 @code{free} or @code{strdup} with it.
 
 Memory obtained by these macros should be aligned in the same way as

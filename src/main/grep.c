@@ -191,25 +191,26 @@ static SEXP mkCharWLenASCII(const wchar_t *wc, int nc, Rboolean maybe_ascii)
     return ans;
 }
 
-static SEXP markBytesOld(SEXP x, Rboolean useBytes)
+static SEXP markBytesOld(SEXP x, Rboolean useBytes, Rboolean haveBytesInput)
 {
-    /* Mark results of gsub, sub, strsplit as "bytes" when using bytes and
-       replacement, split did not happen. If 0, keep their original encoding
-       flag (pre-82589 behavior, see markBytesResultIfNew).
+    /* If 1, mark results of gsub, sub, strsplit as "bytes" when using bytes
+       and replacement, split did not happen. If 0, keep their original
+       encoding flag (pre-82589 behavior, see markBytesResultIfNew).
 
-       The intention of 82589 was to avoid encoding flag instability caused by
-       82587, e.g. in gsub(weird_thing, "", useBytes=TRUE). The options is
-       experimental and intended to disappear.
+       The intention of the marking (82589) was to avoid encoding flag
+       instability caused by 82587, e.g.
+       in gsub(weird_thing, "", useBytes=TRUE). The option is experimental
+       and intended to be removed.
 
        Currently the default is the old behavior.
     */
-    static int markBytesResultIfOld = -1;
+    static int markBytesResultIfOld = -1; /* -1 to allow setting */
 
     if (markBytesResultIfOld == -1) {
 	char *p = getenv("_R_REGEX_MARK_OLD_RESULT_AS_BYTES_");
 	markBytesResultIfOld = (p && StringTrue(p)) ? 1 : 0;
     }
-    if (!markBytesResultIfOld ||
+    if (!markBytesResultIfOld || !haveBytesInput ||
         !useBytes || IS_ASCII(x) || IS_BYTES(x) || x == NA_STRING)
 
 	return x;
@@ -217,22 +218,28 @@ static SEXP markBytesOld(SEXP x, Rboolean useBytes)
 	return mkCharLenCE(CHAR(x), LENGTH(x), CE_BYTES);
 }
 
-static SEXP mkBytesNew(const char *name)
+static SEXP mkBytesNew(const char *name, Rboolean haveBytesInput)
 {
-    /* Mark results of gsub, sub, strsplit as "bytes" when using bytes and
-       creating a replacement or split happened. If 0, mark as native/unknown,
-       possibly creating an invalid string (pre-82587 behavior). This option is
-       experimental and intended to disappear.
+    /* If 1, mark results of gsub, sub, strsplit as "bytes" when using bytes
+       and replacement or split happened. If 0 and no input was marked as
+       "bytes", mark results as native/unknown, possibly creating an invalid
+       string (pre-82587 behavior). This option is experimental and intended
+       to be removed.
 
-       Currently the default is the old behavior.
+       Currently the default is the old behavior when no input is marked as
+       "bytes". However, the new behavior applies when the input includes
+       a string marked as "bytes".
     */
-    static int markBytesResultIfNew = -1;
+    static int markBytesResultIfNew = -1; 
 
     if (markBytesResultIfNew == -1) {
 	char *p = getenv("_R_REGEX_MARK_NEW_RESULT_AS_BYTES_");
 	markBytesResultIfNew = (p && StringTrue(p)) ? 1 : 0;
     }
-    return mkCharCE(name, markBytesResultIfNew ? CE_BYTES : CE_NATIVE);
+    if (haveBytesInput || markBytesResultIfNew)
+	return mkCharCE(name, CE_BYTES);
+    else
+	return mkCharCE(name, CE_NATIVE);
 }
 
 #ifdef HAVE_PCRE2
@@ -544,6 +551,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean use_UTF8 = FALSE;
     const void *vmax, *vmax2;
     int nwarn = 0;
+    Rboolean haveBytesInput;
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
@@ -569,10 +577,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!tlen) { tlen = 1; SETCADR(args0, tok = mkString("")); }
     PROTECT(tok);
 
+    haveBytesInput = have_bytes(tok, tlen) || have_bytes(x, len);
     if (!useBytes)
 	useBytes = only_ascii(tok, tlen) && only_ascii(x, len);
     if (!useBytes) 
-	useBytes = have_bytes(tok, tlen) || have_bytes(x, len);
+	useBytes = haveBytesInput;
     if (!useBytes) {
 	// use_UTF8 means use wchar_t* for the TRE engine
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
@@ -592,7 +601,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = itok; i < len; i += tlen)
 		SET_VECTOR_ELT(ans, i,
 		               ScalarString(markBytesOld(STRING_ELT(x, i),
-		                                         useBytes)));
+		                                         useBytes,
+		                                         haveBytesInput)));
 	    continue;
 	} else if (!CHAR(this)[0]) { /* empty */
 	    vmax2 = vmaxget();
@@ -664,7 +674,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(useBytes) {
 			for (j = 0; j < ntok; j++) {
 			    bf[0] = buf[j];
-			    SET_STRING_ELT(t, j, mkBytesNew(bf));
+			    SET_STRING_ELT(t, j, mkBytesNew(bf, haveBytesInput));
 			}
 		    } else {
 			for (j = 0; j < ntok; j++) {
@@ -756,7 +766,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
 			if (useBytes)
-			    SET_STRING_ELT(t, j, mkBytesNew(pt));
+			    SET_STRING_ELT(t, j, mkBytesNew(pt, haveBytesInput));
 			else if (use_UTF8)
 			    SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 			else
@@ -767,7 +777,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkBytesNew(bufp));
+			SET_STRING_ELT(t, ntok, mkBytesNew(bufp, haveBytesInput));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
@@ -884,7 +894,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp++;
 		    }
 		    if (useBytes)
-			SET_STRING_ELT(t, j, mkBytesNew(pt));
+			SET_STRING_ELT(t, j, mkBytesNew(pt, haveBytesInput));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 		    else
@@ -892,7 +902,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkBytesNew(bufp));
+			SET_STRING_ELT(t, ntok, mkBytesNew(bufp, haveBytesInput));
 		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
@@ -1084,13 +1094,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp++;
 		    }
 		    if (useBytes)
-			SET_STRING_ELT(t, j, mkBytesNew(pt));
+			SET_STRING_ELT(t, j, mkBytesNew(pt, haveBytesInput));
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
 		if (*bufp) {
 		    if (useBytes)
-			SET_STRING_ELT(t, ntok, mkBytesNew(bufp));
+			SET_STRING_ELT(t, ntok, mkBytesNew(bufp, haveBytesInput));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
 		}
@@ -2025,6 +2035,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     pcre_extra *re_pe  = NULL;
 #endif
     const void *vmax = vmaxget();
+    Rboolean haveBytesInput;
 
     checkArity(op, args);
 
@@ -2068,13 +2079,14 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	goto exit_gsub;
     }
+    haveBytesInput = have_bytes(pat, 1) || have_bytes(rep, 1) ||
+                     have_bytes(text, n);
 
     if (!useBytes) 
 	useBytes = only_ascii(pat, 1) && only_ascii(rep, 1) && 
 	           only_ascii(text, n);
     if (!useBytes) 
-	useBytes = have_bytes(pat, 1) || have_bytes(rep, 1) ||
-	           have_bytes(text, n);
+	useBytes = haveBytesInput;
     if (!useBytes) {
 	/* if we have non-ASCII text in a DBCS locale, we need to use wchar in TRE */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
@@ -2174,7 +2186,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    st = fgrep_one_bytes(spat, patlen, s, ns, useBytes, use_UTF8);
 	    if (st < 0)
 		SET_STRING_ELT(ans, i, markBytesOld(STRING_ELT(text, i),
-		                                    useBytes));
+		                                    useBytes, haveBytesInput));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
@@ -2203,7 +2215,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		                                        useBytes, use_UTF8)) >= 0);
 		strcpy(u, s);
 		if (useBytes)
-		    SET_STRING_ELT(ans, i, mkBytesNew(cbuf));
+		    SET_STRING_ELT(ans, i, mkBytesNew(cbuf, haveBytesInput));
 		else if (use_UTF8)
 		    SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 		else
@@ -2292,7 +2304,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	   R_pcre_exec_error(ncap, i);
 	   if (nmatch == 0)
 	       SET_STRING_ELT(ans, i, markBytesOld(STRING_ELT(text, i),
-		                                   useBytes));
+		                                   useBytes, haveBytesInput));
 	   else if (STRING_ELT(rep, 0) == NA_STRING)
 	       SET_STRING_ELT(ans, i, NA_STRING);
 	   else {
@@ -2308,7 +2320,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       for (j = offset ; s[j] ; j++) *u++ = s[j];
 	       *u = '\0';
 	       if (useBytes)
-		   SET_STRING_ELT(ans, i, mkBytesNew(cbuf));
+		   SET_STRING_ELT(ans, i, mkBytesNew(cbuf, haveBytesInput));
 	       else if (use_UTF8)
 		   SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 	       else
@@ -2363,7 +2375,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, markBytesOld(STRING_ELT(text, i),
-		                                    useBytes));
+		                                    useBytes, haveBytesInput));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
@@ -2379,7 +2391,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = '\0';
 		if (useBytes)
-		    SET_STRING_ELT(ans, i, mkBytesNew(cbuf));
+		    SET_STRING_ELT(ans, i, mkBytesNew(cbuf, haveBytesInput));
 		else
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 	    }
@@ -2427,7 +2439,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, markBytesOld(STRING_ELT(text, i),
-		                                    useBytes));
+		                                    useBytes, haveBytesInput));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {

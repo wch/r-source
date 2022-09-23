@@ -145,17 +145,25 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grepl} returns a logical vector (match or not for each element of
   \code{x}).
 
-  \code{sub} and \code{gsub} return a character vector of the same
-  length and with the same attributes as \code{x} (after possible
-  coercion to character).  Elements of character vectors \code{x} which
-  are not substituted will be returned unchanged (including any declared
-  encoding).  If \code{useBytes = FALSE} a non-ASCII substituted result
-  will often be in UTF-8 with a marked encoding (e.g., if there is a
-  UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
-  Such strings can be re-encoded by \code{\link{enc2native}}.
-%%  If \code{useBytes = TRUE} or any of the inputs is marked as
-%%  \code{"bytes"}, a non-ASCII substituted result will be marked as
-%%  \code{"bytes"}.
+  \code{sub} and \code{gsub} return a character vector of the same length
+  and with the same attributes as \code{x} (after possible coercion to
+  character).  Elements of character vectors \code{x} which are not
+  substituted will be returned unchanged (including any declared encoding if
+  \code{useBytes = FALSE}).  If \code{useBytes = FALSE} a non-ASCII
+  substituted result will often be in UTF-8 with a marked encoding (e.g., if
+  there is a UTF-8 input, and in a multibyte locale unless \code{fixed =
+  TRUE}).  Such strings can be re-encoded by \code{\link{enc2native}}.  If
+  any of the inputs is marked as \code{"bytes"}, elements of character
+  vectors \code{x} which are substituted will be returned marked as
+  \code{"bytes"}, but the encoding flag on elements not substituted is
+  unspecified (it may be the original or "bytes").  If none of the inputs is
+  marked as \code{"bytes"}, but \code{useBytes = TRUE} is given explicitly,
+  the encoding flag is unspecified even on the substituted elements (it may
+  be \code{"bytes"} or \code{"unknown"}, possibly invalid in the current
+  encoding).  Mixed use of \code{"bytes"} and other marked encodings is
+  discouraged, but if still desired one may use \code{\link{iconv}} to
+  re-encode the result e.g.  to UTF-8 with suitably substituted invalid
+  bytes.
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -763,6 +763,7 @@ x1     a b <NA>
 +     detach("package:Matrix")
 + }
 [1] 2.5
+as(<matrix>, "dgeMatrix") is deprecated since Matrix 1.5-0; do as(as(as(., "dMatrix"), "generalMatrix"), "unpackedMatrix") instead
 [1] 2.5
 > 
 > ## Various arguments were not duplicated:  PR#15352 to 15354
@@ -900,7 +901,7 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 + }
 > 
 > if(require("Matrix", .Library)) {
-+     M <- Matrix(diag(1:10), sparse=TRUE) # a "dsCMatrix"
++     M <- Matrix(diag(1:10), sparse=TRUE) # a "ddiMatrix"
 +     setClass("TestM", slots = c(M='numeric'))
 +     setMethod("+", c("TestM","TestM"), function(e1,e2) {
 +         e1@M + e2@M
@@ -908,7 +909,9 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 +     M+M # works the first time
 +     M+M # was error   "object '.Generic' not found"
 +     ##
-+     as.Matrix <- function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
++     as.Matrix <- if(packageVersion("Matrix", .Library) >= "1.4.2") {
++                      as.matrix
++                  } else function(x) `dimnames<-`(as.matrix(x), list(NULL,NULL))
 +     stopifnot(exprs = {
 +         identical(pmin(2,M), pmin(2, as.matrix(M)))
 +         identical(as.matrix(pmax(M, 7)),
@@ -922,13 +925,13 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 +     detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
-<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
+<sparse>[ <logic> ]: .M.sub.i.logical() maybe inefficient
 standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x635abd0>
-<environment: 0x63542d8>
+<bytecode: 0x1500f1468>
+<environment: 0x1500e88d0>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 

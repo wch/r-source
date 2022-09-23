@@ -896,6 +896,9 @@ Rd2txt <-
                        if (tag == "TEXT") {
                            txt <- psub("^ ", "", as.character(tabExpand(block)))
                            put(txt)
+                           if (!haveBlanks &&
+                               blocktag %in% c("\\describe", "\\value", "\\arguments"))
+                           dropBlank <<- FALSE  # keep blank line for following text
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
                })

@@ -132,6 +132,12 @@
 ## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
+## The following variable can be used to provide any PIE flags for the
+## Fortran compiler.  Currently only needed when using gfortran on
+## Linux in conjuunction with a default build of clang 15 where it is
+## set to -fPIE.
+## FPIEFLAGS=
+
 ## The command to be used to create shared objects which contain object
 ## files from a C or Fortran compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
@@ -375,8 +381,8 @@
 ## configure tests if size_t works (which it does on gfortran < 8
 ##   where int is used).
 ## Allow user to override the configure checks if they know what they
-##   are doing (the value is unchecked).
-## FC_LEN_T=
+##   are doing (the value is unchecked).  Empty values are ignored.
+## FC_LEN_T=size_t
 
 ## C Stack Direction
 ## In case optimization defeats the configure test: 'down' (the usual) or 'up'

@@ -1,7 +1,7 @@
 \inputencoding{utf8}
 \HeaderA{ver20}{Johnson \& Johnson,  \$ \_  \#\#\# \textasciicircum{} \textasciitilde{}}{ver20}
 %
-\begin{Description}\relax
+\begin{Description}
 This is the description
 \end{Description}
 %
@@ -13,7 +13,7 @@ This is the description
 \end{ldescription}
 \end{Arguments}
 %
-\begin{Details}\relax
+\begin{Details}
 \R{} \R{} \bsl{}R \eqn{\alpha\beta\Gamma}{}
 
 In code, all that needs to be escaped is percent, backslash and unpaired

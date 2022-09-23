@@ -660,6 +660,15 @@ static void readline_handler(char *line)
 {
     R_size_t buflen = rl_top->readline_len;
 
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0802
+    /* In this version of readline, rl_redisplay called from
+       popReadline -> rl_free_line_state (-> rl_clear_message -> rl_redisplay)
+       wipes the prompt and moves the cursor accordingly, causing
+       undesirable indentation here when the input is empty, but the
+       cursor has been moved to the next line.
+       As a work-around, clear the prompt. */
+    if (line && !line[0]) rl_set_prompt("");
+#endif
     popReadline();
 
     if ((rl_top->readline_eof = !line)) /* Yes, I don't mean ==...*/

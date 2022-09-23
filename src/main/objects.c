@@ -1052,20 +1052,35 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 {
     int ans;
-    SEXP cl = PROTECT(asChar(getAttrib(x, R_ClassSymbol)));
+    SEXP clattr = getAttrib(x, R_ClassSymbol);
+    SEXP cl = PROTECT(asChar(clattr));
     const char *class = CHAR(cl);
-    for (ans = 0; ; ans++) {
-	if (!strlen(valid[ans])) // empty string
-	    break;
+    for (ans = 0; strlen(valid[ans]); ans++)
 	if (!strcmp(class, valid[ans])) {
 	    UNPROTECT(1); /* cl */
 	    return ans;
 	}
-    }
-    /* if not found directly, now search the non-virtual super classes :*/
+    /* if not found directly, then look for a match among the nonvirtual 
+       superclasses, possibly after finding the environment 'rho' in which
+       class(x) is defined */
     if(IS_S4_OBJECT(x)) {
-	/* now try the superclasses, i.e.,  try   is(x, "....");  superCl :=
-	   .selectSuperClasses(getClass("....")@contains, dropVirtual=TRUE)  */
+	if (rho == NULL) {
+	    SEXP pkg = getAttrib(clattr, R_PackageSymbol);
+	    if (!isNull(pkg)) {
+		static SEXP meth_classEnv = NULL;
+		if(!meth_classEnv)
+		    meth_classEnv = install(".classEnv");
+		/* FIXME: fails if 'methods' is not loaded */
+		SEXP clEnvCall = PROTECT(lang2(meth_classEnv, clattr));
+		rho = eval(clEnvCall, R_MethodsNamespace);
+		UNPROTECT(1); /* clEnvCall */
+		if(!isEnvironment(rho))
+		    error(_("could not find correct environment; "
+			    "please report!"));
+	    } else
+		rho = R_GlobalEnv;
+	}
+	PROTECT(rho);
 	SEXP classExts, superCl, _call;
 	static SEXP s_contains = NULL, s_selectSuperCl = NULL;
 	if(!s_contains) {
@@ -1074,31 +1089,29 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 	}
 	SEXP classDef = PROTECT(R_getClassDef(class));
 	PROTECT(classExts = R_do_slot(classDef, s_contains));
-	/* .selectSuperClasses(getClassDef(class)@contains, dropVirtual = TRUE,
-	 *                     namesOnly = TRUE, directOnly = FALSE, simpleOnly = TRUE) :
+	/* .selectSuperClasses(getClassDef(class)@contains, 
+	 *                     dropVirtual = TRUE, namesOnly = TRUE, 
+	 *                     directOnly = FALSE, simpleOnly = TRUE):
 	 */
-	PROTECT(_call = lang6(s_selectSuperCl, classExts, ScalarLogical(1),
-			      ScalarLogical(1), ScalarLogical(0), ScalarLogical(1)));
+	PROTECT(_call = lang6(s_selectSuperCl, classExts,
+			      ScalarLogical(1), ScalarLogical(1),
+			      ScalarLogical(0), ScalarLogical(1)));
 	superCl = eval(_call, rho);
 	UNPROTECT(3); /* _call, classExts, classDef */
 	PROTECT(superCl);
-	for(int i=0; i < LENGTH(superCl); i++) {
+	for(int i = 0; i < LENGTH(superCl); i++) {
 	    const char *s_class = CHAR(STRING_ELT(superCl, i));
-	    for (ans = 0; ; ans++) {
-		if (!strlen(valid[ans]))
-		    break;
+	    for (ans = 0; strlen(valid[ans]); ans++)
 		if (!strcmp(s_class, valid[ans])) {
-		    UNPROTECT(2); /* superCl, cl */
+		    UNPROTECT(3); /* superCl, rho, cl */
 		    return ans;
 		}
-	    }
 	}
-	UNPROTECT(1); /* superCl */
+	UNPROTECT(2); /* superCl, rho */
     }
     UNPROTECT(1); /* cl */
     return -1;
 }
-
 
 /**
  * Return the 0-based index of an is() match in a vector of class-name
@@ -1113,25 +1126,7 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
  */
 int R_check_class_etc(SEXP x, const char **valid)
 {
-    static SEXP meth_classEnv = NULL;
-    SEXP cl = getAttrib(x, R_ClassSymbol), rho = R_GlobalEnv, pkg;
-    if(!meth_classEnv)
-	meth_classEnv = install(".classEnv");
-
-    pkg = getAttrib(cl, R_PackageSymbol); /* ==R== packageSlot(class(x)) */
-    if(!isNull(pkg)) { /* find  rho := correct class Environment */
-	SEXP clEnvCall;
-	// FIXME: fails if 'methods' is not loaded.
-	PROTECT(clEnvCall = lang2(meth_classEnv, cl));
-	rho = eval(clEnvCall, R_MethodsNamespace);
-	UNPROTECT(1);
-	if(!isEnvironment(rho))
-	    error(_("could not find correct environment; please report!"));
-    }
-    PROTECT(rho);
-    int res = R_check_class_and_super(x, valid, rho);
-    UNPROTECT(1);
-    return res;
+    return R_check_class_and_super(x, valid, NULL);
 }
 
 /* standardGeneric:  uses a pointer to R_standardGeneric, to be

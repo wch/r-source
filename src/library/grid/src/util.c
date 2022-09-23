@@ -215,10 +215,32 @@ void textRect(double x, double y, SEXP text, int i,
             h = 0;
         warning(_("Unable to calculate text width/height (using zero)"));
     }
-    location(0, 0, bl);
-    location(w, 0, br);
-    location(w, h, tr);
-    location(0, h, tl);
+    /* Ensure anti-clockwise direction */
+    if (w >= 0) {
+        if (h >= 0) {
+            location(0, 0, bl);
+            location(w, 0, br);
+            location(w, h, tr);
+            location(0, h, tl);
+        } else {
+            location(0, h, bl);
+            location(w, h, br);
+            location(w, 0, tr);
+            location(0, 0, tl);
+        }
+    } else {
+        if (h >= 0) {
+            location(w, 0, bl);
+            location(0, 0, br);
+            location(0, h, tr);
+            location(w, h, tl);
+        } else {
+            location(w, h, bl);
+            location(0, h, br);
+            location(0, 0, tr);
+            location(w, 0, tl);
+        }
+    }
     translation(-xadj*w, -yadj*h, thisJustification);
     translation(x, y, thisLocation);
     if (rot != 0)
