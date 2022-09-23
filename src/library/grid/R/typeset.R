@@ -123,10 +123,9 @@ glyphVJust <- function(y, glyph, vjust) {
 
 drawDetails.glyphgrob <- function(x, recording=TRUE) {
     ## Calculate runs of glyphs
-    fontdf <- do.call(rbind, lapply(x$glyph$font,
-                                    function(x) do.call(data.frame, x)))
     fontstring <- unlist(do.call(paste,
-                                 c(fontdf,
+                                 c(x$glyph[c("family", "weight", "style",
+                                             "file", "index", "size")],
                                    list(sep=":"))))
     runs <- rle(fontstring)
     ## Calculate final glyph positions

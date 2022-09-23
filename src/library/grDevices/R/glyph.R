@@ -1,11 +1,45 @@
 
 ## Generate object containing information about typeset glyphs
 ## All x/y and width/height and anchors should be in "big" pts (1/72 inch)
-glyphInfo <- function(index, x, y, font, width, height, hAnchor, vAnchor) {
-    index <- as.integer(index)
+
+mapCharWeight <- function(x) {
+    if (is.na(x))
+        x
+    else 
+        switch(as.character(x),
+               normal=400,
+               bold=700,
+               as.numeric(x))
+}
+
+mapWeight <- function(x) {
+    if (is.numeric(x)) {
+        if (min(x, na.rm=TRUE) < 0 || max(x, na.rm=TRUE) > 1000)
+            stop("Invalid span weight")
+        x
+    } else {
+        sapply(x, mapCharWeight, USE.NAMES=FALSE)
+    }   
+}
+
+mapStyle <- function(x) {
+    ## NA passes through
+    match(x, c("normal", "italic", "oblique"))
+}
+
+glyphInfo <- function(id, x, y,
+                      family, weight, style, file, index, size, 
+                      width, height, hAnchor, vAnchor) {
+    id <- as.integer(id)
     x <- as.numeric(x)
     y <- as.numeric(y)
-    if (!all(sapply(font, inherits, "RFont"))) stop("Invalid font(s)")
+    ## Check font
+    family <- as.character(family)
+    weight <- mapWeight(weight)
+    style <- mapStyle(style)
+    file <- as.character(file)
+    index <- as.integer(index)
+    size <- as.numeric(size)
     ## Check width/height
     if (!(is.numeric(width) && is.numeric(height) &&
           length(width) && length(height)))
@@ -24,7 +58,8 @@ glyphInfo <- function(index, x, y, font, width, height, hAnchor, vAnchor) {
         stop("Every anchor must have a unique name")
     if (!("left" %in% hNames && "bottom" %in% vNames))
         stop('There must be anchors named "left" and "bottom"')
-    info <- data.frame(index, x, y, I(font))
+    info <- data.frame(id, x, y,
+                       family, weight, style, file, index, size)
     attr(info, "width") <- width
     attr(info, "height") <- height
     attr(info, "hAnchor") <- hAnchor

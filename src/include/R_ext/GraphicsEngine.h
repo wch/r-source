@@ -656,18 +656,6 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
 
-/* Must match order in ../library/grDevices/R/font.R */
-#define R_GE_text_style_normal  1
-#define R_GE_text_style_italic  2
-#define R_GE_text_style_oblique 3
-
-SEXP R_GE_fontFamily(SEXP font);
-SEXP R_GE_fontWeight(SEXP font);
-SEXP R_GE_fontStyle(SEXP font);
-SEXP R_GE_fontSize(SEXP font);
-SEXP R_GE_fontFile(SEXP font);
-SEXP R_GE_fontIndex(SEXP font);
-
 /* Must match order in ../library/grDevices/R/span.R */
 SEXP R_GE_spanText(SEXP span);
 SEXP R_GE_spanFamily(SEXP span);
@@ -678,14 +666,25 @@ SEXP R_GE_spanSize(SEXP span);
 void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd);
 
 /* Must match order in ../library/grDevices/R/glyph.R */
-SEXP R_GE_glyphFont(SEXP info);
-SEXP R_GE_glyphIndex(SEXP info);
+#define R_GE_text_style_normal  1
+#define R_GE_text_style_italic  2
+#define R_GE_text_style_oblique 3
+
+SEXP R_GE_glyphID(SEXP info);
 SEXP R_GE_glyphXOffset(SEXP info);
 SEXP R_GE_glyphYOffset(SEXP info);
+SEXP R_GE_glyphFamily(SEXP info);
+SEXP R_GE_glyphWeight(SEXP info);
+SEXP R_GE_glyphStyle(SEXP info);
+SEXP R_GE_glyphSize(SEXP info);
+SEXP R_GE_glyphFile(SEXP info);
+SEXP R_GE_glyphIndex(SEXP info);
 
-void GEGlyph(int n, int *glyphs, double *x, double *y, SEXP font, 
+void GEGlyph(int n, int *glyphs, double *x, double *y, 
+             const char* family, double weight, int style,
+             const char* file, int index, double size,
              pGEDevDesc dd);
-
+    
 #ifdef __cplusplus
 }
 #endif

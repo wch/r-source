@@ -112,8 +112,8 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     if (draw) {
 	GEMode(1, dd);
     }
-    int *glyphs = INTEGER(R_GE_glyphIndex(glyphInfo));
-    n = LENGTH(R_GE_glyphIndex(glyphInfo));
+    int *glyphs = INTEGER(R_GE_glyphID(glyphInfo));
+    n = LENGTH(R_GE_glyphID(glyphInfo));
         
     vmax = vmaxget();
     gx = (double *) R_alloc(n, sizeof(double));
@@ -126,12 +126,21 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     int offset = 0;
     for (i=0; i<nruns; i++) {
         int runLength = INTEGER(runs)[i];
-        SEXP font = VECTOR_ELT(R_GE_glyphFont(glyphInfo), offset);
+        char family[201];
+        strncpy(family, CHAR(STRING_ELT(R_GE_glyphFamily(glyphInfo), offset)), 
+                200);
+        double weight = REAL(R_GE_glyphWeight(glyphInfo))[offset];
+        int style = INTEGER(R_GE_glyphStyle(glyphInfo))[offset];
+        char file[201];
+        strncpy(file, CHAR(STRING_ELT(R_GE_glyphFile(glyphInfo), offset)), 200);
+        int index = INTEGER(R_GE_glyphIndex(glyphInfo))[offset];
+        double size = REAL(R_GE_glyphSize(glyphInfo))[offset];
         GEGlyph(runLength, 
                 glyphs + offset, 
                 gx + offset, 
                 gy + offset, 
-                font, dd);
+                family, weight, style, file, index, size, 
+                dd);
         offset = offset + runLength;
     }
     vmaxset(vmax);

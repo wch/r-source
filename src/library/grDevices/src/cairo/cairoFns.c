@@ -2360,7 +2360,9 @@ static void Cairo_Typeset(SEXP span, double x, double y, double w,
     warning(_("Text shaping not supported on Cairo devices"));
 }
 
-static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, 
+static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
+                        const char* family, double weight, int style,
+                        const char* file, int index, double size,
                         pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -2376,19 +2378,13 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, SEXP font,
         }
     }
 
-    SEXP family = R_GE_fontFamily(font);
-    SEXP weight = R_GE_fontWeight(font);
-    SEXP style = R_GE_fontStyle(font);
-    SEXP size = R_GE_fontSize(font);
     int sl, wt;
-    char fontfamily[200];
-    strncpy(fontfamily, CHAR(STRING_ELT(family, 0)), 199);
-    if (REAL(weight)[0] > 400) {
+    if (weight > 400) {
         wt = CAIRO_FONT_WEIGHT_BOLD;
     } else {
         wt = CAIRO_FONT_WEIGHT_NORMAL;
     }
-    if (INTEGER(style)[0] == R_GE_text_style_normal) {
+    if (style == R_GE_text_style_normal) {
         sl = CAIRO_FONT_SLANT_NORMAL;
     } else {
         sl = CAIRO_FONT_SLANT_ITALIC;
@@ -2400,11 +2396,11 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, SEXP font,
      * (assuming FreeType is available on all platforms ...).
      * See FT_getFont() and FC_getFont() code above.
      */
-    cairo_select_font_face(xd->cc, fontfamily, sl, wt);
+    cairo_select_font_face(xd->cc, family, sl, wt);
     /* Text size (in "points") MUST match the scale of the glyph 
      * location (in "bigpts").  The latter depends on device dpi.
      */
-    cairo_set_font_size(xd->cc, REAL(size)[0] / (72*dd->ipr[0]));
+    cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
 
     for (i=0; i<n; i++) {
         
