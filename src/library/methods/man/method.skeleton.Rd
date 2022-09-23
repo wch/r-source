@@ -24,11 +24,11 @@ method.skeleton(generic, signature, file, external = FALSE, where)
   \item{file}{a character string name for the output file, or a
       writable connection.  By default the generic function name and
       the classes in the signature are concatenated, with separating
-      underscore characters.  The file name should normally end in \code{".R"}. }
+      underscore characters.  The file name should normally end in \code{".R"}.
 
     To write multiple method skeletons to one file, open the file
     connection first and then pass it to \code{method.skeleton()} in
-    multiple calls.
+    multiple calls.}
   \item{external}{flag to control whether the function definition for
       the method should be a separate external object assigned in the
       source file, or included in line in the call to

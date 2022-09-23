@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, https://www.R-project.org
-%%% Copyright (C) 2003-2014 The R Foundation
+%%% Copyright (C) 2003-2022 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -41,7 +41,12 @@
 \RequirePackage{verbatim}        % small example code
 \RequirePackage{url}             % set urls
 \RequirePackage{textcomp}        % for \textquotesingle etc
+
 \RequirePackage{amsmath}         % for \lVert, \text etc, and KaTeX consistency
+\RequirePackage{amsfonts,amssymb}
+\IfFileExists{mathrsfs.sty}% assume that the rsfs font is installed
+  {\RequirePackage{mathrsfs}}%
+  {\usepackage[mathscr]{eucal}}% part of amsfonts
 
 
 \addtolength{\textheight}{12mm}
@@ -130,7 +135,7 @@
 
 \newenvironment{Rdsection}[1]{%
   \ifx\@empty#1\else\subsubsection*{#1}\fi
-  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item}
+  \begin{list}{}{\setlength{\leftmargin}{0.25in}}\item\relax}
   {\end{list}}
 
 \newenvironment{Arguments}{%
@@ -167,11 +172,8 @@
 
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
-\ifx\textbackslash\undefined%-- e.g. for MM
-  \newcommand{\bsl}{\ifmmode\backslash\else$\backslash$\fi}
-\else
   \newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
-\fi
+
 %fails for index (but is not used there...)
 \newcommand{\SIs}{\relax\ifmmode\leftarrow\else$\leftarrow$\fi}
 \newcommand{\SIIs}{\relax\ifmmode<\leftarrow\else$<\leftarrow$\fi}
@@ -179,7 +181,7 @@
 %
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
-\newcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
+\renewcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
 %% as from R 2.12.0 set \file in monospaced font, not sans-serif
 \newcommand{\file}[1]{`\texttt{#1}'}
 

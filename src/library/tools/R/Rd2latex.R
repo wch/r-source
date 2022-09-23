@@ -104,7 +104,6 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 
     sectionExtras <-
     c("\\usage"="verbatim",
-      "\\arguments"="ldescription",
       "\\examples"="ExampleCode")
 
     inCodeBlock <- FALSE ## used to indicate to texify where we are
@@ -514,7 +513,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                    	i <- i - 1
                    },
                    "\\item" = {
-                       if (blocktag == "\\value" && !inList) {
+                       if (blocktag %in% c("\\value", "\\arguments") && !inList) {
                            of1("\\begin{ldescription}\n")
                            inList <- TRUE
                        }
@@ -543,7 +542,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                    },
                    "\\cr" = of1("\\\\{}"), ## might be followed by [
                { # default
-                   if (inList && !(tag == "TEXT" && isBlankRd(block))) {
+                   if (inList && tag != "COMMENT"
+                              && !(tag == "TEXT" && isBlankRd(block))) {
                        of1("\\end{ldescription}\n")
                        inList <- FALSE
                    }
@@ -600,9 +600,6 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     	} else {
             title <- envTitles[tag]
             of0("%\n\\begin{", title, "}")
-            if(tag %in% c("\\author", "\\description", "\\details", "\\note",
-                          "\\references", "\\seealso", "\\source"))
-                of1("\\relax")
             extra <- sectionExtras[tag]
             if(!is.na(extra)) of0("\n\\begin{", extra, "}")
             if(tag %in% c("\\usage", "\\examples")) inCodeBlock <<- TRUE

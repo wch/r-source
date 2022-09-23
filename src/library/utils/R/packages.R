@@ -42,7 +42,7 @@ function(contriburl = contrib.url(repos, type), method,
     res <- matrix(NA_character_, 0L, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
 
-    for(repos in contriburl) {
+    for(repos in unique(contriburl)) {
         localcran <- startsWith(repos, "file:")
         if(localcran) {
             ## see note in download.packages

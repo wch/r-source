@@ -38,6 +38,9 @@ foo(\var{x}, \var{y})
   Yihui Xie's example:
   \Sexpr[results=rd,stage=render]{"\\\\describe{\\\\item{def}{ghi}}"}
 }
+\value{
+  [NULL]\cr\dots
+}
 \examples{
 \\x
 \%\{\}

@@ -1859,19 +1859,21 @@ static void polygonEdge(double *x, double *y, int n,
     xm = (xmin + xmax)/2;
     ym = (ymin + ymax)/2;
     /*
-     * Special case zero-width or zero-height
+     * Special case VERY tall and narrow or VERY short and wide
      */ 
-    if (fabs(xmin - xmax) < 1e-6) {
-        *edgex = xmin;
-        if (theta == 90) 
-	    *edgey = ymax;
-	else if (theta == 270)
-	    *edgey = ymin;
-	else
-	    *edgey = ym;
-	return;
-    }
-    if (fabs(ymin - ymax) < 1e-6) {
+    if (fabs(xmin - xmax) < 1e-6 || 
+        fabs(ymin - ymax)/fabs(xmin - xmax) > 1000) {
+        *edgex = xmin;                                                         
+        if (theta == 90)                                                       
+            *edgey = ymax;                                                     
+        else if (theta == 270)                                                 
+            *edgey = ymin;                                                     
+        else                                                                   
+            *edgey = ym;                                                       
+        return;                                                                
+    }                                                                          
+    if (fabs(ymin - ymax) < 1e-6 || 
+        fabs(xmin - xmax)/fabs(ymin - ymax) > 1000) {
         *edgey = ymin;
         if (theta == 0) 
 	    *edgex = xmax;
@@ -1879,7 +1881,7 @@ static void polygonEdge(double *x, double *y, int n,
 	    *edgex = xmin;
 	else
 	    *edgex = xm;
-	return;
+        return;
     }	    
     /*
      * Find edge that intersects line from centre at angle theta
@@ -3644,7 +3646,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP txt, result = R_NilValue;
-    double edgex, edgey;
+    double edgex = 0, edgey = 0;
     double xmin = DBL_MAX;
     double xmax = -DBL_MAX;
     double ymin = DBL_MAX;
@@ -3811,7 +3813,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 		     * Calculate edgex and edgey for case where this is 
 		     * the only rect
 		     */
-		    {
+                    if (R_FINITE(theta)) {
 			double xxx[4], yyy[4];
 			/*
 			 * Must be in clock-wise order for polygonEdge
@@ -3836,7 +3838,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	     * If there is more than one text, just produce edge
 	     * based on bounding rect of all text
 	     */
-	    if (ntxt > 1) {
+	    if (ntxt > 1 && R_FINITE(theta)) {
 		/*
 		 * Produce edge of rect bounding all text
 		 */

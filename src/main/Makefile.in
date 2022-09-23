@@ -84,6 +84,7 @@ ALL_CPPFLAGS = $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
   $(CURL_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
+@WANT_R_SHLIB_FALSE@ALL_FFLAGS = $(ALL_FFLAGS_PIE)
 
 
 ## use an explicit library: there might be an unsatisfactory -lintl around

@@ -592,7 +592,7 @@ grobPoints.text <- function(x, closed=TRUE, ...) {
                             x$x, x$y,
                             resolveHJust(x$just, x$hjust),
                             resolveVJust(x$just, x$vjust),
-                            x$rot, 0)
+                            x$rot, as.numeric(NA))
         if (is.null(bounds))
             emptyGrobCoords(x$name)
         else {

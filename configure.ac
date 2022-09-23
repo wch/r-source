@@ -758,6 +758,9 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
+dnl substitute FPIEFLAGS as needed, e.g. from config.site
+AC_SUBST(FPIEFLAGS)
+
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
@@ -1195,7 +1198,11 @@ else
 fi
 AC_MSG_RESULT([${fc_len_t}])
 
-if test "x${fc_len_t}" != "xunknown"; then
+if test "x${fc_len_t}" == "x" ; then
+  AC_MSG_ERROR([FC_LEN_T must be non-empty.])
+fi
+
+if test "x${fc_len_t}" != "xunknown" ; then
    AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
                       [C type used for Fortran character lengths])
 fi
@@ -1792,6 +1799,7 @@ R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
+R_STDCXX([23], [CXX23], [CXX20])
 
 ## Set default C++ compiler to C++14 if available, otherwise C++11
 ## Do not set if neither is available.
@@ -2905,6 +2913,7 @@ r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_cxx20_compiler="${CXX20} ${CXX20STD} ${R_XTRA_CXXFLAGS} ${CXX20FLAGS}"
+r_cxx23_compiler="${CXX23} ${CXX23STD} ${R_XTRA_CXXFLAGS} ${CXX23FLAGS}"
 r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${R_XTRA_FFLAGS} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -3041,6 +3050,7 @@ R is now configured for ${host}
   C++14 compiler:              ${r_cxx14_compiler}
   C++17 compiler:              ${r_cxx17_compiler}
   C++20 compiler:              ${r_cxx20_compiler}
+  C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
 

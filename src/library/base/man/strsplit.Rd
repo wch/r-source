@@ -83,9 +83,18 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   For \code{perl = TRUE, useBytes = FALSE} all non-ASCII strings in a
   multibyte locale are translated to UTF-8.
 
-%%  If \code{useBytes = TRUE} or any element of \code{x} or \code{split} is
-%%  marked as \code{"bytes"} (see \code{\link{Encoding}}), all non-ASCII
-%%  character strings in the result will be marked as \code{"bytes"}.
+  If any element of \code{x} or \code{split} is marked as \code{"bytes"}
+  (see \code{\link{Encoding}}), all non-ASCII character strings created by
+  the splitting in the result will be marked as \code{"bytes"}, but encoding
+  of the resulting character strings not split is unspecified (may be
+  \code{"bytes"} or the original).  If no element of \code{x} or
+  \code{split} is marked as \code{"bytes"}, but \code{useBytes = TRUE}, even
+  the encoding of the resulting character strings created by splitting is
+  unspecified (may be \code{"bytes"} or \code{"unknown"}, possibly invalid
+  in the current encoding).  Mixed use of \code{"bytes"} and other marked
+  encodings is discouraged, but if still desired one may use
+  \code{\link{iconv}} to re-encode the result e.g.  to UTF-8 with suitably
+  substituted invalid bytes.
 }
 
 \seealso{

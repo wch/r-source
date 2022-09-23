@@ -3372,13 +3372,17 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
+for the PDF manuals
 (including @pkg{url} and some of the font packages such as @pkg{times}
-and @pkg{helvetic} for the manuals, as well as @pkg{fancyvrb},
-@pkg{natbib} and @pkg{parskip} for the base vignettes) and others such
+and @pkg{helvetic} and also @pkg{amsfonts}) and others such
 as @pkg{hyperref} and @pkg{inconsolata} are desirable (and without them
 you may need to change @R{}'s defaults: @pxref{Making the manuals}).
 Note that package @pkg{hyperref} (currently) requires packages
-@pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For distributions
+@pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount},
+and @pkg{inconsolata} requires @pkg{xkeyval}.
+Building the base vignettes additionally requires @pkg{fancyvrb},
+@pkg{natbib}, @pkg{parskip} and @pkg{listings}.
+For distributions
 based on TeX Live the simplest approach may be to install collections
 @pkg{collection-latex}, @pkg{collection-fontsrecommended},
 @pkg{collection-latexrecommended}, @pkg{collection-fontsextra} and
@@ -4987,6 +4991,24 @@ Recent versions have (optional when built) OpenMP support.@footnote{This
 also needs the OpenMP runtime which has sometimes been distributed
 separately.}
 
+There are problems mixing @command{clang} 15.0.0 built as default on
+Linux to produce PIE code and @command{gfortran} 11 or 12, which do not.
+One symptom is that @command{configure} does not detect @code{FC_LEN_T},
+which can be overcome by setting
+@example
+FPIEFLAGS=-fPIE
+@end example
+@noindent
+in @file{config.site}. This has sufficed for both default and
+shared-library builds.
+
+It is recommended to use C flag @option{-Wno-strict-prototypes}
+(disabling a C23 feature) if using @code{-pedantic} in @command{clang}
+15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
+see the release notes at
+@uref{https://releases.llvm.org/15.0.0/tools/clang/docs/ReleaseNotes.html#id9},
+under `improvements to diagnostics'..
+
 @c This was about 'Classic Flang'.  The newer version is not
 @c yet able to compile Fortran.
 @c There is a project called @command{flang}
@@ -5253,6 +5275,7 @@ further flags are desirable in @file{config.site}:
 @example
 CFLAGS="-falign-functions=8 -g -O2"
 FFLAGS="-g -O2 -mmacosx-version-min=11.0"
+FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
 @end example
 @noindent
 (the first flag in @code{CFLAGS} has been needed to inter-work with the

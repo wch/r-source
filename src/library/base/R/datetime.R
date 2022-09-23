@@ -221,7 +221,12 @@ Sys.timezone <- function(location = TRUE)
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
-as.POSIXlt.Date <- function(x, ...) .Internal(Date2POSIXlt(x))
+as.POSIXlt.Date <- function(x, ...) {
+    if(any((y <- unclass(x)) > .Machine$integer.max, na.rm = TRUE))
+        as.POSIXlt(.POSIXct(y * 86400), tz = "UTC")
+    else
+        .Internal(Date2POSIXlt(x))
+}
 
 ## ## Moved to packages date and chron.
 ## as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
@@ -722,11 +727,18 @@ as.double.difftime <- function(x, units = "auto", ...)
 as.data.frame.difftime <- as.data.frame.vector
 
 format.difftime <- function(x,...)
-    paste(format(unclass(x),...), units(x))
+{
+    if(length(x))
+        paste(format(unclass(x),...), units(x))
+    else
+        character()
+}
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(is.array(x) || length(x) > 1L) {
+    if(!length(x))
+        cat(class(x)[1L], "of length 0\n")
+    else if(is.array(x) || length(x) > 1L) {
         cat("Time differences in ", attr(x, "units"), "\n", sep = "")
         y <- unclass(x); attr(y, "units") <- NULL
 	print(y, digits=digits, ...)
