@@ -57,7 +57,7 @@
       \code{conf.args} arguments for computing and plotting a confidence
       band for the treatment function transforming the distribution of
       \code{x} into the distribution of \code{y } (Switzer, 1976,
-      Biometrika). Contributed by Torsten Hothorn. 
+      Biometrika). Contributed by Torsten Hothorn.
     }
   }
 
@@ -213,6 +213,10 @@
 
       \item \code{tools::Rd2latex()} now correctly handles optional text
       outside \verb{\item}s of argument lists.
+
+      \item \code{as.character(<POSIXt>)} now behaves more in line with the
+      methods for atomic vectors such as numbers, and is no longer
+      influenced by \code{options()}.
     }
   }
 }

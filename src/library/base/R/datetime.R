@@ -394,7 +394,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
 	times <- unlist(unclass(x)[1L:3L])[f0]
 	secs <- x$sec[f0]; secs <- secs[is.finite(secs)]
         np <- if(is.null(digits)) 0L else min(6L, digits)
-        if(np >= 1L)
+        if(np >= 1L) # no unnecessary trailing '0' :
             for (i in seq_len(np)- 1L)
                 if(all( abs(secs - round(secs, i)) < 1e-6 )) {
                     np <- i
@@ -585,7 +585,35 @@ function(x, ..., value) {
     .POSIXct(NextMethod(.Generic), attr(x, "tzone"), oldClass(x))
 }
 
-as.character.POSIXt <- function(x, ...) format(x, ...)
+## Alternatively use  lapply(*, function(.) .Internal(format.POSIXlt(., digits=0))
+## *and* append the fractional seconds ('entirely') ..
+as.character.POSIXt <- function(x, ...) {
+    x <- as.POSIXlt(x)
+    s <- x$sec
+    ## to distinguish {NA, 0, non-0}:
+    time <- x$hour + x$min + s
+    isNA <- is.na(s) & !is.nan(s)
+    ok <- is.finite(time)
+    r <- character(length(ok))
+    if(anyN <- !all(ok)) { # i.e.,  any(!ok)
+        r[   !ok &  isNA] <- NA
+        i <- !ok & !isNA
+        r[i] <- as.character(s[i])
+    }
+    if(any(ok)) {
+        if(anyN) { x <- x[ok]; time <- time[ok] }
+        s <- trunc(x$sec)
+        fs <- x$sec - s
+        r1 <- sprintf("%d-%02d-%02d", 1900 + x$year, x$mon+1L, x$mday)
+        if(any(n0 <- time != 0)) # add time if not 0
+            r1[n0] <- paste(r1[n0],
+                        sprintf("%02d:%02d:%02d%s", x$hour[n0], x$min[n0], s[n0],
+                                substr(as.character(fs[n0]), 2L, 32L)))
+        r[ok] <- r1
+    }
+    r
+}
+
 
 as.data.frame.POSIXct <- as.data.frame.vector
 
