@@ -40,11 +40,11 @@
       \item Regular expression functions now check more thoroughly whether
       their inputs are valid strings (in their encoding, e.g.\sspace{}in UTF-8).
 
-      \item The performance of \code{grep}, \code{sub}, \code{gsub} and
-      \code{strsplit} has been improved, particularly with \code{perl =
-      TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
-      performance reasons should no longer be needed and is discouraged.
-      It may lead to incorrect results.
+      \item The performance of \code{grep()}, \code{sub()},
+      \code{gsub()} and \code{strsplit()} has been improved,
+      particularly with \code{perl = TRUE} and \code{fixed = TRUE}.  Use
+      of \code{useBytes = TRUE} for performance reasons should no longer
+      be needed and is discouraged: it may lead to incorrect results.
 
       \item \code{apropos()} gains an argument \code{dot_internals} which
       is used by the completion (\code{help(rcompgen)}) engine to also
