@@ -75,14 +75,21 @@
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
 
-      \item Non-ASCII characters are now properly displayed on Windows
-      in windows created using GraphApp via
-      e.g. \sspace{}\code{winDialogString} thanks to a workaround for an
-      at least surprising Windows behavior with UTF-8 as the system
-      encoding (\PR{18382}).
-
       \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
       too late to have the intended effect.
+
+      \item \code{as.POSIXlt(x)} now also works with very large dates
+      \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
+    }
+  }
+
+  \subsection{BUG FIXES on Windows}{
+    \itemize{
+     \item Non-ASCII characters are now properly displayed on Windows
+      in windows created using GraphApp via
+      e.g.\sspace{}\code{winDialogString} thanks to a workaround for an
+      at least surprising Windows behavior with UTF-8 as the system
+      encoding (\PR{18382}).
 
       \item Find and replace operations work again in the script editor in
       \command{Rgui} on Windows.
@@ -97,8 +104,6 @@
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
 
-      \item \code{as.POSIXlt(x)} now also works with very large dates
-      \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
     }
   }
 }
