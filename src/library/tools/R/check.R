@@ -5459,6 +5459,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wint-in-bool-context\\]",
                              ## gcc and clang
                              ": warning: .*\\[-Wpointer-sign\\]",
+                             ## gcc's version of clang's -Wformat
+                             ": warning: .* \\[-Wformat=\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
@@ -5514,6 +5516,7 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wempty-body\\]",
                              "warning: .* \\[-Wformat\\]",
                              "warning: .* \\[-Wreturn-stack-address\\]",
+                             ## also gcc
                              "warning: .* \\[-Wsizeof-pointer-div\\]",
                              "warning: .* \\[-Wnon-c-typedef-for-linkage\\]",
                              ## consider also -Wbitwise-op-parentheses
