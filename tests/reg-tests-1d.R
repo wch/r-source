@@ -6094,6 +6094,12 @@ stopifnot(any(as.character(rd) != "\n"),
 ## empty output in R <= 4.2.x
 
 
+## as.POSIXlt(<very large Date>)  gave integer overflow
+stopifnot(as.POSIXlt(.Date(2^31 + 10))$year == 5879680L)
+## year was negative in R <= 4.2.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
