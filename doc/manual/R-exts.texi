@@ -2868,6 +2868,10 @@ The webpage
 some information on which compilers are known to support recent C++
 features.
 
+C++ stanards have deprecated and later removed features.  Be aware that
+some current compilers still accept removed features in C++17 mode,
+such as @code{unary_function} (deprecated in C++11, removed in C++17).
+
 Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
 standard it requires.  In order to specify C++11 code in a package,
@@ -9981,7 +9985,8 @@ R CMD INSTALL --dsym @var{pkgname}
 as macOS does not store debugging symbols in the @file{.so} file.  (It
 is not necessary to have @R{} built with debugging symbols, although
 compiling the package should be done including @option{-g} in
-@code{CFLAGS} / @code{CXXFLAGS} / @code{FCFLAGS} as appropriate.)
+@code{CFLAGS} / @code{CXXFLAGS} / @code{FFLAGS} / @code{FCFLAGS} as
+appropriate.)
 
 Security measures may prevent running a @acronym{CRAN} binary
 distribution of @R{} under @command{lldb} or attaching this as a
