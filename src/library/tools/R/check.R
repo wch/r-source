@@ -5510,7 +5510,15 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wignored-optimization-argument\\]",
                              ## thinkos like <- for = or == for =
                              "warning: .* \\[-Wunused-comparison\\]",
+                             "warning: .* \\[-Wliteral-conversion\\]",
+                             "warning: .* \\[-Wempty-body\\]",
+                             "warning: .* \\[-Wformat\\]",
+                             "warning: .* \\[-Wreturn-stack-address\\]",
+                             "warning: .* \\[-Wsizeof-pointer-div\\]",
                              "warning: .* \\[-Wnon-c-typedef-for-linkage\\]",
+                             ## consider also -Wbitwise-op-parentheses
+                             ## -Wlogical-op-parentheses
+                             ## -Wshift-op-parentheses
                              ## LLVM clang 14, at least
                              "warning: .* \\[-Wbitwise-instead-of-logical\\]",
                              ## LLVM clang 15
