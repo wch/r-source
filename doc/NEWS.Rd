@@ -96,6 +96,9 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
+
+      \item \code{as.POSIXlt(x)} now also works with very large dates
+      \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
     }
   }
 }
