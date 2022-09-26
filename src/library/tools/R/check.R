@@ -5524,6 +5524,7 @@ add_dummies <- function(dir, Log)
                              ## -Wshift-op-parentheses
                              ## LLVM clang 14, at least
                              "warning: .* \\[-Wbitwise-instead-of-logical\\]",
+                             "warning: .* \\[-Wunneeded-internal-declaration\\]",
                              ## LLVM clang 15
                              "warning: .* \\[-Winvalid-utf8\\]"
                              )
@@ -5543,6 +5544,10 @@ add_dummies <- function(dir, Log)
 
                 ## Filter out Eigen header warnings
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out StanHeader warnings
+                ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
