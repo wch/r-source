@@ -137,6 +137,27 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
                        x$glyph, gx, gy)
 }
 
+just <- function(x, ..., class) {
+    UseMethod("just")
+}
+just.GridJust <- function(x, ...) {
+    x
+}
+just.character <- function(x, ...) {
+    just <- x
+    class(just) <- "GridJust"
+    just
+}
+just.numeric <- function(x, which=NULL, ...) {
+    just <- x
+    if (is.null(which)) {
+        which <- names(x)
+    }
+    names(just) <- which
+    class(just) <- "GridJust"
+    just
+}
+
 glyphGrob <- function(glyph,
                       x=.5, y=.5, default.units="npc",
                       hjust="left", vjust="bottom",
@@ -145,7 +166,7 @@ glyphGrob <- function(glyph,
         x <- unit(x, default.units)
     if (!is.unit(y))
         y <- unit(y, default.units)
-    grob(glyph=glyph, x=x, y=y, hjust=hjust, vjust=vjust,
+    grob(glyph=glyph, x=x, y=y, hjust=just(hjust), vjust=just(vjust),
          gp=gp, vp=vp, name=name,
          cl="glyphgrob")    
 }
