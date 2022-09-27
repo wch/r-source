@@ -46,11 +46,11 @@ glyphInfo <- function(id, x, y,
         stop("Width and height must be numeric (and not zero-length)")
     ## Check anchors
     if (missing(hAnchor))
-        hAnchor <- c(left=min(x), right=max(x), centre=(max(x) - min(x))/2,
-                     center=(max(x) - min(x))/2)
+        hAnchor <- c(left=min(x), right=min(x) + width[1],
+                     centre=min(x) + width[1]/2, center=min(x) + width[1]/2)
     if (missing(vAnchor))
-        vAnchor <- c(bottom=min(y), top=max(y), centre=(max(y) - min(y))/2,
-                     center=(max(y) - min(y))/2)
+        vAnchor <- c(bottom=min(y), top=min(y) + height[1],
+                     centre=min(y) + height[1]/2, center=min(y) + height[1]/2)
     if (!is.numeric(hAnchor) || !is.numeric(vAnchor))
         stop("Anchors must be numeric")
     hNames <- names(hAnchor)
