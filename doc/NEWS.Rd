@@ -80,6 +80,9 @@
 
       \item \code{as.POSIXlt(x)} now also works with very large dates
       \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
+
+      \item Files can now be extracted even from very large zip archives
+      (\PR{18390}, thanks to Martin Jakt).
     }
   }
 
