@@ -656,15 +656,6 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
 
-/* Must match order in ../library/grDevices/R/span.R */
-SEXP R_GE_spanText(SEXP span);
-SEXP R_GE_spanFamily(SEXP span);
-SEXP R_GE_spanWeight(SEXP span);
-SEXP R_GE_spanStyle(SEXP span);
-SEXP R_GE_spanSize(SEXP span);
-
-void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd);
-
 /* Must match order in ../library/grDevices/R/glyph.R */
 #define R_GE_text_style_normal  1
 #define R_GE_text_style_italic  2

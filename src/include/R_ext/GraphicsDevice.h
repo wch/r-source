@@ -789,11 +789,6 @@ struct _DevDesc {
     SEXP (*capabilities)();
 #endif
 #if R_USE_PROTOTYPES
-    void (*typeset)(SEXP span, double x, double y, double w, pDevDesc dd);
-#else
-    void (*typeset)();
-#endif
-#if R_USE_PROTOTYPES
     void (*glyph)(int n, int *glyphs, double *x, double *y, 
                   const char* family, double weight, int style,
                   const char* file, int index, double size,

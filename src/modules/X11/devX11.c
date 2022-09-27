@@ -2932,7 +2932,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->fill = Cairo_Fill;
         dd->fillStroke = Cairo_FillStroke;
         dd->capabilities = Cairo_Capabilities;
-        dd->typeset = Cairo_Typeset;
         dd->glyph = Cairo_Glyph;
 
         dd->deviceVersion = R_GE_typeset;

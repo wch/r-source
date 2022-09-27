@@ -3821,39 +3821,6 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 }
 
 /*
- * C API for graphics devices to interrogate span SEXPs
- *
- * MUST match R structures in ../library/grDevices/R/span.R
- */
-#define span_text    0
-#define span_family  1
-#define span_weight  2
-#define span_style   3
-#define span_size    4
-
-SEXP R_GE_spanText(SEXP span) {
-    return VECTOR_ELT(span, span_text);
-}
-SEXP R_GE_spanFamily(SEXP span) {
-    return VECTOR_ELT(span, span_family);
-}
-SEXP R_GE_spanWeight(SEXP span) {
-    return VECTOR_ELT(span, span_weight);
-}
-SEXP R_GE_spanStyle(SEXP span) {
-    return VECTOR_ELT(span, span_style);
-}
-SEXP R_GE_spanSize(SEXP span) {
-    return VECTOR_ELT(span, span_size);
-}
-
-void GETypeset(SEXP span, double x, double y, double w, pGEDevDesc dd) {
-    if (dd->dev->deviceVersion >= R_GE_typeset) {
-        dd->dev->typeset(span, x, y, w, dd->dev);
-    }
-}
-
-/*
  * C API for graphics devices to interrogate glyph info SEXPs
  *
  * MUST match R structures in ../library/grDevices/R/glyph.R

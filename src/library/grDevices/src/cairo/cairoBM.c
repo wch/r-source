@@ -528,7 +528,6 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->fill = Cairo_Fill;
     dd->fillStroke = Cairo_FillStroke;
     dd->capabilities = Cairo_Capabilities;
-    dd->typeset = Cairo_Typeset;
     dd->glyph = Cairo_Glyph;
 
     dd->left = 0;

@@ -20,64 +20,6 @@
 #include "grid.h"
 
 /* We are assuming here that the R code has checked that 
- * span is a "RTextSpan"
- */
-static void typesetSpan(SEXP span, SEXP x, SEXP y, SEXP w, Rboolean draw) 
-{
-    double xx, yy, ww;
-    double vpWidthCM, vpHeightCM;
-    double rotationAngle;
-    LViewportContext vpc;
-    LTransform transform;
-    R_GE_gcontext gc;
-    SEXP currentvp, currentgp;
-    /* Get the current device 
-     */
-    pGEDevDesc dd = getDevice();
-    currentvp = gridStateElement(dd, GSS_VP);
-    currentgp = gridStateElement(dd, GSS_GPAR);
-    /* This copy is used to store/cache resolved gp$fill to avoid
-     * stupid amounts of pattern resolving (resolving a resolved
-     * pattern is basically a no-op), WITHOUT touching current gp
-     * in 'grid' state. */
-    currentgp = PROTECT(duplicate(currentgp));
-    /* Do not need fill, so set gp$fill to "black" to avoid any
-     * pattern resolution. */
-    SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
-    getViewportTransform(currentvp, dd, 
-			 &vpWidthCM, &vpHeightCM, 
-			 transform, &rotationAngle);
-    /* getViewportContext(currentvp, &vpc); */
-    fillViewportContextFromViewport(currentvp, &vpc);
-    if (draw) {
-	GEMode(1, dd);
-    }
-    xx = transformXtoINCHES(x, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
-    yy = transformYtoINCHES(y, 0, vpc, &gc, vpWidthCM, vpHeightCM, dd);
-    xx = toDeviceX(xx, GE_INCHES, dd);
-    yy = toDeviceY(yy, GE_INCHES, dd);
-    if (ISNA(REAL(w)[0])) {
-        ww = NA_REAL;
-    } else {
-        /* Width is taken to be in inches by textshaping::shape_text() */
-	ww = transformWidthtoINCHES(w, 0, vpc, &gc,
-				    vpWidthCM, vpHeightCM,
-				    dd);
-    }
-    if (R_FINITE(xx) && R_FINITE(yy))
-        GETypeset(span, xx, yy, ww, dd);
-    if (draw) {
-	GEMode(0, dd);
-    }
-    UNPROTECT(1);
-}
-
-SEXP L_typeset(SEXP span, SEXP x, SEXP y, SEXP w) {
-    typesetSpan(span, x, y, w, TRUE);
-    return R_NilValue;    
-}
-
-/* We are assuming here that the R code has checked that 
  * info is a "RGlyphInfo"
  */
 static void renderGlyphs(SEXP runs, SEXP glyphInfo, 
@@ -131,8 +73,8 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
                 200);
         double weight = REAL(R_GE_glyphWeight(glyphInfo))[offset];
         int style = INTEGER(R_GE_glyphStyle(glyphInfo))[offset];
-        char file[201];
-        strncpy(file, CHAR(STRING_ELT(R_GE_glyphFile(glyphInfo), offset)), 200);
+        char file[501];
+        strncpy(file, CHAR(STRING_ELT(R_GE_glyphFile(glyphInfo), offset)), 500);
         int index = INTEGER(R_GE_glyphIndex(glyphInfo))[offset];
         double size = REAL(R_GE_glyphSize(glyphInfo))[offset];
         GEGlyph(runLength, 

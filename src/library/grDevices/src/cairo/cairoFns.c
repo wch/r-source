@@ -2355,11 +2355,6 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
  * Typesetting
  ***************************
  */
-static void Cairo_Typeset(SEXP span, double x, double y, double w, 
-                          pDevDesc dd) {
-    warning(_("Text shaping not supported on Cairo devices"));
-}
-
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         const char* family, double weight, int style,
                         const char* file, int index, double size,
