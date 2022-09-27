@@ -35,9 +35,13 @@ glyphInfo <- function(id, x, y,
     y <- as.numeric(y)
     ## Check font
     family <- as.character(family)
+    if (any(nchar(family, "bytes") > 200))
+        warning("Font family longer than 200 will be truncated")
     weight <- mapWeight(weight)
     style <- mapStyle(style)
     file <- as.character(file)
+    if (any(nchar(file, "bytes") > 500))
+        warning("Font file longer than 500 will be truncated")
     index <- as.integer(index)
     size <- as.numeric(size)
     ## Check width/height
