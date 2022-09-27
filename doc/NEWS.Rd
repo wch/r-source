@@ -58,6 +58,24 @@
       band for the treatment function transforming the distribution of
       \code{x} into the distribution of \code{y } (Switzer, 1976,
       Biometrika). Contributed by Torsten Hothorn.
+
+      \item Performance of \code{package_dependencies()} has been improved
+      for cases when the number of dependencies is large.
+
+      \item Strings newly created by \code{gsub()}, \code{sub()} and
+      \code{strsplit()}, when any of the inputs is marked as \code{"bytes"},
+      are also marked as \code{"bytes"}.  This reduces the risk of creating
+      invalid strings and accidental substitution of bytes deemed invalid.
+
+      \item Support for \code{readLines(encoding="bytes")} has been added to
+      allow processing special text files byte-by-byte, without creating
+      invalid strings.
+
+      \item \code{iconv(from="")} now takes into account any declared
+      encoding of the input elements and uses it in preference to the native
+      encoding.  This reduces the risk of accidental creation of invalid
+      strings, particularly when different elements of the input have
+      different encoding (including \code{"bytes"}).
     }
   }
 
