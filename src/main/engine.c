@@ -3831,9 +3831,9 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 #define glyph_family   3
 #define glyph_weight   4
 #define glyph_style    5
-#define glyph_file     6
-#define glyph_index    7
-#define glyph_size     8
+#define glyph_size     6
+#define glyph_file     7
+#define glyph_index    8
 
 SEXP R_GE_glyphID(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_ID);
@@ -3853,14 +3853,14 @@ SEXP R_GE_glyphWeight(SEXP glyph) {
 SEXP R_GE_glyphStyle(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_style);
 }
+SEXP R_GE_glyphSize(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_size);
+}
 SEXP R_GE_glyphFile(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_file);
 }
 SEXP R_GE_glyphIndex(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_index);
-}
-SEXP R_GE_glyphSize(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_size);
 }
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 

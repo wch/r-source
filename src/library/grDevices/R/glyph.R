@@ -28,7 +28,7 @@ mapStyle <- function(x) {
 }
 
 glyphInfo <- function(id, x, y,
-                      family, weight, style, file, index, size, 
+                      family, weight, style, size, file, index, 
                       width, height, hAnchor, vAnchor) {
     id <- as.integer(id)
     x <- as.numeric(x)
@@ -62,17 +62,22 @@ glyphInfo <- function(id, x, y,
     if (length(unique(hNames)) != length(hAnchor) ||
         length(unique(vNames)) != length(vAnchor))
         stop("Every anchor must have a unique name")
-    if (!("left" %in% hNames && "right" %in% hNames &&
-          ("centre" %in% hNames || "center" %in% hNames) &&
-          "bottom" %in% vNames && "top" %in% vNames &&
-          ("centre" %in% vNames || "center" %in% vNames)))
-        stop('There must be anchors named "left", "right", "bottom", "top", and "centre" (or "center")')
-    if (!"centre" %in% hNames) hAnchor <- c(hAnchor, centre=hAnchor["center"])
-    if (!"centre" %in% vNames) vAnchor <- c(vAnchor, centre=vAnchor["center"])
-    if (!"center" %in% hNames) hAnchor <- c(hAnchor, centre=hAnchor["centre"])
-    if (!"center" %in% vNames) vAnchor <- c(vAnchor, centre=vAnchor["centre"])
+    if (!("left" %in% hNames && "bottom" %in% vNames))
+        stop('There must be anchors named "left" and "bottom"')
+    if (!"right" %in% hNames)
+        hAnchor <- c(hAnchor, right=unname(hAnchor["left"]) + width[1])
+    if (!"top" %in% vNames)
+        vAnchor <- c(vAnchor, top=unname(vAnchor["bottom"]) + height[1])
+    if (!"centre" %in% hNames)
+        hAnchor <- c(hAnchor, centre=unname(hAnchor["left"]) + width[1]/2)
+    if (!"centre" %in% vNames)
+        vAnchor <- c(vAnchor, centre=unname(vAnchor["bottom"]) + height[1]/2)
+    if (!"center" %in% hNames)
+        hAnchor <- c(hAnchor, center=unname(hAnchor["centre"]))
+    if (!"center" %in% vNames)
+        vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
     info <- data.frame(id, x, y,
-                       family, weight, style, file, index, size)
+                       family, weight, style, size, file, index)
     attr(info, "width") <- width
     attr(info, "height") <- height
     attr(info, "hAnchor") <- hAnchor
