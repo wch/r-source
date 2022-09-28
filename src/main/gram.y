@@ -86,8 +86,8 @@ typedef struct yyltype
 #define DATA_COUNT  (length( PS_DATA ) / DATA_ROWS)
 #define ID_COUNT    ((length( PS_IDS ) / 2) - 1)
 
-static void finalizeData( ) ;
-static void growData( ) ;
+static void finalizeData(void) ;
+static void growData(void) ;
 static void growID( int ) ;
 
 #define DATA_ROWS 8
@@ -177,14 +177,14 @@ static void 	GrowList(SEXP, SEXP); /* add element to list end */
 static void	SetSingleSrcRef(SEXP);
 static void	AppendToSrcRefs(SEXP);
 static void	PrependToSrcRefs(SEXP);
-static SEXP	SrcRefsToVectorList();
+static SEXP	SrcRefsToVectorList(void);
 
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
-static int 	processLineDirective();
+static int 	processLineDirective(int *);
 static int      checkForPlaceholder(SEXP placeholder, SEXP arg);
 
 static int HavePlaceholder = FALSE; 
@@ -208,7 +208,7 @@ static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
 static int	Status = 1;
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
 static int	xxlinesave, xxbytesave, xxcolsave, xxparsesave;
@@ -355,7 +355,7 @@ static SEXP	xxfirstformal0(SEXP);
 static SEXP	xxfirstformal1(SEXP, SEXP);
 static SEXP	xxaddformal0(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxaddformal1(SEXP, SEXP, SEXP, YYLTYPE *);
-static SEXP	xxexprlist0();
+static SEXP	xxexprlist0(void);
 static SEXP	xxexprlist1(SEXP, YYLTYPE *);
 static SEXP	xxexprlist2(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxsub0(void);
@@ -649,7 +649,7 @@ static int xxungetc(int c)
 }
 
 /* Only used from finish_mbcs_in_parse_context. */
-static int add_mbcs_byte_to_parse_context()
+static int add_mbcs_byte_to_parse_context(void)
 {
     int c;
 
@@ -671,7 +671,7 @@ static int add_mbcs_byte_to_parse_context()
 
 /* On error, the parse context may end inside a multi-byte character. Add
    the missing bytes to the context to so that it contains full characters. */
-static void finish_mbcs_in_parse_context()
+static void finish_mbcs_in_parse_context(void)
 {
     int i, c, nbytes = 0, first;
     Rboolean mbcs = FALSE;
@@ -812,7 +812,7 @@ static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
     return k;
 }
 
-static SEXP xxnullformal()
+static SEXP xxnullformal(void)
 {
     SEXP ans;
     PRESERVE_SV(ans = R_NilValue);
@@ -1446,7 +1446,7 @@ static void PrependToSrcRefs(SEXP r)
     }
 }
 
-static SEXP SrcRefsToVectorList() {
+static SEXP SrcRefsToVectorList(void) {
     SEXP l = PS_SRCREFS;
     if (l == R_NilValue)
 	return PairToVectorList(l);
@@ -4046,7 +4046,7 @@ static SEXP lengthgets2(SEXP x, int len) {
     return result;
 }
 
-static void finalizeData( ){
+static void finalizeData(void){
 	
     int nloc = ParseState.data_count ;
 
@@ -4249,7 +4249,7 @@ static void finalizeData( ){
 /**
  * Grows the data
  */
-static void growData(){
+static void growData(void){
 	
     int new_data_count;	
     if (PS_DATA == R_NilValue) {
@@ -4298,7 +4298,7 @@ static int checkForPlaceholder(SEXP placeholder, SEXP arg)
     return FALSE;
 }
 
-static const char* getFilename() {
+static const char* getFilename(void) {
     SEXP srcfile = PS_SRCFILE;
     if (!srcfile || TYPEOF(srcfile) != ENVSXP)
 	return "<input>";
