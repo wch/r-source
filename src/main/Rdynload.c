@@ -155,7 +155,7 @@ InitDynload(void)
 
 /* Allocate LoadedDLL. Errors are reported via R_Suicide, because this is
    called too early during startup to use error(.) */
-static void initLoadedDLL()
+static void initLoadedDLL(void)
 {
     if (CountDLL != 0 || LoadedDLL != NULL)
 	R_Suicide("DLL table corruption detected"); /* not translated */
@@ -266,7 +266,7 @@ R_registerSymbolEptr(SEXP eptr, SEXP einfo)
 
 /* returns DllInfo used by the embedding application.
    the underlying "(embedding)" entry is created if not present */
-DllInfo *R_getEmbeddingDllInfo()
+DllInfo *R_getEmbeddingDllInfo(void)
 {
     DllInfo *dll = R_getDllInfo("(embedding)");
     if (dll == NULL) {
