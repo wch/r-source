@@ -1167,7 +1167,7 @@ SEXP L_setDLindex(SEXP index)
     return R_NilValue;
 }
 
-SEXP L_getDLon()
+SEXP L_getDLon(void)
 {
     /* Get the current device 
      */

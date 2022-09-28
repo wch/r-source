@@ -117,7 +117,7 @@ static void initId(void);
 static void record_( int, int, int, int, int, int, char* ) ;
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 int yyparse(void);
 
 static FILE *fp_parse;
