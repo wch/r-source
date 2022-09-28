@@ -125,7 +125,7 @@ static Rboolean warnDups = FALSE;
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 static int yyparse(void);
 
 #define yyconst const
@@ -174,10 +174,10 @@ typedef struct yyltype
 static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	UserMacroLookup(const char *);
-static SEXP	InstallKeywords();
+static SEXP	InstallKeywords(void);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 
 /* Flags used to mark need for postprocessing in the dynamicFlag attribute */
@@ -243,7 +243,7 @@ static SEXP	xxmarkup3(SEXP, SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
-static void	xxWarnNewline();
+static void	xxWarnNewline(void);
 static SEXP	xxnewcommand(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxusermacro(SEXP, SEXP, YYLTYPE *);
 static int	mkMarkup(int);
@@ -3374,7 +3374,7 @@ static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
     return item;
 }
 
-static void xxWarnNewline()
+static void xxWarnNewline(void)
 {
     if (parseState.xxNewlineInString) {
 	if(wCalls)
@@ -3811,7 +3811,7 @@ static keywords[] = {
 /* Record the longest # directive here */
 #define DIRECTIVE_LEN 7   
 
-static SEXP InstallKeywords()
+static SEXP InstallKeywords(void)
 {
     int i, num;
     SEXP result, name, val;
@@ -4466,7 +4466,7 @@ static void UseState(ParseState *state) {
     parseState.prevState = state->prevState;
 }
 
-static void PushState() {
+static void PushState(void) {
     if (busy) {
     	ParseState *prev = malloc(sizeof(ParseState));
 	if (prev == NULL) error("unable to allocate in PushState");
@@ -4477,7 +4477,7 @@ static void PushState() {
     busy = TRUE;
 }
 
-static void PopState() {
+static void PopState(void) {
     if (parseState.prevState) {
     	ParseState *prev = parseState.prevState;
     	UseState(prev);
