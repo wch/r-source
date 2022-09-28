@@ -229,6 +229,9 @@
       \item Plain-text help (\code{tools::Rd2txt()}) now preserves an
       initial blank line for text following description list items.
 
+      \item \code{tools::Rd2HTML()} and \code{tools::Rd2latex()} no
+      longer split \verb{\arguments} and \verb{\value} lists at Rd comments.
+      
       \item \code{tools::Rd2latex()} now correctly handles optional text
       outside \verb{\item}s of argument lists.
 
