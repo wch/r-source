@@ -71,12 +71,12 @@ typedef struct {
 } vfontContext;
 
 /* forward references */
-static bool _composite_char (unsigned char *composite,
+static bool0 _composite_char (unsigned char *composite,
 			     unsigned char *character,
 			     unsigned char *accent);
 static void _draw_stroke (vfontContext *vc, const pGEcontext gc,
 			  pGEDevDesc dd,
-			  bool pendown, double deltax, double deltay);
+			  bool0 pendown, double deltax, double deltay);
 static double _label_width_hershey (const pGEcontext gc, pGEDevDesc dd,
 				    const unsigned short *label);
 static void _draw_hershey_string (vfontContext *vc, const pGEcontext gc,
@@ -94,7 +94,7 @@ static void _draw_hershey_string (vfontContext *vc, const pGEcontext gc,
 
 static
 void _draw_hershey_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
-			   bool pendown, double deltax, double deltay)
+			   bool0 pendown, double deltax, double deltay)
 {
     _draw_stroke(vc, gc, dd, pendown,
 		 fromDeviceWidth(HERSHEY_X_UNITS_TO_USER_UNITS (deltax),
@@ -126,7 +126,7 @@ static void linerel(double dx, double dy,
 #endif
 
 static void _draw_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
-			  bool pendown, double deltax, double deltay)
+			  bool0 pendown, double deltax, double deltay)
 {
   double dx, dy;
   double theta;
@@ -292,7 +292,7 @@ void R_GE_VText (double x, double y, const char *s, cetype_t enc,
     char *old_line_mode, *old_cap_mode, *old_join_mode;
     int old_fill_type;
     double oldposx, oldposy;
-    bool old_dash_array_in_effect;
+    bool0 old_dash_array_in_effect;
 
     old_line_mode = (char *)_plot_xmalloc (strlen (_plotter->drawstate->line_mode) + 1);
     old_cap_mode = (char *)_plot_xmalloc (strlen (_plotter->drawstate->cap_mode) + 1);
@@ -550,7 +550,7 @@ static
 void _draw_hershey_penup_stroke(vfontContext *vc, const pGEcontext gc,
 				pGEDevDesc dd,
 				double dx, double dy,
-				double charsize, bool oblique)
+				double charsize, bool0 oblique)
 {
   double shear;
 
@@ -567,11 +567,11 @@ void _draw_hershey_penup_stroke(vfontContext *vc, const pGEcontext gc,
 static
 void _draw_hershey_glyph (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 			  int glyphnum,
-			  double charsize, int type, bool oblique)
+			  double charsize, int type, bool0 oblique)
 {
   double xcurr, ycurr;
   double xfinal, yfinal;
-  bool pendown = false;
+  bool0 pendown = false;
   const unsigned char *glyph;
   double dx, dy;
   double shear;
@@ -783,7 +783,7 @@ void _draw_hershey_string (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 	  int char_width, accent_width; /* for composite chars */
 	  const unsigned char *char_glyph, *accent_glyph;
 	  unsigned char composite, character = '\0', accent = '\0' /* -Wall */;
-	  bool oblique, small_kana = false;
+	  bool0 oblique, small_kana = false;
 
 	  /* compute index of font, in font table in g_fontdb.c */
 	  raw_fontnum = (c >> FONT_SHIFT) & ONE_BYTE;
@@ -955,12 +955,12 @@ void _draw_hershey_string (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 
 /* retrieve the two elements of a composite character from the table in
    g_fontdb.c */
-static bool _composite_char (unsigned char *composite,
+static bool0 _composite_char (unsigned char *composite,
 			     unsigned char *character,
 			     unsigned char *accent)
 {
   const struct plHersheyAccentedCharInfoStruct *compchar = _hershey_accented_char_info;
-  bool found = false;
+  bool0 found = false;
   unsigned char given = *composite;
 
   while (compchar->composite)
