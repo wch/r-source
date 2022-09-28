@@ -120,7 +120,7 @@ just.numeric <- function(x, which=NULL, ...) {
 
 glyphGrob <- function(glyph,
                       x=.5, y=.5, default.units="npc",
-                      hjust="left", vjust="bottom",
+                      hjust="centre", vjust="centre",
                       gp=gpar(), vp=NULL, name=NULL) {
     if (!is.unit(x))
         x <- unit(x, default.units)
