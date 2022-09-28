@@ -118,7 +118,7 @@ static void gc_error(const char *msg)
 }
 
 /* These are used in profiling to separate out time in GC */
-int R_gc_running() { return R_in_gc; }
+int R_gc_running(void) { return R_in_gc; }
 
 #ifdef TESTING_WRITE_BARRIER
 # define PROTECTCHECK
@@ -350,7 +350,7 @@ static double R_VGrowIncrFrac = 0.2, R_VShrinkIncrFrac = 0.2;
 static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
 #endif
 
-static void init_gc_grow_settings()
+static void init_gc_grow_settings(void)
 {
     char *arg;
 
@@ -1118,7 +1118,7 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 
 static void custom_node_free(void *ptr);
 
-static void ReleaseLargeFreeVectors()
+static void ReleaseLargeFreeVectors(void)
 {
     for (int node_class = CUSTOM_NODE_CLASS; node_class <= LARGE_NODE_CLASS; node_class++) {
 	SEXP s = NEXT_NODE(R_GenHeap[node_class].New);
@@ -2159,7 +2159,7 @@ static void NORET mem_err_malloc(R_size_t size)
 #define PP_REDZONE_SIZE 1000L
 static int R_StandardPPStackSize, R_RealPPStackSize;
 
-void attribute_hidden InitMemory()
+void attribute_hidden InitMemory(void)
 {
     int i;
     int gen;

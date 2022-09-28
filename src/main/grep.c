@@ -100,7 +100,7 @@ static pcre2_jit_stack *jit_stack = NULL; // allocated at first use.
 static pcre_jit_stack *jit_stack = NULL; // allocated at first use.
 #endif
 
-static int jit_stack_size()
+static int jit_stack_size(void)
 {
     int stmax = JIT_STACK_MAX;
     char *p = getenv("R_PCRE_JIT_STACK_MAXSIZE");

@@ -196,8 +196,8 @@ static void onintrEx(Rboolean resumeOK)
     jump_to_top_ex(TRUE, tryUserError, TRUE, TRUE, FALSE);
 }
 
-void onintr()  { onintrEx(TRUE); }
-void onintrNoResume() { onintrEx(FALSE); }
+void onintr(void)  { onintrEx(TRUE); }
+void onintrNoResume(void) { onintrEx(FALSE); }
 
 /* SIGUSR1: save and quit
    SIGUSR2: save and quit, don't run .Last or on.exit().
@@ -372,7 +372,7 @@ static R_INLINE void RprintTrunc(char *buf, int truncated)
     }
 }
 
-static SEXP getCurrentCall()
+static SEXP getCurrentCall(void)
 {
     RCNTXT *c = R_GlobalContext;
 
@@ -714,7 +714,7 @@ static char errbuf[BUFSIZE + 1]; /* add 1 to leave room for a null byte */
 
 #define ERRBUFCAT(txt) Rstrncat(errbuf, txt, BUFSIZE - strlen(errbuf))
 
-const char *R_curErrorBuf() {
+const char *R_curErrorBuf(void) {
     return (const char *)errbuf;
 }
 
@@ -1083,7 +1083,7 @@ static void jump_to_top_ex(Rboolean traceback,
     R_jumpctxt(R_ToplevelContext, 0, NULL);
 }
 
-void NORET jump_to_toplevel()
+void NORET jump_to_toplevel(void)
 {
     /* no traceback, no user error option; for now, warnings are
        printed here and console is reset -- eventually these should be
@@ -2849,19 +2849,19 @@ SEXP attribute_hidden R_makeCStackOverflowError(SEXP call, intptr_t usage)
 }
 
 static SEXP R_protectStackOverflowError = NULL;
-SEXP attribute_hidden R_getProtectStackOverflowError()
+SEXP attribute_hidden R_getProtectStackOverflowError(void)
 {
     return R_protectStackOverflowError;
 }
 
 static SEXP R_expressionStackOverflowError = NULL;
-SEXP attribute_hidden R_getExpressionStackOverflowError()
+SEXP attribute_hidden R_getExpressionStackOverflowError(void)
 {
     return R_expressionStackOverflowError;
 }
 
 static SEXP R_nodeStackOverflowError = NULL;
-SEXP attribute_hidden R_getNodeStackOverflowError()
+SEXP attribute_hidden R_getNodeStackOverflowError(void)
 {
     return R_nodeStackOverflowError;
 }
@@ -2871,7 +2871,7 @@ SEXP attribute_hidden R_getNodeStackOverflowError()
 #define NODE_SO_MSG _("node stack overflow")
 
 attribute_hidden
-void R_InitConditions()
+void R_InitConditions(void)
 {
     R_protectStackOverflowError =
 	R_makeErrorCondition(R_NilValue, "stackOverflowError",

@@ -338,7 +338,7 @@ static struct {
 } tost;
 
 static void timeout_handler(int sig);
-static void timeout_init()
+static void timeout_init(void)
 {
     tost.child_pid = 0;
     tost.timedout = 0;
@@ -380,7 +380,7 @@ static void timeout_cleanup_set(sigset_t *ss)
     sigaddset(ss, SIGCHLD);
 }
 
-static void timeout_cleanup()
+static void timeout_cleanup(void)
 {
     sigset_t ss;
     timeout_cleanup_set(&ss);
@@ -477,7 +477,7 @@ static void timeout_cend(void *data)
 /* Fork with blocked SIGCHLD to make sure that tost.child_pid is set
    in the parent before the signal is received. Also makes sure
    SIGCHLD is unblocked in the parent after the call. */
-static void timeout_fork()
+static void timeout_fork(void)
 {
     sigset_t css; 
     sigemptyset(&css);

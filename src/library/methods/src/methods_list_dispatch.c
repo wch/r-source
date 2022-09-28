@@ -135,7 +135,7 @@ static SEXP R_conditionMessage(SEXP cond)
     return out;
 }
 
-static void init_loadMethod()
+static void init_loadMethod(void)
 {
     R_target = install("target");
     R_defined = install("defined");
@@ -263,7 +263,7 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 /*  */
 static int n_ov = 0;
 
-SEXP R_clear_method_selection()
+SEXP R_clear_method_selection(void)
 {
     n_ov = 0;
     return R_NilValue;

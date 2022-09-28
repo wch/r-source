@@ -30,7 +30,7 @@
 
 # include <rlocale.h>
 
-int R_GE_getVersion()
+int R_GE_getVersion(void)
 {
     return R_GE_version;
 }
@@ -3281,7 +3281,7 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
  ****************************************************************
  */
 
-void GEonExit()
+void GEonExit(void)
 {
   /*
    * Run through all devices and turn graphics recording back on

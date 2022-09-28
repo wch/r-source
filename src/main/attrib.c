@@ -774,7 +774,7 @@ static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3, SEXP part4)
 
 // called when R's main loop is setup :
 attribute_hidden
-void InitS3DefaultTypes()
+void InitS3DefaultTypes(void)
 {
     for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
 	SEXP part3 = R_NilValue;

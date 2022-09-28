@@ -1857,7 +1857,7 @@ static int R_ReadMagic(FILE *fp)
     return d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
-static int defaultSaveVersion()
+static int defaultSaveVersion(void)
 {
     static int dflt = -1;
 

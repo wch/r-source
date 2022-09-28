@@ -54,7 +54,7 @@ int gridRegisterIndex;
  * allocated in createGridSystemState() below.
 */
 
-SEXP createGridSystemState()
+SEXP createGridSystemState(void)
 {
     return allocVector(VECSXP, 18);
 }
@@ -178,7 +178,7 @@ static void deglobaliseState(SEXP state)
 		   index, R_NilValue);
 }
 
-static int findStateSlot()
+static int findStateSlot(void)
 {
     int i;
     int result = -1;

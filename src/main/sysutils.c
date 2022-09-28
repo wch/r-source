@@ -1859,7 +1859,7 @@ void R_reInitTempDir(int die_on_fail)
     }
 }
 
-void attribute_hidden InitTempDir() {
+void attribute_hidden InitTempDir(void) {
     R_reInitTempDir(/* die_on_fail = */ TRUE);
 }
 
@@ -1939,7 +1939,7 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-void attribute_hidden resetTimeLimits()
+void attribute_hidden resetTimeLimits(void)
 {
     double data[5];
     R_getProcTime(data);

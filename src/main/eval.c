@@ -601,7 +601,7 @@ static R_INLINE void INCLNK_stack(R_bcstack_t *top)
     R_BCProtTop = top;
 }
 
-static R_INLINE void INCLNK_stack_commit()
+static R_INLINE void INCLNK_stack_commit(void)
 {
     if (R_BCProtCommitted < R_BCProtTop) {
 	R_bcstack_t *base = R_BCProtCommitted;
@@ -4896,7 +4896,7 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 
 #define BCCONSTS(e) BCODE_CONSTS(e)
 
-static void NORET nodeStackOverflow()
+static void NORET nodeStackOverflow(void)
 {
     /* condiiton is pre-allocated and protected with R_PreserveObject */
     SEXP cond = R_getNodeStackOverflowError();
@@ -4923,7 +4923,7 @@ static R_INLINE void* BCNALLOC(int nelems) {
 
 #define BCNALLOC_CNTXT() (RCNTXT *)BCNALLOC(RCNTXT_ELEMS)
 
-static R_INLINE void BCNPOP_AND_END_CNTXT() {
+static R_INLINE void BCNPOP_AND_END_CNTXT(void) {
     RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
     endcontext(cntxt);
     R_BCNodeStackTop -= RCNTXT_ELEMS + 1;
@@ -5279,7 +5279,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 #define CALL_FRAME_FTYPE() TYPEOF(CALL_FRAME_FUN())
 #define CALL_FRAME_SIZE() (3)
 
-static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS()
+static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS(void)
 {
     SEXP args = CALL_FRAME_ARGS();
     for (SEXP a = args; a  != R_NilValue; a = CDR(a))
@@ -5287,7 +5287,7 @@ static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS()
     return args;
 }
 
-static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS()
+static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS(void)
 {
     SEXP args = CALL_FRAME_ARGS();
     /* it would be better not to build this arglist with CONS_NR in
@@ -5541,7 +5541,7 @@ static int current_opcode = NO_CURRENT_OPCODE;
 static int opcode_counts[OPCOUNT];
 #endif
 
-static void bc_check_sigint()
+static void bc_check_sigint(void)
 {
     R_CheckUserInterrupt();
 #ifndef IMMEDIATE_FINALIZERS
@@ -6318,12 +6318,12 @@ SEXP attribute_hidden R_findBCInterpreterSrcref(RCNTXT *cptr)
     return R_findBCInterpreterLocation(cptr, "srcrefsIndex");
 }
 
-static SEXP R_findBCInterpreterExpression()
+static SEXP R_findBCInterpreterExpression(void)
 {
     return R_findBCInterpreterLocation(NULL, "expressionsIndex");
 }
 
-SEXP attribute_hidden R_getCurrentSrcref()
+SEXP attribute_hidden R_getCurrentSrcref(void)
 {
     if (R_Srcref != R_InBCInterpreter)
 	return R_Srcref;
@@ -6422,7 +6422,7 @@ static SEXP inflateAssignmentCall(SEXP expr) {
 }
 
 /* Get the current expression being evaluated by the byte-code interpreter. */
-SEXP attribute_hidden R_getBCInterpreterExpression()
+SEXP attribute_hidden R_getBCInterpreterExpression(void)
 {
     SEXP exp = R_findBCInterpreterExpression();
     if (TYPEOF(exp) == PROMSXP) {
