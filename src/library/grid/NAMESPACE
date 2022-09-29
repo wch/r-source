@@ -102,7 +102,7 @@ export(
        "as.mask",
 
        # Typesetting
-       "grid.glyph", "glyphGrob",
+       "grid.glyph", "glyphGrob", "just",
     
        # Listing grobs and viewports
        "grid.ls",
@@ -545,3 +545,6 @@ S3method("isClosed", "beziergrob")
 S3method("isClosed", "xspline")
 S3method("isClosed", "points")
 
+S3method("just", "character")
+S3method("just", "numeric")
+S3method("just", "GridJust")

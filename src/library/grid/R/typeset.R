@@ -10,15 +10,19 @@ validDetails.glyphgrob <- function(x) {
     ## Make sure that x and y are of length > 0
     if (length(x$x) < 1 || length(x$y) < 1)
         stop("'x' and 'y' must have length > 0")
+    if (!inherits(x$hjust, "GridJust") || !inherits(x$vjust, "GridJust"))
+        stop("'hjust' and 'vjust' must be just() values")
     if (length(x$hjust) != 1 || length(x$vjust) != 1)
-        stop("'hjust' and 'vjust' muat have length 1")
+        stop("'hjust' and 'vjust' must have length 1")
     x
 }
 
 glyphHOffset <- function(glyph, hjust) {
     gx <- convertWidth(unit(glyph$x, "bigpts"), "in", valueOnly=TRUE)
-    width <- convertWidth(unit(attr(glyph, "width"), "bigpts"), "in",
+    glyphWidth <- attr(glyph, "width")
+    width <- convertWidth(unit(glyphWidth, "bigpts"), "in",
                           valueOnly=TRUE)
+    names(width) <- names(glyphWidth)
     hAnchor <- attr(glyph, "hAnchor")
     if (is.numeric(hjust)) {
         justName <- names(hjust)
@@ -29,7 +33,10 @@ glyphHOffset <- function(glyph, hjust) {
                 warning("Unknown width; using first width")
                 gx - hjust*width[1]
             } else {
-                gx - hjust*width[justName]
+                anchor <- glyphWidthAnchor(glyphWidth, justName)
+                gx - convertWidth(unit(hAnchor[anchor], "bigpts"), "in",
+                              valueOnly=TRUE) -
+                    hjust*width[justName]
             }
         }
     } else {
@@ -50,8 +57,10 @@ glyphHJust <- function(x, glyph, hjust) {
 
 glyphVOffset <- function(glyph, vjust) {
     gy <- convertHeight(unit(glyph$y, "bigpts"), "in", valueOnly=TRUE)
-    height <- convertHeight(unit(attr(glyph, "height"), "bigpts"), "in",
+    glyphHeight <- attr(glyph, "height")
+    height <- convertHeight(unit(glyphHeight, "bigpts"), "in",
                             valueOnly=TRUE)
+    names(height) <- names(glyphHeight)
     vAnchor <- attr(glyph, "vAnchor")
     if (is.numeric(vjust)) {
         justName <- names(vjust)
@@ -62,7 +71,10 @@ glyphVOffset <- function(glyph, vjust) {
                 warning("Unknown height; using first height")
                 gy - vjust*height[1]
             } else {
-                gy - vjust*height[justName]
+                anchor <- glyphHeightAnchor(glyphHeight, justName)
+                gx - converHeight(unit(vAnchor[anchor], "bigpts"), "in",
+                              valueOnly=TRUE) -
+                    vjust*height[justName]
             }
         }
     } else {
