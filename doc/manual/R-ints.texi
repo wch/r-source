@@ -4520,6 +4520,17 @@ Default: false (but true for CRAN submission checks).
 Check whether @code{news()} can successfully read package news in plain
 text (file @file{NEWS}) format.
 Default: false (but true for CRAN submission checks).
+
+@item _R_WIN_CHECK_INVALID_PARAMETERS_
+Check whether arguments passed to the Windows C runtime are valid. When
+enabled and a C runtime function is called with an invalid parameter, R
+prints diagnostic information and unconditionally terminates. By default,
+R for Windows following MinGW-W64 default causes UCRT to ignore invalid
+parameters, but they may cause R to abort e.g. when R is embedded into
+applications built with a different compiler toolchain. One may set the
+value to @code{"watson"} for interactive debugging on Windows via
+@code{_invoke_watson}.
+Default: disabled.
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
