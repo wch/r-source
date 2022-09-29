@@ -937,13 +937,13 @@ SEXP L_unsetviewport(SEXP n)
      */
     PROTECT(gvp); PROTECT(newvp);
     {
-	SEXP fcall, false, t;
-	PROTECT(false = allocVector(LGLSXP, 1));
-	LOGICAL(false)[0] = FALSE;
+	SEXP fcall, false0, t;
+	PROTECT(false0 = allocVector(LGLSXP, 1));
+	LOGICAL(false0)[0] = FALSE;
 	PROTECT(fcall = lang4(install("remove"), 
 			      VECTOR_ELT(gvp, VP_NAME),
 			      VECTOR_ELT(newvp, PVP_CHILDREN),
-			      false));
+			      false0));
 	t = fcall;
 	t = CDR(CDR(t));
 	SET_TAG(t, install("envir")); 
