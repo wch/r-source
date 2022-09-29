@@ -5997,6 +5997,12 @@ lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacemen
 @code{std:;mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
+Later versions of standards may add reserved words: for example
+@code{bool}, @code{false} and @code{true} became keywords in C23 and are
+no longer available as variable names.  So avoid common words and
+keywords in other programming languages.
+
+@item
 Be careful about including C headers in C++ code.  Issues include
 @itemize
 @item
