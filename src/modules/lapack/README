@@ -88,6 +88,15 @@ the new .f90 files replacing dlartg.f dlassq.f zlartg.f zlassq.f
 
 Those 4 routines were replaced by their .f90 versions in R 4.3.0.
 
+R 4.2.2 added
+
+zgbcon zgbequ zgbrfs zgbsv zgbsvx zgbtf2 zgbtrf zgbtrs zgeevx zgtcon
+zgtrfs zgtsv zgtsvx zgttrf zgttrs zgtts2 zlagtm zlangb zlangt zlansy
+zlantb zlaqgb zlaqhe zlatbs zpbtf2 zpbtrf zpocon zpoequ zporfs zposv
+zposvx zpotrs zpstf2 zpstrf ztrsna
+
+for recent RcppArmadillo with LLVM clang 15.
+
 -------------------------------------------------
 
 For 'base' R addition of a new .Call()able Lapack routine,
