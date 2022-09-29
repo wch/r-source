@@ -53,7 +53,7 @@ static void getSystemError(char *buf, int len);
 
 static int computeDLOpenFlag(int asLocal, int now);
 
-void attribute_hidden InitFunctionHashing()
+void attribute_hidden InitFunctionHashing(void)
 {
     R_osDynSymbol->loadLibrary = loadLibrary;
     R_osDynSymbol->dlsym = R_local_dlsym;

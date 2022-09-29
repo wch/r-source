@@ -198,7 +198,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
 };
 
 
-static int get_locale_id()
+static int get_locale_id(void)
 {
     char lc_str[128];
     unsigned int i, j;

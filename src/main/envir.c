@@ -662,13 +662,13 @@ static SEXP R_GlobalCache, R_GlobalCachePreserve;
 static SEXP R_BaseNamespaceName;
 static SEXP R_NamespaceSymbol;
 
-void attribute_hidden InitBaseEnv()
+void attribute_hidden InitBaseEnv(void)
 {
     R_EmptyEnv = NewEnvironment(R_NilValue, R_NilValue, R_NilValue);
     R_BaseEnv = NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv);
 }
 
-void attribute_hidden InitGlobalEnv()
+void attribute_hidden InitGlobalEnv(void)
 {
     R_NamespaceSymbol = install(".__NAMESPACE__.");
 
@@ -4084,7 +4084,7 @@ static unsigned int char_hash(const char *s, int len)
     return h;
 }
 
-void attribute_hidden InitStringHash()
+void attribute_hidden InitStringHash(void)
 {
     R_StringHash = R_NewHashTable(char_hash_size);
 }

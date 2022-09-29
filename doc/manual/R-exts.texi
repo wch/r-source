@@ -2853,17 +2853,24 @@ already have extensive partial support for the current drafts.
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
 and @code{202002L} are most commonly used for C++11, C++14, C++17 and
-C++20 respectively, but some compilers set @code{1L}.}  of
-@code{__cplusplus} may help but some compilers use it to denote a
-standard which is partially supported and some the latest standard which
-is (almost) fully supported.  On a Unix-alike @command{configure} will
-try to identify a compiler and flags for each of the standards: this
-relies heavily on the reported values of @code{__cplusplus}.
+C++20 respectively, but some compilers set @code{1L}. For C++23 all that
+can currently be assumed is a value greater than that for C++20: for
+example @command{g++} 12 uses @code{202100L} and @command{clang++} (LLVM
+15, Apple 14) uses @code{202101L}.}  of @code{__cplusplus} may help but
+some compilers use it to denote a standard which is partially supported
+and some the latest standard which is (almost) fully supported.  On a
+Unix-alike @command{configure} will try to identify a compiler and flags
+for each of the standards: this relies heavily on the reported values of
+@code{__cplusplus}.
 
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.
+
+C++ standards have deprecated and later removed features.  Be aware that
+some current compilers still accept removed features in C++17 mode,
+such as @code{unary_function} (deprecated in C++11, removed in C++17).
 
 Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
@@ -2997,6 +3004,13 @@ A requirement of C++17 or later should always be declared in the
 Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
+
+The discussion above is about the standard @R{} ways of compiling C++:
+it will not apply to packages using @file{src/Makefile} or
+@command{configure} or building in a subdirectory that do not set the
+C++ standard.  And the default C++ standard varies widely and gets
+changed frequently by vendors -- for example Apple clang 14 defaults to
+C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
 
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup
@@ -5981,6 +5995,12 @@ them. Examples include @code{bind1st}/@code{bind2nd} (use
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
 @code{std:;mem_fun_ref} and @code{std::ptr_fun}.
+
+@item
+Later versions of standards may add reserved words: for example
+@code{bool}, @code{false} and @code{true} became keywords in C23 and are
+no longer available as variable names.  So avoid common words and
+keywords in other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
@@ -9971,7 +9991,8 @@ R CMD INSTALL --dsym @var{pkgname}
 as macOS does not store debugging symbols in the @file{.so} file.  (It
 is not necessary to have @R{} built with debugging symbols, although
 compiling the package should be done including @option{-g} in
-@code{CFLAGS} / @code{CXXFLAGS} / @code{FCFLAGS} as appropriate.)
+@code{CFLAGS} / @code{CXXFLAGS} / @code{FFLAGS} / @code{FCFLAGS} as
+appropriate.)
 
 Security measures may prevent running a @acronym{CRAN} binary
 distribution of @R{} under @command{lldb} or attaching this as a

@@ -58,7 +58,7 @@
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 static int yyparse(void);
 
 #define yyconst const
@@ -108,7 +108,7 @@ static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 
 /* Internal lexer / parser state variables */
@@ -153,7 +153,7 @@ static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
-static int      mkVerbEnv();
+static int      mkVerbEnv(void);
 
 static SEXP R_LatexTagSymbol = NULL;
 
@@ -854,7 +854,7 @@ static int mkVerb(int c)
     return VERB;  
 }
 
-static int mkVerbEnv()
+static int mkVerbEnv(void)
 {
     char st0[INITBUFSIZE];
     unsigned int nstext = INITBUFSIZE;
@@ -895,7 +895,7 @@ static int yylex(void)
     return tok;
 }
 
-static void PushState() {
+static void PushState(void) {
     if (busy) {
     	ParseState *prev = malloc(sizeof(ParseState));
 	if (prev == NULL) error("unable to allocate in PushState");
@@ -906,7 +906,7 @@ static void PushState() {
     busy = TRUE;
 }
 
-static void PopState() {
+static void PopState(void) {
     if (parseState.prevState) {
     	ParseState *prev = parseState.prevState;
     	UseState(prev);

@@ -793,7 +793,7 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 }
 
 /* Return the current environment. */
-SEXP R_GetCurrentEnv() {
+SEXP R_GetCurrentEnv(void) {
     return R_GlobalContext->sysparent;
 }
 
@@ -897,7 +897,7 @@ typedef struct {
     RCNTXT *jumptarget;
 } unwind_cont_t;
 
-SEXP R_MakeUnwindCont()
+SEXP R_MakeUnwindCont(void)
 {
     return CONS(R_NilValue, allocVector(RAWSXP, sizeof(unwind_cont_t)));
 }

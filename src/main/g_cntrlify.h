@@ -419,7 +419,7 @@ static const Escape _special_escape_tbl[NUM_SPECIAL_ESCAPES] =
 typedef struct
 {
   unsigned char from, to;
-  bool underscored;
+  bool0 underscored;
 } Raiseinfo;
 
 #define NUM_RAISED_CHARS 5

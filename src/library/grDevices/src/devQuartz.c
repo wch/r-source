@@ -2074,7 +2074,7 @@ SEXP Quartz(SEXP args)
     return R_NilValue;
 }
 
-SEXP makeQuartzDefault() {
+SEXP makeQuartzDefault(void) {
     return ScalarLogical(FALSE);
 }
 
@@ -2085,7 +2085,7 @@ Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode)
     return NULL;
 }
 
-void *getQuartzAPI()
+void *getQuartzAPI(void)
 {
     return NULL;
 }

@@ -131,7 +131,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		{
 #ifndef NO_KANJI
 		  const struct kanjipair *kanji = _builtin_kanji_glyphs;
-		  bool matched = false;
+		  bool0 matched = false;
 
 		  while (kanji->jis != 0)
 		    {
@@ -161,7 +161,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		/* not in Kanji range, so look for it in char table */
 		{
 		  const struct jis_entry *char_mapping = _builtin_jis_chars;
-		  bool matched = false;
+		  bool0 matched = false;
 
 		  while (char_mapping->jis != 0)
 		    {
@@ -211,7 +211,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
       if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 	{
 	  int i;
-	  bool matched = false;
+	  bool0 matched = false;
 
 	  for (i = 0; i < NUM_LIGATURES; i++)
 	    if ((_ligature_tbl[i].font == raw_fontnum)
@@ -238,7 +238,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
 	      int i;
-	      bool matched = false;
+	      bool0 matched = false;
 
 	      /* check if this is a `raised' ISO-Latin-1 character */
 	      for (i = 0; i < NUM_RAISED_CHARS; i++)
@@ -416,7 +416,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    {
 #ifndef NO_KANJI
 		      const struct kanjipair *kanji = _builtin_kanji_glyphs;
-		      bool matched = false;
+		      bool0 matched = false;
 
 		      while (kanji->jis != 0)
 			{
@@ -446,7 +446,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    /* not in Kanji range, so look for it in char table */
 		    {
 		      const struct jis_entry *char_mapping = _builtin_jis_chars;
-		      bool matched = false;
+		      bool0 matched = false;
 
 		      while (char_mapping->jis != 0)
 			{
@@ -486,7 +486,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    }
 
 	  {
-	    bool matched = false;
+	    bool0 matched = false;
 
 	    /* is this an escape seq. for a control code? */
 	    for (i = 0; i < NUM_CONTROLS; i++)
@@ -509,7 +509,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
 	      int i;
-	      bool matched = false;
+	      bool0 matched = false;
 
 	      for (i = 0; i < NUM_DELIGATURED_ESCAPES; i++)
 		if (strcmp ((char *)esc, _deligature_escape_tbl[i].from) == 0)
@@ -555,7 +555,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
-	      bool matched = false;
+	      bool0 matched = false;
 
 	      for (i = 0; i < NUM_ISO_ESCAPES; i++)
 		if (strcmp ((char *)esc, _iso_escape_tbl[i].string) == 0)
@@ -570,7 +570,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 		    {
 		      int k;
-		      bool matched2 = false;
+		      bool0 matched2 = false;
 
 		      /* check if this is a `raised' ISO-Latin-1 character */
 		      for (k = 0; k < NUM_RAISED_CHARS; k++)
@@ -623,7 +623,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	     `final s'. */
 	  if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 	    {
-	      bool matched = false;
+	      bool0 matched = false;
 
 	      for (i = 0; i < NUM_SPECIAL_ESCAPES; i++)
 		if (strcmp ((char *)esc, _special_escape_tbl[i].string) == 0)
@@ -646,7 +646,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    }
 
 	  {
-	    bool matched = false;
+	    bool0 matched = false;
 
 	    /* Irrespective of font type, is this an escape seq. for a char
 	       in the font's corresponding symbol font? */

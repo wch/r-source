@@ -2225,7 +2225,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 
 /* MAC/X11 BASICS */
 
-static void bell()
+static void bell(void)
 {
     XBell(iodisplay, 20);
 }

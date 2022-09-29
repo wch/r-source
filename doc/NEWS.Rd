@@ -40,11 +40,11 @@
       \item Regular expression functions now check more thoroughly whether
       their inputs are valid strings (in their encoding, e.g.\sspace{}in UTF-8).
 
-      \item The performance of \code{grep}, \code{sub}, \code{gsub} and
-      \code{strsplit} has been improved, particularly with \code{perl =
-      TRUE} and \code{fixed = TRUE}.  Use of \code{useBytes = TRUE} for
-      performance reasons should no longer be needed and is discouraged.
-      It may lead to incorrect results.
+      \item The performance of \code{grep()}, \code{sub()},
+      \code{gsub()} and \code{strsplit()} has been improved,
+      particularly with \code{perl = TRUE} and \code{fixed = TRUE}.  Use
+      of \code{useBytes = TRUE} for performance reasons should no longer
+      be needed and is discouraged: it may lead to incorrect results.
 
       \item \code{apropos()} gains an argument \code{dot_internals} which
       is used by the completion (\code{help(rcompgen)}) engine to also
@@ -57,7 +57,25 @@
       \code{conf.args} arguments for computing and plotting a confidence
       band for the treatment function transforming the distribution of
       \code{x} into the distribution of \code{y } (Switzer, 1976,
-      Biometrika). Contributed by Torsten Hothorn. 
+      Biometrika). Contributed by Torsten Hothorn.
+
+      \item Performance of \code{package_dependencies()} has been improved
+      for cases when the number of dependencies is large.
+
+      \item Strings newly created by \code{gsub()}, \code{sub()} and
+      \code{strsplit()}, when any of the inputs is marked as \code{"bytes"},
+      are also marked as \code{"bytes"}.  This reduces the risk of creating
+      invalid strings and accidental substitution of bytes deemed invalid.
+
+      \item Support for \code{readLines(encoding="bytes")} has been added to
+      allow processing special text files byte-by-byte, without creating
+      invalid strings.
+
+      \item \code{iconv(from="")} now takes into account any declared
+      encoding of the input elements and uses it in preference to the native
+      encoding.  This reduces the risk of accidental creation of invalid
+      strings, particularly when different elements of the input have
+      different encoding (including \code{"bytes"}).
     }
   }
 
@@ -211,8 +229,21 @@
       \item Plain-text help (\code{tools::Rd2txt()}) now preserves an
       initial blank line for text following description list items.
 
+      \item \code{tools::Rd2HTML()} and \code{tools::Rd2latex()} no
+      longer split \verb{\arguments} and \verb{\value} lists at Rd comments.
+
       \item \code{tools::Rd2latex()} now correctly handles optional text
       outside \verb{\item}s of argument lists.
+
+      \item \code{as.character(<POSIXt>)} now behaves more in line with the
+      methods for atomic vectors such as numbers, and is no longer
+      influenced by \code{options()}.
+      Ditto for \code{as.character(<Date>)}.
+      Use of \code{as.character(*, format = .)} now warns.
+
+      \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
+      methods also behave as \code{good citizen} methods and back compatibility
+      option \code{keepStr = TRUE}.
     }
   }
 }
@@ -287,14 +318,27 @@
       \item \code{source("")} and \code{source(character())} now give more
       helpful error messages.
 
-      \item Non-ASCII characters are now properly displayed on Windows
-      in windows created using GraphApp via
-      e.g. \sspace{}\code{winDialogString} thanks to a workaround for an
-      at least surprising Windows behavior with UTF-8 as the system
-      encoding (\PR{18382}).
-
       \item \command{R CMD check --as-cran} set \env{_R_CHECK_TIMINGS_}
       too late to have the intended effect.
+
+      \item \code{as.POSIXlt(x)} now also works with very large dates
+      \code{x}, fixing \PR{18401} reported by Hannes Mühleisen.
+
+      \item Files can now be extracted even from very large zip archives
+      (\PR{18390}, thanks to Martin Jakt).
+
+      \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date};
+      following up on the extension to \code{format()} them correctly.
+    }
+  }
+
+  \subsection{BUG FIXES on Windows}{
+    \itemize{
+     \item Non-ASCII characters are now properly displayed on Windows
+      in windows created using GraphApp via
+      e.g.\sspace{}\code{winDialogString} thanks to a workaround for an
+      at least surprising Windows behavior with UTF-8 as the system
+      encoding (\PR{18382}).
 
       \item Find and replace operations work again in the script editor in
       \command{Rgui} on Windows.
@@ -308,6 +352,7 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
+
     }
   }
 }

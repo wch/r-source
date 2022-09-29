@@ -5459,6 +5459,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wint-in-bool-context\\]",
                              ## gcc and clang
                              ": warning: .*\\[-Wpointer-sign\\]",
+                             ## gcc's version of clang's -Wformat
+                             ": warning: .* \\[-Wformat=\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
@@ -5510,8 +5512,21 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wignored-optimization-argument\\]",
                              ## thinkos like <- for = or == for =
                              "warning: .* \\[-Wunused-comparison\\]",
+                             "warning: .* \\[-Wliteral-conversion\\]",
+                             "warning: .* \\[-Wempty-body\\]",
+                             "warning: .* \\[-Wformat\\]",
+                             "warning: .* \\[-Wreturn-stack-address\\]",
+                             ## also gcc
+                             "warning: .* \\[-Wsizeof-pointer-div\\]",
+                             "warning: .* \\[-Wnon-c-typedef-for-linkage\\]",
+                             ## consider also -Wbitwise-op-parentheses
+                             ## -Wlogical-op-parentheses
+                             ## -Wshift-op-parentheses
                              ## LLVM clang 14, at least
-                             "warning: .* \\[-Wbitwise-instead-of-logical\\]"
+                             "warning: .* \\[-Wbitwise-instead-of-logical\\]",
+                             "warning: .* \\[-Wunneeded-internal-declaration\\]",
+                             ## LLVM clang 15
+                             "warning: .* \\[-Winvalid-utf8\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
@@ -5529,6 +5544,10 @@ add_dummies <- function(dir, Log)
 
                 ## Filter out Eigen header warnings
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out StanHeader warnings
+                ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
