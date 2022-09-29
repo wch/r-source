@@ -231,13 +231,15 @@
 
       \item \code{tools::Rd2HTML()} and \code{tools::Rd2latex()} no
       longer split \verb{\arguments} and \verb{\value} lists at Rd comments.
-      
+
       \item \code{tools::Rd2latex()} now correctly handles optional text
       outside \verb{\item}s of argument lists.
 
       \item \code{as.character(<POSIXt>)} now behaves more in line with the
       methods for atomic vectors such as numbers, and is no longer
       influenced by \code{options()}.
+      Ditto for \code{as.character(<Date>)}.
+      Use of \code{as.character(*, format = .)} now warns.
 
       \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
       methods also behave as \code{good citizen} methods and back compatibility

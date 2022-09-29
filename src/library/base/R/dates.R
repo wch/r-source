@@ -119,12 +119,7 @@ as.Date.default <- function(x, ...)
 ##                          deparse1(substitute(x)) ))
 ## }
 
-format.Date <- function(x, ...)
-{
-    xx <- format(as.POSIXlt(x), ...)
-    names(xx) <- names(x)
-    xx
-}
+format.Date <- function(x, ...) format(as.POSIXlt(x), ...) # does keep names
 
 ## keep in sync with  print.POSIX?t()  in ./datetime.R
 print.Date <- function(x, max = NULL, ...)
@@ -234,7 +229,7 @@ Summary.Date <- function (..., na.rm)
 `length<-.Date` <- function(x, value)
     .Date(NextMethod(), oldClass(x))
 
-as.character.Date <- function(x, ...) format(x, ...)
+as.character.Date <- function(x, ...) as.character(as.POSIXlt(x), ...)
 
 as.data.frame.Date <- as.data.frame.vector
 

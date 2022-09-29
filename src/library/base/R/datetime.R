@@ -588,6 +588,8 @@ function(x, ..., value) {
 ## Alternatively use  lapply(*, function(.) .Internal(format.POSIXlt(., digits=0))
 ## *and* append the fractional seconds ('entirely') ..
 as.character.POSIXt <- function(x, ...) {
+    if(length(dotn <- ...names()) && "format" %in% dotn)
+        warning("as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?")
     x <- as.POSIXlt(x)
     s <- x$sec
     ## to distinguish {NA, 0, non-0}:
@@ -649,7 +651,7 @@ c.POSIXlt <- function(..., recursive = FALSE) {
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz = "")
 {
-    if(min(vapply(list(year, month, day, hour, min, sec), length, 1, USE.NAMES=FALSE)) == 0L)
+    if(min(lengths(list(year, month, day, hour, min, sec), use.names=FALSE)) == 0L)
         .POSIXct(numeric(), tz = tz)
     else {
         x <- paste(year, month, day, hour, min, sec, sep = "-")
