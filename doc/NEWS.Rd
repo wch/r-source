@@ -238,6 +238,10 @@
       \item \code{as.character(<POSIXt>)} now behaves more in line with the
       methods for atomic vectors such as numbers, and is no longer
       influenced by \code{options()}.
+
+      \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
+      methods also behave as \code{good citizen} methods and back compatibility
+      option \code{keepStr = TRUE}.
     }
   }
 }

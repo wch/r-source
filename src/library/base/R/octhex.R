@@ -35,14 +35,15 @@ format.octmode <- function(x, width = NULL, ...)
     ans
 }
 
-as.character.octmode <- function(x, ...) {
+as.character.octmode <- function(x, keepStr = FALSE, ...) {
     ans <- rep_len(NA_character_, length(x))
     notNA <- !is.na(x)
     ans[notNA] <- sprintf("%o", as.integer(x[notNA]))
-    ## keep dim{names}(), names() if there were:
-    dim(ans) <- dim(x)
-    dimnames(ans) <- dimnames(x)
-    names(ans) <- names(x)
+    if(keepStr) { ## keep dim{names}(), names() if there were:
+        dim(ans) <- dim(x)
+        dimnames(ans) <- dimnames(x)
+        names(ans) <- names(x)
+    }
     ans
 }
 
@@ -96,13 +97,15 @@ format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
     ans
 }
 
-as.character.hexmode <- function(x, ...) {
+as.character.hexmode <- function(x, keepStr = FALSE, ...) {
     ans <- rep_len(NA_character_, length(x))
     notNA <- !is.na(x)
     ans[notNA] <- sprintf("%x", as.integer(x[notNA]))
-    dim(ans) <- dim(x)
-    dimnames(ans) <- dimnames(x)
-    names(ans) <- names(x)
+    if(keepStr) { ## keep dim{names}(), names() if there were:
+        dim(ans) <- dim(x)
+        dimnames(ans) <- dimnames(x)
+        names(ans) <- names(x)
+    }
     ans
 }
 
