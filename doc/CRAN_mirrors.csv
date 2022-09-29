@@ -100,7 +100,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (MI) [https]",USA,"Ann Arbor",https://repo.miserver.it.umich.edu/cran/,"MBNI, University of Michigan, Ann Arbor, MI","linux-mirrors # umich.edu",1,us,"secure_mirror_from_master"
-"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,"secure_mirror_from_master"
+"USA (MO) [https]",USA,"St. Louis",https://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,"secure_mirror_from_master"
 "USA (NC) [https]",USA,Durham,https://archive.linux.duke.edu/cran/,"Duke University, Durham, NC","csi-linux-admins # duke.edu",1,us
 "USA (OH) [https]",USA,Cleveland,https://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us,"secure_mirror_from_master"
 "USA (OR) [https]",USA,Corvallis,https://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us,"secure_mirror_from_master"
