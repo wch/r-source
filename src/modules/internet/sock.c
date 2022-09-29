@@ -198,7 +198,7 @@ int __initialize(void *ignoredParameter) {
 /* </FIXME> */
 
 /* Initialize the socket services */
-int Sock_init()
+int Sock_init(void)
 {
 #if defined(Win32)
     WSADATA wsaData;

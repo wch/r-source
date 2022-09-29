@@ -1165,7 +1165,7 @@ static SEXP createDDVALSymbol(int n) {
     return install(buf);
 }
 
-static void initializeDDVALSymbols() {
+static void initializeDDVALSymbols(void) {
     for(int i = 0; i < N_DDVAL_SYMBOLS; i++) {
 	DDVALSymbols[i] = createDDVALSymbol(i);
     }
@@ -1191,7 +1191,7 @@ static SEXP mkSymMarker(SEXP pname)
 }
 
 /* initialize the symbol table */
-void attribute_hidden InitNames()
+void attribute_hidden InitNames(void)
 {
     /* allocate the symbol table */
     if (!(R_SymbolTable = (SEXP *) calloc(HSIZE, sizeof(SEXP))))

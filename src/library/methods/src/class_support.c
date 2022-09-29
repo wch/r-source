@@ -24,12 +24,12 @@
 
 #include "methods.h"
 
-SEXP NORET R_dummy_extern_place()
+SEXP NORET R_dummy_extern_place(void)
 {
     error(_("calling the C routine used as an initializer for 'externalptr' objects"));
 }
 
-SEXP R_externalptr_prototype_object()
+SEXP R_externalptr_prototype_object(void)
 {
     return R_MakeExternalPtrFn((DL_FUNC) R_dummy_extern_place, R_NilValue,
 			       R_NilValue);

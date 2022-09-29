@@ -5,6 +5,8 @@
 ## size_max.m4 stdint_h.m4 uintmax_t.m4 ulonglong.m4 visibility.m4 
 ## wchar_t.m4 wint_t.m4 xsize.m4 > .../m4/gettext.m4
 
+## 2022-09-28 modify to have prototypes, for clang 15.
+
 ## Then disable testing for libiconv prefix
 
 # gettext.m4 serial 59 (gettext-0.16.1)
@@ -596,7 +598,8 @@ static void
 #ifdef __cplusplus
 sigfpe_handler (int sig)
 #else
-sigfpe_handler (sig) int sig;
+// changed to use a prototype
+sigfpe_handler (int sig);
 #endif
 {
   /* Exit with code 0 if SIGFPE, with code 1 if any other signal.  */
@@ -606,7 +609,8 @@ sigfpe_handler (sig) int sig;
 int x = 1;
 int y = 0;
 int z;
-int nan;
+// clang 15 objects here
+int my_nan;
 
 int main ()
 {
@@ -621,7 +625,7 @@ int main ()
 #endif
 
   z = x / y;
-  nan = y / y;
+  my_nan = y / y;
   exit (1);
 }
 ]])],[gt_cv_int_divbyzero_sigfpe=yes],[gt_cv_int_divbyzero_sigfpe=no],[

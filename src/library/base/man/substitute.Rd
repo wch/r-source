@@ -1,6 +1,6 @@
 % File src/library/base/man/substitute.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2011, 2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substitute}
@@ -75,7 +75,9 @@ enquote(cl)
   \code{\link{missing}} for argument \sQuote{missingness},
   \code{\link{bquote}} for partial substitution,
   \code{\link{sQuote}} and \code{\link{dQuote}} for adding quotation
-  marks to strings,
+  marks to strings.
+  \code{\link{Quotes}} about forward, back, and double quotes \samp{'},
+  \samp{`}, and \samp{"}. % parseRd : can *not* use \code{"} nor \code{\"}; ditto for ' and `
 
   \code{\link{all.names}} to retrieve the symbol names from an expression
   or call.
