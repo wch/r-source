@@ -2868,7 +2868,7 @@ The webpage
 some information on which compilers are known to support recent C++
 features.
 
-C++ stanards have deprecated and later removed features.  Be aware that
+C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
 such as @code{unary_function} (deprecated in C++11, removed in C++17).
 
