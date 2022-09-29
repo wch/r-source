@@ -326,6 +326,9 @@
 
       \item Files can now be extracted even from very large zip archives
       (\PR{18390}, thanks to Martin Jakt).
+
+      \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date};
+      following up on the extension to \code{format()} them correctly.
     }
   }
 

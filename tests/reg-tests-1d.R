@@ -6102,6 +6102,13 @@ stopifnot(as.POSIXlt(.Date(2^31 + 10))$year == 5879680L)
 ## year was negative in R <= 4.2.1
 
 
+## as.Date(<nonfinite_POSIXlt>) :
+D <- .Date(c(7:20)*1000)
+D[15:18] <- c(Inf, -Inf, NA, NaN); D
+stopifnot( identical(D, as.Date(as.POSIXlt(D))) )
+## non-finite POSIXlt gave all  NA in R <= 4.2.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
