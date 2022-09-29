@@ -1304,7 +1304,8 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
      * the image used for the Cairo surface is going to be a
      * different size
      */
-    if (interpolate && (CAIRO_VERSION_MAJOR < 2) & (CAIRO_VERSION_MINOR < 6)) {
+    // clang 15 prefers & here for constant expressions.
+    if (interpolate & (CAIRO_VERSION_MAJOR < 2) & (CAIRO_VERSION_MINOR < 6)) {
         imageWidth = (int) (width + .5);
         imageHeight = abs((int) (height + .5));
     } else {    
@@ -1321,6 +1322,7 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
     cairo_translate(xd->cc, 0, -imageHeight/2.0);
 
     if (interpolate) {
+	// clang 15 prefers & here for constant expressions.
         if ((CAIRO_VERSION_MAJOR < 2) & (CAIRO_VERSION_MINOR < 6)) {
             /* CAIRO_EXTEND_PAD not supported for image sources 
              * so use graphics engine for interpolation 
