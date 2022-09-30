@@ -4999,8 +4999,8 @@ which can be overcome by setting
 FPIEFLAGS=-fPIE
 @end example
 @noindent
-in @file{config.site}. This has sufficed for both default and
-shared-library builds.
+in @file{config.site}. (As from @R{} 4.3.0 @command{configure} tries
+that value if it is unset.)
 
 It is recommended to use C flag @option{-Wno-strict-prototypes}
 (disabling a C23 feature) if using @code{-pedantic} in @command{clang}
