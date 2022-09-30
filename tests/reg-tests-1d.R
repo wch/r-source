@@ -6125,7 +6125,10 @@ stopifnot(exprs = {
     identical(as.character(D), unname(frmD))
     identical(unname(ok), is.finite(as.numeric(D)))
     identical(ok, is.finite(Dct))
-    identical(ok, is.finite(Dlt))
+    identical(ok, is.finite(Dlt))     # now works for POSIXlt
+    identical(is.nan(D), is.nan(Dlt))
+    identical(is.infinite(D), is.infinite(Dlt))
+    identical(D == -Inf, Dlt == -Inf)
 })
 ## is.finite() now works for POSIXlt
 
