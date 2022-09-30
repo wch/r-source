@@ -1366,7 +1366,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = La_svd_cmplx(a1, a2, a3, a4, CAR(args));
 	break;
     }
-    case 1000:
+    case 1000: // La_version()
     {
 	int major, minor, patch;
 	char str[20];
@@ -1375,7 +1375,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = mkString(str);
 	break;
     }
-    case 1001:
+    case 1001: // La_library()
     {
 #if defined(HAVE_DLADDR) && defined(HAVE_REALPATH)
 	Dl_info dl_info;
