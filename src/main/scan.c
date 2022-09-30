@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2021   The R Core Team.
+ *  Copyright (C) 1998-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -673,7 +673,7 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
     char *buffer = NULL;
     int c, strip, bch;
     R_xlen_t blksize, i, ii, j, n, nc, linesread, colsread;
-    R_xlen_t badline, nstring = 0;
+    R_xlen_t badline;
     R_StringBuffer buf = {NULL, 0, MAXELTSIZE};
 
     nc = xlength(what);
@@ -693,7 +693,6 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
 	    if (!isVector(w)) {
 		error(_("invalid '%s' argument"), "what");
 	    }
-	    if(TYPEOF(w) == STRSXP) nstring++;
 	    SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(w), blksize));
 	}
     }
