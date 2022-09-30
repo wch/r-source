@@ -6120,8 +6120,8 @@ stopifnot(exprs = {
     identical(as.character(D), as.character(Dlt))
     identical(      format(D),       format(Dlt) -> frmD)
     identical(names(D), names(frmD))
-    (Dlt == Dct)[ok <- is.finite(D)]
-    is.na((Dlt == Dct)[!ok])
+    (DeD <- Dlt == Dct)[ok <- is.finite(D)]
+    identical(is.na(DeD), is.na(D))
     identical(as.character(D), unname(frmD))
     identical(unname(ok), is.finite(as.numeric(D)))
     identical(ok, is.finite(Dct))
