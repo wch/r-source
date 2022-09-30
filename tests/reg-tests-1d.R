@@ -6107,6 +6107,27 @@ D <- .Date(c(7:20)*1000)
 D[15:18] <- c(Inf, -Inf, NA, NaN); D
 stopifnot( identical(D, as.Date(as.POSIXlt(D))) )
 ## non-finite POSIXlt gave all  NA in R <= 4.2.1
+##
+## POSIX[cl]t: keeping names, also w/ factors; is.finite() ...
+(D <- setNames(D, LETTERS[seq_along(D)]))
+fD <- factor(D)
+stopifnot(exprs = {
+    identical(fD, as.factor(D))
+    identical(names(D), names(fD))
+    ## identical(D, as.Date(fD)) -- FIXME
+    identical(D, as.Date(Dct <- as.POSIXct(D))) # also checks names(.) are kept
+    identical(D, as.Date(Dlt <- as.POSIXlt(D)))
+    identical(as.character(D), as.character(Dlt))
+    identical(      format(D),       format(Dlt) -> frmD)
+    identical(names(D), names(frmD))
+    (Dlt == Dct)[ok <- is.finite(D)]
+    is.na((Dlt == Dct)[!ok])
+    identical(as.character(D), unname(frmD))
+    identical(unname(ok), is.finite(as.numeric(D)))
+    identical(ok, is.finite(Dct))
+    identical(ok, is.finite(Dlt))
+})
+## is.finite() now works for POSIXlt
 
 
 

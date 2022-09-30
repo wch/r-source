@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -43,6 +43,9 @@ as.POSIXlt(x, tz = "", \dots)
            optional = FALSE, \dots)
 \method{as.POSIXlt}{numeric}(x, tz = "", origin, \dots)
 
+\method{as.POSIXct}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXlt}{Date}(x, tz = "UTC", \dots)
+
 \method{as.double}{POSIXlt}(x, \dots)
 }
 \arguments{
@@ -66,7 +69,7 @@ as.POSIXlt(x, tz = "", \dots)
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
   nearest second).  They can convert objects of the other class and of
-  class \code{"Date"} to these classes.  Dates without times are
+  class \code{"\link{Date}"} to these classes.  Dates without times are
   treated as being at midnight UTC.
 
   They can also convert character strings of the formats
@@ -202,9 +205,9 @@ as.POSIXlt(Sys.time(), "Australia/Darwin")
 }
 
 tab <- file.path(R.home("share"), "zoneinfo", "zone1970.tab")
-if(file.exists(tab)) {
+if(file.exists(tab)) { # typically on Windows; *not* on Linux
   cols <- c("code", "coordinates", "TZ", "comments")
-  tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone1970.tab"),
+  tmp <- read.delim(tab,
                     header = FALSE, comment.char = "#", col.names = cols)
   if(interactive()) View(tmp)
   head(tmp, 10)

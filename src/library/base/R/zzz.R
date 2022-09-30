@@ -262,6 +262,8 @@ assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
 ##   tools:::.deparse_S3_methods_table_for_base()
 ## for obtaining the representation used.
 ## Always sort with LC_COLLATE=C.
+#                   ^------------- well, we are close, but differ anyway
+### FIXME: Should be possible to *NOT* have to do all this manually here!
 .S3_methods_table <-
 matrix(c("!", "hexmode",
          "!", "octmode",
@@ -483,7 +485,10 @@ matrix(c("!", "hexmode",
          "format", "summaryDefault",
          "getDLLRegisteredRoutines", "DLLInfo",
          "getDLLRegisteredRoutines", "character",
-         "is.na", "POSIXlt",
+         "is.finite",   "POSIXlt",
+         "is.infinite", "POSIXlt",
+         "is.na",       "POSIXlt",
+         "is.nan",      "POSIXlt",
          "is.na", "data.frame",
          "is.na", "numeric_version",
          "is.na<-", "default",

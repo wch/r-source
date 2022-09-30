@@ -332,6 +332,9 @@
 
       \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date};
       following up on the extension to \code{format()} them correctly.
+
+      \item Have \code{is.finite()}, \code{is.infinite()}, and \code{is.nan()}
+      methods for \code{POSIXlt} date-time objects.
     }
   }
 

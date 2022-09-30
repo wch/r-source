@@ -242,6 +242,7 @@ as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 as.POSIXlt.factor <- function(x, ...)
 {
     y <- as.POSIXlt(as.character(x), ...)
+    ## as.character(.) dropping names ===>
     names(y$year) <- names(x)
     y
 }
@@ -628,8 +629,11 @@ as.list.POSIXct <- function(x, ...)
     y
 }
 
-is.na.POSIXlt <- function(x)
-    is.na(as.POSIXct(x))
+is.na.POSIXlt       <- function(x) is.na      (as.POSIXct(x))
+is.nan.POSIXlt      <- function(x) is.nan     (as.POSIXct(x))
+is.finite.POSIXlt   <- function(x) is.finite  (as.POSIXct(x))
+is.infinite.POSIXlt <- function(x) is.infinite(as.POSIXct(x))
+
 anyNA.POSIXlt <- function(x, recursive = FALSE)
     anyNA(as.POSIXct(x))
 
