@@ -287,6 +287,9 @@
       defaults to position-independent (PIE) executables whereas
       \command{gfortran} does not.  See the \dQuote{R Installation and
       Administration} manual for the setting required.
+
+      \item Many small changes to ease compilation (and suppress
+      warnings) with LLVM \command{clang} 15.
     }
   }
 
