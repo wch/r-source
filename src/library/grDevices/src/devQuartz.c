@@ -1374,7 +1374,7 @@ SEXP Quartz(SEXP args)
     SEXP tmps, bgs, canvass;
     double   width, height, ps;
     Rboolean antialias;
-    int      quartzpos, bg, canvas, module = 0;
+    int      bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
     const char *type, *mtype = 0, *family, *title;
     char *file = NULL;
@@ -1444,7 +1444,7 @@ SEXP Quartz(SEXP args)
 	}
     }
 
-    quartzpos = 1;
+//    quartzpos = 1;
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
