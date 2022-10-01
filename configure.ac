@@ -758,9 +758,6 @@ if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
 
-dnl substitute FPIEFLAGS as needed, e.g. from config.site
-AC_SUBST(FPIEFLAGS)
-
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
@@ -1188,19 +1185,29 @@ else
 fi
 
 ### type for Fortran 'hidden' character lengths, if any
+### Try setting FPIFLAGS if not already set.
 AC_MSG_CHECKING([for type of 'hidden' Fortran character lengths])
 if test "x${FC_LEN_T}" != "x"; then
   fc_len_t=${FC_LEN_T}
 else
   R_PROG_FC_CHAR_LEN_T
-  fc_len_t=${r_cv_prog_fc_char_len_t}
+  if test "${r_cv_prog_fc_char_len_t}" != "xunknown" ; then
+    fc_len_t=${r_cv_prog_fc_char_len_t}
+  fi
 fi
 AC_MSG_RESULT([${fc_len_t}])
 
-if test "x${fc_len_t}" != "xunknown"; then
+if test "x${fc_len_t}" = "x" ; then
+  AC_MSG_ERROR([FC_LEN_T must be non-empty.])
+fi
+
+if test "x${fc_len_t}" != "xunknown" ; then
    AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
                       [C type used for Fortran character lengths])
 fi
+
+dnl substitute FPIEFLAGS as needed, e.g. from config.site or above.
+AC_SUBST(FPIEFLAGS)
 
 
 AC_SUBST(CFLAGS)

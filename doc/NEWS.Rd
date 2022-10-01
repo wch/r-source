@@ -42,8 +42,7 @@
 
       \item There is now support for LLVM clang 15 on Linux, which
       defaults to position-independent (PIE) executables whereas
-      \command{gfortran} does not.  See the \dQuote{R Installation and
-      Administration} manual for the setting required.
+      \command{gfortran} does not.
 
       \item Many small changes to ease compilation (and suppress
       warnings) with LLVM \command{clang} 15.
