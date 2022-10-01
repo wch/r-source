@@ -85,6 +85,10 @@
 
       \item Files can now be extracted even from very large zip archives
       (\PR{18390}, thanks to Martin Jakt).
+
+      \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date}
+      and \code{POSIXct};
+      following up on the extension to \code{format()} them correctly.
     }
   }
 
@@ -108,7 +112,6 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
-
     }
   }
 }
