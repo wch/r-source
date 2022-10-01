@@ -44,7 +44,7 @@ double BM_norm_keep = 0.0;
 N01type N01_kind = INVERSION;
 
 #ifndef MATHLIB_STANDALONE
-typedef void * (*DL_FUNC)();
+typedef void * (*DL_FUNC)(void);
 extern DL_FUNC  User_norm_fun; /* declared and set in ../main/RNG.c */
 #endif
 
