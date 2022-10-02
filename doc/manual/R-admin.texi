@@ -3804,6 +3804,9 @@ session by package @CRANpkg{flexiblas}.  Apparently undocumented:
 FlexiBLAS on Fedora provides a complete LAPACK, but not the enhanced
 routines from ATLAS or OpenBLAS.
 
+BLAS implermentations which use parallel computations can be
+non-deterministic: this is known for ATLAS.
+
 @menu
 * ATLAS::
 * OpenBLAS and BLIS::
@@ -3871,7 +3874,6 @@ hyperthreaded CPUs without restricting affinities at compile-time to one
 virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
 @c http://math-atlas.sourceforge.net/atlas_install/node21.html
-
 
 @node OpenBLAS and BLIS, MKL, ATLAS, BLAS
 @subsubsection OpenBLAS and BLIS
