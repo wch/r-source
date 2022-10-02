@@ -4487,7 +4487,7 @@ second pass including the @code{\donttest} sections, (for the main
 architecture only).  Only for the first pass are the results compared
 to any @file{.Rout.save} file and timings analysed.  Overridden by
 @option{--run-donttest}.
-Default: false unless @option{-as-cran} is specified (which can be
+Default: false unless @option{--as-cran} is specified (which can be
 overridden by setting @samp{_R_CHECK_DONTTEST_EXAMPLES_=false}).
 
 @item _R_CHECK_XREFS_PKGS_ARE_DECLARED_
@@ -4518,17 +4518,17 @@ Default: false (but true for CRAN submission checks).
 Check if package code has @code{if()} condition which compare the class
 of an object to a string.
 See
-@uref{https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html}
+@uref{https://blog.r-project.org/2019/11/09/when-you-think-class.-think-again/}
 why this is a bad idea.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_RD_VALIDATE_RD2HTML_
-Check the validity of the package HTML help pages using HTML tidy
+Check the validity of the package HTML help pages using HTML Tidy
 (@uref{https://www.html-tidy.org/}) (if a suitable version is available
 on the system path for executables or its path is specified by
 environment variable @env{R_TIDYCMD}).  macOS users are advised to
-install 5.8.0 or later from @uref{http://binaries.html-tidy.org/}.
-Default: false (but true for CRAN submission checks). @option{-as-cran}
+install 5.8.0 or later from @uref{https://binaries.html-tidy.org/}.
+Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
 @end vtable
 
@@ -4539,7 +4539,7 @@ directory and setting @code{.libPaths()} to just that and
 installed somewhere other than @code{.Library}.  The temporary library
 is populated by symbolic links@footnote{under Windows, junction points,
 or copies if environment variable @env{R_WIN_NO_JUNCTIONS} has a
-non-empty value.} to installed packages not also in @code{.library}.
+non-empty value.} to installed packages not also in @code{.Library}.
 
 @vtable @code
 @item _R_CHECK_INSTALL_DEPENDS_
@@ -4579,7 +4579,7 @@ Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the checking of
 examples, tests or vignettes.  These can be used on their own, or
 with a false value to override @env{_R_CHECK_DEPENDS_ONLY_}.
 @c
-Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset..
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset.
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
