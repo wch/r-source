@@ -5001,7 +5001,7 @@ which can be overcome by setting
 FPIEFLAGS=-fPIE
 @end example
 @noindent
-in @file{config.site}. (As from @R{} 4.3.0 @command{configure} tries
+in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
 that value if it is unset.)
 
 @c It is recommended to use C flag @option{-Wno-strict-prototypes}
@@ -5259,6 +5259,7 @@ installers mentioned below, use a file @file{config.site} containing
 CC=clang
 OBJC=$CC
 FC="$LOCAL/gfortran/bin/gfortran -mtune=native"
+CPPFLAGS='-isystem $LOCAL/include'
 CXX=clang++
 @end example
 @noindent
