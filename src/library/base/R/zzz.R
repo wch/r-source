@@ -145,6 +145,7 @@ assign("standardGeneric", function(f, fdef) NULL, envir = .ArgsEnv)
 assign("storage.mode<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("substitute", function(expr, env) NULL, envir = .ArgsEnv)
 assign("switch", function(EXPR, ...) NULL, envir = .ArgsEnv)
+assign("toInteger", function(x) NULL, envir = .ArgsEnv)
 assign("tracemem", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
@@ -261,10 +262,8 @@ assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
 ## for computing the methods table and
 ##   tools:::.deparse_S3_methods_table_for_base()
 ## for obtaining the representation used.
-## Always sort with LC_COLLATE=C.
-#                   ^------------- well, we are close, but differ anyway
-### FIXME: Should be possible to *NOT* have to do all this manually here!
-.S3_methods_table <-
+## The sorting is "special" (LC_COLLATE = "C", but more), use :
+.S3_methods_table <- ## ==  Sys.setlocale("LC_COLLATE","C"); writeLines(tools:::.deparse_S3_methods_table_for_base())
 matrix(c("!", "hexmode",
          "!", "octmode",
          "$", "DLLInfo",
@@ -485,15 +484,15 @@ matrix(c("!", "hexmode",
          "format", "summaryDefault",
          "getDLLRegisteredRoutines", "DLLInfo",
          "getDLLRegisteredRoutines", "character",
-         "is.finite",   "POSIXlt",
+         "is.finite", "POSIXlt",
          "is.infinite", "POSIXlt",
-         "is.na",       "POSIXlt",
-         "is.nan",      "POSIXlt",
+         "is.na", "POSIXlt",
          "is.na", "data.frame",
          "is.na", "numeric_version",
          "is.na<-", "default",
          "is.na<-", "factor",
          "is.na<-", "numeric_version",
+         "is.nan", "POSIXlt",
          "is.numeric", "Date",
          "is.numeric", "POSIXt",
          "is.numeric", "difftime",
