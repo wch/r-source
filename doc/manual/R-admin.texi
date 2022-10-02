@@ -5004,12 +5004,12 @@ FPIEFLAGS=-fPIE
 in @file{config.site}. (As from @R{} 4.3.0 @command{configure} tries
 that value if it is unset.)
 
-It is recommended to use C flag @option{-Wno-strict-prototypes}
-(disabling a C23 feature) if using @code{-pedantic} in @command{clang}
-15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
-see the release notes at
-@uref{https://releases.llvm.org/15.0.0/tools/clang/docs/ReleaseNotes.html#id9},
-under `improvements to diagnostics'..
+@c It is recommended to use C flag @option{-Wno-strict-prototypes}
+@c (disabling a C23 feature) if using @code{-pedantic} in @command{clang}
+@c 15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
+@c see the release notes at
+@c @uref{https://releases.llvm.org/15.0.0/tools/clang/docs/ReleaseNotes.html#id9},
+@c under `improvements to diagnostics'..
 
 @c This was about 'Classic Flang'.  The newer version is not
 @c yet able to compile Fortran.
