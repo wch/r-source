@@ -698,10 +698,10 @@ void NORET R_signal_protect_error(void);
 void NORET R_signal_unprotect_error(void);
 void NORET R_signal_reprotect_error(PROTECT_INDEX i);
 
-const char *R_curErrorBuf();
+const char *R_curErrorBuf(void);
 Rboolean R_cycle_detected(SEXP s, SEXP child);
 
-void R_init_altrep();
+void R_init_altrep(void);
 void R_reinit_altrep_classes(DllInfo *);
 
 /* Defining NO_RINLINEDFUNS disables use to simulate platforms where
@@ -1519,8 +1519,8 @@ extern void R_initAssignSymbols(void);
 #ifdef R_USE_SIGNALS
 extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
 #endif
-extern SEXP R_getCurrentSrcref();
-extern SEXP R_getBCInterpreterExpression();
+extern SEXP R_getCurrentSrcref(void);
+extern SEXP R_getBCInterpreterExpression(void);
 
 void R_BCProtReset(R_bcstack_t *);
 
@@ -1812,7 +1812,7 @@ char	*R_HomeDir(void);
 Rboolean R_FileExists(const char *);
 Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
-int	R_GetFDLimit();
+int	R_GetFDLimit(void);
 int	R_EnsureFDLimit(int);
 
 /* environment cell access */
@@ -2066,13 +2066,15 @@ SEXP R_makeErrorCondition(SEXP call,
 			  int nextra, const char *format, ...);
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError1(SEXP call);
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix);
 SEXP R_makeCStackOverflowError(SEXP call, intptr_t usage);
-SEXP R_getProtectStackOverflowError();
-SEXP R_getExpressionStackOverflowError();
-SEXP R_getNodeStackOverflowError();
-void R_InitConditions();
+SEXP R_getProtectStackOverflowError(void);
+SEXP R_getExpressionStackOverflowError(void);
+SEXP R_getNodeStackOverflowError(void);
+void R_InitConditions(void);
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);
@@ -2157,7 +2159,7 @@ int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
 void resetICUcollator(Rboolean disable); /* from util.c */
-void dt_invalidate_locale(); /* from Rstrptime.h */
+void dt_invalidate_locale(void); /* from Rstrptime.h */
 extern int R_OutputCon; /* from connections.c */
 extern int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
 void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */

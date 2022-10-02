@@ -66,7 +66,7 @@ static int order = 1;
 static SEXP *saveds = NULL;
 static R_len_t *savedtl = NULL, nalloc = 0, nsaved = 0;
 
-static void savetl_init()
+static void savetl_init(void)
 {
     if (nsaved || nalloc || saveds || savedtl)
 	error("Internal error: savetl_init checks failed (%d %d %p %p).",
@@ -83,7 +83,7 @@ static void savetl_init()
     }
 }
 
-static void savetl_end()
+static void savetl_end(void)
 {
     // Can get called if nothing has been saved yet (nsaved == 0), or
     // even if _init() has not been called yet (pointers NULL). Such as
@@ -166,7 +166,7 @@ static void mpush(int x, int n)
 	gsmax[flip] = x;
 }
 
-static void flipflop()
+static void flipflop(void)
 {
     flip = 1 - flip;
     gsngrp[flip] = 0;
@@ -175,7 +175,7 @@ static void flipflop()
 	growstack((uint64_t)(gsalloc[1 - flip]) * 2);
 }
 
-static void gsfree()
+static void gsfree(void)
 {
     free(gs[0]);
     free(gs[1]);

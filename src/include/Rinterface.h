@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2017  The R Core Team.
+ *  Copyright (C) 1998--2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataviewer)(SEXP, SEXP, SEXP, SEXP);
-extern void (*ptr_R_ProcessEvents)();
+extern void (*ptr_R_ProcessEvents)(void);
 
 
 /* These two are not used by R itself, but are used by the tcltk package */

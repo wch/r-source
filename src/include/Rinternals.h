@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2021  The R Core Team.
+ *  Copyright (C) 1999--2022  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -573,7 +573,7 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 #endif
 SEXP R_tryEval(SEXP, SEXP, int *);
 SEXP R_tryEvalSilent(SEXP, SEXP, int *);
-SEXP R_GetCurrentEnv();
+SEXP R_GetCurrentEnv(void);
 
 Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean, int);
@@ -648,7 +648,7 @@ SEXP R_tryCatchError(SEXP (*)(void *), void *,        /* body closure*/
 		     SEXP (*)(SEXP, void *), void *); /* handler closure */
 SEXP R_withCallingErrorHandler(SEXP (*)(void *), void *, /* body closure*/
 			       SEXP (*)(SEXP, void *), void *); /* handler closure */
-SEXP R_MakeUnwindCont();
+SEXP R_MakeUnwindCont(void);
 void NORET R_ContinueUnwind(SEXP cont);
 SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
                      void (*cleanfun)(void *data, Rboolean jump),
@@ -1196,7 +1196,7 @@ void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp
 void (SET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
 void (UNSET_S4_OBJECT)(SEXP x); // used by Rcpp (maybe?)
-const char *R_curErrorBuf(); // used by unix */
+const char *R_curErrorBuf(void); // used by unix */
 int (IS_SCALAR)(SEXP x, int type); // used by symengine */
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 
