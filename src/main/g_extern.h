@@ -49,8 +49,8 @@
    This type def taken from sys-defines.h
 */
 typedef int bool0;
-#define false 0
-#define true 1
+#define false_ 0
+#define true_ 1
 
 /*************************************************************************/
 /* DEFINITIONS RELATED TO OUR FONT DATABASE (g_fontdb.c and g_fontd2.c)  */
