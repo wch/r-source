@@ -40,9 +40,9 @@
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
 
-      \item There is now support for LLVM clang 15 on Linux, which
-      defaults to position-independent (PIE) executables whereas
-      \command{gfortran} does not.
+      \item There is now \command{configure} support for LLVM clang 15
+      on Linux, which defaults to position-independent (PIE) executables
+      whereas \command{gfortran} does not.
 
       \item Many small changes to ease compilation (and suppress
       warnings) with LLVM \command{clang} 15.
@@ -86,9 +86,12 @@
       \item Files can now be extracted even from very large zip archives
       (\PR{18390}, thanks to Martin Jakt).
 
-      \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date}
-      and \code{POSIXct};
+      \item Non-finite objects of class \code{"POSIXlt"} are now
+      correctly coerced to classes \code{"Date"} and \code{"POSIXct"};
       following up on the extension to \code{format()} them correctly.
+
+      \item Added methods for \code{is.finite()}, \code{is.infinite()}
+      and \code{is.nan()} for \code{"POSIXlt"} date-time objects.
     }
   }
 
