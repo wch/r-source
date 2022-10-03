@@ -54,7 +54,7 @@
   It is possible for an \R package (or an \R front-end such as RStudio)
   to provide further graphics devices
   and several packages on CRAN do so.  These include other devices outputting
-  SVG and PGF/TiKZ (TeX-based graphics, see \url{http://pgf.sourceforge.net/}).
+  SVG and PGF/TiKZ (TeX-based graphics, see \url{https://pgf.sourceforge.net/}).
 }
 \seealso{
   The individual help files for further information on any of the
