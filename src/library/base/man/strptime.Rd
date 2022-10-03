@@ -20,7 +20,8 @@
 \method{format}{POSIXlt}(x, format = "", usetz = FALSE,
        digits = getOption("digits.secs"), \dots)
 
-\method{as.character}{POSIXt}(x, \dots)
+\method{as.character}{POSIXt}(x, digits = if(inherits(x, "POSIXlt")) 14L else 6L,
+             OutDec = ".", \dots)
 
 strftime(x, format = "", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
@@ -44,12 +45,17 @@ strptime(x, format, tz = "")
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}
-  \item{digits}{integer determining the \code{format()}ing of seconds when needed.}
+  \item{digits}{integer determining the \code{format()}ing of seconds when
+    needed.  Note that the defaults for \code{format()} and
+    \code{as.character()} differ on purpose.}
+  \item{OutDec}{a 1-character string specifying the decimal point to be
+    used; the default is \emph{not} \code{\link{getOption}("OutDec")} on
+    purpose.}
 }
 \details{
   The \code{format} and \code{as.character} methods and \code{strftime}
   convert objects from the classes \code{"\link{POSIXlt}"} and
-  \code{"\link{POSIXct}"} to character vectors.
+  \code{"\link{POSIXct}"} to \code{\link{character}} vectors.
 
   \code{strptime} converts character vectors to class \code{"POSIXlt"}:
   its input \code{x} is first converted by \code{\link{as.character}}.

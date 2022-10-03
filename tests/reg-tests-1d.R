@@ -6157,6 +6157,24 @@ stopifnot(exprs = {
     (Dlct  - Dlt2)[ok] == 5L
 })
 ## both methods return(x)ed immediately, when class "matched"
+op <- options(OutDec = ",") # the "infamous default" in some places should *not* have an effect:
+xf <- as.POSIXlt(chf <- c("2007-07-27 16:11:03.000002",
+                          "2011-10-01 12:34:56.3",
+                          "2022-10-02 13:14:15.9876543210123456"))
+dd <- setNames(, c(0:6, 11:15))
+t(sapply(dd, as.character.POSIXt, x = xf)) # get at most 13 dits after ".", because
+as.character(xf[3]$sec) # does get these but not more; hence:
+chf[3] <- sub("3456$", "3", chf[3])
+stopifnot(exprs = {
+    identical(as.character(xf), chf)
+    identical(as.character(xf, OutDec = ","), sub("[.]", ",", chf))
+    identical(as.character(xf, digits = 5)[-3], sub("[.]00*2$","", chf[-3]))
+})
+## failed for ~ 1 day in R-devel
+(CharleMagne.crowned <- as.POSIXlt(ISOdate(774,7,10)))
+stopifnot(identical(as.character(CharleMagne.crowned),
+                    "774-07-10 12:00:00"))
+options(op) # reset
 
 
 

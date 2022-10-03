@@ -592,9 +592,13 @@ function(x, ..., value) {
 
 ## Alternatively use  lapply(*, function(.) .Internal(format.POSIXlt(., digits=0))
 ## *and* append the fractional seconds ('entirely') ..
-as.character.POSIXt <- function(x, ...) {
+as.character.POSIXt <- function(x, # digits after decimal:
+                                digits = if(inherits(x, "POSIXlt")) 14L else 6L,
+                                OutDec = ".", # *not* depending on options() !
+                                ...) {
     if(length(dotn <- ...names()) && "format" %in% dotn)
         warning("as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?")
+    if(missing(digits)) force(digits)
     x <- as.POSIXlt(x)
     s <- x$sec
     ## to distinguish {NA, 0, non-0}:
@@ -609,13 +613,13 @@ as.character.POSIXt <- function(x, ...) {
     }
     if(any(ok)) {
         if(anyN) { x <- x[ok]; time <- time[ok] }
-        s <- trunc(x$sec)
-        fs <- x$sec - s
         r1 <- sprintf("%d-%02d-%02d", 1900 + x$year, x$mon+1L, x$mday)
-        if(any(n0 <- time != 0)) # add time if not 0
-            r1[n0] <- paste(r1[n0],
-                        sprintf("%02d:%02d:%02d%s", x$hour[n0], x$min[n0], s[n0],
-                                substr(as.character(fs[n0]), 2L, 32L)))
+        if(any(n0 <- time != 0)) { # add time if not 0
+            s <- round(x$sec[n0], digits) # now, assume s >= 0 :
+            if(getOption("OutDec") != OutDec) { op <- options(OutDec = OutDec); on.exit(op) }
+            sch <- paste0(c("","0")[(s < 10) + 1L], as.character(s))
+            r1[n0] <- paste(r1[n0], sprintf("%02d:%02d:%s", x$hour[n0], x$min[n0], sch))
+        }
         r[ok] <- r1
     }
     r

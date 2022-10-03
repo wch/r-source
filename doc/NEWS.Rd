@@ -239,6 +239,8 @@
       methods for atomic vectors such as numbers, and is no longer
       influenced by \code{options()}.
       Ditto for \code{as.character(<Date>)}.
+      The \code{as.character()} method gets arguments \code{digits} and \code{OutDec}
+      with defaults \emph{not} depending on \code{options()}.
       Use of \code{as.character(*, format = .)} now warns.
 
       \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
