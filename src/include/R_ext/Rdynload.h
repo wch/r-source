@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 2001-2022  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -34,8 +34,9 @@
 
 #include <R_ext/Boolean.h>
 
-/* called with a variable argument set */
-typedef void * (*DL_FUNC)();
+/* Called with a variable argument set after casting to a compatible
+   function pointer.  */
+typedef void * (*DL_FUNC)(void);
 
 typedef unsigned int R_NativePrimitiveArgType;
 
