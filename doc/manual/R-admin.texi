@@ -5459,24 +5459,25 @@ what is missing.  At the time of writing using pre-built components
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://github.com/llvm/llvm-project/releases/} (at the time of
-writing only for Intel). In particular, these include support for OpenMP
-which Apple @command{clang} does not.  Some of these have included
-support for the ASAN and UBSAN sanitizers.
+@uref{https://github.com/llvm/llvm-project/releases/} (sometimes only
+for Intel and usually unsigned/not notarized which makes them hard to
+use, especially on @code{arm64}).  In particular, these include support
+for OpenMP which Apple @command{clang} does not.  Some of these have
+included support for the ASAN and UBSAN sanitizers.
 
 Suppose one of these distributions is installed under
-@file{/usr/local/llvm}. Use a file @file{config.site} containing
+@file{$LOCAL/llvm}. Use a file @file{config.site} containing
 @example
-CC=/usr/local/llvm/bin/clang
+CC=$LOCAL/llvm/bin/clang
 OBJC=$CC
-FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/llvm/bin/clang++
-LDFLAGS="-L/usr/local/llvm/lib -L/uar/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/llvm/lib:/usr/local/lib
+FC=$LOCAL/gfortran/bin/gfortran
+CXX=$LOCAL/llvm/bin/clang++
+LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
+R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/llvm/lib/libomp.dylib}, is found when
+library, here @file{$LOCAL/llvm/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5488,9 +5489,9 @@ rather than the system ones.
 
 For Mojave and later the system paths need to be specified @emph{via}
 @example
-CC="/usr/local/llvm/bin/clang -isysroot
+CC="$LOCAL/llvm/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/llvm/bin/clang++ -isysroot
+CXX="$LOCAL/llvm/bin/clang++ -isysroot
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent
