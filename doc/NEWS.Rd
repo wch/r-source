@@ -247,9 +247,9 @@
       methods also behave as \code{good citizen} methods and back compatibility
       option \code{keepStr = TRUE}.
 
-      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
-      argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
-      the R-devel mailing list.
+      \item The \code{as.POSIXlt(<POSIXlt>)} and
+      \code{as.POSIXct(<POSIXct>)} default methods now do obey their
+      \code{tz} argument, also in this case.
     }
   }
 }
