@@ -3804,7 +3804,7 @@ session by package @CRANpkg{flexiblas}.  Apparently undocumented:
 FlexiBLAS on Fedora provides a complete LAPACK, but not the enhanced
 routines from ATLAS or OpenBLAS.
 
-BLAS implermentations which use parallel computations can be
+BLAS implementations which use parallel computations can be
 non-deterministic: this is known for ATLAS.
 
 @menu
