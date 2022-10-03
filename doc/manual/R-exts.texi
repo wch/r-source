@@ -6074,7 +6074,7 @@ is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
 has found quite a number of errors wheere functions have been declared
 without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
-compilers.  (It already is for LLVM @commend{clang} in C23 mode.)
+compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
 @end itemize
 
