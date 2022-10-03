@@ -244,6 +244,10 @@
       \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
       methods also behave as \code{good citizen} methods and back compatibility
       option \code{keepStr = TRUE}.
+
+      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
+      argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
+      the R-devel mailing list.
     }
   }
 }

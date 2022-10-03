@@ -6132,6 +6132,32 @@ stopifnot(exprs = {
 })
 ## is.finite() now works for POSIXlt
 
+## as.POSIX?t(<POSIX?t>, tz=*) now works, too:
+stopifnot(inherits(Dct, "POSIXct"),
+          inherits(Dlt, "POSIXlt"))
+Sys.getenv("TZ")  #  "Australia/Melbourne"   (set above)
+mtz <- "UTC-5"
+head(Dct2  <- as.POSIXct(Dct, tz = mtz), 3)
+head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POISXlt "are different"
+head(Dlct2 <- as.POSIXlt(Dct2),          3)
+head(Dlct  <- as.POSIXlt(Dct) ,          3)
+no_tz <- function(.) `attr<-`(., "tzone", NULL)
+stopifnot(exprs = {
+    identical(mtz, attr(Dct2, "tzone"))
+    identical(mtz, attr(Dlt2, "tzone"))
+    (Dct2 - Dct)[ok] == 0
+    identical(no_tz(Dct2), no_tz(Dct))
+    identical(no_tz(Dlt2), no_tz(Dlt))
+    ## However (!!)
+    (Dct2  - Dct)[ok] == 0
+    ## Have 2 groups" which are "equal":  { Dlt "==" Dlct "==" Dlct2 } and  Dlt2  which differs by 5
+    (Dlt2  - Dlt )[ok] == -5L # !!!
+    (Dlct2 - Dlt )[ok] == 0L
+    (Dlct  - Dlt )[ok] == 0L
+    (Dlct  - Dlt2)[ok] == 5L
+})
+## both methods return(x)ed immediately, when class "matched"
+
 
 
 ## keep at end
