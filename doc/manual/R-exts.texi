@@ -6063,6 +6063,14 @@ Second, the first argument is of type @code{size_t} and recent compilers
 are warning about passing signed arguments (which could get promoted to
 ridiculously large values).
 
+@item
+For C code, consider using the flag @option{-Wstrict-prototypes} which
+is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
+has found quite a number of errors wheere functions have been declared
+without arguments (a function without arguments should have prototype
+@code{fn(void)}) and is likely to become the default in future
+compilers.  (It already is for LLVM @commend{clang} in C23 mode.)
+
 @end itemize
 
 Some additional information for C++ is available at
