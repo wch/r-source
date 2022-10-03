@@ -43,8 +43,8 @@ as.POSIXlt(x, tz = "", \dots)
            optional = FALSE, \dots)
 \method{as.POSIXlt}{numeric}(x, tz = "", origin, \dots)
 
-\method{as.POSIXct}{Date}(x, tz = "UTC", \dots)
-\method{as.POSIXlt}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXct}{Date}(x, \dots)
+\method{as.POSIXlt}{Date}(x, \dots)
 
 \method{as.double}{POSIXlt}(x, \dots)
 }
@@ -86,6 +86,7 @@ as.POSIXlt(x, tz = "", \dots)
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
   \code{\link{Sys.setlocale}}.  This most often affects the use of
+  \code{\%a}, \code{\%A} (weekday names),
   \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
 
   Logical \code{NA}s can be converted to either of the classes, but no
@@ -166,9 +167,9 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
 (now <- as.POSIXlt(Sys.time())) # the current datetime, as class "POSIXlt"
-unlist(unclass(now))          # a list shown as a named vector
+str(unclass(now))             # the internal list ; use now$hour, etc :
 now$year + 1900               # see ?DateTimeClasses
-months(now); weekdays(now)    # see ?months
+months(now); weekdays(now)    # see ?months; using LC_TIME locale
 
 ## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
 ## (the origin used by SAS)
