@@ -27,50 +27,61 @@ mapStyle <- function(x) {
     match(x, c("normal", "italic", "oblique"))
 }
 
-glyphWidth <- function(w, name="width", left="left") {
+glyphWidth <- function(w, label="width", left="left") {
     if (!length(w) ||
-        length(w) != length(name) ||
-        length(name) != length(left))
+        length(w) != length(label) ||
+        length(label) != length(left))
         stop("length of arguments must match (and be greater than 0)")
     w <- as.numeric(w)
     if (any(!is.finite(w))) stop("Invalid glyph width(s)")
-    names(w) <- as.character(name)
+    names(w) <- as.character(label)
     attr(w, "anchor") <- as.character(left)
     class(w) <- "GlyphWidth"
     w
 }
 
-glyphWidthAnchor <- function(w, name) {
+glyphWidthLeft <- function(w, label) {
     if (!inherits(w, "GlyphWidth")) stop("Invalid glyph width")
-    if (!name %in% names(w)) {
+    if (!label %in% names(w)) {
         warning("Unknown width; using left anchor")
         return("left")
     }
-    which <- match(name, names(w))
+    which <- match(label, names(w))
     attr(w, "anchor")[which]
 }
 
-glyphHeight <- function(h, name="height", bottom="bottom") {
+glyphHeight <- function(h, label="height", bottom="bottom") {
     if (!length(h) ||
-        length(h) != length(name) ||
-        length(name) != length(bottom))
+        length(h) != length(label) ||
+        length(label) != length(bottom))
         stop("length of arguments must match (and be greater than 0)")
     h <- as.numeric(h)
     if (any(!is.finite(h))) stop("Invalid glyph height(s)")
-    names(h) <- as.character(name)
+    names(h) <- as.character(label)
     attr(h, "anchor") <- as.character(bottom)
     class(h) <- "GlyphHeight"
     h
 }
 
-glyphHeightAnchor <- function(h, name) {
+glyphHeightBottom <- function(h, label) {
     if (!inherits(h, "GlyphHeight")) stop("Invalid glyph height")
-    if (!name %in% names(h)) {
+    if (!label %in% names(h)) {
         warning("Unknown height; using bottom anchor")
         return("bottom")
     }
-    which <- match(name, names(h))
+    which <- match(label, names(h))
     attr(h, "anchor")[which]
+}
+
+glyphAnchor <- function(value, label) {
+    if (!length(value) ||
+        length(value) != length(label))
+        stop("length of arguments must match (and be greater than 0)")
+    value <- as.numeric(value)
+    if (any(!is.finite(value))) stop("Invalid glyph anchor")
+    names(value) <- as.character(label)
+    class(value) <- "GlyphAnchor"
+    value
 }
 
 glyphInfo <- function(id, x, y,
@@ -97,18 +108,19 @@ glyphInfo <- function(id, x, y,
         height <- glyphHeight(height)
     ## Check anchors
     if (missing(hAnchor))
-        hAnchor <- c(left=min(x), right=min(x) + width[1],
-                     centre=min(x) + width[1]/2, center=min(x) + width[1]/2)
+        hAnchor <- glyphAnchor(c(min(x), min(x) + width[1],
+                                 min(x) + width[1]/2),
+                               label=c("left", "right", "centre"))
     if (missing(vAnchor))
-        vAnchor <- c(bottom=min(y), top=min(y) + height[1],
-                     centre=min(y) + height[1]/2, center=min(y) + height[1]/2)
-    if (!is.numeric(hAnchor) || !is.numeric(vAnchor))
-        stop("Anchors must be numeric")
+        vAnchor <- glyphAnchor(c(min(y), min(y) + height[1],
+                                 min(y) + height[1]/2),
+                               label=c("bottom", "top", "centre"))
+    if (!inherits(hAnchor, "GlyphAnchor"))
+        hAnchor <- glyphAnchor(hAnchor, names(hAnchor))
+    if (!inherits(vAnchor, "GlyphAnchor"))
+        vAnchor <- glyphAnchor(vAnchor, names(vAnchor))
     hNames <- names(hAnchor)
     vNames <- names(vAnchor)
-    if (length(unique(hNames)) != length(hAnchor) ||
-        length(unique(vNames)) != length(vAnchor))
-        stop("Every anchor must have a unique name")
     if (!("left" %in% hNames && "bottom" %in% vNames))
         stop('There must be anchors named "left" and "bottom"')
     if (!"right" %in% hNames)
@@ -127,8 +139,6 @@ glyphInfo <- function(id, x, y,
         hAnchor <- c(hAnchor, center=unname(hAnchor["centre"]))
     if (!"center" %in% vNames)
         vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
-    ## Check width/height against anchors
-    
     ## Build glyph info
     info <- data.frame(id, x, y,
                        family, weight, style, size, file, index)
