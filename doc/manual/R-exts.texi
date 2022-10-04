@@ -11158,6 +11158,16 @@ pointer with a call of the form
 @example
 p_myCfun = R_GetCCallable("packA", "myCfun");
 @end example
+@noindent
+As the type @code{DL_FUNC} is only appropriate for functions with no
+arguments, other users will need to cast to an appopriate type.  For
+example
+@example
+typedef SEXP (*na_omit_xts_func) (SEXP x);
+...
+  na_omit_xts_func fun = (na_omit_xts_func) R_GetCCallable("xts", "na_omit_xts");
+  return fun(x);
+@end example
 
 The author of @pkg{packB} is responsible for ensuring that
 @code{p_myCfun} has an appropriate declaration. In the future @R{} may

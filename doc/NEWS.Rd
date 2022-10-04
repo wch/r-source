@@ -148,6 +148,11 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
+
+      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
+      has been changed to be fully C-compliant.  This means that
+      functions loaded \emph{via} for example \code{R_GetCCallable} need
+      to be cast to an appopriate type if they have any arguments.
     }
   }
 
