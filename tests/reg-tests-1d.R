@@ -6229,14 +6229,13 @@ datePOSIXchk <- function(d, tz) {
 ##
 d1 <- as.Date(c("2000-02-29", "2001-04-01"))
 otz <- OlsonNames()
-for(tz in c("GMT", "EST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Conakry",
+for(tz in c("GMT", "EST", "BST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Conakry",
             "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai", "Asia/Tokyo",
             "Canada/Newfoundland", "Europe/Dublin", "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
-    stopifnot(tz %in% otz)
+    if(!(tz %in% otz)) message(tz, " is *not* in this platform's OlsonNames()")
     datePOSIXchk(d1, tz)
 }
-## not in OlsonNames() :
-datePOSIXchk(d1, "BST")
+## several of the identities datePOSIXchk() failed in R <= 4.2.x
 
 
 
