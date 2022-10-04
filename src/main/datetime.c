@@ -879,6 +879,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(UseTZ == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "usetz");
     SEXP tz = getAttrib(x, install("tzone"));
+    if(!isString(tz))
+	error(_("invalid '%s'"), "attr(x, \"tzone\")");
 
     const char *tz1;
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
