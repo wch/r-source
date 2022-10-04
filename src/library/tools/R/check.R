@@ -5461,6 +5461,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wpointer-sign\\]",
                              ## gcc's version of clang's -Wformat
                              ": warning: .* \\[-Wformat=\\]",
+                             ## gcc and clang with -Wstrict-prototypes
+                             ": warning: .* \\[-Wstrict-prototypes\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
