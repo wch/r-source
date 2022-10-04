@@ -6225,7 +6225,6 @@ datePOSIXchk <- function(d, tz) {
             ## and the two groups (of 3 each) are equal, too
             PLdate == PCdate
         })
-    })
 }
 ##
 d1 <- as.Date(c("2000-02-29", "2001-04-01"))
