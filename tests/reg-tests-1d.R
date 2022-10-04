@@ -6204,6 +6204,10 @@ datePOSIXchk <- function(d, tz) {
     diffD <- PLdate - PCdate
     cat("PLdate - PCdate:", capture.output(diffD[1]), "\n")
     ##
+    if(length(delta <- unique(diffD)) != 1L) {
+        cat(sprintf(" #{unique diffD values} (typically 1), here %d:\n", length(delta)))
+        print(delta)
+    }
     stopifnot(exprs = {
         PLpc == PCdate
         PLpc == PLpcz
@@ -6213,11 +6217,10 @@ datePOSIXchk <- function(d, tz) {
         identical(PCpl, PCplz) # and typically *not* identical to  PLdate, but still equal:
         PCpl == PLdate
         ##
-        length(delta <- unique(diffD)) == 1L
-        PLdate - PLpc  == delta
-        PLdate - PLpcz == delta
-        PCpl  - PCdate == delta
-        PCplz - PCdate == delta
+        PLdate - PLpc  == diffD
+        PLdate - PLpcz == diffD
+        PCpl  - PCdate == diffD
+        PCplz - PCdate == diffD
     })
     if(UTC.) ## UTC-equivalent timezone
         stopifnot(exprs = {
