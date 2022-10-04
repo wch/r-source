@@ -221,11 +221,12 @@ Sys.timezone <- function(location = TRUE)
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
-as.POSIXlt.Date <- function(x, ...) {
-    if(any((y <- unclass(x)) > .Machine$integer.max, na.rm = TRUE))
-        as.POSIXlt(.POSIXct(y * 86400), tz = "UTC")
-    else
-        .Internal(Date2POSIXlt(x))
+as.POSIXlt.Date <- function(x, tz = "UTC", ...) {
+    as.POSIXlt(if(any((y <- unclass(x)) > .Machine$integer.max, na.rm = TRUE))
+                   .POSIXct(y * 86400)
+               else
+                   .Internal(Date2POSIXlt(x))
+             , tz = tz)
 }
 
 ## ## Moved to packages date and chron.
@@ -313,7 +314,7 @@ as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 
-as.POSIXct.Date <- function(x, ...) .POSIXct(unclass(x)*86400)
+as.POSIXct.Date <- function(x, tz = "UTC", ...) .POSIXct(unclass(x)*86400, tz=tz, ...)
 
 ## ## Moved to package date
 ## as.POSIXct.date <- function(x, ...)

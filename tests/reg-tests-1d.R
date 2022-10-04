@@ -6132,6 +6132,7 @@ stopifnot(exprs = {
 })
 ## is.finite() now works for POSIXlt
 
+
 ## as.POSIX?t(<POSIX?t>, tz=*) now works, too:
 stopifnot(inherits(Dct, "POSIXct"),
           inherits(Dlt, "POSIXlt"))
@@ -6175,6 +6176,69 @@ stopifnot(exprs = {
 stopifnot(identical(as.character(CharleMagne.crowned),
                     "774-07-10 12:00:00"))
 options(op) # reset
+
+
+## as.POSIX[cl]t(<Date>, tz = *)
+isUTC <- function(tz)
+    switch(tz,
+           "UTC" =, "GMT" = , "Etc/UTC" = , "Etc/GMT" = , "GMT0" = , "GMT+0" = , "GMT-0" = TRUE,
+           FALSE)
+identical3 <- function(a,b,c) identical(a,b) && identical(b,c)
+datePOSIXchk <- function(d, tz) {
+    stopifnot(inherits(d, "Date"), is.character(tz))
+    UTC. <- isUTC(tz)
+    ## cat(sprintf("\ntz = '%s'%s, Date = '%s':\n      ------------",
+    ##             tz, if(UTC.)"(= UTC)" else "", paste(format(d), collapse=", ")))
+    PCdate <- as.POSIXct(d, tz = tz); PLpc <- as.POSIXlt(PCdate); PLpcz <- as.POSIXlt(PCdate, tz = tz)
+    PLdate <- as.POSIXlt(d, tz = tz); PCpl <- as.POSIXct(PLdate); PCplz <- as.POSIXct(PLdate, tz = tz)
+    m <- rbind(PLdate = format(PLdate, usetz=TRUE)
+      , PCdate = format(PCdate, usetz=TRUE)
+      , PLpc   = format(PLpc,   usetz=TRUE)
+      , PLpcz  = format(PLpcz,  usetz=TRUE)
+      , PCpl   = format(PCpl,   usetz=TRUE)
+      , PCplz  = format(PCplz,  usetz=TRUE)
+    )
+    colnames(m) <- rep("", ncol(m))
+    print(m[c(1:2,5L), ]) # print() those three which are "typically" different
+    ##
+    diffD <- PLdate - PCdate
+    cat("PLdate - PCdate:", capture.output(diffD[1]), "\n")
+    ##
+    stopifnot(exprs = {
+        PLpc == PCdate
+        PLpc == PLpcz
+        ## Not  identical3(PCdate, PLpc, PLpcz), but identically formatted:
+        identical3(m["PCdate",], m["PLpc",], m["PLpcz",])
+        ##
+        identical(PCpl, PCplz) # and typically *not* identical to  PLdate, but still equal:
+        PCpl == PLdate
+        ##
+        length(delta <- unique(diffD)) == 1L
+        PLdate - PLpc  == delta
+        PLdate - PLpcz == delta
+        PCpl  - PCdate == delta
+        PCplz - PCdate == delta
+    })
+    if(UTC.) ## UTC-equivalent timezone
+        stopifnot(exprs = {
+            delta == 0
+            ## and the two groups (of 3 each) are equal, too
+            PLdate == PCdate
+        })
+    })
+}
+##
+d1 <- as.Date(c("2000-02-29", "2001-04-01"))
+otz <- OlsonNames()
+for(tz in c("GMT", "EST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Conakry",
+            "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai", "Asia/Tokyo",
+            "Canada/Newfoundland", "Europe/Dublin", "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
+    stopifnot(tz %in% otz)
+    datePOSIXchk(d1, tz)
+}
+## not in OlsonNames() :
+datePOSIXchk(d1, "BST")
+
 
 
 

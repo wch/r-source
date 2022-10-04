@@ -43,8 +43,8 @@ as.POSIXlt(x, tz = "", \dots)
            optional = FALSE, \dots)
 \method{as.POSIXlt}{numeric}(x, tz = "", origin, \dots)
 
-\method{as.POSIXct}{Date}(x, \dots)
-\method{as.POSIXlt}{Date}(x, \dots)
+\method{as.POSIXct}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXlt}{Date}(x, tz = "UTC", \dots)
 
 \method{as.double}{POSIXlt}(x, \dots)
 }
