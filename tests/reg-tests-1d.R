@@ -6239,7 +6239,10 @@ for(tz in c("GMT", "EST", "BST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Con
     datePOSIXchk(d1, tz)
 }
 ## several of the identities datePOSIXchk() failed in R <= 4.2.x
-
+## unnecessarily passing 'origin'
+ct <- as.POSIXct(.Date(19000), origin="1970-01-01")
+stopifnot(identical(as.Date(ct), .Date(19000)))
+## as.POSIXct.Date() passed on 'origin' raising an error for ~25 hours
 
 
 

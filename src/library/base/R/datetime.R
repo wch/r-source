@@ -314,7 +314,8 @@ as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 
-as.POSIXct.Date <- function(x, tz = "UTC", ...) .POSIXct(unclass(x)*86400, tz=tz, ...)
+as.POSIXct.Date <- function(x, tz = "UTC", ...) .POSIXct(unclass(x)*86400, tz=tz)
+                                        #  \\\ do *not* pass these
 
 ## ## Moved to package date
 ## as.POSIXct.date <- function(x, ...)
