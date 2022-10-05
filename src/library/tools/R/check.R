@@ -3590,11 +3590,12 @@ add_dummies <- function(dir, Log)
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
                 ## -Wno-dev is from qt, not a compiler flag.
+                ## -Wstrict-prototypea is long supported by gcc and LLVM/Apple clang.
                 except <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_KNOWN_", "")
                 except <- unlist(strsplit(except, "\\s", perl = TRUE))
                 warns <- setdiff(warns,
                                  c(except, "-Wall", "-Wextra", "-Weverything",
-                                   "-Wno-dev"))
+                                   "-Wno-dev", "-Wstrict-prototypes"))
                 warns <- warns[!startsWith(warns, "-Wl,")] # linker flags
                 diags <- grep(" -fno-diagnostics-show-option", tokens,
                               useBytes = TRUE, value = TRUE)
