@@ -6262,6 +6262,16 @@ stopifnot(exprs = {
 ## worked (but partly  differently!) in R <= 4.2.x
 
 
+## as.POSIXct(<numeric>) & as.POSIXlt(*) :
+for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33)))
+    for(tz in c("", "GMT", "NZ", "Pacific/Fiji")) {
+        n <- as.numeric(nr)
+        stopifnot(identical(n, as.numeric(print(as.POSIXct(nr, tz=tz)))),
+                  identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
+    }
+## did not work without specifying 'origin'  in  R <= 4.2.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

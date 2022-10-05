@@ -76,6 +76,9 @@
       encoding.  This reduces the risk of accidental creation of invalid
       strings, particularly when different elements of the input have
       different encoding (including \code{"bytes"}).
+
+      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
+      specifiying \code{origin}) now work.
     }
   }
 

@@ -45,6 +45,7 @@ as.POSIXlt(x, tz = "", \dots)
 
 \method{as.POSIXct}{Date}(x, tz = "UTC", \dots)
 \method{as.POSIXlt}{Date}(x, tz = "UTC", \dots)
+\method{as.POSIXct}{numeric}(x, tz = "", origin, \dots)
 
 \method{as.double}{POSIXlt}(x, \dots)
 }
@@ -63,7 +64,8 @@ as.POSIXlt(x, tz = "", \dots)
   \item{optional}{\code{\link{logical}} indicating to return \code{NA}
     (instead of signalling an error) if the format guessing does not succeed.}
   \item{origin}{a date-time object, or something which can be coerced by
-    \code{as.POSIXct(tz = "GMT")} to such an object.}
+    \code{as.POSIXct(tz = "GMT")} to such an object.  Optional since \R
+    4.3.0, where the equivalent of \code{"1970-01-01"} is used.}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
