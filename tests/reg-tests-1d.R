@@ -6244,6 +6244,23 @@ ct <- as.POSIXct(.Date(19000), origin="1970-01-01")
 stopifnot(identical(as.Date(ct), .Date(19000)))
 ## as.POSIXct.Date() passed on 'origin' raising an error for ~25 hours
 
+## as.POSIXct.default() dealing with an *extraneous*  origin = ".."
+(D <- .Date(19000))
+## NB: The following depends on setting of the "TZ" env.var. ("Australia/Melbourne", see above)
+cE <- as.POSIXct(D, tz="EST")
+lE <- as.POSIXlt(D, tz="EST")
+ct   <- as.POSIXct(cE)
+ct50 <- as.POSIXct(cE, origin="1950-1-1", tz = "NZ") ## <-- failed for 1.5 days
+lt50 <- as.POSIXlt(lE, origin="1950-1-1", tz = "NZ") ##   (ditto)
+stopifnot(exprs = {
+    identical(ct, structure(1641600000, class = c("POSIXct", "POSIXt"), tzone = "EST")) # no tzone in R <= 4.2.x
+    identical(ct, cE)
+    identical(ct50, `attr<-`(ct, "tzone", "NZ")) # ct50 had no "tzone"        in R <= 4.2.x
+    identical(lt50, `attr<-`(lE, "tzone", "NZ")) # lt50 had     tzone = "UTC" in R <= 4.2.x
+    identical(as.character(lE), "2022-01-08")
+})
+## worked (but partly  differently!) in R <= 4.2.x
+
 
 
 ## keep at end

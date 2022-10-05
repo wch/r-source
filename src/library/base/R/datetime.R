@@ -298,8 +298,7 @@ as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
 as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
 {
     if(inherits(x, "POSIXlt"))
-        return(if(nargs() == 1L || (missing(tz) && ...length() == 0L)) x
-               else .POSIXlt(x, tz, ...))
+        return(if(missing(tz)) x else .POSIXlt(x, tz))
     if(is.null(x)) return(as.POSIXlt.character(character(), tz))
     if(is.logical(x) && all(is.na(x)))
         return(as.POSIXlt(as.POSIXct.default(x), tz = tz))
@@ -367,8 +366,7 @@ as.POSIXct.numeric <- function(x, tz = "", origin, ...)
 as.POSIXct.default <- function(x, tz = "", ...)
 {
     if(inherits(x, "POSIXct"))
-        return(if(nargs() == 1L || (missing(tz) && ...length() == 0L)) x
-               else .POSIXct(x, tz, ...))
+        return(if(missing(tz)) x else .POSIXct(x, tz))
     if(is.null(x)) return(.POSIXct(numeric(), tz))
     if(is.character(x) || is.factor(x))
 	return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
