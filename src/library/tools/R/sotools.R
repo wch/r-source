@@ -1008,27 +1008,27 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
         "*/")
 
     if(include_declarations) {
+        prepare <- function(nargs)
+            if(nargs > 0) paste(rep.int("void *", nargs), collapse=", ")
+            else "void"
         decls <- c(
             "/* FIXME: ",
             "   Check these declarations against the C/Fortran source code.",
             "*/",
             if(NROW(y <- nrdb$.C)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .C calls */",
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n) if(n >= 0)
-                               paste(rep.int("SEXP", n), collapse=", ")
+                args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                else "/* FIXME */")
                c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
             },
             if(NROW(y <- nrdb$.Fortran)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .Fortran calls */",
                   paste0("extern void F77_NAME(", y$s, ")(", args, ");"))
