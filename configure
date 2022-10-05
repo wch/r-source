@@ -29087,7 +29087,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
       *icc*)
         cpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgcc*)
         cpicflags="-fpic"
 	;;
@@ -29097,7 +29097,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
       *ifc|*ifort)
         fpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgf77|*pgf90|*pgf95)
         fpicflags="-fpic"
         ;;
@@ -29107,7 +29107,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
       *icpc|*icc)
         cxxpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgCC)
         cxxpicflags="-fpic"
         ;;
