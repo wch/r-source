@@ -1496,7 +1496,7 @@ dnl     ;;
       *icc*)
         cpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgcc*)
         cpicflags="-fpic"
 	;;
@@ -1506,7 +1506,7 @@ dnl     ;;
       *ifc|*ifort)
         fpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgf77|*pgf90|*pgf95)
         fpicflags="-fpic"
         ;;
@@ -1516,7 +1516,7 @@ dnl     ;;
       *icpc|*icc)
         cxxpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgCC)
         cxxpicflags="-fpic"
         ;;
