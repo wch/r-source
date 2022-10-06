@@ -163,19 +163,29 @@ Sys.setlocale (category = "LC_ALL", locale = "")
 }
 \examples{
 Sys.getlocale()
-Sys.getlocale("LC_TIME")
+
+## Date-time  related :
+Sys.getlocale("LC_TIME") -> olcT
+then <- as.POSIXlt("2001-01-01 01:01:01", tz = "UTC+1")
 \dontrun{
+c(m = months(then), wd = weekdays(then)) # locale specific
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
 Sys.setlocale("LC_TIME", "de_DE")  # Many Unix-alikes
 Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # Linux, macOS, other Unix-alikes
 Sys.setlocale("LC_TIME", "de_DE.utf8")   # some Linux versions
 Sys.setlocale("LC_TIME", "German.UTF-8") # Windows
+Sys.getlocale("LC_TIME") # the last one successfully set above
+c(m = months(then), wd = weekdays(then)) # in C_TIME locale 'cT' ; typically German
 }
+Sys.setlocale("LC_TIME", "C")
+c(m = months(then), wd = weekdays(then)) # "standard" (still platform specific ?)
+Sys.setlocale("LC_TIME", olcT)           # reset to previous
+
+## Other locales
 Sys.getlocale("LC_PAPER")          # may or may not be set
 .LC.categories # of length 9 on all platforms
 
-\dontrun{
-Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,
+\dontrun{Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,
                                    # usually (but not on all platforms)
 Sys.setenv("LANGUAGE" = "es") # set the language for error/warning messages
 }

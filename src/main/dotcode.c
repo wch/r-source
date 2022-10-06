@@ -582,129 +582,396 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     return check_retval(call, retval);
 }
 
-#ifdef __cplusplus
-typedef SEXP (*VarFun)(...);
-#else
-typedef DL_FUNC VarFun;
-#endif
+typedef SEXP (*FUNS1)(SEXP);
+typedef SEXP (*FUNS2)(SEXP, SEXP);
+typedef SEXP (*FUNS3)(SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS4)(SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS5)(SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS6)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS7)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS8)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS9)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS10)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS11)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS12)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS13)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS14)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS15)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS16)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS17)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS18)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS19)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS20)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS21)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS22)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS23)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS24)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS25)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS26)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS27)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS28)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS29)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS30)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS31)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS32)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS33)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS34)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS35)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS36)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS37)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS38)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS39)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS40)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS41)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS42)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS43)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS44)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS45)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS46)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS47)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS48)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS49)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS50)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS51)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS52)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS53)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS54)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS55)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS56)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
+typedef SEXP (*FUNS57)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS58)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS59)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS60)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS61)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS62)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*FUNS63)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS64)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP);
+typedef SEXP (*FUNS65)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                       SEXP, SEXP);
 
-SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
+SEXP attribute_hidden R_doDotCall(DL_FUNC fun, int nargs, SEXP *cargs,
 				  SEXP call) {
-    VarFun fun = NULL;
     SEXP retval = R_NilValue;	/* -Wall */
-    fun = (VarFun) ofun;
     switch (nargs) {
     case 0:
-	retval = (SEXP)ofun();
+	retval = (SEXP)fun();
 	break;
     case 1:
-	retval = (SEXP)fun(cargs[0]);
+	retval = (SEXP)((FUNS1)fun)(cargs[0]);
 	break;
     case 2:
-	retval = (SEXP)fun(cargs[0], cargs[1]);
+	retval = (SEXP)((FUNS2)fun)(cargs[0], cargs[1]);
 	break;
     case 3:
-	retval = (SEXP)fun(cargs[0], cargs[1], cargs[2]);
+	retval = (SEXP)((FUNS3)fun)(cargs[0], cargs[1], cargs[2]);
 	break;
     case 4:
-	retval = (SEXP)fun(cargs[0], cargs[1], cargs[2], cargs[3]);
+	retval = (SEXP)((FUNS4)fun)(cargs[0], cargs[1], cargs[2], cargs[3]);
 	break;
     case 5:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS5)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4]);
 	break;
     case 6:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS6)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5]);
 	break;
     case 7:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS7)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6]);
 	break;
     case 8:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS8)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7]);
 	break;
     case 9:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS9)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8]);
 	break;
     case 10:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS10)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9]);
 	break;
     case 11:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS11)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10]);
 	break;
     case 12:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS12)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11]);
 	break;
     case 13:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS13)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12]);
 	break;
     case 14:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS14)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13]);
 	break;
     case 15:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS15)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14]);
 	break;
     case 16:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS16)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15]);
 	break;
     case 17:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS17)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16]);
 	break;
     case 18:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS18)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17]);
 	break;
     case 19:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS19)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18]);
 	break;
     case 20:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS20)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19]);
 	break;
     case 21:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS21)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -712,7 +979,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[20]);
 	break;
     case 22:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS22)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -720,7 +987,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[20], cargs[21]);
 	break;
     case 23:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS23)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -728,7 +995,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[20], cargs[21], cargs[22]);
 	break;
     case 24:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS24)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -736,7 +1003,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[20], cargs[21], cargs[22], cargs[23]);
 	break;
     case 25:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS25)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -744,7 +1011,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[20], cargs[21], cargs[22], cargs[23], cargs[24]);
 	break;
     case 26:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS26)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -753,7 +1020,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[25]);
 	break;
     case 27:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS27)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -762,7 +1029,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[25], cargs[26]);
 	break;
     case 28:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS28)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -771,7 +1038,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[25], cargs[26], cargs[27]);
 	break;
     case 29:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS29)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -780,7 +1047,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[25], cargs[26], cargs[27], cargs[28]);
 	break;
     case 30:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS30)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -789,7 +1056,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[25], cargs[26], cargs[27], cargs[28], cargs[29]);
 	break;
     case 31:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS31)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -799,7 +1066,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[30]);
 	break;
     case 32:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS32)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -809,7 +1076,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[30], cargs[31]);
 	break;
     case 33:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS33)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -819,7 +1086,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[30], cargs[31], cargs[32]);
 	break;
     case 34:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS34)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -829,7 +1096,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[30], cargs[31], cargs[32], cargs[33]);
 	break;
     case 35:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS35)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -839,7 +1106,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[30], cargs[31], cargs[32], cargs[33], cargs[34]);
 	break;
     case 36:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS36)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -850,7 +1117,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[35]);
 	break;
     case 37:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS37)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -861,7 +1128,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[35], cargs[36]);
 	break;
     case 38:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS38)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -872,7 +1139,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[35], cargs[36], cargs[37]);
 	break;
     case 39:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS39)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -883,7 +1150,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[35], cargs[36], cargs[37], cargs[38]);
 	break;
     case 40:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS40)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -894,7 +1161,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[35], cargs[36], cargs[37], cargs[38], cargs[39]);
 	break;
     case 41:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS41)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -906,7 +1173,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[40]);
 	break;
     case 42:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS42)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -918,7 +1185,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[40], cargs[41]);
 	break;
     case 43:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS43)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -930,7 +1197,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[40], cargs[41], cargs[42]);
 	break;
     case 44:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS44)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -942,7 +1209,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[40], cargs[41], cargs[42], cargs[43]);
 	break;
     case 45:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS45)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -954,7 +1221,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[40], cargs[41], cargs[42], cargs[43], cargs[44]);
 	break;
     case 46:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS46)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -967,7 +1234,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[45]);
 	break;
     case 47:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS47)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -980,7 +1247,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[45], cargs[46]);
 	break;
     case 48:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS48)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -993,7 +1260,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[45], cargs[46], cargs[47]);
 	break;
     case 49:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS49)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1006,7 +1273,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[45], cargs[46], cargs[47], cargs[48]);
 	break;
     case 50:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS50)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1019,7 +1286,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[45], cargs[46], cargs[47], cargs[48], cargs[49]);
 	break;
     case 51:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS51)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1033,7 +1300,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[50]);
 	break;
     case 52:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS52)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1047,7 +1314,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[50], cargs[51]);
 	break;
     case 53:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS53)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1061,7 +1328,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[50], cargs[51], cargs[52]);
 	break;
     case 54:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS54)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1075,7 +1342,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[50], cargs[51], cargs[52], cargs[53]);
 	break;
     case 55:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS55)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1089,7 +1356,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[50], cargs[51], cargs[52], cargs[53], cargs[54]);
 	break;
     case 56:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS56)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1104,7 +1371,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[55]);
 	break;
     case 57:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS57)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1119,7 +1386,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[55], cargs[56]);
 	break;
     case 58:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS58)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1134,7 +1401,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[55], cargs[56], cargs[57]);
 	break;
     case 59:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS59)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1149,7 +1416,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[55], cargs[56], cargs[57], cargs[58]);
 	break;
     case 60:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS60)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1164,7 +1431,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[55], cargs[56], cargs[57], cargs[58], cargs[59]);
 	break;
     case 61:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS61)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1180,7 +1447,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[60]);
 	break;
     case 62:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS62)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1196,7 +1463,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[60], cargs[61]);
 	break;
     case 63:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS63)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1212,7 +1479,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[60], cargs[61], cargs[62]);
 	break;
     case 64:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS64)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1228,7 +1495,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
 	    cargs[60], cargs[61], cargs[62], cargs[63]);
 	break;
     case 65:
-	retval = (SEXP)fun(
+	retval = (SEXP)((FUNS65)fun)(
 	    cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
@@ -1508,8 +1775,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     void **cargs, **cargs0 = NULL /* -Wall */;
     int naok, na, nargs, Fort;
     Rboolean havenames, copy = R_CBoundsCheck; /* options(CboundsCheck) */
-    DL_FUNC ofun = NULL;
-    VarFun fun = NULL;
+    DL_FUNC fun = NULL;
     SEXP ans, pa, s;
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
     R_NativePrimitiveArgType *checkTypes = NULL;
@@ -1530,9 +1796,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     if(Fort) symbol.type = R_FORTRAN_SYM;
 
     args = enctrim(args);
-    args = resolveNativeRoutine(args, &ofun, &symbol, symName, &nargs,
+    args = resolveNativeRoutine(args, &fun, &symbol, symName, &nargs,
 				&naok, call, env);
-    fun = (VarFun) ofun;
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {
 	if(symbol.symbol.c->numArgs != nargs)
@@ -1797,137 +2062,135 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (nargs) {
     case 0:
-	/* Silicon graphics C chokes here */
-	/* if there is no argument to fun. */
-	fun(0);
+	fun();
 	break;
     case 1:
-	fun(cargs[0]);
+	((FUNS1)fun)(cargs[0]);
 	break;
     case 2:
-	fun(cargs[0], cargs[1]);
+	((FUNS2)fun)(cargs[0], cargs[1]);
 	break;
     case 3:
-	fun(cargs[0], cargs[1], cargs[2]);
+	((FUNS3)fun)(cargs[0], cargs[1], cargs[2]);
 	break;
     case 4:
-	fun(cargs[0], cargs[1], cargs[2], cargs[3]);
+	((FUNS4)fun)(cargs[0], cargs[1], cargs[2], cargs[3]);
 	break;
     case 5:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4]);
+	((FUNS5)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4]);
 	break;
     case 6:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS6)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5]);
 	break;
     case 7:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS7)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6]);
 	break;
     case 8:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS8)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7]);
 	break;
     case 9:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS9)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8]);
 	break;
     case 10:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS10)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9]);
 	break;
     case 11:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS11)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10]);
 	break;
     case 12:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS12)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11]);
 	break;
     case 13:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS13)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12]);
 	break;
     case 14:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS14)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13]);
 	break;
     case 15:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS15)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14]);
 	break;
     case 16:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS16)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15]);
 	break;
     case 17:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS17)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16]);
 	break;
     case 18:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS18)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17]);
 	break;
     case 19:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS19)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18]);
 	break;
     case 20:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS20)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19]);
 	break;
     case 21:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS21)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
 	    cargs[20]);
 	break;
     case 22:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS22)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
 	    cargs[20], cargs[21]);
 	break;
     case 23:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS23)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
 	    cargs[20], cargs[21], cargs[22]);
 	break;
     case 24:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS24)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
 	    cargs[20], cargs[21], cargs[22], cargs[23]);
 	break;
     case 25:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS25)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
 	    cargs[20], cargs[21], cargs[22], cargs[23], cargs[24]);
 	break;
     case 26:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS26)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1935,7 +2198,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[25]);
 	break;
     case 27:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS27)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1943,7 +2206,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[25], cargs[26]);
 	break;
     case 28:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS28)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1951,7 +2214,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[25], cargs[26], cargs[27]);
 	break;
     case 29:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS29)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1959,7 +2222,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[25], cargs[26], cargs[27], cargs[28]);
 	break;
     case 30:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS30)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1967,7 +2230,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[25], cargs[26], cargs[27], cargs[28], cargs[29]);
 	break;
     case 31:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS31)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1976,7 +2239,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[30]);
 	break;
     case 32:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS32)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1985,7 +2248,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[30], cargs[31]);
 	break;
     case 33:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS33)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -1994,7 +2257,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[30], cargs[31], cargs[32]);
 	break;
     case 34:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS34)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2003,7 +2266,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[30], cargs[31], cargs[32], cargs[33]);
 	break;
     case 35:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS35)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2012,7 +2275,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[30], cargs[31], cargs[32], cargs[33], cargs[34]);
 	break;
     case 36:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS36)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2022,7 +2285,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[35]);
 	break;
     case 37:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS37)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2032,7 +2295,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[35], cargs[36]);
 	break;
     case 38:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS38)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2042,7 +2305,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[35], cargs[36], cargs[37]);
 	break;
     case 39:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS39)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2052,7 +2315,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[35], cargs[36], cargs[37], cargs[38]);
 	break;
     case 40:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS40)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2062,7 +2325,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[35], cargs[36], cargs[37], cargs[38], cargs[39]);
 	break;
     case 41:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS41)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2073,7 +2336,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[40]);
 	break;
     case 42:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS42)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2084,7 +2347,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[40], cargs[41]);
 	break;
     case 43:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS43)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2095,7 +2358,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[40], cargs[41], cargs[42]);
 	break;
     case 44:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS44)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2106,7 +2369,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[40], cargs[41], cargs[42], cargs[43]);
 	break;
     case 45:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS45)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2117,7 +2380,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[40], cargs[41], cargs[42], cargs[43], cargs[44]);
 	break;
     case 46:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS46)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2129,7 +2392,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[45]);
 	break;
     case 47:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS47)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2141,7 +2404,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[45], cargs[46]);
 	break;
     case 48:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS48)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2153,7 +2416,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[45], cargs[46], cargs[47]);
 	break;
     case 49:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS49)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2165,7 +2428,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[45], cargs[46], cargs[47], cargs[48]);
 	break;
     case 50:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS50)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2177,7 +2440,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[45], cargs[46], cargs[47], cargs[48], cargs[49]);
 	break;
     case 51:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS51)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2190,7 +2453,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[50]);
 	break;
     case 52:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS52)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2203,7 +2466,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[50], cargs[51]);
 	break;
     case 53:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS53)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2216,7 +2479,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[50], cargs[51], cargs[52]);
 	break;
     case 54:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS54)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2229,7 +2492,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[50], cargs[51], cargs[52], cargs[53]);
 	break;
     case 55:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS55)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2242,7 +2505,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[50], cargs[51], cargs[52], cargs[53], cargs[54]);
 	break;
     case 56:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS56)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2256,7 +2519,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[55]);
 	break;
     case 57:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS57)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2270,7 +2533,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[55], cargs[56]);
 	break;
     case 58:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS58)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2284,7 +2547,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[55], cargs[56], cargs[57]);
 	break;
     case 59:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS59)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2298,7 +2561,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[55], cargs[56], cargs[57], cargs[58]);
 	break;
     case 60:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS60)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2312,7 +2575,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[55], cargs[56], cargs[57], cargs[58], cargs[59]);
 	break;
     case 61:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS61)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2327,7 +2590,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60]);
 	break;
     case 62:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS62)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2342,7 +2605,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60], cargs[61]);
 	break;
     case 63:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS63)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2357,7 +2620,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60], cargs[61], cargs[62]);
 	break;
     case 64:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS64)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],
@@ -2372,7 +2635,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60], cargs[61], cargs[62], cargs[63]);
 	break;
     case 65:
-	fun(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
+	((FUNS65)fun)(cargs[0],  cargs[1],  cargs[2],  cargs[3],  cargs[4],
 	    cargs[5],  cargs[6],  cargs[7],  cargs[8],  cargs[9],
 	    cargs[10], cargs[11], cargs[12], cargs[13], cargs[14],
 	    cargs[15], cargs[16], cargs[17], cargs[18], cargs[19],

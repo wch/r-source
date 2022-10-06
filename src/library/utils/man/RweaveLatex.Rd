@@ -221,9 +221,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       \code{100} is a better choice for package vignettes.}
 
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
-      file to link the input line numbers to the output line numbers.
-      This is an experimental feature; see the source code for the
-      output format, which is subject to change in future releases.}
+      file to link the input line numbers to the output line numbers.}
 
     \item{figs.only:}{logical (\code{FALSE}).
       By default each figure chunk is run once, then re-run for each

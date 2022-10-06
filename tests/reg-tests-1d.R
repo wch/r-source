@@ -6107,6 +6107,169 @@ D <- .Date(c(7:20)*1000)
 D[15:18] <- c(Inf, -Inf, NA, NaN); D
 stopifnot( identical(D, as.Date(as.POSIXlt(D))) )
 ## non-finite POSIXlt gave all  NA in R <= 4.2.1
+##
+## POSIX[cl]t: keeping names, also w/ factors; is.finite() ...
+(D <- setNames(D, LETTERS[seq_along(D)]))
+fD <- factor(D)
+stopifnot(exprs = {
+    identical(fD, as.factor(D))
+    identical(names(D), names(fD))
+    ## identical(D, as.Date(fD)) -- FIXME
+    identical(D, as.Date(Dct <- as.POSIXct(D))) # also checks names(.) are kept
+    identical(D, as.Date(Dlt <- as.POSIXlt(D)))
+    identical(as.character(D), as.character(Dlt))
+    identical(      format(D),       format(Dlt) -> frmD)
+    identical(names(D), names(frmD))
+    (DeD <- Dlt == Dct)[ok <- is.finite(D)]
+    identical(is.na(DeD), is.na(D))
+    identical(as.character(D), unname(frmD))
+    identical(unname(ok), is.finite(as.numeric(D)))
+    identical(ok, is.finite(Dct))
+    identical(ok, is.finite(Dlt))     # now works for POSIXlt
+    identical(is.nan(D), is.nan(Dlt))
+    identical(is.infinite(D), is.infinite(Dlt))
+    identical(D == -Inf, Dlt == -Inf)
+})
+## is.finite() now works for POSIXlt
+
+
+## as.POSIX?t(<POSIX?t>, tz=*) now works, too:
+stopifnot(inherits(Dct, "POSIXct"),
+          inherits(Dlt, "POSIXlt"))
+Sys.getenv("TZ")  #  "Australia/Melbourne"   (set above)
+mtz <- "UTC-5"
+head(Dct2  <- as.POSIXct(Dct, tz = mtz), 3)
+head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POISXlt "are different"
+head(Dlct2 <- as.POSIXlt(Dct2),          3)
+head(Dlct  <- as.POSIXlt(Dct) ,          3)
+no_tz <- function(.) `attr<-`(., "tzone", NULL)
+stopifnot(exprs = {
+    identical(mtz, attr(Dct2, "tzone"))
+    identical(mtz, attr(Dlt2, "tzone"))
+    (Dct2 - Dct)[ok] == 0
+    identical(no_tz(Dct2), no_tz(Dct))
+    identical(no_tz(Dlt2), no_tz(Dlt))
+    ## However (!!)
+    (Dct2  - Dct)[ok] == 0
+    ## Have 2 groups" which are "equal":  { Dlt "==" Dlct "==" Dlct2 } and  Dlt2  which differs by 5
+    (Dlt2  - Dlt )[ok] == -5L # !!!
+    (Dlct2 - Dlt )[ok] == 0L
+    (Dlct  - Dlt )[ok] == 0L
+    (Dlct  - Dlt2)[ok] == 5L
+})
+## both methods return(x)ed immediately, when class "matched"
+op <- options(OutDec = ",") # the "infamous default" in some places should *not* have an effect:
+xf <- as.POSIXlt(chf <- c("2007-07-27 16:11:03.000002",
+                          "2011-10-01 12:34:56.3",
+                          "2022-10-02 13:14:15.9876543210123456"))
+dd <- setNames(, c(0:6, 11:15))
+t(sapply(dd, as.character.POSIXt, x = xf)) # get at most 13 dits after ".", because
+as.character(xf[3]$sec) # does get these but not more; hence:
+chf[3] <- sub("3456$", "3", chf[3])
+stopifnot(exprs = {
+    identical(as.character(xf), chf)
+    identical(as.character(xf, OutDec = ","), sub("[.]", ",", chf))
+    identical(as.character(xf, digits = 5)[-3], sub("[.]00*2$","", chf[-3]))
+})
+## failed for ~ 1 day in R-devel
+(CharleMagne.crowned <- as.POSIXlt(ISOdate(774,7,10)))
+stopifnot(identical(as.character(CharleMagne.crowned),
+                    "774-07-10 12:00:00"))
+options(op) # reset
+
+
+## as.POSIX[cl]t(<Date>, tz = *)
+isUTC <- function(tz)
+    switch(tz,
+           "UTC" =, "GMT" = , "Etc/UTC" = , "Etc/GMT" = , "GMT0" = , "GMT+0" = , "GMT-0" = TRUE,
+           FALSE)
+identical3 <- function(a,b,c) identical(a,b) && identical(b,c)
+datePOSIXchk <- function(d, tz) {
+    stopifnot(inherits(d, "Date"), is.character(tz))
+    UTC. <- isUTC(tz)
+    ## cat(sprintf("\ntz = '%s'%s, Date = '%s':\n      ------------",
+    ##             tz, if(UTC.)"(= UTC)" else "", paste(format(d), collapse=", ")))
+    PCdate <- as.POSIXct(d, tz = tz); PLpc <- as.POSIXlt(PCdate); PLpcz <- as.POSIXlt(PCdate, tz = tz)
+    PLdate <- as.POSIXlt(d, tz = tz); PCpl <- as.POSIXct(PLdate); PCplz <- as.POSIXct(PLdate, tz = tz)
+    m <- rbind(PLdate = format(PLdate, usetz=TRUE)
+      , PCdate = format(PCdate, usetz=TRUE)
+      , PLpc   = format(PLpc,   usetz=TRUE)
+      , PLpcz  = format(PLpcz,  usetz=TRUE)
+      , PCpl   = format(PCpl,   usetz=TRUE)
+      , PCplz  = format(PCplz,  usetz=TRUE)
+    )
+    colnames(m) <- rep("", ncol(m))
+    print(m[c(1:2,5L), ]) # print() those three which are "typically" different
+    ##
+    diffD <- PLdate - PCdate
+    cat("PLdate - PCdate:", capture.output(diffD[1]), "\n")
+    ##
+    if(length(delta <- unique(diffD)) != 1L) {
+        cat(sprintf(" #{unique diffD values} (typically 1), here %d:\n", length(delta)))
+        print(delta)
+    }
+    stopifnot(exprs = {
+        PLpc == PCdate
+        PLpc == PLpcz
+        ## Not  identical3(PCdate, PLpc, PLpcz), but identically formatted:
+        identical3(m["PCdate",], m["PLpc",], m["PLpcz",])
+        ##
+        identical(PCpl, PCplz) # and typically *not* identical to  PLdate, but still equal:
+        PCpl == PLdate
+        ##
+        PLdate - PLpc  == diffD
+        PLdate - PLpcz == diffD
+        PCpl  - PCdate == diffD
+        PCplz - PCdate == diffD
+    })
+    if(UTC.) ## UTC-equivalent timezone
+        stopifnot(exprs = {
+            delta == 0
+            ## and the two groups (of 3 each) are equal, too
+            PLdate == PCdate
+        })
+}
+##
+d1 <- as.Date(c("2000-02-29", "2001-04-01"))
+otz <- OlsonNames()
+for(tz in c("GMT", "EST", "BST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Conakry",
+            "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai", "Asia/Tokyo",
+            "Canada/Newfoundland", "Europe/Dublin", "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
+    if(!(tz %in% otz)) message(tz, " is *not* in this platform's OlsonNames()")
+    datePOSIXchk(d1, tz)
+}
+## several of the identities datePOSIXchk() failed in R <= 4.2.x
+## unnecessarily passing 'origin'
+ct <- as.POSIXct(.Date(19000), origin="1970-01-01")
+stopifnot(identical(as.Date(ct), .Date(19000)))
+## as.POSIXct.Date() passed on 'origin' raising an error for ~25 hours
+
+## as.POSIXct.default() dealing with an *extraneous*  origin = ".."
+(D <- .Date(19000))
+## NB: The following depends on setting of the "TZ" env.var. ("Australia/Melbourne", see above)
+cE <- as.POSIXct(D, tz="EST")
+lE <- as.POSIXlt(D, tz="EST")
+ct   <- as.POSIXct(cE)
+ct50 <- as.POSIXct(cE, origin="1950-1-1", tz = "NZ") ## <-- failed for 1.5 days
+lt50 <- as.POSIXlt(lE, origin="1950-1-1", tz = "NZ") ##   (ditto)
+stopifnot(exprs = {
+    identical(ct, structure(1641600000, class = c("POSIXct", "POSIXt"), tzone = "EST")) # no tzone in R <= 4.2.x
+    identical(ct, cE)
+    identical(ct50, `attr<-`(ct, "tzone", "NZ")) # ct50 had no "tzone"        in R <= 4.2.x
+    identical(lt50, `attr<-`(lE, "tzone", "NZ")) # lt50 had     tzone = "UTC" in R <= 4.2.x
+    identical(as.character(lE), "2022-01-08")
+})
+## worked (but partly  differently!) in R <= 4.2.x
+
+
+## as.POSIXct(<numeric>) & as.POSIXlt(*) :
+for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33)))
+    for(tz in c("", "GMT", "NZ", "Pacific/Fiji")) {
+        n <- as.numeric(nr)
+        stopifnot(identical(n, as.numeric(print(as.POSIXct(nr, tz=tz)))),
+                  identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
+    }
+## did not work without specifying 'origin'  in  R <= 4.2.x
 
 
 

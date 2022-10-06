@@ -33,7 +33,10 @@
 \alias{as.list.POSIXlt}
 \alias{.leap.seconds}
 \alias{anyNA.POSIXlt}
+\alias{is.finite.POSIXlt}
+\alias{is.infinite.POSIXlt}
 \alias{is.na.POSIXlt}
+\alias{is.nan.POSIXlt}
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}

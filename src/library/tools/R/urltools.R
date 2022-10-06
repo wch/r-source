@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## See RFC 3986 <https://tools.ietf.org/html/rfc3986> and
+## See RFC 3986 <https://www.rfc-editor.org/rfc/rfc3986> and
 ## <https://url.spec.whatwg.org/>.
 
 get_IANA_URI_scheme_db <-
@@ -356,9 +356,9 @@ function()
 }
 
 ## See <https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>
-## and <http://tools.ietf.org/html/rfc959>,
+## and <https://www.rfc-editor.org/rfc/rfc959>,
 ## Section 4.2.2 "Numeric Order List of Reply Codes",
-## and <https://tools.ietf.org/html/rfc2228>,
+## and <https://www.rfc-editor.org/rfc/rfc2228>,
 ## Section 5 "New FTP Replies".
 ## Only need those >= 400.
 table_of_FTP_server_return_codes <-
@@ -466,7 +466,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         }
         ## Look for redirected URLs
         ## According to
-        ## <https://tools.ietf.org/html/rfc7230#section-3.1.2> the first
+        ## <https://www.rfc-editor.org/rfc/rfc7230#section-3.1.2> the first
         ## line of a response is the status-line, with "a possibly empty
         ## textual phrase describing the status code", so only look for
         ## a 301 status code in the first line.
@@ -486,7 +486,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                 ## Ouch.  According to RFC 7231, the location is a URI
                 ## reference, and may be relative in which case it needs
                 ## resolving against the effect request URI.
-                ## <https://tools.ietf.org/html/rfc7231#section-7.1.2>.
+                ## <https://www.rfc-editor.org/rfc/rfc7231#section-7.1.2>.
                 ## Not quite straightforward, hence do not report such
                 ## 301s. 
                 ## (Alternatively, could try reporting the 301 but no

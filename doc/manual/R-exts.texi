@@ -666,7 +666,7 @@ A @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
 of standard (not private use or grandfathered) IETF language tags as
 currently defined by RFC 5646
-(@uref{https://tools.ietf.org/html/rfc5646}, see also
+(@uref{https://www.rfc-editor.org/rfc/rfc5646}, see also
 @uref{https://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
 (@uref{https://en.wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
@@ -1451,7 +1451,7 @@ Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
 @file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
 note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
-@uref{https://tools.ietf.org/html/rfc4180}.} CSV format), or
+@uref{https://www.rfc-editor.org/rfc/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
 should be if possible ``self-sufficient'' and not make use of extra
@@ -5473,7 +5473,7 @@ and suitable options might be
 @end example
 
 @noindent
-See @uref{https://www.ghostscript.com/doc/current/VectorDevices.htm} for
+See @uref{https://ghostscript.readthedocs.io/en/latest/VectorDevices.html} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
@@ -6067,6 +6067,14 @@ almost always easier to use @R{}'s @code{R_Calloc}, which does check.
 Second, the first argument is of type @code{size_t} and recent compilers
 are warning about passing signed arguments (which could get promoted to
 ridiculously large values).
+
+@item
+For C code, consider using the flag @option{-Wstrict-prototypes} which
+is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
+has found quite a number of errors where functions have been declared
+without arguments (a function without arguments should have prototype
+@code{fn(void)}) and is likely to become the default in future
+compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
 @end itemize
 
@@ -10946,7 +10954,8 @@ is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 @code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments, although
-link-time optimization will warn.)
+link-time optimization will warn, as will compilers set up to warn on
+strict prototypes -- and C23 will require correct arguments.)
 
 Using @option{-fc-prototypes-external} will give a prototype using
 @code{int_least32_t *lgl} for Fortran @code{LOGICAL LGL}, but this is
@@ -11149,6 +11158,16 @@ pointer with a call of the form
 
 @example
 p_myCfun = R_GetCCallable("packA", "myCfun");
+@end example
+@noindent
+As the type @code{DL_FUNC} is only appropriate for functions with no
+arguments, other users will need to cast to an appropriate type.  For
+example
+@example
+typedef SEXP (*na_omit_xts_func) (SEXP x);
+...
+  na_omit_xts_func fun = (na_omit_xts_func) R_GetCCallable("xts", "na_omit_xts");
+  return fun(x);
 @end example
 
 The author of @pkg{packB} is responsible for ensuring that

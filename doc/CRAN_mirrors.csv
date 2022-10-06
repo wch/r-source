@@ -42,7 +42,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Kwangwoon University (sites: Seoul, Tokyo, Singapore, Manila, Bangalore)","admin # cran.asia",1,asia,"secure_mirror_from_master"
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"mirror # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "Ecuador (Quito) [https]",Ecuador,Quito,https://mirror.epn.edu.ec/CRAN/,Escuela Politécnica Nacional,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
-"El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",1,sv
+"El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",0,sv,"maintainer_address_bounces"
 "Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",0,ee,"secure_mirror_from_master"
 "France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"

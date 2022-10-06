@@ -2929,7 +2929,7 @@ A discussion with many easily followed examples is in Appendix G
 753--771 of @emph{Statistical Analysis and Data Display: An Intermediate
 Course with Examples in R}, Richard M. Heiberger and Burt Holland
 (Springer 2015, second edition).  This appendix is a free download from
-@url{https://link.springer.com/content/pdf/bbm%3A978-1-4939-2122-5%2F1.pdf}.
+@url{https://link.springer.com/content/pdf/bbm:978-1-4939-2122-5/1.pdf}.
 
 For more information, see e.g.@: David Goldberg (1991), ``What Every
 Computer Scientist Should Know About Floating-Point Arithmetic'',

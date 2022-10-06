@@ -5,6 +5,7 @@ useDynLib(tools, .registration = TRUE, .fixes = "C_")
 export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        "Rd2latex", "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db",
        "Rdiff", "Rdindex", "SweaveTeXFilter", "add_datalist",
+       "as.Rconcordance",
        "assertCondition", "assertError", "assertWarning", "bibstyle",
        "buildVignette", "buildVignettes", "charset_to_Unicode",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
@@ -19,6 +20,7 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        langElts, "latexToUtf8", "list_files_with_exts",
        "list_files_with_type", "loadRdMacros", "loadPkgRdMacros",
        "makevars_site", "makevars_user",
+       "matchConcordance",
        nonS3methods,
        "make_translations_pkg", "md5sum",
        package.dependencies,# R/package.dependencies.R man/package.dependencies.Rd
@@ -60,6 +62,9 @@ exportPattern("^SIG.+")
 S3method("[", "check_details_changes")
 
 S3method("as.character", "Rd")
+S3method("as.character", "Rconcordance")
+
+S3method("as.Rconcordance", "default")
 
 S3method("as.matrix", "check_url_db")
 
@@ -130,6 +135,8 @@ S3method("print", "subdir_tests", .print.via.format)
 S3method("print", "undoc", .print.via.format)
 S3method("print", "xgettext")
 S3method("print", "xngettext")
+S3method("print", "activeConcordance")
+S3method("print", "Rconcordance")
 
 S3method("print", "checkRdContents", .print.via.format)
 S3method("print", "check_Rd_line_widths", .print.via.format)

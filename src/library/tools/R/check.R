@@ -3590,11 +3590,12 @@ add_dummies <- function(dir, Log)
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
                 ## -Wno-dev is from qt, not a compiler flag.
+                ## -Wstrict-prototypea is long supported by gcc and LLVM/Apple clang.
                 except <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_KNOWN_", "")
                 except <- unlist(strsplit(except, "\\s", perl = TRUE))
                 warns <- setdiff(warns,
                                  c(except, "-Wall", "-Wextra", "-Weverything",
-                                   "-Wno-dev"))
+                                   "-Wno-dev", "-Wstrict-prototypes"))
                 warns <- warns[!startsWith(warns, "-Wl,")] # linker flags
                 diags <- grep(" -fno-diagnostics-show-option", tokens,
                               useBytes = TRUE, value = TRUE)
@@ -4957,7 +4958,6 @@ add_dummies <- function(dir, Log)
         eq <- .Rd_get_equations_from_Rd_db(db)
 
         i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
-        i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
         i2 <- (length(eq) && isTRUE(R_check_Rd_math_rendering))
         if(!i1 && !i2)
             return()
@@ -4993,7 +4993,7 @@ add_dummies <- function(dir, Log)
                 results <- lapply(db,
                                   function(x)
                                       tryCatch({
-                                          Rd2HTML(x, out)
+                                          Rd2HTML(x, out, concordance = TRUE)
                                           tidy_validate(out, tidy = Tidy)
                                       },
                                       error = identity))
@@ -5064,10 +5064,12 @@ add_dummies <- function(dir, Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Found the following HTML validation problems:\n",
-                            sprintf("%s:%s:%s: %s\n",
+                            sprintf("%s:%s:%s (%s:%s): %s\n",
                                     sub("[Rr]d$", "html", results2[, "path"]),
                                     results2[, "line"],
                                     results2[, "col"],
+                            	    basename(results2[, "srcFile"]),
+                            	    results2[, "srcLine"],
                                     results2[, "msg"])))
             }
         }
@@ -5461,6 +5463,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wpointer-sign\\]",
                              ## gcc's version of clang's -Wformat
                              ": warning: .* \\[-Wformat=\\]",
+                             ## gcc and clang with -Wstrict-prototypes
+                             ": warning: .* \\[-Wstrict-prototypes\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",

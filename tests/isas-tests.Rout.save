@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-04 r83015) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1188,8 +1188,10 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
+[1] TRUE
 > f <- try(as.POSIXlt( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXlt( f )))
+[1] TRUE
 > f <- try(as.array( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.array( f )))
 [1] TRUE
@@ -1525,8 +1527,10 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
+[1] TRUE
 > f <- try(as.POSIXlt( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXlt( f )))
+[1] TRUE
 > f <- try(as.array( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.array( f )))
 [1] TRUE
@@ -2605,6 +2609,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.346 0.054 0.402 0 0 
+Time elapsed:  0.096 0.023 0.12 0 0 
 > 
 > 

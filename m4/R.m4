@@ -1062,7 +1062,6 @@ AC_DEFUN([R_PROG_FC_CHAR_LEN_T],
       call xerbla('abcde', -10)
       end
 EOF
-${FC} ${FFLAGS} ${FPIEFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 [cat > conftest.c <<EOF
 /* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
@@ -1093,6 +1092,10 @@ int main()
     return 0;
 }
 EOF]
+r_cv_prog_fc_char_len_t=unknown
+for fpieflags in "${FPIEFLAGS}" "-fPIE"; do
+echo "Trying FPIEFLAGS = ${fpieflags}" 1>&AS_MESSAGE_LOG_FD
+${FC} ${FFLAGS} ${fpieflags} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -1102,9 +1105,13 @@ if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_
     output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_fc_char_len_t=size_t
+      FPIEFLAGS="${fpieflags}"
+    else
+      break
     fi
   fi
 fi
+done
 ])
 rm -Rf conftest conftest.* conftestf.* core
 ])# R_PROG_FC_CHAR_LEN_T

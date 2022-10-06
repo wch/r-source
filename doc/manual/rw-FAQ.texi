@@ -1753,7 +1753,7 @@ Fast BLAS (Basic Linear Algebra Subprograms,
 @uref{http://www.netlib.org/@/blas/@/faq.html}) routines are used to
 speed up numerical linear algebra.  There is support in the R sources
 for the `tuned' BLAS called ATLAS
-(@uref{http://math-atlas.sourceforge.net}).  The savings can be
+(@uref{https://math-atlas.sourceforge.net}).  The savings can be
 appreciable but because ATLAS is tuned to a particular chip we can't use
 it generally.  However, linear algebra on large matrices is not often an
 important part of R computations, and more typical calculations on small
