@@ -78,7 +78,7 @@
       different encoding (including \code{"bytes"}).
 
       \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
-      specifiying \code{origin}) now work.
+      specifying \code{origin}) now work.
     }
   }
 
@@ -155,7 +155,7 @@
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
       has been changed to be fully C-compliant.  This means that
       functions loaded \emph{via} for example \code{R_GetCCallable} need
-      to be cast to an appopriate type if they have any arguments.
+      to be cast to an appropriate type if they have any arguments.
     }
   }
 

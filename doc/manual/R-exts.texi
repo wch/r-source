@@ -6071,7 +6071,7 @@ ridiculously large values).
 @item
 For C code, consider using the flag @option{-Wstrict-prototypes} which
 is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
-has found quite a number of errors wheere functions have been declared
+has found quite a number of errors where functions have been declared
 without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
@@ -11161,7 +11161,7 @@ p_myCfun = R_GetCCallable("packA", "myCfun");
 @end example
 @noindent
 As the type @code{DL_FUNC} is only appropriate for functions with no
-arguments, other users will need to cast to an appopriate type.  For
+arguments, other users will need to cast to an appropriate type.  For
 example
 @example
 typedef SEXP (*na_omit_xts_func) (SEXP x);
