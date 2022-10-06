@@ -420,6 +420,7 @@ prepare_Rd <-
              fragment = FALSE, options = RweaveRdDefaults,
              stage2 = TRUE, stage3 = TRUE, ..., msglevel = 0)
 {
+    concordance <- NULL
     if (is.character(Rd)) {
         Rdfile <- Rd
         ## do it this way to get info in internal warnings
@@ -428,7 +429,10 @@ prepare_Rd <-
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)$description
         Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
-    } else Rdfile <- attr(Rd, "Rdfile")
+    } else {
+    	Rdfile <- attr(Rd, "Rdfile")
+    	concordance <- attr(Rd, "concordance")
+    }
     srcref <- attr(Rd, "srcref")
     if (is.null(Rdfile) && !is.null(srcref))
     	Rdfile <- attr(srcref, "srcfile")$filename
@@ -443,6 +447,8 @@ prepare_Rd <-
 	for (stage in c("install", "render"))
 	    if (stage %in% stages)
 		Rd <- processRdSexprs(Rd, stage, options, macros=attr(Rd, "macros"))
+	if (is.null(concordance))
+	    concordance <- as.Rconcordance(unlist(Rd[RdTags(Rd) == "COMMENT"]))
 	if (pratt < 2L && stage2)
 	    Rd <- prepare2_Rd(Rd, Rdfile, stages)
 	meta <- attr(Rd, "meta")
@@ -453,7 +459,7 @@ prepare_Rd <-
 	Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
     }
     structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta,
-              srcref = srcref)
+              srcref = srcref, concordance = concordance)
 }
 
 ## auxiliary, currently called only from prepare_Rd(*, stage2 = TRUE)

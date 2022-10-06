@@ -61,7 +61,8 @@ latex_canonical_encoding  <- function(encoding)
 Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                      stages = "render",
 		     outputEncoding = "UTF-8", fragment = FALSE, ...,
-                     writeEncoding = TRUE)
+                     writeEncoding = TRUE,
+		     concordance = FALSE)
 {
     encode_warn <- FALSE
     WriteLines <-
@@ -81,9 +82,16 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             }
     }
 
+    if (concordance)
+    	conc <- activeConcordance()
+    else
+    	conc <- NULL
+    
     last_char <- ""
     of0 <- function(...) of1(paste0(...))
     of1 <- function(text) {
+    	if (concordance)
+    	    conc$addToConcordance(text)
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
         WriteLines(text, con, outputEncoding, sep = "")
@@ -187,6 +195,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     	wrapper <- wrappers[[tag]]
     	if (is.null(wrapper))
     	    wrapper <- c(paste0(tag, "{"), "}")
+    	if (concordance)
+    	    conc$saveSrcref(block)
     	of1(wrapper[1L])
     	writeContent(block, tag)
     	of1(wrapper[2L])
@@ -208,8 +218,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         url <- fsub("%", "\\%",  url)
         url <- fsub("#", "\\#",  url)
         url <- fsub("&", "\\&",  url)  # needs hyperref >= 6.78n (2008-12-26)
+        if (concordance)
+            conc$saveSrcref(block)
     	of0(tag, "{", url, "}")
         if (tag == "\\Rhref") {
+            if (concordance)
+                conc$saveSrcref(block[[2L]])	
             of1("{")
             writeContent(block[[2L]], tag)
             of1("}")
@@ -220,11 +234,15 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     ## (as documented)
     writeLink <- function(tag, block) {
         parts <- get_link(block, tag)
+        if (concordance)
+            conc$saveSrcref(block)
         of0("\\LinkA{", latex_escape_link(parts$topic), "}{",
             latex_link_trans0(parts$dest), "}")
     }
 
     writeDR <- function(block, tag) {
+    	if (concordance)
+    	    conc$saveSrcref(block)
         if (length(block) > 1L) {
             of1('## Not run: ')
             writeContent(block, tag)
@@ -334,11 +352,15 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         ## 'name' is linked from the header
         if (alias == name) return()
         alias2 <- latex_link_trans0(alias)
+        if (concordance)
+            conc$saveSrcref(block)
         of0(aa, latex_code_alias(alias), "}{",
             latex_escape_name(name), "}{", alias2, "}\n")
     }
 
     writeBlock <- function(block, tag, blocktag) {
+    	if (concordance)
+    	    conc$saveSrcref(block)
 	switch(tag,
                UNKNOWN =,
                VERB = of1(texify(block, TRUE)),
@@ -432,6 +454,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                } ,
                "\\eqn" =,
                "\\deqn" = {
+               	   if (concordance)
+               		conc$saveSrcref(block[[1L]])
                    of0(tag, "{")
                    inEqn <<- TRUE
                    writeContent(block[[1L]], tag)
@@ -439,11 +463,15 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                    of0('}{}')
                },
                "\\figure" = {
+               	   if (concordance)
+               		conc$saveSrcref(block[[1L]])
                	   of0('\\Figure{')
                	   writeContent(block[[1L]], tag)
                	   of0('}{')
                	   if (length(block) > 1L) {
-		       includeoptions <- .Rd_get_latex(block[[2]])
+               	       if (concordance)
+               	   	   conc$saveSrcref(block[[2L]])	
+		       includeoptions <- .Rd_get_latex(block[[2L]])
                        ## this was wrong if length(includeopptions) > 1
 		       if (length(includeoptions))
                            for (z in includeoptions)
@@ -468,8 +496,11 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                		writeContent(block[[2L]], tag)
                	    else if (tag == "\\ifelse")
                	    	writeContent(block[[3L]], tag),
-               "\\out" = for (i in seq_along(block))
-		   of1(block[[i]]),
+               "\\out" = for (i in seq_along(block)) {
+               	   if (concordance)
+               		conc$saveSrcref(block[[i]])
+		   of1(block[[i]])
+		   },
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
@@ -481,8 +512,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     	if (length(format) != 1L || RdTags(format) != "TEXT")
     	    stopRd(table, Rdfile, "\\tabular format must be simple text")
         tags <- RdTags(content)
-        of0('\n\\Tabular{', format, '}{')
+	of0('\n\\Tabular{', format, '}{')
+        if (concordance)
+            conc$saveSrcref(table[[1L]])
         for (i in seq_along(tags)) {
+            if (concordance)
+                conc$saveSrcref(content[[i]])	
             switch(tags[i],
                    "\\tab" = of1("&"),
                    "\\cr" = of1("\\\\{}"),
@@ -519,18 +554,26 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                        }
                        switch(blocktag,
                               "\\describe" = {
+                              	  if (concordance)
+                              	      conc$saveSrcref(block[[1L]])
                                   of1('\\item[')
                                   writeContent(block[[1L]], tag)
                                   of1('] ')
+                                  if (concordance)
+                                      conc$saveSrcref(block[[2L]])
                                   writeContent(block[[2L]], tag)
                               },
                               "\\value"=,
                               "\\arguments"={
+                              	  if (concordance)
+                              	      conc$saveSrcref(block[[1L]])
                                   of1('\\item[\\code{')
                                   inCode <<- TRUE
                                   writeContent(block[[1L]], tag)
                                   inCode <<- FALSE
                                   of1('}] ')
+                                  if (concordance)
+                                      conc$saveSrcref(block[[2L]])
                                   writeContent(block[[2L]], tag)
                               },
                               "\\enumerate" =,
@@ -576,6 +619,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     writeSection <- function(section, tag) {
         if (tag == "\\encoding")
             return()
+    	if (concordance)
+    	    conc$saveSrcref(section)
         save <- sectionLevel
         sectionLevel <<- sectionLevel + 1
         if (tag == "\\alias")
@@ -656,7 +701,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         title <- paste(title[nzchar(title)], collapse = " ")
 
 	name <- Rd[[2L]]
-
+	if (concordance)
+	    conc$saveSrcref(name)
 	name <- trim(as.character(Rd[[2L]][[1L]]))
 	ltxname <- latex_escape_name(name)
 
@@ -670,6 +716,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     if (encode_warn)
 	warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
 	       outputEncoding)
+    if (concordance) {
+    	conc$srcFile <- Rdfile
+        concdata <- followConcordance(conc$finish(), attr(Rd, "concordance"))
+        attr(out, "concordance") <- concdata
+    }
+
     invisible(structure(out, latexEncoding = latexEncoding,
                         hasFigures = hasFigures))
 }

@@ -3329,7 +3329,7 @@ A @command{tar} program is needed to unpack the sources and packages
 @uref{https://github.com/libarchive/libarchive/}, used as
 @command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
 the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/tools.html}), although the
+(@uref{https://heirloom.sourceforge.net/tools.html}), although the
 latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
@@ -3804,6 +3804,9 @@ session by package @CRANpkg{flexiblas}.  Apparently undocumented:
 FlexiBLAS on Fedora provides a complete LAPACK, but not the enhanced
 routines from ATLAS or OpenBLAS.
 
+BLAS implementations which use parallel computations can be
+non-deterministic: this is known for ATLAS.
+
 @menu
 * ATLAS::
 * OpenBLAS and BLIS::
@@ -3814,7 +3817,7 @@ routines from ATLAS or OpenBLAS.
 @node ATLAS, OpenBLAS and BLIS, BLAS, BLAS
 @subsubsection ATLAS
 
-ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
+ATLAS (@uref{https://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
 Unfortunately it is built by default as a static library that on some
 platforms may not be able to be used with shared objects such as are
@@ -3859,19 +3862,18 @@ Linking against multiple static libraries requires one of
 @end example
 
 Consult its installation
-guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+guide@footnote{@uref{https://math-atlas.sourceforge.net/atlas_install/}}
 for how to build ATLAS as a shared library or as a static library with
 position-independent code (on platforms where that matters).
 
 According to the ATLAS
-FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+FAQ@footnote{@uref{https://math-atlas.sourceforge.net/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
 hyperthreaded CPUs without restricting affinities at compile-time to one
 virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
-@c http://math-atlas.sourceforge.net/atlas_install/node21.html
-
+@c https://math-atlas.sourceforge.net/atlas_install/node21.html
 
 @node OpenBLAS and BLIS, MKL, ATLAS, BLAS
 @subsubsection OpenBLAS and BLIS
@@ -4999,15 +5001,15 @@ which can be overcome by setting
 FPIEFLAGS=-fPIE
 @end example
 @noindent
-in @file{config.site}. This has sufficed for both default and
-shared-library builds.
+in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
+that value if it is unset.)
 
-It is recommended to use C flag @option{-Wno-strict-prototypes}
-(disabling a C23 feature) if using @code{-pedantic} in @command{clang}
-15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
-see the release notes at
-@uref{https://releases.llvm.org/15.0.0/tools/clang/docs/ReleaseNotes.html#id9},
-under `improvements to diagnostics'..
+@c It is recommended to use C flag @option{-Wno-strict-prototypes}
+@c (disabling a C23 feature) if using @code{-pedantic} in @command{clang}
+@c 15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
+@c see the release notes at
+@c @uref{https://releases.llvm.org/15.0.0/tools/clang/docs/ReleaseNotes.html#id9},
+@c under `improvements to diagnostics'..
 
 @c This was about 'Classic Flang'.  The newer version is not
 @c yet able to compile Fortran.
@@ -5257,6 +5259,7 @@ installers mentioned below, use a file @file{config.site} containing
 CC=clang
 OBJC=$CC
 FC="$LOCAL/gfortran/bin/gfortran -mtune=native"
+CPPFLAGS='-isystem $LOCAL/include'
 CXX=clang++
 @end example
 @noindent
@@ -5456,24 +5459,25 @@ what is missing.  At the time of writing using pre-built components
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://github.com/llvm/llvm-project/releases/} (at the time of
-writing only for Intel). In particular, these include support for OpenMP
-which Apple @command{clang} does not.  Some of these have included
-support for the ASAN and UBSAN sanitizers.
+@uref{https://github.com/llvm/llvm-project/releases/} (sometimes only
+for Intel and usually unsigned/not notarized which makes them hard to
+use, especially on @code{arm64}).  In particular, these include support
+for OpenMP which Apple @command{clang} does not.  Some of these have
+included support for the ASAN and UBSAN sanitizers.
 
 Suppose one of these distributions is installed under
-@file{/usr/local/llvm}. Use a file @file{config.site} containing
+@file{$LOCAL/llvm}. Use a file @file{config.site} containing
 @example
-CC=/usr/local/llvm/bin/clang
+CC=$LOCAL/llvm/bin/clang
 OBJC=$CC
-FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/llvm/bin/clang++
-LDFLAGS="-L/usr/local/llvm/lib -L/uar/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/llvm/lib:/usr/local/lib
+FC=$LOCAL/gfortran/bin/gfortran
+CXX=$LOCAL/llvm/bin/clang++
+LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
+R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/llvm/lib/libomp.dylib}, is found when
+library, here @file{$LOCAL/llvm/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5485,9 +5489,9 @@ rather than the system ones.
 
 For Mojave and later the system paths need to be specified @emph{via}
 @example
-CC="/usr/local/llvm/bin/clang -isysroot
+CC="$LOCAL/llvm/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/llvm/bin/clang++ -isysroot
+CXX="$LOCAL/llvm/bin/clang++ -isysroot
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent

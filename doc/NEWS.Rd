@@ -76,6 +76,9 @@
       encoding.  This reduces the risk of accidental creation of invalid
       strings, particularly when different elements of the input have
       different encoding (including \code{"bytes"}).
+
+      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
+      specifying \code{origin}) now work.
     }
   }
 
@@ -148,6 +151,11 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
+
+      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
+      has been changed to be fully C-compliant.  This means that
+      functions loaded \emph{via} for example \code{R_GetCCallable} need
+      to be cast to an appropriate type if they have any arguments.
     }
   }
 
@@ -239,11 +247,21 @@
       methods for atomic vectors such as numbers, and is no longer
       influenced by \code{options()}.
       Ditto for \code{as.character(<Date>)}.
+      The \code{as.character()} method gets arguments \code{digits} and \code{OutDec}
+      with defaults \emph{not} depending on \code{options()}.
       Use of \code{as.character(*, format = .)} now warns.
 
       \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
       methods also behave as \code{good citizen} methods and back compatibility
       option \code{keepStr = TRUE}.
+
+      \item The \code{as.POSIXlt(<POSIXlt>)} and
+      \code{as.POSIXct(<POSIXct>)} default methods now do obey their
+      \code{tz} argument, also in this case.
+
+      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
+      argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
+      the R-devel mailing list.
     }
   }
 }
@@ -283,10 +301,12 @@
       target \command{make compact-pdf} (at the top level or in
       directory \file{doc/manual}).
 
-      \item There is now support for LLVM clang 15 on Linux, which
-      defaults to position-independent (PIE) executables whereas
-      \command{gfortran} does not.  See the \dQuote{R Installation and
-      Administration} manual for the setting required.
+      \item There is now \command{configure} support for LLVM clang 15
+      on Linux, which defaults to position-independent (PIE) executables
+      whereas \command{gfortran} does not.
+
+      \item Many small changes to ease compilation (and suppress
+      warnings) with LLVM \command{clang} 15.
     }
   }
 
@@ -327,8 +347,12 @@
       \item Files can now be extracted even from very large zip archives
       (\PR{18390}, thanks to Martin Jakt).
 
-      \item Non-finite \code{POSIXlt} now correctly coerce to \code{Date};
+      \item Non-finite objects of class \code{"POSIXlt"} are now
+      correctly coerced to classes \code{"Date"} and \code{"POSIXct"};
       following up on the extension to \code{format()} them correctly.
+
+      \item Added methods for \code{is.finite()}, \code{is.infinite()}
+      and \code{is.nan()} for \code{"POSIXlt"} date-time objects.
     }
   }
 
@@ -352,7 +376,6 @@
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
       pasting text with tilde on Italian keyboard (PR#18391).
-
     }
   }
 }

@@ -1034,7 +1034,6 @@ static void TryToReleasePages(void)
     if (release_count == 0) {
 	release_count = R_PageReleaseFreq;
 	for (i = 0; i < NUM_SMALL_NODE_CLASSES; i++) {
-	    int pages_free = 0;
 	    PAGE_HEADER *page, *last, *next;
 	    int node_size = NODE_SIZE(i);
 	    int page_count = (R_PAGE_SIZE - sizeof(PAGE_HEADER)) / node_size;
@@ -1067,7 +1066,6 @@ static void TryToReleasePages(void)
 			R_GenHeap[i].pages = next;
 		    else
 			last->next = next;
-		    pages_free++;
 		    rel_pages++;
 		}
 		else last = page;

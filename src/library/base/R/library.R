@@ -986,7 +986,7 @@ function(x)
     s <- Sys.info()
 
     R_LIBS_USER_default <- function() {
-        home <- normalizePath("~")
+        home <- normalizePath("~", mustWork = FALSE)  # possibly /nonexistent
         ## FIXME: could re-use v from "above".
         x.y <- paste0(R.version$major, ".",
                       sub("[.].*", "", R.version$minor))

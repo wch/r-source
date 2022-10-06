@@ -4287,13 +4287,12 @@ unsafe).
 Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_} can be set
 to a space-separated set of flags which come from the @R{} build used
 for testing (flags such as @option{-Wall} and @option{-Wextra} are
-already known).  For example, for CRAN build of @R{} >= 4.0.0 on macOS
+already known).  For example, for CRAN builds of @R{} >= 4.0.0 on macOS
 one could use
 @example
 _R_CHECK_COMPILATION_FLAGS_KNOWN_="-mmacosx-version-min=10.13" 
 @end example
-@noindent
-Default: false (but true for CRAN submission checks).
+Default: unset.
 
 @item _R_CHECK_R_DEPENDS_
 Check that any dependence on R is not on a recent patch-level version

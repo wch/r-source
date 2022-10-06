@@ -844,6 +844,7 @@ R_XTRA_CFLAGS
 FFLAGS
 SHLIB_CXXFLAGS
 CXXSTD
+FPIEFLAGS
 FOUNDATION_LIBS
 FOUNDATION_CPPFLAGS
 OPENMP_FCFLAGS
@@ -893,7 +894,6 @@ CXXCPP
 ac_ct_CXX
 CXXFLAGS
 CXX
-FPIEFLAGS
 ac_ct_FC
 FCFLAGS
 FC
@@ -8568,8 +8568,6 @@ F77=${FC}
 if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
 fi
-
-
 
 
 
@@ -26680,7 +26678,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26683: \"$ac_link\") >&5
+(eval echo $as_me:26681: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26756,7 +26754,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26759: \"$ac_link\") >&5
+(eval echo $as_me:26757: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28631,6 +28629,7 @@ fi
 
 
 ### type for Fortran 'hidden' character lengths, if any
+### Try setting FPIFLAGS if not already set.
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for type of 'hidden' Fortran character lengths" >&5
 printf %s "checking for type of 'hidden' Fortran character lengths... " >&6; }
 if test "x${FC_LEN_T}" != "x"; then
@@ -28646,7 +28645,6 @@ else $as_nop
       call xerbla('abcde', -10)
       end
 EOF
-${FC} ${FFLAGS} ${FPIEFLAGS} -c conftestf.f 1>&5 2>&5
 cat > conftest.c <<EOF
 /* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
@@ -28677,6 +28675,10 @@ int main()
     return 0;
 }
 EOF
+r_cv_prog_fc_char_len_t=unknown
+for fpieflags in "${FPIEFLAGS}" "-fPIE"; do
+echo "Trying FPIEFLAGS = ${fpieflags}" 1>&5
+${FC} ${FFLAGS} ${fpieflags} -c conftestf.f 1>&5 2>&5
 if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -28686,20 +28688,26 @@ if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
     output=`./conftest${ac_exeext} 2>&5`
     if test ${?} = 0; then
       r_cv_prog_fc_char_len_t=size_t
+      FPIEFLAGS="${fpieflags}"
+    else
+      break
     fi
   fi
 fi
+done
 
 fi
 
 rm -Rf conftest conftest.* conftestf.* core
 
-  fc_len_t=${r_cv_prog_fc_char_len_t}
+  if test "${r_cv_prog_fc_char_len_t}" != "xunknown" ; then
+    fc_len_t=${r_cv_prog_fc_char_len_t}
+  fi
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: ${fc_len_t}" >&5
 printf "%s\n" "${fc_len_t}" >&6; }
 
-if test "x${fc_len_t}" == "x" ; then
+if test "x${fc_len_t}" = "x" ; then
   as_fn_error $? "FC_LEN_T must be non-empty." "$LINENO" 5
 fi
 
@@ -28708,6 +28716,8 @@ if test "x${fc_len_t}" != "xunknown" ; then
 printf "%s\n" "#define FC_LEN_T ${fc_len_t}" >>confdefs.h
 
 fi
+
+
 
 
 

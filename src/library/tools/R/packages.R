@@ -372,7 +372,7 @@ function(packages = NULL, db = NULL, which = "strong",
             fields <- unique(c(fields, recursive))
     }
 
-    ind <- if(!is.character(recursive) && !recursive && !reverse && 
+    ind <- if(!is.character(recursive) && !recursive && !reverse &&
               !is.null(packages)) {
                ## For forward non-recursive depends, we can simplify
                ## matters by subscripting the db right away---modulo
@@ -381,7 +381,7 @@ function(packages = NULL, db = NULL, which = "strong",
            } else !duplicated(db[, "Package"])
 
     db <- as.data.frame(db[ind, c("Package", fields), drop = FALSE])
-    
+
     ## Avoid recomputing package dependency names in recursive
     ## invocations.
     for(f in fields) {
@@ -480,7 +480,7 @@ function(packages = NULL, db = NULL, which = "strong",
     ## an edge from i to j by a single integer number. Finding duplicates in
     ## a vector of integers is much faster than in rows of a matrix.
     shift <- as.integer(2^15)  ## allows to fit two numbers to an integer
-    if (max(pos) < shift)
+    if (length(pos) && max(pos) < shift)
         posunique <- function(p)
             p[!duplicated(p[,1L]*shift + p[,2L]), , drop = FALSE]
     else

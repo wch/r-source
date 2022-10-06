@@ -134,8 +134,8 @@
 
 ## The following variable can be used to provide any PIE flags for the
 ## Fortran compiler.  Currently only needed when using gfortran on
-## Linux in conjuunction with a default build of clang 15 where it is
-## set to -fPIE.
+## Linux in conjuunction with a default build of clang 15 where it needs
+## to be set to -fPIE: configure tries that value if unset.
 ## FPIEFLAGS=
 
 ## The command to be used to create shared objects which contain object

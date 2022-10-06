@@ -1496,7 +1496,7 @@ function(x)
     address <- format(x, include = c("email"),
                       collapse = list(email = FALSE))
     ## Need to quote display names at least when they contain commas
-    ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
+    ## (RFC 5322 <https://www.rfc-editor.org/rfc/rfc5322>).
     if(any(ind <- grepl(",", display))) {
         display[ind] <- sprintf("\"%s\"",
                                 gsub("\"", "\\\"", display[ind], fixed=TRUE))
