@@ -860,7 +860,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     int index;
     SEXP R_fcall, result;
 
-    index = QuartzNewPatternIndex(xd, 0);
+    index = QuartzNewGroupIndex(xd);
     int savedGroup = xd->appendingGroup;
     int savedLayerType = xd->appendingLayerType;
 
@@ -923,7 +923,7 @@ static void QuartzUseGroup(SEXP ref, SEXP trans,
     CGLayerRef layer = xd->groups[index];
     CGPoint contextOrigin = CGPointMake(0 ,0);
 
-    /* Ignore trans for now */
+    /* Ignore 'trans' for now */
 
     CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
 }
