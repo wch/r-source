@@ -21,6 +21,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
         stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
         texmath = getOption("help.htmlmath"),
+        concordance = FALSE,
         ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
@@ -29,7 +30,8 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          stages = "render", outputEncoding = "UTF-8",
-         fragment = FALSE, ..., writeEncoding = TRUE)
+         fragment = FALSE, ..., writeEncoding = TRUE,
+         concordance = FALSE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8",
@@ -63,6 +65,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       circumstances, e.g., if the help page already uses macros from the
       \code{\link[mathjaxr]{mathjaxr}} package.
     }
+  \item{concordance}{Whether concordance data should be embedded in the
+    output file and attached to the return value.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to
@@ -138,7 +142,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 }
 
 \note{
-  The \verb{\Sexpr} macro is a new addition to Rd files.  It includes
+  The \verb{\Sexpr} macro includes
   \R code that will be executed at one of three times: \emph{build} time
   (when a package's source code is built into a tarball),
   \emph{install} time (when the package is installed or
@@ -162,6 +166,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   file (invisibly).  For \code{Rd2latex}, the output name is given an
   attribute \code{"latexEncoding"} giving the encoding of the file in a
   form suitable for use with the LaTeX \samp{inputenc} package.
+  
+For \code{Rd2HTML} and \code{Rd2latex} with \code{concordance = TRUE}, a 
+\code{"concordance"} attribute is added, containing an
+\code{\link{Rconcordance}} object.
 }
 \author{
   Duncan Murdoch, Brian Ripley
@@ -169,7 +177,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \references{ \url{https://developer.r-project.org/parseRd.pdf} }
 \seealso{
   \code{\link{parse_Rd}}, \code{\link{checkRd}},
-  \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}}.
+  \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}},
+  \code{\link{matchConcordance}}.
 }
 \examples{\donttest{
 

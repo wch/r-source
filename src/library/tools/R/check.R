@@ -4958,7 +4958,6 @@ add_dummies <- function(dir, Log)
         eq <- .Rd_get_equations_from_Rd_db(db)
 
         i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
-        i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
         i2 <- (length(eq) && isTRUE(R_check_Rd_math_rendering))
         if(!i1 && !i2)
             return()
@@ -4994,7 +4993,7 @@ add_dummies <- function(dir, Log)
                 results <- lapply(db,
                                   function(x)
                                       tryCatch({
-                                          Rd2HTML(x, out)
+                                          Rd2HTML(x, out, concordance = TRUE)
                                           tidy_validate(out, tidy = Tidy)
                                       },
                                       error = identity))
@@ -5065,10 +5064,12 @@ add_dummies <- function(dir, Log)
                 any <- TRUE
                 printLog0(Log,
                           c("Found the following HTML validation problems:\n",
-                            sprintf("%s:%s:%s: %s\n",
+                            sprintf("%s:%s:%s (%s:%s): %s\n",
                                     sub("[Rr]d$", "html", results2[, "path"]),
                                     results2[, "line"],
                                     results2[, "col"],
+                            	    basename(results2[, "srcFile"]),
+                            	    results2[, "srcLine"],
                                     results2[, "msg"])))
             }
         }
