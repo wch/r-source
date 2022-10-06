@@ -112,6 +112,10 @@ typedef struct QuartzPattern {
 
 typedef QPattern* QPatternRef;
 
+#define QNoLayer      0
+#define QPatternLayer 1
+#define QGroupLayer   2
+
 typedef struct QuartzSpecific_s {
     double        ps;
     double        scalex, scaley;  /* resolution correction: px/pt ratio */
@@ -142,6 +146,12 @@ typedef struct QuartzSpecific_s {
     QGradientRef  *gradients;
     QPatternRef   *patterns;
     int           appendingPattern;
+
+    int           numGroups;
+    CGLayerRef    *groups;
+    int           appendingGroup;
+    /* are we currently appending a pattern or a group (or neither) */
+    int           appendingLayerType;  
 
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
@@ -387,8 +397,12 @@ static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
  */
 static CGContextRef QuartzGetCurrentContext(QuartzDesc *xd)
 {
-    if (xd->appendingPattern >= 0) {
+    if (xd->appendingPattern >= 0 && 
+        xd->appendingLayerType == QPatternLayer) {
         return CGLayerGetContext(xd->patterns[xd->appendingPattern]->layer);
+    } else if (xd->appendingGroup >= 0 &&
+               xd->appendingLayerType == QGroupLayer) {
+        return CGLayerGetContext(xd->groups[xd->appendingGroup]);
     } else {
         return xd->getCGContext(xd, xd->userInfo);
     }
@@ -721,6 +735,201 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
     return quartz_pattern;
 }
 
+/*
+ ***************************
+ * Groups
+ *
+ ***************************
+ */
+
+/* Just a starting value */
+#define maxGroups 64
+
+static void QuartzInitGroups(QuartzDesc *xd)
+{
+    int i;
+    xd->numGroups = maxGroups;
+    xd->groups = malloc(sizeof(CGLayerRef) * xd->numPatterns);
+    for (i = 0; i < xd->numGroups; i++) {
+        xd->groups[i] = NULL;
+    }
+    xd->appendingGroup = -1;
+}
+
+static int QuartzGrowGroups(QuartzDesc *xd)
+{
+    int i, newMax = 2*xd->numGroups;
+    void *tmp;
+    tmp = realloc(xd->groups, sizeof(CGLayerRef) * newMax);
+    if (!tmp) { 
+        warning(_("Quartz groups exhausted (failed to increase maxGroups)"));
+        return 0;
+    }
+    xd->groups = tmp;
+    for (i = xd->numGroups; i < newMax; i++) {
+        xd->groups[i] = NULL;
+    }
+    xd->numGroups = newMax;
+    return 1;
+}
+
+static void QuartzCleanGroups(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] != NULL) {
+            CGLayerRelease(xd->groups[i]);
+            xd->groups[i] = NULL;
+        }
+    }    
+}
+
+static void QuartzReleaseGroups(int i, QuartzDesc *xd)
+{
+    if (xd->groups[i]) {
+        CGLayerRelease(xd->groups[i]);
+        xd->groups[i] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent group"));
+    }
+}
+
+static void QuartzDestroyGroups(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] != NULL) {
+            CGLayerRelease(xd->groups[i]);
+        }
+    }    
+    free(xd->groups);
+}
+
+static int QuartzNewGroupIndex(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] == NULL) {
+            return i;
+        } else {
+            if (i == (xd->numGroups - 1) &&
+                !QuartzGrowGroups(xd)) {
+                return -1;
+            }
+        }
+    }    
+    /* Should never get here, but just in case */
+    warning(_("Quartz groups exhausted"));
+    return -1;
+}
+
+static int QuartzOperator(int op) {
+    int blendmode = kCGBlendModeNormal;
+    switch(op) {
+    case R_GE_compositeClear: blendmode = kCGBlendModeClear; break;
+    case R_GE_compositeSource: blendmode = kCGBlendModeCopy; break;
+    case R_GE_compositeOver: blendmode = kCGBlendModeNormal; break;
+    case R_GE_compositeIn: blendmode = kCGBlendModeSourceIn; break;
+    case R_GE_compositeOut: blendmode = kCGBlendModeSourceOut; break;
+    case R_GE_compositeAtop: blendmode = kCGBlendModeSourceAtop; break;
+    /* case R_GE_compositeDest is implemented "manually" */
+    case R_GE_compositeDestOver: blendmode = kCGBlendModeDestinationOver; break;
+    case R_GE_compositeDestIn: blendmode = kCGBlendModeDestinationIn; break;
+    case R_GE_compositeDestOut: blendmode = kCGBlendModeDestinationOut; break;
+    case R_GE_compositeDestAtop: blendmode = kCGBlendModeDestinationAtop; break;
+    case R_GE_compositeXor: blendmode = kCGBlendModeXOR; break;
+    /* case R_GE_compositeAdd: blendmode = kCGBlendModeADD; break; */
+    case R_GE_compositeSaturate: blendmode = kCGBlendModeSaturation; break;
+    case R_GE_compositeMultiply: blendmode = kCGBlendModeMultiply; break;
+    case R_GE_compositeScreen: blendmode = kCGBlendModeScreen; break;
+    case R_GE_compositeOverlay: blendmode = kCGBlendModeOverlay; break;
+    case R_GE_compositeDarken: blendmode = kCGBlendModeDarken; break;
+    case R_GE_compositeLighten: blendmode = kCGBlendModeLighten; break;
+    case R_GE_compositeColorDodge: blendmode = kCGBlendModeColorDodge; break;
+    case R_GE_compositeColorBurn: blendmode = kCGBlendModeColorBurn; break;
+    case R_GE_compositeHardLight: blendmode = kCGBlendModeHardLight; break;
+    case R_GE_compositeSoftLight: blendmode = kCGBlendModeSoftLight; break;
+    case R_GE_compositeDifference: blendmode = kCGBlendModeDifference; break;
+    case R_GE_compositeExclusion: blendmode = kCGBlendModeExclusion; break;
+    }
+    return blendmode;
+}
+
+static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst, 
+                              CGContextRef ctx, QuartzDesc *xd) {
+    int index;
+    SEXP R_fcall, result;
+
+    index = QuartzNewPatternIndex(xd, 0);
+    int savedGroup = xd->appendingGroup;
+    int savedLayerType = xd->appendingLayerType;
+
+    double devWidth = QuartzDevice_GetScaledWidth(xd);
+    double devHeight = QuartzDevice_GetScaledHeight(xd);
+    CGSize size = CGSizeMake(devWidth, devHeight);
+    CGLayerRef layer = CGLayerCreateWithContext(ctx, size, NULL);
+    xd->groups[index] = layer;
+    xd->appendingGroup = index;
+    xd->appendingLayerType = QGroupLayer;
+
+    /* Work with the group layer context */
+    CGContextRef layerContext = CGLayerGetContext(layer);
+
+    /* Start with OVER operator */
+    CGContextSetBlendMode(layerContext, kCGBlendModeNormal);
+    
+    if (dst != R_NilValue) {
+        /* Play the destination function to draw the destination */
+        R_fcall = PROTECT(lang1(dst));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+    }
+    /* Set the group operator */
+    if (op == R_GE_compositeDest) {
+        /* There is no DEST operator in Quartz, but can implement by just 
+         * NOT drawing 'src' */
+    } else {
+        CGContextSetBlendMode(layerContext, QuartzOperator(op));
+        /* Play the source function to draw the source */
+        R_fcall = PROTECT(lang1(src));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+    }
+    
+    xd->appendingGroup = savedGroup;
+    xd->appendingLayerType = savedLayerType;
+
+    /* Return group index */
+    PROTECT(result = allocVector(INTSXP, 1));
+    INTEGER(result)[0] = index;
+    UNPROTECT(1);
+    return result;
+}
+
+static void QuartzUseGroup(SEXP ref, SEXP trans, 
+                           CGContextRef ctx, QuartzDesc *xd) {
+    int index = INTEGER(ref)[0];
+
+    if (index < 0) {
+        warning(_("Groups exhausted"));
+        return;
+    }
+
+    if (index >= 0 && !xd->groups[index]) {
+        warning("Unknown group ");
+        return;
+    } 
+
+    CGLayerRef layer = xd->groups[index];
+    CGPoint contextOrigin = CGPointMake(0 ,0);
+
+    /* Ignore trans for now */
+
+    CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
+}
+
+/* END definitions */
+
 #pragma mark RGD API Function Prototypes
 
 static void     RQuartz_Close(pDevDesc);
@@ -752,6 +961,16 @@ static SEXP     RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     RQuartz_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     RQuartz_releaseMask(SEXP ref, pDevDesc dd);
+static SEXP     RQuartz_defineGroup(SEXP source, int op, SEXP destination, 
+                                    pDevDesc dd);
+static void     RQuartz_useGroup(SEXP ref, SEXP trans, pDevDesc dd);
+static void     RQuartz_releaseGroup(SEXP ref, pDevDesc dd);
+static void     RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd);
+static void     RQuartz_fill(SEXP path, int rule, const pGEcontext gc, 
+                             pDevDesc dd);
+static void     RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
+                                   pDevDesc dd);
+static SEXP     RQuartz_capabilities(SEXP cap);
 
 #pragma mark Quartz device implementation
 
@@ -817,7 +1036,11 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->releaseClipPath = RQuartz_releaseClipPath;
     dev->setMask         = RQuartz_setMask;
     dev->releaseMask     = RQuartz_releaseMask;
-    dev->deviceVersion = R_GE_definitions;
+    dev->deviceClip      = FALSE;
+    dev->defineGroup     = RQuartz_defineGroup;
+    dev->useGroup        = RQuartz_useGroup;
+    dev->releaseGroup    = RQuartz_releaseGroup;
+    dev->deviceVersion   = R_GE_group;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -842,6 +1065,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     qd->font       = NULL;
 
     QuartzInitPatterns(qd);
+    QuartzInitGroups(qd);
+    qd->appendingLayerType = QNoLayer;
 
     dev->deviceSpecific = qd;
     qd->dev             = dev;
@@ -1230,6 +1455,8 @@ static void RQuartz_NewPage(CTXDESC)
         if (!ctx) NOCTX;
         {
             xd->appendingPattern = -1;
+            xd->appendingGroup = -1;
+            xd->appendingLayerType = QNoLayer;
 
             CGRect bounds = CGRectMake(0, 0,
 				       QuartzDevice_GetScaledWidth(xd) * 72.0,
@@ -1706,7 +1933,9 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     } else {
         index = QuartzNewPatternIndex(xd, 0);
         int savedPattern = xd->appendingPattern;
+        int savedLayerType = xd->appendingLayerType; 
         xd->appendingPattern = index;
+        xd->appendingLayerType = QPatternLayer;
         QPatternRef quartz_pattern = 
             QuartzCreatePattern(pattern, ctx, xd);
         xd->patterns[index] = quartz_pattern;
@@ -1717,6 +1946,7 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
         UNPROTECT(1);
 
         xd->appendingPattern = savedPattern;
+        xd->appendingLayerType = savedLayerType;
     }
     INTEGER(ref)[0] = index;
     UNPROTECT(1);
@@ -1744,6 +1974,34 @@ static SEXP RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd) {
 }
 
 static void RQuartz_releaseMask(SEXP ref, pDevDesc dd) {}
+
+static SEXP RQuartz_defineGroup(SEXP source, int op, SEXP destination, 
+                                    pDevDesc dd) {
+    DEVSPEC;
+    return QuartzCreateGroup(source, op, destination, ctx, xd);
+}
+
+static void RQuartz_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
+    DEVSPEC;
+    QuartzUseGroup(ref, trans, ctx, xd);
+}
+
+static void RQuartz_releaseGroup(SEXP ref, pDevDesc dd) {
+    DEVSPEC;
+    /* NULL means release all patterns */
+    if (ref == R_NilValue) {
+        QuartzCleanGroups(xd);
+    } else {
+        QuartzReleaseGroups(INTEGER(ref)[0], xd);
+    }
+}
+
+static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {}
+static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc, 
+                         pDevDesc dd) {}
+static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
+                               pDevDesc dd) {}
+static SEXP RQuartz_capabilities(SEXP cap) { return cap; }
 
 #pragma mark -
 #pragma mark R Interface
