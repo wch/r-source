@@ -5278,7 +5278,8 @@ of @command{gfortran} target the current version of macOS (unlike
 To install packages using compiled code one needs the Command Line Tools
 (or Xcode) and appropriate compilers, e.g.@: the C/C++ compilers from
 those tools and/or @command{gfortran}. Some packages have further
-requirements such as component @command{pkgconfig}.
+requirements such as component @command{pkgconfig} (and to set
+@env{PKG_CONFIG_PATH=} as above).
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client, @command{svn} version 1.10, used to be part of
@@ -5353,7 +5354,7 @@ manual.
 For Intel Big Sur and later there is
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
 and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey/gfortran-Intel-11.3-Monterey.dmg}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-Intel-12.1-Monterey.dmg}.
 
 
 For @cputype{arm64}, we use the fork of @command{gfortran} from
