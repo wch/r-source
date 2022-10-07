@@ -1,6 +1,6 @@
 % File src/library/base/man/substitute.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011, 2022 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substitute}
