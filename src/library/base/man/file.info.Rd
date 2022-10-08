@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -36,14 +36,14 @@ file.size(\dots)
   digits summarizing the permissions for the file owner, the owner's
   group and for anyone respectively.  Each digit is the logical
   \emph{or} of read (4), write (2) and execute/search (1) permissions.
-  
+
   See \link{files} for how file paths with marked encodings are interpreted.
-  
-#ifdef unix
+
+ \describe{
+ \item{On unix alikes:}{
   On most systems symbolic links are followed, so information is given
-  about the file to which the link points rather than about the link.
-#endif
-#ifdef windows
+  about the file to which the link points rather than about the link.}
+ \item{On Windows:}{
   File modes are probably only useful on NTFS file systems, and it seems
   all three digits refer to the file's owner.
   The execute/search bits are set for directories, and for files based
@@ -56,42 +56,44 @@ file.size(\dots)
   Junction points and symbolic links are followed, so information is
   given about the file/directory to which the link points rather than
   about the link.
-#endif
+ }}
 }
 \value{
-  For \code{file.info}, data frame with row names the file names and columns
+  For \code{file.info()}, data frame with row names the file names and columns
   \item{size}{double: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}
   \item{mtime, ctime, atime}{object of class \code{"POSIXct"}:
     file modification, \sQuote{last status change} and last access times.}
-#ifdef unix
-  \item{uid}{integer: the user ID of the file's owner.}
-  \item{gid}{integer: the group ID of the file's group.}
-  \item{uname}{character: \code{uid} interpreted as a user name.}
-  \item{grname}{character: \code{gid} interpreted as a group name.}
+
+ \describe{
+ \item{On unix alikes:}{ \describe{
+  \item{uid:}{integer, the user ID of the file's owner.}
+  \item{gid:}{integer, the group ID of the file's group.}
+  \item{uname:}{character, \code{uid} interpreted as a user name.}
+  \item{grname:}{character, \code{gid} interpreted as a group name.}
   Unknown user and group names will be \code{NA}.
-#endif
-#ifdef windows
-  \item{exe}{character: what sort of executable is this?  Possible
+   }}
+ \item{On Windows only:}{ \describe{
+   \item{exe:}{character indicating the sort of executable.  Possible
     values are \code{"no"}, \code{"msdos"}, \code{"win16"},
     \code{"win32"}, \code{"win64"} and \code{"unknown"}.  Note that a
     file (e.g., a script file) can be executable according to the mode
     bits but not executable in this sense.}
-#endif
+   }}
+ }
 
   If \code{extra_cols} is false, only the first six columns are
   returned: as these can all be found from a single C system call this
   can be faster.  (However, properly configured systems will use a
   \sQuote{name service cache daemon} to speed up the name lookups.)
-  
+
   Entries for non-existent or non-readable files will be \code{NA}.
-#ifdef unix
+
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
   may not be supplied on a non-POSIX Unix-alike system, and will not be
   on Windows.
-#endif
 
   What is meant by the three file times depends on the OS and file
   system.  On Windows native file systems \code{ctime} is the file
@@ -106,18 +108,16 @@ file.size(\dots)
   (recorded in increments of 2 seconds).  Note that \code{"POSIXct"}
   times are by default printed in whole seconds: to change that see
   \code{\link{strftime}}.
-  
-  \code{file.mode}, \code{file.mtime} and \code{file.size} are
+
+  \code{file.mode()}, \code{file.mtime()} and \code{file.size()} are fast
   convenience wrappers returning just one of the columns.
 }
-#ifdef unix
 \note{
-  Some (now old) systems allow files of more than 2Gb to be created but
+  Some (now old) unix alike systems allow files of more than 2Gb to be created but
   not accessed by the \code{stat} system call.  Such files may show up
   as non-readable (and very likely not be readable by any of \R's input
   functions).
 }
-#endif
 
 \seealso{
   \code{\link{Sys.readlink}} to find out about symbolic links,
@@ -135,5 +135,10 @@ finf <- file.info(dir(), extra_cols = FALSE)
 finf[difftime(Sys.time(), finf[,"mtime"], units = "days") > 100 , 1:4]
 
 file.info("no-such-file-exists")
+
+\donttest{## E.g., for R-core, in a R-devel version:
+if(Sys.info()[["sysname"]] == "Linux") 
+    sort(file.mtime(file.path(R.home(), c("", file.path("bin", c("", "exec"), "R")))))  }
+}
 }
 \keyword{file}
