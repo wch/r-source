@@ -137,8 +137,10 @@ finf[difftime(Sys.time(), finf[,"mtime"], units = "days") > 100 , 1:4]
 file.info("no-such-file-exists")
 
 \donttest{## E.g., for R-core, in a R-devel version:
+## this should really use R.home("bin")
 if(Sys.info()[["sysname"]] == "Linux") 
-    sort(file.mtime(file.path(R.home(), c("", file.path("bin", c("", "exec"), "R")))))  }
+    sort(file.mtime(file.path(R.home("bin"), c("", file.path("bin", c("",
+"exec"), "R")))))
 }
 }
 \keyword{file}
