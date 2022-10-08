@@ -6272,6 +6272,16 @@ for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33
 ## did not work without specifying 'origin'  in  R <= 4.2.x
 
 
+## small options("scipen") producing exponential format
+cdt <- "2007-07-27 16:11:00.000000000000006"; (dt <- as.POSIXlt(cdt))
+op <- options(scipen = 0, OutDec = ",")
+cbind(ccdt <- c(as.character(dt), as.character(dt, digits=15)))
+stopifnot(grepl(":00\\.0{13}", ccdt), getOption("OutDec") == ",")
+cdt == ccdt[2] # TRUE on all platforms?
+options(op)# reset
+## accidentally used exponential format (and changed OutDec opt) for a while
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
