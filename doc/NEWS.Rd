@@ -80,6 +80,10 @@
       \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
       specifying \code{origin}) now work.
       So does \code{as.Date(<numeric>)}, too.
+
+      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
+      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
+      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
     }
   }
 
