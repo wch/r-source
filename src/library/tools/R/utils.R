@@ -2119,10 +2119,13 @@ function(x, dfile)
 .read_repositories <-
 function(file)
 {
-    db <- utils::read.delim(file, header = TRUE, comment.char = "#",
-                            colClasses =
-                            c(rep.int("character", 3L),
-                              rep.int("logical", 4L))) # allow for win64.binary
+    fun <- get("read.delim", envir = getNamespace("utils"))
+    ## We now use .get_repositories() in utils::.onLoad(), for which
+    ## using utils::read.delim does not work.
+    ## Using utils:::read.delim() causes a check NOTE ...
+    db <- fun(file, header = TRUE, comment.char = "#",
+              colClasses = c(rep.int("character", 3L),
+                             rep.int("logical", 4L))) # allow for win64.binary
     db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
     db
 }
