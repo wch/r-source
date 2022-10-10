@@ -190,6 +190,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{Rscript -e} would fail if stdin is closed (Reported
+      by Henrik Bengtson.)
+
       \item Hashed \code{environment}s with sizes less than 5 can now grow.
       (Reported to R-devel by Duncan Garmonsway.)
 
