@@ -6294,6 +6294,16 @@ stopifnot(exprs = {
 ## 'origin' was not optional in R <= 4.2.x
 
 
+## length(<ragged POSIXlt>)
+## Ex. of "partially filled" with NA's, *not* evenly recycling, out-of-range, fractional sec
+dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
+                     min = 45L, hour = c(21L, 3L, NA, 4L),
+                     mday = 6L, mon  = c(0:11, NA, 1:2),
+                     year = 116L, wday = 2L, yday = 340L, isdst = 1L))
+stopifnot(length(dlt) == 15L)
+## always returned  length(*$sec)  in R <= 4.2.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

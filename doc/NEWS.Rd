@@ -361,6 +361,10 @@
 
       \item Added methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} for \code{"POSIXlt"} date-time objects.
+
+      \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
+      and their list components meant to be recycled, \code{length()} now
+      is the length of the longest component.
     }
   }
 
