@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-09-12 r82839) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-08 r83047) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -8638,8 +8638,7 @@ Asserted error: length(lower) == 1 is not TRUE
 > with(ToothGrowth, {
 + interaction.plot(dose, supp, len, fixed = TRUE)
 + dose <- ordered(dose)
-+ interaction.plot(dose, supp, len, fixed = TRUE,
-+                  col = 2:3, leg.bty = "o", xtick = TRUE)
++ interaction.plot(dose, supp, len, fixed = TRUE, col = 2:3, leg.bty = "o")
 + interaction.plot(dose, supp, len, fixed = TRUE, col = 2:3, type = "p")
 + })
 > 

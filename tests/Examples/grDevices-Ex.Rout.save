@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-08-14 r82716) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-08 r83047) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -4168,7 +4168,7 @@ $ylab
 NULL
 
 > ##> xlab: "Index"  \\  warning: 3 y values <= 0 omitted ..
-> op <- options(warn = 2)# ==> warnings would be errors, we suppress the one "we know":
+> op <- options(warn = 2)# ==> warnings are errors
 > suppressWarnings(xy.coords(-2:10, log = "y"), classes="log_le_0") -> xy
 > options(op) # revert
 > stopifnot(is.list(xy), identical (1:13 +0,  xy$x),
