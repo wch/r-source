@@ -9354,7 +9354,8 @@ will give more legible reports.  It has a runtime penalty of 2--3x,
 extended compilation times and uses substantially more memory, often
 1--2GB, at run time.  On 64-bit platforms it reserves (but does not
 allocate) 16--20TB of virtual memory: restrictive shell settings can
-cause problems.
+cause problems.  It can be helpful to increase the stack size, for
+eaxmple to 40MB.
 
 By comparison with @command{valgrind}, ASan can
 detect misuse of stack and global variables but not the use of
