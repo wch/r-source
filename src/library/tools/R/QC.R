@@ -7676,7 +7676,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                                          "FALSE"))
     if(!capabilities("libcurl") && remote)
         out$no_url_checks <- TRUE
-    else {
+    else if(is.null(out$Rd_db_build_error)) {
+        ## Skip if building the Rd db failed.
         udb <- url_db_from_package_sources(dir)
         bad <- tryCatch(check_url_db(udb,
                                      remote = remote,
