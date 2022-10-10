@@ -334,12 +334,9 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
     y <- .Internal(as.POSIXct(x, tz))
-    names(y) <- names(x$year)
+    ## FIXME: already do handling of 'tz' in C code  !?!
     .POSIXct(y, tz)
-    ## </FIXME>
 }
 
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
@@ -392,12 +389,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
 	    else if(np == 0L) "%Y-%m-%d %H:%M:%S"
 	    else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(format.POSIXlt(x, format, usetz))
-    names(y) <- names(x$year)
-    y
-    ## </FIXME>
+    .Internal(format.POSIXlt(x, format, usetz))
 }
 
 ## prior to 2.9.0 the same as format.POSIXlt.
@@ -406,15 +398,11 @@ strftime <- function(x, format = "", tz = "", usetz = FALSE, ...)
     format(as.POSIXlt(x, tz = tz), format = format, usetz = usetz, ...)
 
 strptime <- function(x, format, tz = "")
-{
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(strptime(as.character(x), format, tz))
-    ## Assuming we can rely on the names of x ...
-    names(y$year) <- names(x)
-    y
-    ## </FIXME>
-}
+    .Internal(strptime(if(is.character(x)) x # not losing names(.) here
+                       else if(is.object(x)) `names<-`(as.character(x), names(x))
+                       else                  `storage.mode<-`(x, "character"),
+                       format, tz))
+
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
