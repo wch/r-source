@@ -6282,6 +6282,18 @@ options(op)# reset
 ## accidentally used exponential format (and changed OutDec opt) for a while
 
 
+## as.Date(.) now also takes default origin 1970-1-1:
+stopifnot(exprs = {
+  identical(D1 <- as.Date(20000), as.Date(20000, origin = "1970-01-01"))
+  inherits(D1, "Date")
+  identical(as.character(D1), "2024-10-04")
+  inherits(D2 <- as.Date(20000, origin="1960-1-1"), "Date")
+  D2 + 3653 == D1
+  identical(c(D2,D1), seq(D2, length.out=2, by = "10 years"))
+})
+## 'origin' was not optional in R <= 4.2.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -70,16 +70,7 @@ as.Date.character <- function(x, format,
 }
 
 as.Date.numeric <- function(x, origin, ...)
-{
-    if(missing(origin)) {
-        if(!length(x))
-            return(.Date(numeric()))
-        if(!any(is.finite(x)))
-            return(.Date(x))
-        stop("'origin' must be supplied")
-    }
-    as.Date(origin, ...) + x
-}
+    if(missing(origin)) .Date(x) else as.Date(origin, ...) + x
 
 as.Date.default <- function(x, ...)
 {
