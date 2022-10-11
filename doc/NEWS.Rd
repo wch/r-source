@@ -270,6 +270,9 @@
       \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
       argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
       the R-devel mailing list.
+
+      \item \code{as.Date.POSIXlt(x)} now also works when the list components
+      are of unequal length, aka \dQuote{partially filled} or \dQuote{ragged}.
     }
   }
 }

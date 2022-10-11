@@ -6300,8 +6300,63 @@ dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
                      min = 45L, hour = c(21L, 3L, NA, 4L),
                      mday = 6L, mon  = c(0:11, NA, 1:2),
                      year = 116L, wday = 2L, yday = 340L, isdst = 1L))
-stopifnot(length(dlt) == 15L)
+dltm3 <- dlt; dltm3$mon <- c(11L, NA, 3L)
+(n <- length(dltm3))
+stopifnot(length(dlt) == 15L, n == 13L)
 ## always returned  length(*$sec)  in R <= 4.2.x
+##
+##  More dealing with such ragged out-of-range POSIXlt:
+##  (with console output, if only to compare platform dependencies)
+dct   <- as.POSIXct(dlt)
+dctm3 <- as.POSIXct(dltm3)
+dltN   <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy)
+dltNm3 <- as.POSIXlt(dctm3)
+data.frame(unclass(dltN))
+##' create "normalized" POSIXlt *not* losing fractional seconds accuracy
+.POSIXltNormalize <- function(x) {
+    stopifnot(is.numeric(s <- x$sec))
+    n <- length(ct <- as.POSIXct(x))
+    x <- as.POSIXlt(ct) # and restore the precise seconds (recycle carefully here!)
+    ifin <- is.finite(s <- rep_len(s, n)) & is.finite(x$sec)
+    x$sec[ifin] <- s[ifin] %% 60
+    x
+}
+dlt2N   <- .POSIXltNormalize(dlt)   # normalized POSIXlt - with accuracy kept
+dlt2Nm3 <- .POSIXltNormalize(dltm3)
+all.equal(dlt2N  $sec, dltN  $sec, tolerance = 0) # .. small (2e-9) difference
+all.equal(dlt2Nm3$sec, dltNm3$sec, tolerance = 0) # .. (ditto, slightly different)
+stopifnot(exprs = {
+    all.equal(dlt2N,   dltN)
+    all.equal(dlt2Nm3, dltNm3)
+    identical(as.POSIXct(dlt2N),   as.POSIXct(dltN))
+    identical(as.POSIXct(dlt2Nm3), as.POSIXct(dltNm3))
+})
+## First show (in a way it also works for older R), then check :
+oldR <- getRversion() < "4.2.2"
+(dd <- data.frame(dlt, dltN, asCT = dct, na = is.na(dlt),
+                  fin = if(oldR) rep_len(NA, n) else is.finite(dlt)))
+##
+## After fixes in as.Date.POSIXlt (and also as.Date.POSIXt)  methods
+dD  <- as.Date(dlt)
+dDc <- as.Date(dct)
+dd2 <- data.frame(lt = dltN, ct = dct, dD, dDc, d.D = (dD - dDc), d.POSIX = (dlt - dct))
+print(width = 101, dd2) ## look at [9,] -- do the date parts correspond ?
+dDm3  <- as.Date(dltm3)
+dDcm3 <- as.Date(dctm3)
+nD  <- unclass(dD)
+nDc <- unclass(dDc)
+cbind(nD, nDc, diff = nD-nDc)
+ifi  <- is.finite(dct)
+ifi3 <- is.finite(dctm3)
+stopifnot(exprs = {
+    all.equal(dD, dDc, tolerance = 1e-4)
+    (dDm3 - dDcm3)[ifi3] %in% 0:1
+      (dD - dDc  )[ifi]  %in% 0:1
+      (nD - nDc  )[ifi]  %in% 0:1
+    is.na((dD   - dDc  )[!ifi])
+    is.na((dDm3 - dDcm3)[!ifi3])
+})
+## as.Date.POSIXlt() failed badly for such ragged cases in  R <= 4.2.x
 
 
 
