@@ -1982,7 +1982,7 @@ static SEXP RQuartz_defineGroup(SEXP source, int op, SEXP destination,
 }
 
 static void RQuartz_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
-    DEVSPEC;
+    DRAWSPEC;
     QuartzUseGroup(ref, trans, ctx, xd);
 }
 
