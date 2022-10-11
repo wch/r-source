@@ -306,7 +306,8 @@ options(op)
 doLC <- FALSE # <= R warns, so change to TRUE manually if you want see the effect
 if(doLC) {
   oldLC <- Sys.getlocale("LC_NUMERIC")
-           Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8") }
+           Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8")
+}
 formatC(1.234 + 10^(0:4), format = "fg", width = 11, flag = "'")
 ## -->  .....  "      1'001" "     10'001"   on supported platforms
 if(doLC) ## revert, typically to  "C"  :
