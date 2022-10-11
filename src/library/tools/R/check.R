@@ -5465,6 +5465,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wformat=\\]",
                              ## gcc and clang with -Wstrict-prototypes
                              ": warning: .* \\[-Wstrict-prototypes\\]",
+                             ## clang-15 variant
+                             ": warning: .* \\[-Wdeprecated-non-prototype\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
