@@ -114,8 +114,8 @@ matchConcordance <- function(linenum, concordance) {
 	if (linenum[i] <= concordance$offset)
 	    result[i,] <- c("", "")
 	else
-	    result[i,] <- c(basename(srcFile[linenum[i] - offset]), 
-	    		      with(concordance, srcLine[linenum[i] - offset]))
+	    result[i,] <- c(srcFile[linenum[i] - offset], 
+	    		    with(concordance, srcLine[linenum[i] - offset]))
     }
     result
 }
@@ -154,7 +154,7 @@ as.character.Rconcordance <- function(x,
         vals <- with(rle(diff(src[seq_len(n)])), as.numeric(rbind(lengths, values)))
         result <- c(result, paste0("concordance:", 
                targetfile, ":",
-               basename(srcfile[1]), ":",
+               srcfile[1], ":",
                if (offset) paste0("ofs ", offset, ":"),
                concordance$srcLine[1], " ",
                paste(vals, collapse = " ")

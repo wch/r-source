@@ -415,6 +415,12 @@ processRdSexprs <-
     expandDynamicFlags(recurse(block), options)
 }
 
+# Get rid of parts of the path up to first, if any
+stripPathTo <- function(path, first) {
+    pattern <- paste0("^.*[/\\]", first, "[/\\]")
+    sub(pattern, "", path)
+}
+
 prepare_Rd <-
     function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
              fragment = FALSE, options = RweaveRdDefaults,
@@ -423,12 +429,14 @@ prepare_Rd <-
     concordance <- NULL
     if (is.character(Rd)) {
         Rdfile <- Rd
+        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
         ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, ...),
-                              list(f = Rd, enc = encoding, frag = fragment)))
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, srcfile = src, ...),
+                              list(f = Rd, enc = encoding, frag = fragment, src = srcfile)))
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)$description
-        Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
+        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
+        Rd <- parse_Rd(Rd, srcfile = srcfile, encoding = encoding, fragment=fragment, ...)
     } else {
     	Rdfile <- attr(Rd, "Rdfile")
     	concordance <- attr(Rd, "concordance")
@@ -447,8 +455,11 @@ prepare_Rd <-
 	for (stage in c("install", "render"))
 	    if (stage %in% stages)
 		Rd <- processRdSexprs(Rd, stage, options, macros=attr(Rd, "macros"))
-	if (is.null(concordance))
-	    concordance <- as.Rconcordance(unlist(Rd[RdTags(Rd) == "COMMENT"]))
+	if (is.null(concordance)) {
+	    concordance <- try(as.Rconcordance(unlist(Rd[RdTags(Rd) == "COMMENT"]), silent = TRUE))
+	    if (inherits(concordance, "try-error"))
+	    	concordance <- NULL
+	}
 	if (pratt < 2L && stage2)
 	    Rd <- prepare2_Rd(Rd, Rdfile, stages)
 	meta <- attr(Rd, "meta")
