@@ -6098,7 +6098,9 @@ stopifnot(any(as.character(rd) != "\n"),
 
 
 ## as.POSIXlt(<very large Date>)  gave integer overflow
-stopifnot(as.POSIXlt(.Date(2^31 + 10))$year == 5879680L)
+## only supported with 64-bit time_t
+if(.Machine$sizeof.time_t >= 8)
+    stopifnot(as.POSIXlt(.Date(2^31 + 10))$year == 5879680L)
 ## year was negative in R <= 4.2.1
 
 
