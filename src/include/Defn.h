@@ -767,6 +767,13 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
+
+#ifdef __has_feature
+# if __has_feature(address_sanitizer)
+#  undef R_CheckStack
+# endif
+#endif
+
 #endif /* USE_RINTERNALS */
 
 const char * Rf_translateCharFP(SEXP);
