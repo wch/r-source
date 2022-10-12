@@ -230,24 +230,25 @@ balancePOSIXlt(x)
   % POSIX says used 'initially', so it should probably be ignored.
   % glibc has a complicated fixup.
 
-  \subsection{"Ragged" and Out-of-range vs "Balanced" POSIXlt}
-  Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11) list
-  components of different \code{\link{length}}, by simply recycling them to
-  full length.  Previous to \R 4.3.0, this has worked in printing,
-  formatting, and conversion to \code{"POSIXct"}, but often not for
-  \code{length()}, conversion to \code{"Date"} or indexing, i.e.,
-  subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
+  \subsection{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} POSIXlt}{
+    Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11) list
+    components of different \code{\link{length}}, by simply recycling them to
+    full length.  Previous to \R 4.3.0, this has worked in printing,
+    formatting, and conversion to \code{"POSIXct"}, but often not for
+    \code{length()}, conversion to \code{"Date"} or indexing, i.e.,
+    subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
 
-  Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
-  and \code{mon} could have been out of their designated range (say, 0--23
-  for hours) and still work correctly, e.g. in conversions and printing.
-  This is supported as well, since \R 4.3.0, at least when the values are
-  not extreme. %% FIXME: say more
+    Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
+    and \code{mon} could have been out of their designated range (say, 0--23
+    for hours) and still work correctly, e.g. in conversions and printing.
+    This is supported as well, since \R 4.3.0, at least when the values are
+    not extreme. %% FIXME: say more
 
-  Function \code{balancePOSIXlt(x)} will now return a version of the
-  \code{"POSIXlt"} object \code{x} which is balanced in both ways:
-  All the internal list components are of full length, and their values are
-  inside the ranges specified above.
+    Function \code{balancePOSIXlt(x)} will now return a version of the
+    \code{"POSIXlt"} object \code{x} which is balanced in both ways:
+    All the internal list components are of full length, and their values are
+    inside the ranges specified above.
+  }
 }% POSIXlt
 
 \section{Sub-second Accuracy}{
