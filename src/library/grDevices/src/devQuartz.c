@@ -887,7 +887,8 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     /* Set the group operator */
     if (op == R_GE_compositeDest) {
         /* There is no DEST operator in Quartz, but can implement by just 
-         * NOT drawing 'src' */
+         * NOT drawing 'src'.
+         * This works because DEST is always drawn with the OVER operator. */
     } else {
         CGContextSetBlendMode(layerContext, QuartzOperator(op));
         /* Play the source function to draw the source */
@@ -1629,11 +1630,21 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CFRelease(str);
 }
 
+static Rboolean implicitGroup(CGContextRef ctx, QuartzDesc *xd) {
+    int op = CGContextGetBlendMode(ctx);
+    return xd->appendingGroup >= 0 &&
+        (op == kCGBlendModeClear ||
+         op == kCGBlendModeCopy ||
+         op == kCGBlendModeSourceIn ||
+         op == kCGBlendModeSourceOut ||
+         op == kCGBlendModeDestinationIn ||
+         op == kCGBlendModeDestinationAtop);
+}
+
 static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
 {
     DRAWSPEC;
     if (!ctx) NOCTX;
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
     if (xd->flags & QDFLAG_RASTERIZED) {
         /* in the case of borderless rectangles snap them to pixels.
            this solves issues with image() without introducing other artifacts.
@@ -1653,6 +1664,21 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
 	    if (y0 == y1 && (oy0 != oy1)) y1 += oy1 - oy0;
         }
     }
+    Rboolean grouping;
+    double devWidth;
+    double devHeight;
+    CGContextRef savedCTX;
+    CGLayerRef layer;
+    grouping = implicitGroup(ctx, xd);
+    if (grouping) {
+        savedCTX = ctx;
+        devWidth = QuartzDevice_GetScaledWidth(xd);
+        devHeight = QuartzDevice_GetScaledHeight(xd);
+        layer = CGLayerCreateWithContext(ctx, CGSizeMake(devWidth, devHeight), 
+                                         NULL);
+        ctx = CGLayerGetContext(layer);
+    }
+    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
     CGContextBeginPath(ctx);
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
     if (QuartzGradientFill(gc->patternFill, xd)) {
@@ -1671,6 +1697,10 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
             QuartzSetPatternFill(ctx, gc->patternFill, xd);
         }
         CGContextDrawPath(ctx, kCGPathFillStroke);
+    }
+    if (grouping) {
+        CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0 ,0), layer);
+        CGLayerRelease(layer);
     }
 }
 
