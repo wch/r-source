@@ -1339,3 +1339,149 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(3);
     return ans;
 }
+
+// .Internal(balancePOSIXlt(x))
+SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    if(!inherits(CAR(args), "POSIXlt"))
+	error(_("'%s' is not a \"%s\""), "x", "POSIXlt");
+    SEXP x = PROTECT(duplicate(CAR(args)));
+    if(!isVectorList(x) || LENGTH(x) < 9)
+	error(_("invalid '%s' argument"), "x");
+    int n_comp = LENGTH(x); // >= 9
+    Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
+#ifdef HAVE_TM_GMTOFF
+      have_zone = n_comp >= 11;
+#else
+      have_zone = n_comp >= 10;
+#endif
+    if(have_zone && !isString(VECTOR_ELT(x, 9)))
+	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
+
+    R_xlen_t n = 0, nlen[n_comp];
+    for(int i = 0; i < n_comp; i++) {
+	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n)
+	    n = nlen[i];
+	else check_nlen(i);
+    } // ==>  n := max(nlen[i]) and all  nlen[i] > 0
+
+    // get names(.) [possibly empty]
+    SEXP nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol));
+    if(nm != R_NilValue && nlen[5] < n) {
+	// names(.) will have to become length n ==>  $year as well: ==> must recycle anyway, do it now:
+	SET_VECTOR_ELT(x, 5, xlengthgets(VECTOR_ELT(x, 5), n));
+	nlen[5] = n;
+    }
+
+    /* coerce fields to integer or real */
+    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
+    for(int i = 1; i < 9; i++)
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    if(n_comp >= 11) // gmtoff
+	SET_VECTOR_ELT(x, 10, coerceVector(VECTOR_ELT(x, 10), INTSXP));
+
+    SEXP ans = PROTECT(allocVector(VECSXP, n_comp));
+    for(int i = 0; i < 9; i++)
+	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
+    if(!isGMT) {
+	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+#ifdef HAVE_TM_GMTOFF
+	// even if( !have_zone )
+	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
+#endif
+    }
+
+    SEXP ansnames = PROTECT(allocVector(STRSXP, n_comp));
+    for(int i = 0; i < n_comp; i++)
+	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
+
+    for(R_xlen_t i = 0; i < n; i++) {
+      // 1. fill 'tm'
+	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
+	stm tm;
+	// avoid (int) NAN
+	tm.tm_sec  = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
+	tm.tm_min  = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
+	tm.tm_hour = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
+	tm.tm_mday = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
+	tm.tm_mon  = INTEGER(VECTOR_ELT(x, 4))[i%nlen[4]];
+	tm.tm_year = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
+	tm.tm_wday = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
+	tm.tm_yday = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
+//	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	tm.tm_isdst = isGMT ? 0
+	           : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	if(have_zone) { // not "UTC", e.g.
+	    char tm_zone[20];
+	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9])), 20 - 1);
+	    tm_zone[20 - 1] = '\0';
+#ifdef HAVE_TM_ZONE
+	    tm.tm_zone = tm_zone;
+#elif defined USE_INTERNAL_MKTIME
+	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
+#else
+	    /* Modifying tzname causes memory corruption on Solaris. It
+	       is not specified to have any effect and strftime is documented
+	       to call settz().*/
+	    if(tm.tm_isdst >= 0 && strcmp(tzname[tm.tm_isdst], tm_zone))
+		warning(_("Timezone specified in the object field cannot be used on this system."));
+#endif
+#ifdef HAVE_TM_GMTOFF
+	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
+	    tm.tm_gmtoff = (tmp == NA_INTEGER) ? 0 : tmp;
+#endif
+	} else { //  !have_zone
+#ifdef HAVE_TM_GMTOFF
+    	    tm.tm_gmtoff = -1; // or 0 ?? FIXME?!
+#endif
+	}
+
+	/* 2. checking for NA/non-finite --------------
+	 * ----------- careful:
+	 * validate_tm() must *not* be called if any other components are NA */
+	Rboolean valid =
+	    (R_FINITE(secs) &&
+	     tm.tm_min  != NA_INTEGER &&
+	     tm.tm_hour != NA_INTEGER &&
+	     tm.tm_mday != NA_INTEGER &&
+	     tm.tm_mon  != NA_INTEGER &&
+	     tm.tm_year != NA_INTEGER);
+
+	if(valid)
+	    validate_tm(&tm);
+	// get correct {yday, wday}:
+	set_w_yday(&tm);
+
+	makelt(&tm, ans, i, valid,
+	       valid ? secs - fsecs : (R_FINITE(secs) ? NA_REAL : secs)); // fills ans[0..8]
+
+	if(!isGMT) {
+	    const char *p = "";
+	    if(valid && tm.tm_isdst >= 0) {
+#ifdef HAVE_TM_ZONE
+		p = tm.tm_zone;
+		if(!p)
+#endif
+		    p = R_tzname[tm.tm_isdst];
+	    }
+	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+#ifdef HAVE_TM_GMTOFF
+	    INTEGER(VECTOR_ELT(ans, 10))[i] =
+		valid ? (int)tm.tm_gmtoff : NA_INTEGER;
+#endif
+	}
+
+    } // end for(i ..)
+
+    setAttrib(ans, R_NamesSymbol, ansnames); // sec, min, ...
+    SEXP klass = PROTECT(allocVector(STRSXP, 2));
+    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
+    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
+    classgets(ans, klass);
+    /* if(isString(tzone)) setAttrib(ans, install("tzone"), tzone); */
+    /* if(settz) reset_tz(oldtz); */
+    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
+    UNPROTECT(5);
+    return ans;
+}

@@ -301,6 +301,8 @@ as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
               domain = NA)
 }
 
+balancePOSIXlt <- function(x) .Internal(balancePOSIXlt(x))
+
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 
@@ -559,6 +561,7 @@ function(x, ..., value) {
     value <- unclass(as.POSIXct(value))
     .POSIXct(NextMethod(.Generic), attr(x, "tzone"), oldClass(x))
 }
+
 
 ## Alternatively use  lapply(*, function(.) .Internal(format.POSIXlt(., digits=0))
 ## *and* append the fractional seconds ('entirely') ..
@@ -1406,13 +1409,13 @@ is.numeric.difftime <- function(x) FALSE
 
 ## ---- additions in 2.13.0 -----
 
-names.POSIXlt <-
-function(x)
-    names(x$year)
+names.POSIXlt <- function(x) names(x$year)
 
 `names<-.POSIXlt` <-
 function(x, value)
 {
+    if(length(yr <- x$year) < (n <- length(x))) # must recycle
+        x$year <- rep_len(yr, n)
     names(x$year) <- value
     x
 }
