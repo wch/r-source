@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-10-08 r83047) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-12 r83075) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -3550,15 +3550,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2022-08-13" "2022-08-14" "2022-08-15" "2022-08-16" "2022-08-17"
-[6] "2022-08-18"
+[1] "2022-10-10" "2022-10-11" "2022-10-12" "2022-10-13" "2022-10-14"
+[6] "2022-10-15"
 > pretty(Sys.time(), n = 10)
- [1] "2022-08-15 09:00:44 BST" "2022-08-15 09:00:45 BST"
- [3] "2022-08-15 09:00:46 BST" "2022-08-15 09:00:47 BST"
- [5] "2022-08-15 09:00:48 BST" "2022-08-15 09:00:49 BST"
- [7] "2022-08-15 09:00:50 BST" "2022-08-15 09:00:51 BST"
- [9] "2022-08-15 09:00:52 BST" "2022-08-15 09:00:53 BST"
-[11] "2022-08-15 09:00:54 BST"
+ [1] "2022-10-12 14:08:17 BST" "2022-10-12 14:08:18 BST"
+ [3] "2022-10-12 14:08:19 BST" "2022-10-12 14:08:20 BST"
+ [5] "2022-10-12 14:08:21 BST" "2022-10-12 14:08:22 BST"
+ [7] "2022-10-12 14:08:23 BST" "2022-10-12 14:08:24 BST"
+ [9] "2022-10-12 14:08:25 BST" "2022-10-12 14:08:26 BST"
+[11] "2022-10-12 14:08:27 BST"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4168,7 +4168,7 @@ $ylab
 NULL
 
 > ##> xlab: "Index"  \\  warning: 3 y values <= 0 omitted ..
-> op <- options(warn = 2)# ==> warnings are errors
+> op <- options(warn = 2)# ==> warnings would be errors, we suppress the one "we know":
 > suppressWarnings(xy.coords(-2:10, log = "y"), classes="log_le_0") -> xy
 > options(op) # revert
 > stopifnot(is.list(xy), identical (1:13 +0,  xy$x),
@@ -4364,7 +4364,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.161 0.639 21.833 0 0.001 
+Time elapsed:  21.873 0.682 22.639 0 0.003 
 > grDevices::dev.off()
 null device 
           1 
