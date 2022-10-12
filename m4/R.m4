@@ -4598,7 +4598,16 @@ AC_DEFUN([R_CSTACK_DIRECTION],
 AC_CACHE_VAL([r_cv_cstack_direction],
 [cat > conftest.c <<EOF
 /* based on gnulib, alloca.c */
-int find_stack_direction(int *addr, int depth) {
+
+#define attribute_no_sanitizer_instrumentation
+#ifdef __has_attribute
+# undef attribute_no_sanitizer_instrumentation
+# define attribute_no_sanitizer_instrumentation \
+    __attribute__((disable_sanitizer_instrumentation))
+#endif
+
+int attribute_no_sanitizer_instrumentation
+find_stack_direction(int *addr, int depth) {
   int dir, dummy = 0;
   if (! addr)
     addr = &dummy;

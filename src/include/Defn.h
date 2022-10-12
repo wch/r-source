@@ -58,6 +58,15 @@
 # define extern0 extern
 #endif
 
+#define attribute_no_sanitizer_instrumentation
+#ifdef __has_attribute
+# if __has_attribute(disable_sanitizer_instrumentation)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+          __attribute__((disable_sanitizer_instrumentation))
+# endif
+#endif
+
 #define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
 			   and occasionally as a limit. */
 
