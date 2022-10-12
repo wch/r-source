@@ -4887,9 +4887,10 @@ certificates: this is worked around in @R{}'s test suite.
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
-Note that 32-bit @code{glibc} before version 2.29 uses a 32-bit
+Note that some distributions of 32-bit @code{glibc} use a 32-bit
 @code{time_t} type, so to pass all the date-time checks needs @R{} built
 with flag @option{--with-internal-tzcode}.
+@c true even of glibc 2.35 in Fedora 36.
 
 Users of @cputype{ix86} CPUs with SSE2 support@footnote{Likely all since
 2005, including Pentium 4 and all @cputype{x86_64} CPUs with 32-bit

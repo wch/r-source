@@ -78,8 +78,7 @@ those limits where there is a 64-bit time_t and the conversions work
 there is code below to extrapolate from 1902-2037.
 
 Path 2) was added for R 3.1.0 and is the only one supported on
-Windows: it is the default on macOS.  The only currently (Jan 2014)
-known OS with 64-bit time_t and complete tables is Linux.
+Windows: it is the default on macOS.
 
 */
 
