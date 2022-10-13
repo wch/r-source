@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/sysutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ getClipboardFormats <- function(numeric = FALSE)
     }
 }
 
-readClipboard <- function(format = 1L, raw = FALSE)
+readClipboard <- function(format = 13L, raw = FALSE)
     .Call(C_readClipboard, format, raw)
 
-writeClipboard <- function(str, format = 1L)
+writeClipboard <- function(str, format = 13L)
     invisible(.Call(C_writeClipboard, str, format))
 
 getIdentification <- function() .Call(C_getIdentification)
