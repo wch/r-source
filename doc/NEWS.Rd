@@ -308,6 +308,10 @@
       identify old systems with a 32-bit type and hence a limited range
       of date-times (and limited support for dates millions of years
       from present).
+
+      \item The default format of \code{readClipboard()} and
+      \code{writeClipboard()} has been changed to \code{13}
+      (\code{CF_UNICODETEXT}).
     }
   }
 
