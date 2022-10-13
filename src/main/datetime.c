@@ -75,7 +75,7 @@ There are two implementation paths here.
 
 For path 1), the system facilities are used for 1902-2037 and outside
 those limits where there is a 64-bit time_t and the conversions work
-(somw OSes have only 32-bit time-zone tables).  Otherwise there is
+(some OSes have only 32-bit time-zone tables).  Otherwise there is
 code below to extrapolate from 1902-2037.
 
 Path 2) was added for R 3.1.0 and is the only one supported on
@@ -1364,6 +1364,10 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x = PROTECT(duplicate(CAR(args)));
     if(!isVectorList(x) || LENGTH(x) < 9)
 	error(_("invalid '%s' argument"), "x");
+    int do_class = asLogical(CADR(args));
+    if(do_class == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "class");
+
     int n_comp = LENGTH(x); // >= 9
     Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
@@ -1490,13 +1494,16 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     } // end for(i ..)
 
     setAttrib(ans, R_NamesSymbol, ansnames); // sec, min, ...
-    SEXP klass = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
-    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
-    classgets(ans, klass);
+    if(do_class) {
+	SEXP klass = PROTECT(allocVector(STRSXP, 2));
+	SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
+	SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
+	classgets(ans, klass);
+	UNPROTECT(1);
+    }
     /* if(isString(tzone)) setAttrib(ans, install("tzone"), tzone); */
     /* if(settz) reset_tz(oldtz); */
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
-    UNPROTECT(5);
+    UNPROTECT(4);
     return ans;
 }

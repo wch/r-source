@@ -301,8 +301,6 @@ as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
               domain = NA)
 }
 
-balancePOSIXlt <- function(x) .Internal(balancePOSIXlt(x))
-
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 
@@ -1535,3 +1533,8 @@ rep.difftime <- function(x, ...)
 
 as.vector.POSIXlt <- function(x, mode = "any")
     as.vector(as.list(x), mode)
+
+## Added in 4.3.0.
+
+balancePOSIXlt <- function(x, class=TRUE) .Internal(balancePOSIXlt(x, class))
+

@@ -71,7 +71,7 @@
 \special{time - z}
 \special{time1 lop time2}
 
-balancePOSIXlt(x)
+balancePOSIXlt(x, class = TRUE)
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
@@ -91,6 +91,9 @@ balancePOSIXlt(x)
   \item{z}{a numeric vector (in seconds)}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
+  \item{class}{a \code{\link{logical}} specifying if the result should be
+    classed, true, by default.  Using \code{balancePOSIXlt(x, class = FALSE)}
+    is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
