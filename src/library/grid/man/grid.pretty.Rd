@@ -7,7 +7,7 @@
 \alias{grid.pretty}
 \title{ Generate a Sensible ("Pretty") Set of Breakpoints }
 \description{
-  Produces a pretty set of of approximately \code{n} breakpoints within the
+  Produces a pretty set of approximately \code{n} breakpoints within the
   range given.
 
   This is a direct interface to \R's graphical engine \code{GEpretty()}

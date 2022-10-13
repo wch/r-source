@@ -566,7 +566,7 @@ The @samp{UseLTO} logical field is used on a Unix-alike to indicate if
 source code in the package is to be compiled with Link-Time Optimization
 (@pxref{Using Link-time Optimization}) if @R{} was installed with
 @option{--enable-lto} (default true) or @option{--enable-lto=R} (default
-false). This can be overridden by by the flags @option{--use-LTO} and
+false). This can be overridden by the flags @option{--use-LTO} and
 @option{--no-use-LTO}.  LTO is said to give most size and performance
 improvements for large and complex (heavily templated) C++ projects.
 
@@ -2021,7 +2021,7 @@ recipes they give actually work.  (This is especially necessary for
 platforms which use static linking.)
 
 If using Autoconf it is good practice to include all the Autoconf
-sources in the the package (and required for an Open Source package and
+sources in the package (and required for an Open Source package and
 tested by @command{R CMD check --as-cran}).  This will include the file
 @file{configure.ac}@footnote{a decade ago Autoconf used
 @file{configure.in}: this is still accepted but should be renamed and
@@ -3022,7 +3022,7 @@ done by including (or unpacking) the sources in a subdirectory of
 @file{src}, as considered above.
 
 Further issues arise when the external software uses another build
-system such as @command{cmake}, principally to ensure that that
+system such as @command{cmake}, principally to ensure that
 @emph{all} the settings for compilers, include and load paths @emph{etc}
 are made.  This section has already mentioned the need to set
 at least some of
@@ -5206,7 +5206,7 @@ be for binary packages).  Java 8 is available for fewer platforms than
 Java 7 was, and Java 11 for fewer still (at the time of writing, only
 @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
 Oracle; Linux on several 64-bit CPUs, Intel and ARM macOS, 32- and
-64-bit Windows and AIX from from @uref{https://adoptium.net/} -- several
+64-bit Windows and AIX from @uref{https://adoptium.net/} -- several
 OSes provide builds of OpenJDK including FreeBSD and most Linux
 distributions).
 
@@ -14869,7 +14869,7 @@ The (complete) Beta function and its natural logarithm.
 
 @deftypefun double choose (double @var{n}, double @var{k})
 @deftypefunx double lchoose (double @var{n}, double @var{k})
-The number of combinations of @var{k} items chosen from from @var{n} and
+The number of combinations of @var{k} items chosen from @var{n} and
 the natural logarithm of its absolute value, generalized to arbitrary real
 @var{n}.  @var{k} is rounded to the nearest integer (with a warning if
 needed).

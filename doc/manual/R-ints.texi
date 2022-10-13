@@ -1409,7 +1409,7 @@ primitive/@code{.Internal} .  This is exactly what one wants for a
 @code{.Internal}, and so may not correspond to any @R{} function.)
 However, it is unlikely to be what is needed for a primitive.
 
-The upshot is that that @code{warningcall} and @code{errorcall} should
+The upshot is that @code{warningcall} and @code{errorcall} should
 normally be used for code called from a primitive, and @code{warning}
 and @code{error} should be used for code called from a @code{.Internal}
 (and necessarily from @code{.Call}, @code{.C} and so on, where the call
@@ -4866,7 +4866,7 @@ if you change internal structures.]
 
 Various dialects of TeX are used for different purposes in @R{}.  The
 policy is that manuals be written in @samp{texinfo}, and for convenience
-the main and Windows FAQs are also.  This has the advantage that is is
+the main and Windows FAQs are also.  This has the advantage that it is
 easy to produce @HTML{} and plain text versions as well as typeset manuals.
 
 @LaTeX{} is not used directly, but rather as an intermediate format for
