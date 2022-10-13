@@ -5558,7 +5558,7 @@ non-default options
 were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
 
 Configure option @option{--with-internal-tzcode} is the default on macOS,
-as the system implementation of time zones does not work correctly for
+as the system implementation of time zones did not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The main @TeX{} implementation used by the developers is
