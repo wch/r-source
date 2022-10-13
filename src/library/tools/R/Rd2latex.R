@@ -608,10 +608,11 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         if (length(section)) {
 	    ## need \n unless one follows, so
 	    nxt <- section[[1L]]
-	    if (attr(nxt, "Rd_tag") %notin% c("TEXT", "RCODE") ||
+	    if (is.null(nxttag <- attr(nxt, "Rd_tag"))) # erroneous Rd file
+		return()
+	    if (nxttag %notin% c("TEXT", "RCODE") ||
 		!startsWith(as.character(nxt), "\n")) of1("\n")
 	    writeContent(section, tag)
-	    inCodeBlock <<- FALSE
 	    if (last_char != "\n") of1("\n")
 	}
     }
