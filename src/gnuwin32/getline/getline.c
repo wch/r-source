@@ -264,11 +264,13 @@ gl_getc(void)
 	    c = gl_alt_to_ucs(bbb);
 	    bbb = 0;
 	    nAlt = 0;
+	    AltIsDown = 0;
 	  } else if (hex && nAlt==8) {
             c = bbb;
             bbb = 0;
             nAlt = 0;
             hex = 0;
+	    AltIsDown = 0;
           }
 	}
 	/* Originally, these (LEFT, RIGHT, HOME, END, UP, DOWN, DELETE) were
@@ -307,14 +309,15 @@ gl_getc(void)
 	    high = 0;
 	} else if (hex && wc==0) {
 	    c = bbb;
-	} else {
+	} else if (bbb) {
 	    /* Handle Alt+xxx (Alt+xx).
 	       Console implementations differ in whether and how they interpret
 	       Alt+xxx sequences. Some translate internally and do not send
 	       Alt+xxx to R. Some send the Alt+xxx to R but also intepret and
 	       send the result in Alt key up event (wc). See PR#18391. */
 	    c = gl_alt_to_ucs(bbb);
-	}
+	} else
+	    c = wc;
 	/* This may have to be re-visited when extending support for combining
 	   marks, which have been seen arriving in Alt key up event as well. */
 	AltIsDown = 0;
@@ -345,11 +348,13 @@ gl_getc(void)
 	  c = gl_alt_to_ucs(bbb);
 	  bbb = 0;
 	  nAlt = 0;
+	  AltIsDown = 0;
         } else if (hex && nAlt==8) {
 	  c = bbb;
 	  bbb = 0;
 	  nAlt = 0;
 	  hex = 0;
+	  AltIsDown = 0;
         }
       } 
     }
