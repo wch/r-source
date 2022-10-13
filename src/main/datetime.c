@@ -75,8 +75,8 @@ There are two implementation paths here.
 
 For path 1), the system facilities are used for 1902-2037 and outside
 those limits where there is a 64-bit time_t and the conversions work
-(most OSes currently have only 32-bit time-zone tables).  Otherwise
-there is code below to extrapolate from 1902-2037.
+(somw OSes have only 32-bit time-zone tables).  Otherwise there is
+code below to extrapolate from 1902-2037.
 
 Path 2) was added for R 3.1.0 and is the only one supported on
 Windows: it is the default on macOS.
@@ -129,14 +129,14 @@ static int validate_tm (stm *tm)
 
     if (tm->tm_sec < 0 || tm->tm_sec > 60) { /* 61 POSIX, 60 draft ISO C */
 	res++;
-	tmp = tm->tm_sec/60;
+	int tmp = tm->tm_sec/60;
 	tm->tm_sec -= 60 * tmp; tm->tm_min += tmp;
 	if(tm->tm_sec < 0) {tm->tm_sec += 60; tm->tm_min--;}
     }
 
     if (tm->tm_min < 0 || tm->tm_min > 59) {
 	res++;
-	tmp = tm->tm_min/60;
+	int tmp = tm->tm_min/60;
 	tm->tm_min -= 60 * tmp; tm->tm_hour += tmp;
 	if(tm->tm_min < 0) {tm->tm_min += 60; tm->tm_hour--;}
     }
@@ -439,8 +439,6 @@ static double mktime0 (stm *tm, const int local)
 static stm * localtime0(const double *tp, const int local, stm *ltm)
 {
     double d = *tp;
-    int y, tmp;
-    time_t t;
 
     Rboolean OK;
 /* as mktime is broken, do not trust localtime */
@@ -452,7 +450,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	OK = d < 2147483647.0 &&
 	    d > (have_broken_mktime() ? 0. : -2147483647.0);
     if(OK) {
-	t = (time_t) d;
+	time_t t = (time_t) d;
 	/* if d is negative and non-integer then t will be off by one day
 	   since we really need floor(). But floor() is slow, so we just
 	   fix t instead as needed. */
@@ -470,10 +468,25 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     /* internal substitute code.
        Like localtime, this returns a pointer to a static struct tm */
 
-    int day = (int) floor(d/86400.0);
-    int left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
-
+    double dday = floor(d/86400.0);
     static stm ltm0, *res = &ltm0;
+    // This cannot exceed (2^31-1) years in either direction from 1970
+    // But loop below would be very slow for very large inputs.
+    if (fabs(dday) > 784368402400) { //bail out
+	res->tm_year = NA_INTEGER;
+	res->tm_mon = NA_INTEGER;
+	res->tm_mday = NA_INTEGER;
+	res->tm_yday = NA_INTEGER;
+	res->tm_wday = NA_INTEGER;
+	res->tm_hour = NA_INTEGER;
+	res->tm_min = NA_INTEGER;
+	res->tm_sec = NA_INTEGER;
+	res->tm_isdst = -1;
+	return res;
+    }
+//    int day = (int) floor(d/86400.0);  // may overflow
+    int left = (int) (d - dday * 86400.0 + 1e-6); // allow for fractional secs
+
     memset(res, 0, sizeof(stm));
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
@@ -482,16 +495,18 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     res->tm_sec = left % 60;
 
     /* weekday: 1970-01-01 was a Thursday */
-    if ((res->tm_wday = (((day % 7) + 4) % 7)) < 0) res->tm_wday += 7;
+    int tmp = (int)(dday - 7 * floor(dday/7)); // day % 7
+    if ((res->tm_wday = ((tmp + 4) % 7)) < 0) res->tm_wday += 7;
 
     /* year & day within year */
-    y = 1970;
-    if (day >= 0)
-	for ( ; day >= (tmp = days_in_year(y)); day -= tmp, y++);
+    int y = 1970;
+    if (dday >= 0)
+	for ( ; dday >= (tmp = days_in_year(y)); dday -= tmp, y++);
     else
-	for ( ; day < 0; --y, day += days_in_year(y) );
+	for ( ; dday < 0; --y, dday += days_in_year(y) );
 
     y = res->tm_year = y - 1900;
+    int day = (int) dday;
     res->tm_yday = day;
 
     /* month within year */
@@ -678,11 +693,11 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
 // .Internal(as.POSIXlt(x, tz)) -- called only from  as.POSIXlt.POSIXct()
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP stz, x, ans, ansnames, klass, tzone;
 
     checkArity(op, args);
-    PROTECT(x = coerceVector(CAR(args), REALSXP));
-    if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
+    SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
+    SEXP stz = CADR(args);
+    if(!isString((stz)) || LENGTH(stz) != 1)
 	error(_("invalid '%s' value"), "tz");
     const char *tz = CHAR(STRING_ELT(stz, 0));
     if(strlen(tz) == 0) {
@@ -706,10 +721,11 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     // localtime may change tzname.
+    SEXP tzone;
     if (isGMT) {
-	PROTECT(tzone = mkString(tz));
+	tzone = PROTECT(mkString(tz));
     } else {
-	PROTECT(tzone = allocVector(STRSXP, 3));
+	tzone = PROTECT(allocVector(STRSXP, 3));
 	SET_STRING_ELT(tzone, 0, mkChar(tz));
 	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
 	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
@@ -721,7 +737,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     int nans = isGMT ? 9 : 10;
 #endif
-    PROTECT(ans = allocVector(VECSXP, nans));
+    SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
     if(!isGMT) {
@@ -731,7 +747,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     }
 
-    PROTECT(ansnames = allocVector(STRSXP, nans));
+    SEXP ansnames = PROTECT(allocVector(STRSXP, nans));
     for(int i = 0; i < nans; i++)
 	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
 
@@ -762,7 +778,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(klass = allocVector(STRSXP, 2));
+    SEXP klass = PROTECT(allocVector(STRSXP, 2));
     SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
