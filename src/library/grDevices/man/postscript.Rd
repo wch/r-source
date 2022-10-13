@@ -171,7 +171,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   (conventionally plain, bold, italic, bold-italic and symbol) selected
   by the graphics parameter \code{\link{par}(font = )} or the grid
   parameter \code{\link{gpar}(fontface = )}.  Font families can be
-  specified either as an an initial/default font family for the device
+  specified either as an initial/default font family for the device
   via the \code{family} argument or after the device is opened by
   the graphics parameter \code{\link{par}(family = )} or the grid
   parameter \code{\link{gpar}(fontfamily = )}.  Families which will be

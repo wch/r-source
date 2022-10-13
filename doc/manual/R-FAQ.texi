@@ -582,7 +582,7 @@ Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing @kbd{help(@var{name})}
 (or @kbd{?@var{name}}) at the R prompt, where @var{name} is the name of
 the topic help is sought for.  (In the case of unary and binary
-operators and control-flow special forms, the name may need to be be
+operators and control-flow special forms, the name may need to be
 quoted.)
 
 This documentation can also be made available as one reference manual

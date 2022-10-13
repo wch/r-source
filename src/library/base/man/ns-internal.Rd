@@ -112,7 +112,7 @@ getNamespaceInfo(ns, "spec")[["name"]] ## -> "stats"
 \dontshow{stopifnot(identical(nsName,
                       getNamespaceInfo(ns, "spec")[["name"]]))}
 
-## Only for for the daring ones, trying to get into the bowels :
+## Only for the daring ones, trying to get into the bowels :
 
 lsNamespaceInfo <- function(ns, ...) {
     ns <- asNamespace(ns, base.OK = FALSE)

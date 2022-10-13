@@ -2354,7 +2354,7 @@ to @emph{write} one or more data frames to an @file{.xls} file, using
 Python and Perl respectively.
 
 @findex xlsx
-Packages @CRANpkg{xlsx} can read and and manipulate Excel 2007 and later
+Package @CRANpkg{xlsx} can read and manipulate Excel 2007 and later
 spreadsheets: it requires Java.
 
 @findex XLConnect

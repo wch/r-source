@@ -1606,7 +1606,7 @@ sources.)
 These are Apple Installer packages.  If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
-``Show All Log'') is useful for tracking down problems.  Note the the
+``Show All Log'') is useful for tracking down problems.  Note that the
 installer is clever enough to try to upgrade the last-installed version
 of the application where you installed it (which may not be where you
 want this time @dots{}).
