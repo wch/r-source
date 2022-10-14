@@ -60,6 +60,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{Rscript -e} would fail if stdin is closed (Reported
+      by Henrik Bengtson.)
+
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
 

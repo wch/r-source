@@ -481,7 +481,7 @@ int Rf_initialize_R(int ac, char **av)
 	}
 	snprintf(ifile, PATH_MAX, "%s/Rscript%x.XXXXXX", tm, getpid());
 	ifd = mkstemp(ifile);
-	if (ifd > 0)
+	if (ifd >= 0) /* -1 on error, can be 0 if stdin is closed */
 	    ifp = fdopen(ifd, "w+");
 	if(!ifp) R_Suicide(_("creating temporary file for '-e' failed"));
 	unlink(ifile);
