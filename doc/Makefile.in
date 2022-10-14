@@ -170,7 +170,7 @@ uninstall:
 	fi
 	@rm -f $(DESTDIR)$(mandir)/man1/R.1 $(DESTDIR)$(mandir)/man1/Rscript.1
 
-dvi info pdf::
+info pdf:
 	@(cd manual && $(MAKE) $@)
 
 mostlyclean:

@@ -79,6 +79,11 @@
 
       \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
       specifying \code{origin}) now work.
+      So does \code{as.Date(<numeric>)}, too.
+
+      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
+      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
+      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
     }
   }
 
@@ -190,6 +195,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{Rscript -e} would fail if \file{stdin} is closed (Reported
+      by Henrik Bengtsson.)
+
       \item Hashed \code{environment}s with sizes less than 5 can now grow.
       (Reported to R-devel by Duncan Garmonsway.)
 
@@ -262,6 +270,9 @@
       \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
       argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
       the R-devel mailing list.
+
+      \item \code{as.Date.POSIXlt(x)} now also works when the list components
+      are of unequal length, aka \dQuote{partially filled} or \dQuote{ragged}.
     }
   }
 }
@@ -292,6 +303,15 @@
       The \verb{\mathscr} \LaTeX command is also provided (via the
       \samp{mathrsfs} package, if available, or the \samp{amsfonts}
       bundle otherwise), fulfilling the wish of \PR{18398}.
+
+      \item \code{.Machine} has a new element \code{sizeof.time_t} to
+      identify old systems with a 32-bit type and hence a limited range
+      of date-times (and limited support for dates millions of years
+      from present).
+
+      \item The default format of \code{readClipboard()} and
+      \code{writeClipboard()} has been changed to \code{13}
+      (\code{CF_UNICODETEXT}).
     }
   }
 
@@ -353,6 +373,10 @@
 
       \item Added methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} for \code{"POSIXlt"} date-time objects.
+
+      \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
+      and their list components meant to be recycled, \code{length()} now
+      is the length of the longest component.
     }
   }
 
@@ -2433,7 +2457,7 @@
       \item \code{as.Date(<char>)} now also works with an initial
       \code{""}, thanks to Michael Chirico's \PR{17909}.
 
-      \item \code{isS3stdGeneric(f)} now detects an S3 generic also when it
+      \item \code{isS3stdGeneric(f)} now detects an S3 generic also when
       it is \code{trace()}d, thanks to Gabe Becker's \PR{17917}.
 
       \item \code{R_allocLD()} has been fixed to return memory aligned for
@@ -3295,7 +3319,7 @@
       \item \command{Rterm} now accepts enhanced/arrow keys also with
       ConPTY.
 
-      \item \R can can now be started \emph{via} the launcher icon in a
+      \item \R can now be started \emph{via} the launcher icon in a
       user documents directory whose path is not representable in the
       system encoding.
 
@@ -3314,10 +3338,10 @@
     \item Older news can be found in text format in files
     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1},
       \href{../NEWS.2}{NEWS.2} and
-      and \href{../NEWS.3}{NEWS.3}}{\file{NEWS.0}, \file{NEWS.1},
+      \href{../NEWS.3}{NEWS.3}}{\file{NEWS.0}, \file{NEWS.1},
       \file{NEWS.2} and \file{NEWS.3}}
     in the \file{doc} directory.  News in HTML format for
-    \R  versions 3.x and from 2.10.0 to 2.15.3 is available at
+    \R  versions 3.x and from 2.10.0 to 2.15.3 are available at
     \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}
     and
     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.

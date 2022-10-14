@@ -58,6 +58,15 @@
 # define extern0 extern
 #endif
 
+#define attribute_no_sanitizer_instrumentation
+#ifdef __has_attribute
+# if __has_attribute(disable_sanitizer_instrumentation)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+          __attribute__((disable_sanitizer_instrumentation))
+# endif
+#endif
+
 #define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
 			   and occasionally as a limit. */
 
@@ -758,6 +767,13 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
+
+#ifdef __has_feature
+# if __has_feature(address_sanitizer)
+#  undef R_CheckStack
+# endif
+#endif
+
 #endif /* USE_RINTERNALS */
 
 const char * Rf_translateCharFP(SEXP);

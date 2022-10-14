@@ -141,7 +141,8 @@ getOption(x, default = NULL)
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
       print when formatting time values in seconds.  Valid values
-      are 0\dots6 with default 0.  See \code{\link{strftime}}.}
+      are 0\dots6 with default 0 (equivalent to \code{NULL} which is used
+      when it is undefined as on vanilla startup).  See \code{\link{strftime}}.}
 
     \item{\code{download.file.extra}:}{Extra command-line argument(s) for
       non-default methods: see \code{\link{download.file}}.}
@@ -730,7 +731,7 @@ getOption(x, default = NULL)
 	  \code{"both"} (the default for CRAN macOS builds).
 	  (\code{"mac.binary.el-capitan"},
 	  \code{"mac.binary.mavericks"}, \code{"mac.binary.leopard"}
-	  and \code{"mac.binary.universal"} are no longer in use.)} 
+	  and \code{"mac.binary.universal"} are no longer in use.)}
       }
       Value \code{"binary"} is a synonym for the native binary type (if
       there is one); \code{"both"} is used by

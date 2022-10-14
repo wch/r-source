@@ -111,7 +111,7 @@ void NORET R_SignalCStackOverflow(intptr_t usage)
     UNPROTECT(1); /* cond; not reached */
 }
 
-void (R_CheckStack)(void)
+void attribute_no_sanitizer_instrumentation (R_CheckStack)(void)
 {
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
@@ -121,7 +121,7 @@ void (R_CheckStack)(void)
 	R_SignalCStackOverflow(usage);
 }
 
-void R_CheckStack2(size_t extra)
+void attribute_no_sanitizer_instrumentation R_CheckStack2(size_t extra)
 {
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);

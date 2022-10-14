@@ -28,7 +28,7 @@ weighted.residuals(obj, drop0 = TRUE)
   \code{\link{influence}} and related functions.
 }
 \value{
-  Numeric vector of length \eqn{n'}, where \eqn{n'} is the number of
+  Numeric vector of length \eqn{n'}, where \eqn{n'} is the number
   of non-0 weights (\code{drop0 = TRUE}) or the number of
   observations, otherwise.
 }

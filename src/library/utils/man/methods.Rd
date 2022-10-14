@@ -41,7 +41,7 @@ methods(generic.function, class)
   \code{methods()} finds S3 and S4 methods associated with either the
   \code{generic.function} or \code{class} argument.  Methods are found in
   all packages on the current \code{search()} path.  \code{.S3methods()}
-  finds only S3 methods, \code{.S4methods()} finds only only S4 methods.
+  finds only S3 methods, \code{.S4methods()} finds only S4 methods.
 
   When invoked with the \code{generic.function} argument, the
   \code{"byclass"} attribute (see Details) is \code{FALSE}, and the

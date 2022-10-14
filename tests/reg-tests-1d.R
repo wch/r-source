@@ -6097,11 +6097,6 @@ stopifnot(any(as.character(rd) != "\n"),
 ## empty output in R <= 4.2.x
 
 
-## as.POSIXlt(<very large Date>)  gave integer overflow
-stopifnot(as.POSIXlt(.Date(2^31 + 10))$year == 5879680L)
-## year was negative in R <= 4.2.1
-
-
 ## as.Date(<nonfinite_POSIXlt>) :
 D <- .Date(c(7:20)*1000)
 D[15:18] <- c(Inf, -Inf, NA, NaN); D
@@ -6270,6 +6265,93 @@ for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33
                   identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
     }
 ## did not work without specifying 'origin'  in  R <= 4.2.x
+
+
+## small options("scipen") producing exponential format
+cdt <- "2007-07-27 16:11:00.000000000000006"; (dt <- as.POSIXlt(cdt))
+op <- options(scipen = 0, OutDec = ",")
+cbind(ccdt <- c(as.character(dt), as.character(dt, digits=15)))
+stopifnot(grepl(":00\\.0{13}", ccdt), getOption("OutDec") == ",")
+cdt == ccdt[2] # TRUE on all platforms?
+options(op)# reset
+## accidentally used exponential format (and changed OutDec opt) for a while
+
+
+## as.Date(.) now also takes default origin 1970-1-1:
+stopifnot(exprs = {
+  identical(D1 <- as.Date(20000), as.Date(20000, origin = "1970-01-01"))
+  inherits(D1, "Date")
+  identical(as.character(D1), "2024-10-04")
+  inherits(D2 <- as.Date(20000, origin="1960-1-1"), "Date")
+  D2 + 3653 == D1
+  identical(c(D2,D1), seq(D2, length.out=2, by = "10 years"))
+})
+## 'origin' was not optional in R <= 4.2.x
+
+
+## length(<ragged POSIXlt>)
+## Ex. of "partially filled" with NA's, *not* evenly recycling, out-of-range, fractional sec
+dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
+                     min = 45L, hour = c(21L, 3L, NA, 4L),
+                     mday = 6L, mon  = c(0:11, NA, 1:2),
+                     year = 116L, wday = 2L, yday = 340L, isdst = 1L))
+dltm3 <- dlt; dltm3$mon <- c(11L, NA, 3L)
+(n <- length(dltm3))
+stopifnot(length(dlt) == 15L, n == 13L)
+## always returned  length(*$sec)  in R <= 4.2.x
+##
+##  More dealing with such ragged out-of-range POSIXlt:
+##  (with console output, if only to compare platform dependencies)
+dct   <- as.POSIXct(dlt)
+dctm3 <- as.POSIXct(dltm3)
+dltN   <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy)
+dltNm3 <- as.POSIXlt(dctm3)
+data.frame(unclass(dltN))
+##' create "normalized" POSIXlt *not* losing fractional seconds accuracy
+.POSIXltNormalize <- function(x) {
+    stopifnot(is.numeric(s <- x$sec))
+    n <- length(ct <- as.POSIXct(x))
+    x <- as.POSIXlt(ct) # and restore the precise seconds (recycle carefully here!)
+    ifin <- is.finite(s <- rep_len(s, n)) & is.finite(x$sec)
+    x$sec[ifin] <- s[ifin] %% 60
+    x
+}
+dlt2N   <- .POSIXltNormalize(dlt)   # normalized POSIXlt - with accuracy kept
+dlt2Nm3 <- .POSIXltNormalize(dltm3)
+all.equal(dlt2N  $sec, dltN  $sec, tolerance = 0) # .. small (2e-9) difference
+all.equal(dlt2Nm3$sec, dltNm3$sec, tolerance = 0) # .. (ditto, slightly different)
+stopifnot(exprs = {
+    all.equal(dlt2N,   dltN)
+    all.equal(dlt2Nm3, dltNm3)
+    identical(as.POSIXct(dlt2N),   as.POSIXct(dltN))
+    identical(as.POSIXct(dlt2Nm3), as.POSIXct(dltNm3))
+})
+## First show (in a way it also works for older R), then check :
+oldR <- getRversion() < "4.2.2"
+(dd <- data.frame(dlt, dltN, asCT = dct, na = is.na(dlt),
+                  fin = if(oldR) rep_len(NA, n) else is.finite(dlt)))
+##
+## After fixes in as.Date.POSIXlt (and also as.Date.POSIXt)  methods
+dD  <- as.Date(dlt)
+dDc <- as.Date(dct)
+dd2 <- data.frame(lt = dltN, ct = dct, dD, dDc, d.D = (dD - dDc), d.POSIX = (dlt - dct))
+print(width = 101, dd2) ## look at [9,] -- do the date parts correspond ?
+dDm3  <- as.Date(dltm3)
+dDcm3 <- as.Date(dctm3)
+nD  <- unclass(dD)
+nDc <- unclass(dDc)
+cbind(nD, nDc, diff = nD-nDc)
+ifi  <- is.finite(dct)
+ifi3 <- is.finite(dctm3)
+stopifnot(exprs = {
+    all.equal(dD, dDc, tolerance = 1e-4)
+    (dDm3 - dDcm3)[ifi3] %in% 0:1
+      (dD - dDc  )[ifi]  %in% 0:1
+      (nD - nDc  )[ifi]  %in% 0:1
+    is.na((dD   - dDc  )[!ifi])
+    is.na((dDm3 - dDcm3)[!ifi3])
+})
+## as.Date.POSIXlt() failed badly for such ragged cases in  R <= 4.2.x
 
 
 

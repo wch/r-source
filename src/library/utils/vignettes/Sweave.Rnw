@@ -453,7 +453,7 @@ statements: these may not work well in Sweave processing.  Since
 in an included file, it is easiest to declare the encoding to Sweave
 using the \verb|%\SweaveUTF8| comment.
 
-It is all too easy for BiBTeX to pick up UTF-8-encoded references for
+It is all too easy for BibTeX to pick up UTF-8-encoded references for
 a Latin-1 document, or \emph{vice versa}.
 
 R output is again to a large extent under the user's control.  If a

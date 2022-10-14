@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-13 r83086) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -247,4 +247,15 @@ Type 'q()' to quit R.
 [1] "03/10/14" "03/10/14"
 [1] "AM" "PM"
 [1] "07:00:00 AM" "01:00:00 PM"
+> 
+> ## Moved from reg-tests-1d.R
+> ## as.POSIXlt(<very large Date>) gave integer overflow
+> ## and needed C-level change for 32-bit time_t.
+> .Machine$sizeof.time_t
+[1] 8
+> (z <- .Date(2^31 + 10))
+[1] "5881580-07-22"
+> as.POSIXlt(z)$year == 5879680L
+[1] TRUE
+> ## year was negative in R <= 4.2.1, even for 64-bit time_t
 > 

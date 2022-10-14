@@ -1128,6 +1128,11 @@ Rd2HTML <-
     if (concordance) {
     	conc$srcFile <- Rdfile
     	concdata <- followConcordance(conc$finish(), attr(Rd, "concordance"))
+    	# NB:  Prior to R 4.3.0, the srcFile could be
+    	#      an absolute path, possibly containing a 
+    	#      colon.  This strips the leading part up to
+    	#      "/man/".
+    	concdata$srcFile <- stripPathTo(concdata$srcFile, "man")
     	attr(out, "concordance") <- concdata
     	of0(paste0('<!-- ', 
     	    as.character(concdata),

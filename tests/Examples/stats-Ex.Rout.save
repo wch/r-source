@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-09-12 r82839) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-12 r83075) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -5045,7 +5045,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x117c48780>
+<bytecode: 0x112840350>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7667,7 +7667,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x127e9c340>
+<environment: 0x123f251d0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12527,14 +12527,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x11773df00>
-<environment: 0x11775d900>
+<bytecode: 0x111e1a8d0>
+<environment: 0x111e29e08>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x11773ddb0>
-<environment: 0x11775d900>
+<bytecode: 0x111e1a780>
+<environment: 0x111e29e08>
 
 > 
 > 
@@ -16873,8 +16873,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x120c064d0>
-<environment: 0x121517578>
+<bytecode: 0x123316a20>
+<environment: 0x111cf0280>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19386,7 +19386,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.963 0.236 3.21 0 0 
+Time elapsed:  2.959 0.247 3.225 0 0 
 > grDevices::dev.off()
 null device 
           1 

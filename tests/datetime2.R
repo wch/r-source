@@ -45,3 +45,11 @@ fmts <- c("%Y-%m-%d %H:%M:%S", "%F", "%A %a %b %h %e %I %j",
           "%X", # but the same in all English locales
           "%c", "%x", "%p", "%r")
 for (f in fmts) print(format(x, f))
+
+## Moved from reg-tests-1d.R
+## as.POSIXlt(<very large Date>) gave integer overflow
+## and needed C-level change for 32-bit time_t.
+.Machine$sizeof.time_t
+(z <- .Date(2^31 + 10))
+as.POSIXlt(z)$year == 5879680L
+## year was negative in R <= 4.2.1, even for 64-bit time_t

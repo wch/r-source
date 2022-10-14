@@ -559,7 +559,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.15"))
+    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.16"))
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
 
@@ -2119,10 +2119,13 @@ function(x, dfile)
 .read_repositories <-
 function(file)
 {
-    db <- utils::read.delim(file, header = TRUE, comment.char = "#",
-                            colClasses =
-                            c(rep.int("character", 3L),
-                              rep.int("logical", 4L))) # allow for win64.binary
+    fun <- get("read.delim", envir = getNamespace("utils"))
+    ## We now use .get_repositories() in utils::.onLoad(), for which
+    ## using utils::read.delim does not work.
+    ## Using utils:::read.delim() causes a check NOTE ...
+    db <- fun(file, header = TRUE, comment.char = "#",
+              colClasses = c(rep.int("character", 3L),
+                             rep.int("logical", 4L))) # allow for win64.binary
     db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
     db
 }
