@@ -990,14 +990,13 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_gmtoff = (tmp == NA_INTEGER) ? 0 : tmp;
 #endif
 	}
-	if(!R_FINITE(secs) && tm.tm_year == NA_INTEGER) {
+	if(!R_FINITE(secs)) {
 	    SET_STRING_ELT(ans, i,
 			   ISNA(secs)  ? NA_STRING :
 			   ISNAN(secs) ? mkChar("NaN") :
 			   (secs > 0)  ? mkChar("Inf") : mkChar("-Inf"));
-	} else if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
-	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
-	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
+	} else if(tm.tm_min == NA_INTEGER || tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
+		  tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else if(validate_tm(&tm) < 0) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
@@ -1371,9 +1370,11 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     int n_comp = LENGTH(x); // >= 9
     Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
-      have_zone = n_comp >= 11;
+	have_zone = n_comp >= 11; // {zone, gmtoff}
+    if(have_zone && !isInteger(VECTOR_ELT(x, 10)))
+	error(_("invalid component [[11]] in \"POSIXlt\" should be 'gmtoff'"));
 #else
-      have_zone = n_comp >= 10;
+        have_zone = n_comp >= 10; // {zone}
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
 	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
@@ -1447,12 +1448,11 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		warning(_("Timezone specified in the object field cannot be used on this system."));
 #endif
 #ifdef HAVE_TM_GMTOFF
-	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
-	    tm.tm_gmtoff = (tmp == NA_INTEGER) ? 0 : tmp;
+	    tm.tm_gmtoff = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
 #endif
 	} else { //  !have_zone
 #ifdef HAVE_TM_GMTOFF
-    	    tm.tm_gmtoff = -1; // or 0 ?? FIXME?!
+	    tm.tm_gmtoff = NA_INTEGER; // or -1 or 0 ??
 #endif
 	}
 
@@ -1486,8 +1486,9 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
 #ifdef HAVE_TM_GMTOFF
-	    INTEGER(VECTOR_ELT(ans, 10))[i] =
-		valid ? (int)tm.tm_gmtoff : NA_INTEGER;
+	    if(n_comp >= 11) // gmtoff
+		INTEGER(VECTOR_ELT(ans, 10))[i] =
+		    valid ? (int)tm.tm_gmtoff : NA_INTEGER;
 #endif
 	}
 
@@ -1501,8 +1502,12 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	classgets(ans, klass);
 	UNPROTECT(1);
     }
-    /* if(isString(tzone)) setAttrib(ans, install("tzone"), tzone); */
-    /* if(settz) reset_tz(oldtz); */
+
+    SEXP tz = getAttrib(x, install("tzone"));
+    if(!isNull(tz)) {
+	if(!isString(tz)) error(_("invalid '%s'"), "attr(x, \"tzone\")");
+	setAttrib(ans, install("tzone"), tz);
+    }
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
     UNPROTECT(4);
     return ans;

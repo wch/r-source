@@ -1100,7 +1100,8 @@ assertErrV(plot.new())
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
 assertErrV(grid::grid.newpage())
 if(no.grid) unloadNamespace("grid") ; options(op)
-pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")# revert to reasonable device
+if(!dev.interactive(orNone = TRUE))
+   pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")# revert to reasonable device
 ## both errors gave segfaults in R <= 3.4.1
 
 
@@ -6299,6 +6300,12 @@ dltm3 <- dlt; dltm3$mon <- c(11L, NA, 3L)
 (n <- length(dltm3))
 stopifnot(length(dlt) == 15L, n == 13L)
 ## always returned  length(*$sec)  in R <= 4.2.x
+## smallest possible lt which shows format.POSIXlt() bug :
+lt. <- local({ l <- 1L
+    .POSIXlt(list(sec = -Inf, min = l, hour = l, mday = l,
+                  mon = l, year = l, wday = l, yday = l, isdst = l))
+})
+stopifnot(format(lt.) == "-Inf")# was NA, which is wrong after allowing non-finite
 ##
 ##  More dealing with such ragged out-of-range POSIXlt:
 ##  (with console output, if only to compare platform dependencies)
@@ -6308,18 +6315,27 @@ dltN   <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy)
 dltNm3 <- as.POSIXlt(dctm3)
 data.frame(unclass(dltN))
 ##' create "normalized" POSIXlt *not* losing fractional seconds accuracy
-.POSIXltNormalize <- function(x) {
+.POSIXltNormalize <- function(x, tz="UTC") { ## for some tz="UTC" is needed, for others tz=""
     stopifnot(is.numeric(s <- x$sec))
-    n <- length(ct <- as.POSIXct(x))
-    x <- as.POSIXlt(ct) # and restore the precise seconds (recycle carefully here!)
+    tzA <- attr(x, "tzone")
+    n <- length(ct <- as.POSIXct(x, tz=tz))
+    x <- as.POSIXlt(ct) # and restore "tzone" attrib. & the precise seconds (recycling carefully!)
     ifin <- is.finite(s <- rep_len(s, n)) & is.finite(x$sec)
     x$sec[ifin] <- s[ifin] %% 60
+    if(!is.null(tzA)) attr(x, "tzone") <- tzA
     x
 }
-dlt2N   <- .POSIXltNormalize(dlt)   # normalized POSIXlt - with accuracy kept
-dlt2Nm3 <- .POSIXltNormalize(dltm3)
+dlt2N   <- .POSIXltNormalize(dlt, tz="") # normalized POSIXlt - with accuracy kept
+dlt2Nu  <- .POSIXltNormalize(dlt)        # (ditto; in "UTC")
+dlt2Nm3 <- .POSIXltNormalize(dltm3, tz="")
 all.equal(dlt2N  $sec, dltN  $sec, tolerance = 0) # .. small (2e-9) difference
 all.equal(dlt2Nm3$sec, dltNm3$sec, tolerance = 0) # .. (ditto, slightly different)
+## new balancePOSIXlt() :
+## Should be identity when a POSIXlt is already balanced:
+(lt1 <- as.POSIXlt(ch <- "2001-02-03 04:05")) # "... AEDT" (Southern Summer)
+stopifnot(identical(lt1, balancePOSIXlt(lt1)))
+## failed initially
+
 stopifnot(exprs = {
     all.equal(dlt2N,   dltN)
     all.equal(dlt2Nm3, dltNm3)
