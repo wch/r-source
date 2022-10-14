@@ -195,9 +195,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{Rscript -e} would fail if \file{stdin} is closed (Reported
-      by Henrik Bengtsson.)
-
       \item Hashed \code{environment}s with sizes less than 5 can now grow.
       (Reported to R-devel by Duncan Garmonsway.)
 
@@ -332,6 +329,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{Rscript -e} would fail if \file{stdin} is closed (Reported
+      by Henrik Bengtsson.)
+
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
 
