@@ -28,12 +28,15 @@ as.Date <- function(x, ...) UseMethod("as.Date")
 
 as.Date.POSIXct <- function(x, tz = "UTC", ...)
 {
-    if(tz == "UTC") {
+    switch(tz,
+           "UTC" =, "GMT" =, "Etc/UTC" =, "Etc/GMT" =, "GMT0" =, "GMT+0" =, "GMT-0" =
+      {
         z <- floor(unclass(x)/86400)
         attr(z, "tzone") <- NULL
         .Date(z)
-    } else
+      }, # all other timezones:
         as.Date(as.POSIXlt(x, tz = tz))
+      )
 }
 
 as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
@@ -70,16 +73,7 @@ as.Date.character <- function(x, format,
 }
 
 as.Date.numeric <- function(x, origin, ...)
-{
-    if(missing(origin)) {
-        if(!length(x))
-            return(.Date(numeric()))
-        if(!any(is.finite(x)))
-            return(.Date(x))
-        stop("'origin' must be supplied")
-    }
-    as.Date(origin, ...) + x
-}
+    if(missing(origin)) .Date(x) else as.Date(origin, ...) + x
 
 as.Date.default <- function(x, ...)
 {

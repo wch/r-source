@@ -30,9 +30,6 @@ mauchly.test(object, ...)
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
-  Mauchly's test test for whether a covariance matrix can be assumed to
-  be proportional to a given matrix.
-
   This is a generic function with methods for classes \code{"mlm"} and
   \code{"\link{SSD}"}.
 

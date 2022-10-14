@@ -4567,7 +4567,7 @@ static void R_ReportNewPage(void)
     return;
 }
 
-static void R_EndMemReporting()
+static void R_EndMemReporting(void)
 {
     if(R_MemReportingOutfile != NULL) {
 	/* does not fclose always flush? */

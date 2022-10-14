@@ -411,17 +411,14 @@ $ make
 If these commands execute successfully, the R binary and a shell script
 front-end called @file{R} are created and copied to the @file{bin}
 directory.  You can copy the script to a place where users can invoke
-it, for example to @file{/usr/local/bin}.  In addition, plain text help
-pages as well as @HTML{} and @LaTeX{} versions of the documentation are
-built.
+it, for example to @file{/usr/local/bin}.  In addition,
+@HTML{} versions of the R manuals (e.g., @file{R-exts.html}, the
+``Writing R Extensions'' manual) are built in the @file{doc/manual}
+subdirectory.
 
-Use @kbd{make dvi} to create DVI versions of the R manuals, such as
-@file{refman.dvi} (an R object reference index) and @file{R-exts.dvi},
-the ``R Extension Writers Guide'', in the @file{doc/manual}
-subdirectory.  These files can be previewed and printed using standard
-programs such as @command{xdvi} and @command{dvips}.  You can also use
-@kbd{make pdf} to build PDF (Portable Document Format) version of the
-manuals, and view these using e.g.@: Acrobat.  Manuals written in the
+Use @kbd{make pdf} to build PDF (Portable Document Format)
+versions of the R manuals, including
+@file{fullrefman.pdf} (an R object reference index).  Manuals written in the
 @acronym{GNU} Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
 Info; use @kbd{make info} to create these versions (note that this
@@ -456,8 +453,8 @@ $ ./configure --prefix=/where/you/want/R/to/go
 (E.g., the R executable will then be installed into
 @file{/where/you/want/R/to/go/bin}.)
 
-To install DVI, info and PDF versions of the manuals, use @kbd{make
-install-dvi}, @kbd{make install-info} and @kbd{make install-pdf},
+To install info and PDF versions of the manuals, use
+@kbd{make install-info} and @kbd{make install-pdf},
 respectively.
 
 @node How can R be installed (Windows), How can R be installed (Mac), How can R be installed (Unix-like), How can R be installed?
@@ -582,7 +579,7 @@ Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing @kbd{help(@var{name})}
 (or @kbd{?@var{name}}) at the R prompt, where @var{name} is the name of
 the topic help is sought for.  (In the case of unary and binary
-operators and control-flow special forms, the name may need to be be
+operators and control-flow special forms, the name may need to be
 quoted.)
 
 This documentation can also be made available as one reference manual

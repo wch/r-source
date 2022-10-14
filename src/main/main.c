@@ -743,7 +743,7 @@ void attribute_hidden BindDomain(char *R_Home)
    than the detection itself. */
 
 #ifdef DEBUG_STACK_DETECTION
-static uintptr_t almostFillStack() {
+static uintptr_t attribute_no_sanitizer_instrumentation almostFillStack() {
     volatile uintptr_t dummy;
 
     dummy = (uintptr_t) &dummy;
@@ -838,6 +838,8 @@ void setup_Rmainloop(void)
 	 */
 	printf("almost filling up stack...\n");
 	printf("filled stack up to %lx\n", almostFillStack());
+	/* the loop below writes outside the local variables and the frame,
+	   which is detected e.g. by ASAN as stack-buffer-overflow */
 	printf("accessing all bytes...\n");
 	for(uintptr_t o = 0; o < R_CStackLimit; o++)
 	    /* with exact bounds, o==-1 and o==R_CStackLimit will segfault */

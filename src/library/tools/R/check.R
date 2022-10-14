@@ -5068,7 +5068,7 @@ add_dummies <- function(dir, Log)
                                     sub("[Rr]d$", "html", results2[, "path"]),
                                     results2[, "line"],
                                     results2[, "col"],
-                            	    basename(results2[, "srcFile"]),
+                            	    results2[, "srcFile"],
                             	    results2[, "srcLine"],
                                     results2[, "msg"])))
             }
@@ -5465,6 +5465,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wformat=\\]",
                              ## gcc and clang with -Wstrict-prototypes
                              ": warning: .* \\[-Wstrict-prototypes\\]",
+                             ## clang-15 variant
+                             ": warning: .* \\[-Wdeprecated-non-prototype\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
@@ -5523,6 +5525,17 @@ add_dummies <- function(dir, Log)
                              ## also gcc
                              "warning: .* \\[-Wsizeof-pointer-div\\]",
                              "warning: .* \\[-Wnon-c-typedef-for-linkage\\]",
+                             "warning: .* \\[-Wc\\+\\+14-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+17-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+20-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+23-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+2b-extensions\\]",
+                             ## LLVM clang 15 versions
+                             "warning: .* \\[-Wc\\+\\+14-attribute-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+17-attribute-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+20-attribute-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+23-attribute-extensions\\]",
+                             "warning: .* \\[-Wc\\+\\+2b-attribute-extensions\\]",
                              ## consider also -Wbitwise-op-parentheses
                              ## -Wlogical-op-parentheses
                              ## -Wshift-op-parentheses

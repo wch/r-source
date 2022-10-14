@@ -1607,7 +1607,7 @@ sources.)
 These are Apple Installer packages.  If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
-``Show All Log'') is useful for tracking down problems.  Note the the
+``Show All Log'') is useful for tracking down problems.  Note that the
 installer is clever enough to try to upgrade the last-installed version
 of the application where you installed it (which may not be where you
 want this time @dots{}).
@@ -4898,9 +4898,10 @@ certificates: this is worked around in @R{}'s test suite.
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
-Note that 32-bit @code{glibc} before version 2.29 uses a 32-bit
+Note that some distributions of 32-bit @code{glibc} use a 32-bit
 @code{time_t} type, so to pass all the date-time checks needs @R{} built
 with flag @option{--with-internal-tzcode}.
+@c true even of glibc 2.35 in Fedora 36.
 
 Users of @cputype{ix86} CPUs with SSE2 support@footnote{Likely all since
 2005, including Pentium 4 and all @cputype{x86_64} CPUs with 32-bit
@@ -5289,7 +5290,8 @@ of @command{gfortran} target the current version of macOS (unlike
 To install packages using compiled code one needs the Command Line Tools
 (or Xcode) and appropriate compilers, e.g.@: the C/C++ compilers from
 those tools and/or @command{gfortran}. Some packages have further
-requirements such as component @command{pkgconfig}.
+requirements such as component @command{pkgconfig} (and to set
+@env{PKG_CONFIG_PATH=} as above).
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client, @command{svn} version 1.10, used to be part of
@@ -5364,7 +5366,7 @@ manual.
 For Intel Big Sur and later there is
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
 and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.3-monterey/gfortran-Intel-11.3-Monterey.dmg}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-Intel-12.1-Monterey.dmg}.
 
 
 For @cputype{arm64}, we use the fork of @command{gfortran} from
@@ -5556,7 +5558,7 @@ non-default options
 were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
 
 Configure option @option{--with-internal-tzcode} is the default on macOS,
-as the system implementation of time zones does not work correctly for
+as the system implementation of time zones did not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The main @TeX{} implementation used by the developers is

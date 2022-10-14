@@ -7198,7 +7198,7 @@ static void writeRasterXObject(rasterImage raster, int n,
     }
     uLong outlen = inlen;
     if (pd->useCompression) {
-	outlen = (int)(1.001*inlen + 20);
+        outlen += (inlen >> 10) + 20; // (1.001*inlen + 20) warns [-Wconversion]; 2^(-10) ~= 0.001
 	buf2 = R_Calloc(outlen, Bytef);
 	int res = compress(buf2, &outlen, buf, inlen);
 	if(res != Z_OK) error("internal error %d in writeRasterXObject", res);
@@ -7246,9 +7246,9 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
     uLong inlen = raster.w * raster.h, outlen = inlen;
     p = buf = R_Calloc(outlen, Bytef);
     for(int i = 0; i < raster.w * raster.h; i++) 
-	*p++ = R_ALPHA(raster.raster[i]);
+        *p++ = (Bytef)R_ALPHA(raster.raster[i]);
     if (pd->useCompression) {
-	outlen = (uLong)(1.001*inlen + 20);
+        outlen += (inlen >> 10) + 20;
 	buf2 = R_Calloc(outlen, Bytef);
 	int res = compress(buf2, &outlen, buf, inlen);
 	if(res != Z_OK) error("internal error %d in writeRasterXObject", res);

@@ -334,12 +334,9 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
     y <- .Internal(as.POSIXct(x, tz))
-    names(y) <- names(x$year)
+    ## FIXME: already do handling of 'tz' in C code  !?!
     .POSIXct(y, tz)
-    ## </FIXME>
 }
 
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
@@ -367,7 +364,7 @@ as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 
 ## POSIXlt is not primarily a list, but primarily an abstract vector of
 ## time stamps:
-length.POSIXlt <- function(x) length(unclass(x)[[1L]])
+length.POSIXlt <- function(x) max(lengths(unclass(x)))
 `length<-.POSIXlt` <- function(x, value)
     .POSIXlt(lapply(unclass(x), `length<-`, value),
              attr(x, "tzone"), oldClass(x))
@@ -392,12 +389,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
 	    else if(np == 0L) "%Y-%m-%d %H:%M:%S"
 	    else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(format.POSIXlt(x, format, usetz))
-    names(y) <- names(x$year)
-    y
-    ## </FIXME>
+    .Internal(format.POSIXlt(x, format, usetz))
 }
 
 ## prior to 2.9.0 the same as format.POSIXlt.
@@ -406,15 +398,11 @@ strftime <- function(x, format = "", tz = "", usetz = FALSE, ...)
     format(as.POSIXlt(x, tz = tz), format = format, usetz = usetz, ...)
 
 strptime <- function(x, format, tz = "")
-{
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(strptime(as.character(x), format, tz))
-    ## Assuming we can rely on the names of x ...
-    names(y$year) <- names(x)
-    y
-    ## </FIXME>
-}
+    .Internal(strptime(if(is.character(x)) x # not losing names(.) here
+                       else if(is.object(x)) `names<-`(as.character(x), names(x))
+                       else                  `storage.mode<-`(x, "character"),
+                       format, tz))
+
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
@@ -572,6 +560,7 @@ function(x, ..., value) {
     .POSIXct(NextMethod(.Generic), attr(x, "tzone"), oldClass(x))
 }
 
+
 ## Alternatively use  lapply(*, function(.) .Internal(format.POSIXlt(., digits=0))
 ## *and* append the fractional seconds ('entirely') ..
 as.character.POSIXt <- function(x, # digits after decimal:
@@ -581,6 +570,7 @@ as.character.POSIXt <- function(x, # digits after decimal:
     if(length(dotn <- ...names()) && "format" %in% dotn)
         warning("as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?")
     if(missing(digits)) force(digits)
+    else if(!is.numeric(digits)) stop("'digits' must be numeric, integer valued")
     x <- as.POSIXlt(x)
     s <- x$sec
     ## to distinguish {NA, 0, non-0}:
@@ -598,7 +588,10 @@ as.character.POSIXt <- function(x, # digits after decimal:
         r1 <- sprintf("%d-%02d-%02d", 1900 + x$year, x$mon+1L, x$mday)
         if(any(n0 <- time != 0)) { # add time if not 0
             s <- round(x$sec[n0], digits) # now, assume s >= 0 :
-            if(getOption("OutDec") != OutDec) { op <- options(OutDec = OutDec); on.exit(op) }
+            ## ensure options() do *not* affect as.character():
+            if(getOption("OutDec") != OutDec) { op <- options(OutDec = OutDec); on.exit(options(op)) }
+            if(getOption("scipen") <= min(digits)) {
+                o2 <- options(scipen = max(digits)+1L); on.exit(options(o2), add=TRUE) }
             sch <- paste0(c("","0")[(s < 10) + 1L], as.character(s))
             r1[n0] <- paste(r1[n0], sprintf("%02d:%02d:%s", x$hour[n0], x$min[n0], sch))
         }
@@ -1414,13 +1407,13 @@ is.numeric.difftime <- function(x) FALSE
 
 ## ---- additions in 2.13.0 -----
 
-names.POSIXlt <-
-function(x)
-    names(x$year)
+names.POSIXlt <- function(x) names(x$year)
 
 `names<-.POSIXlt` <-
 function(x, value)
 {
+    if(length(yr <- x$year) < (n <- length(x))) # must recycle
+        x$year <- rep_len(yr, n)
     names(x$year) <- value
     x
 }
@@ -1540,3 +1533,8 @@ rep.difftime <- function(x, ...)
 
 as.vector.POSIXlt <- function(x, mode = "any")
     as.vector(as.list(x), mode)
+
+## Added in 4.3.0.
+
+balancePOSIXlt <- function(x, class=TRUE) .Internal(balancePOSIXlt(x, class))
+
