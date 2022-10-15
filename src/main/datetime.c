@@ -1383,8 +1383,12 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     for(int i = 0; i < n_comp; i++) {
 	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n)
 	    n = nlen[i];
-	else check_nlen(i);
-    } // ==>  n := max(nlen[i]) and all  nlen[i] > 0
+    }
+    if(n > 0) {
+	for(int i = 0; i < n_comp; i++)
+	  check_nlen(i);
+	// ==>  n := max(nlen[i]) and all  nlen[i] > 0
+    }
 
     // get names(.) [possibly empty]
     SEXP nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol));

@@ -18,8 +18,8 @@ onWindows <- .Platform$OS.type == "windows"
 .M <- .Machine
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
 b64 <- .M$sizeof.pointer == 8
-options(nwarnings = 10000) # (rather than just 50)
-
+options(nwarnings = 10000, # (rather than just 50)
+        width = 99) # instead of 80
 
 ## body() / formals() notably the replacement versions
 x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
@@ -6296,9 +6296,18 @@ dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
                      min = 45L, hour = c(21L, 3L, NA, 4L),
                      mday = 6L, mon  = c(0:11, NA, 1:2),
                      year = 116L, wday = 2L, yday = 340L, isdst = 1L))
+dct   <- as.POSIXct(dlt)
+dltN  <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy), but *added* tz-info:
+data.frame(unclass(dltN)); attr(dltN, "tzone")
+dltv2 <- local({ x <- dltN
+    length(x$min ) <- 4; length(x$hour) <- 4; length(x$mday ) <- 2
+    length(x$mon ) <- 9; length(x$year) <- 5; length(x$isdst) <- 1
+    length(x$yday) <- 1; length(x$wday) <- 1; length(x$ zone) <- 1; length(x$gmtoff) <- 1
+    x })
 dltm3 <- dlt; dltm3$mon <- c(11L, NA, 3L)
-(n <- length(dltm3))
-stopifnot(length(dlt) == 15L, n == 13L)
+dltI  <- dltm3; dltI$sec <- c(-Inf, 0:2, NaN, NA, Inf)
+c((n <- length(dlt)), (n2 <- length(dltv2)), (n3 <- length(dltm3)))
+stopifnot(n == 15L, n2 == 15L, n3 == 13L)
 ## always returned  length(*$sec)  in R <= 4.2.x
 ## smallest possible lt which shows format.POSIXlt() bug :
 lt. <- local({ l <- 1L
@@ -6306,14 +6315,20 @@ lt. <- local({ l <- 1L
                   mon = l, year = l, wday = l, yday = l, isdst = l))
 })
 stopifnot(format(lt.) == "-Inf")# was NA, which is wrong after allowing non-finite
+ltI <- .POSIXlt(list(sec = c(-Inf, 0, NaN, NA, Inf), min = 45L, hour = 21L, mday = 6L,
+                     mon = 0:11, year = 116L, wday = 2L, yday = 340L, isdst = 1L))
+ctI  <- as.POSIXct(ltI) # typically differs from
+ctIu <- as.POSIXct(ltI, "UTC")
+stopifnot(identical3(format(ctIu), format(as.POSIXlt(ctIu)), format(balancePOSIXlt(ltI))))
 ##
 ##  More dealing with such ragged out-of-range POSIXlt:
 ##  (with console output, if only to compare platform dependencies)
-dct   <- as.POSIXct(dlt)
-dctm3 <- as.POSIXct(dltm3)
-dltN   <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy)
+dctm3  <- as.POSIXct(dltm3)
 dltNm3 <- as.POSIXlt(dctm3)
 data.frame(unclass(dltN))
+##' For a POSIXlt, check if it is "ragged"
+is.raggedPOSIXlt <- function(x) { stopifnot(inherits(x,"POSIXlt"))
+    n <- lengths(unclass(x)); any(n[[1]] != n) }
 ##' create "normalized" POSIXlt *not* losing fractional seconds accuracy
 .POSIXltNormalize <- function(x, tz="UTC") { ## for some tz="UTC" is needed, for others tz=""
     stopifnot(is.numeric(s <- x$sec))
@@ -6335,8 +6350,26 @@ all.equal(dlt2Nm3$sec, dltNm3$sec, tolerance = 0) # .. (ditto, slightly differen
 (lt1 <- as.POSIXlt(ch <- "2001-02-03 04:05")) # "... AEDT" (Southern Summer)
 stopifnot(identical(lt1, balancePOSIXlt(lt1)))
 ## failed initially
-
+## The hard cases from above:
+dltB   <- balancePOSIXlt(dlt)
+dltv2B <- balancePOSIXlt(dltv2)
+dltBm3 <- balancePOSIXlt(dltm3)
+dltL <- unclass(dltB)
+data.frame(dltL)
 stopifnot(exprs = {
+    is.list(dltL)
+    lengths(dltL) == n
+    identical(dltL, balancePOSIXlt(dlt, class=FALSE))
+    is.raggedPOSIXlt(dlt)
+    is.raggedPOSIXlt(dltv2)
+    is.raggedPOSIXlt(dltm3)
+   !is.raggedPOSIXlt(dltN)
+   !is.raggedPOSIXlt(dlt2N)
+   !is.raggedPOSIXlt(dlt2Nm3)
+   !is.raggedPOSIXlt(dltB)
+   !is.raggedPOSIXlt(dltv2B)
+   !is.raggedPOSIXlt(dltBm3)
+    ## equal with default tolerance:
     all.equal(dlt2N,   dltN)
     all.equal(dlt2Nm3, dltNm3)
     identical(as.POSIXct(dlt2N),   as.POSIXct(dltN))
@@ -6345,7 +6378,50 @@ stopifnot(exprs = {
 ## First show (in a way it also works for older R), then check :
 oldR <- getRversion() < "4.2.2"
 (dd <- data.frame(dlt, dltN, asCT = dct, na = is.na(dlt),
-                  fin = if(oldR) rep_len(NA, n) else is.finite(dlt)))
+                  fin = if(oldR) rep_len(NA, n3) else is.finite(dlt)))
+## Look at *all* current "POSIXlt" objects:
+str(lts <- local({ oG <- as.list(.GlobalEnv)
+    oG[vapply(oG, inherits, TRUE, "POSIXlt")] }))
+## Check if/when  balancePOSIXlt(.) is the identity for  "POSIXlt" objects
+blts <- lapply(lts, balancePOSIXlt)
+all.equal(blts, lts) # hmm .. "ltI", "dlt", "dltI" and "dltm3" have been shifted by one hour - ok (??)
+## all the others are *deemed* equal by the "tolerant"  all.equal.POSIXt()
+(nmsLT <- setdiff(names(lts), c("ltI", "dlt", "dltI", "dltm3")))
+stopifnot(exprs = {
+    all.equal(lts[nmsLT], blts[nmsLT], tolerance = 0)
+    identical(lapply( lts, attributes),
+              lapply(blts, attributes))
+})
+chlts <- lapply( lts, as.character)
+cblts <- lapply(blts, as.character)
+stopifnot(identical(chlts, cblts))
+## only now that as.char..() uses balanceP..()
+
+
+## Indexing --
+which(ina <- is.na(dlt))
+stopifnot(exprs = {
+    all.equal(format(ltI[-1]), format(ltI)[-1]) # ltI[-1] gave an error
+    all.equal(format(ltI[-2]), format(ltI)[-2])
+    identical(which(ina), c(3L, 7L, 11L, 13L, 15L))
+    !anyNA(dlt[!ina])
+    format(dlt[!ina]) == format(dlt)[!ina] # dlt[!ina] was mostly NA
+    !anyNA(dltm3[!is.na(dltm3)])
+    identical(as.POSIXct(dlt[-3], "UTC"),
+              as.POSIXct(dlt, "UTC")[-3])
+})
+## subassigning  [<- :
+tmp <- dlt
+tmp[1] <- tmp[15]
+stopifnot(exprs = {
+    identical(print(format(tmp)), # had badly failed
+              format(dlt)[c(15, 2:15)])
+    identical(tmp[1], dlt[15])
+    identical(tmp[-1], dlt[-1])
+})
+## badly failed in ragged case, before balancePOSIXlt() was used
+
+
 ##
 ## After fixes in as.Date.POSIXlt (and also as.Date.POSIXt)  methods
 dD  <- as.Date(dlt)

@@ -84,6 +84,10 @@
       \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
       values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
       and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
+
+      \item Experimental \code{balancePOSIXlt()} utility allows using
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects which
+      are documented somewhat, now.
     }
   }
 
