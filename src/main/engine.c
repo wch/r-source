@@ -3834,6 +3834,7 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 #define glyph_size     6
 #define glyph_file     7
 #define glyph_index    8
+#define glyph_colour   9
 
 SEXP R_GE_glyphID(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_ID);
@@ -3862,14 +3863,18 @@ SEXP R_GE_glyphFile(SEXP glyph) {
 SEXP R_GE_glyphIndex(SEXP glyph) {
     return VECTOR_ELT(glyph, glyph_index);
 }
+SEXP R_GE_glyphColour(SEXP glyph) {
+    return VECTOR_ELT(glyph, glyph_colour);
+}
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              const char* family, double weight, int style,
-             const char* file, int index, double size,
+             const char* file, int index, double size, int colour,
              pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_typeset) {
         dd->dev->glyph(n, glyphs, x, y, 
                        family, weight, style, file, index, size,
+                       colour,
                        dd->dev);
     }
 }

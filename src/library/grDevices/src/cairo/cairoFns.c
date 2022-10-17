@@ -2359,7 +2359,7 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
  */
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         const char* family, double weight, int style,
-                        const char* file, int index, double size,
+                        const char* file, int index, double size, int colour,
                         pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -2410,7 +2410,7 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
         cairoGlyph.x = x[i];
         cairoGlyph.y = y[i];
         if (!xd->appending) {
-            CairoColor(R_GE_str2col("black"), xd);
+            CairoColor(colour, xd);
             cairo_show_glyphs(xd->cc, &cairoGlyph, 1);
         } else {
             cairo_glyph_path(xd->cc, &cairoGlyph, 1);

@@ -85,8 +85,9 @@ glyphAnchor <- function(value, label) {
 }
 
 glyphInfo <- function(id, x, y,
-                      family, weight, style, size, file, index, 
-                      width, height, hAnchor, vAnchor) {
+                      family, weight, style, size, file, index,
+                      width, height, hAnchor, vAnchor,
+                      colour=NA) {
     id <- as.integer(id)
     x <- as.numeric(x)
     y <- as.numeric(y)
@@ -101,6 +102,13 @@ glyphInfo <- function(id, x, y,
         warning("Font file longer than 500 will be truncated")
     index <- as.integer(index)
     size <- as.numeric(size)
+    ## Check colour (allow any R colour spec)
+    nacol <- is.na(colour)
+    if (any(!nacol)) {
+        rgb <- col2rgb(colour[!nacol], alpha=TRUE)
+        colour[!nacol] <- rgb(rgb[1,], rgb[2,], rgb[3,], rgb[4,],
+                              maxColorValue=255)
+    }
     ## Check width/height
     if (!inherits(width, "GlyphWidth"))
         width <- glyphWidth(width)
@@ -141,7 +149,8 @@ glyphInfo <- function(id, x, y,
         vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
     ## Build glyph info
     info <- data.frame(id, x, y,
-                       family, weight, style, size, file, index)
+                       family, weight, style, size, file, index,
+                       colour)
     attr(info, "width") <- width
     attr(info, "height") <- height
     attr(info, "hAnchor") <- hAnchor

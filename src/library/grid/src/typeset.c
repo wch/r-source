@@ -77,11 +77,16 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
         strncpy(file, CHAR(STRING_ELT(R_GE_glyphFile(glyphInfo), offset)), 500);
         int index = INTEGER(R_GE_glyphIndex(glyphInfo))[offset];
         double size = REAL(R_GE_glyphSize(glyphInfo))[offset];
+        char colstr[51];
+        strncpy(colstr, CHAR(STRING_ELT(R_GE_glyphColour(glyphInfo), offset)), 
+                50);
+        int colour = R_GE_str2col(colstr);
         GEGlyph(runLength, 
                 glyphs + offset, 
                 gx + offset, 
                 gy + offset, 
                 family, weight, style, file, index, size, 
+                colour,
                 dd);
         offset = offset + runLength;
     }

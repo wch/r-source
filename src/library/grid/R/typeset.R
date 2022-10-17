@@ -97,12 +97,17 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
     ## Calculate runs of glyphs
     fontstring <- unlist(do.call(paste,
                                  c(x$glyph[c("family", "weight", "style",
-                                             "file", "index", "size")],
+                                             "file", "index", "size",
+                                             "colour")],
                                    list(sep=":"))))
     runs <- rle(fontstring)
     ## Calculate final glyph positions
     gx <- glyphHJust(x$x, x$glyph, x$hjust)
     gy <- glyphVJust(x$y, x$glyph, x$vjust)
+    ## Replace NA colours with current gp$col
+    naCol <- is.na(x$glyph$colour)
+    if (any(naCol))
+        x$glyph$colour[naCol] <- get.gpar("col")$col[1]
     ## Call dev->glyph() for each run of glyphs
     grid.Call.graphics(C_glyph,
                        as.integer(runs$lengths),

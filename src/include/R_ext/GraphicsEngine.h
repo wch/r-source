@@ -670,10 +670,11 @@ SEXP R_GE_glyphStyle(SEXP info);
 SEXP R_GE_glyphSize(SEXP info);
 SEXP R_GE_glyphFile(SEXP info);
 SEXP R_GE_glyphIndex(SEXP info);
+SEXP R_GE_glyphColour(SEXP info);
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              const char* family, double weight, int style,
-             const char* file, int index, double size,
+             const char* file, int index, double size, int colour,
              pGEDevDesc dd);
     
 #ifdef __cplusplus
