@@ -1436,8 +1436,8 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 //	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	tm.tm_isdst = isGMT ? 0
 	           : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	char tm_zone[20];
 	if(have_zone) { // not "UTC", e.g.
-	    char tm_zone[20];
 	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9])), 20 - 1);
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
