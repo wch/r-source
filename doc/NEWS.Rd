@@ -274,6 +274,10 @@
 
       \item \code{as.Date.POSIXlt(x)} now also works when the list components
       are of unequal length, aka \dQuote{partially filled} or \dQuote{ragged}.
+
+      \item \code{expand.model.frame()} looked up variables in the wrong
+      environment when applied to models fitted without \code{data}.
+      Reported in \PR{18414}.
     }
   }
 }

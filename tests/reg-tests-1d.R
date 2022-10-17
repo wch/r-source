@@ -6446,6 +6446,20 @@ stopifnot(exprs = {
 ## as.Date.POSIXlt() failed badly for such ragged cases in  R <= 4.2.x
 
 
+## expand.model.frame() for non-data fits (PR#18414)
+y <- 1:10
+g <- gl(2, 5)
+fit <- lm(log(y) ~ g, subset = y > 3)
+mf <- expand.model.frame(fit, ~0)
+stopifnot(all.equal(fit$model, mf, check.attributes = FALSE))
+myexpand <- function(model) expand.model.frame(model, "y")
+stopifnot(identical(myexpand(fit)$y, 4:10))  # failed in R <= 1.4.1 (PR#1423)
+env <- list2env(list(y = y, g = g))
+rm(y, g)
+fit2 <- with(env, lm(log(y) ~ g, subset = y > 3))
+stopifnot(identical(myexpand(fit2)$y, 4:10)) # failed in R <= 4.2.1 with
+## Error in eval(predvars, data, env) : object 'y' not found
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
