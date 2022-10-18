@@ -37,7 +37,7 @@ test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
-test-src-dt = datetime2.R datetime3.R
+test-src-dt = datetime2.R
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-internet2 = internet2.R libcurl.R
