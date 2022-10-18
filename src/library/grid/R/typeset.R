@@ -114,6 +114,26 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
                        x$glyph, gx, gy)
 }
 
+grobPoints.glyphgrob <- function(x, closed=TRUE, ...) {
+    if (closed) {
+        gx <- glyphHJust(x$x, x$glyph, x$hjust)
+        gy <- glyphVJust(x$y, x$glyph, x$vjust)
+        w <- convertWidth(unit(attr(x$glyph, "width")[1], "bigpts"),
+                          "in", valueOnly=TRUE)
+        h <- convertHeight(unit(attr(x$glyph, "height")[1], "bigpts"),
+                           "in", valueOnly=TRUE)
+        left <- min(gx)
+        bottom <- min(gy)
+        right <- left + w
+        top <- bottom + h
+        gridGrobCoords(list("1"=gridCoords(x=c(left, left, right, right),
+                                           y=c(bottom, top, top, bottom))),
+                       x$name)
+    } else {
+        emptyGrobCoords(x$name)
+    }    
+}
+
 just <- function(x, ..., class) {
     UseMethod("just")
 }
