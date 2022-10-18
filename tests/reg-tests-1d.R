@@ -6133,7 +6133,7 @@ stopifnot(exprs = {
 stopifnot(inherits(Dct, "POSIXct"),
           inherits(Dlt, "POSIXlt"))
 Sys.getenv("TZ")  #  "Australia/Melbourne"   (set above)
-mtz <- "UTC-5"
+mtz <- "UTC-5" # maybe "Etc/GMT-5" was meant
 head(Dct2  <- as.POSIXct(Dct, tz = mtz), 3)
 head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POISXlt "are different"
 head(Dlct2 <- as.POSIXlt(Dct2),          3)
@@ -6228,10 +6228,16 @@ datePOSIXchk <- function(d, tz) {
 ##
 d1 <- as.Date(c("2000-02-29", "2001-04-01"))
 otz <- OlsonNames()
-for(tz in c("GMT", "EST", "BST", "NZ", "Egypt", "Israel", "Jamaica", "Africa/Conakry",
-            "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai", "Asia/Tokyo",
-            "Canada/Newfoundland", "Europe/Dublin", "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
-    if(!(tz %in% otz)) message(tz, " is *not* in this platform's OlsonNames()")
+for(tz in c("GMT", "EST", "BST", "NZ", "Egypt", "Israel", "Jamaica",
+            "Africa/Conakry", "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai",
+            "Asia/Tokyo", "Canada/Newfoundland", "Europe/Dublin",
+            "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
+    message("")
+    if(!(tz %in% otz)) {
+        message(tz, " is *not* in this platform's OlsonNames()")
+        next
+    }
+    message("Using ", sQuote(tz))
     datePOSIXchk(d1, tz)
 }
 ## several of the identities datePOSIXchk() failed in R <= 4.2.x
