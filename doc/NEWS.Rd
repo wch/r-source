@@ -37,7 +37,7 @@
       of date-times (and limited support for dates millions of years
       from present).
 
-      \item The default format of \code{readClipboard()} and
+      \item (Windows) The default format of \code{readClipboard()} and
       \code{writeClipboard()} has been changed to \code{13}
       (\code{CF_UNICODETEXT}).
     }
@@ -60,8 +60,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{Rscript -e} would fail if stdin is closed (Reported
-      by Henrik Bengtson.)
+      \item \code{Rscript -e} would fail if \file{stdin} were closed
+      (Reported by Henrik Bengtsson.)
 
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
