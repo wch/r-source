@@ -46,7 +46,7 @@ typedef struct Rtm stm;
 #define localtime_r R_localtime_r
 #define mktime R_mktime
 #define tzset R_tzset
-extern stm* Rgmtime (const R_time_t*);
+extern stm* R_gmtime (const R_time_t*);
 extern stm* R_gmtime_r (const R_time_t*, stm*);
 extern stm* R_localtime (const R_time_t*);
 extern stm* R_localtime_r(const R_time_t*, stm*);
