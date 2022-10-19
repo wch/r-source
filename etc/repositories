@@ -5,6 +5,7 @@
 ## source, win.binary, mac.binary   indicate if the corresponding type is present
 ##
 ## BioC entries are version-specific, with %v getting expanded to the
+## value of the environment variable 'R_BIOC_VERSION' or, if unset, to the
 ## BioC version associated with the current R version.
 ## Also, %bm is substituted from the setting of getOption("BioC_mirror")
 ##
