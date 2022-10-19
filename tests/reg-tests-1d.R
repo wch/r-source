@@ -4055,7 +4055,7 @@ assertErrV(  round(x=1.12345, banana=3))
 ## (by Shane Mueller, to the R-devel m.list)
 
 
-## source(*, echo=TRUE) with srcref's and empty lines; PR#
+## source(*, echo=TRUE) with srcref's and empty lines; PR#17769
 exP <- parse(text=c("1;2+", "", "3"), keep.source=TRUE)
 r <- source(exprs=exP, echo=TRUE)
 stopifnot(identical(r, list(value = 5, visible = TRUE)))
