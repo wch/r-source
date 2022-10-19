@@ -5,6 +5,7 @@ tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 
+onWindows <- .Platform$OS.type == "windows"
 englishMsgs <- {
     ## 1. LANGUAGE takes precedence over locale settings:
     if(nzchar(lang <- Sys.getenv("LANGUAGE")))
