@@ -180,7 +180,8 @@ datePOSIXchk <- function(d, tz) {
     ##
     if(length(delta <- unique(diffD)) != 1L) {
         cat(sprintf("# {unique diffD values} (typically 1), here %d:\n", length(delta)))
-        print(delta) ## does not really work as uniaue loses class
+        attributes(delta) <- attributes(diffD) ## class, units
+        print(delta)
     }
     stopifnot(exprs = {
         PLpc == PCdate
@@ -213,7 +214,7 @@ otz <- OlsonNames()
 ## Europe/Dublin is unusual as it has 'winter time' not DST with
 ##   'Irish Standard Time' being used in summer (at least in 2022)
 ## Europe/Kyiv became a primary name in Aug 2022.
-## 'Time difference quoted here is from UTC aka GMT
+## 'Time difference quoted here is from UTC aka GMT, in hours.
 for(tz in c("GMT", "EST5EDT", "BST", "Pacific/Auckland",
             "Africa/Cairo", "Asia/Jerusalem ", "America/Jamaica",
             "Africa/Conakry", "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai",
