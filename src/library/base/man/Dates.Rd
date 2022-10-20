@@ -46,8 +46,10 @@
   negative values for earlier dates.  They are always printed
   following the rules of the current Gregorian calendar, even though
   that calendar was not in use long ago (it was adopted in 1752 in
-  Great Britain and its colonies).
-
+  Great Britain and its colonies).  When printing there is assumed to
+  be a year zero.
+  % man cal on Linux refers to this as 'the Britixh empire'
+  
   It is intended that the date should be an integer, but this is not
   enforced in the internal representation.  Fractional days will be
   ignored when printing.  It is possible to produce fractional days via
