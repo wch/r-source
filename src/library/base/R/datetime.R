@@ -1463,7 +1463,14 @@ OlsonNames <- function(tzdir = NULL)
         readLines(vf, warn = FALSE)
     else if(file.exists(vf <- file.path(tzdir, "+VERSION")))
         readLines(vf, warn = FALSE)
+    else if(file.exists(vf <- file.path(tzdir, "tzdata.zi"))) {
+        ## exists on Fedora, at least
+        l <- readLines(vf, n = 1L)
+        patt <- "^# version "
+        if(grepl(patt, l)) sub(patt, "", l) else NULL
+    }
     ## else NULL
+
     x <- setdiff(x, "VERSION")
     ## all other auxiliary files are l/case.
     ans <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
