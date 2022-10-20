@@ -253,8 +253,10 @@ stopifnot(exprs = {
 
 
 ## as.POSIXct(<numeric>) & as.POSIXlt(*) :
-for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33)))
+for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf),
+               -2^(20:33), 2^(20:33)))
     for(tz in c("", "GMT", "NZ", "Pacific/Fiji")) {
+        message("testing in ", sQuote(tz))
         n <- as.numeric(nr)
         stopifnot(identical(n, as.numeric(print(as.POSIXct(nr, tz=tz)))),
                   identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
