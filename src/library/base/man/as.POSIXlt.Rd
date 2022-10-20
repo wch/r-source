@@ -123,7 +123,7 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   time for the \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC},
   is before UTC was defined.  More importantly, conversion is done
   assuming the Gregorian calendar which was introduced in 1582 and not
-  used universally until the 20th century.  One of the
+  used near-universally until the 20th century.  One of the
   re-interpretations assumed by ISO 8601:2004 is that there was a year
   zero, even though current year numbering (and zero) is a much later
   concept (525 AD for year numbers from 1 AD).
