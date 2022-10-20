@@ -286,7 +286,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.1 patched}{
+\section{\Rlogo CHANGES IN R 4.2.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
