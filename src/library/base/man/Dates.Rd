@@ -94,7 +94,7 @@ as.Date("00-02-29")
 \dontrun{format(z, "\%04Y-\%m-\%d") # "0001-01-01"
 format(z, "\%_4Y-\%m-\%d") # "   1-01-01"
 format(z, "\%_Y-\%m-\%d")  # "1-01-01"
-}
+} % these are not supported by macOS's native strftimw.
 
 ##  length(<Date>) <- n   now works
 ls <- Dls; length(ls) <- 12
