@@ -278,6 +278,10 @@
       \item \code{expand.model.frame()} looked up variables in the wrong
       environment when applied to models fitted without \code{data}.
       Reported in \PR{18414}.
+
+      \item \code{time()} now (also) uses the \code{ts.eps = getOption("ts.eps")}
+      argument and thus by default rounds values very close to the start (or
+      end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
     }
   }
 }
