@@ -183,8 +183,13 @@ p.lis; (pBlis <- grep("^pkgB", p.lis, value=TRUE))
 InstOpts <- list("exSexpr" = "--html")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
+    # on Windows, 'pkgA' may end up being a text file with a single line
+    # with a note it is meant to be a link to xDir/pkg
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
-    file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
+    unlink(d, recursive=TRUE)
+    dir.create(d) # ensure it is a single existing directory
+    pkgdir <- file.path(pkgPath, "xDir", "pkg")
+    file.copy(file.path(pkgdir, list.files(pkgdir)), to = d, recursive=TRUE)
     ## if even the copy failed (NB: pkgB, pkgC depend on pkgA)
     if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", pBlis, "pkgC"))]
 }

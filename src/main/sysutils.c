@@ -1414,9 +1414,7 @@ next_char:
     if(ttype == NT_FROM_NATIVE) Riconv_close(obj);
     if (mustWork && failed) {
 	const void *vmax = vmaxget();
-	size_t nc = wcstombs(NULL, (wchar_t *) cbuff->data, 0) + 1;
-	char *native_buf = (char *) R_alloc(nc, sizeof(char));
-	wcstombs(native_buf, (wchar_t *) cbuff->data, nc);
+	const char *native_buf = reEnc3(cbuff->data, TO_WCHAR, "", 2);
 
 	/* copy to truncate (and mark as truncated) */
 	char err_buff[256];
@@ -1480,12 +1478,17 @@ static int reEncodeIconv(const char *x, R_StringBuffer *cbuff,
     const char *inbuf;
     char *outbuf;
     size_t inb, outb, res;
+    Rboolean fromWchar = !strcmp(fromcode, TO_WCHAR);
 
     obj = Riconv_open(tocode, fromcode);
     if(obj == (void *)(-1)) return 1;
     R_AllocStringBuffer(0, cbuff);
 top_of_loop:
-    inbuf = x; inb = strlen(inbuf);
+    inbuf = x;
+    if (fromWchar)
+	inb = wcslen((wchar_t *)inbuf) * sizeof(wchar_t);
+    else
+	inb = strlen(inbuf);
     outbuf = cbuff->data; outb = cbuff->bufsize - 3;
     /* First initialize output */
     Riconv (obj, NULL, NULL, &outbuf, &outb);
@@ -1496,37 +1499,48 @@ next_char:
 	R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	goto top_of_loop;
     } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
+	size_t inb_per_char = fromWchar ? sizeof(wchar_t) : 1;
+
+	/* ensure space in cbuff for substitution */	
+	size_t need = 0; 
 	switch(subst) {
 	case 1: /* substitute hex */
-	    if(outb < 5) {
-		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
-		goto top_of_loop;
-	    }
-	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
-	    outbuf += 4; outb -= 4;
-	    inbuf++; inb--;
-	    goto next_char;
+	    need = inb_per_char * 4 + 1;
 	    break;
 	case 2: /* substitute . */
-	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
-		goto top_of_loop;
-	    }
-	    *outbuf++ = '.'; inbuf++; outb--; inb--;
-	    goto next_char;
-	    break;
 	case 3: /* substitute ? */
-	    if(outb < 1) {
-		R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
-		goto top_of_loop;
-	    }
-	    *outbuf++ = '?'; inbuf++; outb--; inb--;
-	    goto next_char;
+	    need = inb_per_char;
 	    break;
 	default: /* skip byte */
-	    inbuf++; inb--;
+	    inbuf += inb_per_char;
+	    inb -= inb_per_char;
 	    goto next_char;
 	}
+	if(outb < need) {
+	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
+	    goto top_of_loop;
+	}
+
+	/* substitute individual bytes, it makes more sense for users as
+	   typically errors would be due to conversion from a single-byte
+	   encoding */
+	for(int i = 0; i < inb_per_char; i++) {
+	    if (!inb) break;
+	    switch(subst) {
+	    case 1: /* substitute hex */
+		snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+		outbuf += 4; outb -= 4;
+		inbuf++; inb--;
+		break;
+	    case 2: /* substitute . */
+		*outbuf++ = '.'; inbuf++; outb--; inb--;
+		break;
+	    case 3: /* substitute ? */
+		*outbuf++ = '?'; inbuf++; outb--; inb--;
+		break;
+	    }
+	}
+	goto next_char;
     }
     Riconv_close(obj);
     *outbuf = '\0';

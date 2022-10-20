@@ -84,6 +84,10 @@
       \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
       values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
       and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
+
+      \item Experimental \code{balancePOSIXlt()} utility allows using
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects which
+      are documented somewhat, now.
     }
   }
 
@@ -195,9 +199,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{Rscript -e} would fail if \file{stdin} is closed (Reported
-      by Henrik Bengtsson.)
-
       \item Hashed \code{environment}s with sizes less than 5 can now grow.
       (Reported to R-devel by Duncan Garmonsway.)
 
@@ -226,7 +227,7 @@
       name which did preserve names). Reported in \PR{17616}.
 
       \item \code{c(a=1, 2)[[]]} no longer matches \code{2} but rather
-      signals a \emph{classed} error.  Reported and analysed by David Vaughan in
+      signals a \emph{classed} error.  Reported and analysed by Davis Vaughan in
       \PR{18367}, a duplicate of \PR{18004}, by Jan Meis et al.
       For consistency, \code{NULL[[]]} is also erroneous now.
       \code{x[[]] <- v} gives an error of the same class \code{"MissingSubscriptError"}.
@@ -273,6 +274,10 @@
 
       \item \code{as.Date.POSIXlt(x)} now also works when the list components
       are of unequal length, aka \dQuote{partially filled} or \dQuote{ragged}.
+
+      \item \code{expand.model.frame()} looked up variables in the wrong
+      environment when applied to models fitted without \code{data}.
+      Reported in \PR{18414}.
     }
   }
 }
@@ -309,7 +314,7 @@
       of date-times (and limited support for dates millions of years
       from present).
 
-      \item The default format of \code{readClipboard()} and
+      \item (Windows) The default format of \code{readClipboard()} and
       \code{writeClipboard()} has been changed to \code{13}
       (\code{CF_UNICODETEXT}).
     }
@@ -332,6 +337,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{Rscript -e} would fail if \file{stdin} were closed
+      (Reported by Henrik Bengtsson.)
+
       \item \code{qt(*, log.p=TRUE)} in outer tails no longer produces
       \code{NaN} in its final steps, thus fixing \PR{18360}.
 

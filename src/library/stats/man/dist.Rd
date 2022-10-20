@@ -1,6 +1,6 @@
 % File src/library/stats/man/dist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dist}
@@ -78,7 +78,11 @@ as.dist(m, diag = FALSE, upper = FALSE)
       are regarded as binary bits, so non-zero elements are \sQuote{on}
       and zero elements are \sQuote{off}.  The distance is the
       \emph{proportion} of bits in which only one is on amongst those in
-      which at least one is on.}
+      which at least one is on.
+      This also called \dQuote{Jaccard} distance in some contexts.
+      Here, two all-zero observations have distance \code{0}, whereas in
+      traditional Jaccard definitions, the distance would be undefined for
+      that case and give \code{\link{NaN}} numerically.}
 
     \item{\code{minkowski}:}{The \eqn{p} norm, the \eqn{p}th root of the
       sum of the \eqn{p}th powers of the differences of the components.}

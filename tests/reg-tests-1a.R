@@ -974,6 +974,13 @@ try(eigen(m))
 ## segfaults on 1.2.2
 
 
+## PR 979 expand.model.frame() failed for models fitted with a subset
+df <- data.frame(y = 1:10, z = 1:10, m = 1:10)
+fit <- lm(y ~ 1, data = df, subset = m < 8)
+mf <- expand.model.frame(fit, ~ z)  # failed in 1.2.3
+stopifnot(identical(names(mf), c("y", "z")), identical(mf$z, 1:7))
+
+
 ## 1.3.0 had poor compression on gzfile() with lots of small pieces.
 zz <- gzfile("t1.gz", "w")
 write(1:1000, zz)
