@@ -132,7 +132,7 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   used near-universally until the 20th century.  One of the
   re-interpretations assumed by ISO 8601:2004 is that there was a year
   zero, even though current year numbering (and zero) is a much later
-  concept (525 AD for year numbers from 1 AD).
+  concept (525 CE for year numbers from 1 CE).
 
   Conversions between \code{"POSIXlt"} and \code{"POSIXct"} of future
   times are speculative except in UTC.  The main uncertainty is in the
