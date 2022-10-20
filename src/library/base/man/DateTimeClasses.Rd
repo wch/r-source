@@ -71,7 +71,7 @@
 \special{time - z}
 \special{time1 lop time2}
 
-balancePOSIXlt(x, class = TRUE)
+balancePOSIXlt(x, classed = TRUE)
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
@@ -91,8 +91,8 @@ balancePOSIXlt(x, class = TRUE)
   \item{z}{a numeric vector (in seconds)}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
-  \item{class}{a \code{\link{logical}} specifying if the result should be
-    classed, true, by default.  Using \code{balancePOSIXlt(x, class = FALSE)}
+  \item{classed}{a \code{\link{logical}} specifying if the result should be
+    classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
     is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
 \details{

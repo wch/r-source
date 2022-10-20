@@ -5571,6 +5571,11 @@ add_dummies <- function(dir, Log)
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## and -Wstrict-prototypes in what should be thought of
+                ## as system headers.
+                ex_re <- "^ *(/usr/include|/opt/R/arm64/include).*\\[-Wstrict-prototypes\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## and ODS 12.5 warnings
                 ex_re <- "^Warning: [[:alnum:]]+ hides"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)

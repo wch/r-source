@@ -69,7 +69,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"
 "Korea (Busan) [https]",Korea,Busan,https://ftp.harukasan.org/CRAN/,"Information and Database Systems Laboratory, Pukyong National University","Jongmin Kim <jmkim # ftp.harukasan.org>",0,kr,",maintainer_address_bounces"
 "Korea (Gyeongsan-si) [https]",Korea,Gyeongsan-si,https://cran.yu.ac.kr/,"Yeungnam University","sysop # yu.ac.kr",1,kr,"secure_mirror_from_master"
-"Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","bigdata # seoul.go.kr",0,kr,"secure_mirror_from_master"
+"Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","bigdata # seoul.go.kr",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",0,kr,
 "Korea (Ulsan) [https]",Korea,Ulsan,https://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","ldsrman # gmail.com",1,kr,"secure_mirror_from_master"
 "Malaysia [https]",Malaysia,Serdang,https://mirrors.upm.edu.my/CRAN/,"Universiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
@@ -89,7 +89,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
 "Sweden (Borås) [https]",Sweden,Borås,https://ftpmirror1.infania.net/mirror/CRAN/,"Infania Networks","Mattias Björlin <mirror # infania.net>",1,se,"secure_mirror_from_master"
 "Sweden (Umeå) [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
-"Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
+"Switzerland (Zurich 1) [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
+"Switzerland (Zurich 2) [https]",Switzerland,Zürich,https://mirror.metanet.ch/cran/," METNET AG","mirror # metanet.ch",1,ch
 "Taiwan (Taipei) [https]",Taiwan,Taipei,https://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","b90098 # csie.ntu.edu.tw",1,tw,"secure_mirror_from_master"
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 "Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr,"secure_mirror_from_master"

@@ -52,6 +52,8 @@
 // for time_t used in R
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"
+#else
+typedef struct tm stm;
 #endif
 
 # include <errno.h>
@@ -3230,7 +3232,7 @@ static int winSetFileTime(const char *fn, double ftime)
 {
     SYSTEMTIME st;
     FILETIME modft;
-    struct tm *utctm;
+    stm *utctm;
     HANDLE hFile;
     time_t ftimei = (time_t) ftime;
 
