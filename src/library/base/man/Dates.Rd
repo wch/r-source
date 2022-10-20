@@ -86,6 +86,15 @@ months(tenweeks)
 }% dont
 (Dls <- as.Date(.leap.seconds))
 
+## Show use of year zero:
+(z <- as.Date("01-01-01")) # how it is printed depends on the OS
+z - 365 # so year zero was a leap year.
+as.Date("00-02-29")
+# if you want a different format, consider something like
+\dontrun{format(z, "\%04Y-\%m-\%d") # glibc, "0001-01-01"
+format(z, "\%_4Y-\%m-\%d") # Windows, macOS, glibc, "   1-01-01"
+}
+
 ##  length(<Date>) <- n   now works
 ls <- Dls; length(ls) <- 12
 l2 <- Dls; length(l2) <- 5 + length(Dls)
