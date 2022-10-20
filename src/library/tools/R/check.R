@@ -2661,11 +2661,14 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
+            t1 <- proc.time()
             el <- if (R_cdo_data) setRlibs(pkgdir = pkgdir, libdir = libdir) else elibs
             out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             out <- filtergrep("^OMP:", out)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (length(out)) {
                 bad <- startsWith(out, "Warning:")
                 bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
