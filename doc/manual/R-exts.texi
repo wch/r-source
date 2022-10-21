@@ -7952,12 +7952,12 @@ See the @file{system.Rd} file in @file{share/Rd/macros} for more details
 and macro definitions, including macros @code{\packageTitle},
 @code{\packageDescription}, @code{\packageAuthor}, @code{\packageMaintainer},
 @code{\packageDESCRIPTION} and @code{\packageIndices}.
-@findex @code{\packageTitle}
-@findex @code{\packageDescription}
-@findex @code{\packageAuthor}
-@findex @code{\packageMaintainer}
-@findex @code{\packageDESCRIPTION}
-@findex @code{\packageIndices}
+@findex \packageTitle
+@findex \packageDescription
+@findex \packageAuthor
+@findex \packageMaintainer
+@findex \packageDESCRIPTION
+@findex \packageIndices
 
 
 Packages may also define their own common macros; these would be stored
