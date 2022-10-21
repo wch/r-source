@@ -1200,5 +1200,8 @@ compareVersion <- function(a, b)
         x, fixed = TRUE)
 }
 
+## default is included in setRepositories.Rd
+.BioC_version_associated_with_R_version_default <- "3.16"
 .BioC_version_associated_with_R_version <- function ()
-    numeric_version(Sys.getenv("R_BIOC_VERSION", "3.16"))
+    numeric_version(Sys.getenv("R_BIOC_VERSION",
+                               .BioC_version_associated_with_R_version_default))
