@@ -5,6 +5,8 @@
 
 \name{setRepositories}
 \alias{setRepositories}
+\alias{R_REPOSITORIES}
+\alias{R_BIOC_VERSION}
 \title{Select Package Repositories}
 \description{
   Interact with the user to choose the package repositories to be used.

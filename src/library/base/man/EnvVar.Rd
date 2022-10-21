@@ -29,6 +29,7 @@
 \alias{R_ZIPCMD}
 \alias{TMPDIR}
 
+% R_REPOSITORIES is in ?setRepositories
 % R_PROFILE, R_ENVIRON are in ?Startup
 % R_LIBS* are in ?.libPaths
 % TZ, TZDIR are in ?Sys.timezone

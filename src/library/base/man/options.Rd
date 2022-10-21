@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -740,15 +740,23 @@ getOption(x, default = NULL)
     }
 
     \item{\code{repos}:}{URLs of the repositories for use by
-      \code{\link{update.packages}}.  Defaults to
+      \code{\link{update.packages}}.  Initially set from entries marked as
+      default in the \file{repositories} file, see \link{R_REPOSITORIES}.
+      The \sQuote{factory-fresh} setting from \file{etc/repositories} is
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
       prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
-      by something like
-      \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
-                   options(repos = r)})}.
+      by something like \preformatted{
+local({
+    r <- getOption("repos")
+    r["CRAN"] <- "https://my.local.cran"
+    options(repos = r)
+})
+}
+      in your \file{\link{.Rprofile}},
+      or use a personal \file{repositories} file.
 
       Note that you can add more repositories (Bioconductor,
-      R-Forge, Rforge.net \dots)
+      R-Forge, RForge.net, \dots) for the current session
       using \code{\link{setRepositories}}.
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{

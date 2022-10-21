@@ -88,6 +88,11 @@
       \item Experimental \code{balancePOSIXlt()} utility allows using
       \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects which
       are documented somewhat, now.
+
+      \item Package repositories in \code{getOption("repos")} are now
+      initialized from the \file{repositories} file when \pkg{utils} is
+      loaded (if not already set, e.g., in \file{.Rprofile}).
+      (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
     }
   }
 
