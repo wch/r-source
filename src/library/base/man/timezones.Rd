@@ -233,7 +233,7 @@ OlsonNames(tzdir = NULL)
   Information about future times is speculative: the database provides
   the best-known information based on current rules set by civil
   authorities.  For the period 1900--1970 those rules (and which of any
-  authority's rules were enacted) is often obsure, and the databases do
+  authority's rules were enacted) is often obscure, and the databases do
   get corrected frequently.
 
   \code{OlsonNames} tries to find an Olson database in known locations.
