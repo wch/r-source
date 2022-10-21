@@ -4439,9 +4439,7 @@ add_dummies <- function(dir, Log)
                                         sQuote(basename(bad_vignettes))),
                                   "", ""), collapse = "\n"))
             }
-            defaultEncoding <- .get_package_metadata(pkgdir)["Encoding"]
-            encs <- vapply(vigns$docs, getVignetteEncoding, "", default = defaultEncoding)
-            bad_vignettes <- vigns$docs[encs == "non-ASCII"]
+            bad_vignettes <- vigns$docs[vigns$encodings == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -4603,7 +4601,7 @@ add_dummies <- function(dir, Log)
                 cat("\n")
                 for (i in iseq) {
                     file <- vigns$docs[i]
-                    name <- vigns$names[i]
+                    ## name <- vigns$names[i]
                     enc <- vigns$encodings[i]
                     out1 <- c("  ", sQuote(basename(file)),
                               if(nzchar(enc)) paste(" using", sQuote(enc)),
