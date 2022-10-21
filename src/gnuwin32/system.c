@@ -231,6 +231,17 @@ static const char *tprompt;
 static unsigned char *tbuf;
 static  int tlen, thist, lineavailable;
 
+static int ReaderThreadTabHook(char *, int, int *);
+static int (*InThreadTabHook)(char *, int, int *);
+volatile static int completionneeded;
+static struct {
+    char *buf;
+    int offset;
+    int *loc;
+    int result;
+    HANDLE done;
+} completionrequest;
+
  /* Fill a text buffer with user typed console input. */
 int
 R_ReadConsole(const char *prompt, unsigned char *buf, int len,
@@ -290,6 +301,18 @@ GuiReadConsole(const char *prompt, unsigned char *buf, int len,
 
 /* 2 and 3: reading in a thread */
 
+/* runs in the 'Reader thread', needs to execute the completion request
+   on the main R thread */
+static int ReaderThreadTabHook(char *buf, int offset, int *loc)
+{
+    completionrequest.buf = buf;
+    completionrequest.offset = offset;
+    completionrequest.loc = loc;
+    completionneeded = 1;
+    PostThreadMessage(mainThreadId, 0, 0, 0);
+    WaitForSingleObject(completionrequest.done, INFINITE);
+    return completionrequest.result;
+}
 
 /* 'Reader thread' main function */
 static void __cdecl ReaderThread(void *unused)
@@ -302,6 +325,17 @@ static void __cdecl ReaderThread(void *unused)
     }
 }
 
+/* runs in the main R thread */
+static void RunCompletion(void *dummy)
+{
+    completionneeded = 0;
+    completionrequest.result = InThreadTabHook(
+			completionrequest.buf,
+			completionrequest.offset,
+			completionrequest.loc);
+}
+
+/* runs in the main R thread */
 static int
 ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
                     int addtohistory)
@@ -316,6 +350,7 @@ ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
     oldbreak = signal(SIGBREAK, SIG_IGN);
     mainThreadId = GetCurrentThreadId();
     lineavailable = 0;
+    completionneeded = 0;
     tprompt = prompt;
     tbuf = buf;
     tlen = len;
@@ -324,6 +359,11 @@ ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
     while (1) {
 	R_WaitEvent();
 	if (lineavailable) break;
+	if (completionneeded) {
+	    if (!R_ToplevelExec(RunCompletion, NULL))
+		completionrequest.result = -1;
+	    SetEvent(completionrequest.done);
+	}
 	doevent();
 	if(R_Tcl_do) R_Tcl_do();
     }
@@ -1238,11 +1278,25 @@ int cmdlineoptions(int ac, char **av)
 	Rp->SaveAction != SA_NOSAVE)
 	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
-    if (InThreadReadConsole &&
-	(!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
-	 (_beginthread(ReaderThread, 0, NULL) == -1)))
-	R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
+    if (InThreadReadConsole) {
+	Rboolean ok = TRUE;
+	if (InThreadReadConsole == CharReadConsole) {
+	    /* Need to arrange for the getline completion tab hook to execute
+	       on the main R thread. Executing it in another thread can cause
+	       crashes due to at least stack overflow checking (part of the
+	       completion is implemented in R). */
 
+	    InThreadTabHook = gl_tab_hook;
+	    gl_tab_hook = ReaderThreadTabHook;
+	    completionrequest.done = CreateEvent(NULL, FALSE, FALSE, NULL);
+	    if (!completionrequest.done)
+		ok = FALSE;
+	}
+	if (!ok || !(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
+	    (_beginthread(ReaderThread, 0, NULL) == -1))
+
+	    R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
+    }
     R_setupHistory();
     return 0;
 }

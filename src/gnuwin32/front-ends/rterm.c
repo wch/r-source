@@ -140,6 +140,8 @@ int AppMain(int argc, char **argv)
     }
     if (isatty(0)) 
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    if(R_Interactive) 
+	R_gl_tab_set();
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
     /* The following restores Ctrl-C handling if we were started from R.exe */
@@ -148,7 +150,6 @@ int AppMain(int argc, char **argv)
     GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
-	R_gl_tab_set();
 	gl_hist_init(R_HistorySize, 1);
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
 	saveConsoleTitle();
