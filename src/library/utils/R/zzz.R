@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
     ## In R < 4.3.0, options(repos = c(CRAN = "@CRAN@")) was hard-wired.
     ## We now respect custom repositories files, which by default gives
     ## the old behavior.
-    reposdf <- tryCatch(tools:::.get_repositories(), error = identity)
+    reposdf <- tryCatch(.get_repositories(), error = identity)
     if(inherits(reposdf, "error"))
         repos <- character()
     else {

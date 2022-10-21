@@ -556,13 +556,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### * Internal utility variables.
 
-### ** .BioC_version_associated_with_R_version
-
-.BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.16"))
-## Things are more complicated from R-2.15.x with still two BioC
-## releases a year, so we do need to set this manually.
-
 ### ** .ORCID_iD_regexp
 
 .ORCID_iD_regexp <-
@@ -1073,20 +1066,6 @@ function(dir, installed = FALSE)
     stop("invalid package layout")
 }
 
-### ** .get_repositories
-
-.get_repositories <-
-function()
-{
-    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
-    if(is.na(rfile) || !file_test("-f", rfile)) {
-        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-        if(!file_test("-f", rfile))
-            rfile <- file.path(R.home("etc"), "repositories")
-    }
-    .read_repositories(rfile)
-}
-
 ### ** .get_requires_from_package_db
 
 .get_requires_from_package_db <-
@@ -1278,7 +1257,7 @@ function(ForXrefs = FALSE)
  {
      if(ForXrefs &&
         nzchar(repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")))
-         return(.expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]]))
+         return(utils:::.expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]]))
 
      nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
      repos <- getOption("repos")
@@ -1286,7 +1265,7 @@ function(ForXrefs = FALSE)
      if(!is.null(repos) && !anyNA(repos[nms]) && (repos["CRAN"] != "@CRAN@"))
          repos <- repos[nms]
      else {
-         repos <- .get_repositories()[nms, "URL"]
+         repos <- utils:::.get_repositories()[nms, "URL"]
          names(repos) <- nms
          ## That might not contain an entry for CRAN
          if(is.na(repos["CRAN"]) || repos["CRAN"] == "@CRAN@")
@@ -1301,7 +1280,7 @@ function()
      repos <- getOption("repos")
      if(!is.null(repos) && !is.na(cr <- repos["CRAN"]) && (cr != "@CRAN@"))
          return(cr)
-     cr <- .get_repositories()["CRAN", "URL"]
+     cr <- utils:::.get_repositories()["CRAN", "URL"]
      ## That might not contain an entry for CRAN
      if(is.na(cr) || cr == "@CRAN@") cr <- "https://CRAN.R-project.org"
      cr
@@ -2112,35 +2091,6 @@ function(x, dfile)
                                  "Maintainer", "BugReports"),
                   useBytes = TRUE)
     }
-}
-
-### ** .read_repositories
-
-.read_repositories <-
-function(file)
-{
-    fun <- get("read.delim", envir = getNamespace("utils"))
-    ## We now use .get_repositories() in utils::.onLoad(), for which
-    ## using utils::read.delim does not work.
-    ## Using utils:::read.delim() causes a check NOTE ...
-    db <- fun(file, header = TRUE, comment.char = "#",
-              colClasses = c(rep.int("character", 3L),
-                             rep.int("logical", 4L))) # allow for win64.binary
-    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
-    db
-}
-
-### default changed to https: for R 3.3.0
-.expand_BioC_repository_URLs <-
-function(x)
-{
-    x <- sub("%bm",
-             as.character(getOption("BioC_mirror",
-                                    "https://bioconductor.org")),
-             x, fixed = TRUE)
-    sub("%v",
-        as.character(.BioC_version_associated_with_R_version()),
-        x, fixed = TRUE)
 }
 
 .expand_package_description_db_R_fields <-
