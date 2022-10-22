@@ -93,8 +93,10 @@ Windows: it is the default on macOS.
 # define HAVE_TM_GMTOFF 1
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
-# undef HAVE_WORKING_64BIT_MKTIME
-# define HAVE_WORKING_64BIT_MKTIME 1
+# undef HAVE_WORKING_MKTIME_AFTER_2037
+# define HAVE_WORKING_MKTIME_AFTER_2037 1
+# undef HAVE_WORKING_MKTIME_BEFORE_1902
+# define HAVE_WORKING_MKTIME_BEFORE_1902 1
 #else
 
 typedef struct tm stm;
@@ -233,7 +235,12 @@ static double mktime00 (stm *tm)
 									\
     /* weekday: Epoch day was a Thursday */				\
     if ((tm->tm_wday = ((day % 7) + 4) % 7) < 0) tm->tm_wday += 7
-
+    
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return NA_REAL;
+    }
     MKTIME_BODY;
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
 	+ (day + excess * 730485) * 86400.0;
@@ -241,12 +248,22 @@ static double mktime00 (stm *tm)
 
 static void set_w_yday(stm *tm)
 {
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return;
+    }
     MKTIME_BODY;
 }
 
 // to be used in POSIXlt2D()
 static double mkdate00 (stm *tm)
 {
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return NA_REAL;
+    }
     MKTIME_BODY;
     return (day + excess * 730485);
 }
@@ -416,12 +433,18 @@ static double mktime0 (stm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
-/* macOS 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
-#ifdef HAVE_WORKING_64BIT_MKTIME
-    if(sizeof(time_t) == 8)
+/* macOS 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 
+   mac)S 12.6 gives -1 for dates prior to 1900 (but we tested 1901 too).
+*/
+    if(sizeof(time_t) == 8) {
 	OK = !have_broken_mktime() || tm->tm_year >= 70;
-    else
+#ifndef HAVE_WORKING_MKTIME_AFTER_2037
+	OK = OK && tm->tm_year < 138;
 #endif
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
+	OK = OK && tm->tm_year > 02;
+#endif
+    } else
 	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
 	res = (double) mktime(tm);
@@ -442,11 +465,15 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 
     Rboolean OK;
 /* as mktime is broken, do not trust localtime */
-#ifdef HAVE_WORKING_64BIT_MKTIME
-    if (sizeof(time_t) == 8)
+    if (sizeof(time_t) == 8) {
 	OK = !have_broken_mktime() || d > 0.;
-    else
+#ifndef HAVE_WORKING_MKTIME_AFTER_2037
+	OK = OK && d < 2147483647.0;
 #endif
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
+	OK = OK && d > -2147483647.0;
+#endif
+    } else
 	OK = d < 2147483647.0 &&
 	    d > (have_broken_mktime() ? 0. : -2147483647.0);
     if(OK) {
@@ -463,7 +490,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #else
 	return local ? localtime(&t) : gmtime(&t);
 #endif
-    }
+    } // end of OK
 
     /* internal substitute code.
        Like localtime, this returns a pointer to a static struct tm */

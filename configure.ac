@@ -2165,6 +2165,7 @@ fi
 if test "${use_internal_tzcode}" != yes; then
   R_MKTIME_ERRNO
   R_FUNC_MKTIME
+  R_FUNC_MKTIME2
 fi
 
 if test x${use_internal_iswxxxxx} = xdefault; then

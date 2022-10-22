@@ -946,9 +946,6 @@
 /* Define if you have the 'wint_t' type. (For intl) */
 #undef HAVE_WINT_T
 
-/* Define if your mktime works correctly outside 1902-2037. */
-#undef HAVE_WORKING_64BIT_MKTIME
-
 /* Define to 1 if you have cairo. */
 #undef HAVE_WORKING_CAIRO
 
@@ -966,6 +963,12 @@
 
 /* Define if log1p() exists and is accurate enough. */
 #undef HAVE_WORKING_LOG1P
+
+/* Define if your mktime works correctly after 2037. */
+#undef HAVE_WORKING_MKTIME_AFTER_2037
+
+/* Define if your mktime works correctly before 1902. */
+#undef HAVE_WORKING_MKTIME_BEFORE_1902
 
 /* Define if sigaction() is complete enough for R's usage */
 #undef HAVE_WORKING_SIGACTION

@@ -123,6 +123,10 @@
       \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
       \option{-fPIC} by default (instead of \option{-fpic}), as desired in
       \PR{18326}.
+
+      \item There is some support for using the native date-time
+      routines on macOS: this is only viable on recent versions
+      (e.g.\sspace{}12.6) and does get some historical changes wrong.
     }
   }
 

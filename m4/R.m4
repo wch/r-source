@@ -4244,7 +4244,7 @@ AC_SUBST(R_SYSTEM_ABI)
 ## R_FUNC_MKTIME
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME],
-[AC_CACHE_CHECK([whether mktime works correctly outside 1902-2037],
+[AC_CACHE_CHECK([whether mktime works correctly after 2037],
                 [r_cv_working_mktime],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -4257,16 +4257,12 @@ int main() {
     time_t res;
     putenv("TZ=Europe/London");
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
-    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 80; tm.tm_isdst = 0;
-    res = mktime(&tm);
-    if(res == (time_t)-1) exit(2);
-    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
-    res = mktime(&tm);
-    if(res == (time_t)-1) exit(3);
-    tm.tm_year = 140;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 140; tm.tm_isdst = 0;
+    // test 2040-01-01, whoch is assumed to be in GMT
     res = mktime(&tm);
     if(res != 2209032000L) exit(4);
     tm.tm_mon = 6; tm.tm_isdst = 1;
+    // test 2040-06-01 which is assumed to be in BST
     res = mktime(&tm);
     if(res != 2224753200L) exit(5);
 
@@ -4277,10 +4273,50 @@ int main() {
               [r_cv_working_mktime=no],
               [r_cv_working_mktime=no])])
 if test "x${r_cv_working_mktime}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_64BIT_MKTIME, 1,
-            [Define if your mktime works correctly outside 1902-2037.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
+            [Define if your mktime works correctly after 2037.])
 fi
 ])# R_FUNC_MKTIME
+
+## R_FUNC_MKTIME2
+## ------------
+AC_DEFUN([R_FUNC_MKTIME2],
+[AC_CACHE_CHECK([whether mktime works correctly before 1902],
+                [r_cv_working_mktime2],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_isdst = 0;
+    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+    // test 1901-01-01, where 32-bit time_t may fail.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(3);
+    tm.tm_year = -52; // macOS 12.6 fails for 1848.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+    tm.tm_year = -1; // and for 1899
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(5);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime2=yes],
+              [r_cv_working_mktime2=no],
+              [r_cv_working_mktime2=no])])
+if test "x${r_cv_working_mktime2}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1902, 1,
+            [Define if your mktime works correctly before 1902.])
+fi
+])# R_FUNC_MKTIME2
 
 ## R_STDCXX
 ## --------
