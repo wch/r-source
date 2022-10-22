@@ -292,37 +292,6 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 }
 
 #else //----------------------------------------------------------------- long clause ----
-/* The glibc in RH8.0 was broken and assumed that dates before
-   1970-01-01 do not exist.  So does Windows, but its code was replaced
-   in R 2.7.0.  As from 1.6.2, test the actual mktime code and cache
-   the result on glibc >= 2.2. (It seems this started between 2.2.5
-   and 2.3, and RH8.0 had an unreleased version in that gap.)
-
-   Sometime in late 2004 this was reverted in glibc.
-*/
-
-static Rboolean have_broken_mktime(void)
-{
-#if defined(_AIX)
-    return TRUE;  // maybe not so for AIX >= 6, which allegedly uses Olson code
-#elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ == 2 && __GLIBC_MINOR__ >= 2 &&  __GLIBC_MINOR__ < 10
-    static int test_result = -1;
-
-    if (test_result == -1) {
-	stm t;
-	time_t res;
-	t.tm_sec = t.tm_min = t.tm_hour = 0;
-	t.tm_mday = t.tm_mon = 1;
-	t.tm_year = 68;
-	t.tm_isdst = -1;
-	res = mktime(&t);
-	test_result = (res == (time_t)-1);
-    }
-    return test_result > 0;
-#else
-    return FALSE;
-#endif
-}
 
 #ifndef HAVE_POSIX_LEAPSECONDS
 static int n_leapseconds = 27; // 2017-01, sync with .leap.seconds in R (!)
@@ -350,7 +319,7 @@ static double guess_offset (stm *tm)
     */
 
     memcpy(&oldtm, tm, sizeof(stm));
-    if(!have_broken_mktime() && tm->tm_year < 2) { /* no DST */
+    if(tm->tm_year < 2) { /* no DST */
 	tm->tm_year = 2;
 	mktime(tm);
 	offset1 = (double) mktime(tm) - mktime00(tm);
@@ -437,7 +406,7 @@ static double mktime0 (stm *tm, const int local)
    mac)S 12.6 gives -1 for dates prior to 1900 (but we tested 1901 too).
 */
     if(sizeof(time_t) == 8) {
-	OK = !have_broken_mktime() || tm->tm_year >= 70;
+	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
 	OK = OK && tm->tm_year < 138;
 #endif
@@ -445,7 +414,7 @@ static double mktime0 (stm *tm, const int local)
 	OK = OK && tm->tm_year > 02;
 #endif
     } else
-	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
+	OK = tm->tm_year < 138 && tm->tm_year >= 02);
     if(OK) {
 	res = (double) mktime(tm);
 	if (res == -1.) return res;
@@ -466,7 +435,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     Rboolean OK;
 /* as mktime is broken, do not trust localtime */
     if (sizeof(time_t) == 8) {
-	OK = !have_broken_mktime() || d > 0.;
+	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
 	OK = OK && d < 2147483647.0;
 #endif
@@ -474,8 +443,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	OK = OK && d > -2147483647.0;
 #endif
     } else
-	OK = d < 2147483647.0 &&
-	    d > (have_broken_mktime() ? 0. : -2147483647.0);
+	OK = d < 2147483647.0 && d > -2147483647.0;
     if(OK) {
 	time_t t = (time_t) d;
 	/* if d is negative and non-integer then t will be off by one day
