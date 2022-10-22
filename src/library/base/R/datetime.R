@@ -1247,24 +1247,23 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
 `[.POSIXlt` <- function(x, i, j, drop = TRUE)
 {
-    if(!(mj <- missing(j)))
+    if((mj <- missing(j)) & (mi <- missing(i)))
+        return(x)
+    if(!mj)
         if(!is.character(j) || (length(j) != 1L))
             stop("component subscript must be a character string")
 
-    if(missing(i)) {
-        if(mj)
-            x
-        else
-            balancePOSIXlt(x, classed=FALSE)[[j]]
-    } else {
+    if(mi) # but !mj
+        balancePOSIXlt(x, TRUE, FALSE)[[j]]
+    else {
         if(is.character(i))
             i <- match(i, names(x),
                        incomparables = c("", NA_character_))
         if(mj)
-            .POSIXlt(lapply(balancePOSIXlt(x, classed=FALSE), `[`, i, drop = drop),
+            .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), `[`, i, drop = drop),
                      attr(x, "tzone"), oldClass(x))
         else
-            balancePOSIXlt(x, classed=FALSE)[[j]][i]
+            balancePOSIXlt(x, TRUE, FALSE)[[j]][i]
     }
 }
 
@@ -1277,10 +1276,10 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
     if(!length(value))
         return(x)
     if((mi <- missing(i)) && mj) # x[] <- v
-        return(as.POSIXlt(value))
+        return(as.POSIXlt(value)) #  , tz = attr(x,"tzone")  ??
 
     cl <- oldClass(x)
-    x <- balancePOSIXlt(x, FALSE) # list
+    x <- balancePOSIXlt(x, TRUE, FALSE) # list
 
     if(mi) { ## x[, ".."] <- v
         x[[j]] <- value
@@ -1321,7 +1320,7 @@ rep.POSIXct <- function(x, ...)
     .POSIXct(NextMethod(), attr(x, "tzone"), oldClass(x))
 
 rep.POSIXlt <- function(x, ...)
-    .POSIXlt(lapply(balancePOSIXlt(x, classed=FALSE), rep, ...),
+    .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), rep, ...),
              attr(x, "tzone"), oldClass(x))
 
 diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
@@ -1485,7 +1484,7 @@ OlsonNames <- function(tzdir = NULL)
     if(!missing(i) && is.character(i)) {
         i <- match(i, names(x), incomparables = c("", NA_character_))
     }
-    .POSIXlt(lapply(balancePOSIXlt(x, classed=FALSE), `[[`, i, drop = drop),
+    .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), `[[`, i, drop = drop),
              attr(x, "tzone"), oldClass(x))
 }
 
@@ -1493,7 +1492,7 @@ as.list.POSIXlt <- function(x, ...)
 {
     nms <- names(x)
     names(x) <- NULL
-    y <- lapply(X = do.call(Map, c(list, balancePOSIXlt(x, classed=FALSE))),
+    y <- lapply(X = do.call(Map, c(list, balancePOSIXlt(x, TRUE, FALSE))),
                 FUN = .POSIXlt, attr(x, "tzone"), oldClass(x))
     names(y) <- nms
     y
@@ -1512,7 +1511,7 @@ as.list.POSIXlt <- function(x, ...)
             names(x[[n]]) <- nms
     }
 
-    value <- balancePOSIXlt(as.POSIXlt(value), classed=FALSE)
+    value <- balancePOSIXlt(as.POSIXlt(value), TRUE, FALSE)
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 
@@ -1543,5 +1542,6 @@ as.vector.POSIXlt <- function(x, mode = "any")
 
 ## Added in 4.3.0.
 
-balancePOSIXlt <- function(x, classed=TRUE) .Internal(balancePOSIXlt(x, classed))
+balancePOSIXlt <- function(x, fill.only=FALSE, classed=TRUE)
+    .Internal(balancePOSIXlt(x, fill.only, classed))
 

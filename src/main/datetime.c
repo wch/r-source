@@ -274,7 +274,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     return local ? R_localtime_r(&t, ltm) : R_gmtime_r(&t, ltm);
 }
 
-#else
+#else //----------------------------------------------------------------- long clause ----
 /* The glibc in RH8.0 was broken and assumed that dates before
    1970-01-01 do not exist.  So does Windows, but its code was replaced
    in R 2.7.0.  As from 1.6.2, test the actual mktime code and cache
@@ -557,8 +557,8 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	res->tm_isdst = 0; /* no dst in GMT */
 	return res;
     }
-}
-#endif
+} /* localtime0() */
+#endif //--------------------------------------------- end { long clause } ---------------
 
 static Rboolean set_tz(const char *tz, char *oldtz)
 {
@@ -1352,7 +1352,7 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-// .Internal(balancePOSIXlt(x))
+// .Internal(balancePOSIXlt(x, fill.only, classed))
 SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1361,9 +1361,12 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x = PROTECT(duplicate(CAR(args)));
     if(!isVectorList(x) || LENGTH(x) < 9)
 	error(_("invalid '%s' argument"), "x");
-    int do_class = asLogical(CADR(args));
+    int fill_only = asLogical(CADR(args));
+    if(fill_only == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "fill.only");
+    int do_class = asLogical(CADDR(args));
     if(do_class == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "class");
+	error(_("invalid '%s' argument"), "classed");
 
     int n_comp = LENGTH(x); // >= 9
     Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
@@ -1377,10 +1380,18 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
 	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
 
+    Rboolean need_fill = FALSE;
     R_xlen_t n = 0, nlen[n_comp];
     for(int i = 0; i < n_comp; i++) {
 	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n)
 	    n = nlen[i];
+	else if(!need_fill && nlen[i] < n)
+	    need_fill = TRUE;
+    }
+    if(fill_only && !need_fill) { // be fast:
+	if(!do_class) classgets(x, R_NilValue);
+	UNPROTECT(1);
+	return(x);
     }
     if(n > 0) {
 	for(int i = 0; i < n_comp; i++)
@@ -1389,19 +1400,69 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     // get names(.) [possibly empty]
-    SEXP nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol));
-    if(nm != R_NilValue && nlen[5] < n) {
-	// names(.) will have to become length n ==>  $year as well: ==> must recycle anyway, do it now:
-	SET_VECTOR_ELT(x, 5, xlengthgets(VECTOR_ELT(x, 5), n));
-	nlen[5] = n;
-    }
+    SEXP nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol);
+    Rboolean set_nm = (nlen[5] < n || !fill_only) && nm != R_NilValue;
+    if(set_nm && !fill_only)
+	PROTECT(nm);
 
     /* coerce fields to integer or real */
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 9; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    if(n_comp >= 10) // zone
+	SET_VECTOR_ELT(x, 9, coerceVector(VECTOR_ELT(x, 9), STRSXP));
     if(n_comp >= 11) // gmtoff
 	SET_VECTOR_ELT(x, 10, coerceVector(VECTOR_ELT(x, 10), INTSXP));
+
+    if(fill_only) { // & need_fill
+	R_xlen_t ni;
+	// x[0] : sec (double)
+	if((ni = nlen[0]) != n) { // recycle sec = x[[0]] to length n
+	    SET_VECTOR_ELT(x, 0, xlengthgets(VECTOR_ELT(x, 0), n));
+	    double *xi = REAL(VECTOR_ELT(x, 0));
+	    for(R_xlen_t ii=ni; ii < n; ii++)
+		xi[ii] = xi[ii % ni];
+	}
+	// x[1:8] = {min, hour, mday, mon, year, wday, yday, isdst} :
+	for(int i = 1; i < 9; i++) {
+	    ni = nlen[i];
+	    if(ni != n) { // recycle x[[i]] to length n
+		// 1. extend to length (filling with NA; names with ""):
+		SET_VECTOR_ELT(x, i, xlengthgets(VECTOR_ELT(x, i), n));
+		// 2. fill by recyling:
+		int *xi = INTEGER(VECTOR_ELT(x, i));
+		for(R_xlen_t ii=ni; ii < n; ii++)
+		    xi[ii] = xi[ii % ni];
+	    }
+	    if(i == 5 && set_nm) { /* set names(.) = names(x[[5]]) = names(x$year) : */
+		nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol)); // of full length n
+		// fill names, recycling:
+		for(R_xlen_t ii=ni; ii < n; ii++)
+		    SET_STRING_ELT(nm, ii, STRING_ELT(nm, ii % ni));
+		setAttrib(VECTOR_ELT(x, 5), R_NamesSymbol, nm);
+		UNPROTECT(1);
+	    }
+	}
+
+	if(n_comp >= 10 && (ni = nlen[9]) != n) { // x[9] : zone (character)
+	    SET_VECTOR_ELT(x, 9, xlengthgets(VECTOR_ELT(x, 9), n));
+	    SEXP xi = VECTOR_ELT(x, 9);
+	    for(R_xlen_t ii=ni; ii < n; ii++)
+		SET_STRING_ELT(xi, ii, STRING_ELT(xi, ii % ni));
+	}
+
+	if(n_comp >= 11 && (ni = nlen[10]) != n) { // x[10] : gmtoff
+	    SET_VECTOR_ELT(x, 10, xlengthgets(VECTOR_ELT(x, 10), n));
+	    int *xi = INTEGER(VECTOR_ELT(x, 10));
+	    for(R_xlen_t ii=ni; ii < n; ii++)
+		xi[ii] = xi[ii % ni];
+	}
+	if(!do_class) classgets(x, R_NilValue);
+	UNPROTECT(1);
+	return(x);
+    }
+
+    // fill *and* validate from now on:
 
     SEXP ans = PROTECT(allocVector(VECSXP, n_comp));
     for(int i = 0; i < 9; i++)
@@ -1511,7 +1572,16 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!isString(tz)) error(_("invalid '%s'"), "attr(x, \"tzone\")");
 	setAttrib(ans, install("tzone"), tz);
     }
-    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
-    UNPROTECT(4);
+    if(set_nm) { /* names(.), attached to x[[5]] = x$year: */
+	SEXP nmN = PROTECT(allocVector(STRSXP, n));
+	R_xlen_t ni = nlen[5];
+	// names(.) will have to become length n;  $year is already
+	// fill names, recycling,  note nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol), of length() ni <= n
+	for(R_xlen_t i=0; i < n; i++)
+	    SET_STRING_ELT(nmN, i, STRING_ELT(nm, i % ni));
+	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
+	UNPROTECT(2); // nm, nmN
+    }
+    UNPROTECT(3);
     return ans;
 }

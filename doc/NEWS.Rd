@@ -86,8 +86,9 @@
       and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
 
       \item Experimental \code{balancePOSIXlt()} utility allows using
-      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects which
-      are documented somewhat, now.
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
+      correctly, e.g., in subsetting and subassignments.  Such objects
+      are now documented.
 
       \item Package repositories in \code{getOption("repos")} are now
       initialized from the \file{repositories} file when \pkg{utils} is
