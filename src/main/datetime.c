@@ -414,7 +414,7 @@ static double mktime0 (stm *tm, const int local)
 	OK = OK && tm->tm_year > 02;
 #endif
     } else
-	OK = tm->tm_year < 138 && tm->tm_year >= 02);
+	OK = tm->tm_year < 138 && tm->tm_year >= 02;
     if(OK) {
 	res = (double) mktime(tm);
 	if (res == -1.) return res;
