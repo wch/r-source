@@ -170,11 +170,6 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
-
-      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
-      has been changed to be fully C-compliant.  This means that
-      functions loaded \emph{via} for example \code{R_GetCCallable} need
-      to be cast to an appropriate type if they have any arguments.
     }
   }
 
@@ -292,6 +287,17 @@
       \item \code{time()} now (also) uses the \code{ts.eps = getOption("ts.eps")}
       argument and thus by default rounds values very close to the start (or
       end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.2.2 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
+      has been changed to be fully C-compliant.  This means that
+      functions loaded \emph{via} for example \code{R_GetCCallable} need
+      to be cast to an appropriate type if they have any arguments.
     }
   }
 }
