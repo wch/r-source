@@ -265,9 +265,9 @@
       with defaults \emph{not} depending on \code{options()}.
       Use of \code{as.character(*, format = .)} now warns.
 
-      \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
-      methods also behave as \code{good citizen} methods and back compatibility
-      option \code{keepStr = TRUE}.
+      \item Similarly, the \code{as.character.hexmode()} and
+      \code{*.octmode()} methods also behave as \code{good citizen}
+      methods and back compatibility option \code{keepStr = TRUE}.
 
       \item The \code{as.POSIXlt(<POSIXlt>)} and
       \code{as.POSIXct(<POSIXct>)} default methods now do obey their
@@ -284,7 +284,8 @@
       environment when applied to models fitted without \code{data}.
       Reported in \PR{18414}.
 
-      \item \code{time()} now (also) uses the \code{ts.eps = getOption("ts.eps")}
+      \item \code{time()} now (also) uses the
+      \code{ts.eps = getOption("ts.eps")}
       argument and thus by default rounds values very close to the start (or
       end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
     }
@@ -298,6 +299,11 @@
       has been changed to be fully C-compliant.  This means that
       functions loaded \emph{via} for example \code{R_GetCCallable} need
       to be cast to an appropriate type if they have any arguments.
+
+      \item \code{.Machine} has a new element \code{sizeof.time_t} to
+      identify old systems with a 32-bit type and hence a limited range
+      of date-times (and limited support for dates millions of years
+      from present).
     }
   }
 }
@@ -328,11 +334,6 @@
       The \verb{\mathscr} \LaTeX command is also provided (via the
       \samp{mathrsfs} package, if available, or the \samp{amsfonts}
       bundle otherwise), fulfilling the wish of \PR{18398}.
-
-      \item \code{.Machine} has a new element \code{sizeof.time_t} to
-      identify old systems with a 32-bit type and hence a limited range
-      of date-times (and limited support for dates millions of years
-      from present).
 
       \item (Windows) The default format of \code{readClipboard()} and
       \code{writeClipboard()} has been changed to \code{13}
