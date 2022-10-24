@@ -49,35 +49,6 @@
 #include <stdlib.h>			/* for realpath */
 #include <time.h>			/* for ctime */
 
-/*  date
- *
- *  Return the current date in a standard format.  This uses standard
- *  POSIX calls which should be available on each platform.  We should
- *  perhaps check this in the configure script.
- */
-/* BDR 2000/7/20.
- *  time and ctime are in fact ANSI C calls, so we don't check them.
- *
- *  This needs the system time_t
- */
-static char *R_Date(void)
-{
-    time_t t;
-    static char s[26];		/* own space */
-
-    time(&t);
-    strcpy(s, ctime(&t));
-    s[24] = '\0';		/* overwriting the final \n */
-    return s;
-}
-
-// for time_t used in R, to report size and for Windows' filetimes
-#ifdef USE_INTERNAL_MKTIME
-# include "datetime.h"
-#else
-typedef struct tm stm;
-#endif
-
 # include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -127,6 +98,12 @@ const char *formatError(DWORD res);  /* extra.c */
 # undef DTYPE
 # undef MACH_NAME
 # undef ABS
+#endif
+
+#ifdef  USE_INTERNAL_MKTIME
+// avoid including datetime.h as that changes too much.
+# include <stdint.h>
+typedef int_fast64_t R_time_t;
 #endif
 
 static void Init_R_Machine(SEXP rho)
@@ -219,7 +196,11 @@ static void Init_R_Machine(SEXP rho)
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
 
     SET_STRING_ELT(nms, 18, mkChar("sizeof.time_t"));
+#ifdef  USE_INTERNAL_MKTIME
+    SET_VECTOR_ELT(ans, 18, ScalarInteger(sizeof(R_time_t)));
+#else
     SET_VECTOR_ELT(ans, 18, ScalarInteger(sizeof(time_t)));
+#endif
 /* This used to be just
 #ifdef HAVE_LONG_DOUBLE
    but platforms can have the type and it be identical to double
@@ -245,46 +226,35 @@ static void Init_R_Machine(SEXP rho)
 		  &R_LD_AccuracyInfo.epsneg,
 		  &R_LD_AccuracyInfo.xmin,
 		  &R_LD_AccuracyInfo.xmax);
- 
-	SET_STRING_ELT(nms, 19+0, mkChar("longdouble.eps"));
-	SET_VECTOR_ELT(ans, 19+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
+#define PT1 19
+	SET_STRING_ELT(nms, PT1+0, mkChar("longdouble.eps"));
+	SET_VECTOR_ELT(ans, PT1+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
 
-	SET_STRING_ELT(nms, 19+1, mkChar("longdouble.neg.eps"));
-	SET_VECTOR_ELT(ans, 19+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
-    /*
-    SET_STRING_ELT(nms, 19+2, mkChar("longdouble.xmin"));     // not representable as double
-    SET_VECTOR_ELT(ans, 19+2, ScalarReal(R_LD_AccuracyInfo.xmin));
+	SET_STRING_ELT(nms, PT1+1, mkChar("longdouble.neg.eps"));
+	SET_VECTOR_ELT(ans, PT1+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
+	SET_STRING_ELT(nms, PT1+2, mkChar("longdouble.digits"));
+	SET_VECTOR_ELT(ans, PT1+2, ScalarInteger(R_LD_AccuracyInfo.it));
 
-    SET_STRING_ELT(nms, 19+3, mkChar("longdouble.xmax"));    // not representable as double
-    SET_VECTOR_ELT(ans, 19+3, ScalarReal(R_LD_AccuracyInfo.xmax));
+	SET_STRING_ELT(nms, PT1+3, mkChar("longdouble.rounding"));
+	SET_VECTOR_ELT(ans, PT1+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
 
-    SET_STRING_ELT(nms, 19+4, mkChar("longdouble.base"));    // same as "all"
-    SET_VECTOR_ELT(ans, 19+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
-    */
+	SET_STRING_ELT(nms, PT1+4, mkChar("longdouble.guard"));
+	SET_VECTOR_ELT(ans, PT1+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
 
-	SET_STRING_ELT(nms, 19+2, mkChar("longdouble.digits"));
-	SET_VECTOR_ELT(ans, 19+2, ScalarInteger(R_LD_AccuracyInfo.it));
+	SET_STRING_ELT(nms, PT1+5, mkChar("longdouble.ulp.digits"));
+	SET_VECTOR_ELT(ans, PT1+5, ScalarInteger(R_LD_AccuracyInfo.machep));
 
-	SET_STRING_ELT(nms, 19+3, mkChar("longdouble.rounding"));
-	SET_VECTOR_ELT(ans, 19+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
+	SET_STRING_ELT(nms, PT1+6, mkChar("longdouble.neg.ulp.digits"));
+	SET_VECTOR_ELT(ans, PT1+6, ScalarInteger(R_LD_AccuracyInfo.negep));
 
-	SET_STRING_ELT(nms, 19+4, mkChar("longdouble.guard"));
-	SET_VECTOR_ELT(ans, 19+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
+	SET_STRING_ELT(nms, PT1+7, mkChar("longdouble.exponent"));
+	SET_VECTOR_ELT(ans, PT1+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
 
-	SET_STRING_ELT(nms, 19+5, mkChar("longdouble.ulp.digits"));
-	SET_VECTOR_ELT(ans, 19+5, ScalarInteger(R_LD_AccuracyInfo.machep));
+	SET_STRING_ELT(nms, PT1+8, mkChar("longdouble.min.exp"));
+	SET_VECTOR_ELT(ans, PT1+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
 
-	SET_STRING_ELT(nms, 19+6, mkChar("longdouble.neg.ulp.digits"));
-	SET_VECTOR_ELT(ans, 19+6, ScalarInteger(R_LD_AccuracyInfo.negep));
-
-	SET_STRING_ELT(nms, 19+7, mkChar("longdouble.exponent"));
-	SET_VECTOR_ELT(ans, 19+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
-
-	SET_STRING_ELT(nms, 19+8, mkChar("longdouble.min.exp"));
-	SET_VECTOR_ELT(ans, 19+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
-
-	SET_STRING_ELT(nms, 19+9, mkChar("longdouble.max.exp"));
-	SET_VECTOR_ELT(ans, 19+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
+	SET_STRING_ELT(nms, PT1+9, mkChar("longdouble.max.exp"));
+	SET_VECTOR_ELT(ans, PT1+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
 
     }
 #endif
@@ -490,6 +460,24 @@ void attribute_hidden R_check_locale(void)
 #endif
 }
 
+/*  date
+ *
+ *  Return the current date in a standard format.  This uses standard
+ *  POSIX calls which should be available on each platform.
+ *  time and ctime are ISO C calls, so we don't check them.
+ *
+ * This needs the system time_t.
+ */
+static char *R_Date(void)
+{
+    time_t t;
+    static char s[26];		/* own space */
+
+    time(&t);
+    strcpy(s, ctime(&t));
+    s[24] = '\0';		/* overwriting the final \n */
+    return s;
+}
 
 SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -3235,7 +3223,7 @@ static int winSetFileTime(const char *fn, double ftime)
 {
     SYSTEMTIME st;
     FILETIME modft;
-    stm *utctm;
+    struct tm *utctm;
     HANDLE hFile;
     time_t ftimei = (time_t) ftime;
 
