@@ -49,11 +49,6 @@
 #include <stdlib.h>			/* for realpath */
 #include <time.h>			/* for ctime */
 
-// for time_t used in R
-#ifdef USE_INTERNAL_MKTIME
-# include "datetime.h"
-#endif
-
 # include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -130,7 +125,7 @@ static void Init_R_Machine(SEXP rho)
 # define MACH_SIZE 18
 #endif
     */
-    int MACH_SIZE = 19;
+    int MACH_SIZE = 18;
     if (sizeof(LDOUBLE) > sizeof(double)) MACH_SIZE += 10;
     
     SEXP ans = PROTECT(allocVector(VECSXP, MACH_SIZE)),
@@ -194,8 +189,6 @@ static void Init_R_Machine(SEXP rho)
     SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
 
-    SET_STRING_ELT(nms, 18, mkChar("sizeof.time_t"));
-    SET_VECTOR_ELT(ans, 18, ScalarInteger(sizeof(time_t)));
 /* This used to be just
 #ifdef HAVE_LONG_DOUBLE
    but platforms can have the type and it be identical to double
@@ -222,45 +215,45 @@ static void Init_R_Machine(SEXP rho)
 		  &R_LD_AccuracyInfo.xmin,
 		  &R_LD_AccuracyInfo.xmax);
  
-	SET_STRING_ELT(nms, 19+0, mkChar("longdouble.eps"));
-	SET_VECTOR_ELT(ans, 19+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
+	SET_STRING_ELT(nms, 18+0, mkChar("longdouble.eps"));
+	SET_VECTOR_ELT(ans, 18+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
 
-	SET_STRING_ELT(nms, 19+1, mkChar("longdouble.neg.eps"));
-	SET_VECTOR_ELT(ans, 19+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
+	SET_STRING_ELT(nms, 18+1, mkChar("longdouble.neg.eps"));
+	SET_VECTOR_ELT(ans, 18+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
     /*
-    SET_STRING_ELT(nms, 19+2, mkChar("longdouble.xmin"));     // not representable as double
-    SET_VECTOR_ELT(ans, 19+2, ScalarReal(R_LD_AccuracyInfo.xmin));
+    SET_STRING_ELT(nms, 18+2, mkChar("longdouble.xmin"));     // not representable as double
+    SET_VECTOR_ELT(ans, 18+2, ScalarReal(R_LD_AccuracyInfo.xmin));
 
-    SET_STRING_ELT(nms, 19+3, mkChar("longdouble.xmax"));    // not representable as double
-    SET_VECTOR_ELT(ans, 19+3, ScalarReal(R_LD_AccuracyInfo.xmax));
+    SET_STRING_ELT(nms, 18+3, mkChar("longdouble.xmax"));    // not representable as double
+    SET_VECTOR_ELT(ans, 18+3, ScalarReal(R_LD_AccuracyInfo.xmax));
 
-    SET_STRING_ELT(nms, 19+4, mkChar("longdouble.base"));    // same as "all"
-    SET_VECTOR_ELT(ans, 19+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
+    SET_STRING_ELT(nms, 18+4, mkChar("longdouble.base"));    // same as "all"
+    SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
     */
 
-	SET_STRING_ELT(nms, 19+2, mkChar("longdouble.digits"));
-	SET_VECTOR_ELT(ans, 19+2, ScalarInteger(R_LD_AccuracyInfo.it));
+	SET_STRING_ELT(nms, 18+2, mkChar("longdouble.digits"));
+	SET_VECTOR_ELT(ans, 18+2, ScalarInteger(R_LD_AccuracyInfo.it));
 
-	SET_STRING_ELT(nms, 19+3, mkChar("longdouble.rounding"));
-	SET_VECTOR_ELT(ans, 19+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
+	SET_STRING_ELT(nms, 18+3, mkChar("longdouble.rounding"));
+	SET_VECTOR_ELT(ans, 18+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
 
-	SET_STRING_ELT(nms, 19+4, mkChar("longdouble.guard"));
-	SET_VECTOR_ELT(ans, 19+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
+	SET_STRING_ELT(nms, 18+4, mkChar("longdouble.guard"));
+	SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
 
-	SET_STRING_ELT(nms, 19+5, mkChar("longdouble.ulp.digits"));
-	SET_VECTOR_ELT(ans, 19+5, ScalarInteger(R_LD_AccuracyInfo.machep));
+	SET_STRING_ELT(nms, 18+5, mkChar("longdouble.ulp.digits"));
+	SET_VECTOR_ELT(ans, 18+5, ScalarInteger(R_LD_AccuracyInfo.machep));
 
-	SET_STRING_ELT(nms, 19+6, mkChar("longdouble.neg.ulp.digits"));
-	SET_VECTOR_ELT(ans, 19+6, ScalarInteger(R_LD_AccuracyInfo.negep));
+	SET_STRING_ELT(nms, 18+6, mkChar("longdouble.neg.ulp.digits"));
+	SET_VECTOR_ELT(ans, 18+6, ScalarInteger(R_LD_AccuracyInfo.negep));
 
-	SET_STRING_ELT(nms, 19+7, mkChar("longdouble.exponent"));
-	SET_VECTOR_ELT(ans, 19+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
+	SET_STRING_ELT(nms, 18+7, mkChar("longdouble.exponent"));
+	SET_VECTOR_ELT(ans, 18+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
 
-	SET_STRING_ELT(nms, 19+8, mkChar("longdouble.min.exp"));
-	SET_VECTOR_ELT(ans, 19+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
+	SET_STRING_ELT(nms, 18+8, mkChar("longdouble.min.exp"));
+	SET_VECTOR_ELT(ans, 18+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
 
-	SET_STRING_ELT(nms, 19+9, mkChar("longdouble.max.exp"));
-	SET_VECTOR_ELT(ans, 19+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
+	SET_STRING_ELT(nms, 18+9, mkChar("longdouble.max.exp"));
+	SET_VECTOR_ELT(ans, 18+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
 
     }
 #endif

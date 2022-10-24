@@ -32,11 +32,6 @@
       \samp{mathrsfs} package, if available, or the \samp{amsfonts}
       bundle otherwise), fulfilling the wish of \PR{18398}.
 
-      \item \code{.Machine} has a new element \code{sizeof.time_t} to
-      identify old systems with a 32-bit type and hence a limited range
-      of date-times (and limited support for dates millions of years
-      from present).
-
       \item (Windows) The default format of \code{readClipboard()} and
       \code{writeClipboard()} has been changed to \code{13}
       (\code{CF_UNICODETEXT}).
