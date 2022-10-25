@@ -116,6 +116,13 @@ typedef QPattern* QPatternRef;
 #define QPatternLayer 1
 #define QGroupLayer   2
 
+typedef struct QuartzPath {
+    CGPathRef path;
+    int rule;
+} QPath;
+
+typedef QPath* QPathRef;
+
 typedef struct QuartzSpecific_s {
     double        ps;
     double        scalex, scaley;  /* resolution correction: px/pt ratio */
@@ -146,6 +153,10 @@ typedef struct QuartzSpecific_s {
     QGradientRef  *gradients;
     QPatternRef   *patterns;
     int           appendingPattern;
+
+    int           numClipPaths;
+    QPathRef      *clipPaths;
+    int           appending;  /* Also serves filled/stroked paths */
 
     int           numGroups;
     CGLayerRef    *groups;
@@ -737,6 +748,159 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
 
 /*
  ***************************
+ * Clipping paths
+ *
+ ***************************
+ */
+
+/* Just a starting value */
+#define maxClipPaths 64
+
+static void QuartzInitClipPaths(QuartzDesc *xd)
+{
+    int i;
+    /* Zero clip paths */
+    xd->numClipPaths = maxClipPaths;
+    xd->clipPaths = malloc(sizeof(QPathRef) * xd->numClipPaths);
+    for (i = 0; i < xd->numClipPaths; i++) {
+        xd->clipPaths[i] = NULL;
+    }
+}
+
+static int QuartzGrowClipPaths(QuartzDesc *xd)
+{
+    int i, newMax = 2*xd->numClipPaths;
+    void *tmp;
+    tmp = realloc(xd->clipPaths, sizeof(QPathRef) * newMax);
+    if (!tmp) { 
+        warning(_("Quartz clipping paths exhausted (failed to increase maxClipPaths)"));
+        return 0;
+    }
+    xd->clipPaths = tmp;
+    for (i = xd->numClipPaths; i < newMax; i++) {
+        xd->clipPaths[i] = NULL;
+    }
+    xd->numClipPaths = newMax;
+    return 1;
+}
+
+static void QuartzCleanClipPaths(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clipPaths[i] != NULL) {
+            CGPathRelease(xd->clipPaths[i]->path);
+            free(xd->clipPaths[i]);
+            xd->clipPaths[i] = NULL;
+        }
+    }    
+}
+
+static void QuartzDestroyClipPaths(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clipPaths[i] != NULL) {
+            CGPathRelease(xd->clipPaths[i]->path);
+            free(xd->clipPaths[i]);
+            xd->clipPaths[i] = NULL;
+        }
+    }    
+    free(xd->clipPaths);
+}
+
+static int QuartzNewClipPathIndex(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clipPaths[i] == NULL) {
+            return i;
+        } else {
+            if (i == (xd->numClipPaths - 1) &&
+                !QuartzGrowClipPaths(xd)) {
+                return -1;
+            }
+        }
+    }    
+    warning(_("Quartz clipping paths exhausted"));
+    return -1;
+}
+
+static QPathRef QuartzCreateClipPath(SEXP clipPath, int index, 
+                                     CGContextRef ctx, QuartzDesc *xd)
+{
+    QPathRef quartz_clipPath = malloc(sizeof(QPath));
+    if (!quartz_clipPath) error(_("Failed to create clipping path"));
+    SEXP R_fcall;
+    /* Save the current path */
+    CGPathRef quartz_saved_path = CGContextCopyPath(ctx);
+    /* Increment the "appending" count */
+    xd->appending++;
+    /* Clear the current path */
+    CGContextBeginPath(ctx);
+    /* Play the clipPath function to build the clipping path */
+    R_fcall = PROTECT(lang1(clipPath));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Save the clipping path (for reuse) */
+    quartz_clipPath->path = CGContextCopyPath(ctx);
+    quartz_clipPath->rule = R_GE_clipPathFillRule(clipPath);
+    /* Set the clipping region from the path 
+     * (applying the path fill rule) */
+    if(xd->gstate > 0) {
+        --xd->gstate;
+        CGContextRestoreGState(ctx);
+    }
+    CGContextSaveGState(ctx);
+    xd->gstate++;
+    switch (quartz_clipPath->rule) {
+    case R_GE_nonZeroWindingRule: 
+        CGContextClip(ctx); break;
+    case R_GE_evenOddRule:
+        CGContextEOClip(ctx); break;
+    }
+    /* Clear the path again */
+    CGContextBeginPath(ctx);
+    /* Decrement the "appending" count */
+    xd->appending--;
+    /* Restore the saved path */
+    CGContextAddPath(ctx, quartz_saved_path);
+    /* Destroy the saved path */
+    CGPathRelease(quartz_saved_path);
+    /* Return the clipping path */
+    return quartz_clipPath;
+}
+
+static void QuartzReuseClipPath(QPathRef quartz_clipPath,
+                                CGContextRef ctx, QuartzDesc *xd)
+{
+    /* Save the current path */
+    CGPathRef quartz_saved_path = CGContextCopyPath(ctx);
+    /* Clear the current path */
+    CGContextBeginPath(ctx);
+    /* Append the clipping path */
+    CGContextAddPath(ctx, quartz_clipPath->path);
+    /* Set the clipping region from the path (which clears the path) */
+    if(xd->gstate > 0) {
+        --xd->gstate;
+        CGContextRestoreGState(ctx);
+    }
+    CGContextSaveGState(ctx);
+    xd->gstate++;
+    switch (quartz_clipPath->rule) {
+    case R_GE_nonZeroWindingRule: 
+        CGContextClip(ctx); break;
+    case R_GE_evenOddRule:
+        CGContextEOClip(ctx); break;
+    }
+    /* Restore the saved path */
+    CGContextAddPath(ctx, quartz_saved_path);
+    /* Destroy the saved path */
+    CGPathRelease(quartz_saved_path);
+}
+
+/*
+ ***************************
  * Groups
  *
  ***************************
@@ -1066,7 +1230,9 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     qd->font       = NULL;
 
     QuartzInitPatterns(qd);
+    QuartzInitClipPaths(qd);
     QuartzInitGroups(qd);
+    qd->appending = 0;
     qd->appendingLayerType = QNoLayer;
 
     dev->deviceSpecific = qd;
@@ -1422,6 +1588,8 @@ static void RQuartz_Close(DEVDESC)
     XD;
     if (xd->close) xd->close(xd, xd->userInfo);
     QuartzDestroyPatterns(xd);
+    QuartzDestroyClipPaths(xd);
+    QuartzDestroyGroups(xd);
 }
 
 static void RQuartz_Activate(DEVDESC)
@@ -1669,38 +1837,46 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     double devHeight;
     CGContextRef savedCTX;
     CGLayerRef layer;
-    grouping = implicitGroup(ctx, xd);
-    if (grouping) {
-        savedCTX = ctx;
-        devWidth = QuartzDevice_GetScaledWidth(xd);
-        devHeight = QuartzDevice_GetScaledHeight(xd);
-        layer = CGLayerCreateWithContext(ctx, CGSizeMake(devWidth, devHeight), 
-                                         NULL);
-        ctx = CGLayerGetContext(layer);
+
+    if (!xd->appending) {
+        grouping = implicitGroup(ctx, xd);
+        if (grouping) {
+            savedCTX = ctx;
+            devWidth = QuartzDevice_GetScaledWidth(xd);
+            devHeight = QuartzDevice_GetScaledHeight(xd);
+            layer = CGLayerCreateWithContext(ctx, 
+                                             CGSizeMake(devWidth, devHeight), 
+                                             NULL);
+            ctx = CGLayerGetContext(layer);
+        }
+        SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
+        CGContextBeginPath(ctx);
     }
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
-    CGContextBeginPath(ctx);
+
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
-    if (QuartzGradientFill(gc->patternFill, xd)) {
-        CGContextSaveGState(ctx);
-        CGContextClip(ctx);
-        QuartzDrawGradientFill(ctx, gc->patternFill, xd);
-        CGContextRestoreGState(ctx);
-        /* Still may need to draw the border */
-        if (R_ALPHA(gc->col) > 0) {
-            CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
-            CGContextDrawPath(ctx, kCGPathStroke);
+
+    if (!xd->appending) {
+        if (QuartzGradientFill(gc->patternFill, xd)) {
+            CGContextSaveGState(ctx);
+            CGContextClip(ctx);
+            QuartzDrawGradientFill(ctx, gc->patternFill, xd);
+            CGContextRestoreGState(ctx);
+            /* Still may need to draw the border */
+            if (R_ALPHA(gc->col) > 0) {
+                CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
+                CGContextDrawPath(ctx, kCGPathStroke);
+            }
+        } else {
+            if (QuartzPatternFill(gc->patternFill, xd)) {
+                /* Override simple colour fill */
+                QuartzSetPatternFill(ctx, gc->patternFill, xd);
+            }
+            CGContextDrawPath(ctx, kCGPathFillStroke);
         }
-    } else {
-        if (QuartzPatternFill(gc->patternFill, xd)) {
-            /* Override simple colour fill */
-            QuartzSetPatternFill(ctx, gc->patternFill, xd);
+        if (grouping) {
+            CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0 ,0), layer);
+            CGLayerRelease(layer);
         }
-        CGContextDrawPath(ctx, kCGPathFillStroke);
-    }
-    if (grouping) {
-        CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0 ,0), layer);
-        CGLayerRelease(layer);
     }
 }
 
@@ -1994,10 +2170,55 @@ static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {
 } 
 
 static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
-    return R_NilValue;
+    DEVSPEC;
+    SEXP newref = R_NilValue;
+    int index;
+
+    if (isNull(ref)) {
+        /* Must generate new ref */
+        index = QuartzNewClipPathIndex(xd);
+        if (index < 0) {
+            /* Unless we have run out of space */
+        } else {
+            /* Create this clipping path */
+            xd->clipPaths[index] = QuartzCreateClipPath(path, index, ctx, xd);
+            PROTECT(newref = allocVector(INTSXP, 1));
+            INTEGER(newref)[0] = index;
+            UNPROTECT(1);
+        }
+    } else {
+        /* Reuse indexed clip path */
+        int index = INTEGER(ref)[0];
+        if (xd->clipPaths[index]) {
+            QuartzReuseClipPath(xd->clipPaths[index], ctx, xd);
+        } else {
+            /* BUT if index clip path does not exist, create a new one */
+            xd->clipPaths[index] = QuartzCreateClipPath(path, index, ctx, xd);
+            warning(_("Attempt to reuse non-existent clipping path"));
+        }
+    }
+
+    return newref;
 }
 
-static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {}
+static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {
+    DEVSPEC;
+    /* NULL means release all patterns */
+    if (isNull(ref)) {
+        QuartzCleanClipPaths(xd);
+    } else {
+        int i;
+        for (i = 0; i < LENGTH(ref); i++) {
+            if (xd->clipPaths[i]) {
+                CGPathRelease(xd->clipPaths[i]->path);
+                free(xd->clipPaths[i]);
+                xd->clipPaths[i] = NULL;
+            } else {
+                warning(_("Attempt to release non-existent clipping path"));
+            }
+        }
+    }
+}
 
 static SEXP RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd) {
     return R_NilValue;
