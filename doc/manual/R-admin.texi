@@ -5102,6 +5102,9 @@ macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big Sur), 12
 (Monterey) and 13 (Ventura), or `Apple Silicon' (@cputype{arm64}) builds
 on macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura).
 
+@strong{NB} @R{} 4.2.2 and earlier only build on Ventura when configured
+with @option{--without-aqua}.
+
 @menu
 * Prerequisites::
 * Fortran compilers::
