@@ -28667,7 +28667,7 @@ cat > conftest.c <<EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info,
 			const size_t srname_len)
@@ -45311,7 +45311,7 @@ fi
 printf "%s\n" "$r_cv_mktime_errno" >&6; }
 if test "${r_cv_mktime_errno}" = yes; then
 
-printf "%s\n" "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
+printf "%s\n" "#define MKTIME_SETS_ERRNO 1" >>confdefs.h
 
 fi
 
@@ -45392,13 +45392,14 @@ int main() {
     struct tm tm;
     time_t res;
     putenv("TZ=Europe/London");
+    // test 1901-01-01 12:00:00
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
     tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_isdst = 0;
-    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+    tm.tm_year = 01;
     // test 1901-01-01, where 32-bit time_t may fail.
     res = mktime(&tm);
     if(res == (time_t)-1) exit(3);
-    tm.tm_year = -52; // macOS 12.6 fails for 1848.
+    tm.tm_year = -52; // macOS 13 fails for 1848.
     res = mktime(&tm);
     if(res == (time_t)-1) exit(4);
     tm.tm_year = -1; // and for 1899
@@ -45427,6 +45428,71 @@ if test "x${r_cv_working_mktime2}" = xyes; then
 printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1902 1" >>confdefs.h
 
 fi
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly before 1970" >&5
+printf %s "checking whether mktime works correctly before 1970... " >&6; }
+if test ${r_cv_working_mktime3+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_working_mktime3=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1969-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 69; tm.tm_isdst = 0;
+    tm.tm_year = 69; // TK says Windows UCRT fails prior to 1970
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+
+    exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_working_mktime3=yes
+else $as_nop
+  r_cv_working_mktime3=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime3" >&5
+printf "%s\n" "$r_cv_working_mktime3" >&6; }
+if test "x${r_cv_working_mktime3}" = xyes; then
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1970 1" >>confdefs.h
+
+fi
+
+else
+
+printf "%s\n" "#define MKTIME_SETS_ERRNO 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_AFTER_2037 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1902 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1970 1" >>confdefs.h
 
 fi
 

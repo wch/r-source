@@ -1075,7 +1075,7 @@ EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info, 
 			const size_t srname_len)
@@ -4123,7 +4123,7 @@ int main()
               [r_cv_mktime_errno=no],
               [r_cv_mktime_errno=no])])
 if test "${r_cv_mktime_errno}" = yes; then
-  AC_DEFINE(MKTIME_SETS_ERRNO,, [Define if mktime sets errno.])
+  AC_DEFINE(MKTIME_SETS_ERRNO, 1, [Define if mktime sets errno.])
 fi
 ])# R_MKTIME_ERRNO
 
@@ -4241,6 +4241,7 @@ fi
 AC_SUBST(R_SYSTEM_ABI)
 ]) # R_ABI
 
+## 32-bit time_t will not
 ## R_FUNC_MKTIME
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME],
@@ -4278,6 +4279,8 @@ if test "x${r_cv_working_mktime}" = xyes; then
 fi
 ])# R_FUNC_MKTIME
 
+## 32-bit time_t will fail in 1901
+## macOS (at leat 13) failed for < 1900
 ## R_FUNC_MKTIME2
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME2],
@@ -4293,13 +4296,14 @@ int main() {
     struct tm tm;
     time_t res;
     putenv("TZ=Europe/London");
+    // test 1901-01-01 12:00:00
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
     tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_isdst = 0;
-    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+    tm.tm_year = 01;
     // test 1901-01-01, where 32-bit time_t may fail.
     res = mktime(&tm);
     if(res == (time_t)-1) exit(3);
-    tm.tm_year = -52; // macOS 12.6 fails for 1848.
+    tm.tm_year = -52; // macOS 13 fails for 1848.
     res = mktime(&tm);
     if(res == (time_t)-1) exit(4);
     tm.tm_year = -1; // and for 1899
@@ -4317,6 +4321,40 @@ if test "x${r_cv_working_mktime2}" = xyes; then
             [Define if your mktime works correctly before 1902.])
 fi
 ])# R_FUNC_MKTIME2
+
+## R_FUNC_MKTIME3
+## ------------
+AC_DEFUN([R_FUNC_MKTIME3],
+[AC_CACHE_CHECK([whether mktime works correctly before 1970],
+                [r_cv_working_mktime3],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1969-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 69; tm.tm_isdst = 0;
+    tm.tm_year = 69; // TK says Windows UCRT fails prior to 1970
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime3=yes],
+              [r_cv_working_mktime3=no],
+              [r_cv_working_mktime3=no])])
+if test "x${r_cv_working_mktime3}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
+            [Define if your mktime works correctly before 1970.])
+fi
+])# R_FUNC_MKTIME3
 
 ## R_STDCXX
 ## --------

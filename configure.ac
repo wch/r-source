@@ -2168,6 +2168,15 @@ if test "${use_internal_tzcode}" != yes; then
   R_MKTIME_ERRNO
   R_FUNC_MKTIME
   R_FUNC_MKTIME2
+  R_FUNC_MKTIME3
+else
+  AC_DEFINE(MKTIME_SETS_ERRNO, 1, [Define if mktime sets errno.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
+            [Define if your mktime works correctly after 2037.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1902, 1,
+            [Define if your mktime works correctly before 1902.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
+            [Define if your mktime works correctly before 1970.])
 fi
 
 if test x${use_internal_iswxxxxx} = xdefault; then
