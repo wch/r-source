@@ -1205,6 +1205,9 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->defineGroup     = RQuartz_defineGroup;
     dev->useGroup        = RQuartz_useGroup;
     dev->releaseGroup    = RQuartz_releaseGroup;
+    dev->stroke          = RQuartz_stroke;
+    dev->fill            = RQuartz_fill;
+    dev->fillStroke      = RQuartz_fillStroke;
     dev->deviceVersion   = R_GE_group;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
@@ -2247,11 +2250,86 @@ static void RQuartz_releaseGroup(SEXP ref, pDevDesc dd) {
     }
 }
 
-static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {}
+static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) 
+{
+    DRAWSPEC;
+    SEXP R_fcall;
+
+    /* Increment the "appending" count */
+    xd->appending++;
+    /* Clear the current path */
+    CGContextBeginPath(ctx);
+    /* Play the path function to build the path */
+    R_fcall = PROTECT(lang1(path));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Decrement the "appending" count */
+    xd->appending--;
+    /* Stroke the path */
+
+    if (!xd->appending) {
+        SET(RQUARTZ_STROKE | RQUARTZ_LINE);
+        CGContextDrawPath(ctx, kCGPathStroke);
+    }
+}
+
 static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc, 
-                         pDevDesc dd) {}
+                         pDevDesc dd) 
+{
+    DRAWSPEC;
+    SEXP R_fcall;
+
+    /* Increment the "appending" count */
+    xd->appending++;
+    /* Clear the current path */
+    CGContextBeginPath(ctx);
+    /* Play the path function to build the path */
+    R_fcall = PROTECT(lang1(path));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Decrement the "appending" count */
+    xd->appending--;
+    /* Fill the path */
+
+    if (!xd->appending) {
+        SET(RQUARTZ_FILL);
+        switch(rule) {
+        case R_GE_nonZeroWindingRule:
+            CGContextDrawPath(ctx, kCGPathFill); break;
+        case R_GE_evenOddRule:
+            CGContextDrawPath(ctx, kCGPathEOFill); break;
+        }
+    }
+}
+
 static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
-                               pDevDesc dd) {}
+                               pDevDesc dd) 
+{
+    DRAWSPEC;
+    SEXP R_fcall;
+
+    /* Increment the "appending" count */
+    xd->appending++;
+    /* Clear the current path */
+    CGContextBeginPath(ctx);
+    /* Play the path function to build the path */
+    R_fcall = PROTECT(lang1(path));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Decrement the "appending" count */
+    xd->appending--;
+    /* Fill and stroke the path */
+    if (!xd->appending) {
+        SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
+        switch(rule) {
+        case R_GE_nonZeroWindingRule:
+            CGContextDrawPath(ctx, kCGPathFillStroke); break;
+        case R_GE_evenOddRule:
+            CGContextDrawPath(ctx, kCGPathEOFillStroke); break;
+        }
+    }
+}
+
 static SEXP RQuartz_capabilities(SEXP cap) { return cap; }
 
 #pragma mark -
