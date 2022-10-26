@@ -5333,11 +5333,16 @@ initio} builds work.
 @c external software.
 
 @menu
-* Note for Catalina and later::
+* Notes for Catalina and later::
 @end menu
 
-@node Note for Catalina and later,  , Prerequisites, Prerequisites
-@subsubsection Note for Catalina and later
+@node Notes for Catalina and later,  , Prerequisites, Prerequisites
+@subsubsection Notes for Catalina and later
+
+If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
+-show-sdk-path`} in a terminal will show you which SDK is selected.},
+you will need to add something like @code{-mmacosx-version-min=12.0} to
+@samp{CFLAGS}.
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
