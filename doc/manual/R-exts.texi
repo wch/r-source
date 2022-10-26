@@ -6076,6 +6076,18 @@ without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
+@item
+Several C entry points are warned against in their @command{man} pages
+on most systens, often in very strong terms such as '@strong{Do not use
+these functions}'.  macOS has started to warn@footnote{when using the
+macOS 13 SDK with a deployment target of macOS 13.} if these are used
+for @code{sprintf}, @code{vsprintf}, @code{gets}, @code{mktemp},
+@code{tempmam} and @code{tmpnam}.  It is highly recommended that you use
+safer alternatives (on any platform) but the warning can be avoided by
+defiining @samp{_POSIX_C_SOURCE} to for example @samp{200809L} before
+including the (C or C++) header which defines them.  (However, this may
+hide other extensions.)
+
 @end itemize
 
 Some additional information for C++ is available at
