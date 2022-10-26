@@ -1339,6 +1339,7 @@ Rstd_ShowFiles(int nfile,		/* number of files */
     */
 
 
+#include <ctype.h>  /* for isspace */
 
 int attribute_hidden Rstd_ChooseFile(int _new, char *buf, int len)
 {
