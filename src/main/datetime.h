@@ -22,7 +22,7 @@
    datetime.c
    machine.c ( for sizeof(time_t) )
    src/extra/tzone/localtome.c
-   src/extra/tzone/stftime.c
+   src/extra/tzone/strftime.c
 */
 
 # include <stdint.h>

@@ -52,8 +52,6 @@
 # include <config.h>
 #endif
 
-#include <Rmath.h> // for imin2()
-
 // to get tm_zone, tm_gmtoff defined in glibc.
 // some other header, e.g. math.h, might define the macro.
 #if defined HAVE_FEATURES_H
@@ -79,8 +77,8 @@
 */
 
 #include <time.h>
-
-#include <errno.h>
+#include <errno.h> // mktime or substitute may set errno.
+#include <Rmath.h> // for imin2()
 
 /*
 
@@ -90,10 +88,10 @@ There are two implementation paths here.
    Use the system time_t, struct tm and time-zone tables.
 
 2) USE_INTERNAL_MKTIME :
-   Use substitutes from src/extra/tzone for mktime, gmtime, localtime,
-   strftime with a R_ prefix.  The system strftime is used for
-   locale-dependent names in R_strptime and R_strftime.  This uses the
-   time-zone tables shipped with R and installed into
+   Use substitutes from src/extra/tzone for mktime, gmtime_r,
+   localtime_r, strftime with a R_ prefix.  The system strftime is
+   used for locale-dependent names in R_strptime and R_strftime.  This
+   uses the time-zone tables shipped with R and installed into
    R_HOME/share/zoneinfo .
 
    Our own versions of time_t (64-bit) and struct tm (including the
@@ -105,24 +103,28 @@ those limits where there is a 64-bit time_t and the conversions work
 1900).  Otherwise there is code below to extrapolate from 1902-2037.
 
 PATH 2) was added for R 3.1.0 (2014-04) and is the only one supported
-on Windows: it is the default on macOS.
+on Windows: it is the current default on macOS.
 
 */
 
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"
-# undef HAVE_LOCAL_TIME_R
-# define HAVE_LOCAL_TIME_R 1
+// configure might have checked the system versions.
+# undef HAVE_LOCALTIME_R
+# define HAVE_LOCALTIME_R 1
 # undef HAVE_TM_ZONE
 # define HAVE_TM_ZONE 1
 # undef HAVE_TM_GMTOFF
 # define HAVE_TM_GMTOFF 1
+// latterly these are set by configure, but not on Windows
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
 # undef HAVE_WORKING_MKTIME_AFTER_2037
 # define HAVE_WORKING_MKTIME_AFTER_2037 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1902
 # define HAVE_WORKING_MKTIME_BEFORE_1902 1
+# undef HAVE_WORKING_MKTIME_BEFORE_1900
+# define HAVE_WORKING_MKTIME_BEFORE_1900 1
 #else
 
 typedef struct tm stm;
@@ -286,6 +288,10 @@ static double mktime00 (stm *tm)
 	+ (day + excess * 730485) * 86400.0;
 }
 
+/* These functions should never be sent NA, but in 2022-10 they were,
+ * by do_balancePOSIXTlt, causing UBSAN warnings.
+ * This could just be mktime00 or mkdate00, discarding the result.
+ */
 static void set_w_yday(stm *tm)
 {
     if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
@@ -454,8 +460,14 @@ static double mktime0 (stm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
-/* macOS 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 
-   mac)S 12.6 gives -1 for dates prior to 1900 (but we tested 1901 too).
+/* 
+   Platforms with a 32-bit time_t will fail before 1901-12-13 and after 2038-01-19.
+   macOS 10.9 gave -1 for dates prior to 1902 and ignored DST after 2037 
+   macOS 13 gives -1 for dates prior to 1900
+   Windows UCRT (and in 2004) gives -1 for dates prior to 1970
+   https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_16
+   states 'the releationship is undefined' prior to 1970.
+   glibc from 2.2.5 until late 2004 also gave -1 for such dates.
 */
     if(sizeof(time_t) == 8) {
 	OK = TRUE;
@@ -463,7 +475,10 @@ static double mktime0 (stm *tm, const int local)
 	OK = OK && tm->tm_year < 138;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1902
-	OK = OK && tm->tm_year > 02;
+	OK = OK && tm->tm_year >= 02;
+#endif
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1970
+	OK = OK && tm->tm_year >= 70;
 #endif
     } else
 	OK = tm->tm_year < 138 && tm->tm_year >= 02;
@@ -480,7 +495,7 @@ static double mktime0 (stm *tm, const int local)
 }
 
 /* 
-   Interface to localtime_r or gmtime_r or internal substitute. 
+   Interface to localtime[_r] or gmtime[_r] or internal substitute. 
    Version in each PATH.
    Used in do_asPOSIXlt and do_strptime.
 */
@@ -745,7 +760,6 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
 // .Internal(as.POSIXlt(x, tz)) -- called only from  as.POSIXlt.POSIXct()
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
     SEXP stz = CADR(args);
@@ -1032,9 +1046,9 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
-#elif defined USE_INTERNAL_MKTIME
-	    // Hmm, tm_zone is defined in PATH 1) so never get here.
-	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
+//#elif defined USE_INTERNAL_MKTIME
+//	    // Hmm, tm_zone is defined in PATH 1) so never get here.
+//	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    /* Modifying tzname causes memory corruption on Solaris. It
 	       is not specified to have any effect and strftime is documented
@@ -1433,7 +1447,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "classed");
 
     int n_comp = LENGTH(x); // >= 9
-    Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
+    Rboolean isGMT = (n_comp == 9), have_zone; // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
     have_zone = n_comp >= 11; // {zone, gmtoff}
     // Why check the type and not the name?
@@ -1568,9 +1582,9 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
-#elif defined USE_INTERNAL_MKTIME
-	    // Hmm, tm_zone is defined in PATH 1) so never get here.
-	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
+//#elif defined USE_INTERNAL_MKTIME
+//	    // Hmm, tm_zone is defined in PATH 1) so never get here.
+//	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    /* Modifying tzname causes memory corruption on Solaris. It
 	       is not specified to have any effect and strftime is documented
