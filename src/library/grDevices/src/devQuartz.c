@@ -112,9 +112,17 @@ typedef struct QuartzPattern {
 
 typedef QPattern* QPatternRef;
 
-#define QNoLayer      0
+typedef struct QuartzMask {
+    CGContextRef context;
+    CGImageRef mask;
+} QMask;
+
+typedef QMask* QMaskRef;
+
+#define QNoAppend     0
 #define QPatternLayer 1
 #define QGroupLayer   2
+#define QMaskBitmap   3
 
 typedef struct QuartzPath {
     CGPathRef path;
@@ -154,6 +162,11 @@ typedef struct QuartzSpecific_s {
     QPatternRef   *patterns;
     int           appendingPattern;
 
+    int           numMasks;
+    QMaskRef      *masks;
+    int           appendingMask;   /* mask we are recording */
+    int           currentMask;     /* mask used for masking other output */
+
     int           numClipPaths;
     QPathRef      *clipPaths;
     int           appending;  /* Also serves filled/stroked paths */
@@ -162,7 +175,7 @@ typedef struct QuartzSpecific_s {
     CGLayerRef    *groups;
     int           appendingGroup;
     /* are we currently appending a pattern or a group (or neither) */
-    int           appendingLayerType;  
+    int           appendingType;  
 
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
@@ -409,11 +422,14 @@ static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
 static CGContextRef QuartzGetCurrentContext(QuartzDesc *xd)
 {
     if (xd->appendingPattern >= 0 && 
-        xd->appendingLayerType == QPatternLayer) {
+        xd->appendingType == QPatternLayer) {
         return CGLayerGetContext(xd->patterns[xd->appendingPattern]->layer);
     } else if (xd->appendingGroup >= 0 &&
-               xd->appendingLayerType == QGroupLayer) {
+               xd->appendingType == QGroupLayer) {
         return CGLayerGetContext(xd->groups[xd->appendingGroup]);
+    } else if (xd->appendingMask >= 0 &&
+               xd->appendingType == QMaskBitmap) {
+        return xd->masks[xd->appendingMask]->context;
     } else {
         return xd->getCGContext(xd, xd->userInfo);
     }
@@ -901,6 +917,139 @@ static void QuartzReuseClipPath(QPathRef quartz_clipPath,
 
 /*
  ***************************
+ * Masks
+ ***************************
+ */
+
+static void QuartzInitMasks(QuartzDesc *xd)
+{
+    int i;
+    xd->numMasks = 20;
+    xd->masks = malloc(sizeof(QMaskRef) * xd->numMasks);
+    for (i = 0; i < xd->numMasks; i++) {
+        xd->masks[i] = NULL;
+    }
+    xd->appendingMask = -1;
+    xd->currentMask = -1;
+}
+
+static int QuartzGrowMasks(QuartzDesc *xd)
+{
+    int i, newMax = 2*xd->numMasks;
+    void *tmp;
+    tmp = realloc(xd->masks, sizeof(QMaskRef) * newMax);
+    if (!tmp) { 
+        warning(_("Quartz masks exhausted (failed to increase maxMasks)"));
+        return 0;
+    }
+    xd->masks = tmp;
+    for (i = xd->numMasks; i < newMax; i++) {
+        xd->masks[i] = NULL;
+    }
+    xd->numMasks = newMax;
+    return 1;
+}
+
+static void QuartzCleanMasks(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] != NULL) {
+            CGContextRelease(xd->masks[i]->context);
+            CGImageRelease(xd->masks[i]->mask);
+            xd->masks[i] = NULL;
+        }
+    }    
+    xd->appendingMask = -1;
+    xd->currentMask = -1;
+}
+
+static void QuartzDestroyMasks(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] != NULL) {
+            CGContextRelease(xd->masks[i]->context);
+            CGImageRelease(xd->masks[i]->mask);
+            xd->masks[i] = NULL;
+        }
+    }    
+    free(xd->masks);
+}
+
+static int QuartzNewMaskIndex(QuartzDesc *xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] == NULL) {
+            return i;
+        } else {
+            if (i == (xd->numMasks - 1) &&
+                !QuartzGrowMasks(xd)) {
+                return -1;
+            }
+        }
+    }    
+    warning(_("Quartz masks exhausted"));
+    return -1;
+}
+
+static int QuartzCreateMask(SEXP mask, 
+                            CGContextRef ctx, QuartzDesc *xd)
+{
+    SEXP R_fcall;
+    CGContextRef quartz_bitmap;
+    CGColorSpaceRef cs;
+    double devWidth = QuartzDevice_GetScaledWidth(xd);
+    double devHeight = QuartzDevice_GetScaledHeight(xd);
+    
+    int index = QuartzNewMaskIndex(xd);
+    if (index >= 0) {        
+        QMaskRef quartz_mask = malloc(sizeof(QMaskRef));
+        if (!quartz_mask) error(_("Failed to create Quartz mask"));
+
+        cs = CGColorSpaceCreateDeviceGray();
+        
+        /* Create bitmap grahics context 
+         * drawing is redirected to this context */
+        quartz_bitmap = CGBitmapContextCreate(NULL,
+                                              devWidth,
+                                              devHeight,
+                                              8,
+                                              0,
+                                              cs,
+                                              kCGImageAlphaNone);
+    
+        quartz_mask->context = quartz_bitmap;
+        xd->masks[index] = quartz_mask;
+
+        int savedMask = xd->appendingMask;
+        int savedType = xd->appendingType;
+        xd->appendingMask = index;
+        xd->appendingType = QMaskBitmap;
+
+        /* Play the mask function to build the mask */
+        R_fcall = PROTECT(lang1(mask));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+
+        /* Create image from bitmap context */
+        CGImageRef maskImage;
+        maskImage = CGBitmapContextCreateImage(quartz_bitmap);
+        xd->masks[index]->mask = maskImage;
+
+        xd->currentMask = index;
+
+        /* tidy up */
+        CGColorSpaceRelease(cs);
+        xd->appendingMask = savedMask;
+        xd->appendingType = savedType;
+    }
+    return index;
+}
+
+/*
+ ***************************
  * Groups
  *
  ***************************
@@ -1026,7 +1175,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
 
     index = QuartzNewGroupIndex(xd);
     int savedGroup = xd->appendingGroup;
-    int savedLayerType = xd->appendingLayerType;
+    int savedType = xd->appendingType;
 
     double devWidth = QuartzDevice_GetScaledWidth(xd);
     double devHeight = QuartzDevice_GetScaledHeight(xd);
@@ -1034,7 +1183,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     CGLayerRef layer = CGLayerCreateWithContext(ctx, size, NULL);
     xd->groups[index] = layer;
     xd->appendingGroup = index;
-    xd->appendingLayerType = QGroupLayer;
+    xd->appendingType = QGroupLayer;
 
     /* Work with the group layer context */
     CGContextRef layerContext = CGLayerGetContext(layer);
@@ -1062,7 +1211,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     }
     
     xd->appendingGroup = savedGroup;
-    xd->appendingLayerType = savedLayerType;
+    xd->appendingType = savedType;
 
     /* Return group index */
     PROTECT(result = allocVector(INTSXP, 1));
@@ -1234,9 +1383,10 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
 
     QuartzInitPatterns(qd);
     QuartzInitClipPaths(qd);
+    QuartzInitMasks(qd);
     QuartzInitGroups(qd);
     qd->appending = 0;
-    qd->appendingLayerType = QNoLayer;
+    qd->appendingType = QNoAppend;
 
     dev->deviceSpecific = qd;
     qd->dev             = dev;
@@ -1628,7 +1778,7 @@ static void RQuartz_NewPage(CTXDESC)
         {
             xd->appendingPattern = -1;
             xd->appendingGroup = -1;
-            xd->appendingLayerType = QNoLayer;
+            xd->appendingType = QNoAppend;
 
             CGRect bounds = CGRectMake(0, 0,
 				       QuartzDevice_GetScaledWidth(xd) * 72.0,
@@ -1854,6 +2004,14 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
         }
         SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
         CGContextBeginPath(ctx);
+        if (xd->currentMask >= 0) {
+            /* Set the clipping region from the mask */
+            CGContextSaveGState(ctx); 
+            devWidth = QuartzDevice_GetScaledWidth(xd);
+            devHeight = QuartzDevice_GetScaledHeight(xd);
+            CGContextClipToMask(ctx, CGRectMake(0, 0, devWidth, devHeight), 
+                                xd->masks[xd->currentMask]->mask);
+        }
     }
 
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
@@ -1876,8 +2034,15 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
             }
             CGContextDrawPath(ctx, kCGPathFillStroke);
         }
+        if (xd->currentMask >= 0) {
+            CGContextRestoreGState(ctx); 
+            /*
+            CGContextDrawImage(ctx, CGRectMake(0, 0, devWidth, devHeight), 
+                               xd->masks[xd->currentMask]->mask);
+            */
+        }
         if (grouping) {
-            CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0 ,0), layer);
+            CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0, 0), layer);
             CGLayerRelease(layer);
         }
     }
@@ -2142,9 +2307,9 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     } else {
         index = QuartzNewPatternIndex(xd, 0);
         int savedPattern = xd->appendingPattern;
-        int savedLayerType = xd->appendingLayerType; 
+        int savedType = xd->appendingType; 
         xd->appendingPattern = index;
-        xd->appendingLayerType = QPatternLayer;
+        xd->appendingType = QPatternLayer;
         QPatternRef quartz_pattern = 
             QuartzCreatePattern(pattern, ctx, xd);
         xd->patterns[index] = quartz_pattern;
@@ -2155,7 +2320,7 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
         UNPROTECT(1);
 
         xd->appendingPattern = savedPattern;
-        xd->appendingLayerType = savedLayerType;
+        xd->appendingType = savedType;
     }
     INTEGER(ref)[0] = index;
     UNPROTECT(1);
@@ -2223,11 +2388,59 @@ static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {
     }
 }
 
-static SEXP RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd) {
-    return R_NilValue;
+static SEXP RQuartz_setMask(SEXP mask, SEXP ref, pDevDesc dd) {
+    DEVSPEC;
+    int index;
+    QMaskRef quartz_mask;
+    SEXP newref = R_NilValue;
+
+    if (isNull(mask)) {
+        /* Set NO mask */
+        index = -1;
+    } else if (R_GE_maskType(mask) == R_GE_alphaMask) {
+        warning(_("Ignored alpha mask (not supported on this device)"));
+        /* Set NO mask */
+        index = -1;        
+    } else {
+        if (isNull(ref)) {
+            /* Create a new mask */
+            index = QuartzCreateMask(mask, ctx, xd);
+        } else {
+            /* Reuse existing mask */
+            index = INTEGER(ref)[0];
+            if (index >= 0 && !xd->masks[index]) {
+                /* But if it does not exist, make a new one */
+                index = QuartzCreateMask(mask, ctx, xd);
+            }
+        }
+        newref = PROTECT(allocVector(INTSXP, 1));
+        INTEGER(newref)[0] = index;
+        UNPROTECT(1);
+    }
+
+    xd->currentMask = index;
+
+    return newref;
 }
 
-static void RQuartz_releaseMask(SEXP ref, pDevDesc dd) {}
+static void RQuartz_releaseMask(SEXP ref, pDevDesc dd) 
+{
+    DEVSPEC;
+    if (isNull(ref)) {
+        QuartzCleanMasks(xd);
+    } else {
+        int i;
+        for (i = 0; i < LENGTH(ref); i++) {
+            if (xd->masks[i]) {
+                CGContextRelease(xd->masks[i]->context);
+                CGImageRelease(xd->masks[i]->mask);
+                xd->masks[i] = NULL;
+            } else {
+                warning(_("Attempt to release non-existent mask"));
+            }
+        }
+    }
+}
 
 static SEXP RQuartz_defineGroup(SEXP source, int op, SEXP destination, 
                                     pDevDesc dd) {
