@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team.
+ *  Copyright (C) 2000-2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,13 @@
  *  https://www.R-project.org/Licenses/
  *
  */
+
+/* Declarations from src/extra/tzone.  Included by
+   datetime.c
+   machine.c ( for sizeof(time_t) )
+   src/extra/tzone/localtome.c
+   src/extra/tzone/stftime.c
+*/
 
 # include <stdint.h>
 // C99/C11 require this to be implemented.
