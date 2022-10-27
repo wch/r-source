@@ -49,6 +49,7 @@
  IS_SPECIAL_SYMBOL
  InitDynload
  InitParser
+ Init_R_Machine
  Init_R_Variables
  LOCK_BINDING
  LoadInitFile
