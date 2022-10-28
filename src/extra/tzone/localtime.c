@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2020  The R Core Team
+ *  Modifications copyright (C) 2007-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ removing ATTRIBUTE_PURE, conditional parts for e.g. ALL_STATE
 use of 'unknown' isdst
 use of 64-bit time_t irrespective of platform.
 use of tm_zone and tm_gmtoff on all platforms.
+using R_ prefix for exported entry points.
 */
 
 #include <config.h>
@@ -176,16 +177,16 @@ static const char	gmt[] = "GMT";
 #endif /* !defined TZDEFDST */
 
 struct ttinfo {				/* time type information */
-	int_fast32_t	tt_gmtoff;	/* UT offset in seconds */
-	int		tt_isdst;	/* used to set tm_isdst */
-	int		tt_abbrind;	/* abbreviation list index */
-	int		tt_ttisstd;	/* TRUE if transition is std time */
-	int		tt_ttisgmt;	/* TRUE if transition is UT */
+    int_fast32_t tt_gmtoff;	/* UT offset in seconds */
+    int		tt_isdst;	/* used to set tm_isdst */
+    int		tt_abbrind;	/* abbreviation list index */
+    int		tt_ttisstd;	/* TRUE if transition is std time */
+    int		tt_ttisgmt;	/* TRUE if transition is UT */
 };
 
 struct lsinfo {				/* leap second information */
-	time_t		ls_trans;	/* transition time */
-	int_fast64_t	ls_corr;	/* correction to apply */
+    time_t		ls_trans;	/* transition time */
+    int_fast64_t	ls_corr;	/* correction to apply */
 };
 
 #define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
@@ -369,6 +370,7 @@ differ_by_repeat(const time_t t1, const time_t t0)
     return (int_fast64_t)t1 - (int_fast64_t)t0 == SECSPERREPEAT;
 }
 
+// from main/util.c (Unix) or registryTZ.c (Windows)
 extern const char *getTZinfo(void);
 extern void Rf_warning(const char *, ...);
 

@@ -288,6 +288,14 @@ stopifnot(identical(myexpand(fit2)$y, 4:10)) # failed in R <= 4.2.1 with
 ## Error in eval(predvars, data, env) : object 'y' not found
 
 
+## time() returning numbers very slightly on the wrong side of an integer
+x <- ts(2:252, start = c(2002, 2), freq = 12)
+true.year <- rep(2002:2022, each = 12)[-1]
+stopifnot(floor(as.numeric(time(x))) == true.year)
+## seen 10 differences in R <= 4.2.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

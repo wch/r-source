@@ -2661,11 +2661,14 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
+            t1 <- proc.time()
             el <- if (R_cdo_data) setRlibs(pkgdir = pkgdir, libdir = libdir) else elibs
             out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             out <- filtergrep("^OMP:", out)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (length(out)) {
                 bad <- startsWith(out, "Warning:")
                 bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
@@ -4436,9 +4439,7 @@ add_dummies <- function(dir, Log)
                                         sQuote(basename(bad_vignettes))),
                                   "", ""), collapse = "\n"))
             }
-            defaultEncoding <- .get_package_metadata(pkgdir)["Encoding"]
-            encs <- vapply(vigns$docs, getVignetteEncoding, "", default = defaultEncoding)
-            bad_vignettes <- vigns$docs[encs == "non-ASCII"]
+            bad_vignettes <- vigns$docs[vigns$encodings == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -4582,7 +4583,7 @@ add_dummies <- function(dir, Log)
             skip_run_maybe <-
                 R_check_vignettes_skip_run_maybe && do_build_vignettes
 
-            vigns <- pkgVignettes(dir = pkgdir)
+            ## vigns <- pkgVignettes(dir = pkgdir)
             savefiles <-
                 file.path(dirname(vigns$docs),
                           paste0(vigns$names, ".Rout.save"))
@@ -4599,18 +4600,18 @@ add_dummies <- function(dir, Log)
                 anyNOTE <- FALSE
                 cat("\n")
                 for (i in iseq) {
-                    file <- vigns$docs[i]
-                    name <- vigns$names[i]
+                    file <- basename(vigns$docs[i])
+                    ## name <- vigns$names[i]
                     enc <- vigns$encodings[i]
-                    out1 <- c("  ", sQuote(basename(file)),
+                    out1 <- c("  ", sQuote(file),
                               if(nzchar(enc)) paste(" using", sQuote(enc)),
                               "...")
                     Rcmd <- paste0(opWarn_string, "\ntools:::.run_one_vignette('",
-                                   basename(file), "', '", vigns$dir, "'",
+                                   file, "', '", vigns$dir, "'",
                                    if (nzchar(enc))
                                        paste0(", encoding = '", enc, "'"),
                                    ", pkgdir='", vigns$pkgdir, "')")
-                    outfile <- paste0(basename(file), ".log")
+                    outfile <- paste0(file, ".log")
                     tlim <- get_timeout(Sys.getenv("_R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_",
                                         Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                     t1b <- proc.time()
@@ -4635,12 +4636,12 @@ add_dummies <- function(dir, Log)
                                                       "10"))
                         res <- if (keep > 0)
                             c(res,
-                              paste("when running code in", sQuote(basename(file))),
+                              paste("when running code in", sQuote(file)),
                               "  ...",
                               utils::tail(out, keep))
                         else
                             c(res,
-                              paste("when running code in", sQuote(basename(file))),
+                              paste("when running code in", sQuote(file)),
                               out)
 
                     } else if(status || " *** Run successfully completed ***" %notin% out) {
@@ -4651,12 +4652,12 @@ add_dummies <- function(dir, Log)
                         out <- c(out, "", "... incomplete output.  Crash?")
                         res <- if (keep > 0)
                             c(res,
-                                 paste("when running code in", sQuote(basename(file))),
+                                 paste("when running code in", sQuote(file)),
                                  "  ...",
                                  utils::tail(out, keep))
                         else
                             c(res,
-                                 paste("when running code in", sQuote(basename(file))),
+                                 paste("when running code in", sQuote(file)),
                                  out)
                     } else if (file.exists(savefile)) {
                         cmd <- paste0("invisible(tools::Rdiff('",
@@ -4690,7 +4691,7 @@ add_dummies <- function(dir, Log)
                         if(cpu >= pmax(theta * td[3L], 1)) {
                             ratio <- round(cpu/td[3L], 1L)
                             cat(sprintf("Running R code from vignette %s had CPU time %g times elapsed time\n",
-                                        sQuote((basename(file))), ratio))
+                                        sQuote(file), ratio))
                         }
                     }
                 }

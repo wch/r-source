@@ -11,7 +11,7 @@ subdir = src/library/Recommended
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in Makefile.win .cvsignore
+DISTFILES = Makefile.in Makefile.win
 # avoid user's startup files
 R = R_LIBS= $(top_builddir)/bin/R --vanilla
 

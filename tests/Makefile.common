@@ -212,8 +212,6 @@ test-Specific:
 	@$(MK) test-TimeZone
 
 test-Packages:
-	@$(ECHO) "building NEWS database [for news() example]"; \
-	  (cd $(top_builddir)/doc ; $(MK) NEWS.rds; ls -l NEWS.rds )
 	@if test -n "${TEST_MC_CORES}"; then \
 	  $(ECHO) "Using ${TEST_MC_CORES} cores to check packages"; \
 	  $(MK) -j ${TEST_MC_CORES} test-Packages2; \

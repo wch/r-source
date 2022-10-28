@@ -1,6 +1,6 @@
 % File src/library/base/man/weekday.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{weekdays}
@@ -95,7 +95,7 @@ d2mat(seq(as.Date("2000-02-02"), by=1, length.out=30)) # has R 1.0.0's release d
 
 \donttest{
 ## Julian Day Number (JDN, https://en.wikipedia.org/wiki/Julian_day)
-## is the number of days since noon UTC on the first day of 4317 BC.
+## is the number of days since noon UTC on the first day of 4317 BCE.
 ## in the proleptic Julian calendar.  To more recently, in
 ## 'Terrestrial Time' which differs from UTC by a few seconds
 ## See https://en.wikipedia.org/wiki/Terrestrial_Time

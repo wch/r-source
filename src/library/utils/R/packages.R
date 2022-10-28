@@ -955,7 +955,7 @@ setRepositories <-
 {
     if(is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
-    a <- tools:::.get_repositories()
+    a <- .get_repositories()
     pkgType <- getOption("pkgType")
     if (!is.character(pkgType))
         stop("invalid options(\"pkgType\"); must be a character string")
@@ -1166,3 +1166,42 @@ compareVersion <- function(a, b)
     }
     done
 }
+
+## moved from tools/R/utils.R as this is now called in utils::.onLoad
+.get_repositories <- function()
+{
+    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
+    if(is.na(rfile) || !file_test("-f", rfile)) {
+        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+        if(!file_test("-f", rfile))
+            rfile <- file.path(R.home("etc"), "repositories")
+    }
+    .read_repositories(rfile)
+}
+
+.read_repositories <- function(file)
+{
+    db <- read.delim(file, header = TRUE, comment.char = "#",
+                     colClasses = c(rep.int("character", 3L),
+                                    rep.int("logical", 4L))) # allow for win64.binary
+    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
+    db
+}
+
+### default changed to https: for R 3.3.0
+.expand_BioC_repository_URLs <- function(x)
+{
+    x <- sub("%bm",
+             as.character(getOption("BioC_mirror",
+                                    "https://bioconductor.org")),
+             x, fixed = TRUE)
+    sub("%v",
+        as.character(.BioC_version_associated_with_R_version()),
+        x, fixed = TRUE)
+}
+
+## default is included in setRepositories.Rd
+.BioC_version_associated_with_R_version_default <- "3.16"
+.BioC_version_associated_with_R_version <- function ()
+    numeric_version(Sys.getenv("R_BIOC_VERSION",
+                               .BioC_version_associated_with_R_version_default))

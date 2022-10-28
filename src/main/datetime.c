@@ -31,13 +31,26 @@
     if it is not set (or even if it is: see the workaround below).  We
     use unsetenv() to work around this: that is a BSD (and POSIX 2001)
     construct but seems to be available on the affected platforms.
+
+    The system date-time entry points we use (or substitute) are
+
+    gmtime_r (or gmtime)
+    localtime_r (or localtime)
+    mktime
+    strftime (in do_formatPOSIXlt)
+    tzname
+    tzset
+
+    PATH 2) also uses R_timegm and R_tzsetwall (a version of tzset
+    which ignores TZ and loads the current timezone).
+
+    Via Rstrptime.h we use the system strftime or wcsftime to get the
+    language-specific names.
 */
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-
-#include <Rmath.h> // for imin2()
 
 // to get tm_zone, tm_gmtoff defined in glibc.
 // some other header, e.g. math.h, might define the macro.
@@ -52,9 +65,20 @@
 #if defined(HAVE_GLIBC2) && !defined(_DEFAULT_SOURCE_) && !defined(_BSD_SOURCE)
 # define _BSD_SOURCE 1
 #endif
-#include <time.h>
 
-#include <errno.h>
+/*
+  glibc (with these macros), macOS and internal tzcode all have tm_zone
+  and tm_gmtoff fields in struct tm.
+
+  musl has __tm_zone and __tm_gmtoff, which it re-defines without __
+  if _BSD_SOURCE or _GNU_SOURCE is defined.  But with no macro to
+  detect musl.  However, they were redefined on the tested Alpine
+  Linux system which did define _GNU_SOURCE.
+*/
+
+#include <time.h>
+#include <errno.h> // mktime or substitute may set errno.
+#include <Rmath.h> // for imin2()
 
 /*
 
@@ -64,37 +88,43 @@ There are two implementation paths here.
    Use the system time_t, struct tm and time-zone tables.
 
 2) USE_INTERNAL_MKTIME :
-   Use substitutes from src/extra/tzone for mktime, gmtime, localtime,
-   strftime with a R_ prefix.  The system strftime is used for
-   locale-dependent names in R_strptime and R_strftime.  This uses the
-   time-zone tables shipped with R and installed into
+   Use substitutes from src/extra/tzone for mktime, gmtime_r,
+   localtime_r, strftime with a R_ prefix.  The system strftime is
+   used for locale-dependent names in R_strptime and R_strftime.  This
+   uses the time-zone tables shipped with R and installed into
    R_HOME/share/zoneinfo .
 
    Our own versions of time_t (64-bit) and struct tm (including the
    BSD-style fields tm_zone and tm_gmtoff) are used.
 
-For path 1), the system facilities are used for 1902-2037 and outside
+For PATH 1), the system facilities are used for 1902-2037 and outside
 those limits where there is a 64-bit time_t and the conversions work
-(some OSes have only 32-bit time-zone tables).  Otherwise there is
-code below to extrapolate from 1902-2037.
+(some OSes have only 32-bit time-zone tables and one only works from
+1900).  Otherwise there is code below to extrapolate from 1902-2037.
 
-Path 2) was added for R 3.1.0 and is the only one supported on
-Windows: it is the default on macOS.
+PATH 2) was added for R 3.1.0 (2014-04) and is the only one supported
+on Windows: it is the current default on macOS.
 
 */
 
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"
-# undef HAVE_LOCAL_TIME_R
-# define HAVE_LOCAL_TIME_R 1
+// configure might have checked the system versions.
+# undef HAVE_LOCALTIME_R
+# define HAVE_LOCALTIME_R 1
 # undef HAVE_TM_ZONE
 # define HAVE_TM_ZONE 1
 # undef HAVE_TM_GMTOFF
 # define HAVE_TM_GMTOFF 1
+// latterly these are set by configure, but not on Windows
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
-# undef HAVE_WORKING_64BIT_MKTIME
-# define HAVE_WORKING_64BIT_MKTIME 1
+# undef HAVE_WORKING_MKTIME_AFTER_2037
+# define HAVE_WORKING_MKTIME_AFTER_2037 1
+# undef HAVE_WORKING_MKTIME_BEFORE_1902
+# define HAVE_WORKING_MKTIME_BEFORE_1902 1
+# undef HAVE_WORKING_MKTIME_BEFORE_1900
+# define HAVE_WORKING_MKTIME_BEFORE_1900 1
 #else
 
 typedef struct tm stm;
@@ -122,6 +152,8 @@ static const int month_days[12] =
   Adjust a struct tm to be a valid scalar date-time.
   Return 0 if valid, -1 if invalid and uncorrectable, or a positive
   integer approximating the number of corrections done.
+
+  Used in both paths.
   */
 static int validate_tm (stm *tm)
 {
@@ -167,7 +199,9 @@ static int validate_tm (stm *tm)
 	if(tm->tm_mon < 0) {tm->tm_mon += 12; tm->tm_year--;}
     }
 
-    /* A limit on the loops of about 3000x round */
+    /* A limit on the loops of about 3000x round.
+       We could spin bacwards or forwards in multiples of 400 years.
+     */
     if(tm->tm_mday < -1000000 || tm->tm_mday > 1000000) return -1;
 
     if(abs(tm->tm_mday) > 366) {
@@ -203,11 +237,21 @@ static int validate_tm (stm *tm)
 } // validate_tm
 
 
-/* Substitute for mktime -- no checking, always in GMT */
+/* Substitute for mktime -- no checking, always in GMT (so really for
+   timegm which is non-POSIX).  Also, returns double and needs to be
+   wider than a 32-bit time_t.
+
+   Used in mktime0 on PATH 2).
+
+   days_in_year is the same for year mod 400.
+
+   We could avoid loops altogether by computing how many leap years
+   there are between tm->tm_year and 1900.
+*/
 static double mktime00 (stm *tm)
 {
 #define MKTIME_BODY							\
-    int day = tm->tm_mday - 1,						\
+    int day = tm->tm_mday - 1,	/* not ok if it's NA_INTEGER */		\
       year0 = 1900 + tm->tm_year;					\
     /* safety check for unbounded loops */				\
     double excess = 0.0;						\
@@ -233,27 +277,51 @@ static double mktime00 (stm *tm)
 									\
     /* weekday: Epoch day was a Thursday */				\
     if ((tm->tm_wday = ((day % 7) + 4) % 7) < 0) tm->tm_wday += 7
-
+    
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return NA_REAL;
+    }
     MKTIME_BODY;
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
 	+ (day + excess * 730485) * 86400.0;
 }
 
+/* These functions should never be sent NA, but in 2022-10 they were,
+ * by do_balancePOSIXTlt, causing UBSAN warnings.
+ * This could just be mktime00 or mkdate00, discarding the result.
+ */
 static void set_w_yday(stm *tm)
 {
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return;
+    }
     MKTIME_BODY;
 }
 
 // to be used in POSIXlt2D()
 static double mkdate00 (stm *tm)
 {
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER) {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return NA_REAL;
+    }
     MKTIME_BODY;
     return (day + excess * 730485);
 }
 
 
 #ifdef USE_INTERNAL_MKTIME
-/* Interface to mktime or mktime00 */
+/* 
+   PATH 1)
+
+   Interface to mktime or timegm, version in each PATH.
+   Called from do_asPOSIXct and do_strptime.
+*/
 static double mktime0 (stm *tm, const int local)
 {
     if(validate_tm(tm) < 0) {
@@ -267,45 +335,18 @@ static double mktime0 (stm *tm, const int local)
     return local ? R_mktime(tm) : mktime00(tm);
 }
 
-/* Interface to localtime_r or gmtime_r */
+/* 
+   Interface to localtime_r or gmtime_r.  Version in each PATH.
+   Used in do_asPOSIXlt and do_strptime.
+*/
 static stm * localtime0(const double *tp, const int local, stm *ltm)
 {
     time_t t = (time_t) *tp;
     return local ? R_localtime_r(&t, ltm) : R_gmtime_r(&t, ltm);
 }
 
-#else
-/* The glibc in RH8.0 was broken and assumed that dates before
-   1970-01-01 do not exist.  So does Windows, but its code was replaced
-   in R 2.7.0.  As from 1.6.2, test the actual mktime code and cache
-   the result on glibc >= 2.2. (It seems this started between 2.2.5
-   and 2.3, and RH8.0 had an unreleased version in that gap.)
-
-   Sometime in late 2004 this was reverted in glibc.
-*/
-
-static Rboolean have_broken_mktime(void)
-{
-#if defined(_AIX)
-    return TRUE;  // maybe not so for AIX >= 6, which allegedly uses Olson code
-#elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ == 2 && __GLIBC_MINOR__ >= 2 &&  __GLIBC_MINOR__ < 10
-    static int test_result = -1;
-
-    if (test_result == -1) {
-	stm t;
-	time_t res;
-	t.tm_sec = t.tm_min = t.tm_hour = 0;
-	t.tm_mday = t.tm_mon = 1;
-	t.tm_year = 68;
-	t.tm_isdst = -1;
-	res = mktime(&t);
-	test_result = (res == (time_t)-1);
-    }
-    return test_result > 0;
-#else
-    return FALSE;
-#endif
-}
+#else // PATH 2)
+//----------------------------------------------------------------- long clause ----
 
 #ifndef HAVE_POSIX_LEAPSECONDS
 static int n_leapseconds = 27; // 2017-01, sync with .leap.seconds in R (!)
@@ -333,7 +374,7 @@ static double guess_offset (stm *tm)
     */
 
     memcpy(&oldtm, tm, sizeof(stm));
-    if(!have_broken_mktime() && tm->tm_year < 2) { /* no DST */
+    if(tm->tm_year < 2) { /* no DST */
 	tm->tm_year = 2;
 	mktime(tm);
 	offset1 = (double) mktime(tm) - mktime00(tm);
@@ -400,7 +441,10 @@ static double guess_offset (stm *tm)
     return offset;
 }
 
-/* Interface to mktime or mktime00 */
+/* 
+   Interface to mktime or mktime00, version in each PATH.
+   Called from do_asPOSIXct and do_strptime.
+*/
 static double mktime0 (stm *tm, const int local)
 {
     double res;
@@ -416,13 +460,28 @@ static double mktime0 (stm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
-/* macOS 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
-#ifdef HAVE_WORKING_64BIT_MKTIME
-    if(sizeof(time_t) == 8)
-	OK = !have_broken_mktime() || tm->tm_year >= 70;
-    else
+/* 
+   Platforms with a 32-bit time_t will fail before 1901-12-13 and after 2038-01-19.
+   macOS 10.9 gave -1 for dates prior to 1902 and ignored DST after 2037 
+   macOS 13 gives -1 for dates prior to 1900
+   Windows UCRT (and in 2004) gives -1 for dates prior to 1970
+   https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_16
+   states 'the releationship is undefined' prior to 1970.
+   glibc from 2.2.5 until late 2004 also gave -1 for such dates.
+*/
+    if(sizeof(time_t) == 8) {
+	OK = TRUE;
+#ifndef HAVE_WORKING_MKTIME_AFTER_2037
+	OK = OK && tm->tm_year < 138;
 #endif
-	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
+	OK = OK && tm->tm_year >= 02;
+#endif
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1970
+	OK = OK && tm->tm_year >= 70;
+#endif
+    } else
+	OK = tm->tm_year < 138 && tm->tm_year >= 02;
     if(OK) {
 	res = (double) mktime(tm);
 	if (res == -1.) return res;
@@ -435,20 +494,27 @@ static double mktime0 (stm *tm, const int local)
     } else return guess_offset(tm) + mktime00(tm);
 }
 
-/* Interface for localtime or gmtime or internal substitute */
+/* 
+   Interface to localtime[_r] or gmtime[_r] or internal substitute. 
+   Version in each PATH.
+   Used in do_asPOSIXlt and do_strptime.
+*/
 static stm * localtime0(const double *tp, const int local, stm *ltm)
 {
     double d = *tp;
 
     Rboolean OK;
 /* as mktime is broken, do not trust localtime */
-#ifdef HAVE_WORKING_64BIT_MKTIME
-    if (sizeof(time_t) == 8)
-	OK = !have_broken_mktime() || d > 0.;
-    else
+    if (sizeof(time_t) == 8) {
+	OK = TRUE;
+#ifndef HAVE_WORKING_MKTIME_AFTER_2037
+	OK = OK && d < 2147483647.0;
 #endif
-	OK = d < 2147483647.0 &&
-	    d > (have_broken_mktime() ? 0. : -2147483647.0);
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
+	OK = OK && d > -2147483647.0;
+#endif
+    } else
+	OK = d < 2147483647.0 && d > -2147483647.0;
     if(OK) {
 	time_t t = (time_t) d;
 	/* if d is negative and non-integer then t will be off by one day
@@ -458,12 +524,13 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #ifndef HAVE_POSIX_LEAPSECONDS
 	for(int y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
+	// Recent Linux and macOS have localtime_r
 #ifdef HAVE_LOCALTIME_R
 	return local ? localtime_r(&t, ltm) : gmtime_r(&t, ltm);
 #else
 	return local ? localtime(&t) : gmtime(&t);
 #endif
-    }
+    } // end of OK
 
     /* internal substitute code.
        Like localtime, this returns a pointer to a static struct tm */
@@ -557,16 +624,15 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	res->tm_isdst = 0; /* no dst in GMT */
 	return res;
     }
-}
-#endif
+} /* localtime0() */
+#endif // end of PATH 1).
 
 static Rboolean set_tz(const char *tz, char *oldtz)
 {
     Rboolean settz = TRUE; // typical result
-    char *p = NULL;
 
     strcpy(oldtz, "");
-    p = getenv("TZ");
+    char *p = getenv("TZ");
     if(p) {
 	if (strlen(p) > 1000)
 	    error("time zone specification is too long");
@@ -627,6 +693,7 @@ static void glibc_fix(stm *tm, Rboolean *invalid)
 #ifndef HAVE_POSIX_LEAPSECONDS
     t -= n_leapseconds;
 #endif
+    // Recent Linux and macOS have localtime_r
 #ifdef HAVE_LOCALTIME_R
     stm tm2;
     tm0 = localtime_r(&t, &tm2);
@@ -693,7 +760,6 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
 // .Internal(as.POSIXlt(x, tz)) -- called only from  as.POSIXlt.POSIXct()
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
     SEXP stz = CADR(args);
@@ -757,9 +823,12 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rboolean valid;
 	if(R_FINITE(d)) {
 	    ptm = localtime0(&d, !isGMT, &dummy);
-	    /* in theory localtime/gmtime always return a valid
-	       struct tm pointer, but Windows uses NULL for error
-	       conditions (like negative times). */
+	    /* 
+	       In theory localtime/gmtime always return a valid struct
+	       tm pointer, but Windows uses NULL for error conditions
+	       (like negative times). Not that we use this for
+	       Windows, but other OSes might also get it wrong.
+	    */
 	    valid = (ptm != NULL);
 	} else {
 	    valid = FALSE;
@@ -841,7 +910,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 6; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP));
+    SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP)); // isdst
 
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
@@ -864,6 +933,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REAL(ans)[i] = NA_REAL;
 	else {
 	    errno = 0;
+	    // Interface to mktime or mktime00, PATH-specific
 	    double tmp = mktime0(&tm, !isGMT);
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
@@ -976,8 +1046,9 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
-#elif defined USE_INTERNAL_MKTIME
-	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
+//#elif defined USE_INTERNAL_MKTIME
+//	    // Hmm, tm_zone is defined in PATH 1) so never get here.
+//	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    /* Modifying tzname causes memory corruption on Solaris. It
 	       is not specified to have any effect and strftime is documented
@@ -1001,6 +1072,11 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else if(validate_tm(&tm) < 0) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
+	    /* FIXME: We could translate to wchar_t and use wcsftime,
+	       But there is no R_wcsftime, nor suuport in IANA's
+	       tcode.  It might be safe enough to translate to UTF-8
+	       and use strftime -- this is only looking to replace
+	       short ASCII character sequqnces. */
 	    const char *q = translateChar(STRING_ELT(sformat, i%m));
 	    int nn = (int) strlen(q) + 50;
 	    char buf2[nn];
@@ -1179,8 +1255,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!invalid) {
 	    /* Solaris sets missing fields to 0 */
 	    if(tm.tm_mday == 0) tm.tm_mday = NA_INTEGER;
-	    if(tm.tm_mon == NA_INTEGER || tm.tm_mday == NA_INTEGER
-	       || tm.tm_year == NA_INTEGER)
+	    if(tm.tm_mon == NA_INTEGER || tm.tm_mday == NA_INTEGER || tm.tm_year == NA_INTEGER)
 		glibc_fix(&tm, &invalid);
 	    tm.tm_isdst = -1;
 	    if (offset != NA_INTEGER) {
@@ -1192,6 +1267,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		   adjust and convert back */
 		double t0;
 		memcpy(&tm2, &tm, sizeof(stm));
+		// Interface to mktime or mktime00, PATH-specific
 		t0 = mktime0(&tm2, 0);
 		if (t0 != -1) {
 		    t0 -= offset; /* offset = -0800 is Seattle */
@@ -1354,7 +1430,7 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-// .Internal(balancePOSIXlt(x))
+// .Internal(balancePOSIXlt(x, fill.only, classed))
 SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1363,26 +1439,38 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x = PROTECT(duplicate(CAR(args)));
     if(!isVectorList(x) || LENGTH(x) < 9)
 	error(_("invalid '%s' argument"), "x");
-    int do_class = asLogical(CADR(args));
+    int fill_only = asLogical(CADR(args));
+    if(fill_only == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "fill.only");
+    int do_class = asLogical(CADDR(args));
     if(do_class == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "class");
+	error(_("invalid '%s' argument"), "classed");
 
     int n_comp = LENGTH(x); // >= 9
-    Rboolean isGMT = n_comp == 9, // otherwise, 10 or 11:
+    Rboolean isGMT = (n_comp == 9), have_zone; // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
-	have_zone = n_comp >= 11; // {zone, gmtoff}
+    have_zone = n_comp >= 11; // {zone, gmtoff}
+    // Why check the type and not the name?
     if(have_zone && !isInteger(VECTOR_ELT(x, 10)))
 	error(_("invalid component [[11]] in \"POSIXlt\" should be 'gmtoff'"));
 #else
-        have_zone = n_comp >= 10; // {zone}
+    have_zone = (n_comp >= 10); // {zone}
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
 	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
 
+    Rboolean need_fill = FALSE;
     R_xlen_t n = 0, nlen[n_comp];
     for(int i = 0; i < n_comp; i++) {
 	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n)
 	    n = nlen[i];
+	else if(!need_fill && nlen[i] < n)
+	    need_fill = TRUE;
+    }
+    if(fill_only && !need_fill) { // be fast:
+	if(!do_class) classgets(x, R_NilValue);
+	UNPROTECT(1);
+	return(x);
     }
     if(n > 0) {
 	for(int i = 0; i < n_comp; i++)
@@ -1391,19 +1479,71 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     // get names(.) [possibly empty]
-    SEXP nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol));
-    if(nm != R_NilValue && nlen[5] < n) {
-	// names(.) will have to become length n ==>  $year as well: ==> must recycle anyway, do it now:
-	SET_VECTOR_ELT(x, 5, xlengthgets(VECTOR_ELT(x, 5), n));
-	nlen[5] = n;
-    }
+    SEXP nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol);
+    Rboolean set_nm = (nlen[5] < n || !fill_only) && nm != R_NilValue;
+    if(set_nm && !fill_only)
+	PROTECT(nm);
 
     /* coerce fields to integer or real */
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 9; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    /* threw an error just above if these were not the case.
+    if(n_comp >= 10) // zone
+	SET_VECTOR_ELT(x, 9, coerceVector(VECTOR_ELT(x, 9), STRSXP));
     if(n_comp >= 11) // gmtoff
 	SET_VECTOR_ELT(x, 10, coerceVector(VECTOR_ELT(x, 10), INTSXP));
+    */
+
+    if(fill_only) { // & need_fill
+	R_xlen_t ni;
+	// x[0] : sec (double)
+	if((ni = nlen[0]) != n) { // recycle sec = x[[0]] to length n
+	    SET_VECTOR_ELT(x, 0, xlengthgets(VECTOR_ELT(x, 0), n));
+	    double *xi = REAL(VECTOR_ELT(x, 0));
+	    for(R_xlen_t ii=ni; ii < n; ii++)
+		xi[ii] = xi[ii % ni];
+	}
+	// x[1:8] = {min, hour, mday, mon, year, wday, yday, isdst} :
+	for(int i = 1; i < 9; i++) {
+	    ni = nlen[i];
+	    if(ni != n) { // recycle x[[i]] to length n
+		// 1. extend to length (filling with NA; names with ""):
+		SET_VECTOR_ELT(x, i, xlengthgets(VECTOR_ELT(x, i), n));
+		// 2. fill by recycling:
+		int *xi = INTEGER(VECTOR_ELT(x, i));
+		for(R_xlen_t ii=ni; ii < n; ii++)
+		    xi[ii] = xi[ii % ni];
+	    }
+	    if(i == 5 && set_nm) { /* set names(.) = names(x[[5]]) = names(x$year) : */
+		nm = PROTECT(getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol)); // of full length n
+		// fill names, recycling:
+		for(R_xlen_t ii=ni; ii < n; ii++)
+		    SET_STRING_ELT(nm, ii, STRING_ELT(nm, ii % ni));
+		setAttrib(VECTOR_ELT(x, 5), R_NamesSymbol, nm);
+		UNPROTECT(1);
+	    }
+	}
+
+	if(n_comp >= 10 && (ni = nlen[9]) != n) { // x[9] : zone (character)
+	    SET_VECTOR_ELT(x, 9, xlengthgets(VECTOR_ELT(x, 9), n));
+	    SEXP xi = VECTOR_ELT(x, 9);
+	    for(R_xlen_t ii = ni; ii < n; ii++)
+		SET_STRING_ELT(xi, ii, STRING_ELT(xi, ii % ni));
+	}
+
+	if(n_comp >= 11 && (ni = nlen[10]) != n) { // x[10] : gmtoff
+	    SET_VECTOR_ELT(x, 10, xlengthgets(VECTOR_ELT(x, 10), n));
+	    int *xi = INTEGER(VECTOR_ELT(x, 10));
+	    for(R_xlen_t ii=ni; ii < n; ii++)
+		xi[ii] = xi[ii % ni];
+	}
+	if(!do_class) classgets(x, R_NilValue);
+	UNPROTECT(1);
+	return(x);
+    }
+
+    // fill *and* validate from now on:
 
     SEXP ans = PROTECT(allocVector(VECSXP, n_comp));
     for(int i = 0; i < 9; i++)
@@ -1442,8 +1582,9 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
-#elif defined USE_INTERNAL_MKTIME
-	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
+//#elif defined USE_INTERNAL_MKTIME
+//	    // Hmm, tm_zone is defined in PATH 1) so never get here.
+//	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    /* Modifying tzname causes memory corruption on Solaris. It
 	       is not specified to have any effect and strftime is documented
@@ -1462,7 +1603,8 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/* 2. checking for NA/non-finite --------------
 	 * ----------- careful:
-	 * validate_tm() must *not* be called if any other components are NA */
+	 * validate_tm() must *not* be called if any other components are NA.
+	 * Nor must set_w_yday (and it was). */
 	Rboolean valid =
 	    (R_FINITE(secs) &&
 	     tm.tm_min  != NA_INTEGER &&
@@ -1471,10 +1613,13 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	     tm.tm_mon  != NA_INTEGER &&
 	     tm.tm_year != NA_INTEGER);
 
-	if(valid)
+	if(valid) {
 	    validate_tm(&tm);
-	// get correct {yday, wday}:
-	set_w_yday(&tm);
+	    // Set correct {yday, wday}:
+	    // The standards-conformant way to get these set
+	    // is to call mktime (or timegm where supported).
+	    set_w_yday(&tm);
+	}
 
 	makelt(&tm, ans, i, valid,
 	       valid ? secs - fsecs : (R_FINITE(secs) ? NA_REAL : secs)); // fills ans[0..8]
@@ -1512,7 +1657,16 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!isString(tz)) error(_("invalid '%s'"), "attr(x, \"tzone\")");
 	setAttrib(ans, install("tzone"), tz);
     }
-    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
-    UNPROTECT(4);
+    if(set_nm) { /* names(.), attached to x[[5]] = x$year: */
+	SEXP nmN = PROTECT(allocVector(STRSXP, n));
+	R_xlen_t ni = nlen[5];
+	// names(.) will have to become length n;  $year is already
+	// fill names, recycling,  note nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol), of length() ni <= n
+	for(R_xlen_t i=0; i < n; i++)
+	    SET_STRING_ELT(nmN, i, STRING_ELT(nm, i % ni));
+	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
+	UNPROTECT(2); // nm, nmN
+    }
+    UNPROTECT(3);
     return ans;
 }
