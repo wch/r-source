@@ -236,73 +236,14 @@ static int validate_tm (stm *tm)
     return res;
 } // validate_tm
 
-
-/* Substitute for mktime -- no checking, always in GMT (so really for
-   timegm which is non-POSIX).  Also, returns double and needs to be
-   wider than a 32-bit time_t.
-
-   Used in mktime0 on PATH 2).
-
-   days_in_year is the same for year mod 400.
-
-   We could avoid loops altogether by computing how many leap years
-   there are between tm->tm_year and 1900.
-*/
-static double mktime00 (stm *tm)
-{
-#define MKTIME_BODY							\
-    int day = tm->tm_mday - 1,	/* not ok if it's NA_INTEGER */		\
-      year0 = 1900 + tm->tm_year;					\
-    /* safety check for unbounded loops */				\
-    double excess = 0.0;						\
-    if (year0 > 3000) {							\
-	excess = (int)(year0/2000) - 1;					\
-	year0 -= (int)(excess * 2000);					\
-    } else if (year0 < 0) {						\
-	excess = -1 - (int)(-year0/2000);				\
-	year0 -= (int)(excess * 2000);					\
-    }									\
-									\
-    for(int i = 0; i < tm->tm_mon; i++) day += month_days[i];		\
-    if (tm->tm_mon > 1 && isleap(year0)) day++;				\
-    tm->tm_yday = day;							\
-									\
-    if (year0 > 1970) {							\
-	for (int year = 1970; year < year0; year++)			\
-	    day += days_in_year(year);					\
-    } else if (year0 < 1970) {						\
-	for (int year = 1969; year >= year0; year--)			\
-	    day -= days_in_year(year);					\
-    }									\
-									\
-    /* weekday: Epoch day was a Thursday */				\
-    if ((tm->tm_wday = ((day % 7) + 4) % 7) < 0) tm->tm_wday += 7
-    
-    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
-       || tm->tm_mon == NA_INTEGER) {
-	tm->tm_yday = tm->tm_wday = NA_INTEGER;
-	return NA_REAL;
-    }
-    MKTIME_BODY;
-    return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day + excess * 730485) * 86400.0;
-}
-
-/* These functions should never be sent NA, but in 2022-10 they were,
- * by do_balancePOSIXTlt, causing UBSAN warnings.
- * This could just be mktime00 or mkdate00, discarding the result.
- */
-static void set_w_yday(stm *tm)
-{
-    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
-       || tm->tm_mon == NA_INTEGER) {
-	tm->tm_yday = tm->tm_wday = NA_INTEGER;
-	return;
-    }
-    MKTIME_BODY;
-}
-
 // to be used in POSIXlt2D()
+/*
+   days_in_year is the same for year mod 400.
+   We could avoid loops altogether by computing how many leap years
+   there are between 1900 + tm->tm_year and 1900.
+
+   This will fix up tm_yday and tm_wday.
+*/
 static double mkdate00 (stm *tm)
 {
     if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
@@ -310,8 +251,55 @@ static double mkdate00 (stm *tm)
 	tm->tm_yday = tm->tm_wday = NA_INTEGER;
 	return NA_REAL;
     }
-    MKTIME_BODY;
-    return (day + excess * 730485);
+
+    int day = tm->tm_mday - 1,	/* not ok if it's NA_INTEGER */
+	year0 = 1900 + tm->tm_year;
+    /* safety check for unbounded loops */
+    double excess = 0.0;
+    if (year0 >= 400) {	
+	excess = (int)(year0/400) - 1;
+	year0 -= (int)(excess * 400);
+    } else if (year0 < 0) {
+	excess = -1 - (int)(-year0/400);
+	year0 -= (int)(excess * 400);
+    }
+
+    for(int i = 0; i < tm->tm_mon; i++) day += month_days[i];
+    if (tm->tm_mon > 1 && isleap(year0)) day++;
+    tm->tm_yday = day;
+
+    if (year0 > 1970) {
+	for (int year = 1970; year < year0; year++)
+	    day += days_in_year(year);
+    } else if (year0 < 1970) {
+	for (int year = 1969; year >= year0; year--)
+	    day -= days_in_year(year);
+    }
+
+    /* weekday: Epoch day was a Thursday */
+    if ((tm->tm_wday = ((day % 7) + 4) % 7) < 0) tm->tm_wday += 7;
+
+    return (day + excess * 146097);
+}
+
+/* Substitute for mktime -- no checking, always in GMT (so really for
+   timegm which is non-POSIX).  Also, returns double and needs to be
+   wider than a 32-bit time_t.
+
+   Used in mktime0 on PATH 2).
+*/
+static double mktime00 (stm *tm)
+{
+    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
+       || tm->tm_mon == NA_INTEGER || tm->tm_sec == NA_INTEGER
+       || tm->tm_min == NA_INTEGER || tm->tm_hour == NA_INTEGER)
+    {
+	tm->tm_yday = tm->tm_wday = NA_INTEGER;
+	return NA_REAL;
+    }
+    double day = mkdate00(tm);
+    return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
+	+ day * 86400.0;
 }
 
 
@@ -346,7 +334,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 }
 
 #else // PATH 2)
-//----------------------------------------------------------------- long clause ----
+//--------------------------------------------------------- long clause ----
 
 #ifndef HAVE_POSIX_LEAPSECONDS
 static int n_leapseconds = 27; // 2017-01, sync with .leap.seconds in R (!)
@@ -391,7 +379,7 @@ static double guess_offset (stm *tm)
     tm->tm_mon = 6;
     tm->tm_mday = 1;
     tm->tm_isdst = -1;
-    set_w_yday(tm);
+    mkdate00(tm); // fixes tm_wday and tm_yday
     wday = tm->tm_wday;
     if (oldtm.tm_year > 137) { /* in the unknown future */
 	for(i = 130; i < 137; i++) { /* These cover all the possibilities */
@@ -1604,7 +1592,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* 2. checking for NA/non-finite --------------
 	 * ----------- careful:
 	 * validate_tm() must *not* be called if any other components are NA.
-	 * Nor must set_w_yday (and it was). */
+	 */
 	Rboolean valid =
 	    (R_FINITE(secs) &&
 	     tm.tm_min  != NA_INTEGER &&
@@ -1618,7 +1606,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    // Set correct {yday, wday}:
 	    // The standards-conformant way to get these set
 	    // is to call mktime (or timegm where supported).
-	    set_w_yday(&tm);
+	    mkdate00(&tm);
 	}
 
 	makelt(&tm, ans, i, valid,
@@ -1657,7 +1645,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!isString(tz)) error(_("invalid '%s'"), "attr(x, \"tzone\")");
 	setAttrib(ans, install("tzone"), tz);
     }
-    if(set_nm) { /* names(.), attached to x[[5]] = x$year: */
+    if(set_nm) { // names(.), attached to x[[5]] = x$year:
 	SEXP nmN = PROTECT(allocVector(STRSXP, n));
 	R_xlen_t ni = nlen[5];
 	// names(.) will have to become length n;  $year is already

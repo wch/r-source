@@ -4397,9 +4397,6 @@ int main(int argc, const char * argv[]) {
               [r_cv_working_mktime=yes],
               [r_cv_working_mktime=no],
               [r_cv_working_mktime=no])])
-if test "x${r_cv_working_mktime}" != xyes; then
-  AC_MSG_ERROR([date-time conversions do not work in 2020])
-fi
 ])# R_WORKING_MKTIME
 
 ## 32-bit time_t will not
@@ -4407,7 +4404,7 @@ fi
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME],
 [AC_CACHE_CHECK([whether mktime works correctly after 2037],
-                [r_cv_working_mktime],
+                [r_cv_working_mktime1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
@@ -4417,24 +4414,24 @@ int main(int argc, const char * argv[]) {
 
     struct tm tm;
     time_t res;
-    putenv("TZ=Pacific/Auckland");
+    putenv("TZ=Europe/London");
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
     tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 140; tm.tm_isdst = 0;
     // test 2040-01-01, whoch is assumed to be in GMT
     res = mktime(&tm);
     if(res != 2209032000L) exit(4);
     tm.tm_mon = 6; tm.tm_isdst = 1;
-    // test 2040-06-01 which is assumed to be in BST
+    // test 2040-07-01 which is assumed to be in BST
     res = mktime(&tm);
     if(res != 2224753200L) exit(5);
 
     exit(0);
 }
 ]])],
-              [r_cv_working_mktime=yes],
-              [r_cv_working_mktime=no],
-              [r_cv_working_mktime=no])])
-if test "x${r_cv_working_mktime}" = xyes; then
+              [r_cv_working_mktime1=yes],
+              [r_cv_working_mktime1=no],
+              [r_cv_working_mktime1=no])])
+if test "x${r_cv_working_mktime1}" = xyes; then
   AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
             [Define if your mktime works correctly after 2037.])
 fi
@@ -4486,7 +4483,7 @@ fi
 ## R_FUNC_MKTIME3
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME3],
-[AC_CACHE_CHECK([whether mktime works correctly before 1970],
+[AC_CACHE_CHECK([whether mktime works correctly in 1969],
                 [r_cv_working_mktime3],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -4511,7 +4508,7 @@ int main(int argc, const char * argv[]) {
               [r_cv_working_mktime3=no])])
 if test "x${r_cv_working_mktime3}" = xyes; then
   AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
-            [Define if your mktime works correctly before 1970.])
+            [Define if your mktime works correctly in 1969.])
 fi
 ])# R_FUNC_MKTIME3
 
