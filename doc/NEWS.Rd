@@ -127,6 +127,10 @@
       \item There is some support for using the native date-time
       routines on macOS: this is only viable on recent versions
       (e.g.\sspace{}12.6) and does get some historical changes wrong.
+
+      \item \command{configure} now checks coversion of datetimes
+      between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
+      (which has been seen on platforms missing \code{tzdata}) is fatal.
     }
   }
 

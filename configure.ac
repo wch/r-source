@@ -2166,6 +2166,7 @@ esac
 fi
 if test "${use_internal_tzcode}" != yes; then
   R_MKTIME_ERRNO
+  R_WORKING_MKTIME
   R_FUNC_MKTIME
   R_FUNC_MKTIME2
   R_FUNC_MKTIME3
