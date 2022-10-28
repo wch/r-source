@@ -53,3 +53,62 @@ for (f in fmts) print(format(x, f))
 (z <- .Date(2^31 + 10))
 as.POSIXlt(z)$year == 5879680L
 ## year was negative in R <= 4.2.1, even for 64-bit time_t
+
+
+## ------------- Tests of far-distant dates -----------
+Sys.setenv(TZ = "Europe/London")
+## the pre-1902 POSIXct values wil be 75s out on platdorm that do not
+## know about UK changes prior to 1902 (in fact in 1847-12-01: see below).
+as.POSIXct("4000-07-01")
+as.Date("4000-07-01")
+zz <- z <- as.POSIXlt("2000-07-01")
+unclass(z)
+
+years <- c(-1e6, -1e5, -1e4, seq(-1000, 4000, by = 100), 1e4, 1e5, 1e6)
+y <- character(length(years))
+for(i in seq_along(years)) {
+    zz$year = years[i] - 1900
+    y[i] <- strftime(zz)
+}
+y
+
+y <- double(length(years))
+for(i in seq_along(years)) {
+    zz$year = years[i] - 1900
+    zz$isdst <- -1 # some are DST, some not so let the code decide
+    y[i] <- as.POSIXct(zz)
+}
+print(y, digits=14)
+y <- .POSIXct(y)
+(y1 <- strftime(y)) # leading zeros or spaces is platform-dependant
+y2 <- strftime(y, "%_4Y-%m-%d") # not all platforms interpret this
+if(y2[1] != "4Y-07-01") print(y2) else message('format "%_4Y" unsupported')
+
+y <- double(length(years))
+for(i in seq_along(years)) {
+    zz$year = years[i] - 1900
+    zz$isdst <- -1
+    y[i] <- as.Date(zz)
+}
+y
+class(y) <- "Date"
+(y3 <- strftime(y))
+y4 <- strftime(y, "%_4Y-%m-%d")
+stopifnot(identical(y3, y1))
+
+zz <- as.POSIXlt("1900-07-01")
+years <- c(1800, 1847:1848, 1899:1902)
+y <- double(length(years))
+for(i in seq_along(years)) {
+    zz$year = years[i] - 1900
+    zz$isdst <- -1 # some are DST, some not so let the code decide
+    y[i] <- as.POSIXct(zz)
+}
+print(y, digits=14)
+.POSIXct(y)
+
+## change of 75s in 1847
+seq(as.POSIXlt("1847-11-24"), as.POSIXlt("1847-12-07"), by ="day")
+
+## end of ------------- Tests of far-distant dates -----------
+
