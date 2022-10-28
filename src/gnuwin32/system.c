@@ -94,8 +94,6 @@ void set_workspace_name(const char *fn); /* ../main/startup.c */
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
 
-static DWORD mainThreadId;
-
 static char oldtitle[512];
 
 __declspec(dllexport) Rboolean UserBreak = FALSE;
@@ -225,11 +223,37 @@ static void Rstd_Suicide(const char *s)
 /* Global variables */
 static int (*InThreadReadConsole) (const char *, unsigned char *, int, int);
 
+/* EhiWakeUp is a synchronization Event between the main thread and the reader
+   thread. It is set by the main thread to inform the reader thread it should
+   start reading a line.
 
-HANDLE EhiWakeUp;
+   ReadMsgWindow is a message-only window used for synchronization between the
+   main thread and the reader thread. The reader thread sends a message to the
+   window when it needs the main thread to perform completion or when the line
+   is available. The window procedure will set "lineavailable" or run the R
+   code for performing completion. */
+
+static HANDLE EhiWakeUp;
+static HWND ReadMsgWindow;
+#define WM_RREADMSG_EVENT ( WM_USER + 2 )
+
+static LRESULT CALLBACK
+ReadMsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 static const char *tprompt;
 static unsigned char *tbuf;
-static  int tlen, thist, lineavailable;
+static int tlen, thist;
+static int lineavailable;
+
+static int ReaderThreadTabHook(char *, int, int *);
+static int (*InThreadTabHook)(char *, int, int *);
+static struct {
+    char *buf;
+    int offset;
+    int *loc;
+    int result;
+    HANDLE done;
+} completionrequest;
 
  /* Fill a text buffer with user typed console input. */
 int
@@ -290,6 +314,47 @@ GuiReadConsole(const char *prompt, unsigned char *buf, int len,
 
 /* 2 and 3: reading in a thread */
 
+/* runs in the main R thread */
+static void RunCompletion(void *dummy)
+{
+    completionrequest.result = InThreadTabHook(
+			completionrequest.buf,
+			completionrequest.offset,
+			completionrequest.loc);
+}
+
+
+/* runs in the main R thread */
+static LRESULT CALLBACK
+ReadMsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    if (hwnd == ReadMsgWindow && uMsg == WM_RREADMSG_EVENT) {
+	int what = (int) lParam;
+	switch(what) {
+	case 1:
+	    lineavailable = 1;
+	    return 0;
+	case 2:
+	    if (!R_ToplevelExec(RunCompletion, NULL))
+		completionrequest.result = -1;
+	    SetEvent(completionrequest.done);
+	    return 0;
+	}
+    }
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+/* runs in the 'Reader thread', needs to execute the completion request
+   on the main R thread */
+static int ReaderThreadTabHook(char *buf, int offset, int *loc)
+{
+    completionrequest.buf = buf;
+    completionrequest.offset = offset;
+    completionrequest.loc = loc;
+    SendMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
+	       (LPARAM) 2 /* completion needed */);
+    WaitForSingleObject(completionrequest.done, INFINITE);
+    return completionrequest.result;
+}
 
 /* 'Reader thread' main function */
 static void __cdecl ReaderThread(void *unused)
@@ -297,11 +362,12 @@ static void __cdecl ReaderThread(void *unused)
     while(1) {
 	WaitForSingleObject(EhiWakeUp,INFINITE);
 	tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
-	lineavailable = 1;
-	PostThreadMessage(mainThreadId, 0, 0, 0);
+	SendMessage(ReadMsgWindow, WM_RREADMSG_EVENT, 0,
+	           (LPARAM) 1 /* line available */);
     }
 }
 
+/* runs in the main R thread */
 static int
 ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
                     int addtohistory)
@@ -314,7 +380,6 @@ ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
      */
     oldint = signal(SIGINT, SIG_IGN);
     oldbreak = signal(SIGBREAK, SIG_IGN);
-    mainThreadId = GetCurrentThreadId();
     lineavailable = 0;
     tprompt = prompt;
     tbuf = buf;
@@ -323,8 +388,8 @@ ThreadedReadConsole(const char *prompt, unsigned char *buf, int len,
     SetEvent(EhiWakeUp);
     while (1) {
 	R_WaitEvent();
-	if (lineavailable) break;
 	doevent();
+	if (lineavailable) break;
 	if(R_Tcl_do) R_Tcl_do();
     }
     lineavailable = 0;
@@ -1238,11 +1303,38 @@ int cmdlineoptions(int ac, char **av)
 	Rp->SaveAction != SA_NOSAVE)
 	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
-    if (InThreadReadConsole &&
-	(!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
-	 (_beginthread(ReaderThread, 0, NULL) == -1)))
-	R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
+    if (InThreadReadConsole) {
+	Rboolean ok = TRUE;
+	if (InThreadReadConsole == CharReadConsole) {
+	    /* Need to arrange for the getline completion tab hook to execute
+	       on the main R thread. Executing it in another thread can cause
+	       crashes due to at least stack overflow checking (part of the
+	       completion is implemented in R). */
 
+	    InThreadTabHook = gl_tab_hook;
+	    gl_tab_hook = ReaderThreadTabHook;
+	    completionrequest.done = CreateEvent(NULL, FALSE, FALSE, NULL);
+	    if (!completionrequest.done)
+		ok = FALSE;
+	}
+	if (ok) {
+	    HINSTANCE instance = GetModuleHandle(NULL);
+	    WNDCLASS wndclass = { 0, ReadMsgWindowProc, 0, 0, instance, NULL,
+	                          0, 0, NULL, "RReadMsg" };
+	    ReadMsgWindow = NULL;
+	    if (RegisterClass(&wndclass)) {
+		ReadMsgWindow = CreateWindow("RReadMsg", "RReadMsg", 0, 1, 1,
+		                             1, 1, HWND_MESSAGE, NULL, instance,
+		                             NULL);
+	    }
+	    if (!ReadMsgWindow)
+		ok = FALSE;
+	}
+	if (!ok || !(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
+	    (_beginthread(ReaderThread, 0, NULL) == -1))
+
+	    R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
+    }
     R_setupHistory();
     return 0;
 }

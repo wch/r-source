@@ -1199,7 +1199,7 @@ void dt_invalidate_locale(void) // used in platform.c
     locale_w_strings_set = 0;
 }
 
-/* use system stuct tm and strftime/wcstime here */
+/* use system stuct tm and strftime/wcsftime here */
 static void get_locale_strings(void)
 {
     int i;

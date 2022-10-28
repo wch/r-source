@@ -86,8 +86,14 @@
       and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
 
       \item Experimental \code{balancePOSIXlt()} utility allows using
-      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects which
-      are documented somewhat, now.
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
+      correctly, e.g., in subsetting and subassignments.  Such objects
+      are now documented.
+
+      \item Package repositories in \code{getOption("repos")} are now
+      initialized from the \file{repositories} file when \pkg{utils} is
+      loaded (if not already set, e.g., in \file{.Rprofile}).
+      (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
     }
   }
 
@@ -117,6 +123,10 @@
       \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
       \option{-fPIC} by default (instead of \option{-fpic}), as desired in
       \PR{18326}.
+
+      \item There is some support for using the native date-time
+      routines on macOS: this is only viable on recent versions
+      (e.g.\sspace{}12.6) and does get some historical changes wrong.
     }
   }
 
@@ -160,11 +170,6 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
-
-      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
-      has been changed to be fully C-compliant.  This means that
-      functions loaded \emph{via} for example \code{R_GetCCallable} need
-      to be cast to an appropriate type if they have any arguments.
     }
   }
 
@@ -260,9 +265,9 @@
       with defaults \emph{not} depending on \code{options()}.
       Use of \code{as.character(*, format = .)} now warns.
 
-      \item Similarly, the \code{as.character.hexmode()} and \code{*.octmode()}
-      methods also behave as \code{good citizen} methods and back compatibility
-      option \code{keepStr = TRUE}.
+      \item Similarly, the \code{as.character.hexmode()} and
+      \code{*.octmode()} methods also behave as \code{good citizen}
+      methods and back compatibility option \code{keepStr = TRUE}.
 
       \item The \code{as.POSIXlt(<POSIXlt>)} and
       \code{as.POSIXct(<POSIXct>)} default methods now do obey their
@@ -278,11 +283,39 @@
       \item \code{expand.model.frame()} looked up variables in the wrong
       environment when applied to models fitted without \code{data}.
       Reported in \PR{18414}.
+
+      \item \code{time()} now (also) uses the
+      \code{ts.eps = getOption("ts.eps")}
+      argument and thus by default rounds values very close to the start (or
+      end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.1 patched}{
+\section{\Rlogo CHANGES IN R 4.2.2 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
+      has been changed to be fully C-compliant.  This means that
+      functions loaded \emph{via} for example \code{R_GetCCallable} need
+      to be cast to an appropriate type if they have any arguments.
+
+      \item \code{.Machine} has a new element \code{sizeof.time_t} to
+      identify old systems with a 32-bit type and hence a limited range
+      of date-times (and limited support for dates millions of years
+      from present).
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
+      and their list components meant to be recycled, \code{length()} now
+      is the length of the longest component.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.2.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
@@ -308,11 +341,6 @@
       The \verb{\mathscr} \LaTeX command is also provided (via the
       \samp{mathrsfs} package, if available, or the \samp{amsfonts}
       bundle otherwise), fulfilling the wish of \PR{18398}.
-
-      \item \code{.Machine} has a new element \code{sizeof.time_t} to
-      identify old systems with a 32-bit type and hence a limited range
-      of date-times (and limited support for dates millions of years
-      from present).
 
       \item (Windows) The default format of \code{readClipboard()} and
       \code{writeClipboard()} has been changed to \code{13}
@@ -381,10 +409,6 @@
 
       \item Added methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} for \code{"POSIXlt"} date-time objects.
-
-      \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
-      and their list components meant to be recycled, \code{length()} now
-      is the length of the longest component.
     }
   }
 

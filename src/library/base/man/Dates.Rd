@@ -46,15 +46,17 @@
   negative values for earlier dates.  They are always printed
   following the rules of the current Gregorian calendar, even though
   that calendar was not in use long ago (it was adopted in 1752 in
-  Great Britain and its colonies).
-
+  Great Britain and its colonies).  When printing there is assumed to
+  be a year zero.
+  % man cal on Linux refers to this as 'the Britixh empire'
+  
   It is intended that the date should be an integer, but this is not
   enforced in the internal representation.  Fractional days will be
   ignored when printing.  It is possible to produce fractional days via
   the \code{mean} method or by adding or subtracting (see
   \code{\link{Ops.Date}}).
 
-  From the many methods, see \code{methods(class = "Date")}, a few are
+  For the many methods see \code{methods(class = "Date")}.  Several are
   documented separately, see below.
 }
 \seealso{
@@ -83,6 +85,16 @@ weekdays(today)
 months(tenweeks)
 }% dont
 (Dls <- as.Date(.leap.seconds))
+
+## Show use of year zero:
+(z <- as.Date("01-01-01")) # how it is printed depends on the OS
+z - 365 # so year zero was a leap year.
+as.Date("00-02-29")
+# if you want a different format, consider something like (if supported)
+\dontrun{format(z, "\%04Y-\%m-\%d") # "0001-01-01"
+format(z, "\%_4Y-\%m-\%d") # "   1-01-01"
+format(z, "\%_Y-\%m-\%d")  # "1-01-01"
+} % these are not supported by macOS's native strftimw.
 
 ##  length(<Date>) <- n   now works
 ls <- Dls; length(ls) <- 12

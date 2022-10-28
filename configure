@@ -28667,7 +28667,7 @@ cat > conftest.c <<EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info,
 			const size_t srname_len)
@@ -43728,6 +43728,59 @@ _ACEOF
 fi
 done
 
+for ac_func in timegm
+do
+as_ac_Symbol=`printf "%s\n" "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
+printf %s "checking whether $ac_func exists and is declared... " >&6; }
+if eval test \${$as_ac_Symbol+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <time.h>
+
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  eval "$as_ac_Symbol=yes"
+else $as_nop
+  eval "$as_ac_Symbol=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$as_ac_Symbol
+	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+printf "%s\n" "$ac_res" >&6; }
+if test `eval 'as_val=${'$as_ac_Symbol'};printf "%s\n" "$as_val"'` = yes
+then :
+  cat >>confdefs.h <<_ACEOF
+#define `printf "%s\n" "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
 for ac_func in nl_langinfo
 do
 as_ac_Symbol=`printf "%s\n" "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -45258,12 +45311,12 @@ fi
 printf "%s\n" "$r_cv_mktime_errno" >&6; }
 if test "${r_cv_mktime_errno}" = yes; then
 
-printf "%s\n" "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
+printf "%s\n" "#define MKTIME_SETS_ERRNO 1" >>confdefs.h
 
 fi
 
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly outside 1902-2037" >&5
-printf %s "checking whether mktime works correctly outside 1902-2037... " >&6; }
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly after 2037" >&5
+printf %s "checking whether mktime works correctly after 2037... " >&6; }
 if test ${r_cv_working_mktime+y}
 then :
   printf %s "(cached) " >&6
@@ -45285,16 +45338,12 @@ int main() {
     time_t res;
     putenv("TZ=Europe/London");
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
-    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 80; tm.tm_isdst = 0;
-    res = mktime(&tm);
-    if(res == (time_t)-1) exit(2);
-    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
-    res = mktime(&tm);
-    if(res == (time_t)-1) exit(3);
-    tm.tm_year = 140;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 140; tm.tm_isdst = 0;
+    // test 2040-01-01, whoch is assumed to be in GMT
     res = mktime(&tm);
     if(res != 2209032000L) exit(4);
     tm.tm_mon = 6; tm.tm_isdst = 1;
+    // test 2040-06-01 which is assumed to be in BST
     res = mktime(&tm);
     if(res != 2224753200L) exit(5);
 
@@ -45317,9 +45366,133 @@ fi
 printf "%s\n" "$r_cv_working_mktime" >&6; }
 if test "x${r_cv_working_mktime}" = xyes; then
 
-printf "%s\n" "#define HAVE_WORKING_64BIT_MKTIME 1" >>confdefs.h
+printf "%s\n" "#define HAVE_WORKING_MKTIME_AFTER_2037 1" >>confdefs.h
 
 fi
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly before 1902" >&5
+printf %s "checking whether mktime works correctly before 1902... " >&6; }
+if test ${r_cv_working_mktime2+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_working_mktime2=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1901-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_isdst = 0;
+    tm.tm_year = 01;
+    // test 1901-01-01, where 32-bit time_t may fail.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(3);
+    tm.tm_year = -52; // macOS 13 fails for 1848.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+    tm.tm_year = -1; // and for 1899
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(5);
+
+    exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_working_mktime2=yes
+else $as_nop
+  r_cv_working_mktime2=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime2" >&5
+printf "%s\n" "$r_cv_working_mktime2" >&6; }
+if test "x${r_cv_working_mktime2}" = xyes; then
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1902 1" >>confdefs.h
+
+fi
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly before 1970" >&5
+printf %s "checking whether mktime works correctly before 1970... " >&6; }
+if test ${r_cv_working_mktime3+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_working_mktime3=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1969-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 69; tm.tm_isdst = 0;
+    tm.tm_year = 69; // TK says Windows UCRT fails prior to 1970
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+
+    exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_working_mktime3=yes
+else $as_nop
+  r_cv_working_mktime3=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime3" >&5
+printf "%s\n" "$r_cv_working_mktime3" >&6; }
+if test "x${r_cv_working_mktime3}" = xyes; then
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1970 1" >>confdefs.h
+
+fi
+
+else
+
+printf "%s\n" "#define MKTIME_SETS_ERRNO 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_AFTER_2037 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1902 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_WORKING_MKTIME_BEFORE_1970 1" >>confdefs.h
 
 fi
 

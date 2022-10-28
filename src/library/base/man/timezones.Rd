@@ -75,8 +75,8 @@ OlsonNames(tzdir = NULL)
   \sQuote{standard} time and a different name is used in winter.  And
   there can be multiple changes during a year, for example for Ramadan.
 
-  A quite common system implementation of \code{POSIXct} is as signed
-  32-bit integers and so only goes back to the end of 1901: on such
+  A quite common system implementation of \code{POSIXct} was as signed
+  32-bit integers and so only went back to the end of 1901: on such
   systems \R assumes that dates prior to that are in the same time zone
   as they were in 1902.  Most of the world had not adopted time zones by
   1902 (so used local \sQuote{mean time} based on longitude) but for a
@@ -85,9 +85,8 @@ OlsonNames(tzdir = NULL)
   the database information is 32-bit and so only available for the range
   1901--2038, and incompletely for the end years.
 
-  As from \R 3.5.0, when a time zone location is first found in a
-  session, its value is cached in object \code{.sys.timezone} in the
-  base environment.
+  When a time zone location is first found in a session its value is
+  cached in object \code{.sys.timezone} in the base environment.
 }
 
 \value{
@@ -97,16 +96,18 @@ OlsonNames(tzdir = NULL)
   ascertained.
 
   A time zone region may be known by several names: for example
-  \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
+  \samp{"Europe/London"} may also be known as \samp{GB}, \samp{GB-Eire},
   \samp{Europe/Belfast}, \samp{Europe/Guernsey},
-  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions
-  are also known by a summary of their time zone,
+  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions are
+  also known by a summary of their time zone,
   e.g.\sspace{}\samp{PST8PDT} is an alias for
   \samp{America/Los_Angeles}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.  It may have an attribute \code{"Version"}, something
-  like \samp{"2020a"}.
+  like \samp{"2020a"}.  (It does on systems using
+  \option{--with-internal-tzcode} and those like Fedora distributing
+  file \file{tzdata.zi}.)
 }
 
 \section{Time zone names}{
@@ -215,7 +216,7 @@ OlsonNames(tzdir = NULL)
   names.
 }
 
-\section{Warning}{
+\section{Warnings}{
 %% glibc and macOS have _POSIX_TZNAME_MAX and define it as 6.
 %% Earlier versions of R's code assumed 10, and it was discovered
 %% that some implemntations did not abbreviate unusual names, thereby
@@ -229,11 +230,23 @@ OlsonNames(tzdir = NULL)
   POSIX).  Some OSes allow the setting of time zones with names which
   exceed their limit, and that can crash the \R session.
 
+  Information about future times is speculative: the database provides
+  the best-known information based on current rules set by civil
+  authorities.  For the period 1900--1970 those rules (and which of any
+  authority's rules were enacted) is often obscure, and the databases do
+  get corrected frequently.
+
   \code{OlsonNames} tries to find an Olson database in known locations.
   It might not succeed (when it returns an empty vector with a warning)
   and even if it does it might not locate the database used by the
   date-time code linked into \R.  Fortunately names are added rarely
-  and most databases are pretty complete.
+  and most databases are pretty complete.  On the other hand, many names
+  which duplicate other named timezones have been moved to the
+  \file{backward} list -- these are regarded as optional and omitted on
+  minimal installations.  Similarly, there are timezones named in file
+  \file{backzone} which differ only from those in the main lists prior
+  to 1970 -- these are usually included but may not be in minimalist
+  systems.
 }
 
 \note{

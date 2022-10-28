@@ -71,12 +71,11 @@
 \special{time - z}
 \special{time1 lop time2}
 
-balancePOSIXlt(x, classed = TRUE)
+balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
-    date-time classes.}
-  %% FIXME: for balancePOSIXlt(), x must be "POSIXlt"
+    date-time classes; for \code{balancePOSIXlt()}, it must be a \code{"POSIXlt"}.}
   \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
   \item{max}{numeric or \code{NULL}, specifying the maximal number of
     entries to be printed.  By default, when \code{NULL},
@@ -91,6 +90,9 @@ balancePOSIXlt(x, classed = TRUE)
   \item{z}{a numeric vector (in seconds)}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
+  \item{fill.only}{a \code{\link{logical}} specifying if \code{balancePOSIXlt(x, ..)}
+    should only \dQuote{fill up} by recycling, but not re-check validity
+    nor recompute, e.g., \code{x$wday} and \code{x$yday}.}
   \item{classed}{a \code{\link{logical}} specifying if the result should be
     classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
     is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
@@ -248,9 +250,12 @@ balancePOSIXlt(x, classed = TRUE)
     not extreme. %% FIXME: say more
 
     Function \code{balancePOSIXlt(x)} will now return a version of the
-    \code{"POSIXlt"} object \code{x} which is balanced in both ways:
+    \code{"POSIXlt"} object \code{x} which by default is balanced in both ways:
     All the internal list components are of full length, and their values are
     inside the ranges specified above.
+    Setting \code{fill.only = TRUE} will only recycle the list components
+    to full length, but not check them at all.  This is particularly faster
+    when all components of \code{x} are already of full length.
   }
 }% POSIXlt
 
@@ -360,11 +365,15 @@ print(.leap.seconds, tz = "PST8PDT")  # and in Seattle's
 
 ## look at *internal* representation of "POSIXlt" :
 leapS <- as.POSIXlt(.leap.seconds)
-names(leapS) ; is.list(leapS)
-## str() "too smart" -->  need unclass(.):
+names(unclass(leapS)) ; is.list(leapS)
+## str() on inner structure needs unclass(.):
 utils::str(unclass(leapS), vec.len = 7)
+## show all (apart from "tzone" attr):
+data.frame(unclass(leapS))
+
 ## Extracting *single* components of POSIXlt objects:
 leapS[1 : 5, "year"]
+leapS[17:22, "mon" ]
 
 ##  length(.) <- n   now works for "POSIXct" and "POSIXlt" :
 for(lpS in list(.leap.seconds, leapS)) {
@@ -377,7 +386,21 @@ for(lpS in list(.leap.seconds, leapS)) {
       ## has filled with NA's
       is.na(l2[(length(lpS)+1):length(l2)])
     })
-}% for
+}% for %
+
+## "balancing":
+d1 <- as.POSIXlt("2000-1-2 3:45", tz="UTC")
+d1$min <- d1$min + (0:16)*20
+(f1 <- format(d1))
+str(unclass(d1)) # only $min is long
+str(unclass(balancePOSIXlt(d1, fill.only=TRUE) -> df)) # all of length 17; 'min' unchanged
+str(        balancePOSIXlt(d1, classed=FALSE)  -> db)  # of length 17 *and* in range
+stopifnot(exprs = {
+    identical(f1, format(df))
+    all.equal(as.POSIXct(d1), as.POSIXct(df))
+    identical(f1, format(.POSIXlt(db)))
+    identical(as.POSIXct(d1, "UTC"), as.POSIXct(.POSIXlt(db, "UTC")))
+})
 }
 \keyword{utilities}
 \keyword{chron}

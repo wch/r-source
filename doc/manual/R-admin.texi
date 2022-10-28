@@ -3398,6 +3398,12 @@ manuals.
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
+For date-times to work correctly it is essential that the tables
+defining time zones are installed: these are usually in an OS compoent
+named something like @code{tzdata}. On most OSes they are required
+@c with glibc by glibc-common
+but installations of Alpine Linux have bee seen without them.
+
 Those distributing binary versions of @R{} may need to be aware of the
 licences of the external libraries it is linked to (including `useful'
 libraries from the next section).  The @code{liblzma} library is in the
@@ -5327,11 +5333,16 @@ initio} builds work.
 @c external software.
 
 @menu
-* Note for Catalina and later::
+* Notes for Catalina and later::
 @end menu
 
-@node Note for Catalina and later,  , Prerequisites, Prerequisites
-@subsubsection Note for Catalina and later
+@node Notes for Catalina and later,  , Prerequisites, Prerequisites
+@subsubsection Notes for Catalina and later
+
+If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
+-show-sdk-path`} in a terminal will show you which SDK is selected.},
+you will need to add something like @code{-mmacosx-version-min=12.0} to
+@samp{CFLAGS}.
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
@@ -5347,6 +5358,17 @@ from @uref{https://mac.R-project.org/}.
 If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
+
+@command{configure} defaults to @option{--with-internal-tzcode} on
+macOS.  The native implementation was unusable on earlier versions of
+even 64-bit macOS (with a 32-bit @code{time_t} and/or timezone tables
+missing information beyond the 32-bit range).  For, e.g.@:, macOS 12.6
+option @option{--without-internal-tzcode} can be used to override this
+and @R{} contains sufficient workarounds (for example, the native code
+fails to recognize dates with a negative @code{tm_year}, that is dates
+before 1900) for @R{} to pass its checks.  However, there are
+discrepancies, notablly in Europe in the 1900s and 1940s, even though
+the Olson database contains the correct information.
 
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compilers

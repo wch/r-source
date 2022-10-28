@@ -6076,6 +6076,18 @@ without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
+@item
+Several C entry points are warned against in their @command{man} pages
+on most systens, often in very strong terms such as '@strong{Do not use
+these functions}'.  macOS has started to warn@footnote{when using the
+macOS 13 SDK with a deployment target of macOS 13.} if these are used
+for @code{sprintf}, @code{vsprintf}, @code{gets}, @code{mktemp},
+@code{tempmam} and @code{tmpnam}.  It is highly recommended that you use
+safer alternatives (on any platform) but the warning can be avoided by
+defiining @samp{_POSIX_C_SOURCE} to for example @samp{200809L} before
+including the (C or C++) header which defines them.  (However, this may
+hide other extensions.)
+
 @end itemize
 
 Some additional information for C++ is available at
@@ -7952,12 +7964,12 @@ See the @file{system.Rd} file in @file{share/Rd/macros} for more details
 and macro definitions, including macros @code{\packageTitle},
 @code{\packageDescription}, @code{\packageAuthor}, @code{\packageMaintainer},
 @code{\packageDESCRIPTION} and @code{\packageIndices}.
-@findex @code{\packageTitle}
-@findex @code{\packageDescription}
-@findex @code{\packageAuthor}
-@findex @code{\packageMaintainer}
-@findex @code{\packageDESCRIPTION}
-@findex @code{\packageIndices}
+@findex \packageTitle
+@findex \packageDescription
+@findex \packageAuthor
+@findex \packageMaintainer
+@findex \packageDESCRIPTION
+@findex \packageIndices
 
 
 Packages may also define their own common macros; these would be stored

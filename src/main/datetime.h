@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team.
+ *  Copyright (C) 2000-2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,16 @@
  *
  */
 
+/* Declarations from src/extra/tzone.  Included by
+   datetime.c
+   machine.c ( for sizeof(time_t) )
+   src/extra/tzone/localtome.c
+   src/extra/tzone/strftime.c
+*/
+
 # include <stdint.h>
 // C99/C11 require this to be implemented.
+// Copied into platform.c to avoid including all of this header.
 typedef int_fast64_t R_time_t;
 
 struct Rtm
@@ -51,10 +59,10 @@ extern stm* R_gmtime_r (const R_time_t*, stm*);
 extern stm* R_localtime (const R_time_t*);
 extern stm* R_localtime_r(const R_time_t*, stm*);
 extern R_time_t R_mktime (stm*);
+extern R_time_t R_timegm(stm*);
 extern void R_tzset(void);
 extern void R_tzsetwall(void);
 extern char *R_tzname[2];
-extern int_fast64_t R_timegm(stm*);
 
 extern size_t
 R_strftime(char * const s, const size_t maxsize, const char *const format,

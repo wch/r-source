@@ -113,7 +113,7 @@ stopifnot(inherits(Dct, "POSIXct"),
 Sys.getenv("TZ")   #  "Australia/Melbourne"   (set above)
 mtz <- "Etc/GMT-5" # was UTC-5
 head(Dct2  <- as.POSIXct(Dct, tz = mtz), 3)
-head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POISXlt "are different"
+head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POSIXlt "are different"
 head(Dlct2 <- as.POSIXlt(Dct2),          3)
 head(Dlct  <- as.POSIXlt(Dct) ,          3)
 no_tz <- function(.) `attr<-`(., "tzone", NULL)
@@ -253,8 +253,10 @@ stopifnot(exprs = {
 
 
 ## as.POSIXct(<numeric>) & as.POSIXlt(*) :
-for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf), -2^(20:33), 2^(20:33)))
+for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf),
+               -2^(20:33), 2^(20:33)))
     for(tz in c("", "GMT", "NZ", "Pacific/Fiji")) {
+        message("testing in ", sQuote(tz))
         n <- as.numeric(nr)
         stopifnot(identical(n, as.numeric(print(as.POSIXct(nr, tz=tz)))),
                   identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
@@ -438,6 +440,38 @@ stopifnot(exprs = {
     is.na((dDm3 - dDcm3)[!ifi3])
 })
 ## as.Date.POSIXlt() failed badly for such ragged cases in  R <= 4.2.x
+
+
+## ragged, including names
+(nlt <- c(P = as.POSIXlt("2000-1-2 3:45")))
+r3n <- rep(nlt, 3)
+lt2 <- nlt; lt2$min <- 45:49; lt2  # (names print wrongly)
+names(lt2) # "P" is maybe ok
+(b2 <- balancePOSIXlt(lt2))# now correct
+t3 <- lt2; t3$year <- c(P = 100L, Q = 101L)
+t3 # "works", not printing recycled names (FIXME?)
+as.POSIXct(t3) # ditto FIXME
+(b3 <- balancePOSIXlt(t3))
+t4 <- lt2; names(t4) <- n4 <- c("P", "Q", "", "S", "T"); t4
+t5 <- lt2; names(t5) <- n4[-5] ; t5 # works; last name is <NA>
+stopifnot(exprs = {
+    identical("P", names(nlt))
+    identical(nlt, balancePOSIXlt(nlt))
+    length(r3n) == 3
+    identical(nlt, r3n[3])
+    identical(names(r3n), rep("P", 3))
+    length(lt2) == 5
+    identical(names(b2), rep("P", 5))
+    identical(b2, balancePOSIXlt(lt2, fill.only = TRUE))# (here)
+    identical(names(b3), rep_len(c("P","Q"), length(b3)))
+    identical(n4, names(t4))
+    identical(n4, names(balancePOSIXlt(t4, fill.only = TRUE)))
+    identical(nn <- c(n4[-5], NA), names(t5))
+    identical(nn, names(b5 <- balancePOSIXlt(t5)))
+    identical(b5, balancePOSIXlt(t5, fill.only = TRUE)) # (here)
+})
+## names(.) were not recycled correctly in original balanceP..()
+
 
 
 ## keep at end

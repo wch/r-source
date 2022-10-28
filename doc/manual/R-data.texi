@@ -1218,7 +1218,7 @@ Traditionally there had been large (and expensive) commercial RDBMSs
 (@uref{https://www.ibm.com/products/informix, Informix};
 @uref{https://www.oracle.com, Oracle}; 
 Sybase;
-@uref{https://www.ibm.com/db2, IBM's DB2};
+@uref{https://www.ibm.com/products/db2, IBM's DB2};
 @uref{https://www.microsoft.com/sql-server/, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
 MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft

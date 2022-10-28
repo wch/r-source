@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-10-13 r83086) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-20 r83140) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
@@ -221,10 +221,10 @@ Type 'q()' to quit R.
 > ## tests of earlier years.  Default format is OS-dependent, so don't test it.
 > ## ISOdate only accepts positive years.
 > z <- as.Date(ISOdate(c(0, 8, 9, 10, 11, 20, 110, 1010), 1, 10)) - 3630
-> strftime(z, "%04Y-%m-%d") # with leading zero(s)
+> strftime(z, "%04Y-%m-%d") # with leading zero(s), where supported
 [1] "-010-02-01" "-002-02-01" "-001-02-02" "0000-02-02" "0001-02-01"
 [6] "0010-02-01" "0100-02-01" "1000-02-01"
-> strftime(z, "%_4Y-%m-%d") # with leading space(s)
+> strftime(z, "%_4Y-%m-%d") # with leading space(s), where supported
 [1] " -10-02-01" "  -2-02-01" "  -1-02-02" "   0-02-02" "   1-02-01"
 [6] "  10-02-01" " 100-02-01" "1000-02-01"
 > strftime(z, "%0Y-%m-%d") # without
