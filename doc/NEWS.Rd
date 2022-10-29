@@ -94,6 +94,11 @@
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
+
+      \item On platforms where (non-UTC) datetimes after 2037 or before
+      1902 (or before 1900 as with system functions on recent macOS) are
+      guessed by extrapolating time zones from 1902-2037, there is a
+      warning at the first use of extrapolation in a session.
     }
   }
 
