@@ -473,6 +473,11 @@ stopifnot(exprs = {
 ## names(.) were not recycled correctly in original balanceP..()
 
 
+## moves from strptime.Rd
+format(.POSIXct(Inf)) # "Inf"  (was NA in R <= 4.1.x)
+notF <- c(-Inf,Inf,NaN,NA)
+(fF <- format(tnF <- .POSIXct(notF))) # was all NA, now the last is still NA (not "NA")
+stopifnot(identical(as.character(notF), fF))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
