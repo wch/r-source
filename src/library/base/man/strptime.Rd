@@ -47,7 +47,8 @@ strptime(x, format, tz = "")
     than using \code{"\%Z"}.}
   \item{digits}{integer determining the \code{format()}ing of seconds when
     needed.  Note that the defaults for \code{format()} and
-    \code{as.character()} differ on purpose.}
+    \code{as.character()} differ on purpose, \code{as.character()} giving
+    close to full accuracy as it does for numbers.}
   \item{OutDec}{a 1-character string specifying the decimal point to be
     used; the default is \emph{not} \code{\link{getOption}("OutDec")} on
     purpose.}
@@ -442,6 +443,9 @@ strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
 format(s1 <- seq.Date(as.Date('1978-01-01'), by = 'day',   len =  7), "\%a")
 format(s2 <- seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "\%b")
 }% dont %
+## Non-finite date-times :
+format(as.POSIXct(Inf)) # "Inf"  (was  NA  in R <= 4.1.x)
+format(as.POSIXlt(c(-Inf,Inf,NaN,NA))) # were all NA
 }
 \keyword{utilities}
 \keyword{chron}
