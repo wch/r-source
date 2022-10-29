@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (c) 1989 The Regents of the University of California.
- *  Copyright (C) 2013-2021 The R Core Team
+ *  Copyright (C) 2013-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@
   Based on code from tzcode, which is turn said to be
   'Based on the UCB version with the copyright notice appearing below.'
 
-  Extensive changes for use with R.
-
 ** Copyright (c) 1989 The Regents of the University of California.
 ** All rights reserved.
 **
@@ -38,6 +36,16 @@
 ** THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 ** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+  Extensive changes for use with R, which are copyright by R Core.
+  These include
+  - using const
+  - converted to use NL_LANGINFO
+  - use snprintf
+  - add support for %P
+  - get locale-specific names via nl_langinfo or system strftime
+  - use 0/1 not false/true
+  - we do not support warnp, which allow warning on less portable formats
 */
 
 
@@ -47,6 +55,9 @@
 #define HAVE_TM_ZONE 1
 #undef HAVE_TM_GMTOFF
 #define HAVE_TM_GMTOFF 1
+
+// added in R 4.3.0, but not default to agree with glibc
+// #define XPG4_1994_04_09
 
 #include "tzfile.h"
 #include <fcntl.h>
@@ -83,6 +94,8 @@ R_strftime(char * const s, const size_t maxsize, const char *const format,
     return p - s;
 }
 
+/* On modern platforms we get day names etc from nl_langinfo.
+   If not, we use the system strftime. */
 #ifdef HAVE_NL_LANGINFO
 // This was part of the configure check
 # include <langinfo.h>
@@ -102,12 +115,13 @@ static char *orig(const char *fmt, const stm *const t)
 }
 #endif
 
+// tzcode has warnp, to warn about the use of less portable formats.
 static char *
 _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 {
     for ( ; *format; ++format) {
 	if (*format == '%') {
-	    /* Check for POSIX 2008 / GNU modifiers */
+	    /* First check for POSIX 2008 / GNU modifiers for %Y */
 	    char pad = '\0'; const char *f; int width = -1;
 	    // first look to see if this is %..Y
 	    for (f = format+1; *f ; f++)
@@ -148,26 +162,26 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		--format;
 		break;
 
-		/* now the locale-dependent cases */
+		/* next the locale-dependent cases */
 #ifdef HAVE_NL_LANGINFO
 	    case 'A':
-		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= DAYSPERWEEK) ?
 			  "?" : nl_langinfo(DAY_1 + t->tm_wday),
 			  pt, ptlim);
 		continue;
 	    case 'a':
-		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= DAYSPERWEEK) ?
 			  "?" : nl_langinfo(ABDAY_1 + t->tm_wday),
 			  pt, ptlim);
 		continue;
 	    case 'B':
-		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= MONSPERYEAR) ?
 			  "?" : nl_langinfo(MON_1 + t->tm_mon),
 			  pt, ptlim);
 		continue;
 	    case 'b':
 	    case 'h':
-		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= MONSPERYEAR) ?
 			  "?" : nl_langinfo(ABMON_1 + t->tm_mon),
 			  pt, ptlim);
 		continue;
@@ -178,7 +192,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _add(nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			  pt, ptlim);
 		continue;
-	    case 'P':
+	    case 'P': // not in tzcode
 		{
 		    char *p = nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			*q, buff[20];
@@ -195,23 +209,23 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		continue;
 #else
 	    case 'A':
-		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= DAYSPERWEEK) ?
 			  "?" : orig("%A", t),
 			  pt, ptlim);
 		continue;
 	    case 'a':
-		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= DAYSPERWEEK) ?
 			  "?" : orig("%a", t),
 			  pt, ptlim);
 		continue;
 	    case 'B':
-		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= MONSPERYEAR) ?
 			  "?" : orig("%B", t),
 			  pt, ptlim);
 		continue;
 	    case 'b':
 	    case 'h':
-		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= MONSPERYEAR) ?
 			  "?" : orig("%b", t),
 			  pt, ptlim);
 		continue;
@@ -243,6 +257,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		continue;
 #endif
 		/* now the locale-independent ones */
+		// 'a' 'A' 'b' 'B' 'c' are locale-dependent
 	    case 'C':
 		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0, pt, ptlim);
 		continue;
@@ -255,7 +270,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'E':
 	    case 'O':
 		/*
-		** C99 locale modifiers.
+		** Locale modifiers of C99 and later.
 		** The sequences
 		**	%Ec %EC %Ex %EX %Ey %EY
 		**	%Od %oe %OH %OI %Om %OM
@@ -270,6 +285,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'F':
 		pt = _fmt("%Y-%m-%d", t, pt, ptlim);
 		continue;
+		// case 'h' is localw-dependenr (same as 'b')
 	    case 'H':
 		pt = _conv(t->tm_hour, "%02d", pt, ptlim);
 		continue;
@@ -283,7 +299,6 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'k':
 		pt = _conv(t->tm_hour, "%2d", pt, ptlim);
 		continue;
-	    case 'l':
 		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,
 			   "%2d", pt, ptlim);
 		continue;
@@ -296,6 +311,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'n':
 		pt = _add("\n", pt, ptlim);
 		continue;
+	    /* 'p' and "P' are locale-dependent */
 	    case 'R':
 		pt = _fmt("%H:%M", t, pt, ptlim);
 		continue;
@@ -321,11 +337,14 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _add("\t", pt, ptlim);
 		continue;
 	    case 'U':
-		pt = _conv((t->tm_yday + 7 - t->tm_wday) / 7,
+		pt = _conv((t->tm_yday + DAYSPERWEEK -
+			    t->tm_wday) / DAYSPERWEEK,
 			   "%02d", pt, ptlim);
 		continue;
 	    case 'u':
-		pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday, "%d", pt, ptlim);
+		pt = _conv((t->tm_wday == 0) ?
+			   DAYSPERWEEK : t->tm_wday,
+			   "%d", pt, ptlim);
 		continue;
 	    case 'V':	/* ISO 8601 week number */
 	    case 'G':	/* ISO 8601 year (four digits) */
@@ -345,14 +364,14 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		    ** What yday (-3 ... 3) does
 		    ** the ISO year begin on?
 		    */
-		    bot = ((yday + 11 - wday) % 7) - 3;
+		    bot = ((yday + 11 - wday) % DAYSPERWEEK) - 3;
 		    /*
 		    ** What yday does the NEXT
 		    ** ISO year begin on?
 		    */
-		    top = bot - (len % 7);
+		    top = bot - (len % DAYSPERWEEK);
 		    if (top < -3)
-			top += 7;
+			top += DAYSPERWEEK;
 		    top += len;
 		    if (yday >= top) {
 			++base;
@@ -360,12 +379,18 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 			break;
 		    }
 		    if (yday >= bot) {
-			w = 1 + ((yday - bot) / 7);
+			w = 1 + ((yday - bot) / DAYSPERWEEK);
 			break;
 		    }
 		    --base;
-		    yday += isleap_sum(year, base) ? DAYSPERLYEAR : DAYSPERNYEAR;
+		    yday += isleap_sum(year, base) ?
+			DAYSPERLYEAR : DAYSPERNYEAR;
 		}
+#ifdef XPG4_1994_04_09
+		if ((w == 52 && t->tm_mon == TM_JANUARY) ||
+		    (w == 1 && t->tm_mon == TM_DECEMBER))
+		    w = 53;
+#endif /* defined XPG4_1994_04_09 */
 		if (*format == 'V')
 		    pt = _conv(w, "%02d", pt, ptlim);
 		else if (*format == 'g')
@@ -378,8 +403,10 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _fmt("%e-%b-%Y", t, pt, ptlim);
 		continue;
 	    case 'W':
-		pt = _conv((t->tm_yday + 7 -
-			    (t->tm_wday ? (t->tm_wday - 1) : (7 - 1))) / 7,
+		pt = _conv((t->tm_yday + DAYSPERWEEK -
+			    (t->tm_wday ?
+			     (t->tm_wday - 1) :
+			     (DAYSPERWEEK - 1))) / DAYSPERWEEK,
 			   "%02d", pt, ptlim);
 		continue;
 	    case 'w':
@@ -389,6 +416,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1, pt, ptlim);
 		continue;
 	    case 'Y':
+		// Changed to agree wirh glibc
 //		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1, pt, ptlim);
 	    {
 		char buf[20] = "%";
