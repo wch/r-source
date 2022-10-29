@@ -57,11 +57,9 @@ Sys.timezone <- function(location = TRUE)
        dir.exists(zp <-file.path(R.home("share"), "zoneinfo")))  {
         ## On macOS, have choice of system or internal zoneinfo
         ## so chose system if newer.
-        veri <- try(readLines(file.path(zp, "VERSION")), silent = TRUE)
-        vers <- try(readLines("/var/db/timezone/zoneinfo/+VERSION"),
-                    silent = TRUE)
-        if(!inherits(veri, "try-error") && !inherits(vers, "try-error") &&
-           vers != veri) {
+        veri <- tryCatch(readLines(file.path(zp, "VERSION")),             error = \(e)e)
+        vers <- tryCatch(readLines("/var/db/timezone/zoneinfo/+VERSION"), error = \(e)e)
+        if(!inherits(veri, "error") && !inherits(vers, "error") && vers != veri) {
             yri <- substr(veri, 1L, 4L); sufi <- substr(veri, 5, 5)
             yrs <- substr(vers, 1L, 4L); sufs <- substr(vers, 5, 5)
             if (yrs > yri || (yrs == yri && sufs > sufi))
@@ -365,9 +363,24 @@ as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 ## POSIXlt is not primarily a list, but primarily an abstract vector of
 ## time stamps:
 length.POSIXlt <- function(x) max(lengths(unclass(x)))
-`length<-.POSIXlt` <- function(x, value)
-    .POSIXlt(lapply(unclass(x), `length<-`, value),
-             attr(x, "tzone"), oldClass(x))
+## keep somewhat in sync with rep.POSIXlt  (further down)
+`length<-.POSIXlt` <- function(x, value) {
+    r <- lapply(unclass(x), `length<-`, value)
+    class(r) <- oldClass(x)
+    attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
+    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt"))) TRUE else NA
+    r
+}
+
+## Exists only to update|remove the "balanced_lt"
+`$<-.POSIXlt` <- function (x, name, value) {
+    r <- NextMethod("$<-")
+    class(r) <- oldClass(x)
+    attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
+    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt")) &&
+                                 length(value) == length(x)) NA # "filled" else NULL
+    r
+}
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE,
                            digits = getOption("digits.secs"), ...)
@@ -690,9 +703,9 @@ difftime <-
     switch(units,
            "secs" = .difftime(z, units = "secs"),
            "mins" = .difftime(z/60, units = "mins"),
-           "hours" = .difftime(z/3600, units = "hours"),
+           "hours"= .difftime(z/3600, units = "hours"),
            "days" = .difftime(z/86400, units = "days"),
-           "weeks" = .difftime(z/(7*86400), units = "weeks")
+           "weeks"= .difftime(z/(7*86400), units = "weeks")
            )
 }
 
@@ -1253,16 +1266,17 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         if(!is.character(j) || (length(j) != 1L))
             stop("component subscript must be a character string")
 
-    if(mi) # but !mj
-        balancePOSIXlt(x, TRUE, FALSE)[[j]]
+    setBalanced <- function(.) `attr<-`(., "balanced_lt", TRUE)
+    if(mi) # but !mj : x[, ".."]
+        setBalanced(balancePOSIXlt(x, TRUE, FALSE)[[j]])
     else {
         if(is.character(i))
             i <- match(i, names(x),
                        incomparables = c("", NA_character_))
-        if(mj)
-            .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), `[`, i, drop = drop),
+        if(mj) # x[i]
+            .POSIXlt(setBalanced(lapply(balancePOSIXlt(x, TRUE, FALSE), `[`, i, drop = drop)),
                      attr(x, "tzone"), oldClass(x))
-        else
+        else # x[i,j]
             balancePOSIXlt(x, TRUE, FALSE)[[j]][i]
     }
 }
@@ -1319,9 +1333,16 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 rep.POSIXct <- function(x, ...)
     .POSIXct(NextMethod(), attr(x, "tzone"), oldClass(x))
 
-rep.POSIXlt <- function(x, ...)
-    .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), rep, ...),
-             attr(x, "tzone"), oldClass(x))
+rep.POSIXlt <- function(x, ...) {
+    cl <- oldClass(x)
+    x <- balancePOSIXlt(x, TRUE, FALSE)
+    ## fails to set class: `attributes<-`(lapply(x, rep, ...), attributes(x))
+    r <- lapply(x, rep, ...)
+    class(r) <- cl
+    attr(r, "tzone") <- attr(x, "tzone")
+    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt"))) TRUE else NA
+    r
+}
 
 diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
 {
@@ -1385,7 +1406,7 @@ is.numeric.difftime <- function(x) FALSE
 }
 
 ## FIXME:
-## At least temporarily avoide structure() for performance reasons.
+## At least temporarily avoid structure() for performance reasons.
 ## .POSIXlt <- function(xx, tz = NULL)
 ##     structure(xx, class = c("POSIXlt", "POSIXt"), tzone = tz)
 .POSIXlt <- function(xx, tz = NULL, cl = c("POSIXlt", "POSIXt")) {
@@ -1395,7 +1416,7 @@ is.numeric.difftime <- function(x) FALSE
 }
 
 ## FIXME:
-## At least temporarily avoide structure() for performance reasons.
+## At least temporarily avoid structure() for performance reasons.
 ## .difftime <- function(xx, units)
 ##     structure(xx, units = units, class = "difftime")
 .difftime <- function(xx, units, cl = "difftime") {
@@ -1544,4 +1565,3 @@ as.vector.POSIXlt <- function(x, mode = "any")
 
 balancePOSIXlt <- function(x, fill.only=FALSE, classed=TRUE)
     .Internal(balancePOSIXlt(x, fill.only, classed))
-

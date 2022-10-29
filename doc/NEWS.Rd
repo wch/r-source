@@ -90,6 +90,10 @@
       correctly, e.g., in subsetting and subassignments.  Such objects
       are now documented.
 
+      More experimentally, a \code{"POSIXlt"} object may have an attribute
+      \code{"balanced_lt"} indicating if it is known to be filled or fully
+      balanced.
+
       \item Package repositories in \code{getOption("repos")} are now
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).

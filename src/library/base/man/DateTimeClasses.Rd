@@ -20,6 +20,7 @@
 \alias{Summary.POSIXct}
 \alias{Math.POSIXlt}
 \alias{Summary.POSIXlt}
+\alias{$<-.POSIXlt}
 \alias{[.POSIXct}
 \alias{[<-.POSIXct}
 \alias{[[.POSIXct}
@@ -256,6 +257,11 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
     Setting \code{fill.only = TRUE} will only recycle the list components
     to full length, but not check them at all.  This is particularly faster
     when all components of \code{x} are already of full length.
+
+    Experimentally, \code{balancePOSIXlt()} and other functions returning
+    \code{POSIXlt} objects now set a \code{\link{logical}} attribute
+    \code{"balanced_lt"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
+    not \dQuote{ragged} and \code{TRUE} means (fully) balanced.
   }
 }% POSIXlt
 

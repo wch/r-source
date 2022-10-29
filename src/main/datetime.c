@@ -108,6 +108,7 @@ on Windows: it is the current default on macOS.
 */
 
 #ifdef USE_INTERNAL_MKTIME
+// PATH 2)
 # include "datetime.h"
 // configure might have checked the system versions.
 # undef HAVE_LOCALTIME_R
@@ -126,7 +127,7 @@ on Windows: it is the current default on macOS.
 # define HAVE_WORKING_MKTIME_BEFORE_1902 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1970
 # define HAVE_WORKING_MKTIME_BEFORE_1970 1
-#else
+#else // PATH 1)
 
 typedef struct tm stm;
 #define R_tzname tzname
@@ -799,6 +800,17 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
 
 	     /* --------- R interfaces --------- */
 
+static SEXP  /* 'const' globals */
+    lt_balancedSymbol = NULL,
+    _balanced_ = NULL;
+
+#define MAYBE_INIT_balanced /* initialize when first used */	\
+    if(lt_balancedSymbol == NULL) {				\
+	lt_balancedSymbol = install("balanced_lt");		\
+	_balanced_ = ScalarLogical(1);				\
+    }
+
+
 // We assume time zone names/abbreviations are ASCII, as all known ones are.
 
 // .Internal(as.POSIXlt(x, tz)) -- called only from  as.POSIXlt.POSIXct()
@@ -899,6 +911,8 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(settz) reset_tz(oldtz);
     SEXP nm = getAttrib(x, R_NamesSymbol);
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
+    MAYBE_INIT_balanced
+    setAttrib(ans, lt_balancedSymbol, _balanced_);
     UNPROTECT(6);
     return ans;
 } // asPOSIXlt
@@ -1069,7 +1083,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean have_zone = LENGTH(x) >= 10;
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
-	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
+	error(_("invalid component [[10]] in \"POSIXlt\", 'zone' should be character"));
     if(!have_zone && LENGTH(x) > 9) // rather even error ?
 	/* never when !HAVE_GMTOFF */
 	warning(_("More than 9 list components in \"POSIXlt\" without timezone"));
@@ -1344,7 +1358,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		invalid ? NA_INTEGER : (int)tm.tm_gmtoff;
 #endif
 	}
-    }
+    } /* for(i ..) */
 
     setAttrib(ans, R_NamesSymbol, ansnames); // sec, min, ...
     SEXP klass = PROTECT(allocVector(STRSXP, 2));
@@ -1355,6 +1369,8 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     if(settz) reset_tz(oldtz);
     SEXP nm = getAttrib(x, R_NamesSymbol);
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
+    MAYBE_INIT_balanced
+    setAttrib(ans, lt_balancedSymbol, _balanced_);
     UNPROTECT(5);
     return ans;
 } // strptime()
@@ -1413,8 +1429,9 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(ans, s_tzone, mkString("UTC"));
     SEXP nm = getAttrib(x, R_NamesSymbol);
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
+    MAYBE_INIT_balanced
+    setAttrib(ans, lt_balancedSymbol, _balanced_);
     UNPROTECT(4);
-
     return ans;
 }
 
@@ -1478,11 +1495,12 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if(!inherits(CAR(args), "POSIXlt"))
-	error(_("'%s' is not a \"%s\""), "x", "POSIXlt");
-    SEXP x = PROTECT(duplicate(CAR(args)));
-    if(!isVectorList(x) || LENGTH(x) < 9)
-	error(_("invalid '%s' argument"), "x");
+    MAYBE_INIT_balanced
+    SEXP _filled_ = ScalarLogical(NA_LOGICAL);
+    SEXP x = CAR(args),
+	bal = getAttrib(x, lt_balancedSymbol);
+    /*  bal in  (TRUE, NA, NULL) <==> ("balanced", "filled", <unset>) */
+
     int fill_only = asLogical(CADR(args));
     if(fill_only == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "fill.only");
@@ -1490,18 +1508,29 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(do_class == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "classed");
 
+    if(bal == _balanced_ || (fill_only && bal == _filled_)) {
+	if(!do_class) {
+	    x = duplicate(x);
+	    setAttrib(x, R_ClassSymbol, R_NilValue);
+	}
+	return(x);
+    }
+
     int n_comp = LENGTH(x); // >= 9
-    Rboolean isGMT = (n_comp == 9), have_zone; // otherwise, 10 or 11:
+    if(!isVectorList(x) || n_comp < 9)
+	error(_("invalid '%s' argument"), "x");
+
+    Rboolean have_zone, isGMT = n_comp == 9; // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
     have_zone = n_comp >= 11; // {zone, gmtoff}
     // Why check the type and not the name?
     if(have_zone && !isInteger(VECTOR_ELT(x, 10)))
-	error(_("invalid component [[11]] in \"POSIXlt\" should be 'gmtoff'"));
+	error(_("invalid component [[11]] in \"POSIXlt\" 'gmtoff' should be integer"));
 #else
     have_zone = (n_comp >= 10); // {zone}
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
-	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
+	error(_("invalid component [[10]] in \"POSIXlt\", 'zone' should be character"));
 
     Rboolean need_fill = FALSE;
     R_xlen_t n = 0, nlen[n_comp];
@@ -1511,11 +1540,19 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if(!need_fill && nlen[i] < n)
 	    need_fill = TRUE;
     }
-    if(fill_only && !need_fill) { // be fast:
-	if(!do_class) classgets(x, R_NilValue);
+    if(fill_only && !need_fill) { // alredy filled; be fast
+	x = PROTECT(duplicate(x)); // (could mutate in the do_class case)
+	setAttrib(x, lt_balancedSymbol, _filled_); /* not there; checked above*/
+	if(!do_class)
+	    setAttrib(x, R_ClassSymbol, R_NilValue);
 	UNPROTECT(1);
 	return(x);
     }
+
+    // check only now as we cannot return quickly :
+    if(!inherits(x, "POSIXlt"))
+	error(_("'%s' is not a \"%s\""), "x", "POSIXlt");
+    x = PROTECT(duplicate(x));
     if(n > 0) {
 	for(int i = 0; i < n_comp; i++)
 	  check_nlen(i);
@@ -1582,7 +1619,8 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for(R_xlen_t ii=ni; ii < n; ii++)
 		xi[ii] = xi[ii % ni];
 	}
-	if(!do_class) classgets(x, R_NilValue);
+	if(!do_class) setAttrib(x, R_ClassSymbol, R_NilValue);
+	setAttrib(x, lt_balancedSymbol, _filled_);
 	UNPROTECT(1);
 	return(x);
     }
@@ -1711,6 +1749,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
 	UNPROTECT(2); // nm, nmN
     }
+    setAttrib(ans, lt_balancedSymbol, _balanced_);
     UNPROTECT(3);
     return ans;
 }

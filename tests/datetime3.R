@@ -4,6 +4,31 @@
 .pt <- proc.time()
 
 options(warn = 1)
+## as such functionality is missing currently:
+## "parallel" to Sys.timezone(); for now check no validity
+##  (neither does Sys.timezone() in the "TZ" case)
+
+Sys.setTimezone <- function(tz)
+{
+    stopifnot(is.character(tz), length(tz) == 1L)
+    be <- baseenv()
+    unlockBinding(".sys.timezone", be)
+    assign(".sys.timezone", tz, be)
+    lockBinding(".sys.timezone", be)
+}
+
+## For some inter-platform reproducibility,
+## Simply calling Sys.setenv(TZ = "...") does *NOT* always work
+##  FIXME ?! --> see nzchar(TZenv) much further down
+myTZ <- "Australia/Melbourne"
+(TZenv <- Sys.getenv("TZ"))
+if(nzchar(TZenv)) ## TZ set, rather set it to the known  myTZ:
+    Sys.setenv(TZ = myTZ)
+Sys.getenv("TZ")
+Sys.setTimezone(myTZ)
+.sys.timezone # "Australia/Melbourne" hopefully:
+stopifnot(identical(.sys.timezone, myTZ))
+
 
 ## 0-length Date and POSIX[cl]t:  PR#71290
 D <- structure(17337, class = "Date") # Sys.Date() of "now"
@@ -68,12 +93,8 @@ options(op)
 someCET <- paste("Europe", c("Berlin", "Brussels", "Copenhagen", "Madrid",
                              "Paris", "Rome", "Vienna", "Zurich"), sep="/")
 if(Sys.t %in% someCET)
-    stopifnot(print(TRUE), identical(format(x, tz = ""), "2012-12-12 13:12:12"))
+    stopifnot(identical(print(format(x, tz = "")), "2012-12-12 13:12:12"))
 ## had failed for almost a month in R-devel & R-patched
-
-
-## set in reg-tests-1d so copied here
-Sys.setenv("TZ" = "Australia/Melbourne")
 
 
 ## as.Date(<nonfinite_POSIXlt>) :
@@ -110,7 +131,7 @@ stopifnot(exprs = {
 ## as.POSIX?t(<POSIX?t>, tz=*) now works, too:
 stopifnot(inherits(Dct, "POSIXct"),
           inherits(Dlt, "POSIXlt"))
-Sys.getenv("TZ")   #  "Australia/Melbourne"   (set above)
+Sys.timezone() #  "Australia/Melbourne"   (set above)
 mtz <- "Etc/GMT-5" # was UTC-5
 head(Dct2  <- as.POSIXct(Dct, tz = mtz), 3)
 head(Dlt2  <- as.POSIXlt(Dlt, tz = mtz), 3) ## these three POSIXlt "are different"
@@ -120,6 +141,7 @@ no_tz <- function(.) `attr<-`(., "tzone", NULL)
 stopifnot(exprs = {
     identical(mtz, attr(Dct2, "tzone"))
     identical(mtz, attr(Dlt2, "tzone"))
+
     (Dct2 - Dct)[ok] == 0
     identical(no_tz(Dct2), no_tz(Dct))
     identical(no_tz(Dlt2), no_tz(Dlt))
@@ -220,12 +242,12 @@ for(tz in c("GMT", "EST5EDT", "BST", "Pacific/Auckland",
             "Africa/Conakry", "Asia/Calcutta", "Asia/Seoul", "Asia/Shanghai",
             "Asia/Tokyo", "Canada/Newfoundland", "Europe/Dublin",
             "Europe/Vienna", "Europe/Kyiv", "Europe/Moscow")) {
-    message("")
+    cat("\n")
     if(!(tz %in% otz)) {
-        message(tz, " is not in this platform's OlsonNames()")
+        cat(tz, "is not in this platform's OlsonNames()\n")
         next
     }
-    message("Using ", sQuote(tz))
+    cat("Using", sQuote(tz), "\n")
     datePOSIXchk(d1, tz)
 }
 ## several of the identities datePOSIXchk() failed in R <= 4.2.x
@@ -236,7 +258,7 @@ stopifnot(identical(as.Date(ct), .Date(19000)))
 
 ## as.POSIXct.default() dealing with an *extraneous*  origin = ".."
 (D <- .Date(19000))
-## NB: The following depends on setting of the "TZ" env.var. ("Australia/Melbourne", see above)
+## NB: The following depends on the timezone, see Sys.timezone() above
 cE <- as.POSIXct(D, tz="EST")
 lE <- as.POSIXlt(D, tz="EST")
 ct   <- as.POSIXct(cE)
@@ -256,7 +278,7 @@ stopifnot(exprs = {
 for(nr in list(1234, -1:1, -1000, NA, c(NaN, 1, -Inf, Inf),
                -2^(20:33), 2^(20:33)))
     for(tz in c("", "GMT", "NZ", "Pacific/Fiji")) {
-        message("testing in ", sQuote(tz))
+        cat("testing in", sQuote(tz),"\n")
         n <- as.numeric(nr)
         stopifnot(identical(n, as.numeric(print(as.POSIXct(nr, tz=tz)))),
                   identical(n, as.numeric(      as.POSIXlt(nr, tz=tz))))
@@ -294,7 +316,7 @@ dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
                      year = 116L, wday = 2L, yday = 340L, isdst = 1L))
 dct   <- as.POSIXct(dlt)
 dltN  <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy), but *added* tz-info:
-data.frame(unclass(dltN)); attr(dltN, "tzone")
+data.frame(unclass(dltN)); str(attributes(dltN)[-1], no.list=TRUE)
 dltv2 <- local({ x <- dltN
     length(x$min ) <- 4; length(x$hour) <- 4; length(x$mday ) <- 2
     length(x$mon ) <- 9; length(x$year) <- 5; length(x$isdst) <- 1
@@ -380,13 +402,17 @@ str(lts <- local({ oG <- as.list(.GlobalEnv)
     oG[vapply(oG, inherits, TRUE, "POSIXlt")] }))
 ## Check if/when  balancePOSIXlt(.) is the identity for  "POSIXlt" objects
 blts <- lapply(lts, balancePOSIXlt)
-all.equal(blts, lts) # hmm .. "ltI", "dlt", "dltI" and "dltm3" have been shifted by one hour - ok (??)
+all.equal(blts, lts) # on Lnx Fedora 36 "ltI", "dlt", "dltI" and "dltm3" have been shifted by one hour - ok (??)
 ## all the others are *deemed* equal by the "tolerant"  all.equal.POSIXt()
 (nmsLT <- setdiff(names(lts), c("ltI", "dlt", "dltI", "dltm3")))
+at.b <- lapply(blts, attributes)
+(cNms <- setdiff(names(at.b[[1]]), "balanced_lt"))
 stopifnot(exprs = {
     all.equal(lts[nmsLT], blts[nmsLT], tolerance = 0)
-    identical(lapply( lts, attributes),
-              lapply(blts, attributes))
+    ## now blts are all balanced of course; lts only partly
+    vapply(at.b, `[[`, TRUE, "balanced_lt")
+    identical(lapply(lapply( lts, attributes), `[`, cNms),
+              lapply(at.b,                     `[`, cNms))
 })
 chlts <- lapply( lts, as.character)
 cblts <- lapply(blts, as.character)
@@ -454,6 +480,8 @@ as.POSIXct(t3) # ditto FIXME
 (b3 <- balancePOSIXlt(t3))
 t4 <- lt2; names(t4) <- n4 <- c("P", "Q", "", "S", "T"); t4
 t5 <- lt2; names(t5) <- n4[-5] ; t5 # works; last name is <NA>
+bare <- function(x) ## drop all attributes but names:
+    `attributes<-`(x, if(!is.null(n <- names(unclass(x)))) list(names=n))
 stopifnot(exprs = {
     identical("P", names(nlt))
     identical(nlt, balancePOSIXlt(nlt))
@@ -462,22 +490,51 @@ stopifnot(exprs = {
     identical(names(r3n), rep("P", 3))
     length(lt2) == 5
     identical(names(b2), rep("P", 5))
-    identical(b2, balancePOSIXlt(lt2, fill.only = TRUE))# (here)
+    identical(bare(b2), bare(balancePOSIXlt(lt2, fill.only = TRUE)))# (here)
     identical(names(b3), rep_len(c("P","Q"), length(b3)))
     identical(n4, names(t4))
     identical(n4, names(balancePOSIXlt(t4, fill.only = TRUE)))
     identical(nn <- c(n4[-5], NA), names(t5))
     identical(nn, names(b5 <- balancePOSIXlt(t5)))
-    identical(b5, balancePOSIXlt(t5, fill.only = TRUE)) # (here)
+    identical(bare(b5), bare(balancePOSIXlt(t5, fill.only = TRUE))) # (here)
 })
 ## names(.) were not recycled correctly in original balanceP..()
 
 
 ## moves from strptime.Rd
-format(.POSIXct(Inf)) # "Inf"  (was NA in R <= 4.1.x)
+stopifnot(identical("Inf", format(.POSIXct(Inf)))) # (was NA in R <= 4.1.x)
 notF <- c(-Inf,Inf,NaN,NA)
 (fF <- format(tnF <- .POSIXct(notF))) # was all NA, now the last is still NA (not "NA")
-stopifnot(identical(as.character(notF), fF))
+stopifnot(identical(as.character(notF[-4]), fF[-4])) # [4] may change!
+##
+## balancePOSIXlt() *not* fixing  {zone, isdst, gmtoff}
+cht <- "2022-10-20 15:09"
+sec <- (0:18)*47^3
+(lt. <- local({ t <- as.POSIXlt(cht          ); t$sec <- sec; t }))
+(lte <- local({ t <- as.POSIXlt(cht, tz=""   ); t$sec <- sec; t }))
+(ltU <- local({ t <- as.POSIXlt(cht, tz="UTC"); t$sec <- sec; t }))
+(ct.. <- as.POSIXct(lt.          )) # good, localtime, switch CEST -> CET
+(ct.e <- as.POSIXct(lt., tz=""   ))
+(ct.U <- as.POSIXct(lt., tz="UCT")) #  *very* bad: all NA but [14] ( = "1969-12-31 .." )
+(cte. <- as.POSIXct(lte          ))
+(ctee <- as.POSIXct(lte, tz=""   ))
+(cteU <- as.POSIXct(lte, tz="UCT")) #  *very* bad: all NA but [14] ( = "1969-12-31 .." )
+(ctU. <- as.POSIXct(ltU          )) # good, all UTC
+(ctUe <- as.POSIXct(ltU, tz=""   )) #"good", localtime, if not-int, shifted by 1 hour
+(ctUU <- as.POSIXct(ltU, tz="UCT")) # "good", all UTC, but shifted by 1-2 hours (int <-> non-int)
+table(dUe <- ctUe - ct..) # all 0 for int-tzone,  all 1 otherwise !!
+table(dUU <- ctUU - ct..) # all 11 x '1' and 8 x '2' for int-tzone,  all  '2'  otherwise !
+## FIXME?  The  if( nchar(TZenv) ) test should not be needed:
+stopifnot(exprs = {
+    if(nzchar(TZenv)) all.equal(ct.e, ct.., check.tzone=FALSE) else identical(ct.e, ct..)
+    identical(cte., ct..)
+    if(nzchar(TZenv)) all.equal(ctee, ct.., check.tzone=FALSE) else identical(ctee, ct..)
+})
+(b1 <- balancePOSIXlt(lt., fill.only=TRUE))
+(b2 <- balancePOSIXlt(lt.))
+stopifnot(b1 == b2)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
