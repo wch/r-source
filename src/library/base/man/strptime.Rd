@@ -442,10 +442,6 @@ strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
 format(s1 <- seq.Date(as.Date('1978-01-01'), by = 'day',   len =  7), "\%a")
 format(s2 <- seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "\%b")
 }% dont %
-format(.POSIXct(Inf)) # "Inf"  (was  NA  in R <= 4.1.x)
-notF <- c(-Inf,Inf,NaN,NA)
-(fF <- format(tnF <- .POSIXct(notF))) # was all  NA, now the last is still NA (not "NA")
-stopifnot(identical(as.character(notF), fF))
 }
 \keyword{utilities}
 \keyword{chron}
