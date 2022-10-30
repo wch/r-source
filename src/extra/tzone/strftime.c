@@ -421,7 +421,11 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    {
 		char buf[20] = "%";
 		int year = TM_YEAR_BASE + t->tm_year;
-		if (pad == '\0') { pad = '0'; width = 4;}
+		char *p = getenv("R_PAD_YEARS_BY_ZERO");
+		if (!p) p = "yes";
+		if( strcmp(p, "yes") == 0 && pad == '\0') {
+		    pad = '0'; width = 4;
+		}
 		if (pad == '0' || pad == '+') strcat(buf, "0");
 		if (width > 0) sprintf(buf+strlen(buf), "%u", width);
 		if (pad == '+' && year > 9999) strcat(buf, "+");

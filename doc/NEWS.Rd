@@ -103,6 +103,13 @@
       1902 (or before 1900 as with system functions on recent macOS) are
       guessed by extrapolating time zones from 1902-2037, there is a
       warning at the first use of extrapolation in a session.
+
+      \item (Platforms using \option{--with-internal-tzone}, including
+      Windows and by default macOS). How years are printed in dates or
+      date-times can be controlled by environment variable
+      \env{R_PAD_YEARS_BY_ZERO}.  The default remains to pad to 4 digits
+      by zeroes, but setting value \samp{no} gives no padding (as used
+      by default by \code{glibc}).
     }
   }
 

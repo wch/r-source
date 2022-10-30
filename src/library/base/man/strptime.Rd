@@ -266,7 +266,7 @@ strptime(x, format, tz = "")
   Everyone agrees that years from 1000 to 9999 should be printed with 4
   digits, but the standards do not define what is to be done outside
   that range.  For years 0 to 999 most OSes pad with zeros or spaces to
-  4 characters, and Linux/glibc outputs just the number.
+  4 characters, but Linux/glibc outputs just the number.
 
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   \sQuote{correctly} (they tend to assume the existence of a year 0: see
@@ -277,11 +277,14 @@ strptime(x, format, tz = "")
   more characters.
 
   Some platforms support modifiers from POSIX 2008 (and others).  On
-  Linux/glibc the format \code{"\%04Y"} assures a minimum of four characters
-  and zero-padding.  The internal code (as used on Windows and by
-  default on macOS) uses zero-padding by default, and formats
-  \code{\%_4Y} and \code{\%_Y} can be used for space padding and no
-  padding.
+  Linux/glibc the format \code{"\%04Y"} assures a minimum of four
+  characters and zero-padding (the default is no padding).  The internal
+  code (as used on Windows and by default on macOS) uses zero-padding by
+  default (this can be controlled by environment variable
+  \env{R_PAD_YEARS_BY_ZERO}).  On those platforms, formats \code{\%04Y},
+  \code{\%_4Y} and \code{\%_Y} can be used for` zero, space and no
+  padding respectively. (On macOS, the native code (not the detault)
+  supports none of these and uses zero-padding to 4 digits.)
 }
 
 \section{Time zone offsets}{
