@@ -3871,7 +3871,7 @@ void GEGlyph(int n, int *glyphs, double *x, double *y,
              const char* family, double weight, int style,
              const char* file, int index, double size, int colour,
              pGEDevDesc dd) {
-    if (dd->dev->deviceVersion >= R_GE_typeset) {
+    if (dd->dev->deviceVersion >= R_GE_glyphs) {
         dd->dev->glyph(n, glyphs, x, y, 
                        family, weight, style, file, index, size,
                        colour,

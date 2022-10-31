@@ -87,15 +87,14 @@ extern "C" {
  *             Added capabilities
  * Version 16: For R 4.3.0
  *             Added more advanced typesetting
- *             - typeset
  *             - glyphs
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
 #define R_GE_group       15
-#define R_GE_typeset     16
+#define R_GE_glyphs      16
 
-#define R_GE_version R_GE_typeset
+#define R_GE_version R_GE_glyphs
 
 int R_GE_getVersion(void);
 
@@ -655,6 +654,7 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_compositing           9
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
+#define R_GE_capability_glyphs               12 
 
 /* Must match order in ../library/grDevices/R/glyph.R */
 #define R_GE_text_style_normal  1

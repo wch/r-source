@@ -72,6 +72,7 @@ dev.capabilities(what = NULL)
     transformations ?}
   \item{paths}{logical:  Does the device support stroking and filling
     paths?}
+  \item{glyphs}{logical:  Does the device support rendering glyphs? }
 }
 \seealso{
   See \code{\link{getGraphicsEvent}} for details on interactive events.

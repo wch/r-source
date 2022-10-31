@@ -553,7 +553,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->startfont = 1;
     dd->startgamma = 1;
     dd->displayListOn = FALSE;
-    dd->deviceVersion = R_GE_typeset;
+    dd->deviceVersion = R_GE_glyphs;
 
     dd->deviceSpecific = (void *) xd;
 

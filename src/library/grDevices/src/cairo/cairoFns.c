@@ -2290,8 +2290,14 @@ static void Cairo_FillStroke(SEXP path, int rule,
     CairoFillStrokePath(path, rule, gc, xd);    
 }
 
+/*
+ ***************************
+ * Device capabilities
+ ***************************
+ */
+
 static SEXP Cairo_Capabilities(SEXP capabilities) {
-    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths, glyphs;
 
     PROTECT(patterns = allocVector(INTSXP, 3));
     INTEGER(patterns)[0] = R_GE_linearGradientPattern;
@@ -2347,6 +2353,11 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
     PROTECT(paths = allocVector(INTSXP, 1));
     INTEGER(paths)[0] = 1;
     SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
+    UNPROTECT(1);
+
+    PROTECT(glyphs = allocVector(INTSXP, 1));
+    INTEGER(glyphs)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, glyphs);
     UNPROTECT(1);
 
     return capabilities;

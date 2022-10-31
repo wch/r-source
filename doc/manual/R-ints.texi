@@ -3127,6 +3127,13 @@ this component should be set to 1.
 If the device does not provide support, this component should
 be set to 0.
 
+@item The @code{glyphs} component reports whether rendering glyphs
+(e.g., via @code{grid::grid.glyph()}) is supported.
+If the device supports rendering glyphs, 
+this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
 @end itemize
 
 The graphics engine provides constants like 
