@@ -13185,7 +13185,7 @@ then :
 else $as_nop
   lt_cv_ld_force_load=no
       cat > conftest.c << _LT_EOF
-int forced_loaded() { return 2;}
+int forced_loaded(void) { return 2;}
 _LT_EOF
       echo "$LTCC $LTCFLAGS -c -o conftest.o conftest.c" >&5
       $LTCC $LTCFLAGS -c -o conftest.o conftest.c 2>&5
