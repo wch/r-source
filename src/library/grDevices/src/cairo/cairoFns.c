@@ -2357,6 +2357,11 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
  * Typesetting
  ***************************
  */
+
+#if CAIRO_HAS_FT_FONT
+#include <cairo-ft.h>
+#endif
+
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         const char* family, double weight, int style,
                         const char* file, int index, double size, int colour,
@@ -2387,13 +2392,19 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
         sl = CAIRO_FONT_SLANT_ITALIC;
     }
 
-    /* This could be made much cleverer with lower-level calls like
-     * cairo_ft_font_face_create_for_pattern(), which could then
-     * include the explicit font path, e.g., with ":file=<path_to_font_file>"
-     * (assuming FreeType is available on all platforms ...).
-     * See FT_getFont() and FC_getFont() code above.
-     */
-    cairo_select_font_face(xd->cc, family, sl, wt);
+    cairo_font_face_t *cairo_face = NULL;
+#if CAIRO_HAS_FT_FONT
+    FcPattern *pattern = FcPatternBuild(NULL,
+                                        FC_FILE, FcTypeString, file,
+                                        FC_INDEX, FcTypeInteger, index,
+                                        NULL);
+    cairo_face = cairo_ft_font_face_create_for_pattern(pattern);
+    FcPatternDestroy(pattern);
+    cairo_set_font_face(xd->cc, cairo_face);
+#endif
+    if (!cairo_face) {
+        cairo_select_font_face(xd->cc, family, sl, wt);
+    }
     /* Text size (in "points") MUST match the scale of the glyph 
      * location (in "bigpts").  The latter depends on device dpi.
      */
