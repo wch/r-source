@@ -93,12 +93,14 @@ glyphInfo <- function(id, x, y,
     y <- as.numeric(y)
     ## Check font
     family <- as.character(family)
-    if (any(nchar(family, "bytes") > 200))
+    nafamily <- is.na(family)
+    if (any(nchar(family[!nafamily], "bytes") > 200))
         warning("Font family longer than 200 will be truncated")
     weight <- mapWeight(weight)
     style <- mapStyle(style)
     file <- as.character(file)
-    if (any(nchar(file, "bytes") > 500))
+    nafile <- is.na(file)
+    if (any(nchar(file[!nafile], "bytes") > 500))
         warning("Font file longer than 500 will be truncated")
     index <- as.integer(index)
     size <- as.numeric(size)
@@ -148,9 +150,14 @@ glyphInfo <- function(id, x, y,
     if (!"center" %in% vNames)
         vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
     ## Build glyph info
-    info <- data.frame(id, x, y,
-                       family, weight, style, size, file, index,
-                       colour)
+    info <- na.omit(data.frame(id, x, y,
+                               family, weight, style, size, file, index))
+    ## Colour can be NA
+    if (inherits(info, "omit")) {
+        info$colour <- colour[-attr(info, "na.action")]
+    } else {
+        info$colour <- colour
+    }
     attr(info, "width") <- width
     attr(info, "height") <- height
     attr(info, "hAnchor") <- hAnchor
