@@ -25354,7 +25354,7 @@ else $as_nop
 #endif
 
 int
-main() {
+main(int argc, const char * argv[]) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -28600,6 +28600,9 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
+##
+## Needs FFLAGS on macOS to pass -mmacosx-version-min=12.0
+## FIXME: this should send stderr to config.log
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if need -fno-optimize-sibling-calls for gfortran" >&5
 printf %s "checking if need -fno-optimize-sibling-calls for gfortran... " >&6; }
 if test ${r_cv_have_gfortran7+y}
@@ -28608,7 +28611,7 @@ then :
 else $as_nop
   r_cv_have_gfortran7=no
 if test "x${GFC}" = xyes; then
-  gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+  gfortran_version_maj=`echo "__GNUC__" | ${FC} ${FFLAGS} -E -P - | ${SED} 's/ //g'`
   if test ${gfortran_version_maj} -ge 7; then
     r_cv_have_gfortran7=yes
   fi
@@ -28655,7 +28658,7 @@ cat > conftest.c <<EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info,
 			const size_t srname_len)
@@ -28666,7 +28669,7 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main()
+int main(int argc, const char * argv[])
 {
     F77_SYMBOL(testit)();
     return 0;
@@ -41279,7 +41282,7 @@ else $as_nop
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -41332,7 +41335,7 @@ else $as_nop
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -41874,7 +41877,7 @@ else $as_nop
 # include <unistd.h> // for unlink
 #endif
 
-int main() {
+int main(int argc, const char * argv[]) {
     FILE *fp;
     long pos;
 
@@ -41985,7 +41988,7 @@ else $as_nop
 #include <time.h>
 #include <errno.h>
 
-int main()
+int main(int argc, const char * argv[])
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
@@ -42014,13 +42017,13 @@ fi
 printf "%s\n" "$r_cv_mktime_errno" >&6; }
 if test "${r_cv_mktime_errno}" = yes; then
 
-printf "%s\n" "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
+printf "%s\n" "#define MKTIME_SETS_ERRNO 1" >>confdefs.h
 
 fi
 
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly outside 1902-2037" >&5
-printf %s "checking whether mktime works correctly outside 1902-2037... " >&6; }
-if test ${r_cv_working_mktime+y}
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly after 2037" >&5
+printf %s "checking whether mktime works correctly after 2037... " >&6; }
+if test ${r_cv_working_mktime1+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -42034,7 +42037,7 @@ else $as_nop
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, const char * argv[]) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -42069,8 +42072,8 @@ rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
 fi
 
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime" >&5
-printf "%s\n" "$r_cv_working_mktime" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime1" >&5
+printf "%s\n" "$r_cv_working_mktime1" >&6; }
 if test "x${r_cv_working_mktime}" = xyes; then
 
 printf "%s\n" "#define HAVE_WORKING_64BIT_MKTIME 1" >>confdefs.h
@@ -46784,7 +46787,7 @@ else $as_nop
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -46915,7 +46918,7 @@ else $as_nop
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main() {
+int main(int argc, const char * argv[]) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -47047,7 +47050,7 @@ else $as_nop
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -47232,7 +47235,7 @@ else $as_nop
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -47361,7 +47364,7 @@ else $as_nop
 #endif
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -47599,7 +47602,7 @@ else $as_nop
 
 #include <stdlib.h>
 #include <curl/curl.h>
-int main()
+int main(int argc, const char * argv[])
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
@@ -47650,7 +47653,7 @@ else $as_nop
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main()
+int main(int argc, const char * argv[])
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -54204,8 +54207,8 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main() {
-    /* use volatiles to reduce the risk of the
+int main(int argc, const char * argv[]) {
+    /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
     volatile int n = 8;

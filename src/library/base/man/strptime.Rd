@@ -302,7 +302,8 @@ strptime(x, format, tz = "")
   The default formats follow the rules of the ISO 8601 international
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  (The ISO form uses no
-  space to separate dates and times: \R does by default.)
+  space, possibly \samp{T}, to separate dates and times: \R uses a space
+  by default.)
 
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
@@ -344,6 +345,10 @@ strptime(x, format, tz = "")
   system's \code{strftime} is replaced (along with most of the rest of
   the C-level datetime code) by code modified from IANA's \samp{tzcode}
   distribution (\url{https://www.iana.org/time-zones}).
+
+  Note that as \code{strftime} is used for output (and not
+  \code{wcsftime}), argument \code{format} is translated if necessry to
+  the session encoding.
 }
 
 \references{
@@ -352,7 +357,8 @@ strptime(x, format, tz = "")
     Information interchange -- Representation of dates and times.},
   slightly updated to International Organization for Standardization (2019)
   \sQuote{ISO 8601-1:2019.  Date and time -- Representations for
-    information interchange -- Part 1: Basic rules}.
+    information interchange -- Part 1: Basic rules}, and further amended
+  in 2022.
   For links to versions available on-line see (at the time of writing)
   \url{https://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{https://www.qsl.net/g1smd/isopdf.htm}; for information on the

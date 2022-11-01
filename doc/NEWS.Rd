@@ -5,6 +5,29 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.2.2 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
+      has been changed to be fully C-compliant.  This means that
+      functions loaded \emph{via} for example \code{R_GetCCallable} need
+      to be cast to an appropriate type if they have any arguments.
+
+      \item \code{.Machine} has a new element \code{sizeof.time_t} to
+      identify old systems with a 32-bit type and hence a limited range
+      of date-times (and limited support for dates millions of years
+      from present).
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
+      and their list components meant to be recycled, \code{length()} now
+      is the length of the longest component.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.2.2}{
   \subsection{NEW FEATURES}{
     \itemize{

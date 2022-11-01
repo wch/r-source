@@ -100,6 +100,12 @@ const char *formatError(DWORD res);  /* extra.c */
 # undef ABS
 #endif
 
+#ifdef  USE_INTERNAL_MKTIME
+// avoid including datetime.h as that changes too much.
+# include <stdint.h>
+typedef int_fast64_t R_time_t;
+#endif
+
 static void Init_R_Machine(SEXP rho)
 {
     machar(&R_AccuracyInfo.ibeta,
@@ -125,7 +131,7 @@ static void Init_R_Machine(SEXP rho)
 # define MACH_SIZE 18
 #endif
     */
-    int MACH_SIZE = 18;
+    int MACH_SIZE = 19;
     if (sizeof(LDOUBLE) > sizeof(double)) MACH_SIZE += 10;
     
     SEXP ans = PROTECT(allocVector(VECSXP, MACH_SIZE)),
@@ -189,6 +195,12 @@ static void Init_R_Machine(SEXP rho)
     SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
 
+    SET_STRING_ELT(nms, 18, mkChar("sizeof.time_t"));
+#ifdef  USE_INTERNAL_MKTIME
+    SET_VECTOR_ELT(ans, 18, ScalarInteger(sizeof(R_time_t)));
+#else
+    SET_VECTOR_ELT(ans, 18, ScalarInteger(sizeof(time_t)));
+#endif
 /* This used to be just
 #ifdef HAVE_LONG_DOUBLE
    but platforms can have the type and it be identical to double
@@ -214,46 +226,35 @@ static void Init_R_Machine(SEXP rho)
 		  &R_LD_AccuracyInfo.epsneg,
 		  &R_LD_AccuracyInfo.xmin,
 		  &R_LD_AccuracyInfo.xmax);
- 
-	SET_STRING_ELT(nms, 18+0, mkChar("longdouble.eps"));
-	SET_VECTOR_ELT(ans, 18+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
+#define PT1 19
+	SET_STRING_ELT(nms, PT1+0, mkChar("longdouble.eps"));
+	SET_VECTOR_ELT(ans, PT1+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
 
-	SET_STRING_ELT(nms, 18+1, mkChar("longdouble.neg.eps"));
-	SET_VECTOR_ELT(ans, 18+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
-    /*
-    SET_STRING_ELT(nms, 18+2, mkChar("longdouble.xmin"));     // not representable as double
-    SET_VECTOR_ELT(ans, 18+2, ScalarReal(R_LD_AccuracyInfo.xmin));
+	SET_STRING_ELT(nms, PT1+1, mkChar("longdouble.neg.eps"));
+	SET_VECTOR_ELT(ans, PT1+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
+	SET_STRING_ELT(nms, PT1+2, mkChar("longdouble.digits"));
+	SET_VECTOR_ELT(ans, PT1+2, ScalarInteger(R_LD_AccuracyInfo.it));
 
-    SET_STRING_ELT(nms, 18+3, mkChar("longdouble.xmax"));    // not representable as double
-    SET_VECTOR_ELT(ans, 18+3, ScalarReal(R_LD_AccuracyInfo.xmax));
+	SET_STRING_ELT(nms, PT1+3, mkChar("longdouble.rounding"));
+	SET_VECTOR_ELT(ans, PT1+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
 
-    SET_STRING_ELT(nms, 18+4, mkChar("longdouble.base"));    // same as "all"
-    SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
-    */
+	SET_STRING_ELT(nms, PT1+4, mkChar("longdouble.guard"));
+	SET_VECTOR_ELT(ans, PT1+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
 
-	SET_STRING_ELT(nms, 18+2, mkChar("longdouble.digits"));
-	SET_VECTOR_ELT(ans, 18+2, ScalarInteger(R_LD_AccuracyInfo.it));
+	SET_STRING_ELT(nms, PT1+5, mkChar("longdouble.ulp.digits"));
+	SET_VECTOR_ELT(ans, PT1+5, ScalarInteger(R_LD_AccuracyInfo.machep));
 
-	SET_STRING_ELT(nms, 18+3, mkChar("longdouble.rounding"));
-	SET_VECTOR_ELT(ans, 18+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
+	SET_STRING_ELT(nms, PT1+6, mkChar("longdouble.neg.ulp.digits"));
+	SET_VECTOR_ELT(ans, PT1+6, ScalarInteger(R_LD_AccuracyInfo.negep));
 
-	SET_STRING_ELT(nms, 18+4, mkChar("longdouble.guard"));
-	SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
+	SET_STRING_ELT(nms, PT1+7, mkChar("longdouble.exponent"));
+	SET_VECTOR_ELT(ans, PT1+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
 
-	SET_STRING_ELT(nms, 18+5, mkChar("longdouble.ulp.digits"));
-	SET_VECTOR_ELT(ans, 18+5, ScalarInteger(R_LD_AccuracyInfo.machep));
+	SET_STRING_ELT(nms, PT1+8, mkChar("longdouble.min.exp"));
+	SET_VECTOR_ELT(ans, PT1+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
 
-	SET_STRING_ELT(nms, 18+6, mkChar("longdouble.neg.ulp.digits"));
-	SET_VECTOR_ELT(ans, 18+6, ScalarInteger(R_LD_AccuracyInfo.negep));
-
-	SET_STRING_ELT(nms, 18+7, mkChar("longdouble.exponent"));
-	SET_VECTOR_ELT(ans, 18+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
-
-	SET_STRING_ELT(nms, 18+8, mkChar("longdouble.min.exp"));
-	SET_VECTOR_ELT(ans, 18+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
-
-	SET_STRING_ELT(nms, 18+9, mkChar("longdouble.max.exp"));
-	SET_VECTOR_ELT(ans, 18+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
+	SET_STRING_ELT(nms, PT1+9, mkChar("longdouble.max.exp"));
+	SET_VECTOR_ELT(ans, PT1+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
 
     }
 #endif
@@ -462,11 +463,10 @@ void attribute_hidden R_check_locale(void)
 /*  date
  *
  *  Return the current date in a standard format.  This uses standard
- *  POSIX calls which should be available on each platform.  We should
- *  perhaps check this in the configure script.
- */
-/* BDR 2000/7/20.
- *  time and ctime are in fact ANSI C calls, so we don't check them.
+ *  POSIX calls which should be available on each platform.
+ *  time and ctime are ISO C calls, so we don't check them.
+ *
+ * This needs the system time_t.
  */
 static char *R_Date(void)
 {

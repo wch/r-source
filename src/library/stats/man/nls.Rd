@@ -147,7 +147,7 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 
-  \url{https://www.netlib.org/port/} for the Port library
+  \url{https://netlib.org/port/} for the Port library
   documentation.
 }
 \author{

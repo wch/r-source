@@ -667,7 +667,7 @@ A @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
 of standard (not private use or grandfathered) IETF language tags as
 currently defined by RFC 5646
-(@uref{https://tools.ietf.org/html/rfc5646}, see also
+(@uref{https://www.rfc-editor.org/rfc/rfc5646}, see also
 @uref{https://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
 (@uref{https://en.wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
@@ -1452,7 +1452,7 @@ Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
 @file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
 note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
-@uref{https://tools.ietf.org/html/rfc4180}.} CSV format), or
+@uref{https://www.rfc-editor.org/rfc/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
 should be if possible ``self-sufficient'' and not make use of extra
@@ -1638,7 +1638,7 @@ have_tktable <- !isFALSE(suppressWarnings(tclRequire('Tktable')))
 Installing @samp{Tktable} needs a C compiler and the Tk headers (not
 necessarily installed with Tcl/Tk).  At the time of writing the latest
 sources (from 2008) were available from
-@uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz},
+@uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz/download},
 but needed patching for current Tk (8.6.11, but not 8.6.10) -- a patch
 can be found at @uref{https://www.stats.ox.ac.uk/pub/bdr/Tktable/}. For
 a system installation of Tk you may need to install Tktable as
@@ -2866,7 +2866,7 @@ The webpage
 some information on which compilers are known to support recent C++
 features.
 
-C++ stanards have deprecated and later removed features.  Be aware that
+C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
 such as @code{unary_function} (deprecated in C++11, removed in C++17).
 
@@ -5468,7 +5468,7 @@ and suitable options might be
 @end example
 
 @noindent
-See @uref{https://www.ghostscript.com/doc/current/VectorDevices.htm} for
+See @uref{https://ghostscript.readthedocs.io/en/latest/VectorDevices.html} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
@@ -6066,10 +6066,22 @@ ridiculously large values).
 @item
 For C code, consider using the flag @option{-Wstrict-prototypes} which
 is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
-has found quite a number of errors wheere functions have been declared
+has found quite a number of errors where functions have been declared
 without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
+
+@item
+Several C entry points are warned against in their @command{man} pages
+on most systens, often in very strong terms such as '@strong{Do not use
+these functions}'.  macOS has started to warn@footnote{when using the
+macOS 13 SDK with a deployment target of macOS 13.} if these are used
+for @code{sprintf}, @code{vsprintf}, @code{gets}, @code{mktemp},
+@code{tempmam} and @code{tmpnam}.  It is highly recommended that you use
+safer alternatives (on any platform) but the warning can be avoided by
+defiining @samp{_POSIX_C_SOURCE} to for example @samp{200809L} before
+including the (C or C++) header which defines them.  (However, this may
+hide other extensions.)
 
 @end itemize
 
@@ -9350,7 +9362,7 @@ extended compilation times and uses substantially more memory, often
 1--2GB, at run time.  On 64-bit platforms it reserves (but does not
 allocate) 16--20TB of virtual memory: restrictive shell settings can
 cause problems.  It can be helpful to increase the stack size, for
-eaxmple to 40MB.
+example to 40MB.
 
 By comparison with @command{valgrind}, ASan can
 detect misuse of stack and global variables but not the use of
@@ -10950,7 +10962,8 @@ is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 @code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments, although
-link-time optimization will warn.)
+link-time optimization will warn, as will compilers set up to warn on
+strict prototypes -- and C23 will require correct arguments.)
 
 Using @option{-fc-prototypes-external} will give a prototype using
 @code{int_least32_t *lgl} for Fortran @code{LOGICAL LGL}, but this is
@@ -11153,6 +11166,16 @@ pointer with a call of the form
 
 @example
 p_myCfun = R_GetCCallable("packA", "myCfun");
+@end example
+@noindent
+As the type @code{DL_FUNC} is only appropriate for functions with no
+arguments, other users will need to cast to an appropriate type.  For
+example
+@example
+typedef SEXP (*na_omit_xts_func) (SEXP x);
+...
+  na_omit_xts_func fun = (na_omit_xts_func) R_GetCCallable("xts", "na_omit_xts");
+  return fun(x);
 @end example
 
 The author of @pkg{packB} is responsible for ensuring that

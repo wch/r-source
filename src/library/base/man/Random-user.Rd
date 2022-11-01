@@ -50,7 +50,7 @@ static Int32 seed;
 static double res;
 static int nseed = 1;
 
-double * user_unif_rand()
+double * user_unif_rand(void)
 {
     seed = 69069 * seed + 1;
     res = seed * 2.32830643653869e-10;
@@ -58,14 +58,14 @@ double * user_unif_rand()
 }
 
 void  user_unif_init(Int32 seed_in) { seed = seed_in; }
-int * user_unif_nseed() { return &nseed; }
-int * user_unif_seedloc() { return (int *) &seed; }
+int * user_unif_nseed(void) { return &nseed; }
+int * user_unif_seedloc(void) { return (int *) &seed; }
 
 /*  ratio-of-uniforms for normal  */
 #include <math.h>
 static double x;
 
-double * user_norm_rand()
+double * user_norm_rand(void)
 {
     double u, v, z;
     do {

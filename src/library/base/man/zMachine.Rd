@@ -95,6 +95,11 @@
   \item{sizeof.pointer}{the number of bytes in the C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
+  \item{sizeof.time_t}{the number of \emph{bytes} in the C \code{time_t}
+    type: a  64-bit \code{time_t} (value \code{8}) is much preferred these
+    days.  Note that this is the type used by code in \R itself, not
+    necessarily the \emph{system} type if \R was configured with
+    \option{--with-internal-tzcode} as also used on Windows.}
 
   \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{
     introduced in \R 4.0.0. When

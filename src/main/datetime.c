@@ -635,7 +635,8 @@ static void glibc_fix(stm *tm, Rboolean *invalid)
 }
 
 
-static const char ltnames [][7] =
+static const char ltnames[][11] =
+  // 0     1      2       3       4      5       6       7       8
 { "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst",
   "zone",  "gmtoff"};
 

@@ -1167,11 +1167,14 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
+##
+## Needs FFLAGS on macOS to pass -mmacosx-version-min=12.0
+## FIXME: this should send stderr to config.log
 AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
 AC_CACHE_VAL([r_cv_have_gfortran7],
 [r_cv_have_gfortran7=no
 if test "x${GFC}" = xyes; then
-  gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+  gfortran_version_maj=`echo "__GNUC__" | ${FC} ${FFLAGS} -E -P - | ${SED} 's/ //g'`
   if test ${gfortran_version_maj} -ge 7; then
     r_cv_have_gfortran7=yes
   fi

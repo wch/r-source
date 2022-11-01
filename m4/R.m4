@@ -1075,7 +1075,7 @@ EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info, 
 			const size_t srname_len)
@@ -1086,7 +1086,7 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main()
+int main(int argc, const char * argv[])
 {
     F77_SYMBOL(testit)();
     return 0;
@@ -1513,7 +1513,7 @@ AC_DEFUN([R_FUNC_FTELL],
 # include <unistd.h> // for unlink
 #endif
 
-int main() {
+int main(int argc, const char * argv[]) {
     FILE *fp;
     long pos;
 
@@ -3173,7 +3173,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -3218,7 +3218,7 @@ AC_CACHE_CHECK([if PCRE1 version >= 8.32 and has UTF-8 support], [r_cv_have_pcre
 #endif
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -3292,7 +3292,7 @@ if test "x${have_pcre2}" = "xyes"; then
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -3332,7 +3332,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main() {
+int main(int argc, const char * argv[]) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -3391,7 +3391,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -3493,7 +3493,7 @@ AC_DEFUN([R_SIZE_MAX],
 #endif
 
 int
-main() {
+main(int argc, const char * argv[]) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -3938,7 +3938,7 @@ AC_DEFUN([R_PUTENV_AS_UNSETENV],
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -3966,7 +3966,7 @@ int main()
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4034,7 +4034,7 @@ AC_DEFUN([R_MKTIME_ERRNO],
 #include <time.h>
 #include <errno.h>
 
-int main()
+int main(int argc, const char * argv[])
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
@@ -4051,7 +4051,7 @@ int main()
               [r_cv_mktime_errno=no],
               [r_cv_mktime_errno=no])])
 if test "${r_cv_mktime_errno}" = yes; then
-  AC_DEFINE(MKTIME_SETS_ERRNO,, [Define if mktime sets errno.])
+  AC_DEFINE(MKTIME_SETS_ERRNO, 1, [Define if mktime sets errno.])
 fi
 ])# R_MKTIME_ERRNO
 
@@ -4172,13 +4172,13 @@ AC_SUBST(R_SYSTEM_ABI)
 ## R_FUNC_MKTIME
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME],
-[AC_CACHE_CHECK([whether mktime works correctly outside 1902-2037],
-                [r_cv_working_mktime],
+[AC_CACHE_CHECK([whether mktime works correctly after 2037],
+                [r_cv_working_mktime1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, const char * argv[]) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4304,7 +4304,7 @@ AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
-int main() 
+int main(int argc, const char * argv[]) 
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
@@ -4330,7 +4330,7 @@ AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main()
+int main(int argc, const char * argv[])
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -4383,8 +4383,8 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main() {
-    /* use volatiles to reduce the risk of the
+int main(int argc, const char * argv[]) {
+    /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
     volatile int n = 8;

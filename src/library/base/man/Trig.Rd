@@ -108,7 +108,7 @@ tanpi(x)
 
   For \code{cospi}, \code{sinpi}, and \code{tanpi} the C11 extension
   ISO/IEC TS 18661-4:2015 (draft at
-  \url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf}).
+  \url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf}).
   
 }
 \examples{

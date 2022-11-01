@@ -78,14 +78,14 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \code{eigen} uses the LAPACK routines \code{DSYEVR}, \code{DGEEV},
   \code{ZHEEV} and \code{ZGEEV}.
 
-  LAPACK is from \url{https://www.netlib.org/lapack/} and its guide is listed
+  LAPACK is from \url{https://netlib.org/lapack/} and its guide is listed
   in the references.
 }
 \references{
   Anderson. E. and ten others (1999)
   \emph{LAPACK Users' Guide}.  Third Edition.  SIAM.\cr
   Available on-line at
-  \url{https://www.netlib.org/lapack/lug/lapack_lug.html}.
+  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
 
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

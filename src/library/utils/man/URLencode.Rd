@@ -42,7 +42,7 @@ URLdecode(URL)
 }
 \references{
   Internet STD 66 (formerly RFC 3986),
-  \url{https://tools.ietf.org/html/std66}
+  \url{https://www.rfc-editor.org/info/std66}
 }
 \examples{
 (y <- URLencode("a url with spaces and / and @"))

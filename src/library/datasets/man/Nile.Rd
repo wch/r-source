@@ -20,7 +20,7 @@
   Durbin, J. and Koopman, S. J. (2001).
   \emph{Time Series Analysis by State Space Methods}.
   Oxford University Press.
-  \url{http://www.ssfpack.com/DKbook.html}
+  %% \url{http://www.ssfpack.com/DKbook.html}
 }
 \references{
   Balke, N. S. (1993).

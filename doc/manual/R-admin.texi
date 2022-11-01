@@ -3328,7 +3328,7 @@ A @command{tar} program is needed to unpack the sources and packages
 @uref{https://github.com/libarchive/libarchive/}, used as
 @command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
 the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/tools.html}), although the
+(@uref{https://heirloom.sourceforge.net/tools.html}), although the
 latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
@@ -3396,6 +3396,12 @@ manuals.
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
+
+For date-times to work correctly it is essential that the tables
+defining time zones are installed: these are usually in an OS compoent
+named something like @code{tzdata}. On most OSes they are required
+@c with glibc by glibc-common
+but installations of Alpine Linux have bee seen without them.
 
 Those distributing binary versions of @R{} may need to be aware of the
 licences of the external libraries it is linked to (including `useful'
@@ -3816,7 +3822,7 @@ non-deterministic: this is known for ATLAS.
 @node ATLAS, OpenBLAS and BLIS, BLAS, BLAS
 @subsubsection ATLAS
 
-ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
+ATLAS (@uref{https://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
 Unfortunately it is built by default as a static library that on some
 platforms may not be able to be used with shared objects such as are
@@ -3861,18 +3867,18 @@ Linking against multiple static libraries requires one of
 @end example
 
 Consult its installation
-guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+guide@footnote{@uref{https://math-atlas.sourceforge.net/atlas_install/}}
 for how to build ATLAS as a shared library or as a static library with
 position-independent code (on platforms where that matters).
 
 According to the ATLAS
-FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+FAQ@footnote{@uref{https://math-atlas.sourceforge.net/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
 hyperthreaded CPUs without restricting affinities at compile-time to one
 virtual core per physical CPU.  (For the Fedora libraries the
 compile-time flag specifies 4 threads.)
-@c http://math-atlas.sourceforge.net/atlas_install/node21.html
+@c https://math-atlas.sourceforge.net/atlas_install/node21.html
 
 @node OpenBLAS and BLIS, MKL, ATLAS, BLAS
 @subsubsection OpenBLAS and BLIS
@@ -5102,10 +5108,6 @@ macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big Sur), 12
 (Monterey) and 13 (Ventura), or `Apple Silicon' (@cputype{arm64}) builds
 on macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura).
 
-@strong{NB} @R{} 4.2.2 and earlier only build on Ventura with the
-macOS 13 SDK if an earlier deployment target is set, for example by
-adding something like @code{-mmacosx-version-min=12.0} to @samp{CFLAGS}.
-
 @menu
 * Prerequisites::
 * Fortran compilers::
@@ -5320,11 +5322,16 @@ initio} builds work.
 @c external software.
 
 @menu
-* Note for Catalina and later::
+* Notes for Catalina and later::
 @end menu
 
-@node Note for Catalina and later,  , Prerequisites, Prerequisites
-@subsubsection Note for Catalina and later
+@node Notes for Catalina and later,  , Prerequisites, Prerequisites
+@subsubsection Notes for Catalina and later
+
+If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
+-show-sdk-path`} in a terminal will show you which SDK is selected.},
+you will need to add something like @code{-mmacosx-version-min=12.0} to
+@samp{CFLAGS}.
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
@@ -5551,7 +5558,7 @@ non-default options
 were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
 
 Configure option @option{--with-internal-tzcode} is the default on macOS,
-as the system implementation of time zones does not work correctly for
+as the system implementation of time zones did not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The main @TeX{} implementation used by the developers is

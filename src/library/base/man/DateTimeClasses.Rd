@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -199,8 +199,9 @@
 }
 \section{Sub-second Accuracy}{
   Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
-  fractions of a second.  (Conversion of fractions between the two forms
-  may not be exact, but will have better than microsecond accuracy.)
+  fractions of a second where the latter allows for higher accuracy.
+  Consequently, conversion of fractions between the two forms
+  may not be exact, but will have better than microsecond accuracy.
 
   Fractional seconds are printed only if
   \code{\link{options}("digits.secs")} is set: see \code{\link{strftime}}.
