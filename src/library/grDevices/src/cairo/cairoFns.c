@@ -2411,9 +2411,12 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
                                         NULL);
     cairo_face = cairo_ft_font_face_create_for_pattern(pattern);
     FcPatternDestroy(pattern);
-    cairo_set_font_face(xd->cc, cairo_face);
 #endif
-    if (!cairo_face) {
+    if (cairo_face && 
+        cairo_font_face_status(cairo_face) == CAIRO_STATUS_SUCCESS) {
+        cairo_set_font_face(xd->cc, cairo_face);
+    } else {
+        warning(_("Font file not found; matching font family and face"));
         cairo_select_font_face(xd->cc, family, sl, wt);
     }
     /* Text size (in "points") MUST match the scale of the glyph 
