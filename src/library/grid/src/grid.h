@@ -681,7 +681,7 @@ SEXP L_fill(SEXP path, SEXP rule);
 SEXP L_fillStroke(SEXP path, SEXP rule);
 
 /* From typeset.c */
-SEXP L_glyph(SEXP runs, SEXP info, SEXP x, SEXP y);
+SEXP L_glyph(SEXP runs, SEXP info, SEXP x, SEXP y, SEXP xc, SEXP yc);
 
 /* From unit.c */
 SEXP validUnits(SEXP units);

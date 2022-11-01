@@ -792,7 +792,7 @@ struct _DevDesc {
     void (*glyph)(int n, int *glyphs, double *x, double *y, 
                   const char* family, double weight, int style,
                   const char* file, int index, double size, int colour,
-                  pDevDesc dd);
+                  double xc, double yc, double rot, pDevDesc dd);
 #else
     void (*glyph)();
 #endif

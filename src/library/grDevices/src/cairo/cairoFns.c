@@ -2376,12 +2376,10 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         const char* family, double weight, int style,
                         const char* file, int index, double size, int colour,
-                        pDevDesc dd) 
+                        double xc, double yc, double rot, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
-    double rot = 0;
-
     int i;
     
     if (!xd->appending) {
@@ -2424,12 +2422,16 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
      */
     cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
 
+    cairo_save(xd->cc);
+
+    if (rot != 0.0) {
+        cairo_translate(xd->cc, xc, yc);            
+        cairo_rotate(xd->cc, -rot/180.*M_PI);
+        cairo_translate(xd->cc, -xc, -yc);
+    }
+
     for (i=0; i<n; i++) {
         
-        cairo_save(xd->cc);
-
-	if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
-
         cairo_glyph_t cairoGlyph;
         cairoGlyph.index = glyphs[i];
         cairoGlyph.x = x[i];
@@ -2453,8 +2455,8 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
             }
         }
 
-	cairo_restore(xd->cc);
     }
     
+    cairo_restore(xd->cc);
 }
 

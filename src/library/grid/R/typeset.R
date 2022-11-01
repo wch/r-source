@@ -111,7 +111,7 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
     ## Call dev->glyph() for each run of glyphs
     grid.Call.graphics(C_glyph,
                        as.integer(runs$lengths),
-                       x$glyph, gx, gy)
+                       x$glyph, gx, gy, x$x, x$y)
 }
 
 grobPoints.glyphgrob <- function(x, closed=TRUE, ...) {
