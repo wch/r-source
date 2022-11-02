@@ -136,11 +136,11 @@ strptime(x, format, tz = "")
 
       Some platforms accept \code{\%P} for output, which uses a lower-case
       version (\code{\%p} may also use lower case): others will output
-      \code{P}.} 
+      \code{P}.}
     \item{\code{\%r}}{For output, the 12-hour clock time (using the
       locale's AM or PM): only defined in some locales, and on some OSes
       misleading in locales which do not define an AM/PM indicator.
-      For input, equivalent to \code{\%I:\%M:\%S \%p}.} 
+      For input, equivalent to \code{\%I:\%M:\%S \%p}.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%S}}{Second as integer (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
@@ -177,12 +177,12 @@ strptime(x, format, tz = "")
       \url{https://en.wikipedia.org/wiki/0_(year)}.  However, the standards
       also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.
-  
+
       For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
       \code{+1400} are accepted.  (Standard only for output.  For input
-      \R currently supports it on all platforms.)} 
+      \R currently supports it on all platforms.)}
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
@@ -206,7 +206,7 @@ strptime(x, format, tz = "")
 
   The definition of \sQuote{whitespace} for \code{\%n} and \code{\%t}
   is platform-dependent: for most it does not include non-breaking spaces.
-  
+
   Not in the standards and less widely implemented are
   \describe{
     \item{\code{\%k}}{The 24-hour clock time with single digits preceded
@@ -231,7 +231,7 @@ strptime(x, format, tz = "")
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
   0}).  Further, for \code{strptime} \code{\%OS} will input seconds
   including fractional seconds.  Note that \code{\%S} does not read
-  fractional parts on output. 
+  fractional parts on output.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
@@ -260,8 +260,8 @@ strptime(x, format, tz = "")
   Everyone agrees that years from 1000 to 9999 should be printed with 4
   digits, but the standards do not define what is to be done outside
   that range.  For years 0 to 999 most OSes pad with zeros or spaces to
-  4 characters, and Linux outputs just the number.
-  
+  4 characters, but Linux/glibc outputs just the number.
+
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   \sQuote{correctly} (they tend to assume the existence of a year 0: see
   \url{https://en.wikipedia.org/wiki/0_(year)}, and some OSes get them
@@ -286,11 +286,11 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
+  offsets like +00:09:21 (Paris in 1900), and -00:44:30 (Liberia until
   1972), offsets are usually treated as whole numbers of minutes, and
   are most often seen in RFC 5322 email headers in forms like
   \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
-  
+
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
   hours and two for minutes: the standards say that an empty string
@@ -324,7 +324,7 @@ strptime(x, format, tz = "")
   conversion by \code{\link{as.POSIXct}} will do so.  Conversion by
   \code{strftime} and formatting/printing uses OS facilities and may
   return nonsensical results for non-existent times at DST transitions.
-  
+
   In a C locale \code{\%c} is required to be
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
@@ -406,7 +406,7 @@ options(op)
 
 ## time zone names are not portable, but 'EST5EDT' comes pretty close.
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
-               "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
+	       "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")
 
 ## An RFC 5322 header (Eastern Canada, during DST)
