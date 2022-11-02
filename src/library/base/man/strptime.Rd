@@ -283,7 +283,7 @@ strptime(x, format, tz = "")
   default (this can be controlled by environment variable
   \env{R_PAD_YEARS_BY_ZERO}).  On those platforms, formats \code{\%04Y},
   \code{\%_4Y} and \code{\%_Y} can be used for` zero, space and no
-  padding respectively. (On macOS, the native code (not the detault)
+  padding respectively. (On macOS, the native code (not the default)
   supports none of these and uses zero-padding to 4 digits.)
 }
 
@@ -357,7 +357,7 @@ strptime(x, format, tz = "")
   distribution (\url{https://www.iana.org/time-zones}).
 
   Note that as \code{strftime} is used for output (and not
-  \code{wcsftime}), argument \code{format} is translated if necessry to
+  \code{wcsftime}), argument \code{format} is translated if necessary to
   the session encoding.
 }
 
