@@ -179,10 +179,11 @@ strptime(x, format, tz = "")
       with agreement of the parties involved.
 
       For input, only years \code{0:9999} are accepted.}
-    \item{\code{\%z}}{Signed offset in hours and minutes
-      from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
-      \code{+1400} are accepted.  (Standard only for output.  For input
-      \R currently supports it on all platforms.)}
+    \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
+      \code{-0800} is 8 hours behind UTC.  (Standard only for output.  For
+      input \R currently supports it on all platforms -- values from
+      \code{-1400} to \code{+1400} are accepted.)}
+    %% Nowehere currently uses less than -1200 nor more than 1400.
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
