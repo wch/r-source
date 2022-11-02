@@ -283,7 +283,7 @@ strptime(x, format, tz = "")
   code (as used on Windows and by default on macOS) uses zero-padding by
   default (this can be controlled by environment variable
   \env{R_PAD_YEARS_BY_ZERO}).  On those platforms, formats \code{\%04Y},
-  \code{\%_4Y} and \code{\%_Y} can be used for` zero, space and no
+  \code{\%_4Y} and \code{\%_Y} can be used for zero, space and no
   padding respectively. (On macOS, the native code (not the default)
   supports none of these and uses zero-padding to 4 digits.)
 }
@@ -307,6 +307,8 @@ strptime(x, format, tz = "")
   should be output if the offset is undetermined, but some systems use
   \code{+0000} or the offsets for the time zone in use for the current year.
   (On some platforms this works better after conversion to \code{"POSIXct"}.)
+
+  Using \code{\%z} for input makes most sense with \code{tz = "UTC"}.
 }
 
 \note{
