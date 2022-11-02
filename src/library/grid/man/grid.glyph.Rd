@@ -36,6 +36,7 @@ glyphGrob(glyph,
     from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{A Grid viewport object (or NULL).}
+  \item{\dots}{Arguments passed to \code{glyphGrob()}.}
 }
 \details{
   Both functions create a glyph grob (a graphical object describing

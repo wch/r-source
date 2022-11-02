@@ -9,7 +9,11 @@
 \alias{glyphAnchor}
 \alias{glyphWidth}
 \alias{glyphHeight}
-\alias{glyphJust}
+\alias{glyphWidthLeft}
+\alias{glyphWidthBottom}
+\alias{glyphJust.GlyphJust}
+\alias{glyphJust.character}
+\alias{glyphJust.numeric}
 \title{Describe a Set of Typeset Glyphs.}
 \description{
   Create an object that contains information about typeset glyphs.
@@ -28,9 +32,9 @@ glyphWidth(w, label="width", left="left")
 glyphHeight(h, label="height", bottom="bottom")
 glyphWidthLeft(w, label)
 glyphHeightBottom(h, label)
-\method{glyphJust}{GlyphJust}(x, ...)
-\method{glyphJust}{character}(x, ...)
-\method{glyphJust}{numeric}(x, which=NULL, ...)
+\method{glyphJust}{GlyphJust}(just, ...)
+\method{glyphJust}{character}(just, ...)
+\method{glyphJust}{numeric}(just, which=NULL, ...)
 }
 \arguments{
   \item{id}{Numeric vector of glyph identifiers (index of glyph within
@@ -58,14 +62,11 @@ glyphHeightBottom(h, label)
   \item{col}{An R colour value for each glyph. Can be \code{NA}.}
   \item{value, w, h}{A numeric value.}
   \item{label, left, bottom}{A character value.}
-  \item{x}{A justification value.  Either a character value like
+  \item{just}{A justification value. Either a character value like
     \code{"left"} or a numeric value like \code{0}.}
   \item{which}{When \code{x} is numeric, a character value identifying
     which width metric the numeric value is relative to.}
-
-  \code{glyphWidthLeft()} and \code{glyphWidthHeight()} provide
-  an API for code that needs to access the relevant anchors for
-  width and height metrics.
+  \item{\dots}{Further arguments passed to other methods.}
 }
 \value{
   The result from \code{glyphInfo()} is an \code{"RGlyphInfo"} object,
@@ -115,6 +116,10 @@ glyphHeightBottom(h, label)
   the glyphs can be justified relative to a bounding box around the
   glyph ink, rather than a bounding box that includes left and right
   bearings.
+
+  \code{glyphWidthLeft()} and \code{glyphWidthHeight()} provide
+  an API for code that needs to access the relevant anchors for
+  width and height metrics.
 }
 \section{Warning}{
   Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y},

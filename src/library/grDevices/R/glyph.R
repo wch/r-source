@@ -84,21 +84,19 @@ glyphAnchor <- function(value, label) {
     value
 }
 
-glyphJust <- function(x, ...) {
+glyphJust <- function(just, ...) {
     UseMethod("glyphJust")
 }
-glyphJust.GlyphJust <- function(x, ...) {
-    x
+glyphJust.GlyphJust <- function(just, ...) {
+    just
 }
-glyphJust.character <- function(x, ...) {
-    just <- x
+glyphJust.character <- function(just, ...) {
     class(just) <- "GlyphJust"
     just
 }
-glyphJust.numeric <- function(x, which=NULL, ...) {
-    just <- x
+glyphJust.numeric <- function(just, which=NULL, ...) {
     if (is.null(which)) {
-        which <- names(x)
+        which <- names(just)
     }
     names(just) <- which
     class(just) <- "GlyphJust"
