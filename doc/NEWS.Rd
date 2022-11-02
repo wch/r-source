@@ -91,7 +91,7 @@
       are now documented.
 
       More experimentally, a \code{"POSIXlt"} object may have an attribute
-      \code{"balanced_lt"} indicating if it is known to be filled or fully
+      \code{"balanced"} indicating if it is known to be filled or fully
       balanced.
 
       \item Package repositories in \code{getOption("repos")} are now

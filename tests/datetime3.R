@@ -406,11 +406,11 @@ all.equal(blts, lts) # on Lnx Fedora 36 "ltI", "dlt", "dltI" and "dltm3" have be
 ## all the others are *deemed* equal by the "tolerant"  all.equal.POSIXt()
 (nmsLT <- setdiff(names(lts), c("ltI", "dlt", "dltI", "dltm3")))
 at.b <- lapply(blts, attributes)
-(cNms <- setdiff(names(at.b[[1]]), "balanced_lt"))
+(cNms <- setdiff(names(at.b[[1]]), "balanced"))
 stopifnot(exprs = {
     all.equal(lts[nmsLT], blts[nmsLT], tolerance = 0)
     ## now blts are all balanced of course; lts only partly
-    vapply(at.b, `[[`, TRUE, "balanced_lt")
+    vapply(at.b, `[[`, TRUE, "balanced")
     identical(lapply(lapply( lts, attributes), `[`, cNms),
               lapply(at.b,                     `[`, cNms))
 })

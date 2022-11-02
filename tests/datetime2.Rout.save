@@ -305,7 +305,7 @@ $gmtoff
 
 attr(,"tzone")
 [1] "Europe/London" "GMT"           "BST"          
-attr(,"balanced_lt")
+attr(,"balanced")
 [1] TRUE
 > 
 > years <- c(-1e6, -1e5, -1e4, seq(-1000, 4000, by = 100), 1e4, 1e5, 1e6)

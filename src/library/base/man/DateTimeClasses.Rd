@@ -260,7 +260,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 
     Experimentally, \code{balancePOSIXlt()} and other functions returning
     \code{POSIXlt} objects now set a \code{\link{logical}} attribute
-    \code{"balanced_lt"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
+    \code{"balanced"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
     not \dQuote{ragged} and \code{TRUE} means (fully) balanced.
   }
 }% POSIXlt

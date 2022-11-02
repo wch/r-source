@@ -368,16 +368,16 @@ length.POSIXlt <- function(x) max(lengths(unclass(x)))
     r <- lapply(unclass(x), `length<-`, value)
     class(r) <- oldClass(x)
     attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
-    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt"))) TRUE else NA
+    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced"))) TRUE else NA
     r
 }
 
-## Exists only to update|remove the "balanced_lt"
+## Exists only to update|remove the "balanced"
 `$<-.POSIXlt` <- function (x, name, value) {
     r <- NextMethod("$<-")
     class(r) <- oldClass(x)
     attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
-    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt")) &&
+    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced")) &&
                                  length(value) == length(x)) NA # "filled" else NULL
     r
 }
@@ -1266,7 +1266,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         if(!is.character(j) || (length(j) != 1L))
             stop("component subscript must be a character string")
 
-    setBalanced <- function(.) `attr<-`(., "balanced_lt", TRUE)
+    setBalanced <- function(.) `attr<-`(., "balanced", TRUE)
     if(mi) # but !mj : x[, ".."]
         setBalanced(balancePOSIXlt(x, TRUE, FALSE)[[j]])
     else {
@@ -1340,7 +1340,7 @@ rep.POSIXlt <- function(x, ...) {
     r <- lapply(x, rep, ...)
     class(r) <- cl
     attr(r, "tzone") <- attr(x, "tzone")
-    attr(r, "balanced_lt") <- if(isTRUE(attr(x, "balanced_lt"))) TRUE else NA
+    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced"))) TRUE else NA
     r
 }
 

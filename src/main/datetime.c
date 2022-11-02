@@ -806,7 +806,7 @@ static SEXP  /* 'const' globals */
 
 #define MAYBE_INIT_balanced /* initialize when first used */	\
     if(lt_balancedSymbol == NULL) {				\
-	lt_balancedSymbol = install("balanced_lt");		\
+	lt_balancedSymbol = install("balanced");		\
 	_balanced_ = ScalarLogical(1);				\
     }
 
