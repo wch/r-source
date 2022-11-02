@@ -1,6 +1,7 @@
 ### Tests of often platform-dependent features of the POSIX[cl]t implementation.
 
-### Expect differences, especially with 32-bit time_t
+### Expect differences, especially with 32-bit time_t and platforms
+### without tm_zone/tm_gmtoff.
 
 z <- ISOdate(1890:1912, 1, 10, tz="UTC")
 ## Rome changed to CET for 1894
@@ -16,6 +17,7 @@ strftime(zz, "%Y-%m-%d %H:%M:%S %z")
 z <- ISOdate(c(seq(1890, 1940, 5), 1941:1946, 1950), 1, 10, tz="UTC")
 as.POSIXlt(z, tz="Europe/Paris")
 for(i in seq_along(z)) print(as.POSIXlt(z[i], tz="Europe/Paris"))
+## use pf %z needs tm_gmtoff
 for(i in seq_along(z))
     print(strftime(as.POSIXlt(z[i], tz="Europe/Paris"), "%Y-%m-%d %H:%M:%S %z"))
 
@@ -113,6 +115,7 @@ seq(as.POSIXlt("1847-11-24"), as.POSIXlt("1847-12-07"), by ="day")
 ## end of ------------- Tests of far-distant dates -----------
 
 ## Tests of %z and %Z for output.
+## Use pf %z needs tm_gmtoff so offsets will otherwise be +0000
 x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "UTC")
 x2 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/Rome")
 x1

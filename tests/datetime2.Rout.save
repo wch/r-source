@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-11-02 r83225) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-02 r83231) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -17,7 +17,8 @@ Type 'q()' to quit R.
 
 > ### Tests of often platform-dependent features of the POSIX[cl]t implementation.
 > 
-> ### Expect differences, especially with 32-bit time_t
+> ### Expect differences, especially with 32-bit time_t and platforms
+> ### without tm_zone/tm_gmtoff.
 > 
 > z <- ISOdate(1890:1912, 1, 10, tz="UTC")
 > ## Rome changed to CET for 1894
@@ -108,6 +109,7 @@ Type 'q()' to quit R.
 [1] "1945-01-10 13:00:00 WEST"
 [1] "1946-01-10 13:00:00 CET"
 [1] "1950-01-10 13:00:00 CET"
+> ## use pf %z needs tm_gmtoff
 > for(i in seq_along(z))
 +     print(strftime(as.POSIXlt(z[i], tz="Europe/Paris"), "%Y-%m-%d %H:%M:%S %z"))
 [1] "1890-01-10 12:09:21 +0009"
@@ -453,6 +455,7 @@ attr(,"balanced")
 > ## end of ------------- Tests of far-distant dates -----------
 > 
 > ## Tests of %z and %Z for output.
+> ## Use pf %z needs tm_gmtoff so offsets will otherwise be +0000
 > x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "UTC")
 > x2 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/Rome")
 > x1
