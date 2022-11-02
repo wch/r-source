@@ -3870,10 +3870,10 @@ SEXP R_GE_glyphColour(SEXP glyph) {
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              const char* family, double weight, int style,
              const char* file, int index, double size, int colour,
-             double xc, double yc, double rot, pGEDevDesc dd) {
+             double rot, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_glyphs) {
         dd->dev->glyph(n, glyphs, x, y, 
                        family, weight, style, file, index, size, colour, 
-                       xc, yc, rot, dd->dev);
+                       rot, dd->dev);
     }
 }

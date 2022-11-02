@@ -102,8 +102,8 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
                                    list(sep=":"))))
     runs <- rle(fontstring)
     ## Calculate final glyph positions
-    gx <- glyphHJust(x$x, x$glyph, x$hjust)
-    gy <- glyphVJust(x$y, x$glyph, x$vjust)
+    gx <- unit(glyphHJust(x$x, x$glyph, x$hjust), "in")
+    gy <- unit(glyphVJust(x$y, x$glyph, x$vjust), "in")
     ## Replace NA colours with current gp$col
     naCol <- is.na(x$glyph$colour)
     if (any(naCol))
@@ -111,7 +111,49 @@ drawDetails.glyphgrob <- function(x, recording=TRUE) {
     ## Call dev->glyph() for each run of glyphs
     grid.Call.graphics(C_glyph,
                        as.integer(runs$lengths),
-                       x$glyph, gx, gy, x$x, x$y)
+                       x$glyph, gx, gy)
+}
+
+glyphRect <- function(x) {
+    gx <- glyphHJust(x$x, x$glyph, x$hjust)
+    gy <- glyphVJust(x$y, x$glyph, x$vjust)
+    w <- convertWidth(unit(attr(x$glyph, "width")[1], "bigpts"),
+                      "in", valueOnly=TRUE)
+    h <- convertHeight(unit(attr(x$glyph, "height")[1], "bigpts"),
+                       "in", valueOnly=TRUE)
+    left <- min(gx)
+    bottom <- min(gy)
+    rectGrob(left, bottom, w, h, default.units="in", just=c("left", "bottom"))
+}
+
+xDetails.glyphgrob <- function(x, theta) {
+    xDetails(glyphRect(x), theta)
+}
+
+yDetails.glyphgrob <- function(x, theta) {
+    yDetails(glyphRect(x), theta)
+}
+
+widthDetails.glyphgrob <- function(x) {
+    widthDetails(glyphRect(x))
+}
+
+heightDetails.glyphgrob <- function(x) {
+    heightDetails(glyphRect(x))
+}
+
+xDetails.glyphgrob <- function(x, theta) {
+    gx <- glyphHJust(x$x, x$glyph, x$hjust)
+    gy <- glyphVJust(x$y, x$glyph, x$vjust)
+    w <- convertWidth(unit(attr(x$glyph, "width")[1], "bigpts"),
+                      "in", valueOnly=TRUE)
+    h <- convertHeight(unit(attr(x$glyph, "height")[1], "bigpts"),
+                       "in", valueOnly=TRUE)
+    left <- min(gx)
+    bottom <- min(gy)
+    xDetails(rectGrob(left, bottom, w, h, default.units="in",
+                      just=c("left", "bottom")),
+             theta)
 }
 
 grobPoints.glyphgrob <- function(x, closed=TRUE, ...) {

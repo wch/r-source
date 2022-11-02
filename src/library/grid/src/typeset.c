@@ -22,13 +22,11 @@
 /* We are assuming here that the R code has checked that 
  * info is a "RGlyphInfo"
  */
-static void renderGlyphs(SEXP runs, SEXP glyphInfo, 
-                         SEXP x, SEXP y, SEXP xc, SEXP yc, 
+static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y, 
                          Rboolean draw) 
 {
     int i, n, nruns = LENGTH(runs);
     double *gx, *gy;
-    double xx, yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     const void *vmax;
@@ -40,6 +38,8 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    R_GE_gcontext gc;
+    gcontextFromgpar(currentgp, 0, &gc, dd);        
     /* This copy is used to store/cache resolved gp$fill to avoid
      * stupid amounts of pattern resolving (resolving a resolved
      * pattern is basically a no-op), WITHOUT touching current gp
@@ -63,18 +63,15 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     gx = (double *) R_alloc(n, sizeof(double));
     gy = (double *) R_alloc(n, sizeof(double));
     for (i=0; i<n; i++) {
-        gx[i] = toDeviceX(REAL(x)[i], GE_INCHES, dd);
-        gy[i] = toDeviceY(REAL(y)[i], GE_INCHES, dd);
+        double xx, yy;
+        transformLocn(x, y, i, vpc, &gc,
+                      vpWidthCM, vpHeightCM,
+                      dd,
+                      transform,
+                      &xx, &yy);
+        gx[i] = toDeviceX(xx, GE_INCHES, dd);
+        gy[i] = toDeviceY(yy, GE_INCHES, dd);
     }
-    R_GE_gcontext gc;
-    gcontextFromgpar(currentgp, 0, &gc, dd);        
-    transformLocn(xc, yc, 0, vpc, &gc,
-                  vpWidthCM, vpHeightCM,
-                  dd,
-                  transform,
-                  &xx, &yy);
-    xx = toDeviceX(xx, GE_INCHES, dd);
-    yy = toDeviceX(yy, GE_INCHES, dd);
 
     int offset = 0;
     for (i=0; i<nruns; i++) {
@@ -98,7 +95,7 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
                 gy + offset, 
                 family, weight, style, file, index, size, 
                 colour,
-                xx, yy, rotationAngle,
+                rotationAngle,
                 dd);
         offset = offset + runLength;
     }
@@ -109,7 +106,7 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo,
     UNPROTECT(1);
 }
 
-SEXP L_glyph(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y, SEXP xc, SEXP yc) {
-    renderGlyphs(runs, glyphInfo, x, y, xc, yc, TRUE);
+SEXP L_glyph(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y) {
+    renderGlyphs(runs, glyphInfo, x, y, TRUE);
     return R_NilValue;    
 }

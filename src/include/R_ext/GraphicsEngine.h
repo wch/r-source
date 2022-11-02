@@ -675,7 +675,7 @@ SEXP R_GE_glyphColour(SEXP info);
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              const char* family, double weight, int style,
              const char* file, int index, double size, int colour,
-             double xc, double yc, double rot, pGEDevDesc dd);
+             double rot, pGEDevDesc dd);
     
 #ifdef __cplusplus
 }
