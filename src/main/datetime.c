@@ -139,7 +139,7 @@ extern char *tzname[2];
 #include <Defn.h>
 #include <Internal.h>
 
-Rboolean warn1902 = FALSE, warn2037 = FALSE;
+Rboolean warn1902 = FALSE;
 
 /* Substitute based on glibc code. */
 #include "Rstrptime.h"
@@ -475,9 +475,9 @@ static double mktime0 (stm *tm, const int local)
 	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
 	if (tm->tm_year >= 138) {
-	    if(!warn2037)
-		warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-	    warn2037 = TRUE;
+//	    if(!warn2037)
+//		warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
+//	    warn2037 = TRUE;
 	    OK = FALSE;
 	}
 	OK = OK && tm->tm_year < 138;
@@ -495,8 +495,8 @@ static double mktime0 (stm *tm, const int local)
 #endif
     } else { // 32-bit time_t
 	if (tm->tm_year >= 138) {
-	    if(!warn2037) warning(_("dateimes after 2037 may not be accurate: warns once per seesion"));
-	    warn2037 = TRUE;
+//	    if(!warn2037) warning(_("dateimes after 2037 may not be accurate: warns once per seesion"));
+//	    warn2037 = TRUE;
 	    OK = FALSE;
 	}
 	else if (tm->tm_year < 02) {
@@ -533,8 +533,8 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
 	if(d >= 2147483647.0) {
-	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-	    warn2037 = TRUE;
+//	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
+//	    warn2037 = TRUE;
 	    OK = FALSE;
 	}
 #endif
@@ -548,8 +548,8 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #endif
     } else { // 32-bit time_t
 	if(d >= 2147483647.0) {
-	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-	    warn2037 = TRUE;
+//	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
+//	    warn2037 = TRUE;
 	    OK = FALSE;
 	}
 	else if (d <= -2147483647.0) {

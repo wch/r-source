@@ -99,10 +99,11 @@
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
 
-      \item On platforms where (non-UTC) datetimes after 2037 or before
-      1902 (or before 1900 as with system functions on recent macOS) are
-      guessed by extrapolating time zones from 1902-2037, there is a
-      warning at the first use of extrapolation in a session.
+      \item On platforms where (non-UTC) datetimes before 1902 (or
+      before 1900 as with system functions on recent macOS) are guessed
+      by extrapolating time zones from 1902-2037, there is a warning at
+      the first use of extrapolation in a session.  (As all timezones
+      post 2037 are extrapolation, we do not warn on those.)
 
       \item (Platforms using \option{--with-internal-tzone}, including
       Windows and by default macOS). How years are printed in dates or
