@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-10-27 r83193) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-02 r83225) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -61,7 +61,7 @@ Type 'q()' to quit R.
 [19] "1908-01-10 12:09:21 PMT" "1909-01-10 12:09:21 PMT"
 [21] "1910-01-10 12:09:21 PMT" "1911-01-10 12:09:21 PMT"
 [23] "1912-01-10 12:00:00 WET"
-> ## The offset was really 00:09:21 until 1911, then 00:00
+> ## The offset was really +00:09:21 until 1911, then +00:00
 > ## Many platforms will give the current offset, +0100
 > strftime(zz, "%Y-%m-%d %H:%M:%S %z")
  [1] "1890-01-10 12:09:21 +0009" "1891-01-10 12:09:21 +0009"
@@ -305,6 +305,8 @@ $gmtoff
 
 attr(,"tzone")
 [1] "Europe/London" "GMT"           "BST"          
+attr(,"balanced_lt")
+[1] TRUE
 > 
 > years <- c(-1e6, -1e5, -1e4, seq(-1000, 4000, by = 100), 1e4, 1e5, 1e6)
 > y <- character(length(years))
@@ -450,4 +452,36 @@ attr(,"tzone")
 > 
 > ## end of ------------- Tests of far-distant dates -----------
 > 
+> ## Tests of %z and %Z for output.
+> x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "UTC")
+> x2 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/Rome")
+> x1
+[1] "2022-07-01 UTC"
+> x2
+[1] "2022-07-01 CEST"
+> # RFC5322 format
+> format(x1, "%a, %d %b %Y %H:%M:%S %z")
+[1] "Fri, 01 Jul 2022 00:00:00 +0000"
+> # offset is not detemined: using glibc gives +0000,
+> # internal tzcode and native macOS work it out as +0200
+> format(x2, "%a, %d %b %Y %H:%M:%S %z")
+[1] "Fri, 01 Jul 2022 00:00:00 +0200"
+> format(as.POSIXct(x2), "%a, %d %b %Y %H:%M:%S %z") # usually correct
+[1] "Fri, 01 Jul 2022 00:00:00 +0200"
+> format(x1, "%a, %d %b %Y %H:%M:%S %Z")
+[1] "Fri, 01 Jul 2022 00:00:00 UTC"
+> format(x2, "%a, %d %b %Y %H:%M:%S %Z")
+[1] "Fri, 01 Jul 2022 00:00:00 CEST"
+> 
+> ## offsets not in whole hours
+> x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
+> format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
+[1] "Sat, 01 Jan 2022 00:00:00 +1030"
+> x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
+> format(as.POSIXct(x4), "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+[1] "Fri, 01 Jan 1971 00:00:00 -0044"
+> ## timezones in 1900 might not be supported
+> x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
+> format(as.POSIXct(x5), "%a, %d %b %Y %H:%M:%S %z")
+[1] "Thu, 01 Mar 1900 00:00:00 +0009"
 > 

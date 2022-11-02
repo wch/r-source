@@ -110,6 +110,12 @@
       \env{R_PAD_YEARS_BY_ZERO}.  The default remains to pad to 4 digits
       by zeroes, but setting value \samp{no} gives no padding (as used
       by default by \code{glibc}).
+
+      \item \code{strftime()} tries harder to determine the offset for
+      the \code{"\%z"} format.  On some platforms where \code{POSIXlt} has a
+      \code{gmtoff} component, this works better after conversion to
+      class \code{"POSIXct"} -- on others (including Windows and macOS)
+      that seems unnecessary.
     }
   }
 

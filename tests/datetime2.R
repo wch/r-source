@@ -8,7 +8,7 @@ as.POSIXlt(z, tz="Europe/Rome")
 ## Paris changed to PMT for 1892, WET for 1912
 (zz <- as.POSIXlt(z, tz="Europe/Paris"))
 strftime(zz, "%Y-%m-%d %H:%M:%S %Z")
-## The offset was really 00:09:21 until 1911, then 00:00
+## The offset was really +00:09:21 until 1911, then +00:00
 ## Many platforms will give the current offset, +0100
 strftime(zz, "%Y-%m-%d %H:%M:%S %z")
 
@@ -112,3 +112,25 @@ seq(as.POSIXlt("1847-11-24"), as.POSIXlt("1847-12-07"), by ="day")
 
 ## end of ------------- Tests of far-distant dates -----------
 
+## Tests of %z and %Z for output.
+x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "UTC")
+x2 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/Rome")
+x1
+x2
+# RFC5322 format
+format(x1, "%a, %d %b %Y %H:%M:%S %z")
+# offset is not detemined: using glibc gives +0000,
+# internal tzcode and native macOS work it out as +0200
+format(x2, "%a, %d %b %Y %H:%M:%S %z")
+format(as.POSIXct(x2), "%a, %d %b %Y %H:%M:%S %z") # usually correct
+format(x1, "%a, %d %b %Y %H:%M:%S %Z")
+format(x2, "%a, %d %b %Y %H:%M:%S %Z")
+
+## offsets not in whole hours
+x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
+format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
+x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
+format(as.POSIXct(x4), "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+## timezones in 1900 might not be supported
+x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
+format(as.POSIXct(x5), "%a, %d %b %Y %H:%M:%S %z")

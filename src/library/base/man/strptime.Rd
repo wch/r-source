@@ -295,7 +295,7 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
+  offsets like +00:09:21 (Paris in 1900), and -00:44:30 (Liberia until
   1972), offsets are usually treated as whole numbers of minutes, and
   are most often seen in RFC 5322 email headers in forms like
   \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
@@ -303,8 +303,9 @@ strptime(x, format, tz = "")
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
   hours and two for minutes: the standards say that an empty string
-  should be output if the offset is unknown, but some systems use the
-  offsets for the time zone in use for the current year.
+  should be output if the offset is undetermined, but some systems use
+  \code{+0000} or the offsets for the time zone in use for the current year.
+  (On some platforms this works better after conversion to \code{"POSIXct"}.)
 }
 
 \note{
