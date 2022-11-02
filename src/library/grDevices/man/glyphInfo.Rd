@@ -1,0 +1,123 @@
+% File src/library/grDevices/man/glyphInfo.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2012 R Core Team
+% Copyright 2002-2010 The R Foundation
+% Distributed under GPL 2 or later
+
+\name{glyphInfo}
+\alias{glyphInfo}
+\alias{glyphAnchor}
+\alias{glyphWidth}
+\alias{glyphHeight}
+\alias{glyphJust}
+\title{Describe a Set of Typeset Glyphs.}
+\description{
+  Create an object that contains information about typeset glyphs.
+  This includes glyph identifiers, glyph locations, font and colour
+  information, and metric information.
+}
+
+\usage{
+glyphInfo(id, x, y,
+          family, weight, style, size, file, index,
+          width, height, hAnchor, vAnchor,
+          col=NA)
+
+glyphAnchor(value, label)
+glyphWidth(w, label="width", left="left")
+glyphHeight(h, label="height", bottom="bottom")
+glyphWidthLeft(w, label)
+glyphHeightBottom(h, label)
+\method{glyphJust}{GlyphJust}(x, ...)
+\method{glyphJust}{character}(x, ...)
+\method{glyphJust}{numeric}(x, which=NULL, ...)
+}
+\arguments{
+  \item{id}{Numeric vector of glyph identifiers (index of glyph within
+    font file).}
+  \item{x, y}{Numeric locations of glyphs in (big) points (1/72 inches).}
+  \item{family}{Character name of font family.}
+  \item{weight}{Numeric weight of glyphs (400 is normal, 700 is bold).}
+  \item{style}{Character style of glyphs (\code{"normal"}, \code{"italic"},
+    or \code{"oblique"}).}
+  \item{size}{Numeric size of glyphs (in points).}
+  \item{file}{Character path to font file.}
+  \item{index}{Numeric index of font within font file.}
+  \item{width}{Overall width of glyphs.  Can be a single numeric value,
+    but can also be the result from a call to \code{glyphWidth()}.}
+  \item{height}{Overall height of glyphs.  Can be a single numeric
+    value, but can also be the result from a call to \code{glyphHeight()}.}
+  \item{hAnchor}{Horizontal anchors for justifying glyphs relative to the
+    (\code{x}, \code{y}) location.  Can be a 
+    single numeric value (against which to \code{"left"} justify),
+    but can also be result from a call to \code{glyphAnchor()}.}
+  \item{vAnchor}{Vertical anchors for justifying glyphs relative to the 
+    (\code{x}, \code{y}) location.  Can be a single numeric value
+    (against which to \code{"bottom"} justify), 
+    but can also be result from a call to \code{glyphAnchor()}.}
+  \item{col}{An R colour value for each glyph. Can be \code{NA}.}
+  \item{value, w, h}{A numeric value.}
+  \item{label, left, bottom}{A character value.}
+  \item{x}{A justification value.  Either a character value like
+    \code{"left"} or a numeric value like \code{0}.}
+  \item{which}{When \code{x} is numeric, a character value identifying
+    which width metric the numeric value is relative to.}
+
+  \code{glyphWidthLeft()} and \code{glyphWidthHeight()} provide
+  an API for code that needs to access the relevant anchors for
+  width and height metrics.
+}
+\value{
+  The result from \code{glyphInfo()} is an \code{"RGlyphInfo"} object,
+  essentially a data frame with each row
+  containing id, location, font, and colour for a glyph.
+  The metric information (widths and anchors) are stored as attributes
+  of the data frame.
+
+  \code{glypAnchor()}, \code{glyphWidth()}, and \code{glyphHeight()}
+  return values that can be used to specify \code{width}, \code{height},
+  \code{hAnchor}, and \code{vAnchor} values to \code{glyphInfo()}.
+}
+\details{
+  Multiple anchors can be specified so as to allow different
+  character-based justifications of the glyphs relative to the
+  (\code{x}, \code{y}) location.  Horizontal anchors with labels
+  \code{"left"}, \code{"centre"}, and \code{"right"} are required.
+  It is possible to specify a single numeric \code{hAnchor}, which is
+  treated as the \code{"left"} anchor, or a single anchor with label
+  \code{"left"}, in which case the other
+  required anchors will be calculated based on the required width of the
+  glyphs (see below).
+  Vertical anchors with labels \code{"bottom"}, \code{"centre"}, and
+  \code{"top"} are required.
+  It is possible to specify a single numeric \code{vAnchor}, which is
+  treated as the \code{"bottom"} anchor, or a single anchor with label
+  \code{"bottom"}, in which case the other
+  required anchors will be calculated based on the required height of the
+  glyphs (see below).
+  An example of a non-required anchor is a vertical anchor
+  with the label \code{"baseline"} so that the glyphs can be placed with
+  their baseline at the \code{y} location.
+
+  Multiple widths and heights can be specified so as to allow different
+  numeric-based justifications of the glyphs relative to the
+  (\code{x}, \code{y}) location, e.g., \code{0} for left-justification
+  and \code{1} for right-justification, but with any value in between
+  or even outside those limits also possible.  
+  A width with label \code{"width"}, relative to the \code{"left"}
+  horizontal anchor, is required, but if a single
+  numeric value is given, that is assumed to be the required width.
+  A height with label \code{"height"}, relative to the \code{"bottom"}
+  vertical anchor is required, but if a single
+  numeric value is given, that is assumed to be the required height.
+  An example of a non-required width is a \code{"tight"} width that
+  is relative to a \code{"left-bearing"} horizontal anchor, so that
+  the glyphs can be justified relative to a bounding box around the
+  glyph ink, rather than a bounding box that includes left and right
+  bearings.
+}
+\section{Warning}{
+  Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y},
+  \code{family}, \code{weight}, \code{style}, \code{size}, \code{file}, or
+  \code{index} is silently dropped.
+}

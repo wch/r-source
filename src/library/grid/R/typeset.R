@@ -10,8 +10,8 @@ validDetails.glyphgrob <- function(x) {
     ## Make sure that x and y are of length > 0
     if (length(x$x) < 1 || length(x$y) < 1)
         stop("'x' and 'y' must have length > 0")
-    if (!inherits(x$hjust, "GridJust") || !inherits(x$vjust, "GridJust"))
-        stop("'hjust' and 'vjust' must be just() values")
+    if (!inherits(x$hjust, "GlyphJust") || !inherits(x$vjust, "GlyphJust"))
+        stop("'hjust' and 'vjust' must be glyphJust() values")
     if (length(x$hjust) != 1 || length(x$vjust) != 1)
         stop("'hjust' and 'vjust' must have length 1")
     x
@@ -176,27 +176,6 @@ grobPoints.glyphgrob <- function(x, closed=TRUE, ...) {
     }    
 }
 
-just <- function(x, ..., class) {
-    UseMethod("just")
-}
-just.GridJust <- function(x, ...) {
-    x
-}
-just.character <- function(x, ...) {
-    just <- x
-    class(just) <- "GridJust"
-    just
-}
-just.numeric <- function(x, which=NULL, ...) {
-    just <- x
-    if (is.null(which)) {
-        which <- names(x)
-    }
-    names(just) <- which
-    class(just) <- "GridJust"
-    just
-}
-
 glyphGrob <- function(glyph,
                       x=.5, y=.5, default.units="npc",
                       hjust="centre", vjust="centre",
@@ -205,7 +184,7 @@ glyphGrob <- function(glyph,
         x <- unit(x, default.units)
     if (!is.unit(y))
         y <- unit(y, default.units)
-    grob(glyph=glyph, x=x, y=y, hjust=just(hjust), vjust=just(vjust),
+    grob(glyph=glyph, x=x, y=y, hjust=glyphJust(hjust), vjust=glyphJust(vjust),
          gp=gp, vp=vp, name=name,
          cl="glyphgrob")    
 }

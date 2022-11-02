@@ -84,10 +84,31 @@ glyphAnchor <- function(value, label) {
     value
 }
 
+glyphJust <- function(x, ...) {
+    UseMethod("glyphJust")
+}
+glyphJust.GlyphJust <- function(x, ...) {
+    x
+}
+glyphJust.character <- function(x, ...) {
+    just <- x
+    class(just) <- "GlyphJust"
+    just
+}
+glyphJust.numeric <- function(x, which=NULL, ...) {
+    just <- x
+    if (is.null(which)) {
+        which <- names(x)
+    }
+    names(just) <- which
+    class(just) <- "GlyphJust"
+    just
+}
+
 glyphInfo <- function(id, x, y,
                       family, weight, style, size, file, index,
                       width, height, hAnchor, vAnchor,
-                      colour=NA) {
+                      col=NA) {
     id <- as.integer(id)
     x <- as.numeric(x)
     y <- as.numeric(y)
@@ -105,11 +126,11 @@ glyphInfo <- function(id, x, y,
     index <- as.integer(index)
     size <- as.numeric(size)
     ## Check colour (allow any R colour spec)
-    nacol <- is.na(colour)
+    nacol <- is.na(col)
     if (any(!nacol)) {
-        rgb <- col2rgb(colour[!nacol], alpha=TRUE)
-        colour[!nacol] <- rgb(rgb[1,], rgb[2,], rgb[3,], rgb[4,],
-                              maxColorValue=255)
+        rgb <- col2rgb(col[!nacol], alpha=TRUE)
+        col[!nacol] <- rgb(rgb[1,], rgb[2,], rgb[3,], rgb[4,],
+                           maxColorValue=255)
     }
     ## Check width/height
     if (!inherits(width, "GlyphWidth"))
@@ -154,9 +175,9 @@ glyphInfo <- function(id, x, y,
                                family, weight, style, size, file, index))
     ## Colour can be NA
     if (inherits(info, "omit")) {
-        info$colour <- colour[-attr(info, "na.action")]
+        info$colour <- col[-attr(info, "na.action")]
     } else {
-        info$colour <- colour
+        info$colour <- col
     }
     attr(info, "width") <- width
     attr(info, "height") <- height
