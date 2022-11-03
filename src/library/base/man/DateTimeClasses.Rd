@@ -211,7 +211,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   platform-dependent: they are supported on almost all current
   platforms: those based on BSD or \code{glibc} (including Linux and
   macOS) and those using the \code{tzcode} implementation shipped with
-  \R (including Windows and by default macOD). But they are not
+  \R (including Windows and by default macOS). But they are not
   necessarily set.
 
   Note that the internal list structure

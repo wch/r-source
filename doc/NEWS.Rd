@@ -116,7 +116,7 @@
       the \code{"\%z"} format, and succeeds on the mainstream \R platforms.
 
       \item \code{strftime()} has a limit of 2048 bytes on the string
-      produced -- attemtping to exceed this is an error.  (Previously it
+      produced -- attempting to exceed this is an error.  (Previously it
       silently truncated at 255 bytes.) 
     }
   }
