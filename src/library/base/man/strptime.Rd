@@ -330,6 +330,10 @@ strptime(x, format, tz = "")
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
   used by \R on Windows in all locales.
+
+  Strings produced by \code{strftime} and the \code{format} methods are
+  silently truncated at 255 bytes. (This will change in future versions
+  of \R.)
 }
 
 \section{Sources}{
@@ -348,7 +352,7 @@ strptime(x, format, tz = "")
   distribution (\url{https://www.iana.org/time-zones}).
 
   Note that as \code{strftime} is used for output (and not
-  \code{wcsftime}), argument \code{format} is translated if necessry to
+  \code{wcsftime}), argument \code{format} is translated if necessary to
   the session encoding.
 }
 
