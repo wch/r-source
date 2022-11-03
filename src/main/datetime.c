@@ -1201,14 +1201,15 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(have_zone) {  // so not in UTC
 		int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
 		if (tmp == NA_INTEGER && strstr(buf2, "%z")) { // only need it for %z
-# ifdef USE_INTERNAL_MKTIME
-		    tm.tm_gmtoff = R_timegm(&tm) - R_mktime(&tm);
-# else
-		    // this gives wrong answers, but in general
-		    // calling mktime will only work in the currently set tz.
 		    tm.tm_gmtoff = 0;
+# ifdef USE_INTERNAL_MKTIME
+		    R_mktime(&tm);
+//		    tm.tm_gmtoff = R_timegm(&tm) - R_mktime(&tm);
+# else
+		    // At least on glibc this corrects it
+		    mktime(&tm);
 # endif
-		    printf("fixing tm_gmtoff to %ld\n", tm.tm_gmtoff);
+//		    printf("fixing tm_gmtoff to %ld\n", tm.tm_gmtoff);
 		} else tm.tm_gmtoff = tmp;
 #endif
 	    }

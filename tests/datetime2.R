@@ -122,8 +122,7 @@ x1
 x2
 # RFC5322 format
 format(x1, "%a, %d %b %Y %H:%M:%S %z")
-# offset is not detemined: using glibc gives +0000,
-# internal tzcode and native macOS work it out as +0200
+# offset may not not determined: +0200 is correct
 format(x2, "%a, %d %b %Y %H:%M:%S %z")
 format(as.POSIXct(x2), "%a, %d %b %Y %H:%M:%S %z") # usually correct
 format(x1, "%a, %d %b %Y %H:%M:%S %Z")

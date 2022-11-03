@@ -113,10 +113,7 @@
       by default by \code{glibc}).
 
       \item \code{strftime()} tries harder to determine the offset for
-      the \code{"\%z"} format.  On some platforms where \code{POSIXlt} has a
-      \code{gmtoff} component, this works better after conversion to
-      class \code{"POSIXct"} -- on others (including Windows and macOS)
-      that seems unnecessary.
+      the \code{"\%z"} format, and succeeds on the mainstream \R platforms.
 
       \item \code{strftime()} has a limit of 2048 bytes on the string
       produced -- attemtping to exceed this is an error.  (Previously it
