@@ -330,6 +330,11 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.2.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{compactPDF()} gets a \code{verbose} option.
+    }
+  }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
