@@ -142,8 +142,6 @@ on Windows: it is the current default on macOS.
 # define HAVE_WORKING_MKTIME_AFTER_2037 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1902
 # define HAVE_WORKING_MKTIME_BEFORE_1902 1
-# undef HAVE_WORKING_MKTIME_BEFORE_1900
-# define HAVE_WORKING_MKTIME_BEFORE_1900 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1970
 # define HAVE_WORKING_MKTIME_BEFORE_1970 1
 #else // PATH 1)
@@ -497,12 +495,22 @@ static double mktime0 (stm *tm, const int local)
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1902
 	OK = OK && tm->tm_year >= 02;
+	if (tm->tm_year < 02) {
+	    if(!warn1902)
+		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
+	    warn1902 = TRUE;
+	}
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1970
 	OK = OK && tm->tm_year >= 70;
 #endif
-    } else {
+    } else {  // 32-bit time_t
 	OK = tm->tm_year < 138 && tm->tm_year >= 02;
+ 	if (tm->tm_year < 02) {
+	    if(!warn1902)
+		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
+	    warn1902 = TRUE;
+	}	
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1970
 	OK = OK && tm->tm_year >= 70;
 #endif
@@ -536,13 +544,25 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	OK = OK && d < 2147483647.0;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1902
+	if (d <= -2147483647.0) {
+	    if(!warn1902)
+		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
+	    warn1902 = TRUE;
+	    OK = FALSE;
+        }
 	OK = OK && d > -2147483647.0;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1970
 	OK = OK && d >= 0.0;
 #endif
-    } else {
-	OK = d < 2147483647.0 && d > -2147483647.0;
+    } else { // 32-bit time_t
+	if (d <= -2147483647.0) {
+	    if(!warn1902)
+		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
+	    warn1902 = TRUE;
+	    OK = FALSE;
+	}
+	OK = OK && d < 2147483647.0;
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1970
 	OK = OK && d >= 0.0;
 #endif
