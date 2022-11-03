@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-10-10 r83054) -- "Unsuffered Consequences"
+R version 4.2.2 Patched (2022-11-03 r83248) -- "Innocent and Trusting"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1186,7 +1186,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
-[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1524,7 +1523,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
-[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -2607,6 +2605,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.346 0.054 0.402 0 0 
+Time elapsed:  0.088 0.023 0.111 0 0 
 > 
 > 
