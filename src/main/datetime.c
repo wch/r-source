@@ -1136,18 +1136,6 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 //	    if(tm.tm_isdst >= 0 && strcmp(tzname[tm.tm_isdst], tm_zone))
 //		warning(_("Timezone specified in the object field cannot be used on this system."));
 #endif
-#ifdef HAVE_TM_GMTOFF
-	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
-	    if (tmp == NA_INTEGER) { // only need it for %z
-# ifdef USE_INTERNAL_MKTIME
-		tm.tm_gmtoff = R_timegm(&tm) - R_mktime(&tm);
-# else
-		// this gives wrong answers, but in general
-		// calling mktime will only work in the currently set tz.
-		tm.tm_gmtoff = 0;
-# endif
-	    } else tm.tm_gmtoff = tmp;
-#endif
 	}
 	if(!R_FINITE(secs)) {
 	    SET_STRING_ELT(ans, i,
@@ -1208,14 +1196,30 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strcat(buf2, p+nused);
 		}
 	    }
-	    // The on-overflow behaviour is not determined by C99-C23.
+
+#ifdef HAVE_TM_GMTOFF
+	    if(have_zone) {  // so not in UTC
+		int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
+		if (tmp == NA_INTEGER && strstr(buf2, "%z")) { // only need it for %z
+# ifdef USE_INTERNAL_MKTIME
+		    tm.tm_gmtoff = R_timegm(&tm) - R_mktime(&tm);
+# else
+		    // this gives wrong answers, but in general
+		    // calling mktime will only work in the currently set tz.
+		    tm.tm_gmtoff = 0;
+# endif
+		    printf("fixing tm_gmtoff to %ld\n", tm.tm_gmtoff);
+		} else tm.tm_gmtoff = tmp;
+#endif
+	    }
+            // The on-overflow behaviour is not determined by C99-C23.
 	    // Hoowever, this should return 0 so we can throw an error.
-	    char buff[2048];
+	    char buff[2049];
 	    size_t res;
 #ifdef USE_INTERNAL_MKTIME
-	    res = R_strftime(buff, 2048, buf2, &tm);
+	    res = R_strftime(buff, 2049, buf2, &tm);
 #else
-	    res = strftime(buff, 2048, buf2, &tm);
+	    res = strftime(buff, 2049, buf2, &tm);
 #endif
 	    if (res == 0) { // overflow for at least internal and glibc
 		Rf_error("output string exceeded 2048 bytes");
