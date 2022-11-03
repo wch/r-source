@@ -4427,6 +4427,7 @@ function(package, dir, lib.loc = NULL)
                                          "FALSE"))
     if(use_aliases_from_CRAN) {
         aliases_db <- NULL
+        tried_aliase_db <- FALSE
     }
 
     anchors <- unique(thispkg[have_anchor])
@@ -4483,8 +4484,19 @@ function(package, dir, lib.loc = NULL)
 
         } else if(use_aliases_from_CRAN) {
             if(is.null(aliases_db)) {
+                if (tried_aliases_db) {
+                    unknown <- c(unknown, pkg)
+                    next
+                }
+                tried_aliase_db <- TRUE
                 ## Not yet read in.
-                aliases_db <- CRAN_aliases_db()
+                ## This can fail if e.g. CRAN is updating DB
+                aliases_db <- tryCatch(CRAN_aliases_db(),
+                                       error = function(e) NULL)
+                if (is.null(aliases_db)) {
+                    unknown <- c(unknown, pkg)
+                    next
+                }
             }
             aliases <- aliases_db[[pkg]]
             if(is.null(aliases)) {
