@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -206,7 +206,7 @@ inRbuildignore <- function(files, pkgdir) {
             depends <- package_dependencies(package, available,
                                             which = install_dependencies)
             depends <- setdiff(unlist(depends),
-                               utils::installed.packages())
+                               rownames(utils::installed.packages()))
             if(length(depends)) {
                 message(paste(strwrap(sprintf("installing dependencies %s",
                                               paste(sQuote(sort(depends)),
