@@ -3398,7 +3398,7 @@ The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
 For date-times to work correctly it is essential that the tables
-defining time zones are installed: these are usually in an OS compoent
+defining time zones are installed: these are usually in an OS component
 named something like @code{tzdata}. On most OSes they are required
 @c with glibc by glibc-common
 but installations of Alpine Linux have bee seen without them.
