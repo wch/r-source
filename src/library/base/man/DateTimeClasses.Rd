@@ -190,7 +190,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   Class \code{"POSIXlt"} is internally a named \code{\link{list}} of
   vectors representing date-time, with the following list components
   \describe{
-    \item{\code{sec}}{0--61: seconds, allowing for leapseconds.}
+    \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
     \item{\code{hour}}{0--23: hours.}
     \item{\code{mday}}{1--31: day of the month}
