@@ -117,6 +117,10 @@
       \code{gmtoff} component, this works better after conversion to
       class \code{"POSIXct"} -- on others (including Windows and macOS)
       that seems unnecessary.
+
+      \item \code{strftime()} has a limit of 2048 bytes on the string
+      produced -- attemtping to exceed this is an error.  (Previously it
+      silently truncated at 255 bytes.) 
     }
   }
 

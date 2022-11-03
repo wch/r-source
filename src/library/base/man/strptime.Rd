@@ -342,6 +342,11 @@ strptime(x, format, tz = "")
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
   used by \R on Windows in all locales.
+
+  There is a limit 0f 2048 bytes on each string produced by
+  \code{strptime} and the \code{format} methods.  As from \R 4.3.0
+  attempting to exceed this gives an error (previous versions silently
+  truncated at 255 bytes).
 }
 
 \section{Sources}{
