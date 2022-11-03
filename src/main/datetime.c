@@ -849,10 +849,10 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     PROTECT(stz); /* it might be new */
-    Rboolean isGMT = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
+    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
       settz = FALSE;
     char oldtz[1001] = "";
-    if(!isGMT && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -861,7 +861,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     // localtime may change tzname.
     SEXP tzone;
-    if (isGMT) {
+    if (isUTC) {
 	tzone = PROTECT(mkString(tz));
     } else {
 	tzone = PROTECT(allocVector(STRSXP, 3));
@@ -872,14 +872,14 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_xlen_t n = XLENGTH(x);
 #ifdef HAVE_TM_GMTOFF
-    int nans = isGMT ? 9 : 11;
+    int nans = isUTC ? 9 : 11;
 #else
-    int nans = isGMT ? 9 : 10;
+    int nans = isUTC ? 9 : 10;
 #endif
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
-    if(!isGMT) {
+    if(!isUTC) {
 	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
 #ifdef HAVE_TM_GMTOFF
 	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
@@ -895,7 +895,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	double d = REAL(x)[i];
 	Rboolean valid;
 	if(R_FINITE(d)) {
-	    ptm = localtime0(&d, !isGMT, &dummy);
+	    ptm = localtime0(&d, !isUTC, &dummy);
 	    /* 
 	       In theory localtime/gmtime always return a valid struct
 	       tm pointer, but Windows uses NULL for error conditions
@@ -907,7 +907,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    valid = FALSE;
 	}
 	makelt(ptm, ans, i, valid, valid ? d - floor(d) : d);
-	if(!isGMT) {
+	if(!isUTC) {
 	    char *p = "";
 	    // or ptm->tm_zone (but not specified by POSIX)
 	    if(valid && ptm->tm_isdst >= 0)
@@ -962,11 +962,11 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(stz); /* it might be new */
-    int isGMT = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) ? 1 : 0;
-    // if !isGMT we need to set the tz.not set tm_isdst and use mktime not timegm
+    int isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) ? 1 : 0;
+    // if !isUTC we need to set the tz.not set tm_isdst and use mktime not timegm
     char oldtz[1001] = "";
     Rboolean settz = FALSE;
-    if(!isGMT && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -1000,7 +1000,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_mon   = INTEGER(VECTOR_ELT(x, 4))[i%nlen[4]];
 	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
 	/* mktime ignores tm.tm_wday and tm.tm_yday */
-	tm.tm_isdst = isGMT ? 0 : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	tm.tm_isdst = isUTC ? 0 : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	if(!R_FINITE(secs))
 	    REAL(ans)[i] = secs;
 	else if(tm.tm_min  == NA_INTEGER ||
@@ -1010,14 +1010,14 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    errno = 0;
 	    // Interface to mktime or gmtime00, PATH-specific
-	    double tmp = mktime0(&tm, !isGMT);
+	    double tmp = mktime0(&tm, !isUTC);
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
 	    REAL(ans)[i] = ((tmp == -1.)
 			    /* avoid silly gotcha at epoch minus one sec */
 			    && (tm.tm_sec != 59)
-			    && ((tm.tm_sec = 58), (mktime0(&tm, !isGMT) != -2.))
+			    && ((tm.tm_sec = 58), (mktime0(&tm, !isUTC) != -2.))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
 #endif
@@ -1282,10 +1282,10 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
 
     char oldtz[1001] = "";
-    Rboolean isGMT = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
+    Rboolean isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0),
       settz = FALSE;
-    // if isGMT, do not set TZ, set tzone to UTC/GMT, make 9 components
-    if(!isGMT && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    // if isUTC, do not set TZ, set tzone to UTC/GMT, make 9 components
+    if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -1294,7 +1294,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
     // in case this gets changed by conversions.
     SEXP tzone;
-    if (isGMT) {
+    if (isUTC) {
 	PROTECT(tzone = mkString(tz));
     } else if(strlen(tz)) {
 	PROTECT(tzone = allocVector(STRSXP, 3));
@@ -1311,14 +1311,14 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
       N = (n > 0) ? ((m > n) ? m : n) : 0;
 
 #ifdef HAVE_TM_GMTOFF
-    int nans = isGMT ? 9 : 11;
+    int nans = isUTC ? 9 : 11;
 #else
-    int nans = isGMT ? 9 : 10;
+    int nans = isUTC ? 9 : 10;
 #endif
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
-    if(!isGMT) {
+    if(!isUTC) {
 	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, N));
 #ifdef HAVE_TM_GMTOFF
 	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, N));
@@ -1369,21 +1369,21 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		t0 = mktime0(&tm2, 0);
 		if (t0 != -1) {
 		    t0 -= offset; /* offset = -0800 is Seattle */
-		    ptm = localtime0(&t0, !isGMT, &tm2);
+		    ptm = localtime0(&t0, !isUTC, &tm2);
 		} else invalid = TRUE;
 	    } else {
 		/* we do want to set wday, yday, isdst, but not to
 		   adjust structure at DST boundaries */
 		memcpy(&tm2, &tm, sizeof(stm));
-		mktime0(&tm2, !isGMT); /* set wday, yday, isdst */
+		mktime0(&tm2, !isUTC); /* set wday, yday, isdst */
 		tm.tm_wday = tm2.tm_wday;
 		tm.tm_yday = tm2.tm_yday;
-		tm.tm_isdst = isGMT ? 0: tm2.tm_isdst;
+		tm.tm_isdst = isUTC ? 0: tm2.tm_isdst;
 	    }
 	    invalid = validate_tm(&tm) != 0;
 	}
 	makelt(ptm, ans, i, !invalid, invalid ? NA_REAL : psecs - floor(psecs));
-	if(!isGMT) {
+	if(!isUTC) {
 	    const char *p = "";
 	    if(!invalid && tm.tm_isdst >= 0) {
 #ifdef HAVE_TM_ZONE
@@ -1560,7 +1560,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isVectorList(x) || n_comp < 9)
 	error(_("invalid '%s' argument"), "x");
 
-    Rboolean have_zone, isGMT = n_comp == 9; // otherwise, 10 or 11:
+    Rboolean have_zone, isUTC = n_comp == 9; // otherwise, 10 or 11:
 #ifdef HAVE_TM_GMTOFF
     have_zone = n_comp >= 11; // {zone, gmtoff}
     // Why check the type and not the name?
@@ -1670,7 +1670,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = PROTECT(allocVector(VECSXP, n_comp));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
-    if(!isGMT) {
+    if(!isUTC) {
 	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
 #ifdef HAVE_TM_GMTOFF
 	// even if( !have_zone )
@@ -1696,7 +1696,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 //	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
-	tm.tm_isdst = isGMT ? 0
+	tm.tm_isdst = isUTC ? 0
 	           : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	char tm_zone[20];
 	if(have_zone) { // not "UTC", e.g.
@@ -1746,7 +1746,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, valid,
 	       valid ? secs - fsecs : (R_FINITE(secs) ? NA_REAL : secs)); // fills ans[0..8]
 
-	if(!isGMT) {
+	if(!isUTC) {
 	    const char *p = "";
 	    if(valid && tm.tm_isdst >= 0) {
 #ifdef HAVE_TM_ZONE
