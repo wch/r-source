@@ -117,7 +117,7 @@
 
       \item \code{strftime()} has a limit of 2048 bytes on the string
       produced -- attempting to exceed this is an error.  (Previously it
-      silently truncated at 255 bytes.) 
+      silently truncated at 255 bytes.)
     }
   }
 
@@ -320,6 +320,11 @@
       \item Printing of a \code{factanal()} result with just one factor and
       \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
       Bates, thanks to the \sQuote{R Contributors} working group.
+
+      \item Printing objects of class \code{"roman"}, \code{"hexmode"},
+      \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
+      \code{"citation"} of length zero now print something better, a
+      sixth of which fixes \PR{18422}, reported by Benjamin Feakins.
     }
   }
 }
