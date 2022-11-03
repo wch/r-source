@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-10 r83054) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1186,6 +1186,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1523,6 +1524,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)

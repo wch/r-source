@@ -380,7 +380,7 @@ as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 
 ## POSIXlt is not primarily a list, but primarily an abstract vector of
 ## time stamps:
-length.POSIXlt <- function(x) length(unclass(x)[[1L]])
+length.POSIXlt <- function(x) max(lengths(unclass(x)))
 `length<-.POSIXlt` <- function(x, value)
     .POSIXlt(lapply(unclass(x), `length<-`, value),
              attr(x, "tzone"), oldClass(x))
