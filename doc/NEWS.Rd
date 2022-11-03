@@ -316,6 +316,10 @@
       \code{ts.eps = getOption("ts.eps")}
       argument and thus by default rounds values very close to the start (or
       end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
+
+      \item Printing of a \code{factanal()} result with just one factor and
+      \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
+      Bates, thanks to the \sQuote{R Contributors} working group.
     }
   }
 }

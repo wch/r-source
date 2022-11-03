@@ -295,6 +295,14 @@ stopifnot(floor(as.numeric(time(x))) == true.year)
 ## seen 10 differences in R <= 4.2.x
 
 
+## Sorted printing of factor analysis loadings with 1 factor, PR#17863
+f1 <- factanal(d <- mtcars[,1:4], factors = 1) ; print(f1, sort=TRUE)
+prl <- capture.output(print(loadings(f1), sort=TRUE))
+stopifnot(identical(1:4, charmatch(colnames(d),
+                                   prl[charmatch("Loadings", prl)+ 1:4+1L])))
+## printed these as vector instead of 1-column matrix in R <= 4.2.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

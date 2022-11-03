@@ -245,7 +245,7 @@ print.loadings <- function(x, digits = 3L, cutoff = 0.1, sort = FALSE, ...)
         mx <- max.col(abs(Lambda))
         ind <- cbind(1L:p, mx)
         mx[abs(Lambda[ind]) < 0.5] <- factors + 1
-        Lambda <- Lambda[order(mx, 1L:p),]
+        Lambda <- Lambda[order(mx, 1L:p), , drop=FALSE]
     }
     cat("\nLoadings:\n")
     fx <- setNames(format(round(Lambda, digits)), NULL)
