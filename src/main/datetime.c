@@ -142,6 +142,8 @@ on Windows: it is the current default on macOS.
 # define HAVE_WORKING_MKTIME_AFTER_2037 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1902
 # define HAVE_WORKING_MKTIME_BEFORE_1902 1
+# undef HAVE_WORKING_MKTIME_BEFORE_1900
+# define HAVE_WORKING_MKTIME_BEFORE_1900 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1970
 # define HAVE_WORKING_MKTIME_BEFORE_1970 1
 #else // PATH 1)
@@ -491,36 +493,19 @@ static double mktime0 (stm *tm, const int local)
     if(sizeof(time_t) == 8) {
 	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
-	if (tm->tm_year >= 138) {
-//	    if(!warn2037)
-//		warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-//	    warn2037 = TRUE;
-	    OK = FALSE;
-	}
 	OK = OK && tm->tm_year < 138;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1902
-	if (tm->tm_year < 02) {
-	    if(!warn1902)
-		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
-	    warn1902 = TRUE;
-	    OK = FALSE;
-	}
+	OK = OK && tm->tm_year >= 02;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1970
 	OK = OK && tm->tm_year >= 70;
 #endif
-    } else { // 32-bit time_t
-	if (tm->tm_year >= 138) {
-//	    if(!warn2037) warning(_("dateimes after 2037 may not be accurate: warns once per seesion"));
-//	    warn2037 = TRUE;
-	    OK = FALSE;
-	}
-	else if (tm->tm_year < 02) {
-	    if(!warn1902) warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
-	    warn1902 = TRUE;
-	    OK = FALSE;
-	}
+    } else {
+	OK = tm->tm_year < 138 && tm->tm_year >= 02;
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1970
+	OK = OK && tm->tm_year >= 70;
+#endif
     }
     if(OK) {
 	res = (double) mktime(tm);
@@ -545,37 +530,22 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 
     Rboolean OK = TRUE;;
 /* as mktime is broken, do not trust localtime */
-    if(local) {
     if (sizeof(time_t) == 8) {
 	OK = TRUE;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
-	if(d >= 2147483647.0) {
-//	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-//	    warn2037 = TRUE;
-	    OK = FALSE;
-	}
+	OK = OK && d < 2147483647.0;
 #endif
 #ifndef HAVE_WORKING_MKTIME_BEFORE_1902
-	if (d <= -2147483647.0) {
-	    if(!warn1902)
-		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
-	    warn1902 = TRUE;
-	    OK = FALSE;
-	}
+	OK = OK && d > -2147483647.0;
 #endif
-    } else { // 32-bit time_t
-	if(d >= 2147483647.0) {
-//	    warning(_("(dateimes after 2037 may not be accurate: warns once per seesion"));
-//	    warn2037 = TRUE;
-	    OK = FALSE;
-	}
-	else if (d <= -2147483647.0) {
-	    if(!warn1902)
-		warning(_("dateimes before 1902 may not be accurate: warns once per seesion"));
-	    warn1902 = TRUE;
-	    OK = FALSE;
-	}
-    }
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1970
+	OK = OK && d >= 0.0;
+#endif
+    } else {
+	OK = d < 2147483647.0 && d > -2147483647.0;
+#ifndef HAVE_WORKING_MKTIME_BEFORE_1970
+	OK = OK && d >= 0.0;
+#endif
     }
     if(OK) {
 	time_t t = (time_t) d;
@@ -1040,6 +1010,12 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 // .Internal(format.POSIXlt(x, format, usetz))
 SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    /* FIXME
+       This may be called on objects generated on other versions of R
+       with/without tm_zone/rm_offset, or even different versions of R.
+       Let alone hand-edited objects.
+       So assuming the structure differs for UTC objects is unsafe.
+    */
     checkArity(op, args);
     SEXP x = PROTECT(duplicate(CAR(args))); /* coerced below */
     if(!isVectorList(x) || LENGTH(x) < 9)
@@ -1225,9 +1201,10 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (res == 0) { // overflow for at least internal and glibc
 		Rf_error("output string exceeded 2048 bytes");
 	    }
-	    // probably no longer needed.
-	    buff[2047] = '\0';
-	    mbcsTruncateToValid(buff);
+	    // no longer needed.
+	    // buff[2048] = '\0';
+	    // mbcsTruncateToValid(buff);
+ 
 	    // Now assume tzone abbreviated name is < 40 bytes,
 	    // but they are currently 3 or 4 bytes.
 	    if(UseTZ) {
@@ -1535,6 +1512,12 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 // .Internal(balancePOSIXlt(x, fill.only, classed))
 SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    /* FIXME
+       This may be called on objects generated on other versions of R
+       with/without tm_zone/rm_offset, or even different versions of R.
+       Let alone hand-edited objects.
+       So assuming the structure differs for UTC objects is unsafe.
+    */
     checkArity(op, args);
     MAYBE_INIT_balanced
     SEXP _filled_ = ScalarLogical(NA_LOGICAL);
