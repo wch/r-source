@@ -52,14 +52,19 @@
   R class "POSIXlt" is a list of 9 components, with two optional ones.
   Currently a time known to be in UTC has only the 9.
 
+  Onjects of this class are most often created from character inputs
+  via strptime() (called by as.POSIXlt.character) or from "POSIXct"
+  objects. In the first case they may or may not have an associated
+  time zone: in the second they must.
+
   On a system with tm_gmtoff (all current platforms) the components
   zone and gmtoff are included, but gmtoff may be NA and usually will
   be unless the value was supplied by strptime(, "%z") or by
-  conversion from "POSIXct".
+  conversion from "POSIXct" or "Date".
 
   There will usually be a "tzone" attribute, of length 1 if only the
-  name is knoen or is "UTC', of length 3 including the abbreviations
-  for all other timezones. (If the timezone does not have DST, the
+  name is known or is "UTC', of length 3 including the abbreviations
+  for all other timezones. (If the timezone does not use DST, the
   second abbreviation may be empty or may repeat the first, depending
   on the platform.)  However, if the call to strptime() does not
   specify 'tz', this attribute is omitted.
@@ -1032,8 +1037,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* FIXME
        This may be called on objects generated on other versions of R
-       with/without tm_zone/rm_offset, or even different versions of R.
-       Let alone hand-edited objects.
+       with/without tm_zone/tm_offset, or even different versions of R.
+       Let alone hand-edited objects or created in packages.
        So assuming the structure differs for UTC objects is unsafe.
     */
     checkArity(op, args);
@@ -1413,6 +1418,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 } // strptime()
 
+// .Internal(Date2POSIXlt(x)) called from as.POSIXlt.Date .
 SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, ansnames, klass;
@@ -1473,7 +1479,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-// as.Date.POSIXlt(x) === .Internal(POSIXlt2Date(x))
+// .Internal(POSIXlt2Date(x)), called from as.Date.POSIXlt(x)
 SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1529,7 +1535,7 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-// .Internal(balancePOSIXlt(x, fill.only, classed))
+// .Internal(balancePOSIXlt(x, fill.only, classed)) called from balancePOSIXlt()
 SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* FIXME
