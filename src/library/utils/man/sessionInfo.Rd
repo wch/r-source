@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -25,7 +25,7 @@ osVersion
    (the default) meaning all attached packages.}
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
-  \item{locale}{show locale and code page information?}
+  \item{locale}{show locale, time zone and (on Windows) code page information?}
   \item{RNG}{show information on \code{\link{RNGkind}()}?  Defaults to true
     iff it differs from the \R version's default, i.e., \code{\link{RNGversion}(*)}.}
   \item{\dots}{currently not used.}
@@ -47,6 +47,7 @@ osVersion
     \code{\link{extSoftVersion}()["BLAS"]}.}
   \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
   \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
+  \item{tzone}{a character string, the result of calling \code{\link{Sys.timezone}()}.}
 #ifdef windows
   \item{codepage}{an integer, the result of calling
     \code{\link{l10n_info}()["codepage"]}.}
@@ -79,7 +80,7 @@ osVersion
   Where \R was compiled under macOS 10.x (as the \acronym{CRAN} Intel
   distributions have been) but running under \sQuote{Big Sur} or later,
   macOS reports itself as \samp{10.16} (which \R recognizes as
-  \sQuote{Big Sur ...}) and not \samp{11.x} or later.
+  \sQuote{Big Sur ...}) and not \samp{11}, \samp{12}, \samp{13} or later.
 }
 \note{
   The information on \sQuote{loaded} packages and namespaces is the

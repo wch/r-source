@@ -118,6 +118,9 @@
       \item \code{strftime()} has a limit of 2048 bytes on the string
       produced -- attempting to exceed this is an error.  (Previously it
       silently truncated at 255 bytes.)
+
+      \item \code{sessionInfo()} records (and by default prints) the
+      system time zone as part of the locale information.
     }
   }
 
