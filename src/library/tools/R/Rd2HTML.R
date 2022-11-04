@@ -431,6 +431,34 @@ Rd2HTML <-
     	inPara <<- newval
     }
 
+    writeItemAsCode <- function(blocktag, block, addID = blocktag == "\\arguments") {
+        ## Usually RdTags(block)[1L] == "TEXT", except when it is
+        ## \\dots, \\ldots, etc. Potentially more complicated in cases
+        ## like \item{foo, \dots, bar}, where block will have length >
+        ## 1. We want to (a) split on comma and treat each part as a
+        ## separate argument / value, and (b) for blocktag==arguments
+        ## only, add an id tag so that we can have internal links.
+
+        ## We do this by 'deparsing' block[[1L]], using as.character.Rd()
+        s <- as.character.Rd(block)
+        toEsc <- s %in% names(HTMLEscapes)
+        if (any(toEsc)) s[toEsc] <- HTMLEscapes[s[toEsc]]
+        ## TODO: HTMLEscapes["\\R"] is problematic (though not
+        ## relevant here). Maybe move style details to R.css?
+
+        ## Now just join, split on comma, wrap individually inside
+        ## </code>, and unsplit. This will be problematic if any
+        ## TeX-like macros remain, but that should not happen in
+        ## practice for \item-s inside \arguments or \value.
+
+        s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
+        s <- s[nzchar(s)] # unlikely to matter, but just to be safe
+        s <- if (addID) sprintf('<code id="%s">%s</code>', gsub("[[:space:]]+", "-", s), s)
+             else sprintf('<code>%s</code>', s)
+        s <- paste0(s, collapse = ", ")
+        of1(s)
+    }
+
     writeWrapped <- function(tag, block, doParas) {
     	if (!doParas || HTMLTags[tag] == "pre")
             leavePara(NA)
@@ -866,9 +894,7 @@ Rd2HTML <-
                     if(identical(RdTags(block[[1L]])[1L], "\\code")) {
                         writeContent(block[[1L]], tag)
                     } else {
-                        of1('<code>')
-                        writeContent(block[[1L]], tag)
-                        of1('</code>')
+                        writeItemAsCode(blocktag, block[[1L]])
                     }
     		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
