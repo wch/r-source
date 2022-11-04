@@ -120,7 +120,9 @@
       silently truncated at 255 bytes.)
 
       \item \code{sessionInfo()} records (and by default prints) the
-      system time zone as part of the locale information.
+      system time zone as part of the locale information.  Also the
+      source (system/internal) of the date-time conversion and printing
+      functions.
     }
   }
 

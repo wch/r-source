@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2021   The R Core Team.
+ *  Copyright (C) 2012-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -170,3 +170,14 @@ SEXP nsl(SEXP hostname)
     return R_NilValue;
 }
 #endif
+
+#include <config.h>
+
+SEXP tzcode_type(void)
+{
+#ifdef USE_INTERNAL_MKTIME
+    return mkString("internal");
+#else
+    return mkString("system");
+#endif
+}

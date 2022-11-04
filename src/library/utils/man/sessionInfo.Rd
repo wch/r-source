@@ -48,6 +48,8 @@ osVersion
   \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
   \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
   \item{tzone}{a character string, the result of calling \code{\link{Sys.timezone}()}.}
+  \item{tzcode_type}{a character string indicating source
+    (system/internal) of the date-time conversion and printing functions.}
 #ifdef windows
   \item{codepage}{an integer, the result of calling
     \code{\link{l10n_info}()["codepage"]}.}
@@ -90,6 +92,7 @@ osVersion
 }
 \seealso{\code{\link{R.version}}
 }
+%% FIXME: this should test this, in RDIFF makeup.
 \examples{\donttest{
 sI <- sessionInfo()
 sI

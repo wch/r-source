@@ -40,6 +40,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(processevents, 0),
     CALLDEF(octsize, 1),
     CALLDEF(charClass, 2),
+    CALLDEF(tzcode_type, 0),
 
     /* Sockets */
     CALLDEF(sockconnect, 2),
