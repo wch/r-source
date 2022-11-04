@@ -41,7 +41,6 @@
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}
-\alias{balancePOSIXlt}
 \alias{length.POSIXlt}
 \alias{length<-.POSIXct}
 \alias{length<-.POSIXlt}
@@ -71,12 +70,10 @@
 \special{z + time}
 \special{time - z}
 \special{time1 lop time2}
-
-balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
-    date-time classes; for \code{balancePOSIXlt()}, it must be a \code{"POSIXlt"}.}
+    date-time classes.}
   \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
   \item{max}{numeric or \code{NULL}, specifying the maximal number of
     entries to be printed.  By default, when \code{NULL},
@@ -91,12 +88,6 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   \item{z}{a numeric vector (in seconds)}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
-  \item{fill.only}{a \code{\link{logical}} specifying if \code{balancePOSIXlt(x, ..)}
-    should only \dQuote{fill up} by recycling, but not re-check validity
-    nor recompute, e.g., \code{x$wday} and \code{x$yday}.}
-  \item{classed}{a \code{\link{logical}} specifying if the result should be
-    classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
-    is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
@@ -239,33 +230,8 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   % POSIX says used 'initially', so it should probably be ignored.
   % glibc has a complicated fixup.
 
-  \subsection{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} POSIXlt}{
-    Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11) list
-    components of different \code{\link{length}}, by simply recycling them to
-    full length.  Previous to \R 4.3.0, this has worked in printing,
-    formatting, and conversion to \code{"POSIXct"}, but often not for
-    \code{length()}, conversion to \code{"Date"} or indexing, i.e.,
-    subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
-
-    Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
-    and \code{mon} could have been out of their designated range (say, 0--23
-    for hours) and still work correctly, e.g. in conversions and printing.
-    This is supported as well, since \R 4.3.0, at least when the values are
-    not extreme. %% FIXME: say more
-
-    Function \code{balancePOSIXlt(x)} will now return a version of the
-    \code{"POSIXlt"} object \code{x} which by default is balanced in both ways:
-    All the internal list components are of full length, and their values are
-    inside the ranges specified above.
-    Setting \code{fill.only = TRUE} will only recycle the list components
-    to full length, but not check them at all.  This is particularly faster
-    when all components of \code{x} are already of full length.
-
-    Experimentally, \code{balancePOSIXlt()} and other functions returning
-    \code{POSIXlt} objects now set a \code{\link{logical}} attribute
-    \code{"balanced"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
-    not \dQuote{ragged} and \code{TRUE} means (fully) balanced.
-  }
+  For \dQuote{ragged} and out-of-range vs \dQuote{balanced}
+  \code{"POSIXlt"} objects, see \code{\link{balancePOSIXlt}()}.
 }% POSIXlt
 
 \section{Sub-second Accuracy}{
@@ -332,6 +298,9 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 
   \code{\link{difftime}} for time intervals.
 
+  \code{\link{balancePOSIXlt}()} for balancing or filling \dQuote{ragged}
+  POSIXlt objects.
+
   \code{\link{cut.POSIXt}}, \code{\link{seq.POSIXt}},
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
   for these classes.
@@ -396,20 +365,6 @@ for(lpS in list(.leap.seconds, leapS)) {
       is.na(l2[(length(lpS)+1):length(l2)])
     })
 }% for %
-
-## "balancing":
-d1 <- as.POSIXlt("2000-1-2 3:45", tz="UTC")
-d1$min <- d1$min + (0:16)*20
-(f1 <- format(d1))
-str(unclass(d1)) # only $min is long
-str(unclass(balancePOSIXlt(d1, fill.only=TRUE) -> df)) # all of length 17; 'min' unchanged
-str(        balancePOSIXlt(d1, classed=FALSE)  -> db)  # of length 17 *and* in range
-stopifnot(exprs = {
-    identical(f1, format(df))
-    all.equal(as.POSIXct(d1), as.POSIXct(df))
-    identical(f1, format(.POSIXlt(db)))
-    identical(as.POSIXct(d1, "UTC"), as.POSIXct(.POSIXlt(db, "UTC")))
-})
 }
 \keyword{utilities}
 \keyword{chron}
