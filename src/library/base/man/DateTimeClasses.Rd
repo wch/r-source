@@ -91,7 +91,7 @@
   (in the UTC time zone) as a numeric vector.  Class \code{"POSIXlt"} is
   a named list of vectors representing
   \describe{
-    \item{\code{sec}}{0--61: seconds.}
+    \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
     \item{\code{hour}}{0--23: hours.}
     \item{\code{mday}}{1--31: day of the month}
@@ -108,19 +108,21 @@
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  (The last two components are not present for times in UTC and are
+  (The last two components may not be present for times in UTC and are
   platform-dependent: they are supported on platforms based on BSD or
   \code{glibc} (including Linux and macOS) and those using the
-  \code{tzcode} implementation shipped with \R (including Windows). But
-  they are not necessarily set.).  Note that the internal list structure
-  is somewhat hidden, as many methods (including
-  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
-  apply to the abstract date-time vector, as for \code{"POSIXct"}.  As
-  from \R 3.5.0, one can extract and replace \emph{single} components
-  via \code{[} indexing with two indices (see the examples).  The
-  classes correspond to the POSIX/C99 constructs of \sQuote{calendar
+  \code{tzcode} implementation shipped with \R (including Windows and
+  used by default on macOS). But they are not necessarily set.).  Note
+  that the internal list structure is somewhat hidden, as many methods
+  (including \code{\link{length}(x)}, \code{\link{print}()} and
+  \code{\link{str}}) apply to the abstract date-time vector, as for
+  \code{"POSIXct"}.  As from \R 3.5.0, one can extract and replace
+  \emph{single} components via \code{[} indexing with two indices (see
+  the examples).
+
+  The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
   time} (the \code{time_t} data type) and \sQuote{local time} (or
-  broken-down time, the \code{struct tm} data type), from which they
+  broken-down time, the \samp{struct tm} data type), from which they
   also inherit their names.  The components of \code{"POSIXlt"} are
   integer vectors, except \code{sec} and \code{zone}.
 
@@ -248,6 +250,20 @@
   rules as from 2007, with a possible future reversion.  So conversions
   for times more than a year or two ahead are speculative.
 }
+\note{
+  Components \code{wday} and \code{yday} are for information, and are not
+  used in the conversion to calendar time nor for printing,
+  \code{format()}, or in \code{as.character()}.
+
+  However, \code{isdst} is needed to distinguish times at the end of
+  DST: typically 1am to 2am occurs twice, first in DST and then in
+  standard time.  At all other times \code{isdst} can be deduced from
+  the first six values, but the behaviour if it is set incorrectly is
+  platform-dependent.  For example Linux/glibc when checked fixed up
+  incorrect values in time zones which support DST but gave an error on
+  value \code{1} in those without DST.
+}
+
 \seealso{
   \link{Dates} for dates without times.
 
