@@ -207,7 +207,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  The last two components are not present for times in UTC and are
+  The last two components may not be present for times in UTC and are
   platform-dependent: they are supported on almost all current
   platforms: those based on BSD or \code{glibc} (including Linux and
   macOS) and those using the \code{tzcode} implementation shipped with
