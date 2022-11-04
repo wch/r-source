@@ -173,6 +173,8 @@ SEXP nsl(SEXP hostname)
 
 #include <config.h>
 
+/* Likw to identify Alpine Linux/musl here, but they refuse to have
+   a compiler macro. */
 SEXP tzcode_type(void)
 {
 #ifdef USE_INTERNAL_MKTIME
@@ -181,6 +183,8 @@ SEXP tzcode_type(void)
     return mkString("system (glibc)");
 #elif defined __APPLE__
     return mkString("system (macOS)");
+#elif defined __FreeBSD__
+    return mkString("system (FreeBSD)");
 #else
     return mkString("system");
 #endif
