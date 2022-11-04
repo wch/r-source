@@ -270,7 +270,8 @@ static int validate_tm (stm *tm)
 
    This will fix up tm_yday and tm_wday.
 
-   Used in gmtime00 and guess_offset in PATH 1) and POSIXlt2D do_balancePOSIXct
+   Used in timegm00 (possibly) and guess_offset in PATH 1) 
+   and POSIXlt2D and do_balancePOSIXct
 */
 static double mkdate00 (stm *tm)
 {
@@ -311,29 +312,6 @@ static double mkdate00 (stm *tm)
 }
 
 
-#ifndef USE_INTERNAL_MKTIME
-/*
-   PATH 1).
-   
-   Substitute for mktime -- no checking, always in GMT (so really for
-   timegm which is non-POSIX).  Also, returns double and needs to be
-   wider than a 32-bit time_t.
-*/
-static double gmtime00 (stm *tm)
-{
-    if(tm->tm_mday == NA_INTEGER || tm->tm_year == NA_INTEGER
-       || tm->tm_mon == NA_INTEGER || tm->tm_sec == NA_INTEGER
-       || tm->tm_min == NA_INTEGER || tm->tm_hour == NA_INTEGER)
-    {
-	tm->tm_yday = tm->tm_wday = NA_INTEGER;
-	return NA_REAL;
-    }
-    double day = mkdate00(tm);
-    return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ day * 86400.0;
-}
-#endif
-
 #ifdef USE_INTERNAL_MKTIME
 /* 
    PATH 2), internal tzcode
@@ -351,7 +329,7 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return -1.;
     }
-//    return local ? R_mktime(tm) : gmtime00(tm);
+//    return local ? R_mktime(tm) : timegm00(tm);
     return local ? R_mktime(tm) : R_timegm(tm);
 }
 
@@ -369,7 +347,25 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #else
 //--------------------------------------------------------- long clause ----
 // PATH 1)
+/*
+   Substitute for timegm (which is non-POSIX) -- no checking.  Also,
+   returns double and needs to be wider than a 32-bit time_t.  So we
+   could use timegm if it exists and time_t is 64-bit and it supports
+   a full range of dates (macOS's does not).
 
+   Used in guess_offset, mktime0 in PATH 1).
+*/
+static double timegm00 (stm *tm)
+{
+    // NA handling may no longer be needed, but left in for safety
+    // (it caused UBSAN errors).
+    double day = mkdate00(tm); // handles NA inputs
+    if (day == NA_REAL) return NA_REAL;
+    return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
+	+ day * 86400.0;
+}
+
+// no known examples recently
 #ifndef HAVE_POSIX_LEAPSECONDS
 static int n_leapseconds = 27; // 2017-01, sync with .leap.seconds in R (!)
 static const time_t leapseconds[] = // dput(unclass(.leap.seconds)) :
@@ -391,7 +387,7 @@ static double guess_offset (stm *tm)
        July 1 on the same day of the week we will likely get guess
        right (since they are usually on Sunday mornings not in Jan/Feb).
 
-       Update for 2.7.0: no one had DST before 1916, so just use the offset
+       Update for R 2.7.0: no one had DST before 1916, so just use the offset
        in 1902, if available.
     */
 
@@ -399,7 +395,7 @@ static double guess_offset (stm *tm)
     if(tm->tm_year < 2) { /* no DST */
 	tm->tm_year = 2;
 	mktime(tm);
-	offset1 = (double) mktime(tm) - gmtime00(tm);
+	offset1 = (double) mktime(tm) - timegm00(tm);
 	memcpy(tm, &oldtm, sizeof(stm));
 	tm->tm_isdst = 0;
 	return offset1;
@@ -437,12 +433,12 @@ static double guess_offset (stm *tm)
     tm->tm_mon = 0;
     tm->tm_year = year;
     tm->tm_isdst = -1;
-    offset1 = (double) mktime(tm) - gmtime00(tm);
+    offset1 = (double) mktime(tm) - timegm00(tm);
     /* and in July */
     tm->tm_year = year;
     tm->tm_mon = 6;
     tm->tm_isdst = -1;
-    offset2 = (double) mktime(tm) - gmtime00(tm);
+    offset2 = (double) mktime(tm) - timegm00(tm);
     if(oldisdst > 0) {
 	offset = (offset1 > offset2) ? offset2 : offset1;
     } else {
@@ -452,7 +448,7 @@ static double guess_offset (stm *tm)
     tm->tm_mon = oldmonth;
     tm->tm_isdst = -1;
     if(oldisdst < 0) {
-	offset1 = (double) mktime(tm) - gmtime00(tm);
+	offset1 = (double) mktime(tm) - timegm00(tm);
 	oldisdst = (offset1 < offset) ? 1:0;
 	if(oldisdst) offset = offset1;
     }
@@ -464,7 +460,7 @@ static double guess_offset (stm *tm)
 }
 
 /* 
-   Interface to mktime or gmtime00, version in each PATH.
+   Interface to mktime or timegm00, version in each PATH.
    Called from do_asPOSIXct and do_strptime.
 
    This is the version for PATH 1)
@@ -482,7 +478,7 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return -1.;
     }
-    if(!local) return gmtime00(tm);
+    if(!local) return timegm00(tm);
 
 /* 
    Platforms with a 32-bit time_t will fail before 1901-12-13 and after 2038-01-19.
@@ -529,7 +525,7 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return res;
 /* watch the side effect here: both calls alter their arg */
-    } else return guess_offset(tm) + gmtime00(tm);
+    } else return guess_offset(tm) + timegm00(tm);
 }
 
 /* 
@@ -848,6 +844,15 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
       settz = FALSE;
     char oldtz[1001] = "";
     if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    /* 
+       In this function isUTC means that the timezonne has been set to
+       UTC either by default, for example as the system timezone or
+       via TZ="UTC", or via a 'tz' argument.
+
+       It controls the format of the object created, and the use of
+       gmtime rather than localtime (but as the timezone is set that
+       should make no difference).
+    */
 #ifdef USE_INTERNAL_MKTIME
     else R_tzsetwall(); // to get the system timezone recorded
 #else
@@ -958,7 +963,10 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(stz); /* it might be new */
     int isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) ? 1 : 0;
-    // if !isUTC we need to set the tz.not set tm_isdst and use mktime not timegm
+    /*
+      if !isUTC we need to set the tz, not set tm_isdst and use mktime
+      not timegm (or an emulation).
+    */
     char oldtz[1001] = "";
     Rboolean settz = FALSE;
     if(!isUTC && strlen(tz) > 0) settz = set_tz(tz, oldtz);
@@ -1004,7 +1012,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REAL(ans)[i] = NA_REAL;
 	else {
 	    errno = 0;
-	    // Interface to mktime or gmtime00, PATH-specific
+	    // Interface to mktime or timegm00, PATH-specific
 	    double tmp = mktime0(&tm, !isUTC);
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
@@ -1368,7 +1376,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		   adjust and convert back */
 		double t0;
 		memcpy(&tm2, &tm, sizeof(stm));
-		// Interface to mktime or gmtime00, PATH-specific
+		// Interface to mktime or timegm00, PATH-specific
 		t0 = mktime0(&tm2, 0);
 		if (t0 != -1) {
 		    t0 -= offset; /* offset = -0800 is Seattle */
@@ -1571,6 +1579,8 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "x");
 
     Rboolean have_zone, isUTC = n_comp == 9; // otherwise, 10 or 11:
+    /* This is very fragile.  isUTC means a patricular sub-format of
+       POSIXlt objects */
 #ifdef HAVE_TM_GMTOFF
     have_zone = n_comp >= 11; // {zone, gmtoff}
     // Why check the type and not the name?
@@ -1706,6 +1716,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 //	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	// This is surely wrong.
 	tm.tm_isdst = isUTC ? 0
 	           : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	char tm_zone[20];
@@ -1756,7 +1767,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, valid,
 	       valid ? secs - fsecs : (R_FINITE(secs) ? NA_REAL : secs)); // fills ans[0..8]
 
-	if(!isUTC) {
+	if(!isUTC) { // set components 10 and 11
 	    const char *p = "";
 	    if(valid && tm.tm_isdst >= 0) {
 #ifdef HAVE_TM_ZONE
