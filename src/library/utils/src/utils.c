@@ -177,6 +177,10 @@ SEXP tzcode_type(void)
 {
 #ifdef USE_INTERNAL_MKTIME
     return mkString("internal");
+#elif defined __GLIBC__
+    return mkString("system (glibc)");
+#elif defined __APPLE__
+    return mkString("system (macOS)");
 #else
     return mkString("system");
 #endif
