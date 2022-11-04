@@ -310,10 +310,12 @@ stopifnot(exprs = {
 
 ## length(<ragged POSIXlt>)
 ## Ex. of "partially filled" with NA's, *not* evenly recycling, out-of-range, fractional sec
+## However, isdst is not known and depends on the time zone.
+## Using -1L says so: 1L failed in time zones without DST on glibc.
 dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
                      min = 45L, hour = c(21L, 3L, NA, 4L),
                      mday = 6L, mon  = c(0:11, NA, 1:2),
-                     year = 116L, wday = 2L, yday = 340L, isdst = 1L))
+                     year = 116L, wday = 2L, yday = 340L, isdst = -1L))
 dct   <- as.POSIXct(dlt)
 dltN  <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy), but *added* tz-info:
 data.frame(unclass(dltN)); str(attributes(dltN)[-1], no.list=TRUE)
