@@ -233,7 +233,9 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   DST: typically 1am to 2am occurs twice, first in DST and then in
   standard time.  At all other times \code{isdst} can be deduced from
   the first six values, but the behaviour if it is set incorrectly is
-  platform-dependent.
+  platform-dependent.  For example Linux/glibc when checked fixed up
+  incorrect values in time zones which support DST but gave an error on
+  value \code{1} in those without DST.
   % POSIX says used 'initially', so it should probably be ignored.
   % glibc has a complicated fixup.
 
