@@ -2165,6 +2165,10 @@ case "${host_os}" in
 esac
 fi
 if test "${use_internal_tzcode}" != yes; then
+  R_WORKING_MKTIME
+  if test "x${r_cv_working_mktime}" != xyes; then
+    AC_MSG_ERROR([date-time conversions do not work in 2020 -- is tzdata installed?])
+  fi
   R_MKTIME_ERRNO
   R_FUNC_MKTIME
   R_FUNC_MKTIME2

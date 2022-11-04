@@ -2188,7 +2188,7 @@ stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
 
 x <- as.POSIXlt(x, tz="GMT"); y <- as.POSIXlt(y, tz="GMT")
 format(pmin(x, y), tz="GMT")
-class(pmin(x, y))
+class (pmin(y, x))  ## (updating "filled")
 stopifnot(identical(pmin(x, y), pmin(y, x)))
 format(pmin(x, y, na.rm=TRUE), tz="GMT")
 stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
@@ -2196,7 +2196,7 @@ format(pmax(x, y), tz="GMT")
 stopifnot(identical(pmax(x, y), pmax(y, x)))
 format(pmax(x, y, na.rm=TRUE), tz="GMT")
 stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
-## regresion tests
+## regression tests
 
 
 ## regression tests on names of 1D arrays

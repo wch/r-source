@@ -1086,7 +1086,7 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main()
+int main(int argc, const char * argv[])
 {
     F77_SYMBOL(testit)();
     return 0;
@@ -1513,7 +1513,7 @@ AC_DEFUN([R_FUNC_FTELL],
 # include <unistd.h> // for unlink
 #endif
 
-int main() {
+int main(int argc, const char * argv[]) {
     FILE *fp;
     long pos;
 
@@ -3145,7 +3145,7 @@ extern void ${ilaver}(int *major, int *minor, int *patch);
 
 #include <stdlib.h>
 #include <stdio.h>
-int main() {
+int main(int argc, const char * argv[]) {
   int major, minor, patch;
   ${ilaver}(&major, &minor, &patch);
   printf("%d.%d.%d, so ", major, minor, patch);
@@ -3245,7 +3245,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -3290,7 +3290,7 @@ AC_CACHE_CHECK([if PCRE1 version >= 8.32 and has UTF-8 support], [r_cv_have_pcre
 #endif
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -3364,7 +3364,7 @@ if test "x${have_pcre2}" = "xyes"; then
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -3404,7 +3404,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main() {
+int main(int argc, const char * argv[]) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -3463,7 +3463,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main() {
+int main(int argc, const char * argv[]) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -3565,7 +3565,7 @@ AC_DEFUN([R_SIZE_MAX],
 #endif
 
 int
-main() {
+main(int argc, const char * argv[]) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -4010,7 +4010,7 @@ AC_DEFUN([R_PUTENV_AS_UNSETENV],
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4038,7 +4038,7 @@ int main()
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(int argc, const char * argv[])
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4106,7 +4106,7 @@ AC_DEFUN([R_MKTIME_ERRNO],
 #include <time.h>
 #include <errno.h>
 
-int main()
+int main(int argc, const char * argv[])
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
@@ -4241,17 +4241,175 @@ fi
 AC_SUBST(R_SYSTEM_ABI)
 ]) # R_ABI
 
+## Sanity check, failed by platforms without tzdata
+## (possible on Alpine Linux).
+## R_WORKING_MKTIME
+## ------------
+AC_DEFUN([R_WORKING_MKTIME],
+[AC_CACHE_CHECK([whether mktime, gmtime, localtime work correctly in 2020],
+                [r_cv_working_mktime],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+
+//#define PRINT
+
+int main(int argc, const char * argv[]) {
+    struct tm tm, *stm;
+    time_t res;
+    putenv("TZ=UTC");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = 0;
+    // test 2020-01-01
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("day %ld\n", res);
+#else
+    if(res != 1577880000L) exit(1);
+#endif
+    // and can we go back to POSIXlt?
+#ifdef HAVE_GMTIME_R
+    stm = gmtime_r(&res, &tm);
+#else
+    stm = gmtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec); 
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(10);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = 0;
+    // test 2020-07-01
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593604800L) exit(2);
+#endif
+#ifdef HAVE_GMTIME_R
+    stm = gmtime_r(&res, &tm);
+#else
+    stm = gmtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(20);
+#endif
+    
+    putenv("TZ=Europe/London");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = -1;
+    // test 2020-01-01, whoch is assumed to be in GMT
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1577880000L) exit(3);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+       || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(30);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = -1;
+    // test 2020-07-01 which is assumed to be in BST
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593601200L) exit(4);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 1) exit(40);
+#endif  
+    putenv("TZ=Pacific/Auckland");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = -1;
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1577833200L) exit(5);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 1) exit(50);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = -1;
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593561600L) exit(6);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+       || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(60);
+#endif
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime=yes],
+              [r_cv_working_mktime=no],
+              [r_cv_working_mktime=no])])
+])# R_WORKING_MKTIME
+
 ## 32-bit time_t will not
 ## R_FUNC_MKTIME
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME],
 [AC_CACHE_CHECK([whether mktime works correctly after 2037],
-                [r_cv_working_mktime],
+                [r_cv_working_mktime1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, const char * argv[]) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4263,17 +4421,17 @@ int main() {
     res = mktime(&tm);
     if(res != 2209032000L) exit(4);
     tm.tm_mon = 6; tm.tm_isdst = 1;
-    // test 2040-06-01 which is assumed to be in BST
+    // test 2040-07-01 which is assumed to be in BST
     res = mktime(&tm);
     if(res != 2224753200L) exit(5);
 
     exit(0);
 }
 ]])],
-              [r_cv_working_mktime=yes],
-              [r_cv_working_mktime=no],
-              [r_cv_working_mktime=no])])
-if test "x${r_cv_working_mktime}" = xyes; then
+              [r_cv_working_mktime1=yes],
+              [r_cv_working_mktime1=no],
+              [r_cv_working_mktime1=no])])
+if test "x${r_cv_working_mktime1}" = xyes; then
   AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
             [Define if your mktime works correctly after 2037.])
 fi
@@ -4290,7 +4448,7 @@ AC_DEFUN([R_FUNC_MKTIME2],
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, const char * argv[]) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4325,15 +4483,13 @@ fi
 ## R_FUNC_MKTIME3
 ## ------------
 AC_DEFUN([R_FUNC_MKTIME3],
-[AC_CACHE_CHECK([whether mktime works correctly before 1970],
+[AC_CACHE_CHECK([whether mktime works correctly in 1969],
                 [r_cv_working_mktime3],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
-    if(sizeof(time_t) < 8) exit(1);
-
+int main(int argc, const char * argv[]) {
     struct tm tm;
     time_t res;
     putenv("TZ=Europe/London");
@@ -4352,7 +4508,7 @@ int main() {
               [r_cv_working_mktime3=no])])
 if test "x${r_cv_working_mktime3}" = xyes; then
   AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
-            [Define if your mktime works correctly before 1970.])
+            [Define if your mktime works correctly in 1969.])
 fi
 ])# R_FUNC_MKTIME3
 
@@ -4450,7 +4606,7 @@ AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
-int main() 
+int main(int argc, const char * argv[]) 
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
@@ -4476,7 +4632,7 @@ AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main()
+int main(int argc, const char * argv[])
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -4529,8 +4685,8 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main() {
-    /* use volatiles to reduce the risk of the
+int main(int argc, const char * argv[]) {
+    /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
     volatile int n = 8;

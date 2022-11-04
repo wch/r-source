@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-10-26 r83183) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6042,7 +6042,7 @@ numeric(0)
 [11] "1982-07-01" "1983-07-01" "1982-07-01" "1981-07-01" "1980-01-01"
 [16] "1979-01-01" "1978-01-01" "1977-01-01" "1976-01-01" "1975-01-01"
 [21] "1974-01-01" "1973-01-01" "1972-07-01"
-> class(pmin(x, y))
+> class (pmin(y, x))  ## (updating "filled")
 [1] "POSIXlt" "POSIXt" 
 > stopifnot(identical(pmin(x, y), pmin(y, x)))
 > format(pmin(x, y, na.rm=TRUE), tz="GMT")
@@ -6066,7 +6066,7 @@ numeric(0)
 [16] "1991-01-01" "1992-07-01" "1993-07-01" "1994-07-01" "1996-01-01"
 [21] "1997-07-01" "1999-01-01" "2006-01-01"
 > stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
-> ## regresion tests
+> ## regression tests
 > 
 > 
 > ## regression tests on names of 1D arrays

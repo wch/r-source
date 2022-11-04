@@ -3399,10 +3399,13 @@ The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
 For date-times to work correctly it is essential that the tables
-defining time zones are installed: these are usually in an OS compoent
+defining time zones are installed: these are usually in an OS component
 named something like @code{tzdata}. On most OSes they are required
 @c with glibc by glibc-common
-but installations of Alpine Linux have bee seen without them.
+but installations of Alpine Linux have been seen without them.  As from
+@R{} 4.3.0 there is a @command{configure} check that recent date-times
+to work correctly in different time zones which catches this when
+installing from source (but not for binary distributions).
 
 Those distributing binary versions of @R{} may need to be aware of the
 licences of the external libraries it is linked to (including `useful'
@@ -5367,7 +5370,7 @@ option @option{--without-internal-tzcode} can be used to override this
 and @R{} contains sufficient workarounds (for example, the native code
 fails to recognize dates with a negative @code{tm_year}, that is dates
 before 1900) for @R{} to pass its checks.  However, there are
-discrepancies, notablly in Europe in the 1900s and 1940s, even though
+discrepancies, notably in Europe in the 1900s and 1940s, even though
 the Olson database contains the correct information.
 
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS

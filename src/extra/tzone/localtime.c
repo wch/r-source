@@ -19,12 +19,20 @@
 
 
 /*
+Added 2007-12-30, priginally for use on Windows.  Derived from 
+http://www.iana.org/time-zones at that time.
+protoize-d in 2008
+Some updates in 2013
+Some changes mergged from tzcode2015f to avoid clang warnings.
+Lots of casts (even 2022f needs casts).
+
 The orginal version of this file stated
 
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
 
 The modified version is copyrighted.  Modifications include:
+how the system timezone is found
 setting EOVERFLOW
 where to find the zi database
 Mingw-w64 changes
@@ -33,6 +41,17 @@ use of 'unknown' isdst
 use of 64-bit time_t irrespective of platform.
 use of tm_zone and tm_gmtoff on all platforms.
 using R_ prefix for exported entry points.
+
+Despite its name, this file provides
+R_gmtime
+R_gmtime_r
+R_localtime
+R_localtime_r
+R_mktime
+R_timegm
+R_tzname
+R_tzset
+R_tzsetwall
 */
 
 #include <config.h>
