@@ -3946,7 +3946,7 @@ add_dummies <- function(dir, Log)
             status <- R_runR0(NULL, c(Ropts, enc),
                               c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
                                 if(nzchar(arch)) env0, jitstr,
-                                if(R_cdo_examples) elibs else character()),
+                                if(R_cdo_examples || R_check_suggests_only) elibs else character()),
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
@@ -4619,7 +4619,7 @@ add_dummies <- function(dir, Log)
                                       if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                       ## add timing as footer, as BATCH does
                                       env = c(jitstr, "R_BATCH=1234",
-                                              if (R_cdo_vignettes) elibs else character(),
+                                              if (R_cdo_vignettes || R_check_suggests_only) elibs else character(),
                                               "_R_CHECK_INTERNALS2_=1"),
                                       stdout = outfile, stderr = outfile,
                                       timeout = tlim)
@@ -4785,7 +4785,7 @@ add_dummies <- function(dir, Log)
                                   if (use_valgrind) paste(R_opts2, "-d valgrind")
                                   else R_opts2,
                                   c(jitstr,
-                                    if(R_cdo_vignettes) elibs
+                                    if(R_cdo_vignettes || R_check_suggests_only) elibs
                                     else character()),
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)

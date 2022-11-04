@@ -700,10 +700,14 @@ tools::assertError(# 'na.fail' should fail :
 xt. <- xtabs(Freq ~ Gender + Admit, DN)
 xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
 xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
+res1 <- xt - xtp
+res1[is.na(res1)] <- NA ## xtabs (tapply/sum) may turn NAs into NaNs
+res2 <- -xtN + rbind(cbind(xt, 0), 0)
+res2[is.na(res2)] <- NA ## xtabs (tapply/sum) may turn NAs into NaNs
 stopifnot(exprs = {
     identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt))
-    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)) # not ok in R <= 3.3.2
-    identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
+    identical(asArr(res1), as_A(c(120,17, 207, NA), xt)) # not ok in R <= 3.3.2
+    identical(asArr(res2),
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 })
 ## 'sparse = TRUE requires recommended package Matrix

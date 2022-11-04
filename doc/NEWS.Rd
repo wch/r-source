@@ -90,10 +90,34 @@
       correctly, e.g., in subsetting and subassignments.  Such objects
       are now documented.
 
+      More experimentally, a \code{"POSIXlt"} object may have an attribute
+      \code{"balanced"} indicating if it is known to be filled or fully
+      balanced.
+
       \item Package repositories in \code{getOption("repos")} are now
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
+
+      \item On platforms where (non-UTC) datetimes before 1902 (or
+      before 1900 as with system functions on recent macOS) are guessed
+      by extrapolating time zones from 1902-2037, there is a warning at
+      the first use of extrapolation in a session.  (As all timezones
+      post 2037 are extrapolation, we do not warn on those.)
+
+      \item (Platforms using \option{--with-internal-tzone}, including
+      Windows and by default macOS). How years are printed in dates or
+      date-times can be controlled by environment variable
+      \env{R_PAD_YEARS_BY_ZERO}.  The default remains to pad to 4 digits
+      by zeroes, but setting value \samp{no} gives no padding (as used
+      by default by \code{glibc}).
+
+      \item \code{strftime()} tries harder to determine the offset for
+      the \code{"\%z"} format, and succeeds on the mainstream \R platforms.
+
+      \item \code{strftime()} has a limit of 2048 bytes on the string
+      produced -- attempting to exceed this is an error.  (Previously it
+      silently truncated at 255 bytes.)
     }
   }
 
@@ -127,6 +151,10 @@
       \item There is some support for using the native date-time
       routines on macOS: this is only viable on recent versions
       (e.g.\sspace{}12.6) and does get some historical changes wrong.
+
+      \item \command{configure} now checks conversion of datetimes
+      between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
+      (which has been seen on platforms missing \code{tzdata}) is fatal.
     }
   }
 
@@ -288,11 +316,25 @@
       \code{ts.eps = getOption("ts.eps")}
       argument and thus by default rounds values very close to the start (or
       end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
+
+      \item Printing of a \code{factanal()} result with just one factor and
+      \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
+      Bates, thanks to the \sQuote{R Contributors} working group.
+
+      \item Printing objects of class \code{"roman"}, \code{"hexmode"},
+      \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
+      \code{"citation"} of length zero now print something better, a
+      sixth of which fixes \PR{18422}, reported by Benjamin Feakins.
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 4.2.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{compactPDF()} gets a \code{verbose} option.
+    }
+  }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}

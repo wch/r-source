@@ -20,6 +20,7 @@
 \alias{Summary.POSIXct}
 \alias{Math.POSIXlt}
 \alias{Summary.POSIXlt}
+\alias{$<-.POSIXlt}
 \alias{[.POSIXct}
 \alias{[<-.POSIXct}
 \alias{[[.POSIXct}
@@ -189,7 +190,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   Class \code{"POSIXlt"} is internally a named \code{\link{list}} of
   vectors representing date-time, with the following list components
   \describe{
-    \item{\code{sec}}{0--61: seconds.}
+    \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
     \item{\code{hour}}{0--23: hours.}
     \item{\code{mday}}{1--31: day of the month}
@@ -206,11 +207,12 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  (The last two components are not present for times in UTC and are
-  platform-dependent: they are supported on platforms based on BSD or
-  \code{glibc} (including Linux and macOS) and those using the
-  \code{tzcode} implementation shipped with \R (including Windows). But
-  they are not necessarily set.)
+  The last two components are not present for times in UTC and are
+  platform-dependent: they are supported on almost all current
+  platforms: those based on BSD or \code{glibc} (including Linux and
+  macOS) and those using the \code{tzcode} implementation shipped with
+  \R (including Windows and by default macOS). But they are not
+  necessarily set.
 
   Note that the internal list structure
   is somewhat hidden, as many methods (including
@@ -256,6 +258,11 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
     Setting \code{fill.only = TRUE} will only recycle the list components
     to full length, but not check them at all.  This is particularly faster
     when all components of \code{x} are already of full length.
+
+    Experimentally, \code{balancePOSIXlt()} and other functions returning
+    \code{POSIXlt} objects now set a \code{\link{logical}} attribute
+    \code{"balanced"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
+    not \dQuote{ragged} and \code{TRUE} means (fully) balanced.
   }
 }% POSIXlt
 

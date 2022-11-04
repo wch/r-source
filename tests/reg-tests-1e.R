@@ -295,6 +295,27 @@ stopifnot(floor(as.numeric(time(x))) == true.year)
 ## seen 10 differences in R <= 4.2.x
 
 
+## Sorted printing of factor analysis loadings with 1 factor, PR#17863
+f1 <- factanal(d <- mtcars[,1:4], factors = 1) ; print(f1, sort=TRUE)
+prl <- capture.output(print(loadings(f1), sort=TRUE))
+stopifnot(identical(1:4, charmatch(colnames(d),
+                                   prl[charmatch("Loadings", prl)+ 1:4+1L])))
+## printed these as vector instead of 1-column matrix in R <= 4.2.x
+
+
+## print() of zero - length, PR#18422
+i0 <- integer(0)
+stopifnot(exprs = {
+    identical("<0-length octmode>", capture.output(as.octmode(i0)))
+    identical("<0-length hexmode>", capture.output(as.hexmode(i0)))
+    identical("<0-length roman>",   capture.output(as.roman  (i0)))
+    identical("person()",           capture.output(    person()))
+    identical("bibentry()",         capture.output(  bibentry()))
+    identical("<0-length citation>",capture.output(  citation()[0L]))
+})
+## printed nothing at all or invalid R-code in R <= 4.2.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

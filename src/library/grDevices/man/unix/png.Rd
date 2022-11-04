@@ -202,7 +202,7 @@ tiff(filename = "Rplot\%03d.tiff",
 \author{Guido Masarotto and Brian Ripley}
 
 \references{
-  The PNG specification, \url{https://www.w3.org/TR/PNG/}.
+  The PNG specification, \url{https://www.w3.org/TR/png/}.
   
   The TIFF specification,
   \url{https://www.iso.org/standard/34342.html}.

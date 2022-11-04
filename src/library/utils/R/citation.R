@@ -191,7 +191,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    if(length(x)) print(format(x, ...))
+    if(length(x)) print(format(x, ...)) else cat("person()\n")
     invisible(x)
 }
 
@@ -655,7 +655,7 @@ function(x)
 {
     if(!length(x)) return(character())
     keys <- lapply(unclass(x), attr, "key")
-    keys[!vapply(keys, length, 0L)] <- ""
+    keys[!lengths(keys)] <- ""
     unlist(keys)
 }
 
@@ -829,7 +829,7 @@ function(x, more = list())
     y <- unclass(y)
 
     crossrefs <- lapply(x, `[[`, "crossref")
-    pc <- which(vapply(crossrefs, length, 0L) > 0L)
+    pc <- which(lengths(crossrefs) > 0L)
 
     if(length(pc)) {
         pk <- match(unlist(crossrefs[pc]), .bibentry_get_key(y))
@@ -875,9 +875,14 @@ function(x, style = "text", .bibstyle = NULL, ...)
 {
     style <- .bibentry_match_format_style(style)
 
-    if(style == "R") {
+    n <- length(x)
+    if(!n) {
+        cat(switch((cl <- class(x)[[1L]]),
+                   "bibentry" = "bibentry()",
+                   sprintf("<0-length %s>", cl)), sep="", "\n")
+    } else if(style == "R") {
 	writeLines(format(x, "R", collapse = TRUE, ...))
-    } else if(length(x)) {
+    } else {
 	y <- format(x, style, .bibstyle, ...)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
@@ -895,7 +900,6 @@ function(x, style = "text", .bibstyle = NULL, ...)
             writeLines(paste(y, collapse = "\n\n"))
         }
     }
-
     invisible(x)
 }
 
