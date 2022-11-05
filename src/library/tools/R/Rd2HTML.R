@@ -379,7 +379,7 @@ Rd2HTML <-
                   "\\strong"="strong",
                   "\\var"="var")
     # These have simple substitutions
-    HTMLEscapes <- c("\\R"='<span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>',
+    HTMLEscapes <- c("\\R"='<span class="rlang"><b>R</b></span>',
     		     "\\cr"="<br />",
     		     "\\dots"="...",
     		     "\\ldots"="...")
@@ -443,8 +443,6 @@ Rd2HTML <-
         s <- as.character.Rd(block)
         toEsc <- s %in% names(HTMLEscapes)
         if (any(toEsc)) s[toEsc] <- HTMLEscapes[s[toEsc]]
-        ## TODO: HTMLEscapes["\\R"] is problematic (though not
-        ## relevant here). Maybe move style details to R.css?
 
         ## Now just join, split on comma, wrap individually inside
         ## </code>, and unsplit. This will be problematic if any
@@ -887,7 +885,7 @@ Rd2HTML <-
     		switch(blocktag,
    		"\\value"=,
      		"\\arguments"= {
-    		    of1('<tr style="vertical-align: top;"><td>')
+    		    of1('<tr><td>')
     		    inPara <<- NA
                     ## Argh.  Quite a few packages put the items in
                     ## their value section inside \code.
