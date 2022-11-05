@@ -10,21 +10,25 @@
 balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 }
 \arguments{
-  \item{x}{an \R object inheriting from \code{"POSIXlt"}, see \code{\link{POSIXlt}}.}
-  \item{fill.only}{a \code{\link{logical}} specifying if \code{balancePOSIXlt(x, ..)}
-    should only \dQuote{fill up} by recycling, but not re-check validity
-    nor recompute, e.g., \code{x$wday} and \code{x$yday}.}
+  \item{x}{an \R object inheriting from \code{"POSIXlt"}, see
+  \code{\link{POSIXlt}}.}
+
+  \item{fill.only}{a \code{\link{logical}} specifying if
+    \code{balancePOSIXlt(x, ..)}  should only \dQuote{fill up} by
+    recycling, but not re-check validity nor recompute, e.g.,
+    \code{x$wday} and \code{x$yday}.}
+
   \item{classed}{a \code{\link{logical}} specifying if the result should be
     classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
     is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
 \section{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} POSIXlt}{
-  Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11) list
-  components of different \code{\link{length}}, by simply recycling them to
-  full length.  Previous to \R 4.3.0, this has worked in printing,
-  formatting, and conversion to \code{"POSIXct"}, but often not for
-  \code{length()}, conversion to \code{"Date"} or indexing, i.e.,
-  subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
+  Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11)
+  list components of different \code{\link{length}}s, by simply
+  recycling them to full length.  Prior to \R 4.3.0, this has worked in
+  printing, formatting, and conversion to \code{"POSIXct"}, but often
+  not for \code{length()}, conversion to \code{"Date"} or indexing,
+  i.e., subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
 
   Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
   and \code{mon} could have been out of their designated range (say, 0--23
@@ -52,18 +56,23 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   \code{\link{as.POSIXlt}}, notably the section \sQuote{Details on POSIXlt}.
 }
 \examples{
-d1 <- as.POSIXlt("2000-1-2 3:45", tz="UTC")
+## FIXME: this should also work for regular (non-UTC) time zones.
+TZ <-"UTC"
+d1 <- as.POSIXlt("2000-01-02 3:45", tz = TZ)
 d1$min <- d1$min + (0:16)*20
 (f1 <- format(d1))
-str(unclass(d1)) # only $min is long
-str(unclass(balancePOSIXlt(d1, fill.only=TRUE) -> df)) # all of length 17; 'min' unchanged
-str(        balancePOSIXlt(d1, classed=FALSE)  -> db ) # of length 17 *and* in range
+str(unclass(d1))      # only $min is of length > 1
+df <- balancePOSIXlt(d1, fill.only = TRUE) # a "POSIXlt" object
+str(unclass(df))      # all of length 17; 'min' unchanged
+db <- balancePOSIXlt(d1, classed = FALSE)  # a list
+str(db) # of length 17 *and* in range
+\dontshow{
 stopifnot(exprs = {
     identical(f1, format(df))
     all.equal(as.POSIXct(d1), as.POSIXct(df))
     identical(f1, format(.POSIXlt(db)))
-    identical(as.POSIXct(d1, "UTC"), as.POSIXct(.POSIXlt(db, "UTC")))
-})
+    identical(as.POSIXct(d1, TZ), as.POSIXct(.POSIXlt(db, TZ)))
+})}
 }
 \keyword{utilities}
 \keyword{chron}
