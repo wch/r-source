@@ -179,7 +179,7 @@
 
 \section{Details on POSIXlt}{
   Class \code{"POSIXlt"} is internally a named \code{\link{list}} of
-  vectors representing date-time, with the following list components
+  vectors representing date-times, with the following list components
   \describe{
     \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
@@ -198,6 +198,8 @@
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
+  The components must be in this order: that was only minimally checked
+  prior to \R 4.3.0.
   The last two components may not be present for times in UTC and are
   platform-dependent: they are supported on almost all current
   platforms: those based on BSD or \code{glibc} (including Linux and
@@ -205,24 +207,25 @@
   \R (including Windows and by default macOS). But they are not
   necessarily set.
 
-  Note that the internal list structure
-  is somewhat hidden, as many methods (including
-  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}()})
-  apply to the abstract date-time vector, as for \code{"POSIXct"}.  As
-  from \R 3.5.0, one can extract and replace \emph{single} components
-  via \code{[} indexing with \emph{two} indices (see the examples).
+  Note that the internal list structure is somewhat hidden, as many
+  methods (including \code{\link{length}(x)}, \code{\link{print}()} and
+  \code{\link{str}()}) apply to the abstract date-time vector, as for
+  \code{"POSIXct"}.  One can extract and replace \emph{single}
+  components via \code{[} indexing with \emph{two} indices (see the
+  examples).
 
   The components of \code{"POSIXlt"} are \code{\link{integer}} vectors,
   except \code{sec} (\code{\link{double}}) and \code{zone}
-  (\code{\link{character}}).
+  (\code{\link{character}}).  However most users will coerce numeric
+  values for the first to real and the rest bar \code{zone} to integer.
 
   Components \code{wday} and \code{yday} are for information, and are not
   used in the conversion to calendar time nor for printing,
   \code{format()}, or in \code{as.character()}.
 
-  However, \code{isdst} is needed to distinguish times at the end of
-  DST: typically 1am to 2am occurs twice, first in DST and then in
-  standard time.  At all other times \code{isdst} can be deduced from
+  However, component \code{isdst} is needed to distinguish times at the
+  end of DST: typically 1am to 2am occurs twice, first in DST and then
+  in standard time.  At all other times \code{isdst} can be deduced from
   the first six values, but the behaviour if it is set incorrectly is
   platform-dependent.  For example Linux/glibc when checked fixed up
   incorrect values in time zones which support DST but gave an error on
@@ -280,10 +283,16 @@
   in the years prior to 1902, and these will be handled correctly only
   where there is OS support.
 
-  There is no reason to suppose that the DST rules will remain the same
-  in the future, and indeed the US legislated in 2005 to change its
+  There is no reason to assume that the DST rules will remain the same
+  in the future: the US legislated in 2005 to change its
   rules as from 2007, with a possible future reversion.  So conversions
-  for times more than a year or two ahead are speculative.
+  for times more than a year or two ahead are speculative.  Other
+  countries have changed their rules (and indeed, if DST is used at all)
+  at a few days' notice.  So representations and conversion of future
+  dates are tentative.  This also applies to dates after the in-use
+  version of the time-zone database -- not all platforms keep it up to
+  date, which includes that shipped with older versions of \R whers used
+  (which it is by default on Windows and macOS).
 }% ranges of times
 \seealso{
   \link{Dates} for dates without times.
@@ -326,9 +335,9 @@
   may have values meaning \sQuote{not yet determined} and the same time
   represented in different time zones will look quite different.
 
-  Currently the \emph{order} of the list components of \code{"POSIXlt"}
-  objects must not be changed, as several C-based conversion methods
-  rely on the order for efficiency.
+  The \emph{order} of the list components of \code{"POSIXlt"} objects
+  must not be changed, as several C-based conversion methods rely on the
+  order for efficiency.
 }
 \examples{
 ## IGNORE_RDIFF_BEGIN
