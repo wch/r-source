@@ -124,7 +124,8 @@
   time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \samp{struct tm} data type), from which they
   also inherit their names.  The components of \code{"POSIXlt"} are
-  integer vectors, except \code{sec} and \code{zone}.
+  integer vectors, except \code{sec} and \code{zone}: however most users
+  will coerce the first to real and the rest bar \code{zone} to integer.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
@@ -179,7 +180,7 @@
   corrected for at build time, so \code{"POSIXct"} times used by \R do
   not include leap seconds on any platform.
 
-  Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
+  Calling \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone, and on \code{"POSIXct"} objects drops any
   \code{"tzone"} attributes, unless they are all marked with the same
   time zone.
