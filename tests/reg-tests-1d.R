@@ -511,6 +511,8 @@ stopifnot(
 
 
 ## format()ing invalid hand-constructed  POSIXlt  objects
+if(FALSE) {
+    ## These become an error in 4.3.0.
 if(hasTZ <- nzchar(.TZ <- Sys.getenv("TZ"))) cat(sprintf("env.var. TZ='%s'\n",.TZ))
 d <- as.POSIXlt("2016-12-06", tz = "Europe/Vienna")
 hasGMTOFF <- !is.null(d$gmtoff)
@@ -531,6 +533,7 @@ for(EX in expression({}, Sys.setenv(TZ = "UTC"), Sys.unsetenv("TZ"))) {
       cat("Skipping timezone amd gmtoff dependent POSIXlt formatting\n")
 }
 if(hasTZ) Sys.setenv(TZ = .TZ); options(op)# revert
+}
 
 dlt <- structure(
     list(sec = 52, min = 59L, hour = 18L, mday = 6L, mon = 11L, year = 116L,

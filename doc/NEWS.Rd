@@ -330,6 +330,10 @@
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
       \code{"citation"} of length zero now print something better, a
       sixth of which fixes \PR{18422}, reported by Benjamin Feakins.
+
+      \item There are comprehensive validity checks on the structure of
+      objects of class \code{"POSIXlt"} when converting (including
+      formatting and printing).
     }
   }
 }
