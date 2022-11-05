@@ -6,6 +6,10 @@
 \title{Balancing \dQuote{Ragged} and Out-of-range POSIXlt Date-Times}
 \alias{balancePOSIXlt}
 % implementation mostly in ../R/datetime.R -- many more in ./DateTimeClasses.Rd
+
+\description{
+  A utiltiy function to \sQuote{balance} objects of class \code{"POSIXlt"}.
+}
 \usage{
 balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 }
@@ -59,7 +63,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 ## FIXME: this should also work for regular (non-UTC) time zones.
 TZ <-"UTC"
 d1 <- as.POSIXlt("2000-01-02 3:45", tz = TZ)
-d1$min <- d1$min + (0:16)*20
+d1$min <- d1$min + (0:16)*20L
 (f1 <- format(d1))
 str(unclass(d1))      # only $min is of length > 1
 df <- balancePOSIXlt(d1, fill.only = TRUE) # a "POSIXlt" object
