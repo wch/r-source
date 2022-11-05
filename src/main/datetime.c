@@ -1553,15 +1553,16 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* FIXME
        This may be called on objects generated on other versions of R
        with/without tm_zone/rm_offset, or even different versions of
-       R.  Let alone hand-edited objects, as in datetime3.R, nor those
+       R.  Let alone hand-edited objects, as in datetime3.R, or those
        created in packages.
-
-       So assuming the structure differs for UTC objects is unsafe.
 
        Currently a POSIXlt object has 9, 10 or 11 components.  The
        optional ones are zone and gmtoff, and it may have either or
        both.  The description does not specify the order of the
        components.  For now, assume the first nine are secs ... isdst.
+       and that the 10th and 11th are zone and gmtoff if present.
+
+       Object can have gmtoff even without HAVE_TM_GMTOFF.
     */
     checkArity(op, args);
     MAYBE_INIT_balanced
@@ -1589,19 +1590,27 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isVectorList(x) || n_comp < 9)
 	error(_("invalid '%s' argument"), "x");
 
-    Rboolean have_zone, have_9 = n_comp == 9; // otherwise, 10 or 11:
-    /* This is fragile.  have_9 means a patricular sub-format of
-       POSIXlt objects */
-#ifdef HAVE_TM_GMTOFF
-    have_zone = n_comp >= 11; // {zone, gmtoff}
-    // Why check the type and not the name?
-    if(have_zone && !isInteger(VECTOR_ELT(x, 10)))
-	error(_("invalid component [[11]] in \"POSIXlt\" 'gmtoff' should be integer"));
-#else
-    have_zone = (n_comp >= 10); // {zone}
-#endif
-    if(have_zone && !isString(VECTOR_ELT(x, 9)))
-	error(_("invalid component [[10]] in \"POSIXlt\", 'zone' should be character"));
+    Rboolean have_10 = n_comp >= 10, have_11 = n_comp >= 11;
+    /* This is fragile.  
+       Objects can have zone or gmtoff even without HAVE_TM_GMTOFF.
+       For now we assume a fixed order. */
+    SEXP nms = getAttrib(x, R_NamesSymbol);
+    if(isNull(nms)) // it must have names
+	error(_("invalid '%s' argument"), "x");
+    if(have_10) {
+	const char *n10 = CHAR(STRING_ELT(nms, 9));
+	if (strcmp(n10, "zone"))
+	    error(_("invalid '%s' argument"), "x");
+	if(!isString(VECTOR_ELT(x, 9)))
+	    error(_("invalid component [[10]] in \"POSIXlt\", 'zone' should be character"));
+    }
+    if(have_11) {
+	const char *n11 = CHAR(STRING_ELT(nms, 10));
+	if (strcmp(n11, "gmtoff"))
+	    error(_("invalid '%s' argument"), "x");
+	if(!isInteger(VECTOR_ELT(x, 10)))
+	    error(_("invalid component [[11]] in \"POSIXlt\" 'gmtoff' should be integer"));
+    }
 
     Rboolean need_fill = FALSE;
     R_xlen_t n = 0, nlen[n_comp];
@@ -1640,12 +1649,6 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 9; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    /* threw an error just above if these were not the case.
-    if(n_comp >= 10) // zone
-	SET_VECTOR_ELT(x, 9, coerceVector(VECTOR_ELT(x, 9), STRSXP));
-    if(n_comp >= 11) // gmtoff
-	SET_VECTOR_ELT(x, 10, coerceVector(VECTOR_ELT(x, 10), INTSXP));
-    */
 
     if(fill_only) { // & need_fill
 	R_xlen_t ni;
@@ -1687,7 +1690,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(n_comp >= 11 && (ni = nlen[10]) != n) { // x[10] : gmtoff
 	    SET_VECTOR_ELT(x, 10, xlengthgets(VECTOR_ELT(x, 10), n));
 	    int *xi = INTEGER(VECTOR_ELT(x, 10));
-	    for(R_xlen_t ii=ni; ii < n; ii++)
+	    for(R_xlen_t ii = ni; ii < n; ii++)
 		xi[ii] = xi[ii % ni];
 	}
 	if(!do_class) setAttrib(x, R_ClassSymbol, R_NilValue);
@@ -1701,13 +1704,8 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = PROTECT(allocVector(VECSXP, n_comp));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
-    if(!have_9) {
-	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
-#ifdef HAVE_TM_GMTOFF
-	// even if( !have_zone )
-	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
-#endif
-    }
+    if(have_10) SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+    if(have_11) SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
 
     SEXP ansnames = PROTECT(allocVector(STRSXP, n_comp));
     for(int i = 0; i < n_comp; i++)
@@ -1719,7 +1717,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	stm tm;
 	// FIXME: this assumes a fised order of components.
 	// avoid (int) NAN
-	tm.tm_sec  = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
+	tm.tm_sec  = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;  // Ouch
 	tm.tm_min  = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -1729,7 +1727,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_yday = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	char tm_zone[20];
-	if(have_zone) { // not "UTC", e.g.
+	if(have_10) {
 	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9])), 20 - 1);
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
@@ -1741,14 +1739,13 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(tm.tm_isdst >= 0 && strcmp(tzname[tm.tm_isdst], tm_zone))
 		warning(_("Timezone specified in the object field cannot be used on this system."));
 #endif
+	}
 #ifdef HAVE_TM_GMTOFF
+	if (have_11)
 	    tm.tm_gmtoff = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
-#endif
-	} else { //  !have_zone
-#ifdef HAVE_TM_GMTOFF
+	else
 	    tm.tm_gmtoff = NA_INTEGER; // or -1 or 0 ??
 #endif
-	}
 
 	/* 2. checking for NA/non-finite --------------
 	 * ----------- careful:
@@ -1773,7 +1770,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, valid,
 	       valid ? secs - fsecs : (R_FINITE(secs) ? NA_REAL : secs)); // fills ans[0..8]
 
-	if(!have_9) { // set components 10 and 11
+	if (have_10) {
 	    const char *p = "";
 	    if(valid && tm.tm_isdst >= 0) {
 #ifdef HAVE_TM_ZONE
@@ -1783,13 +1780,15 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    p = R_tzname[tm.tm_isdst];
 	    }
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+	}
+	if(have_11) {
 #ifdef HAVE_TM_GMTOFF
-	    if(n_comp >= 11) // gmtoff
 		INTEGER(VECTOR_ELT(ans, 10))[i] =
 		    valid ? (int)tm.tm_gmtoff : NA_INTEGER;
+#else
+		INTEGER(VECTOR_ELT(ans, 10))[i] = NA_INTEGER;		
 #endif
 	}
-
     } // end for(i ..)
 
     setAttrib(ans, R_NamesSymbol, ansnames); // sec, min, ...
@@ -1811,7 +1810,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_xlen_t ni = nlen[5];
 	// names(.) will have to become length n;  $year is already
 	// fill names, recycling,  note nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol), of length() ni <= n
-	for(R_xlen_t i=0; i < n; i++)
+	for(R_xlen_t i = 0; i < n; i++)
 	    SET_STRING_ELT(nmN, i, STRING_ELT(nm, i % ni));
 	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
 	UNPROTECT(2); // nm, nmN
