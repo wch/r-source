@@ -812,6 +812,7 @@ static SEXP  /* 'const' globals */
     lt_balancedSymbol = NULL,
     _balanced_ = NULL;
 
+// called from do_asPOXIXlt, do_strptime, do_D2POSIXlt, do_balancePOSIXlt
 #define MAYBE_INIT_balanced /* initialize when first used */	\
     if(lt_balancedSymbol == NULL) {				\
 	lt_balancedSymbol = install("balanced");		\
@@ -1049,6 +1050,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
        with/without tm_zone/tm_offset, or even different versions of R.
        Let alone hand-edited objects or created in packages.
        So assuming the structure differs for UTC objects is unsafe.
+
+       Add a validation step
     */
     checkArity(op, args);
     SEXP x = PROTECT(duplicate(CAR(args))); /* coerced below */
