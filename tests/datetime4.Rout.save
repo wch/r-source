@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-11-02 r83236) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-05 r83285) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -26,16 +26,18 @@ Type 'q()' to quit R.
 > xU
 [1] "2022-01-01 UTC"
 > str(unclass(xU))
-List of 9
- $ sec  : num 0
- $ min  : int 0
- $ hour : int 0
- $ mday : int 1
- $ mon  : int 0
- $ year : int 122
- $ wday : int 6
- $ yday : int 0
- $ isdst: int 0
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 0
+ $ year  : int 122
+ $ wday  : int 6
+ $ yday  : int 0
+ $ isdst : int 0
+ $ zone  : chr "UTC"
+ $ gmtoff: int 0
  - attr(*, "tzone")= chr "UTC"
  - attr(*, "balanced")= logi TRUE
 > 
@@ -81,16 +83,18 @@ List of 11
 > x2
 [1] "2022-07-01 07:55:03 UTC"
 > str(unclass(x2))
-List of 9
- $ sec  : num 3
- $ min  : int 55
- $ hour : int 7
- $ mday : int 1
- $ mon  : int 6
- $ year : int 122
- $ wday : int 5
- $ yday : int 181
- $ isdst: int 0
+List of 11
+ $ sec   : num 3
+ $ min   : int 55
+ $ hour  : int 7
+ $ mday  : int 1
+ $ mon   : int 6
+ $ year  : int 122
+ $ wday  : int 5
+ $ yday  : int 181
+ $ isdst : int 0
+ $ zone  : chr "UTC"
+ $ gmtoff: int 0
  - attr(*, "tzone")= chr "UTC"
  - attr(*, "balanced")= logi TRUE
 > ## in another tzone it will report the time in that zone, with its DST ....

@@ -199,13 +199,13 @@
       unknown, but \code{0} could mean unknown.}
   }
   The components must be in this order: that was only minimally checked
-  prior to \R 4.3.0.
-  The last two components may not be present for times in UTC and are
-  platform-dependent: they are supported on almost all current
-  platforms: those based on BSD or \code{glibc} (including Linux and
-  macOS) and those using the \code{tzcode} implementation shipped with
-  \R (including Windows and by default macOS). But they are not
-  necessarily set.
+  prior to \R 4.3.0.  All objects created in \R 4.3.0 have the optional
+  components.  From earlier versions of \R, he last two components will
+  not be present for times in UTC and are platform-dependent.  Currently
+  \code{gmtoff} is set on almost all current platforms: those based on
+  BSD or \code{glibc} (including Linux and macOS) and those using the
+  \code{tzcode} implementation shipped with \R (including Windows and by
+  default macOS).
 
   Note that the internal list structure is somewhat hidden, as many
   methods (including \code{\link{length}(x)}, \code{\link{print}()} and
