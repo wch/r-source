@@ -2142,11 +2142,12 @@ stopifnot(identical(xx, "1,23456e+02"))
 
 
 ## parseRd() and Rd2HTML() with some \Sexpr{} in *.Rd:
+## This is *incredibly* fragile
 x <- tools::Rd_db("base")
 ## Now check that \Sexpr{}  "installed" correctly:
 of <- textConnection("DThtml", "w")
 tools::Rd2HTML(x$DateTimeClasses.Rd, out = of, stages = "install"); close(of)
-(iLeap <- grep("leap seconds", DThtml)[[1]])
+(iLeap <- grep("leap seconds \\(according to", DThtml)[[1]])
 stopifnot(exprs = {
         grepl("[0-9]+ days",     DThtml[iLeap+ 1])
     any(grepl("20[1-9][0-9]-01", DThtml[iLeap+ 2:4]))
