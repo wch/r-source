@@ -331,10 +331,11 @@
       \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
       Bates, thanks to the \sQuote{R Contributors} working group.
 
-      \item Printing objects of class \code{"roman"}, \code{"hexmode"},
+      \item Printing 0-length objects of class
+      \code{"factor"}, \code{"roman"}, \code{"hexmode"},
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
-      \code{"citation"} of length zero now print something better, a
-      sixth of which fixes \PR{18422}, reported by Benjamin Feakins.
+      \code{"citation"} now prints something better, one
+      of which fixes \PR{18422}, reported by Benjamin Feakins.
 
       \item There are comprehensive validity checks on the structure of
       objects of class \code{"POSIXlt"} when converting (including
