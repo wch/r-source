@@ -850,7 +850,6 @@ static const char ltnames[][11] =
 #define isNum(s) ((TYPEOF(s) == INTSXP) || (TYPEOF(s) == REALSXP))
 static Rboolean valid_POSIXlt(SEXP x, int nm)
 {
-    /* FIXME: could move the coercions here */
     int n_comp = LENGTH(x); // >= 9, 11 for fresh objects
     int n_check = imin2(n_comp, nm);
     if(!isVectorList(x) || n_comp < 9)
@@ -864,16 +863,22 @@ static Rboolean valid_POSIXlt(SEXP x, int nm)
     for (int i = 0; i < n_check ; i++) {
 	const char *nm = CHAR(STRING_ELT(nms, i));
 	if (strcmp(nm, ltnames[i]))
-	    error(_("a valid \"POSIXlt\" object has element %d with name %s which should be"),
+	    error(_("a valid \"POSIXlt\" object has element %d with name '%s' which should be '%s'"),
 		  i+1, nm, ltnames[i]);
     }
 
-    // And check the types
+    // And check the types and coerce if necessary
     for (int i = 0; i < imin2(9, nm) ; i++) {
 	if(!isNum(VECTOR_ELT(x, i)))
 	    error(_("a valid \"POSIXlt\" object has a numeeric element %s"),
 		ltnames[i]);
     }
+    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
+    for(int i = 1; i < n_check; i++) {
+	if (i == 9) continue; //skip zone
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    }
+
     if(n_check >= 10) {
 	if(!isString(VECTOR_ELT(x, 9)))
 	    error(_("a valid \"POSIXlt\" object has a character element %s"),
@@ -1016,7 +1021,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    SEXP x = PROTECT(duplicate(CAR(args))); /* coerced below */
+    SEXP x = PROTECT(duplicate(CAR(args))); /* maybe coerced on next line */
     valid_POSIXlt(x, 9);
 
     SEXP stz;
@@ -1057,12 +1062,13 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    check_nlen(i);
 	check_nlen(8);
     }
-    /* coerce fields to integer or real */
+    /* coerce fields to integer or real
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 6; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
     SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP)); // isdst
-
+    */
+    
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
 	// This codes assumes a fixed order of components.
@@ -1117,8 +1123,9 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    SEXP x = PROTECT(duplicate(CAR(args))); /* coerced below */
+    SEXP x = PROTECT(duplicate(CAR(args))); /* maybe coerced in next line */
     valid_POSIXlt(x, 11);
+
     SEXP sformat;
     if(!isString((sformat = CADR(args))) || XLENGTH(sformat) == 0)
 	error(_("invalid '%s' argument"), "format");
@@ -1153,15 +1160,15 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     stm tm;
     memset(&tm, 0, sizeof(tm));
 
-    /* coerce fields, find length of longest one */
+    /* find length of longest one */
     R_xlen_t n = 0, nlen[11];
     int nn = imin2(LENGTH(x), 11);
     for(int i = 0; i < nn; i++) {
 	nlen[i] = XLENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
-	if(i != 9) // real for 'sec', the first; integer for the rest:
-	    SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
-					      i > 0 ? INTSXP : REALSXP));
+//	if(i != 9) // real for 'sec', the first; integer for the rest:
+//	    SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
+//					      i > 0 ? INTSXP : REALSXP));
     }
     if(n > 0) {
 	for(int i = 0; i < nn; i++)
@@ -1175,6 +1182,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     Rboolean have_zone = LENGTH(x) >= 10;
 #endif
+    // in case it is needed
+    int ns0 = -1;
     for(R_xlen_t i = 0; i < N; i++) {
 	// This codes assumes a fixed order of components.
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
@@ -1245,14 +1254,16 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    p = strstr(q, "%OS");
 	    if(p) {
-		/* FIXME some of this should be outside the loop */
 		int ns, nused = 4;
 		char *p2 = strstr(buf2, "%OS");
 		*p2 = '\0';
-		ns = *(p+3) - '0';
+		ns = *(p + 3) - '0';
 		if(ns < 0 || ns > 9) { /* not a digit */
-		    ns = asInteger(GetOption1(install("digits.secs")));
-		    if(ns == NA_INTEGER) ns = 0;
+		    if (ns0 == -1) {
+			ns0 = asInteger(GetOption1(install("digits.secs")));
+			if(ns0 == NA_INTEGER) ns0 = 0;
+		    }
+		    ns = ns0;
 		    nused = 3;
 		}
 		if(ns > 6) ns = 6;
@@ -1560,18 +1571,20 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	    check_nlen(i);
 	check_nlen(8);
     }
-    /* coerce fields to integer or real */
+    /* coerce fields to integer or real
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 6; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    */
 
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
-	// need to treat {sec, min, hour} in out-of-range case {where fixup *may* change day,month...
+	/* need to treat {sec, min, hour} in out-of-range case
+	   {where fixup *may* change day,month... */
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	stm tm;
 	// avoid (int) NAN
-	// FIXEME: this assumes a fixed order of components.
+	//  this assumes a fixed order of components.
 	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
@@ -1582,10 +1595,11 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_isdst = 0;
 	if(!R_FINITE(secs)) // +/-Inf, NA, NaN
 	    REAL(ans)[i] = secs;
-	else if(tm.tm_min  == NA_INTEGER || tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
+	else if(tm.tm_min  == NA_INTEGER || tm.tm_hour == NA_INTEGER ||
+		tm.tm_mday == NA_INTEGER ||
 		tm.tm_mon  == NA_INTEGER || tm.tm_year == NA_INTEGER)
 	    REAL(ans)[i] = NA_REAL;
-	else if(validate_tm(&tm) < 0) /* validate_tm() fixes up out-of-range {sec,min,...} */
+	else if(validate_tm(&tm) < 0) // validate_tm() fixes up out-of-range {sec,min,...}
 	    REAL(ans)[i] = NA_REAL;
 	else { // normal case:
 	    REAL(ans)[i] = mkdate00(&tm);
@@ -1667,11 +1681,11 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(set_nm && !fill_only)
 	PROTECT(nm);
 
-    /* coerce fields to integer or real */
+    /* coerce fields to integer or real
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(int i = 1; i < 9; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-
+    */
     if(fill_only) { // & need_fill
 	R_xlen_t ni;
 	// x[0] : sec (double)
