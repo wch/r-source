@@ -846,12 +846,12 @@ static const char ltnames[][11] =
   // 9       10
   "zone",  "gmtoff"};
 
-/* FIXME: could move the coercions here */
 // validate components 1 ... nm
 #define isNum(s) ((TYPEOF(s) == INTSXP) || (TYPEOF(s) == REALSXP))
 static Rboolean valid_POSIXlt(SEXP x, int nm)
 {
-    int n_comp = LENGTH(x); // >= 9
+    /* FIXME: could move the coercions here */
+    int n_comp = LENGTH(x); // >= 9, 11 for fresh objects
     int n_check = imin2(n_comp, nm);
     if(!isVectorList(x) || n_comp < 9)
 	error(_("a valid \"POSIXlt\" object is a list of at least 9 elements"));
@@ -1175,14 +1175,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     Rboolean have_zone = LENGTH(x) >= 10;
 #endif
-#if 0
-    if(have_zone && !isString(VECTOR_ELT(x, 9)))
-	error(_("invalid component [[10]] in \"POSIXlt\", 'zone' should be character"));
-    if(!have_zone && LENGTH(x) > 9) // rather even error ?
-	/* never when !HAVE_GMTOFF */
-	warning(_("More than 9 list components in \"POSIXlt\" without zone"));*/
-#endif
-	for(R_xlen_t i = 0; i < N; i++) {
+    for(R_xlen_t i = 0; i < N; i++) {
 	// This codes assumes a fixed order of components.
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	// avoid (int) NAN
@@ -1226,11 +1219,11 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else if(validate_tm(&tm) < 0) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    /* We could translate to wchar_t and use wcsftime,
-	       But there is no R_wcsftime, nor suuport in IANA's
-	       tcode.  It might be safe enough to translate to UTF-8
-	       and use strftime -- this is only looking to replace
-	       short ASCII character sequences. */
+	    /* We could translate to wchar_t and use wcsftime if we
+	       have it.  But there is no R_wcsftime, nor suuport in
+	       IANA's tcode.  It might be safe enough to translate to
+	       UTF-8 and use strftime -- this is only looking to
+	       replace short ASCII character sequences. */
 	    const char *q = translateChar(STRING_ELT(sformat, i%m));
 	    int nn = (int) strlen(q) + 50;
 	    char buf2[nn];
@@ -1498,8 +1491,10 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	double x_i = REAL(x)[i];
 	Rboolean valid = R_FINITE(x_i);
 	if(valid) {
-	    // FIXME: this is potentially rather slow
-	    int day = (int) floor(x_i);
+	    /* every 400 years is exactly 146097 days long and the
+	       pattern is repeated */
+	    double rounds = floor(floor(x_i) / 146097.0);
+	    int day = (int) (floor(x_i) - 146097.0 * rounds);
 	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
 	    /* weekday: 1970-01-01 was a Thursday */
 	    if ((tm.tm_wday = (((day % 7) + 4) % 7)) < 0) tm.tm_wday += 7;
@@ -1510,10 +1505,11 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		for ( ; day >= (tmp = days_in_year(y)); day -= tmp, y++);
 	    else
 		for ( ; day < 0; --y, day += days_in_year(y) );
-
-	    y = tm.tm_year = y - 1900;
+	    // Avoid overflows
+	    double year0 =  y - 1900 + rounds * 400;
+	    if (year0 > INT_MAX || year0 < INT_MIN) valid = FALSE;
+	    y = tm.tm_year = (int)year0;
 	    tm.tm_yday = day;
-
 	    /* month within year */
 	    for (mon = 0;
 		 day >= (tmp = days_in_month(mon, y));

@@ -11,7 +11,7 @@ str(unclass(xU))
 
 x0 <- strptime("2022-01-01", "%Y-%m-%d")
 x0
-str(unclass(x0)) # no tzone attribute
+str(unclass(x0))
 
 x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/London")
 x1
@@ -39,3 +39,10 @@ strptime("2022-01-01 +1400", "%Y-%m-%d %z", tz = "UTC")
 strptime("2022-01-01 -1400", "%Y-%m-%d %z", tz = "UTC")
 strptime("2022-01-01 +1500", "%Y-%m-%d %z", tz = "UTC")
 strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC")
+
+## extreme values for as.Date (negative ones were wrong in R 4.2.2)
+as.Date(2^(30:33))
+as.Date(-2^(30:33))
+## tm$year will overflow ints in less than 800 milion years from present.
+as.Date(c(7e11, 8e11, -7e11, -8e11))
+

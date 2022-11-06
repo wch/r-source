@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-11-05 r83285) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-06 r83289) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -44,7 +44,7 @@ List of 11
 > x0 <- strptime("2022-01-01", "%Y-%m-%d")
 > x0
 [1] "2022-01-01 GMT"
-> str(unclass(x0)) # no tzone attribute
+> str(unclass(x0))
 List of 11
  $ sec   : num 0
  $ min   : int 0
@@ -57,6 +57,7 @@ List of 11
  $ isdst : int 0
  $ zone  : chr "GMT"
  $ gmtoff: int NA
+ - attr(*, "tzone")= chr [1:3] "" "GMT" "BST"
  - attr(*, "balanced")= logi TRUE
 > 
 > x1 <- strptime("2022-07-01", "%Y-%m-%d", tz = "Europe/London")
@@ -168,4 +169,15 @@ Warning in strptime("2022-01-01 +1500", "%Y-%m-%d %z", tz = "UTC") :
 Warning in strptime("2022-01-01 -1500", "%Y-%m-%d %z", tz = "UTC") :
   values for %z outside +/-1400 are an error
 [1] NA
+> 
+> ## extreme values for as.Date (negative ones were wrong in R 4.2.2)
+> as.Date(2^(30:33))
+[1] "2941775-04-07"  "5881580-07-12"  "11761191-01-21" "23520412-02-10"
+> as.Date(-2^(30:33))
+[1] "-2937836-09-26"  "-5877641-06-23"  "-11757252-12-12" "-23516473-11-23"
+> ## tm$year will overflow ints in less than 800 milion years from present.
+> as.Date(c(7e11, 8e11, -7e11, -8e11))
+[1] "1916536874-11-22 00:00:00"  NA                          
+[3] "-1916532935-02-09 00:00:00" NA                          
+> 
 > 

@@ -368,6 +368,9 @@
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
       and their list components meant to be recycled, \code{length()} now
       is the length of the longest component.
+
+      \item \code{as.POSIXlt.Date()} could underflow for dates in the
+      far past (more than half a million years BCE).
     }
   }
 }
