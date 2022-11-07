@@ -220,7 +220,7 @@ Sys.timezone <- function(location = TRUE)
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
 as.POSIXlt.Date <- function(x, tz = "UTC", ...)
-    as.POSIXlt(.Internal(Date2POSIXlt(x)) , tz = tz)
+    as.POSIXlt(.Internal(Date2POSIXlt(x, tz)), tz = tz)
 
 ## ## Moved to packages date and chron.
 ## as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
