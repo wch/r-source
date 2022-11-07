@@ -451,8 +451,8 @@ Rd2HTML <-
 
         s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
         s <- s[nzchar(s)] # unlikely to matter, but just to be safe
-        s <- if (addID) sprintf('<code id="%s">%s</code>', gsub("[[:space:]]+", "-", s), s)
-             else sprintf('<code>%s</code>', s)
+        s <- if (addID) sprintf('<code id="%s">%s</code>', gsub("[[:space:]]+", "-", s), vhtmlify(s))
+             else sprintf('<code>%s</code>', vhtmlify(s))
         s <- paste0(s, collapse = ", ")
         of1(s)
     }
