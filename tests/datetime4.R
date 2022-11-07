@@ -30,6 +30,7 @@ str(unclass(x3))
 x4 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Fiji")
 x4
 str(unclass(x4)) # abbreviations may be numbers.
+# Kiribati does/did not have DST, so second abbreviation may be repeat or empty
 x5 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Kiritimati")
 x5
 str(unclass(x5)) # does not have DST, hence no DST abbreviation on some platforms

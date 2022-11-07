@@ -132,6 +132,7 @@ format(x2, "%a, %d %b %Y %H:%M:%S %Z")
 x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
 format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
 # macOS' strftime prints the next two wrong.
+# Liberia does/did not have DST, so second abbreviation may be repeat or empty
 x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
 y4 <- as.POSIXct(x4)
 str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong on macOS

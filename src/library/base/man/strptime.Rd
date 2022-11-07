@@ -302,12 +302,14 @@ strptime(x, format, tz = "")
   \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
 
   Format \code{\%z} can be used for input or output: it is a character
-  string, conventionally plus or minus followed by two digits for
-  hours and two for minutes: the standards say that an empty string
-  should be output if the offset is undetermined, but some systems use
-  \code{+0000} or the offsets for the time zone in use for the current year.
-  (On some platforms this works better after conversion to \code{"POSIXct"}.)
-
+  string, conventionally plus or minus followed by two digits for hours
+  and two for minutes: the standards say that an empty string should be
+  output if the offset is undetermined, but some systems use
+  \code{+0000} or the offsets for the time zone in use for the current
+  year.  (On some platforms this works better after conversion to
+  \code{"POSIXct"}.  Some platforms only recgnize hour or half-hour
+  offsets for output.)%% strftime in macOS 13.
+  
   Using \code{\%z} for input makes most sense with \code{tz = "UTC"}.
 }
 
