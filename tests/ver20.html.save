@@ -27,15 +27,15 @@ function processMathHTML() {
 <h3>Arguments</h3>
 
 <table>
-<tr style="vertical-align: top;"><td><code>foo</code></td>
+<tr><td><code id="foo">foo</code></td>
 <td>
 <p>item 1</p>
 </td></tr>
-<tr style="vertical-align: top;"><td><code>bar</code></td>
+<tr><td><code id="bar">bar</code></td>
 <td>
 <p>space, the item 2</p>
 </td></tr>
-<tr style="vertical-align: top;"><td><code>bah</code></td>
+<tr><td><code id="bah">bah</code></td>
 <td>
 <p>newline, then item 3</p>
 </td></tr>
@@ -44,7 +44,7 @@ function processMathHTML() {
 
 <h3>Details</h3>
 
-<p><span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> \R <code class="reqn">\alpha\beta\Gamma</code>
+<p><span class="rlang"><b>R</b></span> <span class="rlang"><b>R</b></span> \R <code class="reqn">\alpha\beta\Gamma</code>
 </p>
 <p>In code, all that needs to be escaped is percent, backslash and unpaired
 braces: <code>% \ {</code>. Unescaped: <code>$ # _ ^ ~ &lt; &gt; |</code>, and as a
