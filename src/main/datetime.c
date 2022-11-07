@@ -283,7 +283,6 @@ static double mkdate00 (stm *tm)
 
     int day = tm->tm_mday - 1,	/* not ok if it's NA_INTEGER */
 	year0 = 1900 + tm->tm_year;
-    /* safety check for unbounded loops */
     double excess = 0.0;
     if (year0 >= 400) {	
 	excess = (int)(year0/400) - 1;
@@ -316,7 +315,7 @@ static double mkdate00 (stm *tm)
 /* 
    PATH 2), internal tzcode
 
-   Interface to mktime or timegm, version in each PATH.
+   Interface to mktime or timegm, version in each PATH. This is PATH 2).
    Called from do_asPOSIXct and do_strptime.
 */
 static double mktime0 (stm *tm, const int local)
@@ -329,13 +328,12 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return -1.;
     }
-//    return local ? R_mktime(tm) : timegm00(tm);
     return local ? R_mktime(tm) : R_timegm(tm);
 }
 
 /* 
    Interface to localtime_r or gmtime_r. 
-   Version in each PATH.  This is PATH 2)
+   Version in each PATH.  This is PATH 2).
    Used in do_asPOSIXlt and do_strptime.
 */
 static stm * localtime0(const double *tp, const int local, stm *ltm)
@@ -348,9 +346,9 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 //--------------------------------------------------------- long clause ----
 // PATH 1), using system functions.
 /*
-   Substitute for timegm (which is non-POSIX) -- no checking.  Also,
+   Substitute for timegm (which is non-POSIX) -- with no checking.  Also,
    returns double and needs to be wider than a 32-bit time_t.  So we
-   could use timegm if it exists and time_t is 64-bit and it supports
+   could use timegm if it exists _and_ time_t is 64-bit _and_ it supports
    a full range of dates (macOS's does not).
 
    Used in guess_offset, mktime0 in PATH 1).
@@ -525,7 +523,13 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return res;
 /* watch the side effect here: both calls alter their arg */
-    } else return guess_offset(tm) + timegm00(tm);
+    } else {
+	double offset = guess_offset(tm);
+#ifdef HAVE_TM_GMTOFF
+	tm->tm_gmtoff = (long)offset;
+#endif	
+	return offset + timegm00(tm);
+    }
 }
 
 /* 
@@ -586,12 +590,13 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     } // end of OK
 
     /* internal substitute code.
-       Like localtime, this returns a pointer to a static struct tm */
+       Like localtime, this returns a pointer to a static struct tm 
+       FIXME: could use ltm
+    */
 
     double dday = floor(d/86400.0);
     static stm ltm0, *res = &ltm0;
     // This cannot exceed (2^31-1) years in either direction from 1970
-    // But loop below would be very slow for very large inputs.
     if (fabs(dday) > 784368402400) { //bail out
 	res->tm_year = NA_INTEGER;
 	res->tm_mon = NA_INTEGER;
@@ -604,7 +609,6 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	res->tm_isdst = -1;
 	return res;
     }
-//    int day = (int) floor(d/86400.0);  // may overflow
     int left = (int) (d - dday * 86400.0 + 1e-6); // allow for fractional secs
 
     memset(res, 0, sizeof(stm));
@@ -619,31 +623,69 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     if ((res->tm_wday = ((tmp + 4) % 7)) < 0) res->tm_wday += 7;
 
     /* year & day within year */
-    int y = 1970;
+    /* every 400 years is exactly 146097 days long and the
+       pattern is repeated */
+    double rounds = floor(floor(dday) / 146097.0);
+    dday -= 146097.0 * rounds;
+    int y = (int)(1970 + rounds * 400);
     if (dday >= 0)
 	for ( ; dday >= (tmp = days_in_year(y)); dday -= tmp, y++);
     else
 	for ( ; dday < 0; --y, dday += days_in_year(y) );
-
+    
     y = res->tm_year = y - 1900;
     int day = (int) dday;
     res->tm_yday = day;
-
+    
     /* month within year */
     int mon;
     for (mon = 0;
-	 day >= (tmp = days_in_month(mon, y));
+	 day >= (tmp = days_in_month(mon, y)); // days_in_month in 1900-based
 	 day -= tmp, mon++);
     res->tm_mon = mon;
     res->tm_mday = day + 1;
 
     if(local) {
-	double shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
-
 	/* Try to fix up time zone differences: cf PR#15480 */
-	int sdiff = (int)guess_offset(res);
+	int sdiff = (int) guess_offset(res);
+
+	// New strategy: convert as if in GMT, then guess offset and redo.
+	d -= sdiff;
+	dday = floor(d/86400.0);
+	left = (int) (d - dday * 86400.0 + 1e-6);
+	res->tm_hour = left / 3600;
+	left %= 3600;
+	res->tm_min = left / 60;
+	res->tm_sec = left % 60;
+	tmp = (int)(dday - 7 * floor(dday/7)); // day % 7
+	if ((res->tm_wday = ((tmp + 4) % 7)) < 0) res->tm_wday += 7;
+	rounds = floor(floor(dday) / 146097.0);
+	dday -= 146097.0 * rounds;
+	int y = (int)(1970 + rounds * 400);
+	if (dday >= 0)
+	    for ( ; dday >= (tmp = days_in_year(y)); dday -= tmp, y++);
+	else
+	    for ( ; dday < 0; --y, dday += days_in_year(y) );
+    
+	y = res->tm_year = y - 1900;
+	int day = (int) dday;
+	res->tm_yday = day;
+
+	/* month within year */
+	int mon;
+	for (mon = 0;
+	     day >= (tmp = days_in_month(mon, y));
+	     day -= tmp, mon++);
+	res->tm_mon = mon;
+	res->tm_mday = day + 1;
+	validate_tm(res);
+#ifdef HAVE_TM_GMTOFF
+	res->tm_gmtoff = -sdiff;
+#endif
+
+#if 0	
 	int diff = sdiff/60;
 	// just in case secs are out of range and might affect this.
 	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
@@ -651,6 +693,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	res->tm_sec -= (sdiff % 60);
 	validate_tm(res);
 	res->tm_isdst = -1;
+	printf("shift - diff %f\n", shift - diff); 
 	/* now this might be a different day */
 	if(shift - diff < 0.) {
 	    res->tm_yday--;
@@ -667,8 +710,6 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	    res->tm_sec += (sdiff % 60) - (sdiff2 % 60);
 	    validate_tm(res);
 	}
-#ifdef HAVE_TM_GMTOFF
-	res->tm_gmtoff = -sdiff2;
 #endif
 	// No DST before 1916
 	if(res->tm_year < 16) res->tm_isdst = 0;
@@ -1062,12 +1103,6 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    check_nlen(i);
 	check_nlen(8);
     }
-    /* coerce fields to integer or real
-    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
-    for(int i = 1; i < 6; i++)
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP)); // isdst
-    */
     
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
@@ -1166,9 +1201,6 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     for(int i = 0; i < nn; i++) {
 	nlen[i] = XLENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
-//	if(i != 9) // real for 'sec', the first; integer for the rest:
-//	    SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
-//					      i > 0 ? INTSXP : REALSXP));
     }
     if(n > 0) {
 	for(int i = 0; i < nn; i++)
@@ -1197,16 +1229,13 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday  = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday  = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
-	if(have_zone) { // not "UTC", e.g.
+	if(have_zone) {
 	    strncpy(tm_zone,
 		    CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9])),
 		    20 - 1);
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
-//#elif defined USE_INTERNAL_MKTIME
-//	    // Hmm, tm_zone is defined in PATH 2) so never get here.
-//	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    /* This used to be
 	       if(tm.tm_isdst >= 0) tzname[tm.tm_isdst] = tm_zone;
@@ -1306,9 +1335,6 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (res == 0) { // overflow for at least internal and glibc
 		Rf_error("output string exceeded 2048 bytes");
 	    }
-	    // no longer needed.
-	    // buff[2048] = '\0';
-	    // mbcsTruncateToValid(buff);
  
 	    // Now assume tzone abbreviated name is < 40 bytes,
 	    // but they are currently 3 or 4 bytes.
@@ -1571,11 +1597,6 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	    check_nlen(i);
 	check_nlen(8);
     }
-    /* coerce fields to integer or real
-    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
-    for(int i = 1; i < 6; i++)
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    */
 
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
@@ -1681,11 +1702,6 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(set_nm && !fill_only)
 	PROTECT(nm);
 
-    /* coerce fields to integer or real
-    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
-    for(int i = 1; i < 9; i++)
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    */
     if(fill_only) { // & need_fill
 	R_xlen_t ni;
 	// x[0] : sec (double)
@@ -1754,7 +1770,7 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	stm tm;
 	// this assumes a fixed order of components.
 	// avoid (int) NAN
-	tm.tm_sec  = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;  // Ouch
+	tm.tm_sec  = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
 	tm.tm_min  = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
