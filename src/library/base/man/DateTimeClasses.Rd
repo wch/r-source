@@ -291,7 +291,7 @@
   at a few days' notice.  So representations and conversion of future
   dates are tentative.  This also applies to dates after the in-use
   version of the time-zone database -- not all platforms keep it up to
-  date, which includes that shipped with older versions of \R whers used
+  date, which includes that shipped with older versions of \R where used
   (which it is by default on Windows and macOS).
 }% ranges of times
 \seealso{

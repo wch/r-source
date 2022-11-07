@@ -8,7 +8,7 @@
 % implementation mostly in ../R/datetime.R -- many more in ./DateTimeClasses.Rd
 
 \description{
-  A utiltiy function to \sQuote{balance} objects of class \code{"POSIXlt"}.
+  A utility function to \sQuote{balance} objects of class \code{"POSIXlt"}.
 }
 \usage{
 balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)

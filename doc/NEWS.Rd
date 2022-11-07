@@ -124,7 +124,7 @@
       source (system/internal) of the date-time conversion and printing
       functions.
 
-      \item Objects of class \code{"POSIXlt"} created in thie version of
+      \item Objects of class \code{"POSIXlt"} created in this version of
       \R always have 11 components: component \code{zone} is always set,
       and component \code{gmtoff} is set for times in UTC and usually
       set on the (almost all) platforms which have C-level support.

@@ -41,7 +41,7 @@ compactPDF(paths,
   \item{gs_extras}{An optional character vector of further options to be
     passed to GhostScript.}
   \item{verbose}{\code{\link{logical}} or non-negative integer indicating if
-    and how much of the compression utilties' output should be shown.}
+    and how much of the compression utilities' output should be shown.}
   %--> format(*):
   \item{x}{An object of class \code{"compactPDF"}.}
   \item{ratio, diff}{Limits for reporting: files are only reported whose
