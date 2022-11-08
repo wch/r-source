@@ -249,10 +249,7 @@ strptime(x, format, tz = "")
 \value{
   The \code{format} methods and \code{strftime} return character vectors
   representing the time.  \code{NA} times are returned as
-  \code{NA_character_}.  The elements are restricted to 256 bytes, plus
-  a time zone abbreviation if \code{usetz} is true.  (On known platforms
-  longer strings are truncated at 255 or 256 bytes, but this is not
-  guaranteed by the C99 standard.)
+  \code{NA_character_}.
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The time zone is used to set the
