@@ -98,11 +98,15 @@
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
+    }
+  }
 
+  \subsection{DATES and TIMES}{
+      \itemize{
       \item On platforms where (non-UTC) datetimes before 1902 (or
       before 1900 as with system functions on recent macOS) are guessed
       by extrapolating time zones from 1902-2037, there is a warning at
-      the first use of extrapolation in a session.  (As all timezones
+      the first use of extrapolation in a session.  (As all time zones
       post 2037 are extrapolation, we do not warn on those.)
 
       \item (Platforms using \option{--with-internal-tzone}, including
@@ -127,10 +131,20 @@
       \item Objects of class \code{"POSIXlt"} created in this version of
       \R always have 11 components: component \code{zone} is always set,
       and component \code{gmtoff} is set for times in UTC and usually
-      set on the (almost all) platforms which have C-level support.
-    }
-  }
+      set on the (almost all) platforms which have C-level support,
+      otherwise is \code{NA}.
 
+      \item There are comprehensive validity checks on the structure of
+      objects of class \code{"POSIXlt"} when converting (including
+      formatting and printing).  (This avoids mis-conversions of
+      hand-crafted objects.)
+
+      \item There is some support for using the native date-time
+      routines on macOS: this is only viable on recent versions
+      (e.g.\sspace{}12.6 and 13) and does get some historical changes wrong.
+     }
+  }
+  
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The included LAPACK sources have been updated to include the
@@ -157,10 +171,6 @@
       \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
       \option{-fPIC} by default (instead of \option{-fpic}), as desired in
       \PR{18326}.
-
-      \item There is some support for using the native date-time
-      routines on macOS: this is only viable on recent versions
-      (e.g.\sspace{}12.6) and does get some historical changes wrong.
 
       \item \command{configure} now checks conversion of datetimes
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
@@ -311,7 +321,7 @@
       \code{as.POSIXct(<POSIXct>)} default methods now do obey their
       \code{tz} argument, also in this case.
 
-      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
+      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (time zone)
       argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
       the R-devel mailing list.
 
@@ -336,11 +346,7 @@
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
       \code{"citation"} now prints something better, one
       of which fixes \PR{18422}, reported by Benjamin Feakins.
-
-      \item There are comprehensive validity checks on the structure of
-      objects of class \code{"POSIXlt"} when converting (including
-      formatting and printing).
-    }
+   }
   }
 }
 
