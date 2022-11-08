@@ -124,7 +124,7 @@
       silently truncated at 255 bytes.)
 
       \item \code{sessionInfo()} records (and by default prints) the
-      system time zone as part of the locale information.  Also the
+      system time zone as part of the locale information.  Also, the
       source (system/internal) of the date-time conversion and printing
       functions.
 
@@ -141,7 +141,9 @@
 
       \item There is some support for using the native date-time
       routines on macOS: this is only viable on recent versions
-      (e.g.\sspace{}12.6 and 13) and does get some historical changes wrong.
+      (e.g.\sspace{}12.6 and 13) and does get wrong some historical changes
+      (before 1900, during WWII).  Use of \option{--with-internal-tzone}
+      remains the default.
      }
   }
   

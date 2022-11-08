@@ -112,7 +112,7 @@ There are two implementation paths here.
    This can be use on glibc, macOS and Solaris (and probably FreeBSD),
    but all except 64-bit glibc have isues we can try to work around.
    It could in principlw be used om Windows but the issues there are
-   too severe to work around.
+   too severe (no support for before 1970) to work around.
 
    The system facilities are used for 1902-2037 and outside those
    limits where there is a 64-bit time_t and the conversions work
@@ -135,7 +135,7 @@ There are two implementation paths here.
    Our own versions of time_t (64-bit) and struct tm (including the
    BSD-style fields tm_zone and tm_gmtoff) are used.
 
-   PATH 2) was added for R 3.1.0 (2014-04) and is the only one
+   PATH 2) was added for R 3.1.0 (2014-04), is the only one
    supported on Windows and is the current default on macOS.
 
 */
@@ -829,11 +829,12 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
 	REAL(VECTOR_ELT(ans, 0))[i] = frac_secs;
 	for(int j = 1; j < 8; j++)
 	    INTEGER(VECTOR_ELT(ans, j))[i] = NA_INTEGER;
-	INTEGER(VECTOR_ELT(ans, 8))[i] = -1;
+	INTEGER(VECTOR_ELT(ans, 8))[i] = -1; // isdst
     }
 }
 
 // Used in do_asPOSIXlt do_strptime
+// Uses tz from enclosing function
 #define BEGIN_MAKElt					\
     SEXP tzone;						\
     if (isUTC) {					\
@@ -846,6 +847,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
     }
 
 // Used in do_asPOSIXlt do_strptime do_D2POSIXlt
+// Uses ans ansnames tzone settz oldtz  from enclosing function
 #define END_MAKElt					\
     setAttrib(ans, R_NamesSymbol, ansnames);		\
     SEXP klass = PROTECT(allocVector(STRSXP, 2));	\
