@@ -4538,11 +4538,9 @@ add_dummies <- function(dir, Log)
         }
 
         if(R_check_vignette_titles) {
-            bad_vignettes <- character()
-            for(v in vigns$docs) {
-                if(trimws(vignetteInfo(v)$title == "Vignette Title"))
-                    bad_vignettes <- c(bad_vignettes, v)
-            }
+            titles <- vapply(vigns$docs, function(v) vignetteInfo(v)$title, "",
+                             USE.NAMES = TRUE)
+            bad_vignettes <- names(titles)[titles == "Vignette Title"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -4554,6 +4552,22 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           .format_lines_with_indent(sQuote(basename(bad_vignettes))),
                           "\n")
+            }
+
+            ## Check for duplicated titles (which look silly on CRAN pages)
+            if (any(dup <- duplicated(titles) & nzchar(titles))) {
+                ## empty titles are reported in check_indices()
+                if(!any) noteLog(Log)
+                any <- TRUE
+                dups <- unique(titles[dup])
+                msg <- ngettext(length(dups),
+                                "Duplicated vignette title:",
+                                "Duplicated vignette titles:",
+                                domain = NA)
+                printLog0(Log, msg, "\n",
+                          .format_lines_with_indent(sQuote(dups)), "\n")
+                wrapLog("Ensure that the %\\VignetteIndexEntry lines in the",
+                        "vignette sources correspond to the vignette titles.")
             }
         }
 
