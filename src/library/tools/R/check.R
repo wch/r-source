@@ -5427,6 +5427,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wnarrowing\\]",
                              ## includes -Waddress-of-packed-member
                              ": warning: .* \\[-Waddress",
+                             ": warning: .* \\[-Woverflow",
                              ## -pedantic warning in gcc, fatal in clang and ODS
                              ": warning: initializer element is not a constant expression",
                              ": warning: range expressions in switch statements are non-standard",
