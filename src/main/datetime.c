@@ -75,7 +75,7 @@
 #endif
 
 // to get tm_zone, tm_gmtoff defined in glibc.
-// some other header, e.g. math.h, might define the macro.
+// some other header, e.g. math.h, might define the macro so do this first
 #if defined HAVE_FEATURES_H
 # include <features.h>
 # ifdef __GNUC_PREREQ
@@ -109,30 +109,41 @@ There are two implementation paths here.
 1) Use the system functions for mktime, gmtime[_r], localtime[_r], strftime.
    Use the system time_t, struct tm and time-zone tables.
 
-2) USE_INTERNAL_MKTIME :
-   Use substitutes from src/extra/tzone for mktime, gmtime_r,
-   localtime_r, strftime with a R_ prefix.  The system strftime is
-   used for locale-dependent names in R_strptime and R_strftime.  This
-   uses the time-zone tables shipped with R and installed into
-   R_HOME/share/zoneinfo .
+   This can be use on glibc, macOS and Solaris (and probably FreeBSD),
+   but all except 64-bit glibc have isues we can try to work around.
+   It could in principlw be used om Windows but the issues there are
+   too severe to work around.
+
+   The system facilities are used for 1902-2037 and outside those
+   limits where there is a 64-bit time_t and the conversions work
+   (some OSes have only 32-bit time-zone tables and macOS 13 only
+   works from 1900).  Otherwise there is code below to extrapolate
+   from 1902-2037.
+
+   Other known issues are with strftime (macOS only supports offsets
+   in multiple of half-hours), not having tzdata tables (possible on
+   Alpine and now fatal when configuring) and odd issues reading the
+   time-zone tables, expecially fror 1939-1945.
+
+2) USE_INTERNAL_MKTIME : Use substitutes from src/extra/tzone for
+   mktime, gmtime_r, localtime_r, strftime with a R_ prefix.  The
+   system strftime is used for locale-dependent names in R_strptime
+   and R_strftime.  This uses the time-zone tables shipped with R and
+   installed into R_HOME/share/zoneinfo , with facilites to switch to
+   others using environment variable TZDIR.
 
    Our own versions of time_t (64-bit) and struct tm (including the
    BSD-style fields tm_zone and tm_gmtoff) are used.
 
-For PATH 1), the system facilities are used for 1902-2037 and outside
-those limits where there is a 64-bit time_t and the conversions work
-(some OSes have only 32-bit time-zone tables and one only works from
-1900).  Otherwise there is code below to extrapolate from 1902-2037.
-
-PATH 2) was added for R 3.1.0 (2014-04) and is the only one supported
-on Windows: it is the current default on macOS.
+   PATH 2) was added for R 3.1.0 (2014-04) and is the only one
+   supported on Windows and is the current default on macOS.
 
 */
 
 #ifdef USE_INTERNAL_MKTIME
 // PATH 2)
 # include "datetime.h"
-// configure might have checked the system versions.
+// configure might have checked the system versions, so we override.
 # undef HAVE_LOCALTIME_R
 # define HAVE_LOCALTIME_R 1
 # undef HAVE_TM_ZONE
@@ -142,7 +153,7 @@ on Windows: it is the current default on macOS.
 // latterly these are set by configure, but not on Windows
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
-// these should only be used in PATH 1)
+// these should only be used in PATH 1), but we set them for completeness.
 # undef HAVE_WORKING_MKTIME_AFTER_2037
 # define HAVE_WORKING_MKTIME_AFTER_2037 1
 # undef HAVE_WORKING_MKTIME_BEFORE_1902
@@ -170,6 +181,7 @@ Rboolean warn1902 = FALSE;
 static const int month_days[12] =
   {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+// Careful : days_in_year is for base-0 years, days_in_month for base-1970.
 #define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 #define days_in_month(mon, yr) ((mon == 1 && isleap(1900+yr)) ? 29 : month_days[mon])
@@ -179,8 +191,8 @@ static const int month_days[12] =
   Return 0 if valid, -1 if invalid and uncorrectable, or a positive
   integer approximating the number of corrections done.
 
-  Used in both paths in mktime0, in do_asPOSIXct, do_formatPOSIXlt,
-  do_balancePOSIXlt.
+  Used in both paths in mktime0, in localtimee0 in PATH 1) and in
+  do_formatPOSIXlt, do_strptime, do_POSIXlt2D, do_balancePOSIXlt.
 */
 static int validate_tm (stm *tm)
 {
@@ -270,8 +282,8 @@ static int validate_tm (stm *tm)
 
    This will fix up tm_yday and tm_wday.
 
-   Used in timegm00 (possibly) and guess_offset in PATH 1)
-   and POSIXlt2D and do_balancePOSIXlt
+   Used in timegm00 (possibly) and guess_offset in PATH 1),
+   POSIXlt2D and do_balancePOSIXlt
 */
 static double mkdate00 (stm *tm)
 {
@@ -652,7 +664,8 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	/* Try to fix up time zone differences: cf PR#15480 */
 	int sdiff = (int) guess_offset(res);
 
-	// New strategy: convert as if in UTC, then guess offset and redo.
+	/* New strategy in 4.3.0: convert as if in UTC, then guess
+	   offset and redo. */
 	d -= sdiff;
 	dday = floor(d/86400.0);
 	left = (int) (d - dday * 86400.0 + 1e-6);
@@ -686,33 +699,6 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	res->tm_gmtoff = -sdiff;
 #endif
 
-#if 0
-	int diff = sdiff/60;
-	// just in case secs are out of range and might affect this.
-	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
-	res->tm_min -= diff;
-	res->tm_sec -= (sdiff % 60);
-	validate_tm(res);
-	res->tm_isdst = -1;
-	printf("shift - diff %f\n", shift - diff);
-	/* now this might be a different day */
-	if(shift - diff < 0.) {
-	    res->tm_yday--;
-	    res->tm_wday--;
-	}
-	else if(shift - diff >= 24. * 60.) {
-	    res->tm_yday++;
-	    res->tm_wday++;
-	}
-	int sdiff2 = (int)guess_offset(res);
-	int diff2 = sdiff2/60;
-	if(diff2 != diff) {
-	    res->tm_min += (diff - diff2);
-	    res->tm_sec += (sdiff % 60) - (sdiff2 % 60);
-	    validate_tm(res);
-	}
-#endif
-
 	// No DST before 1916
 	if(res->tm_year < 16) res->tm_isdst = 0;
 	return res;
@@ -738,6 +724,10 @@ static Rboolean set_tz(const char *tz, char *oldtz)
     if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
 #elif defined(HAVE_PUTENV)
     {
+	/* This could be dynamic, but setenv is strongly preferred
+	   (but not availanble on Windows)
+	   "A program should not alter or free the string"
+	*/
 	static char buff[1010];
 	if (strlen(tz) > 1000)
 	    error("time zone specification is too long");
@@ -759,14 +749,14 @@ static void reset_tz(char *tz)
 	if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
 #elif defined(HAVE_PUTENV)
 	{
-	    static char buff[200];
-	    strcpy(buff, "TZ="); strcat(buff, tz);
+	    static char buff[1010];
+	    strcpy(buff, "TZ="); strcat(buff, tz); // could use strncat
 	    if(putenv(buff)) warning(_("problem with setting timezone"));
 	}
 #endif
     } else {
 #ifdef HAVE_UNSETENV
-	unsetenv("TZ"); /* FreeBSD variants do not return a value */
+	unsetenv("TZ"); // FreeBSD variants used not to return a value
 #elif defined(HAVE_PUTENV_UNSET)
 	if(putenv("TZ")) warning(_("problem with unsetting timezone"));
 #elif defined(HAVE_PUTENV_UNSET2)
@@ -799,9 +789,9 @@ static void glibc_fix(stm *tm, Rboolean *invalid)
 #endif
     if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;
     if(tm->tm_mon != NA_INTEGER && tm->tm_mday != NA_INTEGER) return;
-    /* at least one of the month and the day of the month is missing */
+    // at least one of the month and the day of the month is missing
     if(tm->tm_yday != NA_INTEGER) {
-	/* since we have yday, let that take precedence over mon/mday */
+	// since we have yday, let that take precedence over mon/mday
 	int yday = tm->tm_yday, mon = 0;
 	while(yday >= (tmp = days_in_month(mon, tm->tm_year))) {
 	    yday -= tmp;
@@ -877,7 +867,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, Rboolean valid, double frac_secs)
   ... isdst.  and that the 10th and 11th are zone and gmtoff if
   present.
 
-  Object can have gmtoff even without HAVE_TM_GMTOFF.
+  Object can have gmtoff without HAVE_TM_GMTOFF.
 
   Called from do_asPOSIXct do_formatPOSIXlt do_balancePOSIXlt
 */
@@ -891,6 +881,7 @@ static const char ltnames[][11] =
 
 // validate components 1 ... nm
 #define isNum(s) ((TYPEOF(s) == INTSXP) || (TYPEOF(s) == REALSXP))
+// NB: this can change its argument.
 static Rboolean valid_POSIXlt(SEXP x, int nm)
 {
     int n_comp = LENGTH(x); // >= 9, 11 for fresh objects
@@ -969,7 +960,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tz = CHAR(STRING_ELT(stz, 0));
 	}
     }
-    PROTECT(stz); /* it might be new */
+    PROTECT(stz); // it might be new
     /*
        In this function isUTC means that the timezone has been set to
        UTC either by default, for example as the system timezone or
@@ -1038,18 +1029,6 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     END_MAKElt
-/*
-    setAttrib(ans, R_NamesSymbol, ansnames);
-    SEXP klass = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
-    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
-    classgets(ans, klass);
-    setAttrib(ans, install("tzone"), tzone);
-    SEXP nm = getAttrib(x, R_NamesSymbol);
-    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
-    MAYBE_INIT_balanced
-    setAttrib(ans, lt_balancedSymbol, _balanced_);
-*/
     UNPROTECT(6);
     if(settz) reset_tz(oldtz);
     return ans;
@@ -1064,7 +1043,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    SEXP x = PROTECT(duplicate(CAR(args))); /* maybe coerced on next line */
+    SEXP x = PROTECT(duplicate(CAR(args))); // maybe coerced on next line
     valid_POSIXlt(x, 9);
 
     SEXP stz;
@@ -1081,7 +1060,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(stz); /* it might be new */
+    PROTECT(stz); // it might be new
     int isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) ? 1 : 0;
     /*
       if !isUTC we need to set the tz, not set tm_isdst and use mktime
@@ -1338,8 +1317,9 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		Rf_error("output string exceeded 2048 bytes");
 	    }
 
-	    // Now assume tzone abbreviated name is < 40 bytes,
-	    // but they are currently 3 or 4 bytes.
+	    /* Now assume tzone abbreviated name is < 40 bytes,
+	       but they are currently 3 or 4 bytes.
+	    */
 	    if(UseTZ) {
 		if(have_zone) {
 		    const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9]));
@@ -1505,7 +1485,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 } // strptime()
 
 // .Internal(Date2POSIXlt(x)) called from as.POSIXlt.Date
-// It does not get passed tz and always returns a date-time in UTC.
+// It always returns a date-time in UTC.
 SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
