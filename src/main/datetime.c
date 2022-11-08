@@ -68,6 +68,9 @@
   second abbreviation may be empty or may repeat the first, depending
   on the platform.)  However, if the call to strptime() does not
   specify 'tz', this attribute is omitted.
+
+  Names for the date-times are optional (and rarely supplied): 
+  they are attached to the 'year' element' and used by strptime().
 */
 
 #ifdef HAVE_CONFIG_H
@@ -926,6 +929,8 @@ static Rboolean valid_POSIXlt(SEXP x, int nm)
 	    error(_("a valid \"POSIXlt\" object has a numeric element %s"),
 		  ltnames[10]);
     }
+
+    // FIXME check the tzone attribute.
     return TRUE;
 }
 
