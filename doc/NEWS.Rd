@@ -241,8 +241,8 @@
       and \sQuote{checking CRAN incoming feasibility}.
 
       \item \command{R CMD check} can optionally (but included in
-      \option{--as-cran}) check whether HTML math rendering via KaTeX
-      works for the package \file{.Rd} files.
+      \option{--as-cran}) check whether HTML math rendering \emph{via}
+      KaTeX works for the package \file{.Rd} files.
     }
   }
 
