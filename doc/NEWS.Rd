@@ -348,6 +348,10 @@
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
       \code{"citation"} now prints something better, one
       of which fixes \PR{18422}, reported by Benjamin Feakins.
+
+      \item \code{Sys.timezone()} queries \command{timedatectl} only if
+      \command{systemd} is loaded; addressing a report by Jan Gorecki in
+      \PR{17421}.
    }
   }
 }

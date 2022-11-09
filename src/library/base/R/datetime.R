@@ -93,7 +93,8 @@ Sys.timezone <- function(location = TRUE)
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
-    if (nzchar(Sys.which("timedatectl"))) {
+    ## https://www.freedesktop.org/software/systemd/man/sd_booted.html
+    if (dir.exists("/run/systemd/system") && nzchar(Sys.which("timedatectl"))) {
         inf <- system("timedatectl", intern = TRUE)
         ## typical format:
         ## "       Time zone: Europe/London (GMT, +0000)"
