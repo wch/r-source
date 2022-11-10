@@ -2865,10 +2865,8 @@ add_dummies <- function(dir, Log)
             warningLog(Log)
             any <- TRUE
             msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                    strwrap(paste(sQuote(sources), collapse = ", "),
-                            indent = 2L, exdent = 4L),
-                     "")
-            printLog0(Log, paste(msg, collapse = "\n"))
+                     .pretty_format(sources))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
         }
 
         ## Did the vignettes get updated in inst/doc?
@@ -2880,10 +2878,8 @@ add_dummies <- function(dir, Log)
                 if (!any) warningLog(Log)
                 any <- TRUE
                 msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
-                         strwrap(paste(sQuote(vignette_files), collapse = ", "),
-                                 indent = 2L, exdent = 4L),
-                         "")
-                printLog0(Log, paste(msg, collapse = "\n"))
+                         .pretty_format(vignette_files))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
             } else {
                 ## allow for some imprecision in file times (in secs)
                 time_tol <- as.double(Sys.getenv("_R_CHECK_FILE_TIMES_TOL_", 10))
@@ -2894,15 +2890,12 @@ add_dummies <- function(dir, Log)
                     if (!any) warningLog(Log)
                     any <- TRUE
                     msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-                             strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]),
-                                           collapse = ", "),
-                                     indent = 2L, exdent = 4L),
-                             "")
+                             .pretty_format(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]))
                     keep <- is.na(vignette_times) |
                         vignette_times <= max(inst_doc_times, na.rm = TRUE) + time_tol
                     vignette_files <- vignette_files[keep]
                     vignette_times <- vignette_times[keep]
-                    printLog0(Log, paste(msg, collapse = "\n"))
+                    printLog0(Log, paste(msg, collapse = "\n"), "\n")
                 }
                 matches <- match(vignette_files, inst_doc_files)
                 newer <- vignette_times > inst_doc_times[matches] + time_tol
@@ -2911,11 +2904,8 @@ add_dummies <- function(dir, Log)
                     if (!any) warningLog(Log)
                     any <- TRUE
                     msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
-                             strwrap(paste(sQuote(vignette_files[newer]),
-                                           collapse = ", "),
-                                     indent = 2L, exdent = 4L),
-                             "")
-                    printLog0(Log, paste(msg, collapse = "\n"))
+                             .pretty_format(vignette_files[newer]))
+                    printLog0(Log, paste(msg, collapse = "\n"), "\n")
                 }
             }
         }
@@ -4435,10 +4425,7 @@ add_dummies <- function(dir, Log)
                                 "Package vignette without corresponding single PDF/HTML:\n",
                                 "Package vignettes without corresponding single PDF/HTML:\n", domain = NA)
                 printLog0(Log, msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
             bad_vignettes <- vigns$docs[vigns$encodings == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
@@ -4447,11 +4434,8 @@ add_dummies <- function(dir, Log)
                 msg <- ngettext(nb,
                          "Non-ASCII package vignette without specified encoding:\n",
                          "Non-ASCII package vignettes without specified encoding:\n", domain = NA)
-                printLog0(Log, "  ", msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, msg)
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
         }
 
@@ -4484,7 +4468,7 @@ add_dummies <- function(dir, Log)
             if(!any) warningLog(Log)
             any <- TRUE
             printLog(Log,
-                     "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
+                     "Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
         if ("Makefile" %in% dir(vigns$dir)) {
             f <- file.path(vigns$dir, "Makefile")
@@ -4495,7 +4479,7 @@ add_dummies <- function(dir, Log)
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
+                         "Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
             contents <- readChar(f, file.size(f), useBytes = TRUE)
             if(any(grepl("\r", contents, fixed = TRUE, useBytes = TRUE))) {
@@ -4508,7 +4492,7 @@ add_dummies <- function(dir, Log)
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'Rscript' in Makefile: should be '\"$(R_HOME)/bin/Rscript\"'\n")
+                         "Found 'Rscript' in Makefile: should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
 
@@ -4529,11 +4513,8 @@ add_dummies <- function(dir, Log)
                 msg <- ngettext(nb,
                                 "Package vignette which is not in its specified encoding:\n",
                                 "Package vignettes which are not in their specified encoding:\n", domain = NA)
-                printLog0(Log, "  ", msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, msg)
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
         }
 
