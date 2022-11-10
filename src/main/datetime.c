@@ -21,9 +21,9 @@
  */
 
 /*
-    These use POSIX functions which are now also part of C99 so are
-    almost universally available, albeit with more room for
-    implementation variations.
+    These use POSIX functions which are also part of C99 so are almost
+    universally available, albeit with more room for implementation
+    variations.
 
     A particular problem is the setting of the timezone TZ on
     Unix/Linux.  POSIX appears to require it, yet older Linux systems
@@ -37,10 +37,8 @@
 # include <config.h>
 #endif
 
-#include <Rmath.h> // for imin2()
-
 // to get tm_zone, tm_gmtoff defined in glibc.
-// some other header, e.g. math.h, might define the macro.
+// some other header, e.g. math.h, might define the macro so do this first
 #if defined HAVE_FEATURES_H
 # include <features.h>
 # ifdef __GNUC_PREREQ
@@ -53,8 +51,8 @@
 # define _BSD_SOURCE 1
 #endif
 #include <time.h>
-
-#include <errno.h>
+#include <errno.h> // mktime or substitute may set errno.
+#include <Rmath.h> // for imin2()
 
 /*
 
@@ -117,9 +115,9 @@ static const int days_in_month[12] =
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 
 /*
-  Adjust a struct tm to be a valid date-time.
+  Adjust a struct tm to be a valid scalar date-time.
   Return 0 if valid, -1 if invalid and uncorrectable, or a positive
-  integer approximating the number of corrections needed.
+  integer approximating the number of corrections done.
   */
 static int validate_tm (stm *tm)
 {
@@ -1259,6 +1257,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+// .Internal(POSIXlt2Date(x)), called from as.Date.POSIXlt(x)
 SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1267,35 +1266,46 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "x");
 
     R_xlen_t n = 0, nlen[9];
-    for(int i = 3; i < 6; i++)
-	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
-    if((nlen[0] = XLENGTH(VECTOR_ELT(x, 0))) > n) n = nlen[0]; // sec; need for Inf,NaN,..
+    for(int i = 0; i < 6; i++)
+	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];// incl {sec,min,hour}
     if((nlen[8] = XLENGTH(VECTOR_ELT(x, 8))) > n) n = nlen[8]; // isdst
     if(n > 0) {
-	check_nlen(0);
-	for(int i = 3; i < 6; i++)
+	for(int i = 0; i < 6; i++)
 	    check_nlen(i);
 	check_nlen(8);
     }
-    /* coerce relevant fields [3,4,5] = [mday,mon,year] to integer */
-    for(int i = 3; i < 6; i++)
+    /* coerce relevant fields [1,2,..,5] = [min,hour,mday,mon,year] to integer */
+    for(int i = 1; i < 6; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
 
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
+	/* need to treat {sec, min, hour} in out-of-range case
+	   {where fixup *may* change day,month... */
+	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	stm tm;
-	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
+	// avoid (int) NAN
+	//  this assumes a fixed order of components.
+	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
+	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
+	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
 	tm.tm_mon   = INTEGER(VECTOR_ELT(x, 4))[i%nlen[4]];
 	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
 	/* mktime ignores tm.tm_wday and tm.tm_yday */
 	tm.tm_isdst = 0;
-	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER ||
-	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0) // non-finite: take the 'sec'
-	    REAL(ans)[i] = REAL(VECTOR_ELT(x, 0))[i%nlen[0]];
-	else {
-	    /* -1 must be error as seconds were zeroed */
+	if(!R_FINITE(secs)) // +/-Inf, NA, NaN
+	    REAL(ans)[i] = secs;
+	else if(tm.tm_min  == NA_INTEGER || tm.tm_hour == NA_INTEGER ||
+		tm.tm_mday == NA_INTEGER ||
+		tm.tm_mon  == NA_INTEGER || tm.tm_year == NA_INTEGER)
+	    REAL(ans)[i] = NA_REAL;
+	else if(validate_tm(&tm) < 0) // validate_tm() fixes up out-of-range {sec,min,...}
+	    REAL(ans)[i] = NA_REAL;
+	else { // normal case:
+	    tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
 	    double tmp = mktime00(&tm);
+	    /* -1 must be error as seconds were zeroed */
 	    REAL(ans)[i] = (tmp == -1) ? NA_REAL : tmp/86400;
 	}
     }
