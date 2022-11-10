@@ -604,10 +604,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #endif
     } // end of OK
 
-    /* internal substitute code.
-       Like localtime, this returns a pointer to a static struct tm
-       FIXME: could use ltm
-    */
+    // internal substitute code.
 
     double dday = floor(d/86400.0);
 //    static stm ltm0, *res = &ltm0;
@@ -1152,7 +1149,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 } // as.POSIXct()
 
-// .Internal(format.POSIXlt(x, format, usetz))
+// .Internal(format.POSIXlt(x, format, usetz)) aka strftime
 SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1356,10 +1353,19 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    // FIXME: this needs to recycle names
-    SEXP nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol);
-    if (nm != R_NilValue) setAttrib(ans, R_NamesSymbol, nm);
 
+    SEXP nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol);
+    // nm has length nlen[5] ; ans has length N
+    // so first pad nm to length n, then recycle to length N.
+    if (nm != R_NilValue) {
+	SEXP nm2 = PROTECT(xlengthgets(nm, n));
+	SEXP nm3 = allocVector(STRSXP, N);
+	for (R_xlen_t j = 0; j < N; j++)
+	    SET_STRING_ELT(nm3, j, STRING_ELT(nm2, j % n));
+	setAttrib(ans, R_NamesSymbol, nm3);
+	UNPROTECT(1);
+    }
+ 
     if(settz) reset_tz(oldtz);
     UNPROTECT(2);
     return ans;
@@ -1497,6 +1503,14 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     } /* for(i ..) */
 
     END_MAKElt
+    if(nm != R_NilValue) {
+	if (N > n) {// we need to recycle names
+	    SEXP nm3 = allocVector(STRSXP, N);
+	    for (R_xlen_t j = 0; j < N; j++)
+		SET_STRING_ELT(nm3, j, STRING_ELT(nm, j % n));
+	    setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm3);
+	}
+    }
     UNPROTECT(5);
     if(settz) reset_tz(oldtz);
     return ans;
