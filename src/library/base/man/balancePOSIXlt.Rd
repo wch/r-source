@@ -62,7 +62,12 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 \examples{
 ## FIXME: this should also work for regular (non-UTC) time zones.
 TZ <-"UTC"
-d1 <- as.POSIXlt("2000-01-02 3:45", tz = TZ)
+# Could be
+# d1 <- as.POSIXlt("2000-01-02 3:45", tz = TZ)
+# on systems (almost all) which have tm_zone.
+oldTZ <- Sys.getenv('TZ', unset = "unset")
+Sys.setenv(TZ = "UTC")
+d1 <- as.POSIXlt("2000-01-02 3:45")
 d1$min <- d1$min + (0:16)*20L
 (f1 <- format(d1))
 str(unclass(d1))      # only $min is of length > 1
@@ -77,6 +82,7 @@ stopifnot(exprs = {
     identical(f1, format(.POSIXlt(db)))
     identical(as.POSIXct(d1, TZ), as.POSIXct(.POSIXlt(db, TZ)))
 })}
+if(oldTZ == "unset") Sys.unsetenv('TZ') else Sys.setenv(TZ = oldTZ)
 }
 \keyword{utilities}
 \keyword{chron}
