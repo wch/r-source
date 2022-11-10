@@ -2755,7 +2755,8 @@ if(FALSE) {
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
 		 sep = "", file=conn)
-	if (any(file.exists(c(file.path(outDir, "NEWS"), file.path(outDir, "NEWS.Rd")))))
+	if (any(file.exists(file.path(outDir,
+                                      c("NEWS", "NEWS.Rd", "NEWS.md")))))
 	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
 		 sep = "", file=conn)
 
