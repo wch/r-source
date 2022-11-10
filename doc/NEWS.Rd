@@ -77,23 +77,6 @@
       strings, particularly when different elements of the input have
       different encoding (including \code{"bytes"}).
 
-      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
-      specifying \code{origin}) now work.
-      So does \code{as.Date(<numeric>)}, too.
-
-      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
-      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
-      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
-
-      \item Experimental \code{balancePOSIXlt()} utility allows using
-      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
-      correctly, e.g., in subsetting and subassignments.  Such objects
-      are now documented.
-
-      More experimentally, a \code{"POSIXlt"} object may have an attribute
-      \code{"balanced"} indicating if it is known to be filled or fully
-      balanced.
-
       \item Package repositories in \code{getOption("repos")} are now
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
@@ -144,6 +127,24 @@
       (e.g.\sspace{}12.6 and 13) and does get wrong some historical changes
       (before 1900, during WWII).  Use of \option{--with-internal-tzone}
       remains the default.
+
+      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
+      specifying \code{origin}) now work.
+      So does \code{as.Date(<numeric>)}.
+
+      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
+      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
+      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
+
+      \item Experimental \code{balancePOSIXlt()} utility allows using
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
+      correctly, e.g., in subsetting and subassignments.  Such objects
+      are now documented.
+
+      More experimentally, a \code{"POSIXlt"} object may have an attribute
+      \code{"balanced"} indicating if it is known to be filled or fully
+      balanced.
+
      }
   }
   
