@@ -81,6 +81,8 @@
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
+
+      \item \code{compactPDF()} gets a \code{verbose} option.
     }
   }
 
@@ -147,7 +149,7 @@
 
      }
   }
-  
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The included LAPACK sources have been updated to include the
@@ -358,11 +360,6 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.2.2 patched}{
-  \subsection{NEW FEATURES}{
-    \itemize{
-      \item \code{compactPDF()} gets a \code{verbose} option.
-    }
-  }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
@@ -384,6 +381,11 @@
 
       \item \code{as.POSIXlt.Date()} could underflow for dates in the
       far past (more than half a million years BCE).
+
+      \item \code{as.Date.POSIXlt(x)} would return \code{"1970-01-01"}
+      instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
+	x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
+	x$mon <- c(0L, NA); as.Date(x)}
     }
   }
 }
