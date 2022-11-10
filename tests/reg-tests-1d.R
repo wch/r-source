@@ -5855,6 +5855,16 @@ plot(lm(y~    c, dd), which = 5)  # gave empty plot, noting missing factors
     stopifnot(!grepl("no factor predictors", conditionMessage(m), fixed=TRUE)))
 
 
+## as.Date.POSIXlt() with *unbalanced* NAs
+x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
+x$mon <- c(0L, NA)
+x; as.Date(x)
+stopifnot(identical(is.na(x), c(FALSE, TRUE)),
+          identical(is.na(x), is.na(as.Date(x))))
+## R 4.2.2-only gave "1970-01-01" instead of NA
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

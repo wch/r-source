@@ -27,6 +27,11 @@
 
       \item \code{as.POSIXlt.Date()} could underflow for dates in the
       far past (more than half a million years BCE).
+
+      \item \code{as.Date.POSIXlt(x)} would return \code{"1970-01-01"}
+      instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
+	x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
+	x$mon <- c(0L, NA); as.Date(x)}
     }
   }
 }
