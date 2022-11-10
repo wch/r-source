@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2021 R Core Team.
+ *      Copyright 2011-2022 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -472,8 +472,10 @@ static void child_sig_handler(int sig)
 {
     if (sig == SIGUSR1) {
 #ifdef MC_DEBUG
+	int old_errno = errno;
 	Dprintf("child process %d got SIGUSR1; child_exit_status=%d\n", 
 		getpid(), child_exit_status);
+	errno = old_errno;
 #endif
 	child_can_exit = 1;
 	if (child_exit_status >= 0)
@@ -489,6 +491,7 @@ static int parent_handler_set = 0;
    all detached children, anyway, so it won't really help. */
 static void parent_sig_handler(int sig)
 {
+    int old_errno = errno;
     child_info_t *ci = children;
     while(ci) {
 	if (ci->detached && !ci->waitedfor)
@@ -497,6 +500,7 @@ static void parent_sig_handler(int sig)
     }
 
     /* TODO: chain to old sig handler */
+    errno = old_errno;
 }
 
 static void setup_sig_handler(void)
