@@ -101,6 +101,8 @@ sessionInfo <- function(package = NULL)
         z$platform <- paste(z$platform, .Platform$r_arch, sep = "/")
     z$platform <- paste0(z$platform, " (", 8*.Machine$sizeof.pointer, "-bit)")
     z$locale <- Sys.getlocale()
+    z$tzone <-Sys.timezone()
+    z$tzcode_type <- .Call(C_tzcode_type)
     z$running <- osVersion
     z$RNGkind <- RNGkind()
     if(is.null(package)){
@@ -182,6 +184,9 @@ print.sessionInfo <- function(x, locale = TRUE,
             x$system.codepage != x$codepage)
             cat("system code page: ", x$system.codepage, "\n", sep = "")
         cat("\n")
+        cat("time zone: ", x$tzone,  "\n", sep = "")
+        cat("tzcode source: ", x$tzcode_type,  "\n", sep = "")
+        cat("\n")
     }
     cat("attached base packages:\n")
     print(x$basePkgs, quote=FALSE, ...)
@@ -215,7 +220,10 @@ toLatex.sessionInfo <-
 		  ", \\verb|", object$R.version$platform, "|"),
 	   if(locale)
 	       paste0("  \\item Locale: \\verb|",
-		  gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
+                  gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
+               ## FIXME: does not print codepages.
+           if (locale) paste0("  \\item Time zone ", object$tzone),
+           ## FIXME: omits tzcode_source and codepages
 	   paste0("  \\item Running under: \\verb|",
 		  gsub(";", "|, \\verb|", object$running, fixed=TRUE), "|"),
 	   if(RNG)

@@ -2288,7 +2288,8 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
             ## This now evaluates \Sexpr, so run with usual packages.
             out <- R_runR0(Rcmd, R_opts2,
-                           c(elibs, "_R_NO_REPORT_MISSING_NAMESPACES_=true"))
+                           c(if(R_cdo) elibs_cdo else elibs,
+                             "_R_NO_REPORT_MISSING_NAMESPACES_=true"))
             t2 <- proc.time()
             print_time(t1, t2, Log)
             if (length(out)) {
@@ -2662,8 +2663,8 @@ add_dummies <- function(dir, Log)
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
             t1 <- proc.time()
-            el <- if (R_cdo_data) setRlibs(pkgdir = pkgdir, libdir = libdir) else elibs
-            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
+            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2,
+                           if(R_cdo_data) elibs_cdo else elibs)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             out <- filtergrep("^OMP:", out)
@@ -2864,10 +2865,8 @@ add_dummies <- function(dir, Log)
             warningLog(Log)
             any <- TRUE
             msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                    strwrap(paste(sQuote(sources), collapse = ", "),
-                            indent = 2L, exdent = 4L),
-                     "")
-            printLog0(Log, paste(msg, collapse = "\n"))
+                     .pretty_format(sources))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
         }
 
         ## Did the vignettes get updated in inst/doc?
@@ -2879,10 +2878,8 @@ add_dummies <- function(dir, Log)
                 if (!any) warningLog(Log)
                 any <- TRUE
                 msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
-                         strwrap(paste(sQuote(vignette_files), collapse = ", "),
-                                 indent = 2L, exdent = 4L),
-                         "")
-                printLog0(Log, paste(msg, collapse = "\n"))
+                         .pretty_format(vignette_files))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
             } else {
                 ## allow for some imprecision in file times (in secs)
                 time_tol <- as.double(Sys.getenv("_R_CHECK_FILE_TIMES_TOL_", 10))
@@ -2893,15 +2890,12 @@ add_dummies <- function(dir, Log)
                     if (!any) warningLog(Log)
                     any <- TRUE
                     msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-                             strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]),
-                                           collapse = ", "),
-                                     indent = 2L, exdent = 4L),
-                             "")
+                             .pretty_format(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]))
                     keep <- is.na(vignette_times) |
                         vignette_times <= max(inst_doc_times, na.rm = TRUE) + time_tol
                     vignette_files <- vignette_files[keep]
                     vignette_times <- vignette_times[keep]
-                    printLog0(Log, paste(msg, collapse = "\n"))
+                    printLog0(Log, paste(msg, collapse = "\n"), "\n")
                 }
                 matches <- match(vignette_files, inst_doc_files)
                 newer <- vignette_times > inst_doc_times[matches] + time_tol
@@ -2910,11 +2904,8 @@ add_dummies <- function(dir, Log)
                     if (!any) warningLog(Log)
                     any <- TRUE
                     msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
-                             strwrap(paste(sQuote(vignette_files[newer]),
-                                           collapse = ", "),
-                                     indent = 2L, exdent = 4L),
-                             "")
-                    printLog0(Log, paste(msg, collapse = "\n"))
+                             .pretty_format(vignette_files[newer]))
+                    printLog0(Log, paste(msg, collapse = "\n"), "\n")
                 }
             }
         }
@@ -3946,7 +3937,7 @@ add_dummies <- function(dir, Log)
             status <- R_runR0(NULL, c(Ropts, enc),
                               c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
                                 if(nzchar(arch)) env0, jitstr,
-                                if(R_cdo_examples || R_check_suggests_only) elibs else character()),
+                                if(R_cdo_examples) elibs_cdo else elibs),
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
@@ -4434,10 +4425,7 @@ add_dummies <- function(dir, Log)
                                 "Package vignette without corresponding single PDF/HTML:\n",
                                 "Package vignettes without corresponding single PDF/HTML:\n", domain = NA)
                 printLog0(Log, msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
             bad_vignettes <- vigns$docs[vigns$encodings == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
@@ -4446,11 +4434,8 @@ add_dummies <- function(dir, Log)
                 msg <- ngettext(nb,
                          "Non-ASCII package vignette without specified encoding:\n",
                          "Non-ASCII package vignettes without specified encoding:\n", domain = NA)
-                printLog0(Log, "  ", msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, msg)
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
         }
 
@@ -4483,7 +4468,7 @@ add_dummies <- function(dir, Log)
             if(!any) warningLog(Log)
             any <- TRUE
             printLog(Log,
-                     "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
+                     "Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
         if ("Makefile" %in% dir(vigns$dir)) {
             f <- file.path(vigns$dir, "Makefile")
@@ -4494,7 +4479,7 @@ add_dummies <- function(dir, Log)
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
+                         "Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
             contents <- readChar(f, file.size(f), useBytes = TRUE)
             if(any(grepl("\r", contents, fixed = TRUE, useBytes = TRUE))) {
@@ -4507,7 +4492,7 @@ add_dummies <- function(dir, Log)
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'Rscript' in Makefile: should be '\"$(R_HOME)/bin/Rscript\"'\n")
+                         "Found 'Rscript' in Makefile: should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
 
@@ -4528,20 +4513,15 @@ add_dummies <- function(dir, Log)
                 msg <- ngettext(nb,
                                 "Package vignette which is not in its specified encoding:\n",
                                 "Package vignettes which are not in their specified encoding:\n", domain = NA)
-                printLog0(Log, "  ", msg)
-                printLog0(Log,
-                          paste(c(paste("  ",
-                                        sQuote(basename(bad_vignettes))),
-                                  "", ""), collapse = "\n"))
+                printLog0(Log, msg)
+                printLog0(Log, .format_lines_with_indent(sQuote(basename(bad_vignettes))), "\n")
             }
         }
 
         if(R_check_vignette_titles) {
-            bad_vignettes <- character()
-            for(v in vigns$docs) {
-                if(trimws(vignetteInfo(v)$title == "Vignette Title"))
-                    bad_vignettes <- c(bad_vignettes, v)
-            }
+            titles <- vapply(vigns$docs, function(v) vignetteInfo(v)$title, "",
+                             USE.NAMES = TRUE)
+            bad_vignettes <- names(titles)[titles == "Vignette Title"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -4553,6 +4533,22 @@ add_dummies <- function(dir, Log)
                 printLog0(Log,
                           .format_lines_with_indent(sQuote(basename(bad_vignettes))),
                           "\n")
+            }
+
+            ## Check for duplicated titles (which look silly on CRAN pages)
+            if (any(dup <- duplicated(titles) & nzchar(titles))) {
+                ## empty titles are reported in check_indices()
+                if(!any) noteLog(Log)
+                any <- TRUE
+                dups <- unique(titles[dup])
+                msg <- ngettext(length(dups),
+                                "Duplicated vignette title:",
+                                "Duplicated vignette titles:",
+                                domain = NA)
+                printLog0(Log, msg, "\n",
+                          .format_lines_with_indent(sQuote(dups)), "\n")
+                wrapLog("Ensure that the %\\VignetteIndexEntry lines in the",
+                        "vignette sources correspond to the vignette titles.")
             }
         }
 
@@ -4619,7 +4615,7 @@ add_dummies <- function(dir, Log)
                                       if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                       ## add timing as footer, as BATCH does
                                       env = c(jitstr, "R_BATCH=1234",
-                                              if (R_cdo_vignettes || R_check_suggests_only) elibs else character(),
+                                              if(R_cdo_vignettes) elibs_cdo else elibs,
                                               "_R_CHECK_INTERNALS2_=1"),
                                       stdout = outfile, stderr = outfile,
                                       timeout = tlim)
@@ -4762,20 +4758,14 @@ add_dummies <- function(dir, Log)
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
                     else {
-                        if (R_cdo_vignettes) {
                             ## serialize elibs to avoid quotation hell
                             tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
                                        fixed = TRUE)
-                            saveRDS(c(jitstr, elibs), tf)
-                            sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                            saveRDS(c(jitstr, if(R_cdo_vignettes) elibs_cdo else elibs), tf)
+                            sprintf("%s\ntools::buildVignettes(dir = '%s', ser_elibs = '%s')",
                                     opWarn_string,
                                     file.path(pkgoutdir, "vign_test", pkgname0),
                                     tf)
-                        } else {
-                            sprintf("%s\ntools:::buildVignettes(dir = '%s')",
-                                    opWarn_string,
-                                    file.path(pkgoutdir, "vign_test", pkgname0))
-                       }
                     }
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
@@ -4785,8 +4775,7 @@ add_dummies <- function(dir, Log)
                                   if (use_valgrind) paste(R_opts2, "-d valgrind")
                                   else R_opts2,
                                   c(jitstr,
-                                    if(R_cdo_vignettes || R_check_suggests_only) elibs
-                                    else character()),
+                                    if(R_cdo_vignettes) elibs_cdo else elibs),
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
@@ -5433,6 +5422,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wnarrowing\\]",
                              ## includes -Waddress-of-packed-member
                              ": warning: .* \\[-Waddress",
+                             ": warning: .* \\[-Woverflow",
                              ## -pedantic warning in gcc, fatal in clang and ODS
                              ": warning: initializer element is not a constant expression",
                              ": warning: range expressions in switch statements are non-standard",
@@ -6567,6 +6557,9 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "TRUE"))
     R_cdo <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
+    R_cdo_data <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
+                                         R_cdo))
     R_cdo_examples <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_EXAMPLES_",
                                          R_cdo))
@@ -6578,10 +6571,6 @@ add_dummies <- function(dir, Log)
                                          R_cdo))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
-    ## Restrict check of data() to Imports/Depends, if not already done
-    R_cdo_data <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
-                                         "FALSE")) && !R_cdo
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
@@ -6932,6 +6921,7 @@ add_dummies <- function(dir, Log)
         }
 
         this_multiarch <- multiarch
+        elibs <- elibs_tests <- elibs_cdo <- character()
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
@@ -7057,21 +7047,16 @@ add_dummies <- function(dir, Log)
                 if (this_multiarch && length(R_check_skip_arch))
                     inst_archs <- inst_archs %w/o% R_check_skip_arch
             }
+
+            ## prepare restricted library paths
+            if(R_check_suggests_only)
+                elibs <- setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
+            elibs_tests <- if(R_cdo_tests) {
+                setRlibs(pkgdir = pkgdir, libdir = libdir, tests = TRUE)
+            } else elibs
+            if(R_cdo || R_cdo_examples || R_cdo_vignettes || R_cdo_data)
+                elibs_cdo <- setRlibs(pkgdir = pkgdir, libdir = libdir)
         } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
-
-        elibs <- if(is_base_pkg) character()
-             else if(R_cdo || R_cdo_examples || R_cdo_vignettes)
-            setRlibs(pkgdir = pkgdir, libdir = libdir)
-        else if(R_check_suggests_only)
-            setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
-        else character()
-
-        elibs_tests <- if(is_base_pkg) character()
-        else if(R_cdo_tests)
-            setRlibs(pkgdir = pkgdir, libdir = libdir, tests = TRUE)
-        else if(R_check_suggests_only)
-            setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
-        else character()
 
         setwd(startdir)
         check_pkg(pkgdir, pkgname, pkgoutdir, startdir, libdir, desc,

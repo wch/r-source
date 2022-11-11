@@ -77,32 +77,21 @@
       strings, particularly when different elements of the input have
       different encoding (including \code{"bytes"}).
 
-      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
-      specifying \code{origin}) now work.
-      So does \code{as.Date(<numeric>)}, too.
-
-      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
-      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
-      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
-
-      \item Experimental \code{balancePOSIXlt()} utility allows using
-      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
-      correctly, e.g., in subsetting and subassignments.  Such objects
-      are now documented.
-
-      More experimentally, a \code{"POSIXlt"} object may have an attribute
-      \code{"balanced"} indicating if it is known to be filled or fully
-      balanced.
-
       \item Package repositories in \code{getOption("repos")} are now
       initialized from the \file{repositories} file when \pkg{utils} is
       loaded (if not already set, e.g., in \file{.Rprofile}).
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
 
+      \item \code{compactPDF()} gets a \code{verbose} option.
+    }
+  }
+
+  \subsection{DATES and TIMES}{
+      \itemize{
       \item On platforms where (non-UTC) datetimes before 1902 (or
       before 1900 as with system functions on recent macOS) are guessed
       by extrapolating time zones from 1902-2037, there is a warning at
-      the first use of extrapolation in a session.  (As all timezones
+      the first use of extrapolation in a session.  (As all time zones
       post 2037 are extrapolation, we do not warn on those.)
 
       \item (Platforms using \option{--with-internal-tzone}, including
@@ -118,7 +107,47 @@
       \item \code{strftime()} has a limit of 2048 bytes on the string
       produced -- attempting to exceed this is an error.  (Previously it
       silently truncated at 255 bytes.)
-    }
+
+      \item \code{sessionInfo()} records (and by default prints) the
+      system time zone as part of the locale information.  Also, the
+      source (system/internal) of the date-time conversion and printing
+      functions.
+
+      \item Objects of class \code{"POSIXlt"} created in this version of
+      \R always have 11 components: component \code{zone} is always set,
+      and component \code{gmtoff} is set for times in UTC and usually
+      set on the (almost all) platforms which have C-level support,
+      otherwise is \code{NA}.
+
+      \item There are comprehensive validity checks on the structure of
+      objects of class \code{"POSIXlt"} when converting (including
+      formatting and printing).  (This avoids mis-conversions of
+      hand-crafted objects.)
+
+      \item There is some support for using the native date-time
+      routines on macOS: this is only viable on recent versions
+      (e.g.\sspace{}12.6 and 13) and does get wrong some historical changes
+      (before 1900, during WWII).  Use of \option{--with-internal-tzone}
+      remains the default.
+
+      \item \code{as.POSIXct(<numeric>)} and \code{as.POSIXlt(.)} (without
+      specifying \code{origin}) now work.
+      So does \code{as.Date(<numeric>)}.
+
+      \item \code{as.Date.POSIXct(., tz)} now treats several \code{tz}
+      values, notably \code{"GMT"} as equivalent to \code{"UTC"}, proposed
+      and improved by Michael Chirico and Joshua Ulrich in \PR{17674}.
+
+      \item Experimental \code{balancePOSIXlt()} utility allows using
+      \dQuote{ragged} and or out-of-range \code{"POSIXlt"} objects more
+      correctly, e.g., in subsetting and subassignments.  Such objects
+      are now documented.
+
+      More experimentally, a \code{"POSIXlt"} object may have an attribute
+      \code{"balanced"} indicating if it is known to be filled or fully
+      balanced.
+
+     }
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
@@ -147,10 +176,6 @@
       \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
       \option{-fPIC} by default (instead of \option{-fpic}), as desired in
       \PR{18326}.
-
-      \item There is some support for using the native date-time
-      routines on macOS: this is only viable on recent versions
-      (e.g.\sspace{}12.6) and does get some historical changes wrong.
 
       \item \command{configure} now checks conversion of datetimes
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
@@ -219,8 +244,8 @@
       and \sQuote{checking CRAN incoming feasibility}.
 
       \item \command{R CMD check} can optionally (but included in
-      \option{--as-cran}) check whether HTML math rendering via KaTeX
-      works for the package \file{.Rd} files.
+      \option{--as-cran}) check whether HTML math rendering \emph{via}
+      KaTeX works for the package \file{.Rd} files.
     }
   }
 
@@ -301,7 +326,7 @@
       \code{as.POSIXct(<POSIXct>)} default methods now do obey their
       \code{tz} argument, also in this case.
 
-      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (timezone)
+      \item \code{as.POSIXlt(<Date>)} now does apply a \code{tz} (time zone)
       argument, as does \code{as.POSIXct()}; partly suggested by Roland Fuß on
       the R-devel mailing list.
 
@@ -321,20 +346,20 @@
       \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
       Bates, thanks to the \sQuote{R Contributors} working group.
 
-      \item Printing objects of class \code{"roman"}, \code{"hexmode"},
+      \item Printing 0-length objects of class
+      \code{"factor"}, \code{"roman"}, \code{"hexmode"},
       \code{"octmode"}, \code{"person"}, \code{"bibentry"}, or
-      \code{"citation"} of length zero now print something better, a
-      sixth of which fixes \PR{18422}, reported by Benjamin Feakins.
-    }
+      \code{"citation"} now prints something better, one
+      of which fixes \PR{18422}, reported by Benjamin Feakins.
+
+      \item \code{Sys.timezone()} queries \command{timedatectl} only if
+      \command{systemd} is loaded; addressing a report by Jan Gorecki in
+      \PR{17421}.
+   }
   }
 }
 
 \section{\Rlogo CHANGES IN R 4.2.2 patched}{
-  \subsection{NEW FEATURES}{
-    \itemize{
-      \item \code{compactPDF()} gets a \code{verbose} option.
-    }
-  }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
@@ -353,6 +378,14 @@
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
       and their list components meant to be recycled, \code{length()} now
       is the length of the longest component.
+
+      \item \code{as.POSIXlt.Date()} could underflow for dates in the
+      far past (more than half a million years BCE).
+
+      \item \code{as.Date.POSIXlt(x)} would return \code{"1970-01-01"}
+      instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
+	x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
+	x$mon <- c(0L, NA); as.Date(x)}
     }
   }
 }

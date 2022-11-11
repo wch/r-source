@@ -8485,35 +8485,8 @@ Options include using @command{sprof} for a shared object, and
 @command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
-executable or shared object.
-
-@subsubsection sprof
-
-You can select shared objects to be profiled with @command{sprof} by
-setting the environment variable @env{LD_PROFILE}.  For example
-
-@example
-% setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
-R
-... run the boot example
-% sprof /path/to/R_HOME/library/stats/libs/stats.so \
-  /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
-
-Flat profile:
-
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls  us/call  us/call  name
- 76.19      0.32     0.32        0     0.00           numeric_deriv
- 16.67      0.39     0.07        0     0.00           nls_iter
-  7.14      0.42     0.03        0     0.00           getListElement
-
-rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
-... to clean up ...
-@end example
-
-It is possible that root access is needed to create the directories used
-for the profile data.
+executable or shared object.  These seem less widely supplied than they
+used to be (for example Fedoara 36 only has @command{perf}).
 
 @subsubsection oprofile and operf
 
@@ -8615,6 +8588,10 @@ The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
 
+Another way to use this is to run @command{operf -s} as root, run the
+@R{} session in another terminal then shut down @command{operf} and
+analyse as above.
+
 Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
 @code{sm.variogram} took a long time:
 @example
@@ -8690,6 +8667,34 @@ samples  %        symbol name
 
 Shutting down the profiler and clearing the records needs to be done as
 root.
+
+@subsubsection sprof
+
+You can select shared objects to be profiled with @command{sprof} by
+setting the environment variable @env{LD_PROFILE}.  For example
+
+@example
+% setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
+R
+... run the boot example
+% sprof /path/to/R_HOME/library/stats/libs/stats.so \
+  /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
+
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  us/call  us/call  name
+ 76.19      0.32     0.32        0     0.00           numeric_deriv
+ 16.67      0.39     0.07        0     0.00           nls_iter
+  7.14      0.42     0.03        0     0.00           getListElement
+
+rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
+... to clean up ...
+@end example
+
+It is possible that root access is needed to create the directories used
+for the profile data.
 
 @node macOS,  , Linux, Profiling compiled code
 @subsection macOS

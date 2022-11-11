@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-11-03 r83241) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-07 r83301) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -475,15 +475,49 @@ attr(,"balanced")
 > format(x2, "%a, %d %b %Y %H:%M:%S %Z")
 [1] "Fri, 01 Jul 2022 00:00:00 CEST"
 > 
-> ## offsets not in whole hours
+> ## offsets not in whole hours:
 > x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
 > format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
 [1] "Sat, 01 Jan 2022 00:00:00 +1030"
+> # macOS' strftime prints the next two wrong.
+> # Liberia does/did not have DST, so second abbreviation may be repeat or empty
 > x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
-> format(as.POSIXct(x4), "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+> y4 <- as.POSIXct(x4)
+> str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong on macOS
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 0
+ $ year  : int 71
+ $ wday  : int 5
+ $ yday  : int 0
+ $ isdst : int 0
+ $ zone  : chr "MMT"
+ $ gmtoff: int -2670
+ - attr(*, "tzone")= chr [1:3] "Africa/Monrovia" "GMT" "   "
+ - attr(*, "balanced")= logi TRUE
+> format(y4, "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
 [1] "Fri, 01 Jan 1971 00:00:00 -0044"
 > ## timezones in 1900 might not be supported
 > x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
-> format(as.POSIXct(x5), "%a, %d %b %Y %H:%M:%S %z")
+> y5 <- as.POSIXct(x5)
+> str(unclass(as.POSIXlt(y5))) # ditto
+List of 11
+ $ sec   : num 0
+ $ min   : int 0
+ $ hour  : int 0
+ $ mday  : int 1
+ $ mon   : int 2
+ $ year  : int 0
+ $ wday  : int 4
+ $ yday  : int 59
+ $ isdst : int 0
+ $ zone  : chr "PMT"
+ $ gmtoff: int 561
+ - attr(*, "tzone")= chr [1:3] "Europe/Paris" "CET" "CEST"
+ - attr(*, "balanced")= logi TRUE
+> format(y5, "%a, %d %b %Y %H:%M:%S %z")
 [1] "Thu, 01 Mar 1900 00:00:00 +0009"
 > 

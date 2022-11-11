@@ -829,9 +829,6 @@
 /* Define to 1 if you have the `tilde_expand_word' function. */
 #undef HAVE_TILDE_EXPAND_WORD
 
-/* Define to 1 if you have the `timegm' function. */
-#undef HAVE_TIMEGM
-
 /* Define to 1 if you have the `times' function. */
 #undef HAVE_TIMES
 

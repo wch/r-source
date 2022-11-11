@@ -2009,7 +2009,7 @@ x[2, invisible(3)]
 
 
 ## tests of deparsing
-x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
+x <-list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
          e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
          i = as.character(NA), j = c("foo", NA, "bar")
          )
