@@ -118,3 +118,13 @@ span.samp{
 div.vignettes a:hover {
     background: rgb(85%, 85%, 85%);
 }
+
+tr {
+    vertical-align: top;
+}
+
+span.rlang {
+    font-family: Courier New, Courier;
+    color: #666666;
+}
+

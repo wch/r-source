@@ -128,11 +128,17 @@ format(as.POSIXct(x2), "%a, %d %b %Y %H:%M:%S %z") # usually correct
 format(x1, "%a, %d %b %Y %H:%M:%S %Z")
 format(x2, "%a, %d %b %Y %H:%M:%S %Z")
 
-## offsets not in whole hours
+## offsets not in whole hours:
 x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
 format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
+# macOS' strftime prints the next two wrong.
+# Liberia does/did not have DST, so second abbreviation may be repeat or empty
 x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
-format(as.POSIXct(x4), "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+y4 <- as.POSIXct(x4)
+str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong on macOS
+format(y4, "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
 ## timezones in 1900 might not be supported
 x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
-format(as.POSIXct(x5), "%a, %d %b %Y %H:%M:%S %z")
+y5 <- as.POSIXct(x5)
+str(unclass(as.POSIXlt(y5))) # ditto
+format(y5, "%a, %d %b %Y %H:%M:%S %z")

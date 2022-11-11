@@ -41,7 +41,6 @@
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}
-\alias{balancePOSIXlt}
 \alias{length.POSIXlt}
 \alias{length<-.POSIXct}
 \alias{length<-.POSIXlt}
@@ -71,12 +70,10 @@
 \special{z + time}
 \special{time - z}
 \special{time1 lop time2}
-
-balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
-    date-time classes; for \code{balancePOSIXlt()}, it must be a \code{"POSIXlt"}.}
+    date-time classes.}
   \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
   \item{max}{numeric or \code{NULL}, specifying the maximal number of
     entries to be printed.  By default, when \code{NULL},
@@ -91,12 +88,6 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   \item{z}{a numeric vector (in seconds)}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
-  \item{fill.only}{a \code{\link{logical}} specifying if \code{balancePOSIXlt(x, ..)}
-    should only \dQuote{fill up} by recycling, but not re-check validity
-    nor recompute, e.g., \code{x$wday} and \code{x$yday}.}
-  \item{classed}{a \code{\link{logical}} specifying if the result should be
-    classed, true by default.  Using \code{balancePOSIXlt(x, classed = FALSE)}
-    is equivalent to but faster than \code{unclass(balancePOSIXlt(x))}.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
@@ -188,7 +179,7 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
 
 \section{Details on POSIXlt}{
   Class \code{"POSIXlt"} is internally a named \code{\link{list}} of
-  vectors representing date-time, with the following list components
+  vectors representing date-times, with the following list components
   \describe{
     \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
@@ -207,63 +198,43 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  The last two components are not present for times in UTC and are
-  platform-dependent: they are supported on almost all current
-  platforms: those based on BSD or \code{glibc} (including Linux and
-  macOS) and those using the \code{tzcode} implementation shipped with
-  \R (including Windows and by default macOS). But they are not
-  necessarily set.
+  The components must be in this order: that was only minimally checked
+  prior to \R 4.3.0.  All objects created in \R 4.3.0 have the optional
+  components.  From earlier versions of \R, he last two components will
+  not be present for times in UTC and are platform-dependent.  Currently
+  \code{gmtoff} is set on almost all current platforms: those based on
+  BSD or \code{glibc} (including Linux and macOS) and those using the
+  \code{tzcode} implementation shipped with \R (including Windows and by
+  default macOS).
 
-  Note that the internal list structure
-  is somewhat hidden, as many methods (including
-  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}()})
-  apply to the abstract date-time vector, as for \code{"POSIXct"}.  As
-  from \R 3.5.0, one can extract and replace \emph{single} components
-  via \code{[} indexing with \emph{two} indices (see the examples).
+  Note that the internal list structure is somewhat hidden, as many
+  methods (including \code{\link{length}(x)}, \code{\link{print}()} and
+  \code{\link{str}()}) apply to the abstract date-time vector, as for
+  \code{"POSIXct"}.  One can extract and replace \emph{single}
+  components via \code{[} indexing with \emph{two} indices (see the
+  examples).
 
   The components of \code{"POSIXlt"} are \code{\link{integer}} vectors,
   except \code{sec} (\code{\link{double}}) and \code{zone}
-  (\code{\link{character}}).
+  (\code{\link{character}}).  However most users will coerce numeric
+  values for the first to real and the rest bar \code{zone} to integer.
 
   Components \code{wday} and \code{yday} are for information, and are not
   used in the conversion to calendar time nor for printing,
   \code{format()}, or in \code{as.character()}.
 
-  However, \code{isdst} is needed to distinguish times at the end of
-  DST: typically 1am to 2am occurs twice, first in DST and then in
-  standard time.  At all other times \code{isdst} can be deduced from
+  However, component \code{isdst} is needed to distinguish times at the
+  end of DST: typically 1am to 2am occurs twice, first in DST and then
+  in standard time.  At all other times \code{isdst} can be deduced from
   the first six values, but the behaviour if it is set incorrectly is
-  platform-dependent.
+  platform-dependent.  For example Linux/glibc when checked fixed up
+  incorrect values in time zones which support DST but gave an error on
+  value \code{1} in those without DST.
   % POSIX says used 'initially', so it should probably be ignored.
   % glibc has a complicated fixup.
 
-  \subsection{\dQuote{Ragged} and Out-of-range \emph{vs} \dQuote{Balanced} POSIXlt}{
-    Note that \code{"POSIXlt"} objects \code{x} may have their (9 to 11) list
-    components of different \code{\link{length}}, by simply recycling them to
-    full length.  Previous to \R 4.3.0, this has worked in printing,
-    formatting, and conversion to \code{"POSIXct"}, but often not for
-    \code{length()}, conversion to \code{"Date"} or indexing, i.e.,
-    subsetting, \code{\link{[}}, or subassigning, \code{\link{[<-}}.
-
-    Relatedly, components \code{sec}, \code{min}, \code{hour}, \code{mday}
-    and \code{mon} could have been out of their designated range (say, 0--23
-    for hours) and still work correctly, e.g. in conversions and printing.
-    This is supported as well, since \R 4.3.0, at least when the values are
-    not extreme. %% FIXME: say more
-
-    Function \code{balancePOSIXlt(x)} will now return a version of the
-    \code{"POSIXlt"} object \code{x} which by default is balanced in both ways:
-    All the internal list components are of full length, and their values are
-    inside the ranges specified above.
-    Setting \code{fill.only = TRUE} will only recycle the list components
-    to full length, but not check them at all.  This is particularly faster
-    when all components of \code{x} are already of full length.
-
-    Experimentally, \code{balancePOSIXlt()} and other functions returning
-    \code{POSIXlt} objects now set a \code{\link{logical}} attribute
-    \code{"balanced"} with \code{NA} meaning \dQuote{filled-in}, i.e.,
-    not \dQuote{ragged} and \code{TRUE} means (fully) balanced.
-  }
+  For \dQuote{ragged} and out-of-range vs \dQuote{balanced}
+  \code{"POSIXlt"} objects, see \code{\link{balancePOSIXlt}()}.
 }% POSIXlt
 
 \section{Sub-second Accuracy}{
@@ -312,10 +283,16 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   in the years prior to 1902, and these will be handled correctly only
   where there is OS support.
 
-  There is no reason to suppose that the DST rules will remain the same
-  in the future, and indeed the US legislated in 2005 to change its
+  There is no reason to assume that the DST rules will remain the same
+  in the future: the US legislated in 2005 to change its
   rules as from 2007, with a possible future reversion.  So conversions
-  for times more than a year or two ahead are speculative.
+  for times more than a year or two ahead are speculative.  Other
+  countries have changed their rules (and indeed, if DST is used at all)
+  at a few days' notice.  So representations and conversion of future
+  dates are tentative.  This also applies to dates after the in-use
+  version of the time-zone database -- not all platforms keep it up to
+  date, which includes that shipped with older versions of \R where used
+  (which it is by default on Windows and macOS).
 }% ranges of times
 \seealso{
   \link{Dates} for dates without times.
@@ -329,6 +306,9 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   \code{\link{Sys.time}} for clock time as a \code{"POSIXct"} object.
 
   \code{\link{difftime}} for time intervals.
+
+  \code{\link{balancePOSIXlt}()} for balancing or filling \dQuote{ragged}
+  POSIXlt objects.
 
   \code{\link{cut.POSIXt}}, \code{\link{seq.POSIXt}},
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
@@ -355,9 +335,9 @@ balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
   may have values meaning \sQuote{not yet determined} and the same time
   represented in different time zones will look quite different.
 
-  Currently the \emph{order} of the list components of \code{"POSIXlt"}
-  objects must not be changed, as several C-based conversion methods
-  rely on the order for efficiency.
+  The \emph{order} of the list components of \code{"POSIXlt"} objects
+  must not be changed, as several C-based conversion methods rely on the
+  order for efficiency.
 }
 \examples{
 ## IGNORE_RDIFF_BEGIN
@@ -394,20 +374,6 @@ for(lpS in list(.leap.seconds, leapS)) {
       is.na(l2[(length(lpS)+1):length(l2)])
     })
 }% for %
-
-## "balancing":
-d1 <- as.POSIXlt("2000-1-2 3:45", tz="UTC")
-d1$min <- d1$min + (0:16)*20
-(f1 <- format(d1))
-str(unclass(d1)) # only $min is long
-str(unclass(balancePOSIXlt(d1, fill.only=TRUE) -> df)) # all of length 17; 'min' unchanged
-str(        balancePOSIXlt(d1, classed=FALSE)  -> db)  # of length 17 *and* in range
-stopifnot(exprs = {
-    identical(f1, format(df))
-    all.equal(as.POSIXct(d1), as.POSIXct(df))
-    identical(f1, format(.POSIXlt(db)))
-    identical(as.POSIXct(d1, "UTC"), as.POSIXct(.POSIXlt(db, "UTC")))
-})
 }
 \keyword{utilities}
 \keyword{chron}

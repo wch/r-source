@@ -516,24 +516,6 @@ buildVignettes <-
              domain = NA)
     }
 
-    ## Check for duplicated titles (which look silly on CRAN pages)
-    titles <- character()
-    for (d in vigns$docs) {
-        this <- c(.get_vignette_metadata(readLines(d, warn = FALSE),
-                                         "IndexEntry"), "")[1L]
-        titles <- c(titles, this)
-    }
-    have_dup_titles <-
-        if (any(dup <- duplicated(titles))) {
-            dups <- unique(titles[dup])
-            message(ngettext(length(dups),
-                             "duplicated vignette title:",
-                             "duplicated vignette titles:"))
-            message(paste(.pretty_format(dups), collapse = "\n"))
-            message()
-            TRUE
-        } else FALSE
-
     ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
     Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
 
@@ -690,21 +672,11 @@ buildVignettes <-
         message()
     }
 
-
-    msg2 <- paste("Duplicate vignette titles.",
-                  "  Ensure that the %\\VignetteIndexEntry lines in the vignette sources",
-                  "  correspond to the vignette titles.",
-                  sep = "\n")
-
     ## Assert
     if (length(fails) || (length(outputs) != length(vigns$docs))) {
         msg <- "Vignette re-building failed."
-        if (have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
         stop(msg, domain = NA, call. = FALSE)
     }
-
-    if (have_dup_titles)
-        stop(msg2, domain = NA, call. = FALSE)
 
     vigns$outputs <- outputs
     vigns$sources <- sourceList

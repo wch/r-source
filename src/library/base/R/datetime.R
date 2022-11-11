@@ -93,7 +93,8 @@ Sys.timezone <- function(location = TRUE)
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
-    if (nzchar(Sys.which("timedatectl"))) {
+    ## https://www.freedesktop.org/software/systemd/man/sd_booted.html
+    if (dir.exists("/run/systemd/system") && nzchar(Sys.which("timedatectl"))) {
         inf <- system("timedatectl", intern = TRUE)
         ## typical format:
         ## "       Time zone: Europe/London (GMT, +0000)"
@@ -219,13 +220,8 @@ Sys.timezone <- function(location = TRUE)
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
-as.POSIXlt.Date <- function(x, tz = "UTC", ...) {
-    as.POSIXlt(if(any((y <- unclass(x)) > .Machine$integer.max, na.rm = TRUE))
-                   .POSIXct(y * 86400)
-               else
-                   .Internal(Date2POSIXlt(x))
-             , tz = tz)
-}
+as.POSIXlt.Date <- function(x, tz = "UTC", ...)
+    as.POSIXlt(.Internal(Date2POSIXlt(x, tz)), tz = tz)
 
 ## ## Moved to packages date and chron.
 ## as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)

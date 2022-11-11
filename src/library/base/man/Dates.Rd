@@ -50,12 +50,20 @@
   be a year zero.
   % man cal on Linux refers to this as 'the Britixh empire'
   
-  It is intended that the date should be an integer, but this is not
-  enforced in the internal representation.  Fractional days will be
+  It is intended that the date should be an integer value, but this is
+  not enforced in the internal representation.  Fractional days will be
   ignored when printing.  It is possible to produce fractional days via
   the \code{mean} method or by adding or subtracting (see
   \code{\link{Ops.Date}}).
 
+  When a date is converted to a date-time (for example by
+  \code{\link{as.POSIXct}} or \code{\link{as.POSIXlt}} its time is taken
+  as midnight in UTC.
+
+  Printing dates involves conversion to class \code{"\link{POSIXlt}"}
+  which treats dates of more than about 780 million years from present
+  as \code{NA}.
+  
   For the many methods see \code{methods(class = "Date")}.  Several are
   documented separately, see below.
 }

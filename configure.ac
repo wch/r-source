@@ -2010,8 +2010,8 @@ fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
 R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
-dnl BSD extension available on glibc and macOS
-R_CHECK_FUNCS([timegm], [#include <time.h>])
+dnl BSD extension available on glibc and macOS -- but fails on maOS pre-1900
+dnl R_CHECK_FUNCS([timegm], [#include <time.h>])
 R_CHECK_FUNCS([nl_langinfo], [#include <langinfo.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H

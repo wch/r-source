@@ -154,7 +154,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 {
     ord <- is.ordered(x)
     if (length(x) == 0L)
-        cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
+        cat(if(ord)"ordered" else "factor", "()\n", sep = "")
     else {
         xx <- character(length(x))
         xx[] <- as.character(x)
