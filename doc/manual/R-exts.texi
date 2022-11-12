@@ -6071,6 +6071,11 @@ without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
+LLVM @command{clang} has a separate warning
+@option{-Wdeprecated-non-prototype} which is enabled by
+@option{-Wstrict-prototypes}.  This warns on K&R-style usage, which will
+not be accepted in C23.
+
 @item
 Several C entry points are warned against in their @command{man} pages
 on most systems, often in very strong terms such as '@strong{Do not use
