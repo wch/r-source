@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -47,11 +47,11 @@ as.POSIXlt(x, tz = "", \dots)
 }
 \arguments{
   \item{x}{\R  object to be converted.}
-  \item{tz}{time zone specification to be used for the conversion,
-    \emph{if one is required}.  System-specific (see \link{time zones}),
-    but \code{""} is the current time zone, and \code{"GMT"} is UTC
-    (Universal Time, Coordinated).  Invalid values are most commonly
-    treated as UTC, on some platforms with a warning.}
+  \item{tz}{a character string.  The time zone specification to be used
+    for the conversion, \emph{if one is required}.  System-specific (see
+    \link{time zones}), but \code{""} is the current time zone, and
+    \code{"GMT"} is UTC (Universal Time, Coordinated).  Invalid values
+    are most commonly treated as UTC, on some platforms with a warning.}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}
@@ -83,6 +83,7 @@ as.POSIXlt(x, tz = "", \dots)
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
   \code{\link{Sys.setlocale}}.  This most often affects the use of
+  \code{\%a}, \code{\%A} (weekday names),
   \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
 
   Logical \code{NA}s can be converted to either of the classes, but no
@@ -126,7 +127,7 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   used near-universally until the 20th century.  One of the
   re-interpretations assumed by ISO 8601:2004 is that there was a year
   zero, even though current year numbering (and zero) is a much later
-  concept (525 AD for year numbers from 1 AD).
+  concept (525 CE for year numbers from 1 CE).
 
   Conversions between \code{"POSIXlt"} and \code{"POSIXct"} of future
   times are speculative except in UTC.  The main uncertainty is in the
