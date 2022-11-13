@@ -1851,9 +1851,10 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP nmN = PROTECT(allocVector(STRSXP, n));
 	R_xlen_t ni = nlen[5];
 	// names(.) will have to become length n;  $year is already
-	// fill names, recycling,  note nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol), of length() ni <= n
-	for(R_xlen_t i = 0; i < n; i++)
+	for(R_xlen_t i = 0; i < ni; i++)
 	    SET_STRING_ELT(nmN, i, STRING_ELT(nm, i % ni));
+	for(R_xlen_t i = ni; i < n; i++)
+	    SET_STRING_ELT(nmN, i, NA_STRING);
 	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
 	UNPROTECT(2); // nm, nmN
     }

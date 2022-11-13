@@ -80,7 +80,7 @@ strftime(xl, rep(fmt, length = 15))
 
 x2 <- xl[1:5]
 x2$year <- xl$year[1:3]
-x2                # correctly has missing names as NA
-balancePOSIXlt(x2) # recycles names
+x2                 # has missing names as NA
+balancePOSIXlt(x2) # ditto
 strftime(x2, fmt)
 strftime(x2, rep(fmt, length = 10))
