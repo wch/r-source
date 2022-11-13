@@ -386,6 +386,13 @@
       instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
 	x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
 	x$mon <- c(0L, NA); as.Date(x)}
+
+      \item \command{R CMD check} failed to apply enabled
+      \env{_R_CHECK_SUGGESTS_ONLY_} to examples and vignettes
+      (regression in \R 4.2.0).
+
+      \item \command{R CMD check} did not re-build vignettes in
+      separate processes by default (regression in \R 4.2.0).
     }
   }
 }
