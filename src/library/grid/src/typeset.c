@@ -89,13 +89,15 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y,
         strncpy(colstr, CHAR(STRING_ELT(R_GE_glyphColour(glyphInfo), offset)), 
                 50);
         int colour = R_GE_str2col(colstr);
+        char PSname[201];
+        strncpy(PSname, CHAR(STRING_ELT(R_GE_glyphPSname(glyphInfo), offset)), 
+                200);
         GEGlyph(runLength, 
                 glyphs + offset, 
                 gx + offset, 
                 gy + offset, 
-                family, weight, style, file, index, size, 
-                colour,
-                rotationAngle,
+                family, weight, style, file, index, PSname, 
+                size, colour, rotationAngle,
                 dd);
         offset = offset + runLength;
     }

@@ -1008,7 +1008,7 @@ embedGlyphs <- function(file, glyphs, outfile = file, options = character()) {
     ## Generate cidfmap to relate font names to font files
     cidfmap <- file.path(tempdir(), "cidfmap")
     fontfile <- unique(glyphs$file)
-    fontname <- gsub("[.].+$", "", basename(fontfile))
+    fontname <- unique(glyphs$PSname)
     writeLines(paste0("/", fontname,
                       " << /FileType /TrueType /Path (", fontfile,
                       ") /SubfontID 0 /CSI [(Identity) 0] >>;"),

@@ -104,9 +104,9 @@ glyphJust.numeric <- function(just, which=NULL, ...) {
 }
 
 glyphInfo <- function(id, x, y,
-                      family, weight, style, size, file, index,
+                      family, weight, style, size, file, index, 
                       width, height, hAnchor, vAnchor,
-                      col=NA) {
+                      col=NA, PSname=NA) {
     id <- as.integer(id)
     x <- as.numeric(x)
     y <- as.numeric(y)
@@ -123,6 +123,7 @@ glyphInfo <- function(id, x, y,
         warning("Font file longer than 500 will be truncated")
     index <- as.integer(index)
     size <- as.numeric(size)
+    PSname <- as.character(PSname)
     ## Check colour (allow any R colour spec)
     nacol <- is.na(col)
     if (any(!nacol)) {
@@ -174,9 +175,34 @@ glyphInfo <- function(id, x, y,
     ## Colour can be NA
     if (inherits(info, "omit")) {
         info$colour <- col[-attr(info, "na.action")]
+        info$PSname <- PSname[-attr(info, "na.action")]
     } else {
         info$colour <- col
+        info$PSname <- PSname
     }
+    ## Missing PSname values are "estimated"
+    naPS <- is.na(info$PSname)
+    if (any(naPS)) {
+        bold <- ifelse(info$weight >= 700, "Bold", "")
+        style <- ifelse(info$style > 1,
+                        ifelse(info$style > 2, "Oblique", "Italic"),
+                        "")
+        face <- paste0(bold, style)
+        info$PSname[naPS] <-
+            ifelse(nchar(info$file[naPS]),
+                   file_path_sans_ext(basename(info$file[naPS])),
+                   paste0(info$family[naPS],
+                          ifelse(nchar(style), paste0("-", style), "")))
+    }
+    if (any(nchar(info$PSname, "bytes") > 200))
+        warning("PostScript font name longer than 200 will be truncated")
+    ## Check that family-weight-style and file and PSname all line up
+    families <- rle(paste0(info$family, info$weight, info$style))$lengths
+    files <- rle(info$file)$lengths
+    names <- rle(info$PSname)$lengthe
+    if (!(all(families == files) && all(files == names)))
+        stop("Font information is inconsistent")
+    ## Construct final structure
     attr(info, "width") <- width
     attr(info, "height") <- height
     attr(info, "hAnchor") <- hAnchor

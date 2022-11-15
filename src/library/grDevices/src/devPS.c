@@ -5761,8 +5761,9 @@ static void     PDF_fillStroke(SEXP path, int rule,
 static SEXP     PDF_capabilities(SEXP capabilities);
 static void     PDF_glyph(int n, int *glyphs, double *x, double *y, 
                           const char* family, double weight, int style,
-                          const char* file, int index, double size, int colour,
-                          double rot, pDevDesc dd);
+                          const char* file, int index, 
+                          const char* PSname, 
+                          double size, int colour, double rot, pDevDesc dd);
 
 /***********************************************************************
  * Stuff for recording definitions
@@ -10460,10 +10461,11 @@ static SEXP PDF_capabilities(SEXP capabilities) {
 
 static void PDF_glyph(int n, int *glyphs, double *x, double *y, 
                       const char* family, double weight, int style,
-                      const char* file, int index, double size, int colour,
-                      double rot, pDevDesc dd) {
+                      const char* file, int index, 
+                      const char* PSname, 
+                      double size, int colour, double rot, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    newGlyphFont(family, pd);
+    newGlyphFont(PSname, pd);
     if (index >= 0) {
         if (R_VIS(colour)) {
             if(pd->inText) textoff(pd);

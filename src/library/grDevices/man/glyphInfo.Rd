@@ -25,7 +25,7 @@
 glyphInfo(id, x, y,
           family, weight, style, size, file, index,
           width, height, hAnchor, vAnchor,
-          col=NA)
+          col=NA, PSname=NA)
 
 glyphAnchor(value, label)
 glyphWidth(w, label="width", left="left")
@@ -60,6 +60,7 @@ glyphHeightBottom(h, label)
     (against which to \code{"bottom"} justify), 
     but can also be result from a call to \code{glyphAnchor()}.}
   \item{col}{An R colour value for each glyph. Can be \code{NA}.}
+  \item{PSname}{The PostScript name for each font. Can be \code{NA}.}
   \item{value, w, h}{A numeric value.}
   \item{label, left, bottom}{A character value.}
   \item{just}{A justification value. Either a character value like

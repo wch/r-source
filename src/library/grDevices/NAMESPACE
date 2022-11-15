@@ -1,5 +1,7 @@
 useDynLib(grDevices, .registration = TRUE, .fixes = "C_")
 
+importFrom(tools, file_path_sans_ext)
+
 export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        blues9, boxplot.stats, cairoSymbolFont,
        check.options, chull, CIDFont, col2rgb,

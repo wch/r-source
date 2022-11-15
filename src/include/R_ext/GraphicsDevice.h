@@ -791,8 +791,9 @@ struct _DevDesc {
 #if R_USE_PROTOTYPES
     void (*glyph)(int n, int *glyphs, double *x, double *y, 
                   const char* family, double weight, int style,
-                  const char* file, int index, double size, int colour,
-                  double rot, pDevDesc dd);
+                  const char* file, int index, 
+                  const char* PSname, 
+                  double size, int colour, double rot, pDevDesc dd);
 #else
     void (*glyph)();
 #endif

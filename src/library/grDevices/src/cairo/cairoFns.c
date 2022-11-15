@@ -2375,8 +2375,9 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
 
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
                         const char* family, double weight, int style,
-                        const char* file, int index, double size, int colour,
-                        double rot, pDevDesc dd) 
+                        const char* file, int index, 
+                        const char* PSname,
+                        double size, int colour, double rot, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
