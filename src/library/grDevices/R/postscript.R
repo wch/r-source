@@ -989,3 +989,43 @@ embedFonts <- function(file, # The ps or pdf file to convert
     file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }
+
+## 'file' is the pdf file to convert
+## 'glyphs' is RGlyphInfo 
+## 'outfile' is the new pdf file
+## 'options' are additional options to ghostscript
+embedGlyphs <- function(file, glyphs, outfile = file, options = character()) {
+    if (!is.character(file) || length(file) != 1L || !nzchar(file))
+        stop("'file' must be a non-empty character string")
+    if (!inherits(glyphs, "RGlyphInfo"))
+        stop("Invalid 'glyphs'")
+    gsexe <- tools::find_gs_cmd()
+    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
+    format <- "pdfwrite"
+    check_gs_type(gsexe, format)
+    tmpfile <- tempfile("Rembed")
+    ## Generate cidfmap to relate font names to font files
+    cidfmap <- file.path(tempdir(), "cidfmap")
+    fontfile <- unique(glyphs$file)
+    fontname <- gsub("[.].+$", "", basename(fontfile))
+    writeLines(paste0("/", fontname,
+                      " << /FileType /TrueType /Path (", fontfile,
+                      ") /SubfontID 0 /CSI [(Identity) 0] >>;"),
+               cidfmap)
+    args <- c(paste0("-dNOPAUSE -dBATCH -q -dAutoRotatePages=/None ",
+                     "-sDEVICE=", format),
+              paste0("-sOutputFile=", shQuote(tmpfile)),
+              ## Make sure ghostscript can see the cidfmap
+              paste0("-I", shQuote(tempdir())),
+              options, shQuote(file))
+    ret <- system2(gsexe, args)
+    if (ret != 0)
+        stop(gettextf("status %d in running command '%s'", ret, cmd),
+             domain = NA)
+    if (outfile != file)
+        args[2] <- paste0(" -sOutputFile=", shQuote(outfile))
+    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
+    file.copy(tmpfile, outfile, overwrite = TRUE)
+    invisible(cmd)
+}
