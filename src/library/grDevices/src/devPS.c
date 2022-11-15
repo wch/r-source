@@ -6843,7 +6843,7 @@ static int newGlyphFont(const char *fontname, PDFDesc *pd)
     catDefn("<<\n/Type /Font\n/Subtype /Type0\n", defNum, pd);
     snprintf(buf,
              100,
-             "/Name glyph-font-%i\n",
+             "/Name /glyph-font-%i\n",
              pd->numGlyphFonts);
     catDefn(buf, defNum, pd);
     snprintf(buf,
