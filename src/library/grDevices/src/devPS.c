@@ -8965,6 +8965,7 @@ static void PDF_NewPage(const pGEcontext gc,
 		error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDF device"), buf);
 	    pd->pdffp = pd->mainfp;
             resetDefinitions(pd);
+            pd->numGlyphFonts = 0;
 	    PDF_startfile(pd);
 	}
     }
