@@ -81,7 +81,12 @@
           footer.lines,
           "</div></body></html>")
     figdir <- tempfile(pattern = package, fileext = topic)
-    on.exit(unlink(figdir, recursive = TRUE))
+    on.exit(unlink(figdir, recursive = TRUE), add = TRUE)
+    ## Record old knitr / chunk options and restore on exit
+    old_opts_knit <- knitr::opts_knit$get()
+    old_opts_chunk <- knitr::opts_chunk$get()
+    on.exit(knitr::opts_knit$restore(old_opts_knit), add = TRUE)
+    on.exit(knitr::opts_chunk$restore(old_opts_chunk), add = TRUE)
     knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", xfun::base64_encode(x)),
                          unnamed.chunk.label = sprintf("%s-%s-%s", type, package, topic))
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
