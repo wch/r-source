@@ -6935,6 +6935,18 @@ static void PDFwritePatternDefs(int objoffset, int excludeDef, PDFDesc *pd)
     PDFwrite(buf, 100, ">>\n", pd);
 }
 
+static void PDFwriteGlyphFontDefs(int objOffset, PDFDesc *pd) {
+    int i;
+    char buf[100];
+    int glyphFontCount = 0;
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFglyphFont) {
+            PDFwrite(buf, 100, "/glyph-font-%d %d 0 R ", pd,
+                     ++glyphFontCount, i + objOffset);
+        }
+    }
+}
+
 static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
 {
     int i;
@@ -8436,10 +8448,21 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
 	    fontlist = fontlist->next;
 	}
     }
-    for (i = 0; i < pd->numGlyphFonts; i++) {        
-        PDFwrite(buf, 100, "/glyph-font-%d %d 0 R ", pd,
-                 i + 1, ++objCount);
-    }
+
+    /* Definitions start after ExtGState */
+    int defnOffset = objCount + 1;
+    for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
+        ++defnOffset;
+    for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
+        ++defnOffset;
+    for (i = 0; i < PDFnumBlendModes; i++)
+        if (pd->blendModes[i])
+            ++defnOffset;
+    if (nmask > 0)
+        ++defnOffset;
+    
+    PDFwriteGlyphFontDefs(defnOffset, pd);
+
     PDFwrite(buf, 100, ">>\n", pd);
 
     /* graphics state parameter dictionaries */
@@ -8455,7 +8478,6 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     if (nmask > 0)
 	PDFwrite(buf, 100, "/GSais %d 0 R ", pd, ++objCount);
     /* Soft mask definitions */
-    int defnOffset = ++objCount;
     if (pd->numDefns > 0) {
         PDFwriteSoftMaskDefs(defnOffset, pd);
     }    
@@ -10474,6 +10496,7 @@ static void PDF_glyph(int n, int *glyphs, double *x, double *y,
             if (pd->currentMask >= 0) {
                 PDFwriteMask(pd->currentMask, pd);
             }
+            PDFSetTextRenderMode(pd);
             PDFGlyphs(n, glyphs, x, y, size, rot, pd);
         }
     }
