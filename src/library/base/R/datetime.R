@@ -1264,16 +1264,16 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
     setBalanced <- function(.) `attr<-`(., "balanced", TRUE)
     if(mi) # but !mj : x[, ".."]
-        setBalanced(balancePOSIXlt(x, TRUE, FALSE)[[j]])
+        setBalanced(unCfillPOSIXlt(x)[[j]])
     else {
         if(is.character(i))
             i <- match(i, names(x),
                        incomparables = c("", NA_character_))
         if(mj) # x[i]
-            .POSIXlt(setBalanced(lapply(balancePOSIXlt(x, TRUE, FALSE), `[`, i, drop = drop)),
+            .POSIXlt(setBalanced(lapply(unCfillPOSIXlt(x), `[`, i, drop = drop)),
                      attr(x, "tzone"), oldClass(x))
         else # x[i,j]
-            balancePOSIXlt(x, TRUE, FALSE)[[j]][i]
+            unCfillPOSIXlt(x)[[j]][i]
     }
 }
 
@@ -1289,7 +1289,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         return(as.POSIXlt(value)) #  , tz = attr(x,"tzone")  ??
 
     cl <- oldClass(x)
-    x <- balancePOSIXlt(x, TRUE, FALSE) # list
+    x <- unCfillPOSIXlt(x) # list
 
     if(mi) { ## x[, ".."] <- v
         x[[j]] <- value
@@ -1331,7 +1331,7 @@ rep.POSIXct <- function(x, ...)
 
 rep.POSIXlt <- function(x, ...) {
     cl <- oldClass(x)
-    x <- balancePOSIXlt(x, TRUE, FALSE)
+    x <- unCfillPOSIXlt(x)
     ## fails to set class: `attributes<-`(lapply(x, rep, ...), attributes(x))
     r <- lapply(x, rep, ...)
     class(r) <- cl
@@ -1501,7 +1501,7 @@ OlsonNames <- function(tzdir = NULL)
     if(!missing(i) && is.character(i)) {
         i <- match(i, names(x), incomparables = c("", NA_character_))
     }
-    .POSIXlt(lapply(balancePOSIXlt(x, TRUE, FALSE), `[[`, i, drop = drop),
+    .POSIXlt(lapply(unCfillPOSIXlt(x), `[[`, i, drop = drop),
              attr(x, "tzone"), oldClass(x))
 }
 
@@ -1509,7 +1509,7 @@ as.list.POSIXlt <- function(x, ...)
 {
     nms <- names(x)
     names(x) <- NULL
-    y <- lapply(X = do.call(Map, c(list, balancePOSIXlt(x, TRUE, FALSE))),
+    y <- lapply(X = do.call(Map, c(list, unCfillPOSIXlt(x))),
                 FUN = .POSIXlt, attr(x, "tzone"), oldClass(x))
     names(y) <- nms
     y
@@ -1528,7 +1528,7 @@ as.list.POSIXlt <- function(x, ...)
             names(x[[n]]) <- nms
     }
 
-    value <- balancePOSIXlt(as.POSIXlt(value), TRUE, FALSE)
+    value <- unCfillPOSIXlt(as.POSIXlt(value))
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 

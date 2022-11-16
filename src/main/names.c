@@ -840,6 +840,7 @@ FUNTAB R_FunTab[] =
 {"Date2POSIXlt",do_D2POSIXlt,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"POSIXlt2Date",do_POSIXlt2D,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"balancePOSIXlt",do_balancePOSIXlt, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"unCfillPOSIXlt",do_balancePOSIXlt, 1,	 1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"mkCode",     do_mkcode,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"bcClose",    do_bcclose,      0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},

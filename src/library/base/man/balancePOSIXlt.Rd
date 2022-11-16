@@ -5,13 +5,19 @@
 \name{balancePOSIXlt}
 \title{Balancing \dQuote{Ragged} and Out-of-range POSIXlt Date-Times}
 \alias{balancePOSIXlt}
-% implementation mostly in ../R/datetime.R -- many more in ./DateTimeClasses.Rd
+\alias{unCfillPOSIXlt}
+% used in ../R/datetime.R -- many more in ./DateTimeClasses.Rd
 
 \description{
-  A utility function to \sQuote{balance} objects of class \code{"POSIXlt"}.
+  Utilities to \sQuote{balance} objects of class \code{"POSIXlt"}.
+
+  \code{unCfillPOSIXlt(x)} is a fast \link{primitive} version of
+  \code{balancePOSIXlt(x, fill.only=TRUE, classed=FALSE)} or equivalently,
+  \code{unclass(balancePOSIXlt(x, fill.only=TRUE))} from where it is named.
 }
 \usage{
 balancePOSIXlt(x, fill.only = FALSE, classed = TRUE)
+unCfillPOSIXlt(x)
 }
 \arguments{
   \item{x}{an \R object inheriting from \code{"POSIXlt"}, see
@@ -74,6 +80,9 @@ str(unclass(d1))      # only $min is of length > 1
 df <- balancePOSIXlt(d1, fill.only = TRUE) # a "POSIXlt" object
 str(unclass(df))      # all of length 17; 'min' unchanged
 db <- balancePOSIXlt(d1, classed = FALSE)  # a list
+stopifnot(identical(
+    unCfillPOSIXlt(d1),
+    balancePOSIXlt(d1, fill.only = TRUE, classed = FALSE)))
 str(db) # of length 17 *and* in range
 \dontshow{
 stopifnot(exprs = {
