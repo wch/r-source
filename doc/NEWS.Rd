@@ -83,6 +83,9 @@
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
 
       \item \code{compactPDF()} gets a \code{verbose} option.
+
+      \item \code{type.convert()} and hence \code{read.table()} get new
+      option \code{tryLogical = TRUE} with back compatible default.
     }
   }
 
