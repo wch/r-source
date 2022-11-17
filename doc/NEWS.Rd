@@ -85,7 +85,8 @@
       \item \code{compactPDF()} gets a \code{verbose} option.
 
       \item \code{type.convert()} and hence \code{read.table()} get new
-      option \code{tryLogical = TRUE} with back compatible default.
+      option \code{tryLogical = TRUE} with back compatible default.  When
+      set to false, converts \code{"F"} or \code{"T"} columns to character.
     }
   }
 
