@@ -603,10 +603,6 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	exact = FALSE;
     }
 
-#ifndef CAD5R
-#define CAD5R(e) CAD4R(CDR(e))
-#endif
-
     Rboolean tryLogical = asLogical(CAD5R(args));
     if (tryLogical == NA_LOGICAL) tryLogical = FALSE;
     typeInfo.islogical = tryLogical;

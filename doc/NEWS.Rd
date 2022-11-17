@@ -226,6 +226,8 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
+
+      \item New macro \code{CAD5R()} is provided and used in a few places.
     }
   }
 

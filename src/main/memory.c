@@ -2636,7 +2636,7 @@ static void custom_node_free(void *ptr) {
 SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 {
     SEXP s;     /* For the generational collector it would be safer to
-		   work in terms of a VECSEXP here, but that would
+		   work in terms of a VECSXP here, but that would
 		   require several casts below... */
     R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
@@ -3562,7 +3562,7 @@ void R_ReleaseObject(SEXP object)
 	int bin = PTRHASH(object) % PHASH_SIZE;
 	SET_VECTOR_ELT(R_PreciousList, bin,
 		       DeleteFromList(object,
-				      VECTOR_ELT(R_PreciousList, bin)));    
+				      VECTOR_ELT(R_PreciousList, bin)));
     }
     else
 	R_PreciousList =  DeleteFromList(object, R_PreciousList);
@@ -4250,6 +4250,7 @@ SEXP (CDDDR)(SEXP e) { return CHK(CDDDR(CHKCONS(e))); }
 SEXP (CADDR)(SEXP e) { return CHK(CADDR(CHKCONS(e))); }
 SEXP (CADDDR)(SEXP e) { return CHK(CADDDR(CHKCONS(e))); }
 SEXP (CAD4R)(SEXP e) { return CHK(CAD4R(CHKCONS(e))); }
+SEXP (CAD5R)(SEXP e) { return CHK(CAD5R(CHKCONS(e))); }
 int (MISSING)(SEXP x) { return MISSING(CHKCONS(x)); }
 
 void (SET_TAG)(SEXP x, SEXP v)
@@ -4686,7 +4687,7 @@ int Seql(SEXP a, SEXP b)
 	    return !strcmp(CHAR(a), CHAR(b));
 	else
 	    return 0;
-    }	    
+    }
     else {
 	SEXP vmax = R_VStack;
 	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));

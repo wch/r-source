@@ -5481,14 +5481,14 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     // --------- raw, for file() only
     if(PRIMVAL(op) == 1) {
-	raw = asLogical(CAD4R(CDR(args)));
+	raw = asLogical(CAD5R(args));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
     }
 
     // --------- headers, for url() only
     if(PRIMVAL(op) == 0) {
-	SEXP lheaders = CAD4R(CDR(args));
+ 	SEXP lheaders = CAD5R(args);
 	if (!isNull(lheaders)) {
 	    headers = VECTOR_ELT(lheaders, 0);
 #ifdef Win32

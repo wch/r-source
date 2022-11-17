@@ -7573,7 +7573,6 @@ The following example is from @file{Poisson.Rd}:
 
 @iftex
 For the @LaTeX{} manual, this becomes
-@c: Name-and-shame for Brian Diggs:
 @c: this is TeXinfo markup, not the result of the conversions.
 @quotation
 @cartouche
@@ -12846,12 +12845,14 @@ of the interface they are objects that are already in use.  The macros
   second = CADDR(args);
   third = CADDDR(args);
   fourth = CAD4R(args);
+  fifth  = CAD5R(args);
 @end group
 @end example
 @findex CADR
 @findex CADDR
 @findex CADDDR
 @findex CAD4R
+@findex CAD5R
 
 @noindent
 provide convenient ways to access the first four arguments.  More
