@@ -492,9 +492,9 @@ stopifnot(exprs = {
     identical(nlt, r3n[3])
     identical(names(r3n), rep("P", 3))
     length(lt2) == 5
-##    identical(names(b2), rep("P", 5))
-##    identical(bare(b2), bare(balancePOSIXlt(lt2, fill.only = TRUE)))# (here)
-##    identical(names(b3), rep_len(c("P","Q"), length(b3)))
+    identical(names(b2), rep("P", 5))
+    identical(bare(b2), bare(balancePOSIXlt(lt2, fill.only = TRUE)))# (here)
+    identical(names(b3), rep_len(c("P","Q"), length(b3)))
     identical(n4, names(t4))
     identical(n4, names(balancePOSIXlt(t4, fill.only = TRUE)))
     identical(nn <- c(n4[-5], NA), names(t5))
