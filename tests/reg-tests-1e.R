@@ -316,6 +316,10 @@ stopifnot(exprs = {
 ## printed nothing at all or invalid R-code in R <= 4.2.x
 
 
+## isS3method() for names starting with a dot
+stopifnot(!isS3method(".Internal"))
+## failed with "invalid first argument" in R <= 4.2.x
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

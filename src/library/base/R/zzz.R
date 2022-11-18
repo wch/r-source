@@ -146,6 +146,7 @@ assign("storage.mode<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("substitute", function(expr, env) NULL, envir = .ArgsEnv)
 assign("switch", function(EXPR, ...) NULL, envir = .ArgsEnv)
 assign("tracemem", function(x) NULL, envir = .ArgsEnv)
+assign("unCfillPOSIXlt", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
