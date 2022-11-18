@@ -539,6 +539,18 @@ SEXP do_Rprof(SEXP args)
     if (bufsize < 0)
 	error(_("invalid '%s' argument"), "bufsize");
 
+#if defined(linux) || defined(__linux__)
+    if (dinterval < 0.01) {
+	dinterval = 0.01;
+	warning(_("interval too short for this platform, using '%f'"), dinterval);
+    }
+#else
+    if (dinterval < 0.001) {
+	dinterval = 0.001;
+	warning(_("interval too short, using '%f'"), dinterval);
+    }
+#endif
+
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
