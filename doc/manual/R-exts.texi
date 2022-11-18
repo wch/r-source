@@ -8490,7 +8490,7 @@ Options include using @command{sprof} for a shared object, and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
 executable or shared object.  These seem less widely supplied than they
-used to be (for example Fedoara 36 only has @command{perf}).
+used to be (for example Fedora 36 only has @command{perf}).
 
 @subsubsection oprofile and operf
 
