@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-11-14 r83344) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -25,7 +25,7 @@ Type 'q()' to quit R.
 > ap <- available.packages(contrib.url("http://cran.r-project.org"))
 > ## IGNORE_RDIFF_BEGIN
 > nrow(ap)
-[1] 18984
+[1] 18844
 > ## IGNORE_RDIFF_END
 > 
 > # test url connections on http
@@ -54,6 +54,7 @@ Type 'q()' to quit R.
 [21] "here is the <A href=\"navbar.html\">contents page</A> of CRAN."                                           
 [22] "</noframes>"                                                                                              
 [23] "</FRAMESET>"                                                                                              
+[24] "</html>"                                                                                                  
 > close(zz)
 > 
 > # and via read.table

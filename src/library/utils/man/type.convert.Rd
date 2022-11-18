@@ -1,6 +1,6 @@
 % File src/library/utils/man/type.convert.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{type.convert}
@@ -16,7 +16,8 @@
 \usage{
 type.convert(x, \dots)
 \method{type.convert}{default}(x, na.strings = "NA", as.is, dec = ".",
-             numerals = c("allow.loss", "warn.loss", "no.loss"), \dots)
+             numerals = c("allow.loss", "warn.loss", "no.loss"),
+             tryLogical = TRUE, \dots)
 \method{type.convert}{data.frame}(x, \dots)
 \method{type.convert}{list}(x, \dots)
 }
@@ -46,6 +47,10 @@ type.convert(x, \dots)
         behavior of \R version 3.1.0.}
     }
   }
+  \item{tryLogical}{a \code{\link{logical}} determining if vectors
+    consisting entirely of \code{F}, \code{T}, \code{FALSE}, \code{TRUE}
+    and \code{na.strings} should be converted to \code{\link{logical}};
+    true, by default.}
   \item{\dots}{arguments to be passed to or from methods.}
 }
 \details{
@@ -62,9 +67,14 @@ type.convert(x, \dots)
   Vectors which are entirely missing values are converted to logical,
   since \code{NA} is primarily logical.
 
-  Vectors containing just \code{F}, \code{T}, \code{FALSE}, \code{TRUE}
-  and values from \code{na.strings} are converted to logical.  Vectors
-  containing optional whitespace followed by decimal constants
+  If \code{tryLogical} is true as by default, vectors containing just
+  \code{F}, \code{T}, \code{FALSE}, \code{TRUE}
+  and values from \code{na.strings} are converted to logical.  This may be surprising
+  in a context where you have many \code{character} columns with e.g.,
+  1-letter strings and you happen to get one with only \code{"F"}.  In such
+  cases \code{tryLogical = FALSE} is recommended.
+  %
+  Vectors containing optional whitespace followed by decimal constants
   representable as \R integers or values from \code{na.strings} are
   converted to integer.  Other vectors containing optional whitespace
   followed by other decimal or hexadecimal constants (see
@@ -104,10 +114,13 @@ storage.mode(phones)
 
 ## Factor or character
 chr <- c("A", "B", "B", "A")
-fac <- factor(c("A", "B", "B", "A"))
+ch2 <- c("F", "F", "NA", "F")
+(fac <- factor(chr))
 type.convert(chr, as.is = FALSE) # -> factor
 type.convert(fac, as.is = FALSE) # -> factor
 type.convert(chr, as.is = TRUE)  # -> character
 type.convert(fac, as.is = TRUE)  # -> character
+type.convert(ch2, as.is = TRUE)                   #-> logical
+type.convert(ch2, as.is = TRUE, tryLogical=FALSE) #-> character
 }
 \keyword{manip}

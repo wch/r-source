@@ -51,11 +51,11 @@ as.POSIXlt(x, tz = "", \dots)
 }
 \arguments{
   \item{x}{\R  object to be converted.}
-  \item{tz}{time zone specification to be used for the conversion,
-    \emph{if one is required}.  System-specific (see \link{time zones}),
-    but \code{""} is the current time zone, and \code{"GMT"} is UTC
-    (Universal Time, Coordinated).  Invalid values are most commonly
-    treated as UTC, on some platforms with a warning.}
+  \item{tz}{a character string.  The time zone specification to be used
+    for the conversion, \emph{if one is required}.  System-specific (see
+    \link{time zones}), but \code{""} is the current time zone, and
+    \code{"GMT"} is UTC (Universal Time, Coordinated).  Invalid values
+    are most commonly treated as UTC, on some platforms with a warning.}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}

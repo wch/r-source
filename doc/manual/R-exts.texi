@@ -6076,6 +6076,11 @@ without arguments (a function without arguments should have prototype
 @code{fn(void)}) and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)
 
+LLVM @command{clang} has a separate warning
+@option{-Wdeprecated-non-prototype} which is enabled by
+@option{-Wstrict-prototypes}.  This warns on K&R-style usage, which will
+not be accepted in C23.
+
 @item
 Several C entry points are warned against in their @command{man} pages
 on most systems, often in very strong terms such as '@strong{Do not use
@@ -7568,7 +7573,6 @@ The following example is from @file{Poisson.Rd}:
 
 @iftex
 For the @LaTeX{} manual, this becomes
-@c: Name-and-shame for Brian Diggs:
 @c: this is TeXinfo markup, not the result of the conversions.
 @quotation
 @cartouche
@@ -12841,12 +12845,14 @@ of the interface they are objects that are already in use.  The macros
   second = CADDR(args);
   third = CADDDR(args);
   fourth = CAD4R(args);
+  fifth  = CAD5R(args);
 @end group
 @end example
 @findex CADR
 @findex CADDR
 @findex CADDDR
 @findex CAD4R
+@findex CAD5R
 
 @noindent
 provide convenient ways to access the first four arguments.  More

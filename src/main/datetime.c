@@ -69,7 +69,7 @@
   on the platform., but it woll always be present.)  However, if the
   call to strptime() does not specify 'tz', this attribute is omitted.
 
-  Names for the date-times are optional (and rarely supplied): 
+  Names for the date-times are optional (and rarely supplied):
   they are attached to the 'year' element' and used by strptime().
 */
 
@@ -1352,7 +1352,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	setAttrib(ans, R_NamesSymbol, nm3);
 	UNPROTECT(1);
     }
- 
+
     if(settz) reset_tz(oldtz);
     UNPROTECT(2);
     return ans;
@@ -1624,29 +1624,12 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-// .Internal(balancePOSIXlt(x, fill.only, classed)) called from balancePOSIXlt()
-SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP balancePOSIXlt(SEXP x, Rboolean fill_only, Rboolean do_class)
 {
-    /*
-       This may be called on objects generated on other versions of R
-       with/without tm_zone/rm_offset, or even different versions of
-       R.  Let alone hand-edited objects, as in datetime3.R, or those
-       created in packages.
-    */
-    checkArity(op, args);
     MAYBE_INIT_balanced
-    SEXP _filled_ = ScalarLogical(NA_LOGICAL);
-    SEXP x = CAR(args),
-	bal = getAttrib(x, lt_balancedSymbol);
+    const SEXP _filled_ = ScalarLogical(NA_LOGICAL);
+    SEXP bal = getAttrib(x, lt_balancedSymbol);
     /*  bal in  (TRUE, NA, NULL) <==> ("balanced", "filled", <unset>) */
-
-    int fill_only = asLogical(CADR(args));
-    if(fill_only == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "fill.only");
-    int do_class = asLogical(CADDR(args));
-    if(do_class == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "classed");
-
     if(bal == _balanced_ || (fill_only && bal == _filled_)) {
 	if(!do_class) {
 	    x = duplicate(x);
@@ -1849,9 +1832,9 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(set_nm) { // names(.), attached to x[[5]] = x$year:
 	SEXP nmN = PROTECT(allocVector(STRSXP, n));
-	R_xlen_t ni = nlen[5];
+	R_xlen_t ni = XLENGTH(nm); // typically = nlen[5]
 	// names(.) will have to become length n;  $year is already
-	// fill names, recycling,  note nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol), of length() ni <= n
+	// fill names, recycling:
 	for(R_xlen_t i = 0; i < n; i++)
 	    SET_STRING_ELT(nmN, i, STRING_ELT(nm, i % ni));
 	setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nmN);
@@ -1861,3 +1844,32 @@ SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(3);
     return ans;
 }
+
+// .Internal(balancePOSIXlt(x, fill.only, classed)) called from R's balancePOSIXlt()
+// or primitive  unCfillPOSIXlt(x)
+SEXP attribute_hidden do_balancePOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /*
+       This may be called on objects generated on other versions of R
+       with/without tm_zone/rm_offset, or even different versions of
+       R.  Let alone hand-edited objects, as in datetime3.R, or those
+       created in packages.
+    */
+    checkArity(op, args);
+    SEXP x = CAR(args);
+
+    int fill_only, do_class;
+    if(PRIMVAL(op) == 1) { // unCfillPOSIXlt(x)
+	fill_only = TRUE;
+	do_class = FALSE;
+    } else { // op == 0 :  .Internal(balancePOSIXlt(x, fill.only, classed))
+	fill_only = asLogical(CADR(args));
+	if(fill_only == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "fill.only");
+	do_class = asLogical(CADDR(args));
+	if(do_class == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "classed");
+    }
+    return balancePOSIXlt(x, (Rboolean)fill_only, (Rboolean)do_class);
+}
+

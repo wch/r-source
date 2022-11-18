@@ -5327,7 +5327,7 @@ generate @cputype{x86_64} code @dots{}.
 
 Updating an @cputype{arm64} build will often fail because of the bug
 described at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab
-initio} builds work.
+initio} builds work.  This has been far rarer from macOS 13.
 
 
 @c As from Command Line Tools version 12,

@@ -83,6 +83,10 @@
       (From a report and patch proposal by Gabriel Becker in \PR{18405}.)
 
       \item \code{compactPDF()} gets a \code{verbose} option.
+
+      \item \code{type.convert()} and hence \code{read.table()} get new
+      option \code{tryLogical = TRUE} with back compatible default.  When
+      set to false, converts \code{"F"} or \code{"T"} columns to character.
     }
   }
 
@@ -223,6 +227,8 @@
       \code{Sfloat} in header \file{R.h} are no longer defined, and that
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
+
+      \item New macro \code{CAD5R()} is provided and used in a few places.
     }
   }
 
@@ -386,6 +392,13 @@
       instead of \code{NA} in R 4.2.2, e.g., for \preformatted{
 	x <- as.POSIXlt(c("2019-01-30","2001-1-1"))
 	x$mon <- c(0L, NA); as.Date(x)}
+
+      \item \command{R CMD check} failed to apply enabled
+      \env{_R_CHECK_SUGGESTS_ONLY_} to examples and vignettes
+      (regression in \R 4.2.0).
+
+      \item \command{R CMD check} did not re-build vignettes in
+      separate processes by default (regression in \R 4.2.0).
     }
   }
 }
