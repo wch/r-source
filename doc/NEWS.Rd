@@ -87,6 +87,10 @@
       \item \code{type.convert()} and hence \code{read.table()} get new
       option \code{tryLogical = TRUE} with back compatible default.  When
       set to false, converts \code{"F"} or \code{"T"} columns to character.
+
+      \item \code{object.size(*, standard="SI")} uses the new unit prefixes
+      \code{"R"} and \code{"Q"} for sizes above \eqn{10^{27}} bytes, thanks
+      to Henrik Bengtsson's \PR{18435}.
     }
   }
 

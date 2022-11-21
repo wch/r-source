@@ -23,7 +23,8 @@ format.object_size <- function(x, units = "b", standard = "auto", digits = 1L, .
 {
     known_bases <- c(legacy = 1024, IEC = 1024, SI = 1000)
     known_units <- list(
-	SI     = c("B", "kB",  "MB",  "GB", "TB", "PB",  "EB",  "ZB",  "YB"),
+	SI     = c("B", "kB",  "MB",  "GB", "TB", "PB",  "EB",  "ZB",  "YB",
+                   "RB", "QB"),
 	IEC    = c("B", "KiB", "MiB", "GiB","TiB","PiB", "EiB", "ZiB", "YiB"),
 	legacy = c("b", "Kb",  "Mb",  "Gb", "Tb", "Pb"),
 	LEGACY = c("B", "KB",  "MB",  "GB", "TB", "PB") # <- only for "KB"
