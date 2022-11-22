@@ -72,8 +72,8 @@ glyphVOffset <- function(glyph, vjust) {
                 gy - vjust*height[1]
             } else {
                 anchor <- glyphHeightBottom(glyphHeight, justName)
-                gx - converHeight(unit(vAnchor[anchor], "bigpts"), "in",
-                              valueOnly=TRUE) -
+                gy - convertHeight(unit(vAnchor[anchor], "bigpts"), "in",
+                                   valueOnly=TRUE) -
                     vjust*height[justName]
             }
         }

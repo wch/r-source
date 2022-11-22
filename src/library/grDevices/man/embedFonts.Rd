@@ -31,7 +31,7 @@ embedGlyphs(file, glyphs, outfile = file, options = character())
     Ghostscript will search for fonts.}
   \item{options}{a character vector containing further options to
     Ghostscript.}
-  \item{glyphs}{typeset glyph information produced by \code{glyphInfo().}
+  \item{glyphs}{typeset glyph information produced by \code{glyphInfo()}.}
 }
 \details{
   This function is not necessary if you just use the standard

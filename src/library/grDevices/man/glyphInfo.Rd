@@ -10,7 +10,8 @@
 \alias{glyphWidth}
 \alias{glyphHeight}
 \alias{glyphWidthLeft}
-\alias{glyphWidthBottom}
+\alias{glyphHeightBottom}
+\alias{glyphJust}
 \alias{glyphJust.GlyphJust}
 \alias{glyphJust.character}
 \alias{glyphJust.numeric}
@@ -32,6 +33,7 @@ glyphWidth(w, label="width", left="left")
 glyphHeight(h, label="height", bottom="bottom")
 glyphWidthLeft(w, label)
 glyphHeightBottom(h, label)
+glyphJust(just, ...)
 \method{glyphJust}{GlyphJust}(just, ...)
 \method{glyphJust}{character}(just, ...)
 \method{glyphJust}{numeric}(just, which=NULL, ...)
