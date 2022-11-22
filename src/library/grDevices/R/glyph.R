@@ -190,7 +190,8 @@ glyphInfo <- function(id, x, y,
         face <- paste0(bold, style)
         info$PSname[naPS] <-
             ifelse(nchar(info$file[naPS]),
-                   file_path_sans_ext(basename(info$file[naPS])),
+                   sub("([^.]+)\\.[[:alnum:]]+$", "\\1",
+                       basename(info$file[naPS])),
                    paste0(info$family[naPS],
                           ifelse(nchar(style), paste0("-", style), "")))
     }
