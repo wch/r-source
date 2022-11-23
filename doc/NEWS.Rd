@@ -39,6 +39,9 @@
 
       \item \command{R CMD check} did not re-build vignettes in
       separate processes by default (regression in \R 4.2.0).
+
+      \item Running examples from HTML documentation now restores
+      previous knitr settings and options (\PR{18420}).
     }
   }
 }
