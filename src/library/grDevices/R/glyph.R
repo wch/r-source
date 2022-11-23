@@ -170,8 +170,9 @@ glyphInfo <- function(id, x, y,
     if (!"center" %in% vNames)
         vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
     ## Build glyph info
-    dropNA <- is.na(id) | is.na(x) | is.na(y) | is.na(family) |
-        is.na(weight) | is.na(style) | is.na(size) | is.na(file)
+    dropNA <- !(is.na(id) | is.na(x) | is.na(y) | is.na(family) |
+                is.na(weight) | is.na(style) | is.na(size) |
+                is.na(file) | is.na(index))
     info <- data.frame(id, x, y,
                        family, weight, style, size, file, index)[dropNA, ]
     ## Colour can be NA
