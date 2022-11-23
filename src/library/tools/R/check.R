@@ -4755,7 +4755,7 @@ add_dummies <- function(dir, Log)
                 ## testing what R CMD build uses.
                 Rcmd <-
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "TRUE")))
-                        sprintf("%s\ntools::buildVignettes(dir = '%s')",
+                        sprintf("%s\ntools::buildVignettes(dir = '%s', skip = TRUE)",
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
                     else {
@@ -4763,7 +4763,7 @@ add_dummies <- function(dir, Log)
                             tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
                                        fixed = TRUE)
                             saveRDS(c(jitstr, if(R_cdo_vignettes) elibs_cdo else elibs), tf)
-                            sprintf("%s\ntools::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                            sprintf("%s\ntools::buildVignettes(dir = '%s', skip = TRUE, ser_elibs = '%s')",
                                     opWarn_string,
                                     file.path(pkgoutdir, "vign_test", pkgname0),
                                     tf)
@@ -4789,6 +4789,7 @@ add_dummies <- function(dir, Log)
                               out, value = TRUE, useBytes = TRUE)
                 ltx_err <- any(grepl("LaTeX error", out, ignore.case = TRUE,
                                      useBytes = TRUE))
+                iskip <- grep("^Note: skipping .* dependencies:", out)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
@@ -4818,6 +4819,14 @@ add_dummies <- function(dir, Log)
                         unlink(vd2, recursive = TRUE)
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
+                    if (length(iskip)) {
+                        iempty <- which(out == "")
+                        ## skipping notes from buildVignettes each close with empty line
+                        iskip <- unlist(lapply(iskip, function(i)
+                            i:(iempty[iempty > i][1L] - 1L)))
+                        noteLog(Log)
+                        printLog0(Log, paste(out[iskip], collapse = "\n"), "\n")
+                    } else
                     resultLog(Log, "OK")
                 }
                 if(!WINDOWS && !is.na(theta)) {
