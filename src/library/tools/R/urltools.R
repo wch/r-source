@@ -523,7 +523,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
     .check_http_B <- function(u) {
         ul <- tolower(u)
         cran <- ((grepl("^https?://cran.r-project.org/web/packages", ul) &&
-                  !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]_]+(html|pdf|rds)$",
+                  !grepl("^https?://cran.r-project.org/web/packages/([.[:alnum:]_]+(html|pdf|rds))?$",
                          ul)) ||
                  (grepl("^https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
                         ul)) ||
