@@ -795,7 +795,6 @@ specialFunctionArgs <- function(fun, text)
 }
 
 
-
 functionArgs <-
     function(fun, text,
              S3methods = .CompletionEnv$settings[["S3"]],
@@ -814,10 +813,16 @@ functionArgs <-
     if (S4methods) warning("cannot handle S4 methods yet")
     allArgs <- unique(unlist(lapply(fun, argNames)))
     ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), allArgs)
-    if (length(ans) && !keep.dots)
-        ans <- ans[ans != "..."]
+    ## Handle dots specially. If present, drop if keep.dots=FALSE
+    ## obviously, but even otherwise move it to the end and don't add
+    ## a suffix.
+    whereDots <- ans == "..."
+    if (any(whereDots))
+        ans <- ans[!whereDots]
     if (length(ans) && !is.null(add.args))
         ans <- sprintf("%s%s", ans, add.args)
+    if (keep.dots && any(whereDots))
+        ans <- c(ans, "...")
     c(specialFunArgs, ans)
 }
 
