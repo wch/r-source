@@ -1745,6 +1745,7 @@ c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
 
 
 ## Limiting lines on deparse (wishlist PR#8638)
+Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
 op <- options(deparse.max.lines = 3)
 f <- function(...) browser()
 do.call(f, mtcars)
@@ -1754,14 +1755,22 @@ op <- c(op, options(error = expression(NULL)))
 f <- function(...) stop()
 do.call(f, mtcars)
 traceback()
+## unlimited < 2.3.0
+options(op)
 
 ## Debugger can handle a function that has a single function call as its body
 g <- function(fun) fun(1)
 debug(g)
 g(function(x) x+1)
+c
 
-options(op)
-## unlimited < 2.3.0
+## Trap debugger in non-interactive sessions
+if (!interactive()) {
+    Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "true")
+    tools::assertError(browser())
+    browser(expr = FALSE) # but this passes (with no output)
+    Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
+}
 
 
 ## row names in as.table (PR#8652)

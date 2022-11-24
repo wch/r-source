@@ -256,6 +256,12 @@
       \item \command{R CMD check} can optionally (but included in
       \option{--as-cran}) check whether HTML math rendering \emph{via}
       KaTeX works for the package \file{.Rd} files.
+
+      \item Non-interactive debugger invocations can be trapped by
+      setting the environment variable
+      \env{_R_CHECK_BROWSER_NONINTERACTIVE_} to a true value.
+      This is enabled by \command{R CMD check --as-cran} to detect
+      leftover \code{browser()} statements in package code.
     }
   }
 
