@@ -4789,7 +4789,8 @@ add_dummies <- function(dir, Log)
                               out, value = TRUE, useBytes = TRUE)
                 ltx_err <- any(grepl("LaTeX error", out, ignore.case = TRUE,
                                      useBytes = TRUE))
-                iskip <- grep("^Note: skipping .* dependencies:", out)
+                iskip <- grep("^Note: skipping .* dependencies:", out,
+                              useBytes = TRUE)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))

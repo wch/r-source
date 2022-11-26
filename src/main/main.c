@@ -1348,7 +1348,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!R_Interactive) {
         char *p = getenv("_R_CHECK_BROWSER_NONINTERACTIVE_");
         if (p != NULL && StringTrue(p))
-            error(_("non-interactive browser() -- leftover from debugging?"));
+            error(_("non-interactive browser() -- left over from debugging?"));
     }
 
     /* Save the evaluator state information */
