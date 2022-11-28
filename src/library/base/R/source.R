@@ -174,13 +174,20 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    srcref <- if(tail) attr(exprs, "wholeSrcref") else
 		if(i <= length(srcrefs)) srcrefs[[i]] # else NULL
  	    if (!is.null(srcref)) {
-	    	if (i == 1) lastshown <- min(skip.echo, srcref[3L]-1)
-	    	if (lastshown < srcref[3L]) {
+                if (length(srcref) >= 8) {
+                    firstl <- srcref[7L]
+                    lastl <- srcref[8L]
+                } else {
+                    firstl <- srcref[1L]
+                    lastl <- srcref[3L]
+                }
+	    	if (i == 1) lastshown <- min(skip.echo, lastl-1)
+	    	if (lastshown < lastl) {
 	    	    srcfile <- attr(srcref, "srcfile")
-	    	    dep <- trySrcLines(srcfile, lastshown+1, srcref[3L])
+	    	    dep <- trySrcLines(srcfile, lastshown+1, lastl)
 	    	    if (length(dep)) {
-			leading <- if(tail) length(dep) else srcref[1L]-lastshown
-			lastshown <- srcref[3L]
+			leading <- if(tail) length(dep) else firstl-lastshown
+			lastshown <- lastl
 			while (length(dep) && grepl("^[[:blank:]]*$", dep[1L])) {
 			    dep <- dep[-1L]
 			    leading <- leading - 1L
