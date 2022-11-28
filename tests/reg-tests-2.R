@@ -2740,7 +2740,7 @@ str(d)
   saveopt <- options(warnPartialMatchDollar=TRUE)
   pl <- pairlist(abc=1, def=2)
   pl$ab
-  if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+  options(saveopt)
 ## 'abc' was just ''
 
 

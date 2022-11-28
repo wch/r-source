@@ -7173,7 +7173,7 @@ g(y)(x)
 [1] 1
 Warning message:
 In pl$ab : partial match of 'ab' to 'abc'
->   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+>   options(saveopt)
 > ## 'abc' was just ''
 > 
 > 
