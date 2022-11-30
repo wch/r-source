@@ -413,6 +413,12 @@
 
       \item Running examples from HTML documentation now restores
       previous knitr settings and options (\PR{18420}).
+
+      \item Quartz: fonts are now located using Core Graphics API
+      instead of deprecated ATS which is no longer supported in
+      macOS 13 SDK (\PR{18426}). This also addresses an issue where
+      the currently used font in the Quartz device context was not
+      correctly retained.
     }
   }
 }
