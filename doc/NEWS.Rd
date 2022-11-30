@@ -324,7 +324,8 @@
       longer split \verb{\arguments} and \verb{\value} lists at Rd comments.
 
       \item \code{tools::Rd2latex()} now correctly handles optional text
-      outside \verb{\item}s of argument lists.
+      outside \verb{\item}s of argument lists as well as bracketed text
+      at the beginning of sections, e.g., \verb{\value{[NULL]}}.
 
       \item \code{as.character(<POSIXt>)} now behaves more in line with the
       methods for atomic vectors such as numbers, and is no longer
