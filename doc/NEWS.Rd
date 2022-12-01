@@ -372,6 +372,10 @@
       \item \code{Sys.timezone()} queries \command{timedatectl} only if
       \command{systemd} is loaded; addressing a report by Jan Gorecki in
       \PR{17421}.
+
+      \item The formula method of \code{cor.test()} had scoping problems
+      when \code{environment(formula)} was not the calling environment;
+      reported with a patch proposal by Mao Kobayashi in \PR{18439}.
    }
   }
 }

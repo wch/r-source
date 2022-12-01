@@ -321,6 +321,15 @@ stopifnot(!isS3method(".Internal"))
 ## failed with "invalid first argument" in R <= 4.2.x
 
 
+## cor.test.formula() scoping issue -- PR#18439
+form <- ~ CONT + INTG
+local({
+    USJudgeRatings <- head(USJudgeRatings)
+    stopifnot(cor.test(form, data = USJudgeRatings)$parameter == 4)
+})
+## R <= 4.2.x evaluated the constructed call in environment(formula)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
