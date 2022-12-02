@@ -330,6 +330,38 @@ local({
 ## R <= 4.2.x evaluated the constructed call in environment(formula)
 
 
+## PR # 18421 by Benjamin Feakins (and follow up):
+## ---------- "roman", "hexcode" and "octcode" all cannot easily be added to data frames
+for(x in list(as.roman(1:14), as.octmode(1:11), as.hexmode(1:19), as.raw(0:65), (0:17) %% 7 == 0,
+              as.difftime(c(0,30,60:64), units="mins"),
+              seq(ISOdate(2000,2,10), by = "23 hours", length.out = 50)
+ )) {
+  cat("x:"); str(x, vec.len=8)
+  ## the error can be triggered by the following methods:
+  ### 1. as.data.frame()
+  dat1 <- as.data.frame(x) # now works, previously signalled
+  ## Error in as.data.frame.default(x) :
+  ##   cannot coerce class ‘"roman"’ to a data.frame
+  ### 2. data.frame()
+  dat2 <- data.frame(x) # gave error as above, now works
+  stopifnot(identical(dat1, dat2),
+            identical(   data.frame(my.x = x),
+                      as.data.frame(x, nm="my.x")))
+  ### 3. cbind()
+  dat3 <- data.frame(y = seq_along(x))
+  dat3 <- cbind(dat3, x) # gave error, now works
+  stopifnot(identical(dat2, dat3[,"x", drop=FALSE]))
+  ## These worked already previously:
+  dat <- data.frame(x = integer(length(x)))
+  dat$x <- x
+  datl <- list2DF(list(x=x))
+  stopifnot(identical(dat, dat2),
+            identical(dat, datl))
+}
+## --- such data.frame() coercions gave errors in R <= 4.2.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

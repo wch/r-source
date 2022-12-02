@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -24,6 +24,7 @@
 \alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
+\alias{.as.data.frame.vector}% pro tem
 \alias{as.data.frame.array}
 \alias{as.data.frame.difftime}
 
@@ -44,6 +45,9 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 \method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE,
               make.names = TRUE, \dots,
               stringsAsFactors = FALSE)
+
+as.data.frame.vector(x, row.names = NULL, optional = FALSE, \dots,
+                     nm = deparse1(substitute(x)))
 
 is.data.frame(x)
 }
@@ -76,6 +80,8 @@ is.data.frame(x)
     \code{TRUE}, calls \code{\link{make.names}(*, unique=TRUE)};
     \code{make.names=NA} will use \dQuote{automatic} row names and a
     \code{FALSE} value will signal an error for invalid row names.}
+  %% *.vector():
+  \item{nm}{a \code{\link{character}} string to be used as column name.}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names
@@ -90,6 +96,14 @@ is.data.frame(x)
   users and packages can supply further methods.  For classes that act
   as vectors, often a copy of \code{as.data.frame.vector} will work
   as the method.
+
+  Since \R 4.3.0, the \emph{default} method will call
+  \code{as.data.frame.vector()} for atomic (as by \code{\link{is.atomic}})
+  non-\code{NULL} \code{x}.
+
+  Direct calls to  \code{as.data.frame.<class>()} are still possible (base package!),
+  for 12 atomic base classes, but will deprecated
+  where calling \code{as.data.frame.vector()} instead is recommended.
 
   If a list is supplied, each element is converted to a column in the
   data frame.  Similarly, each column of a matrix is converted separately.

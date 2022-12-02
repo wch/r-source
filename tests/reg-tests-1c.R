@@ -1233,11 +1233,11 @@ x$y <- 10 ## failed prior to R 3.3.0
 stopifnot(identical(attr(x, "modified"), "yes"))
 
 
-## illegal 'row.names' for as.data.frame():  -- for now just a warning --
-tools::assertWarning(
+## illegal 'row.names' for as.data.frame(): was just warning; error since R 4.3.0:
+tools::assertError(
     d3 <- as.data.frame(1:3, row.names = letters[1:2])
 )
-stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
+## stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
 ## 'row.names' were not checked and produced a "corrupted" data frame in R <= 3.2.3
 
 

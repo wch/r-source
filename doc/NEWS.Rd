@@ -91,6 +91,15 @@
       \item Added new unit prefixes \code{"R"} and \code{"Q"} for
       abbreviating (unrealistically large) sizes beyond \eqn{10^{27}} in
       \code{standard = "SI"}, thanks to Henrik Bengtsson's \PR{18435}.
+
+      \item \code{as.data.frame()}'s default method now also works fine
+      with atomic objects inheriting from classes such as \code{"roman"},
+      \code{"octmode"} and \code{"hexmode"}, such fulfilling the wish of
+      \PR{18421}, by Benjamin Feakins.
+
+      \item The \code{as.data.frame.vector()} utility now errors for
+      wrong-length \code{row.names}.  It warned for almost six years, with
+      \dQuote{Will be an error!}.
     }
   }
 
