@@ -215,6 +215,11 @@
       C++23 features beyond a check that the compiler reports a
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
+
+      \item The use of \code{sprintf} and \code{vsprintf} from C/C++ has
+      been deprecated in macOS 13 and is a known security
+      risk.  \command{R CMD check} now reports (on all platforms) if
+      their use is found: replace by \code{snprintf} or \code{vsnprintf}.
     }
   }
 
