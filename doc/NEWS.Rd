@@ -215,11 +215,6 @@
       C++23 features beyond a check that the compiler reports a
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
-
-      \item The use of \code{sprintf} and \code{vsprintf} from C/C++ has
-      been deprecated in macOS 13 and is a known security
-      risk.  \command{R CMD check} now reports (on all platforms) if
-      their use is found: replace by \code{snprintf} or \code{vsnprintf}.
     }
   }
 
@@ -273,9 +268,16 @@
 
       \item Non-interactive debugger invocations can be trapped by
       setting the environment variable
-      \env{_R_CHECK_BROWSER_NONINTERACTIVE_} to a true value.
-      This is enabled by \command{R CMD check --as-cran} to detect
-      leftover \code{browser()} statements in package code.
+      \env{_R_CHECK_BROWSER_NONINTERACTIVE_} to a true value.  This is
+      enabled by \command{R CMD check --as-cran} to detect the use of
+      leftover \code{browser()} statements in the package.
+
+      \item The use of \code{sprintf} and \code{vsprintf} from C/C++ has
+      been deprecated in macOS 13 and is a known security risk.
+      \command{R CMD check} now reports (on all platforms) if their use
+      is found in the compiled code: replace by \code{snprintf} or
+      \code{vsnprintf}. [\bold{NB:} whether such calls get compiled into
+      the package is platform-dependent.]
     }
   }
 
