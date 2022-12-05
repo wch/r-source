@@ -3,32 +3,22 @@
 
 .pt <- proc.time()
 
-options(warn = 1)
-## as such functionality is missing currently:
-## "parallel" to Sys.timezone(); for now check no validity
-##  (neither does Sys.timezone() in the "TZ" case)
+options(warn = max(1, getOption("warn")))
 
-Sys.setTimezone <- function(tz)
-{
-    stopifnot(is.character(tz), length(tz) == 1L)
-    be <- baseenv()
-    unlockBinding(".sys.timezone", be)
-    assign(".sys.timezone", tz, be)
-    lockBinding(".sys.timezone", be)
-}
-
-## For some inter-platform reproducibility,
-## Simply calling Sys.setenv(TZ = "...") does *NOT* always work
-##  FIXME ?! --> see nzchar(TZenv) much further down
-myTZ <- "Australia/Melbourne"
-(TZenv <- Sys.getenv("TZ"))
-if(nzchar(TZenv)) ## TZ set, rather set it to the known  myTZ:
-    Sys.setenv(TZ = myTZ)
-Sys.getenv("TZ")
-Sys.setTimezone(myTZ)
-.sys.timezone # "Australia/Melbourne" hopefully:
-stopifnot(identical(.sys.timezone, myTZ))
-
+if(!nzchar(Sys.getenv("_R_CHECK_DATETIME3_NO_TZ_"))) withAutoprint({
+  ## For some inter-platform reproducibility, try to set timezone
+  ## even though  Sys.setenv(..) does *NOT* always work
+  myTZ <- "Australia/Melbourne"
+  (TZenvOrig <- Sys.getenv("TZ"))
+  Sys.setenv(TZ = myTZ)
+  Sys.getenv("TZ")
+  TZok <- Sys.getenv("TZ") == myTZ
+  if(!TZok) {
+      print(sessionInfo())
+      warning("'TZ' environment variable could *not* be set on this platform")
+      ## maybe even:  quit("no")
+  }
+})
 
 ## 0-length Date and POSIX[cl]t:  PR#71290
 D <- structure(17337, class = "Date") # Sys.Date() of "now"
@@ -527,11 +517,10 @@ sec <- (0:18)*47^3
 (ctUU <- as.POSIXct(ltU, tz="UCT")) # "good", all UTC, but shifted by 1-2 hours (int <-> non-int)
 table(dUe <- ctUe - ct..) # all 0 for int-tzone,  all 1 otherwise !!
 table(dUU <- ctUU - ct..) # all 11 x '1' and 8 x '2' for int-tzone,  all  '2'  otherwise !
-## FIXME?  The  if( nchar(TZenv) ) test should not be needed:
 stopifnot(exprs = {
-    if(nzchar(TZenv)) all.equal(ct.e, ct.., check.tzone=FALSE) else identical(ct.e, ct..)
+    all.equal(ct.e, ct.., check.tzone=FALSE)
     identical(cte., ct..)
-    if(nzchar(TZenv)) all.equal(ctee, ct.., check.tzone=FALSE) else identical(ctee, ct..)
+    all.equal(ctee, ct.., check.tzone=FALSE)
 })
 (b1 <- balancePOSIXlt(lt., fill.only=TRUE))
 (b2 <- balancePOSIXlt(lt.))
