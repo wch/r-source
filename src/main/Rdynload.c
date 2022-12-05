@@ -461,10 +461,10 @@ SEXP attribute_hidden Rf_registerRoutines(SEXP sSymbolList) {
     /* PASS 2: allocate all necessary structures and fill them.
        R_registerRoutines() copies all contents so we can use anything
        from the symbol list as-is and any transient allocations as well */
-    R_CMethodDef *cRoutines = n_c ? (R_CMethodDef*) R_alloc(n_c, sizeof(R_CMethodDef)) : NULL;
-    R_CallMethodDef *callRoutines = n_call ? (R_CallMethodDef*) R_alloc(n_call, sizeof(R_CallMethodDef)) : NULL;
-    R_FortranMethodDef *fortranRoutines = n_f ? (R_FortranMethodDef*) R_alloc(n_f, sizeof(R_FortranMethodDef)) : NULL;
-    R_ExternalMethodDef *externalRoutines = n_ext ? (R_ExternalMethodDef*) R_alloc(n_c, sizeof(R_ExternalMethodDef)) : NULL;
+    R_CMethodDef *cRoutines = n_c ? (R_CMethodDef*) R_alloc(n_c + 1, sizeof(R_CMethodDef)) : NULL;
+    R_CallMethodDef *callRoutines = n_call ? (R_CallMethodDef*) R_alloc(n_call + 1, sizeof(R_CallMethodDef)) : NULL;
+    R_FortranMethodDef *fortranRoutines = n_f ? (R_FortranMethodDef*) R_alloc(n_f + 1, sizeof(R_FortranMethodDef)) : NULL;
+    R_ExternalMethodDef *externalRoutines = n_ext ? (R_ExternalMethodDef*) R_alloc(n_c + 1, sizeof(R_ExternalMethodDef)) : NULL;
     /* populate them from the symbols */
     i = n_c = n_call = n_f = n_ext = 0;
     while (i < n) {
@@ -529,8 +529,18 @@ SEXP attribute_hidden Rf_registerRoutines(SEXP sSymbolList) {
 	    externalRoutines[n_ext].numArgs = numArgs;
 	    n_ext++;
 	}
-	i++;
     }
+
+    /* terminate the lists */
+    if (n_c)
+	memset(cRoutines + n_c, 0, sizeof(*cRoutines));
+    if (n_call)
+	memset(callRoutines + n_call, 0, sizeof(*callRoutines));
+    if (n_f)
+	memset(fortranRoutines + n_f, 0, sizeof(*fortranRoutines));
+    if (n_ext)
+	memset(externalRoutines + n_ext, 0, sizeof(*externalRoutines));
+
     return ScalarLogical(R_registerRoutines(dll, cRoutines, callRoutines,
 					    fortranRoutines, externalRoutines));
 }
