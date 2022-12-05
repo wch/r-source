@@ -1129,7 +1129,7 @@ Rd2HTML <-
 	    of0('<hr /><div style="text-align: center;">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
-        of0(hfcomps$footer) # write out footer
+        of0(paste(hfcomps$footer, collapse = "\n")) # write out footer
     }
     if (concordance) {
     	conc$srcFile <- Rdfile
