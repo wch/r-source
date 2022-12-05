@@ -1088,37 +1088,22 @@ Rd2HTML <-
             trimws(Rd[[ which(sections == "\\alias")[1] ]][[1]])
 	if (concordance)
             conc$saveSrcref(.Rd_get_section(Rd, "title"))
-        of0('<!DOCTYPE html>',
-            "<html>",
-	    '<head><title>')
 	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),
 	                     width=65, initial="R: ")
 	if (length(headtitle) > 1) headtitle <- paste0(headtitle[1], "...")
-	of1(htmlify(headtitle))
-	of0('</title>\n',
-	    '<meta http-equiv="Content-Type" content="text/html; charset=',
-	    mime_canonical_encoding(outputEncoding),
-	    '" />\n')
-        of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
-        ## include CSS from prismjs.com for code highlighting
-        if (enhancedHTML && length(PRISM_CSS) == 1L) of0('<link href="', urlify(PRISM_CSS), '" rel="stylesheet" />\n')
-        if (doTexMath) {
-            if (texmath == "katex") {
-                of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
-                    if (dynamic) paste0('<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n')
-                    else paste0('<script type="text/javascript">\n', paste(KATEX_CONFIG, collapse = "\n"), '</script>\n'),
-                    '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
-            }
-            else if (texmath == "mathjax") {
-                of0('<script type="text/javascript" src="', urlify(MATHJAX_CONFIG), '"></script>\n',
-                    '<script type="text/javascript" async src="', urlify(MATHJAX_JS), '"></script>\n')
-            }
-        }
-	of0('<link rel="stylesheet" type="text/css" href="',
-	    urlify(stylesheet),
-	    '" />\n',
-	    '</head><body><div class="container">\n\n',
-	    '<table style="width: 100%;">',
+
+        ## Create HTML header and footer
+        hfcomps <- # should we be able to specify static URLs here?
+            HTMLcomponents(title = headtitle, logo = FALSE,
+                           up = NULL,
+                           top = NULL,
+                           css = stylesheet,
+                           outputEncoding = outputEncoding,
+                           dynamic = dynamic, prism = enhancedHTML,
+                           doTexMath = doTexMath, texmath = texmath,
+                           PRISM_CSS_STATIC = NULL, PRISM_JS_STATIC = NULL)
+        of0(hfcomps$header) # write out header
+        of0('\n\n<table style="width: 100%;">',
             '<tr><td>',
             name)
 	if (nchar(package))
@@ -1138,16 +1123,13 @@ Rd2HTML <-
 	    writeSection(Rd[[i]], sections[i])
 
 	if(nzchar(version))
-	    version <- paste0('Package <em>',package,'</em> version ',version,' ')
+	    version <- paste0('Package <em>', package, '</em> version ', version, ' ')
 	of0('\n')
 	if(nzchar(version))
 	    of0('<hr /><div style="text-align: center;">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
-	of0('\n</div>\n')
-        ## include JS from prismjs.com for code highlighting
-        if (enhancedHTML && length(PRISM_JS) == 1L) of0('<script src="', urlify(PRISM_JS), '"></script>\n')
-        of0('</body></html>\n')
+        of0(hfcomps$footer) # write out footer
     }
     if (concordance) {
     	conc$srcFile <- Rdfile
