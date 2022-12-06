@@ -84,7 +84,7 @@ Sys.timezone <- function(location = TRUE)
         if(dir.exists(tzdir <- "/usr/share/zoneinfo") ||
            dir.exists(tzdir <- "/share/zoneinfo") ||
            dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
-           dir.exists(tzdir <- "/usrlib/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/lib/zoneinfo") ||
            dir.exists(tzdir <- "/usr/local/etc/zoneinfo") ||
            dir.exists(tzdir <- "/etc/zoneinfo") ||
            dir.exists(tzdir <- "/usr/etc/zoneinfo")) {
