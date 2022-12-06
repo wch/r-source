@@ -1102,7 +1102,7 @@ Rd2HTML <-
                            dynamic = dynamic, prism = enhancedHTML,
                            doTexMath = doTexMath, texmath = texmath,
                            PRISM_CSS_STATIC = NULL, PRISM_JS_STATIC = NULL)
-        of0(hfcomps$header) # write out header
+        of1(paste(hfcomps$header, collapse = "")) # write out header
         of0('\n\n<table style="width: 100%;">',
             '<tr><td>',
             name)
@@ -1124,12 +1124,12 @@ Rd2HTML <-
 
 	if(nzchar(version))
 	    version <- paste0('Package <em>', package, '</em> version ', version, ' ')
-	of0('\n')
+	of1('\n')
 	if(nzchar(version))
 	    of0('<hr /><div style="text-align: center;">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
-        of0(paste(hfcomps$footer, collapse = "\n")) # write out footer
+        of1(paste(hfcomps$footer, collapse = "")) # write out footer
     }
     if (concordance) {
     	conc$srcFile <- Rdfile
