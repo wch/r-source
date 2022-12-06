@@ -284,7 +284,13 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{default.stringsAsFactors()} is defunct.
-   }
+
+      \item Calling \code{as.data.frame.<class>()} directly (for 12 atomic
+      classes) is going to be formally deprecated, currently activated by
+      setting the enviroment variable
+      \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} to non-empty, which
+      also happens in \command{R CMD check --as-cran}.
+    }
   }
 
   \subsection{BUG FIXES}{
@@ -300,7 +306,7 @@
       requiring \code{Depends} packages; reported (with fix) in \PR{18331}
       by Mikael Jagan.
 
-      \item \code{R CMD Stangle}: improved message about \sQuote{Output}
+      \item \command{R CMD Stangle}: improved message about \sQuote{Output}
       files.
 
       \item \code{head(x, n)} and \code{tail(x, n)} now signal an error if
@@ -1784,7 +1790,7 @@
       S4 object \code{xS4}.
 
       \item Rudimentary support for vi-style tags in \code{rtags()} and
-      \code{R CMD rtags} has been added.  (Based on a patch from Neal
+      \command{R CMD rtags} has been added.  (Based on a patch from Neal
       Fultz in \PR{17214}.)
 
       \item \code{checkRdContents()} is now exported from \pkg{tools}; it

@@ -24,7 +24,6 @@
 \alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
-\alias{.as.data.frame.vector}% pro tem
 \alias{as.data.frame.array}
 \alias{as.data.frame.difftime}
 
@@ -102,7 +101,8 @@ is.data.frame(x)
   non-\code{NULL} \code{x}.
 
   Direct calls to  \code{as.data.frame.<class>()} are still possible (base package!),
-  for 12 atomic base classes, but will deprecated
+  for 12 atomic base classes, but will deprecated (already visibly by setting
+  environment variable \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} to non-empty)
   where calling \code{as.data.frame.vector()} instead is recommended.
 
   If a list is supplied, each element is converted to a column in the

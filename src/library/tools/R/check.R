@@ -2492,9 +2492,9 @@ add_dummies <- function(dir, Log)
 
                 Rcmd <- paste(opWarn_string, "\n",
                               if (do_install)
-                              sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
+                                  sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
                               else
-                              sprintf("tools::checkDocStyle(dir = \"%s\")\n", pkgdir))
+                                  sprintf("tools::checkDocStyle(dir = \"%s\")\n", pkgdir))
                 out <- R_runR2(Rcmd)
                 if (length(out)) {
                     if (!any) noteLog(Log)
@@ -6674,6 +6674,7 @@ add_dummies <- function(dir, Log)
 ##        Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
         Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
         Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "TRUE")
+        Sys.setenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
