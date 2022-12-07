@@ -287,7 +287,7 @@
 
       \item Calling \code{as.data.frame.<class>()} directly (for 12 atomic
       classes) is going to be formally deprecated, currently activated by
-      setting the enviroment variable
+      setting the environment variable
       \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} to non-empty, which
       also happens in \command{R CMD check --as-cran}.
     }
