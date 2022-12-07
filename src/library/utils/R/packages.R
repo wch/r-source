@@ -620,7 +620,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             ret[i, ] <- c(pkgs[i], lib, desc)
         }
     }
-    ret[!is.na(ret[, 1L]), ]
+    ret[!is.na(ret[, 1L]), , drop = FALSE]
 }
 
 installed.packages <-
