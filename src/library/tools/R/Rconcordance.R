@@ -66,7 +66,8 @@ activeConcordance <- function(srcfile = NA_character_)
 	}
 		
 	finish <- function() {
-		# Drop the last line if it is empty
+            ## Drop the last line if it is empty
+            lastText <<- lastText[[length(lastText)]]
 	    if (length(srcLinenum) && (len <- nchar(lastText)) && substr(lastText, len, len) == "\n")
 		srcLinenum <- srcLinenum[-length(srcLinenum)]
 	    

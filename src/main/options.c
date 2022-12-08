@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2020   The R Core Team.
+ *  Copyright (C) 1998-2022   The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -273,9 +273,9 @@ void attribute_hidden InitOptions(void)
 
     /* options set here should be included into mandatory[] in do_options */
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(23));
+    PROTECT(v = val = allocList(31));
 #else
-    PROTECT(v = val = allocList(22));
+    PROTECT(v = val = allocList(30));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -335,15 +335,15 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("warning.length"));
-    SETCAR(v, ScalarInteger(1000));
+    SETCAR(v, ScalarInteger(R_WarnLength));
     v = CDR(v);
 
     SET_TAG(v, install("nwarnings"));
-    SETCAR(v, ScalarInteger(50));
+    SETCAR(v, ScalarInteger(R_nwarnings));
     v = CDR(v);
 
     SET_TAG(v, install("OutDec"));
-    SETCAR(v, mkString("."));
+    SETCAR(v, mkString(OutDec));
     v = CDR(v);
 
     SET_TAG(v, install("browserNLdisabled"));
@@ -384,6 +384,39 @@ void attribute_hidden InitOptions(void)
     R_PCRE_limit_recursion = NA_LOGICAL;
     SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
     v = CDR(v);
+
+    SET_TAG(v, install("max.contour.segments"));
+    SETCAR(v, ScalarInteger(max_contour_segments));
+    v = CDR(v);
+
+    SET_TAG(v, install("warnPartialMatchDollar"));
+    SETCAR(v, ScalarLogical(R_warn_partial_match_dollar));
+    v = CDR(v);
+
+    SET_TAG(v, install("warnPartialMatchArgs"));
+    SETCAR(v, ScalarLogical(R_warn_partial_match_args));
+    v = CDR(v);
+
+    SET_TAG(v, install("warnPartialMatchAttr"));
+    SETCAR(v, ScalarLogical(R_warn_partial_match_attr));
+    v = CDR(v);
+
+    SET_TAG(v, install("showWarnCalls"));
+    SETCAR(v, ScalarLogical(R_ShowWarnCalls));
+    v = CDR(v);
+
+    SET_TAG(v, install("showErrorCalls"));
+    SETCAR(v, ScalarLogical(R_ShowErrorCalls));
+    v = CDR(v);
+
+    SET_TAG(v, install("showNCalls"));
+    SETCAR(v, ScalarInteger(R_NShowCalls));
+    v = CDR(v);
+
+    SET_TAG(v, install("browserNLdisabled"));
+    SETCAR(v, ScalarLogical(R_DisableNLinBrowser));
+    v = CDR(v);
+
     /* options set here should be included into mandatory[] in do_options */
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
@@ -514,7 +547,9 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (argi == R_NilValue) {
 		/* Handle option removal separately to simplify value checking
 		   for known options below; mandatory means not allowed to be
-		   removed once set, but not all have to be set at startup. */
+		   removed once set. It makes sense to also set these options
+		   at startup, because otherwise one could not reliably restore
+		   previously saved options (see also PR#18372).*/
 		const char *mandatory[] = {"prompt", "continue", "expressions",
 		  "width", "deparse.cutoff", "digits", "echo", "verbose",
 		  "check.bounds", "keep.source", "keep.source.pkgs",
@@ -522,6 +557,10 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  "nwarnings", "OutDec", "browserNLdisabled", "CBoundsCheck",
 		  "matprod", "PCRE_study", "PCRE_use_JIT",
 		  "PCRE_limit_recursion", "rl_word_breaks",
+		  "max.contour.segments", "warnPartialMatchDollar",
+		  "warnPartialMatchArgs", "warnPartialMatchAttr",
+		  "showWarnCalls", "showErrorCalls", "showNCalls",
+		  "browserNLdisabled",
 		  /* ^^^ from InitOptions ^^^ */
 		  "warn", "max.print", "show.error.messages",
 		  /* ^^^ from Common.R ^^^ */
@@ -823,6 +862,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(strings_as_fact)));
+	    }
+	    else if (streql(CHAR(namei), "verbose")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		int k = asLogical(argi);
+		R_Verbose = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

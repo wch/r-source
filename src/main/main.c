@@ -1344,6 +1344,13 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     }
 
+    /* trap non-interactive debugger invocation */
+    if(!R_Interactive) {
+        char *p = getenv("_R_CHECK_BROWSER_NONINTERACTIVE_");
+        if (p != NULL && StringTrue(p))
+            error(_("non-interactive browser() -- left over from debugging?"));
+    }
+
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
 

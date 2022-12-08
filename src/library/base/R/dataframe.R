@@ -181,10 +181,18 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
     UseMethod("as.data.frame")
 }
 
-as.data.frame.default <- function(x, ...)
+as.data.frame.default <- function(x, ...) {
+    isVectorLike <- function(x) {
+        (is.atomic(x) && !is.null(x)) ##  # <== should be new  is.atomic(x) (!)
+        ## || (is.vector(x) && !is.object(x))
+    }
+    if(isVectorLike(x))
+        as.data.frame.vector(x, ...)
+    else
     stop(gettextf("cannot coerce class %s to a data.frame",
                   sQuote(deparse(class(x))[1L])),
          domain = NA)
+}
 
 ###  Here are methods ensuring that the arguments to "data.frame"
 ###  are in a form suitable for combining into a data frame.
@@ -243,23 +251,15 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 {
     force(nm)
     nrows <- length(x)
-    ## ## row.names -- for now warn about and "forget" illegal row.names
-    ## ##           -- can simplify much (move this *after* the is.null(.) case) once we stop() !
-### FIXME: allow  integer [of full length]
-    if(!(is.null(row.names) || (is.character(row.names) && length(row.names) == nrows))) {
-	warning(gettextf(
-	    "'row.names' is not a character vector of length %d -- omitting it. Will be an error!",
-	    nrows), domain = NA)
-	row.names <- NULL
-    }
     if(is.null(row.names)) {
 	if (nrows == 0L)
 	    row.names <- character()
 	else if(length(row.names <- names(x)) != nrows || anyDuplicated(row.names))
 	    row.names <- .set_row_names(nrows)
     }
-    ## else if(length(row.names) != nrows) # same behavior as the 'matrix' method
-    ##     row.names <- .set_row_names(nrows)
+    else if(!(is.character(row.names) || is.integer(row.names)) || length(row.names) != nrows)
+	stop(gettextf("'row.names' is not a character or integer vector of length %d", nrows),
+             domain = NA)
     if(!is.null(names(x))) names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
     if(!optional) names(value) <- nm
@@ -302,8 +302,6 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, make.nam
     ncols <- d[[2L]]
     ic <- seq_len(ncols)
     dn <- dimnames(x)
-    ## surely it cannot be right to override the supplied row.names?
-    ## changed in 1.8.0
     if(is.null(row.names)) row.names <- dn[[1L]]
     collabs <- dn[[2L]]
     ## These might be NA

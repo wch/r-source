@@ -4530,6 +4530,12 @@ applications built with a different compiler toolchain. One may set the
 value to @code{"watson"} for interactive debugging on Windows via
 @code{_invoke_watson}.
 Default: disabled.
+
+@item _R_CHECK_BROWSER_NONINTERACTIVE_
+If set to a true value, trap non-interactive debugger invocations.
+These are most likely caused by leftover @code{browser()} statements
+in package code.
+Default: unset (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4640,6 +4646,7 @@ _R_CHECK_CODE_CLASS_IS_STRING_=true
 _R_CHECK_RD_VALIDATE_RD2HTML_=true
 _R_CHECK_RD_MATH_RENDERING_=true
 _R_CHECK_NEWS_IN_PLAIN_TEXT_=true
+_R_CHECK_BROWSER_NONINTERACTIVE_=true
 @end example
 
 @noindent

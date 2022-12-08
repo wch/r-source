@@ -3380,8 +3380,9 @@ you may need to change @R{}'s defaults: @pxref{Making the manuals}).
 Note that package @pkg{hyperref} (currently) requires packages
 @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount},
 and @pkg{inconsolata} requires @pkg{xkeyval}.
-Building the base vignettes additionally requires @pkg{fancyvrb},
-@pkg{natbib}, @pkg{parskip} and @pkg{listings}.
+Building the base vignettes requires @pkg{fancyvrb},
+@pkg{natbib}, @pkg{parskip} (which currently requires @pkg{etoolbox})
+and @pkg{listings}.
 For distributions
 based on TeX Live the simplest approach may be to install collections
 @pkg{collection-latex}, @pkg{collection-fontsrecommended},

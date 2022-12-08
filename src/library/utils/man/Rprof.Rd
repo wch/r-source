@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rprof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rprof}
@@ -64,6 +64,9 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   click (probably in the range 1--10 ms).
     }
   }
+
+  On Linux, the interval needs to be at least 10ms, on all other platforms
+  at least 1ms.  Shorter intervals will be rounded up with a warning.
 
   Functions will only be recorded in the profile log if they put a
   context on the call stack (see \code{\link{sys.calls}}).  Some

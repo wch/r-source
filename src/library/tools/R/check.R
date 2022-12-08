@@ -2492,9 +2492,9 @@ add_dummies <- function(dir, Log)
 
                 Rcmd <- paste(opWarn_string, "\n",
                               if (do_install)
-                              sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
+                                  sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
                               else
-                              sprintf("tools::checkDocStyle(dir = \"%s\")\n", pkgdir))
+                                  sprintf("tools::checkDocStyle(dir = \"%s\")\n", pkgdir))
                 out <- R_runR2(Rcmd)
                 if (length(out)) {
                     if (!any) noteLog(Log)
@@ -3659,10 +3659,14 @@ add_dummies <- function(dir, Log)
                 pat2 <- paste("possibly from", sQuote("(read|write)"))
                 pat3 <- paste("possibly from", sQuote("close"))
                 pat4 <- paste("possibly from", sQuote("open"))
+                pat5 <- paste("possibly from", sQuote("sprintf"))
+                pat6 <- paste("possibly from", sQuote("vsprintf"))
                 if(haveObjs &&
                    (any(grepl(pat1, out)) && !any(grepl(pat2, out))) ||
                    (any(grepl(pat3, out)) && !any(grepl(pat4, out))) ||
-                   (any(grepl(pat4, out)) && !any(grepl(pat3, out))))
+                   (any(grepl(pat4, out)) && !any(grepl(pat3, out))) ||
+                   any(grepl(pat5, out)) || any(grepl(pat6, out))
+                   )
                     warningLog(Log)
                 else noteLog(Log)
             }
@@ -3674,11 +3678,11 @@ add_dummies <- function(dir, Log)
                 if(haveObjs)
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead of",
-                      "to the console, nor use Fortran I/O nor system RNGs.\n")
+                      "to the console, nor use Fortran I/O nor system RNGs nor [v]sprintf.\n")
                 else
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead of",
-                      "to the console, nor use Fortran I/O nor system RNGs.",
+                      "to the console, nor use Fortran I/O nor system RNGs nor [v]sprintf.",
                       "The detected symbols are linked",
                       "into the code but might come from libraries",
                       "and not actually be called.\n")
@@ -3732,6 +3736,7 @@ add_dummies <- function(dir, Log)
         t2 <- proc.time()
         print_time(t1, t2, Log)
         if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
+            warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("\nIt looks like this package",
                     "(or one of its dependent packages)",
@@ -4754,7 +4759,7 @@ add_dummies <- function(dir, Log)
                 ## testing what R CMD build uses.
                 Rcmd <-
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "TRUE")))
-                        sprintf("%s\ntools::buildVignettes(dir = '%s')",
+                        sprintf("%s\ntools::buildVignettes(dir = '%s', skip = TRUE)",
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
                     else {
@@ -4762,7 +4767,7 @@ add_dummies <- function(dir, Log)
                             tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
                                        fixed = TRUE)
                             saveRDS(c(jitstr, if(R_cdo_vignettes) elibs_cdo else elibs), tf)
-                            sprintf("%s\ntools::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                            sprintf("%s\ntools::buildVignettes(dir = '%s', skip = TRUE, ser_elibs = '%s')",
                                     opWarn_string,
                                     file.path(pkgoutdir, "vign_test", pkgname0),
                                     tf)
@@ -4788,6 +4793,8 @@ add_dummies <- function(dir, Log)
                               out, value = TRUE, useBytes = TRUE)
                 ltx_err <- any(grepl("LaTeX error", out, ignore.case = TRUE,
                                      useBytes = TRUE))
+                iskip <- grep("^Note: skipping .* dependencies:", out,
+                              useBytes = TRUE)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
@@ -4817,6 +4824,14 @@ add_dummies <- function(dir, Log)
                         unlink(vd2, recursive = TRUE)
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
+                    if (length(iskip)) {
+                        iempty <- which(out == "")
+                        ## skipping notes from buildVignettes each close with empty line
+                        iskip <- unlist(lapply(iskip, function(i)
+                            i:(iempty[iempty > i][1L] - 1L)))
+                        noteLog(Log)
+                        printLog0(Log, paste(out[iskip], collapse = "\n"), "\n")
+                    } else
                     resultLog(Log, "OK")
                 }
                 if(!WINDOWS && !is.na(theta)) {
@@ -6658,6 +6673,8 @@ add_dummies <- function(dir, Log)
         if(is.na(prev)) Sys.setenv("_R_CHECK_MATRIX_DATA_" = "TRUE")
 ##        Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
         Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
+        Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "TRUE")
+        Sys.setenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

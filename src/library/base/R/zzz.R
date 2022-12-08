@@ -405,7 +405,6 @@ matrix(c("!", "hexmode",
          "as.data.frame", "raw",
          "as.data.frame", "table",
          "as.data.frame", "ts",
-         "as.data.frame", "vector",
          "as.double", "POSIXlt",
          "as.double", "difftime",
          "as.expression", "default",
@@ -650,3 +649,29 @@ matrix(c("!", "hexmode",
          "xtfrm", "numeric_version"),
        ncol = 2L, byrow = TRUE,
        dimnames = list(NULL, c("generic", "class")))
+
+## Create .as.data.frame.vector :=  deprecated version  as.data.frame.vector
+## which will be used for the now-deprecated as.data.frame.<foo> methods:
+local({
+    bdy <- body(as.data.frame.vector)
+    bdy <- bdy[c(1:2, seq_along(bdy)[-1L])] # taking [(1,2,2:n)] to insert at [2]:
+    ## deprecation warning only when not called by method dispatch from as.data.frame():
+    bdy[[2L]] <- quote(if(is.na(match(expression(as.data.frame), lapply(sys.calls(), `[[`, 1L))) &&
+                          nzchar(Sys.getenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_")))
+	.Deprecated(
+	    msg = gettextf(
+		"Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead",
+		"PLACEHOLDER", "as.data.frame.vector", "as.data.frame")))
+    ii <- c(2L, 3L,2L, 3L)
+    stopifnot(identical(bdy[[ii]], "PLACEHOLDER"))
+    ASDFV <- function(fn) {## = our deprecated AS.Data.Frame.Vector()
+        bdy[[ii]] <- fn  # now basically calling `body(.) <- bdy` :
+        as.function(c(as.list(formals(as.data.frame.vector)), list(bdy)), .BaseNamespaceEnv)
+    }
+    ## now replace all the as.data.frame.<foo> methods which were := as.data.frame.vector :
+    for(f in paste0("as.data.frame.",
+                    c("raw", "logical", "integer", "numeric", "complex",
+                      "factor", "ordered", "Date", "difftime", "POSIXct",
+                      "noquote", "numeric_version")))
+        assign(f, ASDFV(f), .BaseNamespaceEnv)
+})

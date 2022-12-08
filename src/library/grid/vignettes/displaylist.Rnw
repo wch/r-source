@@ -9,8 +9,7 @@
 
 % \VignetteIndexEntry{Display Lists in grid}
 % \VignettePackage{grid}
-% \VignetteDepends{graphics}
-% \VignetteDepends{gridBase}
+% \VignetteDepends{grDevices, graphics, stats}
 
 \newcommand{\grid}{\pkg{grid}}
 \newcommand{\gridBase}{\CRANpkg{gridBase}}

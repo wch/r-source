@@ -299,7 +299,9 @@ Rd2HTML <-
              dynamic = FALSE, no_links = FALSE, fragment=FALSE,
              stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
              texmath = getOption("help.htmlmath"),
-    	     concordance = FALSE,
+             concordance = FALSE,
+             standalone = TRUE,
+             Rhtml = FALSE, # TODO: guess from 'out' if non-missing
              ...)
 {
     ## Is this package help, as opposed to from Rdconv or similar?
@@ -614,7 +616,7 @@ Rd2HTML <-
 	switch(tag,
                UNKNOWN =,
                VERB = of1(vhtmlify(block, inEqn)),
-               RCODE = of1(vhtmlify(block)),
+               RCODE = if (Rhtml) of1(block) else of1(vhtmlify(block)),
                TEXT = of1(if(doParas && !inAsIs) addParaBreaks(htmlify(block)) else vhtmlify(block)),
                USERMACRO =,
                "\\newcommand" =,
@@ -968,11 +970,15 @@ Rd2HTML <-
     	} else
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
-        if (tag %in% c("\\examples", "\\usage")) {
-            if (dynamic && enhancedHTML && tag == "\\examples" && !is.null(firstAlias))
+        if (tag == "\\usage") {
+            of1("<pre><code class='language-R'>")
+            inPara <<- NA
+            pre <- TRUE
+        } else if (tag == "\\examples") {
+            if (dynamic && enhancedHTML && !Rhtml && !is.null(firstAlias))
                 of1(sprintf("<p><a href='../Example/%s'>Run examples</a></p>",
                             topic2url(firstAlias)))
-            of1("<pre><code class='language-R'>")
+            if (Rhtml) of1("\n\n<!--begin.rcode\n") else of1("<pre><code class='language-R'>")
             inPara <<- NA
             pre <- TRUE
         } else {
@@ -986,7 +992,9 @@ Rd2HTML <-
 	    writeContent(section, tag)
 	}
 	leavePara(FALSE)
-	if (pre) of0("</code></pre>\n")
+        if (pre) # must be \usage or \examples
+            if (Rhtml && tag == "\\examples") of1("\nend.rcode-->\n\n")
+            else of1("</code></pre>\n")
     	sectionLevel <<- save
     }
 
@@ -1088,42 +1096,29 @@ Rd2HTML <-
             trimws(Rd[[ which(sections == "\\alias")[1] ]][[1]])
 	if (concordance)
             conc$saveSrcref(.Rd_get_section(Rd, "title"))
-        of0('<!DOCTYPE html>',
-            "<html>",
-	    '<head><title>')
 	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),
 	                     width=65, initial="R: ")
 	if (length(headtitle) > 1) headtitle <- paste0(headtitle[1], "...")
-	of1(htmlify(headtitle))
-	of0('</title>\n',
-	    '<meta http-equiv="Content-Type" content="text/html; charset=',
-	    mime_canonical_encoding(outputEncoding),
-	    '" />\n')
-        of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
-        ## include CSS from prismjs.com for code highlighting
-        if (enhancedHTML && length(PRISM_CSS) == 1L) of0('<link href="', urlify(PRISM_CSS), '" rel="stylesheet" />\n')
-        if (doTexMath) {
-            if (texmath == "katex") {
-                of0('<link rel="stylesheet" href="', urlify(KATEX_CSS), '">\n',
-                    if (dynamic) paste0('<script type="text/javascript" src="', urlify(KATEX_CONFIG), '"></script>\n')
-                    else paste0('<script type="text/javascript">\n', paste(KATEX_CONFIG, collapse = "\n"), '</script>\n'),
-                    '<script defer src="', urlify(KATEX_JS), '"\n    onload="processMathHTML();"></script>\n')
-            }
-            else if (texmath == "mathjax") {
-                of0('<script type="text/javascript" src="', urlify(MATHJAX_CONFIG), '"></script>\n',
-                    '<script type="text/javascript" async src="', urlify(MATHJAX_JS), '"></script>\n')
-            }
+
+        ## Create HTML header and footer
+        if (standalone) {
+            hfcomps <- # should we be able to specify static URLs here?
+                HTMLcomponents(title = headtitle, logo = FALSE,
+                               up = NULL,
+                               top = NULL,
+                               css = stylesheet,
+                               outputEncoding = outputEncoding,
+                               dynamic = dynamic, prism = enhancedHTML,
+                               doTexMath = doTexMath, texmath = texmath,
+                               PRISM_CSS_STATIC = NULL, PRISM_JS_STATIC = NULL)
+            of1(paste(hfcomps$header, collapse = "")) # write out header
+            of0('\n\n<table style="width: 100%;">',
+                '<tr><td>',
+                name)
+            if (nchar(package))
+                of0(' {', package, '}')
+            of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
         }
-	of0('<link rel="stylesheet" type="text/css" href="',
-	    urlify(stylesheet),
-	    '" />\n',
-	    '</head><body><div class="container">\n\n',
-	    '<table style="width: 100%;">',
-            '<tr><td>',
-            name)
-	if (nchar(package))
-	    of0(' {', package, '}')
-	of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
 
 	of1("<h2>")
 	inPara <- NA
@@ -1138,16 +1133,15 @@ Rd2HTML <-
 	    writeSection(Rd[[i]], sections[i])
 
 	if(nzchar(version))
-	    version <- paste0('Package <em>',package,'</em> version ',version,' ')
-	of0('\n')
-	if(nzchar(version))
-	    of0('<hr /><div style="text-align: center;">[', version,
-		if (!no_links) '<a href="00Index.html">Index</a>',
-		']</div>')
-	of0('\n</div>\n')
-        ## include JS from prismjs.com for code highlighting
-        if (enhancedHTML && length(PRISM_JS) == 1L) of0('<script src="', urlify(PRISM_JS), '"></script>\n')
-        of0('</body></html>\n')
+	    version <- paste0('Package <em>', package, '</em> version ', version, ' ')
+	of1('\n')
+        if (standalone) {
+            if(nzchar(version))
+                of0('<hr /><div style="text-align: center;">[', version,
+                    if (!no_links) '<a href="00Index.html">Index</a>',
+                    ']</div>')
+            of1(paste(hfcomps$footer, collapse = "")) # write out footer
+        }
     }
     if (concordance) {
     	conc$srcFile <- Rdfile
