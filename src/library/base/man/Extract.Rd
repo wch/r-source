@@ -385,7 +385,7 @@ op <- options(warnPartialMatchDollar = TRUE)
 stopifnot( identical(li$p, pi), #-- a warning
   inherits(tryCatch (li$p, warning = identity), "warning"))
 ## revert the warning option:
-if(is.null(op[[1]])) op[[1]] <- FALSE; options(op)
+options(op)
 }
 \keyword{array}
 \keyword{list}

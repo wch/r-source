@@ -22,6 +22,8 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
         texmath = getOption("help.htmlmath"),
         concordance = FALSE,
+        standalone = TRUE,
+        Rhtml = FALSE,
         ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
@@ -67,6 +69,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     }
   \item{concordance}{Whether concordance data should be embedded in the
     output file and attached to the return value.}
+  \item{standalone}{logical: whether the output is intended to be a
+    standalone HTML file. If \code{FALSE}, the header and footer are
+    omitted, so that the output can be combined with other fragments.
+  }
+  \item{Rhtml}{logical: whether the output is intended to be a Rhtml
+      file that can be processed using knitr. If \code{TRUE}, the
+      examples section is wrapped inside a \code{rcode} block. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to

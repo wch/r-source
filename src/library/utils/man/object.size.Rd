@@ -32,8 +32,8 @@ object.size(x)
 	\code{"B"}, \code{"KiB"}, \code{"MiB"}, \code{"GiB"},
 	\code{"TiB"}, \code{"PiB"}, \code{"EiB"}, \code{"ZiB"} and \code{"YiB"}.}
       \item{\code{standard = "SI"}:}{
-	\code{"B"}, \code{"kB"}, \code{"MB"}, \code{"GB"}, \code{"TB"},
-	\code{"PB"}, \code{"EB"}, \code{"ZB"} and \code{"YB"}.}
+	\code{"B"}, \code{"kB"}, \code{"MB"}, \code{"GB"}, \code{"TB"}, \code{"PB"},
+	\code{"EB"}, \code{"ZB"}, \code{"YB"}, \code{"RB"}, and \code{"QB"}.}
     }
     For all standards, \code{unit = "auto"} is also allowed.
     If \code{standard = "auto"}, any of the "legacy" and \acronym{IEC}
@@ -111,6 +111,8 @@ object.size(x)
      1000^6  \tab  1 EB  \cr
      1000^7  \tab  1 ZB  \cr
      1000^8  \tab  1 YB  \cr
+     1000^9  \tab  1 RB  \cr
+     1000^10 \tab  1 QB  \cr
   }
 }
 \value{

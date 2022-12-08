@@ -1726,7 +1726,9 @@ nonS3methods <- function(package)
     ## Using package = NULL returns all known examples
 
     stopList <-
-        list(base = c("all.equal", "all.names", "all.vars", "expand.grid",
+        list(base = c("all.equal", "all.names", "all.vars",
+             "as.data.frame.vector",
+             "expand.grid",
              "format.char", "format.info", "format.pval",
              "max.col",
              "pmax.int", "pmin.int",
@@ -1836,7 +1838,7 @@ function()
     ind <- grepl("^[[:alpha:]]", generics)
     generics <- c(generics[!ind], generics[ind])
     ## The foo.bar objects in base:
-    objects <- grep("[^.]+[.]", objects, value = TRUE)
+    objects <- grep("[^.]+[.][[:alpha:]]", objects, value = TRUE)
     ## Make our lives easier ...
     objects <- setdiff(objects, nonS3methods("base"))
     ## Find the ones matching GENERIC.CLASS from the list of generics.
@@ -1856,6 +1858,8 @@ function()
 .deparse_S3_methods_table_for_base <-
 function()
 {
+    if(!identical("C", Sys.getlocale("LC_COLLATE")))
+        warning("*not* using 'C' for LC_COLLATE locale")
     mdb <- .make_S3_methods_table_for_base()
     n <- nrow(mdb)
     c(sprintf("%s\"%s\", \"%s\"%s",

@@ -4,6 +4,18 @@
 tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
+`%||%` <- function (L, R)  if(is.null(L)) R else L
+##' get value of `expr` and keep warning as attribute (if there is one)
+getVaW <- function(expr) {
+    W <- NULL
+    withCallingHandlers(val <- expr,
+                        warning = function(w) {
+                            W <<- conditionMessage(w)
+                            invokeRestart("muffleWarning") })
+    structure(val, warning = W)
+}
+options(nwarnings = 10000, # (rather than just 50)
+        width = 99) # instead of 80
 
 onWindows <- .Platform$OS.type == "windows"
 englishMsgs <- {
@@ -22,6 +34,7 @@ englishMsgs <- {
     }
 }
 cat(sprintf("English messages: %s\n", englishMsgs))
+Sys.setenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = "true")# just in case
 
 
 ## very small size hashed environments
@@ -319,6 +332,69 @@ stopifnot(exprs = {
 ## isS3method() for names starting with a dot
 stopifnot(!isS3method(".Internal"))
 ## failed with "invalid first argument" in R <= 4.2.x
+
+
+## cor.test.formula() scoping issue -- PR#18439
+form <- ~ CONT + INTG
+local({
+    USJudgeRatings <- head(USJudgeRatings)
+    stopifnot(cor.test(form, data = USJudgeRatings)$parameter == 4)
+})
+## R <= 4.2.x evaluated the constructed call in environment(formula)
+
+
+## PR # 18421 by Benjamin Feakins (and follow up):
+## ---------- "roman", "hexcode" and "octcode" all cannot easily be added to data frames
+for(x in list(as.roman(1:14), as.octmode(1:11), as.hexmode(1:19), as.raw(0:65), (0:17) %% 7 == 0,
+              as.difftime(c(0,30,60:64), units="mins"),
+              seq(ISOdate(2000,2,10), by = "23 hours", length.out = 50)
+ )) {
+  cat("x:"); str(x, vec.len=8)
+  ## the error can be triggered by the following methods:
+  ### 1. as.data.frame()
+  dat1 <- as.data.frame(x) # now works, previously signalled
+  ## Error in as.data.frame.default(x) :
+  ##   cannot coerce class ‘"roman"’ to a data.frame
+  ### 2. data.frame()
+  dat2 <- data.frame(x) # gave error as above, now works
+  stopifnot(identical(dat1, dat2),
+            identical(   data.frame(my.x = x),
+                      as.data.frame(x, nm="my.x")))
+  ### 3. cbind()
+  dat3 <- data.frame(y = seq_along(x))
+  dat3 <- cbind(dat3, x) # gave error, now works
+  stopifnot(identical(dat2, dat3[,"x", drop=FALSE]))
+  ## These worked already previously:
+  dat <- data.frame(x = integer(length(x)))
+  dat$x <- x
+  datl <- list2DF(list(x=x))
+  stopifnot(identical(dat, dat2),
+            identical(dat, datl))
+}
+## --- such data.frame() coercions gave errors in R <= 4.2.x
+
+
+## Deprecation of {direct calls to}  as.data.frame.<cls>()
+cls <- c("raw", "logical", "integer", "numeric", "complex",
+         "factor", "ordered", "Date", "difftime", "POSIXct",
+         "noquote", "numeric_version")
+names(cls) <- cls
+be <- baseenv()
+asF  <- lapply(cls, function(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
+obs  <- lapply(cls, function(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, 1:2)))
+asDF <- lapply(cls, function(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
+stopifnot(exprs = {
+    vapply(obs, \(.) class(.)[1], "") == cls
+    vapply(asDF, is.data.frame, NA)
+    ## the first column of each data frame is of the original class:
+    vapply(lapply(asDF, `[[`, 1), \(.) class(.)[1], "") == cls
+    ## all should have a deprecation warning
+    is.character(asDwarn <- vapply(asDF, attr, "<text>", "warning"))
+    !englishMsgs || all(grepl("deprecated.*as\\.data\\.frame\\.vector", asDwarn))
+    length(unique(vapply(cls, function(cl) sub(cl, "<class>", asDwarn[[cl]], fixed=TRUE), ""))) == 1L
+})
+## as.data.frame.<cls>(.) worked w/o deprecation warning in R <= 4.2.x
+
 
 
 ## keep at end

@@ -304,7 +304,7 @@ strptime(x, format, tz = "")
   output if the offset is undetermined, but some systems use
   \code{+0000} or the offsets for the time zone in use for the current
   year.  (On some platforms this works better after conversion to
-  \code{"POSIXct"}.  Some platforms only recgnize hour or half-hour
+  \code{"POSIXct"}.  Some platforms only recognize hour or half-hour
   offsets for output.)%% strftime in macOS 13.
   
   Using \code{\%z} for input makes most sense with \code{tz = "UTC"}.

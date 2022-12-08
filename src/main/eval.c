@@ -499,7 +499,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     */ 
     itv.it_interval.tv_sec = interval / 1000000;
     itv.it_interval.tv_usec =
-	(suseconds_t)(interval - itv.it_interval.tv_sec * 10000000);
+	(suseconds_t)(interval - itv.it_interval.tv_sec * 1000000);
     itv.it_value.tv_sec = interval / 1000000;
     itv.it_value.tv_usec =
 	(suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
@@ -538,6 +538,18 @@ SEXP do_Rprof(SEXP args)
     bufsize = asInteger(CAR(args));
     if (bufsize < 0)
 	error(_("invalid '%s' argument"), "bufsize");
+
+#if defined(linux) || defined(__linux__)
+    if (dinterval < 0.01) {
+	dinterval = 0.01;
+	warning(_("interval too short for this platform, using '%f'"), dinterval);
+    }
+#else
+    if (dinterval < 0.001) {
+	dinterval = 0.001;
+	warning(_("interval too short, using '%f'"), dinterval);
+    }
+#endif
 
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
