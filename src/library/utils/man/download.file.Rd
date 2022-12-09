@@ -259,6 +259,17 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   use \code{\link{capabilities}("libcurl")} in a program to see if it is
   available.
 }
+
+\section{\code{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \code{https://}
+  ones are much preferred for use in \R.
+
+  It is intended that \R will continue to allow such URLs for as long as
+  \code{libcurl} does, but as they become rarer this is increasingly
+  untested.   What \sQuote{protocals} the version of  \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersiion}()}.
+}
+
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the
