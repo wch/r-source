@@ -248,8 +248,8 @@ socketTimeout(socket, timeout = -1)
 
   \code{method = "libcurl"} allows more schemes: exactly which schemes
   is platform-dependent (see \code{\link{libcurlVersion}}), but all
-  Unix-alike platforms will support \samp{https://} and most platforms
-  will support \samp{ftps://}.
+  platforms will support \samp{https://} and most platforms will support
+  \samp{ftps://}.
 
   Support for the \samp{ftp://} scheme by the \code{"internal"} method was
   deprecated in \R 4.1.1 and removed in \R 4.2.0.
@@ -576,6 +576,17 @@ socketTimeout(socket, timeout = -1)
   names not in the native encoding to be opened on file systems which
   use Unicode file names (such as NTFS but not FAT32).
 }
+
+\section{\code{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \code{https://}
+  ones are much preferred for use in \R.
+
+  It is intended that \R will continue to allow such URLs for as long as
+  \code{libcurl} does, but as they become rarer this is increasingly
+  untested.   What \sQuote{protocols} the version of \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersion}()}.
+}
+
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the S model, for example in output
