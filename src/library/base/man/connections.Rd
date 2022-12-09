@@ -248,8 +248,8 @@ socketTimeout(socket, timeout = -1)
 
   \code{method = "libcurl"} allows more schemes: exactly which schemes
   is platform-dependent (see \code{\link{libcurlVersion}}), but all
-  Unix-alike platforms will support \samp{https://} and most platforms
-  will support \samp{ftps://}.
+  platforms will support \samp{https://} and most platforms will support
+  \samp{ftps://}.
 
   Support for the \samp{ftp://} scheme by the \code{"internal"} method was
   deprecated in \R 4.1.1 and removed in \R 4.2.0.
@@ -583,8 +583,8 @@ socketTimeout(socket, timeout = -1)
 
   It is intended that \R will continue to allow such URLs for as long as
   \code{libcurl} does, but as they become rarer this is increasingly
-  untested.   What \sQuote{protocals} the version of  \code{libcurl}
-  being used supports can be seen by calling \code{\link{libcurlVersiion}()}.
+  untested.   What \sQuote{protocols} the version of \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersion}()}.
 }
 
 \note{
