@@ -5868,6 +5868,11 @@ LLVM @command{clang} did not have @code{bind} in the main namespace.  Also
 seen has been type @code{size_t} defined only in the @code{std} namespace.
 @c with g++ on Solaris 10.
 
+@strong{NB:} These functions are only guaranteed to be in the
+@code{std} namespace if the correct C++ header is included, e.g.@:
+@code{<cmath>} rather than @code{<math.h>}.
+@c seen for std::sqrt on macOS 13.
+
 @item
 @c including LLVM clang as from 4.0.0
 Some C++ compilers refuse to compile constructs such as
