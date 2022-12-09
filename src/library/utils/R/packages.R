@@ -1205,3 +1205,14 @@ compareVersion <- function(a, b)
 .BioC_version_associated_with_R_version <- function ()
     numeric_version(Sys.getenv("R_BIOC_VERSION",
                                .BioC_version_associated_with_R_version_default))
+
+## Helper for getting the dependencies of the given installed packages
+## without reading the DESCRIPTION metadata of all installed packages.
+.installed_package_dependencies <- function(pkgs, fields) {
+    mat <- do.call(rbind,
+                   lapply(.libPaths(), .readPkgDesc, fields, pkgs))
+    lst <- apply(mat[, - c(1L, 2L), drop = FALSE], 1L,
+                 .clean_up_dependencies)
+    names(lst) <- mat[, 1L]
+    lst
+}
