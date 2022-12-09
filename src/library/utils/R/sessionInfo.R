@@ -222,7 +222,7 @@ toLatex.sessionInfo <-
 	       paste0("  \\item Locale: \\verb|",
                   gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
                ## FIXME: does not print codepages.
-           if (locale) paste0("  \\item Time zone ", object$tzone),
+           if (locale) paste0("  \\item Time zone: \\verb|", object$tzone, "|"),
            ## FIXME: omits tzcode_source and codepages
 	   paste0("  \\item Running under: \\verb|",
 		  gsub(";", "|, \\verb|", object$running, fixed=TRUE), "|"),
