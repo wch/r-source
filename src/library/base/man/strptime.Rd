@@ -67,12 +67,12 @@ strptime(x, format, tz = "")
   \code{format.POSIXct} first convert to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}} (so they also work for class
   \code{"\link{Date}"}).  Note that only that conversion depends on the
-  time zone.
-  Since \R version 4.2.0, that \code{as.POSIXlt()} conversion now treats
-  the non-finite numeric \code{-Inf}, \code{Inf}, \code{NA} and \code{NaN}
-  differently (where previously all were treated as \code{NA}) and also
-  the \code{format()} method for \code{POSIXlt} now treats these different
-  non-finite times and dates analogously to type \code{\link{double}}.
+  time zone.  Since \R version 4.2.0, \code{as.POSIXlt()} conversion now
+  treats the non-finite numeric \code{-Inf}, \code{Inf}, \code{NA} and
+  \code{NaN} differently (where previously all were treated as
+  \code{NA}). Also the \code{format()} method for \code{POSIXlt} now
+  treats these different non-finite times and dates analogously to type
+  \code{\link{double}}.
 
   The usual vector re-cycling rules are applied to \code{x} and
   \code{format} so the answer will be of length of the longer of these

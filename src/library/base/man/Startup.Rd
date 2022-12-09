@@ -153,7 +153,7 @@
   to \file{.Renviron}.
 
   There is a 100,000 byte limit on the length of a line (after expansions)
-  in environment files (prior to \R 4.1 it was 10,000).
+  in environment files.
 }
 \note{
   It is not intended that there be interaction with the user during
@@ -197,9 +197,9 @@
   \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to (if possible, which it
   is not on Windows) \code{""} or to the name of a non-existent file.
 
-  Prior to \R 4.0.0, \code{${foo-bar}} in an environment file skipped an
-  empty \code{foo}: this has been changed to match the POSIX rules for
-  parameter substitution in shells.
+  %% Prior to \R 4.0.0, \code{${foo-bar}} in an environment file skipped an
+  %% empty \code{foo}: this has been changed to match the POSIX rules for
+  %% parameter substitution in shells.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c

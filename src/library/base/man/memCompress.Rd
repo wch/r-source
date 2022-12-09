@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2020 R Core Team
+% Copyright 2009-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -24,7 +24,7 @@ memDecompress(from,
   \item{from}{A raw vector.  For \code{memCompress} a character vector
     will be converted to a raw vector with character strings separated
     by \code{"\n"}.  Types \code{"gzip"} and \code{"xz"} support long
-    raw vectors as from \R 4.0.0.
+    raw vectors.
   }
   \item{type}{character string, the type of compression.  May be
     abbreviated to a single letter, defaults to the first of the alternatives.}

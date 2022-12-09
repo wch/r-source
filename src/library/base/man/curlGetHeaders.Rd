@@ -11,7 +11,6 @@
 \description{
   Retrieve the headers for a URL for a supported protocol such as
   \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
-  Prior to \R 4.2.0, an optional function not supported on all platforms.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE, verify = TRUE,

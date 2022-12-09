@@ -387,10 +387,10 @@ getOption(x, default = NULL)
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
 
-    \item{\code{stringsAsFactors}:}{The default setting for
-      \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
-      used to provide the default values of the \code{stringsAsFactors}
-      argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
+    %% \item{\code{stringsAsFactors}:}{The default setting for
+    %%   \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
+    %%   used to provide the default values of the \code{stringsAsFactors}
+    %%   argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by functions
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.

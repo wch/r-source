@@ -1,6 +1,6 @@
 % File src/library/base/man/matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matrix}
@@ -104,8 +104,7 @@ is.matrix(x)
   matrix.
 
   A matrix is the special case of a two-dimensional \code{\link{array}}.
-  Since \R 4.0.0, \code{\link{inherits}(m, "array")} is true for a
-  \code{matrix} \code{m}.
+  \code{\link{inherits}(m, "array")} is true for a \code{matrix} \code{m}.
 }
 \examples{
 is.matrix(as.matrix(1:10))

@@ -44,8 +44,8 @@ pretty(x, \dots)
     determines the \code{unit} of the algorithm.  Smaller \code{cell}
     values are set to \eqn{c_n} signalling a \code{\link{warning}} about
     being \dQuote{corrected}.
-    New from \R 4.2.0, where previously, \code{f.min = 20} was implicitly
-    hard coded in the algorithm.}
+    New from \R 4.2.0,: previously \code{f.min = 20} was
+    hardcoded in the algorithm.}
   \item{bounds}{a \code{\link{logical}} indicating if the resulting vector
     should \emph{cover} the full \code{range(x)}, i.e., strictly include
     the bounds of \code{x}.  New from \R 4.2.0, allowing \code{bound=FALSE}
