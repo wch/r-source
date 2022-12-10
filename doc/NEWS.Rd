@@ -100,6 +100,11 @@
       \item The \code{as.data.frame.vector()} utility now errors for
       wrong-length \code{row.names}.  It warned for almost six years, with
       \dQuote{Will be an error!}.
+
+      \item \code{sessionInfo()} now also contains \code{La_version()} and
+      reports codepage and timezone when relevant, in both \code{print()}
+      and \code{toLatex()} methods which also get new option \code{tzone}
+      for displaying timezone information when \code{locale=FALSE}.
     }
   }
 
