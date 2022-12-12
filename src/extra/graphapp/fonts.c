@@ -191,7 +191,9 @@ font newfont(const char *name, int style, int size)
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
     lf.lfCharSet = default_font_charset(); /* used to be ANSI_CHARSET */
     if ((! string_diff(name, "Symbol"))
-	|| (! string_diff(name, "Wingdings")))
+	|| (! string_diff(name, "Wingdings"))
+	|| (! string_diff(name, "TT Symbol"))
+	|| (! string_diff(name, "TT Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
