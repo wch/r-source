@@ -5433,7 +5433,7 @@ especially those near boundaries (problems have most often be seen in
 @samp{Pacific/Auckland}, near enough the International Date line) and
 with offsets not in whole hours (Adelaide, Chatham Islands, @dots{}).
 More extreme examples are @samp{Africa/Conakry} (permanent UTC),
-@samp{Asia/Calcutta} (no DST, permaent half-hour offset)
+@samp{Asia/Calcutta} (no DST, permanent half-hour offset)
 and @samp{Pacific/Kiritimati]}(no DST, more than 12 hours ahead of UTC).
 
 
