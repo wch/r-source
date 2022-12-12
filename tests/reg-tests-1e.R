@@ -380,9 +380,12 @@ cls <- c("raw", "logical", "integer", "numeric", "complex",
          "noquote", "numeric_version")
 names(cls) <- cls
 be <- baseenv()
-asF  <- lapply(cls, function(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
-obs  <- lapply(cls, function(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, 1:2)))
-asDF <- lapply(cls, function(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
+asF  <- lapply(cls, \(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
+obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, 1:2)))
+asDF <- lapply(cls, \(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
+r <- local({ g <- as.data.frame.logical; f <- function(L=TRUE) g(L)
+    getVaW(f()) })
+dfWarn <- "deprecated.*as\\.data\\.frame\\.vector"
 stopifnot(exprs = {
     vapply(obs, \(.) class(.)[1], "") == cls
     vapply(asDF, is.data.frame, NA)
@@ -390,10 +393,17 @@ stopifnot(exprs = {
     vapply(lapply(asDF, `[[`, 1), \(.) class(.)[1], "") == cls
     ## all should have a deprecation warning
     is.character(asDwarn <- vapply(asDF, attr, "<text>", "warning"))
-    !englishMsgs || all(grepl("deprecated.*as\\.data\\.frame\\.vector", asDwarn))
-    length(unique(vapply(cls, function(cl) sub(cl, "<class>", asDwarn[[cl]], fixed=TRUE), ""))) == 1L
+    !englishMsgs || all(grepl(dfWarn, asDwarn))
+    length(unique(vapply(cls, \(cl) sub(cl, "<class>", asDwarn[[cl]], fixed=TRUE), ""))) == 1L
+    all.equal(r, data.frame(L=TRUE), check.attributes=FALSE)
+    !englishMsgs || grepl(dfWarn, attr(r, "warning"))
 })
 ## as.data.frame.<cls>(.) worked w/o deprecation warning in R <= 4.2.x
+
+
+## predict.lm() in *rank deficient* case -- PR#15072, PR#16158
+
+## ... always gave warning about problem (current "simple") in R <= 4.2.x
 
 
 
