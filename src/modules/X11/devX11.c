@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -985,16 +985,16 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
      * Always use a standard font for font face 5
      */
     if (face == SYMBOL_FONTFACE - 1) /* NB: face-- above */
-	sprintf(buf, xd->symbolfamily,  pixelsize);
+	snprintf(buf, BUFSIZ, xd->symbolfamily,  pixelsize);
     else
       if (mbcslocale && *slant[(face & 2) >> 1] == 'o') {
-	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+	snprintf(buf, BUFSIZ, family, weight[face & 1], slant[(face & 2) >> 1],
 		pixelsize);
-	sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
+	snprintf(buf1, BUFSIZ, family, weight[face & 1], "i",  pixelsize);
 	strcat(buf,",");
 	strcat(buf,buf1);
       } else
-	  sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+	  snprintf(buf, BUFSIZ, family, weight[face & 1], slant[(face & 2) >> 1],
 		  pixelsize);
 #ifdef DEBUG_X11
     Rprintf("loading:\n%s\n",buf);
@@ -1047,9 +1047,9 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 
 
 	if (face == SYMBOL_FONTFACE - 1)
-	    sprintf(buf, symbolname, pixelsize);
+	    snprintf(buf, BUFSIZ, symbolname, pixelsize);
 	else
-	    sprintf(buf, fontname,
+	    snprintf(buf, BUFSIZ, fontname,
 		    weight[face & 1],
 		    slant[(face & 2) >> 1 ],  pixelsize);
 #ifdef DEBUG_X11
@@ -1067,9 +1067,9 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 	/* final try, size 24 */
 	pixelsize = 24;
 	if (face == 4)
-	    sprintf(buf, symbolname, 24);
+	    snprintf(buf, BUFSIZ, symbolname, 24);
 	else
-	    sprintf(buf, fontname,
+	    snprintf(buf, BUFSIZ, fontname,
 		    weight[face & 1],
 		    slant[(face & 2) >> 1 ],  24);
 #ifdef DEBUG_X11
@@ -1543,8 +1543,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			char gstr[40];
 			int bitmask;
 
-			sprintf(gstr, "%dx%d+%d+%d", hint->width,
-				hint->height, hint->x, hint->y);
+			snprintf(gstr, 40, "%dx%d+%d+%d", hint->width,
+				 hint->height, hint->x, hint->y);
 			bitmask = XWMGeometry(display, DefaultScreen(display),
 					      xdev.geometry, gstr,
 					      1,
@@ -2150,7 +2150,7 @@ static void X11_Activate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 140, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
     XStoreName(display, xd->window, t);
@@ -2167,7 +2167,7 @@ static void X11_Deactivate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 140 ,"R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
     XStoreName(display, xd->window, t);
@@ -2681,7 +2681,7 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    int keycode;
 	    if (event.xkey.state & ControlMask) {
 	    	keystart += 5; 
-	    	sprintf(keybuffer, "ctrl-"); /* report control keys using labels like "ctrl-A" */
+	    	snprintf(keybuffer, 13, "ctrl-"); /* report control keys using labels like "ctrl-A" */
 	    	event.xkey.state &= ~ControlMask;
 	    	event.xkey.state |= ShiftMask;
 	    }

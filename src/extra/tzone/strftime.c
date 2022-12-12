@@ -192,7 +192,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _add(nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			  pt, ptlim);
 		continue;
-	    case 'P': // not in tzcode
+	    case 'P': // R addition not in tzcode
 		{
 		    char *p = nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			*q, buff[20];
@@ -298,9 +298,6 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		continue;
 	    case 'k':
 		pt = _conv(t->tm_hour, "%2d", pt, ptlim);
-		continue;
-		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,
-			   "%2d", pt, ptlim);
 		continue;
 	    case 'l':
 		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,

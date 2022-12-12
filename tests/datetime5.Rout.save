@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-12-10 r83428) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-12-12 r83435) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > 
 > ff <- c(LETTERS, letters)
 > ff <- setdiff(c(LETTERS, letters),
-+               c("E", "J", "K", "L", "N", "O", "Q",
++               c("E", "J", "K", "L", "N", "P", "O", "Q",
 +                 "f", "i", "k", "l",  "o", "q",
 +                 "r", # %r is locale- and implementation-dependent.
 +                 "s", "v")
@@ -42,7 +42,6 @@ Type 'q()' to quit R.
 %H: 09
 %I: 09
 %M: 03
-%P: am
 %R: 09:03
 %S: 00
 %T: 09:03:00
@@ -71,13 +70,13 @@ Type 'q()' to quit R.
 %y: 22
 %z: +0100
 > 
-> ## Native macOS does not implement %P
-> 
-> ## 'not POSISX but widely implemented'
-> for (f in c("k", "l", "s")) {
+> ## 'not in the standards and less widely implemented'
+> ## %P is a glibc extension which we added to IANA tzcode for R. Not in macOS.
+> for (f in c("P", "k", "l", "s")) {
 +     f <- paste0("%", f)
 +     cat(sprintf("%s: %s\n", f, format(dt, f)))
 + }
+%P: am
 %k:  9
 %l:  9
 %s: 1670745780

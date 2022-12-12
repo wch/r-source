@@ -306,7 +306,6 @@ SEXP in_RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXPTYPE type;
     int i, j, cnt, len, nprotect;
     RCNTXT cntxt;
-    char clab[25];
     char *title = "R Data Editor";
     destruct DE1;
     DEstruct DE = &DE1;
@@ -347,7 +346,8 @@ SEXP in_RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused),
 			   &DE->npi);
 	for(i = 0; i < DE->xmaxused; i++) {
-	    sprintf(clab, "var%d", i);
+	    char clab[25];
+	    snprintf(clab, 25, "var%d", i);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
     } else
@@ -874,7 +874,7 @@ static void drawrow(DEstruct DE, int whichrow)
     cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h);
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
-    sprintf(rlab, DE->labform, whichrow);
+    snprintf(rlab, 15, DE->labform, whichrow);
     printstring(DE, rlab, (int)strlen(rlab), row, 0, 0);
 
     w = DE->bwidth + DE->boxw[0];
@@ -1008,7 +1008,6 @@ static Rboolean getccol(DEstruct DE)
     SEXP tmp, tmp2;
     int i, len, newlen, wcol, wrow;
     SEXPTYPE type;
-    char clab[25];
     Rboolean newcol = FALSE;
 
     wcol = DE->ccol + DE->colmin - 1;
@@ -1018,7 +1017,8 @@ static Rboolean getccol(DEstruct DE)
 	REPROTECT(DE->work = lengthgets(DE->work, wcol), DE->wpi);
 	REPROTECT(DE->names = lengthgets(DE->names, wcol), DE->npi);
 	for (i = DE->xmaxused; i < wcol; i++) {
-	    sprintf(clab, "var%d", i + 1);
+	    char clab[25];
+	    snprintf(clab, 25, "var%d", i + 1);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
@@ -1099,7 +1099,6 @@ static void closerect(DEstruct DE)
     SEXP cvec;
     int i, wcol = DE->ccol + DE->colmin - 1,
 	wrow = DE->rowmin + DE->crow - 1, wrow0;
-    char clab[25];
     Rboolean newcol;
 
     *bufp = '\0';
@@ -1115,7 +1114,8 @@ static void closerect(DEstruct DE)
 		    REPROTECT(DE->names = lengthgets(DE->names, wcol),
 			      DE->npi);
 		    for (i = DE->xmaxused; i < wcol - 1; i++) {
-			sprintf(clab, "var%d", i + 1);
+			char clab[25];
+			snprintf(clab, 25, "var%d", i + 1);
 			SET_STRING_ELT(DE->names, i, mkChar(clab));
 		    }
 		    REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
@@ -1124,8 +1124,8 @@ static void closerect(DEstruct DE)
 		SET_STRING_ELT(DE->names, wcol - 1, mkChar(buf));
 		printstring(DE ,buf, (int) strlen(buf), 0, wcol, 0);
 	    } else {
-		sprintf(buf, "var%d", DE->ccol);
-		printstring(DE ,buf, (int) strlen(buf), 0, wcol, 0);
+		snprintf(buf, BOOSTED_BUF_SIZE, "var%d", DE->ccol);
+		printstring(DE, buf, (int) strlen(buf), 0, wcol, 0);
 	    }
 	} else {
 	    newcol = getccol(DE);
@@ -1367,7 +1367,6 @@ static void handlechar(DEstruct DE, char *text)
 
 static void printlabs(DEstruct DE)
 {
-    char clab[15];
     const char *p;
     int i;
 
@@ -1376,7 +1375,8 @@ static void printlabs(DEstruct DE)
 	printstring(DE, p, (int) strlen(p), 0, i - DE->colmin + 1, 0);
     }
     for (i = DE->rowmin; i <= DE->rowmax; i++) {
-	sprintf(clab, DE->labform, i);
+	char clab[15];
+	snprintf(clab, 15, DE->labform, i);
 	printstring(DE, clab, (int) strlen(clab), i - DE->rowmin + 1, 0, 0);
     }
 }
@@ -1931,7 +1931,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 	SEXP opt = GetOption1(install("X11fonts"));
 	if(isString(opt)) {
 	    const char *s = CHAR(STRING_ELT(opt, 0));
-	    sprintf(opt_fontset_name, s, "medium", "r", 12);
+	    snprintf(opt_fontset_name, 512, s, "medium", "r", 12);
 	} else strcpy(opt_fontset_name, fontset_name);
 
 	if(font_set == NULL) {
@@ -1977,7 +1977,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     DE->windowHeight = 26 * DE->box_h + DE->hht + 2;
     /* this used to presume 4 chars sufficed for row numbering */
     labdigs = max(3, 1+ (int) floor(log10((double)DE->ymaxused)));
-    sprintf(DE->labform, "%%%dd", labdigs);
+    snprintf(DE->labform, 15, "%%%dd", labdigs);
     DE->boxw[0] = (int)( 0.1*labdigs*textwidth(DE, "0123456789", 10)) +
 	textwidth(DE, " ", 1) + 8;
     for(i = 1; i < 100; i++) DE->boxw[i] = get_col_width(DE, i);
@@ -2043,8 +2043,8 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 	    char gstr[40];
 	    int bitmask;
 
-	    sprintf(gstr, "%dx%d+%d+%d", hint->width,
-		    hint->height, hint->x, hint->y);
+	    snprintf(gstr, 40, "%dx%d+%d+%d", hint->width,
+		     hint->height, hint->x, hint->y);
 	    bitmask = XWMGeometry(iodisplay, DefaultScreen(iodisplay),
 				  xdev.geometry, gstr,
 				  1,
@@ -2328,7 +2328,6 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 {
     int i, button, popupcol = col + DE->colmin - 1;
     const char *name;
-    char clab[20];
     XEvent event;
     Window selected_pane;
     SEXP tvec;
@@ -2344,7 +2343,8 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 	REPROTECT(DE->work = lengthgets(DE->work, popupcol), DE->wpi);
 	REPROTECT(DE->names = lengthgets(DE->names, popupcol), DE->npi);
 	for (i = DE->xmaxused+1; i < popupcol; i++) {
-	    sprintf(clab, "var%d", i + 1);
+	    char clab[20];
+	    snprintf(clab, 20, "var%d", i + 1);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, popupcol), DE->lpi);
