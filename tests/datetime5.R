@@ -17,7 +17,7 @@ for (f in ff) {
     cat(sprintf("%s: %s\n", f, format(dt, f)))
 }
 
-## Natome macOS does not implement %P
+## Native macOS does not implement %P
 
 ## 'not POSISX but widely implemented'
 for (f in c("k", "l", "s")) {

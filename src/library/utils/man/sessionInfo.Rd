@@ -55,7 +55,7 @@ osVersion
   \item{BLAS}{a character string, the result of calling
     \code{\link{extSoftVersion}()["BLAS"]}.}
   \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
-  \item{LA_version}{a character string, the result of calling \code{\link{La_version()}()}.}
+  \item{LA_version}{a character string, the result of calling \code{\link{La_version}()}.}
   \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
   \item{tzone}{a character string, the result of calling \code{\link{Sys.timezone}()}.}
   \item{tzcode_type}{a character string indicating source

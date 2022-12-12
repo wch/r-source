@@ -71,7 +71,7 @@ Type 'q()' to quit R.
 %y: 22
 %z: +0100
 > 
-> ## Natome macOS does not implement %P
+> ## Native macOS does not implement %P
 > 
 > ## 'not POSISX but widely implemented'
 > for (f in c("k", "l", "s")) {
