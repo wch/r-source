@@ -302,6 +302,10 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,
 			   "%2d", pt, ptlim);
 		continue;
+	    case 'l':
+		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,
+			   "%2d", pt, ptlim);
+		continue;
 	    case 'M':
 		pt = _conv(t->tm_min, "%02d", pt, ptlim);
 		continue;
