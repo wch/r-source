@@ -369,7 +369,7 @@ getOption(x, default = NULL)
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
-      40 and should be at least 30 and no more than 500.}
+      50 and should be at least 30 and no more than 500.}
 
     \item{\code{show.error.locations}:}{Should source locations of
       errors be printed?  If set to \code{TRUE} or \code{"top"}, the
