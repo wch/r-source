@@ -137,10 +137,10 @@ sessionInfo <- function(package = NULL)
     z$LAPACK <- La_library()
     z$LA_version <- La_version()
     l10n <- l10n_info()
-    if (!is.null(l10n["system.codepage"]))
-        z$system.codepage <- as.character(l10n["system.codepage"])
-    if (!is.null(l10n["codepage"]))
-        z$codepage <- as.character(l10n["codepage"])
+    if (!is.null(l10n[["system.codepage"]]))
+        z$system.codepage <- l10n[["system.codepage"]]
+    if (!is.null(l10n[["codepage"]]))
+        z$codepage <- l10n[["codepage"]]
     class(z) <- "sessionInfo"
     z
 }
@@ -183,7 +183,7 @@ print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
     if(locale) {
         cat("locale:\n")
         print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE, ...)
-        if ("NULL" != x$system.codepage && x$system.codepage != x$codepage)
+        if (!is.null(x$system.codepage) && x$system.codepage != x$codepage)
             cat("system code page: ", x$system.codepage, "\n", sep = "")
         cat("\n")
     }
@@ -225,7 +225,7 @@ toLatex.sessionInfo <-
 	   if(locale)
 	       paste0("  \\item Locale: \\verb|",
                   gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
-           if(locale && "NULL" != object$system.codepage && object$system.codepage != object$codepage)
+           if(locale && !is.null(object$system.codepage) && object$system.codepage != object$codepage)
                paste0("  \\item System code page: \\verb|", object$system.codepage,  "|"),
            if (tzone) paste0("  \\item Time zone: \\verb|", object$tzone, "|"),
            if (tzone) paste0("  \\item TZcode source: \\verb|", object$tzcode_type, "|"),
