@@ -173,8 +173,8 @@ SEXP nsl(SEXP hostname)
 
 #include <config.h>
 
-/* Likw to identify Alpine Linux/musl here, but they refuse to have
-   a compiler macro. */
+/* Would like to identify Alpine Linux/musl here, but they refuse to
+   have a compiler macro. */
 SEXP tzcode_type(void)
 {
 #ifdef USE_INTERNAL_MKTIME
