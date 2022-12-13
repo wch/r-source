@@ -2,7 +2,7 @@
 
 Sys.setenv(TZ = "Europe/Rome")
 
-dt <- as.POSIXct("2022-12-11 09:03;04")
+dt <- as.POSIXlt("2022-12-11 09:03;04")
 
 ff <- c(LETTERS, letters)
 ff <- setdiff(c(LETTERS, letters),
@@ -23,4 +23,8 @@ for (f in c("P", "k", "l", "s")) {
     f <- paste0("%", f)
     cat(sprintf("%s: %s\n", f, format(dt, f)))
 }
+
+## week numbers
+dt2 <- as.POSIXlt(sprintf("%d-01-01 09:03;04", 2015:2018))
+cat(format(dt2, "%Y: %U %V %W"), sep = "\n")
 
