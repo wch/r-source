@@ -1701,6 +1701,7 @@ static SEXP R_Parse1(ParseStatus *status)
 	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr)) {
 	        YYLTYPE lloc;
 	        lloc.first_line = ParseState.xxlineno;
+		lloc.first_column = ParseState.xxcolno;
 	        if (Status == 3) lloc.first_line--;
 		raiseParseError("invalidPlaceholder", R_CurrentExpr,
 		                NO_VALUE, NULL, &lloc,
@@ -1709,6 +1710,7 @@ static SEXP R_Parse1(ParseStatus *status)
 	    if (checkForPipeBind(R_CurrentExpr)) {
 	        YYLTYPE lloc;
 	        lloc.first_line = ParseState.xxlineno;
+		lloc.first_column = ParseState.xxcolno;
 	        if (Status == 3) lloc.first_line--;
 		raiseParseError("invalidPipeBind", R_CurrentExpr, 
 		                NO_VALUE, NULL, &lloc,
