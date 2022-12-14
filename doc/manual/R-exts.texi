@@ -15561,7 +15561,7 @@ two additional functions:
 
 @example
 SEXP R_MakeUnwindCont();
-void NORET R_ContinueUnwind(SEXP cont);
+NORET void R_ContinueUnwind(SEXP cont);
 @end example
 @findex R_MakeUnwindCont
 @findex R_ContinueUnwind

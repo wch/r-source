@@ -325,7 +325,7 @@ typedef struct my_error_mgr * my_error_ptr;
  * Here's the routine that will replace the standard error_exit method:
 */
 
-static void NORET my_error_exit (j_common_ptr cinfo)
+NORET static void my_error_exit (j_common_ptr cinfo)
 {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_ptr myerr = (my_error_ptr) cinfo->err;
