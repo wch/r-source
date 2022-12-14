@@ -680,7 +680,7 @@ static void warn_status(const char *cmd, int res)
 	warning(_("running command '%s' had status %d"), cmd, res);
 }
 
-static void NORET cmdError(const char *cmd, const char *format, ...)
+NORET static void cmdError(const char *cmd, const char *format, ...)
 {
     SEXP call = R_CurrentExpression;
     int nextra = errno ? 3 : 1;

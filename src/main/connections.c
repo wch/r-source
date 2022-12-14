@@ -226,7 +226,7 @@ Rconnection getConnection_no_err(int n)
 
 }
 
-static void NORET set_iconv_error(Rconnection con, char* from, char* to)
+NORET static void set_iconv_error(Rconnection con, char* from, char* to)
 {
     char buf[100];
     snprintf(buf, 100, _("unsupported conversion from '%s' to '%s'"), from, to);
@@ -390,7 +390,7 @@ void set_iconv(Rconnection con)
 
 /* ------------------- null connection functions --------------------- */
 
-static Rboolean NORET null_open(Rconnection con)
+NORET static Rboolean null_open(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "open");
 }
@@ -405,7 +405,7 @@ static void null_destroy(Rconnection con)
     if(con->private) free(con->private);
 }
 
-static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
+NORET static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error(_("%s not enabled for this connection"), "printing");
 }
@@ -577,17 +577,17 @@ int dummy_fgetc(Rconnection con)
 	return con->fgetc_internal(con);
 }
 
-static int NORET null_fgetc(Rconnection con)
+NORET static int null_fgetc(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'getc'");
 }
 
-static double NORET null_seek(Rconnection con, double where, int origin, int rw)
+NORET static double null_seek(Rconnection con, double where, int origin, int rw)
 {
     error(_("%s not enabled for this connection"), "'seek'");
 }
 
-static void NORET null_truncate(Rconnection con)
+NORET static void null_truncate(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "truncation");
 }
@@ -597,14 +597,14 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-static size_t NORET null_read(void *ptr, size_t size, size_t nitems,
-			Rconnection con)
+NORET static size_t null_read(void *ptr, size_t size, size_t nitems,
+			      Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'read'");
 }
 
-static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
-			 Rconnection con)
+NORET static size_t null_write(const void *ptr, size_t size, size_t nitems,
+			       Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'write'");
 }

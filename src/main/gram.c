@@ -311,9 +311,9 @@ static SrcRefState ParseState;
 #define CHAR_VALUE 4
 #define UCS_VALUE 5
 
-static void NORET raiseParseError(const char *, SEXP, int, 
+NORET static void raiseParseError(const char *, SEXP, int, 
                                   const void *, YYLTYPE *, const char *);
-static void NORET raiseLexError(const char *, int,
+NORET static void raiseLexError(const char *, int,
                                 const void *, const char *);
 
 /* Memory protection in the parser
@@ -6548,7 +6548,7 @@ static const char* getFilename(void) {
      [value], filename, lineno, colno
    in the sprintf call for the format.
 */
-static void NORET raiseParseError(const char *subclassname,
+NORET static void raiseParseError(const char *subclassname,
                              SEXP call,
                              int valuetype,
                              const void *value,
@@ -6641,7 +6641,7 @@ static void NORET raiseParseError(const char *subclassname,
    from the ParseState, but is otherwise the same as
    raiseParseError.
 */
-static void NORET raiseLexError(const char *subclassname,
+NORET static void raiseLexError(const char *subclassname,
                              int valuetype,
                              const void *value,
                              const char *format)

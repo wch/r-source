@@ -70,7 +70,7 @@ static int noBreakWarning = 0;
 
 static void try_jump_to_restart(void);
 // The next is crucial to the use of NORET attributes.
-static void NORET
+NORET static void 
 jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 static void signalInterrupt(void);
 static char * R_ConciseTraceback(SEXP call, int skip);
@@ -90,7 +90,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
-void NORET R_SignalCStackOverflow(intptr_t usage)
+NORET void R_SignalCStackOverflow(intptr_t usage)
 {
     /* We do need some stack space to process error recovery, so
        temporarily raise the limit.  We have 5% head room because we
@@ -408,7 +408,7 @@ void warning(const char *format, ...)
 
 static void vsignalError(SEXP call, const char *format, va_list ap);
 static void vsignalWarning(SEXP call, const char *format, va_list ap);
-static void NORET invokeRestart(SEXP, SEXP);
+NORET static void invokeRestart(SEXP, SEXP);
 
 static void reset_inWarning(void *data)
 {
@@ -737,7 +737,7 @@ static int allowedConstsChecks = 1000;
 
 /* Construct newline terminated error message, write it to global errbuf, and
    possibly display with REprintf. */
-static void NORET
+NORET static void
 verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     if (allowedConstsChecks > 0) {
@@ -889,7 +889,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     inError = oldInError;
 }
 
-static void NORET errorcall_dflt(SEXP call, const char *format,...)
+NORET static void errorcall_dflt(SEXP call, const char *format,...)
 {
     va_list(ap);
 
@@ -898,7 +898,7 @@ static void NORET errorcall_dflt(SEXP call, const char *format,...)
     va_end(ap);
 }
 
-void NORET errorcall(SEXP call, const char *format,...)
+NORET void errorcall(SEXP call, const char *format,...)
 {
     va_list(ap);
 
@@ -928,7 +928,7 @@ void NORET errorcall(SEXP call, const char *format,...)
 /* Like errorcall, but copies all data for the error message into a buffer
    before doing anything else. */
 attribute_hidden
-void NORET errorcall_cpy(SEXP call, const char *format, ...)
+NORET void errorcall_cpy(SEXP call, const char *format, ...)
 {
     char buf[BUFSIZE];
 
@@ -1083,7 +1083,7 @@ static void jump_to_top_ex(Rboolean traceback,
     R_jumpctxt(R_ToplevelContext, 0, NULL);
 }
 
-void NORET jump_to_toplevel(void)
+NORET void jump_to_toplevel(void)
 {
     /* no traceback, no user error option; for now, warnings are
        printed here and console is reset -- eventually these should be
@@ -1343,7 +1343,7 @@ static SEXP findCall(void)
     return R_NilValue;
 }
 
-attribute_hidden SEXP NORET do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
     SEXP c_call;
@@ -1405,13 +1405,13 @@ attribute_hidden SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Error recovery for incorrect argument count error. */
 attribute_hidden
-void NORET WrongArgCount(const char *s)
+NORET void WrongArgCount(const char *s)
 {
     error(_("incorrect number of arguments to \"%s\""), s);
 }
 
 
-void NORET UNIMPLEMENTED(const char *s)
+NORET void UNIMPLEMENTED(const char *s)
 {
     error(_("unimplemented feature in %s"), s);
 }
@@ -1446,7 +1446,7 @@ WarningDB[] = {
 
 
 attribute_hidden
-void NORET ErrorMessage(SEXP call, int which_error, ...)
+NORET void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
     char buf[BUFSIZE];
@@ -1520,7 +1520,7 @@ void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
     }
 }
 
-void NORET R_JumpToToplevel(Rboolean restart)
+NORET void R_JumpToToplevel(Rboolean restart)
 {
     RCNTXT *c;
 
@@ -1852,7 +1852,7 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
     else vwarningcall_dflt(call, format, ap);
 }
 
-static void NORET gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
+NORET static void gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
 {
     SEXP rho = ENTRY_TARGET_ENVIR(entry);
     SEXP result = ENTRY_RETURN_RESULT(entry);
@@ -2059,7 +2059,7 @@ attribute_hidden SEXP do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-attribute_hidden SEXP NORET do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -2118,7 +2118,7 @@ attribute_hidden SEXP do_addRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define RESTART_EXIT(r) VECTOR_ELT(r, 1)
 
-static void NORET invokeRestart(SEXP r, SEXP arglist)
+NORET static void invokeRestart(SEXP r, SEXP arglist)
 {
     SEXP exit = RESTART_EXIT(r);
 
@@ -2141,7 +2141,8 @@ static void NORET invokeRestart(SEXP r, SEXP arglist)
     }
 }
 
-attribute_hidden SEXP NORET do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET
+SEXP do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     CHECK_RESTART(CAR(args));
@@ -2682,7 +2683,7 @@ static void R_signalCondition(SEXP cond, SEXP call,
 }
 
 attribute_hidden /* for now */
-void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
+NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 {
     /* caller must make sure that 'cond' and 'call' are protected. */
     R_signalCondition(cond, call, FALSE, exitOnly);
@@ -2700,7 +2701,7 @@ void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
 }
 
 attribute_hidden /* for now */
-void NORET R_signalErrorCondition(SEXP cond, SEXP call)
+NORET void R_signalErrorCondition(SEXP cond, SEXP call)
 {
     R_signalErrorConditionEx(cond, call, FALSE);
 }

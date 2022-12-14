@@ -173,14 +173,14 @@ attribute_hidden SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-attribute_hidden SEXP NORET do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
     errorcall(call, _("R was not compiled with support for memory profiling"));
 }
 
-attribute_hidden SEXP NORET do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");

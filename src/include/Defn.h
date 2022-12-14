@@ -539,7 +539,7 @@ typedef union {
 #define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 #ifdef LONG_VECTOR_SUPPORT
-    R_len_t NORET R_BadLongVector(SEXP, const char *, int);
+    NORET R_len_t R_BadLongVector(SEXP, const char *, int);
 #endif
 
 /* checking for mis-use of multi-threading */
