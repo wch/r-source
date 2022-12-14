@@ -3024,3 +3024,69 @@ char *Rstrdup(const char *s)
     memcpy (cpy, s, nb);
     return (char *) cpy;
 }
+
+static int compareNumericVersion(SEXP x, SEXP y)
+{
+    int i, nx, ny, nc, *ix, *iy;
+    if(!isInteger(x))
+	error(_("invalid '%s' argument"), "x");
+    if(!isInteger(y))
+	error(_("invalid '%s' argument"), "y");
+    nx = LENGTH(x);
+    ny = LENGTH(y);
+    nc =  nx > ny ? ny : nx;
+    if(nc == 0)
+	return NA_INTEGER;
+    ix = INTEGER(x);
+    iy = INTEGER(y);
+    for(i = 0; i < nc; i++) {
+	if(ix[i] > iy[i])
+	    return 1;
+	if(ix[i] < iy[i])
+	    return -1;
+    }
+    if(nc < nx) {
+	for(i = nc; i < nx; i++) {
+	    if(ix[i] > 0)
+		return 1;
+	}
+    } else if(nc < ny) {
+	for(i = nc; i < ny; i++) {
+	    if(iy[i] > 0)
+		return -1;
+	}
+    }
+    return 0;
+}
+
+SEXP do_compareNumericVersion(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x, y;
+    int i, nx, ny, na;
+
+    checkArity(op, args);
+
+    x = CAR(args); args = CDR(args);
+    y = CAR(args);
+
+    if(!isVector(x))
+	error(_("invalid '%s' argument"), "x");
+    if(!isVector(y))
+	error(_("invalid '%s' argument"), "y");
+    nx = LENGTH(x);
+    ny = LENGTH(y);
+    if(nx > 0 && ny > 0)
+	na = nx > ny ? nx : ny;
+    else
+	na = 0;
+    PROTECT(ans = allocVector(INTSXP, na));
+    for(i = 0; i < na; i++) {
+	INTEGER(ans)[i] = 
+	    compareNumericVersion(VECTOR_ELT(x, i % nx),
+				  VECTOR_ELT(y, i % ny));
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+    

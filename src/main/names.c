@@ -842,6 +842,8 @@ FUNTAB R_FunTab[] =
 {"balancePOSIXlt",do_balancePOSIXlt, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"unCfillPOSIXlt",do_balancePOSIXlt, 1,	 1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
+{"compareNumericVersion",do_compareNumericVersion, 0, 11, 2, {PP_FUNCALL, PREC_FN,   0}},
+
 {"mkCode",     do_mkcode,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"bcClose",    do_bcclose,      0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
 {"is.builtin.internal", do_is_builtin_internal, 0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
