@@ -212,20 +212,20 @@ function(db)
     depends <- db[, "Depends"]
     depends[is.na(depends)] <- ""
     ## Collect the (versioned) R depends entries.
-    x <- lapply(strsplit(sub("^[[:space:]]*", "", depends),
-                             "[[:space:]]*,[[:space:]]*"),
-                function(s) s[grepl("^R[[:space:]]*\\(", s)])
+    x <- lapply(strsplit(gsub("[[:space:]]", "", depends), ",",
+                         fixed = TRUE),
+                function(s) s[startsWith(s, "R(")])
     lens <- lengths(x)
     pos <- which(lens > 0L)
     if(!length(pos)) return(db)
     lens <- lens[pos]
     ## Unlist.
     x <- unlist(x)
-    pat <- "^R[[:space:]]*\\(([[<>=!]+)[[:space:]]+(.*)\\)[[:space:]]*"
-    ## Extract ops.
-    ops <- sub(pat, "\\1", x)
+    end <- 3L + (substring(x, 4L, 4L) == "=")
+    ## Extract ops.    
+    ops <- substring(x, 3L, end)
     ## Split target versions accordings to ops.
-    v_t <- split(sub(pat, "\\2", x), ops)
+    v_t <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
     ## Current R version.
     v_c <- getRversion()
     ## Compare current to target grouped by op.
@@ -233,9 +233,11 @@ function(db)
     for(op in names(v_t))
         res[ops == op] <- do.call(op, list(v_c, v_t[[op]]))
     ## And assemble test results according to the rows of db.
-    ind <- rep.int(TRUE, NROW(db))
-    ind[pos] <- sapply(split(res, rep.int(seq_along(lens), lens)), all)
-    db[ind, , drop = FALSE]
+    pos <- pos[!vapply(split(res, rep.int(seq_along(lens), lens)), all,
+                       NA)]
+    if(length(pos))
+        db <- db[-pos, , drop = FALSE]
+    db
 }
 
 available_packages_filters_db$OS_type <-
