@@ -42,6 +42,11 @@
 
       \item Running examples from HTML documentation now restores
       previous knitr settings and options (\PR{18420}).
+
+      \item Math symbols in text drawing functions on Windows are again
+      rendered correctly (\PR{18440}).  This fixes a regression in \R 4.2.1
+      caused by a fix in \PR{PR#18382} which uncovered an issue in GraphApp
+      due to which the symbol charset was not used with TT Symbol font face.
     }
   }
 }
