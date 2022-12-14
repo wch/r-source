@@ -141,7 +141,7 @@ static void setup_jit(pcre_extra *re_pe)
 
 /* we allow pat == NULL if the regex cannot be safely expressed
    as a string (e.g., when using grepRaw) */
-static void NORET reg_report(int rc,  regex_t *reg, const char *pat)
+NORET static void reg_report(int rc,  regex_t *reg, const char *pat)
 {
     char errbuf[1001];
     tre_regerror(rc, reg, errbuf, 1001);

@@ -1571,7 +1571,7 @@ attribute_hidden SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign_dflt(call, op, ans, rho);
 }
 
-static void NORET errorNotSubsettable(SEXP x)
+NORET static void errorNotSubsettable(SEXP x)
 {
     SEXP call = R_CurrentExpression; /* behave like error() */
     SEXP cond = R_makeNotSubsettableError(x, call);
@@ -1579,7 +1579,7 @@ static void NORET errorNotSubsettable(SEXP x)
     UNPROTECT(1); /* cond; not reached */
 }
 
-static void NORET errorMissingSubscript(SEXP x)
+NORET static void errorMissingSubscript(SEXP x)
 {
     SEXP call = R_CurrentExpression; /* behave like error() */
     SEXP cond = R_makeMissingSubscriptError(x, call);
@@ -1739,7 +1739,7 @@ attribute_hidden SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign2_dflt(call, op, ans, rho);
 }
 
-static void NORET errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
+NORET static void errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
 {
     SEXP call = R_CurrentExpression; /* default behaves like error() */
     SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, "[[ ]]");

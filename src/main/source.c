@@ -122,7 +122,7 @@ static SEXP tabExpand(SEXP strings)
     return result;
 }
 
-void NORET parseError(SEXP call, int linenum)
+NORET void parseError(SEXP call, int linenum)
 {
     SEXP context;
     int len, width;

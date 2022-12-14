@@ -499,7 +499,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 */
 
 /* This is a primitive SPECIALSXP */
-attribute_hidden SEXP NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden NORET
+SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
     SEXP callenv, defenv;

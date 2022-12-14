@@ -70,7 +70,7 @@
    (2) we can be arrived here from a button or menuitem callback maybe
    in a different thread from the one where R runs.
 */
-static void NORET my_png_error(png_structp png_ptr, png_const_charp msg)
+NORET static void my_png_error(png_structp png_ptr, png_const_charp msg)
 {
     R_ShowMessage((char *) msg);
 #if PNG_LIBPNG_VER < 10400

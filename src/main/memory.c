@@ -2135,18 +2135,18 @@ attribute_hidden SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-static void NORET mem_err_heap(R_size_t size)
+NORET static void mem_err_heap(R_size_t size)
 {
     errorcall(R_NilValue, _("vector memory exhausted (limit reached?)"));
 }
 
 
-static void NORET mem_err_cons(void)
+NORET static void mem_err_cons(void)
 {
     errorcall(R_NilValue, _("cons memory exhausted (limit reached?)"));
 }
 
-static void NORET mem_err_malloc(R_size_t size)
+NORET static void mem_err_malloc(R_size_t size)
 {
     errorcall(R_NilValue, _("memory exhausted (limit reached?)"));
 }
@@ -3311,7 +3311,7 @@ static void reset_pp_stack(void *data)
     R_PPStackSize =  *poldpps;
 }
 
-void NORET R_signal_protect_error(void)
+NORET void R_signal_protect_error(void)
 {
     RCNTXT cntxt;
     int oldpps = R_PPStackSize;
@@ -3337,7 +3337,7 @@ void NORET R_signal_protect_error(void)
     endcontext(&cntxt); /* not reached */
 }
 
-void NORET R_signal_unprotect_error(void)
+NORET void R_signal_unprotect_error(void)
 {
     error(ngettext("unprotect(): only %d protected item",
 		   "unprotect(): only %d protected items", R_PPStackTop),
@@ -3414,7 +3414,7 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 }
 #endif
 
-void NORET R_signal_reprotect_error(PROTECT_INDEX i)
+NORET void R_signal_reprotect_error(PROTECT_INDEX i)
 {
     error(ngettext("R_Reprotect: only %d protected item, can't reprotect index %d",
 		   "R_Reprotect: only %d protected items, can't reprotect index %d",
@@ -4060,7 +4060,7 @@ const SEXP *(STRING_PTR_RO)(SEXP x) {
     return STRING_PTR_RO(x);
 }
 
-SEXP * NORET (VECTOR_PTR)(SEXP x)
+NORET SEXP * (VECTOR_PTR)(SEXP x)
 {
   error(_("not safe to return vector pointer"));
 }
@@ -4521,7 +4521,7 @@ int  (IS_CACHED)(SEXP x) { return IS_CACHED(CHK(x)); }
 
 #ifndef R_MEMORY_PROFILING
 
-SEXP NORET do_Rprofmem(SEXP args)
+NORET SEXP do_Rprofmem(SEXP args)
 {
     error(_("memory profiling is not available on this system"));
 }
@@ -4698,7 +4698,7 @@ int Seql(SEXP a, SEXP b)
 
 
 #ifdef LONG_VECTOR_SUPPORT
-R_len_t NORET R_BadLongVector(SEXP x, const char *file, int line)
+NORET R_len_t R_BadLongVector(SEXP x, const char *file, int line)
 {
     error(_("long vectors not supported yet: %s:%d"), file, line);
 }

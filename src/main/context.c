@@ -904,7 +904,7 @@ SEXP R_MakeUnwindCont(void)
 
 #define RAWDATA(x) ((void *) RAW0(x))
 
-void NORET R_ContinueUnwind(SEXP cont)
+NORET void R_ContinueUnwind(SEXP cont)
 {
     SEXP retval = CAR(cont);
     unwind_cont_t *u = RAWDATA(CDR(cont));

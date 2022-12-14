@@ -53,10 +53,10 @@ extern "C" {
 #if defined FC_LEN_T
 # include <stddef.h>
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
-void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len);
+NORET void F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len);
 #else
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
-void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
+NORET void F77_SYMBOL(rexitc)(char *msg, int *nchar);
 #endif
 
 #ifdef __cplusplus
@@ -324,7 +324,7 @@ const char *type2char(SEXPTYPE t) /* returns a char* */
 }
 
 #ifdef UNUSED
-SEXP NORET type2symbol(SEXPTYPE t)
+NORET SEXP type2symbol(SEXPTYPE t)
 {
     // if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
 	SEXP res = Type2Table[t].rsymName;
@@ -334,8 +334,8 @@ SEXP NORET type2symbol(SEXPTYPE t)
 }
 #endif
 
-attribute_hidden
-void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
+attribute_hidden NORET
+void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
 {
     int i;
 
@@ -346,7 +346,7 @@ void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
     error(_("unimplemented type (%d) in '%s'\n"), t, s);
 }
 
-void NORET UNIMPLEMENTED_TYPE(const char *s, SEXP x)
+NORET void UNIMPLEMENTED_TYPE(const char *s, SEXP x)
 {
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
@@ -1726,9 +1726,9 @@ void R_fixbackslash(char *s)
 #endif
 
 #if defined FC_LEN_T
-void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len)
+NORET void F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len)
 #else
-void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar)
+NORET void F77_SYMBOL(rexitc)(char *msg, int *nchar)
 #endif
 {
     int nc = *nchar;

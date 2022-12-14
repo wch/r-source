@@ -47,7 +47,7 @@
 #define ECALL3(call, yy, A) if(call == R_NilValue) error(yy, A); else errorcall(call, yy, A);
 #define ECALL4(call, yy, A, B) if(call == R_NilValue) error(yy, A, B); else errorcall(call, yy, A, B);
 
-static void NORET ECALL_OutOfBounds(SEXP x, int subscript,
+NORET static void ECALL_OutOfBounds(SEXP x, int subscript,
 				    R_xlen_t index, SEXP call)
 {
     if (call == R_NilValue)
@@ -60,7 +60,7 @@ static void NORET ECALL_OutOfBounds(SEXP x, int subscript,
     UNPROTECT(2); /* sindex, cond; not reached */
 }
 
-static void NORET ECALL_MissingSubs(SEXP call) // no x
+NORET static void ECALL_MissingSubs(SEXP call) // no x
 {
     if (call == R_NilValue)
 	call = R_CurrentExpression;
@@ -70,7 +70,7 @@ static void NORET ECALL_MissingSubs(SEXP call) // no x
     UNPROTECT(1); /* cond; not reached */
 }
 
-static void NORET ECALL_OutOfBoundsCHAR(SEXP x, int subscript,
+NORET static void ECALL_OutOfBoundsCHAR(SEXP x, int subscript,
 					SEXP sindex, SEXP call)
 {
     if (call == R_NilValue)
