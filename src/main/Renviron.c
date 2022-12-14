@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2021   The R Core Team
+ *   Copyright (C) 1997-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -413,26 +413,27 @@ void process_user_Renviron(void)
 	return;
     }
 
+    char buff[1024]; /* MAX_PATH on Windows is less than this */
+
 #ifdef R_ARCH
-    char buff[100];
-    snprintf(buff, 100, ".Renviron.%s", R_ARCH);
+    snprintf(buff, 1024, ".Renviron.%s", R_ARCH);
     if(process_Renviron(buff)) return;
 #endif
+
     if(process_Renviron(".Renviron")) return;
+
 #ifdef Unix
     s = R_ExpandFileName("~/.Renviron");
 #endif
 #ifdef Win32
-    {
-	char buf[1024]; /* MAX_PATH is less than this */
-	/* R_USER is not necessarily set yet, so we have to work harder */
-	snprintf(buf, 1024, "%s/.Renviron", getRUser());
-	s = buf;
-    }
+    /* R_USER is not necessarily set yet, so we have to work harder */
+    snprintf(buff, 1024, "%s/.Renviron", getRUser());
+    s = buff;
 #endif
+
 #ifdef R_ARCH
-    snprintf(buff, 100, "%s.%s", s, R_ARCH);
-    if( process_Renviron(buff)) return;
+    snprintf(buff, 1024, "%s.%s", s, R_ARCH);
+    if(process_Renviron(buff)) return;
 #endif
     process_Renviron(s);
 }
