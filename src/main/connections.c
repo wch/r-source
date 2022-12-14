@@ -4005,7 +4005,7 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(nbuf == buf_size-1) {  /* need space for the terminator */
 		buf_size *= 2;
 		char *tmp = (char *) realloc(buf, buf_size);
-		if(!buf) {
+		if(!tmp) {
 		    free(buf);
 		    error(_("cannot allocate buffer in readLines"));
 		} else buf = tmp;
