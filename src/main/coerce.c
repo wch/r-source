@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021  The R Core Team
+ *  Copyright (C) 1997-2022  The R Core Team
  *  Copyright (C) 2003-2019  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
@@ -349,7 +349,7 @@ attribute_hidden SEXP StringFromComplex(Rcomplex x, int *warn)
 static SEXP StringFromRaw(Rbyte x, int *warn)
 {
     char buf[3];
-    sprintf(buf, "%02x", x);
+    snprintf(buf, 3, "%02x", x);
     return mkChar(buf);
 }
 

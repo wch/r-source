@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2164,8 +2164,9 @@ attribute_hidden SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	char buf[maxlen + (int) strlen(csep)
-		 + (int) (log((double)n)/log(10.0)) + 2];
+	size_t sz = maxlen + (int) strlen(csep)
+	    + (int) (log((double)n)/log(10.0)) + 2;
+	char buf[sz];
 	if(n < 10000) {
 	    R_CheckStack2((size_t)n * sizeof(int));
 	    cnts = (int *) alloca(((size_t) n) * sizeof(int));
@@ -2186,7 +2187,7 @@ attribute_hidden SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ss = translateChar(STRING_ELT(names, i));
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
 	    for(cnt = cnts[dp - 1]; cnt < n; cnt++) {
-		sprintf(buf, "%s%s%d", ss, csep, cnt);
+		snprintf(buf, sz, "%s%s%d", ss, csep, cnt);
 		SET_STRING_ELT(newx, 0, mkChar(buf));
 		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }

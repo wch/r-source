@@ -441,9 +441,10 @@ static int Rwputenv(const wchar_t *nm, const wchar_t *val)
 static int Rputenv(const char *nm, const char *val)
 {
     char *buf;
-    buf = (char *) malloc((strlen(nm) + strlen(val) + 2) * sizeof(char));
+    size_t sz = (strlen(nm) + strlen(val) + 2) * sizeof(char);
+    buf = (char *) malloc(sz);
     if(!buf) return 1;
-    sprintf(buf, "%s=%s", nm, val);
+    snprintf(buf, sz, "%s=%s", nm, val);
     if(putenv(buf)) return 1;
     /* no free here: storage remains in use */
     return 0;

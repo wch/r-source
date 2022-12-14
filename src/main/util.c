@@ -141,9 +141,9 @@ SEXP asChar(SEXP x)
 		if (LOGICAL(x)[0] == NA_LOGICAL)
 		    return NA_STRING;
 		if (LOGICAL(x)[0])
-		    sprintf(buf, "TRUE");
+		    snprintf(buf, MAXELTSIZE, "TRUE");
 		else
-		    sprintf(buf, "FALSE");
+		    snprintf(buf, MAXELTSIZE, "FALSE");
 		return mkChar(buf);
 	    case INTSXP:
 		if (INTEGER(x)[0] == NA_INTEGER)
@@ -1527,7 +1527,8 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 	if (!R_Is_Running) return (size_t)-1;
 	/* let's try to print out a readable version */
 	R_CheckStack2(4*strlen(s) + 10);
-	char err[4*strlen(s) + 1], *q;
+	size_t sz = 4*strlen(s) + 1;
+	char err[sz], *q;
 	const char *p;
 	for(p = s, q = err; *p; ) {
 	    /* don't do the first to keep ps state straight */
@@ -1536,11 +1537,11 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 	    else if((int) used > 0) {
 		memcpy(q, p, used);
 		p += used;
-		q += used;
+		q += used; sz -= used;
 		n -= used;
 	    } else {
-		sprintf(q, "<%02x>", (unsigned char) *p++);
-		q += 4;
+		snprintf(q, sz, "<%02x>", (unsigned char) *p++);
+		q += 4; sz -= 4;
 		n--;
 	    }
 	}
