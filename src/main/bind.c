@@ -492,8 +492,9 @@ static SEXP NewBase(SEXP base, SEXP tag)
     if (*CHAR(base) && *CHAR(tag)) { /* test of length */
 	const void *vmax = vmaxget();
 	const char *sb = translateCharUTF8(base), *st = translateCharUTF8(tag);
-	cbuf = R_AllocStringBuffer(strlen(st) + strlen(sb) + 1, &cbuff);
-	sprintf(cbuf, "%s.%s", sb, st);
+	size_t sz = strlen(st) + strlen(sb) + 1;
+	cbuf = R_AllocStringBuffer(sz, &cbuff);
+	snprintf(cbuf, sz + 1, "%s.%s", sb, st);
 	/* This isn't strictly correct as we do not know that all the
 	   components of the name were correctly translated. */
 	ans = mkCharCE(cbuf, CE_UTF8);
@@ -527,8 +528,9 @@ static SEXP NewName(SEXP base, SEXP tag, R_xlen_t seqno, int count)
 	    const char
 		*sb = translateCharUTF8(base),
 		*st = translateCharUTF8(tag);
-	    char *cbuf = R_AllocStringBuffer(strlen(sb) + strlen(st) + 1, &cbuff);
-	    sprintf(cbuf, "%s.%s", sb, st);
+	    size_t sz = strlen(sb) + strlen(st) + 1;
+	    char *cbuf = R_AllocStringBuffer(sz, &cbuff);
+	    snprintf(cbuf, sz + 1, "%s.%s", sb, st);
 	    ans = mkCharCE(cbuf, CE_UTF8);
 	    vmaxset(vmax);
 	}
@@ -538,14 +540,14 @@ static SEXP NewName(SEXP base, SEXP tag, R_xlen_t seqno, int count)
 	    const void *vmax = vmaxget();
 	    const char *sb = translateCharUTF8(base);
 	    char *cbuf;
-	    cbuf = R_AllocStringBuffer(strlen(sb) + (size_t) IndexWidth(seqno),
-				       &cbuff);
+	    size_t sz = strlen(sb) + (size_t) IndexWidth(seqno) + 1;
+	    cbuf = R_AllocStringBuffer(sz, &cbuff);
 #ifdef LONG_VECTOR_SUPPORT
 	    if (seqno > INT_MAX)
-		sprintf(cbuf, "%s%.0f", sb, (double) seqno);
+		snprintf(cbuf, sz + 1, "%s%.0f", sb, (double) seqno);
 	    else
 #endif
-		sprintf(cbuf, "%s%d", sb, (int) seqno);
+		snprintf(cbuf, sz + 1, "%s%d", sb, (int) seqno);
 	    ans = mkCharCE(cbuf, CE_UTF8);
 	    vmaxset(vmax);
 	}
@@ -1092,7 +1094,7 @@ attribute_hidden SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		const char *s = translateChar(STRING_ELT(classlist, i));
 		if(strlen(generic) + strlen(s) + 2 > 512)
 		    error(_("class name too long in '%s'"), generic);
-		sprintf(buf, "%s.%s", generic, s);
+		snprintf(buf, 512, "%s.%s", generic, s);
 		SEXP classmethod = R_LookupMethod(install(buf), env, env,
 						  R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
