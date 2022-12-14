@@ -553,6 +553,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	PROTECT(names = getAttrib(s, R_NamesSymbol));
 	int taglen = (int) strlen(tagbuf);
 	char *ptag = tagbuf + taglen;
+	size_t sz = TAGBUFLEN0 * 2 - taglen;
 
 	if(ns > 0) {
 	    R_xlen_t n_pr = (ns <= data->max +1) ? ns : data->max;
@@ -581,29 +582,29 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 #endif
 		    if (taglen + strlen(ss) > TAGBUFLEN) {
 			if (taglen <= TAGBUFLEN)
-			    sprintf(ptag, "$...");
+			    snprintf(ptag, sz, "$...");
 		    } else {
 			/* we need to distinguish character NA from "NA", which
 			   is a valid (if non-syntactic) name */
 			if (STRING_ELT(names, i) == NA_STRING)
-			    sprintf(ptag, "$<NA>");
+			    snprintf(ptag, sz, "$<NA>");
 #ifdef Win32
 			else if( isValidName(st) )
 #else
 			else if( isValidName(ss) )
 #endif
-			    sprintf(ptag, "$%s", ss);
+			    snprintf(ptag, sz, "$%s", ss);
 			else
-			    sprintf(ptag, "$`%s`", ss);
+			    snprintf(ptag, sz, "$`%s`", ss);
 		    }
 		    vmaxset(vmax);
 		}
 		else {
 		    if (taglen + IndexWidth(i) > TAGBUFLEN) {
 			if (taglen <= TAGBUFLEN)
-			    sprintf(ptag, "$...");
+			    snprintf(ptag, sz, "$...");
 		    } else
-			sprintf(ptag, "[[%lld]]", (long long)i+1);
+			snprintf(ptag, sz, "[[%lld]]", (long long)i+1);
 		}
                 Rprintf("%s\n", tagbuf);
 		PrintDispatch(VECTOR_ELT(s, i), data);
@@ -724,29 +725,31 @@ static void printList(SEXP s, R_PrintData *data)
 	i = 1;
 	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
+	size_t sz = TAGBUFLEN0 * 2 - taglen;
+
 	while (TYPEOF(s) == LISTSXP) {
 	    if (i > 1) Rprintf("\n");
 	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
 		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN) {
 		    if (taglen <= TAGBUFLEN)
-			sprintf(ptag, "$...");
+			snprintf(ptag, sz, "$...");
 		} else {
 		    /* we need to distinguish character NA from "NA", which
 		       is a valid (if non-syntactic) name */
 		    if (PRINTNAME(TAG(s)) == NA_STRING)
-			sprintf(ptag, "$<NA>");
+			snprintf(ptag, sz, "$<NA>");
 		    else if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
-			sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
+			snprintf(ptag, sz,  "$%s", CHAR(PRINTNAME(TAG(s))));
 		    else
-			sprintf(ptag, "$`%s`", EncodeChar(PRINTNAME(TAG(s))));
+			snprintf(ptag, sz, "$`%s`", EncodeChar(PRINTNAME(TAG(s))));
 		}
 	    }
 	    else {
 		if (taglen + IndexWidth(i) > TAGBUFLEN) {
 		    if (taglen <= TAGBUFLEN)
-			sprintf(ptag, "$...");
+			snprintf(ptag, sz, "$...");
 		} else
-		    sprintf(ptag, "[[%d]]", i);
+		    snprintf(ptag, sz, "[[%d]]", i);
 	    }
 
             Rprintf("%s\n", tagbuf);
