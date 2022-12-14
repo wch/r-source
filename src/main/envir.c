@@ -3933,6 +3933,7 @@ SEXP do_getNSValue(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_getNSValue(R_NilValue, ns, name, exported);
 }
 
+attribute_hidden
 SEXP do_colon2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -3940,6 +3941,7 @@ SEXP do_colon2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_getNSValue(R_NilValue, CAR(args), CADR(args), TRUE);
 }
 
+attribute_hidden
 SEXP do_colon3(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
