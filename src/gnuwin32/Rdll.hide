@@ -599,6 +599,9 @@
  do_baseenv
  do_basename
  do_bcclose
+ do_bcprofcounts
+ do_bcprofstart
+ do_bcprofstop
  do_bcversion
  do_begin
  do_bincode
@@ -630,6 +633,8 @@
  do_closewinprogressbar
  do_cmathfuns
  do_colon
+ do_colon2
+ do_colon3
  do_colsum
  do_commandArgs
  do_comment
@@ -1026,6 +1031,7 @@
  do_transpose
  do_trunc
  do_truncate
+ do_tryCatchHelper
  do_typeof
  do_tzone_name
  do_unclass
