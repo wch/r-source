@@ -286,7 +286,7 @@ static const char
     return out;
 }
 
-SEXP attribute_hidden StringFromReal(double x, int *warn)
+attribute_hidden SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
@@ -1061,7 +1061,7 @@ int attribute_hidden IndexWidth(R_xlen_t n)
     return (int) (log10(n + 0.5) + 1);
 }
 
-void attribute_hidden VectorIndex(R_xlen_t i, int w)
+attribute_hidden void VectorIndex(R_xlen_t i, int w)
 {
 /* print index label "[`i']" , using total width `w' (left filling blanks) */
     Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);

@@ -41,7 +41,7 @@ static void R_qsort_int_R(int *v, double *I, size_t i, size_t j);
 #endif
 
 /* R function  qsort(x, index.return) */
-SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sx;
     int indx_ret;

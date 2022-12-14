@@ -539,7 +539,7 @@ R_pcre_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
  * list is the collection of splits for the corresponding element of x.
 */
 
-SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP args0 = args, ans, tok, x;
     R_xlen_t i, itok, len, tlen;
@@ -1224,7 +1224,7 @@ static int fgrep_one_bytes(const char *pat, size_t patlen, const char *target,
     return -1;
 }
 
-SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ind, ans;
     regex_t reg;
@@ -1536,7 +1536,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
 
 /* grepRaw(pattern, text, offset, ignore.case, fixed, value, all, invert) */
 // FIXME:  allow long vectors.
-SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, res_head, res_tail;
     regex_t reg;
@@ -2009,7 +2009,7 @@ static int wcount_subs(const wchar_t *repl)
  * either once or globally.
  * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
-SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, text, ans;
     regex_t reg;
@@ -2920,7 +2920,7 @@ static SEXP gregexpr_BadStringAns(void)
     return ans;
 }
 
-SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, itype;
     regex_t reg;
@@ -3272,7 +3272,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 // .Internal(regexec(pattern, text, ignore.case, fixed, useBytes)) :
-SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchpos, matchlen, itype;
     int opt_icase, opt_fixed, useBytes;
@@ -3440,7 +3440,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
    the earliest version we allowed when coding this.
  */
 #ifdef HAVE_PCRE2
-SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     uint32_t res;
 
@@ -3464,7 +3464,7 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 #else
-SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int res;
 

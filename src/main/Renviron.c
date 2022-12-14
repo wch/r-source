@@ -437,7 +437,7 @@ void process_user_Renviron(void)
     process_Renviron(s);
 }
 
-SEXP attribute_hidden do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 
     checkArity(op, args);

@@ -342,7 +342,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
    level start to level stop-1.  ( 0...len-1 or 0..len-2 then len-1).
    For [[<- it needs to duplicate if substructure might be shared.
  */
-SEXP attribute_hidden
+attribute_hidden SEXP
 vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    Rboolean dup)
 {
@@ -414,7 +414,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
   only if(isMatrix(s) && isArray(x) && ncols(s) == "length(dim(x))"),
   where dims = getAttrib(x, R_DimSymbol);
 */
-SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call, SEXP x)
+attribute_hidden SEXP mat2indsub(SEXP dims, SEXP s, SEXP call, SEXP x)
 {
     int nrs = nrows(s);
     R_xlen_t NR = nrs;
@@ -517,7 +517,7 @@ a subscript out of bounds error.  */
   only if(isMatrix(s) && isArray(x) && ncols(s) == "length(dim(x))"),
   where dnamelist = PROTECT(GetArrayDimnames(x))
  */
-SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
+attribute_hidden SEXP strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
 {
     /* XXX: assumes all args are protected */
     SEXP dim = getAttrib(s, R_DimSymbol);
@@ -1045,7 +1045,7 @@ arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
    otherwise, stretch returns the new required length for x
 */
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 {
     if (! (isVector(x) || isList(x) || isLanguage(x))) {

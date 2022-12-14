@@ -34,7 +34,7 @@
     reconstructed after a package has clobbered the value assigned to
     a symbol in the base package. */
 
-SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
+attribute_hidden SEXP mkPRIMSXP(int offset, int eval)
 {
     SEXP result;
     SEXPTYPE type = eval ? BUILTINSXP : SPECIALSXP;
@@ -75,7 +75,7 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 /*  mkCLOSXP - return a closure with formals f,  */
 /*             body b, and environment rho       */
 
-SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
+attribute_hidden SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 {
     SEXP c;
     PROTECT(formals);
@@ -134,7 +134,7 @@ static int isDDName(SEXP name)
     return 0;
 }
 
-SEXP attribute_hidden mkSYMSXP(SEXP name, SEXP value)
+attribute_hidden SEXP mkSYMSXP(SEXP name, SEXP value)
 
 {
     SEXP c;

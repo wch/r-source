@@ -266,7 +266,7 @@ int attribute_hidden R_SetOptionWarn(int w)
 /* Note that options are stored as a dotted pair list */
 /* This is barely historical, but is also useful. */
 
-void attribute_hidden InitOptions(void)
+attribute_hidden void InitOptions(void)
 {
     SEXP val, v;
     char *p;
@@ -431,7 +431,7 @@ void attribute_hidden InitOptions(void)
 }
 
 
-SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP x = CAR(args);
@@ -444,7 +444,7 @@ SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
 static Rboolean warned_on_strings_as_fact = FALSE; // -> once-per-session warning
 
 /* This needs to manage R_Visible */
-SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP names, value, options;
 

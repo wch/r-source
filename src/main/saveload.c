@@ -1876,7 +1876,7 @@ static int defaultSaveVersion(void)
 
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 
-void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
+attribute_hidden void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 {
     SaveLoadData data = {{NULL, 0, MAXELTSIZE}};
 
@@ -1912,7 +1912,7 @@ void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
     }
 }
 
-void attribute_hidden R_SaveToFile(SEXP obj, FILE *fp, int ascii)
+attribute_hidden void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 {
     R_SaveToFileV(obj, fp, ascii, defaultSaveVersion());
 }
@@ -1920,7 +1920,7 @@ void attribute_hidden R_SaveToFile(SEXP obj, FILE *fp, int ascii)
     /* different handling of errors */
 
 #define return_and_free(X) {r = X; R_FreeStringBuffer(&data.buffer); return r;}
-SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
+attribute_hidden SEXP R_LoadFromFile(FILE *fp, int startup)
 {
     struct R_inpstream_st in;
     int magic;
@@ -1971,7 +1971,7 @@ SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
     }
 }
 
-SEXP attribute_hidden do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP file, s;
     FILE *fp;
@@ -1993,7 +1993,7 @@ SEXP attribute_hidden do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-SEXP attribute_hidden do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     FILE *fp;
     int version;
@@ -2028,7 +2028,7 @@ static void saveload_cleanup(void *data)
 }
 
 /* Only used for version 1 saves */
-SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* save(list, file, ascii, version, environment) */
 
@@ -2155,7 +2155,7 @@ static SEXP R_LoadSavedData(FILE *fp, SEXP aenv)
 }
 
 /* This is only used for version 1 or earlier formats */
-SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP fname, aenv, val;
     FILE *fp;
@@ -2200,7 +2200,7 @@ SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 #define R_XDR_INTEGER_SIZE 4
 */
 
-void attribute_hidden R_XDREncodeDouble(double d, void *buf)
+attribute_hidden void R_XDREncodeDouble(double d, void *buf)
 {
     XDR xdrs;
     int success;
@@ -2226,7 +2226,7 @@ double attribute_hidden R_XDRDecodeDouble(void *buf)
     return d;
 }
 
-void attribute_hidden R_XDREncodeInteger(int i, void *buf)
+attribute_hidden void R_XDREncodeInteger(int i, void *buf)
 {
     XDR xdrs;
     int success;
@@ -2323,7 +2323,7 @@ static void con_cleanup(void *data)
    with either a pairlist or list.
 */
 
-SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* saveToConn(list, conn, ascii, version, environment) */
 
@@ -2431,7 +2431,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Read and checks the magic number, open the connection if needed */
 
-SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* 0 .. loadFromConn2(conn, environment, verbose) */
     /* 1 .. loadInfoFromConn2(conn) */

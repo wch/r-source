@@ -229,13 +229,13 @@ char *R_HomeDir(void)
 }
 
 /* This is a primitive (with no arguments) */
-SEXP attribute_hidden do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarLogical( (R_Interactive) ? 1 : 0 );
 }
 
-SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     Rboolean check = asLogical(CAR(args));
@@ -247,7 +247,7 @@ SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans, pattern, fileext, tempdir;
     const char *tn, *td, *te;
@@ -358,7 +358,7 @@ int R_system(const char *command)
 extern char ** environ;
 #endif
 
-SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
     SEXP ans;
@@ -451,7 +451,7 @@ static int Rputenv(const char *nm, const char *val)
 #endif
 
 
-SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_PUTENV) || defined(HAVE_SETENV)
     int i, n;
@@ -490,7 +490,7 @@ SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, n;
     SEXP ans, vars;
@@ -577,7 +577,7 @@ write_one (unsigned int namescount, const char * const *names, void *data)
 #include "RBufferUtils.h"
 
 /* iconv(x, from, to, sub, mark) */
-SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args), si;
     void * arg_obj = (iconv_t)-1;
@@ -1641,7 +1641,7 @@ const char *reEnc3(const char *x,
     return p;
 }
 
-void attribute_hidden
+attribute_hidden void
 invalidate_cached_recodings(void)
 {
     if (latin1_obj) {
@@ -1953,7 +1953,7 @@ void R_reInitTempDir(int die_on_fail)
     }
 }
 
-void attribute_hidden InitTempDir(void) {
+attribute_hidden void InitTempDir(void) {
     R_reInitTempDir(/* die_on_fail = */ TRUE);
 }
 
@@ -2014,7 +2014,7 @@ void R_free_tmpnam(char *name)
     if (name) free(name);
 }
 
-SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nm;
 
@@ -2033,7 +2033,7 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-void attribute_hidden resetTimeLimits(void)
+attribute_hidden void resetTimeLimits(void)
 {
     double data[5];
     R_getProcTime(data);
@@ -2052,7 +2052,7 @@ void attribute_hidden resetTimeLimits(void)
 	cpuLimit = cpuLimit2;
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_setTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double cpu, elapsed, old_cpu = cpuLimitValue,
@@ -2079,7 +2079,7 @@ do_setTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double cpu, elapsed, data[5];
@@ -2103,7 +2103,7 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-void attribute_hidden R_CheckTimeLimits(void)
+attribute_hidden void R_CheckTimeLimits(void)
 {
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
 
@@ -2169,7 +2169,7 @@ void attribute_hidden R_CheckTimeLimits(void)
 #  define GLOB_QUOTE 0
 # endif
 #endif
-SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans;
     R_xlen_t i, n;

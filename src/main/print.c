@@ -114,7 +114,7 @@ void PrintDefaults(void)
     PrintInit(&R_print, R_GlobalEnv);
 }
 
-SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     switch (length(args)) {
     case 0:
@@ -129,7 +129,7 @@ SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* This is *only* called via outdated R_level prmatrix() : */
-SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;
     SEXP a, x, rowlab, collab, naprint;
@@ -217,7 +217,7 @@ static void advancePrintArgs(SEXP* args, SEXP* prev,
 }
 
 /* .Internal(print.default(x, args, missings)) */
-SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -823,7 +823,7 @@ static void print_cleanup(void *data)
 
  * This is the "dispatching" function for  print.default()
  */
-void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
+attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 {
     SEXP t;
 
@@ -1063,7 +1063,7 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 /* Print an S-expression using (possibly) local options.
    This is used for auto-printing from main.c */
 
-void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
+attribute_hidden void PrintValueEnv(SEXP s, SEXP env)
 {
     PrintDefaults();
     tagbuf[0] = '\0';
@@ -1098,7 +1098,7 @@ void R_PV(SEXP s)
 }
 
 
-void attribute_hidden CustomPrintValue(SEXP s, SEXP env)
+attribute_hidden void CustomPrintValue(SEXP s, SEXP env)
 {
     tagbuf[0] = '\0';
 

@@ -1091,7 +1091,7 @@ R_xlen_t any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
    .Internal(       unique(x, incomparables, fromLast, nmax))  [op=1]
    .Internal(anyDuplicated(x, incomparables, fromLast      ))  [op=2]
 */
-SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, dup, ans;
     R_xlen_t i, k, n;
@@ -1487,7 +1487,7 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
 
 
 // .Internal(match(x, table, nomatch, incomparables)) :
-SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -1520,7 +1520,7 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
  * Empty strings are unmatched			      BDR 2000/2/16
  */
 
-SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
     int mtch, n_target, mtch_count, dups_ok, no_match;
@@ -1666,7 +1666,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Partial Matching of Strings */
 /* Based on Therneau's charmatch. */
 
-SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
     const char *ss, *st;
@@ -1829,7 +1829,7 @@ static SEXP subDots(SEXP rho)
 }
 
 
-SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP formals, actuals, rlist;
     SEXP funcall, f, b, rval, sysp, t1, t2, tail;
@@ -2089,7 +2089,7 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     return ans;
 }
 
-SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     if(PRIMVAL(op) == 1)
@@ -2136,7 +2136,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     return ans;
 }
 
-SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP names, sep, ans, dup, newx;
     int i, cnt, *cnts, dp;
@@ -2242,7 +2242,7 @@ SEXP Rf_csduplicated(SEXP x)
 #include <R_ext/Random.h>
 
 // sample.int(.) --> .Internal(sample2(n, size)) :
-SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP ans;
@@ -2635,7 +2635,7 @@ int R_isHashtable(SEXP h)
 }
 
 /* This allows experimenting with creating hash tables at the R level. */
-SEXP attribute_hidden do_vhash(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_vhash(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x = CAR(args);
     SEXP sK = CADR(args);

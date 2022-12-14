@@ -164,7 +164,7 @@ static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
 // .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control), nlines))
-SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -361,7 +361,7 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 
 
 // called only from ./errors.c  for calls in warnings and errors :
-SEXP attribute_hidden deparse1s(SEXP call)
+attribute_hidden SEXP deparse1s(SEXP call)
 {
    Rboolean backtick=TRUE;
    return
@@ -378,7 +378,7 @@ static void con_cleanup(void *data)
 }
 
 // .Internal(dput(x, file, .deparseOpts(control)))
-SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP tval = CAR(args);
@@ -432,7 +432,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 // .Internal(dump(list, file, envir, opts, evaluate))
-SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP names = CAR(args),
