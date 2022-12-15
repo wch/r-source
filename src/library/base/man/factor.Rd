@@ -156,7 +156,7 @@ addNA(x, ifany = FALSE)
   vectors \code{x} it is helpful to supply \code{nmax} as an upper bound
   on the number of unique values.
 
-  Since \R 4.1.0, when using \code{\link{c}} to combine a (possibly
+  When using \code{\link{c}} to combine a (possibly
   ordered) factor with other objects, if all objects are (possibly
   ordered) factors, the result will be a factor with levels the union of
   the level sets of the elements, in the order the levels occur in the

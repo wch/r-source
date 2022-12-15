@@ -162,9 +162,6 @@ rbind(\dots, deparse.level = 1)
     the default code.
   }
 
-  (Before \R 4.0.0, an applicable method found was used only if
-  identical to any method determined for prior arguments.)
-
   If you want to combine other objects with data frames, it may be
   necessary to coerce them to data frames first.  (Note that this
   algorithm can result in calling the data frame method if all the

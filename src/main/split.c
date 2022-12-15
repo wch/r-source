@@ -26,7 +26,7 @@
 #include <Internal.h>
 #include <R_ext/Itermacros.h>
 
-SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
     Rboolean have_names;

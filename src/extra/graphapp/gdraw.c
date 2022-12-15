@@ -920,7 +920,8 @@ font gnewfont2(drawing d, const char *face, int style, int size,
     lf.lfEscapement = lf.lfOrientation = (int) 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
-    if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
+    if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings"))
+        || (! strcmp(face, "TT Symbol")) || (! strcmp(face, "TT Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
 	lf.lfCharSet = default_font_charset();

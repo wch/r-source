@@ -48,7 +48,7 @@ static SEXP raw_relop    (RELOP_TYPE code, SEXP s1, SEXP s2);
 	}						\
     } while (0)
 
-SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, arg1, arg2;
     int argc;
@@ -74,7 +74,7 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 // also called from cmp_relop() in eval.c :
-SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
+attribute_hidden SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     /* handle the REALSXP/INTSXP simple scalar case quickly */
     if (IS_SIMPLE_SCALAR(x, INTSXP)) {
@@ -741,7 +741,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     return ans;
 }
 
-SEXP attribute_hidden do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP ans = R_NilValue; /* -Wall */

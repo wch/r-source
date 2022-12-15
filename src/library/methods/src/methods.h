@@ -31,7 +31,7 @@
 SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist);
 SEXP R_clear_method_selection(void);
-SEXP NORET R_dummy_extern_place(void);
+NORET SEXP R_dummy_extern_place(void);
 SEXP R_el_named(SEXP object, SEXP what);
 SEXP R_externalptr_prototype_object(void);
 SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package);

@@ -98,11 +98,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output in non-UTF-8 locales (note that pdfTeX assumes
   UTF-8 by default since 2018).  Either set
-  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX is
-  aware of the encoding used (in \R < 4.2.0, Windows users needed a
-  \samp{\\usepackage[cp1252]\{inputenc\}} declaration or similar,
-  see \code{\link{l10n_info}()}) and
-  ensure that typewriter fonts containing directional quotes are used.
+  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX
+  is aware of the encoding used and ensure that typewriter fonts
+  containing directional quotes are used.
 
   Some \LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
   in the list of known extensions.  To enable them, add something like

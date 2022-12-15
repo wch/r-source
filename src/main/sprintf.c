@@ -75,7 +75,7 @@ static Rboolean checkfmt(const char *fmt, const char *pattern)
     : translateChar(STRING_ELT(_STR_, _i_)))
 
 
-SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen, nfmt, nprotect = 0;
     /* fmt2 is a copy of fmt with '*' expanded.

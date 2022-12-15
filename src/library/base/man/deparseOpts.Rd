@@ -77,7 +77,7 @@
     }
     \item{\code{"all"}:}{
       An abbreviated way to specify all of the options
-      listed above \emph{plus} \code{"digits17"} (since \R version 4.0.0).
+      listed above \emph{plus} \code{"digits17"}.
       This is the default for \code{dump}, and, without \code{"digits17"}, the options
       used by \code{\link{edit}} (which are fixed).
     }

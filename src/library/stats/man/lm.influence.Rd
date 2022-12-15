@@ -1,6 +1,6 @@
 % File src/library/stats/man/lm.influence.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.influence}
@@ -69,8 +69,7 @@ lm.influence(model, do.coef = TRUE)
   from dropping each case, we return the changes in the coefficients.
   This is more directly useful in many diagnostic measures.\cr
   Since these need \eqn{O(n p^2)} computing time, they can be omitted by
-  \code{do.coef = FALSE}. (Prior to R 4.0.0, this was much worse, using
-  an \eqn{O(n^2 p)} algorithm.)
+  \code{do.coef = FALSE}.
 
   Note that cases with \code{weights == 0} are \emph{dropped} (contrary
   to the situation in S).

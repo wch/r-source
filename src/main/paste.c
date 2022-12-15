@@ -41,7 +41,7 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
   .Internal(paste (args, sep, collapse, recycle0))
   .Internal(paste0(args,      collapse, recycle0))
 */
-SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* do_paste uses two passes to paste the arguments (in CAR(args)) together.
  * The first pass calculates the width of the paste buffer,
@@ -328,7 +328,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
   This should not do translations with escapes.
  */
-SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -440,7 +440,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* format.default(x, trim, digits, nsmall, width, justify, na.encode,
 		  scientific, decimal.mark) */
-SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
     int il, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
@@ -677,7 +677,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
  * for complex : 2 x 3 integers for (Re, Im)
  */
 
-SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
     int digits, nsmall, no = 1, w, d, e, wi, di, ei;

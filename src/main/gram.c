@@ -311,9 +311,9 @@ static SrcRefState ParseState;
 #define CHAR_VALUE 4
 #define UCS_VALUE 5
 
-static void NORET raiseParseError(const char *, SEXP, int, 
+NORET static void raiseParseError(const char *, SEXP, int, 
                                   const void *, YYLTYPE *, const char *);
-static void NORET raiseLexError(const char *, int,
+NORET static void raiseLexError(const char *, int,
                                 const void *, const char *);
 
 /* Memory protection in the parser
@@ -3932,6 +3932,7 @@ static SEXP R_Parse1(ParseStatus *status)
 	    if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr)) {
 	        YYLTYPE lloc;
 	        lloc.first_line = ParseState.xxlineno;
+		lloc.first_column = ParseState.xxcolno;
 	        if (Status == 3) lloc.first_line--;
 		raiseParseError("invalidPlaceholder", R_CurrentExpr,
 		                NO_VALUE, NULL, &lloc,
@@ -3940,6 +3941,7 @@ static SEXP R_Parse1(ParseStatus *status)
 	    if (checkForPipeBind(R_CurrentExpr)) {
 	        YYLTYPE lloc;
 	        lloc.first_line = ParseState.xxlineno;
+		lloc.first_column = ParseState.xxcolno;
 	        if (Status == 3) lloc.first_line--;
 		raiseParseError("invalidPipeBind", R_CurrentExpr, 
 		                NO_VALUE, NULL, &lloc,
@@ -6548,7 +6550,7 @@ static const char* getFilename(void) {
      [value], filename, lineno, colno
    in the sprintf call for the format.
 */
-static void NORET raiseParseError(const char *subclassname,
+NORET static void raiseParseError(const char *subclassname,
                              SEXP call,
                              int valuetype,
                              const void *value,
@@ -6641,7 +6643,7 @@ static void NORET raiseParseError(const char *subclassname,
    from the ParseState, but is otherwise the same as
    raiseParseError.
 */
-static void NORET raiseLexError(const char *subclassname,
+NORET static void raiseLexError(const char *subclassname,
                              int valuetype,
                              const void *value,
                              const char *format)

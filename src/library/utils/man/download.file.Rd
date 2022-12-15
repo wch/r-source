@@ -236,14 +236,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   certificate bundles (there is typically a build option to choose
   either their own or the system ones).
 }
-\section{FTP sites}{
-  \samp{ftp:} URLs are accessed using the FTP protocol which has a
-  number of variants.  One distinction is between \sQuote{active} and
-  \sQuote{(extended) passive} modes: which is used is chosen by the
-  client.  The  \code{"libcurl"} methods uses passive
-  mode: that was almost universally used by browsers before they
-  dropped support altogether.
-}
 \section{Good practice}{
   Setting the \code{method} should be left to the end user.  Neither of
   the \command{wget} nor \command{curl} commands is widely available:
@@ -259,6 +251,25 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   use \code{\link{capabilities}("libcurl")} in a program to see if it is
   available.
 }
+
+\section{\code{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \samp{https://}
+  ones are much preferred for use in \R. \samp{ftps://} URLs have always
+  been rare, and are nowadays even less supported.
+
+  It is intended that \R will continue to allow such URLs for as long as
+  \code{libcurl} does, but as they become rarer this is increasingly
+  untested.   What \sQuote{protocols} the version of \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersion}()}.
+
+  These URLs are accessed using the FTP protocol which has a
+  number of variants.  One distinction is between \sQuote{active} and
+  \sQuote{(extended) passive} modes: which is used is chosen by the
+  client.  The \code{"libcurl"} method uses passive mode which was
+  almost universally used by browsers before they dropped support
+  altogether.
+}
+
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the

@@ -36,9 +36,9 @@ extern "C" {
 #define NORET
 #endif
 
-void NORET Rf_error(const char *, ...);
-void NORET UNIMPLEMENTED(const char *);
-void NORET WrongArgCount(const char *);
+NORET void Rf_error(const char *, ...);
+NORET void UNIMPLEMENTED(const char *);
+NORET void WrongArgCount(const char *);
 
 void	Rf_warning(const char *, ...);
 void 	R_ShowMessage(const char *s);

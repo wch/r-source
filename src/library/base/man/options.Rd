@@ -369,7 +369,7 @@ getOption(x, default = NULL)
 
     \item{\code{showNCalls}:}{integer.  Controls how long the sequence
       of calls must be (in bytes) before ellipses are used.  Defaults to
-      40 and should be at least 30 and no more than 500.}
+      50 and should be at least 30 and no more than 500.}
 
     \item{\code{show.error.locations}:}{Should source locations of
       errors be printed?  If set to \code{TRUE} or \code{"top"}, the
@@ -387,10 +387,10 @@ getOption(x, default = NULL)
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
 
-    \item{\code{stringsAsFactors}:}{The default setting for
-      \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
-      used to provide the default values of the \code{stringsAsFactors}
-      argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
+    %% \item{\code{stringsAsFactors}:}{The default setting for
+    %%   \code{\link{default.stringsAsFactors}}, which in \R < 4.1.0 was
+    %%   used to provide the default values of the \code{stringsAsFactors}
+    %%   argument of \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by functions
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.

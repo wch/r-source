@@ -219,6 +219,8 @@ topic2url <- function(x)
 }
 topic2filename <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
+name2id <- function(x)
+    gsub("%", "+", utils::URLencode(x, reserved = TRUE))
 
 ## Create HTTP redirect files for aliases; called only during package
 ## installation if static help files are enabled. Files are named
@@ -453,7 +455,9 @@ Rd2HTML <-
 
         s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
         s <- s[nzchar(s)] # unlikely to matter, but just to be safe
-        s <- if (addID) sprintf('<code id="%s">%s</code>', gsub("[[:space:]]+", "-", s), vhtmlify(s))
+        s <- if (addID) sprintf('<code id="%s">%s</code>',
+                                gsub("[[:space:]]+", "-", paste(name2id(name), s, sep = "_:_")),
+                                vhtmlify(s))
              else sprintf('<code>%s</code>', vhtmlify(s))
         s <- paste0(s, collapse = ", ")
         of1(s)
@@ -999,6 +1003,7 @@ Rd2HTML <-
     }
 
     ## ----------------------- Continue in main function -----------------------
+    info <- list() # attribute to be returned if standalone = FALSE
     create_redirects <- FALSE
     if (is.character(out)) {
         if (out == "") {
@@ -1120,9 +1125,13 @@ Rd2HTML <-
             of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
         }
 
-	of1("<h2>")
+        ## id can identify help page when combined with others, and
+        ## also needed to form argument id-s programmatically
+        of0("<h2 id='", name2id(name), "'>")
 	inPara <- NA
 	title <- Rd[[1L]]
+        info$name <- name
+        info$title <- trimws(paste(as.character(title), collapse = "\n"))
 	if (concordance)
 	    conc$saveSrcref(title)
 	writeContent(title,sections[1])
@@ -1142,6 +1151,7 @@ Rd2HTML <-
                     ']</div>')
             of1(paste(hfcomps$footer, collapse = "")) # write out footer
         }
+        else attr(out, "info") <- info
     }
     if (concordance) {
     	conc$srcFile <- Rdfile

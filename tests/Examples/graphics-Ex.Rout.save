@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-12-09 r83419) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -149,9 +149,8 @@ Hair    Brown Blue Hazel Green
 > 
 > x <- 9.9*10^(-3:10)
 > plot(x, 1:14, log = "x")
-> axTicks(1) # now length 7, in R <= 2.13.x gave 'nintLog = Inf' res; then
+> axTicks(1) # now length 7
 [1] 1e-02 1e+00 1e+02 1e+04 1e+06 1e+08 1e+10
-> ## 1e-01 1e+01 1e+03 1e+05 1e+07 1e+09 1e+11 ; since R 4.2.0: 1e-2 1e0 1e2 .. 1e10
 > axTicks(1, nintLog = Inf) # rather too many
  [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 1e+07 1e+08 1e+09
 [13] 1e+10 1e+11
@@ -2208,7 +2207,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2931ea0>
+<bytecode: 0x159a33258>
 <environment: namespace:graphics>
 > 
 > 
@@ -3078,7 +3077,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x44b1200>
+<bytecode: 0x139d1f7e0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3159,7 +3158,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.891 0.169 8.114 0 0 
+Time elapsed:  1.367 0.084 1.454 0 0 
 > grDevices::dev.off()
 null device 
           1 

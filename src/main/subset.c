@@ -93,7 +93,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 	}					  \
     } while (0)
 
-static void NORET errorcallNotSubsettable(SEXP x, SEXP call)
+NORET static void errorcallNotSubsettable(SEXP x, SEXP call)
 {
     SEXP cond = R_makeNotSubsettableError(x, call);
     PROTECT(cond);
@@ -101,7 +101,7 @@ static void NORET errorcallNotSubsettable(SEXP x, SEXP call)
     UNPROTECT(1); /* cond; not reached */
 }
 
-static void NORET errorcallMissingSubs(SEXP x, SEXP call)
+NORET static void errorcallMissingSubs(SEXP x, SEXP call)
 {
     if (call == R_NilValue)
 	call = R_CurrentExpression;
@@ -112,7 +112,7 @@ static void NORET errorcallMissingSubs(SEXP x, SEXP call)
 }
 
 
-SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
+attribute_hidden SEXP ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     if (x == R_NilValue)
 	return x;
@@ -252,7 +252,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     return result;
 }
 
-static void NORET errorcallOutOfBounds(SEXP x, int subscript,
+NORET static void errorcallOutOfBounds(SEXP x, int subscript,
 				       R_xlen_t index, SEXP call)
 {
     SEXP sindex = ScalarReal((double) index);
@@ -263,7 +263,7 @@ static void NORET errorcallOutOfBounds(SEXP x, int subscript,
     UNPROTECT(2); /* sindex, cond; not reached */
 }
 
-static void NORET errorcallOutOfBoundsSEXP(SEXP x, int subscript,
+NORET static void errorcallOutOfBoundsSEXP(SEXP x, int subscript,
 					   SEXP sindex, SEXP call)
 {
     SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, NULL);
@@ -677,7 +677,7 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 /* The "[" subset operator.
  * This provides the most general form of subsetting. */
 
-SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -722,7 +722,7 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
 }
 
 // called from (R `[` => ) do_subset, but also from R .subset() :
-SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* By default we drop extents of length 1 */
 
@@ -932,7 +932,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* The [[ subset operator.  It needs to be fast. */
 /* The arguments to this call are evaluated on entry. */
 
-SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -955,7 +955,7 @@ SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset2_dflt(call, op, ans, rho);
 }
 
-SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs;
@@ -1152,7 +1152,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho)
+attribute_hidden SEXP dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho)
 {
     static SEXP bracket_op = NULL;
     SEXP args, x_elt;
@@ -1208,7 +1208,7 @@ pstrmatch(SEXP target, SEXP input, size_t slen)
     }
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 fixSubset3Args(SEXP call, SEXP args, SEXP env, SEXP* syminp)
 {
     SEXP input, nlist;
@@ -1248,7 +1248,7 @@ fixSubset3Args(SEXP call, SEXP args, SEXP env, SEXP* syminp)
    We need to be sure to only evaluate the first argument.
    The second will be a symbol that needs to be matched, not evaluated.
 */
-SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -1275,7 +1275,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* also used in eval.c */
-SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
+attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 {
     SEXP y;
     PROTECT(input);

@@ -27,7 +27,7 @@ type.convert(x, \dots)
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values in logical, integer, numeric or complex vectors.}
   \item{as.is}{whether to store strings as plain \code{character}. When
-    false (was default before \R 4.0.0), convert character vectors to
+    false, convert character vectors to
     factors.  See \sQuote{Details}.}
   \item{dec}{the character to be assumed for decimal points.}
   \item{numerals}{string indicating how to convert numbers whose
@@ -36,15 +36,13 @@ type.convert(x, \dots)
     Can be abbreviated.  Possible values are
     \describe{
       \item{\code{numerals = "allow.loss"}, default:}{the conversion
-	happens with some accuracy loss.  This was the behavior of \R
-        versions 3.0.3 and earlier, and the default from 3.1.1 onwards.}
+	happens with some accuracy loss.}
       \item{\code{numerals = "warn.loss"}:}{a \code{\link{warning}}
 	about accuracy loss is signalled and the conversion happens as
 	with \code{numerals = "allow.loss"}.}
       \item{\code{numerals = "no.loss"}:}{\code{x} is \emph{not}
 	converted to a number, but to a \code{\link{factor}} or
-	\code{character}, depending on \code{as.is}.  This was the
-        behavior of \R version 3.1.0.}
+	\code{character}, depending on \code{as.is}.}
     }
   }
   \item{tryLogical}{a \code{\link{logical}} determining if vectors

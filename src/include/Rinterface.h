@@ -61,7 +61,7 @@ extern void R_SaveGlobalEnv(void);
 extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void NORET R_Suicide(const char *);
+NORET extern void R_Suicide(const char *);
 extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
@@ -75,7 +75,7 @@ extern char *R_Home;		    /* Root of the R tree */
 # define mainloop		Rf_mainloop
 # define onintr			Rf_onintr
 # define onintrNoResume		Rf_onintrNoResume
-void NORET jump_to_toplevel(void);
+NORET void jump_to_toplevel(void);
 void mainloop(void);
 void onintr(void);
 void onintrNoResume(void);

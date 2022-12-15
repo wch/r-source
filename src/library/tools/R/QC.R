@@ -3109,14 +3109,11 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         ## orphaned package, it becomes uninstallable if the linked-to
         ## package is, or if it is removed.
         dependencies <- .expand_dependency_type_spec("strong")
-        av <- utils::installed.packages()[, dependencies, drop = FALSE]
-        rn <- row.names(av)
+        ipd <- utils:::.installed_package_dependencies
         new <- strict0 <- strict
         ex <- character()
         repeat {
-            new <- intersect(new, rn) # avoid NAs in the next line
-            need <- unname(unlist(apply(av[new, , drop = FALSE], 1L,
-                                        utils:::.clean_up_dependencies)))
+            need <- unname(unlist(ipd(new, dependencies)))
             new <- setdiff(need, c(strict, ex))
             if(!length(new)) break
             strict <- union(strict, new)

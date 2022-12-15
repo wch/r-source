@@ -101,11 +101,12 @@ static int rt_completion(char *buf, int offset, int *loc)
 	*pchar++ = achar;
     }
     *pchar = 0;
-    size_t len = strlen(pline) + 100; 
+    size_t plen = strlen(pline);
+    size_t len = plen + 100; 
     char cmd[len];
     snprintf(cmd, len,
-	     "utils:::.win32consoleCompletion(\"%s\", %d)",
-	     pline, cursor_position);
+	     "utils:::.win32consoleCompletion(\"%.*s\", %d)",
+	     (int)plen, pline, cursor_position);
     PROTECT(cmdSexp = mkString(cmd));
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
     if (status != PARSE_OK) {

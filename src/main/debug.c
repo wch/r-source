@@ -26,7 +26,7 @@
 #include <Defn.h>
 #include <Internal.h>
 
-SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue;
 
@@ -64,7 +64,7 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* primitives .primTrace() and .primUntrace() */
-SEXP attribute_hidden do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -95,7 +95,7 @@ static Rboolean tracing_state = TRUE, debugging_state = TRUE;
 #define SET_TRACE_STATE(value) tracing_state = value
 #define SET_DEBUG_STATE(value) debugging_state = value
 
-SEXP attribute_hidden do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP onOff = CAR(args);
@@ -124,7 +124,7 @@ Rboolean R_current_trace_state(void) { return GET_TRACE_STATE; }
 
 #ifdef R_MEMORY_PROFILING
 
-SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP object;
     char buffer[21];
@@ -153,7 +153,7 @@ SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString(buffer);
 }
 
-SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP object;
 
@@ -173,14 +173,14 @@ SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-SEXP attribute_hidden NORET do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
     errorcall(call, _("R was not compiled with support for memory profiling"));
 }
 
-SEXP attribute_hidden NORET do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -219,7 +219,7 @@ void memtrace_report(void * old, void * _new)
 
 #endif /* R_MEMORY_PROFILING */
 
-SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
     SEXP object, previous, ans, argList;
