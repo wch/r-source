@@ -428,8 +428,9 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
                            KATEX_CSS_STATIC = "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css",
                            MATHJAX_JS_STATIC = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js",
                            MATHJAX_CONFIG_STATIC = file.path(Rhome, "doc/html/mathjax-config.js"),
-                           PRISM_JS_STATIC = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js", 
-                           PRISM_CSS_STATIC = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js")
+                           PRISM_JS_STATIC = c("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js",
+                                               "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"),
+                           PRISM_CSS_STATIC = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css")
 {
     header <- character(0)
     footer <- character(0)
@@ -508,8 +509,9 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
     ## Footer:
     addf('\n</div>\n') # closes div.container
     ## include JS from prismjs.com for code highlighting
-    if (prism && length(PRISM_JS) == 1L)
-        addf('<script src="', urlify(PRISM_JS), '"></script>\n')
+    if (prism && length(PRISM_JS) > 0L)
+        for (u in PRISM_JS)
+            addf('<script src="', urlify(u), '"></script>\n')
     addf('</body></html>\n')
 
     ## Optional part of header (title + logo, up, top)

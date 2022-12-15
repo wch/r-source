@@ -10,13 +10,21 @@
 \alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{
-  Print version information about \R, the OS and attached or loaded packages.
+  Get and report version information about \R, the OS and attached or
+  loaded packages.
+
+  The \code{\link{print}()} and \code{\link{toLatex}()} methods (for a
+  \code{"sessionInfo"} object) show the locale and timezone information by
+  default, when \code{locale} or \code{tzone} are true.
+  The \code{system.codepage} is only shown when it is not empty, i.e., only
+  on Windows, \emph{and} if it differs from \code{code.page}, see below or
+  \code{\link{l10n_info}()}.
 }
 \usage{
 sessionInfo(package = NULL)
-\S3method{print}{sessionInfo}(x, locale = TRUE,
+\S3method{print}{sessionInfo}(x, locale = TRUE, tzone = locale,
       RNG = !identical(x$RNGkind, .RNGdefaults), \dots)
-\S3method{toLatex}{sessionInfo}(object, locale = TRUE,
+\S3method{toLatex}{sessionInfo}(object, locale = TRUE, tzone = locale,
         RNG = !identical(object$RNGkind, .RNGdefaults), \dots)
 osVersion
 }
@@ -25,7 +33,8 @@ osVersion
    (the default) meaning all attached packages.}
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
-  \item{locale}{show locale, time zone and (on Windows) code page information?}
+  \item{locale}{show locale, by default \code{tzone}, and (on Windows) code page information?}
+  \item{tzone}{show time zone information?}
   \item{RNG}{show information on \code{\link{RNGkind}()}?  Defaults to true
     iff it differs from the \R version's default, i.e., \code{\link{RNGversion}(*)}.}
   \item{\dots}{currently not used.}
@@ -46,6 +55,7 @@ osVersion
   \item{BLAS}{a character string, the result of calling
     \code{\link{extSoftVersion}()["BLAS"]}.}
   \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
+  \item{LA_version}{a character string, the result of calling \code{\link{La_version}()}.}
   \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
   \item{tzone}{a character string, the result of calling \code{\link{Sys.timezone}()}.}
   \item{tzcode_type}{a character string indicating source

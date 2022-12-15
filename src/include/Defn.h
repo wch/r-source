@@ -539,7 +539,7 @@ typedef union {
 #define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 #ifdef LONG_VECTOR_SUPPORT
-    R_len_t NORET R_BadLongVector(SEXP, const char *, int);
+    NORET R_len_t R_BadLongVector(SEXP, const char *, int);
 #endif
 
 /* checking for mis-use of multi-threading */
@@ -704,9 +704,9 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_printwhere(void);
 void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
 
-void NORET R_signal_protect_error(void);
-void NORET R_signal_unprotect_error(void);
-void NORET R_signal_reprotect_error(PROTECT_INDEX i);
+NORET void R_signal_protect_error(void);
+NORET void R_signal_unprotect_error(void);
+NORET void R_signal_reprotect_error(PROTECT_INDEX i);
 
 const char *R_curErrorBuf(void);
 Rboolean R_cycle_detected(SEXP s, SEXP child);
@@ -762,7 +762,7 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 
 /* macro version of R_CheckStack */
 #define R_CheckStack() do {						\
-	void NORET R_SignalCStackOverflow(intptr_t);				\
+	NORET void R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
@@ -1926,7 +1926,7 @@ R_xlen_t any_duplicated3(SEXP, SEXP, Rboolean);
 SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
-void NORET findcontext(int, SEXP, SEXP);
+NORET void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
 SEXP frameSubscript(int, SEXP, SEXP);
@@ -1960,7 +1960,7 @@ void InitS3DefaultTypes(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
-void NORET jump_to_toplevel(void);
+NORET void jump_to_toplevel(void);
 void KillAllDevices(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
@@ -2052,7 +2052,7 @@ SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int framedepth(RCNTXT*);
 void R_InsertRestartHandlers(RCNTXT *, const char *);
-void NORET R_JumpToContext(RCNTXT *, int, SEXP);
+NORET void R_JumpToContext(RCNTXT *, int, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
@@ -2061,20 +2061,20 @@ RCNTXT *R_findExecContext(RCNTXT *, SEXP);
 RCNTXT *R_findParentContext(RCNTXT *, int);
 
 void R_run_onexits(RCNTXT *);
-void NORET R_jumpctxt(RCNTXT *, int, SEXP);
+NORET void R_jumpctxt(RCNTXT *, int, SEXP);
 #endif
 
 /* ../main/bind.c */
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
-void NORET errorcall_cpy(SEXP, const char *, ...);
-void NORET ErrorMessage(SEXP, int, ...);
+NORET void errorcall_cpy(SEXP, const char *, ...);
+NORET void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
-void NORET R_signalErrorCondition(SEXP cond, SEXP call);
-void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
+NORET void R_signalErrorCondition(SEXP cond, SEXP call);
+NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
 SEXP R_vmakeErrorCondition(SEXP call,
 			   const char *classname, const char *subclassname,
 			   int nextra, const char *format, va_list ap);
@@ -2138,8 +2138,8 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 #include <wchar.h>
 
 /* main/util.c */
-void NORET UNIMPLEMENTED_TYPE(const char *s, SEXP x);
-void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
+NORET void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
+NORET void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);

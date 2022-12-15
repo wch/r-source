@@ -73,7 +73,7 @@ version
   as \samp{mingw32}.
 
   \code{R.version$crt} is supported on Windows since \R 4.2.0 and returns
-  \code{"ucrt"} to denote the Universal C Runtime. It would return
+  \code{"ucrt"} to denote the Universal C Runtime.  It would return
   \code{"msvcrt"} for the older Microsoft Visual C++ Runtime (but \R does
   not use that runtime since 4.2.0).
 }

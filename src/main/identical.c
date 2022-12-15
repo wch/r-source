@@ -47,7 +47,7 @@ static R_INLINE int asFlag(SEXP x, const char *name)
 }
 
 /* .Internal(identical(..)) */
-SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nargs = length(args);
     /* avoid problems with earlier (and future) versions captured in S4

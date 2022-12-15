@@ -5431,7 +5431,11 @@ If your package uses dates/times, ensure that it works in all timezones,
 especially those near boundaries (problems have most often be seen in
 @samp{Europe/London} (zero offset in Winter) and
 @samp{Pacific/Auckland}, near enough the International Date line) and
-with offsets not in whole hours (Adelaide, Chatham Islands, ...).
+with offsets not in whole hours (Adelaide, Chatham Islands, @dots{}).
+More extreme examples are @samp{Africa/Conakry} (permanent UTC),
+@samp{Asia/Calcutta} (no DST, permanent half-hour offset)
+and @samp{Pacific/Kiritimati]}(no DST, more than 12 hours ahead of UTC).
+
 
 @end itemize
 
@@ -5863,6 +5867,11 @@ This problem is less common than it used to be, but in 2019
 LLVM @command{clang} did not have @code{bind} in the main namespace.  Also
 seen has been type @code{size_t} defined only in the @code{std} namespace.
 @c with g++ on Solaris 10.
+
+@strong{NB:} These functions are only guaranteed to be in the
+@code{std} namespace if the correct C++ header is included, e.g.@:
+@code{<cmath>} rather than @code{<math.h>}.
+@c seen for std::sqrt on macOS 13.
 
 @item
 @c including LLVM clang as from 4.0.0
@@ -15552,7 +15561,7 @@ two additional functions:
 
 @example
 SEXP R_MakeUnwindCont();
-void NORET R_ContinueUnwind(SEXP cont);
+NORET void R_ContinueUnwind(SEXP cont);
 @end example
 @findex R_MakeUnwindCont
 @findex R_ContinueUnwind

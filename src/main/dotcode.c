@@ -483,7 +483,7 @@ static SEXP enctrim(SEXP args)
 
 
 
-SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     const char *sym, *type="", *pkg = "";
     int val = 1, nargs = length(args);
@@ -543,7 +543,7 @@ static SEXP check_retval(SEXP call, SEXP val)
     return val;
 }
     
-SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC ofun = NULL;
     SEXP retval;
@@ -857,7 +857,7 @@ typedef SEXP (*FUNS65)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
                        SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
                        SEXP, SEXP);
 
-SEXP attribute_hidden R_doDotCall(DL_FUNC fun, int nargs, SEXP *cargs,
+attribute_hidden SEXP R_doDotCall(DL_FUNC fun, int nargs, SEXP *cargs,
 				  SEXP call) {
     SEXP retval = R_NilValue;	/* -Wall */
     switch (nargs) {
@@ -1517,7 +1517,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC fun, int nargs, SEXP *cargs,
 }
 
 /* .Call(name, <args>) */
-SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC ofun = NULL;
     SEXP retval, cargs[MAX_ARGS], pargs;
@@ -1611,7 +1611,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include <R_ext/GraphicsEngine.h>
 
-SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP retval;
     pGEDevDesc dd = GEcurrentDevice();
@@ -1642,7 +1642,7 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
     return retval;
 }
 
-SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP retval;
     pGEDevDesc dd = GEcurrentDevice();
@@ -1770,7 +1770,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 #define FILL 0xee
 #define NG 64
 
-SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs, **cargs0 = NULL /* -Wall */;
     int naok, na, nargs, Fort;

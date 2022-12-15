@@ -162,8 +162,6 @@ function(x)
 
 ## <NOTE>
 ## Currently unused.
-## </NOTE>
-
 .decode_numeric_version <-
 function(x)
 {
@@ -179,6 +177,7 @@ function(x)
     class(y) <-  unique(c(attr(x, ".classes"), "numeric_version"))
     y
 }
+## </NOTE>
 
 ## Methods.
 
@@ -266,14 +265,8 @@ function(e1, e2)
                       .Generic), domain = NA)
     if(!is.numeric_version(e1)) e1 <- as.numeric_version(e1)
     if(!is.numeric_version(e2)) e2 <- as.numeric_version(e2)
-    n1 <- length(e1)
-    n2 <- length(e2)
-    if(!n1 || !n2) return(logical())
-    e <- split(.encode_numeric_version(c(e1, e2)),
-               rep.int(c(1L, 2L), c(n1, n2)))
-    e1 <- e[[1L]]
-    e2 <- e[[2L]]
-    NextMethod(.Generic)
+    op <- get(.Generic, mode = "function")
+    op(.Internal(compareNumericVersion(e1, e2)), 0L)
 }
 
 Summary.numeric_version <-

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/dotchart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dotchart}
@@ -35,8 +35,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
   \item{gdata}{data values for the groups.
     This is typically a summary such as the median or mean
     of each group.}
-  \item{offset}{offset in inches of \code{ylab} and \code{labels}; was
-    hardwired to 0.4 before \R 4.0.0.}
+  \item{offset}{offset in inches of \code{ylab} and \code{labels}.}
   \item{ann}{a \code{\link{logical}} value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
   \item{xaxt}{a string indicating the x-axis style; use \code{"n"} to

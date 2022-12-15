@@ -325,11 +325,11 @@ transcmp (const void *p1, const void *p2)
 
 /* Name of the default domain used for gettext(3) prior any call to
    textdomain(3).  The default value for this is "messages".  */
-const char _nl_default_default_domain[] attribute_hidden = "messages";
+attribute_hidden const char _nl_default_default_domain[] = "messages";
 
 #ifndef IN_LIBGLOCALE
 /* Value used as the default domain for gettext(3).  */
-const char *_nl_current_default_domain attribute_hidden
+attribute_hidden const char *_nl_current_default_domain
      = _nl_default_default_domain;
 #endif
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ int Rgui_Edit(char *filename, int enc, char *title, int modal);
 static char *DefaultFileName;
 static int  EdFileUsed = 0;
 
-void attribute_hidden InitEd(void)
+attribute_hidden void InitEd(void)
 {
 #ifdef Win32
     DefaultFileName = R_tmpnam2("Redit", R_TempDir, ".R");
@@ -135,7 +135,8 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(ed)) errorcall(call, _("argument 'editor' type not valid"));
     cmd = translateCharFP(STRING_ELT(ed, 0));
     if (strlen(cmd) == 0) errorcall(call, _("argument 'editor' is not set"));
-    editcmd = R_alloc(strlen(cmd) + strlen(filename) + 6, sizeof(char));
+    size_t sz = strlen(cmd) + strlen(filename) + 6;
+    editcmd = R_alloc(sz, sizeof(char));
 #ifdef Win32
     if (!strcmp(cmd,"internal")) {
 	if (!isString(ti))
@@ -152,9 +153,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	/* Quote path if not quoted */
 	if(cmd[0] != '"')
-	    sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
+	    snprintf(editcmd, sz, "\"%s\" \"%s\"", cmd, filename);
 	else
-	    sprintf(editcmd, "%s \"%s\"", cmd, filename);
+	    snprintf(editcmd, sz, "%s \"%s\"", cmd, filename);
 	rc = runcmd(editcmd, CE_NATIVE, 1, 1, NULL, NULL, NULL);
 	if (rc == NOLAUNCH)
 	    errorcall(call, _("unable to run editor '%s'"), cmd);
@@ -165,7 +166,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ptr_R_EditFile)
 	rc = ptr_R_EditFile(filename);
     else {
-	sprintf(editcmd, "'%s' '%s'", cmd, filename); // allow for spaces
+	snprintf(editcmd, sz, "'%s' '%s'", cmd, filename); // allow for spaces
 	rc = R_system(editcmd);
     }
     if (rc != 0)

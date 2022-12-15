@@ -192,7 +192,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _add(nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			  pt, ptlim);
 		continue;
-	    case 'P': // not in tzcode
+	    case 'P': // R addition not in tzcode
 		{
 		    char *p = nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			*q, buff[20];
@@ -299,6 +299,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'k':
 		pt = _conv(t->tm_hour, "%2d", pt, ptlim);
 		continue;
+	    case 'l':
 		pt = _conv((t->tm_hour % 12) ? (t->tm_hour % 12) : 12,
 			   "%2d", pt, ptlim);
 		continue;
@@ -325,7 +326,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    {
 		stm  tm = *t;
 		char buf[22]; // <= 19 digs + sign + terminator
-		int_fast64_t mkt = R_mktime(&tm);
+		int_fast64_t mkt = R_mktime(&tm); // we know -1 is valid tine
 		(void) snprintf(buf, 22, "%lld", (long long) mkt);
 		pt = _add(buf, pt, ptlim);
 	    }
@@ -416,7 +417,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1, pt, ptlim);
 		continue;
 	    case 'Y':
-		// Changed to agree wirh glibc
+		// Changed to allow glibc's way (no padding)
 //		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1, pt, ptlim);
 	    {
 		char buf[20] = "%";
@@ -427,7 +428,10 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		    pad = '0'; width = 4;
 		}
 		if (pad == '0' || pad == '+') strcat(buf, "0");
-		if (width > 0) sprintf(buf+strlen(buf), "%u", width);
+		if (width > 0) {
+		    size_t sz = strlen(buf);
+		    snprintf(buf+sz, 20-sz, "%u", width);
+		}
 		if (pad == '+' && year > 9999) strcat(buf, "+");
 		strcat(buf, "d");
 		pt = _conv(year, buf, pt, ptlim);

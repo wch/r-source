@@ -45,7 +45,7 @@ static Rboolean DebugInitFile = FALSE;
  *  INITIALIZATION AND TERMINATION ACTIONS
  */
 
-void attribute_hidden R_InitialData(void)
+attribute_hidden void R_InitialData(void)
 {
     R_RestoreGlobalEnv();
 }

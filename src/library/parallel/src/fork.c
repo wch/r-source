@@ -1156,7 +1156,7 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
 
 extern int R_ignore_SIGPIPE; /* defined in src/main/main.c on unix */
 
-SEXP NORET mc_exit(SEXP sRes)
+NORET SEXP mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG

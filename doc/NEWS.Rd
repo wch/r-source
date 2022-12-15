@@ -100,6 +100,11 @@
       \item The \code{as.data.frame.vector()} utility now errors for
       wrong-length \code{row.names}.  It warned for almost six years, with
       \dQuote{Will be an error!}.
+
+      \item \code{sessionInfo()} now also contains \code{La_version()} and
+      reports codepage and timezone when relevant, in both \code{print()}
+      and \code{toLatex()} methods which also get new option \code{tzone}
+      for displaying timezone information when \code{locale=FALSE}.
     }
   }
 
@@ -445,6 +450,11 @@
       macOS 13 SDK (\PR{18426}). This also addresses an issue where
       the currently used font in the Quartz device context was not
       correctly retained.
+
+      \item Math symbols in text drawing functions on Windows are again
+      rendered correctly (\PR{18440}).  This fixes a regression in \R 4.2.1
+      caused by a fix in \PR{18382} which uncovered an issue in GraphApp
+      due to which the symbol charset was not used with TT Symbol font face.
     }
   }
 }

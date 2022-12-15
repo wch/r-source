@@ -32,13 +32,13 @@ next
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
     Other types are coerced to logical if possible, ignoring any class.
-    (As from \R 4.2.0, conditions of length greater than one are an error.) 
+    (Conditions of length greater than one are an error.) 
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
     an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
-    factor value will be coerced to a character vector.  As from \R
-    4.0.0 this can be a long vector.}
+    factor value will be coerced to a character vector.  This can be a
+    long vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so-called \emph{compound expression}, usually

@@ -648,7 +648,8 @@ static void process_request_(void *ptr)
 		if (code == 200)
 		    send_http_response(c, " 200 OK\r\nContent-type: ");
 		else {
-		    sprintf(buf, "%s %d Code %d\r\nContent-type: ", HTTP_SIG(c), code, code);
+		    snprintf(buf, 64, "%s %d Code %d\r\nContent-type: ",
+			     HTTP_SIG(c), code, code);
 		    send_response(c->sock, buf, strlen(buf));
 		}
 		send_response(c->sock, ct, strlen(ct));
@@ -680,7 +681,7 @@ static void process_request_(void *ptr)
 		    fseek(f, 0, SEEK_END);
 		    fsz = ftell(f);
 		    fseek(f, 0, SEEK_SET);
-		    sprintf(buf, "\r\nContent-length: %ld\r\n\r\n", fsz);
+		    snprintf(buf, 64, "\r\nContent-length: %ld\r\n\r\n", fsz);
 		    send_response(c->sock, buf, strlen(buf));
 		    if (c->method != METHOD_HEAD) {
 			fbuf = (char*) malloc(32768);
@@ -713,7 +714,8 @@ static void process_request_(void *ptr)
 		    vmaxset(vmax);
 		    return;
 		}
-		sprintf(buf, "\r\nContent-length: %u\r\n\r\n", (unsigned int) strlen(cs));
+		snprintf(buf, 64, "\r\nContent-length: %u\r\n\r\n",
+			 (unsigned int) strlen(cs));
 		send_response(c->sock, buf, strlen(buf));
 		if (c->method != METHOD_HEAD)
 		    send_response(c->sock, cs, strlen(cs));
@@ -728,7 +730,8 @@ static void process_request_(void *ptr)
 		if (code == 200)
 		    send_http_response(c, " 200 OK\r\nContent-type: ");
 		else {
-		    sprintf(buf, "%s %d Code %d\r\nContent-type: ", HTTP_SIG(c), code, code);
+		    snprintf(buf, 64, "%s %d Code %d\r\nContent-type: ",
+			     HTTP_SIG(c), code, code);
 		    send_response(c->sock, buf, strlen(buf));
 		}
 		send_response(c->sock, ct, strlen(ct));
@@ -740,7 +743,7 @@ static void process_request_(void *ptr)
 			send_response(c->sock, hs, strlen(hs));
 		    }
 		}
-		sprintf(buf, "\r\nContent-length: %u\r\n\r\n", LENGTH(y));
+		snprintf(buf, 64, "\r\nContent-length: %u\r\n\r\n", LENGTH(y));
 		send_response(c->sock, buf, strlen(buf));
 		if (c->method != METHOD_HEAD)
 		    send_response(c->sock, (char*) cs, LENGTH(y));

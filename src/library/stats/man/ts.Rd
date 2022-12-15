@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -80,8 +80,8 @@ is.ts(x)
   \code{12} when the data are sampled monthly and the natural time
   period is a year.  Values of \code{4} and \code{12} are assumed in
   (e.g.) \code{print} methods to imply a quarterly and monthly series
-  respectively.  As from \R 4.0.0, \code{frequency} need not be a whole
-  number.  For example, \code{frequency = 0.2} would imply sampling
+  respectively.  \code{frequency} need not be a whole
+  number:  for example, \code{frequency = 0.2} would imply sampling
   once every five time units.
 
   \code{as.ts} is generic.  Its default method will use the

@@ -1670,7 +1670,7 @@ static int AccentAtom(SEXP expr)
     return NameAtom(expr) && (AccentCode(expr) != 0);
 }
 
-static void NORET InvalidAccent(SEXP expr)
+NORET static void InvalidAccent(SEXP expr)
 {
     errorcall(expr, _("invalid accent"));
 }

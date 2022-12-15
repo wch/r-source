@@ -317,7 +317,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 /* internal API - takes one mandatory argument (object to inspect) and
    two optional arguments (deep and pvec - see above), positional argument
    matching only */
-SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
+attribute_hidden SEXP do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     checkArity(op, args);
     SEXP obj = CAR(args);
     int deep = -1;
@@ -332,19 +332,19 @@ SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     return obj;
 }
 
-SEXP attribute_hidden do_address(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_address(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return R_MakeExternalPtr((void *) CAR(args), R_NilValue, R_NilValue);
 }
 
-SEXP attribute_hidden do_named(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_named(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarInteger(NAMED(CAR(args)));
 }
 
-SEXP attribute_hidden do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarInteger(REFCNT(CAR(args)));
@@ -352,12 +352,12 @@ SEXP attribute_hidden do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* the following functions can be use internally and for debugging purposes -
    so far they are not used in any actual code */
-SEXP attribute_hidden R_inspect(SEXP x) {
+attribute_hidden SEXP R_inspect(SEXP x) {
     inspect_tree(0, x, -1, 5);
     return x;
 }
 
-SEXP attribute_hidden R_inspect3(SEXP x, int deep, int pvec) {
+attribute_hidden SEXP R_inspect3(SEXP x, int deep, int pvec) {
     inspect_tree(0, x, deep, pvec);
     return x;
 }

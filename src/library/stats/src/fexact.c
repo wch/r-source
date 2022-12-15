@@ -67,7 +67,7 @@ static Rboolean f10act(int nrow, const int irow[], int ncol, const int icol[],
 		       double *val,
 		       const double fact[], int *nd, int *ne, int *m);
 static void f11act(const int irow[], int i1, int i2, int *new);
-static void NORET prterr(int icode, const char *mes);
+NORET static void prterr(int icode, const char *mes);
 static int iwork(int iwkmax, int *iwkpt, int number, int itype);
 
 #ifdef USING_R
@@ -1794,7 +1794,7 @@ void f11act(const int irow[], int i1, int i2, int *new)
 }
 
 
-void NORET prterr(int icode, const char *mes)
+NORET void prterr(int icode, const char *mes)
 {
 /*
   -----------------------------------------------------------------------
