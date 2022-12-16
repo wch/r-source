@@ -1284,7 +1284,6 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    s = ((int) (s*t))/t;
 		    // FIXME uae snprintf
 		    sprintf(p2, "%0*.*f", ns+3, ns, s);
-		    sprintf(p2, "%0*.*f", ns+3, ns, s);
 		    strcat(buf2, p+nused);
 		} else {
 		    strcat(p2, "%S");
