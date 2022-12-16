@@ -256,6 +256,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (has_star) {
 			    size_t nf; char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
+				// FIXME use snprintf
 				if (*p == '*') q += sprintf(q, "%d", star_arg);
 				else *q++ = *p;
 			    *q = '\0';

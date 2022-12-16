@@ -3215,10 +3215,11 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     va_end(aq);
     if(res >= buffree) { /* res is the desired output length */
 	vmax = vmaxget();
-	b = R_alloc(res + already + 1, sizeof(char));
+	size_t sz = res + already + 1;
+	b = R_alloc(sz, sizeof(char));
 	strcpy(b, this->lastline);
 	p = b + already;
-	vsprintf(p, format, ap);
+	vsnprintf(p, sz - already, format, ap);
     } else if(res < 0) { /* just a failure indication */
 #define NBUFSIZE (already + 100*BUFSIZE)
 	vmax = vmaxget();

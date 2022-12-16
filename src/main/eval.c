@@ -2760,7 +2760,7 @@ static SEXP installAssignFcnSymbol(SEXP fun)
     /* install the symbol */
     if(strlen(CHAR(PRINTNAME(fun))) + 3 > ASSIGNBUFSIZ)
 	error(_("overlong name in '%s'"), EncodeChar(PRINTNAME(fun)));
-    sprintf(buf, "%s<-", CHAR(PRINTNAME(fun)));
+    snprintf(buf, ASSIGNBUFSIZ, "%s<-", CHAR(PRINTNAME(fun)));
     SEXP val = install(buf);
 
     enterAssignFcnSymbol(fun, val);
