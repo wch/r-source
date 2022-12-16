@@ -24,6 +24,8 @@
       shipped with LAPACK version 3.10.1.  This causes some
       (platform-dependent) changes to package check output.
 
+      And then updated to version 3.11.0.
+
       \item The parser now signals \emph{classed} errors, notably in
       case of the pipe operator \code{|>}.  The error object and
       message now give line and column numbers, mostly as proposed and
