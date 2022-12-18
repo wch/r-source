@@ -289,6 +289,9 @@
       is found in the compiled code: replace by \code{snprintf} or
       \code{vsnprintf}. [\bold{NB:} whether such calls get compiled into
       the package is platform-dependent.]
+
+      \item \command{R CMD check} now reports the compilers (and on
+      macOS, the SDK) used for packages with compiled code. (In progress.)
     }
   }
 

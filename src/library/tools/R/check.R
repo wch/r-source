@@ -6863,6 +6863,50 @@ add_dummies <- function(dir, Log)
         }
         setwd(pkg)
         pkgdir <- getwd()
+
+        if (dir.exists("src") &&
+            !file.exists(file.path('src', "Makefile"))) {
+            lines <- readLines(file.path(R.home('etc'), "Makeconf"))
+            if(length(dir("src", patt =  "[.]c$"))) {
+                cc <- lines[grep("^CC =", lines)]
+                cc <- sub("CC = ", "", cc)
+                cc <- sub(" .*", "", cc)
+                cc_ver <- try(system2(cc, "--version", TRUE, TRUE), silent = TRUE)
+                if(!inherits(cc_ver, "try_error"))
+                    messageLog(Log, "using C compiler: ", sQuote(cc_ver[1L]))
+            }
+            if(length(dir("src", patt =  "[.](f|f90|f95)$"))) {
+                fc <- lines[grep("^FC =", lines)]
+                fc <- sub("FC = ", "", fc)
+                fc <- sub(" .*", "", fc)
+                fc_ver <- try(system2(fc, "--version", TRUE, TRUE), silent = TRUE)
+                if(!inherits(fc_ver, "try_error"))
+                    messageLog(Log, "using Fortran compiler: ",
+                               sQuote(fc_ver[1L]))
+            }
+            if(length(dir("src", patt =  "[.](cc|cpp)$"))) {
+                ## FIXME do we want to allow for CXX17 etx?
+                cxx <- lines[grep("^CXX =", lines)]
+                cxx <- sub("CXX = ", "", cxx)
+                cxx <- sub(" .*", "", cxx)
+                if(nzchar(cxx)) {
+                    cxx_ver <- try(system2(cxx, "--version", TRUE, TRUE), silent = TRUE)
+                    if(!inherits(cxx_ver, "try_error"))
+                        messageLog(Log, "using C++ compiler: ",
+                                   sQuote(cxx_ver[1L]))
+                }
+            }
+            if (Sys.info()["sysname"] == "Darwin") {
+                ## report the SDK in use: we want to know what it is symlinked to
+                sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
+                if(!inherits(sdk, "try_error")) {
+                    sdk <- Sys.readlink(sdk)
+                    messageLog(Log, "using SDK: ", sQuote(sdk))
+                }
+
+            }
+         }
+
         thispkg_src_subdirs <- thispkg_subdirs
         if (thispkg_src_subdirs == "yes-maybe") {
             ## now see if there is a 'configure' file
