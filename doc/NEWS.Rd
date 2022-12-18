@@ -20,11 +20,15 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The included BLAS sources have been updated to those
-      shipped with LAPACK version 3.10.1.  This causes some
-      (platform-dependent) changes to package check output.
+      \item The included BLAS sources have been updated to those shipped
+      with LAPACK version 3.10.1.  (This caused some platform-dependent
+      changes to package check output.)  And then to the sources from
+      LAPACK version 3.11 (with changes only to double complex
+      subroutines).
 
-      And then updated to version 3.11.0.
+      \item The LAPACK sources have been updated to version 3.11.0.  (No
+      new subroutines have been added, so this almost entirely bug
+      fixes.)
 
       \item The parser now signals \emph{classed} errors, notably in
       case of the pipe operator \code{|>}.  The error object and
