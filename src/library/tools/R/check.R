@@ -6874,7 +6874,7 @@ add_dummies <- function(dir, Log)
             if(nzchar(.Platform$r_arch))
                 rarch <- paste0("/", .Platform$r_arch)
             lines <- readLines(file.path(paste0(R.home('etc'), rarch), "Makeconf"))            
-            if(length(dir("src", patt =  "[.]c$"))) {
+            if(length(dir("src", pattern =  "[.]c$"))) {
                 cc <- lines[grep("^CC =", lines)]
                 cc <- sub("CC = ", "", cc)
                 cc <- sub(" .*", "", cc)
@@ -6882,7 +6882,7 @@ add_dummies <- function(dir, Log)
                 if(!inherits(cc_ver, "try_error"))
                     messageLog(Log, "using C compiler: ", sQuote(cc_ver[1L]))
             }
-            if(length(dir("src", patt =  "[.](f|f90|f95)$"))) {
+            if(length(dir("src", pattern =  "[.](f|f90|f95)$"))) {
                 fc <- lines[grep("^FC =", lines)]
                 fc <- sub("FC = ", "", fc)
                 fc <- sub(" .*", "", fc)
@@ -6891,7 +6891,7 @@ add_dummies <- function(dir, Log)
                     messageLog(Log, "using Fortran compiler: ",
                                sQuote(fc_ver[1L]))
             }
-            if(length(dir("src", patt =  "[.](cc|cpp)$"))) {
+            if(length(dir("src", pattern =  "[.](cc|cpp)$"))) {
                 ## FIXME do we want to allow for CXX17 etx?
                 cxx <- lines[grep("^CXX =", lines)]
                 cxx <- sub("CXX = ", "", cxx)
