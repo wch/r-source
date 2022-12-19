@@ -6821,6 +6821,11 @@ add_dummies <- function(dir, Log)
         messageLog(Log, "using ", R.version.string)
         messageLog(Log, "using platform: ", R.version$platform,
                    " (", 8*.Machine$sizeof.pointer, "-bit)")
+        vers <- R_compiled_by()
+        if (any(nzchar(vers))) {
+            messageLog(Log, "R was compiled by")
+            printLog(Log, paste("   ", vers, collapse = "\n"), "\n")
+        }
         charset <-
             if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)

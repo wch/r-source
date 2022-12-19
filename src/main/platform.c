@@ -3375,6 +3375,31 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+attribute_hidden SEXP
+do_compilerVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(STRSXP, 2));
+    SEXP nms = PROTECT(allocVector(STRSXP, 2));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("C"));
+    SET_STRING_ELT(nms, 1, mkChar("Fortran"));
+#ifdef CC_VER
+    SET_STRING_ELT(ans, 0, mkChar(CC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+#ifdef FC_VER
+    SET_STRING_ELT(ans, 1, mkChar(FC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+    
+    UNPROTECT(2);
+   return ans;
+}
+
+
 /* platform-specific */
 extern void Rsleep(double timeint);
 

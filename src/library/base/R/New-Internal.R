@@ -73,6 +73,7 @@ lchoose <- function(n, k) .Internal(lchoose(n, k))
 
 ##-- 2nd part --
 R.Version <- function() .Internal(Version())
+R_compiled_by <- function() .Internal(compilerVersion())
 
 commandArgs <- function(trailingOnly = FALSE) {
     args <- .Internal(commandArgs())

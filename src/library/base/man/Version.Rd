@@ -1,6 +1,6 @@
 % File src/library/base/man/Version.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{R.Version}
@@ -9,11 +9,14 @@
 \alias{R.version}
 \alias{version}
 \alias{R.version.string}
+\alias{R_compiled_by}
 \usage{
 R.Version()
 R.version
 R.version.string
 version
+
+R_compiled_by()
 }
 \description{
   \code{R.Version()} provides detailed information about the version of
@@ -50,6 +53,10 @@ version
 
   \code{R.version} and \code{version} are lists of class
   \code{"simple.list"} which has a \code{print} method.
+
+  \code{R_compiled_by} returns a two-element character vector giving
+  detail of the C and Fortran compilers used to build \R.  (Empty
+  strings if no information is available.)
 }
 \note{
   Do \emph{not} use \code{R.version$os} to test the platform the

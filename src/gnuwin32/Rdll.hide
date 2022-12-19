@@ -641,6 +641,7 @@
  do_commentgets
  do_compareNumericVersion
  do_compilepkgs
+ do_compilerVersion
  do_complex
  do_copyDFattr
  do_crc64

@@ -111,6 +111,9 @@
       reports codepage and timezone when relevant, in both \code{print()}
       and \code{toLatex()} methods which also get new option \code{tzone}
       for displaying timezone information when \code{locale=FALSE}.
+
+      \item New function \code{R_compiled_by()} reports the C and
+      Fortran compilers used to build \R, if known. (Not yet Windows.)
     }
   }
 
@@ -291,7 +294,10 @@
       the package is platform-dependent.]
 
       \item \command{R CMD check} now reports the compilers (and on
-      macOS, the SDK) used for packages with compiled code. (In progress.)
+      macOS, the SDK) used for packages with compiled code. (In
+      progress.)
+
+      Where recorded, it reports the C and Fortan compilers used to build \R.
     }
   }
 

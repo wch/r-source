@@ -2816,6 +2816,14 @@ case "${host_os}" in
     ;;
 esac
 
+dnl record compiler versions
+CC_VER=`${CC} --version | ${SED} -n 1p`
+FC_VER=`${FC} --version | ${SED} -n 1p`
+AC_DEFINE_UNQUOTED(CC_VER, "${CC_VER}", [Version of C Compiler])
+AC_SUBST(CC_VER)
+AC_DEFINE_UNQUOTED(FC_VER, "${FC_VER}", [Version of Fortran Compiler])
+AC_SUBST(FC_VER)
+
 ### * Output.
 
 AC_CONFIG_HEADERS([src/include/config.h])
