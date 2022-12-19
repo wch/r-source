@@ -5073,8 +5073,8 @@ add_dummies <- function(dir, Log)
                                     sub("[Rr]d$", "html", results2[, "path"]),
                                     results2[, "line"],
                                     results2[, "col"],
-                            	    results2[, "srcFile"],
-                            	    results2[, "srcLine"],
+                                    results2[, "srcFile"],
+                                    results2[, "srcLine"],
                                     results2[, "msg"])))
             }
         }
@@ -6871,7 +6871,9 @@ add_dummies <- function(dir, Log)
 
         if (dir.exists("src") &&
             !file.exists(file.path('src', "Makefile"))) {
-            lines <- readLines(file.path(R.home('etc'), "Makeconf"))
+            if(nzchar(.Platform$r_arch))
+                rarch <- paste0("/", .Platform$r_arch)
+            lines <- readLines(file.path(paste0(R.home('etc'), rarch), "Makeconf"))            
             if(length(dir("src", patt =  "[.]c$"))) {
                 cc <- lines[grep("^CC =", lines)]
                 cc <- sub("CC = ", "", cc)
