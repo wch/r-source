@@ -236,6 +236,9 @@ struct objinfo
                         negative for not focussed */
     int caretheight;
     int caretshowing;
+    int caretexists; /* A WinAPI caret has been created with CreateCaret */
+    int caretx;      /* Coordinates are stored so that the WinAPI caret can */
+    int carety;      /*   be re-created after the window re-gains focus */
 };
 
 struct callinfo
