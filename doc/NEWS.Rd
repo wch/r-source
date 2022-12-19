@@ -297,7 +297,7 @@
       macOS, the SDK) used for packages with compiled code. (In
       progress.)
 
-      Where recorded, it reports the C and Fortan compilers used to build \R.
+      Where recorded, it reports the C and Fortran compilers used to build \R.
     }
   }
 
