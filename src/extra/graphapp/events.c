@@ -331,6 +331,12 @@ static void handle_focus(object obj, int gained_focus)
 {
     if (gained_focus) {
 	obj->state |= GA_Focus;
+	if ((!obj->caretexists) && obj->caretwidth == 0 && (obj->flags & SetUpCaret)) {
+	    /* set up a dummy caret to help NVDA initialization, see comment in
+	       console.c, newconsole */
+	    setcaret(obj, 0, 0, 2, 10);
+	    showcaret(obj, 1);
+	}	
 	if (obj->caretwidth < 0) {
 	    /* creates the caret object and restores obj->caretshowing */
 	    setcaret(obj, obj->caretx, obj->carety, -obj->caretwidth, obj->caretheight);

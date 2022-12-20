@@ -35,7 +35,8 @@
     Remove assumption of current->dest being non-NULL
     Improve caret handling (destroy when not in focus, do not hide/show
       non-existent caret, prevent against corruption via recursive
-      redraw while not in focus, preserve coordinates when not in focus)
+      redraw while not in focus, preserve coordinates when not in focus,
+      ensure caret exists when a new window first gets focus)
 
  */
 

@@ -993,6 +993,8 @@ rect    GetCurrentWinPos(window obj);
 #define UsePalette	0x00100000L
 #define UseUnicode	0x00200000L
 
+#define SetUpCaret	0x00400000L
+
 #define StandardWindow	(Titlebar|Closebox|Resize|Maximize|Minimize)
 
 /*
