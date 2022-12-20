@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -676,6 +676,7 @@ predict.lm <-
     tt <- terms(object)
     if(!inherits(object, "lm"))
 	warning("calling predict.lm(<fake-lm-object>) ...")
+    type <- match.arg(type)
     if(missing(newdata) || is.null(newdata)) {
 	mm <- X <- model.matrix(object)
 	mmDone <- TRUE
@@ -687,13 +688,20 @@ predict.lm <-
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
-        offset <- rep(0, nrow(X))
-        if (!is.null(off.num <- attr(tt, "offset")))
-            for(i in off.num)
-                offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
-	if (!is.null(object$call$offset))
-	    offset <- offset + eval(object$call$offset, newdata)
-	mmDone <- FALSE
+        if(type != "terms") {
+           if((o1 <- !is.null(off.num <- attr(tt, "offset"))) |
+              (o2 <- !is.null(object$call$offset))) {
+               offset <- rep(0, nrow(X))
+               if(o1)
+                   for(i in off.num)
+                       offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
+               if(o2)
+                   offset <- offset + eval(object$call$offset, newdata)
+           }
+           else
+               offset <- NULL
+        }
+        mmDone <- FALSE
     }
     n <- length(object$residuals) # NROW(qr(object)$qr)
     p <- object$rank
@@ -703,10 +711,11 @@ predict.lm <-
 	warning("prediction from a rank-deficient fit may be misleading")
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     beta <- object$coefficients
-    predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
-    if (!is.null(offset))
-	predictor <- predictor + offset
-
+    if(type != "terms") {
+        predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
+        if (!is.null(offset))
+            predictor <- predictor + offset
+    }
     interval <- match.arg(interval)
     if (interval == "prediction") {
         if (missing(newdata))
@@ -731,7 +740,6 @@ predict.lm <-
         }
     }
 
-    type <- match.arg(type)
     if(se.fit || interval != "none") {
         ## w is needed for interval = "confidence"
         w <- object$weights
@@ -815,7 +823,7 @@ predict.lm <-
             predictor <- ip <- matrix(0, n, 0L)
         }
 	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
-    }
+    } ## type == "terms"
 
 ### Now construct elements of the list that will be returned
 

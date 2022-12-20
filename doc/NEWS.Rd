@@ -114,6 +114,9 @@
 
       \item New function \code{R_compiled_by()} reports the C and
       Fortran compilers used to build \R, if known. (Not yet Windows.)
+
+      \item \code{predict(<lm>, newdata=*)} no longer unnecessarily creates
+      an \code{offset} of all \code{0}s.
     }
   }
 
