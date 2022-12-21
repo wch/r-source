@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -155,13 +155,11 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   Some packages have restrictive licenses, and there is a mechanism to
   allow users to be aware of such licenses.  If
   \code{\link{getOption}("checkPackageLicense") == TRUE}, then at first
-  use of a package with a not-known-to-be-FOSS (see below) license the
-  user is asked to view and accept the license: a list of accepted
-  licenses is stored in file \file{~/.R/licensed}.  In a non-interactive
-  session it is an error to use such a package whose license has not
-  already been recorded as accepted.
-
-  As from \R 3.4.0 the license check is done when the namespace is loaded.
+  use of a namespace of a package with a not-known-to-be-FOSS (see
+  below) license the user is asked to view and accept the license: a
+  list of accepted licenses is stored in file \file{~/.R/licensed}.  In
+  a non-interactive session it is an error to use such a package whose
+  license has not already been recorded as accepted.
 
   Free or Open Source Software (FOSS,
   e.g.\sspace{}\url{https://en.wikipedia.org/wiki/FOSS}) packages are
