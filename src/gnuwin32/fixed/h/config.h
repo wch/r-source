@@ -4,11 +4,6 @@
 /* on Mingw-w64 defines the MING64_ version */
 #include <_mingw.h>
 
-/* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
-   systems. This function is required for `alloca.c' support on those systems.
-   */
-/* #undef CRAY_STACKSEG_END */
-
 /* Version of C Compiler */
 #define CC_VER "gcc (GCC) 10.3.0"
 
@@ -460,7 +455,7 @@
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 /* #undef HAVE_LC_MESSAGES */
 
-/* Define if your system has libcurl >= 7.22.0 with support for https.
+/* Define if your system has libcurl >= 7.28.0 with support for https.
    Set on the command line where supported.
  */
 /* #undef HAVE_LIBCURL */
