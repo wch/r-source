@@ -2009,6 +2009,7 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+dnl These are POSIX functions included by C23
 R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
 dnl BSD extension available on glibc and macOS -- but fails on maOS pre-1900
 dnl R_CHECK_FUNCS([timegm], [#include <time.h>])
@@ -2133,7 +2134,7 @@ AM_LANGINFO_CODESET
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
-## strdup strncasecmp were first required in POSIX 2001.
+## strdup strncasecmp were first required in POSIX 2001.  strdup is C23
 AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
