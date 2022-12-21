@@ -6879,7 +6879,7 @@ add_dummies <- function(dir, Log)
                 cc <- sub("CC = ", "", cc)
                 cc <- sub(" .*", "", cc)
                 cc_ver <- try(system2(cc, "--version", TRUE, TRUE), silent = TRUE)
-                if(!inherits(cc_ver, "try_error"))
+                if(!inherits(cc_ver, "try-error"))
                     messageLog(Log, "using C compiler: ", sQuote(cc_ver[1L]))
             }
             if(length(dir("src", pattern =  "[.](f|f90|f95)$"))) {
@@ -6887,7 +6887,7 @@ add_dummies <- function(dir, Log)
                 fc <- sub("FC = ", "", fc)
                 fc <- sub(" .*", "", fc)
                 fc_ver <- try(system2(fc, "--version", TRUE, TRUE), silent = TRUE)
-                if(!inherits(fc_ver, "try_error"))
+                if(!inherits(fc_ver, "try-error"))
                     messageLog(Log, "using Fortran compiler: ",
                                sQuote(fc_ver[1L]))
             }
@@ -6898,7 +6898,7 @@ add_dummies <- function(dir, Log)
                 cxx <- sub(" .*", "", cxx)
                 if(nzchar(cxx)) {
                     cxx_ver <- try(system2(cxx, "--version", TRUE, TRUE), silent = TRUE)
-                    if(!inherits(cxx_ver, "try_error"))
+                    if(!inherits(cxx_ver, "try-error"))
                         messageLog(Log, "using C++ compiler: ",
                                    sQuote(cxx_ver[1L]))
                 }
@@ -6906,7 +6906,7 @@ add_dummies <- function(dir, Log)
             if (Sys.info()["sysname"] == "Darwin") {
                 ## report the SDK in use: we want to know what it is symlinked to
                 sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
-                if(!inherits(sdk, "try_error")) {
+                if(!inherits(sdk, "try-error")) {
                     sdk <- Sys.readlink(sdk)
                     messageLog(Log, "using SDK: ", sQuote(sdk))
                 }
