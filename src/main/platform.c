@@ -2594,12 +2594,6 @@ attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-/* Only 10.13 (High Sierra) has this, but the headers in Xcode 9 on 10.12
-   declare it, for some people. */
-#if defined(__APPLE__) && defined(MACOS_SIERRA)
-# undef HAVE_UTIMENSAT
-#endif
-
 #if defined(HAVE_UTIMENSAT)
 # include <fcntl.h>
 # include <sys/stat.h>

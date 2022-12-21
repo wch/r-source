@@ -1019,9 +1019,6 @@
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
-/* macOS 10.12 (Sierra) or earlier */
-#undef MACOS_SIERRA
-
 /* Define if mktime sets errno. */
 #undef MKTIME_SETS_ERRNO
 
