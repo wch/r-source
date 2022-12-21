@@ -1634,8 +1634,7 @@ Installers for R-patched and R-devel are usually available from
 unsigned/not notarized: to install those Control/right/two-finger click,
 select @samp{Open With} and @samp{Installer}.)
 
-For building @R{} from source, see @ref{macOS}.  This can in principle
-be done for some older versions of the OS (it is little tested).
+For building @R{} from source, see @ref{macOS}.
 
 
 
@@ -5260,7 +5259,7 @@ future).
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
-@uref{https://mac.r-project.org/bin//}.
+@uref{https://mac.r-project.org/bin/}.
 @end itemize
 
 To build @R{} itself from the sources with the C/C++ compilers in the
