@@ -9,6 +9,12 @@
    */
 /* #undef CRAY_STACKSEG_END */
 
+/* Version of C Compiler */
+#define CC_VER "gcc (GCC) 10.3.0"
+
+/* Version of Fortran Compiler */
+#define FC_VER "GNU Fortran (GCC) 10.3.0"
+
 /* Define to 1 if using `alloca.c'. */
 /* #undef C_ALLOCA */
 
