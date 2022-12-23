@@ -5,10 +5,10 @@
 #include <_mingw.h>
 
 /* Version of C Compiler */
-#define CC_VER "gcc (GCC) 10.3.0"
+#define CC_VER "@CC_VER@"
 
 /* Version of Fortran Compiler */
-#define FC_VER "GNU Fortran (GCC) 10.3.0"
+#define FC_VER "@FC_VER@"
 
 /* Define to 1 if using `alloca.c'. */
 /* #undef C_ALLOCA */
