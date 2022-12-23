@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
+R version 4.2.2 Patched (2022-12-23 r83494) -- "Innocent and Trusting"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.6.0 (64-bit)
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1108,6 +1108,8 @@ Formal class 'signature' [package "methods"] with 3 slots
 > ## failed after an optimization patch
 > 
 > detach("package:methods", force=TRUE)
+Warning message:
+package 'methods' is required by 'Matrix', which may no longer work correctly 
 > C1@slot1 <- pi
 > stopifnot(identical(C1@slot1, pi))
 > stopifnot(require("methods"))
@@ -1150,6 +1152,8 @@ integer(0)
 > ## failed due to lack of prototype in R 3.6.0
 > 
 > detach("package:methods", force=TRUE)
+Warning message:
+package 'methods' is required by 'Matrix', which may no longer work correctly 
 > methods::setClass("test1", methods::representation(date="POSIXct"))
 > methods::setClass("test2", contains="test1")
 > test <- function(x) UseMethod('test', x)
