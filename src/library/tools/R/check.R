@@ -5338,6 +5338,8 @@ add_dummies <- function(dir, Log)
                 if (install != "check")
                     lines <- readLines(outfile, warn = FALSE)
 
+                lines00 <- grep("using (C|Fortran|SDK)", lines, value = TRUE)
+
                 lines0 <- lines
                 warn_re <- c("^WARNING:",
                              ## This fires on ODS 12.5 warnings like
@@ -5775,6 +5777,10 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
+                if (length(lines00)) {
+                    ll <- sub("using", "used", lines00)
+                    for (l in ll)  messageLog(Log, l)
+                }
             }   ## end of case B
         }
     } ## {check_install()}
@@ -6868,51 +6874,6 @@ add_dummies <- function(dir, Log)
         }
         setwd(pkg)
         pkgdir <- getwd()
-
-        if (dir.exists("src") &&
-            !file.exists(file.path('src', "Makefile"))) {
-            if(nzchar(.Platform$r_arch))
-                rarch <- paste0("/", .Platform$r_arch)
-            lines <- readLines(file.path(paste0(R.home('etc'), rarch), "Makeconf"))            
-            if(length(dir("src", pattern =  "[.]c$"))) {
-                cc <- lines[grep("^CC =", lines)]
-                cc <- sub("CC = ", "", cc)
-                cc <- sub(" .*", "", cc)
-                cc_ver <- try(system2(cc, "--version", TRUE, TRUE), silent = TRUE)
-                if(!inherits(cc_ver, "try-error"))
-                    messageLog(Log, "using C compiler: ", sQuote(cc_ver[1L]))
-            }
-            if(length(dir("src", pattern =  "[.](f|f90|f95)$"))) {
-                fc <- lines[grep("^FC =", lines)]
-                fc <- sub("FC = ", "", fc)
-                fc <- sub(" .*", "", fc)
-                fc_ver <- try(system2(fc, "--version", TRUE, TRUE), silent = TRUE)
-                if(!inherits(fc_ver, "try-error"))
-                    messageLog(Log, "using Fortran compiler: ",
-                               sQuote(fc_ver[1L]))
-            }
-            if(length(dir("src", pattern =  "[.](cc|cpp)$"))) {
-                ## FIXME do we want to allow for CXX17 etx?
-                cxx <- lines[grep("^CXX =", lines)]
-                cxx <- sub("CXX = ", "", cxx)
-                cxx <- sub(" .*", "", cxx)
-                if(nzchar(cxx)) {
-                    cxx_ver <- try(system2(cxx, "--version", TRUE, TRUE), silent = TRUE)
-                    if(!inherits(cxx_ver, "try-error"))
-                        messageLog(Log, "using C++ compiler: ",
-                                   sQuote(cxx_ver[1L]))
-                }
-            }
-            if (Sys.info()["sysname"] == "Darwin") {
-                ## report the SDK in use: we want to know what it is symlinked to
-                sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
-                if(!inherits(sdk, "try-error")) {
-                    sdk <- Sys.readlink(sdk)
-                    messageLog(Log, "using SDK: ", sQuote(sdk))
-                }
-
-            }
-         }
 
         thispkg_src_subdirs <- thispkg_subdirs
         if (thispkg_src_subdirs == "yes-maybe") {

@@ -292,15 +292,16 @@
       \item The use of \code{sprintf} and \code{vsprintf} from C/C++ has
       been deprecated in macOS 13 and is a known security risk.
       \command{R CMD check} now reports (on all platforms) if their use
-      is found in the compiled code: replace by \code{snprintf} or
-      \code{vsnprintf}. [\bold{NB:} whether such calls get compiled into
-      the package is platform-dependent.]
+      is found in compiled code: replace by \code{snprintf} or
+      \code{vsnprintf} respectively. [\bold{NB:} whether such calls get
+      compiled into the package is platform-dependent.]
 
-      \item \command{R CMD check} now reports the compilers (and on
-      macOS, the SDK) used for packages with compiled code. (In
-      progress.)
+      \item Where recorded at installation, \command{R CMD check}
+      reports the C and Fortran compilers used to build \R.
 
-      Where recorded, it reports the C and Fortran compilers used to build \R.
+      \item \command{R CMD INSTALL} reports the compilers (and on
+      macOS, the SDK) used, and this is copied to the output of
+      \command{R CMD check}
     }
   }
 

@@ -2473,6 +2473,7 @@ if(FALSE) {
           file.path(R.home("share"), "make",
                     if (WINDOWS) "winshlib.mk" else "shlib.mk"))
     shlib_libadd <- if (nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
+    with_c <- FALSE
     with_cxx <- FALSE
     with_f77 <- FALSE
     with_f9x <- FALSE
@@ -2545,6 +2546,7 @@ if(FALSE) {
                     with_f9x <- TRUE
                     nobj <- base
                 } else if (ext == "c") {
+                    with_c <- TRUE
                     nobj <- base
                 } else if (ext == "o") {
                     nobj <- base
@@ -2714,6 +2716,47 @@ if(FALSE) {
         system(paste(cmd, "-n"))
         res <- 0
     } else {
+        lines <- system2(MAKE,
+                         c(p1(paste("-f", shQuote(makefiles)), "compilers")),
+                         stdout = TRUE, stderr = TRUE)
+        if (with_c) {
+            cc <- lines[grep("^CC =", lines)]
+            cc <- sub("CC = ", "", cc)
+            cc <- sub(" .*", "", cc)
+            cc_ver <- try(system2(cc, "--version", TRUE, TRUE), silent = TRUE)
+            if(!inherits(cc_ver, "try-error"))
+                message("using C compiler: ", sQuote(cc_ver[1L]))
+        }
+        if (with_f77 || with_f9x) {
+            fc <- lines[grep("^FC =", lines)]
+            fc <- sub("FC = ", "", fc)
+            fc <- sub(" .*", "", fc)
+            fc_ver <- try(system2(fc, "--version", TRUE, TRUE), silent = TRUE)
+            if(!inherits(fc_ver, "try-error"))
+                message("using Fortran compiler: ", sQuote(fc_ver[1L]))
+        }
+        if (with_cxx) {
+            cxx <- lines[grep("^CXX =", lines)]
+            cxx <- sub("CXX = ", "", cxx)
+            cxx <- sub(" .*", "", cxx)
+            if(nzchar(cxx)) {
+                cxx_ver <- try(system2(cxx, "--version", TRUE, TRUE), silent = TRUE)
+                if(!inherits(cxx_ver, "try-error")) {
+                    message("using C++ compiler: ", sQuote(cxx_ver[1L]))
+                    if(!is.null(use_cxxstd))
+                        message("using C++", use_cxxstd)
+                }
+            }
+        }
+        if (Sys.info()["sysname"] == "Darwin" &&
+            (with_c|| with_f77 || with_f9x || with_cxx)) {
+            ## report the SDK in use: we want to know what it is symlinked to
+            sdk <- try(system2("xcrun", "--show-sdk-path", TRUE, TRUE), silent = TRUE)
+            if(!inherits(sdk, "try-error")) {
+                sdk <- Sys.readlink(sdk)
+                message("using SDK: ", sQuote(sdk))
+            }
+        }
         if (preclean) system(paste(cmd, "shlib-clean"))
         res <- system(cmd)
         if((res == 0L) && build_objects_symbol_tables) {
