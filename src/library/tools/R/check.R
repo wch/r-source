@@ -5338,7 +5338,8 @@ add_dummies <- function(dir, Log)
                 if (install != "check")
                     lines <- readLines(outfile, warn = FALSE)
 
-                lines00 <- grep("using (C|Fortran|SDK)", lines, value = TRUE)
+                lines00 <- grep("^using (C compiler|C[+][+] compiler|Fortran conpiler|SDK)",
+                                lines, value = TRUE)
 
                 lines0 <- lines
                 warn_re <- c("^WARNING:",
