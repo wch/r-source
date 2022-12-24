@@ -6833,8 +6833,9 @@ add_dummies <- function(dir, Log)
             messageLog(Log, "R was compiled by")
             printLog(Log, paste("   ", vers, collapse = "\n"), "\n")
         }
-        if(!is.null(osVersion))
-            messageLog(Log, "running under: ", osVersion)
+        osV <- utils::osVersion
+        if(!is.null(osV))
+            messageLog(Log, "running under: ", osV)
         charset <-
             if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)
