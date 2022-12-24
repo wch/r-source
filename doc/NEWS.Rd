@@ -299,6 +299,9 @@
       \item Where recorded at installation, \command{R CMD check}
       reports the C and Fortran compilers used to build \R.
 
+      It reports the OS in use (if known, as given by
+      \code{osVersion}) as well as that \R was built for.
+
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
       \command{R CMD check}

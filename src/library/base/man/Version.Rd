@@ -55,7 +55,7 @@ R_compiled_by()
   \code{"simple.list"} which has a \code{print} method.
 
   \code{R_compiled_by} returns a two-element character vector giving
-  detail of the C and Fortran compilers used to build \R.  (Empty
+  details of the C and Fortran compilers used to build \R.  (Empty
   strings if no information is available.)
 }
 \note{
