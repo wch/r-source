@@ -6087,9 +6087,13 @@ ridiculously large values).
 For C code, consider using the flag @option{-Wstrict-prototypes} which
 is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
 has found quite a number of errors where functions have been declared
-without arguments (a function without arguments should have prototype
-@code{fn(void)}) and is likely to become the default in future
-compilers.  (It already is for LLVM @command{clang} in C23 mode.)
+without arguments and is likely to become the default in future
+compilers.  (It already is for LLVM @command{clang} in C23 mode.)  Note
+that using @code{f()} for a function without any parameters was
+deprecated in C99 and C11, but it expected to be non-deprecated in C23.
+However, @code{f(void)} is supportef by all standards and avoids any
+uncertainty.
+@c draft n3054 §6.7.6.3 point 13 and footnote.
 
 LLVM @command{clang} has a separate warning
 @option{-Wdeprecated-non-prototype} which is enabled by
