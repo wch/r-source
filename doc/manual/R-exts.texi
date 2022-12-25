@@ -5008,6 +5008,12 @@ Nor should the C++11 random number library be used, nor any other
 third-party random number generators such as those in GSL.
 
 @item
+Use of @code{sprintf} and @code{vsprintf} is regarded as a potential
+security risk and warned about on some platforms.@footnote{including
+macOS as from version 13.}  @command{R CMD check} reports if any calls
+are found.
+
+@item
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g., segfaults) on some machines.
 See @ref{Checking memory access} for tools which can be used to look for this.
@@ -5420,7 +5426,10 @@ If your package uses dates/times, ensure that it works in all timezones,
 especially those near boundaries (problems have most often be seen in
 @samp{Europe/London} (zero offset in Winter) and
 @samp{Pacific/Auckland}, near enough the International Date line) and
-with offsets not in whole hours (Adelaide, Chatham Islands, ...).
+with offsets not in whole hours (Adelaide, Chatham Islands, @dots{}).
+More extreme examples are @samp{Africa/Conakry} (permanent UTC),
+@samp{Asia/Calcutta} (no DST, permanent half-hour offset)
+and @samp{Pacific/Kiritimati]}(no DST, more than 12 hours ahead of UTC).
 
 @end itemize
 
@@ -6072,9 +6081,13 @@ ridiculously large values).
 For C code, consider using the flag @option{-Wstrict-prototypes} which
 is supported by @command{gcc} and LLVM and Apple @command{clang}.  This
 has found quite a number of errors where functions have been declared
-without arguments (a function without arguments should have prototype
-@code{fn(void)}) and is likely to become the default in future
-compilers.  (It already is for LLVM @command{clang} in C23 mode.)
+without arguments and is likely to become the default in future
+compilers.  (It already is for LLVM @command{clang} in C23 mode.)  Note
+that using @code{f()} for a function without any parameters was
+deprecated in C99 and C11, but it expected to be non-deprecated in C23.
+However, @code{f(void)} is supportef by all standards and avoids any
+uncertainty.
+@c draft n3054 §6.7.6.3 point 13 and footnote.
 
 LLVM @command{clang} has a separate warning
 @option{-Wdeprecated-non-prototype} which is enabled by
@@ -8112,7 +8125,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://www.rstudio.com/}).
+example RStudio (@uref{https://posit.co/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -8490,7 +8503,8 @@ Options include using @command{sprof} for a shared object, and
 @command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
-executable or shared object.
+executable or shared object.  These seem less widely supplied than they
+used to be (for example Fedora 36 only has @command{perf}).
 
 @subsubsection sprof
 
@@ -8619,6 +8633,10 @@ On platforms which support it, call graphs can be produced by
 The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
+
+Another way to use this is to run @command{operf -s} as root, run the
+@R{} session in another terminal then shut down @command{operf} and
+analyse as above.
 
 Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
 @code{sm.variogram} took a long time:
@@ -15540,7 +15558,7 @@ two additional functions:
 
 @example
 SEXP R_MakeUnwindCont();
-void NORET R_ContinueUnwind(SEXP cont);
+NORET void R_ContinueUnwind(SEXP cont);
 @end example
 @findex R_MakeUnwindCont
 @findex R_ContinueUnwind
