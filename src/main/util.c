@@ -35,6 +35,9 @@
 #define R_imax2(x, y) ((x < y) ? y : x)
 #include <Print.h>
 
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif

@@ -73,6 +73,10 @@
 # include <config.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
+
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
