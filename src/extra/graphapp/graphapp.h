@@ -624,6 +624,8 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define current_menubar		GAI_current_menubar
 #define current_window		GAI_current_window
 #define dc			GAI_dc
+#define edit_control_proc	GAI_edit_control_proc
+#define edit_control_procedure	GAI_edit_control_procedure
 #define hAccel			GAI_hAccel
 #define hwndClient		GAI_hwndClient
 #define hwndFrame		GAI_hwndFrame

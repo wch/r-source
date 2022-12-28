@@ -239,6 +239,8 @@ struct objinfo
     int caretexists; /* A WinAPI caret has been created with CreateCaret */
     int caretx;      /* Coordinates are stored so that the WinAPI caret can */
     int carety;      /*   be re-created after the window re-gains focus */
+
+    WNDPROC edit_winproc; /* edit control event handler for dropfield (combo box) */
 };
 
 struct callinfo
@@ -439,6 +441,8 @@ extern HWND hwndClient;
   long WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
   UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
   extern WNDPROC app_control_proc;
+  long WINAPI edit_control_procedure (HWND, UINT, WPARAM, LPARAM);
+  extern WNDPROC edit_control_proc;
 
   extern int	menus_active;
   extern int	active_windows;

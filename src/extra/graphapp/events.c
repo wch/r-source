@@ -34,6 +34,7 @@
    Remove assumption that current->dest is non-NULL
    Add waitevent() function
    Caret handling improvements (see comments in controls.c)
+   Allow to leave a dropfield (combo box) with TAB key
  */
 
 #include "internal.h"
@@ -61,6 +62,7 @@ static	long	mouse_msec = 0;
 
 TIMERPROC app_timer_proc;
 WNDPROC   app_control_proc;
+WNDPROC   edit_control_proc;
 
 static object frontwindow = NULL; /* the window receiving events */
 
@@ -1025,6 +1027,52 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return result;
 }
 
+long WINAPI
+edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    int key;
+    object obj, next;
+    HANDLE hwndCombo;
+
+    /* Find the library (dropfield/combo box) object associated
+       with the hwnd. */
+    hwndCombo = GetParent(hwnd);
+    if (! hwndCombo)
+	return 0;
+    obj = find_by_handle(hwndCombo);
+    key = LOWORD(wParam);
+
+    if (! obj) /* Not a library object ... */
+	return 0; /* ... so do nothing. */
+    if (! obj->edit_winproc)
+	return 0; /* Nowhere to send events! */
+
+    next = find_valid_sibling(obj->next);
+
+    if (message == WM_KEYDOWN)
+	handle_keydown(key);
+    else if (message == WM_KEYUP)
+	handle_keyup(key);
+
+    switch (message)
+    {
+    case WM_KEYDOWN:
+	if (key == VK_TAB) {
+	    SetFocus(next->handle);
+	    return 0;
+	}
+	break;
+
+    case WM_KEYUP:
+    case WM_CHAR:
+	if (key == VK_TAB) 
+	    return 0;
+	break;
+    }
+
+    return CallWindowProc((obj->edit_winproc), hwnd, message, wParam, lParam);
+}
+
 /*
  *  Timer functions use a timer procedure not associated with a window.
  *  We use this one procedure to handle both timer events and mouse-down
@@ -1250,6 +1298,8 @@ void init_events(void)
     setmousetimer(100); /* start 1/10 second mouse-down auto-repeat */
 
     app_control_proc = (WNDPROC) MakeProcInstance((FARPROC) app_control_procedure,
+						  this_instance);
+    edit_control_proc = (WNDPROC) MakeProcInstance((FARPROC) edit_control_procedure,
 						  this_instance);
 }
 
