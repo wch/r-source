@@ -1,4 +1,4 @@
---- configure.orig	2022-12-21 09:20:23
+--- configure	2022-12-21 09:20:23
 +++ configure	2022-12-27 09:37:52
 @@ -3447,9 +3447,7 @@
  /* Most of the following tests are stolen from RCS 5.7 src/conf.sh.  */
