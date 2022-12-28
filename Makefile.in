@@ -17,7 +17,7 @@ NON_SVN_INSTFILES = SVN-REVISION
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL README VERSION VERSION-NICK \
 	Makeconf.in Makefile.in Makefile.fw \
-	config.site configure configure.ac
+	config.site configure configure.ac configure.patch
 SUBDIRS = m4 tools doc etc share src tests
 SUBDIRS_WITH_NO_BUILD = po
 
@@ -45,8 +45,9 @@ ACINCLUDE_DEPENDENCIES = \
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
-$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
+$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES) configure.patch
 	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -B $${BD}
+	@($(AUTOCONF) --version | sed -n 1p | grep -F 2.71) && patch -p0 < configure.patch
 $(ACLOCAL_M4): $(srcdir)/configure.ac acinclude.m4
 	@BD=`pwd`; cd $(srcdir) && $(ACLOCAL) --output=$${BD}/$@ -I $${BD}
 acinclude.m4: $(srcdir)/configure.ac $(ACINCLUDE_DEPENDENCIES)

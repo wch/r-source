@@ -3447,9 +3447,7 @@ struct stat;
 /* Most of the following tests are stolen from RCS 5.7 src/conf.sh.  */
 struct buf { int x; };
 struct buf * (*rcsopen) (struct buf *, struct stat *, int);
-static char *e (p, i)
-     char **p;
-     int i;
+static char *e (char **p, int i)
 {
   return p[i];
 }
