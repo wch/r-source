@@ -2024,6 +2024,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
     pointsize = fnpoints;
     if (consolefn) del(consolefn);
     consolefn = NULL;
+    /* keep in step with applyGUI() in preferences.c */
     if (strcmp(fontname, "FixedFont")) {
 	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0, 1);
 	if (!consolefn) {
