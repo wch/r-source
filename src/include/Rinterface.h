@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2017  The R Core Team.
+ *  Copyright (C) 1998--2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,13 @@ extern "C" {
 # include <stdio.h>
 #endif
 
-#if defined(__GNUC__) && __GNUC__ >= 3
+// See R_exts/Error.h
+#if defined NORET
+#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L) || defined(__cplusplus)
+# define NORET [[noreturn]]
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
+# define NORET _Noreturn
+#elif defined(__GNUC__) && __GNUC__ >= 3
 # define NORET __attribute__((noreturn))
 #else
 # define NORET
