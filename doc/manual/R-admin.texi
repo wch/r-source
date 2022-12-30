@@ -1079,39 +1079,39 @@ CXX20
 CXX20STD
 CXX20FLAGS
 CXX20PICFLAGS
+
+CXX23
+CXX23STD
+CXX23FLAGS
+CXX23PICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
 @option{-std=c++11} for C++11 support (which is required if C++ is to be
-supported at all).  Similarly, @command{configure} will if possible
-choose for @code{CXX14STD} a flag@footnote{This was a valid option for
-@command{g++} 5 and later and 2016 versions of the Intel and Solaris
-compilers.  For earlier versions of @command{g++} one could try
-@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support,
-@option{-std=c++17} or @option{-std=c++1z} for support for C++17 and
-@option{-std=c++20} or @option{-std=c++2a} for support for C++20.  The
-inferred values can be overridden in file @file{config.site} or on the
-@command{configure} command line: user-supplied values will be tested by
-compiling some C++11/14/17/20 code.
+supported at all).  inferred values can be overridden in file
+@file{config.site} or on the @command{configure} command line:
+user-supplied values will be tested by compiling some C++11/14/17/20/23
+code.
 
-It may be that there is no suitable flag for C++14/17/20 support with
+It may be that there is no suitable flag for C++14/17/20/23 support with
 the default compiler, in which case a different compiler could be
-selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
+selected for @code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23} with its
 corresponding flags.
 
 The @option{-std} flag is supported by the GCC, @command{clang++} and
 Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
-         c++20 gnu++20 (from 10)
+         c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
 Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 19.0?)
 @end example
 @noindent
-(Those for @command{clang++} are documented at
+(Those for LLVM @command{clang++} are documented at
 @uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
-@code{-std=c++20} is supported from Clang 10.)
+@code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
+Clang 13.)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
