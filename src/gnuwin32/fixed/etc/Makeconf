@@ -88,6 +88,10 @@ CC = $(BINPREF)gcc $(M_ARCH)
 CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
 CPICFLAGS = 
 CPPFLAGS =
+CC17 = $(BINPREF)gcc $(M_ARCH)
+C17FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu17 @EOPTS@ $(LTO)
+CC23 = $(BINPREF)gcc $(M_ARCH)
+C23FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu2x @EOPTS@ $(LTO)
 CXX = $(BINPREF)g++ -std=gnu++11 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)

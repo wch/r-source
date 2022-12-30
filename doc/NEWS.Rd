@@ -232,6 +232,37 @@
       C++23 features beyond a check that the compiler reports a
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
+
+      \item [Experimental, in progress]
+
+      There is support for a package to indicate the version of the C
+      standard that should be used to compile it.  There are currently
+      two possibilities:
+      \describe{
+	\item{USE_C17}{Use a standard that is at most C17, so allowing
+	  the C23 reserved words \code{bool}, \code{true} and
+	  \code{false} as identifiers and function declarations in
+	  K&R-style and forward declarations without parameter lists
+	  (possibly with a warning).
+
+	  Most current compilers default to C17, so this was the previous
+	  default behaviour.  The intention is to allow legacy packages
+	  to still be installed when later C standards are preferred.
+	}
+	\item{USE_C23}{Use C23 or (in future later).  Support the new
+	  type \code{bool}, specifier \code{[[noreturn]]} and function
+	  declarations with an empty parameter list (only to mean no
+	  parameters). Do not accept K&R-style function declarations.
+
+	  Compiler/library support for C23 is still being implemented,
+	  but LLVM clang 15 and the upcoming GCC 13 have quite
+	  extensive support.
+	}
+      }
+      These can be specified as part of the \samp{SystemRequirements}
+      field in the \file{DESCRIPTION} file or \emph{via} options
+      \option{--use-C17} and \option{--use=C23} of \command{R CMD
+      INSTALL} and \command{R CMD SHLIB}.
     }
   }
 

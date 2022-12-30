@@ -269,7 +269,9 @@ if(FALSE) {
             "      --use-vanilla	do not read any Renviron or Rprofile files",
             "      --use-LTO         use Link-Time Optimization",
             "      --no-use-LTO      do not use Link-Time Optimization",
-           "\nfor Unix",
+            "      --use-C17         use a C standard at most C17",
+            "      --use-C23         use a C standard at least C23",
+            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
@@ -391,7 +393,7 @@ if(FALSE) {
         is_source_package <- is.na(desc["Built"])
 
         if (is_source_package) {
-            ## Find out if any C++ standard is requested in DESCRIPTION file
+            ## Find out if any C++ or C standard is requested in DESCRIPTION file
             sys_requires <- desc["SystemRequirements"]
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
@@ -403,6 +405,8 @@ if(FALSE) {
                         break
                     }
                 }
+                if(any(grepl("USE_C17", sys_requires))) use_C <<- 17
+                if(any(grepl("USE_C23", sys_requires))) use_C <<- 23
             }
         }
 
@@ -609,6 +613,8 @@ if(FALSE) {
             args <- c(shargs,
                       if(isTRUE(use_LTO)) "--use-LTO",
                       if(isFALSE(use_LTO)) "--no-use-LTO",
+                      if(isTRUE(use_C == "17")) "--use-C17"
+                      else if(isTRUE(use_C == "23")) "--use-C23",
                       "-o", paste0(pkg_name, SHLIB_EXT),
                       srcs)
             if (WINDOWS && debug) args <- c(args, "--debug")
@@ -1952,6 +1958,7 @@ if(FALSE) {
     keep.source <- getOption("keep.source.pkgs")
     keep.parse.data <- getOption("keep.parse.data.pkgs")
     use_LTO <- NA # means take from DESCRIPTION file.
+    use_C <- NA # means take from DESCRIPTION file.
     built_stamp <- character()
 
     install_libs <- TRUE
@@ -2087,6 +2094,10 @@ if(FALSE) {
             use_LTO <- TRUE
         } else if (a == "--no-use-LTO") {
             use_LTO <- FALSE
+        } else if (a == "--use-C17") {
+            use_C <- 17
+        } else if (a == "--use-C23") {
+            use_C <- 23
         } else if (a == "--staged-install") {
             staged_install <- TRUE
         } else if (a == "--no-staged-install") {
@@ -2408,6 +2419,8 @@ if(FALSE) {
 #            "Unix only:",
             "  --use-LTO		use Link-Time Optimization",
             "  --no-use-LTO		do not use Link-Time Optimization",
+            "  --use-C17	        use a C standard at most C17",
+            "  --use-C23	        use a C standard at least C23",
             "",
             "Windows only:",
             "  -d, --debug		build a debug DLL",
@@ -2481,6 +2494,7 @@ if(FALSE) {
     use_cxxstd <- NULL
     use_fc_link <- FALSE
     use_lto <- NA
+    use_C <- ""
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -2515,6 +2529,10 @@ if(FALSE) {
             use_lto <- TRUE
         } else if (a == "--no-use-LTO") {
             use_lto <- FALSE
+        } else if (a == "--use-C17") {
+            use_C <- 17
+        } else if (a == "--use-C23") {
+            use_C <- 23
         } else if (a == "-o") {
             if (length(args) >= 2L) {shlib <- args[2L]; args <- args[-1L]}
             else stop("-o option without value", call. = FALSE)
@@ -2683,7 +2701,10 @@ if(FALSE) {
         else
             shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
     }
-
+    if (nzchar(use_C)) {
+        c_makeargs <- sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+        makeargs <- c(c_makeargs, makeargs)
+    }
     if (length(pkg_libs))
         makeargs <- c(makeargs,
                       paste0("PKG_LIBS='", p1(pkg_libs), "'"))
