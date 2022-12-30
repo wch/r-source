@@ -4301,7 +4301,7 @@ R_OS="${host_os}"
 
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
 
 printf "%s\n" "#define Win32 1" >>confdefs.h
 
@@ -24080,6 +24080,9 @@ case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
     ;;
+  cygwin*|mingw*|windows*|winnt|msys)
+    Rshlibpath_var=PATH
+    ;;
   *)
     Rshlibpath_var=${shlibpath_var}
 esac
@@ -25472,7 +25475,7 @@ done
 fi
 
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  cygwin*|mingw*|windows*|winnt|msys)
     r_cv_type_socklen=int
     ;;
 esac
@@ -26702,7 +26705,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26707: \"$ac_link\") >&5
+(eval echo $as_me:26710: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26778,7 +26781,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26783: \"$ac_link\") >&5
+(eval echo $as_me:26786: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28615,7 +28618,7 @@ fi
      ;;
   ## We no longer special-case Intel compilers on Linux:
   ## what we had dated from Nov 2005.
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     printf "%s\n" "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
     ;;
@@ -29146,7 +29149,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
     ;;
-  mingw*)
+  mingw*|msys)
     SHLIB_EXT=".dll"
     cpicflags=
     cxxpicflags=
@@ -29267,7 +29270,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine CPICFLAGS." >&5
@@ -29280,7 +29283,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FPICFLAGS." >&5
@@ -29293,7 +29296,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -n "${CXX}" -a -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -42461,7 +42464,7 @@ fi
 ##    flags to all (C, C++ and Fortran) compiler flags.
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     ;;
   *)
     r_save_CFLAGS=${CFLAGS}
@@ -43410,7 +43413,7 @@ fi
 done
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
   ;;
   *)
   if test "${ac_cv_have_decl_select}" = "no"; then
@@ -44426,7 +44429,7 @@ done
 ## We don't need times() except as a fallback for getrusage and
 ## clock_gettime/gettimeofday -- but it is older and always there.
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
@@ -47574,7 +47577,7 @@ printf "%s\n" "$r_cv_iconv_latin1" >&6; }
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_latin1=yes
       ;;
   esac
@@ -47641,7 +47644,7 @@ printf "%s\n" "$r_cv_iconv_cp1252" >&6; }
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_cp1252=yes
       ;;
   esac
@@ -50353,14 +50356,21 @@ if test ${r_cv_bsd_networking+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-  if test "${ac_cv_header_netdb_h}" = yes \
+  case "${host_os}" in
+  cygwin*|mingw*|windows*|winnt|msys)
+    r_cv_bsd_networking=yes
+    ;;
+esac
+if test "${ac_cv_bsd_networking}" != yes \
+     && test "${ac_cv_header_netdb_h}" = yes \
      && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
      && test "${ac_cv_search_connect}" != no \
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
-else
+fi
+if test "${ac_cv_bsd_networking}" = no; then
   as_fn_error $? "BSD networking functions are required" "$LINENO" 5
 fi
 fi
@@ -52258,7 +52268,71 @@ fi
 
 printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
 
-        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
+        BITMAP_LIBS="-ltiff -lwebp -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # also try with webp and zstd (needed with libtiff 4.4 from MXE/Rtools)
+      unset ac_cv_lib_tiff_TIFFOpen
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libtiff with -lwebp -lzstd" >&5
+printf "%s\n" "$as_me: checking for libtiff with -lwebp -lzstd" >&6;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
+printf %s "checking for TIFFOpen in -ltiff... " >&6; }
+if test ${ac_cv_lib_tiff_TIFFOpen+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS} $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char TIFFOpen ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return TIFFOpen ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_tiff_TIFFOpen=yes
+else $as_nop
+  ac_cv_lib_tiff_TIFFOpen=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tiff_TIFFOpen" >&5
+printf "%s\n" "$ac_cv_lib_tiff_TIFFOpen" >&6; }
+if test "x$ac_cv_lib_tiff_TIFFOpen" = xyes
+then :
+  have_tiff=yes
+else $as_nop
+  have_tiff=no
+fi
+
+      if test "x${have_tiff}" = xyes; then
+
+printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
+
+        BITMAP_LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -57979,7 +58053,8 @@ printf "%s\n" "using as R_SHELL for scripts ... ${R_SHELL}" >&6; }
 
 ### * Win32 overrides
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
+    ## there are not needed with Rtools (detected correctly)
 
 printf "%s\n" "#define HAVE_ICONV 1" >>confdefs.h
 
@@ -57996,20 +58071,29 @@ printf "%s\n" "#define HAVE_JPEG 1" >>confdefs.h
 printf "%s\n" "#define HAVE_PNG 1" >>confdefs.h
 
 
+printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
+
+
+    ## these change what is detected with Rtools
+
 printf "%s\n" "#define HAVE_POSIX_SETJMP 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_DECL_SIGLONGJMP 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_DECL_SIGSETJMP 1" >>confdefs.h
 
 
 printf "%s\n" "#define HAVE_TCLTK 1" >>confdefs.h
 
-
-printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
-
-
-printf "%s\n" "#define HAVE_TIMES 1" >>confdefs.h
-
     want_R_profiling=yes
 
 printf "%s\n" "#define R_PROFILING 1" >>confdefs.h
+
+    want_memory_profiling=yes
+
+printf "%s\n" "#define R_MEMORY_PROFILING 1" >>confdefs.h
 
     ;;
 esac

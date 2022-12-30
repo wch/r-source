@@ -1610,7 +1610,7 @@ AC_CACHE_VAL([r_cv_type_socklen],
 done])
 dnl size_t works on Windows but is unsigned and int is correct
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  cygwin*|mingw*|windows*|winnt|msys)
     r_cv_type_socklen=int
     ;;
 esac
@@ -1903,7 +1903,13 @@ fi
 AC_DEFUN([R_BSD_NETWORKING],
 [AC_CACHE_CHECK([for BSD networking],
                 [r_cv_bsd_networking],
-[if test "${ac_cv_header_netdb_h}" = yes \
+[case "${host_os}" in
+  cygwin*|mingw*|windows*|winnt|msys)
+    r_cv_bsd_networking=yes
+    ;;
+esac
+if test "${ac_cv_bsd_networking}" != yes \
+     && test "${ac_cv_header_netdb_h}" = yes \
 dnl needed for Rhttpd.c but missed before R 3.2.4
      && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
@@ -1911,7 +1917,8 @@ dnl needed for Rhttpd.c but missed before R 3.2.4
      && test "${ac_cv_search_connect}" != no \
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
-else
+fi
+if test "${ac_cv_bsd_networking}" = no; then
   AC_MSG_ERROR([BSD networking functions are required])
 fi])
 ])# R_BSD_NETWORKING
@@ -1989,7 +1996,19 @@ if test "${use_libtiff}" = yes; then
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
-        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
+        BITMAP_LIBS="-ltiff -lwebp -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # also try with webp and zstd (needed with libtiff 4.4 from MXE/Rtools)
+      unset ac_cv_lib_tiff_TIFFOpen
+      AC_MSG_NOTICE([checking for libtiff with -lwebp -lzstd])
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -lzstd -llzma ${BITMAP_LIBS}])
+      if test "x${have_tiff}" = xyes; then
+        AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+        BITMAP_LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -3681,7 +3700,7 @@ int main () {
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_latin1=yes
       ;;
   esac
@@ -3725,7 +3744,7 @@ int main () {
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_cp1252=yes
       ;;
   esac
@@ -4786,7 +4805,7 @@ AC_DEFUN([R_SEARCH_OPTS],
 ## POSIX threads.
 AC_DEFUN([R_PTHREAD],
 [case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     ;;
   *)
     r_save_CFLAGS=${CFLAGS}

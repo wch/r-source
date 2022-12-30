@@ -7,26 +7,22 @@
 /* Version of C Compiler */
 #define CC_VER "@CC_VER@"
 
-/* Version of Fortran Compiler */
-#define FC_VER "@FC_VER@"
-
-/* Define to 1 if using `alloca.c'. */
+/* Define to 1 if using 'alloca.c'. */
 /* #undef C_ALLOCA */
+
+/* C stack direction: 1 (down) or -1 (up) */
+#define C_STACK_DIRECTION 1
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #define ENABLE_NLS 1
 
-/* C type used for Fortran character lengths */
-/* will be size_t for gfortran >= 8, int before */
-/* #undef FC_LEN_T */
-#if defined __GNUC__ && __GNUC__ >= 8
-#define FC_LEN_T size_t
-#endif
-
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
 /* #undef FC_DUMMY_MAIN */
+
+/* Define if F77 and FC dummy `main' functions are identical. */
+/* #undef FC_DUMMY_MAIN_EQ_F77 */
 
 /* Define to a macro mangling the given C identifier (in lower and upper
    case), which must not contain underscores, for linking with Fortran. */
@@ -35,17 +31,23 @@
 /* As FC_FUNC, but for C identifiers containing underscores. */
 #define FC_FUNC_(name,NAME) name ## _
 
-/* Define if F77 and FC dummy `main' functions are identical. */
-/* #undef FC_DUMMY_MAIN_EQ_F77 */
+/* C type used for Fortran character lengths */
+/* will be size_t for gfortran >= 8, int before */
+/* #undef FC_LEN_T */
+#if defined __GNUC__ && __GNUC__ >= 8
+#define FC_LEN_T size_t
+#endif
+
+/* Version of Fortran Compiler */
+#define FC_VER "@FC_VER@"
 
 /* Define to 1 if you have the `access' function. */
 #define HAVE_ACCESS 1
 
-/* Define to 1 if you have `alloca', as a function or macro. */
+/* Define to 1 if you have 'alloca', as a function or macro. */
 #define HAVE_ALLOCA 1
 
-/* Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
-   */
+/* Define to 1 if <alloca.h> works. */
 /* #undef HAVE_ALLOCA_H */
 
 /* Define if you have the Aqua headers and libraries, and want to include
@@ -68,6 +70,7 @@
 /* #undef HAVE_ARPA_INET_H */
 
 /* Define to 1 if you have the `asprintf' function. */
+/* available on Mingw-w64 with _GNU_SOURCE */
 /* #undef HAVE_ASPRINTF */
 
 /* Define to 1 if you have the `atan2pi' function. */
@@ -80,7 +83,7 @@
 #define HAVE_BUILTIN_EXPECT 1
 
 /* Define to 1 if you have the <bzlib.h> header file. */
-/* #undef HAVE_BZLIB_H */
+#define HAVE_BZLIB_H 1
 
 /* Define to 1 if you have the `cabs' function. */
 #define HAVE_CABS 1
@@ -164,7 +167,7 @@
 /* #undef HAVE_CTANH */
 
 /* Define to 1 if you have the <curl/curl.h> header file.
-   Set on the command line where supported.
+   Set on the command line where supported (used via USE_LIBCURL)
 */
 /* #undef HAVE_CURL_CURL_H */
 
@@ -176,14 +179,13 @@
    */
 #define HAVE_DECL_ALLOCA 0
 
-
 /* Define to 1 if you have the declaration of `dladdr', and to 0 if you don't.
    */
-/* #undef HAVE_DECL_DLADDR */
+#define HAVE_DECL_DLADDR 0
 
 /* Define to 1 if you have the declaration of `dlsym', and to 0 if you don't.
    */
-/* #undef HAVE_DECL_DLSYM */
+#define HAVE_DECL_DLSYM 0
 
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. (For intl) */
@@ -219,18 +221,20 @@
 
 /* Define to 1 if you have the declaration of `RTLD_DEFAULT', and to 0 if you
    don't. */
-/* #undef HAVE_DECL_RTLD_DEFAULT */
+#define HAVE_DECL_RTLD_DEFAULT 0
 
 /* Define to 1 if you have the declaration of `RTLD_NEXT', and to 0 if you
    don't. */
-/* #undef HAVE_DECL_RTLD_NEXT */
+#define HAVE_DECL_RTLD_NEXT 0
 
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
+/* from psignal.h */
 #define HAVE_DECL_SIGLONGJMP 1
 
 /* Define to 1 if you have the declaration of `sigsetjmp', and to 0 if you
    don't. */
+/* from psignal.h */
 #define HAVE_DECL_SIGSETJMP 1
 
 /* Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you
@@ -247,6 +251,7 @@
 
 /* Define to 1 if you have the declaration of `vasprintf', and to 0 if you
    don't. */
+/* available on Mingw-w64 with _GNU_SOURCE */
 #define HAVE_DECL_VASPRINTF 0
 
 /* Define to 1 if you have the declaration of `_snprintf', and to 0 if you
@@ -269,9 +274,6 @@
 
 /* Define to 1 if you have the `dlsym' function. */
 /* #undef HAVE_DLSYM */
-
-/* Define to 1 if you have the <dl.h> header file. */
-/* #undef HAVE_DL_H */
 
 /* Define to 1 if you have the <elf.h> header file. */
 /* #undef HAVE_ELF_H */
@@ -315,9 +317,11 @@
 #define HAVE_FORTRAN_DOUBLE_COMPLEX 1
 
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
+/* available on Mingw-w64 */
 /* #undef HAVE_FSEEKO */
 
 /* Define to 1 if you have the `ftello' function. */
+/* available on Mingw-w64 */
 /* #undef HAVE_FTELLO */
 
 /* Define to 1 if you have the `ftruncate' function. */
@@ -338,17 +342,20 @@
 /* Define to 1 if you have the `getgid' function. */
 /* #undef HAVE_GETGID */
 
-/* Define to 1 if you have the `getline' function. */
-/* #undef HAVE_GETLINE */
-
 /* Define to 1 if you have the `getgrgid' function. */
 /* #undef HAVE_GETGRGID */
+
+/* Define to 1 if you have the `getline' function. */
+/* #undef HAVE_GETLINE */
 
 /* Define to 1 if you have the `getpagesize' function. */
 #define HAVE_GETPAGESIZE 1
 
 /* Define to 1 if you have the `getpriority' function. */
 /* #undef HAVE_GETPRIORITY */
+
+/* Define to 1 if you have the `getpwnam' function. */
+/* #undef HAVE_GETPWNAM */
 
 /* Define to 1 if you have the `getpwuid' function. */
 /* #undef HAVE_GETPWUID */
@@ -428,9 +435,6 @@
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
 
-/* Define to 1 if you have the `iswblank' function. */
-#define HAVE_ISWBLANK 1
-
 /* Define to 1 if you have the `iswctype' function. */
 #define HAVE_ISWCTYPE 1
 
@@ -456,7 +460,7 @@
 /* #undef HAVE_LC_MESSAGES */
 
 /* Define if your system has libcurl >= 7.28.0 with support for https.
-   Set on the command line where supported.
+   Set on the command line where supported.  (used via USE_LIBCURL)
  */
 /* #undef HAVE_LIBCURL */
 
@@ -479,7 +483,7 @@
 /* #undef HAVE_LIBREADLINE */
 
 /* Define to 1 if you have the `rt' library (-lrt). */
-#undef HAVE_LIBRT
+/* #undef HAVE_LIBRT */
 
 /* Define to 1 if you have the `sunmath' library (-lsunmath). */
 /* #undef HAVE_LIBSUNMATH */
@@ -489,6 +493,9 @@
 
 /* Define to 1 if you have the `termlib' library (-ltermlib). */
 /* #undef HAVE_LIBTERMLIB */
+
+/* Define to 1 if you have the `tinfo' library (-ltinfo). */
+/* #undef HAVE_LIBTINFO */
 
 /* Define to 1 if you have the `tk' library (-ltk). */
 /* #undef HAVE_LIBTK */
@@ -503,7 +510,8 @@
 #define HAVE_LOCALE_H 1
 
 /* Define to 1 if you have the `localtime_r' function. */
-#define HAVE_LOCALTIME_R 1
+/* available on Mingw-w64 with _POSIX_THREAD_SAFE_FUNCTIONS */
+/* #undef HAVE_LOCALTIME_R */
 
 /* Define to 1 if you have the `log10' function. */
 #define HAVE_LOG10 1
@@ -524,10 +532,10 @@
 #define HAVE_LONG_LONG_INT 1
 
 /* Define if your system has lzma >= 5.0.3. */
-/* #undef HAVE_LZMA */
+#define HAVE_LZMA 1
 
 /* Define to 1 if you have the <lzma.h> header file. */
-/* #undef HAVE_LZMA_H */
+#define HAVE_LZMA_H 1
 
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
@@ -541,13 +549,13 @@
 /* Define to 1 if you have the `mbstowcs' function. */
 #define HAVE_MBSTOWCS 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
 /* Define to 1 if you have the `mempcpy' function. */
 #if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 # define HAVE_MEMPCPY 1
 #endif
+
+/* Define to 1 if you have the <minix/config.h> header file. */
+/* #undef HAVE_MINIX_CONFIG_H */
 
 /* Define to 1 if you have the `mkdtemp' function. */
 /* #undef HAVE_MKDTEMP */
@@ -597,15 +605,13 @@
 #endif
 
 /* Define if your OpenMP 4 implementation fully supports SIMD reduction */
-/* #undef HAVE_OPENMP_SIMDRED */
+#define HAVE_OPENMP_SIMDRED 1
 
 /* Define to 1 if you have pangocairo. */
 /* #undef HAVE_PANGOCAIRO */
 
 /* Define if your system has pcre2. */
-/* #undef HAVE_PCRE2 */
 #define HAVE_PCRE2 1
-#define PCRE2_CODE_UNIT_WIDTH 8
 
 /* Define to 1 if you have the <pcre.h> header file. */
 /* #undef HAVE_PCRE_H */
@@ -625,9 +631,12 @@
 
 /* Define if your printf() function supports format strings with positions.
    (For intl) */
+/* UCRT printf does not support positions,
+   but the TRIO replacement does (trioremap.h) */
 #define HAVE_POSIX_PRINTF 1
 
 /* Define if you have POSIX.1 compatible sigsetjmp/siglongjmp. */
+/* from psignal.h */
 #define HAVE_POSIX_SETJMP 1
 
 /* Define to 1 if you have the `powl' function. */
@@ -635,6 +644,10 @@
 
 /* Define to 1 if you have the `pown' function. */
 /* #undef HAVE_POWN */
+
+/* Define if have support for POSIX threads. */
+/* may be available on Mingw-w64 with winpthreads */
+/* #undef HAVE_PTHREAD */
 
 /* Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE. (For intl) */
 /* #undef HAVE_PTHREAD_MUTEX_RECURSIVE */
@@ -670,9 +683,6 @@
 /* Define to 1 if you have the `rintl' function. */
 #define HAVE_RINTL 1
 
-/* Define to 1 if you have the `rl_callback_sigcleanup' function. */
-/* #undef HAVE_RL_CALLBACK_SIGCLEANUP */
-
 /* Define to 1 if you have the `rl_completion_matches' function. */
 /* #undef HAVE_RL_COMPLETION_MATCHES */
 
@@ -683,13 +693,14 @@
 /* #undef HAVE_RL_SORT_COMPLETION_MATCHES */
 
 /* Define to 1 if you have the `sched_getaffinity' function. */
-#undef HAVE_SCHED_GETAFFINITY
+/* #undef HAVE_SCHED_GETAFFINITY */
 
 /* Define to 1 if you have the <sched.h> header file. */
-#undef HAVE_SCHED_H
+/* may be available on Mingw-w64 with winpthreads */
+/* #undef HAVE_SCHED_H */
 
 /* Define to 1 if you have the `sched_setaffinity' function. */
-#undef HAVE_SCHED_SETAFFINITY
+/* #undef HAVE_SCHED_SETAFFINITY */
 
 /* Define to 1 if you have the `select' function. */
 /* #undef HAVE_SELECT */
@@ -728,7 +739,7 @@
 #define HAVE_STAT 1
 
 /* Define to 1 if you have the <stdalign.h> header file. */
-/* #undef HAVE_STDALIGN_H */
+#define HAVE_STDALIGN_H 1
 
 /* Define to 1 if you have the <stdarg.h> header file. */
 #define HAVE_STDARG_H 1
@@ -745,6 +756,9 @@
 /* Define if <stdint.h> exists, doesn't clash with <sys/types.h>, and declares
    uintmax_t. (For intl) */
 #define HAVE_STDINT_H_WITH_UINTMAX 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -834,6 +848,7 @@
 
 /* Define if you have the Tcl/Tk headers and libraries and want Tcl/Tk support
    to be built. */
+/* Tcl/Tk bundle is by default expected in Tcl directory next to src */
 #define HAVE_TCLTK 1
 
 /* Define to 1 if you have the <thread.h> header file. */
@@ -846,13 +861,16 @@
 #define HAVE_TIFF 1
 
 /* Define to 1 if you have the <tiffio.h> header file. */
-/* #undef HAVE_TIFFIO_H */
+#define HAVE_TIFFIO_H 1
+
+/* Define to 1 if you have the `tilde_expand_word' function. */
+/* #undef HAVE_TILDE_EXPAND_WORD */
 
 /* Define to 1 if you have the `times' function. */
-#define HAVE_TIMES 1
+/* #undef HAVE_TIMES */
 
 /* Define to 1 if you have the `timespec_get' function. */
-/* #undef HAVE_TIMESPEC_GET */
+#define HAVE_TIMESPEC_GET 1
 
 /* Define to 1 if your 'struct tm' has tm_gmtoff. */
 /* #undef HAVE_TM_GMTOFF */
@@ -895,6 +913,7 @@
 #define HAVE_UNSIGNED_LONG_LONG_INT 1
 
 /* Define to 1 if you have the `utime' function. */
+/* may be available on Mingw-w64 */
 /* #undef HAVE_UTIME */
 
 /* Define to 1 if you have the `utimensat' function. */
@@ -904,6 +923,7 @@
 /* #undef HAVE_UTIMES */
 
 /* Define to 1 if you have the <utime.h> header file. */
+/* may be available on Mingw-w64 */
 /* #undef HAVE_UTIME_H */
 
 /* Define to 1 if you have the <valgrind/memcheck.h> header file. */
@@ -967,9 +987,6 @@
 /* Define if you have the 'wint_t' type. (For intl) */
 #define HAVE_WINT_T 1
 
-/* Define if your mktime works correctly outside 1902-2037. */
-#define HAVE_WORKING_64BIT_MKTIME 1
-
 /* Define to 1 if you have cairo. */
 /* #undef HAVE_WORKING_CAIRO */
 
@@ -989,8 +1006,23 @@
 /* Define if log1p() exists and is accurate enough. */
 #define HAVE_WORKING_LOG1P 1
 
+/* Define if your mktime works correctly after 2037. */
+/* using internal-tzcode */
+#define HAVE_WORKING_MKTIME_AFTER_2037 1
+
+/* Define if your mktime works correctly before 1902. */
+/* using internal-tzcode */
+#define HAVE_WORKING_MKTIME_BEFORE_1902 1
+
+/* Define if your mktime works correctly before 1970. */
+/* using internal-tzcode */
+#define HAVE_WORKING_MKTIME_BEFORE_1970 1
+
 /* Define if sigaction() is complete enough for R's usage */
 /* #undef HAVE_WORKING_SIGACTION */
+
+/* Define to 1 if you have cairo including Xlib. */
+/* #undef HAVE_WORKING_X11_CAIRO */
 
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
@@ -1012,22 +1044,20 @@
 /* #undef HAVE___TANPI */
 
 /* Define as const if the declaration of iconv() needs const. */
+/* to match fixed/h/iconv.h */
 #define ICONV_CONST const
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
 
 /* Define if integer division by zero raises signal SIGFPE. (For intl) */
-#define INTDIV0_RAISES_SIGFPE 1
+#define INTDIV0_RAISES_SIGFPE 0
 
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
-
-/* macOS 10.12 (Sierra) or earlier */
-/* #undef MACOS_SIERRA */
 
 /* Define if mktime sets errno. */
 #define MKTIME_SETS_ERRNO 1
@@ -1036,7 +1066,7 @@
 #define NVALGRIND 1
 
 /* Define if using GNU-style Objective C runtime. */
-#define OBJC_GNU_RUNTIME 1
+/* #undef OBJC_GNU_RUNTIME */
 
 /* Define if using NeXT/Apple-style Objective C runtime. */
 /* #undef OBJC_NEXT_RUNTIME */
@@ -1063,7 +1093,7 @@
 #define PACKAGE_VERSION "@VERSION@"
 
 /* PCRE2 code unit width wanted. */
-/* #undef PCRE2_CODE_UNIT_WIDTH */
+#define PCRE2_CODE_UNIT_WIDTH 8
 
 /* Define if <inttypes.h> exists and defines unusable PRI* macros. (For intl)
    */
@@ -1071,9 +1101,6 @@
 
 /* Define if the pthread_in_use() detection is hard. (For intl) */
 /* #undef PTHREAD_IN_USE_DETECTION_HARD */
-
-/* Define as the return type of signal handlers (`int' or `void'). */
-#define RETSIGTYPE void
 
 /* Define this to use architecture-dependent subdirectories of this name. */
 #ifndef R_ARCH
@@ -1169,7 +1196,9 @@
 	STACK_DIRECTION = 0 => direction of growth unknown */
 /* #undef STACK_DIRECTION */
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Define if you have C/C++/Fortran OpenMP support for package code. */
@@ -1205,13 +1234,13 @@
    weak. (For intl) */
 /* #undef USE_PTH_THREADS_WEAK */
 
-/* Define to 1 to use internal code for `towlower' and `towupper'. */
+/* Define to 1 to use internal code for 'towlower' and 'towupper'. */
 #define USE_RI18N_CASE 1
 
-/* Define to 1 to use internal `iswprint' etc. */
+/* Define to 1 to use internal 'iswprint' etc. */
 #define USE_RI18N_FNS 1
 
-/* Define to 1 to use internal `wcwidth' */
+/* Define to 1 to use internal 'wcwidth' */
 #define USE_RI18N_WIDTH
 
 /* Define if the old Solaris multithreading library can be used. (For intl) */
@@ -1286,7 +1315,7 @@
    this defined. */
 /* #undef _POSIX_1_SOURCE */
 
-/* Define to 1 if you need to in order for `stat' and other things to work. */
+/* Define to 1 if you need to in order for 'stat' and other things to work. */
 /* #undef _POSIX_SOURCE */
 
 /* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,
@@ -1307,7 +1336,7 @@
 /* #undef inline */
 #endif
 
-/* Define to `int' if <sys/types.h> does not define. */
+/* Define as a signed integer type capable of holding a process identifier. */
 /* #undef pid_t */
 
 /* Define as the type of the result of subtracting two pointers, if the system
