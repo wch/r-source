@@ -882,6 +882,10 @@ DUMPBIN
 LD
 FGREP
 LIBTOOL
+C23FLAGS
+CC23
+C17FLAGS
+CC17
 R_DEFS
 OBJCXX
 ac_ct_OBJC
@@ -9758,6 +9762,18 @@ fi
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
 
+
+## Other C standards -- first pass
+: ${CC17="${CC} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS}"}
+
+
+: ${CC23="${CC} -std=gnu2x"}
+: ${C23FLAGS="${CFLAGS}"}
+
+
+r_c17_compiler="${CC17} ${C17FLAGS}"
+r_c23_compiler="${CC23} ${C23FLAGS}"
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
@@ -26686,7 +26702,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26691: \"$ac_link\") >&5
+(eval echo $as_me:26707: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26762,7 +26778,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26767: \"$ac_link\") >&5
+(eval echo $as_me:26783: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -61229,6 +61245,8 @@ R is now configured for ${host}
   C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
+  C17 compiler:                ${r_c17_compiler}
+  C23 compiler:                ${r_c23_compiler}
 
   Interfaces supported:        ${r_interfaces}
   External libraries:          ${r_external_libs}
@@ -61257,6 +61275,8 @@ R is now configured for ${host}
   C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
+  C17 compiler:                ${r_c17_compiler}
+  C23 compiler:                ${r_c23_compiler}
 
   Interfaces supported:        ${r_interfaces}
   External libraries:          ${r_external_libs}

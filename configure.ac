@@ -787,6 +787,18 @@ R_PROG_OBJCXX
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
+## Other C standards -- first pass
+: ${CC17="${CC} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS}"}
+AC_SUBST(CC17)
+AC_SUBST(C17FLAGS)
+: ${CC23="${CC} -std=gnu2x"}
+: ${C23FLAGS="${CFLAGS}"}
+AC_SUBST(CC23)
+AC_SUBST(C23FLAGS)
+r_c17_compiler="${CC17} ${C17FLAGS}"
+r_c23_compiler="${CC23} ${C23FLAGS}"
+
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
 ## checks for a Fortran 77 compiler and sets F77 accordingly.)
@@ -3074,6 +3086,8 @@ R is now configured for ${host}
   C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
+  C17 compiler:                ${r_c17_compiler}
+  C23 compiler:                ${r_c23_compiler}
 
   Interfaces supported:        ${r_interfaces}
   External libraries:          ${r_external_libs}

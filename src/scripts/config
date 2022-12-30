@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2021 The R Core Team
+## Copyright (C) 2002-2022 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-2020 The R Core Team.
+Copyright (C) 2002-2022 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -50,6 +50,10 @@ Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries
   CC            C compiler command
   CFLAGS        C compiler flags
+  CC17          Ditto for the C17 or earlier compiler
+  C17FLAGS
+  CC23          Ditto for the C23 or later compiler
+  C23FLAGS
   CPICFLAGS     special flags for compiling C code to be included in a
 		shared library
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
@@ -282,7 +286,7 @@ if test "${personal}" = "yes"; then
 fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
-ok_c_vars="CC CFLAGS CPICFLAGS CPPFLAGS"
+ok_c_vars="CC CFLAGS CPICFLAGS CPPFLAGS CC17 C17FLAGS CC23 C23FLAGS"
 ok_cxx_vars="CXX CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS CXX20 CXX20STD CXX20FLAGS CXX20PICFLAG CXX23 CXX23STD CXX23FLAGS CXX23PICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"

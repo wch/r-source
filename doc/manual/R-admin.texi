@@ -980,6 +980,7 @@ dependence on the @R{} version.)
 * Debugging Symbols::
 * OpenMP Support::
 * C++ Support::
+* C standards::
 * Link-Time Optimization::
 @end menu
 
@@ -1048,7 +1049,7 @@ OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
 
-@node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
+@node C++ Support, C standards, OpenMP Support, Other Options
 @subsection C++ Support
 
 C++ is not used by @R{} itself, but support is provided for installing
@@ -1131,7 +1132,21 @@ can be overridden by setting @samp{CXXSTD} when @R{} is configured.
 which versions of common compilers support (parts of) which C++
 standards.
 
-@node Link-Time Optimization,  , C++ Support, Other Options
+@node C standards, Link-Time Optimization, C++ Support, Other Options
+@subsection C standards
+
+Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
+the substantial update planned for C23 will also be supported.
+
+As from @R{} 4.3.0 there is support for packages to indicate their
+preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
+and @code{C23FLAGS} can be set in @file{config.site} (there are examples
+there).  Those for C17 should support C17 or earlier and not allow C23
+additions so for example @code{bool}, @code{true} and @code{false} can
+be used as identifiers.  Those for C23 should support new types such as
+@code{bool}.
+
+@node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
 
 There is support for using link-time optimization (LTO) if the toolchain

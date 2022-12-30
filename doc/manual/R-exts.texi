@@ -2054,6 +2054,7 @@ licence).
 * Configure example::
 * Using F9x code::
 * Using C++ code::
+* C standards::
 * Using @command{cmake}::
 @end menu
 
@@ -2834,7 +2835,7 @@ define a module of the same name in multiple source files.
 @c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
 @c on Solaris did not.
 
-@node Using C++ code, Using @command{cmake}, Using F9x code, Configure and cleanup
+@node Using C++ code, C standards, Using F9x code, Configure and cleanup
 @subsection Using C++ code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -3012,8 +3013,47 @@ C++ standard.  And the default C++ standard varies widely and gets
 changed frequently by vendors -- for example Apple clang 14 defaults to
 C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
 
+@node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
+@subsection C standards
 
-@node Using @command{cmake},  , Using C++ code, Configure and cleanup
+C has had standards C89/C90, C99, C11, C17 (also known as C18) and C23
+is in final draft and expected to be published during 2023.  C11 was a
+minor change to C99, and C17 is a `bug-fix' update to C11.  On the other
+hand, C23 makes extensive changes, including making @code{bool},
+@code{true} and @code{false} reserved words, finally disallowing
+K&R-style function declarations and clarifying the formerly deprecated
+meaning of function declarations with an empty paramenter list to mean
+zero parameters. (There are many other additions: see for example
+@uref{https://en.cppreference.com/w/c/23}.)
+
+The @command{configure} script in recent versions of @R{} aims to choose
+a C compiler which supports C11: as the default in recent versions of
+@command{gcc}, LLVM @command{clang} and Apple @command{clang} is C17,
+that is what is likely to be chosed.  On the other hand, until recently
+the code for the Windows build specified C99.
+
+Packages may want to either avoid or embrace the changes in C23, and can
+do so @emph{via} specifying @samp{USE_C17} or @samp{USE_C23} in the
+@samp{SystemRequirements} field of their @file{DESCRIPTION} file. Those
+using a @command{configure} script should set the corresponding compiler
+and flags, for example using
+@example
+CC=`"$@{R_HOME@}/bin/R" CMD config CC23`
+CFLAGS=`"$@{R_HOME@}/bin/R" CMD config C23FLAGS`
+CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
+LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
+@end example
+
+The (claimed) C standard in use can be checked by the macro
+@code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
+values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
+and C17.  As C23 is not yet published there is as yet no definitive
+value: compilers are currently using @code{202000L}.
+@c https://gustedt.gitlabpages.inria.fr/c23-library/
+C23 has macros similar to C++ `feature tests' for many of its changes,
+for example @code{__STDC_VERSION_LIMITS_H__}.
+
+@node Using @command{cmake},  , C standards, Configure and cleanup
 @subsection Using @command{cmake}
 
 Packages often wish to include the sources of other software and compile
