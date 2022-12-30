@@ -281,10 +281,10 @@ if(FALSE) {
             "      --dsym            (macOS only) generate dSYM directory",
             "      --built-timestamp=STAMP",
             "                   set timestamp for Built: entry in DESCRIPTION",
-            "\nand on Windows only",
-            "      --force-biarch	attempt to build both architectures",
-            "			even if there is a non-empty configure.win",
-            "      --compile-both	compile both architectures on 32-bit Windows",
+            ## "\nand on Windows only",
+            ## "      --force-biarch	attempt to build both architectures",
+            ## "			even if there is a non-empty configure.win",
+            ## "      --compile-both	compile both architectures on 32-bit Windows",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste0("for this one it is ",
@@ -1275,8 +1275,8 @@ if(FALSE) {
                     srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
                                 all.files = TRUE)
                     archs <- if(have_cross) cross
-                    else if (!force_both && !grepl(" x64 ", utils::win.version()))
-                        "i386"
+                    ## else if (!force_both && !grepl(" x64 ", utils::win.version()))
+                    ##     "i386"
                     else {
                         ## see what is installed
                         ## NB, not R.home("bin")
@@ -2036,10 +2036,10 @@ if(FALSE) {
             libs_only <- TRUE
         } else if (a == "--no-multiarch") {
             multiarch <- FALSE
-        } else if (a == "--force-biarch") {
-            force_biarch <- TRUE
-        } else if (a == "--compile-both") {
-            force_both <- TRUE
+        ## } else if (a == "--force-biarch") {
+        ##     force_biarch <- TRUE
+        ## } else if (a == "--compile-both") {
+        ##     force_both <- TRUE
         } else if (a == "--maybe-get-user-libPaths") {
             get_user_libPaths <- TRUE
         } else if (a == "--build") {
