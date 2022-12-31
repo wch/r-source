@@ -1280,7 +1280,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(ns > 6) ns = 6;
 		if(ns > 0) {
 		    /* truncate to avoid nuisances such as PR#14579 */
-		    double s = secs, t = Rexp10((double) ns);
+		    double s = tm.tm_sec + (secs - fsecs), t = Rexp10((double) ns);
 		    s = ((int) (s*t))/t;
 		    // FIXME uae snprintf
 		    sprintf(p2, "%0*.*f", ns+3, ns, s);

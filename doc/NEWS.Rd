@@ -500,11 +500,15 @@
       caused by a fix in \PR{18382} which uncovered an issue in GraphApp
       due to which the symbol charset was not used with TT Symbol font face.
 
-      \item (Windows) Installing a packge with a
-      \file{src/Makefile.{win,ucrt}} file includes
+      \item (Windows) Installing a package with a
+      \file{src/Makefile.\{win,ucrt\}} file includes
       \file{~/.R/Makevars.win64} in the search for user makevars, as
       documented in \dQuote{R Installation and Administration} and done
-      for packages with a \file{src/Makevars.{win,ucrt}} file.
+      for packages with a \file{src/Makevars.\{win,ucrt\}} file.
+
+      \item \code{format(<POSIXlt_w/_unbalanced_sec>, "....\%OS<n>")} with
+      \eqn{n > 0} no longer accidentally uses the unbalanced seconds,
+      thanks to Suharto Anggono's report (including patch) in \PR{18448}.
     }
   }
 }

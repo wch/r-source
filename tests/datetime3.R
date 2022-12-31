@@ -307,6 +307,8 @@ dlt <- .POSIXlt(list(sec = c(-999, 10000 + c(1:10,-Inf, NA)) + pi,
                      min = 45L, hour = c(21L, 3L, NA, 4L),
                      mday = 6L, mon  = c(0:11, NA, 1:2),
                      year = 116L, wday = 2L, yday = 340L, isdst = -1L))
+f1 <- format(dlt[1], "%Y-%m-%d %H:%M:%OS3") # PR#18448
+stopifnot(f1 == "2016-01-06 21:28:24.141")  # gave "... 21:28:-995.858" in R <= 4.2.2
 dct   <- as.POSIXct(dlt)
 dltN  <- as.POSIXlt(dct) # "normalized POSIXlt" (with *lost* accuracy), but *added* tz-info:
 data.frame(unclass(dltN)); str(attributes(dltN)[-1], no.list=TRUE)
