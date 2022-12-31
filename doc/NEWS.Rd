@@ -43,10 +43,22 @@
       \item Running examples from HTML documentation now restores
       previous knitr settings and options (\PR{18420}).
 
-      \item Math symbols in text drawing functions on Windows are again
+      \item Quartz: fonts are now located using Core Graphics API
+      instead of deprecated ATS which is no longer supported in the
+      macOS 13 SDK (\PR{18426}).  This also addresses an issue where
+      the currently used font in the Quartz device context was not
+      correctly retained.
+
+      \item (Windows) Math symbols in text drawing functions are again
       rendered correctly (\PR{18440}).  This fixes a regression in \R 4.2.1
       caused by a fix in \PR{18382} which uncovered an issue in GraphApp
       due to which the symbol charset was not used with TT Symbol font face.
+
+      \item (Windows) Installing a packge with a
+      \file{src/Makefile.{win,ucrt}} file includes
+      \file{~/.R/Makevars.win64} in the search for user makevars, as
+      documented in \dQuote{R Installation and Administration} and done
+      for packages with a \file{src/Makevars.{win,ucrt}} file.
     }
   }
 }

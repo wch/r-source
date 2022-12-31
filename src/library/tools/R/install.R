@@ -531,7 +531,7 @@ if(FALSE) {
         }
         if (WINDOWS) {
             if (file.exists("cleanup.ucrt"))
-                system("sh ./cleanup.ucrt") 
+                system("sh ./cleanup.ucrt")
             else if (file.exists("cleanup.win"))
                 system("sh ./cleanup.win")
         } else if (file_test("-x", "cleanup")) system("./cleanup")
@@ -1105,7 +1105,7 @@ if(FALSE) {
             # the future.
 
 	    if (!it_patches_base %in% c("no", "disabled", "false", "FALSE")) {
-        
+
                 patches_idx <- tryCatch({
                         idxfile <- file(paste0(it_patches_base, "/",
                                                "patches_idx.rds"))
@@ -1141,7 +1141,7 @@ if(FALSE) {
                             ## be reversed
                             if (system2("patch", args = c("--dry-run", "-R", "-p2", "--binary",
                                                           "--force"), stdin = fname) == 0)
-                                message("NOTE: Skipping installation-time patch ", purl, 
+                                message("NOTE: Skipping installation-time patch ", purl,
                                         " which seems to be already applied.\n")
                             else
                                 message("WARNING: failed to apply patch ", purl, "\n")
@@ -1254,6 +1254,8 @@ if(FALSE) {
                     if (file.exists(f))  makefiles <- f
                 } else if (file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
                     makefiles <- f
+                else if (file.exists(f <- path.expand("~/.R/Makevars.win64")))
+                    makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
@@ -1301,7 +1303,7 @@ if(FALSE) {
                                 force_biarch <- TRUE
                             else if (has_configure_ucrt)
                                 warning("this package has a non-empty 'configure.ucrt' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
-                            else 
+                            else
                                 warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
                         }
                     }
@@ -1433,7 +1435,7 @@ if(FALSE) {
             ## Windows, even if it is installed.
             if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
         }
- 
+
         if (have_cross) Sys.unsetenv("R_ARCH")
 
         if (WINDOWS && dir.exists("install_time_patches"))
