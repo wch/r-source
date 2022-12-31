@@ -2394,10 +2394,12 @@ CXXFLAGS = -g -O -mtune=native
 CXX11FLAGS = -g -O -mtune=native
 ## @r{for fixed-form Fortran code}
 FFLAGS = -g -O -mtune=native
+## @r{for C17 code}
+C17FLAGS = -g -O -mtune=native -Wno-strict-prototypes
 @end example
 
 @noindent
-Note that if you have specified a non-default C++ standard, you need to
+Note that if you have specified a non-default C++ or C standard, you need to
 set the flag(s) appropriate to that standard.
 
 Another use is to override the settings in a binary installation of R.

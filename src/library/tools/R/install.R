@@ -1254,17 +1254,18 @@ if(FALSE) {
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
                 owd <- setwd("src")
-                makefiles <- character()
-                if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
-                                           NA_character_))) {
-                    if (file.exists(f))  makefiles <- f
-                } else if (file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
-                    makefiles <- f
-                else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
-                    makefiles <- f
-                else if (file.exists(f <- path.expand("~/.R/Makevars")))
-                    makefiles <- f
+                ## makefiles <- character()
+                ## if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
+                ##                            NA_character_))) {
+                ##     if (file.exists(f))  makefiles <- f
+                ## } else if (file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
+                ##     makefiles <- f
+                ## else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+                ##     makefiles <- f
+                ## else if (file.exists(f <- path.expand("~/.R/Makevars")))
+                ##     makefiles <- f
                 if (file.exists(f <- "Makefile.ucrt") || file.exists(f <- "Makefile.win")) {
+                    makefiles <- makevars_user()
                     makefiles <- c(f, makefiles)
                     message(paste0("  running 'src/", f, "' ..."), domain = NA)
                     res <- system(paste("make --no-print-directory",

@@ -1214,7 +1214,8 @@ The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
 
 The sources and headers for the compiled code are in @file{src}, plus
-optionally a file @file{Makevars} or @file{Makefile}.  When a package is
+optionally a file @file{Makevars} or @file{Makefile} (or for use on
+Windows, with extesnion @file{.win} or @file{.ucrt}).  When a package is
 installed using @code{R CMD INSTALL}, @command{make} is used to control
 compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
@@ -1274,9 +1275,20 @@ require makefiles to have a complete final line, including a newline.
 
 A few packages use the @file{src} directory for purposes other than
 making a shared object (e.g.@: to create executables).  Such packages
-should have files @file{src/Makefile} and @file{src/Makefile.win} or 
-@file{src/Makefile.ucrt}
-(unless intended for only Unix-alikes or only Windows).
+should have files @file{src/Makefile} and @file{src/Makefile.win} or
+@file{src/Makefile.ucrt} (unless intended for only Unix-alikes or only
+Windows).  Note that on Unix such makefiles are included after
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf} so all the usual @R{}
+macros and make rules are available -- for example C compilation will by
+default use the C compiler and flags with which @R{} was configured.
+@c The order of makefiles on Unix is
+@c etcR_ARCH/Makeconf
+@c site makevars (R_MAKEVARS_SITE R_HOME/etcR_ARCH/Makevars.site)
+@c src/Makefile
+@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{-platform,})
+@c but on Windows
+@c src/Makefile.{ucrt,win}
+@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{ucrt.win64,win,})
 
 In very special cases packages may create binary files other than the
 shared objects/DLLs in the @file{src} directory.  Such files will not be
