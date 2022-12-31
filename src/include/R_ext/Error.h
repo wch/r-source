@@ -35,7 +35,7 @@ extern "C" {
  * In C11 there is _Noreturn * (or noreturn in header <stdnoreturn.h>).
  */
 #if defined NORET
-#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L) || defined(__cplusplus)
+#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
 # define NORET [[noreturn]]
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
 # define NORET _Noreturn
