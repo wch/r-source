@@ -2461,9 +2461,9 @@ example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
 partially supported, not that which is fully implemented.} to say what
 version of OpenMP is supported: version 4.0 (and much of 4.5 or 5.0) is
-supported by recent versions of the Linux, Windows and Solaris
-platforms, but portable packages cannot assume that end users have
-recent versions.  Apple @command{clang} on macOS has no OpenMP support.
+supported by recent versions of the Linux and Windows platforms, but
+portable packages cannot assume that end users have recent versions.
+Apple @command{clang} on macOS has no OpenMP support.
 @uref{https://www.openmp.org/resources/openmp-compilers-tools/} gives
 some idea of what compilers support what versions.
 
@@ -2987,8 +2987,7 @@ from @R{} 4.3.0) can be specified in an analogous way (replacing
 is platform-dependent.  Some C++17 and C++20 support is available with
 the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
-is more recent than some still-current Linux distributions and also than
-the OpenCSW compilers for Solaris.
+is more recent than some still-current Linux distributions.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
@@ -3782,7 +3781,7 @@ PDF or @HTML{} format obtained from plain-text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
 PDF/@HTML{} or intermediate @LaTeX{}).  Vignette engines do this work,
 using ``tangle'' and ``weave'' functions respectively.  Sweave, provided
-by the R distribution, is the default engine.  Other vignette engines
+by the @R{} distribution, is the default engine.  Other vignette engines
 besides Sweave are supported; see @ref{Non-Sweave vignettes}.
 
 Package vignettes have their sources in subdirectory @file{vignettes} of
@@ -4724,8 +4723,8 @@ empty @file{configure.win} file if no actions are needed).
 @item
 If your package has a @file{Makevars} or @file{Makefile} file, make sure
 that you use only portable make features.  Such files should be
-LF-terminated@footnote{Solaris @command{make} does not accept
-CRLF-terminated Makefiles; Solaris warns about and some other
+LF-terminated@footnote{Solaris @command{make} did not accept
+CRLF-terminated Makefiles; Solaris warned about and some other
 @command{make}s ignore incomplete final lines.} (including the final
 line of the file) and not make use of GNU extensions.  (The POSIX
 specification is available at
@@ -4745,7 +4744,7 @@ platforms but do not have the intended results.
 
 Note that the @option{-C} flag for @command{make} is not included in the
 POSIX specification and is not implemented by some of the
-@command{make}s used with @R{}.
+@command{make}s which have been used with @R{}.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
@@ -4756,9 +4755,10 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
 BSD make and other variants of @command{pmake} in FreeBSD, NetBSD and
-formerly in macOS, AT&T make as implemented on Solaris and `Distributed
-Make' (@code{dmake}), part of Oracle Developer Studio and available in
-other versions including from Apache OpenOffice.} to be used with @R{}.
+formerly in macOS, and formerly AT&T make as implemented on Solaris and
+`Distributed Make' (@code{dmake}), part of Oracle Developer Studio and
+available in other versions including from Apache OpenOffice.} to be
+used with @R{}.
 
 If you really must require GNU make, declare it in the @file{DESCRIPTION}
 file by
@@ -4836,7 +4836,7 @@ expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris 10/11, even though they are in
-the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
+the POSIX standard.  Nor did Solaris support @samp{$(@var{cmd})}.}
 Bourne shells: an earlier @R{} toolset on Windows@footnote{as from
 @R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/wiki/Almquist_shell},
@@ -4859,7 +4859,7 @@ which is @command{bash}-specific (first set the variable then export it
 by name).
 
 Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not fully
-portable@footnote{it was not in the Bourne shell, and is not supported
+portable@footnote{it was not in the Bourne shell, and was not supported
 by Solaris 10.}: @code{-f} is normally what is intended.  Flags
 @option{-a} and @option{-o} are nowadays declared obsolescent by POSIX
 and should not be used.
@@ -5161,7 +5161,7 @@ Be careful with the order of entries in macros such as @code{PKG_LIBS}.
 Some linkers will re-order the entries, and behaviour can differ between
 dynamic and static libraries.  Generally @option{-L} options should
 precede@footnote{Whereas the GNU linker reorders so @option{-L} options
-are processed first, the Solaris one does not.} the libraries (typically
+are processed first, the Solaris one did not.} the libraries (typically
 specified by @option{-l} options) to be found from those directories,
 and libraries are searched once in the order they are specified.  Not
 all linkers allow a space after @option{-L} .
@@ -5202,24 +5202,22 @@ portable.
 The @command{strip} utility is platform-specific (and @acronym{CRAN}
 prohibits removing debug symbols).  For example the options
 @option{--strip-debug} and @option{--strip-unneeded} of the GNU version
-are not supported on macOS nor Solaris@footnote{which is
-@file{/usr/ccs/bin/strip}, not @file{/usr/bin/strip}.}: the POSIX
-standard for @command{strip} does not mention any options, and what
-calling it without options does is platform-dependent.  Stripping a
-@file{.so} file could even prevent it being dynamically loaded into @R{}
-on an untested platform.
+are not supported on macOS: the POSIX standard for @command{strip}
+does not mention any options, and what calling it without options does
+is platform-dependent.  Stripping a @file{.so} file could even prevent
+it being dynamically loaded into @R{} on an untested platform.
 
 @command{ld -S} invokes @command{strip --strip-debug} on GNU
-@command{ld} but is not portable: in particular on Solaris it does
+@command{ld} but is not portable: in particular on Solaris it did
 something completely different and takes an argument.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
-and e.g.@: @samp{fr_FR.utf8} is commonly used on Linux but not accepted on
-either Solaris or macOS.  @samp{fr_FR.UTF-8} is more portable, being
-accepted on recent Linux, AIX, FreeBSD, macOS and Solaris (at least).
-However, some Linux distributions micro-package, so locales defined by
-@pkg{glibc} (including these examples) may not be installed.
+and e.g.@: @samp{fr_FR.utf8} is commonly used on Linux but not accepted
+on macOS.  @samp{fr_FR.UTF-8} is more portable, being accepted on recent
+Linux, AIX, FreeBSD, macOS and Solaris (at least).  However, some Linux
+distributions micro-package, so locales defined by @pkg{glibc}
+(including these examples) may not be installed.
 
 @item
 Avoid spaces in file names, not least as they can cause difficulties for
@@ -5248,13 +5246,15 @@ required directly (not @emph{via} @CRANpkg{rJava}) this must be declared
 and its presence tested like any other external command.} and tested at
 runtime (not least as the Java installation when the package is
 installed might not be the same as when the package is run and will not
-be for binary packages).  Java 8 is available for fewer platforms than
-Java 7 was, and Java 11 for fewer still (at the time of writing, only
-@cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
-Oracle; Linux on several 64-bit CPUs, Intel and ARM macOS, 32- and
-64-bit Windows and AIX from @uref{https://adoptium.net/} -- several
-OSes provide builds of OpenJDK including FreeBSD and most Linux
-distributions).
+be for binary packages).
+
+@c Java 8 is available for fewer platforms than
+@c Java 7 was, and Java 11 for fewer still (at the time of writing, only
+@c @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
+@c Oracle; Linux on several 64-bit CPUs, Intel and ARM macOS, 32- and
+@c 64-bit Windows and AIX from @uref{https://adoptium.net/} -- several
+@c OSes provide builds of OpenJDK including FreeBSD and most Linux
+@c distributions).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
@@ -5736,15 +5736,15 @@ various standards.
 More care is needed for functions such as @code{mallinfo} which are not
 specified by any of these standards---hopefully the @command{man} page
 on your system will tell you so.  Searching online for such pages for
-various OSes (preferably at least Linux, macOS and Solaris, and the
-FreeBSD manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow
-you to select many OSes@footnote{`SunOS 5.10' is the most current for
-Solaris.}) should reveal useful information but a @file{configure}
-script is likely to be needed to check availability and functionality.
+various OSes (preferably at least Linux and macOS, and the FreeBSD
+manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow you to
+select many OSes) should reveal useful information but a
+@file{configure} script is likely to be needed to check availability and
+functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
-compilability of C/C++ code.  Compilers from the GCC, @command{clang},
+compilability of C/C++ code.  Compilers from the GCC, @command{clang}
 Intel and Oracle Developer Studio suites have been used with @R{}, and
 both LLVM @command{clang} and Oracle have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive
@@ -5850,11 +5850,13 @@ are not required by the standards, and so code may compile on such
 systems and not on others.  (A prominent example is the C++ header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another issue is the C header @code{<time.h>} which is
-included by other headers on Linux and Windows but not macOS nor
-Solaris.)  @command{g++}@tie{}11 often needs explicit inclusion of the
-C++ headers @code{<limits>} (for @code{numeric_limits}) or
-@code{<exception>} (for @code{set_terminate} and similar), whereas
-earlier versions included these in other headers.
+included by other headers on Linux and Windows but not macOS.)
+@command{g++}@tie{}11 often needs explicit inclusion of the C++ headers
+@code{<limits>} (for @code{numeric_limits}) or @code{<exception>} (for
+@code{set_terminate} and similar), whereas earlier versions included
+these in other headers. Drafts of @command{g++}@tie{}13 require the
+explicit inclusion of @code{<cstdint>} for types such as @code{uint32_t}
+which was previously included implicitly.
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -5875,7 +5877,7 @@ Some headers are not portable: we have just mentioned @file{malloc.h}
 and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
 The latter is a @code{glibc} extension: some OSs have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
-@c macOS has machine/endian.h.  Solaris has none.
+@c macOS has machine/endian.h.  Solaris had none.
 
 @item
 Use @code{#include "my.h"} not @code{#include <my.h>} for headers in
@@ -5932,25 +5934,25 @@ portable code (including not as guards in C/C++ headers).  Other macros,
 typically upper-case, may be defined by the compiler or system headers
 and can cause problems.
 @c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
-The most common issue involves the names of the Intel CPU registers such
-as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
-(and more with longer abbreviations@footnote{including @code{EAX},
-@code{EBP}, @code{EBX}, @code{ECX}, @code{EDI},@code{EDX}, @code{EFL},
-@code{EIP}, @code{ESI} and @code{ESP} .}) defined on i586/x64 Solaris in
-@file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
-and other core headers.  Further examples are @code{ERR}, @code{VERSION},
-@code{LITTLE_ENDIAN}, @code{zero} and @code{I} (which is defined in
-Solaris' @file{<complex.h>} as a compiler intrinsic for the imaginary
-unit).  Some of these can be avoided by defining @code{_POSIX_C_SOURCE}
+@c The most common issue involves the names of the Intel CPU registers such
+@c as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
+@c (and more with longer abbreviations@footnote{including @code{EAX},
+@c @code{EBP}, @code{EBX}, @code{ECX}, @code{EDI},@code{EDX}, @code{EFL},
+@c @code{EIP}, @code{ESI} and @code{ESP} .}) defined on i586/x64 Solaris in
+@c @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
+@c and other core headers.  Further examples are @code{ERR}, @code{VERSION},
+@c @code{LITTLE_ENDIAN}, @code{zero} and @code{I} (which is defined in
+@c Solaris' @file{<complex.h>} as a compiler intrinsic for the imaginary
+@c unit).
+Some of these can be avoided by defining @code{_POSIX_C_SOURCE}
 before including any system headers, but it is better to only use
 all-upper-case names which have a unique prefix such as the package
 name.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
-examples include @code{ulong} on several OSes, @code{index_t} and
-@code{single} on Solaris and @code{thread} using LLVM @command{clang++} from
-version 9.  (Note that these may conflict with other uses as
+examples have included @code{ulong}, @code{index_t}, @code{single} and
+@code{thread}.  (Note that these may conflict with other uses as
 identifiers, e.g.@: defining a C++ function called @code{single}.)
 @c as done by package Emcdf in June 2017.
 @c and thread as a typedef by RVowalWabbit
@@ -10469,12 +10471,12 @@ Compiled code to be used with @R{} is loaded as a shared object
 information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
-@code{dyn.unload}.  Unloading is not normally necessary and is not safe in
-general, but it is needed to allow the DLL to be re-built on some platforms,
-including Windows. Unloading a DLL and then re-loading a DLL of the same name
-may not work: Solaris uses the first version loaded. A DLL that registers
-C finalizers, but fails to unregister them when unloaded, may cause R to crash
-after unloading.
+@code{dyn.unload}.  Unloading is not normally necessary and is not safe
+in general, but it is needed to allow the DLL to be re-built on some
+platforms, including Windows. Unloading a DLL and then re-loading a DLL
+of the same name may not work: Solaris used the first version loaded. A
+DLL that registers C finalizers, but fails to unregister them when
+unloaded, may cause @R{} to crash after unloading.
 
 The first argument to both functions is a character string giving the
 path to the object.  Programmers should not assume a specific file
@@ -11544,22 +11546,24 @@ may depend on the compiler, version and even C++ defines@footnote{For
 example, @samp{_GLIBCXX_USE_CXX11_ABI} in @command{g++} 5.1 and later:
 @uref{https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html}.},
 so requires the package C++ code to be compiled in exactly the same way
-as the library (and what that was is often undocumented).  Examples
-include use of @command{g++} @emph{vs} @command{clang++} or Solaris'
-@command{CC}, and the two ABIs available for C++11 in @command{g++} with
-different defaults for GCC 4.9 and 5.x in some Linux distributions.
+as the library (and what that was is often undocumented).
+
+@c Examples include use of @command{g++} @emph{vs} @command{clang++} or
+@c Solaris' @command{CC}, and the two ABIs available for C++11 in
+@c @command{g++} with different defaults for GCC 4.9 and 5.x in some Linux
+@c distributions.
 
 Even fewer external libraries use C++ internally but present a C
 interface, such as @CRANpkg{rgeos}.  These require the C++ runtime
 library to be linked into the package's shared object/DLL, and this is
 best done by including a dummy C++ file in the package sources.
 
-There is a recent trend to link to the C++ interfaces offered by C
-software such as @pkg{hdf5}, @pkg{pcre} and @pkg{ImageMagick}.  Their C
+There is a trend to link to the C++ interfaces offered by C software
+such as @pkg{hdf5}, @pkg{pcre} and @pkg{ImageMagick}.  Their C
 interfaces are much preferred for portability (and can be used from C++
 code).  Also, the C++ interfaces are often optional in the software
 build or packaged separately and so users installing from package
-sources are far less likely to already have them installed.
+sources are less likely to already have them installed.
 
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
@@ -11980,7 +11984,7 @@ automatically protects them) or unprotect them immediately after use.
 There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
 object pointed to by the @code{SEXP} @var{s}, even if it is not the top item
 on the pointer protection stack.  This macro was introduced for use in the
-parser, where the code interfacing with the R heap is generated and the
+parser, where the code interfacing with the @R{} heap is generated and the
 generator cannot be configured to insert proper calls to @code{PROTECT} and
 @code{UNPROTECT}.  However, @code{UNPROTECT_PTR} is dangerous to use in
 combination with @code{UNPROTECT} when the same object has been protected
@@ -15582,7 +15586,7 @@ efficient.
 
 The function @code{R_UnwindProtect} can be used to ensure that a cleanup
 action takes place on ordinary return as well as on a non-local transfer
-of control, which R implements as a @code{longjmp}.
+of control, which @R{} implements as a @code{longjmp}.
 
 @example
 SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
@@ -15614,7 +15618,7 @@ NORET void R_ContinueUnwind(SEXP cont);
 @code{cont} to pass to @code{R_UnwindProtect}. This token should be
 protected with @code{PROTECT} before calling
 @code{R_UnwindProtect}. When the @code{clean} function is called with
-@code{jump == TRUE}, indicating that R is executing a non-local transfer
+@code{jump == TRUE}, indicating that @R{} is executing a non-local transfer
 of control, it can throw a C++ exception to a C++ @code{catch} outside
 the C++ code to be unwound, and then use the continuation token in the a
 call @code{R_ContinueUnwind(cont)} to resume the non-local transfer of
