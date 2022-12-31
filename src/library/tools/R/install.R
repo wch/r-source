@@ -2702,6 +2702,24 @@ if(FALSE) {
             shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
     }
     if (nzchar(use_C)) {
+        checkC <- function(cstd) {
+            for (i in rev(seq_along(makefiles))) {
+                lines <- readLines(makefiles[i], warn = FALSE)
+                pattern <- paste0("^CC", cstd, " *= *")
+                ll <- grep(pattern, lines, perl = TRUE, value = TRUE,
+                           useBytes = TRUE)
+                for (j in rev(seq_along(ll))) {
+                    cs <- gsub(pattern, "", ll[j])
+                    return(nzchar(cs))
+                }
+            }
+            return(FALSE)
+        }
+        if (!checkC(use_C)) {
+            stop(paste0("C", use_C, " standard requested but CC", use_C,
+                        " is not defined"),
+                 call. = FALSE, domain = NA)
+        }
         c_makeargs <- sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
         makeargs <- c(c_makeargs, makeargs)
     }
