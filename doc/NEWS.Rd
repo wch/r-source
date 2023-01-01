@@ -225,7 +225,7 @@
       libraries.  At this point, R-devel can still be built using Rtools42
       without changes, but when R-devel is installed via the installer, it
       will by default look for Rtools43.  Pre-release builds of Rtools43 are
-      available \href{https://www.r-project.org/nosvn/winutf8/ucrt3/}{here}.
+      available from  \url{https://www.r-project.org/nosvn/winutf8/ucrt3/}.
     }
   }
 
