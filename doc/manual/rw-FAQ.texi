@@ -451,8 +451,8 @@ directory. Note that some distributions of Unix utilities for Windows, such
 as Msys2 (and hence Rtools) or cygwin set the environment variable
 @env{HOME} to a user directory of their choice. When R is invoked from a
 shell of such an distribution, the home directory in R would hence
-typically not be the Windows "personal" directory. With Rtools40 and
-Rtools42, it is the user profile (e.g. @file{C:\Users\username}).
+typically not be the Windows "personal" directory. With Rtools40,
+Rtools42 and Rtools43, it is the user profile (e.g. @file{C:\Users\username}).
 
 The R home directory is the directory where R was installed. You can find
 this from R code by @code{R.home()} or @code{Sys.getenv("R_HOME")}. From

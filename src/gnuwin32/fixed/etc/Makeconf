@@ -40,9 +40,9 @@ ifeq ($(R_INSTALLER_BUILD), yes)
   ifneq ($(strip $(R_CUSTOM_TOOLS_SOFT)),)
     LOCAL_SOFT = $(R_CUSTOM_TOOLS_SOFT)
   else
-    ## The rtools42 installer sets RTOOLS42_HOME
-    RTOOLS42_HOME ?= c:/rtools42
-    LOCAL_SOFT = $(subst \,/,$(RTOOLS42_HOME))/x86_64-w64-mingw32.static.posix
+    ## The rtools43 installer sets RTOOLS43_HOME
+    RTOOLS43_HOME ?= c:/rtools43
+    LOCAL_SOFT = $(subst \,/,$(RTOOLS43_HOME))/x86_64-w64-mingw32.static.posix
   endif
 endif
 R_TOOLS_SOFT ?= $(LOCAL_SOFT)

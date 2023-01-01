@@ -62,15 +62,15 @@ local({
 })
 
 local({
-    setRtools42Path <- 0
-    # INSTALLER-BUILD: setRtools42Path <- 1
+    setRtools43Path <- 0
+    # INSTALLER-BUILD: setRtools43Path <- 1
 
-    if (setRtools42Path) {
-        rthome <- Sys.getenv("RTOOLS42_HOME", "c:/rtools42")
+    if (setRtools43Path) {
+        rthome <- Sys.getenv("RTOOLS43_HOME", "c:/rtools43")
         rtpath <- paste0(rthome, "/x86_64-w64-mingw32.static.posix/bin;",
                          rthome, "/usr/bin")
         path <- Sys.getenv("R_CUSTOM_TOOLS_PATH", rtpath)
-        Sys.setenv(R_RTOOLS42_PATH = rtpath)
+        Sys.setenv(R_RTOOLS43_PATH = rtpath)
         Sys.setenv(PATH = paste0(path, ";", Sys.getenv("PATH")))
     }
 })

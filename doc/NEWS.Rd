@@ -217,6 +217,18 @@
     }
   }
 
+  \subsection{INSTALLATION on WINDOWS}{
+    \itemize{
+      \item Make files and installer scripts for Windows have been tailored
+      to \file{Rtools43}, an update of the \file{Rtools42} toolchain.  It is
+      based on \command{gcc} 12 and newer version of MinGW-W64, binutils and
+      libraries.  At this point, R-devel can still be built using Rtools42
+      without changes, but when R-devel is installed via the installer, it
+      will by default look for Rtools43.  Pre-release builds of Rtools43 are
+      available \href{https://www.r-project.org/nosvn/winutf8/ucrt3/}{here}.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \code{USE_FC_LEN_T} is the default: this uses the

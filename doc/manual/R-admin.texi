@@ -1446,7 +1446,7 @@ and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from
-@uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html,Rtools42
+@uref{https://cran.r-project.org/bin/windows/Rtools/rtools43/rtools.html,Rtools43
 for Windows}. See 
 @uref{https://cran.r-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
