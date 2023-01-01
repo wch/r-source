@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -1265,9 +1265,27 @@ if(FALSE) {
                 ## else if (file.exists(f <- path.expand("~/.R/Makevars")))
                 ##     makefiles <- f
                 if (file.exists(f <- "Makefile.ucrt") || file.exists(f <- "Makefile.win")) {
-                    makefiles <- makevars_user()
-                    makefiles <- c(f, makefiles)
+                    ## for consistency this should be
+                    ## system_makefile <-
+                    ##     file.path(R.home(), paste0("etc", rarch), "Makeconf")
+                    ## makefiles <- c(system_makefile,
+                    ##                makevars_site(),
+                    ##                f,
+                    ##                makevars_user())
+
+                    makefiles <- c(f, makevars_user())
                     message(paste0("  running 'src/", f, "' ..."), domain = NA)
+                    ## Yhere is no point in setting CCxx or CxxFLAGS until
+                    ## the system Makeconf is included.
+                    ## p1 <- function(...) paste(..., collapse = " ")
+                    ## makeargs <-
+                    ##     if (!is.na(use_C))
+                    ##         sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+                    ##     else character()
+                    ## cmd <- paste("make --no-print-directory",
+                    ##              p1("-f", shQuote(makefiles)),
+                    ##              p1(makeargs))
+                    ## res <- system(cmd)
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0L) shlib_install(instdir, rarch)
@@ -1341,8 +1359,10 @@ if(FALSE) {
                 setwd(owd)
             } else { # not WINDOWS
                 if (file.exists("src/Makefile")) {
-                    arch <- substr(rarch, 2, 1000)
-                    starsmsg(stars, "arch - ", arch)
+                    if (nzchar(rarch)) {
+                        arch <- substr(rarch, 2, 1000)
+                        starsmsg(stars, "arch - ", arch)
+                    }
                     owd <- setwd("src")
                     system_makefile <-
                         file.path(R.home(), paste0("etc", rarch), "Makeconf")
@@ -1350,8 +1370,15 @@ if(FALSE) {
                                    makevars_site(),
                                    "Makefile",
                                    makevars_user())
-                    res <- system(paste(MAKE,
-                                        paste("-f", shQuote(makefiles), collapse = " ")))
+                    makeargs <-
+                        if (!is.na(use_C))
+                            sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+                        else character()
+                    p1 <- function(...) paste(..., collapse = " ")
+                    cmd <- paste(MAKE,
+                                 p1("-f", shQuote(makefiles)),
+                                 p1(makeargs))
+                    res <- system(cmd)
                     if (res == 0L) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                     setwd(owd)

@@ -3056,14 +3056,15 @@ zero parameters. (There are many other additions: see for example
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
 @command{gcc}, LLVM @command{clang} and Apple @command{clang} is C17,
-that is what is likely to be chosed.  On the other hand, until recently
+that is what is likely to be chosen.  On the other hand, until recently
 the code for the Windows build specified C99.
 
 Packages may want to either avoid or embrace the changes in C23, and can
 do so @emph{via} specifying @samp{USE_C17} or @samp{USE_C23} in the
-@samp{SystemRequirements} field of their @file{DESCRIPTION} file. Those
-using a @command{configure} script should set the corresponding compiler
-and flags, for example using
+@samp{SystemRequirements} field of their @file{DESCRIPTION} file of a
+package depending on @samp{R (>= 4.3.0)}.  Those using a
+@command{configure} script should set the corresponding compiler and
+flags, for example using
 @example
 CC=`"$@{R_HOME@}/bin/R" CMD config CC23`
 CFLAGS=`"$@{R_HOME@}/bin/R" CMD config C23FLAGS`
@@ -3071,8 +3072,8 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
 @noindent
-Note that This mechanism does not apply to packages with a
-@file{src/Makefile} file (or one of the Windows analogues).
+The first two settings can also be used in a @file{src/Makefile.ucrt} or
+@file{src/Makefi.win} file.
 
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
