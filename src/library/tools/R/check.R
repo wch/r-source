@@ -5552,7 +5552,8 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wbitwise-instead-of-logical\\]",
                              "warning: .* \\[-Wunneeded-internal-declaration\\]",
                              ## LLVM clang 15
-                             "warning: .* \\[-Winvalid-utf8\\]"
+                             "warning: .* \\[-Winvalid-utf8\\]",
+                             "warning: .* \\[-Wunqualified-std-cast-call\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
