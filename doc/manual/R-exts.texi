@@ -2888,8 +2888,8 @@ such as @code{unary_function} (deprecated in C++11, removed in C++17).
 Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
 standard it requires.  In order to specify C++11 code in a package,
-@file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should include
-the line
+@file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
+Windows) should include the line
 
 @example
 CXX_STD = CXX11
@@ -2939,15 +2939,17 @@ sublibs:
 
 Note that the mechanisms described here specify C++11 for code compiled
 by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
-They do not necessarily apply if there is a @file{src/Makefile} file,
-nor to compilation done in vignettes or @emph{via} other packages.
+They do not apply if there is a @file{src/Makefile} file (or a Windows
+analogue) nor to compilation done in vignettes or @emph{via} other
+packages.
 
-Support for a C++14 compiler (where available) has been in @R{}
-since version 3.4.0.  Similar considerations to C++11 apply, with the
-variables associated with the C++14 compiler using the prefix
-@samp{CXX14} instead of @samp{CXX11}. For example, to use C++14 code in a
-package, the package's @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
-Windows) should include the line
+Support for a C++14 compiler (where available) has been in @R{} since
+version 3.4.0 and became the defailt (where avsilable) in 4.1.0.
+Similar considerations to C++11 apply, with the variables associated
+with the C++14 compiler using the prefix @samp{CXX14} instead of
+@samp{CXX11}.  For example, to use C++14 code in a package, the
+package's @file{Makevars} file (or @file{Makevars.win} or
+@file{Makevars.ucrt} on Windows) should include the line
 @example
 CXX_STD = CXX14
 @end example
@@ -3054,6 +3056,9 @@ CFLAGS=`"$@{R_HOME@}/bin/R" CMD config C23FLAGS`
 CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
+@noindent
+Note that This mechanism does not apply to packages with a
+@file{src/Makefile} file (or one of the Windows analogues).
 
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
@@ -10154,7 +10159,9 @@ For non-interactive use, one may need @command{lldb --batch}.
 
 Where supported, @emph{link time optimization} provides a comprehensive
 way to check the consistency of calls between Fortran files or between C
-and Fortran.  Use this @emph{via} @command{R CMD INSTALL --use-LTO}.
+and Fortran.  Use this @emph{via} @command{R CMD INSTALL --use-LTO} (but
+that does not apply if there is a @file{src/Makefile} file or a Windows
+analogue).
 
 To set up support on a Unix-alike,
 @ifset UseExternalXrefs

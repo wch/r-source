@@ -2756,9 +2756,8 @@ if(FALSE) {
         system(paste(cmd, "-n"))
         res <- 0
     } else {
-        lines <- system2(MAKE,
-                         c(p1(paste("-f", shQuote(makefiles)), "compilers")),
-                         stdout = TRUE, stderr = TRUE)
+        lines <- system(paste(MAKE, p1(paste("-f", shQuote(makefiles))),
+                              "compilers"), intern = TRUE)
         if (with_c) {
             cc <- lines[grep("^CC =", lines)]
             cc <- sub("CC = ", "", cc)
