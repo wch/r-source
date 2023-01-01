@@ -562,13 +562,15 @@ be byte-compiled on installation: the default is to byte-compile.  This
 can be overridden by installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field UseLTO
-The @samp{UseLTO} logical field is used on a Unix-alike to indicate if
-source code in the package is to be compiled with Link-Time Optimization
-(@pxref{Using Link-time Optimization}) if @R{} was installed with
-@option{--enable-lto} (default true) or @option{--enable-lto=R} (default
-false). This can be overridden by the flags @option{--use-LTO} and
-@option{--no-use-LTO}.  LTO is said to give most size and performance
-improvements for large and complex (heavily templated) C++ projects.
+The @samp{UseLTO} logical field is used to indicate if source code in
+the package@footnote{without a @file{src/Makefile*} file.}  is to be
+compiled with Link-Time Optimization (@pxref{Using Link-time
+Optimization}) if @R{} was installed with @option{--enable-lto} (default
+true) or @option{--enable-lto=R} (default false) (or on Windows if
+@code{LTO_OPT} is set in @file{MkRules}). This can be overridden by the
+flags @option{--use-LTO} and @option{--no-use-LTO}.  LTO is said to give
+most size and performance improvements for large and complex (heavily
+templated) C++ projects.
 
 @c DESCRIPTION field StagedInstall
 The @samp{StagedInstall} logical field controls if package installation
@@ -3025,6 +3027,18 @@ it will not apply to packages using @file{src/Makefile} or
 C++ standard.  And the default C++ standard varies widely and gets
 changed frequently by vendors -- for example Apple clang 14 defaults to
 C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
+
+For a package with a @file{src/Makefile} (ar a Windows analogue),
+a non-default C++ compiler can be selected by including something like
+@example
+CXX = `"$@{R_HOME@}/bin/R" CMD config CXX17`
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LDFLAGS`
+@end example
+@noindent
+and ensuring these values are used in relevant compilations.
 
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
@@ -10252,6 +10266,30 @@ all.f:1663:72:
                                                                         1
 Warning: Type mismatch in argument 'jpvt' at (1); passed REAL(8) to INTEGER(4)
 @end example
+
+On a Unix-alike for a package with a @file{src/Makefile} file, LTO can
+be enabled by including suitable flags in that file, for example
+@example
+LTO = $(LTO_OPT)
+LTO_FC = $(LTO_FC_OPT)
+@end example
+@noindent
+and ensuring these are used for compilation, for example as part of
+@code{CFLAGS}, @code{CXXFLAGS} or @code{FCFLAGS}.  If @command{R CMD
+SHLIB} is used for compilation, add @option{--use-LTO} to its call.
+
+On Windows for a package with a @file{src/Makefile.ucrt} or
+@file{src/Makefile.win} file which includes
+@samp{"$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf"}, include
+@example
+LTO = $(LTO_OPT)
+@end example
+@noindent
+or to always use LTO however @R{} was built,
+@example
+LTO = -flto
+@end example
+
 
 @node System and foreign language interfaces, The R API, Debugging, Top
 @chapter System and foreign language interfaces
