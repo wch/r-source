@@ -1280,7 +1280,7 @@ if(FALSE) {
                     ## p1 <- function(...) paste(..., collapse = " ")
                     ## makeargs <-
                     ##     if (!is.na(use_C))
-                    ##         sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+                    ##         sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAGS)'"), use_C)
                     ##     else character()
                     ## cmd <- paste("make --no-print-directory",
                     ##              p1("-f", shQuote(makefiles)),
@@ -1372,7 +1372,7 @@ if(FALSE) {
                                    makevars_user())
                     makeargs <-
                         if (!is.na(use_C))
-                            sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+                            sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAGS)'"), use_C)
                         else character()
                     p1 <- function(...) paste(..., collapse = " ")
                     cmd <- paste(MAKE,
@@ -2748,7 +2748,7 @@ if(FALSE) {
                         " is not defined"),
                  call. = FALSE, domain = NA)
         }
-        c_makeargs <- sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAG)'"), use_C)
+        c_makeargs <- sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAGS)'"), use_C)
         makeargs <- c(c_makeargs, makeargs)
     }
     if (length(pkg_libs))
