@@ -56,6 +56,7 @@
 
 ## Ditto for a compiler that supports C17 features and not C23 ones.
 ## For example, 'CC17=gcc -std=gnu17', omit -Wstrict-prototypes from C17FLAGS.
+## With LLCM clang may even want -Wno-strict-prototypes.
 ## It is assumed that this uses the same runtime library as CC, so the
 ## latter can be used to link the code it generates.
 ## CC17=
