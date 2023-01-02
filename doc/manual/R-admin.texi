@@ -1439,7 +1439,7 @@ information on use on older Windows systems.
 
 It is possible to use other 64-bit toolchains (including `MSYS2') with UCRT
 support to build @R{}, but this manual only documents that used for binary
-distributions of @R{} 4.2.x.  When using other toolchains, makefiles of @R{}
+distributions of @R{} 4.2.x and later.  When using other toolchains, makefiles of @R{}
 and packages may need to be adapted.
 
 @menu
@@ -1452,9 +1452,9 @@ and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from
-@uref{https://cran.r-project.org/bin/windows/Rtools/rtools43/rtools.html,Rtools43
+@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools43/rtools.html,Rtools43
 for Windows}. See 
-@uref{https://cran.r-project.org/bin/windows/base/howto-R-devel.html, Building
+@uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
 The toolset includes compilers (GCC version 10.3.0 with selected additional
@@ -1466,7 +1466,7 @@ Kalibera).  The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
 
-The toolsets used for 64-bit Windows from 2008--22 were based on
+The toolsets used for 64-bit Windows from 2008 to 2022 were based on
 MinGW-w64.  The assistance of Yu Gong at a crucial step in porting @R{}
 to MinGW-w64 is gratefully acknowledged, as well as help from Kai Tietz,
 the lead developer of the MinGW-w64 project and from Martin Storsjo.

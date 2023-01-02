@@ -126,7 +126,7 @@ builds of R are provided.
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
 @section Where can I find the latest version?
 
-Go to any CRAN site (see @uref{https://cran.r-project.org/@/mirrors.html}
+Go to any CRAN site (see @uref{https://CRAN.R-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
 installer @samp{@RWVER@-win.exe} of about 80MB.
@@ -282,7 +282,7 @@ after having checked the command line.
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup
-(@uref{http://jrsoftware.org/}) for details.
+(@uref{https://jrsoftware.org/}) for details.
 
 @c We have some facilities for building a customized installer, in
 @c particular to add packages to the installer.  See the `R Installation
@@ -570,7 +570,7 @@ Directly, no.  See packages such as @code{RDCOMClient} from Omegahat
 (@uref{https://github.com/omegahat/RDCOMClient},
 source and binary packages for earlier versions of R available from
 @uref{https://www.stats.ox.ac.uk/pub/RWin/})
-@c @uref{http://www.omegahat.net/} 
+@c @uref{https://www.omegahat.net/} 
 and the non-Free project at @uref{https://www.autstat.com/}.
 
 @node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
@@ -1174,7 +1174,7 @@ packages for each minor (4.x.?) version will be stored in a separate area,
 so for R 4.3.? the files are in @file{bin/windows/contrib/4.3}.
 
 @c Note that the binary versions on CRAN are unsupported: see
-@c @uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.0/@/ReadMe},
+@c @uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe},
 @c which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1185,7 +1185,7 @@ C/C++/Fortran code which needs compilation can simply be installed by
 pkgname} at a Windows command prompt.  For packages with code that needs
 compilation you will need to collect and install several tools: you can
 download them via the portal at
-@uref{https://cran.r-project.org/bin/windows/Rtools/} and check for more
+@uref{https://CRAN.R-project.org/bin/windows/Rtools/} and check for more
 detailed instructions there. Once you have done
 so, just run @command{R CMD INSTALL pkgname} at a Windows command
 prompt.  To check the package (including running all the examples on its
@@ -1199,7 +1199,7 @@ are because people have not done so.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
-documented at @url{https://win-builder.r-project.org}.
+documented at @url{https://win-builder.R-project.org}.
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages into libraries in this version?, Packages
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
@@ -1275,7 +1275,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found. See
-@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe} for a
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/4.3/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2}, @code{cairoDevice},
 @code{rggobi}, @code{rJava}, @code{rjags} and some of the packages connecting to databases).
 
@@ -1397,14 +1397,14 @@ Presumably one not available on CRAN, BioC or a similar repository.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
-documented at @url{https://win-builder.r-project.org}.  If the package is
+documented at @url{https://win-builder.R-project.org}.  If the package is
 not yours, please remember to change the maintainer address so the
 results go to you and not the author(s)!
 
 However, if a CRAN package is not available in binary form, this usually
 means that there is a problem with some dependent package or external
 software (often mentioned in the @file{@@ReadMe} file in the binary
-repository directory).  You can email @email{R-windows@@r-project.org}
+repository directory).  You can email @email{R-windows@@R-project.org}
 expressing a wish for such a package to be ported---the maintainers will
 take such wishes into account when prioritizing work on binary packages.
 
@@ -1750,7 +1750,7 @@ you want to install).
 @section  Can I use a fast BLAS?
 
 Fast BLAS (Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/@/blas/@/faq.html}) routines are used to
+@uref{https://www.netlib.org/@/blas/@/faq.html}) routines are used to
 speed up numerical linear algebra.  There is support in the R sources
 for the `tuned' BLAS called ATLAS
 (@uref{https://math-atlas.sourceforge.net}).  The savings can be
@@ -1771,7 +1771,7 @@ less successful when tried for the common current CPUs.
 @c Versions of Dr Kazushige Goto's BLAS (see
 @c @uref{https://en.wikipedia.org/wiki/Kazushige_Goto}) for 64-bit Windows
 @c by Ei-Ji Nakama can be found at
-@c @uref{http://prs.ism.ac.jp/~nakama/SurviveGotoBLAS2/binary/windows/x64/}.
+@c @uref{https://prs.ism.ac.jp/~nakama/SurviveGotoBLAS2/binary/windows/x64/}.
 @c Just download the file @file{Rblas.dll} appropriate to your CPU and
 @c replace @file{@var{R_HOME}/bin/x64/Rblas.dll}.  (There is also a generic
 @c version called @samp{DYNAMIC_ARCH} that tries to adapt itself to the CPU
@@ -1807,7 +1807,7 @@ further options, or see @code{?SHLIB}.
 @c Debugging under Windows is often a fraught process, and sometimes does
 @c not work at all.  If all you need is a @emph{just-in-time} debugger to
 @c catch crashes, consider (32-bit) @code{Dr. Mingw} from the
-@c @code{mingw-utils} bundle on @uref{http://www.mingw.org}.  That will be
+@c @code{mingw-utils} bundle on @uref{https://www.mingw.org}.  That will be
 @c able to pinpoint the error, most effectively if you build a version of R
 @c with debugging information as described below.
 
@@ -1827,7 +1827,7 @@ Rcmd INSTALL --debug mypkg
 
 @noindent
 See the `R Installation and Administration' manual (for the version of R you
-want to install) and @uref{https://cran.r-project.org/bin/windows/Rtools/}
+want to install) and @uref{https://CRAN.R-project.org/bin/windows/Rtools/}
 for links to detailed information on how to build R and R packages from
 source using corresponding versions of Rtools and for additional hints for
 debugging on Windows.
@@ -1967,13 +1967,13 @@ If you want output to be updated on the console, call
 <hr WIDTH="100%">
 <address>
 Last edited @value{LASTEDIT}: comments to
-<code><a href="mailto:R-windows@@R-project.org">R-windows@@r-project.org</a></code>
+<code><a href="mailto:R-windows@@R-project.org">R-windows@@R-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited @value{LASTEDIT}: comments to <R-windows@@r-project.org>
+Last edited @value{LASTEDIT}: comments to <R-windows@@R-project.org>
 @end ifinfo
 
 @bye
