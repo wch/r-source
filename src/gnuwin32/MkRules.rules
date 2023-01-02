@@ -78,9 +78,6 @@ arch_DEFS = -DR_ARCH='"i386"'
 SYMPAT = 's/^.* [BCDRT] _/ /p'
 endif
 
-## -std=c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
-C99FLAG=-std=gnu99
-
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
 
@@ -94,7 +91,7 @@ endif
 
 AR = $(BINPREF)ar
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
