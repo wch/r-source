@@ -227,8 +227,13 @@
       will by default look for Rtools43.  Pre-release builds of Rtools43 are
       available from  \url{https://www.r-project.org/nosvn/winutf8/ucrt3/}.
 	  
-	  \item Old make targets rsync-extsoft and 32-bit that are no longer 
-	  needed have been removed.
+      \item Old make targets rsync-extsoft and 32-bit that are no longer 
+      needed have been removed.
+
+      \item Default builds (including for packages) no longer select
+      C99.  Thus the C standard used is the default for the compiler,
+      which for the toolchain in \file{Rtools43} is C17.  (This is
+      consistent with Unix builds.)
     }
   }
 

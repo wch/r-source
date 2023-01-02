@@ -3056,8 +3056,9 @@ zero parameters. (There are many other additions: see for example
 The @command{configure} script in recent versions of @R{} aims to choose
 a C compiler which supports C11: as the default in recent versions of
 @command{gcc}, LLVM @command{clang} and Apple @command{clang} is C17,
-that is what is likely to be chosen.  On the other hand, until recently
-the code for the Windows build specified C99.
+that is what is likely to be chosen.  On the other hand, until @R{} 4.3.0
+the makefiles for the Windows build specified C99.  They now use the
+compiler default which for the recommended compiler is C17.
 
 Packages may want to either avoid or embrace the changes in C23, and can
 do so @emph{via} specifying @samp{USE_C17} or @samp{USE_C23} in the
