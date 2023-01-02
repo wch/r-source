@@ -219,16 +219,17 @@
 
   \subsection{INSTALLATION on WINDOWS}{
     \itemize{
-      \item Make files and installer scripts for Windows have been tailored
-      to \file{Rtools43}, an update of the \file{Rtools42} toolchain.  It is
-      based on \command{gcc} 12 and newer version of MinGW-W64, binutils and
-      libraries.  At this point, R-devel can still be built using Rtools42
-      without changes, but when R-devel is installed via the installer, it
-      will by default look for Rtools43.  Pre-release builds of Rtools43 are
-      available from  \url{https://www.r-project.org/nosvn/winutf8/ucrt3/}.
+      \item The makefiles and installer scripts for Windows have been
+      tailored to \file{Rtools43}, an update of the \file{Rtools42}
+      toolchain.  It is based on \command{gcc} 12 and newer versions of
+      MinGW-W64, binutils and libraries.  At this time R-devel can still
+      be built using Rtools42 without changes, but when R-devel is
+      installed via the installer, it will by default look for Rtools43.
+      Pre-release builds of Rtools43 are available from
+      \url{https://www.r-project.org/nosvn/winutf8/ucrt3/}.
 	  
-      \item Old make targets rsync-extsoft and 32-bit that are no longer 
-      needed have been removed.
+      \item Old make targets \code{rsync-extsoft} and 32-bit ones that
+      are no longer needed have been removed.
 
       \item Default builds (including for packages) no longer select
       C99.  Thus the C standard used is the default for the compiler,
