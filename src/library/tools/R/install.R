@@ -1305,19 +1305,6 @@ if(FALSE) {
                     one_only <- !multiarch
                     has_configure_ucrt <- file.exists("../configure.ucrt")
                     if(!one_only && (has_configure_ucrt || file.exists("../configure.win"))) {
-                        ## for now, hardcode some exceptions
-                        ## These are packages which have arch-independent
-                        ## code in configure.win
-                        if(pkg_name %notin%
-                           c("AnalyzeFMRI", "CORElearn", "PearsonDS",
-                             "PKI", "RGtk2", "RNetCDF", "RODBC",
-                             "RSclient", "Rcpp", "Runuran", "SQLiteMap",
-                             "XML", "arulesSequences", "cairoDevice",
-                             "diversitree", "foreign", "fastICA",
-                             "glmnet", "gstat", "igraph", "jpeg", "png",
-                             "proj4", "randtoolbox", "rgdal", "rngWELL",
-                             "rphast", "rtfbs", "sparsenet", "tcltk2",
-                             "tiff", "udunits2"))
                             one_only <- sum(nchar(readLines(
                                 if(has_configure_ucrt) "../configure.ucrt" else "../configure.win",
                                 warn = FALSE), "bytes")) > 0
