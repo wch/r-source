@@ -466,7 +466,11 @@
       \item The formula method of \code{cor.test()} had scoping problems
       when \code{environment(formula)} was not the calling environment;
       reported with a patch proposal by Mao Kobayashi in \PR{18439}.
-   }
+
+      \item \code{attach()} of an environment with active bindings now
+      preserves the active bindings. Reported by Kevin Ushey in
+      \PR{18425}.
+    }
   }
 }
 
