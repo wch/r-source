@@ -225,8 +225,6 @@
       MinGW-W64, binutils and libraries.  At this time R-devel can still
       be built using Rtools42 without changes, but when R-devel is
       installed via the installer, it will by default look for Rtools43.
-      Pre-release builds of Rtools43 are available from
-      \url{https://www.r-project.org/nosvn/winutf8/ucrt3/}.
 	  
       \item Old make targets \code{rsync-extsoft} and 32-bit ones that
       are no longer needed have been removed.
