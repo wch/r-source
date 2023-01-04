@@ -275,8 +275,8 @@ shell scripts which are, respectively, executed before and (if option
 @file{configure.win} and @file{cleanup.win}. Since @R{} 4.2.0 on Windows,
 @file{configure.ucrt} and @file{cleanup.ucrt} are supported and take
 precedence over @file{configure.win} and @file{cleanup.win}. They can
-hence be used to provide content specific for UCRT or Rtools42 and newer, if needed,
-but the support for @file{.ucrt} files may be removed in the future when
+hence be used to provide content specific to UCRT or Rtools42 and newer, if needed,
+but the support for @file{.ucrt} files may be removed in future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
 
@@ -1268,7 +1268,7 @@ There are platform-specific file names on Windows:
 @file{src/Makevars.win} and @file{src/Makefile.ucrt} takes precedence
 over @file{src/Makefile.win}. @file{src/Makevars.ucrt} and
 @file{src/Makefile.ucrt} will be ignored by earlier versions of @R{}, and
-hence can be used to provide content specific for UCRT or Rtools42 and newer,
+hence can be used to provide content specific to UCRT or Rtools42 and newer,
 but the support for @file{.ucrt} files may be removed in the future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -1282,15 +1282,24 @@ should have files @file{src/Makefile} and @file{src/Makefile.win} or
 Windows).  Note that on Unix such makefiles are included after
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf} so all the usual @R{}
 macros and make rules are available -- for example C compilation will by
-default use the C compiler and flags with which @R{} was configured.
+default use the C compiler and flags with which @R{} was
+configured.  This also applies on Windows as from @R{} 4.3.0: packages
+intended to be used with earlier vesions should include that file
+themselves.
 @c The order of makefiles on Unix is
 @c etcR_ARCH/Makeconf
 @c site makevars (R_MAKEVARS_SITE R_HOME/etcR_ARCH/Makevars.site)
 @c src/Makefile
 @c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{-platform,})
-@c but on Windows
+@c and on Windows
+@c etcR_ARCH/Makeconf
+@c site makevars (R_MAKEVARS_SITE R_HOME/etcR_ARCH/Makevars.site)
 @c src/Makefile.{ucrt,win}
 @c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{ucrt.win64,win,})
+@c but on Windows, R < 4.3.0, it was
+@c src/Makefile.{ucrt,win}
+@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{ucrt.win64,win,})
+@c omitting Makevars.win prior to R 4.2.3 (pace documentation)
 
 In very special cases packages may create binary files other than the
 shared objects/DLLs in the @file{src} directory.  Such files will not be
@@ -2946,7 +2955,7 @@ analogue) nor to compilation done in vignettes or @emph{via} other
 packages.
 
 Support for a C++14 compiler (where available) has been in @R{} since
-version 3.4.0 and became the defailt (where avsilable) in 4.1.0.
+version 3.4.0 and became the defailt (where available) in 4.1.0.
 Similar considerations to C++11 apply, with the variables associated
 with the C++14 compiler using the prefix @samp{CXX14} instead of
 @samp{CXX11}.  For example, to use C++14 code in a package, the
@@ -3073,8 +3082,8 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
 @noindent
-The first two settings can also be used in a @file{src/Makefile.ucrt} or
-@file{src/Makefi.win} file.
+@c The first two settings can also be used in a @file{src/Makefile.ucrt} or
+@c @file{src/Makefile.win} file.
 
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
@@ -5777,7 +5786,7 @@ functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
-compilability of C/C++ code.  Compilers from the GCC, @command{clang}
+compilability of C/C++ code.  Compilers from the GCC, @command{clang},
 Intel and Oracle Developer Studio suites have been used with @R{}, and
 both LLVM @command{clang} and Oracle have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive

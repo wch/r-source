@@ -897,6 +897,7 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
+    ## FIXME replace main, maybe by tputs
     AC_CHECK_LIB(ncurses, main, [],
                  AC_CHECK_LIB(tinfo, main, [],
                               AC_CHECK_LIB(termcap, main, [],

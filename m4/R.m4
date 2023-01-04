@@ -1086,7 +1086,7 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main(int argc, const char * argv[])
+int main(void)
 {
     F77_SYMBOL(testit)();
     return 0;
@@ -1513,7 +1513,7 @@ AC_DEFUN([R_FUNC_FTELL],
 # include <unistd.h> // for unlink
 #endif
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     FILE *fp;
     long pos;
 
@@ -3164,7 +3164,7 @@ extern void ${ilaver}(int *major, int *minor, int *patch);
 
 #include <stdlib.h>
 #include <stdio.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
   int major, minor, patch;
   ${ilaver}(&major, &minor, &patch);
   printf("%d.%d.%d, so ", major, minor, patch);
@@ -3264,7 +3264,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -3309,7 +3309,7 @@ AC_CACHE_CHECK([if PCRE1 version >= 8.32 and has UTF-8 support], [r_cv_have_pcre
 #endif
 #endif
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -3383,7 +3383,7 @@ if test "x${have_pcre2}" = "xyes"; then
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -3423,7 +3423,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main(int argc, const char * argv[]) {
+int main(void) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -3482,7 +3482,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -3584,7 +3584,7 @@ AC_DEFUN([R_SIZE_MAX],
 #endif
 
 int
-main(int argc, const char * argv[]) {
+main(void) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -4029,7 +4029,7 @@ AC_DEFUN([R_PUTENV_AS_UNSETENV],
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4057,7 +4057,7 @@ int main(int argc, const char * argv[])
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4125,12 +4125,11 @@ AC_DEFUN([R_MKTIME_ERRNO],
 #include <time.h>
 #include <errno.h>
 
-int main(int argc, const char * argv[])
+int main(void)
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
-       fix up times and there are 64-bit time_t about.
-       But this works for now (yes on Solaris, no on glibc). */
+       fix up times. But this worked for now (yes on Solaris, no on glibc). */
     tm.tm_year = 3000; tm.tm_mon = 0; tm.tm_mday = 0;
     tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
     errno = 0;
@@ -4274,7 +4273,7 @@ AC_DEFUN([R_WORKING_MKTIME],
 
 //#define PRINT
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     struct tm tm, *stm;
     time_t res;
     putenv("TZ=UTC");
@@ -4428,7 +4427,7 @@ AC_DEFUN([R_FUNC_MKTIME],
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4467,7 +4466,7 @@ AC_DEFUN([R_FUNC_MKTIME2],
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4508,7 +4507,7 @@ AC_DEFUN([R_FUNC_MKTIME3],
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     struct tm tm;
     time_t res;
     putenv("TZ=Europe/London");
@@ -4625,7 +4624,7 @@ AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
-int main(int argc, const char * argv[]) 
+int main(void) 
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
@@ -4651,7 +4650,7 @@ AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -4704,7 +4703,7 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};

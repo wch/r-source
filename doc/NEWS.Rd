@@ -23,12 +23,13 @@
       \item The included BLAS sources have been updated to those shipped
       with LAPACK version 3.10.1.  (This caused some platform-dependent
       changes to package check output.)  And then to the sources from
-      LAPACK version 3.11 (with changes only to double complex
+      LAPACK version 3.11.0 (with changes only to double complex
       subroutines).
 
       \item The LAPACK sources have been updated to version 3.11.0.  (No
       new subroutines have been added, so this almost entirely bug
-      fixes.)
+      fixes: Those fixes do affect some computations with \code{NaN}s,
+      including \R's @code{NA}.)
 
       \item The parser now signals \emph{classed} errors, notably in
       case of the pipe operator \code{|>}.  The error object and
@@ -273,6 +274,14 @@
 	INSTALL} and \command{R CMD SHLIB}.
 
       For further details see \dQuote{Writing R Extensions} §1.2.5.
+
+      %% \item (Windows) A \file{src/Makefile.ucrt} or
+      %% \file{src/Makefile.win} file is now used after
+      %% \file{\var{R_HOME}/etc\var{R_ARCH}/Makeconf} and so no longer
+      %% needs to include that file itself.  It also uses a site
+      %% Makevars file in the same way as a package with a
+      %% @file{src/Makevars.win} file would.
+      
     }
   }
 
