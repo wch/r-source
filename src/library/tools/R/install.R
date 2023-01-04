@@ -1254,25 +1254,40 @@ if(FALSE) {
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
                 owd <- setwd("src")
+                ## makefiles <- character()
+                ## if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
+                ##                            NA_character_))) {
+                ##     if (file.exists(f))  makefiles <- f
+                ## } else if (file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
+                ##     makefiles <- f
+                ## else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+                ##     makefiles <- f
+                ## else if (file.exists(f <- path.expand("~/.R/Makevars")))
+                ##     makefiles <- f
                 if (file.exists(f <- "Makefile.ucrt") || file.exists(f <- "Makefile.win")) {
+                    ## for consistency this should be
+                    ## system_makefile <-
+                    ##     file.path(R.home(), paste0("etc", rarch), "Makeconf")
+                    ## makefiles <- c(system_makefile,
+                    ##                makevars_site(),
+                    ##                f,
+                    ##                makevars_user())
+
+                    makefiles <- c(f, makevars_user())
                     message(paste0("  running 'src/", f, "' ..."), domain = NA)
-                    system_makefile <-
-                        file.path(R.home(), paste0("etc", rarch), "Makeconf")
-                    makefiles <- c(system_makefile,
-                                   makevars_site(),
-                                   f,
-                                   makevars_user())
-                    makeargs <-
-                        if (!is.na(use_C))
-                            sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAGS)'"), use_C)
-                        else character()
-                    p1 <- function(...) paste(..., collapse = " ")
-                    cmd <- paste("make --no-print-directory",
-                                 p1("-f", shQuote(makefiles)),
-                                 p1(makeargs))
-                    res <- system(cmd)
-                    ## res <- system(paste("make --no-print-directory",
-                    ##                     paste("-f", shQuote(makefiles), collapse = " ")))
+                    ## Yhere is no point in setting CCxx or CxxFLAGS until
+                    ## the system Makeconf is included.
+                    ## p1 <- function(...) paste(..., collapse = " ")
+                    ## makeargs <-
+                    ##     if (!is.na(use_C))
+                    ##         sprintf(c("CC='$(CC%s)'", "CFLAGS='$(C%sFLAGS)'"), use_C)
+                    ##     else character()
+                    ## cmd <- paste("make --no-print-directory",
+                    ##              p1("-f", shQuote(makefiles)),
+                    ##              p1(makeargs))
+                    ## res <- system(cmd)
+                    res <- system(paste("make --no-print-directory",
+                                        paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0L) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else { ## no src/Makefile.win
