@@ -2955,10 +2955,11 @@ analogue) nor to compilation done in vignettes or @emph{via} other
 packages.
 
 Support for a C++14 compiler (where available) has been in @R{} since
-version 3.4.0 and became the defailt (where available) in 4.1.0.
-Similar considerations to C++11 apply, with the variables associated
-with the C++14 compiler using the prefix @samp{CXX14} instead of
-@samp{CXX11}.  For example, to use C++14 code in a package, the
+version 3.4.0 and became the default (where available) in
+4.1.0.@footnote{Except on Windows where this was overlooked until @R{}
+4.3.0.}  Similar considerations to C++11 apply, with the variables
+associated with the C++14 compiler using the prefix @samp{CXX14} instead
+of @samp{CXX11}.  For example, to use C++14 code in a package, the
 package's @file{Makevars} file (or @file{Makevars.win} or
 @file{Makevars.ucrt} on Windows) should include the line
 @example
