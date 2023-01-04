@@ -2472,11 +2472,10 @@ attribute_hidden SEXP do_emptyenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static void set_attach_frame_value(SEXP p, SEXP s)
 {
-    defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
-    if (IS_ACTIVE_BINDING(p)) {
-	SEXP np = findVarLocInFrame(s, TAG(p), NULL);
-	SET_ACTIVE_BINDING_BIT(np);
-    }
+    if (IS_ACTIVE_BINDING(p))
+	R_MakeActiveBinding(TAG(p), CAR(p), s);
+    else
+	defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
 }
 
 attribute_hidden SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
