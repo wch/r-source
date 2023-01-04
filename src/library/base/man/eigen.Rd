@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -47,6 +47,9 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code (most often \code{1}): these can
   only be interpreted by detailed study of the FORTRAN code.
+
+  Missing, \code{NaN}  or infinite values in \code{x} will given
+  an error.
 }
 \value{
   The spectral decomposition of \code{x} is returned as a list with components

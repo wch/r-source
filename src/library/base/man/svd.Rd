@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -37,6 +37,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   error giving a positive error code (most often \code{1}): these can
   only be interpreted by detailed study of the FORTRAN code but mean
   that the algorithm failed to converge.
+
+  Missing, \code{NaN}  or infinite values in \code{x} will given
+  an error.
 }
 \value{
   The SVD decomposition of the matrix as computed by LAPACK, \deqn{
