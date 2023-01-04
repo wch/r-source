@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -45,6 +45,10 @@ solve(a, b, \dots)
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code: these can only be interpreted by
   detailed study of the FORTRAN code.
+
+  What happens if \code{a} and/or \code{b} contain missing, \code{NaN}
+  or infinite values is platform-dependent, including on the version of
+  LAPACK is in use.
 }
 \source{
   The default method is an interface to the LAPACK routines \code{DGESV}
