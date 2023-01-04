@@ -1217,7 +1217,7 @@ subdirectories named @file{unix} or @file{windows}.
 
 The sources and headers for the compiled code are in @file{src}, plus
 optionally a file @file{Makevars} or @file{Makefile} (or for use on
-Windows, with extesnion @file{.win} or @file{.ucrt}).  When a package is
+Windows, with extension @file{.win} or @file{.ucrt}).  When a package is
 installed using @code{R CMD INSTALL}, @command{make} is used to control
 compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
@@ -1284,7 +1284,7 @@ Windows).  Note that on Unix such makefiles are included after
 macros and make rules are available -- for example C compilation will by
 default use the C compiler and flags with which @R{} was
 configured.  This also applies on Windows as from @R{} 4.3.0: packages
-intended to be used with earlier vesions should include that file
+intended to be used with earlier versions should include that file
 themselves.
 @c The order of makefiles on Unix is
 @c etcR_ARCH/Makeconf
@@ -3038,7 +3038,7 @@ C++ standard.  And the default C++ standard varies widely and gets
 changed frequently by vendors -- for example Apple clang 14 defaults to
 C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
 
-For a package with a @file{src/Makefile} (ar a Windows analogue),
+For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
 CXX = `"$@{R_HOME@}/bin/R" CMD config CXX17`
@@ -3059,7 +3059,7 @@ minor change to C99, and C17 is a `bug-fix' update to C11.  On the other
 hand, C23 makes extensive changes, including making @code{bool},
 @code{true} and @code{false} reserved words, finally disallowing
 K&R-style function declarations and clarifying the formerly deprecated
-meaning of function declarations with an empty paramenter list to mean
+meaning of function declarations with an empty parameter list to mean
 zero parameters. (There are many other additions: see for example
 @uref{https://en.cppreference.com/w/c/23}.)
 
@@ -6176,7 +6176,7 @@ without arguments and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)  Note
 that using @code{f()} for a function without any parameters was
 deprecated in C99 and C11, but it expected to be non-deprecated in C23.
-However, @code{f(void)} is supportef by all standards and avoids any
+However, @code{f(void)} is supported by all standards and avoids any
 uncertainty.
 @c draft n3054 §6.7.6.3 point 13 and footnote.
 

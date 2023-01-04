@@ -1148,7 +1148,7 @@ be used as identifiers.  Those for C23 should support new types such as
 
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
-Howver, versions 15 and later of LLVM @command{clang} warn by default in
+However, versions 15 and later of LLVM @command{clang} warn by default in
 all modes if @option{-Wall} is used, and may need
 @option{-Wno-strict-prototypes}.
 
