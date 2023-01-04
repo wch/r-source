@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -41,6 +41,7 @@ extern "C" {
 # define NORET _Noreturn
 #elif defined(__GNUC__) && __GNUC__ >= 3
 // LLVM and Apple clang identify themselves as 4.
+// But Mandriva (or OpenMandriva) is said to patch clang to 11.
 // Boost also uses this for __SUNPRO_CC >= 0x590
 # define NORET __attribute__((noreturn))
 #else
