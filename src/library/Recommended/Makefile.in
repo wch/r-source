@@ -54,11 +54,11 @@ INSTALL_OPTS = --pkglock --data-compress=xz --no-staged-install @BUILD_LTO_TRUE@
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
 	  MAKE="$(MAKE)" R_LIBS_USER=NULL R_LIBS_SITE=NULL \
 	  _R_CHECK_INSTALL_DEPENDS_=no \
-	  $(R) CMD INSTALL $(INSTALL_OPTS) --no-byte-compile -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) --use-C17 --no-byte-compile -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	else \
 	  MAKE="$(MAKE)" R_LIBS_USER=NULL R_LIBS_SITE=NULL \
 	  _R_CHECK_INSTALL_DEPENDS_=no \
-	  $(R) CMD INSTALL $(INSTALL_OPTS) --byte-compile -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) --use-C17 --byte-compile -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	fi
 	@cat $@.out; rm $@.out
 	@touch $@
