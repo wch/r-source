@@ -282,6 +282,9 @@
       %% Makevars file in the same way as a package with a
       %% @file{src/Makevars.win} file would.
       
+      \item (Windows) The default C++ standard had accidentally been
+      left at C++11 when it was changed to C++14 on Unix.  It is now
+      C++14 as documented.
     }
   }
 
