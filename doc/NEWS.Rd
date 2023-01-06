@@ -127,7 +127,7 @@
 
       \item \code{solve()} for complex inputs now uses argument \code{tol}
       and by default checks for \sQuote{computational singularity} (as
-      it long has for numeric inputs).
+      it long has done for numeric inputs).
     }
   }
 
@@ -192,9 +192,10 @@
       \code{"balanced"} indicating if it is known to be filled or fully
       balanced.
 
-      \item Functions \code{axis.Date} and \code{axis.POSIXct} are rewritten 
-      to gain better default tick locations and better default formats 
-      by using \code{prettyDate}. Thanks to Swetlana Herbrandt.
+      \item Functions \code{axis.Date()} and \code{axis.POSIXct()} are
+      rewritten to gain better default tick locations and better default
+      formats by using \code{prettyDate()}. Thanks to Swetlana
+      Herbrandt.
      }
   }
 
