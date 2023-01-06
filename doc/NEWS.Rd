@@ -480,7 +480,7 @@
       reported with a patch proposal by Mao Kobayashi in \PR{18439}.
 
       \item \code{attach()} of an environment with active bindings now
-      preserves the active bindings. Reported by Kevin Ushey in
+      preserves the active bindings.  Reported by Kevin Ushey in
       \PR{18425}.
     }
   }
@@ -544,6 +544,10 @@
       \item \code{format(<POSIXlt_w/_unbalanced_sec>, "....\%OS<n>")} with
       \eqn{n > 0} no longer accidentally uses the unbalanced seconds,
       thanks to Suharto Anggono's report (including patch) in \PR{18448}.
+
+      \item \code{solve.default(a, b)} works around issues with
+      some versions of LAPACK when \code{a} contains \code{NA} or
+      \code{NaN} values.
     }
   }
 }
