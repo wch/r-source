@@ -63,6 +63,10 @@
       \item \code{format(<POSIXlt_w/_unbalanced_sec>, "....\%OS<n>")} with
       \eqn{n > 0} no longer accidentally uses the unbalanced seconds,
       thanks to Suharto Anggono's report (including patch) in \PR{18448}.
+
+      \item \code{solve.default(a, b)} works around issues with
+      some versions of LAPACK when \code{a} contains \code{NA} or
+      \code{NaN} values.
     }
   }
 }
@@ -1408,7 +1412,7 @@
       S4 object \code{xS4}.
 
       \item Rudimentary support for vi-style tags in \code{rtags()} and
-      \code{R CMD rtags} has been added.  (Based on a patch from Neal
+      \command{R CMD rtags} has been added.  (Based on a patch from Neal
       Fultz in \PR{17214}.)
 
       \item \code{checkRdContents()} is now exported from \pkg{tools}; it

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2022  The R Core Team.
+ *  Copyright (C) 2001--2023  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1112,7 +1112,12 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
     if (info > 0)
 	error(_("Lapack routine %s: system is exactly singular: U[%d,%d] = 0"),
 	      "dgesv", info, info);
-    if(tol > 0) {
+    // LAPACK 3.11.0 fails here if A contains NaNs
+    int OK = 1;
+    size_t nl = n;
+    for (size_t i = 0; i < nl*nl; i++)
+	if (!isfinite(avals[i])) {OK = 0; break;}
+    if(OK == 1 && tol > 0) {
 	char one[2] = "1";
 	anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
 				 (double*) NULL FCONE);
@@ -1366,7 +1371,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = La_svd_cmplx(a1, a2, a3, a4, CAR(args));
 	break;
     }
-    case 1000:
+    case 1000: // La_version()
     {
 	int major, minor, patch;
 	char str[20];
@@ -1375,7 +1380,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = mkString(str);
 	break;
     }
-    case 1001:
+    case 1001: // La_library()
     {
 #if defined(HAVE_DLADDR) && defined(HAVE_REALPATH)
 	Dl_info dl_info;
