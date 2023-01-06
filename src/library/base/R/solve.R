@@ -51,7 +51,7 @@ solve.default <-
         colnames(b) <- rownames(a)
     }
     if(isc || (!missing(b) && is.complex(b)))
-        .Internal(La_solve_cmplx(a, b))
+        .Internal(La_solve_cmplx(a, b, tol))
     else
         .Internal(La_solve(a, b, tol))
 }

@@ -536,7 +536,7 @@ static SEXP La_ztrcon(SEXP A, SEXP norm)
 }
 
 /* Complex case of solve.default: see the comments in La_solve */
-static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
+static SEXP La_solve_cmplx(SEXP A, SEXP Bin, SEXP tolin)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
@@ -597,6 +597,23 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	      -info, "zgesv");
     if (info > 0)
 	error(_("Lapack routine zgesv: system is exactly singular"));
+    int OK = 1;
+    for (size_t i = 0; i < nl*nl; i++)
+	if (!isfinite(avals[i].r) || !isfinite(avals[i].i)) {OK = 0; break;}
+    double tol = asReal(tolin);
+    if(OK == 1 && tol > 0) {
+	char one[2] = "1";
+	double anorm = F77_CALL(zlange)(one, &n, &n, COMPLEX(A), &n,
+					(double*) NULL FCONE);
+	Rcomplex *work = (Rcomplex *) R_alloc(2*nl, sizeof(Rcomplex));
+	double *rwork = (double *) R_alloc(2*nl, sizeof(double));
+	double rcond;
+	F77_CALL(zgecon)(one, &n, avals, &n, &anorm, &rcond, work, rwork,
+			 &info FCONE);
+	if (rcond < tol)
+	    error(_("system is computationally singular: reciprocal condition number = %g"),
+		  rcond);
+    }
     UNPROTECT(3);  /* B, Bin, A */
     return B;
 #else
@@ -1051,7 +1068,7 @@ static SEXP La_chol2inv(SEXP A, SEXP size)
 static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p;
-    double *avals, anorm, rcond, tol = asReal(tolin), *work;
+    double *avals,  tol = asReal(tolin);
     SEXP B, Adn, Bdn;
 
     if (!(isMatrix(A) &&
@@ -1120,9 +1137,10 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	if (!isfinite(avals[i])) {OK = 0; break;}
     if(OK == 1 && tol > 0) {
 	char one[2] = "1";
-	anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
-				 (double*) NULL FCONE);
-	work = (double *) R_alloc(4*nl, sizeof(double));
+	double rcond;
+	double anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
+					(double*) NULL FCONE);
+	double *work = (double *) R_alloc(4*nl, sizeof(double));
 	F77_CALL(dgecon)(one, &n, avals, &n, &anorm, &rcond, work, ipiv,
 			 &info FCONE);
 	if (rcond < tol)
@@ -1338,7 +1356,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
     case 8: ans = La_dtrcon(CAR(args), CADR(args)); break;
     case 9: ans = La_zgecon(CAR(args), CADR(args)); break;
     case 10: ans = La_ztrcon(CAR(args), CADR(args)); break;
-    case 11: ans = La_solve_cmplx(CAR(args), CADR(args)); break;
+    case 11: ans = La_solve_cmplx(CAR(args), CADR(args), CADDR(args)); break;
 
     case 100: ans = La_solve(CAR(args), CADR(args), CADDR(args)); break;
     case 101: ans = La_qr(CAR(args)); break;

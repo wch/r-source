@@ -111,13 +111,16 @@
       \item \code{sessionInfo()} now also contains \code{La_version()} and
       reports codepage and timezone when relevant, in both \code{print()}
       and \code{toLatex()} methods which also get new option \code{tzone}
-      for displaying timezone information when \code{locale=FALSE}.
+      for displaying timezone information when \code{locale = FALSE}.
 
       \item New function \code{R_compiled_by()} reports the C and
       Fortran compilers used to build \R, if known.
 
       \item \code{predict(<lm>, newdata=*)} no longer unnecessarily creates
       an \code{offset} of all \code{0}s.
+
+      \item \code{solve()} for complex inputs now uses argument \code{tol}
+      and by default checks for \sQuote{computational singularity}.
     }
   }
 
