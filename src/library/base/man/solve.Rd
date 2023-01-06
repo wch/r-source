@@ -49,6 +49,9 @@ solve(a, b, \dots)
   What happens if \code{a} and/or \code{b} contain missing, \code{NaN}
   or infinite values is platform-dependent, including on the version of
   LAPACK is in use.
+
+  \code{tol} is a tolerance for the (1-norm) \sQuote{reciprocal condition
+    number}: the check is skipped if \code{tol <= 0}.
 }
 \source{
   The default method is an interface to the LAPACK routines \code{DGESV}
