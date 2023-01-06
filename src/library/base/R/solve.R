@@ -1,7 +1,7 @@
 #  File src/library/base/R/solve.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,26 +38,22 @@ solve.default <-
 {
     if (!missing(LINPACK))
         stop("the LINPACK argument has been defunct since R 3.1.0")
-    if(is.complex(a) || (!missing(b) && is.complex(b))) {
-	a <- as.matrix(a)
-	if(missing(b)) {
-	    b <- diag(1.0+0.0i, nrow(a))
-	    colnames(b) <- rownames(a)
-	}
-        return(.Internal(La_solve_cmplx(a, b)))
-    }
 
     if(inherits(a, "qr")) {
 	warning("solve.default called with a \"qr\" object: use 'qr.solve'")
-	return(solve.qr(a, b, tol))
+	return(solve.qr(a, b)) # used to pass tol, but that is unused
     }
 
     a <- as.matrix(a)
+    isc <- is.complex(a)
     if(missing(b)) {
-        b <- diag(1.0, nrow(a))
+        b <- diag(if(isc) 1.0 + 0.0i else 1.0, nrow(a))
         colnames(b) <- rownames(a)
     }
-    .Internal(La_solve(a, b, tol))
+    if(isc || (!missing(b) && is.complex(b)))
+        .Internal(La_solve_cmplx(a, b))
+    else
+        .Internal(La_solve(a, b, tol))
 }
 
 solve <- function(a, b, ...) UseMethod("solve")
