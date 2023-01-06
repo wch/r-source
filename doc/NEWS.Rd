@@ -26,10 +26,16 @@
       LAPACK version 3.11.0 (with changes only to double complex
       subroutines).
 
+      \item The included LAPACK sources have been updated to include the
+      four Fortran 90 routines rather than their Fortran 77
+      predecessors.  This may give some different signs in SVDs or
+      eigendecompositions..  (This completes the transition to LAPACK
+      3.10.x begun in \R 4.2.0.)
+
       \item The LAPACK sources have been updated to version 3.11.0.  (No
       new subroutines have been added, so this almost entirely bug
       fixes: Those fixes do affect some computations with \code{NaN}s,
-      including \R's @code{NA}.)
+      including \R's \code{NA}.)
 
       \item The parser now signals \emph{classed} errors, notably in
       case of the pipe operator \code{|>}.  The error object and
@@ -40,7 +46,7 @@
       with a \code{toeplitz2()} variant.
 
       \item \code{xy.coords()} and \code{xyz.coords()} and consequently,
-      e.g., \code{plot(x,y, log="y")} now signal a \emph{classed} warning
+      e.g., \code{plot(x,y, log = "y")} now signal a \emph{classed} warning
       about negative values of y (where \code{log(.)} is \code{NA}).
       Such a warning can be specifically suppressed or caught otherwise.
 
@@ -64,7 +70,7 @@
       \code{conf.args} arguments for computing and plotting a confidence
       band for the treatment function transforming the distribution of
       \code{x} into the distribution of \code{y } (Switzer, 1976,
-      Biometrika). Contributed by Torsten Hothorn.
+      \emph{Biometrika}). Contributed by Torsten Hothorn.
 
       \item Performance of \code{package_dependencies()} has been improved
       for cases when the number of dependencies is large.
@@ -74,11 +80,11 @@
       are also marked as \code{"bytes"}.  This reduces the risk of creating
       invalid strings and accidental substitution of bytes deemed invalid.
 
-      \item Support for \code{readLines(encoding="bytes")} has been added to
+      \item Support for \code{readLines(encoding = "bytes")} has been added to
       allow processing special text files byte-by-byte, without creating
       invalid strings.
 
-      \item \code{iconv(from="")} now takes into account any declared
+      \item \code{iconv(from = "")} now takes into account any declared
       encoding of the input elements and uses it in preference to the native
       encoding.  This reduces the risk of accidental creation of invalid
       strings, particularly when different elements of the input have
@@ -116,11 +122,12 @@
       \item New function \code{R_compiled_by()} reports the C and
       Fortran compilers used to build \R, if known.
 
-      \item \code{predict(<lm>, newdata=*)} no longer unnecessarily creates
+      \item \code{predict(<lm>, newdata = *)} no longer unnecessarily creates
       an \code{offset} of all \code{0}s.
 
       \item \code{solve()} for complex inputs now uses argument \code{tol}
-      and by default checks for \sQuote{computational singularity}.
+      and by default checks for \sQuote{computational singularity} (as
+      it long has for numeric inputs).
     }
   }
 
@@ -190,12 +197,6 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The included LAPACK sources have been updated to include the
-      four Fortran 90 routines rather than their Fortran 77
-      predecessors.  This may give some different signs in SVDs or
-      eigendecompositions..  (This completes the transition to LAPACK
-      3.10.x begun in \R 4.2.0.)
-
       \item A system installation of generic LAPACK 3.10.0 or later will
       be preferred to the version in the \R sources.
 
@@ -210,10 +211,9 @@
       Packages using LAPACK will need to be reinstalled if this changes
       to using an external library.
 
-      \item On \samp{aarch64} (aka \samp{arm64}) platforms such as Macs with
-      \dQuote{Apple silicon} (\sQuote{M1}), \command{configure} now chooses
-      \option{-fPIC} by default (instead of \option{-fpic}), as desired in
-      \PR{18326}.
+      \item On \samp{aarch64} Linux platforms using GCC,
+      \command{configure} now defaults to \option{-fPIC} (instead of
+      \option{-fpic}), as desired in \PR{18326}.
 
       \item \command{configure} now checks conversion of datetimes
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
@@ -361,6 +361,8 @@
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
       \command{R CMD check}
+
+      Where C++ is compiled, the standard used is reported.
     }
   }
 
@@ -405,7 +407,7 @@
       level names when given a function object (as opposed a function
       name which did preserve names). Reported in \PR{17616}.
 
-      \item \code{c(a=1, 2)[[]]} no longer matches \code{2} but rather
+      \item \code{c(a = 1, 2)[[]]} no longer matches \code{2} but rather
       signals a \emph{classed} error.  Reported and analysed by Davis Vaughan in
       \PR{18367}, a duplicate of \PR{18004}, by Jan Meis et al.
       For consistency, \code{NULL[[]]} is also erroneous now.
@@ -465,7 +467,7 @@
       end) of a year.  Based on a proposal by Andreï V. Kostyrka on R-help.
 
       \item Printing of a \code{factanal()} result with just one factor and
-      \code{sort=TRUE} now works regularly, fixing \PR{17863} by Timothy
+      \code{sort = TRUE} now works regularly, fixing \PR{17863} by Timothy
       Bates, thanks to the \sQuote{R Contributors} working group.
 
       \item Printing 0-length objects of class
