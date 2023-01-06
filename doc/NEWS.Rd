@@ -192,6 +192,9 @@
       \code{"balanced"} indicating if it is known to be filled or fully
       balanced.
 
+      \item Functions \code{axis.Date} and \code{axis.POSIXct} are rewritten 
+      to gain better default tick locations and better default formats 
+      by using \code{prettyDate}. Thanks to Swetlana Herbrandt.
      }
   }
 

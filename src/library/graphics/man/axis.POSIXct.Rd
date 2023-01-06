@@ -1,7 +1,8 @@
 % File src/library/graphics/man/axis.POSIXct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
+
 
 \name{axis.POSIXct}
 \alias{axis.POSIXct}
@@ -16,9 +17,12 @@ axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 axis.Date(side, x, at, format, labels = TRUE, \dots)
 }
 \arguments{
-  \item{x, at}{A date-time or date object.}
+  \item{x, at}{A date-time or date object, or other types of objects 
+    that can be converted appropriately.}
   \item{side}{See \code{\link{axis}}.}
-  \item{format}{See \code{\link{strptime}}.}
+  \item{format}{See \code{\link{strptime}}. If missing, a good guess for 
+    an appropriate format is made by looking at the argument \code{at} 
+	and its granularity.}
   \item{labels}{Either a logical value specifying whether
     annotations are to be made at the tickmarks, or a vector of character
     strings to be placed at the tickpoints.}
@@ -26,8 +30,10 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
     typically \link{graphical parameters}.}
 }
 \details{
-  \code{axis.POSIXct} and \code{axis.Date} work quite hard to choose
-  suitable time units (years, months, days, hours, minutes or seconds)
+  \code{axis.POSIXct} and \code{axis.Date} work quite hard 
+  (from R-4.3.0 by using \code{\link[grDevices:pretty.Date]{pretty}} for 
+  \link{DateTimeClasses}) to choose
+  suitable time units (years, months, days, hours, minutes, or seconds)
   and a sensible output format, but this can be overridden by supplying
   a \code{format} specification.
 
@@ -54,13 +60,15 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
 }
 \examples{
 with(beaver1, {
-time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),
-                 "\%Y \%j \%H \%M")
-plot(time, temp, type = "l") # axis at 4-hour intervals.
-# now label every hour on the time axis
-plot(time, temp, type = "l", xaxt = "n")
-r <- as.POSIXct(round(range(time), "hours"))
-axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "\%H")
+	opar <- par(mfrow = c(2,1))
+	time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),
+					 "\%Y \%j \%H \%M")
+	plot(time, temp, type = "l") # axis at 5-hour intervals.
+	# now label every hour on the time axis
+	plot(time, temp, type = "l", xaxt = "n")
+	r <- as.POSIXct(round(range(time), "hours"))
+	axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "\%H")
+    par(opar) # reset changed par settings
 })
 
 plot(.leap.seconds, seq_along(.leap.seconds), type = "n", yaxt = "n",
