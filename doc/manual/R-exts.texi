@@ -1280,26 +1280,47 @@ making a shared object (e.g.@: to create executables).  Such packages
 should have files @file{src/Makefile} and @file{src/Makefile.win} or
 @file{src/Makefile.ucrt} (unless intended for only Unix-alikes or only
 Windows).  Note that on Unix such makefiles are included after
-@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf} so all the usual @R{}
+@file{@var{R_HOME}/etc/@var{R_ARCH}/Makeconf} so all the usual @R{}
 macros and make rules are available -- for example C compilation will by
 default use the C compiler and flags with which @R{} was
 configured.  This also applies on Windows as from @R{} 4.3.0: packages
 intended to be used with earlier versions should include that file
 themselves.
-@c The order of makefiles on Unix is
-@c etcR_ARCH/Makeconf
-@c site makevars (R_MAKEVARS_SITE R_HOME/etcR_ARCH/Makevars.site)
-@c src/Makefile
-@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{-platform,})
-@c and on Windows
-@c etcR_ARCH/Makeconf
-@c site makevars (R_MAKEVARS_SITE R_HOME/etcR_ARCH/Makevars.site)
-@c src/Makefile.{ucrt,win}
-@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{ucrt.win64,win,})
-@c but on Windows, R < 4.3.0, it was
-@c src/Makefile.{ucrt,win}
-@c user makevars (R_MAKEVARS_USER ~/.R/Makevars.{ucrt.win64,win,})
-@c omitting Makevars.win prior to R 4.2.3 (pace documentation)
+
+The order of inclusion of makefiles for a package which does
+@strong{not} have a @file{src/Makefile} file is
+@multitable @columnfractions 0.5 0.5
+@headitem Unix-alike @tab Windows
+@item @file{src/Makevars} @tab @file{src/Makevars.ucrt},
+@file{src/Makevars.win}
+@item @file{@var{R_HOME}/etc/@var{R_ARCH}/Makeconf}
+@tab @file{@var{R_HOME}/etc/@var{R_ARCH}/Makeconf}
+@item @env{R_MAKEVARS_SITE}, @file{@var{R_HOME}/etc/@var{R_ARCH}/Makevars.site}
+@tab @env{R_MAKEVARS_SITE}, @file{@var{R_HOME}/etc/@var{R_ARCH}/Makevars.site}
+@item @file{@var{R_HOME}/share/make/shlib.mk}
+@tab @file{@var{R_HOME}/share/make/winshlib.mk}
+@item @env{R_MAKEVARS_USER}, @file{ ~/.R/Makevars-@var{platform}},
+@file{ ~/.R/Makevars}
+@tab @env{R_MAKEVARS_USER}, @file{ ~/.R/Makevars.ucrt},
+@file{ ~/.R/Makevars.win64}, @file{ ~/.R/Makevars.win}
+@end multitable
+@noindent
+For those which do, it is
+@multitable @columnfractions 0.5 0.5
+@item @file{@var{R_HOME}/etc/@var{R_ARCH}/Makeconf}
+@tab @file{@var{R_HOME}/etc/@var{R_ARCH}/Makeconf}
+@item @env{R_MAKEVARS_SITE}, @file{@var{R_HOME}/etc/@var{R_ARCH}/Makevars.site}
+@tab @env{R_MAKEVARS_SITE}, @file{@var{R_HOME}/etc/@var{R_ARCH}/Makevars.site}
+@item @file{src/Makefile} @tab @file{src/Makefile.ucrt},
+@file{src/Makefile.win}
+@item @env{R_MAKEVARS_USER}, @file{ ~/.R/Makevars-@var{platform}},
+@file{ ~/.R/Makevars}
+@tab @env{R_MAKEVARS_USER}, @file{ ~/.R/Makevars.ucrt},
+@file{ ~/.R/Makevars.win64}, @file{ ~/.R/Makevars.win}
+@end multitable
+@noindent
+Items in capitals are environment variables: those separated by commas
+are alternatives looked for in the order shown.
 
 In very special cases packages may create binary files other than the
 shared objects/DLLs in the @file{src} directory.  Such files will not be
