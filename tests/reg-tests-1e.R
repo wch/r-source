@@ -400,10 +400,27 @@ stopifnot(exprs = {
 })
 ## as.data.frame.<cls>(.) worked w/o deprecation warning in R <= 4.2.x
 
-
-## predict.lm() in *rank deficient* case -- PR#15072, PR#16158
-
-## ... always gave warning about problem (current "simple") in R <= 4.2.x
+## useMethod() dispatch error in case of long class strings - PR#18447
+mkCh <- function(n, st=1L) substr(strrep("123456789 ", ceiling(n/10)), st, n)
+useMethErr <- function(n=500, nrep=25)
+    (function(.) UseMethod("foo")(.))(
+        structure(1, class = paste(sep=":", format(1:nrep),
+                                   mkCh(n, 2L + (nrep > 9)))))
+tools::assertError( useMethErr(500,25) )
+## gave a segfault  in R <= 4.2.2
+clsMethErr <- function(...) {
+ sub(    '"[^"]*$', "",
+     sub('^[^"]*"', "",
+         tryCatch(useMethErr(...), error=conditionMessage) ))
+}
+showC <- function(..., n1=20, n2=16) {
+    r <- clsMethErr(...)
+    cat(sprintf('%d: "%s<....>%s"\n', (nr <- nchar(r)),
+                substr(r, 1,n1), substr(r, nr-n2, nr)))
+    invisible(r)
+}
+invisible(lapply(11:120, function(n) showC(n, 1030 %/% n)))
+## (mostly the truncation works "nicely", but sometimes even misses the closing quote)
 
 
 
