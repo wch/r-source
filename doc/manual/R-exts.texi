@@ -3055,12 +3055,13 @@ and ensuring these values are used in relevant compilations.
 
 C has had standards C89/C90, C99, C11, C17 (also known as C18) and C23
 is in final draft and expected to be published during 2023.  C11 was a
-minor change to C99, and C17 is a `bug-fix' update to C11.  On the other
-hand, C23 makes extensive changes, including making @code{bool},
-@code{true} and @code{false} reserved words, finally disallowing
-K&R-style function declarations and clarifying the formerly deprecated
-meaning of function declarations with an empty parameter list to mean
-zero parameters. (There are many other additions: see for example
+minor change to C99 which introduced some new features and made others
+optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
+makes extensive changes, including making @code{bool}, @code{true} and
+@code{false} reserved words, finally disallowing K&R-style function
+declarations and clarifying the formerly deprecated meaning of function
+declarations with an empty parameter list to mean zero
+parameters. (There are many other additions: see for example
 @uref{https://en.cppreference.com/w/c/23}.)
 
 The @command{configure} script in recent versions of @R{} aims to choose
@@ -3094,6 +3095,12 @@ value: compilers are currently using @code{202000L}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,
 for example @code{__STDC_VERSION_LIMITS_H__}.
+
+However, note the `claimed' as no compiler had 100% conformance, and it
+is better to use @command{configure} to test for the feature you want to
+use that to condition on the value of @code{__STDC_VERSION__}.  In
+particular, alignment functionality such as @code{_Alignas} and
+@code{aligned_alloc} are not implemented on Windows.
 
 @node Using @command{cmake},  , C standards, Configure and cleanup
 @subsection Using @command{cmake}
