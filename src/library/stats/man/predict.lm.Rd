@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -16,7 +16,9 @@
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
         terms = NULL, na.action = na.pass,
-        pred.var = res.var/weights, weights = 1, \dots)
+        pred.var = res.var/weights, weights = 1,
+        rankdeficient = c("NA", "non-estim", "simple"), tol = 1e-6, verbose = FALSE,
+        \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -37,6 +39,16 @@
   \item{weights}{variance weights for prediction.  This can be a numeric
     vector or a one-sided model formula.  In the latter case, it is
     interpreted as an expression evaluated in \code{newdata}.}
+  \item{rankdeficient}{a \code{\link{character}} string specifying what
+    should happen in the case of a rank deficient model, i.e., when
+    \code{object$rank < ncol(model.matrix(object))}.
+    ............
+    ..... FIXME ........
+    ............
+  }
+  \item{tol}{.........}
+  \item{verbose}{\code{\link{logical}} indicating if messages should be
+    preoduced about rank deficiency handling.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{

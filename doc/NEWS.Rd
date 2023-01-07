@@ -128,6 +128,14 @@
       \item \code{solve()} for complex inputs now uses argument \code{tol}
       and by default checks for \sQuote{computational singularity} (as
       it long has done for numeric inputs).
+
+      \item \code{predict(<rank-deficient lm>, newdata=*)} now obeys a new
+      argument \code{rankdeficient} with default \code{"NA"} which now
+      predicts \code{NA} (instead of somewhat dubious values) for
+      non-estimable \code{x}.  This addresses \PR{15072} by Russ Lenth and
+      is based on his original proposal and discussions in \PR{16158} also
+      by David Firth and Elin Waring.
+      Still somewhat experimental.
     }
   }
 
@@ -233,7 +241,7 @@
       MinGW-W64, binutils and libraries.  At this time R-devel can still
       be built using Rtools42 without changes, but when R-devel is
       installed via the installer, it will by default look for Rtools43.
-	  
+
       \item Old make targets \code{rsync-extsoft} and 32-bit ones that
       are no longer needed have been removed.
 
@@ -288,7 +296,7 @@
       %% needs to include that file itself.  It also uses a site
       %% Makevars file in the same way as a package with a
       %% @file{src/Makevars.win} file would.
-      
+
       \item (Windows) The default C++ standard had accidentally been
       left at C++11 when it was changed to C++14 on Unix.  It is now
       C++14 as documented.
