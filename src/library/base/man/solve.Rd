@@ -53,7 +53,7 @@ solve(a, b, \dots)
   \code{tol <= 0}.
 
   For historical reasons, the default method accepts \code{a} as an
-  object of class \code{"\link{gr}"} (with a warning) and passes it on to
+  object of class \code{"\link{qr}"} (with a warning) and passes it on to
   \code{\link{solve.qr}}.
 }
 \source{
