@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-12-09 r83419) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.1.0 (64-bit)
+R Under development (unstable) (2023-01-07 r83581) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -196,13 +196,15 @@ Hair    Brown Blue Hazel Green
 > ### ** Examples
 > 
 > with(beaver1, {
-+ time <- strptime(paste(1990, day, time %/% 100, time %% 100),
-+                  "%Y %j %H %M")
-+ plot(time, temp, type = "l") # axis at 4-hour intervals.
-+ # now label every hour on the time axis
-+ plot(time, temp, type = "l", xaxt = "n")
-+ r <- as.POSIXct(round(range(time), "hours"))
-+ axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
++ 	opar <- par(mfrow = c(2,1))
++ 	time <- strptime(paste(1990, day, time %/% 100, time %% 100),
++ 					 "%Y %j %H %M")
++ 	plot(time, temp, type = "l") # axis at 5-hour intervals.
++ 	# now label every hour on the time axis
++ 	plot(time, temp, type = "l", xaxt = "n")
++ 	r <- as.POSIXct(round(range(time), "hours"))
++ 	axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
++     par(opar) # reset changed par settings
 + })
 > 
 > plot(.leap.seconds, seq_along(.leap.seconds), type = "n", yaxt = "n",
@@ -226,6 +228,7 @@ Hair    Brown Blue Hazel Green
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("axis")
 > ### * axis
@@ -2207,7 +2210,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x159a33258>
+<bytecode: 0x116820c70>
 <environment: namespace:graphics>
 > 
 > 
@@ -3077,7 +3080,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x139d1f7e0>
+<bytecode: 0x1069ebfc0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3158,7 +3161,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.367 0.084 1.454 0 0 
+Time elapsed:  1.492 0.085 1.582 0 0 
 > grDevices::dev.off()
 null device 
           1 
