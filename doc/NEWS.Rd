@@ -268,7 +268,7 @@
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
 
-      \item [Experimental, in progress]
+      \item [In progress]
 
       There is some support for a package to indicate the version of the
       C standard which should be used to compile it.  There are
@@ -290,16 +290,16 @@
 
       For further details see \dQuote{Writing R Extensions} §1.2.5.
 
-      %% \item (Windows) A \file{src/Makefile.ucrt} or
-      %% \file{src/Makefile.win} file is now used after
-      %% \file{\var{R_HOME}/etc\var{R_ARCH}/Makeconf} and so no longer
-      %% needs to include that file itself.  It also uses a site
-      %% Makevars file in the same way as a package with a
-      %% @file{src/Makevars.win} file would.
+      \item (Windows) A \file{src/Makefile.ucrt} or
+      \file{src/Makefile.win} file is now included after
+      \file{\var{R_HOME}/etc\var{R_ARCH}/Makeconf} and so no longer
+      needs to include that file itself.  Installation now uses a site
+      \file{Makevars} file in the same way as a package with a
+      \file{src/Makevars.win} file would.
 
       \item (Windows) The default C++ standard had accidentally been
       left at C++11 when it was changed to C++14 on Unix.  It is now
-      C++14 as documented.
+      C++14, as documented.
     }
   }
 
