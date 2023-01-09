@@ -949,7 +949,11 @@ model.matrix(fit)
 summary(fit)
 anova(fit)
 predict(fit)
-(predict(fit, data.frame(x=x), se=TRUE) -> p0) # (no longer warning)
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
 stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 variable.names(fit) #should be empty
@@ -966,7 +970,11 @@ predict(fit, type="terms", se=TRUE)
 summary(fit)
 anova(fit)
 predict(fit)
-(predict(fit, data.frame(x=x), se=TRUE) -> p0)# no longer warns
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
 stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 ## Lots of problems in 1.7.x

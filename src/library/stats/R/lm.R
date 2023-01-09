@@ -672,13 +672,15 @@ predict.lm <-
 	     level = .95,  type = c("response", "terms"),
 	     terms = NULL, na.action = na.pass, pred.var = res.var/weights,
 	     weights = 1,
-	     rankdeficient = c("NA", "non-estim", "simple"), tol = 1e-6, verbose = FALSE,
+	     rankdeficient = c("simple", "non-estim", "NA"),
+             tol = 1e-6, verbose = FALSE,
              ...)
 {
     tt <- terms(object)
     if(!inherits(object, "lm"))
 	warning("calling predict.lm(<fake-lm-object>) ...")
     type <- match.arg(type)
+    missRdef <- missing(rankdeficient)
     rankdeficient <- match.arg(rankdeficient)
     noData <- (missing(newdata) || is.null(newdata))
     if(noData) {
@@ -714,6 +716,9 @@ predict.lm <-
     hasNonest <- (p < ncol(X) && !noData)
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     if(hasNonest) {
+      if(missRdef) {
+        warning("Possibly rank-deficient fit; the default rankdeficient = \"simple\" may change")
+      } else
       if(rankdeficient == "simple") {
         warning("prediction from a rank-deficient fit may be misleading")
       } else { # rankdeficient \in {"NA", "non-estim"}
@@ -724,9 +729,11 @@ predict.lm <-
         pp <- nrow(tR)
         if(verbose) cat(sprintf("  n=%d, p=%d < ncol(X)=%d; ncol(tR)=%d <?< pp=%d (=?= n)\n",
                                 n, p, ncol(X), ncol(tR), pp))
-        if (ncol(tR) < pp) # Add extra zero cols if needed
+        if (ncol(tR) < pp) { # Add extra zero cols if needed
             tR <- cbind(tR, matrix(0, nrow = pp, ncol = pp - ncol(tR)))
-        if(verbose) cat(sprintf("    new tR: ncol(tR)=%d =!?= pp = nrow(tR)\n", ncol(tR),pp))
+            if(verbose)
+                cat(sprintf("    new tR: ncol(tR)=%d =!?= $d = pp = nrow(tR)\n", ncol(tR),pp))
+        }
         ## Pad diagonal with ones
         d <- c(pp,pp) ; tR[.row(d) > p  &  .row(d) == .col(d)] <- 1
         ## Null basis is last pp-p cols of Q in QR decomposition of tR

@@ -17,7 +17,8 @@
         level = 0.95, type = c("response", "terms"),
         terms = NULL, na.action = na.pass,
         pred.var = res.var/weights, weights = 1,
-        rankdeficient = c("NA", "non-estim", "simple"), tol = 1e-6, verbose = FALSE,
+        rankdeficient = c("simple", "non-estim", "NA"),
+        tol = 1e-6, verbose = FALSE,
         \dots)
 }
 \arguments{
@@ -42,11 +43,18 @@
   \item{rankdeficient}{a \code{\link{character}} string specifying what
     should happen in the case of a rank deficient model, i.e., when
     \code{object$rank < ncol(model.matrix(object))}.
-    ............
-    ..... FIXME ........
-    ............
+    \describe{
+      \item{\code{"simple"}:}{is back compatible but may give dubious predictions in
+	non-estimable cases.}
+      \item{\code{"non-estim"}:}{gives the same predictions but with an
+	\code{\link{attribute}}, \code{attr(*, "non-estim")} with indices
+	in \code{1:nrow(newdata)} of new data observations which are deemed
+	non-estimable.}
+      \item{\code{"NA"}:}{predicts \code{NA} for non-estimable new data.}
+    }
   }
-  \item{tol}{.........}
+  \item{tol}{non-negative number determining how non-estimability is
+    determined in rank deficient cases.}
   \item{verbose}{\code{\link{logical}} indicating if messages should be
     preoduced about rank deficiency handling.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -63,6 +71,7 @@
   prediction (tolerance) intervals at the specified \code{level}, sometimes
   referred to as narrow vs. wide intervals.
 
+  %% TODO: this true in *some* cases, but not the whole story; see PR#16158 etc
   If the fit is rank-deficient, some of the columns of the design matrix
   will have been dropped.  Prediction from such a fit only makes sense
   if \code{newdata} is contained in the same subspace as the original

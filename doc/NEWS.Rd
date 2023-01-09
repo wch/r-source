@@ -130,12 +130,12 @@
       it long has done for numeric inputs).
 
       \item \code{predict(<rank-deficient lm>, newdata=*)} now obeys a new
-      argument \code{rankdeficient} with default \code{"NA"} which now
-      predicts \code{NA} (instead of somewhat dubious values) for
-      non-estimable \code{x}.  This addresses \PR{15072} by Russ Lenth and
-      is based on his original proposal and discussions in \PR{16158} also
-      by David Firth and Elin Waring.
-      Still somewhat experimental.
+      argument \code{rankdeficient},
+      currently with default \code{"simple"} for back compatibility, but
+      that may well change before release.
+      This addresses \PR{15072} by Russ Lenth and is based on his original
+      proposal and discussions in \PR{16158} also by David Firth and Elin Waring.
+      Experimental; may be updated before release.
     }
   }
 

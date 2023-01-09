@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-01-07 r83578) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-01-09 r83585) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2741,10 +2741,13 @@ Residuals 10 2.7404 0.27404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> (predict(fit, data.frame(x=x), se=TRUE) -> p0) # (no longer warning)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
-NA NA NA NA NA NA NA NA NA NA 
+ 0  0  0  0  0  0  0  0  0  0 
 
 $se.fit
  [1] 0 0 0 0 0 0 0 0 0 0
@@ -2755,7 +2758,8 @@ $df
 $residual.scale
 [1] 0.5234843
 
-> stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -2944,10 +2948,13 @@ x     0        0        10     2.7404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> (predict(fit, data.frame(x=x), se=TRUE) -> p0)# no longer warns
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
-NA NA NA NA NA NA NA NA NA NA 
+ 0  0  0  0  0  0  0  0  0  0 
 
 $se.fit
  [1] 0 0 0 0 0 0 0 0 0 0
@@ -2955,7 +2962,8 @@ $se.fit
 $residual.scale
 [1] 0.5234843
 
-> stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x

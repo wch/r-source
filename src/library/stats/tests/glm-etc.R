@@ -34,6 +34,10 @@ y <- 1 + x1 + x2 + x3 + x4 + c(-.5,.5,.5,-.5, 0,
 cbind(x1,x2,x3,x4,y)
 ## Fit a model
 mod1234 <- lm(y ~ x1 + x2 + x3 + x4)
+(al <- alias(mod1234)) # x3: 3*x1 - 2*x2  \\  x4 :  4 -x1 +x2
+stopifnot(all.equal(rbind(x3 = c(0,  3,-2),
+                          x4 = c(4, -1, 1)),
+                    unclass(al$Complete), check.attributes=FALSE))
 ## new.x
 new.x <- data.frame(
     row.names = LETTERS[1:6],
@@ -41,15 +45,20 @@ new.x <- data.frame(
     x2 = c(1, 2, 2, 0, 0, 2),
     x3 = c(7,14,14, 0, 0, 3),
     x4 = c(2, 4, 0, 4, 0, 4))
+## where do we have the same aliasing subspace?
+new.ok <- with(new.x, (x4 == 4 - x1 + x2) &
+                      (x3 == 3*x1 - 2*x2))
+which(new.ok) # 1 3 4
 ## old (hard-wired) R <= 4.2.x behavior:
 tools::assertWarning(ps <- predict(mod1234, newdata=new.x, rankdeficient = "simple"), verbose=TRUE)
-## new default:
+## new (possibly default, in the future?)
 (pN <- predict(mod1234, new.x, rankdeficient = "NA"))
 ## "compromise": old behavior with extra info:
 (pne <- predict(mod1234, new.x, rankdeficient = "non-estim"))
 stopifnot(exprs = {
     identical(i.ne <- attr(pne, "non-estim"),
               c(B = 2L, E = 5L, F = 6L))
+    which(!new.ok) == i.ne
     is.na(pN[i.ne])
     identical(ps[-i.ne], pN[-i.ne])
     identical(unname(ps), `attributes<-`(pne, NULL))
@@ -83,12 +92,15 @@ nd <- d8[,-1] + rep(outer(c(-2:2),10^(1:3)), 3) # 5 * 9 = 45 = 15 * 3 (nrow * nc
 row.names(nd) <- LETTERS[1:nrow(nd)]
 tools::assertWarning(verbose=TRUE,
 ps  <- predict(fm8. , newdata=nd, rankdeficient = "simple") )
-pN  <- predict(fm8. , newdata=nd)#rankdeficient = "NA"
+tools::assertWarning(verbose=TRUE, # "... default "simple" may change ... "
+ps. <- predict(fm8. , newdata=nd) ) # default
+pN  <- predict(fm8. , newdata=nd, rankdeficient = "NA")
 pne <- predict(fm8. , newdata=nd, rankdeficient = "non-estim")
 p.9 <- predict(fm8.9, newdata=nd)
 print(digits=9, cbind(ps, pne, pN, p.9))
 all.equal(p.9, ps, tol=0)# 0.035..
 stopifnot(exprs = {
+    identical(ps, ps.)
     identical(unname(ps), `attributes<-`(pne, NULL))
     identical(i.ne <- attr(pne, "non-estim"),
               c(K = 11L, L = 12L, N = 14L, O = 15L))
@@ -99,7 +111,9 @@ stopifnot(exprs = {
 ## play with tol
 str(tls <- sort(outer(c(1,2,4), 10^-(9:5))))
 nT <- length(tls <- setNames(tls, formatC(tls)))
+tools::assertWarning(verbose=TRUE, # "... default "simple" may change ... "
 pls <- t(sapply(tls, function(TL) predict(fm8. , newdata=nd, tol = TL)))
+)
 stopifnot(is.finite(plsLst <- pls[nT,])) # (no NA)
 plsLst
 sweep(pls, 2L, plsLst, `-`)
@@ -132,4 +146,3 @@ stopifnot( ## checking monotonicity: each column is  (NA NA ... NA | p_i p_i ...
 
 ## __FIXME__
 ## predict(*, ... type="terms" .. ) does *not* obey   rankdeficient=".."
-
