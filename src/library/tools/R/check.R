@@ -5339,7 +5339,7 @@ add_dummies <- function(dir, Log)
                     lines <- readLines(outfile, warn = FALSE)
 
                 ## A few packages call SHLIB twice.
-                lines00 <- unique(grep("^using (C compiler|C[+][+] compiler|Fortran conpiler|SDK)",
+                lines00 <- unique(grep("^using (C compiler|C[+][+] compiler|Fortran compiler|SDK)",
                                        lines, value = TRUE))
 
                 lines0 <- lines
