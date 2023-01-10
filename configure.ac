@@ -792,12 +792,19 @@ AC_SUBST(R_DEFS)
 : ${C17FLAGS="${CFLAGS}"}
 AC_SUBST(CC17)
 AC_SUBST(C17FLAGS)
+r_c17_compiler="${CC17} ${C17FLAGS}"
 : ${CC23="${CC} -std=gnu2x"}
 : ${C23FLAGS="${CFLAGS}"}
 AC_SUBST(CC23)
 AC_SUBST(C23FLAGS)
-r_c17_compiler="${CC17} ${C17FLAGS}"
-r_c23_compiler="${CC23} ${C23FLAGS}"
+: ${CC90="${CC} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS}"}
+AC_SUBST(CC90)
+AC_SUBST(C90FLAGS)
+: ${CC99="${CC} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS}"}
+AC_SUBST(CC99)
+AC_SUBST(C99FLAGS)
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL

@@ -3093,7 +3093,7 @@ the makefiles for the Windows build specified C99.  They now use the
 compiler default which for the recommended compiler is C17.
 
 Packages may want to either avoid or embrace the changes in C23, and can
-do so @emph{via} specifying @samp{USE_C17} or @samp{USE_C23} in the
+do so @emph{via} specifying @samp{USE_Cnn} for 17, 23, 90 or 99 in the
 @samp{SystemRequirements} field of their @file{DESCRIPTION} file of a
 package depending on @samp{R (>= 4.3.0)}.  Those using a
 @command{configure} script should set the corresponding compiler and
@@ -3122,6 +3122,10 @@ is better to use @command{configure} to test for the feature you want to
 use that to condition on the value of @code{__STDC_VERSION__}.  In
 particular, alignment functionality such as @code{_Alignas} and
 @code{aligned_alloc} are not implemented on Windows.
+
+End users can specify a standard by something like @command{R CMD
+INSTALL --use-C17}.  This overrides the @samp{SystemRequirements} field,
+but not for any @commmand{configure} file.
 
 @node Using @command{cmake},  , C standards, Configure and cleanup
 @subsection Using @command{cmake}

@@ -270,23 +270,30 @@
 
       \item [In progress]
 
-      There is some support for a package to indicate the version of the
-      C standard which should be used to compile it.  There are
-      currently two possibilities:
+      There is support for a package to indicate the version of the
+      C standard which should be used to compile it, and for the
+      installing user to specify this.  Current options are:
       \describe{
 	\item{USE_C17}{Use a standard that is at most C17.  The
 	  intention is to allow legacy packages to still be installed when
-	  later C standards are preferred.
+	  later C standards become the default.  For example, packages
+	  using new keywords as identifiers or with K&R-style function
+	  declarations.
 	}
+	\item{USE_C90}{Use the C90 (aka C89) standard.}
+	\item{USE_C99}{Use the C99 standard. This should be rarely
+	  needed -- it avoids the few new features of C11/C17 which can
+	  be useful if a package assumes them if C17 is specified and
+	  they are not implemented.}
 	\item{USE_C23}{Use C23 (or in future, later).  Compiler/library
 	  support for C23 is still being implemented, but LLVM clang 15 and
 	  the upcoming GCC 13 have quite extensive support.
 	}
       }
       These can be specified as part of the \samp{SystemRequirements}
-      field in the package's \file{DESCRIPTION} file or \emph{via} options
-      \option{--use-C17} and \option{--use-C23} of \command{R CMD
-	INSTALL} and \command{R CMD SHLIB}.
+      field in the package's \file{DESCRIPTION} file or \emph{via}
+      options \option{--use-C17} and so on of \command{R CMD INSTALL}
+      and \command{R CMD SHLIB}.
 
       For further details see \dQuote{Writing R Extensions} §1.2.5.
 

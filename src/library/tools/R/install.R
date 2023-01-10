@@ -269,7 +269,7 @@ if(FALSE) {
             "      --use-vanilla	do not read any Renviron or Rprofile files",
             "      --use-LTO         use Link-Time Optimization",
             "      --no-use-LTO      do not use Link-Time Optimization",
-            "      --use-C17         use a C standard at most C17",
+            "      --use-C17         use a C standard at most C17 (also C90, C99)",
             "      --use-C23         use a C standard at least C23",
             "\nfor Unix",
             "      --configure-args=ARGS",
@@ -405,8 +405,12 @@ if(FALSE) {
                         break
                     }
                 }
-                if(any(grepl("USE_C17", sys_requires))) use_C <<- 17
-                if(any(grepl("USE_C23", sys_requires))) use_C <<- 23
+                if(is.na(use_C)) {
+                    if(any(grepl("USE_C17", sys_requires))) use_C <<- 17
+                    if(any(grepl("USE_C23", sys_requires))) use_C <<- 23
+                    if(any(grepl("USE_C90", sys_requires))) use_C <<- 90
+                    if(any(grepl("USE_C99", sys_requires))) use_C <<- 99
+                }
             }
         }
 
@@ -614,7 +618,9 @@ if(FALSE) {
                       if(isTRUE(use_LTO)) "--use-LTO",
                       if(isFALSE(use_LTO)) "--no-use-LTO",
                       if(isTRUE(use_C == "17")) "--use-C17"
-                      else if(isTRUE(use_C == "23")) "--use-C23",
+                      else if(isTRUE(use_C == "23")) "--use-C23"
+                      else if(isTRUE(use_C == "90")) "--use-C90"
+                      else if(isTRUE(use_C == "99")) "--use-C99",
                       "-o", paste0(pkg_name, SHLIB_EXT),
                       srcs)
             if (WINDOWS && debug) args <- c(args, "--debug")
@@ -2098,6 +2104,10 @@ if(FALSE) {
             use_C <- 17
         } else if (a == "--use-C23") {
             use_C <- 23
+        } else if (a == "--use-C90") {
+            use_C <- 90
+        } else if (a == "--use-C99") {
+            use_C <- 99
         } else if (a == "--staged-install") {
             staged_install <- TRUE
         } else if (a == "--no-staged-install") {
@@ -2415,11 +2425,9 @@ if(FALSE) {
             "  -c, --clean		remove files created during compilation",
             "  --preclean		remove files created during a previous run",
             "  -n, --dry-run		dry run, showing commands that would be used",
-#            "",
-#            "Unix only:",
             "  --use-LTO		use Link-Time Optimization",
             "  --no-use-LTO		do not use Link-Time Optimization",
-            "  --use-C17	        use a C standard at most C17",
+            "  --use-C17	        use a C standard at most C17 (alsp C90, C99)",
             "  --use-C23	        use a C standard at least C23",
             "",
             "Windows only:",
@@ -2530,6 +2538,10 @@ if(FALSE) {
             use_C <- 17
         } else if (a == "--use-C23") {
             use_C <- 23
+        } else if (a == "--use-C90") {
+            use_C <- 90
+        } else if (a == "--use-C99") {
+            use_C <- 99
         } else if (a == "-o") {
             if (length(args) >= 2L) {shlib <- args[2L]; args <- args[-1L]}
             else stop("-o option without value", call. = FALSE)
@@ -2577,23 +2589,7 @@ if(FALSE) {
 
     if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse = " ")
 
-    if (WINDOWS) {
-        ## FIXME: use makevars_user()
-        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA_character_))) {
-            if (file.exists(f))  makefiles <- c(makefiles, f)
-        } else if (rarch == "/x64" &&
-                   file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
-            makefiles <- c(makefiles, f)
-        else if (rarch == "/x64" &&
-                   file.exists(f <- path.expand("~/.R/Makevars.win64")))
-            makefiles <- c(makefiles, f)
-        else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
-            makefiles <- c(makefiles, f)
-        else if (file.exists(f <- path.expand("~/.R/Makevars")))
-            makefiles <- c(makefiles, f)
-    } else {
-        makefiles <- c(makefiles, makevars_user())
-    }
+    makefiles <- c(makefiles, makevars_user())
 
     makeobjs <- paste0("OBJECTS=", shQuote(objs))
     if (WINDOWS && (file.exists(fn <- "Makevars.ucrt") || file.exists(fn <- "Makevars.win"))) {

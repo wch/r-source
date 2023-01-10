@@ -67,6 +67,13 @@
 ## CC23=
 ## C23FLAGS=
 
+## Ditto for a compiler that supports C90 or C99 features.
+## For example 'CC99=gcc -std=gnu99'
+## CC90=
+## C90FLAGS=
+## CC99=
+## C99FLAGS=
+
 ## Defines for C compilation.
 ## Use this to specify defines to be used in the compilation of R,
 ## DEFS=

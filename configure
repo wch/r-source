@@ -882,6 +882,10 @@ DUMPBIN
 LD
 FGREP
 LIBTOOL
+C99FLAGS
+CC99
+C90FLAGS
+CC90
 C23FLAGS
 CC23
 C17FLAGS
@@ -9768,12 +9772,19 @@ R_DEFS=${DEFS}
 : ${C17FLAGS="${CFLAGS}"}
 
 
+r_c17_compiler="${CC17} ${C17FLAGS}"
 : ${CC23="${CC} -std=gnu2x"}
 : ${C23FLAGS="${CFLAGS}"}
 
 
-r_c17_compiler="${CC17} ${C17FLAGS}"
-r_c23_compiler="${CC23} ${C23FLAGS}"
+: ${CC90="${CC} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS}"}
+
+
+: ${CC99="${CC} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS}"}
+
+
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
@@ -26706,7 +26717,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26711: \"$ac_link\") >&5
+(eval echo $as_me:26722: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26782,7 +26793,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26787: \"$ac_link\") >&5
+(eval echo $as_me:26798: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
