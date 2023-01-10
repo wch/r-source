@@ -5554,7 +5554,10 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wunneeded-internal-declaration\\]",
                              ## LLVM clang 15
                              "warning: .* \\[-Winvalid-utf8\\]",
-                             "warning: .* \\[-Wunqualified-std-cast-call\\]"
+                             "warning: .* \\[-Wunqualified-std-cast-call\\]",
+
+                             ## LLVM clang 16
+                             " warning: use of unary operator that may be intended as compound assignment"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
