@@ -5555,6 +5555,7 @@ add_dummies <- function(dir, Log)
                              ## LLVM clang 15
                              "warning: .* \\[-Winvalid-utf8\\]",
                              "warning: .* \\[-Wunqualified-std-cast-call\\]",
+                             "warning: .* \\[-Wincompatible-pointer-types-discards-qualifiers\\]",
 
                              ## LLVM clang 16
                              " warning: use of unary operator that may be intended as compound assignment"
