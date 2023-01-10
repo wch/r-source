@@ -1,7 +1,7 @@
 #  File src/library/utils/R/example.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -113,15 +113,14 @@ function(topic, package = NULL, lib.loc = NULL,
     if(ask == "default")
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
-	if(.Device != "null device") {
-	    oldask <- grDevices::devAskNewPage(ask = TRUE)
-            if(!oldask) on.exit(grDevices::devAskNewPage(oldask), add = TRUE)
-        }
-        ## <FIXME>
+        oldask <- if(.Device != "null device")
+                      grDevices::devAskNewPage(ask = TRUE)
+                  else
+                      getOption("device.ask.default") %||% FALSE
+        on.exit(if(.Device != "null device") grDevices::devAskNewPage(oldask),
+                add = TRUE)
         ## This ensures that any device opened by the examples will
-        ## have ask = TRUE set, but it does not return the device to
-        ## the expected 'ask' state if it is left as the current device.
-        ## </FIXME>
+        ## have ask = TRUE set
         op <- options(device.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
