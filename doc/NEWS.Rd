@@ -506,6 +506,10 @@
       \item \code{attach()} of an environment with active bindings now
       preserves the active bindings.  Reported by Kevin Ushey in
       \PR{18425}.
+
+      \item BLAS detection now works also with system-provided libraries not
+      available as regular files.  This fixes detection of the Accelerate
+      framework on macOS since Big Sur.  Reported by David Novgorodsky.
     }
   }
 }

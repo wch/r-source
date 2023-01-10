@@ -3360,6 +3360,13 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	char *res = realpath(dl_info1.dli_fname, buf);
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(res));
+	else if (errno == ENOENT)
+	    /* macOs (Big Sur) has uses a cache for system-provided dynamic
+	       libraries and they no longer exist as regular files. The 
+	       dynamic linker knows how to find them, but not regular file
+	       operations such as realpath(). Hence, when the file is not
+	       found, report what we have from the dynamic linker. */
+	    SET_STRING_ELT(ans, i, mkChar(dl_info1.dli_fname));
     }
 #endif
     SET_STRING_ELT(nms, i++, mkChar("BLAS"));
