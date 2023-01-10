@@ -3125,7 +3125,7 @@ particular, alignment functionality such as @code{_Alignas} and
 
 End users can specify a standard by something like @command{R CMD
 INSTALL --use-C17}.  This overrides the @samp{SystemRequirements} field,
-but not for any @commmand{configure} file.
+but not for any @command{configure} file.
 
 @node Using @command{cmake},  , C standards, Configure and cleanup
 @subsection Using @command{cmake}
