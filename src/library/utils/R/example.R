@@ -113,19 +113,19 @@ function(topic, package = NULL, lib.loc = NULL,
     if(ask == "default")
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
+        ## set ask=TRUE for a plotting device used, but do *not* leave it unless it was already
         oldask <- if(.Device != "null device")
                       grDevices::devAskNewPage(ask = TRUE)
                   else
-                      getOption("device.ask.default") %||% FALSE
-        on.exit(if(.Device != "null device") grDevices::devAskNewPage(oldask),
-                add = TRUE)
+                      getOption("device.ask.default", FALSE)
+        on.exit(if(.Device != "null device") grDevices::devAskNewPage(oldask), add = TRUE)
         ## This ensures that any device opened by the examples will
         ## have ask = TRUE set
         op <- options(device.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
     source(tf, local, echo = echo,
-           prompt.echo = paste0(prompt.prefix, getOption("prompt")),
+             prompt.echo = paste0(prompt.prefix, getOption("prompt")),
            continue.echo = paste0(prompt.prefix, getOption("continue")),
            verbose = verbose, max.deparse.length = Inf, encoding = "UTF-8",
     	   skip.echo = skips, keep.source=TRUE)
