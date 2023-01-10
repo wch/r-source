@@ -67,6 +67,10 @@
       \item \code{solve.default(a, b)} works around issues with
       some versions of LAPACK when \code{a} contains \code{NA} or
       \code{NaN} values.
+
+      \item When \code{UseMethod()} cannot dispatch, it no longer segfaults
+      producing the error message in case of a long \code{class()}, thanks to
+      Joris Vankerschaver's report (including patch) in \PR{18447}.
     }
   }
 }
