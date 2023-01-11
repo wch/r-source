@@ -5480,7 +5480,8 @@ add_dummies <- function(dir, Log)
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
-                             "\\[-W#warnings\\]"
+                             "\\[-W#warnings\\]",
+                             "\\[-Wrange-loop-construct\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
