@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-01-07 r83581) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-01-11 r83598 ucrt) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.2.0 (64-bit)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,6 +20,7 @@ Type 'q()' to quit R.
 > pkgname <- "graphics"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('graphics')
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
@@ -196,14 +197,14 @@ Hair    Brown Blue Hazel Green
 > ### ** Examples
 > 
 > with(beaver1, {
-+ 	opar <- par(mfrow = c(2,1))
-+ 	time <- strptime(paste(1990, day, time %/% 100, time %% 100),
-+ 					 "%Y %j %H %M")
-+ 	plot(time, temp, type = "l") # axis at 5-hour intervals.
-+ 	# now label every hour on the time axis
-+ 	plot(time, temp, type = "l", xaxt = "n")
-+ 	r <- as.POSIXct(round(range(time), "hours"))
-+ 	axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
++     opar <- par(mfrow = c(2,1))
++     time <- strptime(paste(1990, day, time %/% 100, time %% 100),
++                      "%Y %j %H %M")
++     plot(time, temp, type = "l") # axis at 5-hour intervals.
++     # now label every hour on the time axis
++     plot(time, temp, type = "l", xaxt = "n")
++     r <- as.POSIXct(round(range(time), "hours"))
++     axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
 +     par(opar) # reset changed par settings
 + })
 > 
@@ -225,6 +226,54 @@ Hair    Brown Blue Hazel Green
 > axis.Date(1, at = seq(as.Date("2001/1/1"), max(random.dates)+6, "weeks"))
 > axis.Date(1, at = seq(as.Date("2001/1/1"), max(random.dates)+6, "days"),
 +      labels = FALSE, tcl = -0.2)
+> 
+> ## axis.Date() with various data types:
+> x <- seq(as.Date("2022-01-20"), as.Date("2023-03-21"), by = "days")
+> plot(data.frame(x, y = 1), xaxt = "n")
+> legend("topleft", title = "input",
++        legend = c("character", "Date", "POSIXct", "POSIXlt", "numeric"),
++        fill = c("violet", "red", "orange", "coral1", "darkgreen"))
+> axis.Date(1)
+> axis.Date(3, at = "2022-04-01", col.axis = "violet")
+> axis.Date(3, at = as.Date("2022-07-01"), col.axis = "red")
+> axis.Date(3, at = as.POSIXct(as.Date("2022-10-01")), col.axis = "orange")
+> axis.Date(3, at = as.POSIXlt(as.Date("2023-01-01")), col.axis = "coral1")
+> axis.Date(3, at = as.integer(as.Date("2023-04-01")), col.axis = "darkgreen")
+> ## automatically extends the format:
+> axis.Date(1, at = "2022-02-15", col.axis = "violet",
++          col = "violet", tck = -0.05, mgp = c(3,2,0))
+> 
+> ## axis.POSIXct() with various data types (2 minutes):
+> x <- as.POSIXct("2022-10-01") + c(0, 60, 120)
+> attributes(x)   # no timezone
+$class
+[1] "POSIXct" "POSIXt" 
+
+> plot(data.frame(x, y = 1), xaxt = "n")
+> legend("topleft", title = "input",
++        legend = c("character", "Date", "POSIXct", "POSIXlt", "numeric"),
++        fill = c("violet", "red", "orange", "coral1", "darkgreen"))
+> axis.POSIXct(1)
+> axis.POSIXct(3, at = "2022-10-01 00:01", col.axis = "violet")
+> axis.POSIXct(3, at = as.Date("2022-10-01"), col.axis = "red")
+> axis.POSIXct(3, at = as.POSIXct("2022-10-01 00:01:30"), col.axis = "orange")
+> axis.POSIXct(3, at = as.POSIXlt("2022-10-01 00:02"), col.axis = "coral1")
+> axis.POSIXct(3, at = as.numeric(as.POSIXct("2022-10-01 00:00:30")),
++                 col.axis = "darkgreen")
+> ## automatically extends format (here: subseconds):
+> axis.POSIXct(3, at = as.numeric(as.POSIXct("2022-10-01 00:00:30")) + 0.25,
++                 col.axis = "forestgreen", col = "darkgreen", mgp = c(3,2,0))
+> 
+> ## axis.POSIXct: 2 time zones
+> HST <- as.POSIXct("2022-10-01", tz = "HST") + c(0, 60, 60*60)
+> CET <- HST
+> attr(CET, "tzone") <- "CET"
+> plot(data.frame(HST, y = 1), xaxt = "n", xlab = "Hawaii Standard Time (HST)")
+> axis.POSIXct(1, HST)
+> axis.POSIXct(1, HST, at = "2022-10-01 00:10", col.axis = "violet")
+> axis.POSIXct(3, CET)
+> mtext(3, text = "Central European Time (CET)", line = 3)
+> axis.POSIXct(3, CET, at="2022-10-01 12:10", col.axis = "violet")
 > 
 > 
 > 
@@ -2032,7 +2081,7 @@ wool         1    451   450.7   3.339 0.07361 .
 tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 > 
 > ## More than one y :
@@ -2210,7 +2259,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x116820c70>
+<bytecode: 0x0000019cccf29bf8>
 <environment: namespace:graphics>
 > 
 > 
@@ -3080,7 +3129,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x1069ebfc0>
+<bytecode: 0x0000019ccc7ed9a0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3161,7 +3210,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.492 0.085 1.582 0 0 
+Time elapsed:  4.08 0.23 4.32 NA NA 
 > grDevices::dev.off()
 null device 
           1 
