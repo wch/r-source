@@ -510,6 +510,10 @@
       \item BLAS detection now works also with system-provided libraries not
       available as regular files.  This fixes detection of the Accelerate
       framework on macOS since Big Sur.  Reported by David Novgorodsky.
+
+      \item \code{download.file()} gives a helpful error message in case of
+      an invalid \code{download.file.method} option, thanks to Colin Fay's
+      report in \PR{18455}.
     }
   }
 }

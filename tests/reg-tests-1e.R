@@ -410,8 +410,7 @@ tools::assertError( useMethErr(500,25) )
 ## gave a segfault  in R <= 4.2.2
 clsMethErr <- function(...) {
  sub(    '"[^"]*$', "",
-     sub('^[^"]*"', "",
-         tryCatch(useMethErr(...), error=conditionMessage) ))
+     sub('^[^"]*"', "", tryCmsg(useMethErr(...))))
 }
 showC <- function(..., n1=20, n2=16) {
     r <- clsMethErr(...)
@@ -421,6 +420,15 @@ showC <- function(..., n1=20, n2=16) {
 }
 invisible(lapply(11:120, function(n) showC(n, 1030 %/% n)))
 ## (mostly the truncation works "nicely", but sometimes even misses the closing quote)
+
+
+## download.file() with invalid option -- PR#18455
+op <- options(download.file.method = "no way")
+Edl <- tryCid(download.file("http://httpbin.org/get", "ping.txt"))
+stopifnot(inherits(Edl, "error"),
+          !englishMsgs || grepl("should be one of .auto.,", conditionMessage(Edl)))
+options(op)
+## error was  "object 'status' not found"  in R <= 4.2.2
 
 
 
