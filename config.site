@@ -59,6 +59,7 @@
 ## With LLCM clang may even want -Wno-strict-prototypes.
 ## It is assumed that this uses the same runtime library as CC, so the
 ## latter can be used to link the code it generates.
+## Default to CC and CFLAGS with any -std options removed.
 ## CC17=
 ## C17FLAGS=
 
@@ -67,7 +68,7 @@
 ## CC23=
 ## C23FLAGS=
 
-## Ditto for a compiler that supports C90 or C99 features.
+## Ditto for a compiler that follows the C90 or C99 standard.
 ## For example 'CC99=gcc -std=gnu99'
 ## CC90=
 ## C90FLAGS=

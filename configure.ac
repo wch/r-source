@@ -787,22 +787,26 @@ R_PROG_OBJCXX
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
-## Other C standards -- first pass
-: ${CC17="${CC} -std=gnu17"}
-: ${C17FLAGS="${CFLAGS}"}
+CC_SUB=`echo "${CC}" | sed 's/-std=[[^ ]]*//'`
+CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[[^ ]]*//'`
+dnl echo "CC_SUB = ${CC_SUB}"
+dnl echo "CFLAGS_SUB = ${CFLAGS_SUB}"
+
+## Other C standards
+: ${CC17="${CC_SUB} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS_SUB}"}
 AC_SUBST(CC17)
 AC_SUBST(C17FLAGS)
-r_c17_compiler="${CC17} ${C17FLAGS}"
-: ${CC23="${CC} -std=gnu2x"}
-: ${C23FLAGS="${CFLAGS}"}
+: ${CC23="${CC_SUB} -std=gnu2x"}
+: ${C23FLAGS="${CFLAGS_SUB}"}
 AC_SUBST(CC23)
 AC_SUBST(C23FLAGS)
-: ${CC90="${CC} -std=gnu90"}
-: ${C90FLAGS="${CFLAGS}"}
+: ${CC90="${CC_SUB} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS_SUB}"}
 AC_SUBST(CC90)
 AC_SUBST(C90FLAGS)
-: ${CC99="${CC} -std=gnu99"}
-: ${C99FLAGS="${CFLAGS}"}
+: ${CC99="${CC_Sub} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS_SUB}"}
 AC_SUBST(CC99)
 AC_SUBST(C99FLAGS)
 
@@ -3105,8 +3109,6 @@ R is now configured for ${host}
   C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
-  C17 compiler:                ${r_c17_compiler}
-  C23 compiler:                ${r_c23_compiler}
 
   Interfaces supported:        ${r_interfaces}
   External libraries:          ${r_external_libs}
