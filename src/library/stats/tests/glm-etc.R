@@ -79,14 +79,15 @@ d8 <- data.frame(
            449999994, 150000002, -3, -599999992, 4,
            -899999988, -300000004, 900000012, 450000006, 2))
 coef(fm8.  <- lm(y ~ . -1, data = d8)) # the one for X3 is NA
-cf8. <- c(X1 = -1.99985480264199, X2 = 3.49949693439699, X3 = NA)
-          all.equal(cf8., coef(fm8.), tol=0)# -> "Mean rel..diff.: 1.999e-15 | 1.776e-15
+cf8. <- c(X1 = -1.999854802642, X2 = 3.499496934397, X3 = NA)
+          all.equal(cf8., coef(fm8.), tol=0)# -> "Mean rel..diff.: ~ 3e-15
 stopifnot(all.equal(cf8., coef(fm8.)))
-coef(fm8.9 <- lm(y ~ . -1, data = d8, tol = 1e-9)) # no NA , but "instable":
-cf8.9 <- c(X1 = 45822.8304219638, X2 = -22908.9158706126, X3 = 45824.8302948333)
-          all.equal(cf8.9, coef(fm8.9), tol=0)# -> "Mean rel..diff.: 5.304e-09 | 4.446e-16
+coef(fm8.9 <- lm(y ~ . -1, data = d8, tol = 1e-9)) # no NA , but "instable" -- not too precise
+cf8.9 <- c(X1 = 45822.830422, X2 = -22908.915871, X3 = 45824.830295)
+          all.equal(cf8.9, coef(fm8.9), tol=0)# -> "Mean rel..diff.: 5.3e-9 | 5.15e-12
 stopifnot(all.equal(cf8.9, coef(fm8.9),
-                    tol = if(getRversion() <= "4.2.2") 1e-8 else 4e-15))
+                    tol = if(getRversion() <= "4.2.2") 2e-8 else 2e-10))
+
 ## predict :
 nd <- d8[,-1] + rep(outer(c(-2:2),10^(1:3)), 3) # 5 * 9 = 45 = 15 * 3 (nrow * ncol)
 row.names(nd) <- LETTERS[1:nrow(nd)]
@@ -111,9 +112,7 @@ stopifnot(exprs = {
 ## play with tol
 str(tls <- sort(outer(c(1,2,4), 10^-(9:5))))
 nT <- length(tls <- setNames(tls, formatC(tls)))
-tools::assertWarning(verbose=TRUE, # "... default "simple" may change ... "
-pls <- t(sapply(tls, function(TL) predict(fm8. , newdata=nd, tol = TL)))
-)
+pls <- t(sapply(tls, function(TL) predict(fm8. , newdata=nd, tol = TL, rankdeficient = "NA")))
 stopifnot(is.finite(plsLst <- pls[nT,])) # (no NA)
 plsLst
 sweep(pls, 2L, plsLst, `-`)
@@ -134,14 +133,20 @@ sweep(pls, 2L, plsLst, `-`)
 ## 4e-06  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 ## 1e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 ## 2e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 4e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 
 (iFi <- apply(pls, 2, function(.) which.max(is.finite(.))))
 ## A  B  C  D  E  F  G  H  I  J  K  L  M  N  O
 ## 7  7  4  6  7  9 10  4  7  8 11 12  5 11 12
-stopifnot( ## checking monotonicity: each column is  (NA NA ... NA | p_i p_i ... p_i)
+stopifnot(exprs = {
+    ## checking monotonicity: each column is  (NA NA ... NA | p_i p_i ... p_i)
     vapply(seq_along(tls),
            function(i) length(unique(pls[iFi[i]:nT, i])) == 1L,
-           NA))
+           NA)
+    ## allow 1 off :
+  3 <= iFi
+  iFi <= 13
+})
 
 
 ## __FIXME__
