@@ -1176,8 +1176,7 @@ if(FALSE) {
             if (WINDOWS) {
                 if (file.exists(f <- "./configure.ucrt") ||
                     file.exists(f <- "./configure.win")) {
-                    if(FALSE) {
-                    ## a possible appraoch with less quoting hell
+                    ## a possible approach with less quoting hell
                     ev <- c("CC", "CFLAGS", "CXX", "CXXFLAGS", "CPPFLAGS",
                             "LDFLAGS", "FC", "FCFLAGS")
                     ## skip any which are already set.
@@ -1185,15 +1184,14 @@ if(FALSE) {
                     ev1 <- ev
                     if (!is.na(use_C))
                         ev1 <- c(sprintf(c("CC%s", "C%sFLAGS"), use_C),
-                                 ev[-(1:2)])
-                    ev2 <- lapply(ev1, function(x) # or use Rcmd.exe
-                        system2(file.path(R.home("bin"), "R"), c("CMD", "config", x),
+                                 ev[!(ev %in% c("CC", "CFLAGS"))])
+                    ev2 <- lapply(ev1, function(x)
+                        system2(file.path(R.home("bin"), "Rcmd.exe"), c("config", x),
                                 stdout = TRUE))
-                    names(ev2) <- ev
-                    }
+                    names(ev2) <- ev1
                     do.call(Sys.setenv, ev2)
                     res <- system(paste("sh", f))
-                    ## Sys.unsetenv(ev)
+                    Sys.unsetenv(ev2)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     message("\n",
