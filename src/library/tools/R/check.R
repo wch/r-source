@@ -5484,7 +5484,7 @@ add_dummies <- function(dir, Log)
                              "\\[-Wrange-loop-construct\\]",
                              "\\[-Warray-parameter=\\]",
                              ## clang version (not Apple clang)
-                             "\\[-Warray-parameter\\]",
+                             "\\[-Warray-parameter\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
