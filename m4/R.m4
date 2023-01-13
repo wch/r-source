@@ -4897,6 +4897,118 @@ else
 fi
 ])# R_CSTACK_DIRECTION
 
+AC_DEFUN([R_C17],
+[AC_CACHE_CHECK([whether ${CC} is a C17 compiler], [r_cv_C17],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ > 201710L
+# error "Compiler claims to be later than C17"
+# elif __STDC_VERSION__ < 199901L
+# error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+// C89 example from autoconf 2.71.
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+// From rmumps
+typedef enum { true=1, false=0 } bool;
+
+// simplified from survival
+static void addup();
+void agsurv3(int *sn)
+{
+    addup(4, 0.0, 0.0);
+}
+static void addup(int itime, double haz, double var){}
+
+int main(void) {
+}
+
+]])],
+               [r_cv_C17=yes],
+               [r_cv_C17=no],
+               [r_cv_C17=no])])
+])# R_C17
+
+AC_DEFUN([R_C23],
+[AC_CACHE_CHECK([whether ${CC} is a C23 compiler], [r_cv_C23],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+}
+
+]])],
+               [r_cv_C23=yes],
+               [r_cv_C23=no],
+               [r_cv_C23=no])])
+])# R_C23
+
+AC_DEFUN([R_C90],
+[AC_CACHE_CHECK([whether ${CC} is a C90 compiler], [r_cv_C90],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#if defined  __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
+# error "Compiler claims to be later than C90"
+#endif
+
+// C90 example from autoconf 2.71.
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+int main(void) {
+}
+
+]])],
+               [r_cv_C90=yes],
+               [r_cv_C90=no],
+               [r_cv_C90=no])])
+])# R_C90
+
+AC_DEFUN([R_C99],
+[AC_CACHE_CHECK([whether ${CC} is a C99 compiler], [r_cv_C99],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ != 199901L
+#  error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+// C90 example from autoconf 2.71.
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+int main(void) {
+}
+
+]])],
+               [r_cv_C99=yes],
+               [r_cv_C99=no],
+               [r_cv_C99=no])])
+])# R_C90
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

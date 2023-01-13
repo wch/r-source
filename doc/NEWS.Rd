@@ -268,19 +268,17 @@
       \code{__cplusplus} value greater than that in the C++20 standard.
       C++ feature tests should be used.
 
-      \item [In progress]
-
-      There is support for a package to indicate the version of the
-      C standard which should be used to compile it, and for the
-      installing user to specify this.  In most cases \R defaults to the C
-      compiler's defailt standard which is C17 (a `bug-fix' of C11) --
+      \item There is support for a package to indicate the version of
+      the C standard which should be used to compile it, and for the
+      installing user to specify this.  In most cases \R defaults to the
+      C compiler's defailt standard which is C17 (a `bug-fix' of C11) --
       earlier versions of \R or compilers may have defaulted to C99.
  
       Current options are:
       \describe{
 	\item{USE_C17}{Use a standard that is at most C17.  The
 	  intention is to allow legacy packages to still be installed when
-	  later C standards become the default.  For example, packages
+	  later C standards become the default, incliuding packages
 	  using new keywords as identifiers or with K&R-style function
 	  declarations.
 	}
@@ -317,7 +315,8 @@
       were not setting them (as documented in \sQuote{Writing R
 	Extensions} §1.2, and settings there will take precedence).
 
-      Not yet used for \command{configure.win} on Windows.
+      Also used for \command{configure.win} and \command{configure.ucrt}
+      on Windows.
     }
   }
 
@@ -344,7 +343,8 @@
       header no longer includes header \file{limits.h} from C nor
       \file{climits} from C++.
 
-      \item New macro \code{CAD5R()} is provided and used in a few places.
+      \item New macro \code{CAD5R()} is provided in \file{Rinternals.h}
+      and used in a few places in the \R sources.
     }
   }
 

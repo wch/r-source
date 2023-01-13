@@ -793,22 +793,58 @@ dnl echo "CC_SUB = ${CC_SUB}"
 dnl echo "CFLAGS_SUB = ${CFLAGS_SUB}"
 
 ## Other C standards
+CC_save=${CC}
+CFLAGS_save=${CFLAGS}
 : ${CC17="${CC_SUB} -std=gnu17"}
 : ${C17FLAGS="${CFLAGS_SUB}"}
+CC=${CC17}
+CFLAGS=${C17FLAGS}
+R_C17
+if test x${r_cv_C17} = xno; then
+CC17=
+C17FLAGS=
+fi
 AC_SUBST(CC17)
 AC_SUBST(C17FLAGS)
+
+## FIXME: try -std=gnu23 first
 : ${CC23="${CC_SUB} -std=gnu2x"}
 : ${C23FLAGS="${CFLAGS_SUB}"}
+CC=${CC23}
+CFLAGS=${C23FLAGS}
+R_C23
+if test x${r_cv_C23} = xno; then
+CC23=
+C23FLAGS=
+fi
 AC_SUBST(CC23)
 AC_SUBST(C23FLAGS)
+
 : ${CC90="${CC_SUB} -std=gnu90"}
 : ${C90FLAGS="${CFLAGS_SUB}"}
+CC=${CC90}
+CFLAGS=${C90FLAGS}
+R_C90
+if test x${r_cv_C90} = xno; then
+CC90=
+C90FLAGS=
+fi
 AC_SUBST(CC90)
 AC_SUBST(C90FLAGS)
-: ${CC99="${CC_Sub} -std=gnu99"}
+
+: ${CC99="${CC_SUB} -std=gnu99"}
 : ${C99FLAGS="${CFLAGS_SUB}"}
+CC=${CC99}
+CFLAGS=${C99FLAGS}
+R_C99
+if test x${r_cv_C99} = xno; then
+CC99=
+C99FLAGS=
+fi
 AC_SUBST(CC99)
 AC_SUBST(C99FLAGS)
+CC=${CC_save}
+CFLAGS=${CFLAGS=save}
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
