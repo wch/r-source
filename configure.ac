@@ -844,7 +844,7 @@ fi
 AC_SUBST(CC99)
 AC_SUBST(C99FLAGS)
 CC=${CC_save}
-CFLAGS=${CFLAGS=save}
+CFLAGS=${CFLAGS_save}
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL

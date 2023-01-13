@@ -10010,7 +10010,7 @@ fi
 
 
 CC=${CC_save}
-CFLAGS=${CFLAGS=save}
+CFLAGS=${CFLAGS_save}
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
