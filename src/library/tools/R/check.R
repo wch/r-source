@@ -5481,7 +5481,10 @@ add_dummies <- function(dir, Log)
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
                              "\\[-W#warnings\\]",
-                             "\\[-Wrange-loop-construct\\]"
+                             "\\[-Wrange-loop-construct\\]",
+                             "\\[-Warray-parameter=\\]",
+                             ## clang version (not Apple clang)
+                             "\\[-Warray-parameter\\]",
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
