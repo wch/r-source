@@ -1886,6 +1886,17 @@ linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
 to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
+As from @R{} 4.3.0, variables
+@example
+CC CFLAGS CXX CXXFLAGS CPPFLAGS LDFLAGS FC FCFLAGS
+@end example
+@noindent
+are set in the environment (if not already set) when @command{configure}
+is called from @command{R CMD INSTALL}, in case the script forgets to
+set them as described above.  This includes making use of the selected C
+standard (but not the C++ standard as that is selected at a later stage
+by  @command{R CMD SHLIB}).
+
 To check for an external BLAS library using the @code{AX_BLAS} macro
 from the official Autoconf Macro
 Archive@footnote{@uref{https://www.gnu.org/software/autoconf-archive/ax_blas.html}. If
@@ -1902,14 +1913,9 @@ FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 AX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
 @end example
-
+@noindent
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
 Fortran code works on all @R{} platforms.  
-@c Calls to the Autoconf macro
-@c @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
-@c not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
-@c versions of Autoconf in fact allow an already set @code{FLIBS} to
-@c override the test for the Fortran linker flags.)
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -1933,19 +1939,20 @@ you ship them in a @file{tools} directory (as @R{} itself does).
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,
 please give enough information for a user on a non-Unix-alike platform
-to configure it manually, or provide a @file{configure.win} script
-(or @file{configure.ucrt}) to be
-used on that platform.  (Optionally, there can be a @file{cleanup.win}
-script (or @file{cleanup.ucrt}).
-Both should be shell scripts to be executed by @command{ash},
-which is a minimal version of Bourne-style @command{sh}.)  When
-@file{configure.win} (or @file{configure.ucrt}) is run the environment variables @env{R_HOME}
-(which uses @samp{/} as the file separator), @env{R_ARCH} and
-@env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
-64-bit build (its value there is @samp{/x64}) and to install DLLs to the
-correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
-@env{R_ARCH_BIN} to find the correct place under the @file{bin}
-directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
+to configure it manually, or provide a @file{configure.win} script (or
+@file{configure.ucrt}) to be used on that platform.  (Optionally, there
+can be a @file{cleanup.win} script (or @file{cleanup.ucrt}).  Both
+should be shell scripts to be executed by @command{ash}, which is a
+minimal version of Bourne-style @command{sh}.)  When
+@file{configure.win} (or @file{configure.ucrt}) is run the environment
+variables @env{R_HOME} (which uses @samp{/} as the file separator),
+@env{R_ARCH} and @env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to
+decide if this is a 64-bit build (its value there is @samp{/x64}) and to
+install DLLs to the correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).
+Use @env{R_ARCH_BIN} to find the correct place under the @file{bin}
+directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
+a @file{configure.win} script does compilation (including calling
+@command{R CMD SHLIB}), maost of the considerations above apply.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An

@@ -1174,11 +1174,26 @@ if(FALSE) {
 
         if (use_configure) {
             if (WINDOWS) {
-                if (file.exists("configure.ucrt")) {
-                    res <- system("sh ./configure.ucrt")
-                    if (res) pkgerrmsg("configuration failed", pkg_name)
-                } else if (file.exists("configure.win")) {
-                    res <- system("sh ./configure.win")
+                if (file.exists(f <- "./configure.ucrt") ||
+                    file.exists(f <- "./configure.win")) {
+                    if(FALSE) {
+                    ## a possible appraoch with less quoting hell
+                    ev <- c("CC", "CFLAGS", "CXX", "CXXFLAGS", "CPPFLAGS",
+                            "LDFLAGS", "FC", "FCFLAGS")
+                    ## skip any which are already set.
+                    ev <- ev[!nzchar(Sys.getenv(ev))]
+                    ev1 <- ev
+                    if (!is.na(use_C))
+                        ev1 <- c(sprintf(c("CC%s", "C%sFLAGS"), use_C),
+                                 ev[-(1:2)])
+                    ev2 <- lapply(ev1, function(x) # or use Rcmd.exe
+                        system2(file.path(R.home("bin"), "R"), c("CMD", "config", x),
+                                stdout = TRUE))
+                    names(ev2) <- ev
+                    }
+                    do.call(Sys.setenv, ev2)
+                    res <- system(paste("sh", f))
+                    ## Sys.unsetenv(ev)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     message("\n",
@@ -1197,6 +1212,21 @@ if(FALSE) {
                     ## in case the configure script calls SHLIB (some do)
                     cmd <- paste("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_=false",
                                  cmd)
+                    ev <- c("CC", "CFLAGS", "CXX", "CXXFLAGS", "CPPFLAGS",
+                            "LDFLAGS", "FC", "FCFLAGS")
+                    ## skip any which are already set.
+                    ev <- ev[!nzchar(Sys.getenv(ev))]
+                    ev1 <- ev
+                    if (!is.na(use_C))
+                        ev1 <- c(sprintf(c("CC%s", "C%sFLAGS"), use_C),
+                                 ev[-(1:2)])
+                    ev2 <- sapply(ev1, function(x)
+                        system2(file.path(R.home("bin"), "R"), c("CMD", "config", x),
+                                stdout = TRUE))
+                    ev3 <- paste0(ev, "=", shQuote(ev2))
+                    ## skip any which are empty, possible for CXX)
+                    ev3 <- ev3[nzchar(ev2)]
+                    cmd <- paste(c(ev3, cmd), collapse = " ")
                     res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))

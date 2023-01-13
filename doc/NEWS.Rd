@@ -272,7 +272,11 @@
 
       There is support for a package to indicate the version of the
       C standard which should be used to compile it, and for the
-      installing user to specify this.  Current options are:
+      installing user to specify this.  In most cases \R defaults to the C
+      compiler's defailt standard which is C17 (a `bug-fix' of C11) --
+      earlier versions of \R or compilers may have defaulted to C99.
+ 
+      Current options are:
       \describe{
 	\item{USE_C17}{Use a standard that is at most C17.  The
 	  intention is to allow legacy packages to still be installed when
@@ -300,13 +304,20 @@
       \item (Windows) A \file{src/Makefile.ucrt} or
       \file{src/Makefile.win} file is now included after
       \file{\var{R_HOME}/etc\var{R_ARCH}/Makeconf} and so no longer
-      needs to include that file itself.  Installation now uses a site
-      \file{Makevars} file in the same way as a package with a
-      \file{src/Makevars.win} file would.
+      needs to include that file itself.  Installation of a package with
+      such a file now uses a site \file{Makevars} file in the same way
+      as a package with a \file{src/Makevars.win} file would.
 
       \item (Windows) The default C++ standard had accidentally been
       left at C++11 when it was changed to C++14 on Unix.  It is now
       C++14, as documented.
+
+      \item \command{configure} is now passed crucial variables such as
+      \env{CC} and \env{CFLAGS} in its environment, as many packages
+      were not setting them (as documented in \sQuote{Writing R
+	Extensions} §1.2, and settings there will take precedence).
+
+      Not yet used for \command{configure.win} on Windows.
     }
   }
 
