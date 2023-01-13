@@ -30347,7 +30347,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx11_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++11 features with $switch" >&5
 printf %s "checking whether $CXX supports C++11 features with $switch... " >&6; }
@@ -31081,7 +31081,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -31504,7 +31504,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -31917,7 +31917,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx14_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++14 features with $switch" >&5
 printf %s "checking whether $CXX supports C++14 features with $switch... " >&6; }
@@ -31934,7 +31934,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -32363,7 +32363,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -32861,7 +32861,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -33647,7 +33647,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -34423,7 +34423,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx17_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++17 features with $switch" >&5
 printf %s "checking whether $CXX supports C++17 features with $switch... " >&6; }
@@ -34440,7 +34440,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -35232,7 +35232,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -36091,7 +36091,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -36875,7 +36875,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -37651,7 +37651,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx20_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++20 features with $switch" >&5
 printf %s "checking whether $CXX supports C++20 features with $switch... " >&6; }
@@ -37666,7 +37666,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -38456,7 +38456,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -40875,7 +40875,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx23_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++23 features with $switch" >&5
 printf %s "checking whether $CXX supports C++23 features with $switch... " >&6; }
