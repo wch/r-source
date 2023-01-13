@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-01-11 r83598 ucrt) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-01-13 r83608) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,7 +20,6 @@ Type 'q()' to quit R.
 > pkgname <- "graphics"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> options(pager = "console")
 > library('graphics')
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
@@ -1247,9 +1246,26 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +       xlab = expression(cos(r^2) * e^{-r/6}))
 > contour(z, add = TRUE, drawlabels = FALSE)
 > 
-> # Volcano data visualized as matrix. Need to transpose and flip
-> # matrix horizontally.
-> image(t(volcano)[ncol(volcano):1,])
+> # Visualize as matrix.  Need to transpose matrix and then flip it horizontally:
+> tf <- function(m) t(m)[, nrow(m):1]
+> imageM <- function(m, grid = max(dim(m)) <= 25, asp = (nrow(m)-1)/(ncol(m)-1), ...) {
++     image(tf(m), asp=asp, axes = FALSE, ...)
++     mAxis <- function(side, at, ...) # using 'j'
++         axis(side, at=at, labels=as.character(j+1L), col="gray", col.axis=1, ...)
++     n <- ncol(m); n1 <- n-1L; j <- 0L:n1; mAxis(1, at= j/n1)
++     if(grid) abline(v = (0:n - .5)/n1, col="gray77", lty="dotted")
++     n <- nrow(m); n1 <- n-1L; j <- 0L:n1; mAxis(2, at=1-j/n1, las=1)
++     if(grid) abline(h = (0:n - .5)/n1, col="gray77", lty="dotted")
++ }
+> (m <- outer(1:5, 1:14))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+[1,]    1    2    3    4    5    6    7    8    9    10    11    12    13    14
+[2,]    2    4    6    8   10   12   14   16   18    20    22    24    26    28
+[3,]    3    6    9   12   15   18   21   24   27    30    33    36    39    42
+[4,]    4    8   12   16   20   24   28   32   36    40    44    48    52    56
+[5,]    5   10   15   20   25   30   35   40   45    50    55    60    65    70
+> imageM(m, main = "image(<5 x 14 matrix>)   with rows and columns")
+> imageM(volcano)
 > 
 > # A prettier display of the volcano
 > x <- 10*(1:nrow(volcano))
@@ -2081,7 +2097,7 @@ wool         1    451   450.7   3.339 0.07361 .
 tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 > 
 > ## More than one y :
@@ -3210,7 +3226,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.08 0.23 4.32 NA NA 
+Time elapsed:  3.054 0.221 3.303 0 0 
 > grDevices::dev.off()
 null device 
           1 
