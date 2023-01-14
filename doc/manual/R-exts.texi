@@ -276,7 +276,7 @@ shell scripts which are, respectively, executed before and (if option
 @file{configure.win} and @file{cleanup.win}. Since @R{} 4.2.0 on Windows,
 @file{configure.ucrt} and @file{cleanup.ucrt} are supported and take
 precedence over @file{configure.win} and @file{cleanup.win}. They can
-hence be used to provide content specific to UCRT or Rtools42, if needed,
+hence be used to provide content specific to UCRT or Rtools42 and newer, if needed,
 but the support for @file{.ucrt} files may be removed in future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -1218,7 +1218,7 @@ subdirectories named @file{unix} or @file{windows}.
 
 The sources and headers for the compiled code are in @file{src}, plus
 optionally a file @file{Makevars} or @file{Makefile} (or for use on
-Windows, with extesnion @file{.win} or @file{.ucrt}).  When a package is
+Windows, with extension @file{.win} or @file{.ucrt}).  When a package is
 installed using @code{R CMD INSTALL}, @command{make} is used to control
 compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
@@ -1269,7 +1269,7 @@ There are platform-specific file names on Windows:
 @file{src/Makevars.win} and @file{src/Makefile.ucrt} takes precedence
 over @file{src/Makefile.win}. @file{src/Makevars.ucrt} and
 @file{src/Makefile.ucrt} will be ignored by earlier versions of @R{}, and
-hence can be used to provide content specific to UCRT or Rtools42,
+hence can be used to provide content specific to UCRT or Rtools42 and newer,
 but the support for @file{.ucrt} files may be removed in the future when
 building packages from source on the older versions of R will no longer
 be needed, and hence the files may be renamed back to @file{.win}.
@@ -1866,7 +1866,7 @@ FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 AX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
 @end example
-
+@noindent
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
 Fortran code works on all @R{} platforms.  
 @c Calls to the Autoconf macro
@@ -1897,19 +1897,20 @@ you ship them in a @file{tools} directory (as @R{} itself does).
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,
 please give enough information for a user on a non-Unix-alike platform
-to configure it manually, or provide a @file{configure.win} script
-(or @file{configure.ucrt}) to be
-used on that platform.  (Optionally, there can be a @file{cleanup.win}
-script (or @file{cleanup.ucrt}).
-Both should be shell scripts to be executed by @command{ash},
-which is a minimal version of Bourne-style @command{sh}.)  When
-@file{configure.win} (or @file{configure.ucrt}) is run the environment variables @env{R_HOME}
-(which uses @samp{/} as the file separator), @env{R_ARCH} and
-@env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
-64-bit build (its value there is @samp{/x64}) and to install DLLs to the
-correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
-@env{R_ARCH_BIN} to find the correct place under the @file{bin}
-directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
+to configure it manually, or provide a @file{configure.win} script (or
+@file{configure.ucrt}) to be used on that platform.  (Optionally, there
+can be a @file{cleanup.win} script (or @file{cleanup.ucrt}).  Both
+should be shell scripts to be executed by @command{ash}, which is a
+minimal version of Bourne-style @command{sh}.)  When
+@file{configure.win} (or @file{configure.ucrt}) is run the environment
+variables @env{R_HOME} (which uses @samp{/} as the file separator),
+@env{R_ARCH} and @env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to
+decide if this is a 64-bit build (its value there is @samp{/x64}) and to
+install DLLs to the correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).
+Use @env{R_ARCH_BIN} to find the correct place under the @file{bin}
+directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
+a @file{configure.win} script does compilation (including calling
+@command{R CMD SHLIB}), maost of the considerations above apply.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
@@ -3018,8 +3019,7 @@ C++ standard.  And the default C++ standard varies widely and gets
 changed frequently by vendors -- for example Apple clang 14 defaults to
 C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
 
-
-For a package with a @file{src/Makefile} (ar a Windows analogue),
+For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
 CXX = `"$@{R_HOME@}/bin/R" CMD config CXX17`
@@ -5320,8 +5320,7 @@ example macOS 10.16 was announced not to have them (but released as
 macOS 11 with them); later it was announced that macOS 12.3 does not
 have Python 2 and only a minimal install of Python 3 is included.
 Python 2 has passed end-of-life and been removed from many major
-distributions.  Support for Rust cannot be assumed, and it does not even
-support all the @R{} platforms used by @acronym{CRAN}.
+distributions.  Support for Rust cannot be assumed.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
@@ -6108,7 +6107,7 @@ without arguments and is likely to become the default in future
 compilers.  (It already is for LLVM @command{clang} in C23 mode.)  Note
 that using @code{f()} for a function without any parameters was
 deprecated in C99 and C11, but it expected to be non-deprecated in C23.
-However, @code{f(void)} is supportef by all standards and avoids any
+However, @code{f(void)} is supported by all standards and avoids any
 uncertainty.
 @c draft n3054 §6.7.6.3 point 13 and footnote.
 
