@@ -56,7 +56,7 @@
   \item{tol}{non-negative number determining how non-estimability is
     determined in rank deficient cases.}
   \item{verbose}{\code{\link{logical}} indicating if messages should be
-    preoduced about rank deficiency handling.}
+    produced about rank deficiency handling.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{

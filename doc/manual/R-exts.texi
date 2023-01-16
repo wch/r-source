@@ -1952,7 +1952,7 @@ install DLLs to the correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).
 Use @env{R_ARCH_BIN} to find the correct place under the @file{bin}
 directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
 a @file{configure.win} script does compilation (including calling
-@command{R CMD SHLIB}), maost of the considerations above apply.
+@command{R CMD SHLIB}), most of the considerations above apply.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An

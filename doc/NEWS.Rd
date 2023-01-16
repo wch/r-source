@@ -271,14 +271,14 @@
       \item There is support for a package to indicate the version of
       the C standard which should be used to compile it, and for the
       installing user to specify this.  In most cases \R defaults to the
-      C compiler's defailt standard which is C17 (a `bug-fix' of C11) --
+      C compiler's default standard which is C17 (a `bug-fix' of C11) --
       earlier versions of \R or compilers may have defaulted to C99.
  
       Current options are:
       \describe{
 	\item{USE_C17}{Use a standard that is at most C17.  The
 	  intention is to allow legacy packages to still be installed when
-	  later C standards become the default, incliuding packages
+	  later C standards become the default, including packages
 	  using new keywords as identifiers or with K&R-style function
 	  declarations.
 	}
