@@ -47,7 +47,7 @@
       \item{\code{"simple"}:}{is back compatible but may give dubious predictions in
 	non-estimable cases.}
       \item{\code{"non-estim"}:}{gives the same predictions but with an
-	\code{\link{attribute}}, \code{attr(*, "non-estim")} with indices
+	attribute \code{\link{attr}(*, "non-estim")} with indices
 	in \code{1:nrow(newdata)} of new data observations which are deemed
 	non-estimable.}
       \item{\code{"NA"}:}{predicts \code{NA} for non-estimable new data.}
