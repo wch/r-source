@@ -432,7 +432,7 @@ static const char *reg2Olson(const wchar_t *s)
 
 
 static TIME_ZONE_INFORMATION tzi;
-/* Longest currently is 31 chars */
+/* Longest currently (2023-01) is 32 bytes (always ASCII) */
 static char StandardName[64], DaylightName[64], Olson[64] = "";
 
 /* Uwe Ligges says these entries are localized in the Windows' base language */
