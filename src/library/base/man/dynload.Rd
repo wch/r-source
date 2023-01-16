@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -145,7 +145,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   The function \code{dyn.unload} unlinks the DLL.  Note that unloading a
   DLL and then re-loading a DLL of the same name may or may not work: on
-  Solaris it uses the first version loaded. Note also that some DLLs cannot
+  Solaris it used the first version loaded. Note also that some DLLs cannot
   be safely unloaded at all: unloading a DLL which implements C finalizers
   but does not unregister them on unload causes R to crash.
 

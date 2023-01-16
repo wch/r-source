@@ -53,7 +53,7 @@ Sys.getenv(x = NULL, unset = "", names = NA)
   environment variables used by \R.
 }
 \examples{
-## whether HOST is set will be shell-dependent e.g. Solaris' csh does not.
+## whether HOST is set will be shell-dependent e.g. Solaris' csh did not.
 Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 
 s <- Sys.getenv()
