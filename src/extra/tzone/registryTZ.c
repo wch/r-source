@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2018   The R Core Team
+ *  Copyright (C) 2007-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@
 #include <string.h>
 
 /*
+  Updated using CLDR 42 (cldr-release-42/common/supplemental/windowsZones.xml),
+  keeping old entries for Windows time zones not present in CLDR42.
+
   From http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html
   Added some entries from the XP Registry (and checked on Vista).
   Table updated from Unicode in August 2015.
@@ -31,10 +34,10 @@ const static struct {
     { L"Afghanistan Standard Time", "Asia/Kabul" },
     { L"Alaskan Standard Time", "America/Anchorage" },
     { L"Arab Standard Time", "Asia/Riyadh" },
-    { L"Arabian Standard Time", "Asia/Bahrain" },
+    { L"Arabian Standard Time", "Asia/Dubai" },
     { L"Arabic Standard Time", "Asia/Baghdad" },
     { L"Armenian Standard Time", "Asia/Yerevan" },
-    { L"Atlantic Standard Time", "America/Curacao" },
+    { L"Atlantic Standard Time", "America/Halifax" },
     { L"AUS Central Standard Time", "Australia/Darwin" },
     { L"AUS Eastern Standard Time", "Australia/Sydney" },
     { L"Azerbaijan Standard Time", "Asia/Baku" },
@@ -44,29 +47,29 @@ const static struct {
     { L"Caucasus Standard Time", "Asia/Yerevan" },
     { L"Cen. Australia Standard Time", "Australia/Adelaide" },
     { L"Central America Standard Time", "America/Guatemala" },
-    { L"Central Asia Standard Time", "Asia/Dhaka" },
-    { L"Central Brazilian Standard Time", "America/Manaus" },
-    { L"Central Europe Standard Time", "Europe/Prague" },
+    { L"Central Asia Standard Time", "Asia/Almaty" },
+    { L"Central Brazilian Standard Time", "America/Cuiaba" },
+    { L"Central Europe Standard Time", "Europe/Budapest" },
     { L"Central European Standard Time", "Europe/Warsaw" },
     { L"Central Pacific Standard Time", "Pacific/Guadalcanal" },
     { L"Central Standard Time", "America/Chicago" },
     { L"Central Standard Time (Mexico)", "America/Mexico_City" },
-    { L"China Standard Time", "Asia/Taipei" },
-    { L"Dateline Standard Time", "Pacific/Kwajalein" },
+    { L"China Standard Time", "Asia/Shanghai" },
+    { L"Dateline Standard Time", "Etc/GMT+12" },
     { L"E. Africa Standard Time", "Africa/Nairobi" },
     { L"E. Australia Standard Time", "Australia/Brisbane" },
-    { L"E. Europe Standard Time", "Europe/Minsk" },
+    { L"E. Europe Standard Time", "Europe/Chisinau" },
     { L"E. South America Standard Time", "America/Sao_Paulo" },
     { L"Eastern Standard Time", "America/New_York" },
     { L"Egypt Standard Time", "Africa/Cairo" },
     { L"Ekaterinburg Standard Time", "Asia/Yekaterinburg" },
     { L"Fiji Standard Time", "Pacific/Fiji" },
-    { L"FLE Standard Time", "Europe/Helsinki" },
+    { L"FLE Standard Time", "Europe/Kiev" },
     { L"Georgian Standard Time", "Asia/Tbilisi" },
     { L"GMT Standard Time", "Europe/London" },
     { L"Greenland Standard Time", "America/Godthab" },
-    { L"Greenwich Standard Time", "Africa/Casablanca" },
-    { L"GTB Standard Time", "Europe/Istanbul" },
+    { L"Greenwich Standard Time", "Atlantic/Reykjavik" },
+    { L"GTB Standard Time", "Europe/Bucharest" },
     { L"Hawaiian Standard Time", "Pacific/Honolulu" },
     { L"India Standard Time", "Asia/Calcutta" },
     { L"Iran Standard Time", "Asia/Tehran" },
@@ -89,20 +92,20 @@ const static struct {
     { L"Nepal Standard Time", "Asia/Katmandu" },
     { L"New Zealand Standard Time", "Pacific/Auckland" },
     { L"Newfoundland Standard Time", "America/St_Johns" },
-    { L"North Asia East Standard Time", "Asia/Ulaanbaatar" },
+    { L"North Asia East Standard Time", "Asia/Irkutsk" },
     { L"North Asia Standard Time", "Asia/Krasnoyarsk" },
     { L"Pacific SA Standard Time", "America/Santiago" },
     { L"Pacific Standard Time", "America/Los_Angeles" },
     { L"Pacific Standard Time (Mexico)", "America/Tijuana" },
     { L"Romance Standard Time", "Europe/Paris" },
     { L"Russian Standard Time", "Europe/Moscow" },
-    { L"SA Eastern Standard Time", "America/Buenos_Aires" },
+    { L"SA Eastern Standard Time", "America/Cayenne" },
     { L"SA Pacific Standard Time", "America/Bogota" },
-    { L"SA Western Standard Time", "America/Caracas" },
+    { L"SA Western Standard Time", "America/La_Paz" },
     { L"Samoa Standard Time", "Pacific/Apia" },
     { L"SE Asia Standard Time", "Asia/Bangkok" },
     /* next is name of timezone, not of Std */
-    { L"Singapore Standard Time", "Asia/Kuala_Lumpur" },
+    { L"Singapore Standard Time", "Asia/Singapore" },
     { L"South Africa Standard Time", "Africa/Johannesburg" },
     { L"Sri Lanka Standard Time", "Asia/Colombo" },
     { L"Taipei Standard Time", "Asia/Taipei" },
@@ -116,8 +119,8 @@ const static struct {
     { L"W. Australia Standard Time", "Australia/Perth" },
     { L"W. Central Africa Standard Time", "Africa/Lagos" },
     { L"W. Europe Standard Time", "Europe/Berlin" },
-    { L"West Asia Standard Time", "Asia/Karachi" },
-    { L"West Pacific Standard Time", "Pacific/Guam" },
+    { L"West Asia Standard Time", "Asia/Tashkent" },
+    { L"West Pacific Standard Time", "Pacific/Port_Moresby" },
     { L"Yakutsk Standard Time", "Asia/Yakutsk" },
 
 /* The ones below do not occur on BDR's XP machine */
@@ -284,14 +287,12 @@ const static struct {
     { L"Wallis Standard Time", "Pacific/Wallis" },
     { L"Yekaterinburg Standard Time", "Asia/Yekaterinburg" },
     { L"Yerevan Standard Time", "Asia/Yerevan" },
-    { L"Yukon Standard Time", "America/Yakutat" },
+    { L"Yukon Standard Time", "America/Whitehorse" },
 
 /* 2015 additions, seen in then-current Windows 7 */
-    { L"Argentina Standard Time", "America/Buenos_Aires" },
     { L"Bahia Standard Time", "America/Bahia" },
     { L"Belarus Standard Time", "Europe/Minsk" },
     { L"Kaliningrad Standard Time", "Europe/Kaliningrad" },
-    { L"Kamchatka Standard Time", "Asia/Kamchatka" },
     { L"Libya Standard Time", "Africa/Tripoli" },
     { L"Morocco Standard Time", "Africa/Casablanca" },
     { L"Syria Standard Time", "Asia/Damascus" },
@@ -308,6 +309,39 @@ const static struct {
     { L"Russia Time Zone 9", "Asia/Magadan" },
     { L"Russia Time Zone 10", "Asia/Srednekolymsk" },
     { L"Russia Time Zone 11", "Asia/Kamchatka" },
+
+/* 2023 additions from CLDR 42 (windowsZones.xml) */
+    { L"Aleutian Standard Time", "America/Adak" },
+    { L"Altai Standard Time", "Asia/Barnaul" },
+    { L"Astrakhan Standard Time", "Europe/Astrakhan" },
+    { L"Aus Central W. Standard Time", "Australia/Eucla" },
+    { L"Bougainville Standard Time", "Pacific/Bougainville" },
+    { L"Chatham Islands Standard Time", "Pacific/Chatham" },
+    { L"Easter Island Standard Time", "Pacific/Easter" },
+    { L"Eastern Standard Time (Mexico)", "America/Cancun" },
+    { L"Haiti Standard Time", "America/Port-au-Prince" },
+    { L"Line Islands Standard Time", "Pacific/Kiritimati" },
+    { L"Lord Howe Standard Time", "Australia/Lord_Howe" },
+    { L"Magallanes Standard Time", "America/Punta_Arenas" },
+    { L"North Korea Standard Time", "Asia/Pyongyang" },
+    { L"Saint Pierre Standard Time", "America/Miquelon" },
+    { L"Sao Tome Standard Time", "Africa/Sao_Tome" },
+    { L"Saratov Standard Time", "Europe/Saratov" },
+    { L"South Sudan Standard Time", "Africa/Juba" },
+    { L"Sudan Standard Time", "Africa/Khartoum" },
+    { L"Tocantins Standard Time", "America/Araguaina" },
+    { L"Tomsk Standard Time", "Asia/Tomsk" },
+    { L"Transbaikal Standard Time", "Asia/Chita" },
+    { L"Turks And Caicos Standard Time", "America/Grand_Turk" },
+    { L"UTC-02", "Etc/GMT+2" },
+    { L"UTC-08", "Etc/GMT+8" },
+    { L"UTC-09", "Etc/GMT+9" },
+    { L"UTC-11", "Etc/GMT+11" },
+    { L"UTC+12", "Etc/GMT-12" },
+    { L"UTC+13", "Etc/GMT-13" },
+    { L"UTC", "Etc/UTC" },
+    { L"West Bank Standard Time", "Asia/Hebron" },
+    { L"W. Mongolia Standard Time", "Asia/Hovd" },
 
     { NULL,  "" }
 };
