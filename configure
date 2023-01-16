@@ -9845,11 +9845,11 @@ fi
 
 
 
-## FIXME: try -std=gnu23 first
-: ${CC23="${CC_SUB} -std=gnu2x"}
+: ${CC23="${CC_SUB} -std=gnu23"}
 : ${C23FLAGS="${CFLAGS_SUB}"}
 CC=${CC23}
 CFLAGS=${C23FLAGS}
+unset r_cv_C23
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
 printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
 if test ${r_cv_C23+y}
@@ -9891,6 +9891,51 @@ fi
 printf "%s\n" "$r_cv_C23" >&6; }
 
 if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
+printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
+if test ${r_cv_C23+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C23=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C23=yes
+else $as_nop
+  r_cv_C23=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
+printf "%s\n" "$r_cv_C23" >&6; }
+
+fi
+if test x${r_cv_C23} = xno; then
 CC23=
 C23FLAGS=
 fi
@@ -9918,7 +9963,7 @@ else $as_nop
 # error "Compiler claims to be later than C90"
 #endif
 
-// C90 example from autoconf 2.71.
+/* C90 example from autoconf 2.71 */
 static char *e (p, i)
      char **p;
      int i;
@@ -26943,7 +26988,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26948: \"$ac_link\") >&5
+(eval echo $as_me:26993: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27019,7 +27064,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27024: \"$ac_link\") >&5
+(eval echo $as_me:27069: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

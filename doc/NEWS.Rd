@@ -282,7 +282,11 @@
 	  using new keywords as identifiers or with K&R-style function
 	  declarations.
 	}
-	\item{USE_C90}{Use the C90 (aka C89) standard.}
+	\item{USE_C90}{Use the C90 (aka C89) standard.  (As that standard
+	  did not require compilers to identify that version, all we can
+	  verify is that the compiler does not claim to be using a later
+	  standard.  It may accept C99 features -- for example
+	  \command{clang} accepts // to make comments.)}
 	\item{USE_C99}{Use the C99 standard. This should be rarely
 	  needed -- it avoids the few new features of C11/C17 which can
 	  be useful if a package assumes them if C17 is specified and

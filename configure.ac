@@ -807,12 +807,19 @@ fi
 AC_SUBST(CC17)
 AC_SUBST(C17FLAGS)
 
-## FIXME: try -std=gnu23 first
-: ${CC23="${CC_SUB} -std=gnu2x"}
+dnl this is a hack until -std=gnu23 is widely accepted.
+: ${CC23="${CC_SUB} -std=gnu23"}
 : ${C23FLAGS="${CFLAGS_SUB}"}
 CC=${CC23}
 CFLAGS=${C23FLAGS}
+unset r_cv_C23
 R_C23
+if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+R_C23
+fi
 if test x${r_cv_C23} = xno; then
 CC23=
 C23FLAGS=

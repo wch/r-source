@@ -4965,7 +4965,7 @@ AC_DEFUN([R_C90],
 # error "Compiler claims to be later than C90"
 #endif
 
-// C90 example from autoconf 2.71.
+/* C90 example from autoconf 2.71 */
 static char *e (p, i)
      char **p;
      int i;
