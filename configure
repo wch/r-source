@@ -9820,6 +9820,7 @@ void agsurv3(int *sn)
 static void addup(int itime, double haz, double var){}
 
 int main(void) {
+     return 0;
 }
 
 
@@ -9872,6 +9873,7 @@ else $as_nop
 #endif
 
 int main(void) {
+     return 0;
 }
 
 
@@ -9916,6 +9918,7 @@ else $as_nop
 #endif
 
 int main(void) {
+     return 0;
 }
 
 
@@ -9971,6 +9974,7 @@ static char *e (p, i)
   return p[i];
 }
 int main(void) {
+     return 0;
 }
 
 
@@ -10021,7 +10025,7 @@ else $as_nop
 # error "Compiler does not advertise ISO C conformance"
 #endif
 
-// C90 example from autoconf 2.71.
+/* C90 example from autoconf 2.71. */
 static char *e (p, i)
      char **p;
      int i;
@@ -10030,6 +10034,7 @@ static char *e (p, i)
 }
 
 int main(void) {
+     return 0;
 }
 
 
@@ -26988,7 +26993,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26993: \"$ac_link\") >&5
+(eval echo $as_me:26998: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27064,7 +27069,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27069: \"$ac_link\") >&5
+(eval echo $as_me:27074: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

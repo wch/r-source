@@ -4930,6 +4930,7 @@ void agsurv3(int *sn)
 static void addup(int itime, double haz, double var){}
 
 int main(void) {
+     return 0;
 }
 
 ]])],
@@ -4950,6 +4951,7 @@ AC_DEFUN([R_C23],
 #endif
 
 int main(void) {
+     return 0;
 }
 
 ]])],
@@ -4973,6 +4975,7 @@ static char *e (p, i)
   return p[i];
 }
 int main(void) {
+     return 0;
 }
 
 ]])],
@@ -4992,7 +4995,7 @@ AC_DEFUN([R_C99],
 # error "Compiler does not advertise ISO C conformance"
 #endif
 
-// C90 example from autoconf 2.71.
+/* C90 example from autoconf 2.71. */
 static char *e (p, i)
      char **p;
      int i;
@@ -5001,6 +5004,7 @@ static char *e (p, i)
 }
 
 int main(void) {
+     return 0;
 }
 
 ]])],
