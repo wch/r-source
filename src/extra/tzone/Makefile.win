@@ -24,6 +24,10 @@ distclean: clean
 	@$(RM) libtz.a
 	@$(RM) -Rf ../../../share/zoneinfo
 
+ifdef USE_ICU
+registryTZ-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
+endif
+
 # Dependencies
 DEPS = $(CSOURCES:.c=.d)
 

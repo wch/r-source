@@ -19,6 +19,11 @@
 
 #include <string.h>
 
+#ifdef USE_ICU
+#define UCHAR_TYPE wchar_t
+#include "unicode/ucal.h"
+#endif
+
 /*
   Updated using CLDR 42 (cldr-release-42/common/supplemental/windowsZones.xml),
   keeping old entries for Windows time zones not present in CLDR42.
@@ -381,6 +386,8 @@ static const char *reg2Olson(const wchar_t *s)
 	if (!wcscmp(s, TZtable[i].reg)) return TZtable[i].Olson;
 
     /* On Vista, the English name of the current timezone is in the registry */
+    /* NOTE: this function is only called with "s" being the Windows _current_
+       time zone. */
     if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, tzikey, 0, KEY_QUERY_VALUE, &hkey)
        == ERROR_SUCCESS) {
 	size = 1000;
@@ -437,6 +444,19 @@ const char *getTZinfo(void)
 	    strncpy(Olson, p, 63);
 	    Olson[63] = '\0';
 	} else {
+#ifdef USE_ICU
+	    wchar_t zone[64];
+	    UErrorCode status = U_ZERO_ERROR;
+	    ucal_getDefaultTimeZone(zone, 64, &status);
+	    if (U_SUCCESS(status) && wcscmp(zone, L"Etc/Unknown")) {
+		wcstombs(Olson, zone, 64);
+		Olson[63] = '\0';
+# ifdef DEBUG
+		printf("TZ = %s\n", Olson);
+# endif
+		return Olson;
+	    }
+#endif
 	    GetTimeZoneInformation(&tzi);
 	    wcstombs(StandardName, tzi.StandardName, 64);
 	    wcstombs(DaylightName, tzi.DaylightName, 64);
