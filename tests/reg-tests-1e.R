@@ -431,6 +431,15 @@ options(op)
 ## error was  "object 'status' not found"  in R <= 4.2.2
 
 
+## handling of invalid Encoding / unsupported conversion in packageDescription()
+dir.create(pkgpath <- tempfile())
+writeLines(c("Version: 1.0", "Encoding: FTU-8"), # (sic!)
+           file.path(pkgpath, "DESCRIPTION"))
+stopifnot(packageVersion(basename(pkgpath), dirname(pkgpath)) == "1.0")
+## outputs try()-catched iconv() errors but does not fail
+## gave a "packageNotFoundError" in 3.5.0 <= R <= 4.2.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
