@@ -287,7 +287,7 @@ static void pb_dbl(profbuf *pb, double num)
     } else
 	negative = 0;
     for (i = 0;;) {
-	digits[i++] = (int) fmod(num, 10.0) + '0';
+	digits[i++] = (char) ((int) fmod(num, 10.0) + '0');
 	num /= 10.0;
 	if (num < 1)
 	    break;

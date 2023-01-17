@@ -2915,6 +2915,10 @@ Unix-alike @command{configure} will try to identify a compiler and flags
 for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
+@c Apple clang 14 defaults to C++98
+@c LLVM clang 15, 16 default to C++14
+@c g++ 11, 12, 13 default to C++17
+
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
@@ -2922,7 +2926,7 @@ features.
 
 C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
-such as @code{unary_function} (deprecated in C++11, removed in C++17).
+such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
 Different versions of @R{} have specified different default C++
 standards, so for maximal portability a package should specify the
