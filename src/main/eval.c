@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022	The R Core Team.
+ *  Copyright (C) 1998--2023	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -95,9 +95,23 @@ static int R_Profiling = 0;
 #  include <sys/time.h>
 # endif
 # include <signal.h>
+# ifdef HAVE_FCNTL_H
+#  include <fcntl.h>		/* for open */
+# endif
+# ifdef HAVE_SYS_STAT_H
+#  include <sys/stat.h>
+# endif
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>		/* for write */
+# endif
 #endif /* not Win32 */
 
+#ifdef Win32
 static FILE *R_ProfileOutfile = NULL;
+#else
+static int R_ProfileOutfile = -1;
+#endif
+
 static int R_Mem_Profiling=0;
 static int R_GC_Profiling = 0;                     /* indicates GC profiling */
 static int R_Line_Profiling = 0;                   /* indicates line profiling, and also counts the filenames seen (+1) */
@@ -361,6 +375,46 @@ static RCNTXT * findProfContext(RCNTXT *cptr)
     return cptr;
 }
 
+/* Write string to the profile file.
+   On Unix, pf_* functions are called from a signal handler, hence avoid
+   calling fprintf. */
+static ssize_t pf_str(const char *s)
+{
+#ifdef Win32
+    return fprintf(R_ProfileOutfile, "%s", s);
+#else
+    size_t wbyte = 0;
+    size_t nbyte = strlen(s);
+    for(;;) {
+	ssize_t w = write(R_ProfileOutfile, s + wbyte, nbyte - wbyte);
+	if (w == -1) {
+	    if (errno == EINTR)
+		continue;
+	    else
+		return -1;
+	}
+	wbyte += w;
+	if (wbyte == nbyte || w == 0)
+	    return wbyte;
+    }
+#endif
+}
+
+static void pf_int(int num)
+{
+#ifdef Win32
+    fprintf(R_ProfileOutfile, "%d", num);
+#else
+    char buf[32];
+    profbuf nb;
+    nb.ptr = buf;
+    nb.left = sizeof(buf);
+    pb_int(&nb, num);
+    nb.ptr[0] = '\0';
+    pf_str(buf);
+#endif
+}
+
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
     char buf[PROFBUFSIZ];
@@ -491,15 +545,22 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     }
 
 #ifdef Win32
+    /* resume before calling pf_* functions to avoid deadlock */
     ResumeThread(MainThread);
-#endif /* Win32 */
+#endif
 
-    /* FIXME: fprintf() is not async-signal-safe */
-    for (int i = prevnum; i < R_Line_Profiling; i++)
-	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
-
-    if(strlen(buf))
-	fprintf(R_ProfileOutfile, "%s\n", buf);
+    for (int i = prevnum; i < R_Line_Profiling; i++) {
+	pf_str("#File ");
+	pf_int(i); /* %d */
+	pf_str(": ");
+	pf_str(R_Srcfiles[i-1]);
+	pf_str("\n"); 
+    }
+    
+    if(strlen(buf)) {
+	pf_str(buf);
+	pf_str("\n");
+    }
 
 #ifndef Win32
     signal(SIGPROF, doprof);
@@ -531,6 +592,8 @@ static void R_EndProfiling(void)
 #ifdef Win32
     SetEvent(ProfileEvent);
     CloseHandle(MainThread);
+    if(R_ProfileOutfile) fclose(R_ProfileOutfile);
+    R_ProfileOutfile = NULL;
 #else /* not Win32 */
     struct itimerval itv;
 
@@ -540,10 +603,9 @@ static void R_EndProfiling(void)
     itv.it_value.tv_usec = 0;
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
-
+    if(R_ProfileOutfile >= 0) close(R_ProfileOutfile);
+    R_ProfileOutfile = -1;
 #endif /* not Win32 */
-    if(R_ProfileOutfile) fclose(R_ProfileOutfile);
-    R_ProfileOutfile = NULL;
     R_Profiling = 0;
     if (R_Srcfiles_buffer) {
 	R_ReleaseObject(R_Srcfiles_buffer);
@@ -567,25 +629,44 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 {
 #ifndef Win32
     struct itimerval itv;
+    const void *vmax = vmaxget();
+
+    if(R_ProfileOutfile >= 0) R_EndProfiling();
+    if (filename != NA_STRING && filename) {
+	const char *fn = R_ExpandFileName(translateCharFP(filename));
+	int flags = O_CREAT | O_WRONLY;
+	if (append)
+	    flags |= O_APPEND;
+	else
+	    flags |= O_TRUNC;
+	int mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH;
+	R_ProfileOutfile = open(fn, flags, mode);
+	if (R_ProfileOutfile < 0)
+	    error(_("Rprof: cannot open profile file '%s'"), fn);
+    }
+    vmaxset(vmax);
 #else
     int wait;
     HANDLE Proc = GetCurrentProcess();
-#endif
-    int interval;
 
-    interval = (int)(1e6 * dinterval + 0.5);
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
 	error(_("Rprof: cannot open profile file '%s'"),
 	      translateChar(filename));
+#endif
+    int interval;
+
+    interval = (int)(1e6 * dinterval + 0.5);
     if(mem_profiling)
-	fprintf(R_ProfileOutfile, "memory profiling: ");
+	pf_str("memory profiling: ");
     if(gc_profiling)
-	fprintf(R_ProfileOutfile, "GC profiling: ");
+	pf_str("GC profiling: ");
     if(line_profiling)
-	fprintf(R_ProfileOutfile, "line profiling: ");
-    fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
+	pf_str("line profiling: ");
+    pf_str("sample.interval=");
+    pf_int(interval); /* %d */
+    pf_str("\n");
 
     R_Mem_Profiling=mem_profiling;
     if (mem_profiling)
