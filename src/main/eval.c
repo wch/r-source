@@ -30,6 +30,7 @@
 #include <Fileio.h>
 #include <R_ext/Print.h>
 #include <errno.h>
+#include <math.h>
 
 static SEXP bcEval(SEXP, SEXP, Rboolean);
 
@@ -111,8 +112,16 @@ HANDLE MainThread;
 HANDLE ProfileEvent;
 #endif /* Win32 */
 
-/* Careful here!  These functions are called asynchronously, maybe in the middle of GC,
-   so don't do any allocations */
+/* Careful here!  These functions are called asynchronously, maybe in the
+   middle of GC, so don't do any allocations. They get called in a signal
+   handler on Unix, so they are only allowed to call library functions
+   that are async-signal-safe. They get called while the main R thread
+   is suspended on Windows, and hence they cannot call into any C runtime
+   function which may possibly include synchronization.
+
+   Note that snprintf() is not safe on Unix nor on Windows. On Windows 10
+   it has been seen to deadlock when the main thread has been suspended
+   in a locale-specific operation. */
 
 /* This does a linear search through the previously recorded filenames.  If
    this one is new, we try to add it.  FIXME:  if there are eventually
@@ -130,8 +139,10 @@ static int getFilenum(const char* filename) {
 	    R_Profiling_Error = 1;
 	    return 0;
 	}
-	if (R_Srcfiles[fnum] - (char*)RAW(R_Srcfiles_buffer) + len + 1 > length(R_Srcfiles_buffer)) {
-	      /* out of space in the buffer */
+	if (R_Srcfiles[fnum] - (char*)RAW(R_Srcfiles_buffer) + len + 1 >
+	    length(R_Srcfiles_buffer)) {
+
+	    /* out of space in the buffer */
 	    R_Profiling_Error = 2;
 	    return 0;
 	}
@@ -144,25 +155,150 @@ static int getFilenum(const char* filename) {
     return fnum + 1;
 }
 
-/* These, together with sprintf/strcat, are not safe -- we should be
-   using snprintf and such and computing needed sizes, but these
-   settings are better than what we had. LT */
-
 #define PROFBUFSIZ 10500
-#define PROFITEMMAX  500
-#define PROFLINEMAX (PROFBUFSIZ - PROFITEMMAX)
 
 /* It would also be better to flush the buffer when it gets full,
    even if the line isn't complete. But this isn't possible if we rely
-   on writing all line profiling files first.  With these sizes
-   hitting the limit is fairly unlikely, but if we do then the output
-   file is wrong. Maybe writing an overflow marker of some sort would
-   be better.  LT */
+   on writing all line profiling files first. In addition, while on Unix
+   we could use write() (not fprintf) to flush, it is not guaranteed we
+   could do this on Windows with the main thread suspended. 
 
-static void lineprof(char* buf, SEXP srcref)
+   With this size hitting the limit is fairly unlikely, but if we do then
+   the output file will miss some entries. Maybe writing an overflow marker
+   of some sort would be better.  LT, TK */
+
+/* The pb_* functions write to profiling buffer, advancing the "ptr" and
+   maintaining "left". If the write wouldn't fit leaving one more byte
+   available for the terminator, "left" is set to zero. They do not
+   terminate the string. */
+
+typedef struct {
+    char *ptr;
+    size_t left;
+} profbuf;
+
+/* If a string fits with terminator to the buffer, add it, excluding
+   the terminator. If it doesn't fit, set left to 0. */
+static void pb_str(profbuf *pb, const char *str)
 {
-    size_t len;
-    if (srcref && !isNull(srcref) && (len = strlen(buf)) < PROFLINEMAX) {
+    size_t len = strlen(str);
+
+    if (len < pb->left) {
+	size_t i;
+	for(i = 0; i < len; i++)
+	    pb->ptr[i] = str[i];
+	pb->ptr += len;
+	pb->left -= len;
+    } else
+	pb->left = 0;
+}
+
+static void pb_uint(profbuf *pb, uint64_t num)
+{
+    char digits[20]; /* 64-bit unsigned integers */
+    int i, j;
+
+    for (i = 0;;) {
+	digits[i++] = num % 10 + '0';
+	num /= 10;
+	if (num == 0)
+	    break;
+    }
+    if (i < pb->left) {
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0; 
+}
+
+static void pb_int(profbuf *pb, int64_t num)
+{
+    char digits[19]; /* 64-bit signed integers */
+    int i, j, negative;
+
+    if (num < 0) {
+	negative = 1;
+	num *= -1;
+    } else
+	negative = 0;
+    for (i = 0;;) {
+	digits[i++] = num % 10 + '0';
+	num /= 10;
+	if (num == 0)
+	    break;
+    }
+    if (negative + i < pb->left) {
+        if (negative) {
+	    pb->ptr[0] = '-';
+	    pb->ptr++;
+	    pb->left--;
+	}
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0;
+}
+
+/* IEEE doubles */
+#define PB_MAX_DBL_DIGITS 309
+
+/* Careful: this is very simplistic printing of the integer parts of doubles
+   (like %0.f) used only (in a special case) for stack trace in profiling data.
+   Not suitable for re-use. */
+static void pb_dbl(profbuf *pb, double num)
+{
+    char digits[PB_MAX_DBL_DIGITS]; 
+    int i, j, negative;
+
+    if (!R_FINITE(num)) {
+	if (ISNA(num))
+	    pb_str(pb, "NA");
+	else if (ISNAN(num))
+	    pb_str(pb,  "NaN");
+	else if (num > 0)
+	    pb_str(pb, "Inf");
+	else
+	    pb_str(pb, "-Inf");
+	return;
+    }
+    if (num < 0) {
+	negative = 1;
+	num *= -1.0;
+    } else
+	negative = 0;
+    for (i = 0;;) {
+	digits[i++] = (int) fmod(num, 10.0) + '0';
+	num /= 10.0;
+	if (num < 1)
+	    break;
+	if (i >= PB_MAX_DBL_DIGITS)
+	    /* This cannot happen with IEEE double */
+	    return;
+    }
+    if (negative + i < pb->left) {
+	if (negative) {
+	    pb->ptr[0] = '-';
+	    pb->ptr++;
+	    pb->left--;
+	}
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0;
+}
+
+static void lineprof(profbuf* pb, SEXP srcref)
+{
+    if (srcref && !isNull(srcref)) {
 	int fnum, line = asInteger(srcref);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	const char *filename;
@@ -172,8 +308,12 @@ static void lineprof(char* buf, SEXP srcref)
 	if (TYPEOF(srcfile) != STRSXP || !length(srcfile)) return;
 	filename = CHAR(STRING_ELT(srcfile, 0));
 
-	if ((fnum = getFilenum(filename)))
-	    snprintf(buf+len, PROFBUFSIZ - len, "%d#%d ", fnum, line);
+	if ((fnum = getFilenum(filename))) {
+	    pb_int(pb, fnum); /* %d */
+	    pb_str(pb, "#");
+	    pb_int(pb, line); /* %d */
+	    pb_str(pb, " " );
+	}
     }
 }
 
@@ -225,11 +365,12 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 {
     char buf[PROFBUFSIZ];
     size_t bigv, smallv, nodes;
-    size_t len;
     int prevnum = R_Line_Profiling;
     int old_errno = errno;
 
-    buf[0] = '\0';
+    profbuf pb;
+    pb.ptr = buf;
+    pb.left = PROFBUFSIZ;
 
 #ifdef Win32
     SuspendThread(MainThread);
@@ -253,108 +394,107 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     }
 #endif /* Win32 */
 
-    if (R_Mem_Profiling){
-	    get_current_mem(&smallv, &bigv, &nodes);
-	    if((len = strlen(buf)) < PROFLINEMAX)
-		snprintf(buf+len, PROFBUFSIZ - len,
-			 ":%lu:%lu:%lu:%lu:",
-			 (unsigned long) smallv, (unsigned long) bigv,
-			 (unsigned long) nodes, get_duplicate_counter());
-	    reset_duplicate_counter();
+    if (R_Mem_Profiling) {
+	get_current_mem(&smallv, &bigv, &nodes);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) smallv);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) bigv);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) nodes);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) get_duplicate_counter());
+	pb_str(&pb, ":");
+	reset_duplicate_counter();
     }
 
     if (R_GC_Profiling && R_gc_running())
-	strcat(buf, "\"<GC>\" ");
+	pb_str(&pb, "\"<GC>\" ");
 
     if (R_Line_Profiling)
-	lineprof(buf, R_getCurrentSrcref());
+	lineprof(&pb, R_getCurrentSrcref());
 
     for (RCNTXT *cptr = R_GlobalContext;
 	 cptr != NULL;
 	 cptr = findProfContext(cptr)) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
+
 	    SEXP fun = CAR(cptr->call);
-	    if(strlen(buf) < PROFLINEMAX) {
-		strcat(buf, "\"");
+	    pb_str(&pb, "\"");
 
-		char itembuf[PROFITEMMAX];
+	    if (TYPEOF(fun) == SYMSXP) {
+		pb_str(&pb, CHAR(PRINTNAME(fun)));
 
-		if (TYPEOF(fun) == SYMSXP) {
-		    snprintf(itembuf, PROFITEMMAX-1, "%s", CHAR(PRINTNAME(fun)));
+	    } else if ((CAR(fun) == R_DoubleColonSymbol ||
+			CAR(fun) == R_TripleColonSymbol ||
+			CAR(fun) == R_DollarSymbol) &&
+		       TYPEOF(CADR(fun)) == SYMSXP &&
+		       TYPEOF(CADDR(fun)) == SYMSXP) {
+		/* Function accessed via ::, :::, or $. Both args must be
+		   symbols. It is possible to use strings with these
+		   functions, as in "base"::"list", but that's a very rare
+		   case so we won't bother handling it. */
+		pb_str(&pb, CHAR(PRINTNAME(CADR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(CAR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(CADDR(fun))));
+	    } else if (CAR(fun) == R_Bracket2Symbol &&
+		       TYPEOF(CADR(fun)) == SYMSXP &&
+		       ((TYPEOF(CADDR(fun)) == SYMSXP ||
+			 TYPEOF(CADDR(fun)) == STRSXP ||
+			 TYPEOF(CADDR(fun)) == INTSXP ||
+			 TYPEOF(CADDR(fun)) == REALSXP) &&
+			length(CADDR(fun)) > 0)) {
+		/* Function accessed via [[. The first arg must be a symbol
+		   and the second can be a symbol, string, integer, or
+		   real. */
+		SEXP arg1 = CADR(fun);
+		SEXP arg2 = CADDR(fun);
 
-		} else if ((CAR(fun) == R_DoubleColonSymbol ||
-			    CAR(fun) == R_TripleColonSymbol ||
-			    CAR(fun) == R_DollarSymbol) &&
-			   TYPEOF(CADR(fun)) == SYMSXP &&
-			   TYPEOF(CADDR(fun)) == SYMSXP) {
-		    /* Function accessed via ::, :::, or $. Both args must be
-		       symbols. It is possible to use strings with these
-		       functions, as in "base"::"list", but that's a very rare
-		       case so we won't bother handling it. */
-		    snprintf(itembuf, PROFITEMMAX-1, "%s%s%s",
-			     CHAR(PRINTNAME(CADR(fun))),
-			     CHAR(PRINTNAME(CAR(fun))),
-			     CHAR(PRINTNAME(CADDR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(arg1)));
+		pb_str(&pb, "[[");
 
-		} else if (CAR(fun) == R_Bracket2Symbol &&
-			   TYPEOF(CADR(fun)) == SYMSXP &&
-			   ((TYPEOF(CADDR(fun)) == SYMSXP ||
-			     TYPEOF(CADDR(fun)) == STRSXP ||
-			     TYPEOF(CADDR(fun)) == INTSXP ||
-			     TYPEOF(CADDR(fun)) == REALSXP) &&
-			    length(CADDR(fun)) > 0)) {
-		    /* Function accessed via [[. The first arg must be a symbol
-		       and the second can be a symbol, string, integer, or
-		       real. */
-		    SEXP arg1 = CADR(fun);
-		    SEXP arg2 = CADDR(fun);
-		    char arg2buf[PROFITEMMAX-5];
-
-		    if (TYPEOF(arg2) == SYMSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%s", CHAR(PRINTNAME(arg2)));
-
-		    } else if (TYPEOF(arg2) == STRSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "\"%s\"", CHAR(STRING_ELT(arg2, 0)));
-
-		    } else if (TYPEOF(arg2) == INTSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%d", INTEGER(arg2)[0]);
-
-		    } else if (TYPEOF(arg2) == REALSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%.0f", REAL(arg2)[0]);
-
-		    } else {
-			/* Shouldn't get here, but just in case. */
-			arg2buf[0] = '\0';
-		    }
-
-		    snprintf(itembuf, PROFITEMMAX-1, "%s[[%s]]",
-			     CHAR(PRINTNAME(arg1)),
-			     arg2buf);
-
-		} else {
-		    snprintf(itembuf, PROFITEMMAX, "<Anonymous>");
+		if (TYPEOF(arg2) == SYMSXP) {
+		    pb_str(&pb, CHAR(PRINTNAME(arg2)));
+		} else if (TYPEOF(arg2) == STRSXP) {
+		    pb_str(&pb, "\"");
+		    pb_str(&pb, CHAR(STRING_ELT(arg2, 0)));
+		    pb_str(&pb, "\"");
+		} else if (TYPEOF(arg2) == INTSXP) {
+		    pb_int(&pb, INTEGER(arg2)[0]);
+		} else if (TYPEOF(arg2) == REALSXP) {
+		    pb_dbl(&pb, REAL(arg2)[0]); /* %0.f */
 		}
 
-		strcat(buf, itembuf);
-		strcat(buf, "\" ");
-		if (R_Line_Profiling) {
-		    if (cptr->srcref == R_InBCInterpreter)
-			lineprof(buf,
-				 R_findBCInterpreterSrcref(cptr));
-		    else
-			lineprof(buf, cptr->srcref);
-		}
+		pb_str(&pb, "]]");
+
+	    } else {
+		pb_str(&pb, "<Anonymous>");
+	    }
+
+	    pb_str(&pb, "\" ");
+	    if (R_Line_Profiling) {
+		if (cptr->srcref == R_InBCInterpreter)
+		    lineprof(&pb, R_findBCInterpreterSrcref(cptr));
+		else
+		    lineprof(&pb, cptr->srcref);
 	    }
 	}
     }
 
-    /* I believe it would be slightly safer to place this _after_ the
-       next two bits, along with the signal() call. LT */
+    if (pb.left)
+	pb.ptr[0] = '\0';
+    else {
+	/* overflow */
+	buf[0] = '\0';
+	R_Profiling_Error = 3;
+    }
+
 #ifdef Win32
     ResumeThread(MainThread);
 #endif /* Win32 */
 
+    /* FIXME: fprintf() is not async-signal-safe */
     for (int i = prevnum; i < R_Line_Profiling; i++)
 	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
 
@@ -409,9 +549,15 @@ static void R_EndProfiling(void)
 	R_ReleaseObject(R_Srcfiles_buffer);
 	R_Srcfiles_buffer = NULL;
     }
-    if (R_Profiling_Error)
-	warning(_("source files skipped by Rprof; please increase '%s'"),
-		R_Profiling_Error == 1 ? "numfiles" : "bufsize");
+    if (R_Profiling_Error) {
+	if (R_Profiling_Error == 3)
+	    /* It is hard to imagine this could happen in practice, but
+	       if needed, it could be configurable like numfiles/bufsize. */
+	    warning(_("samples too large for I/O buffer skipped by Rprof"));
+	else
+	    warning(_("source files skipped by Rprof; please increase '%s'"),
+		      R_Profiling_Error == 1 ? "numfiles" : "bufsize");
+    }
 }
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
