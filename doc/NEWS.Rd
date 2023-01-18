@@ -136,11 +136,20 @@
       This addresses \PR{15072} by Russ Lenth and is based on his original
       proposal and discussions in \PR{16158} also by David Firth and Elin Waring.
       Experimental; may be updated before release.
+
+      \item \command{Rgui} console implementation now works better with the
+      \code{NVDA} screen reader when the full blinking cursor is selected. 
+      The underlying improvements in cursor handling may help also other
+      screen readers on Windows.
+
+      \item The dropfield control in GraphApp can now be left with the TAB
+      key, improving accessibility of the \command{Rgui} configuration
+      editor.
     }
   }
 
   \subsection{DATES and TIMES}{
-      \itemize{
+    \itemize{
       \item On platforms where (non-UTC) datetimes before 1902 (or
       before 1900 as with system functions on recent macOS) are guessed
       by extrapolating time zones from 1902-2037, there is a warning at
@@ -204,6 +213,13 @@
       rewritten to gain better default tick locations and better default
       formats by using \code{prettyDate()}. Thanks to Swetlana
       Herbrandt.
+
+      \item The mapping of Windows' names for time zones to IANA's
+      \sQuote{Olson} names has been updated.  When ICU is available (it is
+      by default), it is used to get a mapping for the current region set in
+      Windows.  This can be overridden by setting environment variable
+      \env{TZ} to the desired Olson name --- see \code{OlsonNames()} for
+      those currently available.
      }
   }
 
@@ -529,6 +545,20 @@
       \item \code{download.file()} gives a helpful error message in case of
       an invalid \code{download.file.method} option, thanks to Colin Fay's
       report in \PR{18455}.
+
+      \item Sporadic crashes of \command{Rterm} when using completion have
+      been fixed.
+
+      \item \code{Rprof()} is now more reliable.  A livelock in thread
+      initialization with too short sampling interval has been fixed on
+      macOS.  A deadlock in using the C runtime has been fixed on Windows.
+      A potential deadlock has been prevented on Unix.
+
+      \item Cursor placement in \command{Rgui} now works even after a
+      fixed-width font is selected.
+
+      \item Mandatory options (\code{options()}) are now set on startup so
+      that saving and restoring them always works (\PR{18372}).
     }
   }
 }
