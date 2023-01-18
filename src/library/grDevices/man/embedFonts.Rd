@@ -19,7 +19,7 @@
 embedFonts(file, format, outfile = file,
            fontpaths = character(), options = character())
 
-embedGlyphs(file, glyphs, outfile = file, options = character())
+embedGlyphs(file, glyphInfo, outfile = file, options = character())
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
@@ -31,7 +31,7 @@ embedGlyphs(file, glyphs, outfile = file, options = character())
     Ghostscript will search for fonts.}
   \item{options}{a character vector containing further options to
     Ghostscript.}
-  \item{glyphs}{typeset glyph information produced by \code{glyphInfo()}.}
+  \item{glyphInfo}{typeset glyph information produced by \code{glyphInfo()}.}
 }
 \details{
   This function is not necessary if you just use the standard
