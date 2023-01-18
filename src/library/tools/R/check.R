@@ -5575,6 +5575,7 @@ add_dummies <- function(dir, Log)
                               value = TRUE, useBytes = TRUE, invert = TRUE)
 
                 ## Filter out boost/armadillo header warnings
+                ## 2023-01: still have class-memaccess from BH with gcc
                 ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-W(tautological-overlap-compare|class-memaccess)\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
@@ -5609,6 +5610,7 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## And deprecated declarations in Eigen and boost
+                ## unary_function in boost < 1.81, auto_ptr in boost/smart_ptr.
                 ex_re <- "(include/Eigen|include/boost|boost/smart_ptr).* warning: .* \\[-Wdeprecated-declarations\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 

@@ -1931,7 +1931,9 @@ rm -f config.* src/Makevars src/config.h
 
 @noindent
 As this example shows, @command{configure} often creates working files
-such as @file{config.log}.
+such as @file{config.log}.  If you use a hand-crafted script
+rather than one created by @command{autoconf}, it is highly recommended
+that you log its actions to file @file{config.log}.
 
 If your configure script needs auxiliary files, it is recommended that
 you ship them in a @file{tools} directory (as @R{} itself does).
@@ -1943,16 +1945,21 @@ to configure it manually, or provide a @file{configure.win} script (or
 @file{configure.ucrt}) to be used on that platform.  (Optionally, there
 can be a @file{cleanup.win} script (or @file{cleanup.ucrt}).  Both
 should be shell scripts to be executed by @command{ash}, which is a
-minimal version of Bourne-style @command{sh}.)  When
-@file{configure.win} (or @file{configure.ucrt}) is run the environment
-variables @env{R_HOME} (which uses @samp{/} as the file separator),
-@env{R_ARCH} and @env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to
-decide if this is a 64-bit build (its value there is @samp{/x64}) and to
-install DLLs to the correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).
-Use @env{R_ARCH_BIN} to find the correct place under the @file{bin}
+minimal version of Bourne-style @command{sh}. As from @R{} 4.2.0,
+@command{bash} is used.  When @file{configure.win} (or
+@file{configure.ucrt}) is run the environment variables @env{R_HOME}
+(which uses @samp{/} as the file separator), @env{R_ARCH} and
+@env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
+64-bit build (its value there is @samp{/x64}) and to install DLLs to the
+correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
+@env{R_ARCH_BIN} to find the correct place under the @file{bin}
 directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
 a @file{configure.win} script does compilation (including calling
 @command{R CMD SHLIB}), most of the considerations above apply.
+
+As the scripts on Windows are excecuted as @command{sh ./configure.win}
+and similar, any 'shebang' first line  (such as @code{#! /bin/bash}) is
+treated as a comment.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
