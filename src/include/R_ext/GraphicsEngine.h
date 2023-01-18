@@ -661,23 +661,26 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_text_style_italic  2
 #define R_GE_text_style_oblique 3
 
-SEXP R_GE_glyphID(SEXP info);
-SEXP R_GE_glyphXOffset(SEXP info);
-SEXP R_GE_glyphYOffset(SEXP info);
-SEXP R_GE_glyphFamily(SEXP info);
-SEXP R_GE_glyphWeight(SEXP info);
-SEXP R_GE_glyphStyle(SEXP info);
-SEXP R_GE_glyphSize(SEXP info);
-SEXP R_GE_glyphFile(SEXP info);
-SEXP R_GE_glyphIndex(SEXP info);
-SEXP R_GE_glyphColour(SEXP info);
-SEXP R_GE_glyphPSname(SEXP info);
+SEXP R_GE_glyphInfoGlyphs(SEXP glyphInfo);
+SEXP R_GE_glyphInfoFonts(SEXP glyphInfo);
+
+SEXP R_GE_glyphID(SEXP glyphs);
+SEXP R_GE_glyphX(SEXP glyphs);
+SEXP R_GE_glyphY(SEXP glyphs);
+SEXP R_GE_glyphFont(SEXP glyphs);
+SEXP R_GE_glyphSize(SEXP glyphs);
+SEXP R_GE_glyphColour(SEXP glyphs);
+
+char* R_GE_glyphFontFile(SEXP glyphFont);
+int R_GE_glyphFontIndex(SEXP glyphFont);
+char* R_GE_glyphFontFamily(SEXP glyphFont);
+double R_GE_glyphFontWeight(SEXP glyphFont);
+int R_GE_glyphFontStyle(SEXP glyphFont);
+char* R_GE_glyphFontPSname(SEXP glyphFont);
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
-             const char* family, double weight, int style,
-             const char* file, int index, 
-             const char* PSname, 
-             double size, int colour, double rot, pGEDevDesc dd);
+             SEXP font, double size, 
+             int colour, double rot, pGEDevDesc dd);
     
 #ifdef __cplusplus
 }

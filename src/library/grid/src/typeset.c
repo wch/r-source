@@ -56,8 +56,10 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y,
     if (draw) {
 	GEMode(1, dd);
     }
-    int *glyphs = INTEGER(R_GE_glyphID(glyphInfo));
-    n = LENGTH(R_GE_glyphID(glyphInfo));
+    SEXP glyphs = R_GE_glyphInfoGlyphs(glyphInfo);
+    SEXP fonts = R_GE_glyphInfoFonts(glyphInfo);
+    int *id = INTEGER(R_GE_glyphID(glyphs));
+    n = LENGTH(R_GE_glyphID(glyphs));
         
     vmax = vmaxget();
     gx = (double *) R_alloc(n, sizeof(double));
@@ -76,27 +78,18 @@ static void renderGlyphs(SEXP runs, SEXP glyphInfo, SEXP x, SEXP y,
     int offset = 0;
     for (i=0; i<nruns; i++) {
         int runLength = INTEGER(runs)[i];
-        char family[201];
-        strncpy(family, CHAR(STRING_ELT(R_GE_glyphFamily(glyphInfo), offset)), 
-                200);
-        double weight = REAL(R_GE_glyphWeight(glyphInfo))[offset];
-        int style = INTEGER(R_GE_glyphStyle(glyphInfo))[offset];
-        char file[501];
-        strncpy(file, CHAR(STRING_ELT(R_GE_glyphFile(glyphInfo), offset)), 500);
-        int index = INTEGER(R_GE_glyphIndex(glyphInfo))[offset];
-        double size = REAL(R_GE_glyphSize(glyphInfo))[offset];
+        SEXP font = VECTOR_ELT(fonts, 
+                               INTEGER(R_GE_glyphFont(glyphs))[offset] - 1);
+        double size = REAL(R_GE_glyphSize(glyphs))[offset];
         char colstr[51];
-        strncpy(colstr, CHAR(STRING_ELT(R_GE_glyphColour(glyphInfo), offset)), 
+        strncpy(colstr, CHAR(STRING_ELT(R_GE_glyphColour(glyphs), offset)), 
                 50);
         int colour = R_GE_str2col(colstr);
-        char PSname[201];
-        strncpy(PSname, CHAR(STRING_ELT(R_GE_glyphPSname(glyphInfo), offset)), 
-                200);
         GEGlyph(runLength, 
-                glyphs + offset, 
+                id + offset, 
                 gx + offset, 
                 gy + offset, 
-                family, weight, style, file, index, PSname, 
+                font,
                 size, colour, rotationAngle,
                 dd);
         offset = offset + runLength;

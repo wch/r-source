@@ -27,6 +27,8 @@ mapStyle <- function(x) {
     match(x, c("normal", "italic", "oblique"))
 }
 
+################################################################################
+## glyph dimensions, anchors, and justification
 glyphWidth <- function(w, label="width", left="left") {
     if (!length(w) ||
         length(w) != length(label) ||
@@ -103,27 +105,81 @@ glyphJust.numeric <- function(just, which=NULL, ...) {
     just
 }
 
-glyphInfo <- function(id, x, y,
-                      family, weight, style, size, file, index, 
-                      width, height, hAnchor, vAnchor,
-                      col=NA, PSname=NA) {
-    id <- as.integer(id)
-    x <- as.numeric(x)
-    y <- as.numeric(y)
-    ## Check font
+################################################################################
+## glyph font
+glyphFont <- function(file, index,
+                      family, weight, style,
+                      PSname=NA) {
+    file <- as.character(file)
+    nafile <- is.na(file)
+    if (any(nchar(file[!nafile], "bytes") > 500))
+        warning("Font file longer than 500 will be truncated")
+    index <- as.integer(index)
     family <- as.character(family)
     nafamily <- is.na(family)
     if (any(nchar(family[!nafamily], "bytes") > 200))
         warning("Font family longer than 200 will be truncated")
     weight <- mapWeight(weight)
     style <- mapStyle(style)
-    file <- as.character(file)
-    nafile <- is.na(file)
-    if (any(nchar(file[!nafile], "bytes") > 500))
-        warning("Font file longer than 500 will be truncated")
-    index <- as.integer(index)
-    size <- as.numeric(size)
     PSname <- as.character(PSname)
+    ## Missing PSname values are "estimated"
+    naPS <- is.na(PSname)
+    if (any(naPS)) {
+        PSbold <- ifelse(weight >= 700, "Bold", "")
+        PSstyle <- ifelse(style > 1,
+                          ifelse(style > 2, "Oblique", "Italic"),
+                          "")
+        face <- paste0(PSbold, PSstyle)
+        PSname[naPS] <-
+            ifelse(nchar(file[naPS]),
+                   sub("([^.]+)\\.[[:alnum:]]+$", "\\1",
+                       basename(file[naPS])),
+                   paste0(family[naPS],
+                          ifelse(nchar(PSstyle), paste0("-", PSstyle), "")))
+    }
+    if (any(nchar(PSname, "bytes") > 200))
+        warning("PostScript font name longer than 200 will be truncated")
+    ## Check that family-weight-style and file and PSname all line up
+    families <- rle(paste0(family, weight, style))$lengths
+    files <- rle(file)$lengths
+    names <- rle(PSname)$lengths
+    if (!(all(families == files) && all(files == names)))
+        stop("Font information is inconsistent")
+    
+    font <- list(file=file, index=index,
+                 family=family, weight=weight, style=style,
+                 PSname=PSname)
+    class(font) <- "RGlyphFont"
+    font
+}
+
+glyphFontList <- function(...) {
+    fonts <- list(...)
+    if (!length(fonts))
+        stop("List must include at least one font")
+    if (!all(sapply(fonts, function(x) inherits(x, "RGlyphFont"))))
+        stop("Invalid glyph font")
+    class(fonts) <- "RGlyphFontList"
+    fonts
+}
+
+################################################################################
+## glyph information
+glyphInfo <- function(id, x, y, font, size,
+                      fontList,
+                      width, height,
+                      hAnchor, vAnchor,
+                      col=NA) {
+    id <- as.integer(id)
+    x <- as.numeric(x)
+    y <- as.numeric(y)
+    ## Check font
+    font <- as.integer(font)
+    if (!inherits(fontList, "RGlyphFontList"))
+        stop("Invalid font list")
+    if (any(is.na(font)) || !all(font %in% seq_along(fontList)))
+        stop("Unknown font")
+    size <- as.numeric(size)
     ## Check colour (allow any R colour spec)
     nacol <- is.na(col)
     if (any(!nacol)) {
@@ -136,7 +192,7 @@ glyphInfo <- function(id, x, y,
         width <- glyphWidth(width)
     if (!inherits(height, "GlyphHeight"))
         height <- glyphHeight(height)
-    ## Check anchors
+    ## Check anchors (and provide defaults if missing)
     if (missing(hAnchor))
         hAnchor <- glyphAnchor(c(min(x), min(x) + width[1],
                                  min(x) + width[1]/2),
@@ -170,50 +226,23 @@ glyphInfo <- function(id, x, y,
     if (!"center" %in% vNames)
         vAnchor <- c(vAnchor, center=unname(vAnchor["centre"]))
     ## Build glyph info
-    dropNA <- !(is.na(id) | is.na(x) | is.na(y) | is.na(family) |
-                is.na(weight) | is.na(style) | is.na(size) |
-                is.na(file) | is.na(index))
-    info <- data.frame(id, x, y,
-                       family, weight, style, size, file, index)[dropNA, ]
-    ## Colour can be NA
-    if (inherits(info, "omit")) {
-        info$colour <- col[-attr(info, "na.action")]
-        info$PSname <- PSname[-attr(info, "na.action")]
-    } else {
-        info$colour <- col
-        info$PSname <- PSname
-    }
-    ## Missing PSname values are "estimated"
-    naPS <- is.na(info$PSname)
-    if (any(naPS)) {
-        bold <- ifelse(info$weight >= 700, "Bold", "")
-        style <- ifelse(info$style > 1,
-                        ifelse(info$style > 2, "Oblique", "Italic"),
-                        "")
-        face <- paste0(bold, style)
-        info$PSname[naPS] <-
-            ifelse(nchar(info$file[naPS]),
-                   sub("([^.]+)\\.[[:alnum:]]+$", "\\1",
-                       basename(info$file[naPS])),
-                   paste0(info$family[naPS],
-                          ifelse(nchar(style), paste0("-", style), "")))
-    }
-    if (any(nchar(info$PSname, "bytes") > 200))
-        warning("PostScript font name longer than 200 will be truncated")
-    ## Check that family-weight-style and file and PSname all line up
-    families <- rle(paste0(info$family, info$weight, info$style))$lengths
-    files <- rle(info$file)$lengths
-    names <- rle(info$PSname)$lengthe
-    if (!(all(families == files) && all(files == names)))
-        stop("Font information is inconsistent")
-    ## Construct final structure
-    attr(info, "width") <- width
-    attr(info, "height") <- height
-    attr(info, "hAnchor") <- hAnchor
-    attr(info, "vAnchor") <- vAnchor
-    if (nrow(info) < 1)
+    dropNA <- !(is.na(id) | is.na(x) | is.na(y) |
+                ## is.na(font) already checked
+                is.na(size))
+    glyphs <- data.frame(id, x, y, font, size)[dropNA, ]
+    if (nrow(glyphs) < 1)
         stop("Invalid glyph info")
-    class(info) <- c("RGlyphInfo", "data.frame")
+    ## Colour can be NA
+    if (inherits(glyphs, "omit")) {
+        glyphs$colour <- col[-attr(glyphs, "na.action")]
+    } else {
+        glyphs$colour <- col
+    }
+    ## Construct final structure
+    info <- list(glyphs=glyphs, fonts=fontList,
+                 width=width, height=height,
+                 hAnchor=hAnchor, vAnchor=vAnchor)
+    class(info) <- c("RGlyphInfo")
     info
 }
 

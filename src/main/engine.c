@@ -3821,64 +3821,78 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd) {
 }
 
 /*
- * C API for graphics devices to interrogate glyph info SEXPs
+ * C API for graphics devices to interrogate glyphInfo and glyphFont SEXPs
  *
  * MUST match R structures in ../library/grDevices/R/glyph.R
  */
-#define glyph_ID       0
-#define glyph_x        1
-#define glyph_y        2
-#define glyph_family   3
-#define glyph_weight   4
-#define glyph_style    5
-#define glyph_size     6
-#define glyph_file     7
-#define glyph_index    8
-#define glyph_colour   9
-#define glyph_PSname  10
 
-SEXP R_GE_glyphID(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_ID);
+#define glyph_info_glyphs   0
+#define glyph_info_fonts    1
+
+SEXP R_GE_glyphInfoGlyphs(SEXP glyphInfo) {
+    return VECTOR_ELT(glyphInfo, glyph_info_glyphs);
 }
-SEXP R_GE_glyphXOffset(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_x);
-}
-SEXP R_GE_glyphYOffset(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_y);
-}
-SEXP R_GE_glyphFamily(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_family);
-}
-SEXP R_GE_glyphWeight(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_weight);
-}
-SEXP R_GE_glyphStyle(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_style);
-}
-SEXP R_GE_glyphSize(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_size);
-}
-SEXP R_GE_glyphFile(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_file);
-}
-SEXP R_GE_glyphIndex(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_index);
-}
-SEXP R_GE_glyphColour(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_colour);
-}
-SEXP R_GE_glyphPSname(SEXP glyph) {
-    return VECTOR_ELT(glyph, glyph_PSname);
+SEXP R_GE_glyphInfoFonts(SEXP glyphInfo) {
+    return VECTOR_ELT(glyphInfo, glyph_info_fonts);
 }
 
-void GEGlyph(int n, int *glyphs, double *x, double *y, 
-             const char* family, double weight, int style,
-             const char* file, int index, 
-             const char* PSname,
-             double size, int colour, double rot, pGEDevDesc dd) {
+#define glyph_id            0
+#define glyph_x             1
+#define glyph_y             2
+#define glyph_font          3
+#define glyph_size          4
+#define glyph_colour        5
+
+SEXP R_GE_glyphID(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_id);
+}
+SEXP R_GE_glyphX(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_x);
+}
+SEXP R_GE_glyphY(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_y);
+}
+SEXP R_GE_glyphFont(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_font);
+}
+SEXP R_GE_glyphSize(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_size);
+}
+SEXP R_GE_glyphColour(SEXP glyphs) {
+    return VECTOR_ELT(glyphs, glyph_colour);
+}
+
+#define glyph_font_file     0
+#define glyph_font_index    1
+#define glyph_font_family   2
+#define glyph_font_weight   3
+#define glyph_font_style    4
+#define glyph_font_PSname   5
+
+char* R_GE_glyphFontFile(SEXP glyphFont) {
+    return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_file), 0));
+}
+int R_GE_glyphFontIndex(SEXP glyphFont) {
+    return INTEGER(VECTOR_ELT(glyphFont, glyph_font_index))[0];
+}
+char* R_GE_glyphFontFamily(SEXP glyphFont) {
+    return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_family), 0));
+}
+double R_GE_glyphFontWeight(SEXP glyphFont) {
+    return REAL(VECTOR_ELT(glyphFont, glyph_font_weight))[0];
+}
+int R_GE_glyphFontStyle(SEXP glyphFont) {
+    return VECTOR_ELT(glyphFont, glyph_font_style);
+}
+char* R_GE_glyphFontPSname(SEXP glyphFont) {
+    return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_PSname), 0));
+}
+
+void GEGlyph(int n, int *glyphs, double *x, double *y,
+             SEXP font, double size,
+             int colour, double rot, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_glyphs) {
-        dd->dev->glyph(n, glyphs, x, y, 
-                       family, weight, style, file, index, PSname, 
-                       size, colour, rot, dd->dev);
+        dd->dev->glyph(n, glyphs, x, y, font, size,
+                       colour, rot, dd->dev);
     }
 }

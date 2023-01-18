@@ -2374,10 +2374,8 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
 #endif
 
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
-                        const char* family, double weight, int style,
-                        const char* file, int index, 
-                        const char* PSname,
-                        double size, int colour, double rot, pDevDesc dd) 
+                        SEXP font, double size, 
+                        int colour, double rot, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     
@@ -2390,7 +2388,9 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
         }
     }
 
-    int sl, wt;
+    double weight = R_GE_glyphFontWeight(font);
+    uint style = R_GE_glyphFontStyle(font);
+    int wt, sl;
     if (weight > 400) {
         wt = CAIRO_FONT_WEIGHT_BOLD;
     } else {
@@ -2405,8 +2405,10 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
     cairo_font_face_t *cairo_face = NULL;
 #if CAIRO_HAS_FT_FONT
     FcPattern *pattern = FcPatternBuild(NULL,
-                                        FC_FILE, FcTypeString, file,
-                                        FC_INDEX, FcTypeInteger, index,
+                                        FC_FILE, FcTypeString, 
+                                        R_GE_glyphFontFile(font),
+                                        FC_INDEX, FcTypeInteger, 
+                                        R_GE_glyphFontIndex(font),
                                         NULL);
     cairo_face = cairo_ft_font_face_create_for_pattern(pattern);
     FcPatternDestroy(pattern);
@@ -2416,7 +2418,8 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
         cairo_set_font_face(xd->cc, cairo_face);
     } else {
         warning(_("Font file not found; matching font family and face"));
-        cairo_select_font_face(xd->cc, family, sl, wt);
+        cairo_select_font_face(xd->cc, 
+                               R_GE_glyphFontFamily(font), sl, wt);
     }
     /* Text size (in "points") MUST match the scale of the glyph 
      * location (in "bigpts").  The latter depends on device dpi.

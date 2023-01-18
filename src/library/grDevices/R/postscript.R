@@ -991,14 +991,15 @@ embedFonts <- function(file, # The ps or pdf file to convert
 }
 
 ## 'file' is the pdf file to convert
-## 'glyphs' is RGlyphInfo 
+## 'glyphInfo' is RGlyphInfo 
 ## 'outfile' is the new pdf file
 ## 'options' are additional options to ghostscript
-embedGlyphs <- function(file, glyphs, outfile = file, options = character()) {
+embedGlyphs <- function(file, glyphInfo, outfile = file,
+                        options = character()) {
     if (!is.character(file) || length(file) != 1L || !nzchar(file))
         stop("'file' must be a non-empty character string")
-    if (!inherits(glyphs, "RGlyphInfo"))
-        stop("Invalid 'glyphs'")
+    if (!inherits(glyphInfo, "RGlyphInfo"))
+        stop("Invalid 'glyphInfo'")
     gsexe <- tools::find_gs_cmd()
     if(!nzchar(gsexe)) stop("GhostScript was not found")
     if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
@@ -1007,8 +1008,8 @@ embedGlyphs <- function(file, glyphs, outfile = file, options = character()) {
     tmpfile <- tempfile("Rembed")
     ## Generate cidfmap to relate font names to font files
     cidfmap <- file.path(tempdir(), "cidfmap")
-    fontfile <- unique(glyphs$file)
-    fontname <- unique(glyphs$PSname)
+    fontfile <- unique(sapply(glyphInfo$fonts, function(x) x$file))
+    fontname <- unique(sapply(glyphInfo$fonts, function(x) x$PSname))
     writeLines(paste0("/", fontname,
                       " << /FileType /TrueType /Path (", fontfile,
                       ") /SubfontID 0 /CSI [(Identity) 0] >>;"),
