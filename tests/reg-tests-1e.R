@@ -440,6 +440,13 @@ stopifnot(packageVersion(basename(pkgpath), dirname(pkgpath)) == "1.0")
 ## gave a "packageNotFoundError" in 3.5.0 <= R <= 4.2.2
 
 
+## format.bibentry() with preloaded Rd macros
+ref <- bibentry("misc", author = "\\authors", year = 2023)
+macros <- tools::loadRdMacros(textConnection("\\newcommand{\\authors}{\\R}"))
+stopifnot(identical(print(format(ref, macros = macros)), "R (2023)."))
+## macro definitions were not used in R <= 4.2.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
