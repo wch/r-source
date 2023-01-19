@@ -1111,13 +1111,14 @@ Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
-Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 19.0?)
+Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 2021.1)
+         c++23 (from 2022.2)
 @end example
 @noindent
 (Those for LLVM @command{clang++} are documented at
 @uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
 @code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
-Clang 13.)
+Clang 13.  Apple Clang supports @code{-std=c++2b} from 13.1.6.)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
