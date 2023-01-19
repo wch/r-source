@@ -10485,7 +10485,7 @@ static void PDF_glyph(int n, int *glyphs, double *x, double *y,
                       SEXP font, double size, 
                       int colour, double rot, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    newGlyphFont(R_GE_glyphFontPSname(font), pd);
+    int index = newGlyphFont(R_GE_glyphFontPSname(font), pd);
     if (index >= 0) {
         if (R_VIS(colour)) {
             if(pd->inText) textoff(pd);
