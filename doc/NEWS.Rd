@@ -138,7 +138,7 @@
       Experimental; may be updated before release.
 
       \item \command{Rgui} console implementation now works better with the
-      \code{NVDA} screen reader when the full blinking cursor is selected. 
+      \code{NVDA} screen reader when the full blinking cursor is selected.
       The underlying improvements in cursor handling may help also other
       screen readers on Windows.
 
@@ -289,7 +289,7 @@
       installing user to specify this.  In most cases \R defaults to the
       C compiler's default standard which is C17 (a `bug-fix' of C11) --
       earlier versions of \R or compilers may have defaulted to C99.
- 
+
       Current options are:
       \describe{
 	\item{USE_C17}{Use a standard that is at most C17.  The
@@ -559,6 +559,16 @@
 
       \item Mandatory options (\code{options()}) are now set on startup so
       that saving and restoring them always works (\PR{18372}).
+
+      \item Package installation, \command{R CMD INSTALL} or \code{install.packages(*)},
+      now parses each of the \file{<pkg>/R/*.R} files individually instead
+      of first concatenating and then \code{parse()}ing the large resulting
+      file.  This allows parser or syntax errors to be diagnosed with
+      correct file names and line numbers, thanks to Simon Dedman's report
+      and Bill Dunlap's patch in \PR{17859}.
+
+      This \emph{does} require syntactically self contained R source
+      files now, fixing another inadvertant bug.
     }
   }
 }
