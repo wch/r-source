@@ -349,7 +349,8 @@ struct callinfo
 /* Control event management. */
 
   PROTECTED void   handle_control(HWND hwnd, UINT message);
-  PROTECTED object find_valid_sibling(object obj);
+  PROTECTED object find_next_valid_sibling(object obj);
+  PROTECTED object find_prev_valid_sibling(object obj);
 
 /* Dialog event management */
 

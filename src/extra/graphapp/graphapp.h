@@ -6,7 +6,7 @@
  *  This header file is designed to be platform-independent.
  *
  *  Copyright 2006-8	The R Foundation
- *  Copyright 2013-22	The R Core Team
+ *  Copyright 2013-23	The R Core Team
  *
  */
 
@@ -311,7 +311,8 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define fillrect		GA_fillrect
 #define fillroundrect		GA_fillroundrect
 #define find_object		GAI_find_object
-#define find_valid_sibling	GAI_find_valid_sibling
+#define find_next_valid_sibling	GAI_find_next_valid_sibling
+#define find_prev_valid_sibling	GAI_find_prev_valid_sibling
 #define finddialog		GA_finddialog
 #define finish_contexts		GAI_finish_contexts
 #define finish_events		GAI_finish_events
