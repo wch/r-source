@@ -50,6 +50,9 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
 # include <config.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 
 /* interval at which to check interrupts */
 #define NINTERRUPT 1000000

@@ -109,6 +109,7 @@ SEXP do_commandArgs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_comment(SEXP, SEXP, SEXP, SEXP);
 SEXP do_commentgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_compareNumericVersion(SEXP, SEXP, SEXP, SEXP);
+SEXP do_compilerVersion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_complex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_contourLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_copyDFattr(SEXP, SEXP, SEXP, SEXP);

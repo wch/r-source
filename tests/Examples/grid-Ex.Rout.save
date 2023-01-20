@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-12-12 r83438) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1667,6 +1667,11 @@ List of 6
 +           gp=gpar(fontsize=20, col="grey"))
 > grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
 +           gp=gpar(fontsize=20), check.overlap=TRUE)
+> 
+> grid.newpage() ## plotmath example
+> grid.text(quote(frac(e^{-x^2/2}, sqrt(2*pi))), x=x, y=y, rot=stats::runif(20, -45,45),
++           gp=gpar(fontsize=17, col=4), check.overlap=TRUE)
+> 
 > grid.newpage()
 > draw.text <- function(just, i, j) {
 +   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -2436,7 +2441,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.471 0.055 3.552 0 0 
+Time elapsed:  0.911 0.192 1.126 0 0 
 > grDevices::dev.off()
 null device 
           1 

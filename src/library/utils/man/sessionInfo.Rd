@@ -100,7 +100,8 @@ osVersion
   loaded from: it can be wrong if another process has been changing
   packages during the session.
 }
-\seealso{\code{\link{R.version}}
+\seealso{
+  \code{\link{R.version}}, \code{\link{R_compiled_by}}
 }
 %% FIXME: this should test this, in RDIFF makeup.
 \examples{\donttest{

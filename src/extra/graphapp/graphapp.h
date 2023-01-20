@@ -6,7 +6,7 @@
  *  This header file is designed to be platform-independent.
  *
  *  Copyright 2006-8	The R Foundation
- *  Copyright 2013-22	The R Core Team
+ *  Copyright 2013-23	The R Core Team
  *
  */
 
@@ -311,7 +311,8 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define fillrect		GA_fillrect
 #define fillroundrect		GA_fillroundrect
 #define find_object		GAI_find_object
-#define find_valid_sibling	GAI_find_valid_sibling
+#define find_next_valid_sibling	GAI_find_next_valid_sibling
+#define find_prev_valid_sibling	GAI_find_prev_valid_sibling
 #define finddialog		GA_finddialog
 #define finish_contexts		GAI_finish_contexts
 #define finish_events		GAI_finish_events
@@ -624,6 +625,8 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define current_menubar		GAI_current_menubar
 #define current_window		GAI_current_window
 #define dc			GAI_dc
+#define edit_control_proc	GAI_edit_control_proc
+#define edit_control_procedure	GAI_edit_control_procedure
 #define hAccel			GAI_hAccel
 #define hwndClient		GAI_hwndClient
 #define hwndFrame		GAI_hwndFrame
@@ -992,6 +995,8 @@ rect    GetCurrentWinPos(window obj);
 
 #define UsePalette	0x00100000L
 #define UseUnicode	0x00200000L
+
+#define SetUpCaret	0x00400000L
 
 #define StandardWindow	(Titlebar|Closebox|Resize|Maximize|Minimize)
 

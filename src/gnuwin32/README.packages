@@ -4,6 +4,9 @@ Writing packages for R
 See the Writing R Extensions manual for a full description of how
 to write a package.
 
+The following content is outdated, but kept here for reference.
+
+
 
 Building from a source-code library under Windows
 =================================================

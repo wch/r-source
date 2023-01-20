@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-04-18 r82207) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.4.0 (64-bit)
+R Under development (unstable) (2023-01-05 r83566) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -409,5 +409,27 @@ attr(,"class")
 [4,]    0    0    0    1    0
 [5,]    0    0    0    0    1
 > 
+> ##  -------  tests of non-finite values  -----------------
+> 
+> a <- matrix(NaN, 3, 3,, list(one=1:3, two=letters[1:3]))
+> b <- cbind(1:3, NA)
+> dimnames(b) <- list(One=4:6, Two=11:12)
+> bb <- 1:3; names(bb) <- 11:12
+> ## gave error with LAPACK 3.11.0
+> solve(a, b)
+   11 12
+a NaN NA
+b NaN NA
+c NaN NA
+> solve(a, bb)
+  a   b   c 
+NaN NaN NaN 
+> 
+> A <- a + 0i
+> solve(A, b)
+        11 12
+a NaN+NaNi NA
+b NaN+NaNi NA
+c NaN+NaNi NA
 > 
 > 

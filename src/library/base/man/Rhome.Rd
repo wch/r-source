@@ -1,6 +1,6 @@
 % File src/library/base/man/Rhome.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016, 2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rhome}
@@ -36,7 +36,9 @@ R.home(component = "home")
   installation.
 
   The value for \code{"modules"} and on Windows \code{"bin"} is a
-  sub-architecture-specific location.
+  sub-architecture-specific location.  (This is not so for
+  \code{"etc"}, which may have sub-architecture-specific files as well
+  as common ones.)
 
   On a Unix-alike, the constructed paths are based on the current
   values of the environment variables \env{R_HOME} and where set

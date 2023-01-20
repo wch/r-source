@@ -86,7 +86,7 @@ like
 
 and follow the instructions, which install the toolchain under a place
 it (and we) call MXE_ROOT.  (To build R only the
-'rtools42-toolchain-libs-base' version is required.)
+'rtools43-toolchain-libs-base' version is required.)
 
 You will also need to fetch the pre-built Tcl/Tk as described in the
 section 'Building R from source using a toolchain tarball'.  The default

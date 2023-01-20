@@ -36,13 +36,15 @@
 #   Copyright (c) 2015 Moritz Klammler <moritz@klammler.eu>
 #   Copyright (c) 2016, 2018 Krzesimir Nowak <qdlacz@gmail.com>
 #   Copyright (c) 2019 Enji Cooper <yaneurabeya@gmail.com>
+#   Copyright (c) 2020 Jason Merrill <jason@redhat.com>
+#   Copyright (c) 2021 Jörn Heusipp <osmanx@problemloesungsmaschine.de>
 #
 #   Copying and distribution of this file, with or without modification, are
 #   permitted in any medium without royalty provided the copyright notice
 #   and this notice are preserved.  This file is offered as-is, without any
 #   warranty.
 
-# cxx_compile_stdcxx serial 11
+# cxx_compile_stdcxx serial 15
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
 dnl  (serial version number 13).
@@ -117,7 +119,7 @@ dnl If e.g. CXX11STD is set, test it first.  Otherwise test default last.
     dnl Cray's crayCC needs "-h std=c++11"
     dnl Both omitted here
     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
         AC_CACHE_CHECK(whether $CXX supports C++$1 features with $switch,
                        $cachevar,
@@ -198,7 +200,7 @@ dnl R modification to exclude C++17 compilers
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
@@ -213,7 +215,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
@@ -226,9 +228,8 @@ dnl Test body for checking C++20 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_20],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
-dnl value from 2020-01-14 draft, clang 11 has 202002L
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
@@ -240,7 +241,7 @@ dnl Test body for checking C++23 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_23],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
-dnl value from 2020-01-14 draft, clang 11 has 202002L
+dnl Reject if value is that of C++20 or earlier
 #elif __cplusplus <= 202002L
 #error "This is not a C++23 compiler"
 #else

@@ -677,11 +677,7 @@ Rboolean R_HasFancyBindings(SEXP rho);
 
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */
-#if defined(__GNUC__) && __GNUC__ >= 3
-void Rf_errorcall(SEXP, const char *, ...) __attribute__((noreturn));
-#else
-void Rf_errorcall(SEXP, const char *, ...);
-#endif
+NORET void Rf_errorcall(SEXP, const char *, ...);
 void Rf_warningcall(SEXP, const char *, ...);
 void Rf_warningcall_immediate(SEXP, const char *, ...);
 

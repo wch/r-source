@@ -1,10 +1,10 @@
-# 1 "new/la_xisnan.F90"
+# 1 "SRC/la_xisnan.F90"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 399 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "new/la_xisnan.F90" 2
+# 1 "SRC/la_xisnan.F90" 2
 module LA_XISNAN
    interface LA_ISNAN
 

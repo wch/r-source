@@ -503,7 +503,7 @@ function()
                 T_ID = .Rd_object_id(db[, "T_Package"], db[, "T_File"]))
 
     ## Do we have Rd xrefs to current CRAN packages which no longer work?
-    current <- rownames(CRAN_current_db())
+    current <- sub("_.*", "", rownames(CRAN_current_db()))
     db1 <- db[!is.na(match(db[, "T_Package"], current)), , drop = FALSE]
     y$broken_xrefs_to_current_CRAN_packages <-
         db1[is.na(match(db1[, "T_ID"],

@@ -27,8 +27,9 @@
  GAI_del_context
  GAI_del_string
  GAI_deletion_traversal
+ GAI_find_next_valid_sibling
  GAI_find_object
- GAI_find_valid_sibling
+ GAI_find_prev_valid_sibling
  GAI_finish_contexts
  GAI_finish_events
  GAI_finish_objects

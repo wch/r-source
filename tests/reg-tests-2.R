@@ -678,7 +678,7 @@ glm(y ~ x, family = poisson(identity), start = c(1,0))
 set.seed(123)
 y <- rpois(100, pmax(3*x, 0))
 glm(y ~ x, family = poisson(identity), start = c(1,0))
-warnings()
+summary(warnings())
 
 
 ## extending char arrrays
@@ -897,6 +897,7 @@ women[,"height", drop = FALSE] # no warning
 women[,"height", drop = TRUE]  # a vector
 ## second and third were interpreted as women["height", , drop] in 1.7.x
 
+op <- options(warn = 2) # *no* warnings (for now)
 
 ## make.names
 make.names("")
@@ -948,7 +949,12 @@ model.matrix(fit)
 summary(fit)
 anova(fit)
 predict(fit)
-predict(fit, data.frame(x=x), se=TRUE)
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
+stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 variable.names(fit) #should be empty
 model.matrix(fit)
@@ -964,7 +970,12 @@ predict(fit, type="terms", se=TRUE)
 summary(fit)
 anova(fit)
 predict(fit)
-predict(fit, data.frame(x=x), se=TRUE)
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
+stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 ## Lots of problems in 1.7.x
 
@@ -1150,6 +1161,7 @@ aov(y ~ a + b - 1 + Error(c), data=test.df)
 
 binom.test(c(800,10))# p-value < epsilon
 
+options(op) # revert: warnings allowed
 
 ## aov with a singular error model
 rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
@@ -1163,7 +1175,7 @@ sample.df <- data.frame(dep.variable=rd,
                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
                         f2=factor(rep(c("g1","g2","g3"),each=18))
 )
-sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df) # warning: singular
 sample.aov
 summary(sample.aov)
 sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)

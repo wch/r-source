@@ -1,0 +1,33 @@
+--- orig/dlatrs.f	2022-11-11 17:49:54
++++ dlatrs.f	2022-12-16 14:50:10
+@@ -259,7 +259,7 @@
+       LOGICAL            NOTRAN, NOUNIT, UPPER
+       INTEGER            I, IMAX, J, JFIRST, JINC, JLAST
+       DOUBLE PRECISION   BIGNUM, GROW, REC, SMLNUM, SUMJ, TJJ, TJJS,
+-     $                   TMAX, TSCAL, USCAL, XBND, XJ, XMAX
++     $                   TMAX, TSCAL, USCAL, XBND, XJ, XMAX, WK(1)
+ *     ..
+ *     .. External Functions ..
+       LOGICAL            LSAME
+@@ -361,17 +361,19 @@
+ *
+ *              A is upper triangular.
+ *
++*     R change: SUMJ -> WK to avoid rank mismatch.
+                DO J = 2, N
+-                  TMAX = MAX( DLANGE( 'M', J-1, 1, A( 1, J ), 1, SUMJ ),
++                  TMAX = MAX( DLANGE( 'M', J-1, 1, A( 1, J ), 1, WK ),
+      $                        TMAX )
+                END DO
+             ELSE
+ *
+ *              A is lower triangular.
+ *
++*     R change: SUMJ -> WK to avoid rank mismatch.
+                DO J = 1, N - 1
+                   TMAX = MAX( DLANGE( 'M', N-J, 1, A( J+1, J ), 1,
+-     $                        SUMJ ), TMAX )
++     $                        WK ), TMAX )
+                END DO
+             END IF
+ *

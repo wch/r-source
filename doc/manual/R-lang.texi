@@ -169,30 +169,31 @@ The following table describes the possible values returned by
 @quotation
 @multitable @columnfractions 0.2 0.7
 @item @code{"NULL"} @tab NULL
-@item @code{"symbol"} @tab a variable name
-@item @code{"pairlist"}@tab a pairlist object (mainly internal)
-@item @code{"closure"} @tab a function
+@item @code{"symbol"}   @tab a variable name
+@item @code{"pairlist"} @tab a pairlist object (mainly internal)
+@item @code{"closure"}  @tab a function
 @item @code{"environment"} @tab an environment
 @cindex evaluation, lazy
 @item @code{"promise"}  @tab an object used to implement lazy evaluation 
 @item @code{"language"} @tab an @R{} language construct
 @item @code{"special"}  @tab an internal function that does not evaluate its arguments
-@item @code{"builtin"} @tab an internal function that evaluates its arguments
-@item @code{"char"} @tab a `scalar' string object (internal only) ***
-@item @code{"logical"} @tab a vector containing logical values
-@item @code{"integer"} @tab a vector containing integer values
-@item @code{"double"}  @tab a vector containing real values
-@item @code{"complex"} @tab a vector containing complex values
+@item @code{"builtin"}  @tab an internal function that evaluates its arguments
+@anchor{typeof-char}
+@item @code{"char"}     @tab a `scalar' string object (internal only) ***
+@item @code{"logical"}  @tab a vector containing logical values
+@item @code{"integer"}  @tab a vector containing integer values
+@item @code{"double"}   @tab a vector containing real values
+@item @code{"complex"}  @tab a vector containing complex values
 @item @code{"character"} @tab a vector containing character values
-@item @code{"..."} @tab the special variable length argument ***
-@item @code{"any"} @tab a special type that matches all types: there are no objects of this type
+@item @code{"..."}      @tab the special variable length argument ***
+@item @code{"any"}      @tab a special type that matches all types: there are no objects of this type
 @item @code{"expression"} @tab an expression object
-@item @code{"list"} @tab a list
+@item @code{"list"}     @tab a list
 @item @code{"bytecode"} @tab byte code (internal only) ***
 @item @code{"externalptr"} @tab an external pointer object
-@item @code{"weakref"} @tab a weak reference object
-@item @code{"raw"} @tab a vector containing bytes
-@item @code{"S4"} @tab an S4 object which is not a simple object
+@item @code{"weakref"}  @tab a weak reference object
+@item @code{"raw"}      @tab a vector containing bytes
+@item @code{"S4"}       @tab an S4 object which is not a simple object
 @end multitable
 @end quotation
 
@@ -283,7 +284,7 @@ indexing operations such as
 @cindex mode
 @cindex atomic
 @R{} has six basic (`atomic') vector types: logical, integer, real,
-complex, string (or character) and raw.  The modes and storage modes for
+complex, character (in C aka `string') and raw.  The modes and storage modes for
 the different vector types are listed in the following table.
 
 @quotation
@@ -302,9 +303,11 @@ Single numbers, such as @code{4.2}, and strings, such as @code{"four
 point two"} are still vectors, of length 1; there are no more basic
 types.  Vectors with length zero are possible (and useful).
 
-String vectors have mode and storage mode @code{"character"}. A single
-element of a character vector is often referred to as a @emph{character
-string}.
+A single element of a character vector is often referred to as a
+@emph{character string} or short @emph{string}.
+@footnote{Note that character vectors internally are @code{STRSXP} types and each
+ element (we call @emph{string} above) is of C type @code{CHARSXP}
+ (with @emph{internal only} @code{typeof(.) == "char"}, @pxref{typeof-char}).}
 
 
 @node List objects, Language objects, Vector objects, Basic types
@@ -1604,7 +1607,7 @@ regarded as matching any @code{NaN} value (and no other value, not even
 
 The @code{NA} of character type is as from R 1.5.0 distinct from the
 string @code{"NA"}.  Programmers who need to specify an explicit string
-@code{NA} should use @samp{as.character(NA)} rather than @code{"NA"}, or
+@code{NA} should use @samp{NA_character_} rather than @code{"NA"}, or
 set elements to @code{NA} using @code{is.na<-}.
 
 There are constants @code{NA_integer_}, @code{NA_real_},
@@ -3083,7 +3086,7 @@ do not suggest a single method then the default method is used.  Either
 a group method or a class method dominates if the other operand has no
 corresponding method.  A class method dominates a group method.
 
-When the group is Ops the special variable @code{.Method} is a string
+When the group is Ops the special variable @code{.Method} is a character
 vector with two elements.  The elements of @code{.Method} are set to the
 name of the method if the corresponding argument is a member of the
 class that was used to determine the method.  Otherwise the

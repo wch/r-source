@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -671,12 +671,19 @@ predict.lm <-
 	     interval = c("none", "confidence", "prediction"),
 	     level = .95,  type = c("response", "terms"),
 	     terms = NULL, na.action = na.pass, pred.var = res.var/weights,
-             weights = 1, ...)
+	     weights = 1,
+	     rankdeficient = c("simple", "non-estim", "NA"),
+             tol = 1e-6, verbose = FALSE,
+             ...)
 {
     tt <- terms(object)
     if(!inherits(object, "lm"))
 	warning("calling predict.lm(<fake-lm-object>) ...")
-    if(missing(newdata) || is.null(newdata)) {
+    type <- match.arg(type)
+    missRdef <- missing(rankdeficient)
+    rankdeficient <- match.arg(rankdeficient)
+    noData <- (missing(newdata) || is.null(newdata))
+    if(noData) {
 	mm <- X <- model.matrix(object)
 	mmDone <- TRUE
 	offset <- object$offset
@@ -687,26 +694,73 @@ predict.lm <-
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
-        offset <- rep(0, nrow(X))
-        if (!is.null(off.num <- attr(tt, "offset")))
-            for(i in off.num)
-                offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
-	if (!is.null(object$call$offset))
-	    offset <- offset + eval(object$call$offset, newdata)
-	mmDone <- FALSE
+        if(type != "terms") {
+           if((o1 <- !is.null(off.num <- attr(tt, "offset"))) |
+              (o2 <- !is.null(object$call$offset))) {
+               offset <- rep(0, nrow(X))
+               if(o1)
+                   for(i in off.num)
+                       offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
+               if(o2)
+                   offset <- offset + eval(object$call$offset, newdata)
+           }
+           else
+               offset <- NULL
+        }
+        mmDone <- FALSE
     }
     n <- length(object$residuals) # NROW(qr(object)$qr)
     p <- object$rank
     p1 <- seq_len(p)
-    piv <- if(p) qr.lm(object)$pivot[p1]
-    if(p < ncol(X) && !(missing(newdata) || is.null(newdata)))
-	warning("prediction from a rank-deficient fit may be misleading")
+    piv <- if(p) (qrX <- qr.lm(object))$pivot[p1]
+    hasNonest <- (p < ncol(X) && !noData)
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
-    beta <- object$coefficients
-    predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
-    if (!is.null(offset))
-	predictor <- predictor + offset
+    if(hasNonest) {
+      if(missRdef) {
+        warning("Possibly rank-deficient fit; the default rankdeficient = \"simple\" may change")
+      } else
+      if(rankdeficient == "simple") {
+        warning("prediction from a rank-deficient fit may be misleading")
+      } else { # rankdeficient \in {"NA", "non-estim"}
+        if(verbose) message("lower-rank qr: determining non-estimable cases")
+        stopifnot(is.numeric(tol), tol > 0)
+        if(!p) qrX <- qr.lm(object)
+        tR <- t(qr.R(qrX))
+        pp <- nrow(tR)
+        if(verbose) cat(sprintf("  n=%d, p=%d < ncol(X)=%d; ncol(tR)=%d <?< pp=%d (=?= n)\n",
+                                n, p, ncol(X), ncol(tR), pp))
+        if (ncol(tR) < pp) { # Add extra zero cols if needed
+            tR <- cbind(tR, matrix(0, nrow = pp, ncol = pp - ncol(tR)))
+            if(verbose)
+                cat(sprintf("    new tR: ncol(tR)=%d =!?= $d = pp = nrow(tR)\n", ncol(tR),pp))
+        }
+        ## Pad diagonal with ones
+        d <- c(pp,pp) ; tR[.row(d) > p  &  .row(d) == .col(d)] <- 1
+        ## Null basis is last pp-p cols of Q in QR decomposition of tR
+        nbasis <- qr.Q(qr.default(tR, LAPACK=TRUE))[, (p+1L):pp, drop = FALSE]
+        ## Determine estimability; nbasis is orthonormal :
+        ## *remember* rows are in qrX$pivot order; we use ALL columns of X, not just p of them
+        Xb <- X[, qrX$pivot] %*% nbasis
+        ## simple vector norm.  norm() breaks if there are NAs
+        norm2 <- function(x) sqrt(sum(x*x))
+        Xb.norm <- apply(Xb, 1L, norm2) # = ||N'k||
+        X.norm  <- apply(X , 1L, norm2) # = ||k'k||
+        ## Find indices of non-estimable cases;  estimable <==> "Xb is basically 0"
+        nonest <- which(tol * X.norm <= Xb.norm)
+      }
+    } else # otherwise everything is estimable
+        nonest <- integer(0L)
 
+    beta <- object$coefficients
+    if(type != "terms") { # type == "terms" re-computes {predictor, ip}
+        predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
+        if(rankdeficient == "NA")
+            predictor[nonest] <- NA
+        else if(rankdeficient == "non-estim")
+            attr(predictor, "non-estim") <- nonest
+        if (!is.null(offset))
+            predictor <- predictor + offset
+    }
     interval <- match.arg(interval)
     if (interval == "prediction") {
         if (missing(newdata))
@@ -723,15 +777,11 @@ predict.lm <-
         if (inherits(weights, "formula")){
             if (length(weights) != 2L)
                 stop("'weights' as formula should be one-sided")
-            d <- if(missing(newdata) || is.null(newdata))
-                model.frame(object)
-            else
-                newdata
+            d <- if(noData) model.frame(object) else newdata
             weights <- eval(weights[[2L]], d, environment(weights))
         }
     }
 
-    type <- match.arg(type)
     if(se.fit || interval != "none") {
         ## w is needed for interval = "confidence"
         w <- object$weights
@@ -746,11 +796,11 @@ predict.lm <-
             if(p > 0) {
                 XRinv <-
                     if(missing(newdata) && is.null(w))
-                        qr.Q(qr.lm(object))[, p1, drop = FALSE]
+                        qr.Q(qrX)[, p1, drop = FALSE]
                     else
-                        X[, piv] %*% qr.solve(qr.R(qr.lm(object))[p1, p1])
+                        X[, piv] %*% qr.solve(qr.R(qrX)[p1, p1])
 #	NB:
-#	 qr.Q(qr.lm(object))[, p1, drop = FALSE] / sqrt(w)
+#	 qr.Q(qrX)[, p1, drop = FALSE] / sqrt(w)
 #	looks faster than the above, but it's slower, and doesn't handle zero
 #	weights properly
 #
@@ -759,7 +809,9 @@ predict.lm <-
 	}
     }
 
-    if (type == "terms") { ## type == "terms" ------------
+    if (type == "terms") { ## type == "terms" ------ re-compute {predictor, ip} from scratch
+        ## FIXME: if(hasNonest)  we are *not* yet obeying `rankdeficient`
+        ## {offset is *not* considered (ok ?)}
 	if(!mmDone) {
             mm <- model.matrix(object)
             mmDone <- TRUE
@@ -781,8 +833,7 @@ predict.lm <-
             dimnames(predictor) <- list(rownames(X), names(asgn))
 
             if (se.fit || interval != "none") {
-                ip <- matrix(ncol = nterms, nrow = NROW(X))
-                dimnames(ip) <- list(rownames(X), names(asgn))
+                ip <- predictor
                 Rinv <- qr.solve(qr.R(qr.lm(object))[p1, p1])
             }
             if(hasintercept)
@@ -815,7 +866,7 @@ predict.lm <-
             predictor <- ip <- matrix(0, n, 0L)
         }
 	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
-    }
+    } ## type == "terms"
 
 ### Now construct elements of the list that will be returned
 

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2022-10-26 r83183) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-01-09 r83585) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1790,35 +1790,11 @@ Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    317.2 
 Residual Deviance: 228.5 	AIC: 344.7
 There were 27 warnings (use warnings() to see them)
-> warnings()
-Warning messages:
-1: step size truncated: out of bounds
-2: step size truncated: out of bounds
-3: step size truncated: out of bounds
-4: step size truncated: out of bounds
-5: step size truncated: out of bounds
-6: step size truncated: out of bounds
-7: step size truncated: out of bounds
-8: step size truncated: out of bounds
-9: step size truncated: out of bounds
-10: step size truncated: out of bounds
-11: step size truncated: out of bounds
-12: step size truncated: out of bounds
-13: step size truncated: out of bounds
-14: step size truncated: out of bounds
-15: step size truncated: out of bounds
-16: step size truncated: out of bounds
-17: step size truncated: out of bounds
-18: step size truncated: out of bounds
-19: step size truncated: out of bounds
-20: step size truncated: out of bounds
-21: step size truncated: out of bounds
-22: step size truncated: out of bounds
-23: step size truncated: out of bounds
-24: step size truncated: out of bounds
-25: step size truncated: out of bounds
-26: glm.fit: algorithm did not converge
-27: glm.fit: algorithm stopped at boundary value
+> summary(warnings())
+Summary of (a total of 27) warning messages:
+25x : step size truncated: out of bounds
+ 1x : glm.fit: algorithm did not converge
+ 1x : glm.fit: algorithm stopped at boundary value
 > 
 > 
 > ## extending char arrrays
@@ -2574,6 +2550,7 @@ In `[.data.frame`(women, "height", drop = TRUE) :
  [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
 > ## second and third were interpreted as women["height", , drop] in 1.7.x
 > 
+> op <- options(warn = 2) # *no* warnings (for now)
 > 
 > ## make.names
 > make.names("")
@@ -2764,7 +2741,10 @@ Residuals 10 2.7404 0.27404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2778,9 +2758,8 @@ $df
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(fit, data.frame(x = x), se = TRUE) :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -2969,7 +2948,10 @@ x     0        0        10     2.7404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2980,9 +2962,8 @@ $se.fit
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(object, newdata, se.fit, scale = residual.scale, type = if (type ==  :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -3724,6 +3705,7 @@ probability of success
              0.9876543 
 
 > 
+> options(op) # revert: warnings allowed
 > 
 > ## aov with a singular error model
 > rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
@@ -3737,7 +3719,7 @@ probability of success
 +                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
 +                         f2=factor(rep(c("g1","g2","g3"),each=18))
 + )
-> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df) # warning: singular
 Warning message:
 In aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) :
   Error() model is singular

@@ -8,14 +8,14 @@ var
   HelpStylePage: TInputOptionWizardPage;
   INIFilename: String;
   
-function IsAdmin: boolean;
+function RIsAdmin: boolean;
 begin
-  Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
+  Result := IsAdmin or IsPowerUserLoggedOn;
 end;
 
 function NonAdmin: boolean;
 begin
-  Result := not IsAdmin;
+  Result := not RIsAdmin;
 end;
 
 procedure InitializeWizard;
@@ -149,7 +149,7 @@ end;
 
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
-  if PageID = NoAdminPage.ID then Result := IsAdmin
+  if PageID = NoAdminPage.ID then Result := RIsAdmin
   else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) then 
     Result := SelectOptionsPage.SelectedValueIndex = 1
   else Result := false;
@@ -158,7 +158,7 @@ end;
 function UserPF(Param:String): String;
 begin
   Result := ExpandConstant('{pf}');
-  if (not IsAdmin) then 
+  if (not RIsAdmin) then 
   begin
     try
       Result := ExpandConstant('{userpf}');

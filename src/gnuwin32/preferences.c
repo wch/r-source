@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000      Guido Masarotto and Brian Ripley
- *                2004-2018 R Core Team
+ *                2004-2022 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -330,10 +330,13 @@ void applyGUI(Gui newGUI)
 	fontsty = sty;
 
 	/* Don't delete font: open pagers may be using it */
+	/* keep in step with setconsoleoptions() in console.c */
 	if (strcmp(fontname, "FixedFont"))
-	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0, 1);
+	    consolefn = gnewfont(NULL, fontname, fontsty | FixedWidth,
+	                         pointsize, 0.0, 1);
 	else consolefn = FixedFont;
 	if (!consolefn) {
+	    /* This is unlikely to happen: it will find some match */
 	    snprintf(msg, LF_FACESIZE + 128,
 		     G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
 		     fontname, fontsty | FixedWidth, pointsize);

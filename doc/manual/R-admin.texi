@@ -333,12 +333,17 @@ make check-all
 @end example
 
 @noindent
-see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
+see @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
 are only run completely if the recommended packages are installed.  If
 you have a local CRAN mirror, these checks can be speeded up by either
 setting environment variable @env{R_CRAN_WEB} to its URL, or having a
 file @file{.R/repositories} specifying it (see @code{?setRepositories}).
+
+Parallel make is supported for building @R{} but not for the
+@samp{check} targets (as the output is likely to be unreadably
+interleaved, although where supported@footnote{not by the version
+supplied by macOS.} GNU make's @option{-O} may help).
 
 If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -980,6 +985,7 @@ dependence on the @R{} version.)
 * Debugging Symbols::
 * OpenMP Support::
 * C++ Support::
+* C standards::
 * Link-Time Optimization::
 @end menu
 
@@ -1048,7 +1054,7 @@ OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
 
-@node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
+@node C++ Support, C standards, OpenMP Support, Other Options
 @subsection C++ Support
 
 C++ is not used by @R{} itself, but support is provided for installing
@@ -1079,39 +1085,40 @@ CXX20
 CXX20STD
 CXX20FLAGS
 CXX20PICFLAGS
+
+CXX23
+CXX23STD
+CXX23FLAGS
+CXX23PICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
 @code{CXXSTD} and @code{CXX11STD} a suitable flag such as
 @option{-std=c++11} for C++11 support (which is required if C++ is to be
-supported at all).  Similarly, @command{configure} will if possible
-choose for @code{CXX14STD} a flag@footnote{This was a valid option for
-@command{g++} 5 and later and 2016 versions of the Intel and Solaris
-compilers.  For earlier versions of @command{g++} one could try
-@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support,
-@option{-std=c++17} or @option{-std=c++1z} for support for C++17 and
-@option{-std=c++20} or @option{-std=c++2a} for support for C++20.  The
-inferred values can be overridden in file @file{config.site} or on the
-@command{configure} command line: user-supplied values will be tested by
-compiling some C++11/14/17/20 code.
+supported at all).  inferred values can be overridden in file
+@file{config.site} or on the @command{configure} command line:
+user-supplied values will be tested by compiling some C++11/14/17/20/23
+code.
 
-It may be that there is no suitable flag for C++14/17/20 support with
+It may be that there is no suitable flag for C++14/17/20/23 support with
 the default compiler, in which case a different compiler could be
-selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
+selected for @code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23} with its
 corresponding flags.
 
 The @option{-std} flag is supported by the GCC, @command{clang++} and
 Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
-         c++20 gnu++20 (from 10)
-Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 19.0?)
+         c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
+Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 2021.1)
+         c++23 (from 2022.2)
 @end example
 @noindent
-(Those for @command{clang++} are documented at
+(Those for LLVM @command{clang++} are documented at
 @uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
-@code{-std=c++20} is supported from Clang 10.)
+@code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
+Clang 13.  Apple Clang supports @code{-std=c++2b} from 13.1.6.)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
@@ -1131,7 +1138,27 @@ can be overridden by setting @samp{CXXSTD} when @R{} is configured.
 which versions of common compilers support (parts of) which C++
 standards.
 
-@node Link-Time Optimization,  , C++ Support, Other Options
+@node C standards, Link-Time Optimization, C++ Support, Other Options
+@subsection C standards
+
+Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
+the substantial update planned for C23 will also be supported.
+
+As from @R{} 4.3.0 there is support for packages to indicate their
+preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
+and @code{C23FLAGS} can be set in @file{config.site} (there are examples
+there).  Those for C17 should support C17 or earlier and not allow C23
+additions so for example @code{bool}, @code{true} and @code{false} can
+be used as identifiers.  Those for C23 should support new types such as
+@code{bool}.
+
+Some compilers warn enthusiastically about prototypes.  For most,
+omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
+However, versions 15 and later of LLVM @command{clang} warn by default
+in all modes if @option{-Wall} or @option{-pedantic} is used, and may
+need @option{-Wno-strict-prototypes}.
+
+@node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
 
 There is support for using link-time optimization (LTO) if the toolchain
@@ -1418,7 +1445,7 @@ information on use on older Windows systems.
 
 It is possible to use other 64-bit toolchains (including `MSYS2') with UCRT
 support to build @R{}, but this manual only documents that used for binary
-distributions of @R{} 4.2.x.  When using other toolchains, makefiles of @R{}
+distributions of @R{} 4.2.x and later.  When using other toolchains, makefiles of @R{}
 and packages may need to be adapted.
 
 @menu
@@ -1431,9 +1458,9 @@ and packages may need to be adapted.
 
 The binary distribution of @R{} is currently built with tools
 from
-@uref{https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html,Rtools42
+@uref{https://CRAN.R-project.org/bin/windows/Rtools/rtools43/rtools.html,Rtools43
 for Windows}. See 
-@uref{https://cran.r-project.org/bin/windows/base/howto-R-devel.html, Building
+@uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
 The toolset includes compilers (GCC version 10.3.0 with selected additional
@@ -1445,7 +1472,7 @@ Kalibera).  The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
 
-The toolsets used for 64-bit Windows from 2008--22 were based on
+The toolsets used for 64-bit Windows from 2008 to 2022 were based on
 MinGW-w64.  The assistance of Yu Gong at a crucial step in porting @R{}
 to MinGW-w64 is gratefully acknowledged, as well as help from Kai Tietz,
 the lead developer of the MinGW-w64 project and from Martin Storsjo.
@@ -1634,8 +1661,7 @@ Installers for R-patched and R-devel are usually available from
 unsigned/not notarized: to install those Control/right/two-finger click,
 select @samp{Open With} and @samp{Installer}.)
 
-For building @R{} from source, see @ref{macOS}.  This can in principle
-be done for some older versions of the OS (it is little tested).
+For building @R{} from source, see @ref{macOS}.
 
 
 
@@ -2367,7 +2393,7 @@ reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
 Compiler Collection, or for @command{clang}.
 
-Note that this mechanism can also be used when it necessary to change
+Note that this mechanism can also be used when it is necessary to change
 the optimization level whilst installing a particular package.  For
 example
 
@@ -2380,10 +2406,12 @@ CXXFLAGS = -g -O -mtune=native
 CXX11FLAGS = -g -O -mtune=native
 ## @r{for fixed-form Fortran code}
 FFLAGS = -g -O -mtune=native
+## @r{for C17 code}
+C17FLAGS = -g -O -mtune=native -Wno-strict-prototypes
 @end example
 
 @noindent
-Note that if you have specified a non-default C++ standard, you need to
+Note that if you have specified a non-default C++ or C standard, you need to
 set the flag(s) appropriate to that standard.
 
 Another use is to override the settings in a binary installation of R.
@@ -3215,20 +3243,16 @@ Fortran}).  Your C compiler should be
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
 that C11 compilers need not be C99-compliant: @R{} requires support for
 @code{double complex} and variable-length arrays which are optional in
-C11 but are mandatory in C99.  C18 (also known as C17) is a `bugfix
-release' of C11, clarifying the standard.} @R{} tries to choose suitable
+C11 but are mandatory in C99.  C17 (also known as C18 as it was
+published in 2018) is a `bugfix release' of C11, clarifying the
+standard. However, all known recent compilers in C11 or C17 mode are
+C99-compliant, and most default to C17.} @R{} tries to choose suitable
 flags@footnote{Examples are @option{-std=gnu99}, @option{-std=c99} and
 @option{-c99}.} for the C compilers it knows about, but you may have to
-set @code{CC} or @code{CFLAGS} suitably.  For versions of @command{gcc}
-prior to 5.1 with @code{glibc}-based Linux this means including
-@option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
-functionality, but @file{config.h} will turn on all @acronym{GNU}
-extensions to include the POSIX functionality for @R{} itself: this does
-not apply to badly-written packages.  The default mode for GCC 5.1 and
-later is @option{-std=gnu11}, which currently includes the optional
-features @R{} needs.}.  (Note that options essential to run the compiler
-even for linking, such as those to set the architecture, should be
-specified as part of @code{CC} rather than in @code{CFLAGS}.)
+set @code{CC} or @code{CFLAGS} suitably. (Note that options essential
+to run the compiler even for linking, such as those to set the
+architecture, should be specified as part of @code{CC} rather than in
+@code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use macOS) you need
 @samp{X11} installed, including its headers and client libraries. For
@@ -5260,7 +5284,7 @@ future).
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
-@uref{https://mac.r-project.org/bin//}.
+@uref{https://mac.r-project.org/bin/}.
 @end itemize
 
 To build @R{} itself from the sources with the C/C++ compilers in the

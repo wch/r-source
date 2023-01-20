@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -425,13 +425,13 @@ Rd2HTML <-
 
     enterPara <- function(enter = TRUE) {
 	if (enter && isFALSE(inPara)) {
-            of0("<p>")
+            of1("<p>")
             inPara <<- TRUE
         }
     }
 
     leavePara <- function(newval) {
-    	if (isTRUE(inPara)) of0("</p>\n")
+    	if (isTRUE(inPara)) of1("</p>\n")
     	inPara <<- newval
     }
 
@@ -603,14 +603,14 @@ Rd2HTML <-
     }
 
     writeDR <- function(block, tag) {
+        if (Rhtml && length(block) > 1L)
+            of1("\nend.rcode-->\n\n<!--begin.rcode eval=FALSE\n")
+        of1('## Not run: ')
+        writeContent(block, tag)
         if (length(block) > 1L) {
-            of1('## Not run: ')
-            writeContent(block, tag)
             of1('\n## End(Not run)')
-        } else {
-            of1('## Not run: ')
-            writeContent(block, tag)
-       }
+            if (Rhtml) of1("\nend.rcode-->\n\n<!--begin.rcode\n")
+        }
     }
 
     writeBlock <- function(block, tag, blocktag) {
@@ -619,7 +619,8 @@ Rd2HTML <-
         doParas <- (blocktag %notin% c("\\tabular"))
 	switch(tag,
                UNKNOWN =,
-               VERB = of1(vhtmlify(block, inEqn)),
+               VERB = if (Rhtml && blocktag == "\\dontrun") of1(block)
+                      else of1(vhtmlify(block, inEqn)),
                RCODE = if (Rhtml) of1(block) else of1(vhtmlify(block)),
                TEXT = of1(if(doParas && !inAsIs) addParaBreaks(htmlify(block)) else vhtmlify(block)),
                USERMACRO =,
@@ -721,7 +722,7 @@ Rd2HTML <-
                        else of1('<p style="text-align: center;"><i>')
                        writeContent(block, tag)
                        if (doTexMath) of1('</code>\n')
-                       else of0('</i>')
+                       else of1('</i>')
                        leavePara(FALSE)
                        inEqn <<- FALSE
                    }
@@ -1162,9 +1163,9 @@ Rd2HTML <-
     	#      "/man/".
     	concdata$srcFile <- stripPathTo(concdata$srcFile, "man")
     	attr(out, "concordance") <- concdata
-    	of0(paste0('<!-- ', 
+    	of0('<!-- ',
     	    as.character(concdata),
-    	    ' -->\n'))
+    	    ' -->\n')
     }
     invisible(out)
 } ## Rd2HTML()

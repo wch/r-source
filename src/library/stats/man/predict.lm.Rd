@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -16,7 +16,10 @@
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
         terms = NULL, na.action = na.pass,
-        pred.var = res.var/weights, weights = 1, \dots)
+        pred.var = res.var/weights, weights = 1,
+        rankdeficient = c("simple", "non-estim", "NA"),
+        tol = 1e-6, verbose = FALSE,
+        \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -37,6 +40,23 @@
   \item{weights}{variance weights for prediction.  This can be a numeric
     vector or a one-sided model formula.  In the latter case, it is
     interpreted as an expression evaluated in \code{newdata}.}
+  \item{rankdeficient}{a \code{\link{character}} string specifying what
+    should happen in the case of a rank deficient model, i.e., when
+    \code{object$rank < ncol(model.matrix(object))}.
+    \describe{
+      \item{\code{"simple"}:}{is back compatible but may give dubious predictions in
+	non-estimable cases.}
+      \item{\code{"non-estim"}:}{gives the same predictions but with an
+	attribute \code{\link{attr}(*, "non-estim")} with indices
+	in \code{1:nrow(newdata)} of new data observations which are deemed
+	non-estimable.}
+      \item{\code{"NA"}:}{predicts \code{NA} for non-estimable new data.}
+    }
+  }
+  \item{tol}{non-negative number determining how non-estimability is
+    determined in rank deficient cases.}
+  \item{verbose}{\code{\link{logical}} indicating if messages should be
+    produced about rank deficiency handling.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -51,6 +71,7 @@
   prediction (tolerance) intervals at the specified \code{level}, sometimes
   referred to as narrow vs. wide intervals.
 
+  %% TODO: this true in *some* cases, but not the whole story; see PR#16158 etc
   If the fit is rank-deficient, some of the columns of the design matrix
   will have been dropped.  Prediction from such a fit only makes sense
   if \code{newdata} is contained in the same subspace as the original

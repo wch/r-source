@@ -1,6 +1,6 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
@@ -73,11 +73,12 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     styles, see \bold{Details}.}
   \item{decreasing}{logical, passed to \code{\link{order}} indicating
     the sort direction.}
-  \item{.bibstyle}{a character string naming a bibliography style.}
+  \item{.bibstyle}{a character string naming a bibliography style,
+    see \code{\link{bibstyle}}.}
   \item{citation.bibtex.max}{(\emph{deprecated}, use
     \code{bibtex = T|F}
     instead!) a number, say \eqn{m}, indicating that the bibtex
-    code should be given in addition to the formatted tex \emph{when}
+    code should be given in addition to the formatted text \emph{when}
     there are not more than \eqn{m} entries.  The default is taken as
     \code{\link{getOption}("citation.bibtex.max", 1)} which is \code{1}
     typically.  For example, to see no bibtex at all, you can change the
@@ -102,43 +103,48 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \dQuote{vectorizing} the given arguments, i.e., use character vectors
   instead of character strings.
 
-  The \code{\link{print}} method for bibentry objects provides a choice
+  The \code{\link{print}} method for bibentry objects is based on a
+  corresponding \code{\link{format}} method and provides a choice
   between seven different styles:
   plain text (style \code{"text"}),
-  BibTeX (\code{"Bibtex"}),
+  BibTeX (\code{"bibtex"}),
   a mixture of plain text and BibTeX as traditionally used for citations
   (\code{"citation"}),
   HTML (\code{"html"}),
-  LaTeX (\code{"latex"}),
+  \LaTeX (\code{"latex"}),
   R code (\code{"R"}),
   and a simple copy of the \code{textVersion} elements (style
   \code{"textVersion"}).
+
   The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
-  of the \code{.bibstyle} argument using the \code{\link{bibstyle}}
-  function.  In addition, one can use the \code{macros} argument to
+  of the \code{.bibstyle} argument: a style defined by the
+  \code{\link{bibstyle}} function for rendering the bibentry into
+  (intermediate) Rd format.
+  The Rd format uses markup commands documented in the \sQuote{Rd format}
+  section of the \sQuote{Writing R Extensions} manual, e.g. \verb{\bold}.
+  In addition, one can use the \code{macros} argument to
   provide additional (otherwise unknown, presumably LaTeX-style) Rd
   macros, either by giving the path to a file with Rd macros to be
   loaded via \code{\link[tools]{loadRdMacros}}, or an object with macros
   already loaded.
+  Note that the \code{"latex"} result may contain commands from the
+  \LaTeX style file \file{Rd.sty} shipped with \R;
+  put \verb{\usepackage{Rd}} in the preamble of a LaTeX document 
+  to make these available when compiling, 
+  e.g. with \code{\link{texi2pdf}}.
 
   When printing bibentry objects in citation style, a
   \code{header}/\code{footer} for each item can be displayed as well as
   a \code{mheader}/\code{mfooter} for the whole vector of references.
 
-  The \code{\link{print}} method is based on a \code{\link{format}}
-  method which provides the same styles, and for formatting as R code
+  For formatting as R code,
   a choice between giving a character vector with one \code{bibentry()}
   call for each bibentry (as commonly used in \file{CITATION} files), or
   a character string with one collapsed call, obtained by combining the
   individual calls with \code{c()} if there is more than one bibentry.
-  This can be controlled by setting the option \code{collapse} to
-  \code{FALSE} (default) or \code{TRUE}, respectively.  (Printing in R
-  style always collapses to a single call.)  Further, for the
-  \code{"citation"} style, \code{format()}'s optional argument
-  \code{citation.bibtex.max} (with default
-  \code{\link{getOption}("citation.bibtex.max")} which defaults to 1)
-  determines for up to how many citation bibentries text style is shown
-  together with bibtex, automatically.
+  This can be controlled by passing the argument \code{collapse=FALSE}
+  (default) or \code{TRUE}, respectively, to the \code{format()} method.
+  (\emph{Printing} in R style always collapses to a single call.)
 
   It is possible to subscript bibentry objects by their keys (which are
   used for character subscripts if the names are \code{NULL}).
@@ -236,7 +242,7 @@ rref <- bibentry(
 
 ## Different printing styles
 print(rref)
-print(rref, style = "Bibtex")
+print(rref, style = "bibtex")
 print(rref, style = "citation")
 print(rref, style = "html")
 print(rref, style = "latex")

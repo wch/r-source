@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11Fonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{X11Fonts}
@@ -9,7 +9,7 @@
 \concept{fonts}
 \title{X11 Fonts}
 \description{
-  These functions handle the translation of a device-independent R graphics
+  These functions handle the translation of a device-independent \R graphics
   font family name to an X11 font description on Unix-alike platforms.
 }
 \usage{
@@ -47,7 +47,7 @@ X11Fonts(...)
   provided for \code{"Helvetica"} (the device default), \code{"Times"},
   \code{"CyrHelvetica"}, \code{"CyrTimes"} (versions of these fonts with
   Cyrillic support, at least on Linux), \code{"Arial"} (on some
-  platforms including macOS and Solaris) and \code{"Mincho"} (a CJK
+  platforms including macOS) and \code{"Mincho"} (a CJK
   font).
 }
 \seealso{

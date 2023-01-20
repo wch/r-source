@@ -1449,7 +1449,7 @@ set.seed(7)
 for(n in c(1:7, 12)) replicate(32, chkPretty(sTime + .001*rlnorm(1) * 0:9, n = n))
 ## failed in R <= 3.2.3
 seqD  <- function(d1,d2) seq.Date(as.Date(d1), as.Date(d2), by = "1 day")
-seqDp <- function(d1,d2) { s <- seqD(d1,d2); structure(s, labels=format(s,"%b %d")) }
+seqDp <- function(d1,d2) { s <- seqD(d1,d2); structure(s, labels=format(s,"%b %d"), format="%b %d") }
 time2d <- function(i) sprintf("%02d", i %% 60)
 MTbd <- as.Date("1960-02-10")
 (p1   <- chkPretty(MTbd))
@@ -1465,7 +1465,7 @@ stopifnot(
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
 	  identical(p2, structure(1012611717 + (0:5), class = c("POSIXct", "POSIXt"),
-				  tzone = "GMT-1", labels = time2d(57 + (0:5)))))
+				  tzone = "GMT-1", labels = time2d(57 + (0:5)), format = "%S")))
 ## failed in R 3.2.4
 (T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
 chkPretty(T3, 1) # error in svn 70438
@@ -1481,7 +1481,7 @@ x5 <- as.POSIXct("2002-02-02 02:02", tz = "EST5EDT")
 atU <- chkPretty(seq(xU, by = "30 mins", length = 2), n = 5)
 at5 <- chkPretty(seq(x5, by = "30 mins", length = 2), n = 5)
 stopifnot(length(at) >= 4,
-	  identical(sort(names(aat <- attributes(at))), c("class", "labels", "tzone")),
+	  identical(sort(names(aat <- attributes(at))), c("class", "format", "labels", "tzone")),
 	  identical(aat$labels, time2d(59+ 0:3)),
           identical(x5 - xU, structure(5, units = "hours", class = "difftime")),
           identical(attr(at5, "labels"), attr(atU, "labels") -> lat),
