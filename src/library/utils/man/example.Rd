@@ -1,6 +1,6 @@
 % File src/library/utils/man/example.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{example}
@@ -14,7 +14,7 @@
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
         character.only = FALSE, give.lines = FALSE, local = FALSE,
-        type = c("console", "html"), echo = TRUE, 
+        type = c("console", "html"), echo = TRUE,
         verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6),
@@ -55,11 +55,11 @@ example(topic, package = NULL, lib.loc = NULL,
     \code{\link{devAskNewPage}(ask = TRUE)} should be called
     before graphical output happens from the example code.  The value
     \code{"default"} (the factory-fresh default) means to ask if
-    \code{echo == TRUE} and the graphics device appears to be
+    \code{echo} is true and the graphics device appears to be
     interactive.  This parameter applies both to any currently opened
     device and to any devices opened by the example code.}
   \item{prompt.prefix}{character; prefixes the prompt to be used if
-    \code{echo = TRUE}.}
+    \code{echo} is true (as it is by default).}
   \item{run.dontrun}{logical indicating that \verb{\dontrun}
     should be ignored.}
   \item{run.donttest}{logical indicating that \verb{\donttest}
@@ -124,7 +124,7 @@ x1; x2
 ## How large are the examples of "lm...()" functions?
 lmex <- sapply(apropos("^lm", mode = "function"),
                example, character.only = TRUE, give.lines = TRUE)
-sapply(lmex, length)
+lengths(lmex)
 }
 \keyword{documentation}
 \keyword{utilities}

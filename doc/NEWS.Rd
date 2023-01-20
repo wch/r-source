@@ -71,6 +71,11 @@
       \item When \code{UseMethod()} cannot dispatch, it no longer segfaults
       producing the error message in case of a long \code{class()}, thanks to
       Joris Vankerschaver's report (including patch) in \PR{18447}.
+
+      \item When \code{example(foo, ..)} produces graphics on an interactive
+      device it needs to open itself, it now leaves \code{devAskNewPage()}
+      unchanged even when it was \code{FALSE}, thus fixing a 14 years old
+      \sQuote{<FIXME>}.
     }
   }
 }
