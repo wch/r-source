@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -730,10 +730,10 @@ function(x, style = "text", .bibstyle = NULL,
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
         permissive <- tools:::config_val_to_logical(permissive)
-        macros <- if(is.null(macros))
-		      tools:::initialRdMacros()
-                  else if(is.character(macros))
-		      tools::loadRdMacros(macros,
+        if(is.null(macros))
+            macros <- tools:::initialRdMacros()
+        else if(is.character(macros))
+            macros <- tools::loadRdMacros(macros,
                                           tools:::initialRdMacros())
         sapply(.bibentry_expand_crossrefs(x),
                function(y) {

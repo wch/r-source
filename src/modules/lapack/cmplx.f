@@ -4821,7 +4821,7 @@
      $            GO TO 40
                IF( I.LT.ILO )
      $            I = ILO - II
-               K = SCALE( I )
+               K = INT( SCALE( I ) )
                IF( K.EQ.I )
      $            GO TO 40
                CALL ZSWAP( M, V( I, 1 ), LDV, V( K, 1 ), LDV )
@@ -4835,7 +4835,7 @@
      $            GO TO 50
                IF( I.LT.ILO )
      $            I = ILO - II
-               K = SCALE( I )
+               K = INT( SCALE( I ) )
                IF( K.EQ.I )
      $            GO TO 50
                CALL ZSWAP( M, V( I, 1 ), LDV, V( K, 1 ), LDV )
@@ -6782,7 +6782,7 @@
 *
             CALL ZHSEQR( 'S', JOBVS, N, 1, N, A, LDA, W, VS, LDVS,
      $             WORK, -1, IEVAL )
-            HSWORK = DBLE( WORK( 1 ) )
+            HSWORK = INT( WORK( 1 ) )
 *
             IF( .NOT.WANTVS ) THEN
                MAXWRK = MAX( MAXWRK, HSWORK )
@@ -25067,7 +25067,7 @@
                LIWMIN = 1
             END IF
             LOPT = MAX( LWMIN, N +
-     $                  ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1, -1 ) )
+     $                  N*ILAENV( 1, 'ZHETRD', UPLO, N, -1, -1, -1 ) )
             LROPT = LRWMIN
             LIOPT = LIWMIN
          END IF
@@ -26408,9 +26408,7 @@
             END IF
          END IF
 *
-         IF( ABS( T( ILAST, ILAST ) ).LE.MAX( SAFMIN, ULP*( 
-     $         ABS( T( ILAST - 1, ILAST ) ) + ABS( T( ILAST-1, ILAST-1 )
-     $          ) ) ) ) THEN
+         IF( ABS( T( ILAST, ILAST ) ).LE.BTOL ) THEN
             T( ILAST, ILAST ) = CZERO
             GO TO 50
          END IF
@@ -26436,10 +26434,7 @@
 *
 *           Test 2: for T(j,j)=0
 *
-            TEMP = ABS ( T( J, J + 1 ) )
-            IF ( J .GT. ILO )
-     $           TEMP = TEMP + ABS ( T( J - 1, J ) )
-            IF( ABS( T( J, J ) ).LT.MAX( SAFMIN,ULP*TEMP ) ) THEN
+            IF( ABS( T( J, J ) ).LT.BTOL ) THEN
                T( J, J ) = CZERO
 *
 *              Test 1a: Check for 2 consecutive small subdiagonals in A
@@ -39693,7 +39688,7 @@
       PARAMETER          ( RZERO = 0.0d0, RONE = 1.0d0 )
 *     ..
 *     .. Local Scalars ..
-      COMPLEX*16         ALPHA, BETA, CDUM, REFSUM
+      COMPLEX*16         ALPHA, BETA, CDUM, REFSUM, T1, T2, T3
       DOUBLE PRECISION   H11, H12, H21, H22, SAFMAX, SAFMIN, SCL,
      $                   SMLNUM, TST1, TST2, ULP
       INTEGER            I2, I4, INCOL, J, JBOT, JCOL, JLEN,
@@ -39838,12 +39833,12 @@
 *              ==== Perform update from right within 
 *              .    computational window. ====
 *
+               T1 = V( 1, M22 )
+               T2 = T1*DCONJG( V( 2, M22 ) )
                DO 30 J = JTOP, MIN( KBOT, K+3 )
-                  REFSUM = V( 1, M22 )*( H( J, K+1 )+V( 2, M22 )*
-     $                     H( J, K+2 ) )
-                  H( J, K+1 ) = H( J, K+1 ) - REFSUM
-                  H( J, K+2 ) = H( J, K+2 ) -
-     $                          REFSUM*DCONJG( V( 2, M22 ) )
+                  REFSUM = H( J, K+1 ) + V( 2, M22 )*H( J, K+2 )
+                  H( J, K+1 ) = H( J, K+1 ) - REFSUM*T1
+                  H( J, K+2 ) = H( J, K+2 ) - REFSUM*T2
    30          CONTINUE
 *
 *              ==== Perform update from left within 
@@ -39856,12 +39851,13 @@
                ELSE
                   JBOT = KBOT
                END IF
+               T1 = DCONJG( V( 1, M22 ) )
+               T2 = T1*V( 2, M22 )
                DO 40 J = K+1, JBOT
-                  REFSUM = DCONJG( V( 1, M22 ) )*
-     $                     ( H( K+1, J )+DCONJG( V( 2, M22 ) )*
-     $                     H( K+2, J ) )
-                  H( K+1, J ) = H( K+1, J ) - REFSUM
-                  H( K+2, J ) = H( K+2, J ) - REFSUM*V( 2, M22 )
+                  REFSUM = H( K+1, J ) +
+     $                     DCONJG( V( 2, M22 ) )*H( K+2, J )
+                  H( K+1, J ) = H( K+1, J ) - REFSUM*T1
+                  H( K+2, J ) = H( K+2, J ) - REFSUM*T2
    40          CONTINUE
 *
 *              ==== The following convergence test requires that
@@ -40024,25 +40020,29 @@
 *              .     deflation check. We still delay most of the
 *              .     updates from the left for efficiency. ====
 *
+               T1 = V( 1, M )
+               T2 = T1*DCONJG( V( 2, M ) )
+               T3 = T1*DCONJG( V( 3, M ) )
                DO 70 J = JTOP, MIN( KBOT, K+3 )
-                  REFSUM = V( 1, M )*( H( J, K+1 )+V( 2, M )*
-     $                     H( J, K+2 )+V( 3, M )*H( J, K+3 ) )
-                  H( J, K+1 ) = H( J, K+1 ) - REFSUM
-                  H( J, K+2 ) = H( J, K+2 ) -
-     $                          REFSUM*DCONJG( V( 2, M ) )
-                  H( J, K+3 ) = H( J, K+3 ) -
-     $                          REFSUM*DCONJG( V( 3, M ) )
+                  REFSUM = H( J, K+1 ) + V( 2, M )*H( J, K+2 )
+     $                     + V( 3, M )*H( J, K+3 )
+                  H( J, K+1 ) = H( J, K+1 ) - REFSUM*T1
+                  H( J, K+2 ) = H( J, K+2 ) - REFSUM*T2
+                  H( J, K+3 ) = H( J, K+3 ) - REFSUM*T3
    70          CONTINUE
 *
 *              ==== Perform update from left for subsequent
 *              .    column. ====
 *
-               REFSUM =  DCONJG( V( 1, M ) )*( H( K+1, K+1 )
-     $                  +DCONJG( V( 2, M ) )*H( K+2, K+1 )
-     $                  +DCONJG( V( 3, M ) )*H( K+3, K+1 ) )
-               H( K+1, K+1 ) = H( K+1, K+1 ) - REFSUM
-               H( K+2, K+1 ) = H( K+2, K+1 ) - REFSUM*V( 2, M )
-               H( K+3, K+1 ) = H( K+3, K+1 ) - REFSUM*V( 3, M )
+               T1 = DCONJG( V( 1, M ) )
+               T2 = T1*V( 2, M )
+               T3 = T1*V( 3, M )
+               REFSUM = H( K+1, K+1 )
+     $                  + DCONJG( V( 2, M ) )*H( K+2, K+1 )
+     $                  + DCONJG( V( 3, M ) )*H( K+3, K+1 )
+               H( K+1, K+1 ) = H( K+1, K+1 ) - REFSUM*T1
+               H( K+2, K+1 ) = H( K+2, K+1 ) - REFSUM*T2
+               H( K+3, K+1 ) = H( K+3, K+1 ) - REFSUM*T3
 *
 *              ==== The following convergence test requires that
 *              .    the tradition small-compared-to-nearby-diagonals
@@ -40102,13 +40102,15 @@
 *
             DO 100 M = MBOT, MTOP, -1
                K = KRCOL + 2*( M-1 )
+               T1 = DCONJG( V( 1, M ) )
+               T2 = T1*V( 2, M )
+               T3 = T1*V( 3, M )
                DO 90 J = MAX( KTOP, KRCOL + 2*M ), JBOT
-                  REFSUM = DCONJG( V( 1, M ) )*
-     $                     ( H( K+1, J )+DCONJG( V( 2, M ) )*
-     $                     H( K+2, J )+DCONJG( V( 3, M ) )*H( K+3, J ) )
-                  H( K+1, J ) = H( K+1, J ) - REFSUM
-                  H( K+2, J ) = H( K+2, J ) - REFSUM*V( 2, M )
-                  H( K+3, J ) = H( K+3, J ) - REFSUM*V( 3, M )
+                  REFSUM = H( K+1, J ) + DCONJG( V( 2, M ) )*H( K+2, J )
+     $                     + DCONJG( V( 3, M ) )*H( K+3, J )
+                  H( K+1, J ) = H( K+1, J ) - REFSUM*T1
+                  H( K+2, J ) = H( K+2, J ) - REFSUM*T2
+                  H( K+3, J ) = H( K+3, J ) - REFSUM*T3
    90          CONTINUE
   100       CONTINUE
 *
@@ -40126,14 +40128,15 @@
                   I2 = MAX( 1, KTOP-INCOL )
                   I2 = MAX( I2, KMS-(KRCOL-INCOL)+1 )
                   I4 = MIN( KDU, KRCOL + 2*( MBOT-1 ) - INCOL + 5 )
+                  T1 = V( 1, M )
+                  T2 = T1*DCONJG( V( 2, M ) )
+                  T3 = T1*DCONJG( V( 3, M ) )
                   DO 110 J = I2, I4
-                     REFSUM = V( 1, M )*( U( J, KMS+1 )+V( 2, M )*
-     $                        U( J, KMS+2 )+V( 3, M )*U( J, KMS+3 ) )
-                     U( J, KMS+1 ) = U( J, KMS+1 ) - REFSUM
-                     U( J, KMS+2 ) = U( J, KMS+2 ) -
-     $                               REFSUM*DCONJG( V( 2, M ) )
-                     U( J, KMS+3 ) = U( J, KMS+3 ) -
-     $                               REFSUM*DCONJG( V( 3, M ) )
+                     REFSUM = U( J, KMS+1 ) + V( 2, M )*U( J, KMS+2 )
+     $                        + V( 3, M )*U( J, KMS+3 )
+                     U( J, KMS+1 ) = U( J, KMS+1 ) - REFSUM*T1
+                     U( J, KMS+2 ) = U( J, KMS+2 ) - REFSUM*T2
+                     U( J, KMS+3 ) = U( J, KMS+3 ) - REFSUM*T3
   110             CONTINUE
   120          CONTINUE
             ELSE IF( WANTZ ) THEN
@@ -40144,14 +40147,15 @@
 *
                DO 140 M = MBOT, MTOP, -1
                   K = KRCOL + 2*( M-1 )
+                  T1 = V( 1, M )
+                  T2 = T1*DCONJG( V( 2, M ) )
+                  T3 = T1*DCONJG( V( 3, M ) )
                   DO 130 J = ILOZ, IHIZ
-                     REFSUM = V( 1, M )*( Z( J, K+1 )+V( 2, M )*
-     $                        Z( J, K+2 )+V( 3, M )*Z( J, K+3 ) )
-                     Z( J, K+1 ) = Z( J, K+1 ) - REFSUM
-                     Z( J, K+2 ) = Z( J, K+2 ) -
-     $                             REFSUM*DCONJG( V( 2, M ) )
-                     Z( J, K+3 ) = Z( J, K+3 ) -
-     $                             REFSUM*DCONJG( V( 3, M ) )
+                     REFSUM = Z( J, K+1 ) + V( 2, M )*Z( J, K+2 )
+     $                        + V( 3, M )*Z( J, K+3 )
+                     Z( J, K+1 ) = Z( J, K+1 ) - REFSUM*T1
+                     Z( J, K+2 ) = Z( J, K+2 ) - REFSUM*T2
+                     Z( J, K+3 ) = Z( J, K+3 ) - REFSUM*T3
   130             CONTINUE
   140          CONTINUE
             END IF
@@ -42851,6 +42855,8 @@
          ELSE
             MUL = CTOC / CFROMC
             DONE = .TRUE.
+            IF (MUL .EQ. ONE)
+     $         RETURN
          END IF
       END IF
 *
@@ -44856,7 +44862,7 @@
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTBSV, DLABAD
+      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTBSV
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
@@ -44902,17 +44908,14 @@
 *
 *     Quick return if possible
 *
+      SCALE = ONE
       IF( N.EQ.0 )
      $   RETURN
 *
 *     Determine machine dependent parameters to control overflow.
 *
-      SMLNUM = DLAMCH( 'Safe minimum' )
+      SMLNUM = DLAMCH( 'Safe minimum' ) / DLAMCH( 'Precision' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
-      SMLNUM = SMLNUM / DLAMCH( 'Precision' )
-      BIGNUM = ONE / SMLNUM
-      SCALE = ONE
 *
       IF( LSAME( NORMIN, 'N' ) ) THEN
 *
@@ -46522,7 +46525,7 @@
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTRSV, DLABAD
+      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTRSV
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
@@ -46566,17 +46569,14 @@
 *
 *     Quick return if possible
 *
+      SCALE = ONE
       IF( N.EQ.0 )
      $   RETURN
 *
 *     Determine machine dependent parameters to control overflow.
 *
-      SMLNUM = DLAMCH( 'Safe minimum' )
+      SMLNUM = DLAMCH( 'Safe minimum' ) / DLAMCH( 'Precision' )
       BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
-      SMLNUM = SMLNUM / DLAMCH( 'Precision' )
-      BIGNUM = ONE / SMLNUM
-      SCALE = ONE
 *
       IF( LSAME( NORMIN, 'N' ) ) THEN
 *
@@ -46608,8 +46608,74 @@
       IF( TMAX.LE.BIGNUM*HALF ) THEN
          TSCAL = ONE
       ELSE
-         TSCAL = HALF / ( SMLNUM*TMAX )
-         CALL DSCAL( N, TSCAL, CNORM, 1 )
+*
+*        Avoid NaN generation if entries in CNORM exceed the
+*        overflow threshold
+*
+         IF ( TMAX.LE.DLAMCH('Overflow') ) THEN
+*           Case 1: All entries in CNORM are valid floating-point numbers
+            TSCAL = HALF / ( SMLNUM*TMAX )
+            CALL DSCAL( N, TSCAL, CNORM, 1 )
+         ELSE
+*           Case 2: At least one column norm of A cannot be
+*           represented as a floating-point number. Find the
+*           maximum offdiagonal absolute value
+*           max( |Re(A(I,J))|, |Im(A(I,J)| ). If this entry is
+*           not +/- Infinity, use this value as TSCAL.
+            TMAX = ZERO
+            IF( UPPER ) THEN
+*
+*              A is upper triangular.
+*
+               DO J = 2, N
+                  DO I = 1, J - 1
+                     TMAX = MAX( TMAX, ABS( DBLE( A( I, J ) ) ),
+     $                           ABS( DIMAG(A ( I, J ) ) ) )
+                  END DO
+               END DO
+            ELSE
+*
+*              A is lower triangular.
+*
+               DO J = 1, N - 1
+                  DO I = J + 1, N
+                     TMAX = MAX( TMAX, ABS( DBLE( A( I, J ) ) ),
+     $                           ABS( DIMAG(A ( I, J ) ) ) )
+                  END DO
+               END DO
+            END IF
+*
+            IF( TMAX.LE.DLAMCH('Overflow') ) THEN
+               TSCAL = ONE / ( SMLNUM*TMAX )
+               DO J = 1, N
+                  IF( CNORM( J ).LE.DLAMCH('Overflow') ) THEN
+                     CNORM( J ) = CNORM( J )*TSCAL
+                  ELSE
+*                    Recompute the 1-norm of each column without
+*                    introducing Infinity in the summation.
+                     TSCAL = TWO * TSCAL
+                     CNORM( J ) = ZERO
+                     IF( UPPER ) THEN
+                        DO I = 1, J - 1
+                           CNORM( J ) = CNORM( J ) +
+     $                                  TSCAL * CABS2( A( I, J ) )
+                        END DO
+                     ELSE
+                        DO I = J + 1, N
+                           CNORM( J ) = CNORM( J ) +
+     $                                  TSCAL * CABS2( A( I, J ) )
+                        END DO
+                     END IF
+                     TSCAL = TSCAL * HALF
+                  END IF
+               END DO
+            ELSE
+*              At least one entry of A is not a valid floating-point
+*              entry. Rely on TRSV to propagate Inf and NaN.
+               CALL ZTRSV( UPLO, TRANS, DIAG, N, A, LDA, X, 1 )
+               RETURN
+            END IF
+         END IF
       END IF
 *
 *     Compute a bound on the computed solution vector to see if the
@@ -62664,7 +62730,7 @@
                END IF
             END IF
          END IF
-         LWKOPT = DBLE( WORK( 1 ) )
+         LWKOPT = INT( DBLE( WORK( 1 ) ) )
          LWKOPT = MAX (LWKOPT, MN)
       END IF
 *

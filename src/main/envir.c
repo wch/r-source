@@ -2470,6 +2470,14 @@ attribute_hidden SEXP do_emptyenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 */
 
+static void set_attach_frame_value(SEXP p, SEXP s)
+{
+    if (IS_ACTIVE_BINDING(p))
+	R_MakeActiveBinding(TAG(p), CAR(p), s);
+    else
+	defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
+}
+
 attribute_hidden SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name, s, t, x;
@@ -2507,14 +2515,14 @@ attribute_hidden SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (i = 0; i < n; i++) {
 		    p = VECTOR_ELT(HASHTAB(loadenv), i);
 		    while (p != R_NilValue) {
-			defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
+			set_attach_frame_value(p, s);
 			p = CDR(p);
 		    }
 		}
 		/* FIXME: duplicate the hash table and assign here */
 	    } else {
 		for(p = FRAME(loadenv); p != R_NilValue; p = CDR(p))
-		    defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
+		    set_attach_frame_value(p, s);
 	    }
 	} else {
 	    error(_("'attach' only works for lists, data frames and environments"));

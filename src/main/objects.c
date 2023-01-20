@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999-2023  The R Core Team.
+ *  Copyright (C) 2002-2023  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2002-2017  The R Foundation
- *  Copyright (C) 1999-2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -502,40 +502,33 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 attribute_hidden NORET
 SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
-    SEXP callenv, defenv;
-    SEXP argList;
-    RCNTXT *cptr;
     static SEXP do_usemethod_formals = NULL;
-
-    static int lookup_use_topenv_as_defenv = -1;
-    char *lookup;
-
     if (do_usemethod_formals == NULL)
 	do_usemethod_formals = allocFormalsList2(install("generic"),
 						 install("object"));
 
-    PROTECT(argList = matchArgs_NR(do_usemethod_formals, args, call));
+    SEXP argList = PROTECT(matchArgs_NR(do_usemethod_formals, args, call));
     if (CAR(argList) == R_MissingArg)
 	errorcall(call, _("there must be a 'generic' argument"));
-    else
-	PROTECT(generic = eval(CAR(argList), env));
+    // else
+    SEXP generic = PROTECT(eval(CAR(argList), env));
     if(!isString(generic) || LENGTH(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
 
+    static int lookup_use_topenv_as_defenv = -1;
     if(lookup_use_topenv_as_defenv == -1) {
-	lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
-	lookup_use_topenv_as_defenv = 
+	char *lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
+	lookup_use_topenv_as_defenv =
 	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
     }
 
     /* get environments needed for dispatching.
        callenv = environment from which the generic was called
        defenv = environment where the generic was defined */
-    cptr = R_GlobalContext;
+    RCNTXT *cptr = R_GlobalContext;
     if ( !(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != env)
 	errorcall(call, _("'UseMethod' used in an inappropriate fashion"));
-    callenv = cptr->sysparent;
+    SEXP callenv = cptr->sysparent;
     /* We need to find the generic to find out where it is defined.
        This is set up to avoid getting caught by things like
 
@@ -548,41 +541,60 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
     */
+    SEXP defenv;
     if(lookup_use_topenv_as_defenv) {
 	defenv = topenv(R_NilValue, env);
     } else {
-	val = findVar1(installTrChar(STRING_ELT(generic, 0)),
-		       ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
-						    * promises */
-	if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
-	else defenv = R_BaseNamespace;
+	SEXP val = findVar1(installTrChar(STRING_ELT(generic, 0)),
+			    ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
+							 * promises */
+	if(TYPEOF(val) == CLOSXP)
+	    defenv = CLOENV(val);
+	else
+	    defenv = R_BaseNamespace;
     }
 
-    if (CADR(argList) != R_MissingArg)
-	PROTECT(obj = eval(CADR(argList), env));
-    else
-	PROTECT(obj = GetObject(cptr));
-
+    SEXP obj = PROTECT((CADR(argList) != R_MissingArg)
+		       ? eval(CADR(argList), env)
+		       : GetObject(cptr));
+    SEXP ans;
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
 	UNPROTECT(3); /* obj, generic, argList */
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
     }
-    else {
-	SEXP klass;
-	int nclass;
-	char cl[1000];
-	PROTECT(klass = R_data_class2(obj));
-	nclass = length(klass);
-	if (nclass == 1)
-	    strcpy(cl, translateChar(STRING_ELT(klass, 0)));
-	else {
+    else { // no method found
+#define CLLEN 1024
+	char cl[CLLEN] = {0};
+	SEXP klass = PROTECT(R_data_class2(obj));
+	int nclass = length(klass);
+	if(!nclass)
+	    errorcall(call, _("illegal class of length 0 when using method for '%s'"),
+		      translateChar(STRING_ELT(generic, 0)));
+	const char *c_name = translateChar(STRING_ELT(klass, 0));
+	if (nclass == 1) {
+	    strncpy(cl, c_name, CLLEN-1); cl[CLLEN-1] = '\0';
+	} else { // nclass >= 2
+	    size_t cl_count = 3; // 3 : "c(" + \0
 	    strcpy(cl, "c('");
 	    for (int i = 0; i < nclass; i++) {
-		if (i > 0) strcat(cl, "', '");
-		strcat(cl, translateChar(STRING_ELT(klass, i)));
+		if(i > 0) {
+		    c_name = translateChar(STRING_ELT(klass, i));
+		    cl_count += 4; // "', '"
+		    if (cl_count < CLLEN) strcat(cl, "', '");
+		}
+		size_t len_nm = strlen(c_name);
+		if (cl_count + len_nm >= CLLEN) {
+		    cl_count += 2;
+		    if(cl_count < CLLEN) strcat(cl, "..");
+		    break;
+		}
+		// else
+		cl_count += len_nm;
+		strcat(cl, c_name);
 	    }
-	    strcat(cl, "')");
+	    if (++cl_count < CLLEN) strcat(cl, "'");
+	    if (++cl_count < CLLEN) strcat(cl, ")");
 	}
 	errorcall(call, _("no applicable method for '%s' applied to an object of class \"%s\""),
 		  translateChar(STRING_ELT(generic, 0)), cl);

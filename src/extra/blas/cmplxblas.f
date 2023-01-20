@@ -1087,7 +1087,7 @@
       INTEGER I,NINCX
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC DCMPLX
+      INTRINSIC DBLE, DCMPLX, DIMAG
 *     ..
       IF (N.LE.0 .OR. INCX.LE.0) RETURN
       IF (INCX.EQ.1) THEN
@@ -1095,7 +1095,7 @@
 *        code for increment equal to 1
 *
          DO I = 1,N
-            ZX(I) = DCMPLX(DA,0.0d0)*ZX(I)
+            ZX(I) = DCMPLX(DA*DBLE(ZX(I)),DA*DIMAG(ZX(I)))
          END DO
       ELSE
 *
@@ -1103,7 +1103,7 @@
 *
          NINCX = N*INCX
          DO I = 1,NINCX,INCX
-            ZX(I) = DCMPLX(DA,0.0d0)*ZX(I)
+            ZX(I) = DCMPLX(DA*DBLE(ZX(I)),DA*DIMAG(ZX(I)))
          END DO
       END IF
       RETURN
@@ -5232,7 +5232,7 @@ c                  END IF
   200             CONTINUE
                   RTEMP = ZERO
                   DO 210 L = 1,K
-                      RTEMP = RTEMP + DCONJG(A(L,J))*A(L,J)
+                      RTEMP = RTEMP + DBLE(DCONJG(A(L,J))*A(L,J))
   210             CONTINUE
                   IF (BETA.EQ.ZERO) THEN
                       C(J,J) = ALPHA*RTEMP
@@ -5244,7 +5244,7 @@ c                  END IF
               DO 260 J = 1,N
                   RTEMP = ZERO
                   DO 230 L = 1,K
-                      RTEMP = RTEMP + DCONJG(A(L,J))*A(L,J)
+                      RTEMP = RTEMP + DBLE(DCONJG(A(L,J))*A(L,J))
   230             CONTINUE
                   IF (BETA.EQ.ZERO) THEN
                       C(J,J) = ALPHA*RTEMP

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file shext.c
  *  Copyright (C) 2001  Guido Masarotto and Brian Ripley
- *                2004-6  R Core Team
+ *                2004-2022  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,6 +74,8 @@ char *getRUser()
 	GetCurrentDirectory(MAX_PATH, RUser);
     }
     p = RUser + (strlen(RUser) - 1);
-    if (*p == '/' || *p == '\\') *p = '\0';
+    /* remove trailing file separator(s), unless root directory on a drive */
+    while (p > RUser && (*p == '/' || *p == '\\')
+           && (p > RUser+2 || *(p-1) != ':'))  *p-- = '\0';
     return RUser;
 }

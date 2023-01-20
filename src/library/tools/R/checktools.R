@@ -896,6 +896,11 @@ function(log, drop_ok = TRUE, ...)
                               "** running tests for arch")]
         if(length(pos))
             lines <- lines[-pos]
+        ## Get info about compilers used into the "whether package can
+        ## be installed" output without leading star.
+        pos <- which(startsWith(lines, "* used"))
+        if(length(pos))
+            lines[pos] <- paste("Used", substring(lines[pos], 8L))
         ## We might still have
         ##   * package encoding:
         ## entries for packages declaring a package encoding.

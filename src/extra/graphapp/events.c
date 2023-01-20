@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004, 2009	The R Foundation
-   Copyright (C) 2013-2022	The R Core Team
+   Copyright (C) 2013-2023	The R Core Team
 
    Changes for R, Chris Jackson, 2004
    Handle find-and-replace modeless dialogs
@@ -33,6 +33,9 @@
    Handle mouse wheel scrolling
    Remove assumption that current->dest is non-NULL
    Add waitevent() function
+   Caret handling improvements (see comments in controls.c)
+   Allow to leave a dropfield (combo box) with TAB key
+   Allow navigating to previous controls with Shift+TAB key
  */
 
 #include "internal.h"
@@ -60,6 +63,7 @@ static	long	mouse_msec = 0;
 
 TIMERPROC app_timer_proc;
 WNDPROC   app_control_proc;
+WNDPROC   edit_control_proc;
 
 static object frontwindow = NULL; /* the window receiving events */
 
@@ -330,16 +334,26 @@ static void handle_focus(object obj, int gained_focus)
 {
     if (gained_focus) {
 	obj->state |= GA_Focus;
-	if (obj->caretwidth < 0) {
-	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
+	if ((!obj->caretexists) && obj->caretwidth == 0 && (obj->flags & SetUpCaret)) {
+	    /* set up a dummy caret to help NVDA initialization, see comment in
+	       console.c, newconsole */
+	    setcaret(obj, 0, 0, 2, 10);
 	    showcaret(obj, 1);
+	}	
+	if (obj->caretwidth < 0) {
+	    /* creates the caret object and restores obj->caretshowing */
+	    setcaret(obj, obj->caretx, obj->carety, -obj->caretwidth, obj->caretheight);
+	    if (obj->caretshowing)
+		/* redraw the caret in case it has been destroyed by a recursive redraw
+		   of the screen, e.g. via disable() when using the menu; such a redraw
+		   can happen while waiting for keyboard input */
+	        ShowCaret(obj->handle);
 	}
     } else {
 	obj->state &= ~GA_Focus;
-	if (obj->caretwidth > 0) {
-	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
-	    showcaret(obj, 0);
-	}
+	if (obj->caretwidth > 0)
+	    /* destroys the caret object and preserves obj->caretshowing */	
+	    setcaret(obj, obj->caretx, obj->carety, -obj->caretwidth, obj->caretheight);
     }
     if ((! USE_NATIVE_BUTTONS) && (obj->kind == ButtonObject))
 	InvalidateRect(obj->handle, NULL, 0);
@@ -911,7 +925,7 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     int prevent_activation = 0;
     int key;
     long result;
-    object obj, next;
+    object obj, next, prev;
 
     /* Find the library object associated with the hwnd. */
     obj = find_by_handle(hwnd);
@@ -922,7 +936,8 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     if (! obj->winproc)
 	return 0; /* Nowhere to send events! */
 
-    next = find_valid_sibling(obj->next);
+    next = find_next_valid_sibling(obj->next);
+    prev = find_prev_valid_sibling(obj->prev);
 
     if (message == WM_KEYDOWN)
 	handle_keydown(key);
@@ -934,14 +949,22 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
 	if (obj->kind == TextboxObject) {
 	    handle_virtual_keydown(obj, key); /* call user's virtual key handler */
-	    if ((key == VK_TAB) && (keystate & CtrlKey)) {
-		SetFocus(next->handle);
-		return 0;
+	    if (key == VK_TAB) {
+		if (keystate & ShiftKey) {
+		    SetFocus(prev->handle);
+		    return 0;
+		} else if (keystate & CtrlKey) {
+		    SetFocus(next->handle);
+		    return 0;
+		}
 	    }
 	    break;
 	}
 	if (key == VK_TAB) {
-	    SetFocus(next->handle);
+	    if (keystate & ShiftKey)
+		SetFocus(prev->handle);
+	    else
+		SetFocus(next->handle);
 	    return 0;
 	}
 	else if ((key == VK_RETURN) || (key == VK_ESCAPE)) {
@@ -1012,6 +1035,56 @@ app_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     if (prevent_activation)
 	obj->state |= GA_Enabled;
     return result;
+}
+
+long WINAPI
+edit_control_procedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    int key;
+    object obj, next, prev;
+    HANDLE hwndCombo;
+
+    /* Find the library (dropfield/combo box) object associated
+       with the hwnd. */
+    hwndCombo = GetParent(hwnd);
+    if (! hwndCombo)
+	return 0;
+    obj = find_by_handle(hwndCombo);
+    key = LOWORD(wParam);
+
+    if (! obj) /* Not a library object ... */
+	return 0; /* ... so do nothing. */
+    if (! obj->edit_winproc)
+	return 0; /* Nowhere to send events! */
+
+    next = find_next_valid_sibling(obj->next);
+    prev = find_prev_valid_sibling(obj->prev);
+
+    if (message == WM_KEYDOWN)
+	handle_keydown(key);
+    else if (message == WM_KEYUP)
+	handle_keyup(key);
+
+    switch (message)
+    {
+    case WM_KEYDOWN:
+	if (key == VK_TAB) {
+	    if (keystate & ShiftKey)
+		SetFocus(prev->handle);
+	    else
+		SetFocus(next->handle);
+	    return 0;
+	}
+	break;
+
+    case WM_KEYUP:
+    case WM_CHAR:
+	if (key == VK_TAB) 
+	    return 0;
+	break;
+    }
+
+    return CallWindowProc((obj->edit_winproc), hwnd, message, wParam, lParam);
 }
 
 /*
@@ -1239,6 +1312,8 @@ void init_events(void)
     setmousetimer(100); /* start 1/10 second mouse-down auto-repeat */
 
     app_control_proc = (WNDPROC) MakeProcInstance((FARPROC) app_control_procedure,
+						  this_instance);
+    edit_control_proc = (WNDPROC) MakeProcInstance((FARPROC) edit_control_procedure,
 						  this_instance);
 }
 

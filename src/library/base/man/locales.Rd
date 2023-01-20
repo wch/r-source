@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -92,7 +92,7 @@ Sys.setlocale (category = "LC_ALL", locale = "")
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale name or a set of locale
-  names separated by \code{"/"} (Solaris, macOS) or \code{";"}
+  names separated by \code{"/"} (macOS) or \code{";"}
   (Windows, Linux).  For portability, it is best to query categories
   individually: it is not necessarily the case that the result of
   \code{foo <- Sys.getlocale()} can be used in
@@ -108,15 +108,15 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   managed by OS-specific facilities such as \command{locale-gen} and
   \command{locale -a} lists those currently enabled.
 
-  For Windows, Microsoft moves its documentation frequently so a Web search
-  is the best way to find current information.  From \R 4.2, UCRT locale
-  names should be used.  The character set should match the system/ANSI
-  codepage (\code{l10n_info()$codepage} be the same as
+  For Windows, Microsoft moves its documentation frequently so a Web
+  search is the best way to find current information.  From \R 4.2, UCRT
+  locale names should be used.  The character set should match the
+  system/ANSI codepage (\code{l10n_info()$codepage} be the same as
   \code{l10n_info()$system.codepage}).  Setting it to any other value
-  results in a warning and may cause encoding problems.  In \R 4.2 on recent
-  Windows the system codepage is 65001 and one should always use locale
-  names ending with \code{".UTF-8"} (except for \code{"C"} and \code{""}),
-  otherwise Windows may add a different character set.
+  results in a warning and may cause encoding problems.  As from \R 4.2
+  on recent Windows the system codepage is 65001 and one should always
+  use locale names ending with \code{".UTF-8"} (except for \code{"C"}
+  and \code{""}), otherwise Windows may add a different character set.
 }
 
 % assume this just affects strtod/atof, scanf/printf and friends,

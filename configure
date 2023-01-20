@@ -662,6 +662,8 @@ ac_header_c_list=
 gt_needs=
 ac_func_c_list=
 ac_subst_vars='LTLIBOBJS
+FC_VER
+CC_VER
 BUILD_LIBINTL_FALSE
 BUILD_LIBINTL_TRUE
 USE_NLS_FALSE
@@ -776,7 +778,6 @@ BLAS_SHLIB_FALSE
 BLAS_SHLIB_TRUE
 RMATH_HAVE_WORKING_LOG1P
 LIBOBJS
-MACOS_SIERRA
 ALLOCA
 R_OPENMP_FFLAGS
 R_OPENMP_CFLAGS
@@ -881,6 +882,14 @@ DUMPBIN
 LD
 FGREP
 LIBTOOL
+C99FLAGS
+CC99
+C90FLAGS
+CC90
+C23FLAGS
+CC23
+C17FLAGS
+CC17
 R_DEFS
 OBJCXX
 ac_ct_OBJC
@@ -2413,6 +2422,49 @@ fi
 
 } # ac_fn_objc_try_compile
 
+# ac_fn_c_try_run LINENO
+# ----------------------
+# Try to run conftest.$ac_ext, and return whether this succeeded. Assumes that
+# executables *can* be run.
+ac_fn_c_try_run ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  if { { ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+printf "%s\n" "$ac_try_echo"; } >&5
+  (eval "$ac_link") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } && { ac_try='./conftest$ac_exeext'
+  { { case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+printf "%s\n" "$ac_try_echo"; } >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+then :
+  ac_retval=0
+else $as_nop
+  printf "%s\n" "$as_me: program exited with status $ac_status" >&5
+       printf "%s\n" "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+       ac_retval=$ac_status
+fi
+  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  as_fn_set_status $ac_retval
+
+} # ac_fn_c_try_run
+
 # ac_fn_c_try_link LINENO
 # -----------------------
 # Try to link conftest.$ac_ext, and return whether this succeeded.
@@ -2781,49 +2833,6 @@ printf "%s\n" "$ac_res" >&6; }
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
 
 } # ac_fn_c_check_type
-
-# ac_fn_c_try_run LINENO
-# ----------------------
-# Try to run conftest.$ac_ext, and return whether this succeeded. Assumes that
-# executables *can* be run.
-ac_fn_c_try_run ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  if { { ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-printf "%s\n" "$ac_try_echo"; } >&5
-  (eval "$ac_link") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } && { ac_try='./conftest$ac_exeext'
-  { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-printf "%s\n" "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; }
-then :
-  ac_retval=0
-else $as_nop
-  printf "%s\n" "$as_me: program exited with status $ac_status" >&5
-       printf "%s\n" "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-       ac_retval=$ac_status
-fi
-  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-  as_fn_set_status $ac_retval
-
-} # ac_fn_c_try_run
 
 # ac_fn_c_compute_int LINENO EXPR VAR INCLUDES
 # --------------------------------------------
@@ -3446,9 +3455,7 @@ struct stat;
 /* Most of the following tests are stolen from RCS 5.7 src/conf.sh.  */
 struct buf { int x; };
 struct buf * (*rcsopen) (struct buf *, struct stat *, int);
-static char *e (p, i)
-     char **p;
-     int i;
+static char *e (char **p, int i)
 {
   return p[i];
 }
@@ -4298,7 +4305,7 @@ R_OS="${host_os}"
 
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
 
 printf "%s\n" "#define Win32 1" >>confdefs.h
 
@@ -9759,6 +9766,301 @@ fi
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
 
+
+CC_SUB=`echo "${CC}" | sed 's/-std=[^ ]*//'`
+CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[^ ]*//'`
+
+## Other C standards
+CC_save=${CC}
+CFLAGS_save=${CFLAGS}
+: ${CC17="${CC_SUB} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS_SUB}"}
+CC=${CC17}
+CFLAGS=${C17FLAGS}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C17 compiler" >&5
+printf %s "checking whether ${CC} is a C17 compiler... " >&6; }
+if test ${r_cv_C17+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C17=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ > 201710L
+# error "Compiler claims to be later than C17"
+# elif __STDC_VERSION__ < 199901L
+# error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+// C89 example from autoconf 2.71.
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+// From rmumps
+typedef enum { true=1, false=0 } bool;
+
+// simplified from survival
+static void addup();
+void agsurv3(int *sn)
+{
+    addup(4, 0.0, 0.0);
+}
+static void addup(int itime, double haz, double var){}
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C17=yes
+else $as_nop
+  r_cv_C17=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C17" >&5
+printf "%s\n" "$r_cv_C17" >&6; }
+
+if test x${r_cv_C17} = xno; then
+CC17=
+C17FLAGS=
+fi
+
+
+
+: ${CC23="${CC_SUB} -std=gnu23"}
+: ${C23FLAGS="${CFLAGS_SUB}"}
+CC=${CC23}
+CFLAGS=${C23FLAGS}
+unset r_cv_C23
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
+printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
+if test ${r_cv_C23+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C23=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C23=yes
+else $as_nop
+  r_cv_C23=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
+printf "%s\n" "$r_cv_C23" >&6; }
+
+if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C23 compiler" >&5
+printf %s "checking whether ${CC} is a C23 compiler... " >&6; }
+if test ${r_cv_C23+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C23=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C23=yes
+else $as_nop
+  r_cv_C23=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C23" >&5
+printf "%s\n" "$r_cv_C23" >&6; }
+
+fi
+if test x${r_cv_C23} = xno; then
+CC23=
+C23FLAGS=
+fi
+
+
+
+: ${CC90="${CC_SUB} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS_SUB}"}
+CC=${CC90}
+CFLAGS=${C90FLAGS}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C90 compiler" >&5
+printf %s "checking whether ${CC} is a C90 compiler... " >&6; }
+if test ${r_cv_C90+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C90=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#if defined  __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
+# error "Compiler claims to be later than C90"
+#endif
+
+/* C90 example from autoconf 2.71 */
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C90=yes
+else $as_nop
+  r_cv_C90=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C90" >&5
+printf "%s\n" "$r_cv_C90" >&6; }
+
+if test x${r_cv_C90} = xno; then
+CC90=
+C90FLAGS=
+fi
+
+
+
+: ${CC99="${CC_SUB} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS_SUB}"}
+CC=${CC99}
+CFLAGS=${C99FLAGS}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CC} is a C99 compiler" >&5
+printf %s "checking whether ${CC} is a C99 compiler... " >&6; }
+if test ${r_cv_C99+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test "$cross_compiling" = yes
+then :
+  r_cv_C99=no
+else $as_nop
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ != 199901L
+#  error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+/* C90 example from autoconf 2.71. */
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+int main(void) {
+     return 0;
+}
+
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  r_cv_C99=yes
+else $as_nop
+  r_cv_C99=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_C99" >&5
+printf "%s\n" "$r_cv_C99" >&6; }
+
+if test x${r_cv_C99} = xno; then
+CC99=
+C99FLAGS=
+fi
+
+
+CC=${CC_save}
+CFLAGS=${CFLAGS_save}
 
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
@@ -24065,6 +24367,9 @@ case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
     ;;
+  cygwin*|mingw*|windows*|winnt|msys)
+    Rshlibpath_var=PATH
+    ;;
   *)
     Rshlibpath_var=${shlibpath_var}
 esac
@@ -24377,6 +24682,7 @@ fi
   if test "${use_readline}" = no; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
+    ## FIXME replace main, maybe by tputs
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for main in -lncurses" >&5
 printf %s "checking for main in -lncurses... " >&6; }
 if test ${ac_cv_lib_ncurses_main+y}
@@ -25379,7 +25685,7 @@ else $as_nop
 #endif
 
 int
-main(int argc, const char * argv[]) {
+main(void) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -25457,7 +25763,7 @@ done
 fi
 
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  cygwin*|mingw*|windows*|winnt|msys)
     r_cv_type_socklen=int
     ;;
 esac
@@ -26687,7 +26993,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26690: \"$ac_link\") >&5
+(eval echo $as_me:26998: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26763,7 +27069,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26766: \"$ac_link\") >&5
+(eval echo $as_me:27074: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28600,7 +28906,7 @@ fi
      ;;
   ## We no longer special-case Intel compilers on Linux:
   ## what we had dated from Nov 2005.
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     printf "%s\n" "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
     ;;
@@ -28678,7 +28984,7 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main(int argc, const char * argv[])
+int main(void)
 {
     F77_SYMBOL(testit)();
     return 0;
@@ -29131,7 +29437,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
     ;;
-  mingw*)
+  mingw*|msys)
     SHLIB_EXT=".dll"
     cpicflags=
     cxxpicflags=
@@ -29252,7 +29558,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine CPICFLAGS." >&5
@@ -29265,7 +29571,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FPICFLAGS." >&5
@@ -29278,7 +29584,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -n "${CXX}" -a -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -30091,7 +30397,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx11_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++11 features with $switch" >&5
 printf %s "checking whether $CXX supports C++11 features with $switch... " >&6; }
@@ -30825,7 +31131,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -31248,7 +31554,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -31661,7 +31967,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx14_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++14 features with $switch" >&5
 printf %s "checking whether $CXX supports C++14 features with $switch... " >&6; }
@@ -31678,7 +31984,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -32107,7 +32413,7 @@ else $as_nop
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
 #elif __cplusplus >= 201703L
-# error "This is a C++17 compiler"
+# error "This is a C++17 or later compiler"
 #else
 
 
@@ -32605,7 +32911,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -33391,7 +33697,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -34167,7 +34473,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx17_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++17 features with $switch" >&5
 printf %s "checking whether $CXX supports C++17 features with $switch... " >&6; }
@@ -34184,7 +34490,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -34976,7 +35282,7 @@ else $as_nop
 #elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #elif __cplusplus >= 202002L
-# error "This is a C++20 compiler"
+# error "This is a C++20 or later compiler"
 #else
 
 
@@ -35835,7 +36141,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -36619,7 +36925,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -37395,7 +37701,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx20_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++20 features with $switch" >&5
 printf %s "checking whether $CXX supports C++20 features with $switch... " >&6; }
@@ -37410,7 +37716,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -38200,7 +38506,7 @@ else $as_nop
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
 #elif __cplusplus < 202002L
-#error "This is not a C++20 compiler"
+#error "This is not a C++20 or later compiler"
 #else
 
 
@@ -40619,7 +40925,7 @@ printf "%s\n" "$ac_res" >&6; }
 
     if test x$ac_success = xno; then
                     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
+      for switch in -std=c++${alternative} +std=c++${alternative}; do
         cachevar=`printf "%s\n" "ax_cv_cxx_compile_cxx23_$switch" | $as_tr_sh`
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++23 features with $switch" >&5
 printf %s "checking whether $CXX supports C++23 features with $switch... " >&6; }
@@ -42446,7 +42752,7 @@ fi
 ##    flags to all (C, C++ and Fortran) compiler flags.
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     ;;
   *)
     r_save_CFLAGS=${CFLAGS}
@@ -43395,7 +43701,7 @@ fi
 done
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
   ;;
   *)
   if test "${ac_cv_have_decl_select}" = "no"; then
@@ -43998,15 +44304,6 @@ _ACEOF
 fi
 done
 
-## Used to avoid a problem with some Xcode 9 updates on macOS 10.12 (Darwin 16)
-case "${host_os}" in
-   darwin1[0123456].*)
-
-printf "%s\n" "#define MACOS_SIERRA 1" >>confdefs.h
-
-   ;;
-esac
-
 ## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD.
@@ -44420,7 +44717,7 @@ done
 ## We don't need times() except as a fallback for getrusage and
 ## clock_gettime/gettimeofday -- but it is older and always there.
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
@@ -44523,7 +44820,7 @@ else $as_nop
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -44576,7 +44873,7 @@ else $as_nop
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -44671,7 +44968,7 @@ printf "%s\n" "#define HAVE_LANGINFO_CODESET 1" >>confdefs.h
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
-## strdup strncasecmp were first required in POSIX 2001.
+## strdup strncasecmp were first required in POSIX 2001.  strdup is C23
 ac_fn_c_check_func "$LINENO" "mkdtemp" "ac_cv_func_mkdtemp"
 if test "x$ac_cv_func_mkdtemp" = xyes
 then :
@@ -45118,7 +45415,7 @@ else $as_nop
 # include <unistd.h> // for unlink
 #endif
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     FILE *fp;
     long pos;
 
@@ -45231,7 +45528,7 @@ else $as_nop
 
 //#define PRINT
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     struct tm tm, *stm;
     time_t res;
     putenv("TZ=UTC");
@@ -45405,12 +45702,11 @@ else $as_nop
 #include <time.h>
 #include <errno.h>
 
-int main(int argc, const char * argv[])
+int main(void)
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
-       fix up times and there are 64-bit time_t about.
-       But this works for now (yes on Solaris, no on glibc). */
+       fix up times. But this worked for now (yes on Solaris, no on glibc). */
     tm.tm_year = 3000; tm.tm_mon = 0; tm.tm_mday = 0;
     tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
     errno = 0;
@@ -45454,7 +45750,7 @@ else $as_nop
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -45509,7 +45805,7 @@ else $as_nop
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -45568,7 +45864,7 @@ else $as_nop
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     struct tm tm;
     time_t res;
     putenv("TZ=Europe/London");
@@ -47194,7 +47490,7 @@ extern void ${ilaver}(int *major, int *minor, int *patch);
 
 #include <stdlib.h>
 #include <stdio.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
   int major, minor, patch;
   ${ilaver}(&major, &minor, &patch);
   printf("%d.%d.%d, so ", major, minor, patch);
@@ -47568,7 +47864,7 @@ printf "%s\n" "$r_cv_iconv_latin1" >&6; }
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_latin1=yes
       ;;
   esac
@@ -47635,7 +47931,7 @@ printf "%s\n" "$r_cv_iconv_cp1252" >&6; }
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_cp1252=yes
       ;;
   esac
@@ -50347,14 +50643,21 @@ if test ${r_cv_bsd_networking+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-  if test "${ac_cv_header_netdb_h}" = yes \
+  case "${host_os}" in
+  cygwin*|mingw*|windows*|winnt|msys)
+    r_cv_bsd_networking=yes
+    ;;
+esac
+if test "${ac_cv_bsd_networking}" != yes \
+     && test "${ac_cv_header_netdb_h}" = yes \
      && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
      && test "${ac_cv_search_connect}" != no \
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
-else
+fi
+if test "${ac_cv_bsd_networking}" = no; then
   as_fn_error $? "BSD networking functions are required" "$LINENO" 5
 fi
 fi
@@ -50507,7 +50810,7 @@ else $as_nop
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -50638,7 +50941,7 @@ else $as_nop
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main(int argc, const char * argv[]) {
+int main(void) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -50770,7 +51073,7 @@ else $as_nop
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -50955,7 +51258,7 @@ else $as_nop
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -51084,7 +51387,7 @@ else $as_nop
 #endif
 #endif
 #include <stdlib.h>
-int main(int argc, const char * argv[]) {
+int main(void) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -51322,7 +51625,7 @@ else $as_nop
 
 #include <stdlib.h>
 #include <curl/curl.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
@@ -51373,7 +51676,7 @@ else $as_nop
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main(int argc, const char * argv[])
+int main(void)
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -52252,7 +52555,71 @@ fi
 
 printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
 
-        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
+        BITMAP_LIBS="-ltiff -lwebp -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # also try with webp and zstd (needed with libtiff 4.4 from MXE/Rtools)
+      unset ac_cv_lib_tiff_TIFFOpen
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libtiff with -lwebp -lzstd" >&5
+printf "%s\n" "$as_me: checking for libtiff with -lwebp -lzstd" >&6;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
+printf %s "checking for TIFFOpen in -ltiff... " >&6; }
+if test ${ac_cv_lib_tiff_TIFFOpen+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS} $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char TIFFOpen ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return TIFFOpen ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_tiff_TIFFOpen=yes
+else $as_nop
+  ac_cv_lib_tiff_TIFFOpen=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tiff_TIFFOpen" >&5
+printf "%s\n" "$ac_cv_lib_tiff_TIFFOpen" >&6; }
+if test "x$ac_cv_lib_tiff_TIFFOpen" = xyes
+then :
+  have_tiff=yes
+else $as_nop
+  have_tiff=no
+fi
+
+      if test "x${have_tiff}" = xyes; then
+
+printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
+
+        BITMAP_LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -57926,7 +58293,7 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main(int argc, const char * argv[]) {
+int main(void) {
     /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -57973,7 +58340,8 @@ printf "%s\n" "using as R_SHELL for scripts ... ${R_SHELL}" >&6; }
 
 ### * Win32 overrides
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
+    ## there are not needed with Rtools (detected correctly)
 
 printf "%s\n" "#define HAVE_ICONV 1" >>confdefs.h
 
@@ -57990,23 +58358,43 @@ printf "%s\n" "#define HAVE_JPEG 1" >>confdefs.h
 printf "%s\n" "#define HAVE_PNG 1" >>confdefs.h
 
 
-printf "%s\n" "#define HAVE_POSIX_SETJMP 1" >>confdefs.h
-
-
-printf "%s\n" "#define HAVE_TCLTK 1" >>confdefs.h
-
-
 printf "%s\n" "#define HAVE_TIFF 1" >>confdefs.h
 
 
-printf "%s\n" "#define HAVE_TIMES 1" >>confdefs.h
+    ## these change what is detected with Rtools
+
+printf "%s\n" "#define HAVE_POSIX_SETJMP 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_DECL_SIGLONGJMP 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_DECL_SIGSETJMP 1" >>confdefs.h
+
+
+printf "%s\n" "#define HAVE_TCLTK 1" >>confdefs.h
 
     want_R_profiling=yes
 
 printf "%s\n" "#define R_PROFILING 1" >>confdefs.h
 
+    want_memory_profiling=yes
+
+printf "%s\n" "#define R_MEMORY_PROFILING 1" >>confdefs.h
+
     ;;
 esac
+
+CC_VER=`${CC} --version | ${SED} -n 1p`
+FC_VER=`${FC} --version | ${SED} -n 1p`
+
+printf "%s\n" "#define CC_VER \"${CC_VER}\"" >>confdefs.h
+
+
+
+printf "%s\n" "#define FC_VER \"${FC_VER}\"" >>confdefs.h
+
+
 
 ### * Output.
 

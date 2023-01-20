@@ -262,7 +262,7 @@ src/main/xspline.c
 src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
 
   Extracted from
-  *  -- LAPACK computational routine (version 3.10.1) --
+  *  -- LAPACK computational routine (version 3.11.0) --
   *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
   *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
   *     November 2017
@@ -271,7 +271,7 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
   For version 3.7.0, many of the copyright dates were updated
   even for routines which have not been changed for years.
 
-  LAPACK 3.10.1 contains a LICENSE file, copied to src/modules/lapack
+  LAPACK 3.11.0 contains a LICENSE file, copied to src/modules/lapack
   (but many of these routines were originally copied from earlier
   versions of LAPACK).  For binary distributions it is reproduced here:
 
@@ -329,7 +329,7 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
 
 src/extra/blas/*.{f,f90}
 
-These are now derived from the LAPACK 3.10.1 sources, so the previous
+These are now derived from the LAPACK 3.11.0 sources, so the previous
 item applies.
 
 src/extra/xdr/*

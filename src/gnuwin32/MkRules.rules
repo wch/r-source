@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 
-## Defaults for user settings, see MkRules.dist for descriptions. Rtools42
+## Defaults for user settings, see MkRules.dist for descriptions. Rtools43
 ## assumes that the compiler toolchain (e.g. gcc, as, ...) is on PATH
 LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
@@ -26,7 +26,7 @@ CAIRO_CPPFLAGS ?= -I$(EXT_LIBS)/include/cairo
 CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
-CURL_LIBS ?= -lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
+CURL_LIBS ?= -lcurl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
 
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE
@@ -78,9 +78,6 @@ arch_DEFS = -DR_ARCH='"i386"'
 SYMPAT = 's/^.* [BCDRT] _/ /p'
 endif
 
-## -std=c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
-C99FLAG=-std=gnu99
-
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
 
@@ -94,7 +91,7 @@ endif
 
 AR = $(BINPREF)ar
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E

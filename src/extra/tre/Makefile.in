@@ -27,8 +27,9 @@ OBJECTS = $(SOURCES:.c=.o)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+# xmalloc.c (only for debugging)
 DISTFILES = LICENSE Makefile.in Makefile.win R_changes \
-  $(SOURCES) $(HEADERS)
+  $(SOURCES) $(HEADERS) xmalloc.c
 noinst_LIBRARIES = libtre.a
 libtre_a_SOURCES = $(SOURCES)
 libtre_a_OBJECTS = $(OBJECTS)

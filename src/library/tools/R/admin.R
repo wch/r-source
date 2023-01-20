@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -308,6 +308,12 @@ function(dir, outDir)
                outFile)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
+    testParse <- function(...) { # parse only to detect errors
+        op <- options(showErrorCalls=FALSE)
+        on.exit(options(op))
+        parse(...)
+        invisible()
+    }
     ## assume that if locale is 'C' we can used 8-bit encodings unchanged.
     if(need_enc && (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
         con <- file(outFile, "a")
@@ -331,7 +337,9 @@ function(dir, outDir)
                                 paste(bad2, collapse = ", ")),
                         domain = NA, call. = FALSE)
             }
-            writeLines(paste0("#line 1 \"", f, "\""), con)
+            line1 <- paste0("#line 1 \"", f, "\"")
+            testParse(text = c(line1, tmp))
+            writeLines(line1, con)
             writeLines(tmp, con)
         }
 	close(con); on.exit()
@@ -341,6 +349,7 @@ function(dir, outDir)
         ##   writeLines(sapply(codeFiles, readLines), outFile)
         ## instead, but this would be much slower ...
         ## use fast version of file.append that ensures LF between files
+        lapply(codeFiles, testParse)
         if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
             stop("unable to write code files")
         ## </NOTE>
@@ -348,9 +357,6 @@ function(dir, outDir)
     ## A syntax check here, so that we do not install a broken package.
     ## FIXME:  this is only needed if we don't lazy load, as the lazy loader
     ## would detect the error.
-    op <- options(showErrorCalls=FALSE)
-    on.exit(options(op))
-    parse(outFile)
     invisible()
 }
 

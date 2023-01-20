@@ -5073,8 +5073,8 @@ add_dummies <- function(dir, Log)
                                     sub("[Rr]d$", "html", results2[, "path"]),
                                     results2[, "line"],
                                     results2[, "col"],
-                            	    results2[, "srcFile"],
-                            	    results2[, "srcLine"],
+                                    results2[, "srcFile"],
+                                    results2[, "srcLine"],
                                     results2[, "msg"])))
             }
         }
@@ -5338,6 +5338,10 @@ add_dummies <- function(dir, Log)
                 if (install != "check")
                     lines <- readLines(outfile, warn = FALSE)
 
+                ## A few packages call SHLIB twice.
+                lines00 <- unique(grep("^using (C compiler|C[+][+] compiler|Fortran compiler|SDK)",
+                                       lines, value = TRUE))
+
                 lines0 <- lines
                 warn_re <- c("^WARNING:",
                              ## This fires on ODS 12.5 warnings like
@@ -5476,7 +5480,11 @@ add_dummies <- function(dir, Log)
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",
-                             "\\[-W#warnings\\]"
+                             "\\[-W#warnings\\]",
+                             "\\[-Wrange-loop-construct\\]",
+                             "\\[-Warray-parameter=\\]",
+                             ## clang version (not Apple clang)
+                             "\\[-Warray-parameter\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
@@ -5549,7 +5557,12 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wbitwise-instead-of-logical\\]",
                              "warning: .* \\[-Wunneeded-internal-declaration\\]",
                              ## LLVM clang 15
-                             "warning: .* \\[-Winvalid-utf8\\]"
+                             "warning: .* \\[-Winvalid-utf8\\]",
+                             "warning: .* \\[-Wunqualified-std-cast-call\\]",
+                             "warning: .* \\[-Wincompatible-pointer-types-discards-qualifiers\\]",
+
+                             ## LLVM clang 16
+                             " warning: use of unary operator that may be intended as compound assignment"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
@@ -5562,6 +5575,7 @@ add_dummies <- function(dir, Log)
                               value = TRUE, useBytes = TRUE, invert = TRUE)
 
                 ## Filter out boost/armadillo header warnings
+                ## 2023-01: still have class-memaccess from BH with gcc
                 ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-W(tautological-overlap-compare|class-memaccess)\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
@@ -5596,6 +5610,7 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## And deprecated declarations in Eigen and boost
+                ## unary_function in boost < 1.81, auto_ptr in boost/smart_ptr.
                 ex_re <- "(include/Eigen|include/boost|boost/smart_ptr).* warning: .* \\[-Wdeprecated-declarations\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
@@ -5775,6 +5790,10 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
+                if (length(lines00)) {
+                    ll <- sub("using", "used", lines00)
+                    for (l in ll)  messageLog(Log, l)
+                }
             }   ## end of case B
         }
     } ## {check_install()}
@@ -6821,6 +6840,14 @@ add_dummies <- function(dir, Log)
         messageLog(Log, "using ", R.version.string)
         messageLog(Log, "using platform: ", R.version$platform,
                    " (", 8*.Machine$sizeof.pointer, "-bit)")
+        vers <- R_compiled_by()
+        if (any(nzchar(vers))) {
+            messageLog(Log, "R was compiled by")
+            printLog(Log, paste("   ", vers, collapse = "\n"), "\n")
+        }
+        osV <- utils::osVersion
+        if(!is.null(osV))
+            messageLog(Log, "running under: ", osV)
         charset <-
             if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)
@@ -6863,6 +6890,7 @@ add_dummies <- function(dir, Log)
         }
         setwd(pkg)
         pkgdir <- getwd()
+
         thispkg_src_subdirs <- thispkg_subdirs
         if (thispkg_src_subdirs == "yes-maybe") {
             ## now see if there is a 'configure' file

@@ -565,11 +565,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
     if ((CURROW >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
 	(i == NUMLINES - 1) && (p->sel == 0 || !intersect_input(p, 0))) {
 	if (!p->overwrite) {
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 	    	setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 	    	            p->cursor_blink == 1 ? 1 : FW/4, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    
 	    if (p->cursor_blink < 2) {
 	    	r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, FW/4, FH);
@@ -586,11 +584,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	    /* term string '\0' box width = 1 fix */
 	    w0 = wc ? Ri18n_wcwidth(wc) : 1;
 	    nn[0] = wc;
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 	    	setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 	    		    p->cursor_blink == 1 ? 1 : FW/4, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    if (p->cursor_blink < 2) {
 	    	r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH,
 		         w0 * FW, FH);
@@ -598,11 +594,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	    	gdrawwcs(BM, p->f, bg, pt(r.x, r.y), nn);
 	    }
 	} else {
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 		setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 		            p->cursor_blink == 1 ? 1 : FW, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    if (p->cursor_blink < 2) 
 	    	WLHELPER(CURCOL - FC, CURCOL - FC, bg, highlight); 
 	}
@@ -1756,6 +1750,10 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 {
     ConsoleData p = getdata(c);
 
+    if (p->cursor_blink == 2)
+	/* The caret may be visible via SetUpCaret flag (see newconsole) for
+	   startup. It needs to be hidden now to be protected agains redraw. */
+	showcaret(c, 0);
     wchar_t *cur_line, *P;
     wchar_t *aLine;
     int ns0 = NUMLINES, w0 = 0, pre_prompt_len;
@@ -1784,13 +1782,20 @@ int consolereads(control c, const char *prompt, char *buf, int len,
     max_pos = 0;
     cur_line = &aLine[prompt_len];
     cur_line[0] = L'\0';
-    showcaret(c, 1);
     REDRAW;
     for(;;) {
 	wchar_t cur_char;
 	char chtype; /* boolean */
 	p->input = 1;
+	/* The caret must not be shown when drawing, because it would
+	   be erased by redraws. We thus only show it when waiting for the
+	   keyboard input. REDRAW is also called when processing events,
+	   e.g. while the console window is loosing focus, so changing the
+	   caret visibility there was error prone. */
+	if (p->cursor_blink)
+	   showcaret(c, 1);
 	cur_char = consolegetc(c);
+	showcaret(c, 0);
 	p->input = 0;
 	chtype = ((unsigned int) cur_char > 0x1f);
 	if(NUMLINES != ns0) { /* we scrolled, e.g. cleared screen */
@@ -1901,7 +1906,6 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 		    if (max_pos && addtohistory) wgl_histadd(cur_line);
 		    xbuffixl(p->lbuf);
 		    consolewrites(c, "\n");
-		    showcaret(c, 0);
 		    REDRAW;
 		    return cur_char == EOFKEY;
 		}
@@ -2020,6 +2024,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
     pointsize = fnpoints;
     if (consolefn) del(consolefn);
     consolefn = NULL;
+    /* keep in step with applyGUI() in preferences.c */
     if (strcmp(fontname, "FixedFont")) {
 	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0, 1);
 	if (!consolefn) {
@@ -2249,6 +2254,14 @@ console newconsole(char *name, int flags)
 		       guiColors,
 		       CONSOLE, consolebuffered, consoleblink);
     if (!p) return NULL;
+    if (p->cursor_blink == 2)
+	/* Arrange for a dummy caret to be created when the new window
+	   gets focus. This is to help NVDA (screen reader) to choose
+	   a correct display model and correctly detect characters
+	   under the caret. After the first redraw, which will happen
+	   right away in consolereads, a correct caret will be set up
+	   and destroyed/restored when loosing/gaining focus. */
+	flags |= SetUpCaret;
     c = (console) newwindow(name, rect(consolex, consoley, WIDTH, HEIGHT),
 			    flags | TrackMouse | VScrollbar | HScrollbar);
     HEIGHT = getheight(c);

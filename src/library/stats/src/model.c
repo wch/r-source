@@ -317,7 +317,7 @@ static char *AppendString(char *buf, const char *str)
 static char *AppendInteger(char *buf, int i)
 {
     char str[32];
-    sprintf(str, "%d", i);
+    snprintf(str, sizeof(str), "%d", i);
     return AppendString(buf, str);
 }
 

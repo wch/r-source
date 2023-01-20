@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 
 /* RENVIRON_WIN32_STANDALONE is set when compiling for use in Rcmd Windows
    front-end, which is not linked against the R library. The locale is not

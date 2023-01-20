@@ -48,7 +48,6 @@
 #include <string.h>
 #include <stdlib.h>			/* for realpath */
 #include <time.h>			/* for ctime */
-
 # include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -2594,12 +2593,6 @@ attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-/* Only 10.13 (High Sierra) has this, but the headers in Xcode 9 on 10.12
-   declare it, for some people. */
-#if defined(__APPLE__) && defined(MACOS_SIERRA)
-# undef HAVE_UTIMENSAT
-#endif
-
 #if defined(HAVE_UTIMENSAT)
 # include <fcntl.h>
 # include <sys/stat.h>
@@ -3367,6 +3360,13 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	char *res = realpath(dl_info1.dli_fname, buf);
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(res));
+	else if (errno == ENOENT)
+	    /* macOs (Big Sur) has uses a cache for system-provided dynamic
+	       libraries and they no longer exist as regular files. The 
+	       dynamic linker knows how to find them, but not regular file
+	       operations such as realpath(). Hence, when the file is not
+	       found, report what we have from the dynamic linker. */
+	    SET_STRING_ELT(ans, i, mkChar(dl_info1.dli_fname));
     }
 #endif
     SET_STRING_ELT(nms, i++, mkChar("BLAS"));
@@ -3374,6 +3374,31 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return ans;
 }
+
+attribute_hidden SEXP
+do_compilerVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(STRSXP, 2));
+    SEXP nms = PROTECT(allocVector(STRSXP, 2));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("C"));
+    SET_STRING_ELT(nms, 1, mkChar("Fortran"));
+#ifdef CC_VER
+    SET_STRING_ELT(ans, 0, mkChar(CC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+#ifdef FC_VER
+    SET_STRING_ELT(ans, 1, mkChar(FC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+    
+    UNPROTECT(2);
+   return ans;
+}
+
 
 /* platform-specific */
 extern void Rsleep(double timeint);

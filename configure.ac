@@ -119,7 +119,7 @@ R_OS="${host_os}"
 AC_SUBST(R_OS)
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
     R_OSTYPE="windows"
@@ -787,6 +787,72 @@ R_PROG_OBJCXX
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
+CC_SUB=`echo "${CC}" | sed 's/-std=[[^ ]]*//'`
+CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[[^ ]]*//'`
+dnl echo "CC_SUB = ${CC_SUB}"
+dnl echo "CFLAGS_SUB = ${CFLAGS_SUB}"
+
+## Other C standards
+CC_save=${CC}
+CFLAGS_save=${CFLAGS}
+: ${CC17="${CC_SUB} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS_SUB}"}
+CC=${CC17}
+CFLAGS=${C17FLAGS}
+R_C17
+if test x${r_cv_C17} = xno; then
+CC17=
+C17FLAGS=
+fi
+AC_SUBST(CC17)
+AC_SUBST(C17FLAGS)
+
+dnl this is a hack until -std=gnu23 is widely accepted.
+: ${CC23="${CC_SUB} -std=gnu23"}
+: ${C23FLAGS="${CFLAGS_SUB}"}
+CC=${CC23}
+CFLAGS=${C23FLAGS}
+unset r_cv_C23
+R_C23
+if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+R_C23
+fi
+if test x${r_cv_C23} = xno; then
+CC23=
+C23FLAGS=
+fi
+AC_SUBST(CC23)
+AC_SUBST(C23FLAGS)
+
+: ${CC90="${CC_SUB} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS_SUB}"}
+CC=${CC90}
+CFLAGS=${C90FLAGS}
+R_C90
+if test x${r_cv_C90} = xno; then
+CC90=
+C90FLAGS=
+fi
+AC_SUBST(CC90)
+AC_SUBST(C90FLAGS)
+
+: ${CC99="${CC_SUB} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS_SUB}"}
+CC=${CC99}
+CFLAGS=${C99FLAGS}
+R_C99
+if test x${r_cv_C99} = xno; then
+CC99=
+C99FLAGS=
+fi
+AC_SUBST(CC99)
+AC_SUBST(C99FLAGS)
+CC=${CC_save}
+CFLAGS=${CFLAGS_save}
+
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
 ## checks for a Fortran 77 compiler and sets F77 accordingly.)
@@ -838,6 +904,9 @@ case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
     ;;
+  cygwin*|mingw*|windows*|winnt|msys)
+    Rshlibpath_var=PATH
+    ;;
   *)
     Rshlibpath_var=${shlibpath_var}
 esac
@@ -882,6 +951,7 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
+    ## FIXME replace main, maybe by tputs
     AC_CHECK_LIB(ncurses, main, [],
                  AC_CHECK_LIB(tinfo, main, [],
                               AC_CHECK_LIB(termcap, main, [],
@@ -1135,7 +1205,7 @@ dnl     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
      ;;
   ## We no longer special-case Intel compilers on Linux:
   ## what we had dated from Nov 2005.
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   openbsd*)
@@ -1529,7 +1599,7 @@ dnl     ;;
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
     ;;
-  mingw*)
+  mingw*|msys)
     SHLIB_EXT=".dll"
     cpicflags=
     cxxpicflags=
@@ -1644,7 +1714,7 @@ R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -1656,7 +1726,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -1668,7 +1738,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -n "${CXX}" -a -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -1989,7 +2059,7 @@ R_CHECK_FUNCS([select],
 #include <sys/time.h>  /* Earlier POSIX, HP-UX? */
 #endif])
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
   ;;
   *)
   if test "${ac_cv_have_decl_select}" = "no"; then
@@ -2009,6 +2079,7 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+dnl These are POSIX functions included by C23
 R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
 dnl BSD extension available on glibc and macOS -- but fails on maOS pre-1900
 dnl R_CHECK_FUNCS([timegm], [#include <time.h>])
@@ -2023,13 +2094,6 @@ R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## POSIX.1-2008 preferred form
 R_CHECK_FUNCS([utimensat], [#include <sys/stat.h>])
-## Used to avoid a problem with some Xcode 9 updates on macOS 10.12 (Darwin 16)
-case "${host_os}" in
-   darwin1[[0123456]].*)
-     AC_DEFINE(MACOS_SIERRA, 1, [macOS 10.12 (Sierra) or earlier])
-   ;;
-esac
-AC_SUBST(MACOS_SIERRA)
 ## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
@@ -2080,7 +2144,7 @@ R_CHECK_FUNCS([thr_stksegment], [
 ## We don't need times() except as a fallback for getrusage and
 ## clock_gettime/gettimeofday -- but it is older and always there.
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
@@ -2133,7 +2197,7 @@ AM_LANGINFO_CODESET
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
-## strdup strncasecmp were first required in POSIX 2001.
+## strdup strncasecmp were first required in POSIX 2001.  strdup is C23
 AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
@@ -2799,22 +2863,38 @@ AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])
 
 ### * Win32 overrides
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
+    ## there are not needed with Rtools (detected correctly)
     AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function.])
     AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
     AC_DEFINE(HAVE_ICONV_H, 1, [Define to 1 if you have the <iconv.h> header file.])
     AC_DEFINE(HAVE_JPEG, 1,[Define if you have the JPEG headers and libraries.])
     AC_DEFINE(HAVE_PNG, 1, [Define if you have the PNG headers and libraries.])
+    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])    
+
+    ## these change what is detected with Rtools
     AC_DEFINE(HAVE_POSIX_SETJMP, 1, [Define if you have POSIX.1 compatible
                                      sigsetjmp/siglongjmp.])
+    AC_DEFINE(HAVE_DECL_SIGLONGJMP, 1, [Define to 1 if you have the declaration of `siglongjmp',
+                                       and to 0 if you don't.])
+    AC_DEFINE(HAVE_DECL_SIGSETJMP, 1, [Define to 1 if you have the declaration of `sigsetjmp',
+                                       and to 0 if you don't.])                                     
     AC_DEFINE(HAVE_TCLTK, 1, [Define if you have the Tcl/Tk headers and 
-                              libraries and want Tcl/Tk support to be built.] )
-    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
-    AC_DEFINE(HAVE_TIMES, 1, [Define to 1 if you have the `times' function.])
+                              libraries and want Tcl/Tk support to be built.])
     want_R_profiling=yes
     AC_DEFINE(R_PROFILING, 1, [Define this to enable R-level profiling.])
+    want_memory_profiling=yes
+    AC_DEFINE(R_MEMORY_PROFILING, 1, [Define this to enable memory profiling.])
     ;;
 esac
+
+dnl record compiler versions
+CC_VER=`${CC} --version | ${SED} -n 1p`
+FC_VER=`${FC} --version | ${SED} -n 1p`
+AC_DEFINE_UNQUOTED(CC_VER, "${CC_VER}", [Version of C Compiler])
+AC_SUBST(CC_VER)
+AC_DEFINE_UNQUOTED(FC_VER, "${FC_VER}", [Version of Fortran Compiler])
+AC_SUBST(FC_VER)
 
 ### * Output.
 

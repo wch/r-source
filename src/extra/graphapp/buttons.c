@@ -41,7 +41,8 @@
 
    Copyright (C) 2022  The R Core Team
 
-   use RichEdit20W to work in UTF-8 
+   use RichEdit20W to work in UTF-8
+   allow to leave a dropfield (combo box) with TAB key
  */
 
 #include "internal.h"
@@ -1144,6 +1145,29 @@ listbox newdropfield(const char *list[], rect r, scrollfn fn)
 		      r, NULL);
     if (! obj)
 	return obj;
+
+    /* subclass the edit control to handle TAB */
+    HANDLE hwndCombo = obj->handle;
+    COMBOBOXINFO cbInfo;
+    cbInfo.cbSize = sizeof(COMBOBOXINFO);
+    BOOL ret = GetComboBoxInfo(hwndCombo, &cbInfo);
+    if (ret) {
+	HANDLE hwndEdit = cbInfo.hwndItem; /* the edit control */
+	if (GetParent(hwndEdit) == hwndCombo) {
+#ifdef _WIN64
+	    obj->edit_winproc = (WNDPROC) GetWindowLongPtr(hwndEdit,
+	                                                   GWLP_WNDPROC);
+	    SetWindowLongPtr(hwndEdit, GWLP_WNDPROC,
+	                     (LONG_PTR) edit_control_proc);
+#else
+	    obj->edit_winproc = (WNDPROC) GetWindowLong(hwndEdit,
+	                                                GWL_WNDPROC);
+	    SetWindowLongPtr(hwndEdit, GWL_WNDPROC,
+	                     (LONG) edit_control_proc);
+#endif
+	}
+    }
+
     obj->kind = DropfieldObject;
     obj->hit = fn;
 

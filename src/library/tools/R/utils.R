@@ -758,8 +758,8 @@ function(expr, type = NULL)
 
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, encoding = "UTF-8", warn = FALSE),
-         message = readLines(msgcon, encoding = "UTF-8", warn = FALSE))
+         output = readLines(outcon, warn = FALSE),
+         message = readLines(msgcon, warn = FALSE))
 }
 
 ### ** .expand_anchored_Rd_xrefs

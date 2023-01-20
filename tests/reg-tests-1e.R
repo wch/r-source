@@ -400,10 +400,51 @@ stopifnot(exprs = {
 })
 ## as.data.frame.<cls>(.) worked w/o deprecation warning in R <= 4.2.x
 
+## useMethod() dispatch error in case of long class strings - PR#18447
+mkCh <- function(n, st=1L) substr(strrep("123456789 ", ceiling(n/10)), st, n)
+useMethErr <- function(n=500, nrep=25)
+    (function(.) UseMethod("foo")(.))(
+        structure(1, class = paste(sep=":", format(1:nrep),
+                                   mkCh(n, 2L + (nrep > 9)))))
+tools::assertError( useMethErr(500,25) )
+## gave a segfault  in R <= 4.2.2
+clsMethErr <- function(...) {
+ sub(    '"[^"]*$', "",
+     sub('^[^"]*"', "", tryCmsg(useMethErr(...))))
+}
+showC <- function(..., n1=20, n2=16) {
+    r <- clsMethErr(...)
+    cat(sprintf('%d: "%s<....>%s"\n', (nr <- nchar(r)),
+                substr(r, 1,n1), substr(r, nr-n2, nr)))
+    invisible(r)
+}
+invisible(lapply(11:120, function(n) showC(n, 1030 %/% n)))
+## (mostly the truncation works "nicely", but sometimes even misses the closing quote)
 
-## predict.lm() in *rank deficient* case -- PR#15072, PR#16158
 
-## ... always gave warning about problem (current "simple") in R <= 4.2.x
+## download.file() with invalid option -- PR#18455
+op <- options(download.file.method = "no way")
+Edl <- tryCid(download.file("http://httpbin.org/get", "ping.txt"))
+stopifnot(inherits(Edl, "error"),
+          !englishMsgs || grepl("should be one of .auto.,", conditionMessage(Edl)))
+options(op)
+## error was  "object 'status' not found"  in R <= 4.2.2
+
+
+## handling of invalid Encoding / unsupported conversion in packageDescription()
+dir.create(pkgpath <- tempfile())
+writeLines(c("Version: 1.0", "Encoding: FTU-8"), # (sic!)
+           file.path(pkgpath, "DESCRIPTION"))
+stopifnot(packageVersion(basename(pkgpath), dirname(pkgpath)) == "1.0")
+## outputs try()-catched iconv() errors but does not fail
+## gave a "packageNotFoundError" in 3.5.0 <= R <= 4.2.2
+
+
+## format.bibentry() with preloaded Rd macros
+ref <- bibentry("misc", author = "\\authors", year = 2023)
+macros <- tools::loadRdMacros(textConnection("\\newcommand{\\authors}{\\R}"))
+stopifnot(identical(print(format(ref, macros = macros)), "R (2023)."))
+## macro definitions were not used in R <= 4.2.2
 
 
 

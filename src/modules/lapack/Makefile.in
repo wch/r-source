@@ -42,7 +42,7 @@ DISTFILES = \
 	cmplx.f dlapack.f dlamch.f \
 	dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
 	zlartg.f90 zlassq.f90 \
-	dble.txt cmplx.txt
+	dble.txt cmplx.txt R.patch
 
 lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)

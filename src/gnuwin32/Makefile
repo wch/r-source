@@ -385,14 +385,6 @@ bytecode-recommended:
 	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  $(MK) -C ../library/Recommended -f Makefile.win
 
-RVER-MAJOR-MINOR = $(shell echo `cut -d'.' -f1,2 ../../VERSION`)
-CRANEXT = cran.r-project.org::CRAN/bin/windows/extsoft/$(RVER-MAJOR-MINOR)/
-
-rsync-extsoft:
-	($(MKDIR) -p ../../extsoft; \
-	cd ../../extsoft; \
-	rsync --timeout=60 -rcvp --delete $(CRANEXT) . ) 
-
 
 docfiles:
 	@$(MK) -C ../../doc/manual -f Makefile.win FAQ
@@ -411,12 +403,6 @@ distribution:
 	@$(MK) manuals
 	@$(MK) rinstaller
 	@$(RM) -f ../../SVN-REVISION.bak
-
-## Builds what is needed in a 32-bit build to copy to 64/32-bit installer
-32-bit:
-	@$(MK) all
-	@$(MK) cairodevices
-	@$(MK) recommended
 
 
 ## ============= End of maintainer targets ========================

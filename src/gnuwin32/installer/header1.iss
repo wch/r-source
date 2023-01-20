@@ -48,4 +48,4 @@ Name: ko; MessagesFile: "Korean.isl"
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,6.0
 Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,6.0; Flags: unchecked 
 Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:regentries}; MinVersion: 0,6.0
-Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,6.0; Check: IsAdmin
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,6.0; Check: RIsAdmin

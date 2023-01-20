@@ -3,6 +3,9 @@
 #ifndef R_CONFIG_H
 #define R_CONFIG_H
 
+/* Version of C Compiler */
+#undef CC_VER
+
 /* Define to 1 if using 'alloca.c'. */
 #undef C_ALLOCA
 
@@ -29,6 +32,9 @@
 
 /* C type used for Fortran character lengths */
 #undef FC_LEN_T
+
+/* Version of Fortran Compiler */
+#undef FC_VER
 
 /* Define to 1 if you have the `access' function. */
 #undef HAVE_ACCESS
@@ -1012,9 +1018,6 @@
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
-
-/* macOS 10.12 (Sierra) or earlier */
-#undef MACOS_SIERRA
 
 /* Define if mktime sets errno. */
 #undef MKTIME_SETS_ERRNO
