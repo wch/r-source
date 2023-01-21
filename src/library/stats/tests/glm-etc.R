@@ -84,9 +84,11 @@ cf8. <- c(X1 = -1.999854802642, X2 = 3.499496934397, X3 = NA)
 stopifnot(all.equal(cf8., coef(fm8.)))
 coef(fm8.9 <- lm(y ~ . -1, data = d8, tol = 1e-9)) # no NA , but "instable" -- not too precise
 cf8.9 <- c(X1 = 45822.830422, X2 = -22908.915871, X3 = 45824.830295)
-          all.equal(cf8.9, coef(fm8.9), tol=0)# -> "Mean rel..diff.: 5.3e-9 | 5.15e-12
-stopifnot(all.equal(cf8.9, coef(fm8.9),
-                    tol = if(getRversion() <= "4.2.2") 2e-8 else 2e-10))
+all.equal(cf8.9, coef(fm8.9), tol=0)# -> "Mean rel..diff.: 5.3e-9 | 5.15e-12
+## was < 2e-8 in R 4.2.2
+## x86_64 Linux/gcc12 gives ca 5e-12
+## vanilla M1mac gives 6.16e-11, Accelerate on M1 macOS gives 3.99e-10
+stopifnot(all.equal(cf8.9, coef(fm8.9), tol = 5e-10))
 
 ## predict :
 nd <- d8[,-1] + rep(outer(c(-2:2),10^(1:3)), 3) # 5 * 9 = 45 = 15 * 3 (nrow * ncol)
