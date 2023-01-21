@@ -332,12 +332,17 @@ make check-all
 @end example
 
 @noindent
-see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
+see @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
 are only run completely if the recommended packages are installed.  If
 you have a local CRAN mirror, these checks can be speeded up by either
 setting environment variable @env{R_CRAN_WEB} to its URL, or having a
 file @file{.R/repositories} specifying it (see @code{?setRepositories}).
+
+Parallel make is supported for building @R{} but not for the
+@samp{check} targets (as the output is likely to be unreadably
+interleaved, although where supported@footnote{not by the version
+supplied by macOS.} GNU make's @option{-O} may help).
 
 If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
