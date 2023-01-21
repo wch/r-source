@@ -1957,7 +1957,7 @@ directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
 a @file{configure.win} script does compilation (including calling
 @command{R CMD SHLIB}), most of the considerations above apply.
 
-As the scripts on Windows are excecuted as @command{sh ./configure.win}
+As the scripts on Windows are executed as @command{sh ./configure.win}
 and similar, any 'shebang' first line  (such as @code{#! /bin/bash}) is
 treated as a comment.
 
