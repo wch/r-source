@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -113,6 +113,19 @@ as.difftime(tim, format = "\%X", units = "auto", tz = "UTC")
 
   The \code{format} method simply formats the numeric value and appends
   the units as a text string.
+}
+\section{Warning}{
+  Because \R follows POSIX (and almost all computer clocks) in ignoring
+  leap seconds, so do time differences.  So in a UTC time zone
+\preformatted{
+    z <- as.POSIXct(c("2016-12-31 23:59:59", "2017-01-01 00:00:01"))
+    z[2] - z[1]
+}
+  reports \samp{Time difference of 2 secs} but 3 seconds elapsed while
+  the computer clock advanced by 2 seconds.
+
+  If you want the elapsed time interval, you need to add in any
+  leap seconds for yourself.
 }
 \note{
   Units such as \code{"months"} are not possible as they are not of
