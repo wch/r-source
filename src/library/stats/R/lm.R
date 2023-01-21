@@ -695,17 +695,11 @@ predict.lm <-
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         if(type != "terms") {
-           if((o1 <- !is.null(off.num <- attr(tt, "offset"))) |
-              (o2 <- !is.null(object$call$offset))) {
-               offset <- rep(0, nrow(X))
-               if(o1)
-                   for(i in off.num)
-                       offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
-               if(o2)
-                   offset <- offset + eval(object$call$offset, newdata)
+           offset <- model.offset(m)
+           if(!is.null(addO <- object$call$offset)) {
+               addO <- eval(addO, newdata, environment(tt))
+               offset <- if(length(offset)) offset + addO else addO
            }
-           else
-               offset <- NULL
         }
         mmDone <- FALSE
     }

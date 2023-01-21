@@ -569,6 +569,10 @@
 
       This \emph{does} require syntactically self contained R source
       files now, fixing another inadvertant bug.
+
+      \item \code{predict.lm(<model with offset>)} now finds the offset in
+      the correct environment, thanks to André Gillibert's report and patch
+      in \PR{18456}.
     }
   }
 }

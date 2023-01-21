@@ -447,6 +447,39 @@ stopifnot(identical(print(format(ref, macros = macros)), "R (2023)."))
 ## macro definitions were not used in R <= 4.2.2
 
 
+## predict.lm() environment used for evaluating offset -- PR#18456
+mod <- local({
+     y <- rep(0,10)
+     x <- rep(c(0,1), each=5)
+     list(lm(y ~ x),
+          lm(y ~ offset(x)))
+})
+stopifnot(exprs = {
+    ## works fine, using the x variable of the local environment
+    identical(predict(mod[[1]], newdata=data.frame(z=1:10)),
+              setNames(rep(0,10), as.character(1:10)))
+    ## gave  error in offset(x) : object 'x' not found :
+    identical(predict(mod[[2]], newdata=data.frame(z=1:10)),
+              setNames(rep(c(-.5,.5), each=5), as.character(1:10)))
+})
+x <- rep(1,5)
+mod2 <- local({
+    x <- rep(2,5) # 2, not 1
+    y <- rep(0,5)
+    lm(rep(0,5) ~ x + offset({ print("hello"); x+2*y }),
+       offset = { print("world"); x-y })
+}) # rank-deficient --> warning here with newdata predict()
+nm5 <- as.character(1:5)
+stopifnot(exprs = {
+    all.equal(setNames(rep(0, 5), nm5), predict(mod2), tol=1e-13) # pred: 1.776e-15
+    is.numeric(p2 <- predict(mod2, newdata = data.frame(y=rep(1,5))))
+    ## Warning ... Possibly rank-deficient fit .. is unneeded, all estimable:
+    identical(p2,    predict(mod2, newdata = data.frame(y=rep(1,5)), rankdeficient="NA"))
+    all.equal(p2, setNames(rep(1, 5), nm5), tol=1e-13)# off.= x+2y + x-y = 2x+y =4+1=5; 5+<intercept> = 1
+})
+## fine, as now use model.offset()
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
