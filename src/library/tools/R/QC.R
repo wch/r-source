@@ -734,9 +734,16 @@ function(package, dir, lib.loc = NULL,
             ## Drop the defunct functions.
             is_defunct <- function(f) {
                 f <- get(f, envir = code_env) # get is expensive
-                is.function(f) &&
-                    is.call(b <- body(f)) &&
-                    identical(as.character(b[[1L]]), ".Defunct")
+                if(!is.function(f)) return(FALSE)
+                b <- body(f)
+                repeat {
+                    if(!is.call(b)) return(FALSE)
+                    if(b[[1L]] == as.name("{"))
+                        b <- b[[2L]]
+                    else
+                        break
+                }
+                b[[1L]] == as.name(".Defunct")
             }
             functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
