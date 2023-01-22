@@ -2389,7 +2389,7 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
     }
 
     double weight = R_GE_glyphFontWeight(font);
-    uint style = R_GE_glyphFontStyle(font);
+    int style = R_GE_glyphFontStyle(font);
     int wt, sl;
     if (weight > 400) {
         wt = CAIRO_FONT_WEIGHT_BOLD;
