@@ -12,13 +12,13 @@
 }
 \usage{
 grid.glyph(...)
-glyphGrob(glyph,
+glyphGrob(glyphInfo,
           x=.5, y=.5, default.units="npc",
           hjust="centre", vjust="centre",
           gp=gpar(), vp=NULL, name=NULL)
 }
 \arguments{
-  \item{glyph}{An \code{"RGlyphInfo"} object from a call to
+  \item{glyphInfo}{An \code{"RGlyphInfo"} object from a call to
     \code{\link{glyphInfo}}.}
   \item{x}{A numeric vector or unit object specifying x-location.}
   \item{y}{A numeric vector or unit object specifying y-location.}
