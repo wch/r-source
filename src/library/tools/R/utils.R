@@ -2165,7 +2165,8 @@ function(file, envir, enc = NA)
     exprs <- parse(n = -1L, file = con)
     exprs <- exprs[lengths(exprs) > 0L]
     for(e in exprs) {
-	if(is.call(e) && as.character(e[[1L]]) %in% assignmentSymbols)
+	if(is.call(e) &&
+           as.character(e[[1L]])[1L] %in% assignmentSymbols)
             tryCatch(eval(e, envir), error = identity)
     }
     invisible()
