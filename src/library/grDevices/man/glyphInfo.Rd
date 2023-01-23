@@ -131,7 +131,6 @@ glyphJust(just, ...)
   width and height metrics.
 }
 \section{Warning}{
-  Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y},
-  \code{family}, \code{weight}, \code{style}, \code{size}, \code{file}, or
-  \code{index} is silently dropped.
+  Any glyph with \code{NA} in any of \code{id}, \code{x}, \code{y}, or
+  \code{size} is silently dropped.
 }
