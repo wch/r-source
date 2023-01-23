@@ -39,6 +39,7 @@ export(X11, x11, bitmap, bmp, cairo_pdf, cairo_ps, jpeg, png, svg, tiff)
 S3method(print, recordedplot)
 S3method(print, colorConverter)
 S3method(print, RGBcolorConverter)
+S3method(print, RGlyphFont)
 
 S3method("checkFont", "default")
 S3method("checkFont", "Type1Font")

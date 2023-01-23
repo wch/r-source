@@ -22,9 +22,15 @@ mapWeight <- function(x) {
     }   
 }
 
+fontStyles <- c("normal", "italic", "oblique")
+
 mapStyle <- function(x) {
     ## NA passes through
-    match(x, c("normal", "italic", "oblique"))
+    match(x, fontStyles)
+}
+
+invertStyle <- function(x) {
+    fontStyles[x]
 }
 
 ################################################################################
@@ -151,6 +157,11 @@ glyphFont <- function(file, index,
                  PSname=PSname)
     class(font) <- "RGlyphFont"
     font
+}
+
+print.RGlyphFont <- function(x, ...) {
+    cat(paste0(x$family, " wgt: ", x$weight, " style: ", invertStyle(x$style),
+               "\n  (", x$file, " [", x$index, "])\n"))
 }
 
 glyphFontList <- function(...) {
