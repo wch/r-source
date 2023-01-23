@@ -51,11 +51,15 @@ new.ok <- with(new.x, (x4 == 4 - x1 + x2) &
 which(new.ok) # 1 3 4
 ## old (hard-wired) R <= 4.2.x behavior:
 tools::assertWarning(ps <- predict(mod1234, newdata=new.x, rankdeficient = "simple"), verbose=TRUE)
-## new (possibly default, in the future?)
-(pN <- predict(mod1234, new.x, rankdeficient = "NA"))
-## "compromise": old behavior with extra info:
+ps1 <-   predict(mod1234, newdata=data.frame(x1,x2,x3,x4), rankdeficient = "warnif") # *not* warning anymore
+## new
+                    (pN <- predict(mod1234, new.x, rankdeficient = "NA"))
+tools::assertWarning(pN.<- predict(mod1234, new.x, rankdeficient = "NAwarn"))
+## "compromise": old predictions with extra info (no warning):
 (pne <- predict(mod1234, new.x, rankdeficient = "non-estim"))
 stopifnot(exprs = {
+    identical(pN, pN.)
+    all.equal(fitted(mod1234), ps1, tol = 2e-15) # seen 3.11e-16
     identical(i.ne <- attr(pne, "non-estim"),
               c(B = 2L, E = 5L, F = 6L))
     which(!new.ok) == i.ne

@@ -15,6 +15,7 @@ getVaW <- function(expr) {
     structure(val, warning = W)
 }
 options(nwarnings = 10000, # (rather than just 50)
+        warn = 2, # only caught or asserted warnings
         width = 99) # instead of 80
 
 onWindows <- .Platform$OS.type == "windows"
@@ -468,16 +469,18 @@ mod2 <- local({
     y <- rep(0,5)
     lm(rep(0,5) ~ x + offset({ print("hello"); x+2*y }),
        offset = { print("world"); x-y })
-}) # rank-deficient --> warning here with newdata predict()
+}) # rank-deficient in "subtle" way {warning/NA may not be needed}; just show for now:
+nd <- data.frame(x = 1:5)
+tools::assertWarning(print(predict(mod2, newdata=nd, rankdeficient = "warnif")))
+                           predict(mod2, newdata=nd, rankdeficient = "NA")
 nm5 <- as.character(1:5)
 stopifnot(exprs = {
     all.equal(setNames(rep(0, 5), nm5), predict(mod2), tol=1e-13) # pred: 1.776e-15
-    is.numeric(p2 <- predict(mod2, newdata = data.frame(y=rep(1,5))))
-    ## Warning ... Possibly rank-deficient fit .. is unneeded, all estimable:
+    is.numeric(p2 <- predict(mod2, newdata = data.frame(y=rep(1,5)))) # no warning, no NA:
     identical(p2,    predict(mod2, newdata = data.frame(y=rep(1,5)), rankdeficient="NA"))
     all.equal(p2, setNames(rep(1, 5), nm5), tol=1e-13)# off.= x+2y + x-y = 2x+y =4+1=5; 5+<intercept> = 1
 })
-## fine, as now use model.offset()
+## fine, using model.offset() now
 
 
 

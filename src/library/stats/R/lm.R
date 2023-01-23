@@ -672,7 +672,7 @@ predict.lm <-
 	     level = .95,  type = c("response", "terms"),
 	     terms = NULL, na.action = na.pass, pred.var = res.var/weights,
 	     weights = 1,
-	     rankdeficient = c("simple", "non-estim", "NA"),
+	     rankdeficient = c("warnif", "simple", "non-estim", "NA", "NAwarn"),
              tol = 1e-6, verbose = FALSE,
              ...)
 {
@@ -710,12 +710,10 @@ predict.lm <-
     hasNonest <- (p < ncol(X) && !noData)
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     if(hasNonest) {
-      if(missRdef) {
-        warning("Possibly rank-deficient fit; the default rankdeficient = \"simple\" may change")
-      } else
+      msg <- "prediction from a rank-deficient fit may be misleading"
       if(rankdeficient == "simple") {
-        warning("prediction from a rank-deficient fit may be misleading")
-      } else { # rankdeficient \in {"NA", "non-estim"}
+        warning(msg)
+      } else { # rankdeficient more than "simple"
         if(verbose) message("lower-rank qr: determining non-estimable cases")
         stopifnot(is.numeric(tol), tol > 0)
         if(!p) qrX <- qr.lm(object)
@@ -741,6 +739,8 @@ predict.lm <-
         X.norm  <- apply(X , 1L, norm2) # = ||k'k||
         ## Find indices of non-estimable cases;  estimable <==> "Xb is basically 0"
         nonest <- which(tol * X.norm <= Xb.norm)
+        if(rankdeficient == "warnif" && length(nonest))# warn only if there's a case
+            warning(msg)
       }
     } else # otherwise everything is estimable
         nonest <- integer(0L)
@@ -748,8 +748,10 @@ predict.lm <-
     beta <- object$coefficients
     if(type != "terms") { # type == "terms" re-computes {predictor, ip}
         predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
-        if(rankdeficient == "NA")
+        if(startsWith(rankdeficient, "NA") && length(nonest)) {
             predictor[nonest] <- NA
+            if(rankdeficient == "NAwarn") warning(msg)
+        }
         else if(rankdeficient == "non-estim")
             attr(predictor, "non-estim") <- nonest
         if (!is.null(offset))
