@@ -738,7 +738,7 @@ function(package, dir, lib.loc = NULL,
                 b <- body(f)
                 repeat {
                     if(!is.call(b)) return(FALSE)
-                    if(b[[1L]] == as.name("{"))
+                    if((length(b) > 1L) && (b[[1L]] == as.name("{")))
                         b <- b[[2L]]
                     else
                         break
