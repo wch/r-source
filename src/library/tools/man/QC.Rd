@@ -50,9 +50,7 @@ nonS3methods(package)
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
   arguments section, and \sQuote{over-documented} arguments which are
-  given in the arguments section but not in the usage.  Note that the
-  match is for the usage section and not a possibly existing synopsis
-  section, as the usage is what gets displayed.
+  given in the arguments section but not in the usage.
 
   \code{checkDocStyle} investigates how (S3) methods are shown in the
   usages of the Rd files in a package.  It reports the methods shown by
