@@ -42,7 +42,8 @@ glyphHOffset <- function(glyphInfo, hjust) {
     } else {
         if (!hjust %in% names(hAnchor)) {
             warning("Unknown anchor; using left justification")
-            gx
+            gx - convertWidth(unit(hAnchor["left"], "bigpts"), "in",
+                              valueOnly=TRUE)
         } else {
             gx - convertWidth(unit(hAnchor[hjust], "bigpts"), "in",
                               valueOnly=TRUE)
@@ -81,7 +82,8 @@ glyphVOffset <- function(glyphInfo, vjust) {
     } else {
         if (!vjust %in% names(vAnchor)) {
             warning("Unknown anchor; using bottom justification")
-            gy
+            gy - convertHeight(unit(vAnchor["bottom"], "bigpts"), "in",
+                               valueOnly=TRUE)
         } else {
             gy - convertHeight(unit(vAnchor[vjust], "bigpts"), "in",
                                valueOnly=TRUE)
