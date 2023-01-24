@@ -76,6 +76,10 @@
       device it needs to open itself, it now leaves \code{devAskNewPage()}
       unchanged even when it was \code{FALSE}, thus fixing a 14 years old
       \sQuote{<FIXME>}.
+
+      \item \code{packageDescription()} again catches errors from encoding
+      conversions. This also fixes broken \code{packageVersion()} in
+      C locale on systems where \code{iconv} does not support transliteration.
     }
   }
 }
