@@ -3303,6 +3303,19 @@ for multi-line strings.
 @code{yLineBias} is used in the base graphics system in @code{axis()} and
 @code{mtext()} to provide a default for their @samp{padj} argument.
 
+From @code{R_GE_version} 16 (@code{R_GE_glyphs}), there is also a @code{glyph}
+callback.
+
+@example
+    void glyph(int n, int *glyphs, double *x, double *y, 
+               SEXP font, double size,
+               int colour, double rot, pDevDesc dd);
+@end example
+
+This instructs the device to draw a specific glyph within a given font, where
+the font is specified by filename (and index), with font family, weight, and
+style also provided as fallbacks.
+
 @node Conventions, 'Mode', Handling text, Graphics devices
 @subsection Conventions
 
