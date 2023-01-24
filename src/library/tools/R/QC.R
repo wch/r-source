@@ -177,7 +177,14 @@ function(package, dir, lib.loc = NULL)
         ## Code objects in add-on packages with names starting with a
         ## dot are considered 'internal' (not user-level) by
         ## convention.
-        code_objs <- grep("^[^.].*", code_objs, value = TRUE)
+        if(!config_val_to_logical(Sys.getenv("_R_CHECK_UNDOC_USE_ALL_NAMES_",
+                                             "FALSE")))
+            code_objs <- grep("^[^.].*", code_objs, value = TRUE)
+        else {
+            code_objs <- code_objs %w/o% c(".Depends")
+            code_objs <- code_objs[!(startsWith(code_objs, ".__C__") |
+                                     startsWith(code_objs, ".__T__"))]
+        }
         ## Note that this also allows us to get rid of S4 meta objects
         ## (with names starting with '.__C__' or '.__M__'; well, as long
         ## as there are none in base).
@@ -724,8 +731,16 @@ function(package, dir, lib.loc = NULL,
     ##   so it seems there is really no way to figure out whether an
     ##   exported S4 generic should have a \usage entry or not ...
     functions_missing_from_usages <-
-        if(!has_namespace) character() else {
+        if(!has_namespace && !is_base)
+            character()
+        else {
             functions <- functions_in_code_not_in_usages
+            if(is_base)
+                functions <-
+                    setdiff(functions,
+                            sprintf("%s.%s",
+                                    .S3_methods_table[, 1L],
+                                    .S3_methods_table[, 2L]))
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
                 functions <-
