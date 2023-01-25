@@ -19,6 +19,14 @@
       from present).
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item (Windows) The default C++ standard had accidentally been
+      left at C++11 when it was changed to C++14 on Unix.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
