@@ -224,6 +224,19 @@
      }
   }
 
+  \subsection{GRAPHICS}{
+      \item The graphics engine version, \code{R_GE_version}, has been
+      bumped to \code{16} and so packages that provide graphics devices
+      should be reinstalled.
+
+      \item The \pkg{grDevices} and \pkg{grid} packages have new
+      functions for rendering typeset glyphs, primarily:
+      \code{grDevices::glyphInfo()} and \code{grid::grid.glyph()}.
+    
+      Rendering of typeset glyphs is only supported so far on the
+      Cairo-based graphics devices and on the \code{pdf()} device.
+  }
+  
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item A system installation of generic LAPACK 3.10.0 or later will

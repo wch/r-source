@@ -85,12 +85,16 @@ extern "C" {
  *             - paths
  *             - luminance masks
  *             Added capabilities
+ * Version 16: For R 4.3.0
+ *             Added more advanced typesetting
+ *             - glyphs
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
 #define R_GE_group       15
+#define R_GE_glyphs      16
 
-#define R_GE_version R_GE_group
+#define R_GE_version R_GE_glyphs
 
 int R_GE_getVersion(void);
 
@@ -650,7 +654,34 @@ int R_GE_maskType(SEXP mask);
 #define R_GE_capability_compositing           9
 #define R_GE_capability_transformations      10
 #define R_GE_capability_paths                11 
+#define R_GE_capability_glyphs               12 
 
+/* Must match order in ../library/grDevices/R/glyph.R */
+#define R_GE_text_style_normal  1
+#define R_GE_text_style_italic  2
+#define R_GE_text_style_oblique 3
+
+SEXP R_GE_glyphInfoGlyphs(SEXP glyphInfo);
+SEXP R_GE_glyphInfoFonts(SEXP glyphInfo);
+
+SEXP R_GE_glyphID(SEXP glyphs);
+SEXP R_GE_glyphX(SEXP glyphs);
+SEXP R_GE_glyphY(SEXP glyphs);
+SEXP R_GE_glyphFont(SEXP glyphs);
+SEXP R_GE_glyphSize(SEXP glyphs);
+SEXP R_GE_glyphColour(SEXP glyphs);
+
+char* R_GE_glyphFontFile(SEXP glyphFont);
+int R_GE_glyphFontIndex(SEXP glyphFont);
+char* R_GE_glyphFontFamily(SEXP glyphFont);
+double R_GE_glyphFontWeight(SEXP glyphFont);
+int R_GE_glyphFontStyle(SEXP glyphFont);
+char* R_GE_glyphFontPSname(SEXP glyphFont);
+
+void GEGlyph(int n, int *glyphs, double *x, double *y, 
+             SEXP font, double size, 
+             int colour, double rot, pGEDevDesc dd);
+    
 #ifdef __cplusplus
 }
 #endif

@@ -100,6 +100,9 @@ export(
 
        # Masks
        "as.mask",
+
+       # Typesetting
+       "grid.glyph", "glyphGrob", 
     
        # Listing grobs and viewports
        "grid.ls",
@@ -196,6 +199,7 @@ S3method("downViewport", "vpPath")
 
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
+S3method("drawDetails", "glyphgrob")
 S3method("drawDetails", "grob")
 S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
@@ -285,6 +289,7 @@ S3method("grobPoints", "rect")
 S3method("grobPoints", "segments")
 S3method("grobPoints", "text")
 S3method("grobPoints", "xspline")
+S3method("grobPoints", "glyphgrob")
 S3method("grobPoints", "gList")
 S3method("grobPoints", "gTree")
 S3method("grobPoints", "GridStroke")
@@ -338,6 +343,7 @@ S3method("heightDetails", "xspline")
 S3method("heightDetails", "beziergrob")
 S3method("heightDetails", "rastergrob")
 #S3method("height.details", "viewport")
+S3method("heightDetails", "glyphgrob")
 
 S3method("postDraw", "grob")
 S3method("preDraw", "grob")
@@ -357,6 +363,7 @@ S3method("validDetails", "circle")
 S3method("validDetails", "clip")
 S3method("validDetails", "curve")
 S3method("validDetails", "functiongrob")
+S3method("validDetails", "glyphgrob")
 S3method("validDetails", "grob")
 S3method("validDetails", "lines")
 S3method("validDetails", "line.to")
@@ -390,6 +397,7 @@ S3method("widthDetails", "xspline")
 S3method("widthDetails", "beziergrob")
 S3method("widthDetails", "rastergrob")
 #S3method("width.details", "viewport")
+S3method("widthDetails", "glyphgrob")
 
 S3method("xDetails", "circle")
 S3method("xDetails", "curve")
@@ -405,6 +413,7 @@ S3method("xDetails", "text")
 S3method("xDetails", "xspline")
 S3method("xDetails", "beziergrob")
 S3method("xDetails", "rastergrob")
+S3method("xDetails", "glyphgrob")
 
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
@@ -420,6 +429,7 @@ S3method("yDetails", "text")
 S3method("yDetails", "xspline")
 S3method("yDetails", "beziergrob")
 S3method("yDetails", "rastergrob")
+S3method("yDetails", "glyphgrob")
 
 S3method("ascentDetails", "default")
 S3method("ascentDetails", "grob")
