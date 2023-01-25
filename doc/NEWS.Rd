@@ -225,6 +225,7 @@
   }
 
   \subsection{GRAPHICS}{
+    \itemize{
       \item The graphics engine version, \code{R_GE_version}, has been
       bumped to \code{16} and so packages that provide graphics devices
       should be reinstalled.
@@ -235,6 +236,7 @@
     
       Rendering of typeset glyphs is only supported so far on the
       Cairo-based graphics devices and on the \code{pdf()} device.
+    }
   }
   
   \subsection{INSTALLATION on a UNIX-ALIKE}{
