@@ -2903,11 +2903,14 @@ standard (`C++11').  A minor update@footnote{Some changes are linked
 from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
-December 2014 and will be used by default as from @R{} 4.1.0 if
+December 2014 and was used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017) and `C++20'
 (with many new features in December 2020) have been published since.
 The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
+
+The default standard was changed to C++17 in \R 4.3.0, if supported (and
+in the unlikely even not, C++14 woule be the default).
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
