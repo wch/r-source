@@ -130,12 +130,13 @@
       it long has done for numeric inputs).
 
       \item \code{predict(<rank-deficient lm>, newdata=*)} now obeys a new
-      argument \code{rankdeficient},
-      currently with default \code{"simple"} for back compatibility, but
-      that may well change before release.
+      argument \code{rankdeficient}, with new default \code{"warnif"},
+      warning only if there are non-estimable cases in \code{newdata}.
+      Other options include \code{rankdeficient = "NA"}, predicting \code{NA}
+      for non-estimable \code{newdata} cases.
       This addresses \PR{15072} by Russ Lenth and is based on his original
       proposal and discussions in \PR{16158} also by David Firth and Elin Waring.
-      Experimental; may be updated before release.
+      Still somewhat experimental.
 
       \item \command{Rgui} console implementation now works better with the
       \code{NVDA} screen reader when the full blinking cursor is selected.
@@ -270,6 +271,10 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item The default C++ standard has been changed to C++17 where
+      available (which it is on all currently checked platforms): if not
+      C++14 is used if available otherwise C++ is not supported.
+
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
       routines called from C/C++, and requires adjustment of many such
@@ -326,14 +331,14 @@
       such a file now uses a site \file{Makevars} file in the same way
       as a package with a \file{src/Makevars.win} file would.
 
-      \item (Windows) The default C++ standard had accidentally been
-      left at C++11 when it was changed to C++14 on Unix.  It is now
-      C++14, as documented.
-
       \item \command{configure} is now passed crucial variables such as
       \env{CC} and \env{CFLAGS} in its environment, as many packages
       were not setting them (as documented in \sQuote{Writing R
 	Extensions} §1.2, and settings there will take precedence).
+
+      This has most effect where \command{configure} is used to compile
+      parts of the package -- most often by \command{cmake} which
+      obscures the actual compile commands used.
 
       Also used for \command{configure.win} and \command{configure.ucrt}
       on Windows.
@@ -408,11 +413,16 @@
       It reports the OS in use (if known, as given by
       \code{osVersion}) as well as that \R was built for.
 
+      It notes if a C++ standard was specified which is older than the
+      current default: many packages have used C++11 to mean \sQuote{not
+      C++98} --- as C++11 is the mininum supported since \R 4.0.0, that
+      specification can probably be removed.
+
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
-      \command{R CMD check}
+      \command{R CMD check}.
 
-      Where C++ is compiled, the standard used is reported.
+      Where q C++ standard is specified, it is reported.
     }
   }
 
@@ -568,7 +578,11 @@
       and Bill Dunlap's patch in \PR{17859}.
 
       This \emph{does} require syntactically self contained R source
-      files now, fixing another inadvertant bug.
+      files now, fixing another inadvertent bug.
+
+      \item \code{predict.lm(<model with offset>)} now finds the offset in
+      the correct environment, thanks to André Gillibert's report and patch
+      in \PR{18456}.
     }
   }
 }
@@ -587,6 +601,14 @@
       from present).
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item (Windows) The default C++ standard had accidentally been
+      left at C++11 when it was changed to C++14 on Unix.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
@@ -644,6 +666,10 @@
       device it needs to open itself, it now leaves \code{devAskNewPage()}
       unchanged even when it was \code{FALSE}, thus fixing a 14 years old
       \sQuote{<FIXME>}.
+
+      \item \code{packageDescription()} again catches errors from encoding
+      conversions. This also fixes broken \code{packageVersion()} in
+      C locale on systems where \code{iconv} does not support transliteration.
     }
   }
 }

@@ -1,6 +1,6 @@
 % File src/library/utils/man/winextras.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winextras}
@@ -22,11 +22,12 @@ win.version()
 \note{
   This function is only available on Microsoft Windows.
 
-  The result is based on the Windows \code{GetVersionEx} API function,
-  which for recent versions of Windows reports the compatibility version,
-  and not necessarily the actual version (hence 8.1 and 10 may be reported
-  as 8). If the API call reports 8, this function returns
-  \code{>= 8}.
+  The result is based on the Windows \code{GetVersionEx} API function.  It
+  is not known how to detect a version of Windows before it is released, and
+  hence the textual information returned by \R may identify an older version
+  than installed.  The build number is more reliable.  When running \R in
+  compatibility mode, the reported version including the build number is the
+  compatibility version, not the installed version.
 }
 \examples{
 if(.Platform$OS.type == "windows")

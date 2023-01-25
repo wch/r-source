@@ -5794,6 +5794,16 @@ add_dummies <- function(dir, Log)
                     ll <- sub("using", "used", lines00)
                     for (l in ll)  messageLog(Log, l)
                 }
+                line <- unique(grep("^using C[+][+][12]", lines0, value = TRUE))
+                if (length(line)) {
+                    checkingLog(Log, "C++ specification")
+                    std <- as.numeric(sub("using C[+][+]", "", line))
+                    if (std < 17) {
+                        noteLog(Log,
+                                sprintf("  Specified C++%d: please update to current default of C++17", std))
+                    }
+                    else resultLog(Log, "OK")
+                }
             }   ## end of case B
         }
     } ## {check_install()}

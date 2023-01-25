@@ -96,7 +96,7 @@ CC90 = $(BINPREF)gcc $(M_ARCH)
 C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ $(LTO)
 CC99 = $(BINPREF)gcc $(M_ARCH)
 C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
-CXX = $(BINPREF)g++ -std=gnu++14 $(M_ARCH)
+CXX = $(BINPREF)g++ -std=gnu++17 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXXPICFLAGS =

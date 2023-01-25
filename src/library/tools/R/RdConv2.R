@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -497,7 +497,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     ## Check other sections are unique
     unique_tags <-
         paste0("\\",
-               c("usage", "arguments", "synopsis",
+               c("usage", "arguments",
                  "format", "details", "value", "references", "source",
                  "seealso", "examples", "author", "encoding"))
     for (tag in unique_tags) {
@@ -986,8 +986,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             tagtitle <- sQuote(as.character(title))
     	} else tagtitle <- tag
         has_text <<- FALSE
-        if (tag == "\\synopsis")
-            stopRd(section, Rdfile, "\\synopsis was removed in R 3.1.0")
+        ## if (tag == "\\synopsis")  # already removed via prepare_Rd
+        ##     stopRd(section, Rdfile, "\\synopsis was removed in R 3.1.0")
         if (tag %in% c("\\usage", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
@@ -1058,7 +1058,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     unique_tags <-
         paste0("\\",
                c("name", "title", # "description" checked above
-                 "usage", "arguments",  "synopsis",
+                 "usage", "arguments",
                  "format", "details", "value", "references", "source",
                  "seealso", "examples", "author", "encoding"))
     for(tag in intersect(sections[duplicated(sections)], unique_tags))

@@ -31,10 +31,12 @@ RweaveEvalWithOpt(expr, options)
 RweaveLatexFinish(object, error = FALSE)
 RtangleFinish(object, error = FALSE)
 RweaveLatexOptions(options)
+RweaveLatexWritedoc(object, chunk)
 RweaveTryStop(err, options)
 SweaveHooks(options, run = FALSE, envir = .GlobalEnv)
 makeRweaveLatexCodeRunner(evalFunc = RweaveEvalWithOpt)
 RtangleRuncode(object, chunk, options)
+
 }
 \author{Friedrich Leisch, with contributions by Seth Falcon}
 \seealso{The \code{\link{Sweave}}, \code{\link{RweaveLatex}} help pages.
