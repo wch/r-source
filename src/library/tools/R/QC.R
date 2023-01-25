@@ -145,9 +145,7 @@ function(package, dir, lib.loc = NULL)
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nsInfo <- parseNamespaceFile(pkgname, dirdir)
             ## Look only at exported objects (and not declared S3
@@ -277,15 +275,15 @@ function(package, dir, lib.loc = NULL)
         ## We use .ArgsEnv and .GenericArgsEnv in checkS3methods() and
         ## codoc(), so we check here that the set of primitives has not
         ## been changed.
-	ff <- as.list(baseenv(), all.names=TRUE)
-	prims <- names(ff)[vapply(ff, is.primitive, logical(1L))]
+	ff <- as.list(baseenv(), all.names = TRUE)
+	prims <- names(ff)[vapply(ff, is.primitive, NA)]
         prototypes <- sort(c(names(.ArgsEnv), names(.GenericArgsEnv)))
         extras <- setdiff(prototypes, prims)
         if(length(extras))
-            undoc_things <- c(undoc_things, list(prim_extra=extras))
+            undoc_things <- c(undoc_things, list(prim_extra = extras))
         miss <- setdiff(prims, c(langElts, prototypes))
         if(length(miss))
-            undoc_things <- c(undoc_things, list(primitives=miss))
+            undoc_things <- c(undoc_things, list(primitives = miss))
     }
 
     class(undoc_things) <- "undoc"
@@ -411,9 +409,7 @@ function(package, dir, lib.loc = NULL,
         objects_in_code <- sort(names(code_env))
         objects_in_code_or_namespace <- objects_in_code
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         ## Also, do not attempt to find S3 methods.
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
@@ -2669,9 +2665,7 @@ function(package, dir, lib.loc = NULL)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
@@ -7518,7 +7512,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                   !all(vapply(aar[-1L],
                               function(e) {
                                   (is.call(e) &&
-                                       (as.character(e[[1L]]) == "person"))
+                                   is.name(x <- e[[1L]]) &&
+                                   (as.character(x) == "person"))
                               },
                               FALSE))))
         }
