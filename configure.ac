@@ -1877,19 +1877,19 @@ R_STDCXX([23], [CXX23], [CXX20])
 ## Set default C++ compiler to C++14 if available, otherwise C++11
 ## Do not set if neither is available.
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX14}"; then
+  if test -n "${CXX17}"; then
+    CXX=${CXX17}
+    CXXSTD=${CXX17STD}
+    CXXFLAGS=${CXX17FLAGS}
+    CXXPICFLAGS=${CXX17PICFLAGS}
+  elif test -n "${CXX11}"; then
+    AC_MSG_WARN([C++17 is not available so the default C++ standard is C++14])
     CXX=${CXX14}
     CXXSTD=${CXX14STD}
     CXXFLAGS=${CXX14FLAGS}
     CXXPICFLAGS=${CXX14PICFLAGS}
-  elif test -n "${CXX11}"; then
-    AC_MSG_WARN([C++14 is not available so the default C++ standard is C++11])
-    CXX=${CXX11}
-    CXXSTD=${CXX11STD}
-    CXXFLAGS=${CXX11FLAGS}
-    CXXPICFLAGS=${CXX11PICFLAGS}
   else
-    AC_MSG_WARN([Neither C++14 nor C++11 is available so no default C++ compiler is set])
+    AC_MSG_WARN([Neither C++17 nor C++14 is available so no default C++ compiler is set])
   fi
 fi
 

@@ -271,6 +271,10 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item The default C++ standard has been changed to C++17 where
+      available (which it is on all currently checked platforms): if not
+      C++14 is used if available otherwise C++ is not supported.
+
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
       routines called from C/C++, and requires adjustment of many such
@@ -327,14 +331,14 @@
       such a file now uses a site \file{Makevars} file in the same way
       as a package with a \file{src/Makevars.win} file would.
 
-      \item (Windows) The default C++ standard had accidentally been
-      left at C++11 when it was changed to C++14 on Unix.  It is now
-      C++14, as documented.
-
       \item \command{configure} is now passed crucial variables such as
       \env{CC} and \env{CFLAGS} in its environment, as many packages
       were not setting them (as documented in \sQuote{Writing R
 	Extensions} §1.2, and settings there will take precedence).
+
+      This has most effect where \command{configure} is used to compile
+      parts of the package -- most often by \command{cmake} which
+      obscures the actual compile commands used.
 
       Also used for \command{configure.win} and \command{configure.ucrt}
       on Windows.
@@ -411,7 +415,7 @@
 
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
-      \command{R CMD check}
+      \command{R CMD check}.
 
       Where C++ is compiled, the standard used is reported.
     }
@@ -592,6 +596,14 @@
       from present).
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item (Windows) The default C++ standard had accidentally been
+      left at C++11 when it was changed to C++14 on Unix.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
