@@ -1137,7 +1137,7 @@ can be overridden by setting @samp{CXXSTD} when @R{} is configured.
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.  GCC 5 was the minimum version with sufficient C++14
-suppoert. GCC introduced C++17 support gradually, but version 7 should
+support. GCC introduced C++17 support gradually, but version 7 should
 suffice.
 
 @node C standards, Link-Time Optimization, C++ Support, Other Options

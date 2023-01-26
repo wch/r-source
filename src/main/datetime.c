@@ -934,7 +934,7 @@ static Rboolean valid_POSIXlt(SEXP x, int nm)
 	    error(_("invalid '%s'"), "attr(x, \"tzone\")");
 	int l = LENGTH(tz);
 	if(l != 1 && l != 3)
-	    error(_("attr(x, \"tzone\") shouls have length 1 or 3"));
+	    error(_("attr(x, \"tzone\") should have length 1 or 3"));
     }
 
     return TRUE;

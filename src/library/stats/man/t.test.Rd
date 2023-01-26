@@ -41,7 +41,8 @@ t.test(x, \dots)
     is a numeric variable giving the data values and \code{rhs} either 
     \code{1} for a one-sample or paired test or a factor
     with two levels giving the corresponding groups. If \code{lhs} is of 
-    class \code{"Pair"} and \code{rhs} is \code{1}, a paired test is done}
+    class \code{"\link{Pair}"} and \code{rhs} is \code{1}, a paired test
+    is done.}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from

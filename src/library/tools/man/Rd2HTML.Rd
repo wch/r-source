@@ -74,7 +74,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     omitted, so that the output can be combined with other fragments.
   }
   \item{Rhtml}{logical: whether the output is intended to be a Rhtml
-      file that can be processed using knitr. If \code{TRUE}, the
+      file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
       examples section is wrapped inside a \code{rcode} block. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}

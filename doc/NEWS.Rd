@@ -143,7 +143,7 @@
       The underlying improvements in cursor handling may help also other
       screen readers on Windows.
 
-      \item The dropfield control in GraphApp can now be left with the TAB
+      \item The drop-field control in GraphApp can now be left with the TAB
       key, improving accessibility of the \command{Rgui} configuration
       editor.
     }
@@ -651,7 +651,7 @@
       separate processes by default (regression in \R 4.2.0).
 
       \item Running examples from HTML documentation now restores
-      previous knitr settings and options (\PR{18420}).
+      previous \pkg{knitr} settings and options (\PR{18420}).
 
       \item Quartz: fonts are now located using Core Graphics API
       instead of deprecated ATS which is no longer supported in the
