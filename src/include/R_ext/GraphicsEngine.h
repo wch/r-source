@@ -671,12 +671,12 @@ SEXP R_GE_glyphFont(SEXP glyphs);
 SEXP R_GE_glyphSize(SEXP glyphs);
 SEXP R_GE_glyphColour(SEXP glyphs);
 
-char* R_GE_glyphFontFile(SEXP glyphFont);
+const char* R_GE_glyphFontFile(SEXP glyphFont);
 int R_GE_glyphFontIndex(SEXP glyphFont);
-char* R_GE_glyphFontFamily(SEXP glyphFont);
+const char* R_GE_glyphFontFamily(SEXP glyphFont);
 double R_GE_glyphFontWeight(SEXP glyphFont);
 int R_GE_glyphFontStyle(SEXP glyphFont);
-char* R_GE_glyphFontPSname(SEXP glyphFont);
+const char* R_GE_glyphFontPSname(SEXP glyphFont);
 
 void GEGlyph(int n, int *glyphs, double *x, double *y, 
              SEXP font, double size, 

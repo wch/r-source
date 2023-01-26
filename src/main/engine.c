@@ -3869,22 +3869,22 @@ SEXP R_GE_glyphColour(SEXP glyphs) {
 #define glyph_font_style    4
 #define glyph_font_PSname   5
 
-char* R_GE_glyphFontFile(SEXP glyphFont) {
+const char* R_GE_glyphFontFile(SEXP glyphFont) {
     return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_file), 0));
 }
 int R_GE_glyphFontIndex(SEXP glyphFont) {
     return INTEGER(VECTOR_ELT(glyphFont, glyph_font_index))[0];
 }
-char* R_GE_glyphFontFamily(SEXP glyphFont) {
+const char* R_GE_glyphFontFamily(SEXP glyphFont) {
     return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_family), 0));
 }
 double R_GE_glyphFontWeight(SEXP glyphFont) {
     return REAL(VECTOR_ELT(glyphFont, glyph_font_weight))[0];
 }
 int R_GE_glyphFontStyle(SEXP glyphFont) {
-    return VECTOR_ELT(glyphFont, glyph_font_style);
+    return INTEGER(VECTOR_ELT(glyphFont, glyph_font_style))[0];
 }
-char* R_GE_glyphFontPSname(SEXP glyphFont) {
+const char* R_GE_glyphFontPSname(SEXP glyphFont) {
     return CHAR(STRING_ELT(VECTOR_ELT(glyphFont, glyph_font_PSname), 0));
 }
 

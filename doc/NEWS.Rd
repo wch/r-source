@@ -349,11 +349,12 @@
       \item \command{configure} is now passed crucial variables such as
       \env{CC} and \env{CFLAGS} in its environment, as many packages
       were not setting them (as documented in \sQuote{Writing R
-	Extensions} §1.2, and settings there will take precedence).
+	Extensions} §1.2).
 
       This has most effect where \command{configure} is used to compile
-      parts of the package -- most often by \command{cmake} which
-      obscures the actual compile commands used.
+      parts of the package -- most often by \command{cmake} or
+      \command{libtool} which obfuscate the actual compile commands
+      used.
 
       Also used for \command{configure.win} and \command{configure.ucrt}
       on Windows.
