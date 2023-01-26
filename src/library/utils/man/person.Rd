@@ -15,10 +15,6 @@
 \alias{format.person}
 \alias{print.person}
 \alias{toBibtex.person}
-\alias{personList}
-\alias{as.personList}
-\alias{as.personList.person}
-\alias{as.personList.default}
 \description{
   A class and utility methods for holding information about persons
   like name and email address.
@@ -158,7 +154,7 @@ as.person(x)
 
   In the old scheme, person objects were used for single persons, and a
   separate \code{"personList"} class with corresponding creator
-  \code{personList()} for collections of these.  The new scheme employs
+  \code{\link{personList}()} for collections of these.  The new scheme employs
   a single class for information about an arbitrary positive number of
   persons, eliminating the need for the \code{personList} mechanism.
 
