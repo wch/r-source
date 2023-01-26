@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021 The R Core Team
+ *  Copyright (C) 1997-2023 The R Core Team
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1175,9 +1175,12 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 }
 
 
-static void GetFullDLLPath(SEXP call, char *buf, const char *const path)
+static void
+GetFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *const path)
 {
-    R_osDynSymbol->getFullDLLPath(call, buf, path);
+    size_t res = R_osDynSymbol->getFullDLLPath(call, buf, bufsize, path);
+    if (res >= bufsize)
+	error(_("path too long")); 
 }
 
 	/* do_dynload implements the R-Interface for the */
@@ -1206,7 +1209,8 @@ attribute_hidden SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, sizeof(buf),
+                   translateCharFP(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0],
 		  translateCharFP(STRING_ELT(CADDDR(args), 0)));
@@ -1222,7 +1226,8 @@ attribute_hidden SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, sizeof(buf),
+                   translateCharFP(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
 	error(_("shared object '%s\' was not loaded"), buf);
     return R_NilValue;
