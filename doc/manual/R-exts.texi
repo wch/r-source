@@ -3084,7 +3084,9 @@ C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX = `"$@{R_HOME@}/bin/R" CMD config CXX17`
+CXX17 = `"$@{R_HOME@}/bin/R" CMD config CXX17`
+CXX17STD = `"$@{R_HOME@}/bin/R" CMD config CXX17STD`
+CXX = "$@{CXX17@} $@{CXX17STD@}"
 CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
 CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17PICFLAGS`
 SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LD`
@@ -3092,6 +3094,9 @@ SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LDFLAGS`
 @end example
 @noindent
 and ensuring these values are used in relevant compilations.
+
+Similar code (without spaces surrounding @code{=}) can be used in
+@code{configure} scripts.
 
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
