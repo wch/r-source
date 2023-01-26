@@ -2910,7 +2910,8 @@ The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
 The default standard was changed to C++17 in \R 4.3.0, if supported (and
-in the unlikely even not, C++14 woule be the default).
+for rather old compilers, C++14 or even C++11 would be used as the
+default).
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}

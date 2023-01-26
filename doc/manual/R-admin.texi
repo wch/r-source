@@ -1120,7 +1120,7 @@ Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 2021.1)
 @code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
 Clang 13.  Apple Clang supports @code{-std=c++2b} from 13.1.6.)
 
-@c c++1y does not pass the configure test in 4.9.3
+@c c++1y does not pass the configure test in gcc 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
 @c @uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for which
 @c C++14 features it supported.} in version 4.9.x) remaining as a deprecated
@@ -1131,12 +1131,14 @@ extensions': what those are is hard to track down.
 
 For the use of C++11 and later in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
-that of the compiler used: currently it is C++14 (if available): this
+that of the compiler used: currently it is C++17 (if available): this
 can be overridden by setting @samp{CXXSTD} when @R{} is configured.
 
 @uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
-standards.
+standards.  GCC 5 was the minimum version with sufficient C++14
+suppoert. GCC introduced C++17 support gradually, but version 7 should
+suffice.
 
 @node C standards, Link-Time Optimization, C++ Support, Other Options
 @subsection C standards

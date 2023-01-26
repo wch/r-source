@@ -288,7 +288,7 @@
     \itemize{
       \item The default C++ standard has been changed to C++17 where
       available (which it is on all currently checked platforms): if not
-      C++14 is used if available otherwise C++ is not supported.
+      C++14 or C++11 is used if available otherwise C++ is not supported.
 
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
