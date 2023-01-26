@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2007  Guido Masarotto and Brian Ripley
+ *            (C) 2023        The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,13 +27,8 @@
 #include <string.h>
 #include <Fileio.h>
 
-#ifndef MAX_PATH
-# include <windows.h>
-#endif
-
-
 static FILE *ff = NULL;
-static char optfl[MAX_PATH];
+static char *optfl = NULL;
 static int optln;
 
 void optclosefile(void)
@@ -40,6 +36,10 @@ void optclosefile(void)
     if (!ff) return;
     fclose(ff);
     ff = NULL;
+    if (optfl) {
+	free(optfl);
+	optfl = NULL;
+   } 
 }
 
 
@@ -47,6 +47,8 @@ int optopenfile(const char *fname)
 {
     optclosefile();
     if (!fname || !(ff = R_fopen(fname,"r"))) return 0;
+    optfl = (char *) malloc(strlen(fname) + 1);
+    if (!optfl) return 0;
     strcpy(optfl,fname);
     optln = 0;
     return 1;
@@ -122,3 +124,4 @@ int optread(char *opt[], const char sep)
     else
 	return 1;
 }
+
