@@ -354,9 +354,6 @@ function(dir, outDir)
             stop("unable to write code files")
         ## </NOTE>
     }
-    ## A syntax check here, so that we do not install a broken package.
-    ## FIXME:  this is only needed if we don't lazy load, as the lazy loader
-    ## would detect the error.
     invisible()
 }
 
