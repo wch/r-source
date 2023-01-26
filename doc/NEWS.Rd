@@ -598,6 +598,10 @@
       \item \code{predict.lm(<model with offset>)} now finds the offset in
       the correct environment, thanks to André Gillibert's report and patch
       in \PR{18456}.
+
+      \item Fix for possible segfault when using recently-added graphics
+      features, such as gradients, clipping paths, masks, and groups with
+      \code{pdf(file=NULL)}.
     }
   }
 }

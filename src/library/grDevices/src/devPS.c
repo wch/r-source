@@ -10256,7 +10256,11 @@ void PDF_MetricInfo(int c,
 static SEXP PDF_setPattern(SEXP pattern, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP ref = R_NilValue;
-    ref = addPattern(pattern, pd);
+
+    if (!pd->offline) {
+        ref = addPattern(pattern, pd);
+    }
+
     return ref;
 }
 
@@ -10266,23 +10270,26 @@ static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP newref = R_NilValue;
 
-    if (isNull(ref)) {
-        /* Generate new clipping path */
-        int index = newPath(path, PDFclipPath, pd);
-        if (index >= 0) {
+    if (!pd->offline) {
+        if (isNull(ref)) {
+            /* Generate new clipping path */
+            int index = newPath(path, PDFclipPath, pd);
+            if (index >= 0) {
+                PDFwriteClipPath(index, pd);
+                PROTECT(newref = allocVector(INTSXP, 1));
+                INTEGER(newref)[0] = index;
+                UNPROTECT(1);
+            }
+        } else {
+            /* Reuse existing clipping path */
+            int index = INTEGER(ref)[0];
             PDFwriteClipPath(index, pd);
-            PROTECT(newref = allocVector(INTSXP, 1));
-            INTEGER(newref)[0] = index;
-            UNPROTECT(1);
+            newref = ref;
         }
-    } else {
-        /* Reuse existing clipping path */
-        int index = INTEGER(ref)[0];
-        PDFwriteClipPath(index, pd);
-        newref = ref;
+
+        PDF_Invalidate(pd);
     }
 
-    PDF_Invalidate(pd);
     return newref;
 
 }
@@ -10291,7 +10298,11 @@ static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
 
 static SEXP PDF_setMask(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    ref = addMask(path, ref, pd);
+
+    if (!pd->offline) {
+        ref = addMask(path, ref, pd);
+    }
+
     return ref;
 }
 
@@ -10302,11 +10313,13 @@ static SEXP PDF_defineGroup(SEXP source, int op, SEXP destination,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP ref = R_NilValue;
 
-    int index = newGroup(source, op, destination, pd);
-    if (index >= 0) {
-        PROTECT(ref = allocVector(INTSXP, 1));
-        INTEGER(ref)[0] = index;
-        UNPROTECT(1);
+    if (!pd->offline) {
+        int index = newGroup(source, op, destination, pd);
+        if (index >= 0) {
+            PROTECT(ref = allocVector(INTSXP, 1));
+            INTEGER(ref)[0] = index;
+            UNPROTECT(1);
+        }
     }
 
     return ref;
@@ -10315,6 +10328,8 @@ static SEXP PDF_defineGroup(SEXP source, int op, SEXP destination,
 static void PDF_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int index;
+
+    PDF_checkOffline();
 
     if(pd->inText) textoff(pd);
 
@@ -10355,6 +10370,9 @@ static void PDF_releaseGroup(SEXP ref, pDevDesc dd) {}
 
 static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int index = newPath(path, PDFstrokePath, pd);
     if (index >= 0) {
         if(pd->inText) textoff(pd);
@@ -10371,6 +10389,9 @@ static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
 
 static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int index = newPath(path, PDFfillPath, pd);
     if (index >= 0) {
         if (gc->patternFill != R_NilValue || R_VIS(gc->fill)) {
@@ -10391,6 +10412,9 @@ static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
 static void PDF_fillStroke(SEXP path, int rule, 
                            const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int code;
     int index = newPath(path, PDFfillStrokePath, pd);
     if (index >= 0) {
@@ -10485,6 +10509,9 @@ static void PDF_glyph(int n, int *glyphs, double *x, double *y,
                       SEXP font, double size, 
                       int colour, double rot, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int index = newGlyphFont(R_GE_glyphFontPSname(font), pd);
     if (index >= 0) {
         if (R_VIS(colour)) {
