@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.formula.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{terms.formula}
@@ -17,16 +17,16 @@
       allowDotAsName = FALSE)
 }
 \arguments{
-  \item{x}{a formula.}
+  \item{x}{a \code{\link{formula}}.}
   \item{specials}{which functions in the formula should be marked as
     special in the \code{terms} object?  A character vector or \code{NULL}.}
-  \item{abb}{Not implemented in \R.}
+  \item{abb}{Not implemented in \R; deprecated.}
   \item{data}{a data frame from which the meaning of the special symbol
-    \code{.} can be inferred.  It is unused if there is no \code{.} in
+    \code{.} can be inferred.  It is used only if there is a \code{.} in
     the formula.}
-  \item{neg.out}{Not implemented in \R.}
+  \item{neg.out}{Not implemented in \R; deprecated.}
   \item{keep.order}{a logical value indicating whether the terms should
-    keep their positions.  If \code{FALSE} the terms are reordered so
+    keep their positions.  By default, when \code{FALSE}, the terms are reordered so
     that main effects come first, followed by the interactions,
     all second-order, all third-order and so on.  Effects of a given
     order are kept in the order specified.}
@@ -42,13 +42,14 @@
   all are implemented.
 }
 \value{
-  A \code{\link{terms.object}} object is returned.  The object itself is
-  the re-ordered (unless \code{keep.order = TRUE}) formula.  In all
+  A \code{terms} object is returned.  It is the re-ordered formula (unless
+  \code{keep.order = TRUE}) with several \code{\link{attributes}}, see
+  \code{\link{terms.object}} for details.  In all
   cases variables within an interaction term in the formula are
   re-ordered by the ordering of the \code{"variables"} attribute, which
   is the order in which the variables occur in the formula.
 }
 \seealso{
-  \code{\link{terms}}, \code{\link{terms.object}}
+  \code{\link{terms}}, \code{\link{terms.object}}, also for examples.
 }
 \keyword{models}

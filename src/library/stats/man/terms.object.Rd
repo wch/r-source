@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.object.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{terms.object}
@@ -13,20 +13,22 @@
   object.
 }
 \value{
-  The object itself is simply the formula supplied to the call of
-  \code{\link{terms.formula}}.  The object has a number of attributes
+  The object itself is simply the result of \code{\link{terms.formula}(<formula>)}.
+  It has a number of attributes
   and they are used to construct the model frame:
 
-  \item{factors}{A matrix of variables by terms showing which variables
-    appear in which terms.  The entries are 0 if the variable does not
-    occur in the term, 1 if it does occur and should be coded by
-    contrasts, and 2 if it occurs and should be coded via dummy
-    variables for all levels (as when a lower-order term
-    is missing).  Note that variables in main effects always receive 1,
+  \item{factors}{An integer matrix of variables by terms showing which variables
+    appear in which terms.  The entries are \describe{
+      \item{0 }{if the variable does not occur in the term,}
+      \item{1 }{if it does occur and should be coded by contrasts, and}
+      \item{2 }{if it occurs and should be coded via dummy variables for
+	all levels (as when a lower-order term is missing).} }
+    Note that variables in main effects always receive 1,
     even if the intercept is missing (in which case the first one
     should be coded with dummy variables).
     If there are no terms other than an intercept and offsets,
-    this is \code{numeric(0)}.}
+    this is \code{\link{integer}(0)}.
+  }
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Note that these are
     after possible re-ordering of terms.
@@ -51,7 +53,7 @@
     \code{variables} attribute which contain these special functions.}
   \item{dataClasses}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
-  \item{predvars}{optional.  An expression to help in computing 
+  \item{predvars}{optional.  An expression to help in computing
     predictions at new covariate values; see \code{\link{makepredictcall}}.}
 
   The object has class \code{c("terms", "formula")}.

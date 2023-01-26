@@ -85,7 +85,7 @@ rnorm(n, mean = 0, sd = 1)
 
   Wichura, M. J. (1988)
   Algorithm AS 241: The percentage points of the normal distribution.
-  \emph{Applied Statistics}, \bold{37}, 477--484.
+  \emph{Applied Statistics}, \bold{37}, 477--484; \doi{10.2307/2347330}.
 
   which provides precise results up to about 16 digits.
 

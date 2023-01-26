@@ -39,8 +39,12 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir = 1,
 nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral = FALSE)
 {
     ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
-    env <- new.env(hash = TRUE, parent=environment(form))
-    for(i in names(data)) env[[i]] <- data[[i]]
+    if(is.environment(data))
+        env <- data
+    else {
+        env <- new.env(hash = TRUE, parent=environment(form))
+        list2env(data, env)
+    }
     ind <- as.list(start)
     p2 <- 0L #{non-linear parameters}
     for(i in names(ind)) {
@@ -221,8 +225,12 @@ nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral 
 nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcentral = FALSE)
 {
     ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
-    env <- new.env(hash = TRUE, parent = environment(form))
-    for(i in names(data)) env[[i]] <- data[[i]]
+    if(is.environment(data))
+        env <- data
+    else {
+        env <- new.env(hash = TRUE, parent=environment(form))
+        list2env(data, env)
+    }
     ind <- as.list(start)
     parLength <- 0L
     for(i in names(ind) ) {
@@ -288,8 +296,8 @@ nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcent
         attr(ans, "gradient") <- eval(gradCall)
         ans
     }
-    if(length(gr <- attr(rhs, "gradient")) == 1L)
-		    attr(rhs, "gradient") <- gr <- as.vector(gr)
+    if(length(gr <- attr(rhs, "gradient")) == 1L && !is.vector(gr))
+        attr(rhs, "gradient") <- gr <- as.vector(gr)
     QR <- qr(.swts * gr)
     qrDim <- min(dim(QR$qr))
     if(QR$rank < qrDim)
@@ -608,8 +616,8 @@ nls <-
     ## Less nice, but more tolerant (to "garbage" which is also put into 'ctrl'):
     ctrl <- nls.control()
     if(!missing(control)) {
-	control <- as.list(control)
-	ctrl[names(control)] <- control
+        control <- as.list(control)
+        ctrl[names(control)] <- control
     }
     scOff  <- ctrl$scaleOffset
     nDcntr <- ctrl$nDcentral
