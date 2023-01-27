@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"PO-Revision-Date: 2022-08-31 15:04+0000\n"
+"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
@@ -6241,7 +6241,7 @@ msgstr "gli argomenti non possono essere riciclati con la medesima lunghezza"
 #: src/main/sprintf.c:155 src/main/sprintf.c:264
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr "la lunghezza 'fmt' eccede la lunghezza massima del formato %d"
+msgstr "La lunghezza di 'fmt' supera la lunghezza massima del formato %d"
 
 #: src/main/sprintf.c:174
 #, c-format

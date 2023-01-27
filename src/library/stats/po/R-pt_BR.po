@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2011-03-26 08:57-0300\n"
-"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"PO-Revision-Date: 2022-10-16 14:04+0000\n"
+"Last-Translator: Gabriel Tormin <gta1998@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr ""
@@ -491,9 +491,8 @@ msgstr ""
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distâncias deve ser resultado de \"dist\", ou de uma matriz quadrada"
 
-#, fuzzy
 msgid "invalid value of %s"
-msgstr "argumento 'omit' inválido"
+msgstr "valor inválido de %s"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' deve estar em {1, 2, ..  n - 1}"
@@ -995,7 +994,7 @@ msgid "wrong method"
 msgstr "comprimento errado para 'fixed'"
 
 msgid "'file' must be a character string or connection"
-msgstr "'file' deve ser uma cadeia de caracteres ou uma conexão"
+msgstr "'file' deve ser uma string de caracteres ou conexão"
 
 msgid "'row.var.names' missing"
 msgstr "faltando 'row.var.names'"
@@ -1207,13 +1206,11 @@ msgstr "número de centros de agrupamento deve estar entre 1 e nrow(x)"
 msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
 msgstr ""
 
-#, fuzzy
 msgid "invalid nrow(x)"
-msgstr "'x' inválido"
+msgstr "nrow(x) inválido"
 
-#, fuzzy
 msgid "invalid ncol(x)"
-msgstr "'x' inválido"
+msgstr "ncol(x) inválido"
 
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' deve ser um número ou uma matriz"
@@ -1570,7 +1567,7 @@ msgid "reformulate"
 msgstr ""
 
 msgid "deprecatedWarning"
-msgstr ""
+msgstr "deprecatedWarning"
 
 #, fuzzy
 msgid "'termobj' must be a object of class %s"

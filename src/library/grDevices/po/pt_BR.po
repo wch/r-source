@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2011-03-26 08:54-0300\n"
-"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"PO-Revision-Date: 2023-01-20 19:04+0000\n"
+"Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
@@ -95,9 +95,9 @@ msgid "invalid gray level, must be in [0,1]."
 msgstr ""
 
 #: colors.c:556 cairo/cairoBM.c:615
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "cadeia de caracteres inválida em '%s'"
+msgstr "valor '%s' inválido"
 
 #: colors.c:1343
 msgid "invalid hex digit in 'color' or 'lty'"
@@ -825,7 +825,7 @@ msgstr ""
 #: cairo/cairoBM.c:637
 #, c-format
 msgid "invalid '%s' argument"
-msgstr ""
+msgstr "argumento '%s' inválido"
 
 #: cairo/cairoBM.c:193 cairo/cairoBM.c:362
 msgid "unimplemented cairo-based device"

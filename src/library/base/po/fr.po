@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R-4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2021-02-10 17:30+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2023-01-20 19:04+0000\n"
+"Last-Translator: Ahmadou Dicko <mail@ahmadoudicko.com>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
@@ -67,7 +67,7 @@ msgstr "trace, REPORT doit être >= 0 (method = \"SANN\")"
 #: src/appl/pretty.c:127
 #, c-format
 msgid "R_pretty(): infinite range; *ndiv=%d, should have ndiv >= 2"
-msgstr ""
+msgstr "R_pretty(): gamme infinie ; *ndiv=%d, devrait avoir ndiv >= 2"
 
 #: src/appl/pretty.c:142
 #, fuzzy, c-format
@@ -1850,7 +1850,7 @@ msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 "\"%s\" peut être attribué comme classe seulement si l'objet est de ce type ; "
-"type trouvé : \"%s\""
+"\"%s\" trouvé"
 
 #: src/main/coerce.c:3031
 #, c-format
@@ -3599,7 +3599,7 @@ msgstr "Dans %s :"
 #, c-format
 msgid "There was %d warning (use warnings() to see it)"
 msgid_plural "There were %d warnings (use warnings() to see them)"
-msgstr[0] "Il y a eu %d avis (utilisez warnings() pour les visionner)"
+msgstr[0] "Il y a eu %d avis (utilisez warnings() pour le visionner)"
 msgstr[1] "Il y a eu %d avis (utilisez warnings() pour les visionner)"
 
 #: src/main/errors.c:667
@@ -5055,7 +5055,7 @@ msgstr "argument incorrect"
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
-msgstr[0] "%d arguments passés à .Internal(%s) qui en exige %d"
+msgstr[0] "%d argument passé à .Internal(%s) qui en exige %d"
 msgstr[1] "%d arguments passés à .Internal(%s) qui en exige %d"
 
 #: src/main/paste.c:103 src/main/paste.c:345
@@ -5727,7 +5727,7 @@ msgstr "erreur xdr de lecture de données de complexes"
 #: src/main/saveload.c:1805 src/main/serialize.c:2333 src/main/serialize.c:2960
 #: src/modules/internet/internet.c:390 src/modules/internet/internet.c:463
 msgid "write failed"
-msgstr "échec d'écriture"
+msgstr "échec de l'écriture"
 
 #: src/main/saveload.c:1964
 msgid "restore file may be empty -- no data loaded"
@@ -6242,7 +6242,7 @@ msgstr "NA ou indices infinis"
 #: src/main/sort.c:799
 #, c-format
 msgid "index %ld outside bounds"
-msgstr "indice  %ld en dehors des limites"
+msgstr "indice %ld en dehors des limites"
 
 #: src/main/sort.c:804 src/main/sort.c:817
 msgid "NA index"
@@ -7230,7 +7230,7 @@ msgstr "format TIFF indisponible dans cette version de R"
 
 #: src/modules/X11/devX11.c:1396
 msgid "filename too long in tiff() call"
-msgstr "nom de fichier trop long dans un appel à tiff()"
+msgstr "nom de fichier trop long dans l'appel tiff()"
 
 #: src/modules/X11/devX11.c:1408
 msgid "filename too long in bmp() call"
@@ -7289,7 +7289,7 @@ msgstr "famille de police introuvable dans la base de données des polices X11"
 #: src/modules/X11/devX11.c:1857
 #, c-format
 msgid "invalid use of %d < 0 in '%s'"
-msgstr "usage incorrect de %d < 0 dans  '%s'"
+msgstr "usage incorrect de %d < 0 dans '%s'"
 
 #: src/modules/X11/devX11.c:1978
 #, c-format
@@ -7544,7 +7544,7 @@ msgstr ""
 #: src/modules/lapack/Lapack.c:91
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
-msgstr "l'argument type[1]='%s' doit être une des options  '1', 'O' ou 'I'"
+msgstr "l'argument type[1]='%s' doit être une des options '1', 'O' ou 'I'"
 
 #: src/modules/lapack/Lapack.c:131 src/modules/lapack/Lapack.c:138
 #: src/modules/lapack/Lapack.c:197 src/modules/lapack/Lapack.c:208

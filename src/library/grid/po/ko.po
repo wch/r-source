@@ -9,18 +9,19 @@ msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2018-04-09 12:06-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2022-10-02 02:04+0000\n"
+"Last-Translator: Kwangchun Lee <kwangchun.lee.7@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
-msgstr ""
+msgstr "updateGContext는 initGContext 를 호출한 다음에만 호출해야 합니다"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"

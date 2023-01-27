@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-05-03 09:56+0200\n"
-"PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-11-18 10:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
@@ -23,7 +24,7 @@ msgstr "调用C子程式给'externalptr'对象进行初始化"
 
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
-msgstr "置换时用的串列出了错"
+msgstr "置换时用的列表出了错"
 
 #: methods_list_dispatch.c:129
 #, c-format
@@ -46,9 +47,8 @@ msgstr ""
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
-msgstr ""
-"当函数'%2$s'方法串列来用的，类别为\"%1$s\" 的对象缺少\"allMethods\"这么一个"
-"槽。"
+msgstr "当函数'%2$s'方法列表来用的，类别为\"%1$s\" 的对象缺少\"allMethods"
+"\"这么一个类型。"
 
 #: methods_list_dispatch.c:407
 #, fuzzy, c-format
@@ -127,8 +127,8 @@ msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错: %3$s "
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
-msgstr ""
-"函数'%s'里不能把类别为\"%s\"的对象当作方法串列来用(没有'argument'这样一个槽)"
+msgstr "函数'%s'里不能把类别为\"%s\"的对象当作方法列表来用"
+"(没有'argument'这样一个类型)"
 
 #: methods_list_dispatch.c:673
 #, c-format

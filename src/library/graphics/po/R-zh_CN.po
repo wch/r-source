@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-02-01 13:58\n"
-"PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a'被'reg'覆盖"
@@ -44,7 +45,7 @@ msgid "at least one entry of 'x' must be positive"
 msgstr "'x'里至少要有一个值是正数"
 
 msgid "incorrect 'col': must be length 2"
-msgstr "'col'不对: 长度必需为二"
+msgstr "'col'不正确: 长度必需为二"
 
 msgid "only for 1-D table"
 msgstr "只适用于1-D表"
@@ -53,16 +54,16 @@ msgid "'side' must be in {1:4}"
 msgstr "'side'的值必需在{1:4}中"
 
 msgid "invalid 'axp'"
-msgstr "'axp'不对"
+msgstr "'axp'无效"
 
 msgid "invalid 'log'"
-msgstr "'log'不对"
+msgstr "'log'无效"
 
 msgid "invalid positive 'axp[3]'"
-msgstr "正的'axp[3]'不对"
+msgstr "正的'axp[3]'无效"
 
 msgid "invalid 'usr'"
-msgstr "'usr'不对"
+msgstr "'usr'无效"
 
 msgid "'height' must be a vector or a matrix"
 msgstr "'height'要么是向量，要么是矩阵"
@@ -80,36 +81,36 @@ msgid "log scale error: 'ylim' <= 0"
 msgstr "对数尺度错误: 'ylim'小于等于零"
 
 msgid "incorrect number of names"
-msgstr "名字数目不对"
+msgstr "名字数目不正确"
 
 msgid "'formula' missing or incorrect"
-msgstr "要么是缺少'formula'，要么是它的设定不对"
+msgstr "缺失'formula'或有错误"
 
 #, fuzzy
 msgid "formula must specify 1 or 2 categorical variables"
-msgstr "'formula'只能设定两个变量"
+msgstr "'formula'只能指定两个变量"
 
 msgid "duplicated categorical values - try another formula or subset"
 msgstr ""
 
 #, fuzzy
 msgid "formula with cbind() must specify 1 categorical variable"
-msgstr "'formula'只能设定两个变量"
+msgstr "'formula'只能指定两个变量"
 
 msgid "invalid first argument"
-msgstr "第一个参数不对"
+msgstr "第一个参数无效"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'同'z$n'的长度必需相等, 如%d"
 
 msgid "invalid boxplot widths"
-msgstr "boxplot宽度不对"
+msgstr "boxplot宽度无效"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr "一些槽在折叶点外('box'): 可能是因为notch=FALSE"
+msgstr "一些类型在折叶点外('box'): 可能是因为notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
-msgstr "'formula'只能设定两个变量"
+msgstr "'formula'只能指定两个变量"
 
 msgid "dependent variable should be a factor"
 msgstr "因变量应当为因子"
@@ -130,7 +131,7 @@ msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
 msgstr ""
 
 msgid "invalid conditioning formula"
-msgstr "条件公式不对"
+msgstr "条件公式无效"
 
 msgid "incompatible variable lengths"
 msgstr "变量长度不匹配"
@@ -142,7 +143,7 @@ msgid "'overlap' must be < 1 (and typically >= 0)."
 msgstr "'overlap'必需小于一(其典型值则大于等于零)."
 
 msgid "invalid 'given.values'"
-msgstr "'given.values'值不对"
+msgstr "'given.values'值无效"
 
 msgid "rows * columns too small"
 msgstr "行 * 列的结果太小"
@@ -163,16 +164,16 @@ msgid "'expr' did not evaluate to an object of length 'n'"
 msgstr "'expr'没有评估为长度是'n'的对象"
 
 msgid "wrong method"
-msgstr "方法不对"
+msgstr "方法有误"
 
 msgid "Must specify 'breaks' in hist(<POSIXt>)"
-msgstr "hist(<POSIXt>)必需设定'breaks'"
+msgstr "hist(<POSIXt>)必需指定'breaks'"
 
 msgid "invalid specification of 'breaks'"
-msgstr "'breaks'定义不对"
+msgstr "'breaks'的值有错误"
 
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr " hist(<Date>)必需设定'breaks'"
+msgstr "hist(<Date>)必需指定'breaks'"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x'要么是数值向量，要么是矩阵"
@@ -193,28 +194,28 @@ msgid "'conf.level' must be a single number between 0 and 1"
 msgstr "'conf.level'必需是在零和一之间的单个数字"
 
 msgid "incorrect 'margin' specification"
-msgstr "'margin'定义不对"
+msgstr "'margin'定义不正确"
 
 msgid "incorrect geometry specification"
-msgstr "几何定义不对"
+msgstr "几何定义不正确"
 
 msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
 msgid "invalid length(x)"
-msgstr "长度不对"
+msgstr "length(x)无效"
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'breaks'设定了的话'nclass'就不能用了"
 
 msgid "'include.lowest' ignored as 'breaks' is not a vector"
-msgstr "因为'breaks'不对向量，'include.lowest'略过不用"
+msgstr "因为'breaks'不对向量，'include.lowest'忽略不用"
 
 msgid "unknown 'breaks' algorithm"
 msgstr "没有'breaks'这样的算法"
 
 msgid "invalid number of 'breaks'"
-msgstr "'breaks'数目不对"
+msgstr "'breaks'数目无效"
 
 msgid "'breaks = %g' is too large and set to 1e6"
 msgstr ""
@@ -226,7 +227,7 @@ msgid "Invalid breakpoints produced by 'breaks(x)': %s"
 msgstr ""
 
 msgid "invalid length(breaks)"
-msgstr "length(breaks)不对"
+msgstr "length(breaks)无效"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks'必需严格递增"
@@ -238,10 +239,10 @@ msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "有些'x'值没有被计数；有可能是因为'breaks'没有跨距整个'x'的范围"
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
-msgstr "图形的面积不对 -- 用'freq=FALSE'"
+msgstr "图形的面积有误 -- 用'freq=FALSE'"
 
 msgid "'x' is wrongly structured"
-msgstr "'x'的结构不对"
+msgstr "'x'的结构有误"
 
 msgid "argument must be matrix-like"
 msgstr "参数必需类似于矩阵"
@@ -257,7 +258,7 @@ msgid "'z' must be numeric or logical"
 msgstr "'x'必需为数值"
 
 msgid "invalid z limits"
-msgstr "z的限制不对"
+msgstr "z的限制无效"
 
 msgid "must have one more break than colour"
 msgstr "数据间隔的数目必需比颜色要多一个"
@@ -286,13 +287,13 @@ msgid ""
 msgstr "格式矩阵至少要对{1 ... %d}里每一个值都有参考值"
 
 msgid "invalid 'title'"
-msgstr "'title'不对"
+msgstr "'title'无效"
 
 msgid "'legend' is of length 0"
 msgstr "'legend'长度为零"
 
 msgid "invalid coordinate lengths"
-msgstr "座标长度不对"
+msgstr "座标长度无效"
 
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width'必需为大于等于零的数值"
@@ -307,7 +308,7 @@ msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "pch[2..]没用，因为pch[1L] 包含多个字符"
 
 msgid "must specify at least one of 'x' and 'y'"
-msgstr "必需设定'x'和'y'中的一个"
+msgstr "必需指定'x'和'y'中的一个"
 
 msgid "'x' and 'y' must have same number of rows"
 msgstr "'x'和'y'的行数必需相等"
@@ -316,7 +317,7 @@ msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x'和'y'要么是一，要么有相等的列数"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr "'pch'的缺省值比列的数目要小，因此再循环使用"
+msgstr "'pch'的默认值比列的数目要小，因此再循环使用"
 
 msgid "missing values in contingency table"
 msgstr "列联表里有缺少值"
@@ -325,7 +326,7 @@ msgid "'x' must not have 0 dimensionality"
 msgstr "'x'不能为零维数"
 
 msgid "invalid 'shade' specification"
-msgstr "'shade'定义不对"
+msgstr "'shade'定义无效"
 
 msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr "'sort'的长度同'dim(x)'不相匹配"
@@ -338,11 +339,11 @@ msgstr "参数里只有一个列用在'pairs'上"
 
 #, fuzzy
 msgid "invalid argument 'horInd'"
-msgstr "第一个参数不对"
+msgstr "第一个参数无效"
 
 #, fuzzy
 msgid "invalid argument 'verInd'"
-msgstr "第一个参数不对"
+msgstr "第一个参数无效"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'函数画了一个新的图"
@@ -354,7 +355,7 @@ msgid "'x' values must be positive."
 msgstr "'x'必需是正数."
 
 msgid "invalid table 'x'"
-msgstr "'x'表不对"
+msgstr "'x'表无效"
 
 msgid "the formula '%s' is treated as '%s'"
 msgstr ""
@@ -365,22 +366,21 @@ msgstr "不能处理多个'x'座标"
 msgid "must have a response variable"
 msgstr "必需有响应变量"
 
-#, fuzzy
 msgid "invalid plot type"
-msgstr "boxplot宽度不对"
+msgstr "绘图类型无效"
 
 msgid "plot type '%s' will be truncated to first character"
 msgstr ""
 
 #, fuzzy
 msgid "invalid plot type '%s'"
-msgstr "boxplot宽度不对"
+msgstr "boxplot宽度无效"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame'不能用在非数据框上"
 
 msgid "'y' must be a numeric vector"
-msgstr "'y'必需为数值向量"
+msgstr "'y'必需是数值向量"
 
 msgid "'x' must be a data frame"
 msgstr "'x'必需为数据框"
@@ -404,22 +404,22 @@ msgid "cannot hatch with logarithmic scale active"
 msgstr "对数尺度设定时不能进行策劃"
 
 msgid "Invalid fill rule for graphics path"
-msgstr "图形填充路径规则不对"
+msgstr "图形填充路径规则无效"
 
 msgid "invalid rectangle specification"
-msgstr "长方形定义不对"
+msgstr "长方形定义无效"
 
 msgid "some values will be clipped"
 msgstr "有些值不能被修整"
 
 msgid "invalid screen number"
-msgstr "屏幕数字不对"
+msgstr "屏幕数字无效"
 
 msgid "'figs' must be a vector or a matrix with 4 columns"
 msgstr "'figs'要么是向量，要么是有四条列的矩阵"
 
 msgid "'figs' must specify at least one screen"
-msgstr "'figs'至少要设定一个屏幕"
+msgstr "'figs'至少要指定一个屏幕"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
 msgstr "'nrpoints'必需为大于0的数字标量。"
@@ -459,19 +459,19 @@ msgid "'scale' must be positive"
 msgstr "'scale'必需为正数"
 
 msgid "invalid plotting method"
-msgstr "画图方法不对"
+msgstr "画图方法无效"
 
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at'的长度必需同组数目%d相等"
 
 msgid "formula missing or incorrect"
-msgstr "要么是缺少公式，要么是公式设定不对"
+msgstr "要么是缺少公式，要么是公式设定不正确"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number'的长度必需同'x'和'y'的长度相同"
 
 msgid "exactly one symbol type must be specified"
-msgstr "只能设定一个符号种类"
+msgstr "只能设定一个符号类型"
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x对数尺度：xinch()没有意义"
@@ -485,7 +485,7 @@ msgstr "对数尺度：xyinch()没有意义"
 #, fuzzy
 msgid "Duplicated argument %s is disregarded"
 msgid_plural "Duplicated arguments %s are disregarded"
-msgstr[0] "多余的参数%s略过不用"
+msgstr[0] "多余的参数%s忽略不用"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

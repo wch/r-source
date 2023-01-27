@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2011-03-26 08:58-0300\n"
-"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"PO-Revision-Date: 2023-01-20 19:04+0000\n"
+"Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: Rmd5.c:47
 msgid "argument 'files' must be character"
@@ -64,9 +64,9 @@ msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
 #: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "tipo de argumento inválido"
+msgstr "valor '%s' inválido"
 
 #: gramRd.c:2547 gramRd.c:2550
 #, c-format
@@ -119,11 +119,11 @@ msgstr ""
 
 #: gramRd.c:4535
 msgid "cannot open the connection"
-msgstr ""
+msgstr "não é possível abrir a conexão"
 
 #: gramRd.c:4542
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "não é possível ler a partir desta conexão"
 
 #: gramRd.c:4550
 msgid "invalid Rd file"
@@ -151,9 +151,9 @@ msgid "path too long"
 msgstr ""
 
 #: install.c:115 install.c:134 install.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "tipo de argumento inválido"
+msgstr "argumento '%s' inválido"
 
 #: install.c:165
 msgid "write error during file append"

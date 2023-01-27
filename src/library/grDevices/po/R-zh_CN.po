@@ -8,17 +8,18 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2008-04-05 10:53+0100\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "invalid 'filename'"
-msgstr "'filename'不对"
+msgstr "'filename'无效"
 
 msgid "svg: Cairo-based devices are not available for this platform"
 msgstr ""
@@ -132,19 +133,19 @@ msgid "can only print from a screen device"
 msgstr "只可以从屏幕装置打印"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr "至少需要设定'width'和'height'中的一个"
+msgstr "至少需要指定'width'和'height'中的一个"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.control()的"
 
 msgid "argument is missing with no default"
-msgstr "没有设定参数，也没有默认值"
+msgstr "缺失设定参数，也缺失默认值"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.displaylist()的"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr "'getOption(\"device\")'的设定不对"
+msgstr "'getOption(\"device\")'的设定无效"
 
 msgid "device '%s' not found"
 msgstr "没有'%s'这个装置"
@@ -166,21 +167,21 @@ msgstr ""
 
 #, fuzzy
 msgid "Invalid fill rule"
-msgstr "'file'不对"
+msgstr "'file'无效"
 
 #, fuzzy
 msgid "Invalid pattern type"
-msgstr "字体种类不对"
+msgstr "字体类型无效"
 
 #, fuzzy
 msgid "Invalid 'extend' value"
-msgstr "'filename'不对"
+msgstr "'filename'无效"
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "'%s'里的参数不对(需要有带名参数)"
+msgstr "'%s'里的参数无效(需要有带名参数)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr "'name.opt'的值必需是字符串，当前存在的串列的名字"
+msgstr "'name.opt'的值必需是字符串，当前存在的列表的名字"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "还不存在的'%s'是不能被重新设定的"
@@ -192,32 +193,32 @@ msgid "NOT changing %s"
 msgstr "不更换%s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr "'append'参数不后向相容，因此略过不用"
+msgstr "'append'参数不后向相容，因此忽略不用"
 
 msgid "unknown family '%s'"
 msgstr "没有'%s'这样的系列"
 
 msgid "invalid 'family' argument"
-msgstr "'family'参数不对"
+msgstr "'family'参数无效"
 
 msgid "'title' argument \"%s\" contains invalid characters"
 msgstr ""
 
 #, fuzzy
 msgid "invalid 'file' argument '%s'"
-msgstr "'family'参数不对"
+msgstr "'family'参数无效"
 
 msgid "invalid PDF version"
-msgstr "PDF版本不对"
+msgstr "PDF版本无效"
 
 msgid "Invalid font type"
-msgstr "字体种类不对"
+msgstr "字体类型无效"
 
 msgid "invalid family name in font specification"
-msgstr "字体设置里的系列名称不对"
+msgstr "字体设置里的系列名称无效"
 
 msgid "invalid metric information in font specification"
-msgstr "字体设置里的公制信息不对"
+msgstr "字体设置里的公制信息无效"
 
 msgid "invalid encoding in font specification"
 msgstr "字体设置里的编码有问题"
@@ -226,22 +227,22 @@ msgid "Not a CID font"
 msgstr "非CID字体"
 
 msgid "invalid CMap name in font specification"
-msgstr "字体设置里的CMap名字不对"
+msgstr "字体设置里的CMap名字无效"
 
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "字体设置里的'cmapEncoding'值不对"
+msgstr "字体设置里的'cmapEncoding'值无效"
 
 msgid "invalid PDF resource in font specification"
-msgstr "字体设置里的PDF资源不对"
+msgstr "字体设置里的PDF资源无效"
 
 msgid "Invalid font database name"
-msgstr "字体数据库名称不对"
+msgstr "字体数据库名称无效"
 
 msgid "font %s already in use"
 msgstr "字体%s已经在用了"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr "'%s'里的参数不对(必需是字体名称)"
+msgstr "'%s'里的参数无效(必需是字体名称)"
 
 msgid "unknown font"
 msgstr "没有这样的字体"
@@ -257,7 +258,7 @@ msgstr ""
 
 #, fuzzy
 msgid "invalid output format"
-msgstr "输出的格式不对"
+msgstr "输出的格式无效"
 
 msgid "status %d in running command '%s'"
 msgstr "调用命令'%2$s'的运行状况为%1$d"
@@ -281,7 +282,7 @@ msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'[.raster'里的'drop'含蓄值总是FALSE"
 
 msgid "invalid raster subsetting"
-msgstr "栅格子集不对"
+msgstr "栅格子集无效"
 
 msgid "invalid raster subassignment"
 msgstr "光栅子分配无效"
@@ -325,28 +326,28 @@ msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"
 
 msgid "invalid first argument"
-msgstr "第一个参数不对"
+msgstr "第一个参数无效"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr "'x'是串列，但没有'x'和'y'这两个组件"
+msgstr "'x'是列表，但没有'x'和'y'这两个组件"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x'和'y'的长度不一样"
 
 msgid "invalid first argument [bad language object]"
-msgstr "第一个参数不对[语言对象出了错]"
+msgstr "第一个参数无效[语言对象出了错]"
 
 msgid "at least 2 columns needed"
 msgstr "至少需要两列"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr "'x'是串列，但没有'x'，'y'和'z'这三个组件"
+msgstr "'x'是列表，但没有'x'，'y'和'z'这三个组件"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "'x', 'y'和'z'的长度不一样"
 
 msgid "'file' is missing with no default"
-msgstr "'file'不存在，也没有默认值"
+msgstr "'file'不存在，也缺失默认值"
 
 msgid "unrecognized format of gs -help"
 msgstr "gs -help的格式不对"
@@ -373,19 +374,19 @@ msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "invalid 'title'"
-msgstr "'title'不对"
+msgstr "'title'无效"
 
 msgid "invalid 'file'"
-msgstr "'file'不对"
+msgstr "'file'无效"
 
 msgid "invalid Quartz font:  must be 4 strings"
-msgstr "石英字体不对： 必需有四条字符串"
+msgstr "石英字体无效： 必需有四条字符串"
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "'quartzFonts'里的参数不对(必需为字体名称)"
+msgstr "'quartzFonts'里的参数无效(必需为字体名称)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "'quartzFonts'里的参数不对(需要带名参数)"
+msgstr "'quartzFonts'里的参数无效(需要带名参数)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr "这个构建不支持基于cairo的类型-用\"Xlib\""
@@ -397,10 +398,10 @@ msgid "invalid X11 font specification:"
 msgstr "X11字体设置出了错:"
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "'X11Fonts'里的参数不对(必需是字体名称)"
+msgstr "'X11Fonts'里的参数无效(必需是字体名称)"
 
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "'X11Fonts'里的参数不对(需要有带名参数)"
+msgstr "'X11Fonts'里的参数无效(需要有带名参数)"
 
 msgid "no such device"
 msgstr "没有这样的装置"
@@ -409,7 +410,7 @@ msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "只能从'X11(type=\"*cairo\")'装置拷贝"
 
 msgid "invalid value for 'rescale'"
-msgstr "'rescale'不对"
+msgstr "'rescale'无效"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
 msgstr ""
@@ -430,17 +431,17 @@ msgid "subscript out of range"
 msgstr "下标值超出边界了"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr "窗户字体不对：必需为单个字体系列名称"
+msgstr "窗户字体无效：必需为单个字体系列名称"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "'windows fonts'里的参数不对(必需为字体名称)"
+msgstr "'windows fonts'里的参数无效(必需为字体名称)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "'windows fonts'里的参数不对(需要带名参数)"
+msgstr "'windows fonts'里的参数无效(需要带名参数)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
-msgstr[0] "'%2$s'里的%1$s参数名字不对"
+msgstr[0] "'%2$s'里的%1$s参数名字无效"
 
 msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
@@ -448,15 +449,15 @@ msgstr[0] "新的值和旧的值不一样"
 
 msgid "%d x value <= 0 omitted from logarithmic plot"
 msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "对数图里略过%d个小于等于零的x值"
+msgstr[0] "对数图里忽略%d个小于等于零的x值"
 
 msgid "%d y value <= 0 omitted from logarithmic plot"
 msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "对数图里略过%d个小于等于零的y值"
+msgstr[0] "对数图里忽略%d个小于等于零的y值"
 
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "对数图里略过%d个小于等于零的z值"
+msgstr[0] "对数图里忽略%d个小于等于零的z值"
 
 #~ msgid "range too small for 'min.n'"
 #~ msgstr "'min.n'的范围太小了"

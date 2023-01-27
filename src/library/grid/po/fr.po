@@ -8,38 +8,38 @@ msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2021-02-10 17:42+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2022-08-31 15:04+0000\n"
+"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext doit être appelé après initGContext"
 
 #: grid.c:199
-#, fuzzy
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr "Activer ou désactiver le découpage dans un chemin de découpage ('clipping path') n’est pas pris en compte"
+msgstr ""
+"L'activation ou la désactivation de l'écrêtage dans un chemin (d'écrêtage) "
+"n'est pas respectée"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "impossible de couper une vue pivotée"
 
 #: grid.c:455
-#, fuzzy
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr "Les chemins de découpage ('clipping path’) à l’intérieur d’un chemin de découpage ne sont pas pris en compte"
+msgstr ""
+"Les chemins de détourage dans un chemin (de détourage) ne sont pas respectés"
 
 #: grid.c:474
-#, fuzzy
 msgid "Masks within a (clipping) path are not honoured"
-msgstr "Le masquage à l’aide d’un chemin de découpage ('clipping path') n’est pas pris en compte"
+msgstr "Les masques dans un chemin (de détourage) ne sont pas respectés"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"

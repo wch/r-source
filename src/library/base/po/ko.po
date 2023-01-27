@@ -9,27 +9,28 @@ msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2018-04-09 12:04-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2022-09-29 03:04+0000\n"
+"Last-Translator: Kwangchun Lee <kwangchun.lee.7@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
-msgstr "'optim'을 통하여 얻은 값이 유한하지 않습니다. "
+msgstr "'optim'을 통하여 얻은 값이 유한하지 않습니다."
 
 #: src/appl/optim.c:67
 #, c-format
 msgid "candidate point in 'optim' evaluated to length %d not %d"
-msgstr "'optim'내부의 후보점 길이가 %2$d가 아니라 %1$d입니다"
+msgstr "'optim'내부의 후보점 길이가 %d 임, %d 이 아님."
 
 #: src/appl/optim.c:136
 msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr "method에  \"BFGS\"가 주어졌을때, REPORT는 반드시 0 보다 커야 합니다"
+msgstr "method에 \"BFGS\"가 주어졌을때, REPORT는 반드시 0 보다 커야 합니다"
 
 #: src/appl/optim.c:147
 msgid "initial value in 'vmmin' is not finite"
@@ -68,7 +69,7 @@ msgstr ""
 #: src/appl/pretty.c:127
 #, c-format
 msgid "R_pretty(): infinite range; *ndiv=%d, should have ndiv >= 2"
-msgstr ""
+msgstr "R_pretty(): 무한범위; *ndiv=%d, ndiv >= 2 이상 가져야 함"
 
 #: src/appl/pretty.c:142
 #, fuzzy, c-format
@@ -83,7 +84,7 @@ msgstr "Internal(pretty()): 너무 큰 범위입니다.. 수정되었습니다"
 #: src/gnuwin32/dynload.c:144
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
-msgstr "DLL이 FPU 컨트롤 단어를 %1$x에서 %2$x로 변경을 시도했습니다"
+msgstr "DLL이 FPU 컨트롤 단어를 %x 에서 %x로 변경을 시도했습니다"
 
 #: src/gnuwin32/dynload.c:185
 msgid "cannot get working directory"
@@ -356,7 +357,7 @@ msgstr "인자 '%s'가 올바르지 않습니다."
 #: src/gnuwin32/sys-win32.c:317 src/unix/sys-unix.c:800 src/unix/sys-unix.c:835
 #, c-format
 msgid "command '%s' timed out after %ds"
-msgstr ""
+msgstr "'%s' 명령어는 %ds 뒤 타임아웃"
 
 #: src/gnuwin32/sys-win32.c:320 src/unix/sys-unix.c:673
 #, c-format
