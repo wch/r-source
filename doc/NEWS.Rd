@@ -600,6 +600,10 @@
       the correct environment, thanks to André Gillibert's report and patch
       in \PR{18456}.
 
+      \item \code{getInitial(<formula>)} now finds the \code{selfStart}
+      model in the correct environment.
+      (Reported by Ivan Krylov in \PR{18368}.)
+
       \item Fix for possible segfault when using recently-added graphics
       features, such as gradients, clipping paths, masks, and groups with
       \code{pdf(file=NULL)}.

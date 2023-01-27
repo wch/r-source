@@ -87,6 +87,13 @@ xmid   728.76    107.299  6.7919 1.1202e-07
 scal   353.53     81.472  4.3393 1.3382e-04
 > ## IGNORE_RDIFF_END
 > 
+> ## getInitial.formula() gets selfStart function from environment(formula)
+> plogis <- stats::SSlogis
+> in2 <- getInitial(circumference ~ plogis(age, Asym, xmid, scal), Orange)
+> ## in R <= 4.2.x gave Error:
+> ##   no 'getInitial' method found for "function" objects
+> rm(plogis)
+> 
 > 
 > ## lower and upper in algorithm="port"
 > set.seed(123)
