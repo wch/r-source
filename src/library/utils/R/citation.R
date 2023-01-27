@@ -1081,13 +1081,36 @@ function(x, name, value)
 c.bibentry <-
 function(..., recursive = FALSE)
 {
+    ## only bibentry objects can be combined
     args <- list(...)
     if(!all(vapply(args, inherits, NA, "bibentry")))
         warning(gettextf("method is only applicable to %s objects",
                          sQuote("bibentry")),
                 domain = NA)
+
+    ## combine raw lists
     args <- lapply(args, unclass)
     rval <- do.call(c, args)
+
+    ## preserve mheader/mfooter if any
+    mheader <- unlist(lapply(args, attr, "mheader"))
+    if(length(mheader) >= 1L) {
+        if(length(mheader) > 1L)
+            warning(gettextf("more than one %s specified, using the first",
+                             sQuote("mheader")),
+                    domain = NA)
+        attr(rval, "mheader") <- mheader[1L]
+    }
+    mfooter <- unlist(lapply(args, attr, "mfooter"))
+    if(length(mfooter) >= 1L) {
+        if(length(mfooter) > 1L)
+            warning(gettextf("more than one %s specified, using the last",
+                             sQuote("mfooter")),
+                    domain = NA)
+        attr(rval, "mfooter") <- mfooter[length(mfooter)]
+    }
+    
+    ## return as bibentry object
     .bibentry(rval)
 }
 
