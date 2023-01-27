@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,15 +55,12 @@ static editor REditors[MAXNEDITORS];
 static int neditors  = 0;
 static Rboolean fix_editor_up = FALSE;
 
-static EditorData neweditordata (int file, const char *filename)
+static EditorData neweditordata (int file)
 {
     EditorData p;
     p = (EditorData) malloc(sizeof(struct structEditorData));
     p->file = file;
-    /* need space for terminator, and to copy it */
-    p->filename = (char *) malloc((MAX_PATH+1)*sizeof(char));
-    if (filename)
-	strncpy(p->filename, filename, MAX_PATH+1);
+    p->filename = NULL;
     p->title = (char *) malloc((EDITORMAXTITLE + 1)*sizeof(char));
     p->title[EDITORMAXTITLE] = p->title[0] = '\0';
     return p;
@@ -73,7 +70,8 @@ void deleditordata(EditorData p)
 {
     if (p->stealconsole)
 	fix_editor_up = FALSE;
-    free(p->filename);
+    if (p->filename)
+	free(p->filename);
     free(p->title);
     free(p->hmenu);
     free(p->pmenu);
@@ -97,35 +95,85 @@ static void editor_set_title(editor c, const char *title)
 
 /*** FILE MANAGEMENT FUNCTIONS ***/
 
+/* FIXME: simplify this once UTF-8 is the only supported native encoding. */
+
+static wchar_t* utf8_to_wchar(const char *src)
+{
+    size_t needed = Rf_utf8towcs(NULL, src, 0);
+    wchar_t *res = (wchar_t  *)malloc((needed + 1)*sizeof(wchar_t));
+    if (res)
+	Rf_utf8towcs(res, src, needed + 1);
+    return res;
+}
+	
+static char* utf8_to_native(const char *src)
+{
+    /* a defensive guess, reEnc2 would throw error if not enough */
+    size_t needed = strlen(src) * 4;
+    char *res = (char *)malloc(needed + 1);
+    if (res)
+	reEnc2(src, res, needed + 1, CE_UTF8, CE_NATIVE, 3);
+    return res;
+}	
+
+static char* native_to_utf8(const char *src)
+{
+    /* a defensive guess, reEnc2 would throw error if not enough */
+    size_t needed = strlen(src) * 4;
+    char *res = (char *)malloc(needed + 1);
+    if (res)
+	reEnc2(src, res, needed + 1, CE_NATIVE, CE_UTF8, 3);
+    return res;
+}	
+
+static char* wchar_to_utf8(const wchar_t *src)
+{
+    size_t needed = Rf_wcstoutf8(NULL, src, INT_MAX);
+    char *res = (char *)malloc(needed + 1);
+    if (res)
+	Rf_wcstoutf8(res, src, needed + 1);
+    return res;
+}
+
 FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode);
+
+#define MSGSIZE 512
 
 static void editor_load_file(editor c, const char *name, int enc)
 {
     textbox t = getdata(c);
     EditorData p = getdata(t);
     FILE *f;
-    char *buffer = NULL, tmp[MAX_PATH+50], tname[MAX_PATH+1];
+    char *buffer = NULL, tmp[MSGSIZE];
     const char *sname;
     long num = 1, bufsize;
 
     if(enc == CE_UTF8) {
-	wchar_t wname[MAX_PATH+1];
-	Rf_utf8towcs(wname, name, MAX_PATH+1);
+	wchar_t *wname = utf8_to_wchar(name);
 	f = R_wfopen(wname, L"r");
-	reEnc2(name, tname, MAX_PATH+1, CE_UTF8, CE_NATIVE, 3);
-	sname = tname;
+	free(wname);
+	sname = utf8_to_native(name);
     } else {
 	f = R_fopen(name, "r");
 	sname = name;
     }
     if (f == NULL) {
-	snprintf(tmp, MAX_PATH+50, 
+	snprintf(tmp, MSGSIZE, 
 		 G_("unable to open file %s for reading"), sname);
 	R_ShowMessage(tmp);
+	if (enc == CE_UTF8)
+	    free((char *)sname); 
 	return;
     }
     p->file = 1;
-    strncpy(p->filename, name, MAX_PATH+1);
+    if (p->filename)
+	free(p->filename);
+    if (enc == CE_UTF8) {
+	p->filename = (char *) malloc(strlen(name) + 1);
+	strcpy(p->filename, name);
+    } else
+	p->filename = native_to_utf8(name);
+
     bufsize = 0;
     while (num > 0) {
 	buffer = realloc(buffer, bufsize + 3000 + 1);
@@ -135,7 +183,7 @@ static void editor_load_file(editor c, const char *name, int enc)
 	    buffer[bufsize] = '\0';
 	}
 	else {
-	    snprintf(tmp, MAX_PATH+50, 
+	    snprintf(tmp, MSGSIZE,
 		     G_("Could not read from file '%s'"), sname);
 	    askok(tmp);
 	}
@@ -145,35 +193,40 @@ static void editor_load_file(editor c, const char *name, int enc)
     gsetmodified(t, 0);
     free(buffer);
     fclose(f);
+    if (enc == CE_UTF8)
+	free((char *)sname); 
 }
 
 static void editor_save_file(editor c, const char *name, int enc)
 {
     textbox t = getdata(c);
     FILE *f;
-    char buf[MAX_PATH+30], tname[MAX_PATH+1];
+    char buf[MSGSIZE];
     const char *sname;
 
     if (name == NULL)
 	return;
     else {
 	if(enc == CE_UTF8) {
-	    wchar_t wname[MAX_PATH+1];
-	    Rf_utf8towcs(wname, name, MAX_PATH+1);
-	    reEnc2(name, tname, MAX_PATH+1, CE_UTF8, CE_NATIVE, 3);
-	    sname = tname;
+	    wchar_t *wname = utf8_to_wchar(name);
 	    f = R_wfopen(wname, L"w");
+	    free(wname);
+	    sname = utf8_to_native(name);
 	} else {
 	    sname = name;
 	    f = R_fopen(sname, "w");
 	}
 	if (f == NULL) {
-	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), sname);
+	    snprintf(buf, MSGSIZE, G_("Could not save file '%s'"), sname);
 	    askok(buf);
+	    if (enc == CE_UTF8)
+		free((char *)sname);
 	    return;
 	}
 	fprintf(f, "%s", gettext(t));
 	fclose(f);
+	if (enc == CE_UTF8)
+	    free((char *)sname);
     }
 }
 
@@ -186,16 +239,24 @@ static void editorsaveas(editor c)
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     wname = askfilesaveW(G_("Save script as"), "");
     if (wname) {
-	char name[4*MAX_PATH+1];
-	wcstoutf8(name, wname, sizeof(name));
-	/* now check if it has an extension */
+	char *name = wchar_to_utf8(wname);
 	char *q = strchr(name, '.');
-	if(!q) strncat(name, ".R", 4*MAX_PATH);
+	if(!q) {
+	    char *tmp = (char *)malloc(strlen(name) + 2 + 1);
+	    if (tmp) {
+		strcpy(tmp, name);
+		strcat(tmp, ".R");
+		free(name);
+		name = tmp;
+	    }
+	}
 	editor_save_file(c, name, CE_UTF8);
 	p->file = 1;
-	reEnc2(name, p->filename, MAX_PATH+1, CE_UTF8, CE_NATIVE, 3);
+	p->filename = name; /* keeps name */
 	gsetmodified(t, 0);
-	editor_set_title(c, p->filename);
+	char *sname = utf8_to_native(name);
+	editor_set_title(c, sname);
+	free(sname);
     }
     show(c);
 }
@@ -372,40 +433,46 @@ void menueditornew(control m)
 static void editoropen(const char *default_name)
 {
     wchar_t *wname;
-    char name[4*MAX_PATH + 1], title[4*MAX_PATH];
 
     int i; textbox t; EditorData p;
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     wname = askfilenameW(G_("Open script"), default_name); /* returns NULL if open dialog cancelled */
     if (wname) {
-	wcstoutf8(name, wname, sizeof(name));
+	char *name = wchar_to_utf8(wname);
 	/* check if file is already open in an editor. If so, close and open again */
 	for (i = 0; i < neditors; ++i) {
 	    t = getdata(REditors[i]);
 	    p = getdata(t);
-	    if (!strcmp (name, p->filename)) {
+	    if (p->filename && !strcmp (name, p->filename)) {
 		editorclose(REditors[i]);
 		break;
 	    }
 	}
-	reEnc2(name, title, MAX_PATH+1, CE_UTF8, CE_NATIVE, 3);
-	Rgui_Edit(name, CE_UTF8, title, 0);
+	char *sname = utf8_to_native(name);
+	Rgui_Edit(name, CE_UTF8, sname, 0);
+	free(name);
+	free(sname);
     } else show(RConsole);
 }
 
 void menueditoropen(control m)
 {
     editor c = getdata(m);
-    char *default_name = "";
     /* It really is not clear what is meant here: seems to assume an
        editor window but is called from elsewhere, hopefully with NULL
        (since 2.1.1 patched). */
     if (c) {
 	textbox t = getdata(c);
 	EditorData p = getdata(t);
-	if (p->file) default_name = p->filename;  /* name of currently-open file, if there is one */
-    }
-    editoropen(default_name);
+	if (p->file && p->filename) {
+	    /* name of currently-open file, if there is one */
+	    char *sname = utf8_to_native(p->filename);
+	    editoropen(sname);
+	    free(sname);
+	    return;
+	}
+    } 
+    editoropen("");
 }
 
 
@@ -647,7 +714,7 @@ static editor neweditor(void)
     textbox t;
     long flags;
     font editorfn = (consolefn ? consolefn : FixedFont);
-    EditorData p = neweditordata(0, NULL);
+    EditorData p = neweditordata(0);
     DWORD rand;
 
     w = (pagercol + 1)*fontwidth(editorfn);
