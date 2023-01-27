@@ -145,9 +145,7 @@ function(package, dir, lib.loc = NULL)
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nsInfo <- parseNamespaceFile(pkgname, dirdir)
             ## Look only at exported objects (and not declared S3
@@ -177,7 +175,14 @@ function(package, dir, lib.loc = NULL)
         ## Code objects in add-on packages with names starting with a
         ## dot are considered 'internal' (not user-level) by
         ## convention.
-        code_objs <- grep("^[^.].*", code_objs, value = TRUE)
+        if(!config_val_to_logical(Sys.getenv("_R_CHECK_UNDOC_USE_ALL_NAMES_",
+                                             "FALSE")))
+            code_objs <- grep("^[^.].*", code_objs, value = TRUE)
+        else {
+            code_objs <- code_objs %w/o% c(".Depends")
+            code_objs <- code_objs[!(startsWith(code_objs, ".__C__") |
+                                     startsWith(code_objs, ".__T__"))]
+        }
         ## Note that this also allows us to get rid of S4 meta objects
         ## (with names starting with '.__C__' or '.__M__'; well, as long
         ## as there are none in base).
@@ -270,15 +275,15 @@ function(package, dir, lib.loc = NULL)
         ## We use .ArgsEnv and .GenericArgsEnv in checkS3methods() and
         ## codoc(), so we check here that the set of primitives has not
         ## been changed.
-	ff <- as.list(baseenv(), all.names=TRUE)
-	prims <- names(ff)[vapply(ff, is.primitive, logical(1L))]
+	ff <- as.list(baseenv(), all.names = TRUE)
+	prims <- names(ff)[vapply(ff, is.primitive, NA)]
         prototypes <- sort(c(names(.ArgsEnv), names(.GenericArgsEnv)))
         extras <- setdiff(prototypes, prims)
         if(length(extras))
-            undoc_things <- c(undoc_things, list(prim_extra=extras))
+            undoc_things <- c(undoc_things, list(prim_extra = extras))
         miss <- setdiff(prims, c(langElts, prototypes))
         if(length(miss))
-            undoc_things <- c(undoc_things, list(primitives=miss))
+            undoc_things <- c(undoc_things, list(primitives = miss))
     }
 
     class(undoc_things) <- "undoc"
@@ -404,9 +409,7 @@ function(package, dir, lib.loc = NULL,
         objects_in_code <- sort(names(code_env))
         objects_in_code_or_namespace <- objects_in_code
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         ## Also, do not attempt to find S3 methods.
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
@@ -724,8 +727,16 @@ function(package, dir, lib.loc = NULL,
     ##   so it seems there is really no way to figure out whether an
     ##   exported S4 generic should have a \usage entry or not ...
     functions_missing_from_usages <-
-        if(!has_namespace) character() else {
+        if(!has_namespace && !is_base)
+            character()
+        else {
             functions <- functions_in_code_not_in_usages
+            if(is_base)
+                functions <-
+                    setdiff(functions,
+                            sprintf("%s.%s",
+                                    .S3_methods_table[, 1L],
+                                    .S3_methods_table[, 2L]))
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
                 functions <-
@@ -734,9 +745,16 @@ function(package, dir, lib.loc = NULL,
             ## Drop the defunct functions.
             is_defunct <- function(f) {
                 f <- get(f, envir = code_env) # get is expensive
-                is.function(f) &&
-                    is.call(b <- body(f)) &&
-                    identical(as.character(b[[1L]]), ".Defunct")
+                if(!is.function(f)) return(FALSE)
+                b <- body(f)
+                repeat {
+                    if(!is.call(b)) return(FALSE)
+                    if((length(b) > 1L) && (b[[1L]] == as.name("{")))
+                        b <- b[[2L]]
+                    else
+                        break
+                }
+                b[[1L]] == as.name(".Defunct")
             }
             functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
@@ -2647,9 +2665,7 @@ function(package, dir, lib.loc = NULL)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
@@ -7496,7 +7512,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                   !all(vapply(aar[-1L],
                               function(e) {
                                   (is.call(e) &&
-                                       (as.character(e[[1L]]) == "person"))
+                                   is.name(x <- e[[1L]]) &&
+                                   (as.character(x) == "person"))
                               },
                               FALSE))))
         }

@@ -15,10 +15,6 @@
 \alias{format.person}
 \alias{print.person}
 \alias{toBibtex.person}
-\alias{personList}
-\alias{as.personList}
-\alias{as.personList.person}
-\alias{as.personList.default}
 \description{
   A class and utility methods for holding information about persons
   like name and email address.
@@ -27,7 +23,10 @@
 person(given = NULL, family = NULL, middle = NULL,
        email = NULL, role = NULL, comment = NULL,
        first = NULL, last = NULL)
+
+as.person(x)
 \method{as.person}{default}(x)
+
 \method{format}{person}(x,
        include = c("given", "family", "email", "role", "comment"),
        braces = list(given = "", family = "", email = c("<", ">"),
@@ -57,7 +56,8 @@ person(given = NULL, family = NULL, middle = NULL,
     Deprecated, see \bold{Details}.}
   \item{last}{a character string giving the last name.
     Deprecated, see \bold{Details}.}
-  \item{x}{a character string for the \code{as.person} default method;
+  \item{x}{an object for the \code{as.person} generic;
+    a character string for the \code{as.person} default method;
     an object of class \code{"person"} otherwise.}
   \item{include}{a character vector giving the fields to be included
     when formatting.}
@@ -154,7 +154,7 @@ person(given = NULL, family = NULL, middle = NULL,
 
   In the old scheme, person objects were used for single persons, and a
   separate \code{"personList"} class with corresponding creator
-  \code{personList()} for collections of these.  The new scheme employs
+  \code{\link{personList}()} for collections of these.  The new scheme employs
   a single class for information about an arbitrary positive number of
   persons, eliminating the need for the \code{personList} mechanism.
 

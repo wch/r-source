@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -17,6 +17,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
               all.knots = FALSE, nknots = .nknots.smspl,
               keep.data = TRUE, df.offset = 0, penalty = 1,
               control.spar = list(), tol = 1e-6 * IQR(x), keep.stuff = FALSE)
+
+.nknots.smspl(n)
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -57,7 +59,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
    knots.}
  \item{nknots}{integer or \code{\link{function}} giving the number of
    knots to use when \code{all.knots = FALSE}.  If a function (as by
-   default), the number of knots is \code{nknots(nx)}.  By default for
+   default), the number of knots is \code{nknots(nx)}.  By default using
+   \code{.nknots.smspl()}, for
    \eqn{n_x > 49}{nx > 49} this is less than \eqn{n_x}{nx}, the number
    of unique \code{x} values, see the Note.}
  \item{keep.data}{logical specifying if the input data should be kept
@@ -98,6 +101,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
  \item{keep.stuff}{an experimental \code{\link{logical}} indicating if
    the result should keep extras from the internal computations.  Should
    allow to reconstruct the \eqn{X} matrix and more.}
+
+ \item{n}{for \code{.nknots.smspl}; typically the number of unique
+   \code{x} values (aka \eqn{n_x}{nx}).}
 }
 \details{
   Neither \code{x} nor \code{y} are allowed to containing missing or
@@ -178,7 +184,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   \eqn{n_k}{nk} is the number of knots.
 
   In this case where not all unique \code{x} values are
-  used as knots, the result is not a smoothing spline in the strict
+  used as knots, the result is a \emph{regression spline} rather than a
+  smoothing spline in the strict
   sense, but very close unless a small smoothing parameter (or large
   \code{df}) is used.
 }

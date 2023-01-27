@@ -113,10 +113,10 @@ factanal <-
     }
     start <- as.matrix(start)
     if(nrow(start) != p)
-    stop(sprintf(ngettext(p,
+        stop(sprintf(ngettext(p,
                        "'start' must have %d row",
                        "'start' must have %d rows"),
-                 p), domain = NA)
+                     p), domain = NA)
     nc <- ncol(start)
     if(nc < 1) stop("no starting values supplied")
     best <- Inf
@@ -272,19 +272,16 @@ print.factanal <- function(x, digits = 3, ...)
     print(x$loadings, digits = digits, ...)
                                         # the following lines added by J. Fox, 26 June 2005
     if (!is.null(x$rotmat)){
-
       tmat <- solve(x$rotmat)
       R <- tmat %*% t(tmat)
       factors <- x$factors
       rownames(R) <- colnames(R) <- paste0("Factor", 1:factors)
 
                                         # the following line changed by Ulrich Keller, 9 Sept 2008
-      if (TRUE != all.equal(c(R), c(diag(factors)))){
+      if (!isTRUE(all.equal(c(R), c(diag(factors))))) {
         cat("\nFactor Correlations:\n")
         print(R, digits=digits, ...)
       }
-
-
     }
                                         # end additions J. Fox, 23 June 2005
     if(!is.null(x$STATISTIC)) {

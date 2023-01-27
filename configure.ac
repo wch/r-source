@@ -1874,22 +1874,30 @@ R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
 R_STDCXX([23], [CXX23], [CXX20])
 
-## Set default C++ compiler to C++14 if available, otherwise C++11
-## Do not set if neither is available.
+## Set default C++ compiler to C++17 if available, otherwise C++14 or C++11
+## Do not set if none is available.
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX14}"; then
-    CXX=${CXX14}
-    CXXSTD=${CXX14STD}
-    CXXFLAGS=${CXX14FLAGS}
-    CXXPICFLAGS=${CXX14PICFLAGS}
+  if test -n "${CXX17}"; then
+    CXX=${CXX17}
+    CXXSTD=${CXX17STD}
+    CXXFLAGS=${CXX17FLAGS}
+    CXXPICFLAGS=${CXX17PICFLAGS}
   elif test -n "${CXX11}"; then
-    AC_MSG_WARN([C++14 is not available so the default C++ standard is C++11])
-    CXX=${CXX11}
-    CXXSTD=${CXX11STD}
-    CXXFLAGS=${CXX11FLAGS}
-    CXXPICFLAGS=${CXX11PICFLAGS}
+    if test -n "${CXX14}"; then
+      AC_MSG_WARN([C++17 is not available so the default C++ standard is C++14])
+      CXX=${CXX14}
+      CXXSTD=${CXX14STD}
+      CXXFLAGS=${CXX14FLAGS}
+      CXXPICFLAGS=${CXX14PICFLAGS}
+    else
+      AC_MSG_WARN([C++17 is not available so the default C++ standard is C++11])
+      CXX=${CXX11}
+      CXXSTD=${CXX11STD}
+      CXXFLAGS=${CXX11FLAGS}
+      CXXPICFLAGS=${CXX11PICFLAGS}
+    fi
   else
-    AC_MSG_WARN([Neither C++14 nor C++11 is available so no default C++ compiler is set])
+    AC_MSG_WARN([None of C++17, C++14 nor C++11 is available so no default C++ compiler is set])
   fi
 fi
 

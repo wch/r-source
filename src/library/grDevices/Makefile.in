@@ -17,7 +17,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-INSTDIRS = afm enc icc
+INSTDIRS = afm enc fonts/Roboto fonts/Montserrat/static icc
 DEFPKGS = NULL
 
 all: Makefile DESCRIPTION

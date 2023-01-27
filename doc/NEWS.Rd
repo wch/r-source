@@ -130,19 +130,20 @@
       it long has done for numeric inputs).
 
       \item \code{predict(<rank-deficient lm>, newdata=*)} now obeys a new
-      argument \code{rankdeficient},
-      currently with default \code{"simple"} for back compatibility, but
-      that may well change before release.
+      argument \code{rankdeficient}, with new default \code{"warnif"},
+      warning only if there are non-estimable cases in \code{newdata}.
+      Other options include \code{rankdeficient = "NA"}, predicting \code{NA}
+      for non-estimable \code{newdata} cases.
       This addresses \PR{15072} by Russ Lenth and is based on his original
       proposal and discussions in \PR{16158} also by David Firth and Elin Waring.
-      Experimental; may be updated before release.
+      Still somewhat experimental.
 
       \item \command{Rgui} console implementation now works better with the
       \code{NVDA} screen reader when the full blinking cursor is selected.
       The underlying improvements in cursor handling may help also other
       screen readers on Windows.
 
-      \item The dropfield control in GraphApp can now be left with the TAB
+      \item The drop-field control in GraphApp can now be left with the TAB
       key, improving accessibility of the \command{Rgui} configuration
       editor.
     }
@@ -223,6 +224,21 @@
      }
   }
 
+  \subsection{GRAPHICS}{
+    \itemize{
+      \item The graphics engine version, \code{R_GE_version}, has been
+      bumped to \code{16} and so packages that provide graphics devices
+      should be reinstalled.
+
+      \item The \pkg{grDevices} and \pkg{grid} packages have new
+      functions for rendering typeset glyphs, primarily:
+      \code{grDevices::glyphInfo()} and \code{grid::grid.glyph()}.
+    
+      Rendering of typeset glyphs is only supported so far on the
+      Cairo-based graphics devices and on the \code{pdf()} device.
+    }
+  }
+  
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item A system installation of generic LAPACK 3.10.0 or later will
@@ -270,6 +286,10 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item The default C++ standard has been changed to C++17 where
+      available (which it is on all currently checked platforms): if not
+      C++14 or C++11 is used if available otherwise C++ is not supported.
+
       \item \code{USE_FC_LEN_T} is the default: this uses the
       correct (compiler-dependent) prototypes for Fortran BLAS/LAPACK
       routines called from C/C++, and requires adjustment of many such
@@ -326,14 +346,15 @@
       such a file now uses a site \file{Makevars} file in the same way
       as a package with a \file{src/Makevars.win} file would.
 
-      \item (Windows) The default C++ standard had accidentally been
-      left at C++11 when it was changed to C++14 on Unix.  It is now
-      C++14, as documented.
-
       \item \command{configure} is now passed crucial variables such as
       \env{CC} and \env{CFLAGS} in its environment, as many packages
       were not setting them (as documented in \sQuote{Writing R
-	Extensions} §1.2, and settings there will take precedence).
+	Extensions} §1.2).
+
+      This has most effect where \command{configure} is used to compile
+      parts of the package -- most often by \command{cmake} or
+      \command{libtool} which obfuscate the actual compile commands
+      used.
 
       Also used for \command{configure.win} and \command{configure.ucrt}
       on Windows.
@@ -408,11 +429,16 @@
       It reports the OS in use (if known, as given by
       \code{osVersion}) as well as that \R was built for.
 
+      It notes if a C++ standard was specified which is older than the
+      current default: many packages have used C++11 to mean \sQuote{not
+      C++98} --- as C++11 is the mininum supported since \R 4.0.0, that
+      specification can probably be removed.
+
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
-      \command{R CMD check}
+      \command{R CMD check}.
 
-      Where C++ is compiled, the standard used is reported.
+      Where q C++ standard is specified, it is reported.
     }
   }
 
@@ -568,7 +594,15 @@
       and Bill Dunlap's patch in \PR{17859}.
 
       This \emph{does} require syntactically self contained R source
-      files now, fixing another inadvertant bug.
+      files now, fixing another inadvertent bug.
+
+      \item \code{predict.lm(<model with offset>)} now finds the offset in
+      the correct environment, thanks to André Gillibert's report and patch
+      in \PR{18456}.
+
+      \item Fix for possible segfault when using recently-added graphics
+      features, such as gradients, clipping paths, masks, and groups with
+      \code{pdf(file=NULL)}.
     }
   }
 }
@@ -587,6 +621,14 @@
       from present).
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item (Windows) The default C++ standard had accidentally been
+      left at C++11 when it was changed to C++14 on Unix.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item As \code{"POSIXlt"} objects may be \dQuote{partially filled}
@@ -609,7 +651,7 @@
       separate processes by default (regression in \R 4.2.0).
 
       \item Running examples from HTML documentation now restores
-      previous knitr settings and options (\PR{18420}).
+      previous \pkg{knitr} settings and options (\PR{18420}).
 
       \item Quartz: fonts are now located using Core Graphics API
       instead of deprecated ATS which is no longer supported in the
@@ -644,6 +686,10 @@
       device it needs to open itself, it now leaves \code{devAskNewPage()}
       unchanged even when it was \code{FALSE}, thus fixing a 14 years old
       \sQuote{<FIXME>}.
+
+      \item \code{packageDescription()} again catches errors from encoding
+      conversions. This also fixes broken \code{packageVersion()} in
+      C locale on systems where \code{iconv} does not support transliteration.
     }
   }
 }

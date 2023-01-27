@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2022  The R Core Team
+ *             (C) 2007-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,10 +49,10 @@ static char RunError[501] = "";
 static char *expandcmd(const char *cmd, int whole)
 {
     char c = '\0';
-    char *s, *p, *q = NULL, *f, *dest, *src;
-    int   d, ext, len = strlen(cmd)+1;
-    char buf[len], fl[len], fn[MAX_PATH];
-    DWORD res = 0;
+    char *s = NULL, *p, *q = NULL, *f, *dest, *src, *fn = NULL;
+    int  ext, len = strlen(cmd)+1;
+    char buf[len], fl[len];
+    DWORD d, res = 0;
 
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
@@ -71,12 +71,6 @@ static char *expandcmd(const char *cmd, int whole)
 	}
 	c = *q; /* character after the command, normally a space */
 	*q = '\0';
-    }
-
-    // This is the return value.
-    if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)");
-	return NULL;
     }
 
     /*
@@ -98,20 +92,27 @@ static char *expandcmd(const char *cmd, int whole)
 	 * it might get an error after; but maybe sometimes
 	 * in the future every extension will be executable
 	 */
-	d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
+	d = SearchPath(NULL, fl, NULL, 0, NULL, &f);
     } else {
 	int iexts = 0;
 	const char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
 	while (exts[iexts]) {
 	    strcpy(dest, exts[iexts]);
-	    if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;
+	    if ((d = SearchPath(NULL, fl, NULL, 0, NULL, &f))) break;
 	    iexts++ ;
 	}
     }
+    if (d > 0) {
+	/* perform the search again with the right buffer size */
+	if (!(fn = (char *) malloc(d))) {
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	d = SearchPath(NULL, fl, NULL, d, fn, &f);
+    }
     if (!d) {
-	free(s);
+	if (fn) free(fn);
 	snprintf(RunError, 500, "'%s' not found", p);
-	if(!whole) *q = c;
 	return NULL;
     }
     /*
@@ -123,17 +124,37 @@ static char *expandcmd(const char *cmd, int whole)
     */
     /* NOTE: short names are not always enabled/available. In that case,
        GetShortPathName may succeed and return the original (long) name. */
-    res = GetShortPathName(fn, s, MAX_PATH);
-    if (res == 0) 
+
+    res = GetShortPathName(fn, NULL, 0);
+    if (res > 0) {
+	/* perform the translation again sufficient buffer size */
+	// This is the return value.
+	if (!(s = (char *) malloc(res + strlen(cmd)))) {
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	res = GetShortPathName(fn, s, res);
+    }
+    if (res == 0) {
 	/* Use full name if GetShortPathName fails, i.e. due to insufficient
 	   permissions for some component of the path. */
+	// This is the return value.
+	if (s) free(s);
+	if (!(s = (char *) malloc(d + strlen(cmd) + 1))) {
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
         strncpy(s, fn, d + 1);
+    }
 
     /* FIXME: warn if the path contains space? */
     if (!whole) {
 	*q = c;
 	strcat(s, q);
     }
+    if (fn) free(fn);
     return s;
 }
 

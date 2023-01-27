@@ -2310,8 +2310,14 @@ static void Cairo_FillStroke(SEXP path, int rule,
     CairoFillStrokePath(path, rule, gc, xd);    
 }
 
+/*
+ ***************************
+ * Device capabilities
+ ***************************
+ */
+
 static SEXP Cairo_Capabilities(SEXP capabilities) {
-    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths, glyphs;
 
     PROTECT(patterns = allocVector(INTSXP, 3));
     INTEGER(patterns)[0] = R_GE_linearGradientPattern;
@@ -2369,6 +2375,113 @@ static SEXP Cairo_Capabilities(SEXP capabilities) {
     SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
     UNPROTECT(1);
 
+    PROTECT(glyphs = allocVector(INTSXP, 1));
+    INTEGER(glyphs)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, glyphs);
+    UNPROTECT(1);
+
     return capabilities;
+}
+
+/*
+ ***************************
+ * Typesetting
+ ***************************
+ */
+
+#if CAIRO_HAS_FT_FONT
+#include <cairo-ft.h>
+#endif
+
+static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
+                        SEXP font, double size, 
+                        int colour, double rot, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    
+    int i;
+    
+    if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
+    }
+
+    double weight = R_GE_glyphFontWeight(font);
+    int style = R_GE_glyphFontStyle(font);
+    int wt, sl;
+    if (weight > 400) {
+        wt = CAIRO_FONT_WEIGHT_BOLD;
+    } else {
+        wt = CAIRO_FONT_WEIGHT_NORMAL;
+    }
+    if (style == R_GE_text_style_normal) {
+        sl = CAIRO_FONT_SLANT_NORMAL;
+    } else {
+        sl = CAIRO_FONT_SLANT_ITALIC;
+    }
+
+    cairo_font_face_t *cairo_face = NULL;
+#if CAIRO_HAS_FT_FONT
+    FcPattern *pattern = FcPatternBuild(NULL,
+                                        FC_FILE, FcTypeString, 
+                                        R_GE_glyphFontFile(font),
+                                        FC_INDEX, FcTypeInteger, 
+                                        R_GE_glyphFontIndex(font),
+                                        NULL);
+    cairo_face = cairo_ft_font_face_create_for_pattern(pattern);
+    FcPatternDestroy(pattern);
+#endif
+    if (cairo_face && 
+        cairo_font_face_status(cairo_face) == CAIRO_STATUS_SUCCESS) {
+        cairo_set_font_face(xd->cc, cairo_face);
+    } else {
+        warning(_("Font file not found; matching font family and face"));
+        cairo_select_font_face(xd->cc, 
+                               R_GE_glyphFontFamily(font), sl, wt);
+    }
+    /* Text size (in "points") MUST match the scale of the glyph 
+     * location (in "bigpts").  The latter depends on device dpi.
+     */
+    cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
+
+    for (i=0; i<n; i++) {
+        
+        if (rot != 0.0) {
+            cairo_save(xd->cc);
+            cairo_translate(xd->cc, x[i], y[i]);
+            cairo_rotate(xd->cc, -rot/180.*M_PI);
+            cairo_translate(xd->cc, -x[i], -y[i]);
+        }
+
+        cairo_glyph_t cairoGlyph;
+        cairoGlyph.index = glyphs[i];
+        cairoGlyph.x = x[i];
+        cairoGlyph.y = y[i];
+        if (!xd->appending) {
+            CairoColor(colour, xd);
+            cairo_show_glyphs(xd->cc, &cairoGlyph, 1);
+        } else {
+            cairo_glyph_path(xd->cc, &cairoGlyph, 1);
+        }
+
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, use temporary pattern as source and mask that */
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+                /* Release temporary pattern */
+                cairo_pattern_destroy(source);
+            }
+        }
+
+        if (rot != 0.0) {
+            cairo_restore(xd->cc);
+        }
+    }
+    
 }
 

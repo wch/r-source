@@ -5517,6 +5517,7 @@ typedef struct {
 #define PDFfillStrokePath 11
 #define PDFtemp 12
 #define PDFshadingSoftMask 13
+#define PDFglyphFont 14
 
 /* PDF Blend Modes */
 #define PDFnormal 0
@@ -5662,6 +5663,7 @@ typedef struct {
     int appendingPattern; /* Are we defining a (tiling) pattern ? */
     int blendModes[PDFnumBlendModes];
     int appendingGroup; /* Are we defining a transparency group ? */
+    int numGlyphFonts;
 
     /* Is the device "offline" (does not write out to a file) */
     Rboolean offline;
@@ -5757,6 +5759,9 @@ static void     PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
 static void     PDF_fillStroke(SEXP path, int rule, 
                                const pGEcontext gc, pDevDesc dd);
 static SEXP     PDF_capabilities(SEXP capabilities);
+static void     PDF_glyph(int n, int *glyphs, double *x, double *y, 
+                          SEXP font, double size, 
+                          int colour, double rot, pDevDesc dd);
 
 /***********************************************************************
  * Stuff for recording definitions
@@ -6819,6 +6824,52 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
 }
 
 /***********************************************************************
+ * Stuff for glyphs
+ */
+
+static int newGlyphFont(const char *fontname, PDFDesc *pd)
+{
+    /* Must be able to handle a glyph info font file name */
+    char buf[600];
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFglyphFont, pd);
+
+    pd->numGlyphFonts += 1;
+
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n", defNum, pd);
+    catDefn("<<\n/Type /Font\n/Subtype /Type0\n", defNum, pd);
+    snprintf(buf,
+             100,
+             "/Name /glyph-font-%i\n",
+             pd->numGlyphFonts);
+    catDefn(buf, defNum, pd);
+    snprintf(buf,
+             100,
+             "/BaseFont /%s\n",
+             fontname);
+    catDefn(buf, defNum, pd);
+    catDefn("/Encoding /Identity-H\n/DescendantFonts [\n<<\n/Type /Font\n/Subtype /CIDFontType2\n", 
+            defNum, pd);
+    /* BaseFont again */
+    catDefn(buf, defNum, pd);
+    catDefn("/CIDSystemInfo\n<<\n/Registry (Adobe)\n/Ordering (Identity)\n/Supplement 0\n>>\n/FontDescriptor\n<<\n/Type /FontDescriptor\n", 
+            defNum, pd);
+    snprintf(buf,
+             100,
+             "/FontName /%s\n",
+             fontname);
+    catDefn(buf, defNum, pd);
+    catDefn("/Flags 6\n/FontBBox [-1000 -1000 1000 1000]\n/ItalicAngle 0\n/Ascent 1000\n/Descent -1000\n/CapHeight 1000\n/StemV 100\n>>\n/CIDToGIDMap /Identity\n>>\n]\n>>\nendobj\n",
+            defNum, pd);    
+    trimDefn(defNum, pd);
+
+    return defNum;
+}
+
+/***********************************************************************
  * Stuff for writing out PDF code
  */
 
@@ -6881,6 +6932,18 @@ static void PDFwritePatternDefs(int objoffset, int excludeDef, PDFDesc *pd)
         }
     }
     PDFwrite(buf, 100, ">>\n", pd);
+}
+
+static void PDFwriteGlyphFontDefs(int objOffset, PDFDesc *pd) {
+    int i;
+    char buf[100];
+    int glyphFontCount = 0;
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFglyphFont) {
+            PDFwrite(buf, 100, "/glyph-font-%d %d 0 R ", pd,
+                     ++glyphFontCount, i + objOffset);
+        }
+    }
 }
 
 static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
@@ -6989,6 +7052,55 @@ static void PDFFillStrokePath(int i, int rule, PDFDesc *pd)
     }
 }
 
+/* This was an optimization that has effectively been disabled in
+   2.8.0, to avoid repeatedly going in and out of text mode.  Howver,
+   Acrobat puts all text rendering calls in BT...ET into a single
+   transparency group, and other viewers do not.  So for consistent
+   rendering we put each text() call into a separate group.
+*/
+static void texton(PDFDesc *pd)
+{
+    char buf[10];
+    PDFwrite(buf, 10, "BT\n", pd);
+    pd->inText = TRUE;
+}
+
+static void textoff(PDFDesc *pd)
+{
+    char buf[10];
+    PDFwrite(buf, 10, "ET\n", pd);
+    pd->inText = FALSE;
+}
+
+static void PDFGlyphs(int n, int *glyphs, double *x, double *y, 
+                      double size, double rot, PDFDesc *pd) {
+    int i;
+    char buf[200];
+    double a, b, bm, rot1; 
+
+    rot1 = rot * DEG2RAD;
+    a = size * cos(rot1);
+    b = size * sin(rot1);
+    bm = -b;
+    /* avoid printing -0.00 on rotated text */
+    if(fabs(a) < 0.01) a = 0.0;
+    if(fabs(b) < 0.01) {b = 0.0; bm = 0.0;}
+
+    if(!pd->inText) texton(pd);
+
+    PDFwrite(buf, 200, "/glyph-font-%d 1 Tf\n", pd, pd->numGlyphFonts);
+
+    for (i=0; i<n; i++) {
+        PDFwrite(buf, 200, "%.2f %.2f %.2f %.2f %.2f %.2f Tm ", pd,
+                 a, b, bm, a, x[i], y[i]);
+        if (glyphs[i] > 0xFFFF) 
+            warning(_("Glyph ID larger than 0xFFFF; output will be incorrect"));
+        PDFwrite(buf, 200, "<%04x> Tj\n", pd, glyphs[i]);        
+    }
+
+    textoff(pd); 
+}
+                      
 /*
  * Search through the alphas used so far and return
  * existing index if there is one.
@@ -7654,6 +7766,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->currentMask = -1;
     pd->appendingPattern = -1;
     pd->appendingGroup = -1;
+    pd->numGlyphFonts = 0;
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -7832,10 +7945,11 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->fill            = PDF_fill;
     dd->fillStroke      = PDF_fillStroke;
     dd->capabilities    = PDF_capabilities;
+    dd->glyph           = PDF_glyph;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
-    dd->deviceVersion = R_GE_group;
+    dd->deviceVersion = R_GE_glyphs;
     return TRUE;
 }
 
@@ -8090,26 +8204,6 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
     }
 }
 
-/* This was an optimization that has effectively been disabled in
-   2.8.0, to avoid repeatedly going in and out of text mode.  Howver,
-   Acrobat puts all text rendering calls in BT...ET into a single
-   transparency group, and other viewers do not.  So for consistent
-   rendering we put each text() call into a separate group.
-*/
-static void texton(PDFDesc *pd)
-{
-    char buf[10];
-    PDFwrite(buf, 10, "BT\n", pd);
-    pd->inText = TRUE;
-}
-
-static void textoff(PDFDesc *pd)
-{
-    char buf[10];
-    PDFwrite(buf, 10, "ET\n", pd);
-    pd->inText = FALSE;
-}
-
 static void PDF_Encodings(PDFDesc *pd)
 {
     encodinglist enclist = pd->encodings;
@@ -8284,7 +8378,6 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     char buf[100];
     int i, objCount, nenc, nfonts, cidnfonts, nraster, nmask;
 
-
     nraster = pd->numRasters;
     nmask = pd->numMasks;
 
@@ -8354,6 +8447,21 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
 	    fontlist = fontlist->next;
 	}
     }
+
+    /* Definitions start after ExtGState */
+    int defnOffset = objCount + 1;
+    for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
+        ++defnOffset;
+    for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
+        ++defnOffset;
+    for (i = 0; i < PDFnumBlendModes; i++)
+        if (pd->blendModes[i])
+            ++defnOffset;
+    if (nmask > 0)
+        ++defnOffset;
+    
+    PDFwriteGlyphFontDefs(defnOffset, pd);
+
     PDFwrite(buf, 100, ">>\n", pd);
 
     /* graphics state parameter dictionaries */
@@ -8369,7 +8477,6 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     if (nmask > 0)
 	PDFwrite(buf, 100, "/GSais %d 0 R ", pd, ++objCount);
     /* Soft mask definitions */
-    int defnOffset = ++objCount;
     if (pd->numDefns > 0) {
         PDFwriteSoftMaskDefs(defnOffset, pd);
     }    
@@ -8404,7 +8511,6 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     if (pd->numDefns > 0) {
         PDFwritePatternDefs(defnOffset, excludeDef, pd);
     }
-
 
     if (streql(pd->colormodel, "srgb")) {
 	/* Ojects 5 and 6 are the sRGB color space, if required */
@@ -8880,6 +8986,7 @@ static void PDF_NewPage(const pGEcontext gc,
 		error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDF device"), buf);
 	    pd->pdffp = pd->mainfp;
             resetDefinitions(pd);
+            pd->numGlyphFonts = 0;
 	    PDF_startfile(pd);
 	}
     }
@@ -10149,7 +10256,11 @@ void PDF_MetricInfo(int c,
 static SEXP PDF_setPattern(SEXP pattern, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP ref = R_NilValue;
-    ref = addPattern(pattern, pd);
+
+    if (!pd->offline) {
+        ref = addPattern(pattern, pd);
+    }
+
     return ref;
 }
 
@@ -10159,23 +10270,26 @@ static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP newref = R_NilValue;
 
-    if (isNull(ref)) {
-        /* Generate new clipping path */
-        int index = newPath(path, PDFclipPath, pd);
-        if (index >= 0) {
+    if (!pd->offline) {
+        if (isNull(ref)) {
+            /* Generate new clipping path */
+            int index = newPath(path, PDFclipPath, pd);
+            if (index >= 0) {
+                PDFwriteClipPath(index, pd);
+                PROTECT(newref = allocVector(INTSXP, 1));
+                INTEGER(newref)[0] = index;
+                UNPROTECT(1);
+            }
+        } else {
+            /* Reuse existing clipping path */
+            int index = INTEGER(ref)[0];
             PDFwriteClipPath(index, pd);
-            PROTECT(newref = allocVector(INTSXP, 1));
-            INTEGER(newref)[0] = index;
-            UNPROTECT(1);
+            newref = ref;
         }
-    } else {
-        /* Reuse existing clipping path */
-        int index = INTEGER(ref)[0];
-        PDFwriteClipPath(index, pd);
-        newref = ref;
+
+        PDF_Invalidate(pd);
     }
 
-    PDF_Invalidate(pd);
     return newref;
 
 }
@@ -10184,7 +10298,11 @@ static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
 
 static SEXP PDF_setMask(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    ref = addMask(path, ref, pd);
+
+    if (!pd->offline) {
+        ref = addMask(path, ref, pd);
+    }
+
     return ref;
 }
 
@@ -10195,11 +10313,13 @@ static SEXP PDF_defineGroup(SEXP source, int op, SEXP destination,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     SEXP ref = R_NilValue;
 
-    int index = newGroup(source, op, destination, pd);
-    if (index >= 0) {
-        PROTECT(ref = allocVector(INTSXP, 1));
-        INTEGER(ref)[0] = index;
-        UNPROTECT(1);
+    if (!pd->offline) {
+        int index = newGroup(source, op, destination, pd);
+        if (index >= 0) {
+            PROTECT(ref = allocVector(INTSXP, 1));
+            INTEGER(ref)[0] = index;
+            UNPROTECT(1);
+        }
     }
 
     return ref;
@@ -10208,6 +10328,8 @@ static SEXP PDF_defineGroup(SEXP source, int op, SEXP destination,
 static void PDF_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int index;
+
+    PDF_checkOffline();
 
     if(pd->inText) textoff(pd);
 
@@ -10248,6 +10370,9 @@ static void PDF_releaseGroup(SEXP ref, pDevDesc dd) {}
 
 static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int index = newPath(path, PDFstrokePath, pd);
     if (index >= 0) {
         if(pd->inText) textoff(pd);
@@ -10264,6 +10389,9 @@ static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
 
 static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int index = newPath(path, PDFfillPath, pd);
     if (index >= 0) {
         if (gc->patternFill != R_NilValue || R_VIS(gc->fill)) {
@@ -10284,6 +10412,9 @@ static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
 static void PDF_fillStroke(SEXP path, int rule, 
                            const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
     int code;
     int index = newPath(path, PDFfillStrokePath, pd);
     if (index >= 0) {
@@ -10321,7 +10452,7 @@ static void PDF_fillStroke(SEXP path, int rule,
 }
 
 static SEXP PDF_capabilities(SEXP capabilities) {
-    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths, glyphs;
 
     PROTECT(patterns = allocVector(INTSXP, 3));
     INTEGER(patterns)[0] = R_GE_linearGradientPattern;
@@ -10366,8 +10497,35 @@ static SEXP PDF_capabilities(SEXP capabilities) {
     SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
     UNPROTECT(1);
 
+    PROTECT(glyphs = allocVector(INTSXP, 1));
+    INTEGER(glyphs)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, glyphs);
+    UNPROTECT(1);
+
     return capabilities;
 }
+
+static void PDF_glyph(int n, int *glyphs, double *x, double *y, 
+                      SEXP font, double size, 
+                      int colour, double rot, pDevDesc dd) {
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
+
+    int index = newGlyphFont(R_GE_glyphFontPSname(font), pd);
+    if (index >= 0) {
+        if (R_VIS(colour)) {
+            if(pd->inText) textoff(pd);
+            PDF_SetFill(colour, dd);
+            if (pd->currentMask >= 0) {
+                PDFwriteMask(pd->currentMask, pd);
+            }
+            PDFSetTextRenderMode(pd);
+            PDFGlyphs(n, glyphs, x, y, size, rot, pd);
+        }
+    }
+}
+
 
 /*  PostScript Device Driver Parameters:
  *  ------------------------

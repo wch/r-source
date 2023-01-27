@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-10-12 r83075) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.6.0 (64-bit)
+R Under development (unstable) (2023-01-20 r83643) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2039,6 +2039,9 @@ $transformations
 $paths
 [1] TRUE
 
+$glyphs
+[1] TRUE
+
 > 
 > 
 > 
@@ -3550,15 +3553,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2022-10-10" "2022-10-11" "2022-10-12" "2022-10-13" "2022-10-14"
-[6] "2022-10-15"
+[1] "2023-01-21" "2023-01-22" "2023-01-23" "2023-01-24" "2023-01-25"
+[6] "2023-01-26"
 > pretty(Sys.time(), n = 10)
- [1] "2022-10-12 14:08:17 BST" "2022-10-12 14:08:18 BST"
- [3] "2022-10-12 14:08:19 BST" "2022-10-12 14:08:20 BST"
- [5] "2022-10-12 14:08:21 BST" "2022-10-12 14:08:22 BST"
- [7] "2022-10-12 14:08:23 BST" "2022-10-12 14:08:24 BST"
- [9] "2022-10-12 14:08:25 BST" "2022-10-12 14:08:26 BST"
-[11] "2022-10-12 14:08:27 BST"
+ [1] "2023-01-23 09:00:53 NZDT" "2023-01-23 09:00:54 NZDT"
+ [3] "2023-01-23 09:00:55 NZDT" "2023-01-23 09:00:56 NZDT"
+ [5] "2023-01-23 09:00:57 NZDT" "2023-01-23 09:00:58 NZDT"
+ [7] "2023-01-23 09:00:59 NZDT" "2023-01-23 09:01:00 NZDT"
+ [9] "2023-01-23 09:01:01 NZDT" "2023-01-23 09:01:02 NZDT"
+[11] "2023-01-23 09:01:03 NZDT"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4364,7 +4367,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.873 0.682 22.639 0 0.003 
+Time elapsed:  29.035 0.328 29.373 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -13,10 +13,12 @@
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
+
+  (currently none)
 }
-\usage{
-default.stringsAsFactors()
-}
+%% \usage{
+%% default.stringsAsFactors()
+%% }
 %% \arguments{
 %%   \item{\dots}{(arguments)}
 %% }

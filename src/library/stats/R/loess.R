@@ -1,7 +1,7 @@
 #  File src/library/stats/R/loess.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2020 The R Core Team
+#  Copyright (C) 1998-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -443,20 +443,21 @@ print.summary.loess <-
     function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     print.loess(x, digits=digits, ...)
+    prs <- x$pars
     cat("Trace of smoother matrix: ", format(round(x$trace.hat, 2L)),
-        "  (",x$pars$trace.hat, ")\n", sep="")
+        "  (",prs$trace.hat, ")\n", sep="")
     cat("\nControl settings:\n")
-    cat("  span     : ", format(x$pars$span), "\n")
-    cat("  degree   : ", x$pars$degree, "\n")
-    cat("  family   : ", x$pars$family)
-    if(x$pars$family != "gaussian")
-	cat("	    iterations =", x$pars$iterations)
-    cat("\n  surface  : ", x$pars$surface)
-    if(x$pars$surface == "interpolate")
-	cat("	  cell =", format(x$pars$cell))
-    cat("\n  normalize: ", x$pars$normalize)
-    cat("\n parametric: ", x$pars$parametric)
-    cat("\ndrop.square: ", x$pars$drop.square, "\n")
+    cat("  span     : ", format(prs$span), "\n")
+    cat("  degree   : ", prs$degree, "\n")
+    cat("  family   : ", prs$family)
+    if(prs$family != "gaussian")
+	cat("	    iterations =", prs$iterations)
+    cat("\n  surface  : ", prs$surface)
+    if(prs$surface == "interpolate")
+	cat("	  cell =", format(prs$cell))
+    cat("\n  normalize: ", prs$normalize)
+    cat("\n parametric: ", prs$parametric)
+    cat("\ndrop.square: ", prs$drop.square, "\n")
     invisible(x)
 }
 

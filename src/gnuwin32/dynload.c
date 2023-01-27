@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2021 The R Core Team
+ *  Copyright (C) 1997-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,46 +29,22 @@
 #include <stdlib.h>
 #include <Defn.h>
 #include <Rmath.h>
-#include <direct.h>
 #define WIN32_LEAN_AND_MEAN 1
-/* Eventually #define _WIN32_WINNT 0x0502 for SetDllDirectoryA */
+
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0502 /* for SetDllDirectory */
+#endif
+#include <direct.h>
 #include <windows.h>
 
-/* SetDllDirectory is supported under XP SP1 and later.
-   If called with a non-NULL argument it sets the argument to be
+/* If called with a non-NULL argument it sets the argument to be
    the second item on the DLL search path (after the application
    launch directory).  This is removed if called with NULL.
-
-   Prior to XP SP1 the second item was the current directory, but this
-   has (by default, 'safe DLL search mode') been moved below the
-   Windows dirs.  Using SetDllDirectory removes it altogether.
-
-   We fudge this via the current directory in earlier systems.
  */
-typedef BOOL (WINAPI *PSDD)(LPCTSTR);
 
 int setDLLSearchPath(const char *path)
 {
-    int res = 0; /* failure */
-    PSDD p = (PSDD) -1;
-    static char wd[MAX_PATH] = "";  /* stored real current directory */
-
-    // XP SP1 and later.
-    if(p == (PSDD) -1)
-	p = (PSDD) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
-				  "SetDllDirectoryA");
-    if(p) {
-	res = p(path);
-    } else { /* Windows 2000 */
-	if(path) {
-	    GetCurrentDirectory(MAX_PATH, wd);
-	    SetCurrentDirectory(path);
-	} else if (wd[0]) {
-	    SetCurrentDirectory(wd);
-	    wd[0] = '\0';
-	}
-    }
-    return res;
+    return SetDllDirectory(path);
 }
 
 #include <R_ext/Rdynload.h>
@@ -91,7 +67,8 @@ static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now,
 static DL_FUNC getRoutine(DllInfo *info, char const *name);
 
 static void R_getDLLError(char *buf, int len);
-static void GetFullDLLPath(SEXP call, char *buf, const char *path);
+static size_t
+GetFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *path);
 
 static void closeLibrary(HINSTANCE handle)
 {
@@ -176,17 +153,37 @@ static void R_getDLLError(char *buf, int len)
     LocalFree(lpMsgBuf);
 }
 
-static void GetFullDLLPath(SEXP call, char *buf, const char *path)
+/* Retuns the number of bytes (excluding the terminator) needed in buf.
+   When bufsize is at least that + 1, buf contains the result
+   with terminator. */
+static size_t
+GetFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *path)
 {
-    char *p;
+    /* NOTE: Unix version also expands ~ */
 
+    size_t needed = strlen(path);
     if ((path[0] != '/') && (path[0] != '\\') && (path[1] != ':')) {
-	if (!getcwd(buf, MAX_PATH))
+	needed ++; /* for separator */
+	DWORD res = GetCurrentDirectory(bufsize, buf);
+	if (!res)
 	    errorcall(call, _("cannot get working directory"));
-	strcat(buf, "\\");
-	strcat(buf, path);
-    } else
-	strcpy(buf, path);
-    /* fix slashes to allow inconsistent usage later */
-    for (p = buf; *p; p++) if (*p == '\\') *p = '/';
+	needed += res;
+	if (res >= bufsize)
+	    return needed - 1; /* res here includes terminator */
+
+	if (bufsize >= needed + 1) {
+	    strcat(buf, "/");
+	    strcat(buf, path);
+	    /* fix slashes to allow inconsistent usage later */
+	    fixPath(buf);
+	}
+    } else {
+	if (bufsize >= needed + 1) {
+	    strcpy(buf, path);
+	    /* fix slashes to allow inconsistent usage later */
+	    fixPath(buf);
+	}
+    }
+    return needed;
 }
+

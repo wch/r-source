@@ -662,7 +662,7 @@ model.matrix.default <- function(object, data = environment(object),
                 else {
                     ca <- contrasts.arg[[nn]]
                     if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca
-                    else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
+                    else contrasts(data[[ni]]) <- ca
                 }
             }
           }
