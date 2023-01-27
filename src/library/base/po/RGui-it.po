@@ -1,11 +1,11 @@
 # R Italian translation 
 # This file is distributed under the same license as the R package.
 # Copyright (C) The R Foundation.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RGui 4.1.0\n"
+"Project-Id-Version: R-4-2-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: src/gnuwin32/console.c:1176 src/gnuwin32/console.c:1218
 msgid "Not enough memory"
@@ -109,8 +109,11 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: elimina carattere precedente;\n"
 
 #: src/gnuwin32/console.c:2271
-msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del o Ctrl+K: cancella il testo dal carattere corrente a fine riga.\n"
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr ""
+"     Ctrl+Del o Ctrl+K: cancella il testo dal carattere corrente a fine "
+"riga.\n"
 
 #: src/gnuwin32/console.c:2272
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -121,16 +124,25 @@ msgid "  Copy and paste.\n"
 msgstr "  Copia e incolla.\n"
 
 #: src/gnuwin32/console.c:2274
-msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Usa il mouse (tasto sinistro abbassato) per selezionare il testo.\n"
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+"     Usa il mouse (tasto sinistro abbassato) per selezionare il testo.\n"
 
 #: src/gnuwin32/console.c:2275
-msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Usa Shift+Del (o Ctrl+C) per copiare il testo selezionato negli appunti e\n"
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+"     Usa Shift+Del (o Ctrl+C) per copiare il testo selezionato negli appunti "
+"e\n"
 
 #: src/gnuwin32/console.c:2276
-msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Ins (o Ctrl+V o Ctrl+Y) per copiare il contenuto della clipboard (se presente)  \n"
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+"     Shift+Ins (o Ctrl+V o Ctrl+Y) per copiare il contenuto della clipboard "
+"(se presente)  \n"
 
 #: src/gnuwin32/console.c:2277
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -146,7 +158,9 @@ msgstr "     Ctrl+L: pulisci console.\n"
 
 #: src/gnuwin32/console.c:2280
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O o INS: attiva/disattiva modalità sovrascrittura: inizialmente inattiva.\n"
+msgstr ""
+"     Ctrl+O o INS: attiva/disattiva modalità sovrascrittura: inizialmente "
+"inattiva.\n"
 
 #: src/gnuwin32/console.c:2281
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -186,7 +200,8 @@ msgstr ""
 
 #: src/gnuwin32/console.c:2286
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "Le hotkey standard di Windows possono essere utilizzate per spostarsi al\n"
+msgstr ""
+"Le hotkey standard di Windows possono essere utilizzate per spostarsi al\n"
 
 #: src/gnuwin32/console.c:2287
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -199,7 +214,7 @@ msgstr "Editor di R"
 #: src/gnuwin32/editor.c:123
 #, c-format
 msgid "unable to open file %s for reading"
-msgstr "Non è possibile aprire il file %s in lettura"
+msgstr "non è possibile aprire il file %s in lettura"
 
 #: src/gnuwin32/editor.c:139
 #, c-format
@@ -238,7 +253,8 @@ msgstr "COMANDI IN ESECUZIONE\n"
 
 #: src/gnuwin32/editor.c:609
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "Per eseguire una linea o sezione di codice R, selezionare il codice e\n"
+msgstr ""
+"Per eseguire una linea o sezione di codice R, selezionare il codice e\n"
 
 #: src/gnuwin32/editor.c:610
 msgid "     Press Ctrl-R\n"
@@ -250,14 +266,17 @@ msgstr "     Seleziona \"Esegui linea o selezione\" dal menu \"Modifica\"\n"
 
 #: src/gnuwin32/editor.c:612
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Premi l'icona \"Esegui linea o selezione\" sulla barra degli strumenti\n"
+msgstr ""
+"     Premi l'icona \"Esegui linea o selezione\" sulla barra degli strumenti\n"
 
 #: src/gnuwin32/editor.c:613
-msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Questo copierà i comandi selezionati nella console e li valuterà.\n"
 
 #: src/gnuwin32/editor.c:614
-msgid "If there is no selection, this will just run the current line and advance\n"
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
 msgstr "Se non c'è selezione, questo eseguirà la linea attuale e avanzerà\n"
 
 #: src/gnuwin32/editor.c:615
@@ -469,7 +488,9 @@ msgstr ""
 
 #: src/gnuwin32/preferences.c:376
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr "I cambiarmenti nella dimensione del pager non saranno applicati su quelli attivi"
+msgstr ""
+"I cambiarmenti nella dimensione del pager non saranno applicati su quelli "
+"attivi"
 
 #: src/gnuwin32/preferences.c:382
 msgid ""
@@ -858,34 +879,28 @@ msgid "Arrange Icons"
 msgstr "Allinea icone"
 
 #: src/extra/graphapp/metafile.c:55
-#, fuzzy
 msgid "Unable to save metafile to the clipboard"
-msgstr "Non è possibile aprire gli appunti"
+msgstr "Non è possibile salvare metafile negli appunti"
 
 #: src/extra/graphapp/metafile.c:108
-#, fuzzy
 msgid "Unable to create metafile"
-msgstr "Non è possibile creare una finestra per l'editor"
+msgstr "Non è possibile creare metafile"
 
 #: src/extra/graphapp/metafile.c:113
-#, fuzzy
 msgid "Insufficient memory to create metafile"
-msgstr "Memoria insufficiente. Per piacere, si chiuda la console"
+msgstr "Memoria insufficiente per creare metafile"
 
 #: src/extra/graphapp/printer.c:90
-#, fuzzy
 msgid "Unable to choose printer"
-msgstr "Non è possibile creare una finestra pager"
+msgstr "Non è possibile selezionare una stampante"
 
 #: src/extra/graphapp/printer.c:118
-#, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr "Memoria insufficiente per visualizzare il file con il pager interno"
+msgstr "Memoria insufficiente per una nuova stampante"
 
 #: src/extra/graphapp/printer.c:151
-#, fuzzy
 msgid "Unable to start the print job"
-msgstr "Non è possibile creare una finestra pager"
+msgstr "Non è possibile avviare un processo di stampa"
 
 #: src/library/utils/src/windows/dataentry.c:225
 #: src/library/utils/src/windows/dataentry.c:1853
@@ -991,7 +1006,8 @@ msgstr ""
 "  Ctrl-L ridisegna lo schermo, ridimensiona automaticamente le colonne\n"
 "  Ctrl-C copia le celle selezionate\n"
 "  Ctrl-V incolla nelle celle selezionate\n"
-"  Clic-destro per il menu di copia, incolla, auto-ridimensionamento della colonna selezionata\n"
+"  Clic-destro per il menu di copia, incolla, auto-ridimensionamento della "
+"colonna selezionata\n"
 "\n"
 
 #: src/library/utils/src/windows/dataentry.c:1702
@@ -1057,7 +1073,8 @@ msgstr "Metafile avanzati"
 #: src/library/grDevices/src/devWindows.c:1013
 #: src/library/grDevices/src/devWindows.c:3559
 msgid "file path selected is too long: only 512 bytes are allowed"
-msgstr "il percorso file scelto è troppo lungo: sono ammessi solo 512 caratteri"
+msgstr ""
+"il percorso file scelto è troppo lungo: sono ammessi solo 512 caratteri"
 
 #: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"

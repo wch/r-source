@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"PO-Revision-Date: 2023-01-19 18:31+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: Srunmed.c:63
 msgid "bandwidth/span of running medians is larger than n"
-msgstr "ampiezza/copertura mediane più grande di n"
+msgstr "ampiezza/copertura delle mediane più grande di n"
 
 #: Srunmed.c:262
 #, c-format
@@ -141,11 +141,15 @@ msgstr "solo il primo elemento è utilizzato come nome di variabile"
 msgid "invalid expression in '%s'"
 msgstr "espressione non valida in '%s'"
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+msgid "too many variables"
+msgstr "troppe variabili"
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr "nomi variabili non validi"
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr "'tag' non valido"
 
@@ -182,14 +186,15 @@ msgstr "L'argomento %s dev'essere un vettore numerico non vuoto"
 #: family.c:131 family.c:134
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr "l'argomento %s dev'essere un vettore numerico di lunghezza 1 o lunghezza %d"
+msgstr ""
+"l'argomento %s dev'essere un vettore numerico di lunghezza 1 o lunghezza %d"
 
-#: fexact.c:273
+#: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr "un integer overflow potrebbe accadere in 'mult * ldkey' = %g"
 
-#: fexact.c:653
+#: fexact.c:656
 #, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
@@ -198,14 +203,21 @@ msgid ""
 msgstr ""
 "FEXACT errore 6.  LDKEY=%d è troppo piccolo per questo problema,\n"
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
-"Prova ad incrementare la dimensione dell'area di lavoro e possibilmente 'mult'"
+"Prova ad incrementare la dimensione dell'area di lavoro e possibilmente "
+"'mult'"
 
-#: fexact.c:1037
+#: fexact.c:1040
 #, c-format
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= "
+"%d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
+msgstr ""
+"FEXACT[f3xact()] errore: chiave hash %.0g > INT_MAX, kyy=%d, it[i (= nco = "
+"%d)]= %d.\n"
+"Piuttosto si usi 'simulate.p.value=TRUE'\n"
 
-#: fexact.c:1069
+#: fexact.c:1073
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -214,18 +226,20 @@ msgid ""
 msgstr ""
 "FEXACT errore 30.  La lunghezza dello stack eccede in f3xact,\n"
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
-"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p.value=TRUE'"
+"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
+"value=TRUE'"
 
-#: fexact.c:1404
+#: fexact.c:1407
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
-"FEXACT errore 6 (f5xact).  LDKEY=%d è troppo piccolo per questo problema: kval=%d.\n"
+"FEXACT errore 6 (f5xact).  LDKEY=%d è troppo piccolo per questo problema: "
+"kval=%d.\n"
 "Prova ad incrementare la dimensione dell'area di lavoro."
 
-#: fexact.c:1417
+#: fexact.c:1420
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -234,9 +248,10 @@ msgid ""
 msgstr ""
 "FEXACT errore 7(%s). LDSTP=%d è troppo piccolo per questo problema,\n"
 "  (kval=%d, itop-ldstp=%d).\n"
-"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p.value=TRUE'."
+"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
+"value=TRUE'."
 
-#: fexact.c:1454
+#: fexact.c:1458
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -245,7 +260,8 @@ msgid ""
 msgstr ""
 "FEXACT errore 7(%s). LDSTP=%d è troppo piccolo per questo problema,\n"
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
-"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p.value=TRUE'"
+"Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
+"value=TRUE'"
 
 #: fourier.c:70 fourier.c:165
 msgid "non-numeric argument"
@@ -261,13 +277,19 @@ msgstr "richiesta serie a valori vettoriali (multidimensionale)"
 
 #: fourier.c:221
 #, c-format
-msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
-msgstr "nextn() non ha trovato alcuna soluzione < %d = INT_MAX (il massimo intero); passate '0+ n' come alternativa a 'n'"
+msgid ""
+"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
+"instead of 'n'"
+msgstr ""
+"nextn() non ha trovato alcuna soluzione < %d = INT_MAX (il massimo intero); "
+"passate '0+ n' come alternativa a 'n'"
 
 #: fourier.c:233
 #, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
-msgstr "nextn<64>() non ha trovato alcuna soluzione < %ld = UINT64_MAX (il massimo intero)"
+msgstr ""
+"nextn<64>() non ha trovato alcuna soluzione < %ld = UINT64_MAX (il massimo "
+"intero)"
 
 #: fourier.c:249
 msgid "no factors"
@@ -287,8 +309,12 @@ msgstr "'n' deve avere typeof(.) \"integer\" o \"double\""
 
 #: fourier.c:298
 #, c-format
-msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
-msgstr "nextn() = %<PRIu64> > 2^53 potrebbe non essere esattamente rappresentabile in R (come \"double\")"
+msgid ""
+"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as "
+"\"double\")"
+msgstr ""
+"nextn() = %<PRIu64> > 2^53 potrebbe non essere esattamente rappresentabile "
+"in R (come \"double\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -430,7 +456,8 @@ msgstr "la variabile %d non ha livelli"
 
 #: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
-msgstr "la variabile risposta appare anche nel membro di destra ed è stata eliminata"
+msgstr ""
+"la variabile risposta appare anche nel membro di destra ed è stata eliminata"
 
 #: model.c:567
 #, c-format
@@ -453,7 +480,8 @@ msgstr "i nomi dei termini saranno troncati"
 
 #: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
-msgstr "le variabili complesse non sono attualmente ammesse nelle matrici del modello"
+msgstr ""
+"le variabili complesse non sono attualmente ammesse nelle matrici del modello"
 
 #: model.c:669
 #, c-format
@@ -507,8 +535,12 @@ msgstr "l'argomento 'data' è di tipo sbagliato"
 
 #: model.c:1873
 #, c-format
-msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
-msgstr "'varlist' è cambiato (da nvar=%d) al nuovo %d dopo EncodeVars() -- non dovrebbe accadere più!"
+msgid ""
+"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
+"no longer happen!"
+msgstr ""
+"'varlist' è cambiato (da nvar=%d) al nuovo %d dopo EncodeVars() -- non "
+"dovrebbe accadere più!"
 
 #: model.c:2157
 msgid "'.' in formula and no 'data' argument"
@@ -603,7 +635,8 @@ msgstr "valore non finito passato da optim"
 #: optim.c:89
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
-msgstr "la funzione obiettivo in optim restituisce valori di lunghezza %d anziché 1"
+msgstr ""
+"la funzione obiettivo in optim restituisce valori di lunghezza %d anziché 1"
 
 #: optim.c:116
 #, c-format
@@ -696,7 +729,9 @@ msgstr "valore della funzione non valido per l'ottimizzatore 'nlm'"
 
 #: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
-msgstr "il caching del valore della funzione per l'ottimizzazione è seriamente confuso"
+msgstr ""
+"il caching del valore della funzione per l'ottimizzazione è seriamente "
+"confuso"
 
 #: optimize.c:596
 msgid "numeric parameter expected"
@@ -777,7 +812,9 @@ msgstr "Iterazioni successive entro i limiti di tolleranza.\n"
 
 #: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr "L'ultimo passaggio globale non è riuscito a determinare un punto più piccolo di x.\n"
+msgstr ""
+"L'ultimo passaggio globale non è riuscito a determinare un punto più piccolo "
+"di x.\n"
 
 #: optimize.c:675
 msgid ""
@@ -814,11 +851,13 @@ msgstr "valori di NA non valido per il parametro"
 
 #: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
-msgstr "l'hessiano passato è della lunghezza o modalità sbagliata, viene ignorato"
+msgstr ""
+"l'hessiano passato è della lunghezza o modalità sbagliata, viene ignorato"
 
 #: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
-msgstr "il gradiente passato è della lunghezza o modalità sbagliata, viene ignorato"
+msgstr ""
+"il gradiente passato è della lunghezza o modalità sbagliata, viene ignorato"
 
 #: pacf.c:87
 msgid "bad Starma struct"
@@ -850,12 +889,15 @@ msgstr "gli algoritmi di porta 3 o successivi non sono supportati"
 #: port.c:317
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr "la funzione gradiente deve restituire un vettore numerico di lunghezza %d"
+msgstr ""
+"la funzione gradiente deve restituire un vettore numerico di lunghezza %d"
 
 #: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "La funzione hessiana deve restituire una matrice numerica quadrata di ordine %d"
+msgstr ""
+"La funzione hessiana deve restituire una matrice numerica quadrata di ordine "
+"%d"
 
 #: port.c:386
 msgid "'rho' must be an environment"
@@ -872,7 +914,8 @@ msgstr "Quando Hessian è definito lo dev'essere anche il gradiente"
 #: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "l'ambiente 'rho' deve contenere un vettore numerico '.par' di lunghezza %d"
+msgstr ""
+"l'ambiente 'rho' deve contenere un vettore numerico '.par' di lunghezza %d"
 
 #: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
@@ -895,7 +938,9 @@ msgstr "'gradient' dev'essere una matrice numerica di dimensioni (%d,%d)"
 #: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn ha prodotto la modalità %d, lunghezza %d - richiesta modalità %d, lunghezza %d"
+msgstr ""
+"fcn ha prodotto la modalità %d, lunghezza %d - richiesta modalità %d, "
+"lunghezza %d"
 
 #: port.c:534
 msgid "invalid type for eval_check_store"
@@ -965,8 +1010,6 @@ msgstr "regola finale non valida per calcolare la mediana di 3: %d"
 msgid "missing value in last %d observations"
 msgstr "valori mancanti nelle ultime %d osservazioni"
 
-#~ msgid "'x' is a factor"
-#~ msgstr "'x' è un factor"
-
-#~ msgid "'y' is a factor"
-#~ msgstr "'y' è un factor"
+#, c-format
+#~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+#~ msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"

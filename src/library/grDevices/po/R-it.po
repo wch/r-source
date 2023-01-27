@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation for Statistical Computing
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-grDevices 4.0.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2022-10-13 09:29\n"
+"PO-Revision-Date: 2022-10-14 10:22+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,22 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "invalid 'filename'"
 msgstr "'filename' non valido"
 
 msgid "svg: Cairo-based devices are not available for this platform"
-msgstr "svg: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
+msgstr ""
+"svg: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
-msgstr "cairo_pdf: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
+msgstr ""
+"cairo_pdf: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr "cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
+msgstr ""
+"cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "'coef' must not be negative"
-msgstr "'coef' dev'essere non negativo"
+msgstr "'coef' non dev'essere negativo"
 
 msgid "no 'z' matrix specified"
 msgstr "la matrice 'z' non è stata specificata"
@@ -40,7 +46,7 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr "i valori di 'x' e 'y' devono essere crescenti"
 
 msgid "no proper 'z' matrix specified"
-msgstr "nessuna matrice 'z' opportuna specificata"
+msgstr "non è stata specificata alcuna opportuna matrice 'z'"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "le dimensioni di 'x', 'y' e 'z' non corrispondono"
@@ -130,7 +136,7 @@ msgid "no device to print from"
 msgstr "nessun dispositivo da cui stampare"
 
 msgid "can only print from a screen device"
-msgstr "può solo stampare da un dispositivo schermo"
+msgstr "può solo stampare da un dispositivo di tipo schermo"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "è richiesta la specificazione di 'width' e 'height'"
@@ -162,12 +168,20 @@ msgstr "nessun nome file utilizzabile per postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): si utilizza postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr "Capacità non valide - si avvisi il responsabile del dispositivo"
+
+msgid "Invalid compositing operator"
+msgstr "Operatore di composizione non valido"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "'type' errato; non dovrebbe accadere, per piacere riportalo!"
 
-#, fuzzy
+msgid "Invalid mask type"
+msgstr "Tipo maschera non valido"
+
 msgid "Invalid fill rule"
-msgstr "'file' non valido"
+msgstr "Regola di riempimento non valida"
 
 msgid "Invalid pattern type"
 msgstr "Tipo di pattern non valido"
@@ -179,7 +193,8 @@ msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti nominati)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr "'name.opt' dev'essere di tipo character, il nome di una lista esistente"
+msgstr ""
+"'name.opt' dev'essere di tipo character, il nome di una lista esistente"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "non posso re-inizializzare '%s' perché non esistente"
@@ -314,10 +329,17 @@ msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' dev'essere positivo"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr "Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended')"
+msgstr ""
+"Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended')"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' dev'essere un \"intervallo\", quindi di lunghezza 2"
+
+msgid "log_le_0"
+msgstr "log_le_0"
+
+msgid "plot_coords"
+msgstr "plot_coords"
 
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
@@ -378,10 +400,12 @@ msgid "invalid Quartz font:  must be 4 strings"
 msgstr "carattere Quartz non valido: devono essere 4 stringhe"
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "argomenti non validi in 'quartzFonts' (devono essere nomi di caratteri)"
+msgstr ""
+"argomenti non validi in 'quartzFonts' (devono essere nomi di caratteri)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "argomenti non validi in 'quartzFonts' (devono essere argomenti nominati)"
+msgstr ""
+"argomenti non validi in 'quartzFonts' (devono essere argomenti nominati)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr "tipo cairo-based non supportati su questa build - si utilizza \"Xlib\""
@@ -408,7 +432,8 @@ msgid "invalid value for 'rescale'"
 msgstr "valore non valido per 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr "Le chiamate tipo '%s' sono poco sicure e dovrebbero essere sostituite da '%s'"
+msgstr ""
+"Le chiamate tipo '%s' sono poco sicure e dovrebbero essere sostituite da '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"
@@ -426,13 +451,17 @@ msgid "subscript out of range"
 msgstr "indice fuori range"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr "carattere Windows non valido: dev'essere il singolo nome di una famiglia di caratteri"
+msgstr ""
+"carattere Windows non valido: dev'essere il singolo nome di una famiglia di "
+"caratteri"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "argomenti non validi in 'windowsFonts' (devono essere nomi di caratteri)"
+msgstr ""
+"argomenti non validi in 'windowsFonts' (devono essere nomi di caratteri)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "argomenti non validi in 'windowsFonts' (necessita di argomenti nominati)"
+msgstr ""
+"argomenti non validi in 'windowsFonts' (necessita di argomenti nominati)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -444,17 +473,17 @@ msgid_plural "differ between new and previous"
 msgstr[0] "differisce tra nuovo e vecchio"
 msgstr[1] "differiscono tra nuovi e vecchi"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
+msgstr[0] "omesso valore %d %s <= 0 dal grafico su scala logaritmica"
+msgstr[1] "omessi valori %d %s <= 0 dal grafico su scala logaritmica"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"

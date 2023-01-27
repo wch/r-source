@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation for Statistical Computing
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-graphics 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2022-10-13 09:29\n"
+"PO-Revision-Date: 2022-10-14 10:12+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr "'a' è annullato da 'reg'"
+msgstr "'a' è sovrascritto da 'reg'"
 
 msgid "only using the first two of %d regression coefficients"
 msgstr "si utilizzano solo i primi due dei %d coefficienti di regressione"
@@ -28,7 +28,7 @@ msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a' e 'b' sono annullati da 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr "uno tra 'x1' e 'y1' dev'essere indicato"
+msgstr "dev'essere indicato almeno un 'x1' e 'y1'"
 
 msgid ""
 "'length', 'angle', or 'code' greater than length 1; values after the first "
@@ -131,7 +131,7 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr "i valori di 'x' e 'y' devono essere crescenti"
 
 msgid "no proper 'z' matrix specified"
-msgstr "nessuna matrice 'z' opportuna specificata"
+msgstr "non è stata specificata alcuna matrice 'z' valida"
 
 msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
 msgstr ""
@@ -309,11 +309,11 @@ msgstr "'legend' è di lunghezza 0"
 msgid "invalid coordinate lengths"
 msgstr "lunghezza delle coordinate non valida"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width' dev'essere numerico, >= 0"
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "la specificazione orizzontale eccede: Numero di colonne := %d"
+
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width' dev'essere numerico, >= 0, o uno scalare NA"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr ""
@@ -360,7 +360,7 @@ msgid "invalid argument 'verInd'"
 msgstr "argomento 'verInd' non valido"
 
 msgid "the 'panel' function made a new plot"
-msgstr "La funzione 'panel' ha generato un nuovo grafico"
+msgstr "la funzione 'panel' ha generato un nuovo grafico"
 
 msgid "surface extends beyond the box"
 msgstr "la superficie si estende oltre il box"
@@ -417,7 +417,7 @@ msgid "cannot hatch with logarithmic scale active"
 msgstr "non posso usare il tratteggio in scala logaritmica"
 
 msgid "Invalid fill rule for graphics path"
-msgstr "regola di riempimento non valida per percorso grafico"
+msgstr "Regola di riempimento non valida per percorsi grafici"
 
 msgid "invalid rectangle specification"
 msgstr "specificazione del rettangolo non valida"

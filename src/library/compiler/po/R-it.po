@@ -1,14 +1,14 @@
 # R Italian translation
 # # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-compiler 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2022-10-13 09:29\n"
+"PO-Revision-Date: 2022-10-14 10:09+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "namespace found within local environments"
-msgstr "namespace trovato dentro ambienti locali"
+msgstr "namespace trovato in ambienti locali"
 
 msgid "not a proper evaluation environment"
 msgstr "non è un appropriato ambiente di valutazione"
 
 msgid "non-namespace found within namespace environments"
-msgstr "non-namespace trovato dentro ambienti namespace"
+msgstr "non-namespace trovato in ambienti namespace"
 
 msgid "namespace found within global environments"
-msgstr "namespace trovato dentro ambienti globali"
+msgstr "namespace trovato in ambienti globali"
 
 msgid "bad assignment: %s"
 msgstr "assegnamento errato: %s"
@@ -46,13 +46,13 @@ msgid "cannot compile byte code literals in code"
 msgstr "non è possibile compilare byte code literal nel codice"
 
 msgid "cannot compile promise literals in code"
-msgstr "non è possibile compilare promise literal nel codice"
+msgstr "non è possibile compilare promise literals nel codice"
 
 msgid "possible error in '%s': %s"
 msgstr "possibile errore in '%s': %s"
 
 msgid "bad namespace import frame"
-msgstr "errato namespace import frame"
+msgstr "errato frame di importazione namespace"
 
 msgid "bad assignment 1"
 msgstr "errato assegnamento 1"
@@ -97,7 +97,7 @@ msgid "compiling '%s'"
 msgstr "compilando '%s'"
 
 msgid "saving to file \"%s\" ..."
-msgstr "salvataggio in corso del file \"%s\" ..."
+msgstr "salvataggio in corso nel file \"%s\" ..."
 
 msgid "done"
 msgstr "fatto"
@@ -121,8 +121,7 @@ msgid "invalid environment variable value: %s==%s"
 msgstr "valore variabile di ambiente non valido: %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr ""
-"opzioni del compilatore non valide: optimize(==%d)<2 e jitEnabled(==%d)>2"
+msgstr "opzioni del compilatore non valide: optimize(==%d)<2 e jitEnabled(==%d)>2"
 
 msgid "function is not compiled"
 msgstr "la funzione non è compilata"

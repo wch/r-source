@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: methods 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56+0200\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"PO-Revision-Date: 2022-10-14 10:32+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
@@ -31,7 +31,7 @@ msgstr "lista di sostituzione non valida"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr "tipo '%s' inatteso il messaggio condizione"
+msgstr "tipo '%s' inatteso per il messaggio condizione"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
@@ -96,7 +96,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "nessun metodo diretto o collegato per la funzione '%s' per questa chiamata"
 
-#: methods_list_dispatch.c:586 methods_list_dispatch.c:1157
+#: methods_list_dispatch.c:586 methods_list_dispatch.c:1165
 msgid "invalid object (non-function) used as method"
 msgstr "oggetto (non-funzione) non valido utilizzato come metodo"
 
@@ -202,18 +202,18 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 "'%s' dev'essere una stringa singola (ricevuto un oggetto di classe \"%s\")"
 
-#: methods_list_dispatch.c:980
+#: methods_list_dispatch.c:988
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "la classe dovrebbe essere o un nome stringa di caratteri o una definizione "
 "di classe"
 
-#: methods_list_dispatch.c:1066
+#: methods_list_dispatch.c:1074
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "ricezione fallita del generic per la primitiva \"%s\""
 
-#: methods_list_dispatch.c:1073
+#: methods_list_dispatch.c:1081
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

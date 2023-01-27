@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grid 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"PO-Revision-Date: 2022-10-14 10:25+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,72 +16,89 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext dev'essere unicamente chiamato dopo initGContext"
 
 #: grid.c:199
-#, fuzzy
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr "On/off del clipping all'interno di un clipping path non onorato"
+msgstr ""
+"L'attivazione o meno del ritaglio dentro un tracciato (di ritaglio) non "
+"viene onorato"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "non è possibile tagliare su una viewport ruotata"
 
-#: grid.c:455
-#, fuzzy
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr "Clipping path interno ad altri non onorato"
+msgstr ""
+"I tracciati di ritaglio dentro un altro tracciato (di ritaglio) non sono "
+"onorati"
 
-#: grid.c:474
-#, fuzzy
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
-msgstr "Maschere interne a un clipping path non onorate"
+msgstr "Le maschere interne a un tracciato (di ritaglio) non sono onorate"
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "non è possibile mostrare la view-port di livello più alto (output di 'grid' e 'graphics' mischiato?)"
+msgstr ""
+"non è possibile mostrare la view-port di livello più alto (output di 'grid' "
+"e 'graphics' mischiato?)"
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
-#: grid.c:1702
+#: grid.c:1719
 msgid "there is no layout defined"
 msgstr "non c'è alcun layout definito"
 
-#: grid.c:1922
+#: grid.c:1941
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "bordo poligonale non trovato (larghezza o altezza zero?)"
 
-#: grid.c:1931
+#: grid.c:1950
 msgid "polygon edge not found"
 msgstr "bordo poligonale non trovato"
 
-#: grid.c:2085
+#: grid.c:2104
 msgid "require at least two points to draw arrow"
 msgstr "richiedono almeno due punti per disegnare la freccia"
 
-#: grid.c:2408
+#: grid.c:2475
 msgid "non-finite control point in Xspline"
 msgstr "punto di controllo non finito in Xspline"
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr "x o y non finiti nel percorso grafico"
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr "Raster vuoto"
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr "Cordinate per pch testo non ancora supportate"
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr "valore pch '%d' non è valido per questa localizzazione"
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr "valore pch '%d' non implementato"
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr "simbolo di plotting non valido"
 
-#: grid.c:3963
+#: grid.c:5205
 msgid "unable to clip to rotated rectangle"
 msgstr "non è possibile tagliare su un rettangolo ruotato"
 
@@ -99,11 +116,13 @@ msgstr "matrice di trasformazione singolare"
 
 #: state.c:192
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
+msgstr ""
+"non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
-msgstr "Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
+msgstr ""
+"Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
 
 #: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
@@ -119,7 +138,7 @@ msgstr "Conversione unit non supportata"
 
 #: unit.c:1555
 msgid "Invalid unit"
-msgstr "unit non valida"
+msgstr "Unità non valida"
 
 #: unit.c:1570
 msgid "'units' must be character"
@@ -130,8 +149,12 @@ msgid "'units' must be of length > 0"
 msgstr "'units' dev'essere di lunghezza > 0"
 
 #: unit.c:1584
-msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
-msgstr "i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza del vettore dell'unità finale"
+msgid ""
+"data must be either NULL, have length 1, or match the length of the final "
+"unit vector"
+msgstr ""
+"i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza "
+"del vettore dell'unità finale"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
@@ -165,6 +188,10 @@ msgstr "l'oggetto non è un'unità"
 msgid "units can only be multiplied with numerics and integers"
 msgstr "le unità possono unicamente essere moltiplicate con numerici e interi"
 
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
+msgstr "Non è possibile calcolare la larghezza/altezza del testo (usando zero)"
+
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Mask non è un valore logico ('none' o 'inherit')"
@@ -172,6 +199,3 @@ msgstr "Mask non è un valore logico ('none' o 'inherit')"
 #: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr "posizione e/o dimensione della viewport non finita"
-
-#~ msgid "unimplemented unit function"
-#~ msgstr "funzione unit non implementata"
