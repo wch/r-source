@@ -2909,7 +2909,7 @@ supported.  Further revisions `C++17' (in December 2017) and `C++20'
 The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
-The default standard was changed to C++17 in \R 4.3.0, if supported (and
+The default standard was changed to C++17 in @R{} 4.3.0, if supported (and
 for rather old compilers, C++14 or even C++11 would be used as the
 default).
 
@@ -2939,75 +2939,36 @@ C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
 such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
-Different versions of @R{} have specified different default C++
-standards, so for maximal portability a package should specify the
-standard it requires.  In order to specify C++11 code in a package,
-@file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
-Windows) should include the line
+Different versions of @R{} have used different default C++ standards, so
+for maximal portability a package should specify the standard it
+requires.  In order to specify C++11 code in a package, @file{Makevars}
+file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should
+include the line
 
 @example
 CXX_STD = CXX11
 @end example
 @noindent
-Compilation and linking will then be done with the C++11 compiler (if any).
+Compilation and linking will then be done with the C++11 compiler (if
+any).  Analogously for later standards (details below).
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
-specify that they require C++11 for code in the @file{src} directory by
-including @samp{C++11} in the @samp{SystemRequirements} field of the
-@file{DESCRIPTION} file, e.g.
+specify that they a C++ standard for code in the @file{src} directory by
+including something like @samp{C++14} in the @samp{SystemRequirements}
+field of the @file{DESCRIPTION} file, e.g.
 
 @example
-SystemRequirements: C++11
+SystemRequirements: C++14
 @end example
 
 If a package does have a @file{src/Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
 
-If a package using C++ has a @command{configure} script it is essential
-that it selects the correct C++ standard, @emph{via} something like
-
-@example
-CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
-if test -z "$CXX11"; then
-  AC_MSG_ERROR([No C++11 compiler is available])
-fi
-CXX11STD=`"$@{R_HOME@}/bin/R" CMD config CXX11STD`
-CXX="$@{CXX11@} $@{CXX11STD@}"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
-AC_LANG(C++)
-@end example
-
-@noindent
-if C++11 was specified, but using @code{CXX} instead of @code{CXX11} if
-no standard was specified.
-
-If you want to compile C++ code in a subdirectory, make sure you pass
-down the macros to specify the appropriate compiler, e.g.@: in
-@file{src/Makevars}
-@example
-sublibs:
-         @@(cd libs && $(MAKE) \
-            CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)")
-@end example
-
-Note that the mechanisms described here specify C++11 for code compiled
-by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
-They do not apply if there is a @file{src/Makefile} file (or a Windows
-analogue) nor to compilation done in vignettes or @emph{via} other
-packages.
-
-Support for a C++14 compiler (where available) has been in @R{} since
-version 3.4.0 and became the default (where available) in
-4.1.0.@footnote{Except on Windows where this was overlooked until @R{}
-4.3.0.}  Similar considerations to C++11 apply, with the variables
-associated with the C++14 compiler using the prefix @samp{CXX14} instead
-of @samp{CXX11}.  For example, to use C++14 code in a package, the
-package's @file{Makevars} file (or @file{Makevars.win} or
-@file{Makevars.ucrt} on Windows) should include the line
-@example
-CXX_STD = CXX14
-@end example
+A requirement of C++17 or later should always be declared in the
+@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
+@file{src/Makefile}) so this is shown on the package's summary pages on
+@acronym{CRAN} or similar.
 
 Essentially complete C++14 support is available from GCC 5, LLVM
 @command{clang} 3.4 and currently-used versions of Apple
@@ -3031,22 +2992,6 @@ using std::make_unique;
 #endif
 @end example
 
-@c Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
-@c which had only partial C++14 support, and the flag to obtain that
-@c support was not included in the default Windows build of @R{} --- one
-@c could try something like
-
-@c @example
-@c CXX14="$(BINPREF)g++ $(M_ARCH)"
-@c CXX14FLAGS="-O2 -Wall" 
-@c CXX14STD=-std=gnu1y 
-@c @end example
-
-@c @noindent
-@c in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
-@c from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
-@c back-compatibility @option{-std=gnu1y}.
-
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
 @c RHEL 7 (4.8, end of all support in 2028) are examples.
@@ -3065,38 +3010,81 @@ feature tests as well as resources such as
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented.
 
-A requirement of C++17 or later should always be declared in the
-@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
-@file{src/Makefile}) so this is shown on the package's summary pages on
-@acronym{CRAN} or similar.
-
 Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
+If a package using C++ has a @command{configure} script it is essential
+that rhe script selects the correct C++ compiler and standard,
+@emph{via} something like
+
+@example
+CXX17=`"$@{R_HOME@}/bin/R" CMD config CXX17`
+if test -z "$CXX17"; then
+  AC_MSG_ERROR([No C++17 compiler is available])
+fi
+CXX17STD=`"$@{R_HOME@}/bin/R" CMD config CXX17STD`
+CXX="$@{CXX17@} $@{CXX17STD@}"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+AC_LANG(C++)
+@end example
+
+@noindent
+if C++17 was specified, but using
+@example
+CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+AC_LANG(C++)
+@end example
+@noindent
+if no standard was specified.
+
+If you want to compile C++ code in a subdirectory, make sure you pass
+down the macros to specify the appropriate compiler, e.g.@: in
+@file{src/Makevars}
+@example
+sublibs:
+         @@(cd libs && $(MAKE) \
+            CXX="$(CXX17) $(CXX17STD)" CXXFLAGS="$(CXX17FLAGS) $(CXX17PICFLAGS)")
+@end example
+
 The discussion above is about the standard @R{} ways of compiling C++:
-it will not apply to packages using @file{src/Makefile} or
-@command{configure} or building in a subdirectory that do not set the
-C++ standard.  And the default C++ standard varies widely and gets
-changed frequently by vendors -- for example Apple clang 14 defaults to
-C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
+it will not apply to packages using @file{src/Makefile} or building in a
+subdirectory that do not set the C++ standard.  And compilers' default
+C++ standards varies widely and gets changed frequently by vendors -- for
+example Apple clang 14 defaults to C++98, LLVM clang 14 to C++14 and
+@command{g++} 12 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX17 = `"$@{R_HOME@}/bin/R" CMD config CXX17`
-CXX17STD = `"$@{R_HOME@}/bin/R" CMD config CXX17STD`
-CXX = "$@{CXX17@} $@{CXX17STD@}"
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
-CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17PICFLAGS`
-SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LD`
-SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LDFLAGS`
+CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
+CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
 @end example
 @noindent
-and ensuring these values are used in relevant compilations.
+and ensuring these values are used in relevant compilations, after
+checking they are non-empty.  A common use of @file{src/Makefile} is to
+compile an executable, when likely
+@example
+CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
+CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
+@end example
+@noindent
+suffices.  On Unix (and on Windows from @R{} 4.3.0) this can be simplifed
+to
+@example
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = $@{CXX14FLAGS@}
+@end example
+@noindent
 
-Similar code (without spaces surrounding @code{=}) can be used in
-@code{configure} scripts.
 
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2022 The R Core Team
+ *  Copyright (C) 2015-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -689,17 +689,27 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nurls == 1) {
 	long status;
 	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);
-	double cl, dl;
+	// new interface in libcurl >= 7.55.0
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_off_t cl, dl;
+	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
+	double cl ,dl;
 	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	if (!quiet && status == 200) {
 	    if (dl > 1024*1024)
 		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
 	    else if (dl > 10240)
-		REprintf("downloaded %d KB\n\n", (int) dl/1024);
+		REprintf("downloaded %d KB\n\n", (int) dl/1024.0);
 	    else
 		REprintf("downloaded %d bytes\n\n", (int) dl);
 	}
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD_T, &cl);
+#else
 	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
+#endif
 	if (cl >= 0 && dl != cl)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
@@ -710,8 +720,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
 	    fclose(out[i]);
+#if LIBCURL_VERSION_NUM >= 0x073700
+	    curl_off_t dl;
+	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
 	    double dl;
 	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
 	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
