@@ -4126,7 +4126,7 @@ add_dummies <- function(dir, Log)
                            !run_dontrun, !run_donttest)
             Rout <- tempfile("Rout")
             ## any arch will do here
-            status <- R_runR0(cmd, R_opts2, "LC_ALL=C",
+            status <- R_runR0(cmd, R_opts2,
                               stdout = Rout, stderr = Rout)
             exfile <- paste0(pkgname, "-Ex.R")
             if (status) {
@@ -4205,7 +4205,7 @@ add_dummies <- function(dir, Log)
                                        !run_dontrun, FALSE)
                         Rout <- tempfile("Rout")
                         ## any arch will do here
-                        status <- R_runR0(cmd, R_opts2, "LC_ALL=C",
+                        status <- R_runR0(cmd, R_opts2,
                                           stdout = Rout, stderr = Rout)
                         exfile <- paste0(pkgname, "-Ex.R")
                         if (status) {
