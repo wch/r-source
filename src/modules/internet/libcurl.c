@@ -443,9 +443,15 @@ static void doneprogressbar(void *data)
 }
 # endif // Win32
 
+#if LIBCURL_VERSION_NUM >= 0x072000
+# define CURL_LEN curl_off_t
+#else
+# define CURL_LEN double
+#endif
+
 static
-int progress(void *clientp, double dltotal, double dlnow,
-	     double ultotal, double ulnow)
+int progress(void *clientp, CURL_LEN dltotal, CURL_LEN dlnow,
+	     CURL_LEN ultotal, CURL_LEN ulnow)
 {
     CURL *hnd = (CURL *) clientp;
     long status;
@@ -480,7 +486,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 	    }
 	}
 	if (R_Interactive) {
-	    setprogressbar(pbar.pb, dlnow/factor);
+	    setprogressbar(pbar.pb, 1.0*dlnow/factor);
 	    if (total > 0) {
 		static char pbuf[30];
 		int pc = 0.499 + 100.0*dlnow/total;
@@ -490,7 +496,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 		    pbar.pc = pc;
 		}
 	    }
-	} else putdashes(&ndashes, (int)(50*dlnow/total));
+	} else putdashes(&ndashes, (int)(50.0*dlnow/total));
     }
     R_ProcessEvents();
     return 0;
@@ -498,7 +504,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 
 	    if (R_Consolefile) fflush(R_Consolefile);
 	}
-	putdashes(&ndashes, (int)(50*dlnow/total));
+	putdashes(&ndashes, (int)(50.0*dlnow/total));
     }
     return 0;
 # endif
@@ -634,8 +640,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
+#if LIBCURL_VERSION_NUM >= 0x072000
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFOFUNCTION, progress);
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFODATA, hnd[i]);
+#else
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
+#endif
 	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 
 	/* This would allow the negotiation of compressed HTTP transfers,
