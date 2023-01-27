@@ -24,11 +24,12 @@
 */
 
 /* Copyright (C) 2004--2008	The R Foundation
-   Copyright (C) 2013--2022	The R Core Team
+   Copyright (C) 2013--2023	The R Core Team
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers.
    Modify find and replace for RichEdit20W.
+   Path length limits.
 */
 
 /* Mingw-w64 defines this to be 0x0502 */
@@ -69,7 +70,7 @@ InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
     return(0);
 }
 
-#define BUFSIZE _MAX_PATH
+#define BUFSIZE (3*65536)
 static char strbuf[BUFSIZE];
 static wchar_t wcsbuf[65536];
 
@@ -390,7 +391,7 @@ wchar_t *askfilesaveW(const char *title, const char *default_name)
     ofn.nMaxCustFilter  = 0;
     ofn.nFilterIndex    = 0;
     ofn.lpstrFile       = wcsbuf;
-    ofn.nMaxFile        = BUFSIZE;
+    ofn.nMaxFile        = 65520; /* precaution against overflow */
     ofn.lpstrFileTitle  = NULL;
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
     if (GetCurrentDirectoryW(MAX_PATH, cwd))
