@@ -2941,7 +2941,7 @@ such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
 Different versions of @R{} have used different default C++ standards, so
 for maximal portability a package should specify the standard it
-requires.  In order to specify C++11 code in a package, @file{Makevars}
+requires.  In order to specify C++14 code in a package, @file{Makevars}
 file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should
 include the line
 
@@ -2953,9 +2953,9 @@ Compilation and linking will then be done with the C++14 compiler (if
 any).  Analogously for other standards (details below).
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
-specify that they a C++ standard for code in the @file{src} directory by
-including something like @samp{C++14} in the @samp{SystemRequirements}
-field of the @file{DESCRIPTION} file, e.g.
+specify a C++ standard for code in the @file{src} directory by including
+something like @samp{C++14} in the @samp{SystemRequirements} field of
+the @file{DESCRIPTION} file, e.g.
 
 @example
 SystemRequirements: C++14
