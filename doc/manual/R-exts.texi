@@ -2909,7 +2909,7 @@ supported.  Further revisions `C++17' (in December 2017) and `C++20'
 The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
-The default standard was changed to C++17 in @R{} 4.3.0, if supported (and
+The default standard was changed to C++17 in @R{} 4.3.0 if supported (and
 for rather old compilers, C++14 or even C++11 would be used as the
 default).
 
@@ -2946,11 +2946,11 @@ file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should
 include the line
 
 @example
-CXX_STD = CXX11
+CXX_STD = CXX14
 @end example
 @noindent
-Compilation and linking will then be done with the C++11 compiler (if
-any).  Analogously for later standards (details below).
+Compilation and linking will then be done with the C++14 compiler (if
+any).  Analogously for other standards (details below).
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
 specify that they a C++ standard for code in the @file{src} directory by
@@ -2961,9 +2961,10 @@ field of the @file{DESCRIPTION} file, e.g.
 SystemRequirements: C++14
 @end example
 
-If a package does have a @file{src/Makevars[.win]} file then setting the
-make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
-SHLIB} to work correctly in the package's @file{src} directory.
+If a package does have a @file{src/Makevars[.win]} file then also
+setting the make variable @samp{CXX_STD} is recommended, as it allows
+@command{R CMD SHLIB} to work correctly in the package's @file{src}
+directory.
 
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
@@ -2994,14 +2995,17 @@ using std::make_unique;
 
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
-@c RHEL 7 (4.8, end of all support in 2028) are examples.
+@c Centos 7 (4.8.5, ESM support until 2024-06)
+@c RHEL 7 (4.8, end of all support in 2028)
 C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
 from @R{} 4.3.0) can be specified in an analogous way (replacing
 @code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
 is platform-dependent.  Some C++17 and C++20 support is available with
 the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
-is more recent than some still-current Linux distributions.
+is more recent than some still-current Linux distributions but often
+packages for later compilers are available: for RHEL/Centos 7 look for
+`devtoolset'.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
@@ -3026,6 +3030,7 @@ fi
 CXX17STD=`"$@{R_HOME@}/bin/R" CMD config CXX17STD`
 CXX="$@{CXX17@} $@{CXX17STD@}"
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+## for an configure.ac file
 AC_LANG(C++)
 @end example
 
@@ -3034,6 +3039,7 @@ if C++17 was specified, but using
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+## for an configure.ac file
 AC_LANG(C++)
 @end example
 @noindent
@@ -3069,7 +3075,8 @@ SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
 @noindent
 and ensuring these values are used in relevant compilations, after
 checking they are non-empty.  A common use of @file{src/Makefile} is to
-compile an executable, when likely
+compile an executable, when likely something like (for example for
+C++14)
 @example
 CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
 CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
@@ -5942,9 +5949,10 @@ included by other headers on Linux and Windows but not macOS.)
 @command{g++}@tie{}11 often needs explicit inclusion of the C++ headers
 @code{<limits>} (for @code{numeric_limits}) or @code{<exception>} (for
 @code{set_terminate} and similar), whereas earlier versions included
-these in other headers. Drafts of @command{g++}@tie{}13 require the
+these in other headers. @command{g++}@tie{}13 requires the
 explicit inclusion of @code{<cstdint>} for types such as @code{uint32_t}
-which was previously included implicitly.
+which was previously included implicitly.  (For more such, see
+@uref{https://gcc.gnu.org/gcc-13/porting_to.html}.)
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -6002,6 +6010,11 @@ seen has been type @code{size_t} defined only in the @code{std} namespace.
 @code{std} namespace if the correct C++ header is included, e.g.@:
 @code{<cmath>} rather than @code{<math.h>}.
 @c seen for std::sqrt on macOS 13.
+
+If you define functions in C++ which are insired by later standards, put
+them in a namepsace and refer to them using the namespace.  We have seen
+conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
+@code{std::data}, @code{std::sample} and @code{std::size} from C++17.
 
 @item
 @c including LLVM clang as from 4.0.0
@@ -6139,20 +6152,22 @@ them. Examples include @code{bind1st}/@code{bind2nd} (use
 @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
-@code{std:;mem_fun_ref} and @code{std::ptr_fun}.
+@code{std::mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
 Later versions of standards may add reserved words: for example
 @code{bool}, @code{false} and @code{true} became keywords in C23 and are
-no longer available as variable names.  So avoid common words and
-keywords in other programming languages.
+no longer available as variable names.  As noted above, C++17 uses
+@code{byte}, @code{data}, @code{sample} and @code{size}.
+
+So avoid common words and keywords in other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
 @itemize
 @item
-Use of the @code{register} storage class specifier (see the previous
-item).
+Use of the @code{register} storage class specifier (see the previous but
+one item).
 @item
 The C99 keyword @code{restrict} is not part of@footnote{it is allowed
 but ignored in system headers.} any C++ standard and is rejected by some
