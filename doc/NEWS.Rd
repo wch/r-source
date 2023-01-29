@@ -262,6 +262,9 @@
       \item \command{configure} now checks conversion of datetimes
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
       (which has been seen on platforms missing \code{tzdata}) is fatal.
+
+      \item The minimum required version of \code{libcurl} has been
+      increased from 7.28.0 to 7.32.0 (released in Aug 2013).
     }
   }
 

@@ -51619,15 +51619,15 @@ fi
 done
 
 if test "x${have_libcurl}" = "xyes"; then
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
-printf %s "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
-if test ${r_cv_have_curl728+y}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.32.0" >&5
+printf %s "checking if libcurl is version 7 and >= 7.32.0... " >&6; }
+if test ${r_cv_have_curl732+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
   if test "$cross_compiling" = yes
 then :
-  r_cv_have_curl728=no
+  r_cv_have_curl732=no
 else $as_nop
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -51639,7 +51639,7 @@ int main(void)
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 32
   exit(0);
 #else
   exit(1);
@@ -51652,19 +51652,19 @@ int main(void)
 _ACEOF
 if ac_fn_c_try_run "$LINENO"
 then :
-  r_cv_have_curl728=yes
+  r_cv_have_curl732=yes
 else $as_nop
-  r_cv_have_curl728=no
+  r_cv_have_curl732=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
-printf "%s\n" "$r_cv_have_curl728" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl732" >&5
+printf "%s\n" "$r_cv_have_curl732" >&6; }
 fi
-if test "x${r_cv_have_curl728}" = xno; then
+if test "x${r_cv_have_curl732}" = xno; then
   have_libcurl=no
 fi
 

@@ -3340,8 +3340,9 @@ by calling @code{pcre_config()}.
 @c libcurl 7.26.0 was released in May 2012, still in Debian 7 Wheezy LTS,
 @c   end-of-life May 2018. 
 @c libcurl 7.28.0 was released in Oct 2012
+@d libcurl 7.32.0 was released in Aug 2013
 @c Ubuntu 16.04LTS has 7.47.0
-Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
+Library @code{libcurl} (version 7.32.0 or later@footnote{but not a major
 version greater than 7 should there ever be one: the major version has
 been 7 since 2000.}) is required.  Information on @code{libcurl} is
 found from the @command{curl-config} script: if that is missing or needs
