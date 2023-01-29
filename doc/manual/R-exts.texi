@@ -1915,7 +1915,7 @@ directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.  If
 a @file{configure.win} script does compilation (including calling
 @command{R CMD SHLIB}), most of the considerations above apply.
 
-As the scripts on Windows are excecuted as @command{sh ./configure.win}
+As the scripts on Windows are executed as @command{sh ./configure.win}
 and similar, any 'shebang' first line  (such as @code{#! /bin/bash}) is
 treated as a comment.
 
@@ -2866,6 +2866,10 @@ supported.  Further revisions `C++17' (in December 2017) and `C++20'
 The next revision, `C++23', is expected in 2023: @R{} will support that
 from version 4.3.0.
 
+The default standard for compiling @R{} packages is currently C++14x if
+supported (and for rather old compilers, C++11 would be used as the
+default).
+
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
 and @code{202002L} are most commonly used for C++11, C++14, C++17 and
@@ -2876,6 +2880,10 @@ is (almost) fully supported.  On a Unix-alike @command{configure} will
 try to identify a compiler and flags for each of the standards: this
 relies heavily on the reported values of @code{__cplusplus}.
 
+@c Apple clang 14 defaults to C++98
+@c LLVM clang 15, 16 default to C++14
+@c g++ 11, 12, 13 default to C++17
+
 The webpage
 @uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
@@ -2883,11 +2891,11 @@ features.
 
 C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
-such as @code{unary_function} (deprecated in C++11, removed in C++17).
+such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
-Different versions of @R{} have specified different default C++
-standards, so for maximal portability a package should specify the
-standard it requires.  In order to specify C++11 code in a package,
+Different versions of @R{} have used different default C++ standards, so
+for maximal portability a package should specify the standard it
+requires.  In order to specify C++11 code in a package with a
 @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
 Windows) should include the line
 
@@ -2895,67 +2903,32 @@ Windows) should include the line
 CXX_STD = CXX11
 @end example
 @noindent
-Compilation and linking will then be done with the C++11 compiler (if any).
+Compilation and linking will then be done with the C++11 compiler (if
+any).  Analogously for other standards (details below).  On the other
+hand, specifying C++11@footnote{Often historically used to mean `not C++98'}
+when the code is valid under C++14 or C++17 reduces future portability.
 
-Packages without a @file{src/Makevars} or @file{src/Makefile} file may
-specify that they require C++11 for code in the @file{src} directory by
-including @samp{C++11} in the @samp{SystemRequirements} field of the
-@file{DESCRIPTION} file, e.g.
+Packages may also specify that they require C++11 for code in the @file{src}
+directory by including @samp{C++11} in the @samp{SystemRequirements}
+field of the @file{DESCRIPTION} file, e.g.
 
 @example
 SystemRequirements: C++11
 @end example
 
-If a package does have a @file{src/Makevars[.win]} file then setting the
-make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
-SHLIB} to work correctly in the package's @file{src} directory.
+If a package does have a @file{src/Makevars[.win]} file then also
+setting the make variable @samp{CXX_STD} there is recommended, as it
+allows @command{R CMD SHLIB} to work correctly in the package's
+@file{src} directory.
 
-If a package using C++ has a @command{configure} script it is essential
-that it selects the correct C++ standard, @emph{via} something like
-
-@example
-CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
-if test -z "$CXX11"; then
-  AC_MSG_ERROR([No C++11 compiler is available])
-fi
-CXX11STD=`"$@{R_HOME@}/bin/R" CMD config CXX11STD`
-CXX="$@{CXX11@} $@{CXX11STD@}"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
-AC_LANG(C++)
-@end example
-
-@noindent
-if C++11 was specified, but using @code{CXX} instead of @code{CXX11} if
-no standard was specified.
-
-If you want to compile C++ code in a subdirectory, make sure you pass
-down the macros to specify the appropriate compiler, e.g.@: in
-@file{src/Makevars}
-@example
-sublibs:
-         @@(cd libs && $(MAKE) \
-            CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)")
-@end example
-
-Note that the mechanisms described here specify C++11 for code compiled
-by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
-They do not apply if there is a @file{src/Makefile} file (or a Windows
-analogue) nor to compilation done in vignettes or @emph{via} other
-packages.
-
-Support for a C++14 compiler (where available) has been in @R{}
-since version 3.4.0.  Similar considerations to C++11 apply, with the
-variables associated with the C++14 compiler using the prefix
-@samp{CXX14} instead of @samp{CXX11}. For example, to use C++14 code in
-a package, the package's @file{Makevars} file (or @file{Makevars.win} or
-@file{Makevars.ucrt} on Windows) should include the line
-@example
-CXX_STD = CXX14
-@end example
+A requirement of C++17 or later should always be declared in the
+@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
+@file{src/Makefile}) so this is shown on the package's summary pages on
+@acronym{CRAN} or similar.
 
 Essentially complete C++14 support is available from GCC 5, LLVM
 @command{clang} 3.4 and currently-used versions of Apple
-@command{clang}.
+@command{clang} (10.0.0 for High Sierra).
 
 Code needing C++14 features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
@@ -2975,33 +2948,19 @@ using std::make_unique;
 #endif
 @end example
 
-@c Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
-@c which had only partial C++14 support, and the flag to obtain that
-@c support was not included in the default Windows build of @R{} --- one
-@c could try something like
-
-@c @example
-@c CXX14="$(BINPREF)g++ $(M_ARCH)"
-@c CXX14FLAGS="-O2 -Wall" 
-@c CXX14STD=-std=gnu1y 
-@c @end example
-
-@c @noindent
-@c in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
-@c from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
-@c back-compatibility @option{-std=gnu1y}.
-
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
-@c RHEL 7 (4.8, end of all support in 2028) are examples.
-C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
-specified in an analogous way (replacing @code{14} by @code{17} or
-@code{20}) but compiler/OS support is platform-dependent.  Some C++17
-and C++20 support is available with the default builds of @R{} on macOS
-and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support for
-C++17 needs version 7 or later: that is more recent than some
-still-current Linux distributions and the OpenCSW compilers for
-Solaris.
+@c Centos 7 (4.8.5, ESM support until 2024-06)
+@c RHEL 7 (4.8, end of all support in 2028)
+C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
+from @R{} 4.3.0) can be specified in an analogous way (replacing
+@code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
+is platform-dependent.  Some C++17 and C++20 support is available with
+the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
+Much of @command{g++}'s support for C++17 needs version 7 or later: that
+is more recent than some still-current Linux distributions but often
+packages for later compilers are available: for RHEL/Centos 7 look for
+`devtoolset'.
 
 Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
@@ -3019,24 +2978,78 @@ Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
+If a package using C++ has a @command{configure} script it is essential
+that rhe script selects the correct C++ compiler and standard,
+@emph{via} something like
+
+@example
+CXX17=`"$@{R_HOME@}/bin/R" CMD config CXX17`
+if test -z "$CXX17"; then
+  AC_MSG_ERROR([No C++17 compiler is available])
+fi
+CXX17STD=`"$@{R_HOME@}/bin/R" CMD config CXX17STD`
+CXX="$@{CXX17@} $@{CXX17STD@}"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+## for an configure.ac file
+AC_LANG(C++)
+@end example
+
+@noindent
+if C++17 was specified, but using
+@example
+CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+## for an configure.ac file
+AC_LANG(C++)
+@end example
+@noindent
+if no standard was specified.
+
+If you want to compile C++ code in a subdirectory, make sure you pass
+down the macros to specify the appropriate compiler, e.g.@: in
+@file{src/Makevars}
+@example
+sublibs:
+         @@(cd libs && $(MAKE) \
+            CXX="$(CXX17) $(CXX17STD)" CXXFLAGS="$(CXX17FLAGS) $(CXX17PICFLAGS)")
+@end example
+
 The discussion above is about the standard @R{} ways of compiling C++:
-it will not apply to packages using @file{src/Makefile} or
-@command{configure} or building in a subdirectory that do not set the
-C++ standard.  And the default C++ standard varies widely and gets
-changed frequently by vendors -- for example Apple clang 14 defaults to
-C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
+it will not apply to packages using @file{src/Makefile} or building in a
+subdirectory that do not set the C++ standard.  And compilers' default
+C++ standards varies widely and gets changed frequently by vendors -- for
+example Apple clang 14 defaults to C++98, LLVM clang 14 to C++14 and
+@command{g++} 12 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX = `"$@{R_HOME@}/bin/R" CMD config CXX17`
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
-CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17PICFLAGS`
-SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LD`
-SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LDFLAGS`
+CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
+CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
 @end example
 @noindent
-and ensuring these values are used in relevant compilations.
+and ensuring these values are used in relevant compilations, after
+checking they are non-empty.  A common use of @file{src/Makefile} is to
+compile an executable, when likely something like (for example for
+C++11)
+@example
+CXX11 = `"$@{R_HOME@}/bin/R" CMD config CXX11`
+CXX11STD = `"$@{R_HOME@}/bin/R" CMD config CXX11STD`
+CXX = $@{CXX11@} $@{CXX11STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
+@end example
+@noindent
+suffices.  On Unix this can be simplifed to
+@example
+CXX = $@{CXX11@} $@{CXX11STD@}
+CXXFLAGS = $@{CXX11FLAGS@}
+@end example
+@noindent
 
 @node Using @command{cmake},  , Using C++ code, Configure and cleanup
 @subsection Using @command{cmake}
@@ -5835,9 +5848,10 @@ included by other headers on Linux and Windows but not macOS.)
 @command{g++}@tie{}11 often needs explicit inclusion of the C++ headers
 @code{<limits>} (for @code{numeric_limits}) or @code{<exception>} (for
 @code{set_terminate} and similar), whereas earlier versions included
-these in other headers. Drafts of @command{g++}@tie{}13 require the
+these in other headers. @command{g++}@tie{}13 requires the
 explicit inclusion of @code{<cstdint>} for types such as @code{uint32_t}
-which was previously included implicitly.
+which was previously included implicitly.  (For more such, see
+@uref{https://gcc.gnu.org/gcc-13/porting_to.html}.)
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -5895,6 +5909,11 @@ seen has been type @code{size_t} defined only in the @code{std} namespace.
 @code{std} namespace if the correct C++ header is included, e.g.@:
 @code{<cmath>} rather than @code{<math.h>}.
 @c seen for std::sqrt on macOS 13.
+
+If you define functions in C++ which are insired by later standards, put
+them in a namepsace and refer to them using the namespace.  We have seen
+conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
+@code{std::data}, @code{std::sample} and @code{std::size} from C++17.
 
 @item
 @c including LLVM clang as from 4.0.0
@@ -6032,20 +6051,22 @@ them. Examples include @code{bind1st}/@code{bind2nd} (use
 @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
-@code{std:;mem_fun_ref} and @code{std::ptr_fun}.
+@code{std::mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
 Later versions of standards may add reserved words: for example
 @code{bool}, @code{false} and @code{true} became keywords in C23 and are
-no longer available as variable names.  So avoid common words and
-keywords in other programming languages.
+no longer available as variable names.  As noted above, C++17 uses
+@code{byte}, @code{data}, @code{sample} and @code{size}.
+
+So avoid common words and keywords in other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
 @itemize
 @item
-Use of the @code{register} storage class specifier (see the previous
-item).
+Use of the @code{register} storage class specifier (see the previous but
+one item).
 @item
 The C99 keyword @code{restrict} is not part of@footnote{it is allowed
 but ignored in system headers.} any C++ standard and is rejected by some
@@ -11522,7 +11543,7 @@ and so is compiled when an @R{} package which uses it is installed.
 This causes few problems.
 
 A small number of external libraries used in @R{} packages have a C++
-interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
+interface to a library of compiled code, e.g.@: packages @CRANpkg{sf}
 and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
 uses name-mangling and the
 ABI@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
