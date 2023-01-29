@@ -2909,9 +2909,9 @@ supported.  Further revisions `C++17' (in December 2017) and `C++20'
 The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
-The default standard was changed to C++17 in @R{} 4.3.0 if supported (and
-for rather old compilers, C++14 or even C++11 would be used as the
-default).
+The default standard for compiling @R{} packages was changed to C++17 in
+@R{} 4.3.0 if supported (and for rather old compilers, C++14 or even
+C++11 would be used as the default).
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
@@ -2941,9 +2941,9 @@ such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
 Different versions of @R{} have used different default C++ standards, so
 for maximal portability a package should specify the standard it
-requires.  In order to specify C++14 code in a package, @file{Makevars}
-file (or @file{Makevars.win} or @file{Makevars.ucrt} on Windows) should
-include the line
+requires.  In order to specify C++14 code in a package with a
+@file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
+Windows) should include the line
 
 @example
 CXX_STD = CXX14
@@ -2951,7 +2951,7 @@ CXX_STD = CXX14
 @noindent
 Compilation and linking will then be done with the C++14 compiler (if
 any).  Analogously for other standards (details below).  On the other
-hand, speccifying C++11@footnote{Often historical to mean `not C++98'}
+hand, specifying C++11@footnote{Often historically used to mean `not C++98'}
 when the code is valid under C++14 or C++17 reduces future portability.
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
