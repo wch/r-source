@@ -222,7 +222,7 @@ function(db)
     ## Unlist.
     x <- unlist(x)
     end <- 3L + (substring(x, 4L, 4L) == "=")
-    ## Extract ops.    
+    ## Extract ops.
     ops <- substring(x, 3L, end)
     ## Split target versions accordings to ops.
     v_t <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
@@ -1203,7 +1203,7 @@ compareVersion <- function(a, b)
 }
 
 ## default is included in setRepositories.Rd
-.BioC_version_associated_with_R_version_default <- "3.16"
+.BioC_version_associated_with_R_version_default <- "3.17"
 .BioC_version_associated_with_R_version <- function ()
     numeric_version(Sys.getenv("R_BIOC_VERSION",
                                .BioC_version_associated_with_R_version_default))

@@ -2950,7 +2950,9 @@ CXX_STD = CXX14
 @end example
 @noindent
 Compilation and linking will then be done with the C++14 compiler (if
-any).  Analogously for other standards (details below).
+any).  Analogously for other standards (details below).  On the other
+hand, speccifying C++11@footnote{Often historical to mean `not C++98'}
+when the code is valid under C++14 or C++17 reduces future portability.
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
 specify a C++ standard for code in the @file{src} directory by including
@@ -2962,9 +2964,9 @@ SystemRequirements: C++14
 @end example
 
 If a package does have a @file{src/Makevars[.win]} file then also
-setting the make variable @samp{CXX_STD} is recommended, as it allows
-@command{R CMD SHLIB} to work correctly in the package's @file{src}
-directory.
+setting the make variable @samp{CXX_STD} there is recommended, as it
+allows @command{R CMD SHLIB} to work correctly in the package's
+@file{src} directory.
 
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
@@ -2973,7 +2975,7 @@ A requirement of C++17 or later should always be declared in the
 
 Essentially complete C++14 support is available from GCC 5, LLVM
 @command{clang} 3.4 and currently-used versions of Apple
-@command{clang}.
+@command{clang} (10.0.0 for High Sierra).
 
 Code needing C++14 features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See

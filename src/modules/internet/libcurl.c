@@ -701,7 +701,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (dl > 1024*1024)
 		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
 	    else if (dl > 10240)
-		REprintf("downloaded %d KB\n\n", (int) dl/1024.0);
+		REprintf("downloaded %d KB\n\n", (int) (dl/1024.0));
 	    else
 		REprintf("downloaded %d bytes\n\n", (int) dl);
 	}
