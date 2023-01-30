@@ -434,14 +434,14 @@
 
       It notes if a C++ standard was specified which is older than the
       current default: many packages have used C++11 to mean \sQuote{not
-      C++98} --- as C++11 is the mininum supported since \R 4.0.0, that
+      C++98} --- as C++11 is the minimum supported since \R 4.0.0, that
       specification can probably be removed.
 
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
       \command{R CMD check}.
 
-      Where q C++ standard is specified, it is reported.
+      Where a C++ standard is specified, it is reported.
     }
   }
 

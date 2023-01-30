@@ -2861,7 +2861,7 @@ support Fortran 90.  However, Fortran 95 is widely supported.
 
 Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
 2018 code: such code should still use file extension @file{.f90} or
-@file{.f95}.  Almsot all current platforms use @command{gfortran} where
+@file{.f95}.  Almost all current platforms use @command{gfortran} where
 you may need to include @option{-std=f2003}, @option{-std=f2008} or
 (from version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
 @code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
@@ -3024,7 +3024,7 @@ versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
 If a package using C++ has a @command{configure} script it is essential
-that rhe script selects the correct C++ compiler and standard,
+that the script selects the correct C++ compiler and standard,
 @emph{via} something like
 
 @example
@@ -3089,7 +3089,7 @@ CXX = $@{CXX14@} $@{CXX14STD@}
 CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
 @end example
 @noindent
-suffices.  On Unix (and on Windows from @R{} 4.3.0) this can be simplifed
+suffices.  On Unix (and on Windows from @R{} 4.3.0) this can be simplified
 to
 @example
 CXX = $@{CXX14@} $@{CXX14STD@}
@@ -5833,7 +5833,7 @@ More care is needed for functions such as @code{mallinfo} which are not
 specified by any of these standards---hopefully the @command{man} page
 on your system will tell you so.  Searching online for such pages for
 various OSes (preferably at least Linux and macOS, and the FreeBSD
-manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow you to
+manual pages at @uref{https://man.freebsd.org/cgi/man.cgi} allow you to
 select many OSes) should reveal useful information but a
 @file{configure} script is likely to be needed to check availability and
 functionality.
@@ -6012,8 +6012,8 @@ seen has been type @code{size_t} defined only in the @code{std} namespace.
 @code{<cmath>} rather than @code{<math.h>}.
 @c seen for std::sqrt on macOS 13.
 
-If you define functions in C++ which are insired by later standards, put
-them in a namepsace and refer to them using the namespace.  We have seen
+If you define functions in C++ which are inspired by later standards, put
+them in a namespace and refer to them using the namespace.  We have seen
 conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
 @code{std::data}, @code{std::sample} and @code{std::size} from C++17.
 
