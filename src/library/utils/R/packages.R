@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1202,8 +1202,8 @@ compareVersion <- function(a, b)
         x, fixed = TRUE)
 }
 
-## default is included in setRepositories.Rd
-.BioC_version_associated_with_R_version_default <- "3.16"
+## default is included in setRepositories.Rd (via \Sexpr)
+.BioC_version_associated_with_R_version_default <- "3.17"
 .BioC_version_associated_with_R_version <- function ()
     numeric_version(Sys.getenv("R_BIOC_VERSION",
                                .BioC_version_associated_with_R_version_default))
