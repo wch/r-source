@@ -9,6 +9,7 @@
 \alias{median.default}
 \usage{
 median(x, na.rm = FALSE, \dots)
+\S3method{median}{default}(x, na.rm = FALSE, \dots)
 }
 \arguments{
   \item{x}{an object for which a method has been defined, or a

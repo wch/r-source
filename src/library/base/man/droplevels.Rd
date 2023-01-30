@@ -16,6 +16,7 @@
   \code{\link{factor}} or, more commonly, from factors in a data frame.
 }
 \usage{
+droplevels(x, \dots)
 \S3method{droplevels}{factor}(x, exclude = if(anyNA(levels(x))) NULL else NA, \dots)
 \S3method{droplevels}{data.frame}(x, except, exclude, \dots)
 }
