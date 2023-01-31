@@ -1340,7 +1340,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         has_authors_at_R_field <- TRUE
     } else {
         has_authors_at_R_field <- FALSE
-        author <- as.personList(meta$Author)
+        author <- as.person(meta$Author)
     }
     ## </NOTE>
 
