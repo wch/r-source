@@ -4066,7 +4066,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
             bad <- c(bad, grep(bad_flags_regexp, flags[[i]], value = TRUE))
         if(length(bad))
             bad_flags$p2flags <-
-                C(bad_flags$p2flags,
+                c(bad_flags$p2flags,
                   structure(list(bad), names = file.path("src", basename(f))))
     }
 
