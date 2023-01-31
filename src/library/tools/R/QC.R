@@ -4043,13 +4043,15 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                       collapse = "|"))
     for(i in seq_along(lines)) {
         bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
+        if (names[i] %in% c("PKG_FFLAGS", "PKG_FCFLAGS"))
+            bad <- grep("^-std=f", bad, invert = TRUE, value = TRUE)
         if(length(bad))
             bad_flags$pflags <-
                 c(bad_flags$pflags,
                   structure(list(bad), names = names[i]))
     }
 
-    ## The above does not know about GNU extensions like
+    ## The above does not know about GNU make extensions like
     ## target.o: PKG_CXXFLAGS = -mavx
     ## so grep files directly.
     for (f in paths) {
@@ -4062,10 +4064,9 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
         bad <- character()
         for(i in seq_along(lines))
             bad <- c(bad, grep(bad_flags_regexp, flags[[i]], value = TRUE))
-
         if(length(bad))
             bad_flags$p2flags <-
-                c(bad_flags$p2flags,
+                C(bad_flags$p2flags,
                   structure(list(bad), names = file.path("src", basename(f))))
     }
 
