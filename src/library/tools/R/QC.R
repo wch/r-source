@@ -8489,11 +8489,11 @@ function(x, ...)
                       collapse = "\n")
             },
             if(isTRUE(x$citation_has_calls_to_personList_et_al)) {
-                paste(strwrap("Package CITATION file contains call(s) to personList() or as.personList().  Please use c() on person objects instead."),
+                paste(strwrap("Package CITATION file contains call(s) to old-style personList() or as.personList().  Please use c() on person objects instead."),
                       collapse = "\n")
             },
             if(isTRUE(x$citation_has_calls_to_citEntry_et_al)) {
-                paste(strwrap("Package CITATION file contains call(s) to citEntry(), citHeader() or citFooter().  Please use bibentry() instead."),
+                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry() or citHeader()/citFooter().  Please use bibentry() instead, possibly with arguments 'header' and 'footer'."),
                       collapse = "\n")
             }
             )),
