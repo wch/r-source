@@ -475,7 +475,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
-    .POSIXct(unclass(e1) + unclass(e2), check_tzones(e1, e2))
+    .POSIXct(unclass(e1) + unclass(e2), .check_tzones(e1, e2))
 }
 
 `-.POSIXt` <- function(e1, e2)
@@ -508,7 +508,7 @@ Ops.POSIXt <- function(e1, e2)
              domain = NA)
     if(inherits(e1, "POSIXlt") || is.character(e1)) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt") || is.character(e2)) e2 <- as.POSIXct(e2)
-    check_tzones(e1, e2)
+    .check_tzones(e1, e2)
     NextMethod(.Generic)
 }
 
@@ -518,7 +518,7 @@ Math.POSIXt <- function (x, ...)
          domain = NA)
 }
 
-check_tzones <- function(...)
+.check_tzones <- function(...)
 {
     tzs <- unique(sapply(list(...), function(x) {
         y <- attr(x, "tzone")
@@ -537,7 +537,7 @@ Summary.POSIXct <- function (..., na.rm)
         stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
              domain = NA)
     args <- list(...)
-    tz <- do.call(check_tzones, args)
+    tz <- do.call(.check_tzones, args)
     .POSIXct(NextMethod(.Generic), tz = tz, cl = oldClass(args[[1L]]))
 }
 
@@ -548,7 +548,7 @@ Summary.POSIXlt <- function (..., na.rm)
         stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
              domain = NA)
     args <- list(...)
-    tz <- do.call(check_tzones, args)
+    tz <- do.call(.check_tzones, args)
     args <- lapply(args, as.POSIXct)
     val <- do.call(.Generic, c(args, na.rm = na.rm))
     as.POSIXlt(.POSIXct(val, tz))
