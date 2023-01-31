@@ -2116,7 +2116,7 @@ example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
 When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
 compiler: flags such as @option{-O2 -Wall -pedantic} (and all other
-@option{-W} flags: for the Oracle compilers these are used to pass
+@option{-W} flags: for the Oracle compilers these were used to pass
 arguments to compiler phases) are all specific to GCC (and compilers such
 as @command{clang} which aim to be options-compatible with it).
 
@@ -2525,13 +2525,13 @@ dubious assumptions.  One way to limit resources is to limit the overall
 number of threads available to OpenMP in the @R{} process: this can be
 done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
-Oracle, Intel and Clang compilers.  The count may include the thread
+Intel and Clang compilers.  The count may include the thread
 running the main process.}  Alternatively, the number of threads per
 region can be limited by the environment variable @env{OMP_NUM_THREADS}
 or API call @code{omp_set_num_threads}, or, better, for the regions in
 your code as part of their specification. E.g.@: @R{} uses@footnote{Be
 careful not to declare @code{nthreads} as @code{const int}: the Oracle
-compiler requires it to be `an lvalue'.}
+compiler required it to be `an lvalue'.}
 @example
 #pragma omp parallel for num_threads(nthreads) @dots{}
 @end example
@@ -2818,15 +2818,18 @@ support Fortran 90.  However, Fortran 95 is widely supported.
 
 Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
 2018 code: such code should still use file extension @file{.f90} or
-@file{.f95}.  Most platforms use @command{gfortran} where you may need
-to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
-@option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
-default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
-Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
-(search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
-look for §4.6).  Intel Fortran has full Fortran 2008 support from
-version 17.0, and some 2018 support in version 16.0 and more in version
-19.0.
+@file{.f95}.  Almost all current platforms use @command{gfortran} where
+you may need to include @option{-std=f2003}, @option{-std=f2008} or
+(from version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+non-standard extensions.
+@c The Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
+@c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
+@c look for §4.6).
+Intel Fortran had full Fortran 2008 support from version 17.0, and some
+2018 support in version 16.0 and more in version 19.0.  It is good
+practice to describe the requirement in @file{DESCRIPTION}'s
+@samp{SystemRequirements} field.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -2979,7 +2982,7 @@ versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
 If a package using C++ has a @command{configure} script it is essential
-that rhe script selects the correct C++ compiler and standard,
+that the script selects the correct C++ compiler and standard,
 @emph{via} something like
 
 @example
@@ -5701,11 +5704,7 @@ e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
 @code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
 used.  On macOS extensions are declared unless one of these macros is
 given too small a value.} they are not declared otherwise.  So you may
-need to include something like one of @footnote{Solaris 10 does not
-recognize this value of @code{_POSIX_C_SOURCE}, nor values of
-@code{_XOPEN_SOURCE} beyond 600 (700 corresponds to POSIX 2008).
-Further, the value of 500 is not allowed in C99 mode, @R{}'s default for
-C code.}
+need to include something like one of
 @example
 #define _XOPEN_SOURCE 600
 @end example
@@ -5718,8 +5717,8 @@ or
 @end example
 @noindent
 before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
-@code{strnlen} are such functions --  there are several older platforms
-which do not have the POSIX 2008 function @code{strnlen}.)
+@code{strnlen} are such functions --  there were several older platforms
+which did not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
@@ -5731,7 +5730,7 @@ More care is needed for functions such as @code{mallinfo} which are not
 specified by any of these standards---hopefully the @command{man} page
 on your system will tell you so.  Searching online for such pages for
 various OSes (preferably at least Linux and macOS, and the FreeBSD
-manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow you to
+manual pages at @uref{https://man.freebsd.org/cgi/man.cgi} allow you to
 select many OSes) should reveal useful information but a
 @file{configure} script is likely to be needed to check availability and
 functionality.
@@ -5910,8 +5909,8 @@ seen has been type @code{size_t} defined only in the @code{std} namespace.
 @code{<cmath>} rather than @code{<math.h>}.
 @c seen for std::sqrt on macOS 13.
 
-If you define functions in C++ which are insired by later standards, put
-them in a namepsace and refer to them using the namespace.  We have seen
+If you define functions in C++ which are inspired by later standards, put
+them in a namespace and refer to them using the namespace.  We have seen
 conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
 @code{std::data}, @code{std::sample} and @code{std::size} from C++17.
 
@@ -6024,7 +6023,7 @@ POSIX function.  An adequately portable preamble is
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
 #elif defined(__sun) || defined(_AIX)
-/* this is necessary (and sufficient) for Solaris 10 and AIX 6: */
+/* this was necessary (and sufficient) for Solaris 10 and AIX 6: */
 # include <alloca.h>
 #endif
 @end example
@@ -9743,8 +9742,8 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Oracle Developer Studio has @option{-C}.
-This will give an error when the upper or lower bound is exceeded, e.g.
+@option{-fbounds-check}.  This will give an error when the upper or
+lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
 Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
@@ -15758,7 +15757,7 @@ is configured and recorded in header @file{Rconfig.h} (included by
 @file{R_ext/Visibility.h}).  It is often defined on modern Unix-alikes
 with a recent compiler@footnote{It is defined by the Intel compilers,
 but also hides unsatisfied references and so cannot be used with @R{}.
-It is not supported by the AIX nor Solaris compilers.}, but not
+It was not supported by the AIX nor Solaris compilers.}, but not
 supported on macOS nor Windows.  Minimizing the visibility of symbols in
 a shared library will both speed up its loading (unlikely to be
 significant) and reduce the possibility of linking to other entry points
