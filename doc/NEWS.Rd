@@ -272,11 +272,11 @@
       the default and ignored.  It is highly recommended that the system
       headers are installed alongside \command{valgrind}: they are part
       of its packaging on some Linux distributions and packaged
-      separetely (e.g.\sspace{}in a \file{valgrind-devel} RPM) on
+      separetely (e.g.\sspace{}in the \file{valgrind-devel} RPM) on
       others.  \command{configure} gives a warning if they are not
       found.
 
-      THe system headers will be reauired in a future release of \R
+      The system headers will be required in a future release of \R
       to build with \command{valgrind} instruementation.
     }
   }
