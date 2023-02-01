@@ -9434,7 +9434,7 @@ even more effective (and even slower).
 
 It is highly recommended that the @command{valgrind} headers (sometimes
 packaged separately, for example as @file{valgrind-devel}) are installed
-and want to build an instrumented @R{}: this will be required in future.
+to build an instrumented @R{}: this will be required in future.
 
 An example of @code{valgrind} output is
 @smallexample
