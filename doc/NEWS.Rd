@@ -265,6 +265,19 @@
 
       \item The minimum required version of \code{libcurl} has been
       increased from 7.28.0 to 7.32.0 (released in Aug 2013).
+
+      \item If \command{configure} option
+      \option{--with-valgrind-instrumentation} is given value \code{1}
+      or \code{2}, option \option{--with-system-valgrind-headers} is now
+      the default and ignored.  It is highly recommended that the system
+      headers are installed alongside \command{valgrind}: they are part
+      of its packaging on some Linux distributions and packaged
+      separetely (e.g.\sspace{}in a \file{valgrind-devel} RPM) on
+      others.  \command{configure} gives a warning if they are not
+      found.
+
+      THe system headers will be reauired in a future release of \R
+      to build with \command{valgrind} instruementation.
     }
   }
 

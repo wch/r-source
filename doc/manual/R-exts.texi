@@ -9432,11 +9432,9 @@ they are freed.}  but make @R{} much slower when running under
 @code{valgrind}.  Using this in conjunction with @code{gctorture} can be
 even more effective (and even slower).
 
-If you have the development files (sometimes packaged separately, for
-example as @file{valgrind-devel}) installed and want to build an
-instrumented @R{} you are recoomended to also use the
-@command{configure} option @option{--with-system-valgrind-headers} (and
-having them installed is highly recommended).
+It is highly recommended that the @command{valgrind} headers (sometimes
+packaged separately, for example as @file{valgrind-devel}) are installed
+and want to build an instrumented @R{}: this will be required in future.
 
 An example of @code{valgrind} output is
 @smallexample

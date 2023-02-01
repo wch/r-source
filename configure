@@ -1908,7 +1908,7 @@ Optional Packages:
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
   --with-system-valgrind-headers
-                          use system valgrind headers (if available) [no]
+                          use system valgrind headers (if available) [yes]
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
                           use internal code for towlower/upper [no, yes on
@@ -4920,7 +4920,7 @@ else
 fi
 
 else $as_nop
-  use_system_valgrind=no
+  use_system_valgrind=yes
 fi
 
 
@@ -53210,6 +53210,11 @@ then :
 
 fi
 
+  if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
+  set use_system_valgrind = no
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: system valgrind headers not found -- using internal copies" >&5
+printf "%s\n" "$as_me: WARNING: system valgrind headers not found -- using internal copies" >&2;}
+  fi
 fi
 
 

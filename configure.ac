@@ -503,9 +503,9 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=0])
 
 AC_ARG_WITH([system-valgrind-headers],
-[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(valgrind)],
-[use_system_valgrind=no])
+[use_system_valgrind=yes])
 
 AC_ARG_WITH([internal-tzcode],
 [AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
@@ -2605,6 +2605,10 @@ if test ${valgrind_level} -eq 0; then
   AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
 elif test "${use_system_valgrind}" = yes; then
   AC_CHECK_HEADERS([valgrind/memcheck.h])
+  if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
+  set use_system_valgrind = no
+  AC_MSG_WARN([system valgrind headers not found -- using internal copies])
+  fi
 fi
 
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
