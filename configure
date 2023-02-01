@@ -4913,14 +4913,8 @@ fi
 # Check whether --with-system-valgrind-headers was given.
 if test ${with_system_valgrind_headers+y}
 then :
-  withval=$with_system_valgrind_headers; if test "${withval}" = no; then
-  use_system_valgrind=no
-else
-  use_system_valgrind=yes
-fi
-
-else $as_nop
-  use_system_valgrind=yes
+  withval=$with_system_valgrind_headers; { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: --with-system-valgrind-headers is defunct" >&5
+printf "%s\n" "$as_me: WARNING: --with-system-valgrind-headers is defunct" >&2;}
 fi
 
 
@@ -26993,7 +26987,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26998: \"$ac_link\") >&5
+(eval echo $as_me:26992: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27069,7 +27063,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27074: \"$ac_link\") >&5
+(eval echo $as_me:27068: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -53202,7 +53196,7 @@ if test ${valgrind_level} -eq 0; then
 
 printf "%s\n" "#define NVALGRIND 1" >>confdefs.h
 
-elif test "${use_system_valgrind}" = yes; then
+else
   ac_fn_c_check_header_compile "$LINENO" "valgrind/memcheck.h" "ac_cv_header_valgrind_memcheck_h" "$ac_includes_default"
 if test "x$ac_cv_header_valgrind_memcheck_h" = xyes
 then :
@@ -53211,7 +53205,6 @@ then :
 fi
 
   if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
-  set use_system_valgrind = no
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: system valgrind headers not found -- using internal copies" >&5
 printf "%s\n" "$as_me: WARNING: system valgrind headers not found -- using internal copies" >&2;}
   fi
