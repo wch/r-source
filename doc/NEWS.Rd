@@ -455,6 +455,10 @@
       \command{R CMD check}.
 
       Where a C++ standard is specified, it is reported.
+
+      \item \command{check}'s \sQuote{checking compilation flags in
+	Makevars} has been relaxed to accept the use of flags such as
+      \option{-std=f2008} in \samp{PKG_FFLAGS}.
     }
   }
 
