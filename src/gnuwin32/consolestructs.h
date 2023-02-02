@@ -134,7 +134,7 @@ extern int pagerrow, pagercol;
 #define DIMLBUF 250000          /* console buffer size in chars */
 #define MLBUF   8000            /* console buffer size in lines */
 #define SLBUF   512             /* console buffer shift in lines */
-#define NKEYS   512		/* key input buffer */
+#define NKEYS   5000		/* key input buffer */
 #define TABSIZE 8
 
 xbuf newxbuf(xlong dim, xint ms, xint shift);

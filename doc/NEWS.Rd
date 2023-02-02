@@ -262,6 +262,22 @@
       \item \command{configure} now checks conversion of datetimes
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
       (which has been seen on platforms missing \code{tzdata}) is fatal.
+
+      \item The minimum required version of \code{libcurl} has been
+      increased from 7.28.0 to 7.32.0 (released in Aug 2013).
+
+      \item If \command{configure} option
+      \option{--with-valgrind-instrumentation} is given value \code{1}
+      or \code{2}, option \option{--with-system-valgrind-headers} is now
+      the default and ignored (with a warning).  It is highly
+      recommended that the system headers are installed alongside
+      \command{valgrind}: they are part of its packaging on some Linux
+      distributions and packaged separately (e.g.\sspace{}in the
+      \file{valgrind-devel} RPM) on others.  \command{configure} will
+      give a warning if they are not found.
+
+      The system headers will be required in a future release of \R
+      to build with \command{valgrind} instrumentation.
     }
   }
 
@@ -431,14 +447,18 @@
 
       It notes if a C++ standard was specified which is older than the
       current default: many packages have used C++11 to mean \sQuote{not
-      C++98} --- as C++11 is the mininum supported since \R 4.0.0, that
+      C++98} --- as C++11 is the minimum supported since \R 4.0.0, that
       specification can probably be removed.
 
       \item \command{R CMD INSTALL} reports the compilers (and on
       macOS, the SDK) used, and this is copied to the output of
       \command{R CMD check}.
 
-      Where q C++ standard is specified, it is reported.
+      Where a C++ standard is specified, it is reported.
+
+      \item \command{check}'s \sQuote{checking compilation flags in
+	Makevars} has been relaxed to accept the use of flags such as
+      \option{-std=f2008} in \samp{PKG_FFLAGS}.
     }
   }
 
@@ -599,6 +619,10 @@
       \item \code{predict.lm(<model with offset>)} now finds the offset in
       the correct environment, thanks to André Gillibert's report and patch
       in \PR{18456}.
+
+      \item \code{getInitial(<formula>)} now finds the \code{selfStart}
+      model in the correct environment.
+      (Reported by Ivan Krylov in \PR{18368}.)
 
       \item Fix for possible segfault when using recently-added graphics
       features, such as gradients, clipping paths, masks, and groups with

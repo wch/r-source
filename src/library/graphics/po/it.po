@@ -1,14 +1,14 @@
 # R Italian translation
 # This file is distributed under the same license as the R package.
 # Copyright (C) The R Foundation.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: graphics 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"PO-Revision-Date: 2022-10-14 10:16+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,28 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: base.c:43
 msgid "no base graphics system is registered"
-msgstr "nessun sistema grafico base è registrato"
+msgstr "non è registrato alcun sistema grafico base"
 
 #: base.c:310
 msgid "Incompatible graphics state"
-msgstr "stato grafico non compatibile"
+msgstr "Stato grafico non compatibile"
 
 #: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
-msgstr "il sistema grafico base non è registrato"
+msgstr "non è registrato il sistema grafico base"
 
 #: graphics.c:297
 #, c-format
 msgid "bad units specified in '%s'"
-msgstr "specificate unità errate in '%s'"
+msgstr "sono state specificate unità errate in '%s'"
 
 #: graphics.c:1820 graphics.c:1842
 msgid "attempt to plot on null device"
-msgstr "tentaivo di disegnare sul dispositivo null"
+msgstr "tentativo di disegnare sul dispositivo null"
 
 #: graphics.c:1872
 msgid "outer margins too large (figure region too small)"
@@ -56,9 +56,10 @@ msgid "plot region too large"
 msgstr "regione di plot troppo grande"
 
 #: graphics.c:1946
-#, fuzzy, c-format
+#, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr "limiti asse non finiti [GScale(%g,%g,%d, .); log=%d]"
+msgstr ""
+"limiti asse non finiti=%d limiti [GScale(%g,%g,..); log=%s] -- corretti ora"
 
 #: graphics.c:2023
 #, c-format
@@ -87,7 +88,9 @@ msgstr "Nessun dispositivo grafico attivo"
 
 #: graphics.c:3127
 msgid "zero-length arrow is of indeterminate angle and so skipped"
-msgstr "frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno ignorate"
+msgstr ""
+"frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno "
+"ignorate"
 
 #: graphics.c:3208
 #, c-format
@@ -127,11 +130,11 @@ msgstr "il parametro \"mfg\" ha la lunghezza sbagliata"
 
 #: par.c:438
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr "parametro \"i\" in \"mfg\" fuori range"
+msgstr "parametro \"i\" in \"mfg\" fuori intervallo"
 
 #: par.c:440
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr "parametro \"j\" in \"mfg\" fuori range"
+msgstr "parametro \"j\" in \"mfg\" fuori intervallo"
 
 #: par.c:445
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
@@ -155,21 +158,26 @@ msgstr "il parametro grafico \"%s\" è obsoleto"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "parametro grafico \"%s\" non valido"
 
-#: par.c:1116
+#: par.c:1109
+#, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "l'argomento %d non nomina un parametro grafico"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "parametro non valido passato a par()"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "troppe righe nel layout, limite %d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "troppe colonne nel layout, limite %d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "troppe celle nel layout, limite %d"
@@ -323,7 +331,9 @@ msgstr "quarto argomento non valido"
 
 #: plot.c:1690
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr "non è possibile mischiare coordinate di lunghezza-zero con quelle di lunghezza-non-zero"
+msgstr ""
+"non è possibile mischiare coordinate di lunghezza-zero con quelle di "
+"lunghezza-non-zero"
 
 #: plot.c:1915
 msgid "Empty raster"
@@ -573,12 +583,3 @@ msgstr "tutti i valori di z sono NA"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "il vettore long '%s' non è supportato"
-
-#~ msgid "plot type '%s' will be truncated to first character"
-#~ msgstr "tipo lpot '%s' verrà troncato al primo carattere"
-
-#~ msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-#~ msgstr "l'intervallo relativo di valori (%4.0f * EPS) è piccolo (asse %d)"
-
-#~ msgid "invalid NA contour values"
-#~ msgstr "valori di contorno NA non validi"

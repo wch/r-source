@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tcltk 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"PO-Revision-Date: 2022-10-14 10:43+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: tcltk.c:70
 msgid "parse error in R expression"
@@ -24,7 +24,7 @@ msgstr "errore di elaborazione nell'espressione R"
 
 #: tcltk.c:179 tcltk.c:257
 msgid "tcl error.\n"
-msgstr "errore tcl.\n"
+msgstr "errore di tcl.\n"
 
 #: tcltk.c:208 tcltk.c:283 tcltk.c:300 tcltk.c:320 tcltk.c:340 tcltk.c:415
 #: tcltk.c:480 tcltk.c:534 tcltk.c:773
@@ -51,10 +51,10 @@ msgstr "l'argomento non è del tipo corretto"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "nessuna variabile DISPLAY perciò Tk non è disponibile"
 
-#: tcltk_unix.c:94
+#: tcltk_unix.c:111
 msgid "Tcl is not loaded"
 msgstr "Tcl non è caricato"
 
-#: tcltk_unix.c:98
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl non è l'ultimo gestore caricato"

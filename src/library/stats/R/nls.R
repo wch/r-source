@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nls.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2000-2020 The R Core Team
+#  Copyright (C) 2000-2023 The R Core Team
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -487,15 +487,9 @@ nls <-
 	if (missing(start)) {
 	    if(!is.null(attr(data, "parameters"))) {
 		names(attr(data, "parameters"))
-	    } else { ## try selfStart - like object
-		cll <- formula[[length(formula)]]
-		if(is.symbol(cll)) { ## replace  y ~ S   by   y ~ S + 0 :
-		    ## formula[[length(formula)]] <-
-		    cll <- substitute(S + 0, list(S = cll))
-		}
-		fn <- as.character(cll[[1L]])
-		if(is.null(func <- tryCatch(get(fn), error=function(e)NULL)))
-		    func <- get(fn, envir=parent.frame()) ## trying "above"
+	    } else if (is.call(cll <- formula[[length(formula)]])) {
+		## possibly a selfStart - like object
+		func <- eval(cll[[1L]], environment(formula))
 		if(!is.null(pn <- attr(func, "pnames")))
 		    as.character(as.list(match.call(func, call = cll))[-1L][pn])
 	    }

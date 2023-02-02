@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "invalid 'at' location in 'axis'"
-msgstr "'axis'里的'at'位置不对"
+msgstr "'axis'里的'at'位置无效"
 
 msgid "invalid to specify axis labels when 'at' is NULL"
-msgstr "'at'是NULL的话不能设定轴标签"
+msgstr "'at'是NULL的话不能指定轴标签"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels'和'at'的位置量必需有相同的长度"
@@ -51,43 +52,45 @@ msgid "must start new page if showing leaves separately"
 msgstr "如果分别显示树叶的话需要重新开一页"
 
 msgid "invalid 'edit' information"
-msgstr "'edit'信息不对"
+msgstr "'edit'信息无效"
 
 msgid "'gEditList' can only contain 'gEdit' objects"
 msgstr "'gEditList'只能包含'gEdit'对象"
 
 msgid "invalid 'frame'"
-msgstr "'frame'的值不对"
+msgstr "'frame'的值无效"
 
 msgid "invalid 'grob'"
-msgstr "'grob'的值不对"
+msgstr "'grob'的值无效"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr "'row'或者是'col'的值不对(没有在框布局里有这样的单元格)"
+msgstr "'row'或者是'col'的值无效(没有在框布局里有这样的单元格)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col'的值只能在已存在列的范围之内"
 
 msgid "invalid 'col' specification"
-msgstr "'col'设定得不对"
+msgstr "'col'设定得无效"
 
 msgid "'row' can only be a range of existing rows"
 msgstr "'row'的值只能在已存在行的范围之内"
 
 msgid "invalid 'row' specification"
-msgstr "'row'设定得不对"
+msgstr "'row'设定得无效"
 
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr "只能设定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col.after'中的一个"
+msgstr "只能指定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col."
+"after'中的一个"
 
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr "只能设定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一个"
+msgstr "只能指定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row."
+"after'中的一个"
 
 msgid "invalid 'n'"
-msgstr "'n'的值不对"
+msgstr "'n'的值无效"
 
 msgid "invalid 'f'"
-msgstr "'f'的值不对"
+msgstr "'f'的值无效"
 
 msgid "'gpar' element '%s' must not be length 0"
 msgstr "'gpar'成分'%s'的长度不能为零"
@@ -99,17 +102,17 @@ msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' gpar已经不再有用"
 
 msgid "invalid 'linemitre' value"
-msgstr "'linemitre'的值不对"
+msgstr "'linemitre'的值无效"
 
 msgid "invalid 'alpha' value"
-msgstr "'alpha'的值不对"
+msgstr "'alpha'的值无效"
 
 msgid "must specify only one of 'font' and 'fontface'"
-msgstr "'font'和'fontface'两个量只能设定一个"
+msgstr "'font'和'fontface'两个量只能指定一个"
 
 #, fuzzy
 msgid "invalid fontface"
-msgstr "字体面设定不对"
+msgstr "字体面设定无效"
 
 msgid "argument must be a 'gpar' object"
 msgstr "参数必需是'gpar'对象"
@@ -118,7 +121,7 @@ msgid "must specify only valid 'gpar' names"
 msgstr "只能用正确的'gpar'名字"
 
 msgid "invalid display list element"
-msgstr "显示列成分不对"
+msgstr "显示列成分无效"
 
 #, fuzzy
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
@@ -134,7 +137,7 @@ msgid "only valid to push viewports"
 msgstr "只能推视口"
 
 msgid "must specify at least one viewport"
-msgstr "至少必需设定一个视口"
+msgstr "至少必需指定一个视口"
 
 #, fuzzy
 msgid "Down viewport failed to record on display list"
@@ -142,7 +145,7 @@ msgstr "显示列里所插入的对象不对"
 
 #, fuzzy
 msgid "Down viewport incorrectly recorded on display list"
-msgstr "显示列里所插入的对象不对"
+msgstr "显示列里所插入的对象不正确"
 
 msgid "must pop at least one viewport"
 msgstr "至少需要弹起一个视口"
@@ -155,28 +158,28 @@ msgstr ""
 
 #, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "'arrow'参数不对"
+msgstr "'arrow'参数无效"
 
 msgid "invalid object inserted on the display list"
-msgstr "显示列里所插入的对象不对"
+msgstr "显示列里所插入的对象无效"
 
 msgid "invalid modification of the display list"
-msgstr "显示单修改得不对"
+msgstr "显示单修改得无效"
 
 msgid "'expr' must return a grob or gList"
 msgstr "'expr'必需回归grob或gList"
 
 msgid "invalid 'grob' argument"
-msgstr "'grob'参数值不对"
+msgstr "'grob'参数值无效"
 
 msgid "invalid 'vp' slot"
-msgstr "'vp'槽的值不对"
+msgstr "'vp'类型的值无效"
 
 msgid "invalid 'gp' slot"
-msgstr "'gp'槽的值不对"
+msgstr "'gp'类型的值无效"
 
 msgid "invalid 'grob' class"
-msgstr "'grob'的类别不对"
+msgstr "'grob'的类别无效"
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr "'grob'的路径至少要包含一个'grob'名字"
@@ -188,7 +191,7 @@ msgid "only 'grobs' allowed in \"gList\""
 msgstr "\"gList\"只许用'grobs'"
 
 msgid "invalid element to add to \"gList\""
-msgstr "\"gList\"加的成分不对"
+msgstr "\"gList\"加的成分无效"
 
 msgid "can only set 'children' for a \"gTree\""
 msgstr "\"gTree\"只能给'children'设定值"
@@ -200,22 +203,22 @@ msgid "it is only valid to get 'children' from a \"gTree\""
 msgstr "只能从\"gTree\"那儿得到'children'的值"
 
 msgid "invalid \"gTree\" class"
-msgstr "\"gTree\"的类别不对"
+msgstr "\"gTree\"的类别无效"
 
 msgid "'allDevices' not yet implemented"
 msgstr "'allDevices'还没有被实现"
 
 msgid "invalid 'gPath'"
-msgstr "'gPath'的值不对"
+msgstr "'gPath'的值无效"
 
 msgid "invalid 'grep' value"
-msgstr "'grep'的值不对"
+msgstr "'grep'的值无效"
 
 msgid "it is only valid to get a child from a \"gTree\""
 msgstr "只能从\"gTree\"那儿取得子树"
 
 msgid "'gPath' does not specify a valid child"
-msgstr "'gPath'没有设定正确的子值"
+msgstr "'gPath'没有指定正确的子值"
 
 msgid "it is only valid to set a child of a \"gTree\""
 msgstr "只能给\"gTree\"设子值"
@@ -242,16 +245,16 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "只能对'gTree'的子值进行修改"
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr "不能直接对'children'或'childrenOrder'这样的槽进行修改"
+msgstr "不能直接对'children'或'childrenOrder'这样的类型进行修改"
 
 msgid "invalid 'result'"
-msgstr "'result'的值不对"
+msgstr "'result'的值无效"
 
 msgid "the new 'grob' must have the same name as the old 'grob'"
 msgstr "新的'grob'值必需等于旧的'grob'值"
 
 msgid "slot '%s' not found"
-msgstr "没有'%s'这样的槽"
+msgstr "没有'%s'这样的类型"
 
 msgid "gPath (%s) not found"
 msgstr "gPath(%s)不存在"
@@ -261,28 +264,28 @@ msgstr "不存在grob'%s'这个值"
 
 #, fuzzy
 msgid "Invalid force target"
-msgstr "'order'的值不对"
+msgstr "'order'的值无效"
 
 #, fuzzy
 msgid "Invalid revert target"
-msgstr "'print'参数值不对"
+msgstr "'print'参数值无效"
 
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr "\"gTree\"只能给'children'设定值"
 
 msgid "Invalid 'order'"
-msgstr "'order'的值不对"
+msgstr "'order'的值无效"
 
 msgid "Group definition failed"
 msgstr ""
 
 #, fuzzy
 msgid "Invalid source"
-msgstr "'order'的值不对"
+msgstr "'order'的值无效"
 
 #, fuzzy
 msgid "Invalid destination"
-msgstr "定位不对"
+msgstr "定位无效"
 
 msgid "Invalid compositing operator"
 msgstr ""
@@ -295,7 +298,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Invalid transform"
-msgstr "'order'的值不对"
+msgstr "'order'的值无效"
 
 msgid "'l' must be a layout"
 msgstr "'l'必需为布局"
@@ -321,31 +324,31 @@ msgid "nrow * ncol < #{legend labels}"
 msgstr ""
 
 msgid "invalid justification"
-msgstr "定位不对"
+msgstr "定位无效"
 
 msgid "invalid horizontal justification"
-msgstr "水平定位不对"
+msgstr "水平定位无效"
 
 msgid "invalid vertical justification"
-msgstr "垂直定位不对"
+msgstr "垂直定位无效"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect'的值要么是逻辑值，要么是一个'nrow'乘'ncol'大小的矩阵"
 
 msgid "invalid 'print' argument"
-msgstr "'print'参数值不对"
+msgstr "'print'参数值无效"
 
 msgid "invalid object in 'listing'"
-msgstr "'listing'里目标对象不对"
+msgstr "'listing'里目标对象无效"
 
 msgid "invalid listing"
-msgstr "表不对"
+msgstr "表无效"
 
 msgid "invalid 'listing'"
-msgstr "'listing'不对"
+msgstr "'listing'无效"
 
 msgid "invalid 'origin'"
-msgstr "'origin'的值不对"
+msgstr "'origin'的值无效"
 
 msgid "Only a grob can be converted to a path"
 msgstr ""
@@ -379,7 +382,7 @@ msgid "'length' must be a 'unit' object"
 msgstr "'length'的值必需是'unit'对象"
 
 msgid "invalid 'ends' or 'type' argument"
-msgstr "'ends'或'type'参数的值不对"
+msgstr "'ends'或'type'参数的值无效"
 
 msgid "'x' and 'y' must be units"
 msgstr "'x'和'y'必需为单元值"
@@ -388,10 +391,10 @@ msgid "'x' and 'y' must have length 1"
 msgstr "'x'和'y'的长度必需为一"
 
 msgid "invalid 'arrow' argument"
-msgstr "'arrow'参数不对"
+msgstr "'arrow'参数无效"
 
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
-msgstr "不能同时对'id'和'id.lengths'进行设定"
+msgstr "不能同时对'id'和'id.lengths'进行指定"
 
 msgid "'x' and 'y' must be same length"
 msgstr "'x'和'y'的长度必需相同"
@@ -400,7 +403,7 @@ msgid "'x' and 'y' and 'id' must all be same length"
 msgstr "'x'，'y'和'id'的长度必需相同"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr "'x'，'y'和'id.lengths'必需设定整体长度"
+msgstr "'x'，'y'和'id.lengths'必需指定整体长度"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1'和'y1'必需为单元值"
@@ -413,7 +416,7 @@ msgstr "'arrows'对象出了错"
 
 #, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr "'x'，'y'和'id.lengths'必需设定整体长度"
+msgstr "'x'，'y'和'id.lengths'必需指定整体长度"
 
 msgid "x and y must be units"
 msgstr "x和y必需为单元值"
@@ -431,7 +434,7 @@ msgid "'x', 'y', 'width', and 'height' must be units"
 msgstr "'x', 'y', 'width'和'height'必需为单元值"
 
 msgid "invalid 'rot' value"
-msgstr "'rot'的值不对"
+msgstr "'rot'的值无效"
 
 msgid "zero-length 'pch'"
 msgstr "'pch'的长度不能为零"
@@ -458,7 +461,7 @@ msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
 
 msgid "invalid 'axis' or 'type'"
-msgstr "'axis'或'type'的值不对"
+msgstr "'axis'或'type'的值无效"
 
 #, fuzzy
 msgid "Not a unit object"
@@ -501,38 +504,38 @@ msgid "replacement must be of length 1"
 msgstr "'gpar'成分'%s'的长度不能为零"
 
 msgid "invalid 'theta'"
-msgstr "'theta'值不对"
+msgstr "'theta'值无效"
 
 msgid "'range' must be numeric"
 msgstr "'range'必需为数字"
 
 msgid "invalid 'gp' value"
-msgstr "'gp'的值不对"
+msgstr "'gp'的值无效"
 
 msgid "invalid 'clip' value"
-msgstr "'clip'值不对"
+msgstr "'clip'值无效"
 
 #, fuzzy
 msgid "invalid 'mask' value"
-msgstr "'ask'的值不对"
+msgstr "'ask'的值无效"
 
 msgid "invalid 'xscale' in viewport"
-msgstr "视口里的'xscale'值不对"
+msgstr "视口里的'xscale'值无效"
 
 msgid "invalid 'yscale' in viewport"
-msgstr "视口里的'yscale'值不对"
+msgstr "视口里的'yscale'值无效"
 
 msgid "invalid 'angle' in viewport"
-msgstr "视口里的'angle'值不对"
+msgstr "视口里的'angle'值无效"
 
 msgid "invalid 'layout' in viewport"
-msgstr "视口里的'layout'值不对"
+msgstr "视口里的'layout'值无效"
 
 msgid "invalid 'layout.pos.row' in viewport"
-msgstr "视口里的'layout.pos.row'值不对"
+msgstr "视口里的'layout.pos.row'值无效"
 
 msgid "invalid 'layout.pos.col' in viewport"
-msgstr "视口里的'layout.pos.col'值不对"
+msgstr "视口里的'layout.pos.col'值无效"
 
 msgid "only viewports allowed in 'vpList'"
 msgstr "'vpList'里的值只能是视口"
@@ -547,21 +550,21 @@ msgid "a viewport path must contain at least one viewport name"
 msgstr "视口路径至少要有一个视口的名字"
 
 msgid "must specify at least one of 'x' or 'xscale'"
-msgstr "至少要设定'x'或'xscale'两个中的一个"
+msgstr "至少要指定'x'或'xscale'两个中的一个"
 
 msgid "must specify at least one of 'y' or 'yscale'"
-msgstr "至少要设定'y'或'yscale'两个中的一个"
+msgstr "至少要指定'y'或'yscale'两个中的一个"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "卸载'grid'名字空间时关闭所有的设备"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
-msgstr[0] "'grob'名字不对"
+msgstr[0] "'grob'名字无效"
 
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
-msgstr[0] "视口名字不对"
+msgstr[0] "视口名字无效"
 
 #~ msgid "'x' argument must be a unit object"
 #~ msgstr "'x'参数必需是单元对象"

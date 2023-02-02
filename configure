@@ -1908,7 +1908,7 @@ Optional Packages:
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
   --with-system-valgrind-headers
-                          use system valgrind headers (if available) [no]
+                          use system valgrind headers (if available) [yes]
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
                           use internal code for towlower/upper [no, yes on
@@ -4913,14 +4913,8 @@ fi
 # Check whether --with-system-valgrind-headers was given.
 if test ${with_system_valgrind_headers+y}
 then :
-  withval=$with_system_valgrind_headers; if test "${withval}" = no; then
-  use_system_valgrind=no
-else
-  use_system_valgrind=yes
-fi
-
-else $as_nop
-  use_system_valgrind=no
+  withval=$with_system_valgrind_headers; { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: --with-system-valgrind-headers is defunct" >&5
+printf "%s\n" "$as_me: WARNING: --with-system-valgrind-headers is defunct" >&2;}
 fi
 
 
@@ -26993,7 +26987,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26998: \"$ac_link\") >&5
+(eval echo $as_me:26992: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27069,7 +27063,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27074: \"$ac_link\") >&5
+(eval echo $as_me:27068: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -51619,15 +51613,15 @@ fi
 done
 
 if test "x${have_libcurl}" = "xyes"; then
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
-printf %s "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
-if test ${r_cv_have_curl728+y}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.32.0" >&5
+printf %s "checking if libcurl is version 7 and >= 7.32.0... " >&6; }
+if test ${r_cv_have_curl732+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
   if test "$cross_compiling" = yes
 then :
-  r_cv_have_curl728=no
+  r_cv_have_curl732=no
 else $as_nop
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -51639,7 +51633,7 @@ int main(void)
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 32
   exit(0);
 #else
   exit(1);
@@ -51652,19 +51646,19 @@ int main(void)
 _ACEOF
 if ac_fn_c_try_run "$LINENO"
 then :
-  r_cv_have_curl728=yes
+  r_cv_have_curl732=yes
 else $as_nop
-  r_cv_have_curl728=no
+  r_cv_have_curl732=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
-printf "%s\n" "$r_cv_have_curl728" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl732" >&5
+printf "%s\n" "$r_cv_have_curl732" >&6; }
 fi
-if test "x${r_cv_have_curl728}" = xno; then
+if test "x${r_cv_have_curl732}" = xno; then
   have_libcurl=no
 fi
 
@@ -53202,7 +53196,7 @@ if test ${valgrind_level} -eq 0; then
 
 printf "%s\n" "#define NVALGRIND 1" >>confdefs.h
 
-elif test "${use_system_valgrind}" = yes; then
+else
   ac_fn_c_check_header_compile "$LINENO" "valgrind/memcheck.h" "ac_cv_header_valgrind_memcheck_h" "$ac_includes_default"
 if test "x$ac_cv_header_valgrind_memcheck_h" = xyes
 then :
@@ -53210,6 +53204,10 @@ then :
 
 fi
 
+  if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: system valgrind headers not found -- using internal copies" >&5
+printf "%s\n" "$as_me: WARNING: system valgrind headers not found -- using internal copies" >&2;}
+  fi
 fi
 
 

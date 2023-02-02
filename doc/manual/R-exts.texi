@@ -2159,7 +2159,7 @@ example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
 When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
 compiler: flags such as @option{-O2 -Wall -pedantic} (and all other
-@option{-W} flags: for the Oracle compilers these are used to pass
+@option{-W} flags: for the Oracle compilers these were used to pass
 arguments to compiler phases) are all specific to GCC (and compilers such
 as @command{clang} which aim to be options-compatible with it).
 
@@ -2568,13 +2568,13 @@ dubious assumptions.  One way to limit resources is to limit the overall
 number of threads available to OpenMP in the @R{} process: this can be
 done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
-Oracle, Intel and Clang compilers.  The count may include the thread
+Intel and Clang compilers.  The count may include the thread
 running the main process.}  Alternatively, the number of threads per
 region can be limited by the environment variable @env{OMP_NUM_THREADS}
 or API call @code{omp_set_num_threads}, or, better, for the regions in
 your code as part of their specification. E.g.@: @R{} uses@footnote{Be
 careful not to declare @code{nthreads} as @code{const int}: the Oracle
-compiler requires it to be `an lvalue'.}
+compiler required it to be `an lvalue'.}
 @example
 #pragma omp parallel for num_threads(nthreads) @dots{}
 @end example
@@ -2861,15 +2861,18 @@ support Fortran 90.  However, Fortran 95 is widely supported.
 
 Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
 2018 code: such code should still use file extension @file{.f90} or
-@file{.f95}.  Most platforms use @command{gfortran} where you may need
-to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
-@option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
-default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
-Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
-(search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
-look for §4.6).  Intel Fortran has full Fortran 2008 support from
-version 17.0, and some 2018 support in version 16.0 and more in version
-19.0.
+@file{.f95}.  Almost all current platforms use @command{gfortran} where
+you may need to include @option{-std=f2003}, @option{-std=f2008} or
+(from version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+non-standard extensions.
+@c The Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
+@c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
+@c look for §4.6).
+Intel Fortran had full Fortran 2008 support from version 17.0, and some
+2018 support in version 16.0 and more in version 19.0.  It is good
+practice to describe the requirement in @file{DESCRIPTION}'s
+@samp{SystemRequirements} field.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -2909,9 +2912,9 @@ supported.  Further revisions `C++17' (in December 2017) and `C++20'
 The next revision, `C++23', is expected in 2023 and several compilers
 already have extensive partial support for the current drafts.
 
-The default standard was changed to C++17 in \R 4.3.0, if supported (and
-for rather old compilers, C++14 or even C++11 would be used as the
-default).
+The default standard for compiling @R{} packages was changed to C++17 in
+@R{} 4.3.0 if supported (and for rather old compilers, C++14 or even
+C++11 would be used as the default).
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
@@ -2939,79 +2942,43 @@ C++ standards have deprecated and later removed features.  Be aware that
 some current compilers still accept removed features in C++17 mode,
 such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
 
-Different versions of @R{} have specified different default C++
-standards, so for maximal portability a package should specify the
-standard it requires.  In order to specify C++11 code in a package,
+Different versions of @R{} have used different default C++ standards, so
+for maximal portability a package should specify the standard it
+requires.  In order to specify C++14 code in a package with a
 @file{Makevars} file (or @file{Makevars.win} or @file{Makevars.ucrt} on
 Windows) should include the line
 
 @example
-CXX_STD = CXX11
-@end example
-@noindent
-Compilation and linking will then be done with the C++11 compiler (if any).
-
-Packages without a @file{src/Makevars} or @file{src/Makefile} file may
-specify that they require C++11 for code in the @file{src} directory by
-including @samp{C++11} in the @samp{SystemRequirements} field of the
-@file{DESCRIPTION} file, e.g.
-
-@example
-SystemRequirements: C++11
-@end example
-
-If a package does have a @file{src/Makevars[.win]} file then setting the
-make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
-SHLIB} to work correctly in the package's @file{src} directory.
-
-If a package using C++ has a @command{configure} script it is essential
-that it selects the correct C++ standard, @emph{via} something like
-
-@example
-CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
-if test -z "$CXX11"; then
-  AC_MSG_ERROR([No C++11 compiler is available])
-fi
-CXX11STD=`"$@{R_HOME@}/bin/R" CMD config CXX11STD`
-CXX="$@{CXX11@} $@{CXX11STD@}"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
-AC_LANG(C++)
-@end example
-
-@noindent
-if C++11 was specified, but using @code{CXX} instead of @code{CXX11} if
-no standard was specified.
-
-If you want to compile C++ code in a subdirectory, make sure you pass
-down the macros to specify the appropriate compiler, e.g.@: in
-@file{src/Makevars}
-@example
-sublibs:
-         @@(cd libs && $(MAKE) \
-            CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)")
-@end example
-
-Note that the mechanisms described here specify C++11 for code compiled
-by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
-They do not apply if there is a @file{src/Makefile} file (or a Windows
-analogue) nor to compilation done in vignettes or @emph{via} other
-packages.
-
-Support for a C++14 compiler (where available) has been in @R{} since
-version 3.4.0 and became the default (where available) in
-4.1.0.@footnote{Except on Windows where this was overlooked until @R{}
-4.3.0.}  Similar considerations to C++11 apply, with the variables
-associated with the C++14 compiler using the prefix @samp{CXX14} instead
-of @samp{CXX11}.  For example, to use C++14 code in a package, the
-package's @file{Makevars} file (or @file{Makevars.win} or
-@file{Makevars.ucrt} on Windows) should include the line
-@example
 CXX_STD = CXX14
 @end example
+@noindent
+Compilation and linking will then be done with the C++14 compiler (if
+any).  Analogously for other standards (details below).  On the other
+hand, specifying C++11@footnote{Often historically used to mean `not C++98'}
+when the code is valid under C++14 or C++17 reduces future portability.
+
+Packages without a @file{src/Makevars} or @file{src/Makefile} file may
+specify a C++ standard for code in the @file{src} directory by including
+something like @samp{C++14} in the @samp{SystemRequirements} field of
+the @file{DESCRIPTION} file, e.g.
+
+@example
+SystemRequirements: C++14
+@end example
+
+If a package does have a @file{src/Makevars[.win]} file then also
+setting the make variable @samp{CXX_STD} there is recommended, as it
+allows @command{R CMD SHLIB} to work correctly in the package's
+@file{src} directory.
+
+A requirement of C++17 or later should always be declared in the
+@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
+@file{src/Makefile}) so this is shown on the package's summary pages on
+@acronym{CRAN} or similar.
 
 Essentially complete C++14 support is available from GCC 5, LLVM
 @command{clang} 3.4 and currently-used versions of Apple
-@command{clang}.
+@command{clang} (10.0.0 for High Sierra).
 
 Code needing C++14 features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
@@ -3031,32 +2998,19 @@ using std::make_unique;
 #endif
 @end example
 
-@c Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
-@c which had only partial C++14 support, and the flag to obtain that
-@c support was not included in the default Windows build of @R{} --- one
-@c could try something like
-
-@c @example
-@c CXX14="$(BINPREF)g++ $(M_ARCH)"
-@c CXX14FLAGS="-O2 -Wall" 
-@c CXX14STD=-std=gnu1y 
-@c @end example
-
-@c @noindent
-@c in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
-@c from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
-@c back-compatibility @option{-std=gnu1y}.
-
 @c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
 @c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
-@c RHEL 7 (4.8, end of all support in 2028) are examples.
+@c Centos 7 (4.8.5, ESM support until 2024-06)
+@c RHEL 7 (4.8, end of all support in 2028)
 C++17 (as from @R{} 3.4.0), C++20 (as from @R{} 4.0.0) and C++23 (as
 from @R{} 4.3.0) can be specified in an analogous way (replacing
 @code{14} by @code{17}, @code{20} or @code{23}) but compiler/OS support
 is platform-dependent.  Some C++17 and C++20 support is available with
 the default builds of @R{} on macOS and Windows as from @R{} 4.0.0.
 Much of @command{g++}'s support for C++17 needs version 7 or later: that
-is more recent than some still-current Linux distributions.
+is more recent than some still-current Linux distributions but often
+packages for later compilers are available: for RHEL/Centos 7 look for
+`devtoolset'.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
@@ -3065,38 +3019,84 @@ feature tests as well as resources such as
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented.
 
-A requirement of C++17 or later should always be declared in the
-@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
-@file{src/Makefile}) so this is shown on the package's summary pages on
-@acronym{CRAN} or similar.
-
 Attempts to specify an unknown C++ standard are silently ignored: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
+If a package using C++ has a @command{configure} script it is essential
+that the script selects the correct C++ compiler and standard,
+@emph{via} something like
+
+@example
+CXX17=`"$@{R_HOME@}/bin/R" CMD config CXX17`
+if test -z "$CXX17"; then
+  AC_MSG_ERROR([No C++17 compiler is available])
+fi
+CXX17STD=`"$@{R_HOME@}/bin/R" CMD config CXX17STD`
+CXX="$@{CXX17@} $@{CXX17STD@}"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+## for an configure.ac file
+AC_LANG(C++)
+@end example
+
+@noindent
+if C++17 was specified, but using
+@example
+CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+## for an configure.ac file
+AC_LANG(C++)
+@end example
+@noindent
+if no standard was specified.
+
+If you want to compile C++ code in a subdirectory, make sure you pass
+down the macros to specify the appropriate compiler, e.g.@: in
+@file{src/Makevars}
+@example
+sublibs:
+         @@(cd libs && $(MAKE) \
+            CXX="$(CXX17) $(CXX17STD)" CXXFLAGS="$(CXX17FLAGS) $(CXX17PICFLAGS)")
+@end example
+
 The discussion above is about the standard @R{} ways of compiling C++:
-it will not apply to packages using @file{src/Makefile} or
-@command{configure} or building in a subdirectory that do not set the
-C++ standard.  And the default C++ standard varies widely and gets
-changed frequently by vendors -- for example Apple clang 14 defaults to
-C++98, LLVM clang 14 to C++14 and @command{g++} 12 to C++17.
+it will not apply to packages using @file{src/Makefile} or building in a
+subdirectory that do not set the C++ standard.  And compilers' default
+C++ standards varies widely and gets changed frequently by vendors -- for
+example Apple clang 14 defaults to C++98, LLVM clang 14 to C++14 and
+@command{g++} 12 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX17 = `"$@{R_HOME@}/bin/R" CMD config CXX17`
-CXX17STD = `"$@{R_HOME@}/bin/R" CMD config CXX17STD`
-CXX = "$@{CXX17@} $@{CXX17STD@}"
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
-CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX17PICFLAGS`
-SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LD`
-SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX17LDFLAGS`
+CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
+CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
 @end example
 @noindent
-and ensuring these values are used in relevant compilations.
+and ensuring these values are used in relevant compilations, after
+checking they are non-empty.  A common use of @file{src/Makefile} is to
+compile an executable, when likely something like (for example for
+C++14)
+@example
+CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
+CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
+@end example
+@noindent
+suffices.  On Unix (and on Windows from @R{} 4.3.0) this can be simplified
+to
+@example
+CXX = $@{CXX14@} $@{CXX14STD@}
+CXXFLAGS = $@{CXX14FLAGS@}
+@end example
+@noindent
 
-Similar code (without spaces surrounding @code{=}) can be used in
-@code{configure} scripts.
 
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
@@ -5311,7 +5311,7 @@ it being dynamically loaded into @R{} on an untested platform.
 
 @command{ld -S} invokes @command{strip --strip-debug} on GNU
 @command{ld} but is not portable: in particular on Solaris it did
-something completely different and takes an argument.
+something completely different and took an argument.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
@@ -5807,11 +5807,7 @@ e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
 @code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
 used.  On macOS extensions are declared unless one of these macros is
 given too small a value.} they are not declared otherwise.  So you may
-need to include something like one of @footnote{Solaris 10 does not
-recognize this value of @code{_POSIX_C_SOURCE}, nor values of
-@code{_XOPEN_SOURCE} beyond 600 (700 corresponds to POSIX 2008).
-Further, the value of 500 is not allowed in C99 mode, @R{}'s default for
-C code.}
+need to include something like one of
 @example
 #define _XOPEN_SOURCE 600
 @end example
@@ -5824,8 +5820,8 @@ or
 @end example
 @noindent
 before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
-@code{strnlen} are such functions --  there are several older platforms
-which do not have the POSIX 2008 function @code{strnlen}.)
+@code{strnlen} are such functions --  there were several older platforms
+which did not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
@@ -5837,7 +5833,7 @@ More care is needed for functions such as @code{mallinfo} which are not
 specified by any of these standards---hopefully the @command{man} page
 on your system will tell you so.  Searching online for such pages for
 various OSes (preferably at least Linux and macOS, and the FreeBSD
-manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow you to
+manual pages at @uref{https://man.freebsd.org/cgi/man.cgi} allow you to
 select many OSes) should reveal useful information but a
 @file{configure} script is likely to be needed to check availability and
 functionality.
@@ -5858,8 +5854,8 @@ floating-point arguments: @code{float}, @code{double}, @code{long
 double} and possibly more.  The standard specifies what happens with an
 argument of integer type but this is not always implemented, resulting
 in a report of `overloading ambiguity': this was commonly seen on
-Solaris, but for @code{pow} also seen on macOS (and other platforms
-using @command{clang++}).
+Solaris, but for @code{pow} also seen on macOS and other platforms
+using @command{clang++}.
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -5954,9 +5950,10 @@ included by other headers on Linux and Windows but not macOS.)
 @command{g++}@tie{}11 often needs explicit inclusion of the C++ headers
 @code{<limits>} (for @code{numeric_limits}) or @code{<exception>} (for
 @code{set_terminate} and similar), whereas earlier versions included
-these in other headers. Drafts of @command{g++}@tie{}13 require the
+these in other headers. @command{g++}@tie{}13 requires the
 explicit inclusion of @code{<cstdint>} for types such as @code{uint32_t}
-which was previously included implicitly.
+which was previously included implicitly.  (For more such, see
+@uref{https://gcc.gnu.org/gcc-13/porting_to.html}.)
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -6014,6 +6011,11 @@ seen has been type @code{size_t} defined only in the @code{std} namespace.
 @code{std} namespace if the correct C++ header is included, e.g.@:
 @code{<cmath>} rather than @code{<math.h>}.
 @c seen for std::sqrt on macOS 13.
+
+If you define functions in C++ which are inspired by later standards, put
+them in a namespace and refer to them using the namespace.  We have seen
+conflicts with @code{std::make_unique} from C++14 and @code{std::byte},
+@code{std::data}, @code{std::sample} and @code{std::size} from C++17.
 
 @item
 @c including LLVM clang as from 4.0.0
@@ -6124,7 +6126,7 @@ POSIX function.  An adequately portable preamble is
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
 #elif defined(__sun) || defined(_AIX)
-/* this is necessary (and sufficient) for Solaris 10 and AIX 6: */
+/* this was necessary (and sufficient) for Solaris 10 and AIX 6: */
 # include <alloca.h>
 #endif
 @end example
@@ -6151,20 +6153,22 @@ them. Examples include @code{bind1st}/@code{bind2nd} (use
 @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
-@code{std:;mem_fun_ref} and @code{std::ptr_fun}.
+@code{std::mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
 Later versions of standards may add reserved words: for example
 @code{bool}, @code{false} and @code{true} became keywords in C23 and are
-no longer available as variable names.  So avoid common words and
-keywords in other programming languages.
+no longer available as variable names.  As noted above, C++17 uses
+@code{byte}, @code{data}, @code{sample} and @code{size}.
+
+So avoid common words and keywords in other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
 @itemize
 @item
-Use of the @code{register} storage class specifier (see the previous
-item).
+Use of the @code{register} storage class specifier (see the previous but
+one item).
 @item
 The C99 keyword @code{restrict} is not part of@footnote{it is allowed
 but ignored in system headers.} any C++ standard and is rejected by some
@@ -9428,6 +9432,10 @@ they are freed.}  but make @R{} much slower when running under
 @code{valgrind}.  Using this in conjunction with @code{gctorture} can be
 even more effective (and even slower).
 
+It is highly recommended that the @command{valgrind} headers (sometimes
+packaged separately, for example as @file{valgrind-devel}) are installed
+to build an instrumented @R{}: this will be required in future.
+
 An example of @code{valgrind} output is
 @smallexample
 ==12539== Invalid read of size 4
@@ -9491,15 +9499,15 @@ or setting the environment variable @env{VALGRIND_OPTS}.  As from @R{}
 4.2.0, @option{--use-valgrind} also uses @command{valgrind} when
 re-building the vignettes.
 
-On macOS you may need to ensure that debugging symbols are made available
-(so @command{valgrind} reports line numbers in files).  This can usually
-be done with the @command{valgrind} option @option{--dsymutil=yes} to
-ask for the symbols to be dumped when the @file{.so} file is loaded.
-This will not work where packages are installed into a system area (such
-as the @file{R.framework}) and can be slow.  Installing packages with
-@command{R CMD INSTALL --dsym} installs the dumped symbols.  (This can
-also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
-non-empty value before the @command{INSTALL}.)
+@c On macOS you may need to ensure that debugging symbols are made available
+@c (so @command{valgrind} reports line numbers in files).  This can usually
+@c be done with the @command{valgrind} option @option{--dsymutil=yes} to
+@c ask for the symbols to be dumped when the @file{.so} file is loaded.
+@c This will not work where packages are installed into a system area (such
+@c as the @file{R.framework}) and can be slow.  Installing packages with
+@c @command{R CMD INSTALL --dsym} installs the dumped symbols.  (This can
+@c also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
+@c non-empty value before the @command{INSTALL}.)
 
 This section has described the use of @command{memtest}, the default
 (and most useful) of @code{valgrind}'s tools.  There are others
@@ -9840,8 +9848,8 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Oracle Developer Studio has @option{-C}.
-This will give an error when the upper or lower bound is exceeded, e.g.
+@option{-fbounds-check}.  This will give an error when the upper or
+lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
 Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
@@ -15881,7 +15889,7 @@ is configured and recorded in header @file{Rconfig.h} (included by
 @file{R_ext/Visibility.h}).  It is often defined on modern Unix-alikes
 with a recent compiler@footnote{It is defined by the Intel compilers,
 but also hides unsatisfied references and so cannot be used with @R{}.
-It is not supported by the AIX nor Solaris compilers.}, but not
+It was not supported by the AIX nor Solaris compilers.}, but not
 supported on macOS nor Windows.  Minimizing the visibility of symbols in
 a shared library will both speed up its loading (unlikely to be
 significant) and reduce the possibility of linking to other entry points

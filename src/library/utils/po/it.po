@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: utils 4.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
-"PO-Revision-Date: \n"
+"Project-Id-Version: R-4-3-BRANCH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-23 19:19+0100\n"
+"PO-Revision-Date: 2023-01-19 18:36+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
-#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:573 io.c:777 io.c:830 io.c:844 io.c:848
+#: io.c:854 io.c:855 io.c:1096 io.c:1097 io.c:1099 io.c:1100 io.c:1101
+#: io.c:1102 io.c:1103 io.c:1104 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
 #: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
@@ -29,11 +29,11 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
 
-#: io.c:350 io.c:835
+#: io.c:350 io.c:841
 msgid "invalid quote symbol set"
 msgstr "simbolo di citazione non valido"
 
-#: io.c:362 io.c:858 io.c:1078
+#: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
 msgstr "non è possibile aprire la connessione"
 
@@ -46,71 +46,71 @@ msgstr "non posso leggere da questa connessione"
 msgid "quoted string on line %d terminated by EOF"
 msgstr "la stringa tra apici alla linea %d termina con EOF"
 
-#: io.c:567
+#: io.c:569
 msgid "the first argument must be of mode character"
 msgstr "il primo argomento dev'essere in modalità caratteri"
 
-#: io.c:597
+#: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "stringa 'numerals' non valida: \"%s\""
 
-#: io.c:773
+#: io.c:779
 #, c-format
 msgid "Selection: "
 msgstr "Selezione: "
 
-#: io.c:868 io.c:883
+#: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "non posso allocare il buffer in 'readTableHead'"
 
-#: io.c:896
+#: io.c:902
 msgid "\\ followed by EOF"
 msgstr "\\ seguito da EOF"
 
-#: io.c:948 io.c:952
+#: io.c:954 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "trovata linea finale incompleta da readTableHeader su '%s'"
 
-#: io.c:1009
+#: io.c:1015
 msgid "index out of range"
 msgstr "indice fuori campo di variazione"
 
-#: io.c:1046
+#: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr "Problema riscontrato durante la chiusura della connessione: %s"
 
-#: io.c:1048
+#: io.c:1054
 msgid "Problem closing connection"
 msgstr "Problema riscontrato durante la chiusura della connessione"
 
-#: io.c:1071
+#: io.c:1077
 msgid "'file' is not a connection"
 msgstr "'file' non è una connessione"
 
-#: io.c:1074
+#: io.c:1080
 msgid "cannot write to this connection"
 msgstr "non è possibile scrivere su questa connessione"
 
-#: io.c:1104
+#: io.c:1110
 msgid "'dec' must be a single character"
 msgstr "'dec' dev'essere un singolo carattere"
 
-#: io.c:1130
+#: io.c:1137
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "data frame corrotto -- la lunghezza della colonna %d non corrisponde con "
 "nrows"
 
-#: io.c:1161
+#: io.c:1171
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "la colonna %s si presenta come un factor ma non ha codici numerici"
 
-#: io.c:1179
+#: io.c:1189
 msgid "corrupt matrix -- dims do not match length"
 msgstr "matrice corrotta -- le dimensioni non corrispondono con la lunghezza"
 

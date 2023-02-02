@@ -1,14 +1,14 @@
 # R Italian translation                                                                                                                   
 # This file is distributed under the same license as the R package.
 # Copyright (C) The R Foundation.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-tcltk 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2022-10-13 09:29\n"
+"PO-Revision-Date: 2022-10-14 10:44+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "cannot handle object of mode '%s'"
 msgstr "non è possibile gestire oggetti in modalità '%s'"
@@ -88,10 +88,10 @@ msgid "Manuals in PDF format"
 msgstr "Manuali in formato PDF"
 
 msgid "OK"
-msgstr "OK"
+msgstr "Ok"
 
 msgid "Cancel"
-msgstr "Cancella"
+msgstr "Annulla"
 
 msgid "'pb' is not from class %s"
 msgstr "'pb' non è della classe %s"
@@ -100,7 +100,7 @@ msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' dev'essere una matrice di caratteri a 2 colonne"
 
 msgid "tcltk DLL is linked to"
-msgstr ""
+msgstr "tcltk DLL collegata ha"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Il supporto Tcl/tk non è disponibile su questo sistema"

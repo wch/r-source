@@ -26,8 +26,6 @@
 \alias{rep.difftime}
 \alias{units.difftime}
 \alias{units<-.difftime}
-\alias{units}
-\alias{units<-}
 \alias{time interval} % used by mean.Rd
 \description{
   Time intervals creation, printing, and some arithmetic.  The

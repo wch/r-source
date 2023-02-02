@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
@@ -71,11 +72,11 @@ msgstr "图形路径里x或y的值非限定"
 
 #: grid.c:3383
 msgid "Empty raster"
-msgstr ""
+msgstr "空栅格"
 
 #: grid.c:3869
 msgid "invalid plotting symbol"
-msgstr "图画符号值不对"
+msgstr "绘图符号无效"
 
 #: grid.c:3963
 msgid "unable to clip to rotated rectangle"
@@ -83,11 +84,11 @@ msgstr "无法修剪到旋转了的长方形上"
 
 #: layout.c:600
 msgid "invalid 'layout.pos.row'"
-msgstr "'layout.pos.row'的值不对"
+msgstr "'layout.pos.row'的值无效"
 
 #: layout.c:604
 msgid "invalid 'layout.pos.col'"
-msgstr "'layout.pos.col'的值不对"
+msgstr "'layout.pos.col'的值无效"
 
 #: matrix.c:50
 msgid "singular transformation matrix"
@@ -115,7 +116,7 @@ msgstr ""
 
 #: unit.c:1555
 msgid "Invalid unit"
-msgstr "单位不对"
+msgstr "单位无效"
 
 #: unit.c:1570
 msgid "'units' must be character"

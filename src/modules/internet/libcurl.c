@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2022 The R Core Team
+ *  Copyright (C) 2015-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -444,8 +444,8 @@ static void doneprogressbar(void *data)
 # endif // Win32
 
 static
-int progress(void *clientp, double dltotal, double dlnow,
-	     double ultotal, double ulnow)
+int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
+	     curl_off_t ultotal, curl_off_t ulnow)
 {
     CURL *hnd = (CURL *) clientp;
     long status;
@@ -480,7 +480,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 	    }
 	}
 	if (R_Interactive) {
-	    setprogressbar(pbar.pb, dlnow/factor);
+	    setprogressbar(pbar.pb, 1.0*dlnow/factor);
 	    if (total > 0) {
 		static char pbuf[30];
 		int pc = 0.499 + 100.0*dlnow/total;
@@ -490,7 +490,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 		    pbar.pc = pc;
 		}
 	    }
-	} else putdashes(&ndashes, (int)(50*dlnow/total));
+	} else putdashes(&ndashes, (int)(50.0*dlnow/total));
     }
     R_ProcessEvents();
     return 0;
@@ -498,7 +498,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 
 	    if (R_Consolefile) fflush(R_Consolefile);
 	}
-	putdashes(&ndashes, (int)(50*dlnow/total));
+	putdashes(&ndashes, (int)(50.0*dlnow/total));
     }
     return 0;
 # endif
@@ -633,9 +633,9 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 		pbar.cntxt.cenddata = &pbar;
 	    }
 #endif
-	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
-	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
-	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
+	    // For libcurl >= 7.32.0
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFOFUNCTION, progress);
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFODATA, hnd[i]);
 	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 
 	/* This would allow the negotiation of compressed HTTP transfers,
@@ -689,17 +689,27 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nurls == 1) {
 	long status;
 	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);
-	double cl, dl;
+	// new interface in libcurl >= 7.55.0
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_off_t cl, dl;
+	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
+	double cl ,dl;
 	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	if (!quiet && status == 200) {
 	    if (dl > 1024*1024)
 		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
 	    else if (dl > 10240)
-		REprintf("downloaded %d KB\n\n", (int) dl/1024);
+		REprintf("downloaded %d KB\n\n", (int) (dl/1024.0));
 	    else
 		REprintf("downloaded %d bytes\n\n", (int) dl);
 	}
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD_T, &cl);
+#else
 	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
+#endif
 	if (cl >= 0 && dl != cl)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
@@ -710,8 +720,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
 	    fclose(out[i]);
+#if LIBCURL_VERSION_NUM >= 0x073700
+	    curl_off_t dl;
+	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
 	    double dl;
 	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
 	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))

@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2012-03-16 15:43+0100\n"
-"Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
+"PO-Revision-Date: 2022-09-01 16:04+0000\n"
+"Last-Translator: Lluís <lluis.revilla+weblate@gmail.com>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.13.1\n"
 "X-Poedit-Language: Spanish\n"
 
 #: src/gnuwin32/console.c:1176 src/gnuwin32/console.c:1218
@@ -51,7 +52,7 @@ msgstr "Guardar como"
 
 #: src/gnuwin32/console.c:2159
 msgid "Save console contents to"
-msgstr "Guardar contenido de la consola en "
+msgstr "Guardar contenido de la consola en"
 
 #: src/gnuwin32/console.c:2258
 msgid "Scrolling.\n"
@@ -75,11 +76,11 @@ msgstr "Editando.\n"
 
 #: src/gnuwin32/console.c:2262
 msgid "  Moving the cursor: \n"
-msgstr " Moviendo el cursor: \n"
+msgstr "  Moviendo el cursor: \n"
 
 #: src/gnuwin32/console.c:2263
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr "    Flecha izquierda or Ctrl+B: mueve un caracter para atras;\n"
+msgstr "     Flecha izquierda or Ctrl+B: mueve un caracter para atras;\n"
 
 #: src/gnuwin32/console.c:2264
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
@@ -107,7 +108,7 @@ msgstr "     Del o Ctrl+D: borrar caracter actual o sección;\n"
 
 #: src/gnuwin32/console.c:2270
 msgid "     Backspace: delete preceding character;\n"
-msgstr "     Backspace: delete preceding character;\n"
+msgstr "     Retroceso: borra el carácter precedente\n"
 
 #: src/gnuwin32/console.c:2271
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
@@ -139,7 +140,7 @@ msgstr "     para la consola, Ctrl+X primeiro copie depues pegue\n"
 
 #: src/gnuwin32/console.c:2278
 msgid "  Misc:\n"
-msgstr "  Misc:\n"
+msgstr "  Misceláneo:\n"
 
 #: src/gnuwin32/console.c:2279
 msgid "     Ctrl+L: Clear the console.\n"
@@ -214,7 +215,7 @@ msgstr "No se puede guardar el archivo '%s"
 
 #: src/gnuwin32/editor.c:187
 msgid "Save script as"
-msgstr "Guardar script como ..."
+msgstr "Guardar script como"
 
 #: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
 #: src/gnuwin32/rui.c:1078
@@ -371,7 +372,7 @@ msgstr "Substituir..."
 
 #: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
 msgid "GUI preferences..."
-msgstr "Preferencias de la interface gráfica"
+msgstr "Preferencias de la interface gráfica..."
 
 #: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
 #: src/library/utils/src/windows/dataentry.c:1700
@@ -568,7 +569,7 @@ msgstr "Limpar pantalla"
 
 #: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1171
 msgid "Buffered output"
-msgstr "Salida con  buffer"
+msgstr "Salida con buffer"
 
 #: src/gnuwin32/rui.c:908
 msgid "Packages"
@@ -595,9 +596,8 @@ msgid "Update packages..."
 msgstr "Actualizar paquetes..."
 
 #: src/gnuwin32/rui.c:920
-#, fuzzy
 msgid "Install package(s) from local files..."
-msgstr "Instalar paquetes(s) a partir de archivos zip locales..."
+msgstr "Instalar paquete(s) a partir de archivos locales..."
 
 #: src/gnuwin32/rui.c:944
 msgid "FAQ on R"
@@ -613,7 +613,7 @@ msgstr "Manuales (en PDF)"
 
 #: src/gnuwin32/rui.c:985
 msgid "R functions (text)..."
-msgstr "Funciones  R (texto)..."
+msgstr "Funciones R (texto)..."
 
 #: src/gnuwin32/rui.c:987
 msgid "Html help"
@@ -669,7 +669,7 @@ msgstr "Cargar área de trabajo"
 
 #: src/gnuwin32/rui.c:1086
 msgid "Save workspace"
-msgstr "Guardar  área de trabajo"
+msgstr "Guardar área de trabajo"
 
 #: src/gnuwin32/rui.c:1102
 msgid "Stop current computation"
@@ -689,7 +689,7 @@ msgstr "Cargar área de trabajo..."
 
 #: src/gnuwin32/rui.c:1131
 msgid "Save Workspace..."
-msgstr "Guardar  área de trabajo..."
+msgstr "Guardar área de trabajo..."
 
 #: src/gnuwin32/rui.c:1133
 msgid "Load History..."
@@ -709,7 +709,7 @@ msgstr "Salir"
 
 #: src/gnuwin32/rui.c:1150
 msgid "Copy and Paste"
-msgstr "Copiar y Pegar..."
+msgstr "Copiar y Pegar"
 
 #: src/gnuwin32/rui.c:1154
 msgid "Data editor..."
@@ -725,7 +725,7 @@ msgstr "Barra de status"
 
 #: src/gnuwin32/rui.c:1164
 msgid "Misc"
-msgstr "Misc"
+msgstr "Misceláneo"
 
 #: src/gnuwin32/rui.c:1165
 msgid "Stop current computation           \tESC"
@@ -774,7 +774,7 @@ msgstr "menu %s no existe"
 
 #: src/gnuwin32/rui.c:1348
 msgid "'menu' is limited to 500 bytes"
-msgstr "'menu'  limitado a 500 caracteres"
+msgstr "'menú' limitado a 500 caracteres"
 
 #: src/gnuwin32/rui.c:1358
 msgid "base menu does not exist"
@@ -823,7 +823,7 @@ msgstr "Pregunta"
 
 #: src/extra/graphapp/dialogs.c:203
 msgid " Change working directory to:"
-msgstr "Cambiar el directorio de trabajo a:"
+msgstr " Cambiar el directorio de trabajo a:"
 
 #: src/extra/graphapp/dialogs.c:206
 #, c-format
@@ -848,7 +848,7 @@ msgstr "Usuario"
 
 #: src/extra/graphapp/dialogs.c:738
 msgid "Password"
-msgstr "Palabra secreta"
+msgstr "Contraseña"
 
 #: src/extra/graphapp/dialogs.c:904 src/extra/graphapp/dialogs.c:910
 #, c-format
@@ -860,34 +860,28 @@ msgid "Arrange Icons"
 msgstr "Organizar Iconos"
 
 #: src/extra/graphapp/metafile.c:55
-#, fuzzy
 msgid "Unable to save metafile to the clipboard"
-msgstr "No es posible abrir el área de transferencia"
+msgstr "No es posible guardar el metarchivo en el área de transferencia"
 
 #: src/extra/graphapp/metafile.c:108
-#, fuzzy
 msgid "Unable to create metafile"
-msgstr "No fue posible crear una ventana de edición"
+msgstr "No fue posible crear un metaarchivo"
 
 #: src/extra/graphapp/metafile.c:113
-#, fuzzy
 msgid "Insufficient memory to create metafile"
-msgstr "Memoria insuficiente. Por favor cierre la consola"
+msgstr "Memoria insuficiente para crear el meta archivo"
 
 #: src/extra/graphapp/printer.c:90
-#, fuzzy
 msgid "Unable to choose printer"
-msgstr "No fue posible crear una ventana visualizadora"
+msgstr "No fue posible elegir impresora"
 
 #: src/extra/graphapp/printer.c:118
-#, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr "Memoria insuficiente para mostrar un archivo en el visualizador interno"
+msgstr "Memoria insuficiente para mostrar un archivo en la impresora"
 
 #: src/extra/graphapp/printer.c:151
-#, fuzzy
 msgid "Unable to start the print job"
-msgstr "No fue posible crear una ventana visualizadora"
+msgstr "No fue posible iniciar la impresión"
 
 #: src/library/utils/src/windows/dataentry.c:225
 #: src/library/utils/src/windows/dataentry.c:1853
@@ -1063,16 +1057,15 @@ msgstr "camino de archivo seleccionado es demaciado largo: solamente 512 bytes s
 
 #: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
-msgstr "No hay gráfico para substituir"
+msgstr "No hay gráfico a substituir!"
 
 #: src/library/grDevices/src/devWindows.c:1274
 msgid "Variable name"
 msgstr "Nombre de variable"
 
 #: src/library/grDevices/src/devWindows.c:1283
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "Variable inexistente o no contiene ningún gráfico"
+msgstr "La variable no contiene ningún gráfico!"
 
 #: src/library/grDevices/src/devWindows.c:1298
 msgid "Name of variable to save to"
@@ -1121,7 +1114,7 @@ msgstr "Copiar para el área de transferencia"
 
 #: src/library/grDevices/src/devWindows.c:1668
 msgid "as a Bitmap\tCTRL+C"
-msgstr "como un  Bitmap\tCTRL+C"
+msgstr "como un Bitmap\tCTRL+C"
 
 #: src/library/grDevices/src/devWindows.c:1669
 msgid "as a Metafile\tCTRL+W"
@@ -1161,7 +1154,7 @@ msgstr "Guardar en la variable ..."
 
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Get from variable..."
-msgstr "Obtener de la variable"
+msgstr "Obtener de la variable..."
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"

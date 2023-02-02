@@ -15,6 +15,8 @@
 }
 \usage{
 confint(object, parm, level = 0.95, \dots)
+\S3method{confint}{default}(object, parm, level = 0.95, \dots)
+\S3method{confint}{lm}(object, parm, level = 0.95, \dots)
 }
 \arguments{
   \item{object}{a fitted model object.}

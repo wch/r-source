@@ -21,12 +21,12 @@ as.personList(x)
 }
 \arguments{
   \item{...}{person objects (inheriting from class
-    \code{"\link{person}"}}
+    \code{"\link{person}"})}
   \item{x}{an object the elements of which are coercible via
     \code{\link{as.person}}}
 }
 \value{
-  a person object (inheriting from class \code{"\link{person}"}
+  a person object (inheriting from class \code{"\link{person}"})
 }
 \seealso{
   \code{\link{person}} for the new functionality for representing and

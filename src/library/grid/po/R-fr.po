@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2021-02-10 17:42+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2022-08-31 15:04+0000\n"
+"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "position 'at' incorrecte dans 'axis'"
@@ -263,34 +263,31 @@ msgid "Invalid revert target"
 msgstr "Cible incorrecte pour 'revert'"
 
 msgid "can only reorder 'children' for a \"gTree\""
-msgstr "il est seulement possible de définir 'children' dans  un objet \"gTree\""
+msgstr "ne peut réorganiser les 'children' que pour un \"gTree\""
 
 msgid "Invalid 'order'"
 msgstr "'order' incorrect"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "la définition du groupe a échoué"
 
-#, fuzzy
 msgid "Invalid source"
-msgstr "'order' incorrect"
+msgstr "Source invalide"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "justification incorrecte"
+msgstr "Destination invalide"
 
 msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Opérateur de composition invalide"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Groupe inconnu :"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Transformation invalide (rien de dessiné)"
 
-#, fuzzy
 msgid "Invalid transform"
-msgstr "'order' incorrect"
+msgstr "Transformation invalide"
 
 msgid "'l' must be a layout"
 msgstr "'l' doit être une mise en page (layout)"
@@ -341,7 +338,7 @@ msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Seul un grob peut être converti en chemin"
 
 #, fuzzy
 msgid "colours and stops must be at least length 1"
@@ -360,7 +357,7 @@ msgid "x, y, width, and height must all be length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "Le modèle doit être basé sur le grob"
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Le pattern de remplissage manquant est remplacé par un remplissage transparent"

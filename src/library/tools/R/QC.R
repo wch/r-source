@@ -4043,13 +4043,15 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                       collapse = "|"))
     for(i in seq_along(lines)) {
         bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
+        if (names[i] %in% c("PKG_FFLAGS", "PKG_FCFLAGS"))
+            bad <- grep("^-std=f", bad, invert = TRUE, value = TRUE)
         if(length(bad))
             bad_flags$pflags <-
                 c(bad_flags$pflags,
                   structure(list(bad), names = names[i]))
     }
 
-    ## The above does not know about GNU extensions like
+    ## The above does not know about GNU make extensions like
     ## target.o: PKG_CXXFLAGS = -mavx
     ## so grep files directly.
     for (f in paths) {
@@ -4062,7 +4064,6 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
         bad <- character()
         for(i in seq_along(lines))
             bad <- c(bad, grep(bad_flags_regexp, flags[[i]], value = TRUE))
-
         if(length(bad))
             bad_flags$p2flags <-
                 c(bad_flags$p2flags,
@@ -7486,6 +7487,29 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         if(inherits(cfmt, "condition"))
             out$citation_problem_when_formatting <-
                 conditionMessage(cfmt)
+
+        ## Also capture calls to outdated personList() and citEntry()
+        ## and friends.
+        if(!installed) {
+            ccalls <- .find_calls(.parse_code_file(cfile,
+                                                   meta["Encoding"]),
+                                  recursive = TRUE)
+        }
+        cnames <- .call_names(ccalls)
+        if(any(cnames %in% c("personList", "as.personList")))
+            out$citation_has_calls_to_personList_et_al <- TRUE
+        ## Prior to c83706, there was no convenient way to get citation
+        ## headers/footers for bibentries with length > 1.  So for now
+        ## only complain when citHeader()/citFooter() is used with a
+        ## single bibentry.
+        ## <FIXME>
+        ## Change eventually ...
+        if(any(cnames == "citEntry") ||
+           (any(cnames %in% c("citHeader", "citFooter")) &&
+            length(cinfo) <= 1L))
+            out$citation_has_calls_to_citEntry_et_al <- TRUE
+        ## </FIXME>
+        
         out
     }
 
@@ -8463,7 +8487,16 @@ function(x, ...)
                 paste(c("Problems when formatting CITATION entries:",
                         paste0("  ", y)),
                       collapse = "\n")
-            })),
+            },
+            if(isTRUE(x$citation_has_calls_to_personList_et_al)) {
+                paste(strwrap("Package CITATION file contains call(s) to old-style personList() or as.personList().  Please use c() on person objects instead."),
+                      collapse = "\n")
+            },
+            if(isTRUE(x$citation_has_calls_to_citEntry_et_al)) {
+                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry() or citHeader()/citFooter().  Please use bibentry() instead, possibly with arguments 'header' and 'footer'."),
+                      collapse = "\n")
+            }
+            )),
       fmt(c(if(length(y <- x$bad_urls)) {
                 if(inherits(y, "error"))
                     paste(c("Checking URLs failed with message:",
