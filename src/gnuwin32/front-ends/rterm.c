@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  R Core Team
+ *  Copyright (C) 1998--2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -77,7 +77,6 @@ int AppMain(int argc, char **argv)
 	   or msys). Re-run RTerm with winpty, if available, to allow
 	   line editing using Windows Console API. */
 	int i, interactive;
-	char winpty[MAX_PATH+1];
 
 	interactive = 1;
 	/* needs to be in sync with cmdlineoptions() */
@@ -93,14 +92,14 @@ int AppMain(int argc, char **argv)
 		interactive = 0;
 		i++;
 	    }
-	if (interactive && strcpy(winpty, "winpty.exe") &&
-	    PathFindOnPath(winpty, NULL)) {
+	if (interactive &&
+	    !system("winpty.exe --version >NUL 2>NUL")) {
 
 	    size_t len, pos;
 	    int res;
 	    char *cmd;
 
-	    len = strlen(winpty) + 5; /* 4*quote, terminator */
+	    len = strlen("winpty.exe") + 5; /* 4*quote, terminator */
 	    for(i = 0; i < argc; i++)
 		len += strlen(argv[i]) + 3; /* space, 2*quote */
 	    cmd = (char *)malloc(len * sizeof(char));
@@ -108,7 +107,7 @@ int AppMain(int argc, char **argv)
 		fprintf(stderr, "Error: cannot allocate memory");
 		exit(1);
 	    }
-	    pos = snprintf(cmd, len, "\"\"%s\"", winpty);
+	    pos = snprintf(cmd, len, "\"\"%s\"", "winpty.exe");
 	    for(i = 0; i < argc; i++)
 		pos += snprintf(cmd + pos, len - pos, " \"%s\"",
 		                argv[i]);

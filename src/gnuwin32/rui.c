@@ -840,25 +840,36 @@ static void menuact(control m)
 
 #define MCHECK(m) {if(!(m)) {del(RConsole); return 0;}}
 
+static Rboolean tryLoadRconsole(char *format, char *varname, struct structGUI* gui)
+{
+    char *varvalue = getenv(varname);
+    size_t needed = snprintf(NULL, 0, format, varvalue) + 1;
+    char *optf = (char *)malloc(needed);
+
+    if (optf && (snprintf(optf, needed, format, varvalue) < needed) &&
+	loadRconsole(gui, optf)) {
+	free(optf);
+	return TRUE;
+    }
+    return FALSE;
+}
+
 void readconsolecfg()
 {
     char  fn[128];
     int   sty = Plain;
-    char  optf[PATH_MAX+1];
 
     struct structGUI gui;
 
     getDefaults(&gui);
 
     if (R_LoadRconsole) {
-	snprintf(optf, PATH_MAX+1, "%s/Rconsole", getenv("R_USER"));
-	if (!loadRconsole(&gui, optf)) {
-	    snprintf(optf, PATH_MAX+1, "%s/etc/Rconsole", getenv("R_HOME"));
-	    if (!loadRconsole(&gui, optf)) {
-		app_cleanup();
-		RConsole = NULL;
-		exit(10);
-	    }
+	if (!tryLoadRconsole("%s/Rconsole", "R_USER", &gui) &&
+	    !tryLoadRconsole("%s/etc/Rconsole", "R_HOME", &gui)) {
+
+	    app_cleanup();
+	    RConsole = NULL;
+	    exit(10);
 	}
     }
     if (gui.tt_font) {
@@ -890,6 +901,7 @@ void readconsolecfg()
 	char *buf = malloc(50);
 	snprintf(buf, 50, "LANGUAGE=%s", gui.language);
 	putenv(buf);
+	/* no free here: storage remains in use */
     }
     setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
 		      gui.cx, gui.cy,

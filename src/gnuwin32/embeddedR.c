@@ -1,5 +1,5 @@
 /*  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022 R Core Team
+ *  Copyright (C) 1998--2023 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ extern int UserBreak;
 
 /* calls into the R DLL */
 extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
+extern void freeRUser(char *), free_R_HOME(char *);
 extern void R_SetParams(Rstart), R_setStartTime();
 extern void ProcessEvents(void);
 extern int R_DefParamsEx(Rstart, int), R_ReplDLLdo1();
@@ -82,7 +83,7 @@ int Rf_initialize_R(int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25], *RHome;
+    char Rversion[25], *RHome, *RUser;
 
     snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     if(strncmp(getDLLVersion(), Rversion, 25) != 0) {
@@ -98,7 +99,8 @@ int Rf_initialize_R(int argc, char **argv)
 	exit(2);
     }
     Rp->rhome = RHome;
-    Rp->home = getRUser();
+    RUser = getRUser();
+    Rp->home = RUser;
     Rp->CharacterMode = LinkDLL;
     Rp->EmitEmbeddedUTF8 = FALSE;
     Rp->ReadConsole = myReadConsole;
@@ -113,6 +115,8 @@ int Rf_initialize_R(int argc, char **argv)
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
     R_SetParams(Rp);
+    freeRUser(RUser);
+    free_R_HOME(RHome);
     R_set_command_line_arguments(argc, argv);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
