@@ -193,7 +193,7 @@ stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
 ## Case, where log.p=TRUE was fine, but log.p=FALSE (default) gave NaN:
 lp <- 40:406
 stopifnot(all.equal(lp, -pt(qt(exp(-lp), 1.2), 1.2, log=TRUE), tolerance = 4e-16))
-## Other log.p cases, giving NaN (all but 1.1) in R <= 4.2.1 (still inaccurate)
+## Other log.p cases, gave NaN (all but 1.1) in R <= 4.2.1, PR#18360 [NB: *still* inaccurate: tol=0.2]
 q <- exp(seq(200, 500, by=1/2))
 for(df in c(1.001, 1 + (1:10)/100)) {
     pq  <- pt(q,  df = df, log = TRUE)
@@ -714,10 +714,13 @@ qp. <- qnorm(lp, log.p=TRUE)
 all.equal( qs, qpU, tol=0)
 all.equal(-qs, qp., tol=0)
 all.equal(-qp.,qpU, tol=0) # typically TRUE (<==> exact equality)
+## however,
+range(qpU/qs - 1) # -5.68e-6  5.41e-6  in R <= 4.2.1
 stopifnot(exprs = {
     all.equal( qs,  qpU, tol=1e-15)
     all.equal(-qs,  qp., tol=1e-15)
     all.equal(-qp., qpU, tol=1e-15)# diff of 4.71e-16 in 4.1.0 w/icc (Eric Weese)
+    max(abs(qpU/qs - 1)) < 1e-15 # see  4.44e-16  {was 5.68e-6 in R <= 4.2.1; much larger in R <= 4.0.x)
 })
 ## both failed very badly in  R <= 4.0.x
 

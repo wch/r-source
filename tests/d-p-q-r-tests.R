@@ -232,13 +232,15 @@ stopifnot(
     dnorm(x,3,s=Inf) == 0,
     pnorm(x,3,s=Inf) == c(0, rep(0.5, 8), 1))
 
-## 3 Test data from Wichura (1988) :
 stopifnot(
+    ## 3 Test data from Wichura (1988) :
     all.equal(qnorm(c( 0.25,  .001, 1e-20)),
 	      c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
 	      tolerance = 1e-15)
   , ## extreme tail -- available on log scale only:
-    all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
+    all.equal(qe5 <- qnorm(-1e5, log = TRUE), -447.1978937)
+  , ## much more accurate (2022-08):
+    All.eq(-1e5, pnorm(qe5, log = TRUE))
 )
 
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tolerance = 1e-15)

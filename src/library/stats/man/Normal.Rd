@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -43,15 +43,15 @@ rnorm(n, mean = 0, sd = 1)
   \code{pnorm} gives the distribution function,
   \code{qnorm} gives the quantile function, and
   \code{rnorm} generates random deviates.
-  
+
   The length of the result is determined by \code{n} for
   \code{rnorm}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
-  
+
   For \code{sd = 0} this gives the limit as \code{sd} decreases to 0, a
   point mass at \code{mu}.
   \code{sd < 0} is an error and returns \code{NaN}.
@@ -81,13 +81,20 @@ rnorm(n, mean = 0, sd = 1)
   function routines and test drivers.
   \emph{ACM Transactions on Mathematical Software} \bold{19}, 22--32.
 
-  For \code{qnorm}, the code is a C translation of
+  For \code{qnorm}, the code is based on a C translation of
 
   Wichura, M. J. (1988)
   Algorithm AS 241: The percentage points of the normal distribution.
   \emph{Applied Statistics}, \bold{37}, 477--484; \doi{10.2307/2347330}.
 
-  which provides precise results up to about 16 digits.
+  which provides precise results up to about 16 digits for
+  \code{log.p=FALSE}.  For log scale probabilities in the extreme tails,
+  since \R version 4.1.0, extensively since 4.3.0, asymptotic expansions
+  are used which have been derived and explored in
+
+  Maechler, M. (2022)
+  Asymptotic tail formulas for gaussian quantiles; \CRANpkg{DPQ} vignette
+  \url{https://CRAN.R-project.org/package=DPQ/vignettes/qnorm-asymp.pdf}.
 
   For \code{rnorm}, see \link{RNG} for how to select the algorithm and
   for references to the supplied methods.

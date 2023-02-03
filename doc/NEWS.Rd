@@ -146,6 +146,9 @@
       \item The drop-field control in GraphApp can now be left with the TAB
       key, improving accessibility of the \command{Rgui} configuration
       editor.
+
+      \item \code{qnorm(<very large negative>, log.p=TRUE)} is now fully
+      accurate (instead of to \dQuote{only} minimally five digits).
     }
   }
 
@@ -233,12 +236,12 @@
       \item The \pkg{grDevices} and \pkg{grid} packages have new
       functions for rendering typeset glyphs, primarily:
       \code{grDevices::glyphInfo()} and \code{grid::grid.glyph()}.
-    
+
       Rendering of typeset glyphs is only supported so far on the
       Cairo-based graphics devices and on the \code{pdf()} device.
     }
   }
-  
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item A system installation of generic LAPACK 3.10.0 or later will
