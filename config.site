@@ -43,6 +43,7 @@
 ## To override this choice, specify the name or path of the command
 ## which runs the compiler, for example 'c99'.
 ## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## CC=
 
 ## Debugging and optimization options for the C compiler.
@@ -100,6 +101,7 @@
 
 ## The command which runs the Fortran compiler.
 ## Used for both fixed-form and free-form Fortran
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## FC=
 
 ## Options for the Fortran compiler.
@@ -202,6 +204,7 @@
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
 ## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
 ## names (from autoconf).
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## CXX=
 
 ## Options for the C++ compiler.
