@@ -529,7 +529,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
 
     args <- c(list(...), other)
     if(!length(args))
-        return(.bibentry())
+        return(.bibentry(list(), mheader, mfooter))
     if(any(vapply(names(args), .is_not_nonempty_text, NA)))
         stop("all fields have to be named")
 
@@ -608,19 +608,18 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                            c(lapply(args, `[[`, i),
                              list(other = lapply(other, `[[`, i)))))
 
-    ## add main header/footer for overall bibentry vector
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
-
-    .bibentry(rval)
+    .bibentry(rval, mheader, mfooter)
 }
 
 .bibentry <-
-function(x = list())
+function(x = list(), mheader = NULL, mfooter = NULL)
 {
     class(x) <- "bibentry"
+    ## add main header/footer for overall bibentry vector
+    if(!.is_not_nonempty_text(mheader))
+        attr(x, "mheader") <- paste(mheader, collapse = "\n")
+    if(!.is_not_nonempty_text(mfooter))
+        attr(x, "mfooter") <- paste(mfooter, collapse = "\n")
     x
 }
 
