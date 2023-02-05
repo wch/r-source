@@ -7498,14 +7498,13 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         if(any(cnames %in% c("personList", "as.personList")))
             out$citation_has_calls_to_personList_et_al <- TRUE
         ## Prior to c83706, there was no convenient way to get citation
-        ## headers/footers for bibentries with length > 1.  So for now
-        ## only complain when citHeader()/citFooter() is used with a
-        ## single bibentry.
+        ## headers/footers for bibentries with length > 1, so one really
+        ## needed to use the old-style citHeader() and citFooter().
+        ## For now one could complain when citHeader()/citFooter() is
+        ## used with a single bibentry ...
         ## <FIXME>
         ## Change eventually ...
-        if(any(cnames == "citEntry") ||
-           (any(cnames %in% c("citHeader", "citFooter")) &&
-            length(cinfo) <= 1L))
+        if(any(cnames == "citEntry"))
             out$citation_has_calls_to_citEntry_et_al <- TRUE
         ## </FIXME>
         
@@ -8497,7 +8496,7 @@ function(x, ...)
                       collapse = "\n")
             },
             if(isTRUE(x$citation_has_calls_to_citEntry_et_al)) {
-                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry() or citHeader()/citFooter().  Please use bibentry() instead, possibly with arguments 'header' and 'footer'."),
+                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry().  Please use bibentry() instead."),
                       collapse = "\n")
             }
             )),
