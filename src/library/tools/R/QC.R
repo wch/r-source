@@ -7423,10 +7423,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## return value using $ will fail (as this needs lists);
         ## subscripting by other means, or using specific fields,
         ## incorrectly results in NAs.
-        ## The warnings are currently not caught by the direct check.
-        ## (We could need a suitably package-not-found condition for
-        ## reliable analysis: the condition messages are locale
-        ## specific.)
+        ## Hence, we also catch and report all warnings ...
         libpaths <- .libPaths()
         .libPaths(character())
         on.exit(.libPaths(libpaths))
@@ -7454,26 +7451,28 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                           c("packageDescription", "library", "require"))
             if(length(cnames))
                 out$citation_calls <- cnames
-            cinfo <-
-                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
-                                                                    meta),
-                                            error = identity))$value
-            if(inherits(cinfo, "error")) {
+        }
+        .warnings <- character()
+        cinfo <-
+            withCallingHandlers(tryCatch(utils::readCitationFile(cfile,
+                                                                 meta),
+                                         error = identity),
+                                warning = function(e) {
+                                    .warnings <<- c(.warnings,
+                                                    conditionMessage(e))
+                                    tryInvokeRestart("muffleWarning")
+                                })
+        if(inherits(cinfo, "error")) {
+            if(installed)
                 out$citation_error_reading_if_installed <-
                     conditionMessage(cinfo)
-                return(out)
-            }
-        } else {
-            cinfo <-
-                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
-                                                                    meta),
-                                            error = identity))$value
-            if(inherits(cinfo, "error")) {
+            else
                 out$citation_error_reading_if_not_installed <-
                     conditionMessage(cinfo)
-                return(out)
-            }
+            return(out)
         }
+        if(length(.warnings))
+            out$citation_trouble_when_reading <- unique(.warnings)
         ## If we can successfully read in the citation file, also check
         ## whether we can at least format the bibentries we obtained.
         cfmt <- tryCatch(format(cinfo, style = "text"),
@@ -8481,6 +8480,11 @@ function(x, ...)
                 paste(c("Reading CITATION file fails with",
                         paste0("  ", y),
                         "when package is not installed."),
+                      collapse = "\n")
+            },
+            if(length(y <- x$citation_trouble_when_reading)) {
+                paste(c("Problems when reading CTIATION file:",
+                        paste0("  ", y)),
                       collapse = "\n")
             },
             if(length(y <- x$citation_problem_when_formatting)) {
