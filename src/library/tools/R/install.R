@@ -2783,19 +2783,18 @@ if(FALSE) {
         if (with_c) {
             cc <- lines[grep("^CC =", lines)]
             cc <- sub("CC = ", "", cc)
-            ## strip any flags but allow for things like 'ccache gcc'
-            cc <- sub(" -.*", "", cc)
-            ## as this might be more than one word we must use system.
+            ## We do not strip flags in configure so leave them here
+            ## cc <- sub(" -.*", "", cc)
+            ## As this might be more than one word we use system not system2.
             cc_ver <- try(system(paste(cc, "--version"),
                                  intern = TRUE), silent = TRUE)
-##            cc_ver <- try(system2(cc, "--version", TRUE, TRUE), silent = TRUE)
             if(!inherits(cc_ver, "try-error"))
                 message("using C compiler: ", sQuote(cc_ver[1L]))
         }
         if (with_f77 || with_f9x) {
             fc <- lines[grep("^FC =", lines)]
             fc <- sub("FC = ", "", fc)
-            fc <- sub(" -.*", "", fc)
+            ## fc <- sub(" -.*", "", fc)
             fc_ver <- try(system(paste(fc, "--version"),
                                  intern = TRUE), silent = TRUE)
             if(!inherits(fc_ver, "try-error"))
@@ -2804,7 +2803,7 @@ if(FALSE) {
         if (with_cxx) {
             cxx <- lines[grep("^CXX =", lines)]
             cxx <- sub("CXX = ", "", cxx)
-            cxx <- sub(" -.*", "", cxx)
+            ## cxx <- sub(" -.*", "", cxx)
             if(nzchar(cxx)) {
                 cxx_ver <- try(system(paste(cxx, "--version"),
                                  intern = TRUE), silent = TRUE)
