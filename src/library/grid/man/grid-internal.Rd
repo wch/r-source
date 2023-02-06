@@ -188,7 +188,6 @@
 \alias{grid.multipanel}
 \alias{grid.panel}
 \alias{grid.strip}
-\alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{layout.heights}
