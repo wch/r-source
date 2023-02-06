@@ -5800,7 +5800,7 @@ add_dummies <- function(dir, Log)
                     std <- as.numeric(sub("using C[+][+]", "", line))
                     if (std < 17) {
                         noteLog(Log,
-                                sprintf("  Specified C++%d: please update to current default of C++17", std))
+                                sprintf("  Specified C++%d: please drop specification unless essential", std))
                     }
                     else resultLog(Log, "OK")
                 }
