@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ function(x, i, j)
     ## Change sequences which are NULL or contains NAs to integer().
     bad <- vapply(y, function(t) is.null(t) || anyNA(t), NA)
     if(any(bad))
-        y[bad] <- rep.int(list(integer()), length(bad))
+        y[bad] <- rep.int(list(integer()), sum(bad))
     class(y) <- class(x)
     y
 }
@@ -347,7 +347,7 @@ function(x)
 `is.na<-.numeric_version` <-
 function(x, value)
 {
-    x[value] <- rep.int(list(integer()), length(value))
+    x[value] <- list(integer())
     x
 }
 

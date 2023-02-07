@@ -483,6 +483,13 @@ stopifnot(exprs = {
 ## fine, using model.offset() now
 
 
+## "numeric_version" methods
+x <- numeric_version(c("1", "2.0"))
+stopifnot(identical(format(x[,2]), c(NA_character_, "0")))
+is.na(x)[1] <- TRUE; stopifnot(identical(is.na(x), c(TRUE, FALSE)))
+## gave two spurious warnings in R <= 4.2.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
