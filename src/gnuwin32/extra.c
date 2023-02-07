@@ -719,8 +719,9 @@ static char *getFullPathName(const char *orig)
 	/* GetFullPathNameA unfortunately does not work with long paths
 	   (tested on Windows 10 19045), it fails with
 	   ERROR_FILENAME_EXCED_RANGE even when long paths are enabled. */
-	size_t cnt = mbstowcs(NULL, orig, 0) + 1;
+	size_t cnt = mbstowcs(NULL, orig, 0);
 	if (cnt != (size_t)-1) {
+	    cnt++;
 	    wchar_t *worig = (wchar_t*) R_alloc(cnt, sizeof(wchar_t));
 	    mbstowcs(worig, orig, cnt);
 	    wchar_t *wres = getFullPathNameW(worig);
