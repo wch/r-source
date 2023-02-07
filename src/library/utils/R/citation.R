@@ -1094,19 +1094,11 @@ function(..., recursive = FALSE)
     ## preserve mheader/mfooter if any
     mheader <- unlist(lapply(args, attr, "mheader"))
     if(length(mheader) >= 1L) {
-        if(length(mheader) > 1L)
-            warning(gettextf("more than one %s specified, using the first",
-                             sQuote("mheader")),
-                    domain = NA)
-        attr(rval, "mheader") <- mheader[1L]
+        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
     }
     mfooter <- unlist(lapply(args, attr, "mfooter"))
     if(length(mfooter) >= 1L) {
-        if(length(mfooter) > 1L)
-            warning(gettextf("more than one %s specified, using the last",
-                             sQuote("mfooter")),
-                    domain = NA)
-        attr(rval, "mfooter") <- mfooter[length(mfooter)]
+        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
     }
     
     ## return as bibentry object
@@ -1187,17 +1179,13 @@ function(entry, textVersion = NULL, header = NULL, footer = NULL, ...)
 citHeader <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationHeader"
-    rval
+    .bibentry(mheader = paste(...))
 }
 
 citFooter <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationFooter"
-    rval
+    .bibentry(mfooter = paste(...))
 }
 
 readCitationFile <-
@@ -1217,10 +1205,6 @@ function(file, meta = NULL)
         x <- eval(expr, envir = envir)
         if(inherits(x, "bibentry"))
             rval <- c(rval, list(x))
-        else if(identical(class(x), "citationHeader"))
-            mheader <- c(mheader, x)
-        else if(identical(class(x), "citationFooter"))
-            mfooter <- c(mfooter, x)
     }
 
     rlen <- length(rval)
@@ -1228,10 +1212,6 @@ function(file, meta = NULL)
         rval <- rval[[1L]]
     else if(rlen > 1L)
         rval <- do.call(c, rval)
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
 
     .citation(rval, meta$Package)
 }
