@@ -257,6 +257,8 @@
  R_warn_partial_match_args
  R_warn_partial_match_attr
  R_warn_partial_match_dollar
+ R_wfixbackslash
+ R_wfixslash
  R_wfopen
  Rconn_getline
  Rcons_vprintf
@@ -1325,6 +1327,7 @@
  menueditornew
  menueditoropen
  mkPRIMSXP
+ mkCharWUTF8
  mkdtemp
  nCPFun
  newWpipe
