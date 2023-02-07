@@ -5829,7 +5829,9 @@ function(package, dir, lib.loc = NULL)
                     as.name(paste0(deparse(e21[[3L]])[1L], "<-"))
             }
             for(i in seq_along(e)) Recall(e[[i]])
-        }
+        } else if (is.pairlist(e))
+            for(i in seq_along(e)) Recall(e[[i]])
+        	
     }
 
     if(!missing(package)) {
@@ -5844,7 +5846,7 @@ function(package, dir, lib.loc = NULL)
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env) # get is expensive
-			    if(typeof(f) == "closure") body(f) # else NULL
+			    if(typeof(f) == "closure") pairlist(formals(f), body(f)) # else NULL
                         })
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
@@ -5871,7 +5873,6 @@ function(package, dir, lib.loc = NULL)
                                    .massage_file_parse_error_message(conditionMessage(e))),
                                domain = NA, call. = FALSE))
     }
-
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
     if(length(ns)) {
