@@ -7513,16 +7513,15 @@ type from computer output.  Text is entered `verbatim'.
 @item \samp@{@var{text}@}
 @findex \samp
 Indicate text that is a literal example of a sequence of characters,
-entered `verbatim'.  No wrapping or reformatting will occur.  Displayed
+entered `verbatim', to be included within word-wrapped text.  Displayed
+within single quotation marks and
 using @code{typewriter} font where possible.
-
 
 @item \verb@{@var{text}@}
 @findex \verb
 Indicate text that is a literal example of a sequence of characters,
-with no interpretation of e.g.@: @code{\var}, but which will be included
-within word-wrapped text.  Displayed using @code{typewriter} font if
-possible.
+entered `verbatim'.  No wrapping or reformatting will occur.  Displayed
+using @code{typewriter} font where possible.
 
 @item \pkg@{@var{package_name}@}
 @findex \pkg
