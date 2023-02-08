@@ -168,8 +168,9 @@ printer newprinter(double width, double height, const char *name)
     docinfo.lpszDatatype = 0;
     docinfo.fwType = 0;
 
-    /* FIXME: this fails when trying to print to a file using a long path,
-       seen on Windows 10 19045, "Microsoft Print to PDF" */
+    /* Note: this fails when trying to print to a file using a long path,
+       seen on Windows 10 19045, "Microsoft Print to PDF". However, this is
+       the same as with other applications, seems to be a Windows issue. */
     if (StartDoc(hDC, &docinfo) <= 0) {
 	R_ShowMessage(G_("Unable to start the print job"));
 	del(obj);
