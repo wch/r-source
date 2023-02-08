@@ -30,10 +30,11 @@
    Find and replace dialog boxes and dialog handlers.
    Modify find and replace for RichEdit20W.
    Path length limits.
+   Update askcdstring to IFileOpenDialog (Vista).
 */
 
 #ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0500
+# define _WIN32_WINNT 0x0600
 #endif
 
 #include "win-nls.h"
@@ -41,37 +42,8 @@
 #include "ga.h"
 
 #include <shlobj.h>
+#include <shobjidl.h>
 #include <stdlib.h>
-
-/* FIXME: SHGetPathFromIDList/SHBrowseForFolder does not work with paths
-   longer than MAX_PATH. When long paths are enabled and one is
-   selected, the dialog crashes. */
-typedef struct {
-    char default_str[MAX_PATH];
-    char question[40];
-} browserInfo;
-
-#define STATUSTEXT 14146
-
-static int CALLBACK
-InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
-{
-    char szDir[MAX_PATH], status[MAX_PATH + 40 + 2];
-
-    if (uMsg == BFFM_INITIALIZED) {
-	SendMessage(hwnd, BFFM_SETSELECTION, 1,
-		    (LPARAM)&((browserInfo*)lpData)->default_str);
-    } else if (uMsg == BFFM_SELCHANGED) {
-	if (SHGetPathFromIDList((LPITEMIDLIST) lp, szDir)) {
-	    snprintf(status, MAX_PATH+40+2, "%s\n %s",
-		     ((browserInfo*)lpData)->question, szDir);
-	    SetDlgItemText(hwnd, STATUSTEXT, status);
-	    SendMessage(hwnd, BFFM_ENABLEOK, 0, TRUE);
-	} else
-	    SendMessage(hwnd, BFFM_ENABLEOK, 0, FALSE);
-    }
-    return(0);
-}
 
 #define BUFSIZE (3*65536)
 static char strbuf[BUFSIZE];
@@ -269,15 +241,21 @@ static int savecod(void)
 
 void askchangedir()
 {
-    char *s, msg[MAX_PATH + 40];
+    char *s, *msg;
 
     /* set cod to current directory */
     savecod();
     s = askcdstring(G_(" Change working directory to:"), cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
-	snprintf(msg, MAX_PATH + 40,
-		 G_("Unable to set '%s' as working directory"), s);
-	askok(msg);
+	char *format = G_("Unable to set '%s' as working directory");
+	size_t nb;
+	nb = snprintf(NULL, 0, format, s);
+	msg = (char*) malloc(nb + 1);
+	if (msg) {
+	    snprintf(msg, nb + 1,  format, s);
+	    askok(msg);
+	    free(msg);
+	}
     }
     /* in every case reset cod (to new directory if all went ok
        or to old since user may have edited it) */
@@ -763,47 +741,55 @@ char *askstring(const char *question, const char *default_str)
 
 char *askcdstring(const char *question, const char *default_str)
 {
-    LPMALLOC g_pMalloc;
-    BROWSEINFO bi;
-    LPITEMIDLIST pidlBrowse;
-    browserInfo info;
-    OSVERSIONINFOEX osvi;
+    HRESULT res;
+    IFileOpenDialog *fileOpen = NULL;
+    IShellItem *dirsi = NULL;
+    DWORD flags = 0;
+    int ok;
+    wchar_t *wquestion, *wdefault_str, *wdir = NULL;
+    size_t nb;
 
-    strncpy(info.question, question, 40 - 1);
-    info.question[40 - 1] = '\0';
-    strncpy(info.default_str, default_str, MAX_PATH - 1);
-    info.default_str[MAX_PATH - 1] = '\0';
+    wquestion = mbstowcs_malloc(question);
+    wdefault_str = mbstowcs_malloc(default_str);
 
-    /* Get the shell's allocator. */
-    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return NULL;
+    res = CoCreateInstance(&CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER,
+                     &IID_IFileOpenDialog, (void **)&fileOpen);
+    
+    if (SUCCEEDED(res) && fileOpen && wquestion && wdefault_str) {
+	ok = SUCCEEDED(fileOpen->lpVtbl->GetOptions(fileOpen, &flags));
+	flags |= FOS_PICKFOLDERS | FOS_FILEMUSTEXIST |
+		 FOS_NOCHANGEDIR;
+	flags &= ~FOS_ALLOWMULTISELECT & ~FOS_OVERWRITEPROMPT &
+		 ~FOS_ALLNONSTORAGEITEMS;
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetOptions(fileOpen, flags));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetTitle(fileOpen, wquestion));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetFileName(fileOpen,
+	                                                   wdefault_str));
 
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-    GetVersionEx((OSVERSIONINFO *)&osvi);
-
-    ZeroMemory(&bi, sizeof(bi));
-    bi.hwndOwner = 0;
-    if(osvi.dwMajorVersion >= 6) { /* future proof */
-	/* CSIDL_DESKTOP gets mapped to the User's desktop in Vista
-	   (a bug).  SHGetFolderLocation is Win2k or later */
-	if (!SUCCEEDED(SHGetFolderLocation(NULL, CSIDL_DRIVES, NULL, 0,
-					   (LPITEMIDLIST *) &bi.pidlRoot)))
-	    return NULL;
-    }  /* else it is 0, which is CSIDL_DESKTOP */
-    bi.pszDisplayName = strbuf;
-    bi.lpszTitle = question;
-    bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
-    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
-    bi.lParam = (LPARAM) &info;
-
-    /* Browse for a folder and return its PIDL. */
-    pidlBrowse = SHBrowseForFolder(&bi);
-    if (pidlBrowse != NULL) {
-	SHGetPathFromIDList(pidlBrowse, strbuf);
-	g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
-	if (strbuf[0])
-	    return strbuf;
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->Show(fileOpen, NULL));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->GetResult(fileOpen, &dirsi));
+	ok = ok && SUCCEEDED(dirsi->lpVtbl->GetDisplayName(dirsi,
+	                                                   SIGDN_FILESYSPATH,
+	                                                   &wdir));
+	if (ok && dirsi) {
+	    nb = wcstombs(strbuf, wdir, BUFSIZE);
+	    if (nb == (size_t)-1 || nb >= BUFSIZE) {
+		strbuf[0] = 0;
+		ok = 0;
+	    }
+	}
     }
-    return NULL;
+    if (wdir)
+	CoTaskMemFree(wdir);
+    if (dirsi)
+	dirsi->lpVtbl->Release(dirsi);
+    if (fileOpen)
+	fileOpen->lpVtbl->Release(fileOpen);
+    if (wquestion)
+	free(wquestion);
+    if (wdefault_str)
+	free(wdefault_str);
+    return ok ? strbuf : NULL; 
 }
 
 char *askpassword(const char *question, const char *default_str)
