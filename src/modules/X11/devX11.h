@@ -163,6 +163,7 @@ typedef struct {
     int numGroups;
     cairo_pattern_t **groups;
     cairo_pattern_t *nullGroup;
+    int currentGroup;
 #endif
 
     double fontscale;

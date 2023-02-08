@@ -1158,7 +1158,7 @@ pattern fill resolved on bbox of both rects", y=.8)
 ## Remove r2 from r1 with "group" and fill with gradient
 ## (bbox is from BOTH rects, hence whole page)
 grid.newpage()
-grid.group(r2, "clear", r1, gp=gpar(fill=linearGradient()))
+grid.group(r2, "dest.out", r1, gp=gpar(fill=linearGradient()))
 HersheyLabel("group of two rects
 big rect takes bite out of small rect
 pattern fill resolved on bbox of both rects", y=.8)
@@ -1293,7 +1293,7 @@ pattern fill resolved on bbox of both rects", y=.8)
 ## Remove r2 from r1 with "group" and fill with gradient, group = FALSE
 ## Gradient should be applied to individual rects
 grid.newpage()
-grid.group(r2, "clear", r1, gp=gpar(fill=linearGradient(group=FALSE)))
+grid.group(r2, "dest.out", r1, gp=gpar(fill=linearGradient(group=FALSE)))
 HersheyLabel("group of two rects
 group = FALSE
 big rect takes bite out of small rect
@@ -1301,7 +1301,7 @@ pattern fill resolved on each rect", y=.8)
 
 ## fill on the grob in the group
 grid.newpage()
-grid.define(r2, "clear",
+grid.define(r2, "dest.out",
             editGrob(r1, gp=gpar(fill=linearGradient())),
             name="r1")
 pushViewport(viewport(x=1, y=1))
@@ -1312,7 +1312,7 @@ rect within group has pattern fill
 pattern resolved on rect on use", y=.2)
 ## ... even with scaling (as well as translation) transformation
 grid.newpage()
-grid.define(r2, "clear",
+grid.define(r2, "dest.out",
             editGrob(r1, gp=gpar(fill=linearGradient())),
             name="r1")
 pushViewport(viewport(x=1, y=1, width=.5, height=.5))
@@ -1324,7 +1324,7 @@ pattern resolved on rect on use", y=.2)
 
 ## fill on the grob in the group, group = FALSE
 grid.newpage()
-grid.define(r2, "clear",
+grid.define(r2, "dest.out",
             editGrob(r1, gp=gpar(fill=linearGradient(group=FALSE))),
             name="gt")
 pushViewport(viewport(x=1, y=1))
@@ -1336,7 +1336,7 @@ group = FALSE (no effect)
 pattern resolved on rect on use", y=.2)
 ## ... even with scaling (as well as translation) transformation, group=FALSE
 grid.newpage()
-grid.define(r2, "clear",
+grid.define(r2, "dest.out",
             editGrob(r1, gp=gpar(fill=linearGradient(group=FALSE))),
             name="gt")
 pushViewport(viewport(x=1, y=1, width=.5, height=.5))
