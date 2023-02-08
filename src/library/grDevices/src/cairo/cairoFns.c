@@ -707,7 +707,6 @@ static void CairoInitGroups(pX11Desc xd)
         xd->groups[i] = NULL;
     }
     xd->nullGroup = cairo_pattern_create_rgb(0, 0, 0);
-    xd->currentGroup = -1;
 }
 
 static int CairoGrowGroups(pX11Desc xd)
@@ -737,7 +736,6 @@ static void CairoCleanGroups(pX11Desc xd)
             xd->groups[i] = NULL;
         }
     }    
-    xd->currentGroup = -1;
 }
 
 static void CairoDestroyGroups(pX11Desc xd)
@@ -848,10 +846,7 @@ static SEXP CairoDefineGroup(SEXP src, int op, SEXP dst, pX11Desc xd)
     /* Create a new group */
     index = CairoNewGroupIndex(xd);
     if (index >= 0) {
-        int savedGroup = xd->currentGroup;
-        xd->currentGroup = index;
         cairo_group = CairoCreateGroup(src, op, dst, xd);
-        xd->currentGroup = savedGroup;
         xd->groups[index] = cairo_group;
     }
 
@@ -983,24 +978,15 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
     cairo_clip(xd->cc);
 }
 
-static Rboolean implicitGroup(pX11Desc xd) {
-    return xd->currentGroup && 
-        (cairo_get_operator(xd->cc) == CAIRO_OPERATOR_CLEAR ||
-         cairo_get_operator(xd->cc) == CAIRO_OPERATOR_SOURCE);
-}
 
 static void Cairo_Rect(double x0, double y0, double x1, double y1,
 		       const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    Rboolean grouping = implicitGroup(xd);
 
     if (!xd->appending) {
         if (xd->currentMask >= 0) {
             /* If masking, draw temporary pattern */
-            cairo_push_group(xd->cc);
-        }
-        if (grouping) {
             cairo_push_group(xd->cc);
         }
         cairo_new_path(xd->cc);
@@ -1023,12 +1009,6 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
             CairoColor(gc->col, xd);
             CairoLineType(gc, xd);
             cairo_stroke(xd->cc);
-        }
-        if (grouping) {
-            cairo_pattern_t *source = cairo_pop_group(xd->cc);
-            cairo_set_source(xd->cc, source);
-            cairo_paint(xd->cc);
-            cairo_pattern_destroy(source);            
         }
         if (xd->currentMask >= 0) {
             /* If masking, use temporary pattern as source and mask that */
