@@ -16,7 +16,7 @@ function processMathHTML() {
 
 <table style="width: 100%;"><tr><td>testit</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>An Rd Regression Test</h2>
+<h2 id='testit'>An Rd Regression Test</h2>
 
 <h3>Description</h3>
 
