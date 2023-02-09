@@ -5801,8 +5801,11 @@ add_dummies <- function(dir, Log)
                     if (std < 17) {
                         noteLog(Log,
                                 sprintf("  Specified C++%d: please drop specification unless essential", std))
-                    }
-                    else resultLog(Log, "OK")
+                    } else if (std >= 17) {
+                        resultLog(Log, "OK")
+                        printLog(Log,
+                                 sprintf("  Not all R platforms support C++%s\n", std))
+                    } else resultLog(Log, "OK")
                 }
             }   ## end of case B
         }
