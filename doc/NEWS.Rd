@@ -149,6 +149,9 @@
 
       \item \code{qnorm(<very large negative>, log.p=TRUE)} is now fully
       accurate (instead of to \dQuote{only} minimally five digits).
+
+      \item \code{demo(error.catching)} now also shows off
+      \code{withWarnings()} and \code{tryCatchWEMs()}.
     }
   }
 
