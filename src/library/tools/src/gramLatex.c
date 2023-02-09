@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -123,7 +123,7 @@
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 static int yyparse(void);
 
 #define yyconst const
@@ -173,7 +173,7 @@ static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 
 /* Internal lexer / parser state variables */
@@ -218,7 +218,7 @@ static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
-static int      mkVerbEnv();
+static int      mkVerbEnv(void);
 
 static SEXP R_LatexTagSymbol = NULL;
 
@@ -607,13 +607,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   179,   179,   180,   181,   184,   185,   186,   187,   189,
-     190,   192,   193,   194,   195,   196,   197,   199,   199,   203,
-     205,   206
+       0,   181,   181,   182,   183,   186,   187,   188,   189,   191,
+     192,   194,   195,   196,   197,   198,   199,   201,   201,   205,
+     207,   208
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || 0
+#if YYDEBUG || YYERROR_VERBOSE || 1
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
@@ -2539,7 +2539,7 @@ static int mkVerb(int c)
     return VERB;  
 }
 
-static int mkVerbEnv()
+static int mkVerbEnv(void)
 {
     char st0[INITBUFSIZE];
     unsigned int nstext = INITBUFSIZE;
@@ -2580,7 +2580,7 @@ static int yylex(void)
     return tok;
 }
 
-static void PushState() {
+static void PushState(void) {
     if (busy) {
     	ParseState *prev = malloc(sizeof(ParseState));
 	if (prev == NULL) error("unable to allocate in PushState");
@@ -2591,7 +2591,7 @@ static void PushState() {
     busy = TRUE;
 }
 
-static void PopState() {
+static void PopState(void) {
     if (parseState.prevState) {
     	ParseState *prev = parseState.prevState;
     	UseState(prev);

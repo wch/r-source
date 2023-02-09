@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c
 
 /* call pointers to allow interface switching */
 
-void NORET R_Suicide(const char *s) {
+NORET void R_Suicide(const char *s) {
     ptr_R_Suicide(s);
     // This should not have returned, but belt-and-braces
     exit(2); // same status as Rstd_Suicide
@@ -82,7 +82,7 @@ void R_FlushConsole(void) { ptr_R_FlushConsole(); }
 #endif
 void R_ClearerrConsole(void) { ptr_R_ClearerrConsole(); }
 void R_Busy(int which) { ptr_R_Busy(which); }
-void NORET R_CleanUp(SA_TYPE saveact, int status, int runLast)
+NORET void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     ptr_R_CleanUp(saveact, status, runLast);
     // This should not have returned, but belt-and-braces
@@ -116,7 +116,7 @@ void R_FlushConsole(void) {
 #endif
 
 
-void R_setupHistory()
+void R_setupHistory(void)
 {
     int value, ierr;
     char *p;
@@ -170,6 +170,9 @@ static char* unescape_arg(char *p, char* avp) {
 	} else if(*q == '~' && *(q+1) == 'n' && *(q+2) == '~') {
 	    q += 2;
 	    *p++ = '\n';
+	} else if(*q == '~' && *(q+1) == 't' && *(q+2) == '~') {
+	    q += 2;
+	    *p++ = '\t';
 	} else *p++ = *q;
     }
     return p;
@@ -333,7 +336,7 @@ int Rf_initialize_R(int ac, char **av)
     process_system_Renviron();
 
     R_setStartTime();
-    R_DefParams(Rp);
+    R_DefParamsEx(Rp, RSTART_VERSION);
     /* Store the command line arguments before they are processed
        by the R option handler.
      */
@@ -481,7 +484,7 @@ int Rf_initialize_R(int ac, char **av)
 	}
 	snprintf(ifile, PATH_MAX, "%s/Rscript%x.XXXXXX", tm, getpid());
 	ifd = mkstemp(ifile);
-	if (ifd > 0)
+	if (ifd >= 0) /* -1 on error, can be 0 if stdin is closed */
 	    ifp = fdopen(ifd, "w+");
 	if(!ifp) R_Suicide(_("creating temporary file for '-e' failed"));
 	unlink(ifile);
@@ -588,7 +591,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 
 /* Returns the limit on the number of open files. On error or when no
    limit is known, returns a negative number. */
-int R_GetFDLimit() {
+int R_GetFDLimit(void) {
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
     struct rlimit rlim;

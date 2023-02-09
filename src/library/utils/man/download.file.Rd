@@ -19,7 +19,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
               headers = NULL, \dots)
 }
 \arguments{
-  \item{url}{a \code{\link{character}} string (or longer vector e.g.,
+  \item{url}{a \code{\link{character}} string (or longer vector
     for the \code{"libcurl"} method) naming the URL of a resource to be
     downloaded.}
 
@@ -28,9 +28,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Current
-    download methods are \code{"internal"}, \code{"wininet"} (Windows
-    only) \code{"libcurl"}, \code{"wget"} and \code{"curl"}, and there
-    is a value \code{"auto"}: see \sQuote{Details} and \sQuote{Note}.
+    download methods are \code{"internal"}, \code{"libcurl"},
+    \code{"wget"}, \code{"curl"} and \code{"wininet"} (Windows
+    only), and there is a value \code{"auto"}: see \sQuote{Details} and
+    \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
@@ -51,8 +52,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{headers}{named character vector of HTTP headers to use in HTTP
     requests.  It is ignored for non-HTTP URLs.  The \code{User-Agent}
-    header, coming from the \code{HTTPUserAgent} option (see
-    \code{\link{options}}) is used as the first header, automatically.}
+    header taken from the \code{HTTPUserAgent} option (see
+    \code{\link{options}}) is automatically used as the first header.}
 
   \item{\dots}{allow additional arguments to be passed, unused.}
 }
@@ -62,12 +63,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{destfile}.
 
   The \code{url} must start with a scheme such as \samp{http://},
-  \samp{https://}, \samp{ftp://} or \samp{file://}.  Which methods
-  support which schemes varies by \R version, but \code{method = "auto"}
-  will try to find a method which supports the scheme.
+  \samp{https://} or \samp{file://}.  Which methods support which
+  schemes varies by \R version, but \code{method = "auto"} will try to
+  find a method which supports the scheme.
 
-  For \code{method = "auto"} (the default) the \code{"internal"} method
-  is used for \samp{file://} URLs, and \code{"libcurl"} for all others.
+  For \code{method = "auto"} (the default) currently the
+  \code{"internal"} method is used for \samp{file://} URLs and
+  \code{"libcurl"} for all others.
 
   Support for method \code{"libcurl"} was optional on Windows prior to
   \R 4.2.0: use \code{\link{capabilities}("libcurl")} to see if it is
@@ -75,13 +77,17 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   name (\url{https://curl.se/libcurl/}) against which \R can be
   compiled.
 
-  When method \code{"libcurl"} is used, it provides
-  (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
-  URLs.  There is support for simultaneous downloads, so \code{url} and
-  \code{destfile} can be character vectors of the same length greater
-  than one (but the method has to be specified explicitly and not
-  \emph{via} \code{"auto"}).  For a single URL and \code{quiet = FALSE}
-  a progress bar is shown in interactive use.
+  When method \code{"libcurl"} is used, there is support for
+  simultaneous downloads, so \code{url} and \code{destfile} can be
+  character vectors of the same length greater than one (but the method
+  has to be specified explicitly and not \emph{via} \code{"auto"}).  For
+  a single URL and \code{quiet = FALSE} a progress bar is shown in
+  interactive use.
+
+  Nowadays the \code{"internal"} method only supports the \samp{file://}
+  scheme (for which it is the default).  On Windows the \code{"wininet"}
+  method currently supports \samp{file://} and (but deprecated with a
+  warning) \samp{http://} and \samp{https://} schemes.
 
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -101,10 +107,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The \code{"wininet"} method supports some redirections but not all.
   (For method \code{"libcurl"}, messages will quote the endpoint of
   redirections.)
-
-  Support for \samp{http://} URLs in the \code{"internal"} method and
-  \samp{ftp://} URLs in the \code{"internal"} and \code{"wininet"}
-  methods was deprecated in \R 4.1.1 and removed in \R 4.2.0.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
@@ -133,12 +135,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The level of detail provided during transfer can be set by the
   \code{quiet} argument and the \code{internet.info} option: the details
-  depend on the platform and scheme.  For the \code{"internal"} method
-  setting option \code{internet.info} to 0 gives all available details,
-  including all server responses.  Using 2 (the default) gives only
-  serious messages, and 3 or more suppresses all messages.  For the
-  \code{"libcurl"} method values of the option less than 2 give verbose
-  output.
+  depend on the platform and scheme.  For the \code{"libcurl"} method
+  values of the option less than 2 give verbose output.
 
   A progress bar tracks the transfer platform-specifically:
   \describe{
@@ -148,7 +146,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
       is exceeded.  (In non-interactive use this uses a text version.  If the
       file length is known, an equals sign represents 2\% of the transfer
       completed: otherwise a dot represents 10Kb.)}
-    \item{On a unix-alike}{If the file length is known, an
+    \item{On a Unix-alike}{If the file length is known, an
       equals sign represents 2\% of the transfer completed: otherwise a dot
       represents 10Kb.}
   }
@@ -201,39 +199,42 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   details.
 }
 \section{Secure URLs}{
-  Methods which access \samp{https://} and \samp{ftps://} URLs should
-  try to verify the site certificates.  This is usually done using the CA
-  root certificates installed by the OS (although we have seen instances
-  in which these got removed rather than updated). For further information
-  see \url{https://curl.se/docs/sslcerts.html}.
+  Methods which access \samp{https://} and (where
+  supported) \samp{ftps://} URLs should try to verify the site
+  certificates.  This is usually done using the CA root certificates
+  installed by the OS (although we have seen instances in which these
+  got removed rather than updated). For further information see
+  \url{https://curl.se/docs/sslcerts.html}.
 
-  On Windows, with \code{method = "libcurl"}, the CA root certificates are
-  provided by the OS when \R was linked with \code{libcurl} with
-  \code{Schannel} enabled, which is the default in Rtools.  This can be
-  verified by that \code{libcurlVersion()} returns a version string
-  containing "Schannel".  If it does not, for verification to be on, the
-  environment variable \env{CURL_CA_BUNDLE} must be set to a path to a
-  certificate bundle file, usually named \file{ca-bundle.crt} or
-  \file{curl-ca-bundle.crt}.  (This is normally done automatically for a
-  binary installation of \R, which installs
-  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets \env{CURL_CA_BUNDLE}
-  to point to it if that environment variable is not already set.) For an
-  updated certificate bundle, see \url{https://curl.se/docs/sslcerts.html}. 
-  Currently one can download a copy from
+  On Windows with \code{method = "libcurl"}, the CA root certificates
+  are provided by the OS when \R was linked with \code{libcurl} with
+  \code{Schannel} enabled, which is the current default in Rtools.  This
+  can be verified by checking that \code{libcurlVersion()} returns a
+  version string containing \samp{"Schannel"}.  If it does not, for
+  verification to be on the environment variable \env{CURL_CA_BUNDLE}
+  must be set to a path to a certificate bundle file, usually named
+  \file{ca-bundle.crt} or \file{curl-ca-bundle.crt}.  (This is normally
+  done automatically for a binary installation of \R, which installs
+  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
+  \env{CURL_CA_BUNDLE} to point to it if that environment variable is
+  not already set.) For an updated certificate bundle, see
+  \url{https://curl.se/docs/sslcerts.html}.  Currently one can download
+  a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
+
+  On Windows with \code{method = "libcurl"}, when \R was linked with
+  \code{libcurl} with \code{Schannel} enabled, the connection fails if it
+  cannot be established that the certificate has not been revoked.  Some
+  MITM proxies present particularly in corporate environments do not work
+  with this behavior. It can be changed by setting environment variable
+  \env{R_LIBCURL_SSL_REVOKE_BEST_EFFORT} to \code{TRUE}, with the
+  consequence of reducing security.
 
   Note that the root certificates used by \R may or may not be the same
   as used in a browser, and indeed different browsers may use different
   certificate bundles (there is typically a build option to choose
   either their own or the system ones).
-}
-\section{FTP sites}{
-  \samp{ftp:} URLs are accessed using the FTP protocol which has a
-  number of variants.  One distinction is between \sQuote{active} and
-  \sQuote{(extended) passive} modes: which is used is chosen by the
-  client.  The  \code{"libcurl"} methods uses passive
-  mode, and that is almost universally used by browsers.
 }
 \section{Good practice}{
   Setting the \code{method} should be left to the end user.  Neither of
@@ -250,6 +251,25 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   use \code{\link{capabilities}("libcurl")} in a program to see if it is
   available.
 }
+
+\section{\code{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \samp{https://}
+  ones are much preferred for use in \R. \samp{ftps://} URLs have always
+  been rare, and are nowadays even less supported.
+
+  It is intended that \R will continue to allow such URLs for as long as
+  \code{libcurl} does, but as they become rarer this is increasingly
+  untested.   What \sQuote{protocols} the version of \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersion}()}.
+
+  These URLs are accessed using the FTP protocol which has a
+  number of variants.  One distinction is between \sQuote{active} and
+  \sQuote{(extended) passive} modes: which is used is chosen by the
+  client.  The \code{"libcurl"} method uses passive mode which was
+  almost universally used by browsers before they dropped support
+  altogether.
+}
+
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the
@@ -259,7 +279,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   What happens to the destination file(s) in the case of error depends
   on the method and \R{} version. Currently the \code{"internal"},
   \code{"wininet"} and \code{"libcurl"} methods will remove the file if
-  there the URL is unavailable except when \code{mode} specifies
+  the URL is unavailable except when \code{mode} specifies
   appending when the file should be unchanged.
 }
 \seealso{

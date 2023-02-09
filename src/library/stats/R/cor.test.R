@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cor.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -212,7 +212,7 @@ function(formula, data, subset, na.action, ...)
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     m$... <- NULL
-    mf <- eval(m, environment(formula))
+    mf <- eval(m, parent.frame())
     if(length(mf) != 2L)
         stop("invalid formula")
     DNAME <- paste(names(mf), collapse = " and ")

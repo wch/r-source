@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2022  The R Core Team.
+ *  Copyright (C) 2001--2023  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -536,7 +536,7 @@ static SEXP La_ztrcon(SEXP A, SEXP norm)
 }
 
 /* Complex case of solve.default: see the comments in La_solve */
-static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
+static SEXP La_solve_cmplx(SEXP A, SEXP Bin, SEXP tolin)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
@@ -547,6 +547,7 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
+    size_t nl = n;
     int n2 = Adims[1];
     if(n2 != n) error(_("'a' (%d x %d) must be square"), n, n2);
     Adn = getAttrib(A, R_DimNamesSymbol);
@@ -577,7 +578,7 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
     }
     Bin = PROTECT(coerceVector(Bin, CPLXSXP));
-    Memcpy(COMPLEX(B), COMPLEX(Bin), (size_t)n * p);
+    Memcpy(COMPLEX(B), COMPLEX(Bin), nl * p);
 
     ipiv = (int *) R_alloc(n, sizeof(int));
 
@@ -586,8 +587,8 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	A = coerceVector(A, CPLXSXP);
 	avals = COMPLEX(A);
     } else {
-	avals = (Rcomplex *) R_alloc((size_t)n * n, sizeof(Rcomplex));
-	Memcpy(avals, COMPLEX(A), (size_t) n * n);
+	avals = (Rcomplex *) R_alloc(nl * nl, sizeof(Rcomplex));
+	Memcpy(avals, COMPLEX(A), nl * nl);
     }
     PROTECT(A);
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
@@ -596,6 +597,23 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	      -info, "zgesv");
     if (info > 0)
 	error(_("Lapack routine zgesv: system is exactly singular"));
+    int OK = 1;
+    for (size_t i = 0; i < nl*nl; i++)
+	if (!isfinite(avals[i].r) || !isfinite(avals[i].i)) {OK = 0; break;}
+    double tol = asReal(tolin);
+    if(OK == 1 && tol > 0) {
+	char one[2] = "1";
+	double anorm = F77_CALL(zlange)(one, &n, &n, COMPLEX(A), &n,
+					(double*) NULL FCONE);
+	Rcomplex *work = (Rcomplex *) R_alloc(2*nl, sizeof(Rcomplex));
+	double *rwork = (double *) R_alloc(2*nl, sizeof(double));
+	double rcond;
+	F77_CALL(zgecon)(one, &n, avals, &n, &anorm, &rcond, work, rwork,
+			 &info FCONE);
+	if (rcond < tol)
+	    error(_("system is computationally singular: reciprocal condition number = %g"),
+		  rcond);
+    }
     UNPROTECT(3);  /* B, Bin, A */
     return B;
 #else
@@ -1050,7 +1068,7 @@ static SEXP La_chol2inv(SEXP A, SEXP size)
 static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p;
-    double *avals, anorm, rcond, tol = asReal(tolin), *work;
+    double *avals,  tol = asReal(tolin);
     SEXP B, Adn, Bdn;
 
     if (!(isMatrix(A) &&
@@ -1059,6 +1077,7 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
     int *Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
+    size_t nl = n;
     int n2 = Adims[1];
     if(n2 != n) error(_("'a' (%d x %d) must be square"), n, n2);
     Adn = getAttrib(A, R_DimNamesSymbol);
@@ -1091,7 +1110,7 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
     }
     PROTECT(Bin = coerceVector(Bin, REALSXP));
-    Memcpy(REAL(B), REAL(Bin), (size_t)n * p);
+    Memcpy(REAL(B), REAL(Bin), nl * p);
 
     int *ipiv = (int *) R_alloc(n, sizeof(int));
 
@@ -1100,8 +1119,8 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	A = coerceVector(A, REALSXP);
 	avals = REAL(A);
     } else {
-	avals = (double *) R_alloc((size_t)n * n, sizeof(double));
-	Memcpy(avals, REAL(A), (size_t)n * n);
+	avals = (double *) R_alloc(nl * nl, sizeof(double));
+	Memcpy(avals, REAL(A), nl * nl);
     }
     PROTECT(A);
     int info;
@@ -1112,11 +1131,16 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
     if (info > 0)
 	error(_("Lapack routine %s: system is exactly singular: U[%d,%d] = 0"),
 	      "dgesv", info, info);
-    if(tol > 0) {
+    // LAPACK 3.11.0 fails here if A contains NaNs
+    int OK = 1;
+    for (size_t i = 0; i < nl*nl; i++)
+	if (!isfinite(avals[i])) {OK = 0; break;}
+    if(OK == 1 && tol > 0) {
 	char one[2] = "1";
-	anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
-				 (double*) NULL FCONE);
-	work = (double *) R_alloc(4*(size_t)n, sizeof(double));
+	double rcond;
+	double anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
+					(double*) NULL FCONE);
+	double *work = (double *) R_alloc(4*nl, sizeof(double));
 	F77_CALL(dgecon)(one, &n, avals, &n, &anorm, &rcond, work, ipiv,
 			 &info FCONE);
 	if (rcond < tol)
@@ -1332,7 +1356,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
     case 8: ans = La_dtrcon(CAR(args), CADR(args)); break;
     case 9: ans = La_zgecon(CAR(args), CADR(args)); break;
     case 10: ans = La_ztrcon(CAR(args), CADR(args)); break;
-    case 11: ans = La_solve_cmplx(CAR(args), CADR(args)); break;
+    case 11: ans = La_solve_cmplx(CAR(args), CADR(args), CADDR(args)); break;
 
     case 100: ans = La_solve(CAR(args), CADR(args), CADDR(args)); break;
     case 101: ans = La_qr(CAR(args)); break;
@@ -1366,7 +1390,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = La_svd_cmplx(a1, a2, a3, a4, CAR(args));
 	break;
     }
-    case 1000:
+    case 1000: // La_version()
     {
 	int major, minor, patch;
 	char str[20];
@@ -1375,7 +1399,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = mkString(str);
 	break;
     }
-    case 1001:
+    case 1001: // La_library()
     {
 #if defined(HAVE_DLADDR) && defined(HAVE_REALPATH)
 	Dl_info dl_info;

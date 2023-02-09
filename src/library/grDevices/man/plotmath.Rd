@@ -1,11 +1,11 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
 \alias{plotmath}
-\alias{symbol}
+\alias{symbol}% also for R symbols aka names in ../../base/man/name.Rd
 \alias{plain}
 \alias{bold}
 \alias{italic}
@@ -171,6 +171,9 @@
   The special delimiters \code{lceil}, \code{lfloor}, \code{langle}
   (and their right-hand versions) are not scalable.
 
+  Note that \code{paste} does not insert spaces when juxtaposing, unlike
+  (by default) the \R function of that name.
+
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
@@ -290,7 +293,8 @@ text(1, 9.0, expression(
  "     second: {f * second}(x) "        == {f * second}(x)), adj = 0)
 
 
-plot(1:10, 1:10)
+## note the "{ .. }" trick to get "chained" equations:
+plot(1:10, 1:10, main = quote(1 <= {1 < 2}))
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
 text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)",
      cex = .8)

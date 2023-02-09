@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2013  The R Core Team
+ *  Copyright (C) 2000--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,23 +52,40 @@ typedef struct {
 static void (* OldHandler)(void);
 static int OldRwait;
 static int Tcl_loaded = 0;
-static int Tcl_lock = 0; /* reentrancy guard */
+
+#define R_TCL_SPIN_MAX 5
 
 static void TclSpinLoop(void *data)
 {
-    /* Tcl_ServiceAll is not enough here, for reasons that escape me */
-    while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
+    /* In the past, Tcl_ServiceAll() wasn't enough and we used
+
+	  while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
+
+       but that seems no longer needed and causes infinite recursion
+       with R handlers that have a re-entrancy guard, when TclSpinLoop
+       is invoked from such a handler (seen with Rhttp server).
+
+       However, handling certain Tcl events tend to generate further 
+       events (closing a window is typically followed by a WM event
+       saying that the window is now closed, etc.), so we run 
+       Tcl_ServiceAll() a small number of times to try and clear the 
+       queue. Otherwise, the processing of such "knock-on" events would
+       have to wait until the next polling event.
+    */
+
+    int i = R_TCL_SPIN_MAX;
+	
+    while (i-- && Tcl_ServiceAll())
+        ;
 }
 
 //extern Rboolean R_isForkedChild;
 static void TclHandler(void)
 {
-    if (!R_isForkedChild && !Tcl_lock 
-	&& Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
-	Tcl_lock = 1;
+    if (!R_isForkedChild)
+	/* there is a reentrancy guard in Tcl_ServiceAll */
 	(void) R_ToplevelExec(TclSpinLoop, NULL);
-	Tcl_lock = 0;
-    }
+    
     OldHandler();
 }
 
@@ -79,7 +96,7 @@ static void addTcl(void)
     OldHandler = R_PolledEvents;
     OldRwait = R_wait_usec;
     R_PolledEvents = TclHandler;
-    if ( R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
+    if (R_wait_usec > 1000 || R_wait_usec == 0) R_wait_usec = 1000;
 }
 
 #ifdef UNUSED
@@ -109,14 +126,15 @@ static void RTcl_setupProc(ClientData clientData, int flags)
 {
     Tcl_SetMaxBlockTime(&timeout);
 }
-static void RTcl_eventProc(RTcl_Event *evPtr, int flags)
+static int RTcl_eventProc(Tcl_Event *evPtr, int flags)
 {
     fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
 
     if (readMask==NULL)
-	return;
+	return TRUE;
 
     R_runHandlers(R_InputHandlers, readMask);
+    return TRUE;
 }
 static void RTcl_checkProc(ClientData clientData, int flags)
 {
@@ -126,7 +144,7 @@ static void RTcl_checkProc(ClientData clientData, int flags)
 	return;
 
     evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event));
-    evPtr->proc = (Tcl_EventProc*) RTcl_eventProc;
+    evPtr->proc = RTcl_eventProc;
 
     Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD);
 }

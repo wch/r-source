@@ -82,7 +82,7 @@ optimise(f, interval, \dots, lower = min(interval), upper = max(interval),
   and the value of the function at that point.
 }
 \source{
-  A C translation of Fortran code \url{https://www.netlib.org/fmm/fmin.f}
+  A C translation of Fortran code \url{https://netlib.org/fmm/fmin.f}
   (author(s) unstated)
   based on the Algol 60 procedure \code{localmin} given in the reference.
 }

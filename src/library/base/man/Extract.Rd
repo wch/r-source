@@ -1,7 +1,7 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
-% Copyright 2002-2012 The R Foundation
+% Copyright 1995-2022 R Core Team
+% Copyright 2002-2022 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{Extract}
@@ -19,7 +19,7 @@
 \alias{[[<-}
 \alias{$<-}
 \concept{delete}
-
+\concept{subscript}% code in ../../../main/subscript.c
 \description{
   Operators acting on vectors, matrices, arrays and lists to extract or
   replace parts.
@@ -46,8 +46,9 @@ x$name <- value
   \item{i, j, \dots}{
     indices specifying elements to extract or replace.  Indices are
     \code{numeric} or \code{character} vectors or empty (missing) or
-    \code{NULL}.  Numeric values are coerced to integer as by
-    \code{\link{as.integer}} (and hence truncated towards zero).
+    \code{NULL}.  Numeric values are coerced to integer or whole numbers as
+    by \code{\link{as.integer}} or for large values by \code{\link{trunc}}
+    (and hence truncated towards zero).
     Character vectors will be matched to the \code{\link{names}} of the
     object (or for matrices/arrays, the \code{\link{dimnames}}):
     see \sQuote{Character indices} below for further details.
@@ -98,6 +99,9 @@ x$name <- value
   The most important distinction between \code{[}, \code{[[} and
   \code{$} is that the \code{[} can select more than one element whereas
   the other two select a single element.
+
+  Note that \code{x[[]]} is always erroneous.
+  % even for \code{\link{NULL}}, where otherwise all subsetting returns \code{NULL}.
 
   The default methods work somewhat differently for atomic vectors,
   matrices/arrays and for recursive (list-like, see
@@ -381,7 +385,7 @@ op <- options(warnPartialMatchDollar = TRUE)
 stopifnot( identical(li$p, pi), #-- a warning
   inherits(tryCatch (li$p, warning = identity), "warning"))
 ## revert the warning option:
-if(is.null(op[[1]])) op[[1]] <- FALSE; options(op)
+options(op)
 }
 \keyword{array}
 \keyword{list}

@@ -216,3 +216,11 @@
 ## Defunct in 4.2.0
 unix.time <- function(...) .Defunct("system.time")
 ## </entry>
+
+## <entry>
+## Deprecated in 4.2.0
+## Defunct in 4.3.0
+default.stringsAsFactors <- function()
+    .Defunct("`stringsAsFactors = FALSE`")
+
+## </entry>

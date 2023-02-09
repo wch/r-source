@@ -49,6 +49,7 @@
 \alias{is.tkwin}
 \alias{tkdestroy}
 \alias{.TkRoot}
+\alias{.TkUp}
 \alias{addTclPath}
 \alias{tclRequire}
 \alias{tclVersion}
@@ -69,6 +70,7 @@
 .Tk.newwin(ID)
 .Tk.subwin(parent)
 .TkRoot
+.TkUp
 
 tkdestroy(win)
 is.tkwin(x)
@@ -189,6 +191,9 @@ tclVersion()
   \code{.Tk.newwin} creates a new window environment with a given ID and
   \code{.Tk.subwin} creates a new window which is a sub-window of a given
   parent window.
+
+  \code{.TkUp} is a logical flag to indicate whether the Tk widget
+system is active; if \code{FALSE}, only the Tcl interpreter is available.
 
   \code{tkdestroy} destroys a window and also removes the reference to a
   window from its parent.

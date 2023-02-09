@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ function(contriburl = contrib.url(repos, type), method,
     res <- matrix(NA_character_, 0L, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
 
-    for(repos in contriburl) {
+    for(repos in unique(contriburl)) {
         localcran <- startsWith(repos, "file:")
         if(localcran) {
             ## see note in download.packages
@@ -212,20 +212,20 @@ function(db)
     depends <- db[, "Depends"]
     depends[is.na(depends)] <- ""
     ## Collect the (versioned) R depends entries.
-    x <- lapply(strsplit(sub("^[[:space:]]*", "", depends),
-                             "[[:space:]]*,[[:space:]]*"),
-                function(s) s[grepl("^R[[:space:]]*\\(", s)])
+    x <- lapply(strsplit(gsub("[[:space:]]", "", depends), ",",
+                         fixed = TRUE),
+                function(s) s[startsWith(s, "R(")])
     lens <- lengths(x)
     pos <- which(lens > 0L)
     if(!length(pos)) return(db)
     lens <- lens[pos]
     ## Unlist.
     x <- unlist(x)
-    pat <- "^R[[:space:]]*\\(([[<>=!]+)[[:space:]]+(.*)\\)[[:space:]]*"
+    end <- 3L + (substring(x, 4L, 4L) == "=")
     ## Extract ops.
-    ops <- sub(pat, "\\1", x)
+    ops <- substring(x, 3L, end)
     ## Split target versions accordings to ops.
-    v_t <- split(sub(pat, "\\2", x), ops)
+    v_t <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
     ## Current R version.
     v_c <- getRversion()
     ## Compare current to target grouped by op.
@@ -233,9 +233,11 @@ function(db)
     for(op in names(v_t))
         res[ops == op] <- do.call(op, list(v_c, v_t[[op]]))
     ## And assemble test results according to the rows of db.
-    ind <- rep.int(TRUE, NROW(db))
-    ind[pos] <- sapply(split(res, rep.int(seq_along(lens), lens)), all)
-    db[ind, , drop = FALSE]
+    pos <- pos[!vapply(split(res, rep.int(seq_along(lens), lens)), all,
+                       NA)]
+    if(length(pos))
+        db <- db[-pos, , drop = FALSE]
+    db
 }
 
 available_packages_filters_db$OS_type <-
@@ -620,7 +622,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             ret[i, ] <- c(pkgs[i], lib, desc)
         }
     }
-    ret[!is.na(ret[, 1L]), ]
+    ret[!is.na(ret[, 1L]), , drop = FALSE]
 }
 
 installed.packages <-
@@ -955,7 +957,7 @@ setRepositories <-
 {
     if(is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
-    a <- tools:::.get_repositories()
+    a <- .get_repositories()
     pkgType <- getOption("pkgType")
     if (!is.character(pkgType))
         stop("invalid options(\"pkgType\"); must be a character string")
@@ -996,6 +998,11 @@ setRepositories <-
     }
 }
 
+findCRANmirror <- function(type = c("src", "web"))
+{
+    e <- paste0("R_CRAN_", toupper(type))
+    Sys.getenv(e, tools:::.get_CRAN_repository_URL())
+}
 
 
 ## used in some BioC packages and their support in tools.
@@ -1160,4 +1167,54 @@ compareVersion <- function(a, b)
         DL <- DL[!OK]
     }
     done
+}
+
+## moved from tools/R/utils.R as this is now called in utils::.onLoad
+.get_repositories <- function()
+{
+    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
+    if(is.na(rfile) || !file_test("-f", rfile)) {
+        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+        if(!file_test("-f", rfile))
+            rfile <- file.path(R.home("etc"), "repositories")
+    }
+    .read_repositories(rfile)
+}
+
+.read_repositories <- function(file)
+{
+    db <- read.delim(file, header = TRUE, comment.char = "#",
+                     colClasses = c(rep.int("character", 3L),
+                                    rep.int("logical", 4L))) # allow for win64.binary
+    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
+    db
+}
+
+### default changed to https: for R 3.3.0
+.expand_BioC_repository_URLs <- function(x)
+{
+    x <- sub("%bm",
+             as.character(getOption("BioC_mirror",
+                                    "https://bioconductor.org")),
+             x, fixed = TRUE)
+    sub("%v",
+        as.character(.BioC_version_associated_with_R_version()),
+        x, fixed = TRUE)
+}
+
+## default is included in setRepositories.Rd (via \Sexpr)
+.BioC_version_associated_with_R_version_default <- "3.17"
+.BioC_version_associated_with_R_version <- function ()
+    numeric_version(Sys.getenv("R_BIOC_VERSION",
+                               .BioC_version_associated_with_R_version_default))
+
+## Helper for getting the dependencies of the given installed packages
+## without reading the DESCRIPTION metadata of all installed packages.
+.installed_package_dependencies <- function(pkgs, fields) {
+    mat <- do.call(rbind,
+                   lapply(.libPaths(), .readPkgDesc, fields, pkgs))
+    lst <- apply(mat[, - c(1L, 2L), drop = FALSE], 1L,
+                 .clean_up_dependencies, simplify = FALSE)
+    names(lst) <- mat[, 1L]
+    lst
 }

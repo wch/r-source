@@ -91,8 +91,6 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
 .news_reader_default <-
 function(file)
 {
-    verbose <- getOption("verbose")
-
     .collapse <- function(s) paste(s, collapse = "\n")
 
     lines <- readLines(file, warn = FALSE)
@@ -243,9 +241,9 @@ function(file)
     out <- lapply(chunks, do_chunk)
     ## Now assemble pieces.
     reporter <- function(x) {
-        if(verbose)
-            message(gettextf("Cannot process chunk/lines:\n%s",
-                             .collapse(x)))
+        warning(gettextf("Cannot process chunk/lines:\n%s",
+                         .collapse(paste0("  ", x))),
+                domain = NA, call. = FALSE)
         NULL
     }
     finisher <- function(x) {
@@ -358,7 +356,7 @@ function(f, pdf_file)
              outputEncoding = "UTF-8", writeEncoding = FALSE,
              macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-        "\\usepackage[ae,hyper]{Rd}\n",
+        "\\usepackage[hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
         "\\usepackage{graphicx}\n",
         "\\setkeys{Gin}{width=0.7\\textwidth}\n",
@@ -472,7 +470,7 @@ function(file, out = stdout(), codify = FALSE)
         ## Re-order according to decreasing version.
         vchunks <- vchunks[order(as.numeric_version(names(vchunks)),
                                  decreasing = TRUE)]
-        dates <- sapply(vchunks, function(v) v$Date[1L])
+        dates <- vapply(vchunks, function(v) v$Date[1L], "")
         if(any(ind <- !is.na(dates)))
             names(vchunks)[ind] <-
                 sprintf("%s (%s)", names(vchunks)[ind], dates[ind])
@@ -554,8 +552,9 @@ function(file)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n",
-		paste(unique(nms[!ind]), collapse = "  "))
+        warning(gettextf("Cannot extract version info from the following section titles:\n%s",
+                         paste0("  ", unique(nms[!ind]), collapse = "\n")),
+                domain = NA, call. = FALSE)
     .make_news_db(cbind(ifelse(ind,
 			       sub(re_v, "\\1", nms, ignore.case = TRUE),
 			       NA_character_),
@@ -594,7 +593,7 @@ function(x)
                              substr(sub("^[[:space:]]*", "",
                                         .Rd_deparse(x)),
                                     1L, 60L)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
             pos <- pos[1L]
         }
 
@@ -614,7 +613,7 @@ function(x)
                              substr(sub("^[[:space:]]*", "",
                                         .Rd_deparse(x)),
                                     1L, 60L)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
             return(matrix(character(), 0L, 2L,
                           dimnames = list(NULL, c("Text", "HTML"))))
         }
@@ -681,6 +680,8 @@ function(x)
 function(f)
 {
     md <- readLines(f, encoding = "UTF-8", warn = FALSE)
+    ## Maybe complain?
+    if(!length(md)) return()
 
     ## Handle YAML header.
     if(md[1L] == "---") {
@@ -815,8 +816,9 @@ function(f)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n",
-                paste(unique(nms[!ind]), collapse = "  "))
+        warning(gettextf("Cannot extract version info from the following section titles:\n%s",
+                         paste0("  ", unique(nms[!ind]), collapse = "\n")),
+                domain = NA, call. = FALSE)
 
     .make_news_db(cbind(ifelse(ind,
                                sub(re_v, "\\2", nms, ignore.case = TRUE),
@@ -850,7 +852,7 @@ function(x, ...)
     if(!length(vchunks))
         return(character())
 
-    dates <- sapply(vchunks, function(v) v$Date[1L])
+    dates <- vapply(vchunks, function(v) v$Date[1L], "")
     vheaders <-
         format(sprintf("Changes in version %s%s",
                        names(vchunks),

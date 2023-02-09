@@ -16,6 +16,7 @@
   \code{\link{factor}} or, more commonly, from factors in a data frame.
 }
 \usage{
+droplevels(x, \dots)
 \S3method{droplevels}{factor}(x, exclude = if(anyNA(levels(x))) NULL else NA, \dots)
 \S3method{droplevels}{data.frame}(x, except, exclude, \dots)
 }
@@ -38,7 +39,7 @@
   columns; rather the default uses the same factor-specific
   \code{exclude} as the factor method itself.
 
-  The \code{except} argument follow the usual indexing rules.
+  The \code{except} argument follows the usual indexing rules.
 }
 
 \note{ This function was introduced in R 2.12.0.  It is primarily

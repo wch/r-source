@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -67,7 +67,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
     argument if your repository mirror is incomplete, e.g., because
-    you burned only the \file{contrib} section on a CD, or only have
+    you mirrored only the \file{contrib} section, or only have
     binary packages.  Overrides argument \code{repos}.
     Incompatible with \code{type = "both"}.
   }
@@ -340,7 +340,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   installs \emph{via} the OS's \command{timeout} command.  (The one
   tested is from GNU \pkg{coreutils}, commonly available on Linux but
   not other Unix-alikes.  If no such command is available the timeout
-  request is ignored, with a warning.)  For parallel installs a
+  request is ignored, with a warning. On Windows, one needs to specify
+  a suitable \command{timeout} command via environment variable
+  \env{R_TIMEOUT}, because \file{c:/Windows/system32/timeout.exe} is
+  not.)  For parallel installs a
   \samp{Error 124} message from \command{make} indicates that timeout
   occurred.
 

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -196,7 +196,8 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         list(insert = insert, getname = getname)
     }
     ## Use a hash table once utils is fully available.
-    if (file.exists(system.file("R", "utils.rdx", package = "utils")))
+    if (file.exists(system.file("R", "utils.rdx", package = "utils")) &&
+        is.environment(tryCatch(loadNamespace("utils"), error=identity)))
         envtable <- function() {
             idx <- 0
             h <- utils::hashtab()
@@ -337,7 +338,7 @@ makeLazyLoading <-
     if(!is.logical(compress) && compress %notin% c(2,3))
 	stop(gettextf("invalid value for '%s' : %s", "compress",
 		      "should be FALSE, TRUE, 2 or 3"), domain = NA)
-    options(warn = 1L)
+    if(!getOption("warn")) options(warn = 1L) # ( keep warn=2 !)
     findpack <- function(package, lib.loc) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022	The R Core Team.
+ *  Copyright (C) 1998--2023	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,8 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <R_ext/Print.h>
-
+#include <errno.h>
+#include <math.h>
 
 static SEXP bcEval(SEXP, SEXP, Rboolean);
 
@@ -94,9 +95,23 @@ static int R_Profiling = 0;
 #  include <sys/time.h>
 # endif
 # include <signal.h>
+# ifdef HAVE_FCNTL_H
+#  include <fcntl.h>		/* for open */
+# endif
+# ifdef HAVE_SYS_STAT_H
+#  include <sys/stat.h>
+# endif
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>		/* for write */
+# endif
 #endif /* not Win32 */
 
+#ifdef Win32
 static FILE *R_ProfileOutfile = NULL;
+#else
+static int R_ProfileOutfile = -1;
+#endif
+
 static int R_Mem_Profiling=0;
 static int R_GC_Profiling = 0;                     /* indicates GC profiling */
 static int R_Line_Profiling = 0;                   /* indicates line profiling, and also counts the filenames seen (+1) */
@@ -111,8 +126,16 @@ HANDLE MainThread;
 HANDLE ProfileEvent;
 #endif /* Win32 */
 
-/* Careful here!  These functions are called asynchronously, maybe in the middle of GC,
-   so don't do any allocations */
+/* Careful here!  These functions are called asynchronously, maybe in the
+   middle of GC, so don't do any allocations. They get called in a signal
+   handler on Unix, so they are only allowed to call library functions
+   that are async-signal-safe. They get called while the main R thread
+   is suspended on Windows, and hence they cannot call into any C runtime
+   function which may possibly include synchronization.
+
+   Note that snprintf() is not safe on Unix nor on Windows. On Windows 10
+   it has been seen to deadlock when the main thread has been suspended
+   in a locale-specific operation. */
 
 /* This does a linear search through the previously recorded filenames.  If
    this one is new, we try to add it.  FIXME:  if there are eventually
@@ -130,8 +153,10 @@ static int getFilenum(const char* filename) {
 	    R_Profiling_Error = 1;
 	    return 0;
 	}
-	if (R_Srcfiles[fnum] - (char*)RAW(R_Srcfiles_buffer) + len + 1 > length(R_Srcfiles_buffer)) {
-	      /* out of space in the buffer */
+	if (R_Srcfiles[fnum] - (char*)RAW(R_Srcfiles_buffer) + len + 1 >
+	    length(R_Srcfiles_buffer)) {
+
+	    /* out of space in the buffer */
 	    R_Profiling_Error = 2;
 	    return 0;
 	}
@@ -144,25 +169,150 @@ static int getFilenum(const char* filename) {
     return fnum + 1;
 }
 
-/* These, together with sprintf/strcat, are not safe -- we should be
-   using snprintf and such and computing needed sizes, but these
-   settings are better than what we had. LT */
-
 #define PROFBUFSIZ 10500
-#define PROFITEMMAX  500
-#define PROFLINEMAX (PROFBUFSIZ - PROFITEMMAX)
 
 /* It would also be better to flush the buffer when it gets full,
    even if the line isn't complete. But this isn't possible if we rely
-   on writing all line profiling files first.  With these sizes
-   hitting the limit is fairly unlikely, but if we do then the output
-   file is wrong. Maybe writing an overflow marker of some sort would
-   be better.  LT */
+   on writing all line profiling files first. In addition, while on Unix
+   we could use write() (not fprintf) to flush, it is not guaranteed we
+   could do this on Windows with the main thread suspended. 
 
-static void lineprof(char* buf, SEXP srcref)
+   With this size hitting the limit is fairly unlikely, but if we do then
+   the output file will miss some entries. Maybe writing an overflow marker
+   of some sort would be better.  LT, TK */
+
+/* The pb_* functions write to profiling buffer, advancing the "ptr" and
+   maintaining "left". If the write wouldn't fit leaving one more byte
+   available for the terminator, "left" is set to zero. They do not
+   terminate the string. */
+
+typedef struct {
+    char *ptr;
+    size_t left;
+} profbuf;
+
+/* If a string fits with terminator to the buffer, add it, excluding
+   the terminator. If it doesn't fit, set left to 0. */
+static void pb_str(profbuf *pb, const char *str)
 {
-    size_t len;
-    if (srcref && !isNull(srcref) && (len = strlen(buf)) < PROFLINEMAX) {
+    size_t len = strlen(str);
+
+    if (len < pb->left) {
+	size_t i;
+	for(i = 0; i < len; i++)
+	    pb->ptr[i] = str[i];
+	pb->ptr += len;
+	pb->left -= len;
+    } else
+	pb->left = 0;
+}
+
+static void pb_uint(profbuf *pb, uint64_t num)
+{
+    char digits[20]; /* 64-bit unsigned integers */
+    int i, j;
+
+    for (i = 0;;) {
+	digits[i++] = num % 10 + '0';
+	num /= 10;
+	if (num == 0)
+	    break;
+    }
+    if (i < pb->left) {
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0; 
+}
+
+static void pb_int(profbuf *pb, int64_t num)
+{
+    char digits[19]; /* 64-bit signed integers */
+    int i, j, negative;
+
+    if (num < 0) {
+	negative = 1;
+	num *= -1;
+    } else
+	negative = 0;
+    for (i = 0;;) {
+	digits[i++] = num % 10 + '0';
+	num /= 10;
+	if (num == 0)
+	    break;
+    }
+    if (negative + i < pb->left) {
+        if (negative) {
+	    pb->ptr[0] = '-';
+	    pb->ptr++;
+	    pb->left--;
+	}
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0;
+}
+
+/* IEEE doubles */
+#define PB_MAX_DBL_DIGITS 309
+
+/* Careful: this is very simplistic printing of the integer parts of doubles
+   (like %0.f) used only (in a special case) for stack trace in profiling data.
+   Not suitable for re-use. */
+static void pb_dbl(profbuf *pb, double num)
+{
+    char digits[PB_MAX_DBL_DIGITS]; 
+    int i, j, negative;
+
+    if (!R_FINITE(num)) {
+	if (ISNA(num))
+	    pb_str(pb, "NA");
+	else if (ISNAN(num))
+	    pb_str(pb,  "NaN");
+	else if (num > 0)
+	    pb_str(pb, "Inf");
+	else
+	    pb_str(pb, "-Inf");
+	return;
+    }
+    if (num < 0) {
+	negative = 1;
+	num *= -1.0;
+    } else
+	negative = 0;
+    for (i = 0;;) {
+	digits[i++] = (char) ((int) fmod(num, 10.0) + '0');
+	num /= 10.0;
+	if (num < 1)
+	    break;
+	if (i >= PB_MAX_DBL_DIGITS)
+	    /* This cannot happen with IEEE double */
+	    return;
+    }
+    if (negative + i < pb->left) {
+	if (negative) {
+	    pb->ptr[0] = '-';
+	    pb->ptr++;
+	    pb->left--;
+	}
+	j = 0;
+	for (i--; i >= 0;)
+	    pb->ptr[j++] = digits[i--];
+	pb->ptr += j;
+	pb->left -= j;
+    } else
+	pb->left = 0;
+}
+
+static void lineprof(profbuf* pb, SEXP srcref)
+{
+    if (srcref && !isNull(srcref)) {
 	int fnum, line = asInteger(srcref);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	const char *filename;
@@ -172,8 +322,12 @@ static void lineprof(char* buf, SEXP srcref)
 	if (TYPEOF(srcfile) != STRSXP || !length(srcfile)) return;
 	filename = CHAR(STRING_ELT(srcfile, 0));
 
-	if ((fnum = getFilenum(filename)))
-	    snprintf(buf+len, PROFBUFSIZ - len, "%d#%d ", fnum, line);
+	if ((fnum = getFilenum(filename))) {
+	    pb_int(pb, fnum); /* %d */
+	    pb_str(pb, "#");
+	    pb_int(pb, line); /* %d */
+	    pb_str(pb, " " );
+	}
     }
 }
 
@@ -182,6 +336,12 @@ static void lineprof(char* buf, SEXP srcref)
 //  but apparently not FreeBSD): it is included above.
 # include <pthread.h>
 static pthread_t R_profiled_thread;
+#endif
+
+#if defined(__APPLE__)
+#include <mach/mach_init.h>
+#include <mach/mach_port.h>
+static mach_port_t R_profiled_thread_id;
 #endif
 
 static RCNTXT * findProfContext(RCNTXT *cptr)
@@ -215,136 +375,197 @@ static RCNTXT * findProfContext(RCNTXT *cptr)
     return cptr;
 }
 
+/* Write string to the profile file.
+   On Unix, pf_* functions are called from a signal handler, hence avoid
+   calling fprintf. */
+static ssize_t pf_str(const char *s)
+{
+#ifdef Win32
+    return fprintf(R_ProfileOutfile, "%s", s);
+#else
+    size_t wbyte = 0;
+    size_t nbyte = strlen(s);
+    for(;;) {
+	ssize_t w = write(R_ProfileOutfile, s + wbyte, nbyte - wbyte);
+	if (w == -1) {
+	    if (errno == EINTR)
+		continue;
+	    else
+		return -1;
+	}
+	wbyte += w;
+	if (wbyte == nbyte || w == 0)
+	    return wbyte;
+    }
+#endif
+}
+
+static void pf_int(int num)
+{
+#ifdef Win32
+    fprintf(R_ProfileOutfile, "%d", num);
+#else
+    char buf[32];
+    profbuf nb;
+    nb.ptr = buf;
+    nb.left = sizeof(buf);
+    pb_int(&nb, num);
+    nb.ptr[0] = '\0';
+    pf_str(buf);
+#endif
+}
+
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
     char buf[PROFBUFSIZ];
     size_t bigv, smallv, nodes;
-    size_t len;
     int prevnum = R_Line_Profiling;
+    int old_errno = errno;
 
-    buf[0] = '\0';
+    profbuf pb;
+    pb.ptr = buf;
+    pb.left = PROFBUFSIZ;
 
 #ifdef Win32
     SuspendThread(MainThread);
+#elif defined(__APPLE__)
+    /* Using Mach thread API to detect whether we are on the main thread,
+       because pthread_self() sometimes crashes R due to a page fault when
+       the signal handler runs just after the new thread is created, but
+       before pthread initialization has been finished. */
+    mach_port_t id = mach_thread_self();
+    mach_port_deallocate(mach_task_self(), id);
+    if (id != R_profiled_thread_id) {
+	pthread_kill(R_profiled_thread, sig);
+	errno = old_errno;
+	return;
+    }
 #elif defined(HAVE_PTHREAD)
     if (! pthread_equal(pthread_self(), R_profiled_thread)) {
 	pthread_kill(R_profiled_thread, sig);
+	errno = old_errno;
 	return;
     }
 #endif /* Win32 */
 
-    if (R_Mem_Profiling){
-	    get_current_mem(&smallv, &bigv, &nodes);
-	    if((len = strlen(buf)) < PROFLINEMAX)
-		snprintf(buf+len, PROFBUFSIZ - len,
-			 ":%lu:%lu:%lu:%lu:",
-			 (unsigned long) smallv, (unsigned long) bigv,
-			 (unsigned long) nodes, get_duplicate_counter());
-	    reset_duplicate_counter();
+    if (R_Mem_Profiling) {
+	get_current_mem(&smallv, &bigv, &nodes);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) smallv);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) bigv);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) nodes);
+	pb_str(&pb, ":");
+	pb_uint(&pb, (uint64_t) get_duplicate_counter());
+	pb_str(&pb, ":");
+	reset_duplicate_counter();
     }
 
     if (R_GC_Profiling && R_gc_running())
-	strcat(buf, "\"<GC>\" ");
+	pb_str(&pb, "\"<GC>\" ");
 
     if (R_Line_Profiling)
-	lineprof(buf, R_getCurrentSrcref());
+	lineprof(&pb, R_getCurrentSrcref());
 
     for (RCNTXT *cptr = R_GlobalContext;
 	 cptr != NULL;
 	 cptr = findProfContext(cptr)) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
+
 	    SEXP fun = CAR(cptr->call);
-	    if(strlen(buf) < PROFLINEMAX) {
-		strcat(buf, "\"");
+	    pb_str(&pb, "\"");
 
-		char itembuf[PROFITEMMAX];
+	    if (TYPEOF(fun) == SYMSXP) {
+		pb_str(&pb, CHAR(PRINTNAME(fun)));
 
-		if (TYPEOF(fun) == SYMSXP) {
-		    snprintf(itembuf, PROFITEMMAX-1, "%s", CHAR(PRINTNAME(fun)));
+	    } else if ((CAR(fun) == R_DoubleColonSymbol ||
+			CAR(fun) == R_TripleColonSymbol ||
+			CAR(fun) == R_DollarSymbol) &&
+		       TYPEOF(CADR(fun)) == SYMSXP &&
+		       TYPEOF(CADDR(fun)) == SYMSXP) {
+		/* Function accessed via ::, :::, or $. Both args must be
+		   symbols. It is possible to use strings with these
+		   functions, as in "base"::"list", but that's a very rare
+		   case so we won't bother handling it. */
+		pb_str(&pb, CHAR(PRINTNAME(CADR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(CAR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(CADDR(fun))));
+	    } else if (CAR(fun) == R_Bracket2Symbol &&
+		       TYPEOF(CADR(fun)) == SYMSXP &&
+		       ((TYPEOF(CADDR(fun)) == SYMSXP ||
+			 TYPEOF(CADDR(fun)) == STRSXP ||
+			 TYPEOF(CADDR(fun)) == INTSXP ||
+			 TYPEOF(CADDR(fun)) == REALSXP) &&
+			length(CADDR(fun)) > 0)) {
+		/* Function accessed via [[. The first arg must be a symbol
+		   and the second can be a symbol, string, integer, or
+		   real. */
+		SEXP arg1 = CADR(fun);
+		SEXP arg2 = CADDR(fun);
 
-		} else if ((CAR(fun) == R_DoubleColonSymbol ||
-			    CAR(fun) == R_TripleColonSymbol ||
-			    CAR(fun) == R_DollarSymbol) &&
-			   TYPEOF(CADR(fun)) == SYMSXP &&
-			   TYPEOF(CADDR(fun)) == SYMSXP) {
-		    /* Function accessed via ::, :::, or $. Both args must be
-		       symbols. It is possible to use strings with these
-		       functions, as in "base"::"list", but that's a very rare
-		       case so we won't bother handling it. */
-		    snprintf(itembuf, PROFITEMMAX-1, "%s%s%s",
-			     CHAR(PRINTNAME(CADR(fun))),
-			     CHAR(PRINTNAME(CAR(fun))),
-			     CHAR(PRINTNAME(CADDR(fun))));
+		pb_str(&pb, CHAR(PRINTNAME(arg1)));
+		pb_str(&pb, "[[");
 
-		} else if (CAR(fun) == R_Bracket2Symbol &&
-			   TYPEOF(CADR(fun)) == SYMSXP &&
-			   ((TYPEOF(CADDR(fun)) == SYMSXP ||
-			     TYPEOF(CADDR(fun)) == STRSXP ||
-			     TYPEOF(CADDR(fun)) == INTSXP ||
-			     TYPEOF(CADDR(fun)) == REALSXP) &&
-			    length(CADDR(fun)) > 0)) {
-		    /* Function accessed via [[. The first arg must be a symbol
-		       and the second can be a symbol, string, integer, or
-		       real. */
-		    SEXP arg1 = CADR(fun);
-		    SEXP arg2 = CADDR(fun);
-		    char arg2buf[PROFITEMMAX-5];
-
-		    if (TYPEOF(arg2) == SYMSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%s", CHAR(PRINTNAME(arg2)));
-
-		    } else if (TYPEOF(arg2) == STRSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "\"%s\"", CHAR(STRING_ELT(arg2, 0)));
-
-		    } else if (TYPEOF(arg2) == INTSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%d", INTEGER(arg2)[0]);
-
-		    } else if (TYPEOF(arg2) == REALSXP) {
-			snprintf(arg2buf, PROFITEMMAX-6, "%.0f", REAL(arg2)[0]);
-
-		    } else {
-			/* Shouldn't get here, but just in case. */
-			arg2buf[0] = '\0';
-		    }
-
-		    snprintf(itembuf, PROFITEMMAX-1, "%s[[%s]]",
-			     CHAR(PRINTNAME(arg1)),
-			     arg2buf);
-
-		} else {
-		    sprintf(itembuf, "<Anonymous>");
+		if (TYPEOF(arg2) == SYMSXP) {
+		    pb_str(&pb, CHAR(PRINTNAME(arg2)));
+		} else if (TYPEOF(arg2) == STRSXP) {
+		    pb_str(&pb, "\"");
+		    pb_str(&pb, CHAR(STRING_ELT(arg2, 0)));
+		    pb_str(&pb, "\"");
+		} else if (TYPEOF(arg2) == INTSXP) {
+		    pb_int(&pb, INTEGER(arg2)[0]);
+		} else if (TYPEOF(arg2) == REALSXP) {
+		    pb_dbl(&pb, REAL(arg2)[0]); /* %0.f */
 		}
 
-		strcat(buf, itembuf);
-		strcat(buf, "\" ");
-		if (R_Line_Profiling) {
-		    if (cptr->srcref == R_InBCInterpreter)
-			lineprof(buf,
-				 R_findBCInterpreterSrcref(cptr));
-		    else
-			lineprof(buf, cptr->srcref);
-		}
+		pb_str(&pb, "]]");
+
+	    } else {
+		pb_str(&pb, "<Anonymous>");
+	    }
+
+	    pb_str(&pb, "\" ");
+	    if (R_Line_Profiling) {
+		if (cptr->srcref == R_InBCInterpreter)
+		    lineprof(&pb, R_findBCInterpreterSrcref(cptr));
+		else
+		    lineprof(&pb, cptr->srcref);
 	    }
 	}
     }
 
-    /* I believe it would be slightly safer to place this _after_ the
-       next two bits, along with the signal() call. LT */
+    if (pb.left)
+	pb.ptr[0] = '\0';
+    else {
+	/* overflow */
+	buf[0] = '\0';
+	R_Profiling_Error = 3;
+    }
+
 #ifdef Win32
+    /* resume before calling pf_* functions to avoid deadlock */
     ResumeThread(MainThread);
-#endif /* Win32 */
+#endif
 
-    for (int i = prevnum; i < R_Line_Profiling; i++)
-	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
-
-    if(strlen(buf))
-	fprintf(R_ProfileOutfile, "%s\n", buf);
+    for (int i = prevnum; i < R_Line_Profiling; i++) {
+	pf_str("#File ");
+	pf_int(i); /* %d */
+	pf_str(": ");
+	pf_str(R_Srcfiles[i-1]);
+	pf_str("\n"); 
+    }
+    
+    if(strlen(buf)) {
+	pf_str(buf);
+	pf_str("\n");
+    }
 
 #ifndef Win32
     signal(SIGPROF, doprof);
 #endif /* not Win32 */
-
+    errno = old_errno;
 }
 
 #ifdef Win32
@@ -371,6 +592,8 @@ static void R_EndProfiling(void)
 #ifdef Win32
     SetEvent(ProfileEvent);
     CloseHandle(MainThread);
+    if(R_ProfileOutfile) fclose(R_ProfileOutfile);
+    R_ProfileOutfile = NULL;
 #else /* not Win32 */
     struct itimerval itv;
 
@@ -380,18 +603,23 @@ static void R_EndProfiling(void)
     itv.it_value.tv_usec = 0;
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
-
+    if(R_ProfileOutfile >= 0) close(R_ProfileOutfile);
+    R_ProfileOutfile = -1;
 #endif /* not Win32 */
-    if(R_ProfileOutfile) fclose(R_ProfileOutfile);
-    R_ProfileOutfile = NULL;
     R_Profiling = 0;
     if (R_Srcfiles_buffer) {
 	R_ReleaseObject(R_Srcfiles_buffer);
 	R_Srcfiles_buffer = NULL;
     }
-    if (R_Profiling_Error)
-	warning(_("source files skipped by Rprof; please increase '%s'"),
-		R_Profiling_Error == 1 ? "numfiles" : "bufsize");
+    if (R_Profiling_Error) {
+	if (R_Profiling_Error == 3)
+	    /* It is hard to imagine this could happen in practice, but
+	       if needed, it could be configurable like numfiles/bufsize. */
+	    warning(_("samples too large for I/O buffer skipped by Rprof"));
+	else
+	    warning(_("source files skipped by Rprof; please increase '%s'"),
+		      R_Profiling_Error == 1 ? "numfiles" : "bufsize");
+    }
 }
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
@@ -401,25 +629,44 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 {
 #ifndef Win32
     struct itimerval itv;
+    const void *vmax = vmaxget();
+
+    if(R_ProfileOutfile >= 0) R_EndProfiling();
+    if (filename != NA_STRING && filename) {
+	const char *fn = R_ExpandFileName(translateCharFP(filename));
+	int flags = O_CREAT | O_WRONLY;
+	if (append)
+	    flags |= O_APPEND;
+	else
+	    flags |= O_TRUNC;
+	int mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH;
+	R_ProfileOutfile = open(fn, flags, mode);
+	if (R_ProfileOutfile < 0)
+	    error(_("Rprof: cannot open profile file '%s'"), fn);
+    }
+    vmaxset(vmax);
 #else
     int wait;
     HANDLE Proc = GetCurrentProcess();
-#endif
-    int interval;
 
-    interval = (int)(1e6 * dinterval + 0.5);
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
 	error(_("Rprof: cannot open profile file '%s'"),
 	      translateChar(filename));
+#endif
+    int interval;
+
+    interval = (int)(1e6 * dinterval + 0.5);
     if(mem_profiling)
-	fprintf(R_ProfileOutfile, "memory profiling: ");
+	pf_str("memory profiling: ");
     if(gc_profiling)
-	fprintf(R_ProfileOutfile, "GC profiling: ");
+	pf_str("GC profiling: ");
     if(line_profiling)
-	fprintf(R_ProfileOutfile, "line profiling: ");
-    fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
+	pf_str("line profiling: ");
+    pf_str("sample.interval=");
+    pf_int(interval); /* %d */
+    pf_str("\n");
 
     R_Mem_Profiling=mem_profiling;
     if (mem_profiling)
@@ -458,6 +705,12 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     error("profiling requires 'pthread' support");
 #endif
 
+#if defined(__APPLE__)
+    /* see comment in doprof for why R_profiled_thread is not enough */
+    R_profiled_thread_id = mach_thread_self();
+    mach_port_deallocate(mach_task_self(), R_profiled_thread_id);
+#endif
+
     signal(SIGPROF, doprof);
 
     /* The macOS implementation requires normalization here:
@@ -473,7 +726,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     */ 
     itv.it_interval.tv_sec = interval / 1000000;
     itv.it_interval.tv_usec =
-	(suseconds_t)(interval - itv.it_interval.tv_sec * 10000000);
+	(suseconds_t)(interval - itv.it_interval.tv_sec * 1000000);
     itv.it_value.tv_sec = interval / 1000000;
     itv.it_value.tv_usec =
 	(suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
@@ -513,6 +766,18 @@ SEXP do_Rprof(SEXP args)
     if (bufsize < 0)
 	error(_("invalid '%s' argument"), "bufsize");
 
+#if defined(linux) || defined(__linux__)
+    if (dinterval < 0.01) {
+	dinterval = 0.01;
+	warning(_("interval too short for this platform, using '%f'"), dinterval);
+    }
+#else
+    if (dinterval < 0.001) {
+	dinterval = 0.001;
+	warning(_("interval too short, using '%f'"), dinterval);
+    }
+#endif
+
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
@@ -533,7 +798,7 @@ SEXP do_Rprof(SEXP args)
 /* NEEDED: A fixup is needed in browser, because it can trap errors,
  *	and currently does not reset the limit to the right value. */
 
-void attribute_hidden check_stack_balance(SEXP op, int save)
+attribute_hidden void check_stack_balance(SEXP op, int save)
 {
     if(save == R_PPStackTop) return;
     REprintf("Warning: stack imbalance in '%s', %d then %d\n",
@@ -601,7 +866,7 @@ static R_INLINE void INCLNK_stack(R_bcstack_t *top)
     R_BCProtTop = top;
 }
 
-static R_INLINE void INCLNK_stack_commit()
+static R_INLINE void INCLNK_stack_commit(void)
 {
     if (R_BCProtCommitted < R_BCProtTop) {
 	R_bcstack_t *base = R_BCProtCommitted;
@@ -631,7 +896,7 @@ static R_INLINE void DECLNK_stack(R_bcstack_t *base)
     R_BCProtTop = base;
 }
 
-void attribute_hidden R_BCProtReset(R_bcstack_t *ptop)
+attribute_hidden void R_BCProtReset(R_bcstack_t *ptop)
 {
     DECLNK_stack(ptop);
 }
@@ -1048,7 +1313,7 @@ static int MIN_JIT_SCORE = 50;
 
 static struct { unsigned long count, envcount, bdcount; } jit_info = {0, 0, 0};
 
-void attribute_hidden R_init_jit_enabled(void)
+attribute_hidden void R_init_jit_enabled(void)
 {
     /* Need to force the lazy loading promise to avoid recursive
        promise evaluation when JIT is enabled. Might be better to do
@@ -1417,7 +1682,7 @@ static R_INLINE Rboolean jit_srcref_match(SEXP cmpsrcref, SEXP srcref)
     return R_compute_identical(cmpsrcref, srcref, 0);
 }
 
-SEXP attribute_hidden R_cmpfun1(SEXP fun)
+attribute_hidden SEXP R_cmpfun1(SEXP fun)
 {
     int old_visible = R_Visible;
     SEXP packsym, funsym, call, fcall, val;
@@ -1544,7 +1809,7 @@ static Rboolean R_compileAndExecute(SEXP call, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int old = R_jit_enabled, new;
     checkArity(op, args);
@@ -1559,7 +1824,7 @@ SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(old);
 }
 
-SEXP attribute_hidden do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int old = R_compile_pkgs, new;
     checkArity(op, args);
@@ -1751,7 +2016,7 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
     }
 }
 
-void attribute_hidden unpromiseArgs(SEXP pargs)
+attribute_hidden void unpromiseArgs(SEXP pargs)
 {
     /* This assumes pargs will no longer be references. We could
        double check the refcounts on pargs as a sanity check. */
@@ -1763,7 +2028,7 @@ void attribute_hidden unpromiseArgs(SEXP pargs)
     }
 }
 #else
-void attribute_hidden unpromiseArgs(SEXP pargs) { }
+attribute_hidden void unpromiseArgs(SEXP pargs) { }
 #endif
 
 /* Note: GCC will not inline execClosure because it calls setjmp */
@@ -1997,7 +2262,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
     return tmp;
 }
 
-SEXP attribute_hidden do_forceAndCall(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_forceAndCall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n = asInteger(eval(CADR(call), rho));
     SEXP e = CDDR(call);
@@ -2187,18 +2452,8 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
     }
 
     int len = length(s);
-    if (len > 1) {
-//	/* PROTECT(s) needed as per PR#15990.  call gets protected by
-//	   warningcall(). Now "s" is protected by caller and also
-//	   R_BadValueInRCode disables GC. */
-//	R_BadValueInRCode(s, call, rho,
-//	    "the condition has length > 1",
-//	    _("the condition has length > 1"),
-//	    _("the condition has length > 1 and only the first element will be used"),
-//	    "_R_CHECK_LENGTH_1_CONDITION_",
-//	    TRUE /* by default issue warning */);
+    if (len > 1)
 	errorcall(call, _("the condition has length > 1"));
-    }
     if (len > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {
@@ -2239,7 +2494,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 	}							\
     } while(0)
 
-SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP Cond, Stmt=R_NilValue;
     int vis=0;
@@ -2295,7 +2550,7 @@ static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
 	return FALSE;
 }
 
-SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* Need to declare volatile variables whose values are relied on
        after for_next or for_break longjmps and might change between
@@ -2432,7 +2687,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int dbg;
     volatile int bgn;
@@ -2479,7 +2734,7 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int dbg;
     volatile SEXP body;
@@ -2509,20 +2764,20 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden NORET do_break(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_break(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     findcontext(PRIMVAL(op), rho, R_NilValue);
 }
 
 
-SEXP attribute_hidden do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return CAR(args);
 }
 
-SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue;
     if (args != R_NilValue) {
@@ -2547,7 +2802,7 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden NORET do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden NORET SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP v;
 
@@ -2564,7 +2819,7 @@ SEXP attribute_hidden NORET do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Declared with a variable number of args in names.c */
-SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval, srcref;
 
@@ -2665,7 +2920,7 @@ static SEXP R_Subassign2Sym = NULL;
 static SEXP R_DollarGetsSymbol = NULL;
 static SEXP R_AssignSym = NULL;
 
-void attribute_hidden R_initAssignSymbols(void)
+attribute_hidden void R_initAssignSymbols(void)
 {
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);
@@ -2732,7 +2987,7 @@ static SEXP installAssignFcnSymbol(SEXP fun)
     /* install the symbol */
     if(strlen(CHAR(PRINTNAME(fun))) + 3 > ASSIGNBUFSIZ)
 	error(_("overlong name in '%s'"), EncodeChar(PRINTNAME(fun)));
-    sprintf(buf, "%s<-", CHAR(PRINTNAME(fun)));
+    snprintf(buf, ASSIGNBUFSIZ, "%s<-", CHAR(PRINTNAME(fun)));
     SEXP val = install(buf);
 
     enterAssignFcnSymbol(fun, val);
@@ -2972,7 +3227,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*  Assignment in its various forms  */
 
-SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP lhs, rhs;
 
@@ -3025,7 +3280,7 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
    'n' is the number of arguments already evaluated and hence not
    passed to evalArgs and hence to here.
  */
-SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
+attribute_hidden SEXP evalList(SEXP el, SEXP rho, SEXP call, int n)
 {
     SEXP head, tail, ev, h, val;
 
@@ -3113,7 +3368,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 /* A slight variation of evaluating each expression in "el" in "rho". */
 
 /* used in evalArgs, arithmetic.c, seq.c */
-SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
+attribute_hidden SEXP evalListKeepMissing(SEXP el, SEXP rho)
 {
     SEXP head, tail, ev, h, val;
 
@@ -3188,7 +3443,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 /* form below because it is does not cause growth of the pointer */
 /* protection stack, and because it is a little more efficient. */
 
-SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
+attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
 {
     SEXP ans, h, tail;
 
@@ -3248,7 +3503,7 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 /* Check that each formal is a symbol */
 
 /* used in coerce.c */
-void attribute_hidden CheckFormals(SEXP ls)
+attribute_hidden void CheckFormals(SEXP ls)
 {
     if (isList(ls)) {
 	for (; ls != R_NilValue; ls = CDR(ls))
@@ -3296,7 +3551,7 @@ static SEXP VectorToPairListNamed(SEXP x)
 /* "eval": Evaluate the first argument
    in the environment specified by the second argument. */
 
-SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP encl, x;
     volatile SEXP expr, env, tmp;
@@ -3409,7 +3664,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* This is a special .Internal */
-SEXP attribute_hidden do_withVisible(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_withVisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, nm, ret;
 
@@ -3429,7 +3684,7 @@ SEXP attribute_hidden do_withVisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* This is a special .Internal */
-SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
     SEXP s, ans ;
@@ -4675,11 +4930,7 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 
 	{"cospi", NULL, cospi},
 	{"sinpi", NULL, sinpi},
-#ifndef HAVE_TANPI
-	{"tanpi", NULL, tanpi}
-#else
 	{"tanpi", NULL, Rtanpi}
-#endif
     };
 
 static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
@@ -4900,7 +5151,7 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 
 #define BCCONSTS(e) BCODE_CONSTS(e)
 
-static void NORET nodeStackOverflow()
+NORET static void nodeStackOverflow(void)
 {
     /* condiiton is pre-allocated and protected with R_PreserveObject */
     SEXP cond = R_getNodeStackOverflowError();
@@ -4927,7 +5178,7 @@ static R_INLINE void* BCNALLOC(int nelems) {
 
 #define BCNALLOC_CNTXT() (RCNTXT *)BCNALLOC(RCNTXT_ELEMS)
 
-static R_INLINE void BCNPOP_AND_END_CNTXT() {
+static R_INLINE void BCNPOP_AND_END_CNTXT(void) {
     RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
     endcontext(cntxt);
     R_BCNodeStackTop -= RCNTXT_ELEMS + 1;
@@ -5136,7 +5387,7 @@ static R_INLINE SEXP GET_BINDING_CELL_CACHE(SEXP symbol, SEXP rho,
     }
 }
 
-static void NORET MISSING_ARGUMENT_ERROR(SEXP symbol)
+NORET static void MISSING_ARGUMENT_ERROR(SEXP symbol)
 {
     const char *n = CHAR(PRINTNAME(symbol));
     if(*n) error(_("argument \"%s\" is missing, with no default"), n);
@@ -5146,7 +5397,7 @@ static void NORET MISSING_ARGUMENT_ERROR(SEXP symbol)
 #define MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss) \
     do { if (! keepmiss) MISSING_ARGUMENT_ERROR(symbol); } while (0)
 
-static void NORET UNBOUND_VARIABLE_ERROR(SEXP symbol)
+NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol)
 {
     error(_("object '%s' not found"), EncodeChar(PRINTNAME(symbol)));
 }
@@ -5283,7 +5534,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 #define CALL_FRAME_FTYPE() TYPEOF(CALL_FRAME_FUN())
 #define CALL_FRAME_SIZE() (3)
 
-static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS()
+static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS(void)
 {
     SEXP args = CALL_FRAME_ARGS();
     for (SEXP a = args; a  != R_NilValue; a = CDR(a))
@@ -5291,7 +5542,7 @@ static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS()
     return args;
 }
 
-static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS()
+static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS(void)
 {
     SEXP args = CALL_FRAME_ARGS();
     /* it would be better not to build this arglist with CONS_NR in
@@ -5545,7 +5796,7 @@ static int current_opcode = NO_CURRENT_OPCODE;
 static int opcode_counts[OPCOUNT];
 #endif
 
-static void bc_check_sigint()
+static void bc_check_sigint(void)
 {
     R_CheckUserInterrupt();
 #ifndef IMMEDIATE_FINALIZERS
@@ -6098,8 +6349,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
 	    SETSTACK(-1, ScalarLogical(asLogical2(			\
 					   val, /*checking*/ 1,		\
-					   VECTOR_ELT(constants, callidx),	\
-					   rho)));			\
+					   VECTOR_ELT(constants, callidx) \
+					   )));				\
 	}								\
     } while(0)
 
@@ -6317,17 +6568,17 @@ static SEXP R_findBCInterpreterLocation(RCNTXT *cptr, const char *iname)
     return getLocTableElt(relpc, ltable, constants);
 }
 
-SEXP attribute_hidden R_findBCInterpreterSrcref(RCNTXT *cptr)
+attribute_hidden SEXP R_findBCInterpreterSrcref(RCNTXT *cptr)
 {
     return R_findBCInterpreterLocation(cptr, "srcrefsIndex");
 }
 
-static SEXP R_findBCInterpreterExpression()
+static SEXP R_findBCInterpreterExpression(void)
 {
     return R_findBCInterpreterLocation(NULL, "expressionsIndex");
 }
 
-SEXP attribute_hidden R_getCurrentSrcref()
+attribute_hidden SEXP R_getCurrentSrcref(void)
 {
     if (R_Srcref != R_InBCInterpreter)
 	return R_Srcref;
@@ -6426,7 +6677,7 @@ static SEXP inflateAssignmentCall(SEXP expr) {
 }
 
 /* Get the current expression being evaluated by the byte-code interpreter. */
-SEXP attribute_hidden R_getBCInterpreterExpression()
+attribute_hidden SEXP R_getBCInterpreterExpression(void)
 {
     SEXP exp = R_findBCInterpreterExpression();
     if (TYPEOF(exp) == PROMSXP) {
@@ -7313,7 +7564,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (dispatched)
 	    SETSTACK(-1, value);
 	else
-	    SETSTACK(-1, R_subset3_dflt(x, PRINTNAME(symbol), R_NilValue));
+	    SETSTACK(-1, R_subset3_dflt(x, PRINTNAME(symbol), call));
 	R_Visible = TRUE;
 	NEXT();
       }
@@ -7839,7 +8090,7 @@ SEXP R_bcDecode(SEXP x) { return duplicate(x); }
 /* Add BCODESXP bc into the constants registry, performing a deep copy of the
    bc's constants */
 #define CONST_CHECK_COUNT 1000
-void attribute_hidden R_registerBC(SEXP bcBytes, SEXP bcode)
+attribute_hidden void R_registerBC(SEXP bcBytes, SEXP bcode)
 {
     if (R_check_constants <= 0)
 	return;
@@ -8048,7 +8299,7 @@ Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
     return constsOK;
 }
 
-SEXP attribute_hidden do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP bytes, consts, ans;
 
@@ -8062,7 +8313,7 @@ SEXP attribute_hidden do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP forms, body, env;
 
@@ -8086,7 +8337,7 @@ SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkCLOSXP(forms, body, env);
 }
 
-SEXP attribute_hidden do_is_builtin_internal(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_is_builtin_internal(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP symbol, i;
 
@@ -8131,7 +8382,7 @@ static SEXP disassemble(SEXP bc)
   return ans;
 }
 
-SEXP attribute_hidden do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
   SEXP code;
 
@@ -8142,7 +8393,7 @@ SEXP attribute_hidden do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
   return disassemble(code);
 }
 
-SEXP attribute_hidden do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
   checkArity(op, args);
   SEXP ans = allocVector(INTSXP, 1);
@@ -8201,7 +8452,7 @@ FILE *R_OpenCompiledFile(char *fname, char *buf, size_t bsize)
 }
 #endif
 
-SEXP attribute_hidden do_growconst(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_growconst(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP constBuf, ans;
     int i, n;
@@ -8219,7 +8470,7 @@ SEXP attribute_hidden do_growconst(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP constBuf, x;
     int i, constCount;
@@ -8252,7 +8503,7 @@ SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarInteger(constCount);
 }
 
-SEXP attribute_hidden do_getconst(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_getconst(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP constBuf, ans;
     int i, n;
@@ -8274,6 +8525,7 @@ SEXP attribute_hidden do_getconst(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef BC_PROFILING
+attribute_hidden
 SEXP do_bcprofcounts(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP val;
@@ -8293,6 +8545,7 @@ static void dobcprof(int sig)
     signal(SIGPROF, dobcprof);
 }
 
+attribute_hidden
 SEXP do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     struct itimerval itv;
@@ -8336,6 +8589,7 @@ static void dobcprof_null(int sig)
     signal(SIGPROF, dobcprof_null);
 }
 
+attribute_hidden
 SEXP do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     struct itimerval itv;
@@ -8356,15 +8610,18 @@ SEXP do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 #else
-SEXP NORET do_bcprofcounts(SEXP call, SEXP op, SEXP args, SEXP env) {
+attribute_hidden
+NORET SEXP do_bcprofcounts(SEXP call, SEXP op, SEXP args, SEXP env) {
     checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
-SEXP NORET do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env) {
+attribute_hidden
+NORET SEXP do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env) {
     checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
-SEXP NORET do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env) {
+attribute_hidden
+NORET SEXP do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env) {
     checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
@@ -8372,7 +8629,7 @@ SEXP NORET do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env) {
 
 /* end of byte code section */
 
-SEXP attribute_hidden do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int old = R_num_math_threads, new;
     checkArity(op, args);
@@ -8382,7 +8639,7 @@ SEXP attribute_hidden do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(old);
 }
 
-SEXP attribute_hidden do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int old = R_max_num_math_threads, new;
     checkArity(op, args);
@@ -8395,7 +8652,7 @@ SEXP attribute_hidden do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rh
     return ScalarInteger(old);
 }
 
-SEXP attribute_hidden do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val;
     checkArity(op, args);

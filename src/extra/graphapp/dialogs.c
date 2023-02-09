@@ -24,14 +24,17 @@
 */
 
 /* Copyright (C) 2004--2008	The R Foundation
-   Copyright (C) 2013--2021	The R Core Team
+   Copyright (C) 2013--2023	The R Core Team
 
    Additions for R, Chris Jackson
-   Find and replace dialog boxes and dialog handlers */
+   Find and replace dialog boxes and dialog handlers.
+   Modify find and replace for RichEdit20W.
+   Path length limits.
+   Update askcdstring to IFileOpenDialog (Vista).
+*/
 
-/* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0500
+# define _WIN32_WINNT 0x0600
 #endif
 
 #include "win-nls.h"
@@ -39,35 +42,10 @@
 #include "ga.h"
 
 #include <shlobj.h>
+#include <shobjidl.h>
+#include <stdlib.h>
 
-typedef struct {
-    char default_str[MAX_PATH];
-    char question[40];
-} browserInfo;
-
-#define STATUSTEXT 14146
-
-static int CALLBACK
-InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM lpData )
-{
-    char szDir[MAX_PATH], status[MAX_PATH + 40 + 2];
-
-    if (uMsg == BFFM_INITIALIZED) {
-	SendMessage(hwnd, BFFM_SETSELECTION, 1,
-		    (LPARAM)&((browserInfo*)lpData)->default_str);
-    } else if (uMsg == BFFM_SELCHANGED) {
-	if (SHGetPathFromIDList((LPITEMIDLIST) lp, szDir)) {
-	    snprintf(status, MAX_PATH+40+2, "%s\n %s",
-		     ((browserInfo*)lpData)->question, szDir);
-	    SetDlgItemText(hwnd, STATUSTEXT, status);
-	    SendMessage(hwnd, BFFM_ENABLEOK, 0, TRUE);
-	} else
-	    SendMessage(hwnd, BFFM_ENABLEOK, 0, FALSE);
-    }
-    return(0);
-}
-
-#define BUFSIZE _MAX_PATH
+#define BUFSIZE (3*65536)
 static char strbuf[BUFSIZE];
 static wchar_t wcsbuf[65536];
 
@@ -108,13 +86,30 @@ void setuserfilterW(const wchar_t *uf)
 
 static HWND hModelessDlg = NULL;
 
+static wchar_t *mbstowcs_malloc(const char *s)
+{
+    wchar_t *ws = NULL;
+    size_t cnt = mbstowcs(NULL, s, 0);
+    if (cnt != (size_t)-1) {
+	cnt++;
+	ws = (wchar_t*) malloc(cnt * sizeof(wchar_t));
+	if (ws)
+	    mbstowcs(ws, s, cnt);
+    }
+    return ws;
+}
+
 int myMessageBox(HWND h, const char *text, const char *caption, UINT type)
 {
     if(localeCP != GetACP()) {
-	wchar_t wc[1000], wcaption[100];
-	mbstowcs(wcaption, caption, 100);
-	mbstowcs(wc, text, 1000);
-	return MessageBoxW(h, wc, wcaption, type);
+	wchar_t *wtext = mbstowcs_malloc(text);
+	wchar_t *wcaption = mbstowcs_malloc(caption);
+	int res = 0;
+	if (wtext && wcaption)
+	    res = MessageBoxW(h, wtext, wcaption, type);
+	free(wtext);
+	free(wcaption);
+	return res;
     } else
 	return MessageBoxA(h, text, caption, type);
 }
@@ -192,23 +187,79 @@ int askyesnocancel(const char *question)
 }
 
 /* This should always have a native encoded name, so don't need Unicode here */
-static char cod[MAX_PATH]=""; /*current open directory*/
+static char *cod = NULL; /*current open directory*/
+
+static char *getCurrentDirectory()
+{
+    DWORD rc;
+    char *cwd = NULL;
+
+    rc = GetCurrentDirectory(0, NULL);
+    if (rc) {
+        cwd = (char *)malloc(rc);
+        if (cwd) {
+            DWORD rc1 = GetCurrentDirectory(rc, cwd);
+            if (rc1 <= 0 || rc1 >= rc) {
+                free(cwd);
+                cwd = NULL;
+            }
+	}
+    }
+    return cwd;
+}
+
+static wchar_t *getCurrentDirectoryW()
+{
+    DWORD rc;
+    wchar_t *cwd = NULL;
+
+    rc = GetCurrentDirectoryW(0, NULL);
+    if (rc) {
+        cwd = (wchar_t *)malloc(rc * sizeof(wchar_t));
+        if (cwd) {
+            DWORD rc1 = GetCurrentDirectoryW(rc, cwd);
+            if (rc1 <= 0 || rc1 >= rc) {
+                free(cwd);
+                cwd = NULL;
+            }
+	}
+    }
+    return cwd;
+}
+
+/* returns 0 on error */
+static int savecod(void)
+{
+    char *cwd = getCurrentDirectory();
+    /* This could fail if the Unicode name is not a native name */
+    if (cwd) {
+	if (cod) free(cod);
+	cod = cwd;
+    }
+    return cwd ? 1 : 0;
+}
 
 void askchangedir()
 {
-    char *s, msg[MAX_PATH + 40];
+    char *s, *msg;
 
-/* set cod to current directory */
-    GetCurrentDirectory(MAX_PATH, cod);
+    /* set cod to current directory */
+    savecod();
     s = askcdstring(G_(" Change working directory to:"), cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
-	snprintf(msg, MAX_PATH + 40,
-		 G_("Unable to set '%s' as working directory"), s);
-	askok(msg);
+	char *format = G_("Unable to set '%s' as working directory");
+	size_t nb;
+	nb = snprintf(NULL, 0, format, s);
+	msg = (char*) malloc(nb + 1);
+	if (msg) {
+	    snprintf(msg, nb + 1,  format, s);
+	    askok(msg);
+	    free(msg);
+	}
     }
     /* in every case reset cod (to new directory if all went ok
        or to old since user may have edited it) */
-    GetCurrentDirectory(MAX_PATH, cod);
+    savecod();
 }
 
 char *askfilename(const char *title, const char *default_name)
@@ -231,15 +282,15 @@ char *askfilenames(const char *title, const char *default_name, int multi,
 		   char *strbuf, int bufsize,
 		   const char *dir)
 {
-    int i;
+    int i, succeeded;
     OPENFILENAME ofn;
-    char cwd[MAX_PATH] = "";
+    char *cwd;
     HWND prev = GetFocus();
 
     if (!default_name) default_name = "";
     strcpy(strbuf, default_name);
-    GetCurrentDirectory(MAX_PATH, cwd);
-    if (!cod[0]) strcpy(cod, cwd);
+    cwd = getCurrentDirectory();
+    if (!cod) savecod();
 
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = current_window ? current_window->handle : 0;
@@ -263,14 +314,15 @@ char *askfilenames(const char *title, const char *default_name, int multi,
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
 
-    if (GetOpenFileName(&ofn) == 0) {
-	if(!dir) GetCurrentDirectory(MAX_PATH, cod);
-	SetCurrentDirectory(cwd);
+    succeeded = (GetOpenFileName(&ofn) != 0);
+    if(!dir) savecod();
+    SetCurrentDirectory(cwd);
+    free(cwd);
+
+    if (!succeeded) { /* error or cancelled by user */
 	strbuf[0] = 0;
 	strbuf[1] = 0;
     } else {
-	if(!dir) GetCurrentDirectory(MAX_PATH, cod);
-	SetCurrentDirectory(cwd);
 	for (i = 0; i <  10; i++) if (peekevent()) doevent();
     }
     SetFocus(prev);
@@ -279,14 +331,18 @@ char *askfilenames(const char *title, const char *default_name, int multi,
 
 wchar_t *askfilenameW(const char *title, const char *default_name)
 {
-    wchar_t wtitle[1000], wdef_name[MAX_PATH];
+    wchar_t wtitle[1000], *wdef_name;
 
     mbstowcs(wtitle, title, 1000);
-    if (!default_name) wcscpy(wdef_name, L"");
-    else mbstowcs(wdef_name, default_name, MAX_PATH);
-    if (*askfilenamesW(wtitle, wdef_name, 0, 
+    wdef_name = mbstowcs_malloc(default_name ? default_name : "");
+    if (!wdef_name)
+	return NULL;
+
+    wchar_t res = *askfilenamesW(wtitle, wdef_name, 0, 
 		       userfilterW ? userfilterW : wfilter[0], 0,
-		       NULL)) return wcsbuf;
+		       NULL);
+    free(wdef_name);
+    if (res) return wcsbuf;
     else return NULL;
 }
 
@@ -295,20 +351,32 @@ wchar_t *askfilenamesW(const wchar_t *title, const wchar_t *default_name,
 		       const wchar_t *filters, int filterindex,
 		       const wchar_t *dir)
 {
-    int i;
+    int i, succeeded;
     OPENFILENAMEW ofn;
-    char cwd[MAX_PATH];
-    wchar_t wcod[MAX_PATH];
+    char *cwd;
+    wchar_t *wcod;
     HWND prev = GetFocus();
 
     if (!default_name) default_name = L"";
     memset(wcsbuf, 0, sizeof(wcsbuf));
     wcscpy(wcsbuf, default_name);
-    GetCurrentDirectory(MAX_PATH, cwd);
-    if (!strcmp(cod, "")) {
-	if (!dir) GetCurrentDirectoryW(MAX_PATH, wcod); else wcscpy(wcod, dir);
+    cwd = getCurrentDirectory();
+
+    if (!cod) {
+	if (!dir)
+	    wcod = getCurrentDirectoryW();
+	else {
+	    wcod = (wchar_t*) malloc((wcslen(dir) + 1) * sizeof(wchar_t));
+	    if (wcod)
+		wcscpy(wcod, dir);
+	}
     } else
-	mbstowcs(wcod, cod, MAX_PATH);
+	wcod = mbstowcs_malloc(cod);
+    if (!wcod) {
+        wcsbuf[0] = 0;
+        wcsbuf[1] = 0;
+	return wcsbuf;
+    }
 
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = current_window ? current_window->handle : 0;
@@ -332,17 +400,23 @@ wchar_t *askfilenamesW(const wchar_t *title, const wchar_t *default_name,
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
 
-    if (GetOpenFileNameW(&ofn) == 0) {
+    succeeded = (GetOpenFileNameW(&ofn) != 0);
+    free(wcod);
+    if (!savecod()) {
 	/* This could fail if the Unicode name is not a native name */
-	DWORD res = GetCurrentDirectory(MAX_PATH, cod);
-	if(res) strcpy(cod, cwd);
+	if (cod)
+	    free(cod);
+	cod = cwd;
 	SetCurrentDirectory(cwd);
+    } else {
+	SetCurrentDirectory(cwd);
+	free(cwd);
+    }
+    
+    if (!succeeded) { /* error or cancelled by user */
 	wcsbuf[0] = 0;
 	wcsbuf[1] = 0;
     } else {
-	DWORD res = GetCurrentDirectory(MAX_PATH, cod);
-	if(res) strcpy(cod, cwd);
-	SetCurrentDirectory(cwd);
 	for (i = 0; i <  10; i++) if (peekevent()) doevent();
     }
     SetFocus(prev);
@@ -365,12 +439,14 @@ char *askfilesave(const char *title, const char *default_name)
 
 wchar_t *askfilesaveW(const char *title, const char *default_name) 
 {
-    int i;
+    int i, succeeded;
     OPENFILENAMEW ofn;
-    wchar_t cwd[MAX_PATH], wdef_name[MAX_PATH], wtitle[1000];
+    wchar_t *cwd, *wdef_name, wtitle[1000];
 
-    if (!default_name) wcscpy(wdef_name, L"");
-    else mbstowcs(wdef_name, default_name, MAX_PATH);
+    wdef_name = mbstowcs_malloc(default_name ? default_name : "");
+    if (!wdef_name)
+	return NULL;
+
     wcscpy(wcsbuf, wdef_name);
     mbstowcs(wtitle, title, 1000);
 
@@ -382,10 +458,11 @@ wchar_t *askfilesaveW(const char *title, const char *default_name)
     ofn.nMaxCustFilter  = 0;
     ofn.nFilterIndex    = 0;
     ofn.lpstrFile       = wcsbuf;
-    ofn.nMaxFile        = BUFSIZE;
+    ofn.nMaxFile        = 65520; /* precaution against overflow */
     ofn.lpstrFileTitle  = NULL;
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-    if (GetCurrentDirectoryW(MAX_PATH, cwd))
+    cwd = getCurrentDirectoryW();
+    if (cwd)
 	ofn.lpstrInitialDir = cwd;
     else
 	ofn.lpstrInitialDir = NULL;
@@ -399,7 +476,11 @@ wchar_t *askfilesaveW(const char *title, const char *default_name)
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
 
-    if (GetSaveFileNameW(&ofn) == 0)
+    succeeded = (GetSaveFileNameW(&ofn) != 0);
+    free(wdef_name);
+    if (cwd)
+	free(cwd);
+    if (!succeeded)
 	return NULL;
     else {
 	for (i = 0; i < 10; i++) if (peekevent()) doevent();
@@ -410,9 +491,9 @@ wchar_t *askfilesaveW(const char *title, const char *default_name)
 char *askfilesavewithdir(const char *title, const char *default_name,
 			 const char *dir)
 {
-    int i;
+    int i, succeeded;
     OPENFILENAME ofn;
-    char cwd[MAX_PATH], *defext = NULL;
+    char *cwd, *defext = NULL;
 
     if (!default_name) default_name = "";
     else if(default_name[0] == '|') {
@@ -433,14 +514,16 @@ char *askfilesavewithdir(const char *title, const char *default_name,
     ofn.lpstrFileTitle  = NULL;
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
     if(dir && strlen(dir) > 0) {
+	/* FIXME: is the copy needed? */
+	cwd = (char *)malloc(strlen(dir) + 1);
+	if (!cwd)
+	    return NULL;
 	strcpy(cwd, dir);
 	/* This should have been set to use backslashes in the caller */
 	ofn.lpstrInitialDir = cwd;
     } else {
-	if (GetCurrentDirectory(MAX_PATH, cwd))
-	    ofn.lpstrInitialDir = cwd;
-	else
-	    ofn.lpstrInitialDir = NULL;
+	cwd = getCurrentDirectory();
+	ofn.lpstrInitialDir = cwd;
     }
     ofn.lpstrTitle      = title;
     ofn.Flags           = OFN_OVERWRITEPROMPT |
@@ -452,7 +535,10 @@ char *askfilesavewithdir(const char *title, const char *default_name,
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
 
-    if (GetSaveFileName(&ofn) == 0)
+    succeeded = (GetSaveFileName(&ofn) != 0);
+    if (cwd)
+	free(cwd);
+    if (!succeeded)
 	return NULL;
     else {
 	for (i = 0; i < 10; i++) if (peekevent()) doevent();
@@ -655,47 +741,55 @@ char *askstring(const char *question, const char *default_str)
 
 char *askcdstring(const char *question, const char *default_str)
 {
-    LPMALLOC g_pMalloc;
-    BROWSEINFO bi;
-    LPITEMIDLIST pidlBrowse;
-    browserInfo info;
-    OSVERSIONINFOEX osvi;
+    HRESULT res;
+    IFileOpenDialog *fileOpen = NULL;
+    IShellItem *dirsi = NULL;
+    DWORD flags = 0;
+    int ok;
+    wchar_t *wquestion, *wdefault_str, *wdir = NULL;
+    size_t nb;
 
-    strncpy(info.question, question, 40 - 1);
-    info.question[40 - 1] = '\0';
-    strncpy(info.default_str, default_str, MAX_PATH - 1);
-    info.default_str[MAX_PATH - 1] = '\0';
+    wquestion = mbstowcs_malloc(question);
+    wdefault_str = mbstowcs_malloc(default_str);
 
-    /* Get the shell's allocator. */
-    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return NULL;
+    res = CoCreateInstance(&CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER,
+                     &IID_IFileOpenDialog, (void **)&fileOpen);
+    
+    if (SUCCEEDED(res) && fileOpen && wquestion && wdefault_str) {
+	ok = SUCCEEDED(fileOpen->lpVtbl->GetOptions(fileOpen, &flags));
+	flags |= FOS_PICKFOLDERS | FOS_FILEMUSTEXIST |
+		 FOS_NOCHANGEDIR;
+	flags &= ~FOS_ALLOWMULTISELECT & ~FOS_OVERWRITEPROMPT &
+		 ~FOS_ALLNONSTORAGEITEMS;
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetOptions(fileOpen, flags));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetTitle(fileOpen, wquestion));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->SetFileName(fileOpen,
+	                                                   wdefault_str));
 
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-    GetVersionEx((OSVERSIONINFO *)&osvi);
-
-    ZeroMemory(&bi, sizeof(bi));
-    bi.hwndOwner = 0;
-    if(osvi.dwMajorVersion >= 6) { /* future proof */
-	/* CSIDL_DESKTOP gets mapped to the User's desktop in Vista
-	   (a bug).  SHGetFolderLocation is Win2k or later */
-	if (!SUCCEEDED(SHGetFolderLocation(NULL, CSIDL_DRIVES, NULL, 0,
-					   (LPITEMIDLIST *) &bi.pidlRoot)))
-	    return NULL;
-    }  /* else it is 0, which is CSIDL_DESKTOP */
-    bi.pszDisplayName = strbuf;
-    bi.lpszTitle = question;
-    bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
-    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
-    bi.lParam = (LPARAM) &info;
-
-    /* Browse for a folder and return its PIDL. */
-    pidlBrowse = SHBrowseForFolder(&bi);
-    if (pidlBrowse != NULL) {
-	SHGetPathFromIDList(pidlBrowse, strbuf);
-	g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
-	if (strbuf[0])
-	    return strbuf;
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->Show(fileOpen, NULL));
+	ok = ok && SUCCEEDED(fileOpen->lpVtbl->GetResult(fileOpen, &dirsi));
+	ok = ok && SUCCEEDED(dirsi->lpVtbl->GetDisplayName(dirsi,
+	                                                   SIGDN_FILESYSPATH,
+	                                                   &wdir));
+	if (ok && dirsi) {
+	    nb = wcstombs(strbuf, wdir, BUFSIZE);
+	    if (nb == (size_t)-1 || nb >= BUFSIZE) {
+		strbuf[0] = 0;
+		ok = 0;
+	    }
+	}
     }
-    return NULL;
+    if (wdir)
+	CoTaskMemFree(wdir);
+    if (dirsi)
+	dirsi->lpVtbl->Release(dirsi);
+    if (fileOpen)
+	fileOpen->lpVtbl->Release(fileOpen);
+    if (wquestion)
+	free(wquestion);
+    if (wdefault_str)
+	free(wdefault_str);
+    return ok ? strbuf : NULL; 
 }
 
 char *askpassword(const char *question, const char *default_str)
@@ -834,11 +928,17 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
     long start, end;
     CHARRANGE sel;
     WPARAM w = 0;
-    FINDTEXTEX ft;
+    FINDTEXTEXW ft;
     sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
     start = sel.cpMin;
     end = sel.cpMax;
-    ft.lpstrText = what;
+
+    /* RichEdit20W (see newrichtextarea) requires a Unicode string. */
+    wchar_t *wwhat = mbstowcs_malloc(what);
+    if (!wwhat)
+	return 0;
+    ft.lpstrText = wwhat;
+
     ft.chrgText.cpMin = start;
     ft.chrgText.cpMax = end;
     if (down) {
@@ -852,12 +952,20 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
     }
     if (matchcase) w = w | FR_MATCHCASE;
     if (wholeword) w = w | FR_WHOLEWORD;
-    if (sendmessage(hwnd, EM_FINDTEXTEX, w, &ft) == -1)
+    /* The cast is necessary, because EM_FINDTEXTEXW returns LONG (32-bit),
+       but the rest of the 64-bit LRESULT is undefined (not all 1s for -1).
+       Checking chrgText.cpMin and chrgText.cpMax is for safety only:
+       returning 1 here by accident instead of 0 would lead to infinite loop
+       during replace all. */
+    long res = (LONG) sendmessage (hwnd, EM_FINDTEXTEXW, w, &ft);
+    if (res == -1 || (ft.chrgText.cpMin == -1 && ft.chrgText.cpMax == -1)) {
+	free(wwhat);
 	return 0;
-    else {
+    } else {
 	sendmessage (hwnd, EM_EXSETSEL, 0, &(ft.chrgText));
-	sendmessage (hwnd, EM_SCROLLCARET, 0, 0) ;
+	sendmessage (hwnd, EM_SCROLLCARET, 0, 0);
     }
+    free(wwhat);
     return 1;
 }
 
@@ -867,20 +975,26 @@ static int richeditreplace(HWND hwnd, char *what, char *replacewith,
     /* If current selection is the find string, replace it and find next */
     long start, end;
     CHARRANGE sel;
-    char *buf;
+    wchar_t *wbuf;
     textbox t = find_by_handle(hwnd);
     if (t) {
 	sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
 	start = sel.cpMin;
 	end = sel.cpMax;
 	if (start < end) {
-	    buf = (char *) malloc(end - start + 1);
-	    sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
-	    if (!strcmp(buf, what)) {
+	    /* RichEdit20W (see newrichtextarea) produces a Unicode string. */
+	    wchar_t *wwhat = mbstowcs_malloc(what);
+	    wbuf = (wchar_t *) malloc((end - start + 1)*sizeof(wchar_t));
+	    if (!wwhat || !wbuf)
+		return 0;
+	    sendmessage(hwnd, EM_GETSELTEXT, 0, wbuf);
+
+	    if (!wcscmp(wbuf, wwhat)) {
 		checklimittext(t, strlen(replacewith) - strlen(what) + 2);
 		sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
 	    }
-	    free(buf);
+	    free(wwhat);	
+	    free(wbuf);
 	}
 	/* else just find next */
 	if (richeditfind(hwnd, what, matchcase, wholeword, down))

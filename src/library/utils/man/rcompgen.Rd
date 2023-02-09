@@ -44,86 +44,73 @@ rc.options(\dots)
 }
 
 \arguments{
-  \item{ops, ns, args, dots, func, ipck, S3, data, help, argdb, fuzzy, quotes, files}{
 
-    logical, turning some optional completion features on and off.
+  \item{ops}{ Logical flag. Activates completion after the \code{$} and
+    \code{@} operators. }
 
-    \describe{
-      \item{\code{ops}:}{ Activates completion after the \code{$} and
-        \code{@} operators. }
+  \item{ns}{ Logical flag. Controls namespace related completions. }
 
-      \item{\code{ns}:}{ Controls namespace related completions. }
+  \item{args}{ Logical flag. Enables completion of function arguments. }
 
-      \item{\code{args}:}{ Enables completion of function arguments. }
-
-      \item{\code{dots}:}{ If disabled, drops \code{...} from list of
-	function arguments. Relevant only if \code{args} is enabled.
-      }
-
-      \item{\code{func}:}{ Enables detection of functions.  If enabled,
-        a customizable extension (\code{"("} by default) is appended to
-        function names.  The process of determining whether a potential
-        completion is a function requires evaluation, including for lazy
-        loaded symbols.  This is undesirable for large objects, because
-        of potentially wasteful use of memory in addition to the time
-        overhead associated with loading.  For this reason, this feature
-        is disabled by default. }
-
-      \item{\code{S3}:}{ When \code{args = TRUE}, activates completion on
-        arguments of all S3 methods (otherwise just the generic, which
-        usually has very few arguments). }
-
-      \item{\code{ipck}:}{ Enables completion of installed package names
-        inside \code{\link{library}} and \code{\link{require}}. }
-
-      \item{\code{data}:}{ Enables completion of data sets (including
-        those already visible) inside \code{\link{data}}. }
-
-      \item{\code{help}:}{ Enables completion of help requests starting
-        with a question mark, by looking inside help index files. }
-
-      \item{\code{argdb}:}{ When \code{args = TRUE}, completion is
-        attempted on function arguments.  Generally, the list of valid
-        arguments is determined by dynamic calls to \code{\link{args}}.
-        While this gives results that are technically correct, the use
-        of the \code{\dots} argument often hides some useful arguments.
-        To give more flexibility in this regard, an optional table of
-        valid arguments names for specific functions is retained
-        internally.  Setting \code{argdb = TRUE} enables preferential
-        lookup in this internal data base for functions with an entry in
-        it.  Of course, this is useful only when the data base contains
-        information about the function of interest.  Some functions are
-        already included, and more can be added by the user through the
-        unexported function \code{.addFunctionInfo} (see below).  }
-
-      \item{\code{fuzzy}:}{ Enables fuzzy matching, where close but
-	non-exact matches (e.g., with different case) are considered if
-	no exact matches are found.  This feature is experimental and
-	the details can change.  }
-
-      \item{\code{quotes}:}{ Enables completion in \R code when inside
-        quotes.  This normally leads to filename completion, but can be
-        otherwise depending on context (for example, when the open quote
-        is preceded by \code{?}), help completion is invoked.  Setting
-        this to \code{FALSE} relegates completion to the underlying
-        completion front-end, which may do its own processing (for
-        example, \code{readline} on Unix-alikes will do filename
-        completion).  }
-
-      \item{\code{files}:}{ Deprecated.  Use \code{quotes} instead.  }
-
-    }
-
-    All settings are turned on by default except \code{ipck},
-    \code{func}, and \code{fuzzy}.  Turn more off if your CPU cycles are
-    valuable; you will still retain basic completion on names of objects
-    in the search list.  See below for additional details.
-
+  \item{dots}{ Logical flag. If disabled, drops \code{...} from list of
+    function arguments. Relevant only if \code{args} is enabled.
   }
+
+  \item{func}{ Logical flag. Enables detection of functions.  If
+    enabled, a customizable extension (\code{"("} by default) is
+    appended to function names.  The process of determining whether a
+    potential completion is a function requires evaluation, including
+    for lazy loaded symbols.  This is undesirable for large objects,
+    because of potentially wasteful use of memory in addition to the
+    time overhead associated with loading.  For this reason, this
+    feature is disabled by default. }
+
+  \item{S3}{ Logical flag. When \code{args = TRUE}, activates completion on
+    arguments of all S3 methods (otherwise just the generic, which
+    usually has very few arguments). }
+
+  \item{ipck}{ Logical flag. Enables completion of installed package names
+    inside \code{\link{library}} and \code{\link{require}}. }
+
+  \item{data}{ Logical flag. Enables completion of data sets (including
+    those already visible) inside \code{\link{data}}. }
+
+  \item{help}{ Logical flag. Enables completion of help requests starting
+    with a question mark, by looking inside help index files. }
+
+  \item{argdb}{ Logical flag. When \code{args = TRUE}, completion is
+    attempted on function arguments.  Generally, the list of valid
+    arguments is determined by dynamic calls to \code{\link{args}}.
+    While this gives results that are technically correct, the use of
+    the \code{\dots} argument often hides some useful arguments.  To
+    give more flexibility in this regard, an optional table of valid
+    arguments names for specific functions is retained internally.
+    Setting \code{argdb = TRUE} enables preferential lookup in this
+    internal data base for functions with an entry in it.  Of course,
+    this is useful only when the data base contains information about
+    the function of interest.  Some functions are already included, and
+    more can be added by the user through the unexported function
+    \code{.addFunctionInfo} (see below).  }
+
+  \item{fuzzy}{ Logical flag. Enables fuzzy matching, where close but
+    non-exact matches (e.g., with different case) are considered if no
+    exact matches are found.  This feature is experimental and the
+    details can change.  }
+
+  \item{quotes}{ Logical flag. Enables completion in \R code when inside
+    quotes.  This normally leads to filename completion, but can be
+    otherwise depending on context (for example, when the open quote is
+    preceded by \code{?}), help completion is invoked.  Setting this to
+    \code{FALSE} relegates completion to the underlying completion
+    front-end, which may do its own processing (for example,
+    \code{readline} on Unix-alikes will do filename completion).  }
+
+  \item{files}{ Logical flag. Deprecated. Use \code{quotes} instead.  }
+
   \item{name, \dots}{ user-settable options.  Currently valid names are
     \describe{
       \item{\code{function.suffix}:}{ default \code{"("} }
-      \item{\code{funarg.suffix}:}{ default \code{" = "} }
+      \item{\code{funarg.suffix}:}{ default \code{"="} }
       \item{\code{package.suffix}}{ default \code{"::"} }
     }
     Usage is similar to that of \code{\link{options}}.
@@ -139,14 +126,21 @@ rc.options(\dots)
 }
 
 \details{
+
   There are several types of completion, some of which can be disabled
-  using \code{rc.settings}.  The most basic level, which can not be
-  turned off once the completion functionality is activated, provides
-  completion on names visible on the search path, along with a few
-  special keywords (e.g., \code{TRUE}).  This type of completion is not
-  attempted if the partial \sQuote{word} (a.k.a. token) being completed
-  is empty (since there would be too many completions).  The more
-  advanced types of completion are described below.
+  using \code{rc.settings}. The arguments of \code{rc.settings} are all
+  logical flags, turning specific optional completion features on and
+  off. All settings are on by default except \code{ipck}, \code{func},
+  and \code{fuzzy}. Turn more off if your CPU cycles are valuable; you
+  will still retain basic completion.
+
+  The most basic level, which can not be turned off once the completion
+  functionality is activated, provides completion on names visible on
+  the search path, along with a few special keywords (e.g.,
+  \code{TRUE}).  This type of completion is not attempted if the partial
+  \sQuote{word} (a.k.a. token) being completed is empty (since there
+  would be too many completions).  The more advanced types of completion
+  are described below.
 
   \describe{
 

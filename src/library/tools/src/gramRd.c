@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -125,7 +125,7 @@ static Rboolean warnDups = FALSE;
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 static int yyparse(void);
 
 #define yyconst const
@@ -174,10 +174,10 @@ typedef struct yyltype
 static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	UserMacroLookup(const char *);
-static SEXP	InstallKeywords();
+static SEXP	InstallKeywords(void);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 
 /* Flags used to mark need for postprocessing in the dynamicFlag attribute */
@@ -243,7 +243,7 @@ static SEXP	xxmarkup3(SEXP, SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
-static void	xxWarnNewline();
+static void	xxWarnNewline(void);
 static SEXP	xxnewcommand(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxusermacro(SEXP, SEXP, YYLTYPE *);
 static int	mkMarkup(int);
@@ -713,19 +713,19 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   232,   232,   233,   234,   237,   240,   243,   244,   246,
-     247,   248,   249,   250,   251,   252,   253,   254,   255,   256,
-     257,   258,   259,   261,   262,   264,   265,   266,   267,   268,
-     269,   270,   271,   272,   274,   275,   276,   277,   278,   279,
-     280,   281,   282,   283,   284,   285,   286,   287,   288,   289,
-     290,   292,   293,   294,   295,   297,   299,   301,   303,   305,
-     308,   311,   316,   318,   319,   328,   330,   332,   336,   337,
-     339,   341,   345,   346,   348,   351,   353,   355,   357,   359,
-     361,   363,   365,   367,   369,   370,   371,   372,   373,   375
+       0,   234,   234,   235,   236,   239,   242,   245,   246,   248,
+     249,   250,   251,   252,   253,   254,   255,   256,   257,   258,
+     259,   260,   261,   263,   264,   266,   267,   268,   269,   270,
+     271,   272,   273,   274,   276,   277,   278,   279,   280,   281,
+     282,   283,   284,   285,   286,   287,   288,   289,   290,   291,
+     292,   294,   295,   296,   297,   299,   301,   303,   305,   307,
+     310,   313,   318,   320,   321,   330,   332,   334,   338,   339,
+     341,   343,   347,   348,   350,   353,   355,   357,   359,   361,
+     363,   365,   367,   369,   371,   372,   373,   374,   375,   377
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || 0
+#if YYDEBUG || YYERROR_VERBOSE || 1
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
@@ -3108,19 +3108,36 @@ static SEXP xxmarkup(SEXP header, SEXP body, int flag, YYLTYPE *lloc)
 
 static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
 {
-    SEXP ans, prev, thename, thedefn;
-    char buffer[128];
+    SEXP ans, prev, defnvals, val, thename, thedefn;
+    char buffer[128], *defnBuffer = NULL;
     const char *c;
-    int maxarg = 0;
+    int maxarg = 0, vlen, len = 0;
 #if DEBUGVALS
     Rprintf("xxnewcommand(cmd=%p, name=%p, defn=%p)", cmd, name, defn);
 #endif
     thename = CADR(name);
-    thedefn = CADR(defn);
-    if (TYPEOF(thedefn) == STRSXP)
-    	PROTECT(thedefn = mkString(CHAR(STRING_ELT(thedefn,0))));
-    else
+    /* 
+     * Multi-line definitions are parsed as multiple
+     * VERB items.  The macro handler can only handle
+     * one item, so we concatenate everything into
+     * one long string.
+     */
+    defnvals = CDR(defn);
+    while (!isNull(defnvals)) {
+        if (TYPEOF(val = CAR(defnvals)) == STRSXP) {
+            vlen = (int)strlen(CHAR(STRING_ELT(val, 0)));
+            defnBuffer = R_Realloc(defnBuffer, len + vlen + 1, char);
+            strncpy(defnBuffer + len, CHAR(STRING_ELT(val, 0)), vlen + 1);
+            len += vlen;
+        }
+        defnvals = CDR(defnvals);
+    }
+    if (len != 0) {
+        PROTECT(thedefn = mkString(defnBuffer)); 
+        R_Free(defnBuffer);
+    } else
     	PROTECT(thedefn = mkString(""));
+    	
     if (warnDups) {
 	prev = findVar(installTrChar(STRING_ELT(thename, 0)), parseState.xxMacroList);
     	if (prev != R_UnboundValue && strcmp(CHAR(STRING_ELT(cmd,0)), "\\renewcommand")) {
@@ -3374,7 +3391,7 @@ static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
     return item;
 }
 
-static void xxWarnNewline()
+static void xxWarnNewline(void)
 {
     if (parseState.xxNewlineInString) {
 	if(wCalls)
@@ -3811,7 +3828,7 @@ static keywords[] = {
 /* Record the longest # directive here */
 #define DIRECTIVE_LEN 7   
 
-static SEXP InstallKeywords()
+static SEXP InstallKeywords(void)
 {
     int i, num;
     SEXP result, name, val;
@@ -4466,7 +4483,7 @@ static void UseState(ParseState *state) {
     parseState.prevState = state->prevState;
 }
 
-static void PushState() {
+static void PushState(void) {
     if (busy) {
     	ParseState *prev = malloc(sizeof(ParseState));
 	if (prev == NULL) error("unable to allocate in PushState");
@@ -4477,7 +4494,7 @@ static void PushState() {
     busy = TRUE;
 }
 
-static void PopState() {
+static void PopState(void) {
     if (parseState.prevState) {
     	ParseState *prev = parseState.prevState;
     	UseState(prev);
@@ -4611,7 +4628,7 @@ SEXP deparseRd(SEXP e, SEXP state)
 		break;
 	    case LBRACE:
 	    case RBRACE:
-		if (quoteBraces)
+		if (quoteBraces || parseState.xxmode == LATEXLIKE)
 		    escape = TRUE;
 		else if (!parseState.xxinRString && !parseState.xxinEqn && (parseState.xxmode == RLIKE || parseState.xxmode == VERBATIM)) {
 		    if (*c == LBRACE) parseState.xxbraceDepth++;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2017  The R Core Team.
+ *  Copyright (C) 1998--2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,13 @@ extern "C" {
 # include <stdio.h>
 #endif
 
-#if defined(__GNUC__) && __GNUC__ >= 3
+// See R_exts/Error.h
+#if defined NORET
+#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202301L)
+# define NORET [[noreturn]]
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201102L
+# define NORET _Noreturn
+#elif defined(__GNUC__) && __GNUC__ >= 3
 # define NORET __attribute__((noreturn))
 #else
 # define NORET
@@ -61,7 +67,7 @@ extern void R_SaveGlobalEnv(void);
 extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void NORET R_Suicide(const char *);
+NORET extern void R_Suicide(const char *);
 extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
@@ -75,7 +81,7 @@ extern char *R_Home;		    /* Root of the R tree */
 # define mainloop		Rf_mainloop
 # define onintr			Rf_onintr
 # define onintrNoResume		Rf_onintrNoResume
-void NORET jump_to_toplevel(void);
+NORET void jump_to_toplevel(void);
 void mainloop(void);
 void onintr(void);
 void onintrNoResume(void);
@@ -154,7 +160,7 @@ extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataviewer)(SEXP, SEXP, SEXP, SEXP);
-extern void (*ptr_R_ProcessEvents)();
+extern void (*ptr_R_ProcessEvents)(void);
 
 
 /* These two are not used by R itself, but are used by the tcltk package */

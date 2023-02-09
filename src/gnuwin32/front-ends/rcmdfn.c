@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2021  R Core Team
+ *  Copyright (C) 2000-2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@
 #endif
 
 extern char *getRHOME(int), *getRUser(void); /* in ../rhome.c */
+extern void freeRHOME(char *), freeRUser(char *);
+extern void R_putenv_path_cpy(char *, char *, int);
 
 void R_Suicide(char *s) /* for call from ../rhome.o */
 {
@@ -152,6 +154,7 @@ char *quoted_arg_cat(char *dest, const char *arg)
 		strcat(cmd, ARG);\
 		if (strlen(cmd) + quoted_arg_len(argv[i]) > 9900) {\
 		    fprintf(stderr, "command line too long\n");\
+		    freeRHOME(RHome);\
 		    return(27);\
 		}\
 		quoted_arg_cat(cmd, argv[i]);\
@@ -159,6 +162,7 @@ char *quoted_arg_cat(char *dest, const char *arg)
 	    /* the outermost double quotes are needed for cmd.exe */\
 	    strcat(cmd,"\"");\
 	}\
+	freeRHOME(RHome);\
 	return(system(cmd))
 
 
@@ -180,9 +184,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     char *p, cmd[CMD_LEN];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
-    char env_path[MAX_PATH];
+    char *env_path;
     int timing = 1;
     char *RHome = getRHOME(3);
+
+    if(!RHome)
+        R_Suicide("Invalid R_HOME");
 
     if(!strncmp(argv[0]+len-4, "Rcmd", 4) ||
        !strncmp(argv[0]+len-4, "rcmd", 4) ||
@@ -209,7 +216,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(0);
 	}
 	/* R --help */
-	snprintf(cmd, CMD_LEN, "\"%s/%s/Rterm.exe\" --help", getRHOME(3), BINDIR);
+	snprintf(cmd, CMD_LEN, "\"%s/%s/Rterm.exe\" --help", RHome, BINDIR);
 	system(cmd);
 	fprintf(stderr, "%s", "\n\nOr: R CMD command args\n\n");
 	rcmdusage(RCMD);
@@ -220,10 +227,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* use of R.exe without CMD, -h, --help */
 	if (argc > 1 && !strcmp(argv[1], "RHOME")) {
 	    /* An historical special case */
-	    fprintf(stdout, "%s", getRHOME(3));
+	    fprintf(stdout, "%s", RHome);
 	    return(0);
 	}
-	snprintf(cmd, CMD_LEN, "\"\"%s/%s/Rterm.exe\"", getRHOME(3), BINDIR);
+	snprintf(cmd, CMD_LEN, "\"\"%s/%s/Rterm.exe\"", RHome, BINDIR);
 	/* R.exe should ignore Ctrl-C, and let Rterm.exe handle it */
 	SetConsoleCtrlHandler(NULL, TRUE);
 	PROCESS_CMD(" ");
@@ -231,23 +238,24 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
     /* From here on down, this was called as Rcmd or R CMD */
 
-    char RHOME[MAX_PATH];
-    strcpy(RHOME, "R_HOME=");
-    strcat(RHOME, RHome);
-    for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
-    putenv(RHOME);
+    R_putenv_path_cpy("R_HOME", RHome, 1);
 
     /* We follow Unix-alikes as from R 2.12.0 in setting environment
        variables in Rcmd BATCH.
 
        NB: Rcmd_environ uses R_HOME.
     */
+    env_path = (char*)malloc(strlen(RHome) + strlen("/etc/Rcmd_environ") + 1);
+    if (!env_path)
+	R_Suicide("Allocation error");
     strcpy(env_path, RHome); strcat(env_path, "/etc/Rcmd_environ");
     process_Renviron(env_path);
+    free(env_path);
 
     if (!strcmp(argv[cmdarg], "BATCH")) {
 	/* ----- handle Rcmd BATCH  ---- */
-	char infile[MAX_PATH], outfile[MAX_PATH], *p, cmd_extra[CMD_LEN];
+	char *infile, *outfile, *p, cmd_extra[CMD_LEN];
+	int allocated_outfile = 0;
 	DWORD ret;
 	SECURITY_ATTRIBUTES sa;
 	PROCESS_INFORMATION pi;
@@ -312,15 +320,19 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else break;
 	}
 	if (iused+1 < argc)
-	    strcpy(infile, argv[iused+1]);
+	    infile = argv[iused+1];
 	else {
 	    fprintf(stderr, "no input file\n");
 	    return(1);
 	}
 	if (iused+2 < argc)
-	    strcpy(outfile, argv[iused+2]);
+	    outfile = argv[iused+2];
 	else {
 	    int len = strlen(infile);
+	    outfile = (char *)malloc(len + strlen(".Rout") + 1);
+	    if (!outfile)
+		R_Suicide("Allocation error");
+	    allocated_outfile = 1;
 	    strcpy(outfile, infile);
 	    if (!strcmp(outfile+len-2, ".R")) strcat(outfile, "out");
 	    else strcat(outfile, ".Rout");
@@ -329,7 +341,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* Unix has --restore --save --no-readline */
 	/* cmd is used with CreateProcess, hence no outermost double quotes */
 	snprintf(cmd, CMD_LEN, "\"%s/%s/Rterm.exe\" -f \"%s\" --restore --save",
-		 getRHOME(3), BINDIR, infile);
+		 RHome, BINDIR, infile);
 	if(strlen(cmd) + strlen(cmd_extra) >= CMD_LEN) {
 	    fprintf(stderr, "command line too long\n");
 	    return(27);
@@ -364,6 +376,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	si.wShowWindow = SW_SHOWDEFAULT;
 	ret = CreateProcess(0, cmd, &sa, &sa, TRUE, 0, NULL, NULL, &si, &pi);
 	CloseHandle(hOUT);
+	if (allocated_outfile)
+	    free(outfile);
 	if (!ret) {
 	    fprintf(stderr, "unable to run Rterm.exe\n");
 	    return(3);
@@ -378,85 +392,77 @@ int rcmdfn (int cmdarg, int argc, char **argv)
      */
 
     /* Not sure that we still need these set -- they are Windows-only */
-    char Rversion[25];
+    char *Rversion = (char *)malloc(25);
+    if (!Rversion)
+	R_Suicide("Allocation error");
     snprintf(Rversion, 25, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
     putenv(Rversion);
+    /* no free here: storage remains in use */
 
     putenv("R_CMD=R CMD");
 
-    char *Path = malloc( strlen(getenv("PATH")) + MAX_PATH + 10 );
-    if (!Path) {fprintf(stderr, "PATH too long\n"); return(4);}
-    strcpy(Path, "PATH=");
-    strcat(Path, RHome);
-    strcat(Path, "\\");
-    strcat(Path, BINDIR);
-    strcat(Path, ";");
-    strcat(Path, getenv("PATH"));
-    putenv(Path);
-    free(Path);
+    char *oldpath = getenv("PATH");
+    char *pformat = "PATH=%s\\%s;%s";
+    size_t needed = snprintf(NULL, 0, pformat, RHome, BINDIR, oldpath) + 1;
+    char *newpath = (char *)malloc(needed);
+    if (!newpath) {fprintf(stderr, "PATH too long\n"); return(4);}
+    snprintf(newpath, needed, pformat, RHome, BINDIR, oldpath);
+    putenv(newpath);
+    /* no free here: storage remains in use */
 
-    char Rarch[30];
+    char *Rarch = malloc(30);
+    if (!Rarch)
+	R_Suicide("Allocation error");
     strcpy(Rarch, "R_ARCH=/");
     strcat(Rarch, R_ARCH);
     putenv(Rarch);
+    /* no free here: storage remains in use */
 
-    char Bindir[30];
-    strcpy(Bindir, "BINDIR=");
-    strcat(Bindir, BINDIR);
-    putenv(Bindir);
+    R_putenv_path_cpy("BINDIR", BINDIR, 0);
 
-    char Tmpdir[MAX_PATH+10];
+    char *RUser = getRUser();
+
     if ( (p = getenv("TMPDIR")) && isDir(p)) {
 	/* TMPDIR is already set */
     } else {
-	if ( (p = getenv("TEMP")) && isDir(p)) {
-	    strcpy(Tmpdir, "TMPDIR=");
-	    strcat(Tmpdir, p);
-	    putenv(Tmpdir);
-	} else if ( (p = getenv("TMP")) && isDir(p)) {
-	    strcpy(Tmpdir, "TMPDIR=");
-	    strcat(Tmpdir, p);
-	    putenv(Tmpdir);
-	} else {
-	    strcpy(Tmpdir, "TMPDIR=");
-	    strcat(Tmpdir, getRUser());
-	    putenv(Tmpdir);
-	}
+	if ( (p = getenv("TEMP")) && isDir(p))
+	    R_putenv_path_cpy("TMPDIR", p, 0);
+	else if ( (p = getenv("TMP")) && isDir(p))
+	    R_putenv_path_cpy("TMPDIR", p, 0);
+	else
+	    R_putenv_path_cpy("TMPDIR", RUser, 0);
     }
 
-    char HOME[MAX_PATH+10];
-    if( !getenv("HOME") ) {
-	strcpy(HOME, "HOME=");
-	strcat(HOME, getRUser());
-	putenv(HOME);
-    }
+    if( !getenv("HOME") ) 
+	R_putenv_path_cpy("HOME", RUser, 0);
 
+    freeRUser(RUser);
 
     if (!strcmp(argv[cmdarg], "INSTALL")) {
 	/* Unix has --no-restore except for MM's undocumented --use-vanilla */
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "REMOVE")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --no-restore --no-echo --args",
-		 getRHOME(3), BINDIR, getRHOME(3));
+		 RHome, BINDIR, RHome);
 	PROCESS_CMD(" ");
     } else if (!strcmp(argv[cmdarg], "build")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.build_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "check")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.check_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rprof")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.Rprof() R_DEFAULT_PACKAGES=utils LC_COLLATE=C --vanilla --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
    } else if (!strcmp(argv[cmdarg], "texify")) {
 	if (argc < cmdarg+2) {
@@ -464,42 +470,42 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(1);
 	}
 	snprintf(cmd, CMD_LEN,
-		 "\"texify.exe -I \"%s/share/texmf/tex/latex\" -I \"%s/share/texmf/bibtex/bst\"", getRHOME(3), getRHOME(3));
+		 "\"texify.exe -I \"%s/share/texmf/tex/latex\" -I \"%s/share/texmf/bibtex/bst\"", RHome, RHome);
 	PROCESS_CMD(" ");
     } else if (!strcmp(argv[cmdarg], "SHLIB")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.SHLIB() R_DEFAULT_PACKAGES=NULL --no-restore --no-echo --no-site-file --no-init-file --args",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD(" ");
     } else if (!strcmp(argv[cmdarg], "Rdiff")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.Rdiff() R_DEFAULT_PACKAGES=NULL --vanilla --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rdconv")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rd2txt")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --no-echo --args nextArg-tnextArgtxt",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rd2pdf")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" -e tools:::..Rd2pdf() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --no-echo --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Sweave")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" --no-restore --no-echo -e utils:::.Sweave() --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Stangle")) {
 	snprintf(cmd, CMD_LEN,
 		 "\"\"%s/%s/Rterm.exe\" --vanilla --no-echo -e utils:::.Stangle() --args ",
-		 getRHOME(3), BINDIR);
+		 RHome, BINDIR);
 	PROCESS_CMD("nextArg");
     } else {
 	/* not one of those handled internally */

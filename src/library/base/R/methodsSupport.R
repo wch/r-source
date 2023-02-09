@@ -33,7 +33,7 @@ trace <- function(what, tracer, exit, at, print, signature,
     ## now call the version in the methods package, to ensure we get
     ## the correct namespace (e.g., correct version of class())
     call <- sys.call()
-    call[[1L]] <- quote(methods::.TraceWithMethods)
+    call[[1L]] <- quote(methods:::.TraceWithMethods)
     call$where <- where
     eval.parent(call)
 }
@@ -47,7 +47,7 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
     ## now call the version in the methods package, to ensure we get
     ## the correct namespace (e.g., correct version of class())
     call <- sys.call()
-    call[[1L]] <- quote(methods::.TraceWithMethods)
+    call[[1L]] <- quote(methods:::.TraceWithMethods)
     call$where <- where
     call$untrace <- TRUE
     invisible(eval.parent(call))

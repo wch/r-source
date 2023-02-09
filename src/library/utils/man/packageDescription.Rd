@@ -68,9 +68,7 @@ asDateBuilt(built)
   \code{lib.loc} are not made use of.
 }
 \note{The default behavior of \code{packageDate()}, notably for
-  \code{date.fields}, is somewhat experimental and may change.  Using
-  \code{date.fields = <string>}
-  single
+  \code{date.fields}, is somewhat experimental and may change.
 }
 \value{
   If a \file{DESCRIPTION} file for the given package is found and can

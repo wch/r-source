@@ -14,7 +14,7 @@ ifeq "$(USE_ATLAS)" "YES"
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
 	   -L../../../$(IMPDIR) -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
 else
-../../../$(BINDIR)/Rblas.dll: blas.o cmplxblas.o ../../gnuwin32/dllversion.o
+../../../$(BINDIR)/Rblas.dll: blas.o blas2.o cmplxblas.o cmplxblas2.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../../$(IMPDIR) -lR $(FLIBS)
 endif

@@ -161,14 +161,14 @@ socketTimeout(socket, timeout = -1)
   connections were introduced but now mainly defunct.  Method
   \code{"wininet"} is only available on Windows (it uses the WinINet
   functions of that OS) and method \code{"libcurl"} (using the library
-  of that name: \url{https://curl.se/libcurl/}) is required on a
-  Unix-alike but was optional on Windows before \R 4.2.0.  Method
-  \code{"default"} currently uses method \code{"internal"} for
-  \samp{file://} URLs and \code{"libcurl"} for all others.  Which
-  methods support which schemes has varied by \R version -- currently
-  \code{"internal"} supports only \samp{file://}; \code{"wininet"}
-  supports \samp{file://}, \samp{http://} and \samp{https://}.  Proxies
-  can be specified: see \code{\link{download.file}}.
+  of that name: \url{https://curl.se/libcurl/}) is nowadays required but
+  was optional on Windows before \R 4.2.0.  Method \code{"default"}
+  currently uses method \code{"internal"} for \samp{file://} URLs and
+  \code{"libcurl"} for all others.  Which methods support which schemes
+  has varied by \R version -- currently \code{"internal"} supports only
+  \samp{file://}; \code{"wininet"} supports \samp{file://},
+  \samp{http://} and \samp{https://}.  Proxies can be specified: see
+  \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
@@ -248,8 +248,8 @@ socketTimeout(socket, timeout = -1)
 
   \code{method = "libcurl"} allows more schemes: exactly which schemes
   is platform-dependent (see \code{\link{libcurlVersion}}), but all
-  Unix-alike platforms will support \samp{https://} and most platforms
-  will support \samp{ftps://}.
+  platforms will support \samp{https://} and most platforms will support
+  \samp{ftps://}.
 
   Support for the \samp{ftp://} scheme by the \code{"internal"} method was
   deprecated in \R 4.1.1 and removed in \R 4.2.0.
@@ -280,8 +280,7 @@ socketTimeout(socket, timeout = -1)
   No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
 
-  All the methods attempt to follow redirected HTTP URLs, but the
-  \code{"internal"} method is unable to follow redirections to HTTPS URLs.
+  All the methods attempt to follow redirected HTTP and HTTPS URLs.
 
   Server-side cached data is always accepted.
 
@@ -424,26 +423,30 @@ socketTimeout(socket, timeout = -1)
 
   When writing to a text connection, the connections code always assumes its
   input is in native encoding, so e.g.  \code{\link{writeLines}} has to
-  convert text to native encoding.  \code{\link{writeLines}} does not do the
-  conversion when \code{useBytes=TRUE} (for expert use only), but the
-  connections code still behaves as if the text was in native encoding, so
-  any attempt to convert encoding (\code{encoding} argument other than
-  \code{""} and \code{"native.enc"}) in connections will produce incorrect
-  results.
+  convert text to native encoding.  The native encoding is UTF-8 on most
+  systems (since R 4.2 also on recent Windows) and can represent all
+  characters.  \code{\link{writeLines}} does not do the conversion when
+  \code{useBytes=TRUE} (for expert use only, only useful on systems with native
+  encoding other than UTF-8), but the connections code still behaves as if
+  the text was in native encoding, so any attempt to convert encoding
+  (\code{encoding} argument other than \code{""} and \code{"native.enc"}) in
+  connections will produce incorrect results.
 
-  When reading from a text connection, the connections code, after
-  re-encoding based on the \code{encoding} argument, returns text that is
-  assumed to be in native encoding; an encoding mark is only added by
-  functions that read from the connection, so e.g.  \code{\link{readLines}}
-  can be instructed to mark the text as \code{"UTF-8"} or \code{"latin1"},
-  but \code{\link{readLines}} does no further conversion.  To allow reading
-  text in \code{"UTF-8"} on a system that cannot represent all such
-  characters in native encoding (currently only Windows), a connection can
-  be internally configured to return the read text in UTF-8 even though it
-  is not the native encoding; currently \code{\link{readLines}} and
-  \code{\link{scan}} use this feature when given a connection that is not
-  yet open and, when using the feature, they unconditionally mark the text
-  as \code{"UTF-8"}.
+  When reading from a text connection, the connections code re-encodes the
+  input to native encoding (from the encoding given by the \code{encoding}
+  argument).  On systems where UTF-8 is not the native encoding, one can
+  read text not representable in the native encoding using
+  \code{\link{readLines}} and \code{\link{scan}} by providing them with an
+  unopened connection that has been created with the \code{encoding}
+  argument specifying the input encoding.  \code{\link{readLines}} and
+  \code{\link{scan}} would then instruct the connections code to convert the
+  text to UTF-8 (instead of native encoding) and they will return it marked
+  (aka declared, see \code{\link{Encoding}})
+  as \code{"UTF-8"}.  Finally and for expert use only, one may disable
+  re-encoding of input by specifying \code{""} or \code{"native.enc"} as
+  \code{encoding} for the connection, but then mark the text as being
+  \code{"UTF-8"} or \code{"latin1"} via the \code{encoding} argument
+  of \code{\link{readLines}} and \code{\link{scan}}.
 
   Re-encoding only works for connections in text mode: reading from a
   connection with re-encoding specified in binary mode will read the
@@ -465,18 +468,18 @@ socketTimeout(socket, timeout = -1)
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
   widely implemented).
 
-  As from \R 3.0.0 the encoding \code{"UTF-8-BOM"} is accepted for
-  reading and will remove a Byte Order Mark if present (which it often
-  is for files and webpages generated by Microsoft applications).  If a
-  BOM is required (it is not recommended) when writing it should be
-  written explicitly, e.g.\sspace{}by \code{writeChar("\ufeff", con, eos
-  = NULL)} or \code{writeBin(as.raw(c(0xef, 0xbb, 0xbf)), binary_con)}
+  The encoding \code{"UTF-8-BOM"} is accepted for reading and will
+  remove a Byte Order Mark if present (which it often is for files and
+  webpages generated by Microsoft applications).  If a BOM is required
+  (it is not recommended) when writing it should be written explicitly,
+  e.g.\sspace{}by \code{writeChar("\ufeff", con, eos = NULL)} or
+  \code{writeBin(as.raw(c(0xef, 0xbb, 0xbf)), binary_con)}
 
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable, and not supported on all current \R platforms.
-  \code{"UTF-8"} is portable and \code{"macintosh"} is the official
-  (and most widely supported) name for \sQuote{Mac Roman}.  (As from \R
-  3.4.0, \R maps \code{"utf8"} to \code{"UTF-8"} internally.)
+  \code{"UTF-8"} is portable and \code{"macintosh"} is the official (and
+  most widely supported) name for \sQuote{Mac Roman}.  (\R maps
+  \code{"utf8"} to \code{"UTF-8"} internally.)
 
   Requesting a conversion that is not supported is an error, reported
   when the connection is opened.  Exactly what happens when the
@@ -556,7 +559,7 @@ socketTimeout(socket, timeout = -1)
   Unix users wishing to \emph{write} to one of the X11 selections may be
   able to do so via \command{xclip}
   (\url{https://github.com/astrand/xclip}) or \command{xsel}
-  (\url{http://www.vergenet.net/~conrad/software/xsel/}), for example by
+  (\url{https://www.vergenet.net/~conrad/software/xsel/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 
   macOS users can use \code{pipe("pbpaste")} and
@@ -573,6 +576,17 @@ socketTimeout(socket, timeout = -1)
   names not in the native encoding to be opened on file systems which
   use Unicode file names (such as NTFS but not FAT32).
 }
+
+\section{\code{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \code{https://}
+  ones are much preferred for use in \R.
+
+  It is intended that \R will continue to allow such URLs for as long as
+  \code{libcurl} does, but as they become rarer this is increasingly
+  untested.   What \sQuote{protocols} the version of \code{libcurl}
+  being used supports can be seen by calling \code{\link{libcurlVersion}()}.
+}
+
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the S model, for example in output
@@ -665,11 +679,12 @@ seek(Tfile, 0, rw = "r") # reset to beginning
 readLines(Tfile)
 cat("ghi\n", file = Tfile)
 readLines(Tfile)
+\dontshow{## IGNORE_RDIFF_BEGIN}
 Tfile # -> print() :  "valid" connection
 close(Tfile)
 Tfile # -> print() :  "invalid" connection
 unlink(Tpath)
-
+\dontshow{## IGNORE_RDIFF_END}
 ## We can do the same thing with an anonymous file.
 Tfile <- file()
 cat("abc\ndef\n", file = Tfile)

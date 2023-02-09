@@ -362,7 +362,7 @@ locales the comma is used as the decimal point (set this in
 semicolon as the field separator: use @code{write.csv2} for appropriate
 defaults.  There is an IETF standard for CSV files (which mandates
 commas and CRLF line endings, for which use @code{eol = "\r\n"}), RFC4180
-(see @uref{https://tools.ietf.org/html/rfc4180}), but what is more
+(see @uref{https://www.rfc-editor.org/rfc/rfc4180}), but what is more
 important in practice is that the file is readable by the application it
 is targeted at.
 
@@ -1137,7 +1137,7 @@ or (more recently) @file{.syd}.
 @findex read.octave
 
 Octave is a numerical linear algebra system
-(@uref{https://www.gnu.org/software/octave/}), and function @code{read.octave} in
+(@uref{https://octave.org/}), and function @code{read.octave} in
 package @CRANpkg{foreign} can read in files in Octave text data format
 created using the Octave command @command{save -ascii}, with support for
 most of the common types of variables, including the standard atomic
@@ -1215,10 +1215,10 @@ applications, including Mail and Address Book, use SQLite.
 @section Overview of RDBMSs
 
 Traditionally there had been large (and expensive) commercial RDBMSs
-(@uref{https://www.ibm.com/software/data/informix/, Informix};
+(@uref{https://www.ibm.com/products/informix, Informix};
 @uref{https://www.oracle.com, Oracle}; 
 Sybase;
-@uref{https://www.ibm.com/db2, IBM's DB2};
+@uref{https://www.ibm.com/products/db2, IBM's DB2};
 @uref{https://www.microsoft.com/sql-server/, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
 MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
@@ -1384,9 +1384,8 @@ JDBC driver).
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
-@pkg{PL/R} (@uref{https://joeconway.com/plr/,
-@code{https://@/joeconway.com/@/plr}}) is a project to embed R into
-PostgreSQL.
+@pkg{PL/R} (@uref{https://github.com/postgres-plr/plr}) is a project to
+embed R into PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
 `MongoDB' (@uref{https://en.wikipedia.org/wiki/MongoDB}) databases,
@@ -1510,7 +1509,7 @@ running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is part of the OS.  On Unix/Linux you will need
 an @acronym{ODBC} Driver Manager such as unixODBC
-(@uref{http://www.unixODBC.org}) or iOBDC (@uref{http://www.iODBC.org}:
+(@uref{http://www.unixODBC.org}) or iOBDC (@uref{https://www.iodbc.org/}:
 this is pre-installed in macOS) and an installed driver for your
 database system.
 
@@ -2354,7 +2353,7 @@ to @emph{write} one or more data frames to an @file{.xls} file, using
 Python and Perl respectively.
 
 @findex xlsx
-Packages @CRANpkg{xlsx} can read and and manipulate Excel 2007 and later
+Package @CRANpkg{xlsx} can read and manipulate Excel 2007 and later
 spreadsheets: it requires Java.
 
 @findex XLConnect

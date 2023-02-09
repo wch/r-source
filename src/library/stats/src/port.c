@@ -19,7 +19,7 @@
 
 #include "port.h"
 
-#include <R_ext/Constants.h>
+//#include <R_ext/Constants.h>
 #include <R_ext/BLAS.h>
 #include <R_ext/Print.h>
 

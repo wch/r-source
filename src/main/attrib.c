@@ -68,7 +68,7 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	    PROTECT(vec);
 	    PROTECT(val = allocVector(INTSXP, 2));
 	    INTEGER(val)[0] = NA_INTEGER;
-	    INTEGER(val)[1] = n;
+	    INTEGER(val)[1] = n; // +n:  compacted *and* automatic row names
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	    UNPROTECT(2); /* vec, val */
 	    return ans;
@@ -108,7 +108,7 @@ static Rboolean isOneDimensionalArray(SEXP vec)
    conclude that the class attribute is R_NilValue.  If you want to
    rewrite this function to use such a pre-test, be sure to adjust
    serialize.c accordingly.  LT */
-SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
+attribute_hidden SEXP getAttrib0(SEXP vec, SEXP name)
 {
     SEXP s;
     if (name == R_NamesSymbol) {
@@ -414,7 +414,7 @@ static void checkNames(SEXP x, SEXP s)
 
 /* Time Series Parameters */
 
-static void NORET badtsp(void)
+NORET static void badtsp(void)
 {
     error(_("invalid time series parameters specified"));
 }
@@ -488,7 +488,7 @@ static SEXP commentgets(SEXP vec, SEXP comment)
     return R_NilValue;/*- just for -Wall */
 }
 
-SEXP attribute_hidden do_commentgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_commentgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     if (MAYBE_SHARED(CAR(args))) SETCAR(args, duplicate(CAR(args)));
@@ -498,12 +498,15 @@ SEXP attribute_hidden do_commentgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
-SEXP attribute_hidden do_comment(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_comment(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     return getAttrib(CAR(args), R_CommentSymbol);
 }
 
+/* *Not* called from  class(.) <- v,  nor  oldClass(.) <- v,  but
+ * e.g. from  attr(x, "class") <- value   plus our own C, e.g. ./connections.c
+ */
 SEXP classgets(SEXP vec, SEXP klass)
 {
     if (isNull(klass) || isString(klass)) {
@@ -562,14 +565,14 @@ SEXP classgets(SEXP vec, SEXP klass)
 	    }
 #endif
 	}
-	return R_NilValue;
     }
-    error(_("attempt to set invalid 'class' attribute"));
-    return R_NilValue;/*- just for -Wall */
+    else
+	error(_("attempt to set invalid 'class' attribute"));
+    return R_NilValue;
 }
 
 /* oldClass<-(), primitive */
-SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     // have 2 args: check1arg(args, call, "x");
@@ -586,7 +589,7 @@ SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 // oldClass, primitive --  NB: class() |=> R_do_data_class() |=> R_data_class()
-SEXP attribute_hidden do_class(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -774,7 +777,7 @@ static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3, SEXP part4)
 
 // called when R's main loop is setup :
 attribute_hidden
-void InitS3DefaultTypes()
+void InitS3DefaultTypes(void)
 {
     for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
 	SEXP part3 = R_NilValue;
@@ -822,7 +825,7 @@ void InitS3DefaultTypes()
 }
 
 /* Version for S3-dispatch */
-SEXP attribute_hidden R_data_class2 (SEXP obj)
+attribute_hidden SEXP R_data_class2 (SEXP obj)
 {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
     if(length(klass) > 0) {
@@ -874,7 +877,7 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 }
 
 // class(x)  &  .cache_class(classname, extendsForS3(.)) {called from methods}  & .class2() :
-SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   checkArity(op, args);
   if(PRIMVAL(op) == 1) { // .cache_class() - typically re-defining existing cache
@@ -894,7 +897,7 @@ SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* names(object) <- name */
-SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     checkArity(op, args);
@@ -1016,7 +1019,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 #define isS4Environment(x) (TYPEOF(x) == S4SXP &&	\
 			    isEnvironment(R_getS4DataSlot(x, ENVSXP)))
 
-SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     checkArity(op, args);
@@ -1035,7 +1038,7 @@ SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -1151,7 +1154,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     return vec;
 }
 
-SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     checkArity(op, args);
@@ -1165,13 +1168,11 @@ SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
-{
+SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
+{ 
     SEXP ans;
-    checkArity(op, args);
-    check1arg(args, call, "x");
     /* DispatchOrEval internal generic: dim */
-    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 1))
+    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, /* argsevald: */ 1))
 	return(ans);
     PROTECT(args = ans);
     ans = getAttrib(CAR(args), R_DimSymbol);
@@ -1179,7 +1180,14 @@ SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    check1arg(args, call, "x");
+    return R_dim(call, op, args, env);
+}
+
+attribute_hidden SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x;
     checkArity(op, args);
@@ -1249,7 +1257,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     return vec;
 }
 
-SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -1299,7 +1307,7 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 //  levels(.) <- newlevs :
-SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -1323,7 +1331,7 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* attributes(object) <- attrs */
-SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* NOTE: The following code ensures that when an attribute list */
 /* is attached to an object, that the "dim" attibute is always */
@@ -1431,7 +1439,7 @@ benchmarks.  There is still some inefficiency since using getAttrib
 means the attributes list will be searched twice, but this seems
 fairly minor.  LT */
 
-SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
@@ -1570,7 +1578,7 @@ static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 /* attr(obj, which = "<name>")  <-  value    (op == 0)  and
         obj @ <name>            <-  value    (op == 1)
 */
-SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP obj;
     checkArity(op, args);
@@ -1852,7 +1860,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     return obj;
 }
 
-SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, klass;
 
@@ -1898,7 +1906,7 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
    (Obviously, this is another routine that has accumulated barnacles and
    should at some time be broken into separate parts.)
 */
-SEXP attribute_hidden
+attribute_hidden SEXP
 R_getS4DataSlot(SEXP obj, SEXPTYPE type)
 {
   static SEXP s_xData, s_dotData; SEXP value = R_NilValue;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2021  The R Foundation
+ *  Copyright (C) 2004--2023  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include "Defn.h"
 #undef append /* defined by graphapp/internal.h */
 #include <stdio.h>
+#include <stddef.h>
 #undef DEBUG /* needed for mingw-runtime 2.0 */
 /* the user menu code looks at the internal structure */
 #define GA_EXTERN
@@ -78,22 +79,41 @@ static PkgMenuItems pmenu;
 
    MBCS-aware since 2.4.0.
  */
-static void double_backslashes(char *s, char *out)
+/* Returns the number of bytes, excluding the terminator, needed.
+   If bufsize is large enough, it contains the terminated result. */
+static size_t double_backslashes(char *s, char *out, size_t bufsize)
 {
     char *p = s;
-
+    size_t needed = 0;
     int i;
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
 	while((used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st))) {
-	    if(*p == '\\') *out++ = '\\';
-	    for(i = 0; i < used; i++) *out++ = *p++;
+	    if(*p == '\\') {
+		needed ++;
+		if (needed < bufsize) *out++ = '\\';
+	    }
+	    for(i = 0; i < used; i++) {
+		needed ++;
+		if (needed < bufsize) *out++ = *p;
+		p++;
+	    }
 	}
-    } else
-	for (; *p; p++)
-	    if (*p == '\\') {*out++ = *p; *out++ = *p;} else *out++ = *p;
-    *out = '\0';
+    } else {
+	for (; *p; p++) {
+	    if(*p == '\\') {
+		needed ++;
+		if (needed < bufsize) *out++ = '\\';
+	    }
+	    needed ++;
+	    if (needed < bufsize) *out++ = *p;
+	}
+    }
+    needed ++;
+    if (needed <= bufsize)
+	*out = '\0';
+    return needed - 1; /* exclude terminator */    
 }
 
 
@@ -108,41 +128,94 @@ static void closeconsole(control m)
 //    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
-static void quote_fn(wchar_t *fn, char *s)
+/* Returns the number of bytes, excluding the terminator, needed.
+   If bufsize is large enough, it contains the terminated result. */
+static size_t quote_fn(wchar_t *fn, char *s, size_t bufsize)
 {
     char *p = s;
     wchar_t *w;
     int used;
+    size_t needed = 0;
+    char chars[MB_CUR_MAX];
+
     for (w = fn; *w; w++) {
 	if(*w  == L'\\') {
-	    *p++ = '\\';
-	    *p++ = '\\';
+	    needed += 2;
+	    if (needed < bufsize) {
+		*p++ = '\\';
+		*p++ = '\\';
+	    }
 	} else {
-	    used = wctomb(p, *w);
-	    if(used > 0) p += used;
+	    used = wctomb(chars, *w);
+	    if(used > 0) {
+		needed += used;
+		if (needed < bufsize) {
+		    memcpy(p, chars, used);
+		    p += used;
+		}
+	    }
 	    else {
-		sprintf(p, "\\u%04x", (unsigned int) *w);
-		p += 6;
+		needed += 6;
+		if (needed < bufsize) {
+		    sprintf(p, "\\u%04x", (unsigned int) *w);
+		    p += 6; /* strips terminator written by sprintf */
+		}
 	    }
 	}
     }
-    *p = '\0';
+    needed ++;
+    if (needed <= bufsize)
+	*p = '\0';
+    return needed - 1; /* exclude terminator */
 }
 
+static void cmdfileW(char *fun, wchar_t *fn)
+{
+    size_t needed, qfnbytes;
+
+    qfnbytes = quote_fn(fn, NULL, 0);
+    /*              source  ("   thefile  ")  \0 */
+    needed  = strlen(fun) + 2 + qfnbytes + 2 + 1;
+    char *cmd = (char *) malloc(needed);
+    if (!cmd)
+	return;
+    strcpy(cmd, fun);
+    strcat(cmd, "(\"");
+    quote_fn(fn, cmd + strlen(cmd), qfnbytes + 1);
+    strcat(cmd, "\")");
+    consolecmd(RConsole, cmd); /* command length limited by NKEYS */
+    free(cmd);
+}
+
+static void cmdfile(char *fun,  char *fn)
+{
+    size_t needed, dblbytes;
+
+    dblbytes = double_backslashes(fn, NULL, 0);
+    /*              source  ("   thefile  ")  \0 */
+    needed  = strlen(fun) + 2 + dblbytes + 2 + 1;
+    char *cmd = (char *)malloc(needed);
+    if (!cmd)
+	return;
+    strcpy(cmd, fun);
+    strcat(cmd, "(\"");
+    double_backslashes(fn, cmd + strlen(cmd), dblbytes + 1);
+    strcat(cmd, "\")");
+    consolecmd(RConsole, cmd); /* command length limited by NKEYS */
+    free(cmd);
+    
+}
 
 static void menusource(control m)
 {
     wchar_t *fn;
-    char local[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     fn = askfilenameW(G_("Select file to source"), "");
-    if (fn) {
-	quote_fn(fn, local);
-	snprintf(cmd, 1024, "source(\"%s\")", local);
-	consolecmd(RConsole, cmd);
-    } else show(RConsole);
+    if (fn) 
+	cmdfileW("source", fn);
+    else show(RConsole);
 }
 
 static void menudisplay(control m)
@@ -154,31 +227,27 @@ static void menudisplay(control m)
 static void menuloadimage(control m)
 {
     wchar_t *fn;
-    char s[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
     setuserfilterW(L"R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
     fn = askfilenameW(G_("Select image to load"), "");
-    if (fn) {
-	quote_fn(fn, s);
-	snprintf(cmd, 1024, "load(\"%s\")", s);
-	consolecmd(RConsole, cmd);
-    } else show(RConsole);
+    if (fn)
+	cmdfileW("load", fn);
+    else show(RConsole);
 }
 
 static void menusaveimage(control m)
 {
     wchar_t *fn;
-    char s[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
     setuserfilterW(L"R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
     fn = askfilesaveW(G_("Save image in"), ".RData");
     if (fn) {
-	quote_fn(fn, s);
-	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
-	snprintf(cmd, 1024, "save.image(\"%s\")", s);
-	consolecmd(RConsole, cmd);
+	size_t fnlen = wcslen(fn);
+	if (fn[fnlen - 2] == L'.' && fn[fnlen - 1] == L'*')
+	    fn[fnlen - 2] = L'\0';
+	cmdfileW("save.image", fn);
     } else show(RConsole);
 }
 
@@ -430,7 +499,7 @@ static Rboolean isdebuggerpresent(void)
 
 void breaktodebugger(void)
 {
-    asm("int $3");
+    __asm__("int $3");
 }
 
 static void menudebug(control m)
@@ -771,25 +840,36 @@ static void menuact(control m)
 
 #define MCHECK(m) {if(!(m)) {del(RConsole); return 0;}}
 
+static Rboolean tryLoadRconsole(char *format, char *varname, struct structGUI* gui)
+{
+    char *varvalue = getenv(varname);
+    size_t needed = snprintf(NULL, 0, format, varvalue) + 1;
+    char *optf = (char *)malloc(needed);
+
+    if (optf && (snprintf(optf, needed, format, varvalue) < needed) &&
+	loadRconsole(gui, optf)) {
+	free(optf);
+	return TRUE;
+    }
+    return FALSE;
+}
+
 void readconsolecfg()
 {
     char  fn[128];
     int   sty = Plain;
-    char  optf[PATH_MAX+1];
 
     struct structGUI gui;
 
     getDefaults(&gui);
 
     if (R_LoadRconsole) {
-	snprintf(optf, PATH_MAX+1, "%s/Rconsole", getenv("R_USER"));
-	if (!loadRconsole(&gui, optf)) {
-	    snprintf(optf, PATH_MAX+1, "%s/etc/Rconsole", getenv("R_HOME"));
-	    if (!loadRconsole(&gui, optf)) {
-		app_cleanup();
-		RConsole = NULL;
-		exit(10);
-	    }
+	if (!tryLoadRconsole("%s/Rconsole", "R_USER", &gui) &&
+	    !tryLoadRconsole("%s/etc/Rconsole", "R_HOME", &gui)) {
+
+	    app_cleanup();
+	    RConsole = NULL;
+	    exit(10);
 	}
     }
     if (gui.tt_font) {
@@ -821,6 +901,7 @@ void readconsolecfg()
 	char *buf = malloc(50);
 	snprintf(buf, 50, "LANGUAGE=%s", gui.language);
 	putenv(buf);
+	/* no free here: storage remains in use */
     }
     setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
 		      gui.cx, gui.cy,
@@ -831,25 +912,17 @@ void readconsolecfg()
 
 static void dropconsole(control m, char *fn)
 {
-    char *p, local[MAX_PATH];
+    char *p;
 
     p = Rf_strrchr(fn, '.');
     if(p) {
+	if (!ConsoleAcceptCmd) return;
 	/* OK even in MBCS */
-	if(stricmp(p+1, "R") == 0) {
-	    if(ConsoleAcceptCmd) {
-		double_backslashes(fn, local);
-		snprintf(cmd, 1024, "source(\"%s\")", local);
-		consolecmd(RConsole, cmd);
-	    }
+	if(stricmp(p+1, "R") == 0) 
+	    cmdfile("source", fn);
 	/* OK even in MBCS */
-	} else if(stricmp(p+1, "RData") == 0 || stricmp(p+1, "rda")) {
-	    if(ConsoleAcceptCmd) {
-		double_backslashes(fn, local);
-		snprintf(cmd, 1024, "load(\"%s\")", local);
-		consolecmd(RConsole, cmd);
-	    }
-	}
+	else if(stricmp(p+1, "RData") == 0 || stricmp(p+1, "rda"))
+	    cmdfile("load", fn);
 	return;
     }
     askok(G_("Can only drag-and-drop .R, .RData and .rda files"));
@@ -1024,6 +1097,9 @@ int setupui(void)
     initapp(0, 0);
 
     /* set locale before doing anything with menus */
+    /* localeCP is used for the current locale when translating text in ui */
+
+    /* FIXME: sync this with R_check_locale/setup_Rmainloop */
     setlocale(LC_CTYPE, ""); /* necessary in case next fails to set
 				a valid locale */
     if((p = getenv("LC_ALL")))
@@ -1035,7 +1111,13 @@ int setupui(void)
     mbcslocale = MB_CUR_MAX > 1;
     ctype = setlocale(LC_CTYPE, NULL);
     p = strrchr(ctype, '.');
-    if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+    localeCP = 1252;
+    if(p) {
+	if (isdigit(p[1]))
+	    localeCP = atoi(p+1);
+	else if (!strcasecmp(p+1, "UTF-8") || !strcasecmp(p+1, "UTF8"))
+	    localeCP = 65001;
+    } 
 
     readconsolecfg();
     int flags = StandardWindow | Document | Menubar;

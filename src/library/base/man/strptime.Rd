@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -17,9 +17,11 @@
 }
 \usage{
 \method{format}{POSIXct}(x, format = "", tz = "", usetz = FALSE, \dots)
-\method{format}{POSIXlt}(x, format = "", usetz = FALSE, \dots)
+\method{format}{POSIXlt}(x, format = "", usetz = FALSE,
+       digits = getOption("digits.secs"), \dots)
 
-\method{as.character}{POSIXt}(x, \dots)
+\method{as.character}{POSIXt}(x, digits = if(inherits(x, "POSIXlt")) 14L else 6L,
+             OutDec = ".", \dots)
 
 strftime(x, format = "", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
@@ -43,11 +45,18 @@ strptime(x, format, tz = "")
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}
+  \item{digits}{integer determining the \code{format()}ing of seconds when
+    needed.  Note that the defaults for \code{format()} and
+    \code{as.character()} differ on purpose, \code{as.character()} giving
+    close to full accuracy as it does for numbers.}
+  \item{OutDec}{a 1-character string specifying the decimal point to be
+    used; the default is \emph{not} \code{\link{getOption}("OutDec")} on
+    purpose.}
 }
 \details{
   The \code{format} and \code{as.character} methods and \code{strftime}
   convert objects from the classes \code{"\link{POSIXlt}"} and
-  \code{"\link{POSIXct}"} to character vectors.
+  \code{"\link{POSIXct}"} to \code{\link{character}} vectors.
 
   \code{strptime} converts character vectors to class \code{"POSIXlt"}:
   its input \code{x} is first converted by \code{\link{as.character}}.
@@ -58,7 +67,12 @@ strptime(x, format, tz = "")
   \code{format.POSIXct} first convert to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}} (so they also work for class
   \code{"\link{Date}"}).  Note that only that conversion depends on the
-  time zone.
+  time zone.  Since \R version 4.2.0, \code{as.POSIXlt()} conversion now
+  treats the non-finite numeric \code{-Inf}, \code{Inf}, \code{NA} and
+  \code{NaN} differently (where previously all were treated as
+  \code{NA}). Also the \code{format()} method for \code{POSIXlt} now
+  treats these different non-finite times and dates analogously to type
+  \code{\link{double}}.
 
   The usual vector re-cycling rules are applied to \code{x} and
   \code{format} so the answer will be of length of the longer of these
@@ -129,11 +143,11 @@ strptime(x, format, tz = "")
 
       Some platforms accept \code{\%P} for output, which uses a lower-case
       version (\code{\%p} may also use lower case): others will output
-      \code{P}.} 
+      \code{P}.}
     \item{\code{\%r}}{For output, the 12-hour clock time (using the
       locale's AM or PM): only defined in some locales, and on some OSes
       misleading in locales which do not define an AM/PM indicator.
-      For input, equivalent to \code{\%I:\%M:\%S \%p}.} 
+      For input, equivalent to \code{\%I:\%M:\%S \%p}.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%S}}{Second as integer (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
@@ -170,12 +184,13 @@ strptime(x, format, tz = "")
       \url{https://en.wikipedia.org/wiki/0_(year)}.  However, the standards
       also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.
-  
+
       For input, only years \code{0:9999} are accepted.}
-    \item{\code{\%z}}{Signed offset in hours and minutes
-      from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
-      \code{+1400} are accepted.  (Standard only for output.  For input
-      \R currently supports it on all platforms.)} 
+    \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
+      \code{-0800} is 8 hours behind UTC.  (Standard only for output.  For
+      input \R currently supports it on all platforms -- values from
+      \code{-1400} to \code{+1400} are accepted.)}
+    %% Nowehere currently uses less than -1200 nor more than 1400.
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
@@ -191,12 +206,14 @@ strptime(x, format, tz = "")
   and Windows). Knowing what the abbreviations are is essential
   if you wish to use \code{\%a}, \code{\%b} or \code{\%h} as part of an
   input format: see the examples for how to check.
-% Unlike Dominic Comtois in non-bug PR#16301
 
   When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
   for that time zone --- but it is not guaranteed to succeed.
-  
+
+  The definition of \sQuote{whitespace} for \code{\%n} and \code{\%t}
+  is platform-dependent: for most it does not include non-breaking spaces.
+
   Not in the standards and less widely implemented are
   \describe{
     \item{\code{\%k}}{The 24-hour clock time with single digits preceded
@@ -221,7 +238,7 @@ strptime(x, format, tz = "")
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
   0}).  Further, for \code{strptime} \code{\%OS} will input seconds
   including fractional seconds.  Note that \code{\%S} does not read
-  fractional parts on output. 
+  fractional parts on output.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
@@ -232,10 +249,7 @@ strptime(x, format, tz = "")
 \value{
   The \code{format} methods and \code{strftime} return character vectors
   representing the time.  \code{NA} times are returned as
-  \code{NA_character_}.  The elements are restricted to 256 bytes, plus
-  a time zone abbreviation if \code{usetz} is true.  (On known platforms
-  longer strings are truncated at 255 or 256 bytes, but this is not
-  guaranteed by the C99 standard.)
+  \code{NA_character_}.
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The time zone is used to set the
@@ -244,15 +258,14 @@ strptime(x, format, tz = "")
   \samp{"2010-02-30 08:00"}) all the components of the result are
   \code{NA}.  (NB: this does means exactly what it says -- if it is an
   invalid time, not just a time that does not exist in some time zone.)
-  %% One of Master B Diggs moments of infamy
 }
 
 \section{Printing years}{
   Everyone agrees that years from 1000 to 9999 should be printed with 4
   digits, but the standards do not define what is to be done outside
   that range.  For years 0 to 999 most OSes pad with zeros or spaces to
-  4 characters, and Linux outputs just the number.
-  
+  4 characters, but Linux/glibc outputs just the number.
+
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   \sQuote{correctly} (they tend to assume the existence of a year 0: see
   \url{https://en.wikipedia.org/wiki/0_(year)}, and some OSes get them
@@ -262,11 +275,14 @@ strptime(x, format, tz = "")
   more characters.
 
   Some platforms support modifiers from POSIX 2008 (and others).  On
-  Linux the format \code{"\%04Y"} assures a minimum of four characters
-  and zero-padding.  The internal code (as used on Windows and by
-  default on macOS) uses zero-padding by default, and formats
-  \code{\%_4Y} and \code{\%_Y} can be used for space padding and no
-  padding.
+  Linux/glibc the format \code{"\%04Y"} assures a minimum of four
+  characters and zero-padding (the default is no padding).  The internal
+  code (as used on Windows and by default on macOS) uses zero-padding by
+  default (this can be controlled by environment variable
+  \env{R_PAD_YEARS_BY_ZERO}).  On those platforms, formats \code{\%04Y},
+  \code{\%_4Y} and \code{\%_Y} can be used for zero, space and no
+  padding respectively. (On macOS, the native code (not the default)
+  supports none of these and uses zero-padding to 4 digits.)
 }
 
 \section{Time zone offsets}{
@@ -277,23 +293,29 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
+  offsets like +00:09:21 (Paris in 1900), and -00:44:30 (Liberia until
   1972), offsets are usually treated as whole numbers of minutes, and
   are most often seen in RFC 5322 email headers in forms like
   \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
-  
+
   Format \code{\%z} can be used for input or output: it is a character
-  string, conventionally plus or minus followed by two digits for
-  hours and two for minutes: the standards say that an empty string
-  should be output if the offset is unknown, but some systems use the
-  offsets for the time zone in use for the current year.
+  string, conventionally plus or minus followed by two digits for hours
+  and two for minutes: the standards say that an empty string should be
+  output if the offset is undetermined, but some systems use
+  \code{+0000} or the offsets for the time zone in use for the current
+  year.  (On some platforms this works better after conversion to
+  \code{"POSIXct"}.  Some platforms only recognize hour or half-hour
+  offsets for output.)%% strftime in macOS 13.
+  
+  Using \code{\%z} for input makes most sense with \code{tz = "UTC"}.
 }
 
 \note{
   The default formats follow the rules of the ISO 8601 international
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  (The ISO form uses no
-  space to separate dates and times: \R does by default.)
+  space, possibly \samp{T}, to separate dates and times: \R uses a space
+  by default.)
 
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
@@ -314,11 +336,16 @@ strptime(x, format, tz = "")
   conversion by \code{\link{as.POSIXct}} will do so.  Conversion by
   \code{strftime} and formatting/printing uses OS facilities and may
   return nonsensical results for non-existent times at DST transitions.
-  
+
   In a C locale \code{\%c} is required to be
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
   used by \R on Windows in all locales.
+
+  There is a limit of 2048 bytes on each string produced by
+  \code{strftime} and the \code{format} methods.  As from \R 4.3.0
+  attempting to exceed this is an error (previous versions silently
+  truncated at 255 bytes).
 }
 
 \section{Sources}{
@@ -335,6 +362,10 @@ strptime(x, format, tz = "")
   system's \code{strftime} is replaced (along with most of the rest of
   the C-level datetime code) by code modified from IANA's \samp{tzcode}
   distribution (\url{https://www.iana.org/time-zones}).
+
+  Note that as \code{strftime} is used for output (and not
+  \code{wcsftime}), argument \code{format} is translated if necessary to
+  the session encoding.
 }
 
 \references{
@@ -343,11 +374,13 @@ strptime(x, format, tz = "")
     Information interchange -- Representation of dates and times.},
   slightly updated to International Organization for Standardization (2019)
   \sQuote{ISO 8601-1:2019.  Date and time -- Representations for
-    information interchange -- Part 1: Basic rules}.
+    information interchange -- Part 1: Basic rules}, and further amended
+  in 2022.
   For links to versions available on-line see (at the time of writing)
   \url{https://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{https://www.qsl.net/g1smd/isopdf.htm}; for information on the
-  current official version, see \url{https://www.iso.org/iso/iso8601}.
+  current official version, see \url{https://www.iso.org/iso/iso8601} and
+  \url{https://en.wikipedia.org/wiki/ISO_8601}.
 
   The POSIX 1003.1 standard, which is in some respects stricter than ISO 8601.
 }
@@ -365,7 +398,7 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 
 ## time to sub-second accuracy (if supported by the OS)
 format(Sys.time(), "\%H:\%M:\%OS3")
-
+}% \dont.. %
 ## read in date info in format 'ddmmmyyyy'
 ## This will give NA(s) in some non-English locales; setting the C locale
 ## as in the commented lines will overcome this on most systems.
@@ -373,36 +406,59 @@ format(Sys.time(), "\%H:\%M:\%OS3")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
 z <- strptime(x, "\%d\%b\%Y")
 ## Sys.setlocale("LC_TIME", lct)
-z
+\donttest{z}
+(chz <- as.character(z)) # same w/o TZ
+## *here* (but not in general), the same as format():
+stopifnot(exprs = {
+     identical(chz, format(z))
+     grepl("^1960-0[137]-[03][012]$", chz[!is.na(z)])
+})
 
 ## read in date/time info in format 'm/d/y h:m:s'
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
 times <- c("23:03:20", "22:29:56", "01:03:30", "18:21:03", "16:56:26")
 x <- paste(dates, times)
-strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
+z2 <- strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
+\donttest{z2 }
+## *here* (but not in general), the same as format():
+stopifnot(identical(format(z2), as.character(z2)))
 
 ## time with fractional seconds
-z <- strptime("20/2/06 11:16:16.683", "\%d/\%m/\%y \%H:\%M:\%OS")
-z # prints without fractional seconds
+z3 <- strptime("20/2/06 11:16:16.683", "\%d/\%m/\%y \%H:\%M:\%OS") \donttest{
+z3 # prints without fractional seconds by default, digits.sec = NULL ("= 0")}
 op <- options(digits.secs = 3)
-z
+\donttest{z3 # shows the 3 extra digits}
+as.character(z3) # ditto
 options(op)
 
 ## time zone names are not portable, but 'EST5EDT' comes pretty close.
-(x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
-               "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
-attr(x, "tzone")
+z4 <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
+               "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT")
+\donttest{z4 }
+attr(z4, "tzone")
+as.character(z4)
+z4$sec[2] <- pi # "very" fractional seconds
+as.character(z4) # shows full precision
+format(z4) # no fractional sec
+format(z4, digits=8) # shows only 6  (hard-wired maximum)
+format(z4, digits=4)
+
 
 ## An RFC 5322 header (Eastern Canada, during DST)
 ## In a non-English locale the commented lines may be needed.
+\donttest{
 ## prev <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
 ## Sys.setlocale("LC_TIME", prev)
 
 ## Make sure you know what the abbreviated names are for you if you wish
 ## to use them for input (they are matched case-insensitively):
-format(seq.Date(as.Date('1978-01-01'), by = 'day', len = 7), "\%a")
-format(seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "\%b")
-}}
+format(s1 <- seq.Date(as.Date('1978-01-01'), by = 'day',   len =  7), "\%a")
+format(s2 <- seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "\%b")
+}% dont %
+## Non-finite date-times :
+format(as.POSIXct(Inf)) # "Inf"  (was  NA  in R <= 4.1.x)
+format(as.POSIXlt(c(-Inf,Inf,NaN,NA))) # were all NA
+}
 \keyword{utilities}
 \keyword{chron}

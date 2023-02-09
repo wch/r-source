@@ -1,6 +1,6 @@
 % File src/library/utils/man/installed.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{installed.packages}
@@ -25,12 +25,12 @@ installed.packages(lib.loc = NULL, priority = NULL,
     character vector or \code{NULL} (default).  If non-null, used to
     select packages; \code{"high"} is equivalent to
     \code{c("base", "recommended")}.  To select all packages without an
-    assigned priority use \code{priority = "NA"}.
+    assigned priority use \code{priority = NA_character_}.
   }
   \item{noCache}{Do not use cached information, nor cache it.}
 
   \item{fields}{a character vector giving the fields to extract from
-    each package's \code{DESCRIPTION} file in addition to the default
+    each package's \file{DESCRIPTION} file in addition to the default
     ones, or \code{NULL} (default).  Unavailable fields result in
     \code{NA} values.}
 
@@ -66,7 +66,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
 \note{
   This needs to read several files per installed package, which will be
   slow on Windows and on some network-mounted file systems.
-  
+
   It will be slow when thousands of packages are installed, so do not
   use it to find out if a named package is installed (use
   \code{\link{find.package}} or \code{\link{system.file}}) nor to find
@@ -86,5 +86,12 @@ ip[, c(1,3:5)]
 plic <- installed.packages(.Library, priority = "high", fields = "License")
 ## what licenses are there:
 table( plic[, "License"] )
+
+## Recommended setup (by many pros):
+## Keep packages that come with R (priority="high") and all others separate!
+## Consequently, .Library, R's "system" library, shouldn't have any
+## non-"high"-priority packages :
+pSys <- installed.packages(.Library, priority = NA_character_)
+length(pSys) == 0 # TRUE under such a setup
 }
 \keyword{utilities}

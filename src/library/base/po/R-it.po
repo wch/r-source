@@ -1,14 +1,14 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+# Daniele Medri <dmedri@gmail.com>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-base 4.1.0\n"
+"Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-01-14 11:27\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2023-01-19 11:58\n"
+"PO-Revision-Date: 2023-01-19 12:03+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' è rimossa."
@@ -246,8 +246,8 @@ msgstr "numero di intervalli non valido"
 msgid "'breaks' are not unique"
 msgstr "i 'breaks' non sono distinti"
 
-msgid "lengths of 'breaks' and 'labels' differ"
-msgstr "la lunghezza di 'breaks' e 'labels' differisce"
+msgid "number of intervals and length of 'labels' differ"
+msgstr "il numero di intervalli e la lunghezza di 'labels' differiscono"
 
 msgid "invalid 'row.names' length"
 msgstr "lunghezza di 'row.names' non valida"
@@ -267,15 +267,8 @@ msgstr "'dimnames' passata per il data frame non valida"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "coercizione di classe %s in data.frame non possibile"
 
-msgid ""
-"'row.names' is not a character vector of length %d -- omitting it. Will be "
-"an error!"
-msgstr ""
-"'row.names' non è un vettore di caratteri di lunghezza %d -- omesso. Sarà un "
-"errore!"
-
-msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
-msgstr "options(\"stringsAsFactors\") non impostate in TRUE o FALSE"
+msgid "'row.names' is not a character or integer vector of length %d"
+msgstr "'row.names' non è un vettore di caratteri o interi di lunghezza %d"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
@@ -370,6 +363,13 @@ msgstr ""
 "argomento lista non valido: tutte le variabili dovrebbero avere la medesima "
 "lunghezza"
 
+msgid ""
+"number of columns of result, %d, is not a multiple of vector length %d of "
+"arg %d"
+msgstr ""
+"il numero di colonne del risultato, %d, non è un multiplo della lunghezza "
+"del vettore %d dell'argomento %d"
+
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 righe> (o 0-length row.names)"
 
@@ -394,17 +394,11 @@ msgstr "definito unicamente per un data frame con tutte variabili numeriche"
 msgid "cannot xtfrm data frames"
 msgstr "non è possibile xtfrm i data frame"
 
-#, fuzzy
 msgid "all variables should have the same length"
-msgstr ""
-"argomento lista non valido: tutte le variabili dovrebbero avere la medesima "
-"lunghezza"
+msgstr "tutte le variabili dovrebbero avere la stessa lunghezza"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "la stringa di caratteri non è in un formato standard"
-
-msgid "'origin' must be supplied"
-msgstr "'origin' dev'essere indicato"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "conversione incerta di '%s' nella classe %s"
@@ -504,6 +498,16 @@ msgstr "'%s' non è definito per oggetti \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "gli attributi 'tzone' sono inconsistenti"
+
+msgid ""
+"as.character(td, ..) no longer obeys a 'format' argument; use "
+"format(td, ..) ?"
+msgstr ""
+"as.character(td, ..) non risponde più all'argomento 'format'; utilizzare "
+"format(td, ..) ?"
+
+msgid "'digits' must be numeric, integer valued"
+msgstr "'digits' dev'essere numerico, con valore intero"
 
 msgid "'tim' is not character or numeric"
 msgstr "'tim' non è di tipo character o numeric"
@@ -877,9 +881,6 @@ msgstr ""
 "caricamento pacchetto o namespace fallito per %s%s:\n"
 " %s"
 
-msgid "package %s does not have a namespace and should be re-installed"
-msgstr "il pacchetto %s non ha un namespace e dovrebbe essere re-installato"
-
 msgid "package %s already present in search()"
 msgstr "pacchetto %s già presente in search()"
 
@@ -1007,7 +1008,7 @@ msgid "[Previously saved workspace restored]"
 msgstr "[Caricato workspace precedentemente salvato]"
 
 msgid "Attempting to load the environment %s"
-msgstr "Tentando di caricare l'ambiente %s"
+msgstr "Tentato caricamento dell'ambiente %s"
 
 msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr "Ambiente specificato non trovato: si utilizza '.GlobalEnv'"
@@ -1033,9 +1034,6 @@ msgstr "'arg' dev'essere di lunghezza 1"
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' dev'essere lunghezza 1"
 
-msgid "'arg' should be one of %s"
-msgstr "'arg' dev'essere uno di %s"
-
 msgid "there is more than one match in 'match.arg'"
 msgstr "c'è più di una corrispondenza in 'match.arg'"
 
@@ -1048,9 +1046,8 @@ msgstr "'input' deve avere lunghezza 1"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' e 'target' devono essere vettori di caratteri"
 
-#, fuzzy
 msgid "cannot mtfrm"
-msgstr "non è possibile xtfrm 'x'"
+msgstr "mtfrm non possibile"
 
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s' non è una function, un character o un symbol"
@@ -1235,7 +1232,7 @@ msgstr "-- esecuzione finita di .onLoad per"
 
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
-"specificate esportazioni S4 nel 'NAMESPACE' ma non definite nel pacchetto %s"
+"Specificate esportazioni S4 nel 'NAMESPACE' ma non definite nel pacchetto %s"
 
 msgid "-- processing S4 stuff for"
 msgstr "-- elaborazione di aspetti S4 per"
@@ -1567,6 +1564,9 @@ msgstr "opzioni non supportate nell'ordinamento parziale"
 msgid "non-finite 'partial'"
 msgstr "'partial' non finito"
 
+msgid "'decreasing' of length > 1 is only for method = \"radix\""
+msgstr "'decreasing' di lunghezza > 1 è solo per il metodo = \"radix\""
+
 msgid "argument lengths differ"
 msgstr "argomenti di lunghezza differente"
 
@@ -1591,6 +1591,9 @@ msgstr "'echo' dev'essere logico"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr "'verbose' è TRUE, echo no; ... coercizione 'echo <- TRUE'"
+
+msgid "empty file/url name"
+msgstr "nome file/url assente"
 
 msgid "unable to find a plausible encoding"
 msgstr "non è possibile trovare una codifica adeguata"
@@ -1636,7 +1639,7 @@ msgid "additional arguments ignored in warning()"
 msgstr "ignorati gli argomenti aggiuntivi in warning()"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
-msgstr ""
+msgstr "Sys.setenv(LANGUAGE=\"%s\") potrebbe essere fallito"
 
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
@@ -1770,6 +1773,11 @@ msgstr "Riepilogo di (un totale di %d) messaggi di avvertimento:"
 msgid "invalid 'digits'"
 msgstr "'digits' non valido"
 
+msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
+msgstr ""
+"Chiamata diretta di '%s()' deprecata.  Si utilizzi '%s()' o '%s()' in "
+"alternativa"
+
 msgid ""
 "arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
 "Windows only"
@@ -1856,8 +1864,8 @@ msgstr[1] "opzioni di deparse %s non riconosciute"
 
 msgid "The following object is masked _by_ %s:"
 msgid_plural "The following objects are masked _by_ %s:"
-msgstr[0] "Il seguente oggetto è mascherato _da_ %s:"
-msgstr[1] "I seguenti oggetti sono mascherati _da_ %s:"
+msgstr[0] "Il seguente oggetto è mascherato _per_ %s:"
+msgstr[1] "I seguenti oggetti sono mascherati _per_ %s:"
 
 msgid "The following object is masked from %s:"
 msgid_plural "The following objects are masked from %s:"
@@ -1942,6 +1950,11 @@ msgid_plural "objects %s not found"
 msgstr[0] "oggetto %s non trovato"
 msgstr[1] "oggetti %s non trovati"
 
+msgid "'arg' should be %s"
+msgid_plural "'arg' should be one of %s"
+msgstr[0] "'arg' dovrebbe essere %s"
+msgstr[1] "'arg' dovrebbe essere uno di %s"
+
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] "'by' deve specificare unicamente una colonna valida"
@@ -2021,10 +2034,11 @@ msgstr[1] ""
 "In %s :\n"
 " gli argomenti extra %s saranno ignorati"
 
-#~ msgid "argument 'object' must deparse to a single character string"
-#~ msgstr ""
-#~ "l'argomento 'object' dev'essere ritrattato in una singola stringa di "
-#~ "caratteri"
+#~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+#~ msgstr "options(\"stringsAsFactors\") non impostate in TRUE o FALSE"
 
-#~ msgid "'%s' is not an exported object from 'namespace:%s'"
-#~ msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
+#~ msgid "'origin' must be supplied"
+#~ msgstr "'origin' dev'essere indicato"
+
+#~ msgid "package %s does not have a namespace and should be re-installed"
+#~ msgstr "il pacchetto %s non ha un namespace e dovrebbe essere re-installato"

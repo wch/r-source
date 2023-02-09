@@ -35,6 +35,12 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
     if(!is.data.frame(x)) x <- as.data.frame(x)
     ## Do this here to avoid masking by non-function (could happen)
     FUN <- match.fun(FUN)
+    
+    ## manually dispatch to formula method if 'by' is a formula and not a list
+    if (inherits(by, "formula")) {
+        return(aggregate.formula(x = by, data = x, FUN = FUN, ...))
+    }
+    
     if(NROW(x) == 0L) stop("no rows to aggregate")
     if(NCOL(x) == 0L) {
         ## fake it

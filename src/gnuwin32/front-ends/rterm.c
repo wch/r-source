@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  R Core Team
+ *  Copyright (C) 1998--2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <shlwapi.h> /* for PathFindOnPath */
+#include <stdlib.h>
 #include <stdio.h>
 #include <io.h> /* for isatty */
 #include <Rversion.h>
@@ -58,6 +59,15 @@ static void my_onintr(int nSig)
   PostThreadMessage(mainThreadId,0,0,0);
 }
 
+static UINT oldConsoleCP = 0;
+static UINT oldConsoleOutputCP = 0;
+
+static void restore_cp(void)
+{
+    if (oldConsoleCP) SetConsoleCP(oldConsoleCP);
+    if (oldConsoleOutputCP) SetConsoleOutputCP(oldConsoleOutputCP);
+}
+
 /* Used also by Rscript */
 int AppMain(int argc, char **argv)
 {
@@ -67,7 +77,6 @@ int AppMain(int argc, char **argv)
 	   or msys). Re-run RTerm with winpty, if available, to allow
 	   line editing using Windows Console API. */
 	int i, interactive;
-	char winpty[MAX_PATH+1];
 
 	interactive = 1;
 	/* needs to be in sync with cmdlineoptions() */
@@ -83,14 +92,14 @@ int AppMain(int argc, char **argv)
 		interactive = 0;
 		i++;
 	    }
-	if (interactive && strcpy(winpty, "winpty.exe") &&
-	    PathFindOnPath(winpty, NULL)) {
+	if (interactive &&
+	    !system("winpty.exe --version >NUL 2>NUL")) {
 
 	    size_t len, pos;
 	    int res;
 	    char *cmd;
 
-	    len = strlen(winpty) + 5; /* 4*quote, terminator */
+	    len = strlen("winpty.exe") + 5; /* 4*quote, terminator */
 	    for(i = 0; i < argc; i++)
 		len += strlen(argv[i]) + 3; /* space, 2*quote */
 	    cmd = (char *)malloc(len * sizeof(char));
@@ -98,7 +107,7 @@ int AppMain(int argc, char **argv)
 		fprintf(stderr, "Error: cannot allocate memory");
 		exit(1);
 	    }
-	    pos = snprintf(cmd, len, "\"\"%s\"", winpty);
+	    pos = snprintf(cmd, len, "\"\"%s\"", "winpty.exe");
 	    for(i = 0; i < argc; i++)
 		pos += snprintf(cmd + pos, len - pos, " \"%s\"",
 		                argv[i]);
@@ -116,6 +125,9 @@ int AppMain(int argc, char **argv)
 	/* Typically the console code page would be something else and then
 	   characters not representable in that code page would be displayed
 	   as question marks (regardless of whether the fonts support them). */
+	atexit(restore_cp);
+	oldConsoleCP = GetConsoleCP();
+	oldConsoleOutputCP = GetConsoleOutputCP();
 	SetConsoleOutputCP(65001);
 	SetConsoleCP(65001); /* not clear if needed */
     }
@@ -127,6 +139,8 @@ int AppMain(int argc, char **argv)
     }
     if (isatty(0)) 
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    if(R_Interactive) 
+	R_gl_tab_set();
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
     /* The following restores Ctrl-C handling if we were started from R.exe */
@@ -135,7 +149,6 @@ int AppMain(int argc, char **argv)
     GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
-	R_gl_tab_set();
 	gl_hist_init(R_HistorySize, 1);
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
 	saveConsoleTitle();

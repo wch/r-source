@@ -606,6 +606,7 @@ double cospi(double);
 double sinpi(double);
 double tanpi(double);
 #endif
+double Rtanpi(double); /* our own in any case */
 
 /* Compute the log of a sum or difference from logs of terms, i.e.,
  *

@@ -139,8 +139,11 @@
   constructs that have the same behavior as in a Unix shell.  Hence,
   expansions of variables should be in double quotes (e.g. 
   \code{"${HOME}"}, in case they may contain a backslash) and literals
-  including a backslash should be in single quotes.  It is ok to mix text in
-  single and double quotes, see examples below.
+  including a backslash should be in single quotes. If a variable value
+  may end in a backslash, such as \code{PATH} on Windows, it may be
+  necessary to protect the following quote from it, e.g. \code{"${PATH}/"}.
+  It is recommended to use forward slashes instead of backslashes.
+  It is ok to mix text in single and double quotes, see examples below.
 
   On systems with sub-architectures (mainly Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
@@ -150,7 +153,7 @@
   to \file{.Renviron}.
 
   There is a 100,000 byte limit on the length of a line (after expansions)
-  in environment files (prior to \R 4.1 it was 10,000).
+  in environment files.
 }
 \note{
   It is not intended that there be interaction with the user during
@@ -194,9 +197,9 @@
   \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to (if possible, which it
   is not on Windows) \code{""} or to the name of a non-existent file.
 
-  Prior to \R 4.0.0, \code{${foo-bar}} in an environment file skipped an
-  empty \code{foo}: this has been changed to match the POSIX rules for
-  parameter substitution in shells.
+  %% Prior to \R 4.0.0, \code{${foo-bar}} in an environment file skipped an
+  %% empty \code{foo}: this has been changed to match the POSIX rules for
+  %% parameter substitution in shells.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c

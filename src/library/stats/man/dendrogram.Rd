@@ -112,7 +112,7 @@ is.leaf(object)
     the (larger of the) two component heights.}
   \item{adjust}{a string determining if the leaf values should be
     adjusted.  The default, \code{"auto"}, checks if the (first) two
-    dendrograms both start at \code{1}; if they do, code{"add.max"} is
+    dendrograms both start at \code{1}; if they do, \code{"add.max"} is
     chosen, which adds the maximum of the previous dendrogram leaf
     values to each leaf of the \dQuote{next} dendrogram.  Specifying
     \code{adjust} to another value skips the check and hence is a tad

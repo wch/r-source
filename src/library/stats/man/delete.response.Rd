@@ -1,6 +1,6 @@
 % File src/library/stats/man/delete.response.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{delete.response}
@@ -71,7 +71,7 @@ reformulate(c("a", "b*f"), fS[[2]])
 reformulate(c("`P/E`", "`\% Growth`"), response = as.name("+-"))
 
 x <- c("a name", "another name")
-try( reformulate(x) ) # -> Error ..... unexpected symbol
+tryCatch( reformulate(x), error = function(e) "Syntax error." )
 ## rather backquote the strings in x :
 reformulate(sprintf("`\%s`", x))
 

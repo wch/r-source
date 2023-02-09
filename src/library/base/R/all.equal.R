@@ -505,11 +505,11 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
     current <- as.POSIXct(current)
     msg <- NULL
     if(check.tzone) {
-        ## See check_tzones():
+        ## See .check_tzones():
         tz <- function(dt) {
             if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
         }
-        ## FIXME: check_tzones() ignores differences with "" as time zone,
+        ## FIXME: .check_tzones() ignores differences with "" as time zone,
         ## regardless of whether that other time zone is the current one.
         ## However, this code does not handle "" at all, so that it is
         ## treated as "inconsistent" even with the current time zone,

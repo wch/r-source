@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -315,7 +315,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
     } else { # determine (f, class) from 'method'
 	f.c <- strsplit(method, ".", fixed=TRUE)[[1]]
 	nfc <- length(f.c)
-	if(nfc < 2 || !is.character(f.c))
+	if(nfc < 2 || !is.character(f.c) || f.c[[1L]] == "")
 	    return(FALSE) ## stop("Invalid 'method' specification; must be  \"<fun>.<class>\"")
 	if(nfc == 2) {
 	    f     <- f.c[[1L]]

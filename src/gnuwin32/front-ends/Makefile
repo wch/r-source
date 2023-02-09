@@ -78,6 +78,9 @@ rgui-CPPFLAGS = -DWin32
 rterm-CPPFLAGS = -DWin32
 
 ## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
+R-LIBS = -lole32 -luuid
+Rcmd-LIBS = -lole32 -luuid
+Rfe-LIBS = -lole32 -luuid
 Rgui-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
 Rscript-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp -lshlwapi
 Rterm-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp -lshlwapi

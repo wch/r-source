@@ -55,13 +55,15 @@ A special debt is owed to John Chambers who has graciously contributed
 advice and encouragement in the early days of R and later became a
 member of the core team.
 
-Stefano Iacus (a former member of R Core) and Simon Urbanek developed
-the macOS port, including the R.app GUI, toolchains and packaging.
+Stefano Iacus (up to 2014, a former member of R Core) and Simon
+Urbanek developed the macOS port, including the R.app GUI, toolchains
+and packaging.
 
-The Windows port was developed by Guido Masarotto (for a while a
-member of R Core) and Brian Ripley, then Duncan Murdoch (a former
-member of R Core) and currently by Jeroen Ooms (base) and Uwe Ligges
-(packages).
+The Windows port was originally developed by Guido Masarotto (for a
+while a member of R Core) and Brian Ripley, then further by Duncan
+Murdoch (a former member of R Core) and then Jeroen Ooms (base) and
+Uwe Ligges (packages).  Tomas Kalibera is the current main developer
+of the Windows port and provides assistance with package porting.
 
 Tomas Kalibera's work has been sponsored by Jan Vitek and funded by
 his European Research Council grant "Evolving Language Ecosystems

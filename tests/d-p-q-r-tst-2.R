@@ -163,8 +163,9 @@ stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tolerance = 1e-6),# (1.50 | 1.6
 ## qt(p ~ 0, df=1) - PR#9804
 p <- 10^(-10:-20)
 qtp <- qt(p, df = 1)
-## relative error < 10^-14 :
-stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
+## relative error:
+table(rerr <- abs(1 - p / pt(qtp, df=1))) # 64-bit F34 : 1 x 0, 10 x 2.22e-16
+stopifnot(rerr < 1e-14)
 
 ## Similarly for df = 2 --- both for p ~ 0  *and*  p ~ 1/2
 ## P ~ 0
@@ -192,6 +193,16 @@ stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
 ## Case, where log.p=TRUE was fine, but log.p=FALSE (default) gave NaN:
 lp <- 40:406
 stopifnot(all.equal(lp, -pt(qt(exp(-lp), 1.2), 1.2, log=TRUE), tolerance = 4e-16))
+## Other log.p cases, gave NaN (all but 1.1) in R <= 4.2.1, PR#18360 [NB: *still* inaccurate: tol=0.2]
+q <- exp(seq(200, 500, by=1/2))
+for(df in c(1.001, 1 + (1:10)/100)) {
+    pq  <- pt(q,  df = df, log = TRUE)
+    qpq <- qt(pq, df = df, log = TRUE)
+    cat("df = ", df, ": all.equal(., tol=0): "); print(all.equal(q,qpq, tol=0)) # ~0.17!
+    ## plot(lp, 1-qpq/q, main=paste0("relErr(qt(., df=",df,"))"), type="l")
+    stopifnot(all.equal(q,qpq, tol = 0.2)) # Lnx 64b: 1.001 shows 0.179
+    if(any(ina <- is.na(qpq))) { cat("NaN in q-range: [", range(q[ina]),"]\n") }
+}
 
 
 ## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
@@ -461,6 +472,11 @@ stopifnot(qp > 0, all.equal(x, qp, tol= 1e-15))# seeing {2.4|3.3}e-16
 
 ## qbeta(), PR#15755
 a1 <- 0.0672788; b1 <- 226390
+curve(pbeta(x, a1,b1), from=1e-50, n=4001, log="x",
+      main = sprintf("(a1=%g, b1=%g) -- needs log-x scale",a1,b1))
+## zoom into part where it jumps from const = 0 to const = 5.562685e-309 to regular growth:
+curve(qbeta(x, a1,b1), from=1e-21, to=6e-21, type="o", cex=1/4) -> qb1
+rle(qb1$y)
 p <- 0.6948886
 qp <- qbeta(p, a1,b1)
 stopifnot(qp < 2e-8, # was '1' (with a warning) in R <= 3.1.0
@@ -469,12 +485,12 @@ stopifnot(qp < 2e-8, # was '1' (with a warning) in R <= 3.1.0
 a <- 43779; b <- 0.06728
 stopifnot(All.eq(0.695, pbeta(qbeta(0.695, b,a), b,a)))
 x <- -exp(seq(0, 14, by=2^-9))
-ct <- system.time(qx <- qbeta(x, a,b, log.p=TRUE))[[1]]
+qx <- qbeta(x, a,b, log.p=TRUE)# used to be slow
 pqx <- pbeta(qx, a,b, log=TRUE)
-stopifnot(all.equal(x, pqx, tol= 2e-15)) # seeing {3.51|3.54}e-16
+stopifnot(diff(qx) < 0,
+          all.equal(x, pqx, tol= 2e-15)) # seeing {3.51|3.54}e-16
 ## note that qx[x > -exp(2)] is too close to 1 to get full accuracy:
-## i2 <- x > -exp(2); all.equal(x[i2], pqx[i2], tol= 0)#-> 5.849e-12
-if(ct > 0.5) { cat("system.time:\n"); print(ct) }# lynne(2013): 0.048
+i2 <- x > -exp(2); all.equal(x[i2], pqx[i2], tol= 0)#-> 5.849e-12
 ## was Inf, and much slower, for R <= 3.1.0
 x3 <- -(15450:15700)/2^11
 pq3 <- pbeta(qbeta(x3, a,b, log.p=TRUE), a,b, log=TRUE)
@@ -497,7 +513,8 @@ stopifnot(abs(pq - 1/8) < 1/8)
 x <- c(1e-300, 1e-12, 1e-5, 0.1, 0.21, 0.3)
 stopifnot(0 == qbeta(x, 2^-12, 2^-10))## gave warnings
 a <- 10^-(8:323)
-qb <- qbeta(0.95, a, 20)
+length(uq <- unique(qb <- qbeta(0.95, a, 20)))# typically just 1 !
+head(uq) # 5.562685e-309
 ## had warnings and wrong value +1; also NaN
 ct2 <- system.time(q2 <- qbeta(0.95, a,a))[1]
 stopifnot(is.finite(qb), qb < 1e-300, q2 == 1)
@@ -625,11 +642,12 @@ for(dist in PDQR) {
 
 ## qbeta() in very asymmetric cases
 sh2 <- 2^seq(9,16, by=1/16)
-qbet <- qbeta(1e-10, 1.5, shape2=sh2, lower.tail=FALSE)
-plot(sh2, 1- pbeta(qbet, 1.5, sh2, lower.tail=FALSE) * 1e10, log="x")
+p <- 1e-10
+qbet <- qbeta(p, 1.5, shape2=sh2, lower.tail=FALSE)
+plot(sh2, pbeta(qbet, 1.5, sh2, lower.tail=FALSE)/p -1 -> rE, log="x", main="rel.Error")
 dqb <- diff(qbet); d2qb <- diff(dqb); d3qb <- diff(d2qb)
 stopifnot(all.equal(qbet[[1]], 0.047206901483498, tol=1e-12),
-	  max(abs(1- pbeta(qbet, 1.5, sh2, lower.tail=FALSE) * 1e10)) < 1e-12,# Lx 64b: 2.4e-13
+	  print(max(abs(rE))) < 1e-12, # Lx 64b: 2.4e-13
 	  0 > dqb, dqb > -0.002,
 	  0 < d2qb, d2qb < 0.00427,
 	  -3.2e-8 > d3qb, d3qb > -3.1e-6,
@@ -696,10 +714,13 @@ qp. <- qnorm(lp, log.p=TRUE)
 all.equal( qs, qpU, tol=0)
 all.equal(-qs, qp., tol=0)
 all.equal(-qp.,qpU, tol=0) # typically TRUE (<==> exact equality)
+## however,
+range(qpU/qs - 1) # -5.68e-6  5.41e-6  in R <= 4.2.1
 stopifnot(exprs = {
     all.equal( qs,  qpU, tol=1e-15)
     all.equal(-qs,  qp., tol=1e-15)
     all.equal(-qp., qpU, tol=1e-15)# diff of 4.71e-16 in 4.1.0 w/icc (Eric Weese)
+    max(abs(qpU/qs - 1)) < 1e-15 # see  4.44e-16  {was 5.68e-6 in R <= 4.2.1; much larger in R <= 4.0.x)
 })
 ## both failed very badly in  R <= 4.0.x
 

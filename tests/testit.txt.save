@@ -1,5 +1,9 @@
 _A_n _R_d _R_e_g_r_e_s_s_i_o_n _T_e_s_t
 
+_D_e_s_c_r_i_p_t_i_o_n:
+
+       linked text in \tabular  <https://example.org/a&b#c> 
+      
 _U_s_a_g_e:
 
      \x \y %{}
@@ -12,14 +16,12 @@ _D_e_t_a_i_l_s:
 
      '%{}'
 
-     a link and one to a known destination: weighted.mean
+     a link and some to known destinations: weighted.mean, '{'
 
      var in text.
 
      'foo(x, y)'.
 
-     
-     
        Escaped backslash \x.
      
        %{}
@@ -29,11 +31,24 @@ _D_e_t_a_i_l_s:
        foo(\var{x}, \var{y}).
        
        From gap: pedtodot.Rd -- n=split(m,par,"\034") 
-       
+     
+_V_a_l_u_e:
+
+     [NULL]
+     ...
+
+\_S_e_x_p_r:
 
      Yihui Xie's example:
 
      def ghi
+
+     -
+
+     > cat("\noutput\n")
+     output
+
+     -
 
 _E_x_a_m_p_l_e_s:
 

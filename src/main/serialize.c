@@ -195,7 +195,7 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
 /* The default version used when a stream Init function is called with
    version = 0 */
 
-static int defaultSerializeVersion()
+static int defaultSerializeVersion(void)
 {
     static int dflt = -1;
 
@@ -349,17 +349,17 @@ static void OutString(R_outpstream_t stream, const char *s, int length)
 	char buf[128];
 	for (i = 0; i < length; i++) {
 	    switch(s[i]) {
-	    case '\n': sprintf(buf, "\\n");  break;
-	    case '\t': sprintf(buf, "\\t");  break;
-	    case '\v': sprintf(buf, "\\v");  break;
-	    case '\b': sprintf(buf, "\\b");  break;
-	    case '\r': sprintf(buf, "\\r");  break;
-	    case '\f': sprintf(buf, "\\f");  break;
-	    case '\a': sprintf(buf, "\\a");  break;
-	    case '\\': sprintf(buf, "\\\\"); break;
-	    case '\?': sprintf(buf, "\\?");  break;
-	    case '\'': sprintf(buf, "\\'");  break;
-	    case '\"': sprintf(buf, "\\\""); break;
+	    case '\n': snprintf(buf, 128, "\\n");  break;
+	    case '\t': snprintf(buf, 128, "\\t");  break;
+	    case '\v': snprintf(buf, 128, "\\v");  break;
+	    case '\b': snprintf(buf, 128, "\\b");  break;
+	    case '\r': snprintf(buf, 128, "\\r");  break;
+	    case '\f': snprintf(buf, 128, "\\f");  break;
+	    case '\a': snprintf(buf, 128, "\\a");  break;
+	    case '\\': snprintf(buf, 128, "\\\\"); break;
+	    case '\?': snprintf(buf, 128, "\\?");  break;
+	    case '\'': snprintf(buf, 128, "\\'");  break;
+	    case '\"': snprintf(buf, 128, "\\\""); break;
 	    default  :
 		/* cannot print char in octal mode -> cast to unsigned
 		   char first */
@@ -367,9 +367,9 @@ static void OutString(R_outpstream_t stream, const char *s, int length)
 		   is handled above, s[i] > 126 can't happen, but
 		   I'm superstitious...  -pd */
 		if (s[i] <= 32 || s[i] > 126)
-		    sprintf(buf, "\\%03o", (unsigned char) s[i]);
+		    snprintf(buf, 128, "\\%03o", (unsigned char) s[i]);
 		else
-		    sprintf(buf, "%c", s[i]);
+		    snprintf(buf, 128, "%c", s[i]);
 	    }
 	    stream->OutBytes(stream, buf, (int)strlen(buf));
 	}
@@ -1646,6 +1646,23 @@ static char *native_fromcode(R_inpstream_t stream)
     return from;
 }
 
+static void invalid_utf8_warning(const char *buf, const char *from)
+{
+    const void *vmax = vmaxget();
+    const char *native_buf;
+
+    if (utf8Valid(buf)) {
+	native_buf = reEnc3(buf, "UTF-8", "", 1);
+	warning(_("input string '%s' cannot be translated from '%s' to UTF-8, but is valid UTF-8"),
+		native_buf, from);
+    } else {
+	native_buf = reEnc(reEnc3(buf, from, "UTF-8", 1), CE_UTF8, CE_NATIVE, 2);
+	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
+		native_buf, from);
+    }
+    vmaxset(vmax);
+}
+
 /* Read string into pre-allocated buffer, convert encoding if necessary, and
    return a CHARSXP */
 static SEXP
@@ -1695,9 +1712,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	if (known_to_be_utf8) {
 	    /* nat2nat_obj is converting to UTF-8, no need to use nat2utf8_obj */
 	    stream->nat2utf8_obj = (void *)-1;
-	    char *from = native_fromcode(stream);
-	    warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
-	            buf, from);
+	    invalid_utf8_warning(buf, native_fromcode(stream));
 	}
     }
     /* try converting to UTF-8 */
@@ -1716,9 +1731,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	SEXP ans = ConvertChar(stream->nat2utf8_obj, buf, length, CE_UTF8);
 	if (ans != R_NilValue)
 	    return ans;
-	char *from = native_fromcode(stream);
-	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s' ?"),
-	        buf, from);
+	invalid_utf8_warning(buf, native_fromcode(stream));
     }
     /* no translation possible */
     return mkCharLenCE(buf, length, CE_NATIVE); 
@@ -1881,6 +1894,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	}
 	SETCAR(s, ReadItem(ref_table, stream));
 	R_ReadItemDepth--; /* do this early because of the recursion. */
+	R_CheckStack();
 	SETCDR(s, ReadItem(ref_table, stream));
 	/* For reading closures and promises stored in earlier versions, convert NULL env to baseenv() */
 	if      (type == CLOSXP && CLOENV(s) == R_NilValue) SET_CLOENV(s, R_BaseEnv);
@@ -2502,7 +2516,7 @@ static void con_cleanup(void *data)
 /* Used from saveRDS().
    This became public in R 2.13.0, and that version added support for
    connections internally */
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* serializeToConn(object, conn, ascii, version, hook) */
@@ -2572,7 +2586,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 /* unserializeFromConn(conn, hook) used from readRDS().
    It became public in R 2.13.0, and that version added support for
    connections internally */
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* 0 .. unserializeFromConn(conn, hook) */
@@ -2883,7 +2897,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 }
 
 
-SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
+attribute_hidden SEXP R_unserialize(SEXP icon, SEXP fun)
 {
     struct R_inpstream_st in;
     SEXP (*hook)(SEXP, SEXP);
@@ -2975,7 +2989,7 @@ static int used = 0;
 static char names[NC][PATH_MAX];
 static char *ptr[NC];
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_lazyLoadDBflush(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -3179,7 +3193,7 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
    from a file, optionally decompresses, and unserializes the bytes.
    If the result is a promise, then the promise is forced. */
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP key, file, compsxp, hook;
@@ -3214,7 +3228,7 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
     return val;
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_getVarsFromFrame(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -3222,7 +3236,7 @@ do_getVarsFromFrame(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_lazyLoadDBinsertValue(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -3235,7 +3249,7 @@ do_lazyLoadDBinsertValue(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_lazyLoadDBinsertValue(value, file, ascii, compsxp, hook);
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_serialize(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);

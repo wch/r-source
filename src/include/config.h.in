@@ -3,6 +3,9 @@
 #ifndef R_CONFIG_H
 #define R_CONFIG_H
 
+/* Version of C Compiler */
+#undef CC_VER
+
 /* Define to 1 if using 'alloca.c'. */
 #undef C_ALLOCA
 
@@ -29,6 +32,9 @@
 
 /* C type used for Fortran character lengths */
 #undef FC_LEN_T
+
+/* Version of Fortran Compiler */
+#undef FC_VER
 
 /* Define to 1 if you have the `access' function. */
 #undef HAVE_ACCESS
@@ -946,9 +952,6 @@
 /* Define if you have the 'wint_t' type. (For intl) */
 #undef HAVE_WINT_T
 
-/* Define if your mktime works correctly outside 1902-2037. */
-#undef HAVE_WORKING_64BIT_MKTIME
-
 /* Define to 1 if you have cairo. */
 #undef HAVE_WORKING_CAIRO
 
@@ -966,6 +969,15 @@
 
 /* Define if log1p() exists and is accurate enough. */
 #undef HAVE_WORKING_LOG1P
+
+/* Define if your mktime works correctly after 2037. */
+#undef HAVE_WORKING_MKTIME_AFTER_2037
+
+/* Define if your mktime works correctly before 1902. */
+#undef HAVE_WORKING_MKTIME_BEFORE_1902
+
+/* Define if your mktime works correctly before 1970. */
+#undef HAVE_WORKING_MKTIME_BEFORE_1970
 
 /* Define if sigaction() is complete enough for R's usage */
 #undef HAVE_WORKING_SIGACTION
@@ -1006,9 +1018,6 @@
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
-
-/* macOS 10.12 (Sierra) or earlier */
-#undef MACOS_SIERRA
 
 /* Define if mktime sets errno. */
 #undef MKTIME_SETS_ERRNO

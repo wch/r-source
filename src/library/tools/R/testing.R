@@ -143,6 +143,10 @@ massageExamples <-
 }
 
 ## compares 2 files
+## 2022-07: it is reasonable to assume that almost all users will
+## have diff (it is part of Rtools), and currently only GNU diff
+## (from 2022 on macOS) and FreeBSD versions semm to be in use.
+## So the support without diff is minimal.
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
                   nullPointers = TRUE, Log = FALSE)
 {
@@ -175,9 +179,13 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## (Keeps the end markers, but that's ok.)
         if (nullPointers) {
             ## remove pointer addresses from listings
-            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
+            ## useBytes=TRUE as some tests intentionally use invalid strings
+            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt,
+                        useBytes = TRUE)
             ## standardize hashtable, pro tem
-            txt <- sub("<hashtable.*>", "<hashtable output>", txt)
+            ## useBytes=TRUE as some tests intentionally use invalid strings
+            txt <- sub("<hashtable.*>", "<hashtable output>", txt,
+                       useBytes = TRUE)
         }
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- .canonicalize_quotes(txt)
@@ -193,51 +201,84 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## platforms.
         txt <- txt[!grepl('options(pager = "console")', txt,
                           fixed = TRUE, useBytes = TRUE)]
-        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^/CreationDate |^/ModDate |^/Producer |^End.Don\'t show)'
+        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^End.Don\'t show)'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
     clean2 <- function(txt)
     {
-        eoh <- grep("^> options\\(warn = 1\\)$", txt)
+        ## useBytes=TRUE as some tests intentionally use invalid strings
+        eoh <- grep("^> options\\(warn = 1\\)$", txt, useBytes = TRUE)
         if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
-
-    left <- clean(readLines(from))
-    right <- clean(readLines(to))
-    if (forEx) {
-        left <- clean2(left)
-        ## remove lines from R CMD check --timings
-        left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
-        right <- clean2(right)
+    trimPDF <- function(txt)
+    {
+        ## drop the PDF header
+        if (length(txt) < 2L || !startsWith(txt[1L], "%PDF"))
+            stop("not a PDF file")
+        ## drop second line if comment, often non-ASCII
+        txt <- if(startsWith(txt[1L], "%")) txt[-(1:2)] else txt[-1L]
+        ## Remove variable parts of the header
+        pat <- '(^/CreationDate |^/ModDate |^/Producer)'
+        txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
-    if (!useDiff && (length(left) == length(right))) {
-        ## The idea is to emulate diff -b, as documented by POSIX:
-        ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
-        bleft  <- gsub("[[:space:]]*$", "", left)
-        bright <- gsub("[[:space:]]*$", "", right)
-        bleft  <- gsub("[[:space:]]+", " ", bleft)
-        bright <- gsub("[[:space:]]+", " ", bright)
-        if(all(bleft == bright))
-            return(if(Log) list(status = 0L, out = character()) else 0L)
-        cat("\n")
-        diff <- bleft != bright
-        ## FIXME do run lengths here
-        for(i in which(diff))
-            cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
-                sep = "")
-        if (Log) {
-            i <- which(diff)
-            out <- paste0(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i])
-            list(status = 1L, out = out)
-        } else 1L
-    } else {
-        ## FIXME: use C code, or something like merge?
-        ## The files can be very big.
-        out <- character()
+
+    useDiff0 <- useDiff
+
+    left <- readLines(from)
+    right <- readLines(to)
+    asPDF <- length(left) >= 1L && startsWith(left[1L], "%PDF")
+    if (useDiff && !nzchar(Sys.which("diff"))) {
+        if(!asPDF)
+            warning("'diff' is not available so useDiff = FALSE will be used")
+        useDiff <- FALSE
+    }
+
+    if(asPDF) {
         if(!useDiff) {
-            cat("\nfiles differ in number of lines:\n")
-            out <- "files differ in number of lines"
+            out <- if(!useDiff0) "comparing PDF files requires useDiff = TRUE"
+                   else "comparing PDF files requires 'diff'"
+            if (Log) return(list(status = 0L, out = out))
+            else {message(out); return(invisible(0L))}
         }
+        left <- trimPDF(left); right <- trimPDF(right)
+    } else {
+        left <- clean(left); right <- clean(right)
+        if (forEx) {
+            left <- clean2(left)
+            ## remove lines from R CMD check --timings
+            left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
+            right <- clean2(right)
+        }
+    }
+
+    if (!useDiff) {
+        if(length(left) == length(right)) {
+            ## The idea is to emulate diff -b, as documented by POSIX:
+            ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+            bleft  <- gsub("[[:space:]]*$", "", left)
+            bright <- gsub("[[:space:]]*$", "", right)
+            bleft  <- gsub("[[:space:]]+", " ", bleft)
+            bright <- gsub("[[:space:]]+", " ", bright)
+            if(all(bleft == bright))
+                return(if(Log) list(status = 0L, out = character()) else 0L)
+            cat("\n")
+            diff <- bleft != bright
+            ## FIXME do run lengths here
+            for(i in which(diff))
+                cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
+                    sep = "")
+            if (Log) {
+                i <- which(diff)
+                out <- paste0(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i])
+                list(status = 1L, out = out)
+            } else invisible(1L)
+        } else { ## no diff, different lengths
+            out <- "files differ in number of lines"
+            if (Log) list(status = 2L, out = out)
+            else {message(out); invisible(2L)}
+        }
+    } else {
+        out <- character()
         a <- tempfile("Rdiffa")
         writeLines(left, a)
         b <- tempfile("Rdiffb")
@@ -251,6 +292,26 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
 } ## {Rdiff}
 
+.is.writeable <- function(dir)
+{
+    # see packages2.R for comment on unreliability of file.access
+    ok <- TRUE
+    fn <- file.path(dir, paste0("_test_dir_", Sys.getpid()))
+    res <- try(dir.create(fn, showWarnings = FALSE))
+    if(inherits(res, "try-error") || !res)
+        ok <- FALSE
+    else
+        unlink(fn, recursive = TRUE)
+    if (ok) {
+        fn <- file.path(dir, paste0("_test_file_", Sys.getpid()))
+        res <- try(file.create(fn, showWarnings = FALSE))
+        if(inherits(res, "try-error") || !res)
+            ok <- FALSE
+        else
+            unlink(fn)
+    }
+    ok
+}
 
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
@@ -258,6 +319,8 @@ testInstalledPackages <-
              types = c("examples", "tests", "vignettes"),
              srcdir = NULL, Ropts = "", ...)
 {
+    if (!.is.writeable(outDir))
+        stop("directory ", sQuote(outDir), " is not writeable ", domain = NA)
     ow <- options(warn = 1)
     on.exit(ow)
     scope <- match.arg(scope)
@@ -315,6 +378,7 @@ testInstalledPackage <-
     owd <- setwd(outDir)
     on.exit(setwd(owd))
     strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
+    useDiff <- nzchar(Sys.which("diff"))
 
     if ("examples" %in% types) {
         message(gettextf("Testing examples for package %s", sQuote(pkg)),
@@ -348,8 +412,8 @@ testInstalledPackage <-
                                     sQuote(outfile), sQuote(basename(savefile))),
                            appendLF = FALSE, domain = NA)
                    cmd <-
-                       sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
-                               outfile, savefile)
+                       sprintf("invisible(tools::Rdiff('%s','%s',%s,TRUE))",
+                               outfile, savefile, as.character(useDiff))
                    out <- R_runR(cmd, "--vanilla --no-echo")
                    if(length(out)) {
                        if(strict)
@@ -371,8 +435,8 @@ testInstalledPackage <-
                             sQuote(outfile), sQuote(basename(prevfile))),
                             appendLF = FALSE, domain = NA)
                     cmd <-
-                        sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
-                                outfile, prevfile)
+                        sprintf("invisible(tools::Rdiff('%s','%s',%s,TRUE))",
+                                outfile, prevfile, as.character(useDiff))
                     out <- R_runR(cmd, "--vanilla --no-echo")
                     if(length(out)) {
                         message(" NOTE")
@@ -539,19 +603,16 @@ testInstalledPackage <-
     nfail <- 0L ## allow for later running all tests even if some fail.
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
-        Rfile <- sub("\\.Rin$", ".R", f)
-        message("  Creating ", sQuote(Rfile), domain = NA)
+        message("  Processing ", sQuote(f), domain = NA)
         if (!is.null(Log))
-            cat("  Creating ", sQuote(Rfile), "\n", sep = "", file = Log)
+            cat("  Processing ", sQuote(f), "\n", sep = "", file = Log)
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                     "CMD BATCH --no-timing --vanilla --no-echo", f)
+                     "CMD BATCH --no-timing --vanilla --no-echo", shQuote(f))
         if (system(cmd)) {
-            warning("creation of ", sQuote(Rfile), " failed", domain = NA)
-            if (!is.null(Log))
-                cat("Warning: creation of ", sQuote(Rfile), " failed\n",
-                    sep = "", file = Log)
-        } else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
-        if (nfail > 0) return(nfail)
+            nfail <- nfail + 1L
+            file.rename(paste0(f, ".Rout"), paste0(f, ".Rout.fail"))
+            if (stop_on_error) return(1L)
+        }
     }
 
     Rfiles <- dir(".", pattern="\\.[rR]$")
@@ -625,6 +686,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 "p-qbeta-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
+    useDiff <- nzchar(Sys.which("diff"))  # only check once
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
         f <- paste0(f, ".R")
@@ -653,6 +715,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             Sys.setenv(R_DEFAULT_PACKAGES="")
             Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
+            ## FIXME: the above are currently not restored after testing
+            if (inC) { # breaks reg-plot-latin1, so restore between tests
+                oenv <- Sys.getenv("LC_CTYPE", unset = NA)
+                on.exit(if (is.na(oenv)) Sys.unsetenv("LC_CTYPE")
+                        else Sys.setenv(LC_CTYPE=oenv), add = TRUE)
+                Sys.setenv(LC_CTYPE="C")
+            }
             ## ignore all 'extra' (incl. 'inC')  and hope
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
@@ -666,7 +735,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             message(gettextf("  comparing %s to %s ...",
                              sQuote(outfile), sQuote(savefile)),
                     appendLF = FALSE, domain = NA)
-            res <- Rdiff(outfile, savefile, TRUE)
+            res <- Rdiff(outfile, savefile, useDiff)
             if (!res) message(" OK")
             else if (!diffOK) return(1L)
         }
@@ -675,6 +744,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
 
     owd <- setwd(file.path(R.home(), "tests"))
     on.exit(setwd(owd), add=TRUE)
+    if (!.is.writeable("."))
+        stop("directory ", sQuote(file.path(R.home(), "tests")),
+              " is not writeable ", domain = NA)
 
     if (scope %in% c("basic", "both")) {
         message("running strict specific tests", domain = NA)
@@ -697,11 +769,12 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         message("running tests of plotting Latin-1", domain = NA)
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
-        runone("reg-plot-latin1", TRUE, inC=FALSE)
-        message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
-                appendLF = FALSE, domain = NA)
-        res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
-        if(res != 0L) message("DIFFERED") else message("OK")
+        if (runone("reg-plot-latin1", TRUE, inC=FALSE) == 0L) {
+            message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
+                    appendLF = FALSE, domain = NA)
+            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
+            if(res != 0L) message("DIFFERED") else message("OK")
+        }
     }
 
     if (scope %in% c("devel", "both")) {

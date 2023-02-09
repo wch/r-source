@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 
 FILE *R_OpenInitFile(void)
 {
-    char  buf[PATH_MAX], *p = getenv("R_PROFILE_USER");
+    char  *buf, *p = getenv("R_PROFILE_USER");
     FILE *fp;
 
     fp = NULL;
@@ -50,9 +50,16 @@ FILE *R_OpenInitFile(void)
 	}
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
-	snprintf(buf, PATH_MAX, "%s/.Rprofile", getenv("R_USER"));
-	if ((fp = R_fopen(buf, "r")))
-	    return fp;
+	p = getenv("R_USER");
+	if (p) {
+	    size_t needed = snprintf(NULL, 0, "%s/.Rprofile", p) + 1;
+	    buf = (char *)malloc(needed);
+	    if (!buf)
+		return NULL;
+	    snprintf(buf, needed, "%s/.Rprofile", p);
+	    fp = R_fopen(buf, "r");
+	    free(buf);
+	}
     }
     return fp;
 }
@@ -62,42 +69,54 @@ FILE *R_OpenInitFile(void)
 
 
 static int HaveHOME=-1;
-static char UserHOME[PATH_MAX];
-static char newFileName[PATH_MAX];
+static char *UserHOME = NULL;
+#define NEWFILENAME_MAX 65536
+static char newFileName[NEWFILENAME_MAX];
 
 const char *R_ExpandFileName(const char *s)
 {
-    char *p;
+    char *p, *q;
 
     if(s[0] != '~' || (s[0] && isalpha(s[1]))) return s;
     if(HaveHOME < 0) {
 	HaveHOME = 0;
 	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
-	if(p && strlen(p) && strlen(p) < PATH_MAX) {
-	    strcpy(UserHOME, p);
-	    HaveHOME = 1;
-	} else {
-	    p = getenv("HOME");
-	    if(p && strlen(p) && strlen(p) < PATH_MAX) {
+	if(p && strlen(p)) {
+	    if ((UserHOME = (char *)malloc(strlen(p) + 1))) {
 		strcpy(UserHOME, p);
 		HaveHOME = 1;
+	    }
+	} else {
+	    p = getenv("HOME");
+	    if(p && strlen(p)) {
+		if ((UserHOME = (char *)malloc(strlen(p) + 1))) {
+		    strcpy(UserHOME, p);
+		    HaveHOME = 1;
+		}
 	    } else {
 		p = getenv("HOMEDRIVE");
-		if(p && strlen(p) < PATH_MAX) {
+		q = getenv("HOMEPATH");
+		if(p && q &&
+		   (UserHOME = (char *)malloc(strlen(p) + strlen(q) + 1))) {
+
 		    strcpy(UserHOME, p);
-		    p = getenv("HOMEPATH");
-		    if(p && strlen(UserHOME) + strlen(p) < PATH_MAX) {
-			strcat(UserHOME, p);
-			HaveHOME = 1;
-		    }
+		    strcat(UserHOME, q);
+		    HaveHOME = 1;
 		}
 	    }
 	}
     }
-    if(HaveHOME > 0 && strlen(UserHOME) + strlen(s+1) < PATH_MAX) {
-	strcpy(newFileName, UserHOME);
-	strcat(newFileName, s+1);
-	return newFileName;
+    if(HaveHOME > 0) {
+	size_t len = strlen(UserHOME) + strlen(s+1);
+	if(len < NEWFILENAME_MAX) {
+	    strcpy(newFileName, UserHOME);
+	    strcat(newFileName, s+1);
+	    return newFileName;
+	} else {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+		    len, s);
+	    return s;
+	}
     } else return s;
 }
 
@@ -111,13 +130,26 @@ const char *R_ExpandFileNameUTF8(const char *s)
 {
     if (s[0] !='~' || (s[0] && isalpha(s[1]))) return s;
     else {
-    	char home[PATH_MAX];
-    	reEnc2(R_ExpandFileName("~"), home, PATH_MAX, CE_NATIVE, CE_UTF8, 3);
-    	if (strlen(home) + strlen(s+1) < PATH_MAX) {
-    	    strcpy(newFileName, home);
+	const char *native_home = R_ExpandFileName("~");
+	/* a defensive guess, reEnc2 would throw error if not enough */
+	size_t len = strlen(native_home) * 4;
+    	char *utf8_home = (char *)malloc(len);
+	if (!utf8_home) {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+	            len, s);
+	    return s;
+	}
+    	reEnc2(native_home, utf8_home, len, CE_NATIVE, CE_UTF8, 3);
+	len = strlen(utf8_home) + strlen(s+1) + 1;
+    	if (len <= NEWFILENAME_MAX) {
+    	    strcpy(newFileName, utf8_home);
     	    strcat(newFileName, s+1);
     	    return newFileName;
-    	} else return s;
+    	} else {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+	            len, s);
+	    return s;
+	}
     }
 }
 

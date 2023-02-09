@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2021 R Core Team
+### Copyright (C) 1998-2022 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -119,7 +119,7 @@ R_OS="${host_os}"
 AC_SUBST(R_OS)
 
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
     R_OSTYPE="windows"
@@ -412,14 +412,12 @@ AC_ARG_WITH([blas],
 [AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
-# default is "no" except on macOS
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
-# default is "no" except on macOS
 
 ## Readline.
 AC_ARG_WITH([readline],
@@ -505,9 +503,8 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=0])
 
 AC_ARG_WITH([system-valgrind-headers],
-[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@no@:>@])],
-[R_ARG_USE_SYSTEM(valgrind)],
-[use_system_valgrind=no])
+[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@yes@:>@])],
+[AC_MSG_WARN([--with-system-valgrind-headers is defunct])])
 
 AC_ARG_WITH([internal-tzcode],
 [AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
@@ -789,6 +786,72 @@ R_PROG_OBJCXX
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
+CC_SUB=`echo "${CC}" | sed 's/-std=[[^ ]]*//'`
+CFLAGS_SUB=`echo "${CFLAGS}" | sed -e 's/-std=[[^ ]]*//'`
+dnl echo "CC_SUB = ${CC_SUB}"
+dnl echo "CFLAGS_SUB = ${CFLAGS_SUB}"
+
+## Other C standards
+CC_save=${CC}
+CFLAGS_save=${CFLAGS}
+: ${CC17="${CC_SUB} -std=gnu17"}
+: ${C17FLAGS="${CFLAGS_SUB}"}
+CC=${CC17}
+CFLAGS=${C17FLAGS}
+R_C17
+if test x${r_cv_C17} = xno; then
+CC17=
+C17FLAGS=
+fi
+AC_SUBST(CC17)
+AC_SUBST(C17FLAGS)
+
+dnl this is a hack until -std=gnu23 is widely accepted.
+: ${CC23="${CC_SUB} -std=gnu23"}
+: ${C23FLAGS="${CFLAGS_SUB}"}
+CC=${CC23}
+CFLAGS=${C23FLAGS}
+unset r_cv_C23
+R_C23
+if test x${r_cv_C23} = xno; then
+unset r_cv_C23
+CC23="${CC_SUB} -std=gnu2x"
+CC=${CC23}
+R_C23
+fi
+if test x${r_cv_C23} = xno; then
+CC23=
+C23FLAGS=
+fi
+AC_SUBST(CC23)
+AC_SUBST(C23FLAGS)
+
+: ${CC90="${CC_SUB} -std=gnu90"}
+: ${C90FLAGS="${CFLAGS_SUB}"}
+CC=${CC90}
+CFLAGS=${C90FLAGS}
+R_C90
+if test x${r_cv_C90} = xno; then
+CC90=
+C90FLAGS=
+fi
+AC_SUBST(CC90)
+AC_SUBST(C90FLAGS)
+
+: ${CC99="${CC_SUB} -std=gnu99"}
+: ${C99FLAGS="${CFLAGS_SUB}"}
+CC=${CC99}
+CFLAGS=${C99FLAGS}
+R_C99
+if test x${r_cv_C99} = xno; then
+CC99=
+C99FLAGS=
+fi
+AC_SUBST(CC99)
+AC_SUBST(C99FLAGS)
+CC=${CC_save}
+CFLAGS=${CFLAGS_save}
+
 ## Libtool.
 ## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
 ## checks for a Fortran 77 compiler and sets F77 accordingly.)
@@ -840,6 +903,9 @@ case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
     ;;
+  cygwin*|mingw*|windows*|winnt|msys)
+    Rshlibpath_var=PATH
+    ;;
   *)
     Rshlibpath_var=${shlibpath_var}
 esac
@@ -884,6 +950,7 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
+    ## FIXME replace main, maybe by tputs
     AC_CHECK_LIB(ncurses, main, [],
                  AC_CHECK_LIB(tinfo, main, [],
                               AC_CHECK_LIB(termcap, main, [],
@@ -1137,7 +1204,7 @@ dnl     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
      ;;
   ## We no longer special-case Intel compilers on Linux:
   ## what we had dated from Nov 2005.
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   openbsd*)
@@ -1169,37 +1236,48 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
-AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
-AC_CACHE_VAL([r_cv_have_gfortran7],
-[r_cv_have_gfortran7=no
-if test "x${GFC}" = xyes; then
-  gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
-  if test ${gfortran_version_maj} -ge 7; then
-    r_cv_have_gfortran7=yes
-  fi
-fi])
+## No longer used once all packages are passing char lengths.
+dnl AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
+dnl AC_CACHE_VAL([r_cv_have_gfortran7],
+dnl [r_cv_have_gfortran7=no
+dnl if test "x${GFC}" = xyes; then
+dnl   gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+dnl   if test ${gfortran_version_maj} -ge 7; then
+dnl     r_cv_have_gfortran7=yes
+dnl   fi
+dnl fi])
 
-if test "x${r_cv_have_gfortran7}" = xyes; then
-  AC_MSG_RESULT([yes])
-  R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
-else
-  AC_MSG_RESULT([no])
-fi
+dnl if test "x${r_cv_have_gfortran7}" = xyes; then
+dnl   AC_MSG_RESULT([yes])
+dnl   R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
+dnl else
+dnl   AC_MSG_RESULT([no])
+dnl fi
 
 ### type for Fortran 'hidden' character lengths, if any
+### Try setting FPIFLAGS if not already set.
 AC_MSG_CHECKING([for type of 'hidden' Fortran character lengths])
 if test "x${FC_LEN_T}" != "x"; then
   fc_len_t=${FC_LEN_T}
 else
   R_PROG_FC_CHAR_LEN_T
-  fc_len_t=${r_cv_prog_fc_char_len_t}
+  if test "${r_cv_prog_fc_char_len_t}" != "xunknown" ; then
+    fc_len_t=${r_cv_prog_fc_char_len_t}
+  fi
 fi
 AC_MSG_RESULT([${fc_len_t}])
 
-if test "x${fc_len_t}" != "xunknown"; then
+if test "x${fc_len_t}" = "x" ; then
+  AC_MSG_ERROR([FC_LEN_T must be non-empty.])
+fi
+
+if test "x${fc_len_t}" != "xunknown" ; then
    AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
                       [C type used for Fortran character lengths])
 fi
+
+dnl substitute FPIEFLAGS as needed, e.g. from config.site or above.
+AC_SUBST(FPIEFLAGS)
 
 
 AC_SUBST(CFLAGS)
@@ -1318,7 +1396,7 @@ if test "${GCC}" = yes; then
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
 ## See <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004747> for alpha.
-    alpha*|sparc*|ppc64*|powerpc64*|s390*)
+    aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1329,7 +1407,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    alpha*|sparc*|ppc64*|powerpc64*|s390*)
+    aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1345,7 +1423,7 @@ case "${FC}" in
 esac
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    alpha*|sparc*|ppc64*|powerpc64*|s390*)
+    aarch64*|alpha*|sparc*|ppc64*|powerpc64*|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
@@ -1488,7 +1566,7 @@ dnl     ;;
       *icc*)
         cpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgcc*)
         cpicflags="-fpic"
 	;;
@@ -1498,7 +1576,7 @@ dnl     ;;
       *ifc|*ifort)
         fpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgf77|*pgf90|*pgf95)
         fpicflags="-fpic"
         ;;
@@ -1508,7 +1586,7 @@ dnl     ;;
       *icpc|*icc)
         cxxpicflags="-fpic"
         ;;
-      ## Portland Group
+      ## Nvidia (formerly Portland Group)
       *pgCC)
         cxxpicflags="-fpic"
         ;;
@@ -1520,7 +1598,7 @@ dnl     ;;
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
     ;;
-  mingw*)
+  mingw*|msys)
     SHLIB_EXT=".dll"
     cpicflags=
     cxxpicflags=
@@ -1635,7 +1713,7 @@ R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -1647,7 +1725,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -1659,7 +1737,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -n "${CXX}" -a -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|mingw*)
+    aix*|mingw*|msys)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -1793,23 +1871,32 @@ R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
+R_STDCXX([23], [CXX23], [CXX20])
 
-## Set default C++ compiler to C++14 if available, otherwise C++11
-## Do not set if neither is available.
+## Set default C++ compiler to C++17 if available, otherwise C++14 or C++11
+## Do not set if none is available.
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX14}"; then
-    CXX=${CXX14}
-    CXXSTD=${CXX14STD}
-    CXXFLAGS=${CXX14FLAGS}
-    CXXPICFLAGS=${CXX14PICFLAGS}
+  if test -n "${CXX17}"; then
+    CXX=${CXX17}
+    CXXSTD=${CXX17STD}
+    CXXFLAGS=${CXX17FLAGS}
+    CXXPICFLAGS=${CXX17PICFLAGS}
   elif test -n "${CXX11}"; then
-    AC_MSG_WARN([C++14 is not available so the default C++ standard is C++11])
-    CXX=${CXX11}
-    CXXSTD=${CXX11STD}
-    CXXFLAGS=${CXX11FLAGS}
-    CXXPICFLAGS=${CXX11PICFLAGS}
+    if test -n "${CXX14}"; then
+      AC_MSG_WARN([C++17 is not available so the default C++ standard is C++14])
+      CXX=${CXX14}
+      CXXSTD=${CXX14STD}
+      CXXFLAGS=${CXX14FLAGS}
+      CXXPICFLAGS=${CXX14PICFLAGS}
+    else
+      AC_MSG_WARN([C++17 is not available so the default C++ standard is C++11])
+      CXX=${CXX11}
+      CXXSTD=${CXX11STD}
+      CXXFLAGS=${CXX11FLAGS}
+      CXXPICFLAGS=${CXX11PICFLAGS}
+    fi
   else
-    AC_MSG_WARN([Neither C++14 nor C++11 is available so no default C++ compiler is set])
+    AC_MSG_WARN([None of C++17, C++14 nor C++11 is available so no default C++ compiler is set])
   fi
 fi
 
@@ -1979,7 +2066,7 @@ R_CHECK_FUNCS([select],
 #include <sys/time.h>  /* Earlier POSIX, HP-UX? */
 #endif])
 case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
   ;;
   *)
   if test "${ac_cv_have_decl_select}" = "no"; then
@@ -1999,7 +2086,10 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+dnl These are POSIX functions included by C23
 R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
+dnl BSD extension available on glibc and macOS -- but fails on maOS pre-1900
+dnl R_CHECK_FUNCS([timegm], [#include <time.h>])
 R_CHECK_FUNCS([nl_langinfo], [#include <langinfo.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
@@ -2011,13 +2101,6 @@ R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## POSIX.1-2008 preferred form
 R_CHECK_FUNCS([utimensat], [#include <sys/stat.h>])
-## Used to avoid a problem with some Xcode 9 updates on macOS 10.12 (Darwin 16)
-case "${host_os}" in
-   darwin1[[0123456]].*)
-     AC_DEFINE(MACOS_SIERRA, 1, [macOS 10.12 (Sierra) or earlier])
-   ;;
-esac
-AC_SUBST(MACOS_SIERRA)
 ## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
@@ -2068,7 +2151,7 @@ R_CHECK_FUNCS([thr_stksegment], [
 ## We don't need times() except as a fallback for getrusage and
 ## clock_gettime/gettimeofday -- but it is older and always there.
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
@@ -2121,7 +2204,7 @@ AM_LANGINFO_CODESET
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
-## strdup strncasecmp were first required in POSIX 2001.
+## strdup strncasecmp were first required in POSIX 2001.  strdup is C23
 AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
@@ -2153,8 +2236,22 @@ case "${host_os}" in
 esac
 fi
 if test "${use_internal_tzcode}" != yes; then
+  R_WORKING_MKTIME
+  if test "x${r_cv_working_mktime}" != xyes; then
+    AC_MSG_ERROR([date-time conversions do not work in 2020 -- is tzdata installed?])
+  fi
   R_MKTIME_ERRNO
   R_FUNC_MKTIME
+  R_FUNC_MKTIME2
+  R_FUNC_MKTIME3
+else
+  AC_DEFINE(MKTIME_SETS_ERRNO, 1, [Define if mktime sets errno.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
+            [Define if your mktime works correctly after 2037.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1902, 1,
+            [Define if your mktime works correctly before 1902.])
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
+            [Define if your mktime works correctly before 1970.])
 fi
 
 if test x${use_internal_iswxxxxx} = xdefault; then
@@ -2366,13 +2463,15 @@ AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
-## The default has already been set on macOS: otherwise it is "no"
-## and so this test fails.
-if test "${use_lapack}" = "yes"; then
+## The default is "unset"
+if test "${use_lapack}" = "unset"; then
+  R_LAPACK_SYSTEM_LIB
+elif test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
   LAPACK_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRlapack"
+  AC_MSG_NOTICE([using internal LAPACK sources])
 fi
 AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
@@ -2503,8 +2602,11 @@ AC_FUNC_FSEEKO
 ## Valgrind instrumentation
 if test ${valgrind_level} -eq 0; then
   AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
-elif test "${use_system_valgrind}" = yes; then
+else
   AC_CHECK_HEADERS([valgrind/memcheck.h])
+  if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
+  AC_MSG_WARN([system valgrind headers not found -- using internal copies])
+  fi
 fi
 
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
@@ -2600,11 +2702,10 @@ AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 AC_LANG_PUSH(Fortran)
 ## The next two are needed to get IBM's xlf* and Intel's ifc
 ## to accept these extensions (but neither are current).
-## They set FCFLAGS_F9x used in etc/Makeconf.in
+## They set FCFLAGS_f9x used in etc/Makeconf.in
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 ## We probably should be calling AC_FC_FREEFORM: adds to FCFLAGS
-## We could call AC_FC_FIXEDFORM: adds to FCFLAGS
 R_OPENMP
 AC_LANG_POP()
 
@@ -2772,22 +2873,38 @@ AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])
 
 ### * Win32 overrides
 case "${host_os}" in
-  mingw*)
+  mingw*|msys)
+    ## there are not needed with Rtools (detected correctly)
     AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function.])
     AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
     AC_DEFINE(HAVE_ICONV_H, 1, [Define to 1 if you have the <iconv.h> header file.])
     AC_DEFINE(HAVE_JPEG, 1,[Define if you have the JPEG headers and libraries.])
     AC_DEFINE(HAVE_PNG, 1, [Define if you have the PNG headers and libraries.])
+    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])    
+
+    ## these change what is detected with Rtools
     AC_DEFINE(HAVE_POSIX_SETJMP, 1, [Define if you have POSIX.1 compatible
                                      sigsetjmp/siglongjmp.])
+    AC_DEFINE(HAVE_DECL_SIGLONGJMP, 1, [Define to 1 if you have the declaration of `siglongjmp',
+                                       and to 0 if you don't.])
+    AC_DEFINE(HAVE_DECL_SIGSETJMP, 1, [Define to 1 if you have the declaration of `sigsetjmp',
+                                       and to 0 if you don't.])                                     
     AC_DEFINE(HAVE_TCLTK, 1, [Define if you have the Tcl/Tk headers and 
-                              libraries and want Tcl/Tk support to be built.] )
-    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
-    AC_DEFINE(HAVE_TIMES, 1, [Define to 1 if you have the `times' function.])
+                              libraries and want Tcl/Tk support to be built.])
     want_R_profiling=yes
     AC_DEFINE(R_PROFILING, 1, [Define this to enable R-level profiling.])
+    want_memory_profiling=yes
+    AC_DEFINE(R_MEMORY_PROFILING, 1, [Define this to enable memory profiling.])
     ;;
 esac
+
+dnl record compiler versions
+CC_VER=`${CC} --version | ${SED} -n 1p`
+FC_VER=`${FC} --version | ${SED} -n 1p`
+AC_DEFINE_UNQUOTED(CC_VER, "${CC_VER}", [Version of C Compiler])
+AC_SUBST(CC_VER)
+AC_DEFINE_UNQUOTED(FC_VER, "${FC_VER}", [Version of Fortran Compiler])
+AC_SUBST(FC_VER)
 
 ### * Output.
 
@@ -2905,6 +3022,7 @@ r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_cxx20_compiler="${CXX20} ${CXX20STD} ${R_XTRA_CXXFLAGS} ${CXX20FLAGS}"
+r_cxx23_compiler="${CXX23} ${CXX23STD} ${R_XTRA_CXXFLAGS} ${CXX23FLAGS}"
 r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${R_XTRA_FFLAGS} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -2931,12 +3049,13 @@ if test "${acx_blas_ok}" = "yes"; then
     *-latlas*) r_blas=ATLAS ;;
     *-lgoto*) r_blas=Goto ;;
     *-lopenblas*) r_blas=OpenBLAS ;;
-    *-lacml*) r_blas=ACML ;;
     *-lmkl*) r_blas=MKL ;;
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
     *Accelerate*)  r_blas=Accelerate ;;
+    *-lflexiblas*)  r_blas=FlexiBlas ;;
+    *-lblis*)  r_blas=BLIS ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac
@@ -3040,6 +3159,7 @@ R is now configured for ${host}
   C++14 compiler:              ${r_cxx14_compiler}
   C++17 compiler:              ${r_cxx17_compiler}
   C++20 compiler:              ${r_cxx20_compiler}
+  C++23 compiler:              ${r_cxx23_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}
   Obj-C compiler:	       ${r_objc_compiler}
 

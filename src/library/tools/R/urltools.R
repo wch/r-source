@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2021 The R Core Team
+#  Copyright (C) 2015-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## See RFC 3986 <https://www.rfc-editor.org/rfc/rfc3986> and
+## <https://url.spec.whatwg.org/>.
+
 get_IANA_URI_scheme_db <-
 function()
 {
@@ -25,13 +28,13 @@ function()
     db <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
                           stringsAsFactors = FALSE, encoding = "UTF-8")
     names(db) <- chartr(".", "_", names(db))
+    db$URI_Scheme <- sub(" .*", "", db$URI_Scheme)
     db
 }
 
 parse_URI_reference <-
 function(x)
 {
-    ## See RFC_3986 <https://tools.ietf.org/html/rfc3986>.
     re <- "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?"
     if(length(x)) {
         y <- do.call(rbind, regmatches(x, regexec(re, x)))
@@ -353,9 +356,9 @@ function()
 }
 
 ## See <https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>
-## and <http://tools.ietf.org/html/rfc959>,
+## and <https://www.rfc-editor.org/rfc/rfc959>,
 ## Section 4.2.2 "Numeric Order List of Reply Codes",
-## and <https://tools.ietf.org/html/rfc2228>,
+## and <https://www.rfc-editor.org/rfc/rfc2228>,
 ## Section 5 "New FTP Replies".
 ## Only need those >= 400.
 table_of_FTP_server_return_codes <-
@@ -463,13 +466,11 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         }
         ## Look for redirected URLs
         ## According to
-        ## <https://tools.ietf.org/html/rfc7230#section-3.1.2> the first
+        ## <https://www.rfc-editor.org/rfc/rfc7230#section-3.1.2> the first
         ## line of a response is the status-line, with "a possibly empty
         ## textual phrase describing the status code", so only look for
         ## a 301 status code in the first line.
-        if(grepl(" 301 ", h[1L], useBytes = TRUE) &&
-           !startsWith(u, "https://doi.org/") &&
-           !startsWith(u, "http://dx.doi.org/")) {
+        if(grepl(" 301 ", h[1L], useBytes = TRUE)) {
             ## Get the new location from the last consecutive 301
             ## obtained.
             h <- split(h, c(0L, cumsum(h == "\r\n")[-length(h)]))
@@ -485,14 +486,24 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                 ## Ouch.  According to RFC 7231, the location is a URI
                 ## reference, and may be relative in which case it needs
                 ## resolving against the effect request URI.
-                ## <https://tools.ietf.org/html/rfc7231#section-7.1.2>.
+                ## <https://www.rfc-editor.org/rfc/rfc7231#section-7.1.2>.
                 ## Not quite straightforward, hence do not report such
                 ## 301s. 
                 ## (Alternatively, could try reporting the 301 but no
                 ## new location.)
-                if(nzchar(parse_URI_reference(loc)[1L, "scheme"]))
+                newParts <- parse_URI_reference(loc)
+                if(nzchar(newParts[1L, "scheme"])) {
                     newLoc <- loc
-                ## (Note also that fragments would need extra care.)
+                    ## Handle fragments. If the new URL does have one,
+                    ## use it. Otherwise, if the old has one, use that.
+                    ## (From section 7.1.2).
+                    if (newParts[1L, "fragment"] == "") {
+                        uParts <- parse_URI_reference(u)
+                        if (nzchar(uFragment <- uParts[1L, "fragment"])) {
+                            newLoc <- paste0(newLoc, "#", uFragment)
+                        }
+                    }
+                }
             }
         }
         ##
@@ -512,7 +523,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
     .check_http_B <- function(u) {
         ul <- tolower(u)
         cran <- ((grepl("^https?://cran.r-project.org/web/packages", ul) &&
-                  !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]_]+(html|pdf|rds)$",
+                  !grepl("^https?://cran.r-project.org/web/packages/([.[:alnum:]_]+(html|pdf|rds))?$",
                          ul)) ||
                  (grepl("^https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
                         ul)) ||
@@ -598,6 +609,25 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
     pos <- which(schemes == "http" | schemes == "https")
     if(length(pos)) {
         urlspos <- urls[pos]
+        ## Check DOI URLs via the DOI handle API, as we nowadays do for
+        ## checking DOIs.
+        myparts <- parts[pos, , drop = FALSE]
+        ind <- (((myparts[, 2L] == "doi.org") | 
+                 (myparts[, 2L] == "dx.doi.org")) &
+                startsWith(myparts[, 3L], "/10.") &
+                !nzchar(myparts[, 4L]) &
+                !nzchar(myparts[, 5L]))
+        if(any(ind))
+            urlspos[ind] <- paste0("https://doi.org/api/handles",
+                                   myparts[ind, 3L])
+        ## Could also use regexps, e.g.
+        ##    pat <- "^https?://(dx[.])?doi.org/10[.]([^?#]+)$"
+        ##    ind <- grep(pat, urlspos)
+        ##    if(length(ind))
+        ##         urlspos[ind] <-
+        ##             paste0("https://doi.org/api/handles/10.",
+        ##                     sub(pat, "\\2", urlspos[ind]))
+        ## but using the parts is considerably faster ...
         headers <- .fetch_headers(urlspos)
         results <- do.call(rbind, Map(.check_http, urlspos, headers))
         status <- as.numeric(results[, 1L])
@@ -684,15 +714,36 @@ function(x, ...)
     y
 }
 
-.fetch_headers_via_base <- function(urls, verbose = FALSE, ids = urls)
+.fetch_headers_via_base <-
+function(urls, verbose = FALSE, ids = urls)
     Map(function(u, verbose, i) {
             if(verbose) message(sprintf("processing %s", i))
             tryCatch(curlGetHeaders(u), error = identity)
         },
         urls, verbose, ids)
 
-.fetch_headers_via_curl <- function(urls, verbose = FALSE, pool = NULL) {
+.fetch_headers_via_curl <-
+function(urls, verbose = FALSE, pool = NULL) {
+    out <- .curl_multi_run_worker(urls, TRUE, verbose, pool)
+    ind <- !vapply(out, inherits, NA, "error")
+    if(any(ind))
+        out[ind] <- lapply(out[ind],
+                           function(x) {
+                               y <- strsplit(rawToChar(x$headers),
+                                             "(?<=\r\n)",
+                                             perl = TRUE)[[1L]]
+                               attr(y, "status") <- x$status_code
+                               y
+                           })
+    out
+}
 
+
+.curl_multi_run_worker <-
+function(urls, nobody = FALSE, verbose = FALSE, pool = NULL)
+{
+    ## Use 'nobody = TRUE' to fetch only headers.
+    
     .progress_bar <- function(length, msg = "") {
         bar <- new.env(parent = baseenv())
         if(is.null(length)) {
@@ -722,14 +773,15 @@ function(x, ...)
     if(is.null(pool))
         pool <- curl::new_pool()
 
-    hs <- vector("list", length(urls))
+    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")    
 
-    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")
-    for(i in seq_along(hs)) {
+    out <- vector("list", length(urls))
+
+    for(i in seq_along(out)) {
         u <- urls[[i]]
         h <- curl::new_handle(url = u)
         curl::handle_setopt(h,
-                            nobody = TRUE,
+                            nobody = nobody,
                             cookiesession = 1L,
                             followlocation = 1L,
                             http_version = 2L,
@@ -746,14 +798,14 @@ function(x, ...)
         handle_result <- local({
             i <- i
             function(x) {
-                hs[[i]] <<- x
+                out[[i]] <<- x
                 bar$update()
             }
         })
         handle_error <- local({
             i <- i
             function(x) {
-                hs[[i]] <<-
+                out[[i]] <<-
                     structure(list(message = x),
                               class = c("curl_error", "error", "condition"))
                 bar$update()
@@ -767,21 +819,9 @@ function(x, ...)
 
     curl::multi_run(pool = pool)
    
-    out <- vector("list", length(hs))
-    for(i in seq_along(out)) {
-        if(inherits(hs[[i]], "error")) {
-            out[[i]] <- hs[[i]]
-        } else {
-            out[[i]] <- strsplit(rawToChar(hs[[i]]$headers),
-                                 "(?<=\r\n)",
-                                 perl = TRUE)[[1L]]
-            attr(out[[i]], "status") <- hs[[i]]$status_code
-        }
-    }
-        
     out
 }
-    
+
 .curl_GET_status <-
 function(u, verbose = FALSE)
 {

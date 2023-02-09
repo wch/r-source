@@ -2,6 +2,14 @@
 \HeaderA{testit}{An Rd Regression Test}{testit}
 \aliasB{\{}{testit}{.Rlbrace.}
 %
+\begin{Description}
+
+\Tabular{rl}{
+\Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
+& \url{https://example.org/a\&b\#c}
+}
+\end{Description}
+%
 \begin{Usage}
 \begin{verbatim}
 \x \y %{}
@@ -10,13 +18,13 @@ foo(x, y)
 \end{verbatim}
 \end{Usage}
 %
-\begin{Details}\relax
+\begin{Details}
 Escaped backslash \code{\bsl{}x}.
 
 \code{\%\{\}}
 
-\LinkA{a link}{a link} and one to a known destination:
-\LinkA{weighted.mean}{weighted.mean}
+\LinkA{a link}{a link} and some to known destinations:
+\LinkA{weighted.mean}{weighted.mean}, \code{\LinkA{\{}{Paren}}
 
 var in \var{text}.
 
@@ -33,12 +41,26 @@ var in \var{text}.
   From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034") 
   \end{alltt}
 
+\end{Details}
+%
+\begin{Value}
+[NULL]\\{}\dots
+\end{Value}
+%
+\begin{Section}{\AsIs{\texttt{\bsl{}Sexpr}}}
 Yihui Xie's example:
 \begin{description}
 \item[def] ghi
 \end{description}
 
-\end{Details}
+
+--
+\AsIs{\texttt{
+> cat("\bsl{}noutput\bsl{}n")
+output
+}}
+--
+\end{Section}
 %
 \begin{Examples}
 \begin{ExampleCode}

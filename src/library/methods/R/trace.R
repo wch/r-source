@@ -1,7 +1,7 @@
 #  File src/library/methods/R/trace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2016, 2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -99,6 +99,7 @@
         else {
             fname <- substitute(what)
             if(is.name(fname)) {
+                ## regular case
                 what <- as.character(fname)
                 temp <- .findFunEnvAndName(what, where)
                 whereF <- temp$whereF
@@ -236,8 +237,11 @@
         }
         original <- .untracedFunction(def)
         traceClass <- .traceClassName(class(original))
-        if(is.null(getClassDef(traceClass)))
+        if(is.null(getClassDef(traceClass))) {
+            ## e.g. for a simple S3 class name
             traceClass <- .makeTraceClass(traceClass, class(original))
+### FIXME: allow this to be NULL and then do *not* "think anymore" of S4 classes ...
+        }
         if(doEdit && is.environment(edit)) {
             ## trace with the version found in the edit environment
             def <- .findNewDefForTrace(what, signature, edit, fromPackage)
@@ -937,7 +941,7 @@ insertSource <- function(source, package = "",
             newObject <- get(what, envir = env)
         else
             stop(gettextf("no definition for object %s found in tracing environment",
-                          sQuote(what), source),
+                          sQuote(what)),
                  domain = NA)
     }
     else {

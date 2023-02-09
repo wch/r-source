@@ -171,13 +171,9 @@ identichr <- function(x, y) {
     } else FALSE
 }
 stopifnot(
-    identichr(strsplit(x, "", useBytes=TRUE)[[1]], strsplit(xb, "")[[1]]),
-    identichr(strsplit(xu, "", useBytes=TRUE)[[1]], strsplit(xb, "")[[1]]),
-    identichr(strsplit(xb, "")[[1]], split.a),
     identichr(strsplit(x, "[\x80\x9f]", useBytes=TRUE)[[1]], split.b),
     identichr(strsplit(x, "[\x80\x9f]", useBytes=TRUE, perl=TRUE)[[1]], split.b),
-    identichr(strsplit(x, "\x98", useBytes=TRUE, fixed=TRUE)[[1]], split.c),
-    identichr(strsplit(x, x98, fixed=TRUE)[[1]], split.c))
+    identichr(strsplit(x, "\x98", useBytes=TRUE, fixed=TRUE)[[1]], split.c))
 if(l10n_info()[['Latin-1']]) {
     xl <- x
     Encoding(xl) <- "latin1"
@@ -375,21 +371,3 @@ local({
     on.exit(options(old.warn))
     gregexec("123", "123 456", fixed=TRUE) # No warning with perl=FALSE
 })
-
-## Translations to wchar_t are done correctly?  Note: this is testing
-## undocumented behavior in `sub` and others whereby strings are translated
-## with substitution of invalid bytes into their escaped values, rather than
-## failing.  This behavior might change in the future, but in the interim we
-## must still ensure it is done correctly.  Currently "\xa0" is translated into
-## "<a0>" in UTF-8 strings.
-text <- c("\xa0<a0>", "<a0>\xa0\xff<a0>\xbb>", "\xc0")
-Encoding(text) <- "UTF-8"
-gsub.res <- c("!a0>!a0>", "!a0>!a0>!ff>!a0>!bb>>", "!c0>")
-grep.res <- c(TRUE, TRUE, TRUE)
-split.res <- list(c("", "a0>", "a0>"),
-                  c("", "a0>", "a0>", "ff>", "a0>", "bb>>"),
-                  c("", "c0>"))
-stopifnot(identical(gsub("<", "!", text), gsub.res),
-          identical(grepl("<", text), grep.res),
-          identical(strsplit(text, "<"), split.res))
-

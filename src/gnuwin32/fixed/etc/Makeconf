@@ -40,9 +40,9 @@ ifeq ($(R_INSTALLER_BUILD), yes)
   ifneq ($(strip $(R_CUSTOM_TOOLS_SOFT)),)
     LOCAL_SOFT = $(R_CUSTOM_TOOLS_SOFT)
   else
-    ## The rtools42 installer sets RTOOLS42_HOME
-    RTOOLS42_HOME ?= c:/rtools42
-    LOCAL_SOFT = $(subst \,/,$(RTOOLS42_HOME))/x86_64-w64-mingw32.static.posix
+    ## The rtools43 installer sets RTOOLS43_HOME
+    RTOOLS43_HOME ?= c:/rtools43
+    LOCAL_SOFT = $(subst \,/,$(RTOOLS43_HOME))/x86_64-w64-mingw32.static.posix
   endif
 endif
 R_TOOLS_SOFT ?= $(LOCAL_SOFT)
@@ -85,22 +85,26 @@ AR = $(BINPREF)ar
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)gcc $(M_ARCH)
-CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
+CFLAGS = -O3 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CPICFLAGS = 
 CPPFLAGS =
-CXX = $(BINPREF)g++ -std=gnu++11 $(M_ARCH)
+CC17 = $(BINPREF)gcc $(M_ARCH)
+C17FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu17 @EOPTS@ $(LTO)
+CC23 = $(BINPREF)gcc $(M_ARCH)
+C23FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu2x @EOPTS@ $(LTO)
+CC90 = $(BINPREF)gcc $(M_ARCH)
+C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ $(LTO)
+CC99 = $(BINPREF)gcc $(M_ARCH)
+C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
+CXX = $(BINPREF)g++ -std=gnu++17 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXXPICFLAGS =
-#CXX98 = $(BINPREF)g++ $(M_ARCH)
-#CXX98FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
-#CXX98PICFLAGS = 
-#CXX98STD = -std=gnu++98
 CXX11 = $(BINPREF)g++ $(M_ARCH)
 CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXX11PICFLAGS =
 CXX11STD = -std=gnu++11
-## these settings are for gcc >= 8
+## these settings are for GCC >= 10
 CXX14 = $(CXX11)
 CXX14FLAGS = $(CXX11FLAGS)
 CXX14PICFLAGS =
@@ -112,7 +116,13 @@ CXX17STD = -std=gnu++17
 CXX20 = $(CXX11)
 CXX20FLAGS = $(CXX11FLAGS)
 CXX20PICFLAGS =
-CXX20STD = -std=gnu++2a
+## g++ 8/9 used 2a, 10 supports 20.
+CXX20STD = -std=gnu++20
+CXX23 = $(CXX11)
+CXX23FLAGS = $(CXX11FLAGS)
+CXX23PICFLAGS =
+## g++ >= 11 allow 23
+CXX23STD = -std=gnu++2b
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
@@ -163,8 +173,8 @@ LTO_OPT =
 # MAIN_LD =
 # MAIN_LDFLAGS =
 # MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
-# don't have this: would 'mkdir -p' do?
-# MKINSTALLDIRS = $(R_HOME)/bin/mkinstalldirs
+# assume suitable mkdir on PATH (e.g. from Msys2)
+MKINSTALLDIRS = mkdir -p
 NM = $(BINPREF)nm
 ## There is no ObjC support in the recommended toolchain,
 ## but if a toolchain had support, this it what it would be.
@@ -194,6 +204,8 @@ SHLIB_CXX17LD = $(CXX17)
 SHLIB_CXX17LDFLAGS = -shared
 SHLIB_CXX20LD = $(CXX20)
 SHLIB_CXX20LDFLAGS = -shared
+SHLIB_CXX23LD = $(CXX23)
+SHLIB_CXX23LDFLAGS = -shared
 SHLIB_EXT = .dll
 SHLIB_FCLD = $(FC)
 ## ideally -shared -static-libgfortran, but not for gcc 4.2.1
@@ -216,9 +228,10 @@ TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 STATIC_LIBR =
 
 R_XTRA_CFLAGS =
-R_XTRA_CPPFLAGS = -I"$(R_HOME)/include" -DNDEBUG
+## Allow next to be overriden for cross-builds.
+R_XTRA_CPPFLAGS ?= -I"$(R_HOME)/include" -DNDEBUG
 R_XTRA_CXXFLAGS = 
-R_XTRA_FFLAGS =  @GF7OPTS@
+R_XTRA_FFLAGS =
 
 ifneq "$(LTO_OPT)" ""
 LTO = $(LTO_OPT)

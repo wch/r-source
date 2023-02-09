@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-08-02 r82660) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -108,13 +108,13 @@ Type 'q()' to quit R.
 + }
 m= 10 ; n= 7 :
 Time    user  system elapsed 
-Time   0.005   0.000   0.004 
+Time   0.004   0.000   0.005 
 m= 15 ; n= 0 :
 Time    user  system elapsed 
-Time   0.001   0.000   0.002 
+Time   0.001   0.000   0.001 
 m= 999 ; n= 0 :
 Time    user  system elapsed 
-Time   0.117   0.000   0.117 
+Time   0.068   0.000   0.068 
 > 
 > ##__ 4. Negative Binomial __
 > 
@@ -258,13 +258,15 @@ Time   0.117   0.000   0.117
 +     dnorm(x,3,s=Inf) == 0,
 +     pnorm(x,3,s=Inf) == c(0, rep(0.5, 8), 1))
 > 
-> ## 3 Test data from Wichura (1988) :
 > stopifnot(
++     ## 3 Test data from Wichura (1988) :
 +     all.equal(qnorm(c( 0.25,  .001, 1e-20)),
 + 	      c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
 + 	      tolerance = 1e-15)
 +   , ## extreme tail -- available on log scale only:
-+     all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
++     all.equal(qe5 <- qnorm(-1e5, log = TRUE), -447.1978937)
++   , ## much more accurate (2022-08):
++     All.eq(-1e5, pnorm(qe5, log = TRUE))
 + )
 > 
 > z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tolerance = 1e-15)
@@ -878,5 +880,5 @@ Time   0.117   0.000   0.117
 > ## ==        ~~~                    ~~~~  ~~~               ~~~~~~~~~~~~~~~
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.166 0.019 1.19 0 0 
+Time elapsed:  0.592 0.053 0.65 0 0 
 > 

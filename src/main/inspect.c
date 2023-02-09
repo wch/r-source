@@ -114,6 +114,9 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
+    if (TYPEOF(v) == PROMSXP) {
+	if (PRVALUE(v) != R_UnboundValue) { if (a) Rprintf(","); Rprintf("VAL"); a = 1; }
+    }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
@@ -143,9 +146,18 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (IS_ASCII(v)) Rprintf("[ASCII] ");
 	if (IS_CACHED(v)) Rprintf("[cached] ");
 	Rprintf("\"%s\"", CHAR(v));
+	if (v == R_NaString) Rprintf(" [NA]");
     }
-    if (TYPEOF(v) == SYMSXP)
-	Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+    if (TYPEOF(v) == SYMSXP) {
+	if (v == R_UnboundValue)
+	    Rprintf("[unbound value]");
+	else if (v == R_MissingArg)
+	    Rprintf("[missing argument]");
+	else if (v == R_RestartToken)
+	    Rprintf("[restart token]");
+	else
+	    Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+    }
     if (TYPEOF(v) == EXTPTRSXP)
 	Rprintf("<%p>", R_ExternalPtrAddr(v));
     switch (TYPEOF(v)) { /* for native vectors print the first elements in-line */
@@ -305,7 +317,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 /* internal API - takes one mandatory argument (object to inspect) and
    two optional arguments (deep and pvec - see above), positional argument
    matching only */
-SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
+attribute_hidden SEXP do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     checkArity(op, args);
     SEXP obj = CAR(args);
     int deep = -1;
@@ -320,19 +332,19 @@ SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     return obj;
 }
 
-SEXP attribute_hidden do_address(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_address(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return R_MakeExternalPtr((void *) CAR(args), R_NilValue, R_NilValue);
 }
 
-SEXP attribute_hidden do_named(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_named(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarInteger(NAMED(CAR(args)));
 }
 
-SEXP attribute_hidden do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarInteger(REFCNT(CAR(args)));
@@ -340,12 +352,12 @@ SEXP attribute_hidden do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* the following functions can be use internally and for debugging purposes -
    so far they are not used in any actual code */
-SEXP attribute_hidden R_inspect(SEXP x) {
+attribute_hidden SEXP R_inspect(SEXP x) {
     inspect_tree(0, x, -1, 5);
     return x;
 }
 
-SEXP attribute_hidden R_inspect3(SEXP x, int deep, int pvec) {
+attribute_hidden SEXP R_inspect3(SEXP x, int deep, int pvec) {
     inspect_tree(0, x, deep, pvec);
     return x;
 }

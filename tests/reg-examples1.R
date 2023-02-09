@@ -12,6 +12,8 @@ example(DateTimeClasses, run.donttest = TRUE)
 example(Dates, run.donttest = TRUE)
 example(Ops.Date, run.donttest = TRUE)
 example(Random, run.donttest = TRUE)
+head(s <- Sys.getenv(), 12) # from Sys.getenv.Rd
+writeLines(formatDL(s, style = "list")) # from formatDL.Rd
 example(Sys.getpid, run.donttest = TRUE)
 example(Sys.sleep, run.donttest = TRUE)
 example(Sys.time, run.donttest = TRUE)
@@ -61,12 +63,11 @@ if(.Platform$OS.type == "windows") {
 }
 
 library(tools)
-example(Rdutils, run.donttest = TRUE)
-example(fileutils, run.donttest = TRUE)
+example(Rd_db, run.donttest = TRUE)
+example(file_ext, run.donttest = TRUE)
 example(makevars_user, run.donttest = TRUE)
 ## results are location- and OS-specific
 example(parseLatex, run.donttest = TRUE) # charset-specific
-example(loadRdMacros, run.donttest = TRUE) # collation-specific
 
 ## part of example(buildVignettes) at one time
 gVigns <- pkgVignettes("grid")

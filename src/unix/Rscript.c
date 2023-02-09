@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2021  The R Core Team
+ *  Copyright (C) 2006-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,25 +91,27 @@ static int verbose = 0;
 
 void usage(void)
 {
-    fprintf(stderr, "Usage: /path/to/Rscript [options] [-e expr [-e expr2 ...] | file] [args]\n\n");
-    fprintf(stderr, "options accepted in [options]:\n");
-    fprintf(stderr, "  --help              Print usage and exit\n");
-    fprintf(stderr, "  --version           Print version and exit\n");
-    fprintf(stderr, "  --verbose           Print information on progress\n");
-    fprintf(stderr, "  --default-packages=list\n");
-    fprintf(stderr, "                      A comma-separated 'list' of package names, or 'NULL'\n");
-    fprintf(stderr, "  and options to R (--no-echo --no-restore are added automatically), such as\n");
-    fprintf(stderr, "  --save              Do save workspace at the end of the session\n");
-    fprintf(stderr, "  --no-environ        Don't read the site and user environment files\n");
-    fprintf(stderr, "  --no-site-file      Don't read the site-wide Rprofile\n");
-    fprintf(stderr, "  --no-init-file      Don't read the user R profile\n");
-    fprintf(stderr, "  --restore           Do restore previously saved objects at startup\n");
-    fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file,\n");
-    fprintf(stderr, "                        --no-init-file and --no-environ\n");
-    fprintf(stderr, "\n'file' may contain spaces but not shell metacharacters\n");
-    fprintf(stderr, "Expressions (one or more '-e <expr>') may be used *instead* of 'file'\n");
-    fprintf(stderr, "'args' are accessible via commandArgs(TRUE) in the script\n");
-    fprintf(stderr, "See also  ?Rscript  from within R\n");
+    fprintf(stdout, "Usage: Rscript [options] file [args]\n");
+    fprintf(stdout, "   or: Rscript [options] -e expr [-e expr2 ...] [args]\n");
+    fprintf(stdout, "A binary front-end to R, for use in scripting applications.\n\n");
+    fprintf(stdout, "Options:\n");
+    fprintf(stdout, "  --help              Print usage and exit\n");
+    fprintf(stdout, "  --version           Print version and exit\n");
+    fprintf(stdout, "  --verbose           Print information on progress\n");
+    fprintf(stdout, "  --default-packages=LIST  Attach these packages on startup;\n");
+    fprintf(stdout, "                        a comma-separated LIST of package names, or 'NULL'\n");
+    fprintf(stdout, "and options to R (in addition to --no-echo --no-restore), for example:\n");
+    fprintf(stdout, "  --save              Do save workspace at the end of the session\n");
+    fprintf(stdout, "  --no-environ        Don't read the site and user environment files\n");
+    fprintf(stdout, "  --no-site-file      Don't read the site-wide Rprofile\n");
+    fprintf(stdout, "  --no-init-file      Don't read the user R profile\n");
+    fprintf(stdout, "  --restore           Do restore previously saved objects at startup\n");
+    fprintf(stdout, "  --vanilla           Combine --no-save, --no-restore, --no-site-file,\n");
+    fprintf(stdout, "                        --no-init-file and --no-environ\n");
+    /* fprintf(stdout, "\n'file' may contain spaces but not shell metacharacters.\n"); */
+    fprintf(stdout, "\nExpressions (one or more '-e <expr>') may be used *instead* of 'file'.\n");
+    fprintf(stdout, "Any additional 'args' can be accessed from R via 'commandArgs(TRUE)'.\n");
+    fprintf(stdout, "See also  ?Rscript  from within R.\n");
 }
 
 
@@ -232,10 +234,10 @@ int main(int argc_, char *argv_[])
 	}
 	if(strcmp(argv[1], "--version") == 0) {
 	    if(strlen(R_STATUS) == 0)
-		fprintf(stderr, "R scripting front-end version %s.%s (%s-%s-%s)\n",
+		fprintf(stdout, "Rscript (R) version %s.%s (%s-%s-%s)\n",
 			R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
 	    else
-		fprintf(stderr, "R scripting front-end version %s.%s %s (%s-%s-%s r%d)\n",
+		fprintf(stdout, "Rscript (R) version %s.%s %s (%s-%s-%s r%d)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 			R_SVN_REVISION);
 	    exit(0);

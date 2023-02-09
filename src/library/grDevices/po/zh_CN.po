@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
@@ -76,33 +77,33 @@ msgstr "hsv到rgb颜色转换出错"
 
 #: colors.c:220 colors.c:234
 msgid "invalid hsv color"
-msgstr "hsv颜色不对"
+msgstr "hsv颜色无效"
 
 #: colors.c:346 colors.c:366
 msgid "invalid hcl color"
-msgstr "hcl颜色不对"
+msgstr "hcl颜色无效"
 
 #: colors.c:398
 #, fuzzy
 msgid "invalid value of 'maxColorValue'"
-msgstr "'%s'的值不对"
+msgstr "'%s'的值无效"
 
 #: colors.c:426
 msgid "invalid 'names' vector"
-msgstr "'names'向量不对"
+msgstr "'names'向量无效"
 
 #: colors.c:491 colors.c:500
 msgid "invalid gray level, must be in [0,1]."
-msgstr "灰色水平不对，必需在[0,1]。"
+msgstr "灰色水平无效，必需在[0,1]。"
 
 #: colors.c:556 cairo/cairoBM.c:615
 #, c-format
 msgid "invalid '%s' value"
-msgstr "'%s'值 不对"
+msgstr "'%s'值无效"
 
 #: colors.c:1343
 msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "'color'或'lty'里的十六进制数字不对"
+msgstr "'color'或'lty'里的十六进制数字无效"
 
 #: colors.c:1353 colors.c:1363
 msgid "invalid RGB specification"
@@ -111,7 +112,7 @@ msgstr "RGB设置出错"
 #: colors.c:1396
 #, c-format
 msgid "invalid color name '%s'"
-msgstr "'%s'颜色名字不对"
+msgstr "'%s'颜色名字无效"
 
 #: colors.c:1446 colors.c:1455
 #, c-format
@@ -129,7 +130,7 @@ msgstr "颜色数值必需大于等于零，现在得到的是%d"
 
 #: colors.c:1498
 msgid "invalid argument type"
-msgstr "参数种类不对"
+msgstr "参数类型无效"
 
 #: colors.c:1509
 msgid "unknown palette (need >= 2 colors)"
@@ -153,7 +154,7 @@ msgstr "遇到未知AFM值这个错误"
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
-msgstr "'%s'里的字符串不对"
+msgstr "'%s'里的字符串无效"
 
 #: devPS.c:780
 #, c-format
@@ -178,11 +179,11 @@ msgstr "字符0x%x不带字体度量"
 #: devPS.c:887
 #, c-format
 msgid "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
-msgstr "传给'PostScriptCIDMetricInfo'的字符(%04x)在单字节場所里, 因此不对"
+msgstr "传给'PostScriptCIDMetricInfo'的字符(%04x)在单字节場所里, 因此无效"
 
 #: devPS.c:895
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
-msgstr "传给'PostScriptCIDMetricInfo'的字符是单字节場所, 因此不对"
+msgstr "传给'PostScriptCIDMetricInfo'的字符是单字节場所, 因此无效"
 
 #: devPS.c:1007
 msgid "failed to allocate CID font info"
@@ -223,7 +224,7 @@ msgstr "无法载入编码文本'%s'"
 
 #: devPS.c:1463 devPS.c:1496
 msgid "invalid font name or more than one font name"
-msgstr "字体名字不对或太多"
+msgstr "字体名字无效或太多"
 
 #: devPS.c:1617 devPS.c:1652
 #, c-format
@@ -309,7 +310,7 @@ msgstr "无法初始化外加的PostScript字体"
 
 #: devPS.c:3335
 msgid "invalid foreground/background color (postscript)"
-msgstr "前景/后景颜色不对(postscript)"
+msgstr "前景/后景颜色无效(postscript)"
 
 #: devPS.c:3340
 msgid "'command' is too long"
@@ -322,7 +323,7 @@ msgstr "'postscript(print.it=TRUE)'不能用在空'print'命令里"
 #: devPS.c:3396
 #, c-format
 msgid "invalid page type '%s' (postscript)"
-msgstr "页类别'%s'(postscript)不对"
+msgstr "页类别'%s'(postscript)无效"
 
 #: devPS.c:3524 devPS.c:4676 devWindows.c:2356
 msgid "semi-transparency is not supported on this device: reported only once per page"
@@ -379,7 +380,7 @@ msgstr "文字转换到编码'%s'时出了错"
 
 #: devPS.c:4690
 msgid "ran out of colors in xfig()"
-msgstr "xfig()里的颜色不够用"
+msgstr "xfig()里的颜色不足用"
 
 #: devPS.c:4719
 #, c-format
@@ -393,7 +394,7 @@ msgstr "不存在postscript字体系列'%s', 用Helvetica"
 
 #: devPS.c:4863
 msgid "invalid foreground/background color (xfig)"
-msgstr "前景/后景颜色不对(xfig)"
+msgstr "前景/后景颜色无效(xfig)"
 
 #: devPS.c:4896
 msgid "only Type 1 fonts supported for XFig"
@@ -467,7 +468,7 @@ msgstr ""
 
 #: devPS.c:6996
 msgid "invalid 'alpha' value in PDF"
-msgstr "PDF里的'alpha'值不对"
+msgstr "PDF里的'alpha'值无效"
 
 #: devPS.c:7110 devPS.c:7113
 msgid "failed to increase 'maxRaster'"
@@ -517,11 +518,11 @@ msgstr "无法分配字体列"
 #: devPS.c:7708
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
-msgstr "纸张类别'%s'不对(pdf)"
+msgstr "纸张类别'%s'无效(pdf)"
 
 #: devPS.c:7732
 msgid "invalid foreground/background color (pdf)"
-msgstr "前景/后景颜色不对(pdf)"
+msgstr "前景/后景颜色无效(pdf)"
 
 #: devPS.c:7837
 msgid "increasing the PDF version to 1.4"
@@ -581,19 +582,19 @@ msgstr "没有能够找到或载入PDF CID字体"
 #: devPS.c:10353 devPS.c:10357 devPS.c:10518 devPS.c:10522
 #, c-format
 msgid "invalid 'family' parameter in %s"
-msgstr "%s里的'system'参数不对"
+msgstr "%s里的'system'参数无效"
 
 #: devPS.c:10375 devPS.c:10534
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
-msgstr "%s里的'fonts'参数不对"
+msgstr "%s里的'fonts'参数无效"
 
 #: devPS.c:10381 devPS.c:10544 devPS.c:10547 devWindows.c:3760
 #: devWindows.c:3764 devWindows.c:3772 devWindows.c:3783 devWindows.c:3789
 #: devWindows.c:3796 devWindows.c:3803 devWindows.c:3807
 #, c-format
 msgid "invalid value of '%s'"
-msgstr "'%s'的值不对"
+msgstr "'%s'的值无效"
 
 #: devPS.c:10394 devPS.c:10461 devPS.c:10561 devPicTeX.c:775 devWindows.c:3850
 #, c-format
@@ -616,11 +617,11 @@ msgstr "字体家族\"%s\"没有字体"
 
 #: devQuartz.c:1407
 msgid "invalid 'file' argument"
-msgstr "'file'参数不对"
+msgstr "'file'参数无效"
 
 #: devQuartz.c:1434
 msgid "invalid quartz() device size"
-msgstr "quartz()装置大小不对"
+msgstr "quartz()装置大小无效"
 
 #: devQuartz.c:1462
 msgid "unable to create device description"
@@ -628,7 +629,7 @@ msgstr "无法建立设备描述文件"
 
 #: devQuartz.c:1512
 msgid "unable to create quartz() device target, given type may not be supported"
-msgstr "无法建立quartz()装置，可能不支持所提供的种类"
+msgstr "无法建立quartz()装置，可能不支持所提供的类型"
 
 #: devQuartz.c:1642
 msgid "Quartz device is not available on this platform"
@@ -636,7 +637,7 @@ msgstr "这个平台上没有石英装置"
 
 #: devWindows.c:364 devWindows.c:410 devWindows.c:481
 msgid "Not enough memory to copy graphics window"
-msgstr "内存不够，无法拷贝图形窗"
+msgstr "内存不足，无法拷贝图形窗"
 
 #: devWindows.c:369 devWindows.c:415 devWindows.c:486
 msgid "No device available to copy graphics window"
@@ -649,7 +650,7 @@ msgstr "文件名字中不能有'%%'"
 
 #: devWindows.c:627
 msgid "invalid font specification"
-msgstr "字体设置出错"
+msgstr "字体设定无效"
 
 #: devWindows.c:666
 msgid "font family not found in Windows font database"
@@ -706,11 +707,11 @@ msgstr "无法打开剪輯板来写入元文本"
 
 #: devWindows.c:2144
 msgid "Insufficient memory for resize. Killing device"
-msgstr "内存不够，无法重新修改大小. 关闭装置"
+msgstr "内存不足，无法重新修改大小. 关闭装置"
 
 #: devWindows.c:2152
 msgid "Insufficient memory for resize. Disabling alpha blending"
-msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
+msgstr "内存不足，无法重新修改大小. 关闭alpha混合"
 
 #: devWindows.c:2181
 msgid "a clipboard metafile can store only one figure."
@@ -731,7 +732,7 @@ msgstr "调用dev.hold()后不能再用定位器"
 
 #: devWindows.c:3244
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "图形设备在调用 locator 或 identify时关闭"
 
 #: devWindows.c:3510
 msgid "option 'windowsTimeouts' should be integer"
@@ -747,11 +748,11 @@ msgstr "'savePlot'装置出错"
 
 #: devWindows.c:3537
 msgid "invalid filename argument in 'savePlot'"
-msgstr "'savePlot'文本名字参数不对"
+msgstr "'savePlot'文本名字参数无效"
 
 #: devWindows.c:3542
 msgid "invalid type argument in 'savePlot'"
-msgstr "'savePlot'类别参数不对"
+msgstr "'savePlot'类别参数无效"
 
 #: devWindows.c:3569
 msgid "unknown type in savePlot"
@@ -768,7 +769,7 @@ msgstr "无法打开"
 
 #: devWindows.c:3755
 msgid "invalid 'width' or 'height'"
-msgstr "'width'或'height'的值不对"
+msgstr "'width'或'height'的值无效"
 
 #: devices.c:51
 msgid "argument must have positive length"
@@ -776,11 +777,12 @@ msgstr "参数的长度必需是下的"
 
 #: devices.c:60
 msgid "invalid argument"
-msgstr "参数不对"
+msgstr "参数无效"
 
 #: devices.c:89 devices.c:97 devices.c:105
+#, fuzzy
 msgid "NA argument is invalid"
-msgstr ""
+msgstr "列表参数的名字无效"
 
 #: group.c:38
 msgid "Group definition ignored (device is appending path)"
@@ -809,7 +811,7 @@ msgstr "不支持这个规划，因此没有写任何图象数据"
 #: cairo/cairoBM.c:637
 #, c-format
 msgid "invalid '%s' argument"
-msgstr "'%s'参数不对"
+msgstr "'%s'参数无效"
 
 #: cairo/cairoBM.c:193 cairo/cairoBM.c:362
 #, fuzzy

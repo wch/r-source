@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2021   The R Core Team.
+ *  Copyright (C) 1998-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -478,7 +478,7 @@ static R_INLINE int isNAstring(const char *buf, int mode, LocalData *d)
     return 0;
 }
 
-static R_INLINE void NORET expected(char *what, char *got, LocalData *d)
+NORET static R_INLINE void expected(char *what, char *got, LocalData *d)
 {
     int c;
     if (d->ttyflag) { /* This is safe in a MBCS */
@@ -673,7 +673,7 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
     char *buffer = NULL;
     int c, strip, bch;
     R_xlen_t blksize, i, ii, j, n, nc, linesread, colsread;
-    R_xlen_t badline, nstring = 0;
+    R_xlen_t badline;
     R_StringBuffer buf = {NULL, 0, MAXELTSIZE};
 
     nc = xlength(what);
@@ -693,7 +693,6 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
 	    if (!isVector(w)) {
 		error(_("invalid '%s' argument"), "what");
 	    }
-	    if(TYPEOF(w) == STRSXP) nstring++;
 	    SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(w), blksize));
 	}
     }
@@ -833,7 +832,7 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
     return ans;
 }
 
-SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int c, flush, fill, blskip, multiline, escapes, skipNul;
@@ -1005,7 +1004,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int c;
     char buffer[MAXELTSIZE], *bufp = buffer;

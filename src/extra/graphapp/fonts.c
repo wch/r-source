@@ -26,6 +26,7 @@
 
    Use default GUI font
    Do not delete FixedFont
+   default_font_charset for use with UTF-8 as ACP
 
  */
 
@@ -127,6 +128,7 @@ void init_fonts(void)
     */
     ncm.cbSize = sizeof(NONCLIENTMETRICS);
     SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0);
+    ncm.lfMenuFont.lfCharSet = default_font_charset();
     SystemFont = new_font_object(CreateFontIndirect(&ncm.lfMenuFont));
     if (SystemFont) SystemFont->text = new_string("SystemFont");
 
@@ -140,6 +142,26 @@ void init_fonts(void)
     protect_object(Times);
     protect_object(Helvetica);
     protect_object(Courier);
+}
+
+/* With UTF-8 as the active code page, one cannot use DEFAULT_CHARSET as the
+   charset in the device context. This function returns a value that needs
+   to be used, instead, for functions like TextOutA, ExTextOutA, DrawTextA
+   to work. The value returned for UTF-8 code page seems to be 254, but that
+   does not seem to be documented.
+
+   https://tedwvc.wordpress.com/2019/09/09/new-utf-8-features-in-windows-10-1903/
+   R PR#18382
+*/
+UINT default_font_charset()
+{
+    if (GetACP() == 65001) {
+	CHARSETINFO csinfo;
+	if (TranslateCharsetInfo((DWORD *)(ULONG_PTR)65001, &csinfo,
+	                         TCI_SRCCODEPAGE))
+	    return csinfo.ciCharset;
+    }
+    return DEFAULT_CHARSET;
 }
 
 /*
@@ -167,9 +189,11 @@ font newfont(const char *name, int style, int size)
     lf.lfWidth = lf.lfEscapement = lf.lfOrientation = 0;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
-    lf.lfCharSet = ANSI_CHARSET;
+    lf.lfCharSet = default_font_charset(); /* used to be ANSI_CHARSET */
     if ((! string_diff(name, "Symbol"))
-	|| (! string_diff(name, "Wingdings")))
+	|| (! string_diff(name, "Wingdings"))
+	|| (! string_diff(name, "TT Symbol"))
+	|| (! string_diff(name, "TT Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;

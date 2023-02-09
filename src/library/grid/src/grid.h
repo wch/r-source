@@ -276,36 +276,36 @@ SEXP R_gridEvalEnv;
  * (from all over the place)
  */
 SEXP L_initGrid(SEXP GridEvalEnv); 
-SEXP L_killGrid(); 
-SEXP L_gridDirty();
-SEXP L_currentViewport(); 
+SEXP L_killGrid(void); 
+SEXP L_gridDirty(void);
+SEXP L_currentViewport(void); 
 SEXP L_setviewport(SEXP vp, SEXP hasParent);
 SEXP L_downviewport(SEXP vp, SEXP strict);
 SEXP L_downvppath(SEXP path, SEXP name, SEXP strict);
 SEXP L_unsetviewport(SEXP last);
 SEXP L_upviewport(SEXP last);
-SEXP L_getDisplayList(); 
+SEXP L_getDisplayList(void); 
 SEXP L_setDisplayList(SEXP dl); 
 SEXP L_getDLelt(SEXP index);
 SEXP L_setDLelt(SEXP value);
-SEXP L_getDLindex();
+SEXP L_getDLindex(void);
 SEXP L_setDLindex(SEXP index);
-SEXP L_getDLon();
+SEXP L_getDLon(void);
 SEXP L_setDLon(SEXP value);
-SEXP L_getEngineDLon();
+SEXP L_getEngineDLon(void);
 SEXP L_setEngineDLon(SEXP value);
 SEXP L_setGridState(SEXP elementIndex, SEXP value);
-SEXP L_getCurrentGrob();
+SEXP L_getCurrentGrob(void);
 SEXP L_setCurrentGrob(SEXP value);
-SEXP L_getEngineRecording();
+SEXP L_getEngineRecording(void);
 SEXP L_setEngineRecording(SEXP value);
-SEXP L_currentGPar();
-SEXP L_newpagerecording();
-SEXP L_newpage();
+SEXP L_currentGPar(void);
+SEXP L_newpagerecording(void);
+SEXP L_newpage(void);
 SEXP L_clearDefinitions(SEXP clearGroups);
-SEXP L_initGPar();
-SEXP L_initViewportStack();
-SEXP L_initDisplayList();
+SEXP L_initGPar(void);
+SEXP L_initViewportStack(void);
+SEXP L_initDisplayList(void);
 SEXP L_convertToNative(SEXP x, SEXP what); 
 SEXP L_moveTo(SEXP x, SEXP y);
 SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow);
@@ -321,14 +321,14 @@ SEXP L_circle(SEXP x, SEXP y, SEXP r);
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h, 
               SEXP hjust, SEXP vjust, SEXP interpolate);
-SEXP L_cap();
+SEXP L_cap(void);
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap);
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
 SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_pretty(SEXP scale);
 SEXP L_pretty2(SEXP scale, SEXP n);
-SEXP L_locator();
+SEXP L_locator(void);
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
 SEXP L_devLoc(SEXP x, SEXP y, SEXP device);
@@ -654,7 +654,7 @@ SEXP doSetViewport(SEXP vp,
 void getDeviceSize(pGEDevDesc dd, double *devWidthCM, double *devHeightCM); 
 
 /* This is, confusingly, a wrapper for GEcurrentDevice */
-pGEDevDesc getDevice();
+pGEDevDesc getDevice(void);
 
 void dirtyGridDevice(pGEDevDesc dd);
 
@@ -673,11 +673,15 @@ SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
 SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
+SEXP L_pointsPoints(SEXP x, SEXP y, SEXP pch, SEXP size, SEXP closed);
 
 /* From path.c */
 SEXP L_stroke(SEXP path);
 SEXP L_fill(SEXP path, SEXP rule);
 SEXP L_fillStroke(SEXP path, SEXP rule);
+
+/* From typeset.c */
+SEXP L_glyph(SEXP runs, SEXP info, SEXP x, SEXP y);
 
 /* From unit.c */
 SEXP validUnits(SEXP units);

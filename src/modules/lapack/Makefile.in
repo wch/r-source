@@ -10,13 +10,17 @@ subdir = src/modules/lapack
 R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
+.SUFFIXES:
+.SUFFIXES: .c .f .f90 .d .o
+.f90.o:
+	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
 
 SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
 SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 
 ## BUILD_LTO_CHECK_TRUE relies on using the internal LAPACK
 DEPENDS = $(SOURCES_C:.c=.d)
-SOURCES = $(SOURCES_C) $(SOURCES_F)
+SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_F90)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = Lapack.h
 
@@ -24,7 +28,10 @@ HEADERS = Lapack.h
 ## vecLib/Accelerate, so needs the zdot* fix.
 LIBSOURCES = dlamch.f dlapack.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.o) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
+LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
+  @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ zlartg.f90 zlassq.f90
+LIBOBJECTS = $(LIBSOURCES:.f=.o) $(LIBSOURCES90:.f90=.o) \
+  @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
@@ -33,7 +40,9 @@ DISTFILES = \
 	$(HEADERS) Lapack.c init_win.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f dlapack.f dlamch.f \
-	dble.txt cmplx.txt
+	dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
+	zlartg.f90 zlassq.f90 \
+	dble.txt cmplx.txt R.patch
 
 lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
@@ -72,6 +81,11 @@ LTO = @LTO_FC@
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO_FC)
 dlamch.o: dlamch.f
 	$(FC) $(DLAMC_FFLAGS) -c $< -o $@
+
+la_constants.mod: la_constants.o
+la_xisnan.mod: la_xisnan.o
+dlartg.o dlassq.o zlartg.o zlassq.o la_xisnan.o: la_constants.o
+dlassq.o zlassq.o: la_xisnan.o
 
 R: Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
@@ -116,7 +130,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -Rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *.mod \
 	  $(lapack_la) $(Rlapack_la)
 distclean: clean
 	@-rm -f Makefile

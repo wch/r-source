@@ -6,17 +6,19 @@
 \name{base-deprecated}
 \alias{base-deprecated}
 %------ Eventually move entries to ---->> ./base-defunct.Rd
-\alias{default.stringsAsFactors}% here for R 4.2.0
+%%\alias{default.stringsAsFactors}% here for R 4.2.0
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
+
+  (currently none)
 }
-\usage{
-default.stringsAsFactors()
-}
+%% \usage{
+%% default.stringsAsFactors()
+%% }
 %% \arguments{
 %%   \item{\dots}{(arguments)}
 %% }

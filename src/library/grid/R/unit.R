@@ -115,6 +115,10 @@ convertNative <- function(unit, dimension="x", type="location") {
 }
 
 deviceLoc <- function(x, y, valueOnly=FALSE, device=FALSE) {
+    if (!(is.unit(x) && length(x) > 0 &&
+          is.unit(y) && length(y) > 0 &&
+          is.logical(device) && length(device) == 1 && !is.na(device)))
+        stop("'x' and 'y' must be units and 'device' must be logical")
     result <- grid.Call(C_devLoc, x, y, as.logical(device))
     names(result) <- c("x", "y")
     if (valueOnly) {
@@ -129,6 +133,10 @@ deviceLoc <- function(x, y, valueOnly=FALSE, device=FALSE) {
 }
 
 deviceDim <- function(w, h, valueOnly=FALSE, device=FALSE) {
+    if (!(is.unit(w) && length(w) > 0 &&
+          is.unit(h) && length(h) > 0 &&
+          is.logical(device) && length(device) == 1 && !is.na(device)))
+        stop("'w' and 'h' must be units and 'device' must be logical")
     result <- grid.Call(C_devDim, w, h, as.logical(device))
     names(result) <- c("w", "h")
     if (valueOnly) {

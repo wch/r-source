@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2015   The R Core Team
+  Copyright (C) 1997-2023   The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ static Rboolean DebugInitFile = FALSE;
  *  INITIALIZATION AND TERMINATION ACTIONS
  */
 
-void attribute_hidden R_InitialData(void)
+attribute_hidden void R_InitialData(void)
 {
     R_RestoreGlobalEnv();
 }
@@ -114,18 +114,28 @@ static char workspace_name[1000] = ".RData";
   drag-and-drop on Windows.
  */
 #else
-static char workspace_name[PATH_MAX] = ".RData";
+static char *workspace_name = ".RData";
 
 attribute_hidden
-void set_workspace_name(const char *fn)
+Rboolean set_workspace_name(const char *fn)
 {
-    strncpy(workspace_name, fn, PATH_MAX);
-    workspace_name[PATH_MAX - 1] = '\0';
+    static Rboolean previously_allocated = FALSE;
+    size_t needed = strlen(fn) + 1;
+    char *new_wsn = (char *)malloc(needed);
+
+    if (!new_wsn)
+	return FALSE;
+    if (previously_allocated)
+	free(workspace_name);
+    previously_allocated = TRUE;
+    strncpy(new_wsn, fn, needed);
+    workspace_name = new_wsn;
+    return TRUE;
 }
 #endif
 
 attribute_hidden
-const char* get_workspace_name()
+const char* get_workspace_name(void)
 {
     return workspace_name;
 }
@@ -147,8 +157,15 @@ void R_SaveGlobalEnv(void)
  *  INITIALIZATION HELPER CODE
  */
 
-void R_DefParams(Rstart Rp)
+/* RstartVersion is the version of the passed Rstart structure to fill in.
+   Returns 0 on success, a negative number if the version is too old,
+   a positive number if it is too new. */
+int R_DefParamsEx(Rstart Rp, int RstartVersion)
 {
+    Rp->RstartVersion = RstartVersion;
+    if (RstartVersion < 0) return -1;
+    if (RstartVersion > 1) return 1;
+    
     Rp->R_Quiet = FALSE;
     Rp->R_NoEcho = FALSE;
     Rp->R_Interactive = TRUE;
@@ -165,6 +182,19 @@ void R_DefParams(Rstart Rp)
     Rp->ppsize = R_PPSSIZE;
     Rp->NoRenviron = FALSE;
     R_SizeFromEnv(Rp);
+
+    if (RstartVersion > 0) {
+#ifdef Win32
+	Rp->EmitEmbeddedUTF8 = FALSE;
+	R_DefCallbacks(Rp, RstartVersion);
+#endif
+    }
+    return 0;
+}
+
+void R_DefParams(Rstart Rp)
+{
+    R_DefParamsEx(Rp, 0); /* version 0 for now supported */
 }
 
 #define Max_Nsize 50000000	/* about 1.4Gb 32-bit, 2.8Gb 64-bit */
@@ -282,5 +312,7 @@ void R_SetParams(Rstart Rp)
     R_SetPPSize(Rp->ppsize);
 #ifdef Win32
     R_SetWin32(Rp);
+    if (strlen(Rp->rhome) >= PATH_MAX)
+	R_Suicide("Invalid R_HOME");
 #endif
 }

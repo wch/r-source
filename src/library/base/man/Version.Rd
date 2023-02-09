@@ -1,6 +1,6 @@
 % File src/library/base/man/Version.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{R.Version}
@@ -9,11 +9,14 @@
 \alias{R.version}
 \alias{version}
 \alias{R.version.string}
+\alias{R_compiled_by}
 \usage{
 R.Version()
 R.version
 R.version.string
 version
+
+R_compiled_by()
 }
 \description{
   \code{R.Version()} provides detailed information about the version of
@@ -50,12 +53,18 @@ version
 
   \code{R.version} and \code{version} are lists of class
   \code{"simple.list"} which has a \code{print} method.
+
+  \code{R_compiled_by} returns a two-element character vector giving
+  details of the C and Fortran compilers used to build \R.  (Empty
+  strings if no information is available.)
 }
 \note{
   Do \emph{not} use \code{R.version$os} to test the platform the
   code is running on: use \code{.Platform$OS.type} instead.  Slightly
   different versions of the OS may report different values of
   \code{R.version$os}, as may different versions of \R.
+  Alternatively, \code{\link[utils]{osVersion}} typically contains more
+  details about the platform \R is running on.
 
   \code{R.version.string} is a copy of \code{R.version$version.string}
   for simplicity and backwards compatibility.
@@ -71,13 +80,14 @@ version
   as \samp{mingw32}.
 
   \code{R.version$crt} is supported on Windows since \R 4.2.0 and returns
-  \code{"ucrt"} to denote the Universal C Runtime. It would return
+  \code{"ucrt"} to denote the Universal C Runtime.  It would return
   \code{"msvcrt"} for the older Microsoft Visual C++ Runtime (but \R does
   not use that runtime since 4.2.0).
 }
 \seealso{
   \code{\link{sessionInfo}} which provides additional information;
   \code{\link{getRversion}} typically used inside R code,
+  \code{\link{osVersion}},
   \code{\link{.Platform}}, \code{\link{Sys.info}}.
 }
 \examples{

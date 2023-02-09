@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2003--2018  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -837,8 +837,12 @@ FUNTAB R_FunTab[] =
 {"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"format.POSIXlt",do_formatPOSIXlt,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"strptime",	do_strptime,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"Date2POSIXlt",do_D2POSIXlt,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"Date2POSIXlt",do_D2POSIXlt,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"POSIXlt2Date",do_POSIXlt2D,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"balancePOSIXlt",do_balancePOSIXlt, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"unCfillPOSIXlt",do_balancePOSIXlt, 1,	 1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+
+{"compareNumericVersion",do_compareNumericVersion, 0, 11, 2, {PP_FUNCALL, PREC_FN,   0}},
 
 {"mkCode",     do_mkcode,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"bcClose",    do_bcclose,      0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
@@ -975,7 +979,7 @@ FUNTAB R_FunTab[] =
 {"La_dtrcon",	do_lapack,	8,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_zgecon",	do_lapack,	9,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_ztrcon",	do_lapack,	10,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_solve_cmplx",do_lapack,    11,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_solve_cmplx",do_lapack,    11,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_solve",	do_lapack,	100,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_qr",	do_lapack,	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_chol",	do_lapack,	200,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1000,6 +1004,7 @@ FUNTAB R_FunTab[] =
 {"curlVersion", do_curlVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"curlGetHeaders",do_curlGetHeaders,0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"curlDownload",do_curlDownload, 0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"compilerVersion",do_compilerVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };
@@ -1036,7 +1041,7 @@ static char *Spec_name[] = {
 
 
 /* also used in eval.c */
-SEXP attribute_hidden R_Primitive(const char *primname)
+attribute_hidden SEXP R_Primitive(const char *primname)
 {
     for (int i = 0; R_FunTab[i].name; i++)
 	if (strcmp(primname, R_FunTab[i].name) == 0) { /* all names are ASCII */
@@ -1048,7 +1053,7 @@ SEXP attribute_hidden R_Primitive(const char *primname)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name, prim;
     checkArity(op, args);
@@ -1165,13 +1170,13 @@ static SEXP createDDVALSymbol(int n) {
     return install(buf);
 }
 
-static void initializeDDVALSymbols() {
+static void initializeDDVALSymbols(void) {
     for(int i = 0; i < N_DDVAL_SYMBOLS; i++) {
 	DDVALSymbols[i] = createDDVALSymbol(i);
     }
 }
 
-SEXP attribute_hidden installDDVAL(int n) {
+attribute_hidden SEXP installDDVAL(int n) {
     if (n < N_DDVAL_SYMBOLS)
 	return DDVALSymbols[n];
 
@@ -1191,7 +1196,7 @@ static SEXP mkSymMarker(SEXP pname)
 }
 
 /* initialize the symbol table */
-void attribute_hidden InitNames()
+void attribute_hidden InitNames(void)
 {
     /* allocate the symbol table */
     if (!(R_SymbolTable = (SEXP *) calloc(HSIZE, sizeof(SEXP))))
@@ -1343,7 +1348,7 @@ SEXP installS3Signature(const char *className, const char *methodName) {
 
 /*  do_internal - This is the code for .Internal(). */
 
-SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun, ans;
     int save = R_PPStackTop;
@@ -1419,7 +1424,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/* Internal code for the ~ operator */
 
-SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     if (isObject(call))
 	return duplicate(call);

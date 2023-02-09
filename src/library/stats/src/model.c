@@ -316,9 +316,9 @@ static char *AppendString(char *buf, const char *str)
 
 static char *AppendInteger(char *buf, int i)
 {
-    sprintf(buf, "%d", i);
-    while(*buf) buf++;
-    return buf;
+    char str[32];
+    snprintf(str, sizeof(str), "%d", i);
+    return AppendString(buf, str);
 }
 
 static SEXP ColumnNames(SEXP x)

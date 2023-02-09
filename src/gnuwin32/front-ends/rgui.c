@@ -51,6 +51,9 @@ typedef BOOL (*AC)(DWORD);
 int AppMain(int argc, char **argv)
 {
     CharacterMode = RGui;
+    /* NOTE: localeCP is set in setupui(), but already used by MessageBox
+       here and in cmdlineoptions(). MessageBox will hence use the
+       compile-time default, and hence usually the *W interface. */
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	MessageBox(0, "R.DLL version does not match", "Terminating",
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);

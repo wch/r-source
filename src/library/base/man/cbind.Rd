@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -32,8 +32,9 @@ rbind(\dots, deparse.level = 1)
     \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of non-matrix-like arguments (for the default method):\cr
-    \code{deparse.level = 0} constructs no labels; the default,\cr
-    \code{deparse.level = 1 or 2} constructs labels from the argument
+    \code{deparse.level = 0} constructs no labels;\cr
+    the default \code{deparse.level = 1} typically and
+    \code{deparse.level = 2} always construct labels from the argument
     names, see the \sQuote{Value} section below.}
   \item{make.row.names}{(only for data frame method:) logical
     indicating if unique and valid \code{\link{row.names}} should be
@@ -152,7 +153,7 @@ rbind(\dots, deparse.level = 1)
   \enumerate{
     \item For each argument we get the list of possible class
     memberships from the class attribute.
-    
+
     \item We inspect each class in turn to see if there is an
     applicable method.
 
@@ -160,9 +161,6 @@ rbind(\dots, deparse.level = 1)
     object among the arguments, we try S4 dispatch; otherwise, we use
     the default code.
   }
-
-  (Before \R 4.0.0, an applicable method found was used only if
-  identical to any method determined for prior arguments.)
 
   If you want to combine other objects with data frames, it may be
   necessary to coerce them to data frames first.  (Note that this

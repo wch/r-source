@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2010--2021  R Core Team
+ *  Copyright (C) 2010--2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <stdio.h>
 
 extern char *getRHOME(int); /* in ../rhome.c */
+extern void freeRHOME(char *);
 
 extern size_t quoted_arg_len(const char *arg); /* in rcmdfn.c */
 extern char *quoted_arg_cat(char *dest, const char *arg);
@@ -67,14 +68,20 @@ int main (int argc, char **argv)
 	strncpy(arch, p+1, 10 - 1); /* skip leading slash */
 	arch[10 - 1] = '\0';
     }
-    
+ 
+    char *rhome2 = getRHOME(2);
+    if (!rhome2) {
+	fprintf(stderr, "Invalid R_HOME\n");
+	exit(1);
+    }
     if (stricmp(argv[0] + strlen(argv[0]) - 11, "Rscript.exe") == 0
 	|| stricmp(argv[0] + strlen(argv[0]) - 7, "Rscript") == 0)
-	snprintf(cmd, CMD_LEN, "\"\"%s\\bin\\%s\\Rscript.exe\"", getRHOME(2), arch);
+	snprintf(cmd, CMD_LEN, "\"\"%s\\bin\\%s\\Rscript.exe\"", rhome2, arch);
     else {
-    	snprintf(cmd, CMD_LEN, "\"\"%s\\bin\\%s\\R.exe\"", getRHOME(2), arch);
+    	snprintf(cmd, CMD_LEN, "\"\"%s\\bin\\%s\\R.exe\"", rhome2, arch);
 	interactive = 1;
     }
+    freeRHOME(rhome2);
 
     for(int i = cmdarg; i < argc; i++) {
 	if (interactive && !strcmp(argv[i], "CMD"))

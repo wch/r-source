@@ -115,7 +115,7 @@ aggregate(x, \dots)
 }
 
 \section{Warning}{
-  The first argument of the \code{"formuala"} method was named
+  The first argument of the \code{"formula"} method was named
   \code{formula} rather than \code{x} prior to \R 4.2.0.  Portable uses
   should not name that argument.
 }

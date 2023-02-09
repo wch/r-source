@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -23,8 +23,7 @@ solve(a, b, \dots)
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}.  The default is \code{.Machine$double.eps}. Not
-    currently used with complex matrices \code{a}.}
+    columns of \code{a}.  The default is \code{.Machine$double.eps}.}
   \item{LINPACK}{logical.  Defunct and an error.}
   \item{\dots}{further arguments passed to or from other methods}
 }
@@ -35,8 +34,7 @@ solve(a, b, \dots)
   The row and column names of the result are taken from the column names
   of \code{a} and of \code{b} respectively.  If \code{b} is missing the
   column names of the result are the row names of \code{a}.  No check is
-  made that the column names of \code{a} and the row names of \code{b}
-  are equal.
+  made that the column names of \code{a} match the row names of \code{b}.
 
   For back-compatibility \code{a} can be a (real) QR decomposition,
   although \code{\link{qr.solve}} should be called in that case.
@@ -45,18 +43,30 @@ solve(a, b, \dots)
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code: these can only be interpreted by
   detailed study of the FORTRAN code.
+
+  What happens if \code{a} and/or \code{b} contain missing, \code{NaN}
+  or infinite values is platform-dependent, including on the version of
+  LAPACK is in use.
+
+  \code{tol} is a tolerance for the (estimated 1-norm)
+  \sQuote{reciprocal condition number}: the check is skipped if
+  \code{tol <= 0}.
+
+  For historical reasons, the default method accepts \code{a} as an
+  object of class \code{"\link{qr}"} (with a warning) and passes it on to
+  \code{\link{solve.qr}}.
 }
 \source{
   The default method is an interface to the LAPACK routines \code{DGESV}
   and \code{ZGESV}.
 
-  LAPACK is from \url{https://www.netlib.org/lapack/}.
+  LAPACK is from \url{https://netlib.org/lapack/}.
 }
 \references{
   Anderson. E. and ten others (1999)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
-  \url{https://www.netlib.org/lapack/lug/lapack_lug.html}.
+  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
 
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

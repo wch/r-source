@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ stopRd <- function(block, Rdfile, ...)
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
     else {
-        Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
+        Rdfile <- basename(Rdfile) # Rdfile could be an absolute path (Rbuild tempdir)
         Rdfile <- paste0(Rdfile, ":")
     }
 
@@ -66,7 +66,7 @@ warnRd <- function(block, Rdfile, ...)
         if(missing(Rdfile) || is.null(Rdfile))
             ""
         else
-            paste0(sub("^man/", "", Rdfile), # for consistency with earlier reports
+            paste0(basename(Rdfile), # Rdfile could be an absolute path (Rbuild tempdir)
                    ":")
     msg <- if (is.null(srcref))
         paste0(Rdfile, " ", ...)
@@ -103,9 +103,8 @@ RweaveRdOptions <- function(options)
 
     for(opt in names(options)){
         if(opt %notin% NOLOGOPTS) {
-            oldval <- options[[opt]]
-            if(!is.logical(options[[opt]])){
-                options[[opt]] <- c2l(options[[opt]])
+            if(!is.logical(oldval <- options[[opt]])){
+                options[[opt]] <- c2l(oldval)
             }
             if(is.na(options[[opt]]))
                 stop(gettextf("invalid value for '%s' : %s", opt, oldval),
@@ -117,13 +116,14 @@ RweaveRdOptions <- function(options)
     }
 
     if(!is.null(options$results))
-        options$results <- tolower(as.character(options$results))
-    options$results <- match.arg(options$results,
-                                 c("text", "verbatim", "rd", "hide"))
+        options$results <- match.arg(tolower(options$results),
+                                     c("text", "verbatim", "rd", "hide"))
     if(!is.null(options$stage))
-    	options$stage <- tolower(as.character(options$stage))
-    options$stage <- match.arg(options$stage,
-    				 c("build", "install", "render"))
+        options$stage <- match.arg(tolower(options$stage),
+                                   c("build", "install", "render"))
+    if(!is.null(options$strip.white))
+        options$strip.white <- tolower(options$strip.white)
+
     options
 }
 
@@ -201,19 +201,21 @@ replaceRdSrcrefs <- function(Rd, srcref) {
     Rd
 }
 
-processRdChunk <- function(code, stage, options, env, Rdfile, macros)
+processRdChunk <- function(code, stage, options, env, macros)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
     codesrcref <- attr(code, "srcref")
+    Rdfile <- attr(codesrcref, "srcfile")$filename
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
     if (stage == options$stage) {
         #  The code below is very similar to RWeaveLatexRuncode, but simplified
 
         # Results as a character vector for now; convert to list later
         res <- character(0)
-        code <- code[RdTags(code) != "COMMENT"]
+        code <- code[RdTags(code) != "COMMENT"]  # list attributes are lost here
 	chunkexps <- tryCatch(parse(text = code), error = identity)
-	if (inherits(chunkexps, "error")) stopRd(code, Rdfile, chunkexps)
+	if (inherits(chunkexps, "error"))
+            stopRd(code, Rdfile, conditionMessage(chunkexps))
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
@@ -262,8 +264,8 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
 	    if (inherits(err, "error")) {
-	    	code <- replaceRdSrcrefs(code, codesrcref)
-	    	stopRd(code, Rdfile, err$message)
+	    	attr(code, "srcref") <- codesrcref  # restore for error location
+	    	stopRd(code, Rdfile, conditionMessage(err))
 	    }
 
 	    if(length(output) && (options$results != "hide")) {
@@ -274,7 +276,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 		    if(options$strip.white == "all")
 		      output <- sub("\n[[:space:]]*\n", "\n", output)
 		}
-		res <- c(res, output)
+		res <- c(res, output, "\n")
 		remove(output)
 	    }
 	}
@@ -413,20 +415,32 @@ processRdSexprs <-
     expandDynamicFlags(recurse(block), options)
 }
 
+# Get rid of parts of the path up to first, if any
+stripPathTo <- function(path, first) {
+    pattern <- paste0("^.*[/\\]", first, "[/\\]")
+    sub(pattern, "", path)
+}
+
 prepare_Rd <-
     function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
              fragment = FALSE, options = RweaveRdDefaults,
              stage2 = TRUE, stage3 = TRUE, ..., msglevel = 0)
 {
+    concordance <- NULL
     if (is.character(Rd)) {
         Rdfile <- Rd
+        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
         ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, ...),
-                              list(f = Rd, enc = encoding, frag = fragment)))
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, srcfile = src, ...),
+                              list(f = Rd, enc = encoding, frag = fragment, src = srcfile)))
     } else if(inherits(Rd, "connection")) {
-        Rdfile <- summary(Rd)
-        Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
-    } else Rdfile <- attr(Rd, "Rdfile")
+        Rdfile <- summary(Rd)$description
+        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
+        Rd <- parse_Rd(Rd, srcfile = srcfile, encoding = encoding, fragment=fragment, ...)
+    } else {
+    	Rdfile <- attr(Rd, "Rdfile")
+    	concordance <- attr(Rd, "concordance")
+    }
     srcref <- attr(Rd, "srcref")
     if (is.null(Rdfile) && !is.null(srcref))
     	Rdfile <- attr(srcref, "srcfile")$filename
@@ -441,6 +455,11 @@ prepare_Rd <-
 	for (stage in c("install", "render"))
 	    if (stage %in% stages)
 		Rd <- processRdSexprs(Rd, stage, options, macros=attr(Rd, "macros"))
+	if (is.null(concordance)) {
+	    concordance <- try(as.Rconcordance(unlist(Rd[RdTags(Rd) == "COMMENT"]), silent = TRUE))
+	    if (inherits(concordance, "try-error"))
+	    	concordance <- NULL
+	}
 	if (pratt < 2L && stage2)
 	    Rd <- prepare2_Rd(Rd, Rdfile, stages)
 	meta <- attr(Rd, "meta")
@@ -451,7 +470,7 @@ prepare_Rd <-
 	Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
     }
     structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta,
-              srcref = srcref)
+              srcref = srcref, concordance = concordance)
 }
 
 ## auxiliary, currently called only from prepare_Rd(*, stage2 = TRUE)
@@ -478,7 +497,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     ## Check other sections are unique
     unique_tags <-
         paste0("\\",
-               c("usage", "arguments", "synopsis",
+               c("usage", "arguments",
                  "format", "details", "value", "references", "source",
                  "seealso", "examples", "author", "encoding"))
     for (tag in unique_tags) {
@@ -606,20 +625,16 @@ sectionTitles <-
       "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
 psub <- function(pattern, replacement, x)
-##    gsub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
+    gsub(pattern, replacement, x, perl = TRUE)
 
 psub1 <- function(pattern, replacement, x)
-##    sub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
+    sub(pattern, replacement, x, perl = TRUE)
 
 fsub <- function(pattern, replacement, x)
-##    gsub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
+    gsub(pattern, replacement, x, fixed = TRUE)
 
 fsub1 <- function(pattern, replacement, x)
-##    sub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
+    sub(pattern, replacement, x, fixed = TRUE)
 
 
 ## for lists of messages, see ../man/checkRd.Rd
@@ -628,7 +643,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 {
     warnRd <- function(block, Rdfile, ..., level = 0L)
     {
-        Rdfile <- sub("^man/", "", Rdfile)
+        Rdfile <- sub("^\\./man/", "", Rdfile)
         srcref <- attr(block, "srcref")
         msg <- if (is.null(srcref))
             paste0("file '", Rdfile, "': ", ...)
@@ -648,6 +663,34 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         get_link(block, tag, Rdfile) ## to do the same as Rd2HTML
     }
 
+    checkEmail <- function(block) {
+        pattern <- .make_RFC_2822_email_address_regexp()
+        if(length(block)) {
+            address <- lines2str(.Rd_deparse(block, tag = FALSE))
+            if(!grepl(re_anchor(pattern), address))
+                warnRd(block, Rdfile, level = 7,
+                       "Invalid email address: ", address)
+        }
+    }
+
+    checkURL <- function(block, tag) {
+        pattern <- .make_RFC_2822_email_address_regexp()        
+        if(tag == "\\url")
+            u <- .Rd_deparse(block, tag = FALSE)
+        else
+            u <- .Rd_deparse(block[[1L]], tag = FALSE)
+        u <- lines2str(u)
+        parts <- parse_URI_reference(u)
+        if(nzchar(s <- parts[, "scheme"])) {
+            if(is.na(match(s, c(IANA_URI_scheme_db$URI_Scheme,
+                                "javascript"))) ||
+               ((s == "mailto") &&
+                !grepl(re_anchor(pattern), parts[, "path"])))
+                warnRd(block, Rdfile, level = 7,
+                       "Invalid URL: ", u)
+        }
+    }
+            
     ## blocktag is unused
     checkBlock <- function(block, tag, blocktag)
     {
@@ -670,6 +713,18 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                        if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
                            warnRd(block, Rdfile, level = -3,
                                   "Apparent non-ASCII contents ", msg3)
+                   }
+                   if(tag == "TEXT") {
+                       pat <- "([^\\]|^)\\\\[#$&_^~]"
+                       if(grepl(pat, block)) {
+                           txt <- sub("^[^\\]*", "",
+                                      unlist(regmatches(block,
+                                                        gregexpr(pat,
+                                                                 block))))
+                           warnRd(block, Rdfile, level = -1,
+                                  "Escaped LaTeX specials: ",
+                                  paste(txt, collapse = " "))
+                       }
                    }
                    ## check if this renders as non-whitespace
                    if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
@@ -704,8 +759,14 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                "\\verb"= checkContent(block, tag),
                "\\linkS4class" =,
                "\\link" = checkLink(tag, block),
-               "\\email" =,
-               "\\url" = has_text <<- TRUE,
+               "\\email" = {
+                   checkEmail(block)
+                   has_text <<- TRUE
+               },
+               "\\url" = {
+                   checkURL(block, tag)
+                   has_text <<- TRUE
+               },
                "\\cr" ={},
                "\\dots" =,
                "\\ldots" =,
@@ -752,14 +813,16 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     		   unknown <- allow %w/o% c("", "latex", "example", "text",
                                             "html", "TRUE", "FALSE")
     		   if (length(unknown))
-    		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
+    		       warnRd(block, Rdfile, level = 7, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])
                    if (tag == "\\ifelse")
                        checkContent(block[[3L]])
                },
                "\\href" = {
                    if (!identical(RdTags(block[[1L]]), "VERB"))
-                   	stopRd(block, Rdfile, "First argument to \\href must be verbatim URL")
+                   	stopRd(block, Rdfile,
+                               "First argument to \\href must be verbatim URL")
+                   checkURL(block, tag)
                	   checkContent(block[[2L]], tag)
                },
                "\\out" = {
@@ -884,6 +947,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             switch(tag,
             "\\item" = {
     	    	if (!inlist) inlist <- TRUE
+                if((blocktag %in% c("\\describe", "\\arguments",
+                                    "\\value")) &&
+                    isBlankRd(block[[1L]]))
+                    warnRd(block, Rdfile, level = 5,
+                           "\\item in ", blocktag,
+                           " must have non-empty label")
     		switch(blocktag,
     		"\\arguments"= {
     		    checkContent(block[[1L]], tag)
@@ -917,8 +986,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             tagtitle <- sQuote(as.character(title))
     	} else tagtitle <- tag
         has_text <<- FALSE
-        if (tag == "\\synopsis")
-            stopRd(section, Rdfile, "\\synopsis was removed in R 3.1.0")
+        ## if (tag == "\\synopsis")  # already removed via prepare_Rd
+        ##     stopRd(section, Rdfile, "\\synopsis was removed in R 3.1.0")
         if (tag %in% c("\\usage", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
@@ -946,6 +1015,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                        "Tag ", tag, " must not be empty")
         }
     }
+
+        
 
     dt <- which(RdTags(Rd) == "\\docType")
     docTypes <- character(length(dt))
@@ -987,12 +1058,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     unique_tags <-
         paste0("\\",
                c("name", "title", # "description" checked above
-                 "usage", "arguments",  "synopsis",
+                 "usage", "arguments",
                  "format", "details", "value", "references", "source",
                  "seealso", "examples", "author", "encoding"))
     for(tag in intersect(sections[duplicated(sections)], unique_tags))
         warnRd(Rd, Rdfile, level = 5,
-               sprintf("multiple sections named '%s' are not allowed", tag))
+               sprintf("Multiple sections named '%s' are not allowed", tag))
 
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])

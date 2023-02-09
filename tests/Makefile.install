@@ -2,6 +2,8 @@
 #
 # ${R_HOME}/tests/Makefile.install
 
+## Keep in step with Makefile.install.win
+
 srcdir = .
 top_srcdir = ..
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2021   The R Core Team
+ *  Copyright (C) 2005-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@
 #include <locale.h>
 #include <limits.h>
 #include <R_ext/Riconv.h>
+#include <Defn.h> /* for localeCP */
 
 #if defined(USE_RI18N_WIDTH) || defined(USE_RI18N_FNS)
 
@@ -196,6 +197,25 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"",				        MB_Default},
 };
 
+
+static int get_locale_id(void)
+{
+    char lc_str[128];
+    unsigned int i, j;
+
+    strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str) - 1);
+    lc_str[sizeof(lc_str) - 1] = '\0';
+    for (i = 0, j = (int) strlen(lc_str); i < j && i < sizeof(lc_str); i++)
+	lc_str[i] = (char) toupper(lc_str[i]);
+    for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t));
+	 i++) {
+	if (0 == strncmp(cjk_locale_name[i].name, lc_str,
+			 strlen(cjk_locale_name[i].name)))
+	    return cjk_locale_name[i].locale;
+    }
+    return 0;
+}
+
 /* used in character.c, ../gnuwin32/console.c (for an MBCS locale) ,
    ../library/grDevices/src/devP*.c 
 
@@ -206,26 +226,25 @@ static cjk_locale_name_t cjk_locale_name[] = {
 */
 int Ri18n_wcwidth(R_wchar_t c)
 {
-    char lc_str[128];
-    unsigned int i, j;
 
-    static char *lc_cache = "";
+    /* This quickly gives one for printing ASCII characters */
+    if (c > 0x1F && c < 0x7F) return 1;
+
     static int lc = 0;
-
-    if (0 != strcmp(setlocale(LC_CTYPE, NULL), lc_cache)) {
-	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str) - 1);
-        lc_str[sizeof(lc_str) - 1] = '\0';
-	for (i = 0, j = (int) strlen(lc_str); i < j && i < sizeof(lc_str); i++)
-	    lc_str[i] = (char) toupper(lc_str[i]);
-	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t));
-	     i++) {
-	    if (0 == strncmp(cjk_locale_name[i].name, lc_str,
-			     strlen(cjk_locale_name[i].name))) {
-		lc = cjk_locale_name[i].locale;
-		break;
-	    }
-	}
+#ifdef Win32
+    static int localeCP_lc = -1;
+    if (localeCP_lc != localeCP) {
+	lc = get_locale_id();
+	localeCP_lc = localeCP;
     }
+#else
+    static char encname_lc[R_CODESET_MAX + 1] = "";
+    if (strcmp(encname_lc, R_nativeEncoding())) {
+	lc = get_locale_id();
+	strncpy(encname_lc, R_nativeEncoding(), R_CODESET_MAX);
+	encname_lc[R_CODESET_MAX] = '\0';
+    }
+#endif
 
     int wd = wcwidthsearch(c, table_wcwidth,
 			   (sizeof(table_wcwidth)/sizeof(struct interval_wcwidth)),

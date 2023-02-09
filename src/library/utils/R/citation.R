@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    if(length(x)) print(format(x, ...))
+    if(length(x)) print(format(x, ...)) else cat("person()\n")
     invisible(x)
 }
 
@@ -529,7 +529,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
 
     args <- c(list(...), other)
     if(!length(args))
-        return(.bibentry())
+        return(.bibentry(list(), mheader, mfooter))
     if(any(vapply(names(args), .is_not_nonempty_text, NA)))
         stop("all fields have to be named")
 
@@ -608,19 +608,18 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                            c(lapply(args, `[[`, i),
                              list(other = lapply(other, `[[`, i)))))
 
-    ## add main header/footer for overall bibentry vector
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
-
-    .bibentry(rval)
+    .bibentry(rval, mheader, mfooter)
 }
 
 .bibentry <-
-function(x = list())
+function(x = list(), mheader = NULL, mfooter = NULL)
 {
     class(x) <- "bibentry"
+    ## add main header/footer for overall bibentry vector
+    if(!.is_not_nonempty_text(mheader))
+        attr(x, "mheader") <- paste(mheader, collapse = "\n")
+    if(!.is_not_nonempty_text(mfooter))
+        attr(x, "mfooter") <- paste(mfooter, collapse = "\n")
     x
 }
 
@@ -655,7 +654,7 @@ function(x)
 {
     if(!length(x)) return(character())
     keys <- lapply(unclass(x), attr, "key")
-    keys[!vapply(keys, length, 0L)] <- ""
+    keys[!lengths(keys)] <- ""
     unlist(keys)
 }
 
@@ -730,10 +729,10 @@ function(x, style = "text", .bibstyle = NULL,
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
         permissive <- tools:::config_val_to_logical(permissive)
-        macros <- if(is.null(macros))
-		      tools:::initialRdMacros()
-                  else if(is.character(macros))
-		      tools::loadRdMacros(macros,
+        if(is.null(macros))
+            macros <- tools:::initialRdMacros()
+        else if(is.character(macros))
+            macros <- tools::loadRdMacros(macros,
                                           tools:::initialRdMacros())
         sapply(.bibentry_expand_crossrefs(x),
                function(y) {
@@ -750,7 +749,7 @@ function(x, style = "text", .bibstyle = NULL,
                                          permissive = permissive,
                                          macros = macros)
                    rd <- tools:::processRdSexprs(rd,
-                                                 "build",
+                                                 "install",
                                                  macros = attr(rd, "macros"))
                    f(rd, fragment = TRUE, out = out, ...)
                    paste(readLines(out), collapse = "\n")
@@ -760,7 +759,7 @@ function(x, style = "text", .bibstyle = NULL,
     format_as_citation <- function(x, msg) {
         m <- attr(x, "mheader")
         if(is.null(m) &&
-           is.null(x$header) &&
+           is.null(unlist(x$header)) &&
            !is.null(p <- attr(x, "package")))
             m <- gettextf("To cite package %s in publications use:",
                           sQuote(p))
@@ -829,7 +828,7 @@ function(x, more = list())
     y <- unclass(y)
 
     crossrefs <- lapply(x, `[[`, "crossref")
-    pc <- which(vapply(crossrefs, length, 0L) > 0L)
+    pc <- which(lengths(crossrefs) > 0L)
 
     if(length(pc)) {
         pk <- match(unlist(crossrefs[pc]), .bibentry_get_key(y))
@@ -875,9 +874,14 @@ function(x, style = "text", .bibstyle = NULL, ...)
 {
     style <- .bibentry_match_format_style(style)
 
-    if(style == "R") {
+    n <- length(x)
+    if(!n) {
+        cat(switch((cl <- class(x)[[1L]]),
+                   "bibentry" = "bibentry()",
+                   sprintf("<0-length %s>", cl)), sep="", "\n")
+    } else if(style == "R") {
 	writeLines(format(x, "R", collapse = TRUE, ...))
-    } else if(length(x)) {
+    } else {
 	y <- format(x, style, .bibstyle, ...)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
@@ -895,7 +899,6 @@ function(x, style = "text", .bibstyle = NULL, ...)
             writeLines(paste(y, collapse = "\n\n"))
         }
     }
-
     invisible(x)
 }
 
@@ -1077,13 +1080,28 @@ function(x, name, value)
 c.bibentry <-
 function(..., recursive = FALSE)
 {
+    ## only bibentry objects can be combined
     args <- list(...)
     if(!all(vapply(args, inherits, NA, "bibentry")))
         warning(gettextf("method is only applicable to %s objects",
                          sQuote("bibentry")),
                 domain = NA)
+
+    ## combine raw lists
     args <- lapply(args, unclass)
     rval <- do.call(c, args)
+
+    ## preserve mheader/mfooter if any
+    mheader <- unlist(lapply(args, attr, "mheader"))
+    if(length(mheader) >= 1L) {
+        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
+    }
+    mfooter <- unlist(lapply(args, attr, "mfooter"))
+    if(length(mfooter) >= 1L) {
+        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
+    }
+    
+    ## return as bibentry object
     .bibentry(rval)
 }
 
@@ -1154,24 +1172,20 @@ function(x, ...)
 ######################################################################
 
 citEntry <-
-function(entry, textVersion, header = NULL, footer = NULL, ...)
+function(entry, textVersion = NULL, header = NULL, footer = NULL, ...)
     bibentry(bibtype = entry, textVersion = textVersion,
              header = header, footer = footer, ...)
 
 citHeader <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationHeader"
-    rval
+    .bibentry(mheader = paste(...))
 }
 
 citFooter <-
 function(...)
 {
-    rval <- paste(...)
-    class(rval) <- "citationFooter"
-    rval
+    .bibentry(mfooter = paste(...))
 }
 
 readCitationFile <-
@@ -1191,10 +1205,6 @@ function(file, meta = NULL)
         x <- eval(expr, envir = envir)
         if(inherits(x, "bibentry"))
             rval <- c(rval, list(x))
-        else if(identical(class(x), "citationHeader"))
-            mheader <- c(mheader, x)
-        else if(identical(class(x), "citationFooter"))
-            mfooter <- c(mfooter, x)
     }
 
     rlen <- length(rval)
@@ -1202,10 +1212,6 @@ function(file, meta = NULL)
         rval <- rval[[1L]]
     else if(rlen > 1L)
         rval <- do.call(c, rval)
-    if(!.is_not_nonempty_text(mheader))
-        attr(rval, "mheader") <- paste(mheader, collapse = "\n")
-    if(!.is_not_nonempty_text(mfooter))
-        attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
 
     .citation(rval, meta$Package)
 }
@@ -1313,7 +1319,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         has_authors_at_R_field <- TRUE
     } else {
         has_authors_at_R_field <- FALSE
-        author <- as.personList(meta$Author)
+        author <- as.person(meta$Author)
     }
     ## </NOTE>
 
@@ -1496,7 +1502,7 @@ function(x)
     address <- format(x, include = c("email"),
                       collapse = list(email = FALSE))
     ## Need to quote display names at least when they contain commas
-    ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
+    ## (RFC 5322 <https://www.rfc-editor.org/rfc/rfc5322>).
     if(any(ind <- grepl(",", display))) {
         display[ind] <- sprintf("\"%s\"",
                                 gsub("\"", "\\\"", display[ind], fixed=TRUE))

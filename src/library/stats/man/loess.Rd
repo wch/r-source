@@ -98,7 +98,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \source{
   The 1998 version of \code{cloess} package of Cleveland,
   Grosse and Shyu.  A later version is available as \code{dloess} at
-  \url{https://www.netlib.org/a/}.
+  \url{https://netlib.org/a/}.
 }
 \note{
   As this is based on \code{cloess}, it is similar to but not identical to

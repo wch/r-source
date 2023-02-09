@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2011-03-26 08:56-0300\n"
-"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"PO-Revision-Date: 2022-10-16 14:04+0000\n"
+"Last-Translator: Gabriel Tormin <gta1998@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-Language: Portuguese\n"
 
@@ -375,7 +375,7 @@ msgstr "Substituir..."
 
 #: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
 msgid "GUI preferences..."
-msgstr "Preferências da interface gráfica"
+msgstr "Preferências da interface gráfica..."
 
 #: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
 #: src/library/utils/src/windows/dataentry.c:1700
@@ -713,7 +713,7 @@ msgstr "Sair"
 
 #: src/gnuwin32/rui.c:1150
 msgid "Copy and Paste"
-msgstr "Copiar e Colar..."
+msgstr "Copiar e Colar"
 
 #: src/gnuwin32/rui.c:1154
 msgid "Data editor..."
@@ -1068,7 +1068,7 @@ msgstr "caminho do arquivo selecionado é muito grande: somente 512 bytes são per
 
 #: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
-msgstr "Não há gráfico para substituir"
+msgstr "Não há gráfico para substituir!"
 
 # inverte e deixa a primeira maiúscula
 #: src/library/grDevices/src/devWindows.c:1274
@@ -1167,7 +1167,7 @@ msgstr "Salvar para variável..."
 
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Get from variable..."
-msgstr "Pegar da variável"
+msgstr "Pegar da variável..."
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"

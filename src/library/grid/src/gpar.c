@@ -278,11 +278,23 @@ static unsigned int combineAlpha(double alpha, int col)
     return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
 }
 
-static SEXP resolveFill(SEXP pattern) 
+static SEXP resolveFill(SEXP pattern, int i) 
 {
-    SEXP resolveFn, R_fcall, result;
+    SEXP resolveFn, R_fcall, index, result;
+    PROTECT(index = allocVector(INTSXP, 1));
+    INTEGER(index)[0] = i + 1;
     PROTECT(resolveFn = findFun(install("resolveFill"), R_gridEvalEnv));
-    PROTECT(R_fcall = lang2(resolveFn, pattern));
+    PROTECT(R_fcall = lang3(resolveFn, pattern, index));
+    result = eval(R_fcall, R_gridEvalEnv);
+    UNPROTECT(3);
+    return result;
+}
+
+static SEXP unresolveFill(SEXP pattern) 
+{
+    SEXP unresolveFn, R_fcall, result;
+    PROTECT(unresolveFn = findFun(install("unresolveFill"), R_gridEvalEnv));
+    PROTECT(R_fcall = lang2(unresolveFn, pattern));
     result = eval(R_fcall, R_gridEvalEnv);
     UNPROTECT(2);
     return result;
@@ -291,9 +303,10 @@ static SEXP resolveFill(SEXP pattern)
 SEXP resolveGPar(SEXP gp) 
 {
     SEXP result = R_NilValue;
-    if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
-        SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp)));
-        setListElement(gp, "fill", resolvedFill);
+    if (Rf_inherits(gpFillSXP(gp), "GridPattern") ||
+        Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
+        SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
+        SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
         result = resolvedFill;
         UNPROTECT(1);
     }
@@ -302,6 +315,23 @@ SEXP resolveGPar(SEXP gp)
 
 /* 
  * Generate an R_GE_gcontext from a gpar
+ * 
+ * Regarding the gp$fill ...
+ *
+ * This is only called by functions ...
+ *    that only perform calculations
+ * OR that only stroke output (but do not fill it)
+ * OR that fill output, BUT only require a single fill and
+ *    have already called resolveFill()
+ * OR when pushing a viewport
+ * ... so ...
+ *    the fill either does not matter 
+ * OR we only need a single (resolved) fill
+ * OR (when pushing a viewport) we are using the viewport parent gpar
+ *    which is typically resolved, but MIGHT be called in the middle
+ *    of resolving a grob gp$fill (in which case, we want to ignore
+ *    that parent fill because the viewport is a temporary one for
+ *    calculating transformations, so the fill is unimportant).
  */
 void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd) 
 {
@@ -315,6 +345,17 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
     if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
         if (Rf_inherits(gpFillSXP(gp), "GridResolvedPattern")) {
             SEXP fillRef = getListElement(gpFillSXP(gp), "ref");
+            gc->fill = R_TRANWHITE;
+            gc->patternFill = fillRef;
+        } else {
+            gc->fill = R_TRANWHITE;
+            gc->patternFill = R_NilValue;
+        }
+    } else if (Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
+        if (Rf_inherits(gpFillSXP(gp), "GridResolvedPatternList")) {
+            SEXP fill = VECTOR_ELT(gpFillSXP(gp), 
+                                   i % LENGTH(gpFillSXP(gp)));
+            SEXP fillRef = getListElement(fill, "ref");
             gc->fill = R_TRANWHITE;
             gc->patternFill = fillRef;
         } else {
@@ -371,7 +412,7 @@ SEXP L_getGPar(void)
     return gridStateElement(dd, GSS_GPAR);
 }
 
-SEXP L_getGPsaved() 
+SEXP L_getGPsaved(void) 
 {
     /* Get the current device 
      */
@@ -481,14 +522,71 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
         combineAlpha(gpAlpha2(gp, i, gpIsScalar), gpCol2(gp, i, gpIsScalar));
     if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
         if (Rf_inherits(gpFillSXP(gp), "GridResolvedPattern")) {
+            /* This handles case where (scalar) pattern fill has already been 
+             * resolved before calling initGContext() */
             SEXP fillRef = getListElement(gpFillSXP(gp), "ref");
             gcCache->fill = gc->fill = R_TRANWHITE;
             gcCache->patternFill = gc->patternFill = fillRef;
+            gpIsScalar[GP_FILL] = 1;
         } else {
-            gcCache->fill = gc->fill = R_TRANWHITE;
-            gcCache->patternFill = gc->patternFill = R_NilValue;
+            /* This handles case where pattern fill has not yet 
+             * been resolved */
+            if (!LOGICAL(getListElement(gpFillSXP(gp), "group"))[0]) {
+                /* Pattern will be resolved for each individual shape
+                 * in updateGContext, so do not bother here.
+                 */
+                gpIsScalar[GP_FILL] = 0;
+            } else if (Rf_inherits(gpFillSXP(gp), "GridGrobPattern")) {
+                SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
+                /* Pattern may not resolve (e.g., we are filling a stroke) */
+                if (Rf_inherits(resolvedFill, "GridResolvedPattern")) {
+                    SEXP fillRef = getListElement(resolvedFill, "ref");
+                    gcCache->fill = gc->fill = R_TRANWHITE;
+                    gcCache->patternFill = gc->patternFill = fillRef;
+                    /* Store resolved gp$fill in currentgp (which is duplicate
+                     * of 'grid' state currentgp) */
+                    SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+                } else {
+                    gcCache->fill = gc->fill = R_TRANWHITE;
+                    gcCache->patternFill = gc->patternFill = R_NilValue;
+                }
+                UNPROTECT(1);
+                gpIsScalar[GP_FILL] = 1;
+            } else {
+                /* Fallback is to use no fill */
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = R_NilValue;
+                gpIsScalar[GP_FILL] = 1;
+            }
         }
-        gpIsScalar[GP_FILL] = 1;
+    } else if (Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
+        if (Rf_inherits(gpFillSXP(gp), "GridResolvedPatternList")) {
+            /* This handles case where list of patterns fill has already been 
+             * resolved */
+            SEXP fill = VECTOR_ELT(gpFillSXP(gp), 0);
+            SEXP fillRef = getListElement(fill, "ref");
+            gcCache->fill = gc->fill = R_TRANWHITE;
+            gcCache->patternFill = gc->patternFill = fillRef;
+        } else {
+            /* This handles case where list of pattern fills has not yet 
+             * been resolved */
+            SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
+            /* Pattern may not resolve (e.g., we are filling a stroke) */
+            if (Rf_inherits(resolvedFill, "GridResolvedPatternList")) {
+                SEXP fill = VECTOR_ELT(resolvedFill, 0);
+                SEXP fillRef = getListElement(fill, "ref");
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = fillRef;
+                /* Store resolved gp$fill in currentgp (which is duplicate
+                 * of 'grid' state currentgp) */
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+            } else {
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = R_NilValue;
+            }
+            UNPROTECT(1);           
+        }
+        gpIsScalar[GP_FILL] = 0;
     } else {
         gcCache->fill = gc->fill = 
             combineAlpha(gpAlpha(gp, i), gpFill2(gp, i, gpIsScalar));
@@ -530,8 +628,57 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
         gc->col = gcCache->col;
     }
     if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
-        gc->fill = gcCache->fill;
-        gc->patternFill = gcCache->patternFill;
+        if (gpIsScalar[GP_FILL]) {
+            gc->fill = gcCache->fill;
+            gc->patternFill = gcCache->patternFill;
+        } else {
+            if (!LOGICAL(getListElement(gpFillSXP(gp), "group"))[0]) {
+                /* Pattern needs to be resolved for each grob shape 
+                 * so UNresolve the saved pattern */
+                SEXP unresolvedFill = PROTECT(unresolveFill(gpFillSXP(gp)));
+                SET_VECTOR_ELT(gp, GP_FILL, unresolvedFill);
+                UNPROTECT(1);
+            }
+            SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), i));
+            /* Pattern may not resolve (e.g., we are filling a stroke) */
+            if (Rf_inherits(resolvedFill, "GridResolvedPattern")) {
+                SEXP fillRef = getListElement(resolvedFill, "ref");
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = fillRef;
+                /* Store resolved gp$fill in currentgp (which is duplicate
+                 * of 'grid' state currentgp) */
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+            } else {
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = R_NilValue;
+            }
+            UNPROTECT(1);
+        }
+    } else if (Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
+        if (Rf_inherits(gpFillSXP(gp), "GridResolvedPatternList")) {
+            SEXP fill = VECTOR_ELT(gpFillSXP(gp), 
+                                   i % LENGTH(gpFillSXP(gp)));
+            SEXP fillRef = getListElement(fill, "ref");
+            gcCache->fill = gc->fill = R_TRANWHITE;
+            gcCache->patternFill = gc->patternFill = fillRef;
+        } else {
+            SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), i));
+            /* Pattern may not resolve (e.g., we are filling a stroke) */
+            if (Rf_inherits(resolvedFill, "GridResolvedPatternList")) {
+                SEXP fill = VECTOR_ELT(gpFillSXP(gp), 
+                                       i % LENGTH(gpFillSXP(gp)));
+                SEXP fillRef = getListElement(fill, "ref");
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = fillRef;
+                /* Store resolved gp$fill in currentgp (which is duplicate
+                 * of 'grid' state currentgp) */
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+            } else {
+                gcCache->fill = gc->fill = R_TRANWHITE;
+                gcCache->patternFill = gc->patternFill = R_NilValue;
+            }
+            UNPROTECT(1);            
+        }
     } else {
         if (!(gpIsScalar[GP_ALPHA] && gpIsScalar[GP_FILL])) {
             double alpha = gpAlpha(gp, i);

@@ -622,6 +622,52 @@ function(x, predicate)
     nodes
 }
 
+### * .Rd_get_Sexpr_build_time_info
+
+## Determine whether Rd has \Sexprs which R CMD build needs to handle at
+## build stage (expand into the partial Rd db), "later" (build
+## refman.pdf) or "never" (\Sexprs from \PR or \doi can always safely
+## be expanded).
+
+.Rd_get_Sexpr_build_time_info <-
+function(x)
+{
+    y <- getDynamicFlags(x)
+    if(!y["\\Sexpr"])
+        c("\\Sexpr" = FALSE,
+          build = FALSE,
+          later = FALSE,
+          never = FALSE)
+    else if(!any(y[c("install", "render")]))
+        c("\\Sexpr" = TRUE,
+          build = TRUE,
+          later = FALSE,
+          never = FALSE)
+    else {
+        nodes <- .Rd_find_nodes_with_tags(x, "\\Sexpr")
+        btinfo <-
+            vapply(nodes,
+                   function(e) {
+                       flags <- getDynamicFlags(e)
+                       if(flags["build"])
+                           "build"
+                       else if(flags["install"]) {
+                           s <- trimws(paste(as.character(e),
+                                             collapse = ""))
+                           if(startsWith(s, "tools:::Rd_expr_PR(") ||
+                              startsWith(s, "tools:::Rd_expr_doi("))
+                               return("never")
+                       }
+                       "later"
+                   },
+                   "")
+        c("\\Sexpr" = TRUE,
+          y["build"],
+          later = any(btinfo == "later"),
+          never = any(btinfo == "never"))
+    }
+}
+
 ### * .Rd_get_argument_names
 
 .Rd_get_argument_names <-
@@ -838,6 +884,41 @@ function(db)
     unlist(Rd_names)
 }
 
+### * ..Rd_get_equations_from_Rd
+
+.Rd_get_equations_from_Rd <-
+function(x)
+{
+    y <- .Rd_find_nodes_with_tags(x, c("\\eqn", "\\deqn"))
+    if(!length(y)) return(matrix(character(), 0L, 5L))
+    z <- lapply(y, function(e) {
+        c(attr(e, "Rd_tag"),
+          ## % is treated verbatim in the first arg of equations as per
+          ## "Exceptions to special character handling" in parseRd.pdf.
+          .Rd_deparse(e[[1L]], tag = FALSE),
+          if(length(e) > 1L)
+              trimws(.Rd_deparse(e[[2L]], tag = FALSE))
+          else
+              NA_character_,
+          if(!is.null(loc <- attr(e, "srcref")))
+              loc[c(1L, 3L)]
+          else
+              rep.int(NA_character_, 2L))
+    })
+    do.call(rbind, z)
+}
+
+### * .Rd_get_equations_from_Rd_db
+
+.Rd_get_equations_from_Rd_db <-
+function(x)
+{
+    if(!length(x)) return(matrix(character(), 0L, 6L))
+    m <- lapply(x, .Rd_get_equations_from_Rd)
+    cbind(rep.int(names(m), vapply(m, nrow, 0L)),
+          do.call(rbind, m))
+}
+
 ### * .Rd_format_title
 
 .Rd_format_title <-
@@ -860,36 +941,6 @@ function(x)
     x <- gsub("---", "--", x, fixed=TRUE)
     ## Also remove leading and trailing whitespace.
     trimws(x)
-}
-
-### * .Rd_has_Sexpr_needing_refman
-
-## Try to find out whether Rd has a Sexpr for which we build the refman.
-## For now, any install or render Sexpr which does not come from \PR or
-## \doi.
-
-.Rd_has_Sexpr_needing_refman <-
-function(x)
-{
-    found <- FALSE
-    predicate <- function(e) {
-        (any(attr(e, "Rd_tag") == "USERMACRO") &&
-         any(attr(e, "macro") %in% c("\\PR", "\\doi")))
-    }
-    recurse <- function(e) {
-        if(identical(attr(e, "Rd_tag"), "\\Sexpr") &&
-           any(getDynamicFlags(e)[c("install", "render")])) {
-            found <<- TRUE
-            return()
-        } else if(is.list(e) && !found) {
-            i <- which(vapply(e, predicate, NA))
-            if(length(i))
-                e <- e[-c(i, i + 1L)]
-            lapply(e, recurse)
-        }
-    }
-    recurse(x)
-    found
 }
 
 ### * fetchRdDB
@@ -971,7 +1022,7 @@ initialRdMacros <- function(pkglist = NULL,
                                  p),
                         call. = FALSE)
             else if(dir.exists(file.path(fp, "help", "macros")))
-    	    	macros <- loadPkgRdMacros(system.file(package = p), macros)
+    	    	macros <- loadPkgRdMacros(fp, macros)
     	    else
     	    	warning(gettextf("No Rd macros in package '%s'.", p),
                         call. = FALSE)
@@ -982,18 +1033,7 @@ initialRdMacros <- function(pkglist = NULL,
 }
 
 loadPkgRdMacros <- function(pkgdir, macros = NULL) {
-    ## this does get called on any directory,
-    ## e.g. a man directory in package 'diveMove'.
-    pkglist <- try(.read_description(file.path(pkgdir, "DESCRIPTION")),
-                   silent = TRUE)
-    if (inherits(pkglist, "try-error"))
-    	pkglist <-  try(.read_description(file.path(pkgdir, "DESCRIPTION.in")),
-                        silent = TRUE)
-    ## may check for 'macros' subdirectory?
-    if (inherits(pkglist, "try-error")) return(macros)
-
-    pkglist <- pkglist["RdMacros"]
-
+    pkglist <- .get_package_metadata(pkgdir)["RdMacros"]
     if (is.na(pkglist))
         pkglist <- NULL
 

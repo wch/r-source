@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016   The R Core Team
+ *  Copyright (C) 2016-2022 The R Core Team
  *
  *  Based on code donated from the data.table package
  *  (C) 2006-2015 Matt Dowle and Arun Srinivasan.
@@ -66,7 +66,7 @@ static int order = 1;
 static SEXP *saveds = NULL;
 static R_len_t *savedtl = NULL, nalloc = 0, nsaved = 0;
 
-static void savetl_init()
+static void savetl_init(void)
 {
     if (nsaved || nalloc || saveds || savedtl)
 	error("Internal error: savetl_init checks failed (%d %d %p %p).",
@@ -83,7 +83,7 @@ static void savetl_init()
     }
 }
 
-static void savetl_end()
+static void savetl_end(void)
 {
     // Can get called if nothing has been saved yet (nsaved == 0), or
     // even if _init() has not been called yet (pointers NULL). Such as
@@ -166,7 +166,7 @@ static void mpush(int x, int n)
 	gsmax[flip] = x;
 }
 
-static void flipflop()
+static void flipflop(void)
 {
     flip = 1 - flip;
     gsngrp[flip] = 0;
@@ -175,7 +175,7 @@ static void flipflop()
 	growstack((uint64_t)(gsalloc[1 - flip]) * 2);
 }
 
-static void gsfree()
+static void gsfree(void)
 {
     free(gs[0]);
     free(gs[1]);
@@ -1542,7 +1542,7 @@ static void dsort(double *x, int *o, int n)
     }
 }
 
-SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n = -1, narg = 0, ngrp, tmp, *osub, thisgrpn;
     R_xlen_t nl = n;
@@ -1696,8 +1696,10 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     int maxgrpn = gsmax[flip];   // biggest group in the first arg
     void *xsub = NULL;           // local
-    int (*f) ();
-    void (*g) ();
+// This was not valid C23, and clang 15 warns it was not valid C99 either.
+//    int (*f) ();  // called with fn pointer, int
+//    void (*g) (); // called with fn pointer, int *, int
+    int fgtype;
     
     if (narg > 1 && gsngrp[flip] < n) {
         // double is the largest type, 8
@@ -1725,26 +1727,31 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (TYPEOF(x)) {
 	case INTSXP:
 	case LGLSXP:
-	    f = &isorted;
-	    g = &isort;
+//	    f = &isorted;
+//	    g = &isort;
+	    fgtype = 1;
 	    break;
 	case REALSXP:
 	    twiddle = &dtwiddle;
 	    is_nan = &dnan;
-	    f = &dsorted;
-	    g = &dsort;
+	    fgtype = 2;
+//	    f = &dsorted;
+//	    g = &dsort;
 	    break;
 	case STRSXP:
-	    f = &csorted;
+	    fgtype = 3;
+//	    f = &csorted;
 	    if (sortStr) {
 		csort_pre(xd, n);
 		alloc_csort_otmp(gsmax[1 - flip]);
-		g = &csort;
+//		g = &csort;
 	    }
 	    // no increasing/decreasing order required if sortStr = FALSE,
 	    // just a dummy argument
-	    else
-		g = &cgroup;
+	    else {
+		fgtype = 4;
+//		g = &cgroup;
+	    }
 	    break;
 	default:
 	    Error("Arg %d is type '%s', not yet supported",
@@ -1809,7 +1816,18 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
             // continue; // BASELINE short circuit timing
             // point. Up to here is the cost of creating xsub.
             // [i|d|c]sorted(); very low cost, sequential
-            tmp = (*f)(xsub, thisgrpn);
+//            tmp = (*f)(xsub, thisgrpn);
+	    switch(fgtype) {
+	    case 1:
+		tmp = isorted(xsub, thisgrpn);
+		break;
+	    case 2:
+		tmp = dsorted(xsub, thisgrpn);
+		break;
+	    case 3:
+	    case 4:
+		tmp = csorted(xsub, thisgrpn);
+	    }
             if (tmp) {
                 // *sorted will have already push()'d the groups
                 if (tmp == -1) {
@@ -1836,8 +1854,13 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    newo[0] = -1;
 	    // may update osub directly, or if not will put the
 	    // result in global newo
-	    (*g)(xsub, osub, thisgrpn);
-
+//	    (*g)(xsub, osub, thisgrpn);
+	    switch(fgtype) {
+	    case 1: isort(xsub, osub, thisgrpn); break;
+	    case 2: dsort(xsub, osub, thisgrpn); break;
+	    case 3: csort(xsub, osub, thisgrpn); break;
+	    case 4: cgroup(xsub, osub, thisgrpn); break;
+	    }
 	    if (newo[0] != -1) {
 		if (nalast != 0)
 		    for (int j = 0; j < thisgrpn; j++)

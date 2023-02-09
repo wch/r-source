@@ -43,12 +43,11 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <ctype.h>			/* toupper */
-#include <float.h> // -> FLT_RADIX
+//#include <float.h> // -> FLT_RADIX
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>			/* for realpath */
 #include <time.h>			/* for ctime */
-
 # include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -79,190 +78,6 @@ const char *formatError(DWORD res);  /* extra.c */
 #undef HAVE_SYMLINK
 #define HAVE_SYMLINK 1
 #endif
-
-/* Machine Constants */
-
-#define DTYPE double
-#define MACH_NAME machar
-#define ABS fabs
-#include "machar.c"
-#undef DTYPE
-#undef MACH_NAME
-#undef ABS
-
-#ifdef HAVE_LONG_DOUBLE
-# define DTYPE long double
-# define MACH_NAME machar_LD
-# define ABS fabsl
-# include "machar.c"
-# undef DTYPE
-# undef MACH_NAME
-# undef ABS
-#endif
-
-static void Init_R_Machine(SEXP rho)
-{
-    machar(&R_AccuracyInfo.ibeta,
-	   &R_AccuracyInfo.it,
-	   &R_AccuracyInfo.irnd,
-	   &R_AccuracyInfo.ngrd,
-	   &R_AccuracyInfo.machep,
-	   &R_AccuracyInfo.negep,
-	   &R_AccuracyInfo.iexp,
-	   &R_AccuracyInfo.minexp,
-	   &R_AccuracyInfo.maxexp,
-	   &R_AccuracyInfo.eps,
-	   &R_AccuracyInfo.epsneg,
-	   &R_AccuracyInfo.xmin,
-	   &R_AccuracyInfo.xmax);
-
-    R_dec_min_exponent = (int) floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
-
-    /*
-#ifdef HAVE_LONG_DOUBLE
-# define MACH_SIZE 18+10
-#else
-# define MACH_SIZE 18
-#endif
-    */
-    int MACH_SIZE = 18;
-    if (sizeof(LDOUBLE) > sizeof(double)) MACH_SIZE += 10;
-    
-    SEXP ans = PROTECT(allocVector(VECSXP, MACH_SIZE)),
-	 nms = PROTECT(allocVector(STRSXP, MACH_SIZE));
-
-    SET_STRING_ELT(nms, 0, mkChar("double.eps"));
-    SET_VECTOR_ELT(ans, 0, ScalarReal(R_AccuracyInfo.eps));
-
-    SET_STRING_ELT(nms, 1, mkChar("double.neg.eps"));
-    SET_VECTOR_ELT(ans, 1, ScalarReal(R_AccuracyInfo.epsneg));
-
-    SET_STRING_ELT(nms, 2, mkChar("double.xmin"));
-    SET_VECTOR_ELT(ans, 2, ScalarReal(R_AccuracyInfo.xmin));
-
-    SET_STRING_ELT(nms, 3, mkChar("double.xmax"));
-    SET_VECTOR_ELT(ans, 3, ScalarReal(R_AccuracyInfo.xmax));
-
-    SET_STRING_ELT(nms, 4, mkChar("double.base"));
-    SET_VECTOR_ELT(ans, 4, ScalarInteger(R_AccuracyInfo.ibeta));
-
-    SET_STRING_ELT(nms, 5, mkChar("double.digits"));
-    SET_VECTOR_ELT(ans, 5, ScalarInteger(R_AccuracyInfo.it));
-
-    SET_STRING_ELT(nms, 6, mkChar("double.rounding"));
-    SET_VECTOR_ELT(ans, 6, ScalarInteger(R_AccuracyInfo.irnd));
-
-    SET_STRING_ELT(nms, 7, mkChar("double.guard"));
-    SET_VECTOR_ELT(ans, 7, ScalarInteger(R_AccuracyInfo.ngrd));
-
-    SET_STRING_ELT(nms, 8, mkChar("double.ulp.digits"));
-    SET_VECTOR_ELT(ans, 8, ScalarInteger(R_AccuracyInfo.machep));
-
-    SET_STRING_ELT(nms, 9, mkChar("double.neg.ulp.digits"));
-    SET_VECTOR_ELT(ans, 9, ScalarInteger(R_AccuracyInfo.negep));
-
-    SET_STRING_ELT(nms, 10, mkChar("double.exponent"));
-    SET_VECTOR_ELT(ans, 10, ScalarInteger(R_AccuracyInfo.iexp));
-
-    SET_STRING_ELT(nms, 11, mkChar("double.min.exp"));
-    SET_VECTOR_ELT(ans, 11, ScalarInteger(R_AccuracyInfo.minexp));
-
-    SET_STRING_ELT(nms, 12, mkChar("double.max.exp"));
-    SET_VECTOR_ELT(ans, 12, ScalarInteger(R_AccuracyInfo.maxexp));
-
-    SET_STRING_ELT(nms, 13, mkChar("integer.max"));
-    SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));
-
-    SET_STRING_ELT(nms, 14, mkChar("sizeof.long"));
-    SET_VECTOR_ELT(ans, 14, ScalarInteger(SIZEOF_LONG));
-
-    SET_STRING_ELT(nms, 15, mkChar("sizeof.longlong"));
-    SET_VECTOR_ELT(ans, 15, ScalarInteger(SIZEOF_LONG_LONG));
-
-    SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
-#ifdef HAVE_LONG_DOUBLE
-    SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
-#else
-    SET_VECTOR_ELT(ans, 16, ScalarInteger(0));
-#endif
-
-    SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
-    SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
-
-/* This used to be just
-#ifdef HAVE_LONG_DOUBLE
-   but platforms can have the type and it be identical to double
-   (as on ARM).  So do the same as capabilities("long.double")
-*/
-#ifdef HAVE_LONG_DOUBLE
-    if (sizeof(LDOUBLE) > sizeof(double)) {
-	static struct {
-	    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
-	    long double eps, epsneg, xmin, xmax;
-	} R_LD_AccuracyInfo;
-	
-	machar_LD(&R_LD_AccuracyInfo.ibeta,
-		  &R_LD_AccuracyInfo.it,
-		  &R_LD_AccuracyInfo.irnd,
-		  &R_LD_AccuracyInfo.ngrd,
-		  &R_LD_AccuracyInfo.machep,
-		  &R_LD_AccuracyInfo.negep,
-		  &R_LD_AccuracyInfo.iexp,
-		  &R_LD_AccuracyInfo.minexp,
-		  &R_LD_AccuracyInfo.maxexp,
-		  &R_LD_AccuracyInfo.eps,
-		  &R_LD_AccuracyInfo.epsneg,
-		  &R_LD_AccuracyInfo.xmin,
-		  &R_LD_AccuracyInfo.xmax);
- 
-	SET_STRING_ELT(nms, 18+0, mkChar("longdouble.eps"));
-	SET_VECTOR_ELT(ans, 18+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
-
-	SET_STRING_ELT(nms, 18+1, mkChar("longdouble.neg.eps"));
-	SET_VECTOR_ELT(ans, 18+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
-    /*
-    SET_STRING_ELT(nms, 18+2, mkChar("longdouble.xmin"));     // not representable as double
-    SET_VECTOR_ELT(ans, 18+2, ScalarReal(R_LD_AccuracyInfo.xmin));
-
-    SET_STRING_ELT(nms, 18+3, mkChar("longdouble.xmax"));    // not representable as double
-    SET_VECTOR_ELT(ans, 18+3, ScalarReal(R_LD_AccuracyInfo.xmax));
-
-    SET_STRING_ELT(nms, 18+4, mkChar("longdouble.base"));    // same as "all"
-    SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
-    */
-
-	SET_STRING_ELT(nms, 18+2, mkChar("longdouble.digits"));
-	SET_VECTOR_ELT(ans, 18+2, ScalarInteger(R_LD_AccuracyInfo.it));
-
-	SET_STRING_ELT(nms, 18+3, mkChar("longdouble.rounding"));
-	SET_VECTOR_ELT(ans, 18+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
-
-	SET_STRING_ELT(nms, 18+4, mkChar("longdouble.guard"));
-	SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
-
-	SET_STRING_ELT(nms, 18+5, mkChar("longdouble.ulp.digits"));
-	SET_VECTOR_ELT(ans, 18+5, ScalarInteger(R_LD_AccuracyInfo.machep));
-
-	SET_STRING_ELT(nms, 18+6, mkChar("longdouble.neg.ulp.digits"));
-	SET_VECTOR_ELT(ans, 18+6, ScalarInteger(R_LD_AccuracyInfo.negep));
-
-	SET_STRING_ELT(nms, 18+7, mkChar("longdouble.exponent"));
-	SET_VECTOR_ELT(ans, 18+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
-
-	SET_STRING_ELT(nms, 18+8, mkChar("longdouble.min.exp"));
-	SET_VECTOR_ELT(ans, 18+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
-
-	SET_STRING_ELT(nms, 18+9, mkChar("longdouble.max.exp"));
-	SET_VECTOR_ELT(ans, 18+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
-
-    }
-#endif
-
-    setAttrib(ans, R_NamesSymbol, nms);
-    defineVar(install(".Machine"), ans, rho);
-    UNPROTECT(2);
-}
-
 
 /*  Platform
  *
@@ -319,7 +134,9 @@ static void Init_R_Platform(SEXP rho)
     UNPROTECT(2);
 }
 
-void attribute_hidden Init_R_Variables(SEXP rho)
+void Init_R_Machine(SEXP rho); // from machine.c
+
+attribute_hidden void Init_R_Variables(SEXP rho)
 {
     Init_R_Machine(rho);
     Init_R_Platform(rho);
@@ -381,7 +198,7 @@ static int defaultLocaleACP(const char *ctype)
    known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
 
 static char codeset[R_CODESET_MAX + 1];
-void attribute_hidden R_check_locale(void)
+attribute_hidden void R_check_locale(void)
 {
     known_to_be_utf8 = utf8locale = FALSE;
     known_to_be_latin1 = latin1locale = FALSE;
@@ -462,11 +279,10 @@ void attribute_hidden R_check_locale(void)
 /*  date
  *
  *  Return the current date in a standard format.  This uses standard
- *  POSIX calls which should be available on each platform.  We should
- *  perhaps check this in the configure script.
- */
-/* BDR 2000/7/20.
- *  time and ctime are in fact ANSI C calls, so we don't check them.
+ *  POSIX calls which should be available on each platform.
+ *  time and ctime are ISO C calls, so we don't check them.
+ *
+ * This needs the system time_t.
  */
 static char *R_Date(void)
 {
@@ -479,7 +295,7 @@ static char *R_Date(void)
     return s;
 }
 
-SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return mkString(R_Date());
@@ -493,7 +309,7 @@ SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 
 // .Internal so manages R_alloc stack used by acopy_string
-SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
     const char **f, **h, *t, *pager = NULL /* -Wall */;
@@ -587,7 +403,7 @@ static int R_AppendFile(SEXP file1, SEXP file2)
     return status;
 }
 
-SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2, ans;
     int n, n1, n2;
@@ -657,7 +473,7 @@ done:
     return ans;
 }
 
-SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
     FILE *fp;
@@ -687,7 +503,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f, ans;
     int i, n;
@@ -723,7 +539,7 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
    have, and which many people report granting in the Policy Editor
    fails to work.
 */
-SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2;
     int n, n1, n2;
@@ -811,7 +627,7 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2;
     int n, n1, n2;
@@ -889,7 +705,7 @@ int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 int Rwin_wrename(const wchar_t *from, const wchar_t *to);
 #endif
 
-SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2, ans;
     int i, n1, n2;
@@ -982,7 +798,7 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 # define STAT_TIMESPEC_NS(st, st_xtim) ((st).st_xtim.st__tim.tv_nsec)
 #endif
 
-SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir,
 	mode, xxclass;
@@ -1206,7 +1022,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
 
@@ -1268,6 +1084,7 @@ SEXP attribute_hidden do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
+// A filenamw cannot be that long, but avoid GCC warnings
 #define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
@@ -1375,7 +1192,7 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 }
 #undef IF_MATCH_ADD_TO_ANS
 
-SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int countmax = 128;
 
@@ -1499,7 +1316,7 @@ static void list_dirs(const char *dnp, const char *nm,
     }
 }
 
-SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int countmax = 128;
 
@@ -1530,7 +1347,7 @@ SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *path;
     checkArity(op, args);
@@ -1547,7 +1364,7 @@ static Rboolean attribute_hidden R_WFileExists(const wchar_t *path)
 }
 #endif
 
-SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, ans;
     int i, nfile;
@@ -1570,7 +1387,11 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 	    // returns NULL if not translatable
 	    const char *p = translateCharFP2(STRING_ELT(file, i));
-	    LOGICAL(ans)[i] = p && R_FileExists(p);
+	    /* Package XML sends arbitrarily long strings to file.exists! */
+	    if (!p || strlen(p) > PATH_MAX)
+		LOGICAL(ans)[i] = FALSE;
+	    else
+		LOGICAL(ans)[i] = R_FileExists(p);
 #endif
 	} else LOGICAL(ans)[i] = FALSE;
     }
@@ -1581,7 +1402,7 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define CHOOSEBUFSIZE 1024
 
 #ifndef Win32
-SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int _new, len;
     char buf[CHOOSEBUFSIZE];
@@ -1605,7 +1426,7 @@ extern int winAccessW(const wchar_t *path, int mode);
 #endif
 
 /* we require 'access' as from 2.12.0 */
-SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
     int i, n, mode, modemask;
@@ -1829,7 +1650,7 @@ static int R_unlink(const char *name, int recursive, int force)
 /* Note that wildcards are allowed in 'names' */
 #ifdef Win32
 # include <dos_wglob.h>
-SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
     int i, j, nfiles, res, failures = 0, recursive, force, expand;
@@ -1879,7 +1700,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 #  include <glob.h>
 # endif
 
-SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
     int i, nfiles, failures = 0, recursive, force, expand;
@@ -1941,7 +1762,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #endif
 
-SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int cat;
     char *p = NULL;
@@ -1957,14 +1778,16 @@ SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 4: cat = LC_MONETARY; break;
     case 5: cat = LC_NUMERIC; break;
     case 6: cat = LC_TIME; break;
-#ifdef LC_MESSAGES
+#ifndef Win32
+# ifdef LC_MESSAGES
     case 7: cat = LC_MESSAGES; break;
-#endif
-#ifdef LC_PAPER
+# endif
+# ifdef LC_PAPER
     case 8: cat = LC_PAPER; break;
-#endif
-#ifdef LC_MEASUREMENT
+# endif
+# ifdef LC_MEASUREMENT
     case 9: cat = LC_MEASUREMENT; break;
+# endif
 #endif
     default: cat = NA_INTEGER;
     }
@@ -1973,11 +1796,12 @@ SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Locale specs are always ASCII */
-SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP locale = CADR(args), ans;
     int cat;
     const char *p;
+    Rboolean warned = FALSE;
 
     checkArity(op, args);
     cat = asInteger(CAR(args));
@@ -2037,29 +1861,36 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	dt_invalidate_locale();
 	break;
-#if defined LC_MESSAGES
+#ifdef Win32
+    case 7: /* LC_MESSAGES (defined in gnuintl.h only for (d)gettext) */
+    case 8: /* LC_PAPER */
+    case 9: /* LC_MEASUREMENT */
+	warning(_("%s does not exist on Windows"),
+	    (cat == 7) ? "LC_MESSAGES" :
+	    (cat == 8) ? "LC_PAPER"    :
+	                 "LC_MEASUREMENT");
+	p = NULL;
+	warned = TRUE;
+	break;
+#else /* not Win32 */
+# ifdef LC_MESSAGES
     case 7:
 	cat = LC_MESSAGES;
-#ifdef Win32
-/* this seems to exist in MinGW, but it does not work in Windows */
-	warning(_("LC_MESSAGES exists on Windows but is not operational"));
-	p = NULL;
-#else
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
-#endif
 	break;
-#endif
-#ifdef LC_PAPER
+# endif
+# ifdef LC_PAPER
     case 8:
 	cat = LC_PAPER;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
-#endif
-#ifdef LC_MEASUREMENT
+# endif
+# ifdef	LC_MEASUREMENT
     case 9:
 	cat = LC_MEASUREMENT;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
+# endif
 #endif
     default:
 	p = NULL; /* -Wall */
@@ -2069,8 +1900,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  {
 	SET_STRING_ELT(ans, 0, mkChar(""));
-	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
-		CHAR(STRING_ELT(locale, 0)));
+	if (!warned)
+	    warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
+	            CHAR(STRING_ELT(locale, 0)));
     }
 #ifdef Win32
     int oldCP = localeCP;
@@ -2091,7 +1923,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 
-SEXP attribute_hidden do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     struct lconv *lc = localeconv();
@@ -2121,28 +1953,28 @@ SEXP attribute_hidden do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i++, mkChar("positive_sign"));
     SET_STRING_ELT(ans, i, mkChar(lc->negative_sign));
     SET_STRING_ELT(ansnames, i++, mkChar("negative_sign"));
-    sprintf(buff, "%d", (int)lc->int_frac_digits);
+    snprintf(buff, 20, "%d", (int)lc->int_frac_digits);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("int_frac_digits"));
-    sprintf(buff, "%d", (int)lc->frac_digits);
+    snprintf(buff, 20, "%d", (int)lc->frac_digits);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("frac_digits"));
-    sprintf(buff, "%d", (int)lc->p_cs_precedes);
+    snprintf(buff, 20, "%d", (int)lc->p_cs_precedes);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("p_cs_precedes"));
-    sprintf(buff, "%d", (int)lc->p_sep_by_space);
+    snprintf(buff, 20, "%d", (int)lc->p_sep_by_space);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("p_sep_by_space"));
-    sprintf(buff, "%d", (int)lc->n_cs_precedes);
+    snprintf(buff, 20, "%d", (int)lc->n_cs_precedes);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("n_cs_precedes"));
-    sprintf(buff, "%d", (int)lc->n_sep_by_space);
+    snprintf(buff, 20, "%d", (int)lc->n_sep_by_space);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("n_sep_by_space"));
-    sprintf(buff, "%d", (int)lc->p_sign_posn);
+    snprintf(buff, 20, "%d", (int)lc->p_sign_posn);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("p_sign_posn"));
-    sprintf(buff, "%d", (int)lc->n_sign_posn);
+    snprintf(buff, 20, "%d", (int)lc->n_sign_posn);
     SET_STRING_ELT(ans, i, mkChar(buff));
     SET_STRING_ELT(ansnames, i++, mkChar("n_sign_posn"));
     setAttrib(ans, R_NamesSymbol, ansnames);
@@ -2151,7 +1983,7 @@ SEXP attribute_hidden do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* .Internal function for path.expand */
-SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
     int i, n;
@@ -2215,7 +2047,7 @@ static Rboolean R_can_use_X11(void)
 #endif
 
 /* only actually used on Unix */
-SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 #ifdef Unix
@@ -2225,7 +2057,7 @@ SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho
 #endif
 }
 
-SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
@@ -2368,7 +2200,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* This is true iff winCairo.dll is available */
     struct stat sb;
-    char path[1000];
+    char path[1000]; // R_HomeDir() should be at most 260 chars
     snprintf(path, 1000, "%s/library/grDevices/libs/%s/winCairo.dll",
 	     R_HomeDir(), R_ARCH);
     LOGICAL(ans)[i++] = stat(path, &sb) == 0;
@@ -2400,7 +2232,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return ScalarInteger(getpid());
@@ -2415,7 +2247,7 @@ SEXP attribute_hidden do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 */
 #ifndef Win32
 /* mkdir is defined in <sys/stat.h> */
-SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP path;
     int res, show, recursive, mode, serrno = 0;
@@ -2475,7 +2307,7 @@ end:
 }
 #else /* Win32 */
 #include <io.h> /* mkdir is defined here */
-SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path;
     wchar_t *p, dir[MAX_PATH];
@@ -2684,7 +2516,7 @@ copy_error:
 
 /* file.copy(from, to, overwrite, recursive, copy.mode, copy.date)
  * --------- Windows */
-SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP fn = CAR(args);
@@ -2761,12 +2593,6 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-/* Only 10.13 (High Sierra) has this, but the headers in Xcode 9 on 10.12
-   declare it, for some people. */
-#if defined(__APPLE__) && defined(MACOS_SIERRA)
-# undef HAVE_UTIMENSAT
-#endif
-
 #if defined(HAVE_UTIMENSAT)
 # include <fcntl.h>
 # include <sys/stat.h>
@@ -2820,7 +2646,9 @@ static int do_copy(const char* from, const char* name, const char* to,
 	return 1;
     }
     struct stat sb;
-    int nfail = 0, res;
+    int nfail = 0, res; // we only use nfail == 0
+    size_t len;
+    // After POSIX clarification, PATH_MAX would do
     char dest[PATH_MAX + 1], this[PATH_MAX + 1];
 
     int mask;
@@ -2831,11 +2659,13 @@ static int do_copy(const char* from, const char* name, const char* to,
     mask = 0777;
 #endif
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
-    if (strlen(from) + strlen(name) >= PATH_MAX) {
+    // We use snprintf to compute lengths to pacify GCC 12
+    len = snprintf(NULL, 0, "%s%s", from, name);
+    if (len >= PATH_MAX) {
 	warning(_("over-long path"));
 	return 1;
     }
-    snprintf(this, PATH_MAX+1, "%s%s", from, name);
+    snprintf(this, len+1, "%s%s", from, name);
     /* Here we want the target not the link */
     stat(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
@@ -2844,11 +2674,12 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char p[PATH_MAX + 1];
 
 	if (!recursive) return 1;
-	if (strlen(to) + strlen(name) >= PATH_MAX) {
+	len = snprintf(NULL, 0, "%s%s", to, name);
+	if (len >= PATH_MAX) {
 	    warning(_("over-long path"));
 	    return 1;
 	}
-	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
+	snprintf(dest, len+1, "%s%s", to, name);
 	/* If a directory does not have write permission for the user,
 	   we will fail to create files in that directory, so defer
 	   setting mode */
@@ -2875,12 +2706,13 @@ static int do_copy(const char* from, const char* name, const char* to,
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		if (strlen(name) + strlen(de->d_name) + 1 >= PATH_MAX) {
+		len = snprintf(NULL, 0, "%s/%s", name, de->d_name);
+		if (len >= PATH_MAX) {
 		    warning(_("over-long path"));
 		    closedir(dir);
 		    return 1;
 		}
-		snprintf(p, PATH_MAX+1, "%s/%s", name, de->d_name);
+		snprintf(p, len+1, "%s/%s", name, de->d_name);
 		nfail += do_copy(from, p, to, over, recursive,
 				 perms, dates, depth);
 	    }
@@ -2895,13 +2727,13 @@ static int do_copy(const char* from, const char* name, const char* to,
 	FILE *fp1 = NULL, *fp2 = NULL;
 
 	nfail = 0;
-	size_t nc = strlen(to);
-	if (nc + strlen(name) >= PATH_MAX) {
+	len = snprintf(NULL, 0, "%s%s", to, name);
+	if (len >= PATH_MAX) {
 	    warning(_("over-long path"));
 	    nfail++;
 	    goto copy_error;
 	}
-	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
+	snprintf(dest, len+1, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
 	    /* REprintf("copying %s to %s\n", this, dest); */
 	    if ((fp1 = R_fopen(this, "rb")) == NULL ||
@@ -2917,6 +2749,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		fclose(fp2);
 		error("could not allocate copy buffer");
 	    }
+	    size_t nc;
 	    while ((nc = fread(buf, 1, APPENDBUFSIZE, fp1)) == APPENDBUFSIZE)
 		if (    fwrite(buf, 1, APPENDBUFSIZE, fp2)  != APPENDBUFSIZE) {
 		    nfail++;
@@ -2946,7 +2779,7 @@ copy_error:
 
 /* file.copy(from, to, overwrite, recursive, copy.mode, copy.date)
  * --------- Unix-alike */
-SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP fn = CAR(args);
@@ -3016,7 +2849,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
-SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef Win32
     int len = 5;
@@ -3050,7 +2883,7 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* do_normalizepath moved to util.c in R 2.13.0 */
 
-SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_CHMOD
     SEXP paths, smode, ans;
@@ -3114,7 +2947,7 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     int mode;
@@ -3143,7 +2976,7 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP paths = CAR(args);
@@ -3172,7 +3005,7 @@ SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, nms;
 
@@ -3226,7 +3059,7 @@ static int winSetFileTime(const char *fn, double ftime)
 }
 #endif
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_setFileTime(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -3296,7 +3129,7 @@ typedef struct TMN_REPARSE_DATA_BUFFER
     WCHAR  PathBuffer[1024];
 } TMN_REPARSE_DATA_BUFFER;
 
-SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     wchar_t from[10000];
     const wchar_t *to;
@@ -3396,7 +3229,7 @@ extern void *dlsym(void *handle, const char *symbol);
    without loading any modules; libraries available via modules are
    treated individually (libcurlVersion(), La_version(), etc)
 */
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -3527,6 +3360,13 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	char *res = realpath(dl_info1.dli_fname, buf);
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(res));
+	else if (errno == ENOENT)
+	    /* macOs (Big Sur) has uses a cache for system-provided dynamic
+	       libraries and they no longer exist as regular files. The 
+	       dynamic linker knows how to find them, but not regular file
+	       operations such as realpath(). Hence, when the file is not
+	       found, report what we have from the dynamic linker. */
+	    SET_STRING_ELT(ans, i, mkChar(dl_info1.dli_fname));
     }
 #endif
     SET_STRING_ELT(nms, i++, mkChar("BLAS"));
@@ -3535,10 +3375,35 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+attribute_hidden SEXP
+do_compilerVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(STRSXP, 2));
+    SEXP nms = PROTECT(allocVector(STRSXP, 2));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("C"));
+    SET_STRING_ELT(nms, 1, mkChar("Fortran"));
+#ifdef CC_VER
+    SET_STRING_ELT(ans, 0, mkChar(CC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+#ifdef FC_VER
+    SET_STRING_ELT(ans, 1, mkChar(FC_VER));
+#else
+    SET_STRING_ELT(ans, 1, mkChar(""));
+#endif
+    
+    UNPROTECT(2);
+   return ans;
+}
+
+
 /* platform-specific */
 extern void Rsleep(double timeint);
 
-SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     double time = asReal(CAR(args));

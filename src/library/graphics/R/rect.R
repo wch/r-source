@@ -24,8 +24,7 @@ rect <-
         density <- NULL
     if (!is.null(density) && !is.null(angle)) {
         if (is.logical(border) && !is.na(border)) {
-            if (border) border <- col
-            else border <- NA
+            border <- if(border) col else NA
         }
         n <- range(length(xleft), length(xright),
                    length(ybottom), length(ytop))

@@ -9,11 +9,12 @@
 \alias{citHeader}
 \alias{citFooter}
 \description{
-  Functionality for specifying bibliographic information in enhanced
-  BibTeX style.
+  Old interface providing functionality for specifying bibliographic 
+  information in enhanced BibTeX style.  Since R 2.14.0 this has been 
+  superseded by \code{\link{bibentry}}.
 }
 \usage{
-citEntry(entry, textVersion, header = NULL, footer = NULL, ...)
+citEntry(entry, textVersion = NULL, header = NULL, footer = NULL, ...)
 citHeader(...)
 citFooter(...)
 }
@@ -23,7 +24,7 @@ citFooter(...)
     details.
   }
   \item{textVersion}{a character string with a text representation of
-    the reference.}
+    the reference to optionally be employed for printing.}
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{\dots}{for \code{citEntry}, arguments of the form

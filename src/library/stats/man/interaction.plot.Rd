@@ -1,6 +1,6 @@
 % File src/library/stats/man/interaction.plot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{interaction.plot}
@@ -26,7 +26,7 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 \arguments{
   \item{x.factor}{a factor whose levels will form the x axis.}
   \item{trace.factor}{another factor whose levels will form the traces.}
-  \item{response}{a numeric variable giving the response}
+  \item{response}{a numeric variable giving the response.}
   \item{fun}{the function to compute the summary. Should return a single
     real value.}
   \item{type}{the type of plot (see \code{\link{plot.default}}): lines
@@ -34,7 +34,8 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
   \item{legend}{logical. Should a legend be included?}
   \item{trace.label}{overall label for the legend.}
   \item{fixed}{logical.  Should the legend be in the order of the levels
-    of \code{trace.factor} or in the order of the traces at their right-hand ends?}
+    of \code{trace.factor} (\code{TRUE}) or in the order of the
+    traces at their right-hand ends (\code{FALSE}, the default)?}
   \item{xlab,ylab}{the x and y label of the plot each with a sensible default.}
   \item{ylim}{numeric of length 2 giving the y limits for the plot.}
   \item{lty}{line type for the lines drawn, with sensible default.}
@@ -50,7 +51,7 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 \details{
   By default the levels of \code{x.factor} are plotted on the x axis in
-  their given order, with extra space left at the right for the legend
+  their given order, with extra space on the right for the legend
   (if specified). If \code{x.factor} is an ordered factor and the levels
   are numeric, these numeric values are used for the x axis.
 
@@ -62,7 +63,7 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
   \code{lty}, \code{col} and \code{pch} are given suitable defaults
   (and \code{xlim} and \code{xaxs} are set and cannot be overridden).
   The defaults are to cycle through the line types, use the foreground
-  colour, and to use the symbols 1:9, 0, and the capital letters to plot
+  colour, and to use the symbols 1:9, 0, and the small letters to plot
   the traces.
 }
 \note{
@@ -82,7 +83,8 @@ require(graphics)
 with(ToothGrowth, {
 interaction.plot(dose, supp, len, fixed = TRUE)
 dose <- ordered(dose)
-interaction.plot(dose, supp, len, fixed = TRUE, col = 2:3, leg.bty = "o")
+interaction.plot(dose, supp, len, fixed = TRUE,
+                 col = 2:3, leg.bty = "o", xtick = TRUE)
 interaction.plot(dose, supp, len, fixed = TRUE, col = 2:3, type = "p")
 })
 

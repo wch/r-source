@@ -1,7 +1,8 @@
 useDynLib("grid", .registration = TRUE, .fixes = "C_")
 
 import(grDevices)
-importFrom(utils, str)
+importFrom(utils,
+           str, head)
 
 export(
        "arcCurvature", "arrow",
@@ -99,6 +100,9 @@ export(
 
        # Masks
        "as.mask",
+
+       # Typesetting
+       "grid.glyph", "glyphGrob", 
     
        # Listing grobs and viewports
        "grid.ls",
@@ -123,7 +127,10 @@ export(
        "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
        "xsplinePoints", "bezierPoints",
 
-       "grobCoords", "grobPoints", "emptyCoords", "isEmptyCoords",
+       "grobCoords", "grobPoints",
+       "gridCoords", "gridGrobCoords", "gridGTreeCoords",
+       "emptyCoords", "emptyGrobCoords", "emptyGTreeCoords",
+       "isEmptyCoords", "isClosed",
     
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob",
@@ -182,6 +189,9 @@ S3method("print", "viewport")
 S3method("print", "path")
 S3method("print", "gpar")
 S3method("print", "flatGridListing")
+S3method("print", "GridCoords")
+S3method("print", "GridGrobCoords")
+S3method("print", "GridGTreeCoords")
 
 ## S3 methods for exported generics in grid
 S3method("downViewport", "default")
@@ -189,6 +199,7 @@ S3method("downViewport", "vpPath")
 
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
+S3method("drawDetails", "glyphgrob")
 S3method("drawDetails", "grob")
 S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
@@ -226,6 +237,31 @@ S3method("gridList", "vpPath")
 S3method("gridList", "pop")
 S3method("gridList", "up")
 
+S3method("getX", "GridCoords")
+S3method("getX", "GridGrobCoords")
+S3method("getX", "GridGTreeCoords")
+S3method("getY", "GridCoords")
+S3method("getY", "GridGrobCoords")
+S3method("getY", "GridGTreeCoords")
+
+S3method("toDevice", "GridCoords")
+S3method("toDevice", "GridGrobCoords")
+S3method("toDevice", "GridGTreeCoords")
+S3method("fromDevice", "GridCoords")
+S3method("fromDevice", "GridGrobCoords")
+S3method("fromDevice", "GridGTreeCoords")
+
+S3method("isEmptyCoords", "GridCoords")
+S3method("isEmptyCoords", "GridGrobCoords")
+S3method("isEmptyCoords", "GridGTreeCoords")
+
+S3method("transformCoords", "GridCoords")
+S3method("transformCoords", "GridGrobCoords")
+S3method("transformCoords", "GridGTreeCoords")
+
+S3method("flattenCoords", "GridGrobCoords")
+S3method("flattenCoords", "GridGTreeCoords")
+
 S3method("grobCoords", "grob")
 S3method("grobCoords", "gList")
 S3method("grobCoords", "gTree")
@@ -234,6 +270,10 @@ S3method("grobCoords", "GridFill")
 S3method("grobCoords", "GridFillStroke")
 S3method("grobCoords", "GridGroup")
 S3method("grobCoords", "GridDefine")
+S3method("grobCoords", "GridDefineChild")
+S3method("grobCoords", "GridUse")
+S3method("grobCoords", "GridUseChild")
+S3method("grobPoints", "grob")
 S3method("grobPoints", "move.to")
 S3method("grobPoints", "line.to")
 S3method("grobPoints", "circle")
@@ -249,6 +289,7 @@ S3method("grobPoints", "rect")
 S3method("grobPoints", "segments")
 S3method("grobPoints", "text")
 S3method("grobPoints", "xspline")
+S3method("grobPoints", "glyphgrob")
 S3method("grobPoints", "gList")
 S3method("grobPoints", "gTree")
 S3method("grobPoints", "GridStroke")
@@ -302,6 +343,7 @@ S3method("heightDetails", "xspline")
 S3method("heightDetails", "beziergrob")
 S3method("heightDetails", "rastergrob")
 #S3method("height.details", "viewport")
+S3method("heightDetails", "glyphgrob")
 
 S3method("postDraw", "grob")
 S3method("preDraw", "grob")
@@ -321,6 +363,7 @@ S3method("validDetails", "circle")
 S3method("validDetails", "clip")
 S3method("validDetails", "curve")
 S3method("validDetails", "functiongrob")
+S3method("validDetails", "glyphgrob")
 S3method("validDetails", "grob")
 S3method("validDetails", "lines")
 S3method("validDetails", "line.to")
@@ -354,6 +397,7 @@ S3method("widthDetails", "xspline")
 S3method("widthDetails", "beziergrob")
 S3method("widthDetails", "rastergrob")
 #S3method("width.details", "viewport")
+S3method("widthDetails", "glyphgrob")
 
 S3method("xDetails", "circle")
 S3method("xDetails", "curve")
@@ -369,6 +413,7 @@ S3method("xDetails", "text")
 S3method("xDetails", "xspline")
 S3method("xDetails", "beziergrob")
 S3method("xDetails", "rastergrob")
+S3method("xDetails", "glyphgrob")
 
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
@@ -384,6 +429,7 @@ S3method("yDetails", "text")
 S3method("yDetails", "xspline")
 S3method("yDetails", "beziergrob")
 S3method("yDetails", "rastergrob")
+S3method("yDetails", "glyphgrob")
 
 S3method("ascentDetails", "default")
 S3method("ascentDetails", "grob")
@@ -475,6 +521,7 @@ S3method("resolveFill", "GridResolvedPattern")
 
 S3method("resolvePattern", "GridLinearGradient")
 S3method("resolvePattern", "GridRadialGradient")
+S3method("resolvePattern", "GridTilingPattern")
 
 S3method("unresolveFill", "default")
 S3method("unresolveFill", "GridPattern")
@@ -492,3 +539,14 @@ S3method("fillGrob", "grob")
 S3method("fillGrob", "GridPath")
 S3method("fillStrokeGrob", "grob")
 S3method("fillStrokeGrob", "GridPath")
+
+S3method("isClosed", "default")
+S3method("isClosed", "move.to")
+S3method("isClosed", "line.to")
+S3method("isClosed", "lines")
+S3method("isClosed", "polyline")
+S3method("isClosed", "segments")
+S3method("isClosed", "beziergrob")
+S3method("isClosed", "xspline")
+S3method("isClosed", "points")
+

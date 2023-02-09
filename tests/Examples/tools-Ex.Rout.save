@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-02-09 r81684) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-05-29 r82419) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -33,7 +33,7 @@ Type 'q()' to quit R.
 > ### Name: CRANtools
 > ### Title: CRAN Package Repository Tools
 > ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
-> ###   CRAN_check_issues CRAN_memtest_notes summarize_CRAN_check_status
+> ###   CRAN_check_issues summarize_CRAN_check_status R_CRAN_WEB R_CRAN_SRC
 > 
 > ### ** Examples
 > 
@@ -198,20 +198,22 @@ Error in assertWarning(ff()) :
 +     year = 1964,
 +     title = "An Analysis of Transformations",
 +     journal = "Journal of the Royal Statistical Society, Series B",
-+     volume = 26,
-+     pages = "211-252"))
++     volume = 26, number = 2, pages = "211--243",
++     doi = "10.1111/j.2517-6161.1964.tb00553.x"))
 > 
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x559c1cfec6f0>
+<environment: 0x12a8be408>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-<URL: https://www.R-project.org>.
+<https://www.R-project.org>.
 
 [2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
-of the Royal Statistical Society, Series B_, *26*, 211-252.
+of the Royal Statistical Society, Series B_, *26*(2), 211-243.
+doi:10.1111/j.2517-6161.1964.tb00553.x
+<https://doi.org/10.1111/j.2517-6161.1964.tb00553.x>.
 > 
 > 
 > 
@@ -635,6 +637,23 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
+> f <- tempfile()
+> writeLines(r"(
++ \newcommand{\Rlogo}{
++   \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
++   \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
++ }
++ )", f)
+> m <- loadRdMacros(f)
+> ls(m)
+[1] "\\Rlogo"
+> ls(parent.env(parent.env(m)))
+character(0)
+> parse_Rd(textConnection(r"(\Rlogo)"), fragment = TRUE, macros = m)
+
+  \if{html}{\figure{Rlogo.svg}{options: width=100 alt="R logo"}}
+  \if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}
+
 > 
 > 
 > 
@@ -856,7 +875,7 @@ function (x, ...)
 <a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
 </div>
 <h2>Demos in package &lsquo;base&rsquo;</h2>
-<table cols="2" width="100%">
+<table cols="2" style="width: 100%;">
 <tr>
  <td style="text-align: left; vertical-align: top; width: 10%;">
 error.catching
@@ -954,7 +973,7 @@ An illustration of lexical scoping.
 > 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/home/Hornik/.cache/R/FOO"
+[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1094,7 +1113,7 @@ sqrt(x) is
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.236 0.013 0.248 0 0 
+Time elapsed:  0.135 0.011 0.147 0 0 
 > grDevices::dev.off()
 null device 
           1 

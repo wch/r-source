@@ -25,18 +25,18 @@
   when a \code{grid.define()}d group is \code{grid.use()}d.
 }
 \usage{
-viewportTransform(group, shear=groupShear(), flip=groupFlip(), \dots) 
-viewportTranslate(group, \dots)
-viewportScale(group, \dots)
-viewportRotate(group, \dots)
-defnTranslate(group, inverse=FALSE, \dots)
-defnScale(group, inverse=FALSE, \dots)
-defnRotate(group, inverse=FALSE, \dots)
-useTranslate(group, inverse=FALSE, \dots)
-useScale(group, inverse=FALSE, \dots)
-useRotate(group, inverse=FALSE, \dots)
+viewportTransform(group, shear=groupShear(), flip=groupFlip(), device=TRUE) 
+viewportTranslate(group, device=TRUE)
+viewportScale(group, device=TRUE)
+viewportRotate(group, device=TRUE)
+defnTranslate(group, inverse=FALSE, device=TRUE)
+defnScale(group, inverse=FALSE)
+defnRotate(group, inverse=FALSE, device=TRUE)
+useTranslate(inverse=FALSE, device=TRUE)
+useScale(inverse=FALSE)
+useRotate(inverse=FALSE, device=TRUE)
 groupTranslate(dx=0, dy=0)
-groupRotate(r=0)
+groupRotate(r=0, device=TRUE)
 groupScale(sx=1, sy=1)
 groupShear(sx=0, sy=0)
 groupFlip(flipX=FALSE, flipY=FALSE)
@@ -52,8 +52,10 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   \item{dx, dy}{The translation to apply.}
   \item{r}{The rotation to apply.}
   \item{sx, sy}{The scaling (or shear) to apply.}
-  \item{flipX, flipY}{Whether to negate the x-scaling or y-scaling (logical).}
-  \item{\dots}{Arguments passed on to lower-level transformation functions.}
+  \item{flipX, flipY}{Whether to negate the x-scaling or y-scaling
+    (logical).}
+  \item{device}{A logical indicating whether transformation should be
+    relative to the device or relative to the current viewport.}
 }
 \value{
   An affine transformation matrix.
@@ -73,11 +75,13 @@ groupFlip(flipX=FALSE, flipY=FALSE)
   functions.  For example, the \code{groupShear()} function can be
   used to specify a shear transform to \code{viewportTransform()}.
 
-  It is also possible to define any function that returns a 4x4 matrix
+  It is also possible to define any function that returns a 3x3 matrix
+  (as long as the last column contains 0, 0, and 1)
   and use it as the \code{transform} argument to
   \code{\link{grid.use}}, but the results will probably be
-  device-dependent may be \emph{very} difficult
-  to predict.
+  device-dependent, and may be \emph{very} difficult
+  to predict.  The function will be called with two arguments:
+  \code{group} and \code{device}.
 }
 \author{Paul Murrell}
 \seealso{

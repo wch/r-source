@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2021   The R Core Team
+ *   Copyright (C) 1997-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 
 /* RENVIRON_WIN32_STANDALONE is set when compiling for use in Rcmd Windows
    front-end, which is not linked against the R library. The locale is not
@@ -342,7 +345,7 @@ static int process_Renviron(const char *filename)
 #ifndef RENVIRON_WIN32_STANDALONE
 
 /* try system Renviron: R_HOME/etc/Renviron.  Unix only. */
-void process_system_Renviron()
+void process_system_Renviron(void)
 {
     char buf[PATH_MAX];
 
@@ -372,7 +375,7 @@ void process_system_Renviron()
 #endif
 
 /* try site Renviron: R_ENVIRON, then R_HOME/etc/Renviron.site. */
-void process_site_Renviron ()
+void process_site_Renviron (void)
 {
     char buf[PATH_MAX], *p = getenv("R_ENVIRON");
 
@@ -401,10 +404,11 @@ void process_site_Renviron ()
 
 #ifdef Win32
 extern char *getRUser(void);
+extern void freeRUser(char *);
 #endif
 
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
-void process_user_Renviron()
+void process_user_Renviron(void)
 {
     const char *s = getenv("R_ENVIRON_USER");
 
@@ -413,31 +417,44 @@ void process_user_Renviron()
 	return;
     }
 
+    char buff[PATH_MAX];  /* FIXME: to be increased on Windows */
+
 #ifdef R_ARCH
-    char buff[100];
-    snprintf(buff, 100, ".Renviron.%s", R_ARCH);
+    snprintf(buff, PATH_MAX, ".Renviron.%s", R_ARCH);
     if(process_Renviron(buff)) return;
 #endif
+
     if(process_Renviron(".Renviron")) return;
+
 #ifdef Unix
     s = R_ExpandFileName("~/.Renviron");
 #endif
 #ifdef Win32
-    {
-	char buf[1024]; /* MAX_PATH is less than this */
-	/* R_USER is not necessarily set yet, so we have to work harder */
-	snprintf(buf, 1024, "%s/.Renviron", getRUser());
-	s = buf;
+    /* R_USER is not necessarily set yet, so we have to work harder */
+    char *RUser = getRUser();
+    if (strlen(RUser) + strlen("/.Renviron") + 1 > PATH_MAX) {
+	Renviron_warning("path to user Renviron is too long: skipping");
+	freeRUser(RUser);
+	return;
+    } else {
+	snprintf(buff, PATH_MAX, "%s/.Renviron", RUser);
+	freeRUser(RUser);
+	s = buff;
     }
 #endif
+
 #ifdef R_ARCH
-    snprintf(buff, 100, "%s.%s", s, R_ARCH);
-    if( process_Renviron(buff)) return;
+    if (strlen(s) + 1 + strlen(R_ARCH) + 1 > PATH_MAX)
+	Renviron_warning("path to arch-specific user Renviron is too long: skipping");
+    else {
+	snprintf(buff, PATH_MAX, "%s.%s", s, R_ARCH);
+	if(process_Renviron(buff)) return;
+    }
 #endif
     process_Renviron(s);
 }
 
-SEXP attribute_hidden do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 
     checkArity(op, args);

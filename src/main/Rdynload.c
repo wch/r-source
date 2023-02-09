@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2021 The R Core Team
+ *  Copyright (C) 1997-2023 The R Core Team
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -141,10 +141,10 @@ attribute_hidden OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
 
-static void initLoadedDLL();
+static void initLoadedDLL(void);
 
-void attribute_hidden
-InitDynload()
+attribute_hidden void
+InitDynload(void)
 {
     initLoadedDLL();
     int which = addDLL(Rstrdup("base"), "base", NULL);
@@ -155,7 +155,7 @@ InitDynload()
 
 /* Allocate LoadedDLL. Errors are reported via R_Suicide, because this is
    called too early during startup to use error(.) */
-static void initLoadedDLL()
+static void initLoadedDLL(void)
 {
     if (CountDLL != 0 || LoadedDLL != NULL)
 	R_Suicide("DLL table corruption detected"); /* not translated */
@@ -266,7 +266,7 @@ R_registerSymbolEptr(SEXP eptr, SEXP einfo)
 
 /* returns DllInfo used by the embedding application.
    the underlying "(embedding)" entry is created if not present */
-DllInfo *R_getEmbeddingDllInfo()
+DllInfo *R_getEmbeddingDllInfo(void)
 {
     DllInfo *dll = R_getDllInfo("(embedding)");
     if (dll == NULL) {
@@ -410,6 +410,139 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
     }
 
     return(1);
+}
+
+static SEXP getSymbolComponent(SEXP sSym, const char *name, SEXPTYPE type, int optional) {
+    SEXP sNames = 0;
+    int i = 0, n;
+    if (TYPEOF(sSym) != VECSXP ||
+	TYPEOF(sNames = getAttrib(sSym, R_NamesSymbol)) != STRSXP)
+	Rf_error(_("Invalid object."));
+    n = LENGTH(sNames);
+    while (i < n) {
+	if (!strcmp(CHAR(STRING_ELT(sNames, i)), name)) {
+	    SEXP res = R_NilValue;
+	    if (i >= LENGTH(sSym) ||
+		((type != ANYSXP) && (TYPEOF(res = VECTOR_ELT(sSym, i)) != type)))
+		Rf_error(_("Invalid entry '%s' in native symbol object."), name);
+	    return res;
+	}
+	i++;
+    }
+    if (!optional)
+	Rf_error(_("Component '%s' missing in symbol object."), name);
+    return R_NilValue;
+}
+
+/* This takes a list objects of any of the classes CRoutine, CallRoutine,
+   FortranRoutine, ExternalRoutine containing registration info in either
+   numParameters or nativeParamTypes and registers them using R_registerRoutines. */
+attribute_hidden SEXP Rf_registerRoutines(SEXP sSymbolList) {
+    DllInfo *dll = NULL;
+    int i = 0, n;
+    int n_c = 0, n_call = 0, n_f = 0, n_ext = 0;
+    if (TYPEOF(sSymbolList) != VECSXP)
+	Rf_error(_("Invalid symbol list."));
+    n = LENGTH(sSymbolList);
+    /* PASS 1: find the number of entries for each type */
+    while (i < n) {
+	SEXP sSym = VECTOR_ELT(sSymbolList, i++);
+	if (inherits(sSym, "CRoutine"))
+	    n_c++;
+	else if (inherits(sSym, "CallRoutine"))
+	    n_call++;
+	else if (inherits(sSym, "FortranRoutine"))
+	    n_f++;
+	else if (inherits(sSym, "ExternalRoutine"))
+	    n_ext++;
+	else
+	    Rf_error(_("Symbol at %d does not have registration information."), i);
+    }
+    /* PASS 2: allocate all necessary structures and fill them.
+       R_registerRoutines() copies all contents so we can use anything
+       from the symbol list as-is and any transient allocations as well */
+    R_CMethodDef *cRoutines = n_c ? (R_CMethodDef*) R_alloc(n_c + 1, sizeof(R_CMethodDef)) : NULL;
+    R_CallMethodDef *callRoutines = n_call ? (R_CallMethodDef*) R_alloc(n_call + 1, sizeof(R_CallMethodDef)) : NULL;
+    R_FortranMethodDef *fortranRoutines = n_f ? (R_FortranMethodDef*) R_alloc(n_f + 1, sizeof(R_FortranMethodDef)) : NULL;
+    R_ExternalMethodDef *externalRoutines = n_ext ? (R_ExternalMethodDef*) R_alloc(n_c + 1, sizeof(R_ExternalMethodDef)) : NULL;
+    /* populate them from the symbols */
+    i = n_c = n_call = n_f = n_ext = 0;
+    while (i < n) {
+	const char *cName = 0;
+	SEXP sSym = VECTOR_ELT(sSymbolList, i++);
+	SEXP sName = getSymbolComponent(sSym, "name", STRSXP, 0);
+	SEXP sAddr = getSymbolComponent(sSym, "address", EXTPTRSXP, 0);
+	SEXP sArgTypes = getSymbolComponent(sSym, "nativeParamTypes", INTSXP, 1);
+	SEXP sArgNum = getSymbolComponent(sSym, "numParameters", INTSXP, 1);
+	SEXP sDll = getSymbolComponent(sSym, "dll", VECSXP, 0);
+	SEXP sDllInfo = getSymbolComponent(sDll, "info", EXTPTRSXP, 0);
+	DL_FUNC addr = (DL_FUNC) EXTPTR_PTR(sAddr);
+	R_NativePrimitiveArgType* types = NULL;
+	int numArgs = -1;
+	if (LENGTH(sName) != 1)
+	    Rf_error(_("Invalid symbol name."));
+	cName = CHAR(STRING_ELT(sName, 0));
+	if (inherits(sAddr, "RegisteredNativeSymbol"))
+	    Rf_error(_("Cannot register already registered native symbol '%s'."), cName);
+	if (!inherits(sAddr, "NativeSymbol"))
+	    Rf_error(_("Symbol '%s' does not have a valid native address."), cName);
+	if (!inherits(sDllInfo, "DLLInfoReference"))
+	    Rf_error(_("Symbol '%s' does not have a valid DllInfo reference."), cName);
+	if (!dll)
+	    dll = (DllInfo*) EXTPTR_PTR(sDllInfo);
+	else /* check if it is the same Dll, we only support one Dll per call */
+	    if (dll != (DllInfo*) EXTPTR_PTR(sDllInfo))
+		Rf_error(_("Symbol '%s' comes from a different shared object."), cName);
+	if (sArgTypes == R_NilValue) { /* no type spec - just use num args */
+	    if (sArgNum == R_NilValue)
+		Rf_error(_("Symbol '%s' is missing parameter specification."), cName);
+	    numArgs = (INTEGER(sArgNum)[0] < 0) ? -1 : INTEGER(sArgNum)[0];
+	} else {
+	    /* NOTE: we do assume that we can use the native type specification as-is,
+	       i.e. R_NativePrimitiveArgType has to match INTSXP */
+	    numArgs = LENGTH(sArgTypes);
+	    if (numArgs)
+		types = (R_NativePrimitiveArgType*)(INTEGER(sArgTypes));
+	}
+	if (inherits(sSym, "CRoutine")) {
+	    cRoutines[n_c].name    = cName;
+	    cRoutines[n_c].fun     = addr;
+	    cRoutines[n_c].types   = types;
+	    cRoutines[n_c].numArgs = numArgs;
+	    n_c++;
+	} else if (inherits(sSym, "CallRoutine")) {
+	    callRoutines[n_call].name    = cName;
+	    callRoutines[n_call].fun     = addr;
+	    /* callRoutines[n_call].types   = types; */
+	    callRoutines[n_call].numArgs = numArgs;
+	    n_call++;
+	} else if (inherits(sSym, "FortranRoutine")) {
+	    fortranRoutines[n_f].name    = cName;
+	    fortranRoutines[n_f].fun     = addr;
+	    fortranRoutines[n_f].types   = types;
+	    fortranRoutines[n_f].numArgs = numArgs;	    
+	    n_f++;
+	} else if (inherits(sSym, "ExternalRoutine")) {
+	    externalRoutines[n_ext].name    = cName;
+	    externalRoutines[n_ext].fun     = addr;
+	    /* externalRoutines[n_ext].types   = types; */
+	    externalRoutines[n_ext].numArgs = numArgs;
+	    n_ext++;
+	}
+    }
+
+    /* terminate the lists */
+    if (n_c)
+	memset(cRoutines + n_c, 0, sizeof(*cRoutines));
+    if (n_call)
+	memset(callRoutines + n_call, 0, sizeof(*callRoutines));
+    if (n_f)
+	memset(fortranRoutines + n_f, 0, sizeof(*fortranRoutines));
+    if (n_ext)
+	memset(externalRoutines + n_ext, 0, sizeof(*externalRoutines));
+
+    return ScalarLogical(R_registerRoutines(dll, cRoutines, callRoutines,
+					    fortranRoutines, externalRoutines));
 }
 
 static void
@@ -942,7 +1075,7 @@ R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
     return((DL_FUNC) NULL);
 }
 
-DL_FUNC attribute_hidden
+attribute_hidden DL_FUNC
 R_dlsym(DllInfo *info, char const *name,
 	R_RegisteredNativeSymbol *symbol)
 {
@@ -1042,9 +1175,12 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 }
 
 
-static void GetFullDLLPath(SEXP call, char *buf, const char *const path)
+static void
+GetFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *const path)
 {
-    R_osDynSymbol->getFullDLLPath(call, buf, path);
+    size_t res = R_osDynSymbol->getFullDLLPath(call, buf, bufsize, path);
+    if (res >= bufsize)
+	error(_("path too long")); 
 }
 
 	/* do_dynload implements the R-Interface for the */
@@ -1065,7 +1201,7 @@ static void GetFullDLLPath(SEXP call, char *buf, const char *const path)
   call routines from "incomplete" DLLs.
  */
 
-SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
     DllInfo *info;
@@ -1073,7 +1209,8 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, sizeof(buf),
+                   translateCharFP(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0],
 		  translateCharFP(STRING_ELT(CADDDR(args), 0)));
@@ -1082,14 +1219,15 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     return(Rf_MakeDLLInfo(info));
 }
 
-SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
 
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, sizeof(buf),
+                   translateCharFP(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
 	error(_("shared object '%s\' was not loaded"), buf);
     return R_NilValue;
@@ -1283,7 +1421,7 @@ Rf_MakeDLLInfo(DllInfo *info)
   registered, we add a class identifying the interface type
   for which it is intended (i.e. .C(), .Call(), etc.)
  */
-SEXP attribute_hidden
+attribute_hidden SEXP
 R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 {
     const void *vmax = vmaxget();
@@ -1323,8 +1461,8 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
     return sym;
 }
 
-SEXP attribute_hidden
-R_getDllTable()
+attribute_hidden SEXP
+R_getDllTable(void)
 {
     int i;
     SEXP ans, nm;
@@ -1491,7 +1629,7 @@ R_getRoutineSymbols(NativeSymbolType type, DllInfo *info)
 }
 
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 R_getRegisteredRoutines(SEXP dll)
 {
     DllInfo *info;
@@ -1522,7 +1660,7 @@ R_getRegisteredRoutines(SEXP dll)
     return(ans);
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1530,14 +1668,14 @@ do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* .Internal(getLoadedDLLs()) */
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_getDllTable(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     return R_getDllTable();
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 do_getRegisteredRoutines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);

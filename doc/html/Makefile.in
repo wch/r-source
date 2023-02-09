@@ -17,7 +17,10 @@ INSTFILES = \
 	NEWS.2.html NEWS.3.html \
 	R.css Rlogo.svg Rlogo.pdf Search.html SearchOn.html \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
-	about.html packages-head-utf8.html
+	about.html packages-head-utf8.html  \
+	mathjax-config.js katex-config.js katex-check.js \
+	prism.css prism.js
+INSTDIRS = katex
 NON_SVN_INSTFILES = resources.html NEWS.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes
 OBJECTS = index.html
@@ -58,6 +61,9 @@ install: svnonly install-message installdirs install-sources
 	@for f in $(NON_SVN_INSTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
+	@for d in $(INSTDIRS); do \
+	  cp -p -R $${d} "$(DESTDIR)$(rdocdir)/html"; \
+	done
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/html"
 install-message:
@@ -66,11 +72,17 @@ install-sources: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
+	@for d in $(INSTDIRS); do \
+	  cp -p -R $(srcdir)/$${d} "$(DESTDIR)$(rdocdir)/html"; \
+	done
 install-strip: install
 uninstall:
 	@$(ECHO) "uninstalling $(subdir) ..."
 	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
 	  rm -f "$(DESTDIR)$(rdocdir)/html/$${f}"; \
+	done
+	@for d in $(INSTDIRS); do \
+	  rm -rf "$(DESTDIR)$(rdocdir)/html/$${d}"; \
 	done
 	@rmdir "$(DESTDIR)$(rdocdir)/html" 2>/dev/null \
 	  || $(ECHO) "  subdir $(DESTDIR)$(subdir) not removed"
@@ -96,4 +108,7 @@ distdir: $(DISTFILES)
 	done
 	@for f in $(NON_SVN_INSTFILES); do \
 	  cp -p $${f} $(distdir)/$${f}; \
+	done
+	@for d in $(INSTDIRS); do \
+	  cp -p -R $${d} $(distdir)/$${d}; \
 	done

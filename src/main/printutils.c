@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2021  The R Core Team
+ *  Copyright (C) 1999--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -145,7 +145,7 @@ attribute_hidden
 const char *EncodeRaw(Rbyte x, const char * prefix)
 {
     static char buff[10];
-    sprintf(buff, "%s%02x", prefix, x);
+    snprintf(buff, 10, "%s%02x", prefix, x);
     return buff;
 }
 
@@ -155,11 +155,11 @@ const char *EncodeEnvironment(SEXP x)
     const void *vmax = vmaxget();
     static char ch[1000];
     if (x == R_GlobalEnv)
-	sprintf(ch, "<environment: R_GlobalEnv>");
+	snprintf(ch, 1000,  "<environment: R_GlobalEnv>");
     else if (x == R_BaseEnv)
-	sprintf(ch, "<environment: base>");
+	snprintf(ch, 1000, "<environment: base>");
     else if (x == R_EmptyEnv)
-	sprintf(ch, "<environment: R_EmptyEnv>");
+	snprintf(ch, 1000, "<environment: R_EmptyEnv>");
     else if (R_IsPackageEnv(x))
 	snprintf(ch, 1000, "<environment: %s>",
 		translateChar(STRING_ELT(R_PackageEnvName(x), 0)));
@@ -176,7 +176,7 @@ attribute_hidden
 const char *EncodeExtptr(SEXP x)
 {
     static char buf[1000];
-    sprintf(buf, "<pointer: %p>", R_ExternalPtrAddr(x));
+    snprintf(buf, 1000, "<pointer: %p>", R_ExternalPtrAddr(x));
     return buf;
 }
 
@@ -202,16 +202,16 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
     }
     else if (e) {
 	if(d) {
-	    sprintf(fmt,"%%#%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20, "%%#%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
 	else {
-	    sprintf(fmt,"%%%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20, "%%%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
     }
     else { /* e = 0 */
-	sprintf(fmt,"%%%d.%df", min(w, (NB-1)), d);
+	snprintf(fmt, 20, "%%%d.%df", min(w, (NB-1)), d);
 	snprintf(buff, NB, fmt, x);
     }
     buff[NB-1] = '\0';
@@ -238,23 +238,23 @@ static const char
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
-	if(ISNA(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
+	if(ISNA(x))       snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
 	else if(ISNAN(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), "NaN");
-	else if(x > 0) snprintf(buff, NB, "%*s", min(w, (NB-1)), "Inf");
-	else snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
+	else if(x > 0)    snprintf(buff, NB, "%*s", min(w, (NB-1)), "Inf");
+	else              snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
     }
     else if (e) {
 	if(d) {
-	    sprintf(fmt,"%%#%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20, "%%#%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
 	else {
-	    sprintf(fmt,"%%%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20, "%%%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
     }
     else { /* e = 0 */
-	sprintf(fmt,"%%%d.%df", min(w, (NB-1)), d);
+	snprintf(fmt, 20, "%%%d.%df", min(w, (NB-1)), d);
 	snprintf(buff, NB, fmt, x);
     }
     buff[NB-1] = '\0';
@@ -286,7 +286,7 @@ static const char
     return out;
 }
 
-SEXP attribute_hidden StringFromReal(double x, int *warn)
+attribute_hidden SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
@@ -311,16 +311,16 @@ const char *EncodeReal2(double x, int w, int d, int e)
     }
     else if (e) {
 	if(d) {
-	    sprintf(fmt,"%%#%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20 ,"%%#%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
 	else {
-	    sprintf(fmt,"%%%d.%de", min(w, (NB-1)), d);
+	    snprintf(fmt, 20, "%%%d.%de", min(w, (NB-1)), d);
 	    snprintf(buff, NB, fmt, x);
 	}
     }
     else { /* e = 0 */
-	sprintf(fmt,"%%#%d.%df", min(w, (NB-1)), d);
+	snprintf(fmt, 20, "%%#%d.%df", min(w, (NB-1)), d);
 	snprintf(buff, NB, fmt, x);
     }
     buff[NB-1] = '\0';
@@ -944,7 +944,7 @@ void Rcons_vprintf(const char *format, va_list arg)
 	/* dummy_vfprintf protects against `res` being counted short; we do not
 	   do that here */
 	p = R_alloc(res+1, sizeof(char));
-	vsprintf(p, format, arg);
+	vnsprintf(p, res + 1, format, arg);
     } else if(res < 0) {
 	/* Some non-C99 conforming vsnprintf implementations return -1 on
 	   truncation instead of only on error. */
@@ -1061,7 +1061,7 @@ int attribute_hidden IndexWidth(R_xlen_t n)
     return (int) (log10(n + 0.5) + 1);
 }
 
-void attribute_hidden VectorIndex(R_xlen_t i, int w)
+attribute_hidden void VectorIndex(R_xlen_t i, int w)
 {
 /* print index label "[`i']" , using total width `w' (left filling blanks) */
     Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);

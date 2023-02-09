@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pretty.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2016 R Core Team
+% Copyright 2010-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pretty.Date}
@@ -33,7 +33,8 @@
 %% }
 \value{
   A vector (of the suitable class) of locations, with attribute
-  \code{"labels"} giving corresponding formatted character labels.
+  \code{"labels"} giving corresponding formatted character labels and attribute
+  \code{"format"} giving the format specification that was used.
 }
 \seealso{
   \code{\link{pretty}} for the default method.

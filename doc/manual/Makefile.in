@@ -312,6 +312,12 @@ stamp-images-pdf:
 	fi
 	@touch $@
 R-lang.pdf: $(texiincludes)
+## R-FAQ.pdf does not depend on anything
+
+## compact whatever manuals have been built -- needs qpdf and ghostscript
+compact-pdf:
+	@echo 'compacting PDF manuals in doc/manual'
+	@../../bin$(R_ARCH)/Rscript -e 'tools::compactPDF(".", gs_quality="ebook")'
 
 install: install-message installdirs install-html install-images-html
 install-message:

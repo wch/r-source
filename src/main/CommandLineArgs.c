@@ -71,8 +71,8 @@ R_set_command_line_arguments(int argc, char **argv)
   The .Internal which returns the command line arguments that are stored
   in global variables.
  */
-SEXP attribute_hidden
-do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden
+SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i;
     SEXP vals;
@@ -222,9 +222,9 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 				 _("WARNING: '%s' value is invalid: ignored"),
 				 *av);
 		    else
-			sprintf(msg,
-				_("WARNING: %s: too large and ignored"),
-				*av);
+			snprintf(msg, 1024,
+				 _("WARNING: %s: too large and ignored"),
+				 *av);
 		    R_ShowMessage(msg);
 
 		} else {

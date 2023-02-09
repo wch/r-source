@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,7 +58,7 @@
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
-static int yylex();
+static int yylex(void);
 static int yyparse(void);
 
 #define yyconst const
@@ -108,7 +108,7 @@ static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
-static int	xxgetc();
+static int	xxgetc(void);
 static int	xxungetc(int);
 
 /* Internal lexer / parser state variables */
@@ -153,13 +153,15 @@ static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
-static int      mkVerbEnv();
+static int      mkVerbEnv(void);
 
 static SEXP R_LatexTagSymbol = NULL;
 
 #define YYSTYPE		SEXP
 
 %}
+/* token-table is needed for yytname[] to be defined in recent bison versions */
+%token-table
 
 %token		END_OF_INPUT ERROR
 %token		MACRO
@@ -852,7 +854,7 @@ static int mkVerb(int c)
     return VERB;  
 }
 
-static int mkVerbEnv()
+static int mkVerbEnv(void)
 {
     char st0[INITBUFSIZE];
     unsigned int nstext = INITBUFSIZE;
@@ -893,7 +895,7 @@ static int yylex(void)
     return tok;
 }
 
-static void PushState() {
+static void PushState(void) {
     if (busy) {
     	ParseState *prev = malloc(sizeof(ParseState));
 	if (prev == NULL) error("unable to allocate in PushState");
@@ -904,7 +906,7 @@ static void PushState() {
     busy = TRUE;
 }
 
-static void PopState() {
+static void PopState(void) {
     if (parseState.prevState) {
     	ParseState *prev = parseState.prevState;
     	UseState(prev);

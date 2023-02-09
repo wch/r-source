@@ -1,6 +1,6 @@
 % File src/library/base/man/diag.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{diag}
@@ -44,7 +44,8 @@ diag(x) <- value
 }
 \value{
   If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
-  \code{x}.  The resulting vector will have \code{\link{names}} if the
+  \code{x}.  The resulting vector will have \code{\link{names}} if
+  \code{names} is true and if the
   matrix \code{x} has matching column and rownames.
 
   The replacement form sets the diagonal of the matrix \code{x} to the

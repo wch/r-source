@@ -5462,7 +5462,7 @@ cmpIndices <- function(indices, cb, cntxt) {
         if (i > 1 && checkNeedsInc(indices[[i]], cntxt)) {
             needInc <- TRUE
             break
-        }            
+        }
     for (i in seq_along(indices)) {
         cmp(indices[[i]], cb, cntxt, TRUE)
         if (needInc && i < n) cb$putcode(INCLNK.OP)

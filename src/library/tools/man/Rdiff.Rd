@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdiff.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2017 R Core Team
+% Copyright 2010-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rdiff}
@@ -16,8 +16,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 }
 \arguments{
   \item{from, to}{filepaths to be compared}
-  \item{useDiff}{should \command{diff} always be used to compare
-    results?}
+  \item{useDiff}{should \command{diff} be used to compare results?
+    Overridden to false if the command is not available.}
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
     exclude the header.}
   \item{nullPointers}{logical: should the displayed addresses of
@@ -41,12 +41,20 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   consecutive spaces), otherwise \command{diff -bw} is called on the
   edited files.  (This tries to ignore all differences in whitespace:
   note that flag \option{-w} is not required by POSIX but is supported
-  by GNU, Solaris and FreeBSD versions.)
+  by GNU, Solaris and FreeBSD versions -- macOS uses an old GNU version.)
 
-  This can compare uncompressed PDF files, ignoring differences in
-  creation and modification dates.
+  %% Unreliable with 2022-07 gsub changes.
+  %% This can compare uncompressed PDF files, ignoring differences in
+  %% creation and modification dates.  However, non-ASCII text may not be
+  %% handled in UTF-8 locales, and it does not check if the PDF files really
+  %% are uncompressed.  Using \code{useDiff = TRUE} is likely to be more
+  %% successful if a \command{diff} command is available.
 
-  Mainly for use in examples, text from marker
+  There is limited support for comparing PDF files produced by
+  \code{pdf(compress = FALSE)}, mainly for use in \command{make check}
+  -- this requires a \command{diff} command and \code{useDiff = TRUE}.
+
+  Mainly for use in examples and tests, text from marker
   \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)
   \samp{> ## IGNORE_RDIFF_END} is ignored.
 }
@@ -55,12 +63,13 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   below) and \code{out}, a character vector of descriptions of
   differences, possibly of zero length.
 
-  Otherwise, a status indicator, \code{0L} if and only if no differences
-  were found.
+  Otherwise, a status indicator (invisibly), \code{0L} if and only if no
+  differences were found.
 }
 
 \seealso{
-  The shell script run as \command{R CMD Rdiff}.
+  The shell script run as \command{R CMD Rdiff}, which uses
+  \code{useDiff = TRUE}.
 }
 
 \keyword{utilities}

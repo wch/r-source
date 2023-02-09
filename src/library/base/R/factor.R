@@ -154,7 +154,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 {
     ord <- is.ordered(x)
     if (length(x) == 0L)
-        cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
+        cat(if(ord)"ordered" else "factor", "()\n", sep = "")
     else {
         xx <- character(length(x))
         xx[] <- as.character(x)
@@ -305,7 +305,7 @@ Ops.factor <- function(e1, e2)
 
 ## ordered factors ...
 
-ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
+ordered <- function(x = character(), ...) factor(x, ..., ordered=TRUE)
 
 is.ordered <- function(x) inherits(x, "ordered")
 as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)

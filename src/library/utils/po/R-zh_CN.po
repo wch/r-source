@@ -8,34 +8,35 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: 2011-01-18 13:56+0000\n"
-"Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
+"PO-Revision-Date: 2022-12-20 08:04+0000\n"
+"Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
-msgstr "RShowDoc()应该和指定说明书文件的字符串一起使用"
+msgstr "RShowDoc()应该和指定文档文件的字符串一起使用"
 
 msgid "no documentation for %s found in package %s"
-msgstr "程序包%2$s里没有%1$s这样一本说明书"
+msgstr "程序包%2$s里没有%1$s这样一本文档"
 
 msgid "document not found"
-msgstr "找不到这个说明书"
+msgstr "找不到这个文档"
 
 msgid "A search query has been submitted to %s"
-msgstr "檢索查詢疑問已被提交给%s"
+msgstr "搜索查询已提交到 %s"
 
 msgid "The results page should open in your browser shortly"
-msgstr "计算结果应很快就在瀏覽器里打开"
+msgstr "计算结果应很快就在浏览器里打开"
 
 msgid "reference to unknown chunk %s"
-msgstr "没有这样一个可對照的%s块"
+msgstr "对未知区块 %s 的引用"
 
 msgid "no Sweave file with name %s found"
 msgstr "没有名字为'%s'的Sweave文件"
@@ -47,7 +48,7 @@ msgid "object %s does not have class \"SweaveSyntax\""
 msgstr "对象%s不属于\"SweavSyntax\"这一类别"
 
 msgid "recursive Sweave input %s in stack"
-msgstr "堆疊里不能有回歸Sweave输入%s"
+msgstr "堆栈里不能有回歸Sweave输入%s"
 
 msgid "target syntax not of class %s"
 msgstr "目标語法不是%s这一类别"
@@ -85,7 +86,7 @@ msgid "the output file '%s' has disappeared"
 msgstr "输出文件'%s'不见了"
 
 msgid "invalid value for %s : %s"
-msgstr "%s的值不对: %s"
+msgstr "%s的值无效: %s"
 
 msgid "value of 'results' option should be lowercase"
 msgstr "'results'这个选项的值必需小写"
@@ -116,7 +117,7 @@ msgid "Filter '%s' is not available."
 msgstr "没有'%s'这种过滤器"
 
 msgid "Invalid 'filter' argument."
-msgstr "'filter'参数不对"
+msgstr "'filter'参数无效"
 
 msgid ""
 "The following dictionaries were not found:\n"
@@ -235,10 +236,10 @@ msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr "數據機从程序包'stats'移到了程序包'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
-msgstr "程序包%s的数据索引不对，略过不用"
+msgstr "程序包%s的数据索引无效，忽略不用"
 
 msgid "file 'filelist' is missing for directory %s"
-msgstr "目录%s里没有'filelist'这一文件"
+msgstr "目录%s里缺失'filelist'这一文件"
 
 msgid "data set %s not found"
 msgstr "没有%s这个数据集"
@@ -253,19 +254,19 @@ msgid "kind '%s' not yet implemented"
 msgstr "'%s'这一类还没有被实现"
 
 msgid "wrong number of table row entries"
-msgstr "表中的行数不对"
+msgstr "表中的行数有误"
 
 msgid "wrong argument to 'dataentry'"
-msgstr "'dataentry'的参数不对"
+msgstr "'dataentry'的参数有误"
 
 msgid "could not restore type information"
-msgstr "无法恢復种类的信息"
+msgstr "无法恢復类型的信息"
 
 msgid "'modes' argument ignored"
-msgstr "'modes'参数略过不用"
+msgstr "'modes'参数忽略不用"
 
 msgid "'names' argument ignored"
-msgstr "'names'参数略过不用"
+msgstr "'names'参数忽略不用"
 
 msgid "could not restore variables properly"
 msgstr "无法正确恢复变量"
@@ -314,31 +315,31 @@ msgstr ""
 "用在%s找到的那一个"
 
 msgid "invalid 'data' argument"
-msgstr "'data'参数不对"
+msgstr "'data'参数无效"
 
 msgid "invalid 'modes' argument"
-msgstr "'modes'参数不对"
+msgstr "'modes'参数无效"
 
 msgid "invalid 'x' argument"
-msgstr "'x'参数不对"
+msgstr "'x'参数无效"
 
 msgid "can only handle vector and factor elements"
 msgstr "只能对向量和因子元素适用"
 
 msgid "invalid factor levels in '%s'"
-msgstr "'%s'因子水准不对"
+msgstr "'%s'因子水准无效"
 
 msgid "added factor levels in '%s'"
 msgstr "在'%s'里加上了因子水准"
 
 msgid "edited row names contain duplicates and will be ignored"
-msgstr "改过的行名中含有重复的名字，因此略过不用"
+msgstr "改过的行名中含有重复的名字，因此忽略不用"
 
 msgid "invalid input matrix"
-msgstr "输入矩阵不对"
+msgstr "输入矩阵无效"
 
 msgid "class of 'name' will be discarded"
-msgstr "'name'的类别将被略过不用"
+msgstr "'name'的类别将被忽略不用"
 
 msgid "cannot edit NULL row names"
 msgstr "无法修改NULL行名"
@@ -356,7 +357,7 @@ msgid "'fix' requires a name"
 msgstr "'fix'需要名字值"
 
 msgid "too many list items (at most up to %d)"
-msgstr "串列项太多(最多只能有%d项)"
+msgstr "列表项太多(最多只能有%d项)"
 
 msgid "no vector columns were selected"
 msgstr "没有选择向量列"
@@ -412,7 +413,7 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 
 msgid "No documentation for %s in specified packages and libraries:"
-msgstr "在指定的程序包和图书馆里没有与%s有关的说明书:"
+msgstr "在指定的程序包和图书馆里没有与%s有关的文档:"
 
 msgid "you could try %s"
 msgstr "你可以用用%s"
@@ -442,7 +443,7 @@ msgid "R Help on %s"
 msgstr "与%s有关的R Help"
 
 msgid "invalid %s argument"
-msgstr "%s参数不对"
+msgstr "无效的 %s 参数"
 
 msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
 msgstr "有%s这样一个程序包但没有在R >= 2.10.0下安装，因此不能用它的帮助文件"
@@ -463,7 +464,7 @@ msgid "argument %s must be a single character string"
 msgstr "参数%s必需是单字符串"
 
 msgid "incorrect field specification"
-msgstr "域设定得不对"
+msgstr "域设定得不正确"
 
 msgid "do not know what to search"
 msgstr "不知道要搜查什么"
@@ -472,13 +473,13 @@ msgid "argument 'help.db' is deprecated"
 msgstr "参数'help.db'已经不再用了"
 
 msgid "incorrect type specification"
-msgstr "域设定得不对"
+msgstr "域设定得不正确"
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
 
 msgid "incorrect 'agrep' specification"
-msgstr "'agrep'设定得不对"
+msgstr "'agrep'设定得不正确"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "程序包%s的hsearch数据是空的-很奇怪"
@@ -487,7 +488,7 @@ msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
 
 msgid "invalid browser name, check options(\"browser\")."
-msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
+msgstr "浏览器的名字无效，请检查options(\"browser\")的设置。"
 
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start()需要用HTTP服务器"
@@ -522,7 +523,7 @@ msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possibl
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr "程序包'%s'里要么没有DESCRIPTION这个文件，要么出了错"
+msgstr "程序包'%s'里要么缺失DESCRIPTION这个文件，要么出了错"
 
 msgid "Invalid \"Built\":"
 msgstr ""
@@ -543,7 +544,7 @@ msgid "%d errors caught in %s.  The error messages and their frequencies are"
 msgstr ""
 
 msgid "invalid query"
-msgstr "询问不对"
+msgstr "询问无效"
 
 msgid "For SI units, specify 'standard = \"SI\"'"
 msgstr ""
@@ -568,7 +569,7 @@ msgid "'class' is of length > 1; only the first element will be used"
 msgstr ""
 
 msgid "must supply 'generic.function' or 'class'"
-msgstr "必需提供'generic.function'或'class'两个中的一个"
+msgstr "必须提供 'generic.function'或 'class'"
 
 msgid "no function '%s' could be found"
 msgstr "找不到'%s'这样一个函数"
@@ -620,7 +621,7 @@ msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
 msgid "invalid 'filters' argument."
-msgstr "'filters'参数不对。"
+msgstr "'filters'参数无效。"
 
 msgid "specifying 'contriburl' or 'available' requires a single type, not type = \"both\""
 msgstr ""
@@ -629,7 +630,7 @@ msgid "package '%s' in library '%s' will not be updated"
 msgstr "程序库'%2$s'里'%1$s'这个程序包将不会被更新"
 
 msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr "'oldPkgs'的值不对；必需字符矢量或从old.packages()得到的结果"
+msgstr "'oldPkgs'的值无效；必需字符向量或从old.packages()得到的结果"
 
 msgid "ill-formed 'instPkgs' matrix"
 msgstr "'instPkgs'矩阵不对"
@@ -657,7 +658,7 @@ msgstr "貯藏處里没有%s这样的程序包"
 
 #, fuzzy
 msgid "invalid 'type'"
-msgstr "询问不对"
+msgstr "询问无效"
 
 msgid "package %s does not exist on the local repository"
 msgstr "地方貯藏處里没有%s这样的程序包"
@@ -709,7 +710,7 @@ msgid ""
 "skipping dependencies"
 msgstr ""
 "不知道'lib'元素里如何安装依赖程序\n"
-"因此略过不装"
+"因此忽略不装"
 
 #, fuzzy
 msgid "type 'binary' is not supported on this platform"
@@ -843,7 +844,7 @@ msgid "cannot determine import name"
 msgstr "无法指定一个可以用的名字"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
-msgstr "没有种类为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"
+msgstr "没有类型为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"
 
 msgid "the object of class %s in the function call %s could not be used as a documentation topic"
 msgstr "函数調用%2$s里类别为%1$s的对象不能用作帮助文件題目"
@@ -897,31 +898,31 @@ msgid "not all columns named in 'colClasses' exist"
 msgstr "有些'colClasses'所设定的列并不存在"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr "数目'as.is' 表现不对"
+msgstr "数目'as.is' 表现无效"
 
 msgid "not all columns named in 'as.is' exist"
 msgstr "有此'as.is' 所设定的列并不存在"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' 的长度不对%d  != cols = %d "
+msgstr "'as.is' 的长度有误%d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
-msgstr "'row.names'设定得不对"
+msgstr "'row.names'设定得无效"
 
 msgid "invalid 'row.names' length"
-msgstr "'row.names'的长度设定得不对"
+msgstr "'row.names'的长度无效"
 
 msgid "duplicate 'row.names' are not allowed"
 msgstr "'row.names'里不能有重复的名字"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr "'row.names'里不能有遗漏值"
+msgstr "'row.names'里不能有缺失值"
 
 msgid "missing lengths for some fields"
 msgstr "某些域缺少长度值"
 
 msgid "invalid format"
-msgstr "格式不对"
+msgstr "格式无效"
 
 msgid "transfer failure"
 msgstr "转移时出了错"
@@ -942,26 +943,26 @@ msgid "first five rows are empty: giving up"
 msgstr "开头五行都是空白的：停止运行"
 
 msgid "relist() requires recursively unlisted objects."
-msgstr "relist()需要递归解串列目标对象"
+msgstr "relist()需要递归解列表目标对象"
 
 msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr "'flesh'参数不包含骨架属性"
 
 msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
-msgstr "你要么得保证你解串列了一个可重新串列的目标对象，要么你得分别设定一个骨架"
+msgstr "你要么得保证你解列表了一个可重新列表的目标对象，要么你得分别指定一个骨架"
 
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
 
 #, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr "无法恢復种类的信息"
+msgstr "无法恢復类型的信息"
 
 msgid "no valid packages were specified"
 msgstr "没有设定程序包"
 
 msgid "invalid 'socket' argument"
-msgstr "'socket'参数不对"
+msgstr "'socket'参数无效"
 
 msgid "'port' must be integer of length 1"
 msgstr "'port'必需是长度为一的整数"
@@ -982,7 +983,7 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
 
 msgid "invalid options(\"str\") -- using defaults instead"
-msgstr "options(\"str\")不对--使用默认值"
+msgstr "options(\"str\")无效--使用默认值"
 
 msgid "invalid components in options(\"str\"): %s"
 msgstr "options(\"str\")内元件无效：%s"
@@ -1031,7 +1032,7 @@ msgid "argument 'compressed' is ignored for the internal method"
 msgstr ""
 
 msgid "invalid 'tarfile' argument"
-msgstr "'tarfile'参数不对"
+msgstr "'tarfile'参数无效"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
@@ -1053,7 +1054,7 @@ msgid "failed to create directory %s"
 msgstr "无法建立目录%s"
 
 msgid "invalid octal digit"
-msgstr "八进制数字格式不对"
+msgstr "八进制数字格式无效"
 
 msgid "removing drive '%s'"
 msgstr ""
@@ -1081,7 +1082,7 @@ msgid "incomplete block: rather use gzfile(.) created connection?"
 msgstr ""
 
 msgid "invalid name field in tarball"
-msgstr "tarball里的名字域不对"
+msgstr "tarball里的名字域无效"
 
 msgid "checksum error for entry '%s'"
 msgstr "项目'%s'检查和错误"
@@ -1090,7 +1091,7 @@ msgid "failed to copy %s to %s"
 msgstr "无法把%s拷贝到%s"
 
 msgid "unsupported entry type"
-msgstr "不支持这一项目种类"
+msgstr "不支持这一项目类型"
 
 msgid "file '%s' not found"
 msgstr "找不到'%s'这一文件"
@@ -1136,7 +1137,7 @@ msgid "Enter one or more numbers separated by spaces and then ENTER, or 0 to can
 msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
 
 msgid "Invalid input, please try again"
-msgstr "输入不对，请再试一试"
+msgstr "输入无效，请再试一试"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr "'quote'的值必需是'TRUE', 'FALSE' 或数值中的一个"
@@ -1145,13 +1146,13 @@ msgid "invalid numbers in 'quote'"
 msgstr "'quote'里有不适当的数字"
 
 msgid "invalid 'quote' specification"
-msgstr "'quote'设定得不对"
+msgstr "'quote'设定得无效"
 
 msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr "row.names=FALSE时col.name=NA没有意义"
 
 msgid "invalid 'col.names' specification"
-msgstr "'col.names'设定得不对"
+msgstr "'col.names'设定得无效"
 
 msgid "appending column names to file"
 msgstr "给文件加列名"
@@ -1177,7 +1178,7 @@ msgid "Using the browser to open a mailto: URI"
 msgstr "用浏览器打开mailto: URI"
 
 msgid "must specify 'address'"
-msgstr "必需设定'address'"
+msgstr "必需指定'address'"
 
 msgid "'subject' is missing"
 msgstr "缺少'subject'值"
@@ -1234,7 +1235,7 @@ msgid "unable to move temporary installation %s to %s"
 msgstr "无法将临时安装%s搬到%s"
 
 msgid "cannot remove prior installation of package %s"
-msgstr "无法将拆除原来安装的程序包%s"
+msgstr "无法删除软件包 %s 的先前安装"
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1297,11 +1298,11 @@ msgstr[0] "%2$s里%1$d出现"
 
 msgid "Invalid role specification: %s."
 msgid_plural "Invalid role specifications: %s."
-msgstr[0] "角色设定得不对: %s"
+msgstr[0] "角色设定得无效: %s"
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
-msgstr[0] "bibtype%s的条目必需设定这些项：%s"
+msgstr[0] "bibtype%s的条目必需指定这些项：%s"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1349,11 +1350,11 @@ msgstr[0] "没有%s这个程序包(给%s用)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
-msgstr[0] "没有'%s'这种相依关系"
+msgstr[0] "没有'%s'这种依赖关系"
 
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
-msgstr[0] "还安装相依关系%s"
+msgstr[0] "还安装依赖关系%s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
@@ -1401,11 +1402,11 @@ msgstr[0] "有二进制版本（将被安装），但源代码版本是后来的
 
 msgid "last record incomplete, %d line discarded"
 msgid_plural "last record incomplete, %d lines discarded"
-msgstr[0] "最后一个记录不完全，%d行略过不用"
+msgstr[0] "最后一个记录不完全，%d行忽略不用"
 
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] "罗马数字不对：%s"
+msgstr[0] "罗马数字无效：%s"
 
 #~ msgid "bad argument"
 #~ msgstr "参数不对"

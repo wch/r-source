@@ -87,15 +87,15 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   The LAPACK routines \code{DTRCON} and \code{ZTRCON} and the LINPACK
   routine \code{DTRCO}.
 
-  LAPACK and LINPACK are from \url{https://www.netlib.org/lapack/} and
-  \url{https://www.netlib.org/linpack/} and their guides are listed
+  LAPACK and LINPACK are from \url{https://netlib.org/lapack/} and
+  \url{https://netlib.org/linpack/} and their guides are listed
   in the references.
 }
 \references{
   Anderson. E. and ten others (1999)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
-  \url{https://www.netlib.org/lapack/lug/lapack_lug.html}.
+  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
 
  Chambers, J. M. (1992)
   \emph{Linear models.}

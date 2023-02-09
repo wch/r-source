@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999-2023  The R Core Team.
+ *  Copyright (C) 2002-2023  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2002-2017  The R Foundation
- *  Copyright (C) 1999-2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -499,42 +499,36 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 */
 
 /* This is a primitive SPECIALSXP */
-SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden NORET
+SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
-    SEXP callenv, defenv;
-    SEXP argList;
-    RCNTXT *cptr;
     static SEXP do_usemethod_formals = NULL;
-
-    static int lookup_use_topenv_as_defenv = -1;
-    char *lookup;
-
     if (do_usemethod_formals == NULL)
 	do_usemethod_formals = allocFormalsList2(install("generic"),
 						 install("object"));
 
-    PROTECT(argList = matchArgs_NR(do_usemethod_formals, args, call));
+    SEXP argList = PROTECT(matchArgs_NR(do_usemethod_formals, args, call));
     if (CAR(argList) == R_MissingArg)
 	errorcall(call, _("there must be a 'generic' argument"));
-    else
-	PROTECT(generic = eval(CAR(argList), env));
+    // else
+    SEXP generic = PROTECT(eval(CAR(argList), env));
     if(!isString(generic) || LENGTH(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
 
+    static int lookup_use_topenv_as_defenv = -1;
     if(lookup_use_topenv_as_defenv == -1) {
-	lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
-	lookup_use_topenv_as_defenv = 
+	char *lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
+	lookup_use_topenv_as_defenv =
 	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
     }
 
     /* get environments needed for dispatching.
        callenv = environment from which the generic was called
        defenv = environment where the generic was defined */
-    cptr = R_GlobalContext;
+    RCNTXT *cptr = R_GlobalContext;
     if ( !(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != env)
 	errorcall(call, _("'UseMethod' used in an inappropriate fashion"));
-    callenv = cptr->sysparent;
+    SEXP callenv = cptr->sysparent;
     /* We need to find the generic to find out where it is defined.
        This is set up to avoid getting caught by things like
 
@@ -547,41 +541,60 @@ SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
     */
+    SEXP defenv;
     if(lookup_use_topenv_as_defenv) {
 	defenv = topenv(R_NilValue, env);
     } else {
-	val = findVar1(installTrChar(STRING_ELT(generic, 0)),
-		       ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
-						    * promises */
-	if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
-	else defenv = R_BaseNamespace;
+	SEXP val = findVar1(installTrChar(STRING_ELT(generic, 0)),
+			    ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
+							 * promises */
+	if(TYPEOF(val) == CLOSXP)
+	    defenv = CLOENV(val);
+	else
+	    defenv = R_BaseNamespace;
     }
 
-    if (CADR(argList) != R_MissingArg)
-	PROTECT(obj = eval(CADR(argList), env));
-    else
-	PROTECT(obj = GetObject(cptr));
-
+    SEXP obj = PROTECT((CADR(argList) != R_MissingArg)
+		       ? eval(CADR(argList), env)
+		       : GetObject(cptr));
+    SEXP ans;
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
 	UNPROTECT(3); /* obj, generic, argList */
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
     }
-    else {
-	SEXP klass;
-	int nclass;
-	char cl[1000];
-	PROTECT(klass = R_data_class2(obj));
-	nclass = length(klass);
-	if (nclass == 1)
-	    strcpy(cl, translateChar(STRING_ELT(klass, 0)));
-	else {
+    else { // no method found
+#define CLLEN 1024
+	char cl[CLLEN] = {0};
+	SEXP klass = PROTECT(R_data_class2(obj));
+	int nclass = length(klass);
+	if(!nclass)
+	    errorcall(call, _("illegal class of length 0 when using method for '%s'"),
+		      translateChar(STRING_ELT(generic, 0)));
+	const char *c_name = translateChar(STRING_ELT(klass, 0));
+	if (nclass == 1) {
+	    strncpy(cl, c_name, CLLEN-1); cl[CLLEN-1] = '\0';
+	} else { // nclass >= 2
+	    size_t cl_count = 3; // 3 : "c(" + \0
 	    strcpy(cl, "c('");
 	    for (int i = 0; i < nclass; i++) {
-		if (i > 0) strcat(cl, "', '");
-		strcat(cl, translateChar(STRING_ELT(klass, i)));
+		if(i > 0) {
+		    c_name = translateChar(STRING_ELT(klass, i));
+		    cl_count += 4; // "', '"
+		    if (cl_count < CLLEN) strcat(cl, "', '");
+		}
+		size_t len_nm = strlen(c_name);
+		if (cl_count + len_nm >= CLLEN) {
+		    cl_count += 2;
+		    if(cl_count < CLLEN) strcat(cl, "..");
+		    break;
+		}
+		// else
+		cl_count += len_nm;
+		strcat(cl, c_name);
 	    }
-	    strcat(cl, "')");
+	    if (++cl_count < CLLEN) strcat(cl, "'");
+	    if (++cl_count < CLLEN) strcat(cl, ")");
 	}
 	errorcall(call, _("no applicable method for '%s' applied to an object of class \"%s\""),
 		  translateChar(STRING_ELT(generic, 0)), cl);
@@ -671,7 +684,7 @@ static R_INLINE SEXP getPrimitive(SEXP symbol)
 
 
 /* This is a special .Internal */
-SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     const char *sb, *sg, *sk;
     SEXP ans, s, t, klass, method, matchedarg, generic;
@@ -919,7 +932,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* primitive */
-SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -1021,7 +1034,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
     return rval;
 }
 
-SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -1052,20 +1065,35 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 {
     int ans;
-    SEXP cl = PROTECT(asChar(getAttrib(x, R_ClassSymbol)));
+    SEXP clattr = getAttrib(x, R_ClassSymbol);
+    SEXP cl = PROTECT(asChar(clattr));
     const char *class = CHAR(cl);
-    for (ans = 0; ; ans++) {
-	if (!strlen(valid[ans])) // empty string
-	    break;
+    for (ans = 0; strlen(valid[ans]); ans++)
 	if (!strcmp(class, valid[ans])) {
 	    UNPROTECT(1); /* cl */
 	    return ans;
 	}
-    }
-    /* if not found directly, now search the non-virtual super classes :*/
+    /* if not found directly, then look for a match among the nonvirtual 
+       superclasses, possibly after finding the environment 'rho' in which
+       class(x) is defined */
     if(IS_S4_OBJECT(x)) {
-	/* now try the superclasses, i.e.,  try   is(x, "....");  superCl :=
-	   .selectSuperClasses(getClass("....")@contains, dropVirtual=TRUE)  */
+	if (rho == NULL) {
+	    SEXP pkg = getAttrib(clattr, R_PackageSymbol);
+	    if (!isNull(pkg)) {
+		static SEXP meth_classEnv = NULL;
+		if(!meth_classEnv)
+		    meth_classEnv = install(".classEnv");
+		/* FIXME: fails if 'methods' is not loaded */
+		SEXP clEnvCall = PROTECT(lang2(meth_classEnv, clattr));
+		rho = eval(clEnvCall, R_MethodsNamespace);
+		UNPROTECT(1); /* clEnvCall */
+		if(!isEnvironment(rho))
+		    error(_("could not find correct environment; "
+			    "please report!"));
+	    } else
+		rho = R_GlobalEnv;
+	}
+	PROTECT(rho);
 	SEXP classExts, superCl, _call;
 	static SEXP s_contains = NULL, s_selectSuperCl = NULL;
 	if(!s_contains) {
@@ -1074,31 +1102,29 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 	}
 	SEXP classDef = PROTECT(R_getClassDef(class));
 	PROTECT(classExts = R_do_slot(classDef, s_contains));
-	/* .selectSuperClasses(getClassDef(class)@contains, dropVirtual = TRUE,
-	 *                     namesOnly = TRUE, directOnly = FALSE, simpleOnly = TRUE) :
+	/* .selectSuperClasses(getClassDef(class)@contains, 
+	 *                     dropVirtual = TRUE, namesOnly = TRUE, 
+	 *                     directOnly = FALSE, simpleOnly = TRUE):
 	 */
-	PROTECT(_call = lang6(s_selectSuperCl, classExts, ScalarLogical(1),
-			      ScalarLogical(1), ScalarLogical(0), ScalarLogical(1)));
+	PROTECT(_call = lang6(s_selectSuperCl, classExts,
+			      ScalarLogical(1), ScalarLogical(1),
+			      ScalarLogical(0), ScalarLogical(1)));
 	superCl = eval(_call, rho);
 	UNPROTECT(3); /* _call, classExts, classDef */
 	PROTECT(superCl);
-	for(int i=0; i < LENGTH(superCl); i++) {
+	for(int i = 0; i < LENGTH(superCl); i++) {
 	    const char *s_class = CHAR(STRING_ELT(superCl, i));
-	    for (ans = 0; ; ans++) {
-		if (!strlen(valid[ans]))
-		    break;
+	    for (ans = 0; strlen(valid[ans]); ans++)
 		if (!strcmp(s_class, valid[ans])) {
-		    UNPROTECT(2); /* superCl, cl */
+		    UNPROTECT(3); /* superCl, rho, cl */
 		    return ans;
 		}
-	    }
 	}
-	UNPROTECT(1); /* superCl */
+	UNPROTECT(2); /* superCl, rho */
     }
     UNPROTECT(1); /* cl */
     return -1;
 }
-
 
 /**
  * Return the 0-based index of an is() match in a vector of class-name
@@ -1113,25 +1139,7 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
  */
 int R_check_class_etc(SEXP x, const char **valid)
 {
-    static SEXP meth_classEnv = NULL;
-    SEXP cl = getAttrib(x, R_ClassSymbol), rho = R_GlobalEnv, pkg;
-    if(!meth_classEnv)
-	meth_classEnv = install(".classEnv");
-
-    pkg = getAttrib(cl, R_PackageSymbol); /* ==R== packageSlot(class(x)) */
-    if(!isNull(pkg)) { /* find  rho := correct class Environment */
-	SEXP clEnvCall;
-	// FIXME: fails if 'methods' is not loaded.
-	PROTECT(clEnvCall = lang2(meth_classEnv, cl));
-	rho = eval(clEnvCall, R_MethodsNamespace);
-	UNPROTECT(1);
-	if(!isEnvironment(rho))
-	    error(_("could not find correct environment; please report!"));
-    }
-    PROTECT(rho);
-    int res = R_check_class_and_super(x, valid, rho);
-    UNPROTECT(1);
-    return res;
+    return R_check_class_and_super(x, valid, NULL);
 }
 
 /* standardGeneric:  uses a pointer to R_standardGeneric, to be
@@ -1258,7 +1266,7 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 
 static SEXP get_this_generic(SEXP args);
 
-SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, value, fdef; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
 
@@ -1520,7 +1528,7 @@ Rboolean R_has_methods(SEXP op)
 
 static SEXP deferred_default_object;
 
-SEXP R_deferred_default_method()
+SEXP R_deferred_default_method(void)
 {
     if(!deferred_default_object)
 	deferred_default_object = install("__Deferred_Default_Marker__");
@@ -1544,7 +1552,7 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
    promises, but not from the other two: there all the arguments have
    already been evaluated.
  */
-SEXP attribute_hidden
+attribute_hidden SEXP
 R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		    Rboolean promisedArgs)
 {
@@ -1745,7 +1753,7 @@ Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
 	    getAttrib(klass, R_PackageSymbol) != R_NilValue) ? TRUE: FALSE;
 }
 
-SEXP attribute_hidden do_setS4Object(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_setS4Object(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP object = CAR(args);

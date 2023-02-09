@@ -66,6 +66,7 @@ rect getcliprect(void);
 void setcliprect(rect r);
 PROTECTED void updatestatus(const char *text);
 PROTECTED font new_font_object(HFONT hf);
+UINT default_font_charset();
 
 #ifdef __cplusplus
 extern "C" {
@@ -235,6 +236,11 @@ struct objinfo
                         negative for not focussed */
     int caretheight;
     int caretshowing;
+    int caretexists; /* A WinAPI caret has been created with CreateCaret */
+    int caretx;      /* Coordinates are stored so that the WinAPI caret can */
+    int carety;      /*   be re-created after the window re-gains focus */
+
+    WNDPROC edit_winproc; /* edit control event handler for dropfield (combo box) */
 };
 
 struct callinfo
@@ -343,7 +349,8 @@ struct callinfo
 /* Control event management. */
 
   PROTECTED void   handle_control(HWND hwnd, UINT message);
-  PROTECTED object find_valid_sibling(object obj);
+  PROTECTED object find_next_valid_sibling(object obj);
+  PROTECTED object find_prev_valid_sibling(object obj);
 
 /* Dialog event management */
 
@@ -435,6 +442,8 @@ extern HWND hwndClient;
   long WINAPI app_control_procedure (HWND, UINT, WPARAM, LPARAM);
   UINT WINAPI app_timer_procedure(HWND, UINT, UINT, DWORD);
   extern WNDPROC app_control_proc;
+  long WINAPI edit_control_procedure (HWND, UINT, WPARAM, LPARAM);
+  extern WNDPROC edit_control_proc;
 
   extern int	menus_active;
   extern int	active_windows;

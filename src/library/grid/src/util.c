@@ -206,10 +206,41 @@ void textRect(double x, double y, SEXP text, int i,
 					 gc, dd),
 			     GE_INCHES, dd);
     }
-    location(0, 0, bl);
-    location(w, 0, br);
-    location(w, h, tr);
-    location(0, h, tl);
+    /* 'w' and 'h' may be non-finite, e.g., if font not found,
+     * in which case, return zero-width/height rectangle */
+    if (!R_FINITE(w) || !R_FINITE(h)) { 
+        if (!R_FINITE(w))
+            w = 0;
+        if (!R_FINITE(h))
+            h = 0;
+        warning(_("Unable to calculate text width/height (using zero)"));
+    }
+    /* Ensure anti-clockwise direction */
+    if (w >= 0) {
+        if (h >= 0) {
+            location(0, 0, bl);
+            location(w, 0, br);
+            location(w, h, tr);
+            location(0, h, tl);
+        } else {
+            location(0, h, bl);
+            location(w, h, br);
+            location(w, 0, tr);
+            location(0, 0, tl);
+        }
+    } else {
+        if (h >= 0) {
+            location(w, 0, bl);
+            location(0, 0, br);
+            location(0, h, tr);
+            location(w, h, tl);
+        } else {
+            location(w, h, bl);
+            location(0, h, br);
+            location(0, 0, tr);
+            location(w, 0, tl);
+        }
+    }
     translation(-xadj*w, -yadj*h, thisJustification);
     translation(x, y, thisLocation);
     if (rot != 0)

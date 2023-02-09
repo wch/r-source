@@ -802,7 +802,7 @@ SEXP doD(SEXP args)
 
 /* ------ FindSubexprs ------ and ------ Accumulate ------ */
 
-static void NORET InvalidExpression(char *where)
+NORET static void InvalidExpression(char *where)
 {
     error(_("invalid expression in '%s'"), where);
 }

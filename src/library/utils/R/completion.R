@@ -1,8 +1,8 @@
 #  File src/library/utils/R/completion.R
 #  Part of the R package, https://www.R-project.org
 #
-# Copyright     2006 Deepayan Sarkar
-#           (C) 2006-2017  The R Core Team
+# Copyright (C) 2006-2022  The R Core Team
+# Copyright (C) 2006-2022  Deepayan Sarkar
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,6 +44,15 @@
 ### so will change all pastes to sprintf.  However, we need to be
 ### careful because 0 length components in sprintf will cause errors.
 
+## Should compare with paste0() and if you compare with a pure format string, it may change:
+if(FALSE) {
+    ii <- seq_len(1e5) ; ilet <- seq_along(letters)
+    system.time(for (i in ii) sprintf("%s%s%s%d", "foo", letters, "bar", ilet) )[1] # 1.101
+    system.time(for (i in ii) paste0(             "foo", letters, "bar", ilet) )[1] # 0.936
+    ## But for the most frequent case,  sprintf() is still faster:
+    system.time(for (i in ii) sprintf("^%s", letters)) # 0.344
+    system.time(for (i in ii) paste0 ("^",   letters)) # 0.444
+}
 
 ## [July 2013] First attempt to support fuzzy matching, if
 ## rc.settings(fuzzy=TRUE), based on suggestion from Rasmus Baath.
@@ -610,7 +619,8 @@ normalCompletions <-
             if (.CompletionEnv$settings[["fuzzy"]])
                 fuzzyApropos(sprintf("^%s", makeRegexpSafe(text)))
             else
-                apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = FALSE)
+                apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = FALSE,
+                        dot_internals = TRUE)
         if (.CompletionEnv$settings[["func"]] && check.mode && !is.null(add.fun))
         {
             which.function <- sapply(comps, function(s) exists(s, mode = "function"))
@@ -785,7 +795,6 @@ specialFunctionArgs <- function(fun, text)
 }
 
 
-
 functionArgs <-
     function(fun, text,
              S3methods = .CompletionEnv$settings[["S3"]],
@@ -804,10 +813,16 @@ functionArgs <-
     if (S4methods) warning("cannot handle S4 methods yet")
     allArgs <- unique(unlist(lapply(fun, argNames)))
     ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), allArgs)
-    if (length(ans) && !keep.dots)
-        ans <- ans[ans != "..."]
+    ## Handle dots specially. If present, drop if keep.dots=FALSE
+    ## obviously, but even otherwise move it to the end and don't add
+    ## a suffix.
+    whereDots <- ans == "..."
+    if (any(whereDots))
+        ans <- ans[!whereDots]
     if (length(ans) && !is.null(add.args))
         ans <- sprintf("%s%s", ans, add.args)
+    if (keep.dots && any(whereDots))
+        ans <- c(ans, "...")
     c(specialFunArgs, ans)
 }
 
@@ -938,11 +953,11 @@ fileCompletions <- function(token)
     ## need to delete extra part
     if (pfilename != token)
         comps <- substring(comps, nchar(pfilename) - nchar(token) + 1L, 1000L)
-        
-    ## In Win32, we often have backslashes in names. Also possible on 
+
+    ## In Win32, we often have backslashes in names. Also possible on
     ## Unix, though unlikely.  Add escapes for those and for quotes.
     comps <- gsub("([\\\\'\"])", "\\\\\\1", comps)
-    
+
     comps
 }
 
@@ -1337,23 +1352,23 @@ fileCompletions <- function(token)
           "SweaveHooks", "SweaveSyntax", "topLevelEnvironment")
 
     .addFunctionInfo(par = par, options = options)
-      
+
     ## read.csv etc (... passed to read.table)
-    readTable <- 
+    readTable <-
         c("file", "header", "sep", "quote", "dec", "numerals",
           "row.names", "col.names", "as.is", "na.strings",
           "colClasses", "nrows", "skip", "check.names", "fill",
           "strip.white", "blank.lines.skip", "comment.char",
           "allowEscapes", "flush", "stringsAsFactors", "fileEncoding",
           "encoding", "text", "skipNul")
-      
+
     .addFunctionInfo(read.csv = readTable, read.csv2 = readTable,
                      read.delim = readTable, read.delim2 = readTable)
-      
+
     ## c() because it is primitive c(...) and there is no proper
     ## c.default even though docs say it is
     ## c.default(..., recursive = FALSE, use.names = TRUE)
-    
+
     .addFunctionInfo(c = c("recursive", "use.names"))
 }
 
@@ -1362,8 +1377,8 @@ fileCompletions <- function(token)
 .CompletionEnv <- new.env(hash = FALSE)
 
 ## needed to save some overhead in .win32consoleCompletion
-assign("linebuffer", "", env = .CompletionEnv)
-assign("end", 1, env = .CompletionEnv)
+assign("linebuffer", "", envir = .CompletionEnv)
+assign("end", 1, envir = .CompletionEnv)
 
 assign("settings",
        list(ops = TRUE, ns = TRUE,
@@ -1372,18 +1387,18 @@ assign("settings",
             help = TRUE, argdb = TRUE, fuzzy = FALSE,
             files = TRUE, # FIXME: deprecate in favour of quotes
             quotes = TRUE),
-       env = .CompletionEnv)
+       envir = .CompletionEnv)
 
 assign("options",
        list(package.suffix = "::",
             funarg.suffix = "=",
             function.suffix = "("),
-       env = .CompletionEnv)
+       envir = .CompletionEnv)
 
 ## These keeps track of attached packages and available help topics.
 ## Needs updating only when packages are attached.
-assign("attached_packages", character(0), env = .CompletionEnv)
-assign("help_topics", character(0), env = .CompletionEnv)
+assign("attached_packages", character(0), envir = .CompletionEnv)
+assign("help_topics", character(0), envir = .CompletionEnv)
 
 
 .FunArgEnv <- new.env(hash = TRUE, parent = emptyenv())

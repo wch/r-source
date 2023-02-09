@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -154,9 +154,16 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
     if (temp == NULL) { // ~name
 	strcpy(buff, home);
     } else { // ~name/path
-	size_t len = strlen(home) + 1 + strlen(s2) + 1;
-	if (len >= PATH_MAX) return s;
-	(void)snprintf(buff, len, "%s/%s", home, s2);
+	// ask snprintf to compute the length, as GCC 12 complains otherwise.
+	size_t len = snprintf(NULL, 0, "%s/%s", home, s2);
+	// buff is passed from R_ExpandFileName, uses static array of
+	// size PATH_MAX.
+	if (len >= PATH_MAX) {
+	    warning(_("expanded path length %d would be too long for\n%s\n"),
+		       len, s);
+	    return s;
+	}
+	(void)snprintf(buff, len + 1,  "%s/%s", home, s2);
     }
 
     return buff;
@@ -194,7 +201,7 @@ const char *R_ExpandFileName(const char *s)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-SEXP attribute_hidden do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     return mkString("Unix");
@@ -331,7 +338,7 @@ static struct {
 } tost;
 
 static void timeout_handler(int sig);
-static void timeout_init()
+static void timeout_init(void)
 {
     tost.child_pid = 0;
     tost.timedout = 0;
@@ -373,7 +380,7 @@ static void timeout_cleanup_set(sigset_t *ss)
     sigaddset(ss, SIGCHLD);
 }
 
-static void timeout_cleanup()
+static void timeout_cleanup(void)
 {
     sigset_t ss;
     timeout_cleanup_set(&ss);
@@ -470,7 +477,7 @@ static void timeout_cend(void *data)
 /* Fork with blocked SIGCHLD to make sure that tost.child_pid is set
    in the parent before the signal is received. Also makes sure
    SIGCHLD is unblocked in the parent after the call. */
-static void timeout_fork()
+static void timeout_fork(void)
 {
     sigset_t css; 
     sigemptyset(&css);
@@ -673,7 +680,7 @@ static void warn_status(const char *cmd, int res)
 	warning(_("running command '%s' had status %d"), cmd, res);
 }
 
-static void NORET cmdError(const char *cmd, const char *format, ...)
+NORET static void cmdError(const char *cmd, const char *format, ...)
 {
     SEXP call = R_CurrentExpression;
     int nextra = errno ? 3 : 1;
@@ -696,7 +703,7 @@ static void NORET cmdError(const char *cmd, const char *format, ...)
 }
 
 #define INTERN_BUFSIZE 8096
-SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tlist = R_NilValue;
     int intern = 0;
@@ -878,7 +885,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #  include <pwd.h>
 # endif
 
-SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     struct utsname name;
@@ -994,17 +1001,17 @@ void fpu_setup(Rboolean start)
 #if defined(__ARM_ARCH) && defined(__ARM_32BIT_STATE) && defined(__ARM_FP)
     uint32_t fpscr;
 
-    asm volatile("vmrs %0, fpscr" : "=r"(fpscr));
+    __asm__ volatile("vmrs %0, fpscr" : "=r"(fpscr));
     /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
     fpscr = fpscr & 0xfcffffff;
-    asm volatile("vmsr fpscr, %0" : : "r"(fpscr));
+    __asm__ volatile("vmsr fpscr, %0" : : "r"(fpscr));
 #elif defined(__ARM_ARCH) && defined(__ARM_64BIT_STATE) && defined(__ARM_FP)
     uint64_t fpcr;
 
-    asm volatile("mrs %0, fpcr" : "=r"(fpcr));
+    __asm__ volatile("mrs %0, fpcr" : "=r"(fpcr));
     /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
     fpcr = fpcr & 0xfffffffffcffffff;
-    asm volatile("msr fpcr, %0" : : "r"(fpcr));
+    __asm__ volatile("msr fpcr, %0" : : "r"(fpcr));
 #endif
     } else {
 #ifdef __FreeBSD__

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -165,7 +165,6 @@
              silent = FALSE, pkglist = NULL)
 {
     if (dir.exists(files)) {
-        ## FIXME: outputEncoding
         .pkg2tex(files, outfile, internals = internals, asChapter = FALSE, 
                  encoding = encoding, outputEncoding = outputEncoding,
                  extraDirs = extraDirs, append = append,
@@ -262,7 +261,6 @@
                 return(invisible(character()))
             }
             cnt <- 0L
-            macros <- initialRdMacros(pkglist)
             for(f in names(Rd)) {
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
@@ -271,11 +269,9 @@
                 outfilename <- file.path(latexdir, out)
                 res <- Rd2latex(Rd[[f]],
 				  outfilename,
-				  encoding = encoding,
 				  outputEncoding = outputEncoding,
 				  defines = NULL,
-				  writeEncoding = !asChapter,
-				  macros = macros)
+				  writeEncoding = !asChapter)
                 latexEncodings <- c(latexEncodings,
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
@@ -305,13 +301,18 @@
                 if (!length(files))
                     stop("this package has a ", sQuote("man"), " directory but no .Rd files",
                          domain = NA)
+                macros <- loadPkgRdMacros(pkgdir)
+                macros <- initialRdMacros(pkglist, macros)
            } else {
+                ## (Be nice and find Rd files & system macros also when 'pkgdir' is
+                ## not a package root directory.)
                 files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
                            Sys.glob(file.path(pkgdir, "*.rd")))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
                          domain = NA)
+                macros <- initialRdMacros(pkglist)
             }
             paths <- files
             ## Use a partial Rd db if there is one.
@@ -330,10 +331,6 @@
             if (!silent) message("Converting Rd files to LaTeX ",
                                  appendLF = FALSE, domain = NA)
             cnt <- 0L
-            macros <- loadPkgRdMacros(pkgdir, initialRdMacros())
-            ## (Be nice and give the system macros also when 'pkgdir' is
-            ## not a package root directory.)
-            macros <- initialRdMacros(pkglist, macros)
             for(i in seq_along(paths)) {
                 cnt <- cnt + 1L
                 if(!silent && cnt %% 10L == 0L)
@@ -556,7 +553,7 @@
 ### * .Rd2pdf
 
 .Rd2pdf <-
-function(pkgdir, outfile, title, batch = FALSE,
+function(pkgdir, outfile, title, silent = FALSE,
          description = TRUE, only_meta = FALSE,
          enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
          internals = FALSE, index = TRUE, pkglist = NULL)
@@ -574,14 +571,12 @@ function(pkgdir, outfile, title, batch = FALSE,
             pkg_enc <- desc["Encoding"]
             if (!is.na(pkg_enc)) {
             	enc <- pkg_enc
-                ## FIXME: outputEncoding
-                ##   outputEncoding <- pkg_enc
             }
         }
     }
 
     ## Rd2.tex part 1: header
-    if (batch) writeLines("\\nonstopmode{}", out)
+    writeLines("\\nonstopmode{}", out)  # for texinfo < 6.7 and MikTeX's texify
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[", Sys.getenv("R_RD4PDF", "times,inconsolata,hyper"), "]{Rd}\n",
         sep = "", file = out)
@@ -652,11 +647,10 @@ function(pkgdir, outfile, title, batch = FALSE,
           dir.exists(file.path(pkgdir, "latex")))) only_meta <- TRUE
     if (!only_meta) {
         if (nzchar(toc)) writeLines(toc, out)
-        ## FIXME: outputEncoding
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc,
                             outputEncoding = outputEncoding,
                             append = TRUE, extraDirs = OSdir, 
-                            internals = internals, silent = batch,
+                            internals = internals, silent = silent,
                             pkglist = pkglist)
         if(length(res)) {
             latexEncodings <- c(latexEncodings, res$latexEncodings)
@@ -742,11 +736,11 @@ function(pkgdir, outfile, title, batch = FALSE,
 
 ..Rd2pdf <- function(args = NULL, quit = TRUE)
 {
-    do_cleanup <- function() {
+    do_cleanup <- function(quiet = FALSE) {
         if(clean) {
             setwd(startdir)
             unlink(build_dir, recursive = TRUE)
-        } else {
+        } else if (!quiet) {
             cat("You may want to clean up by 'rm -Rf ", build_dir, "'\n", sep="")
         }
     }
@@ -765,7 +759,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             "The Rd sources are assumed to be ASCII unless they contain \\encoding",
             "declarations (which take priority) or --encoding is supplied or if using",
             "package sources, if the package DESCRIPTION file has an Encoding field.",
-            "The output encoding defaults to the package encoding then to 'UTF-8'.",
+            "The output encoding defaults to 'UTF-8'.",
             "",
             "Files are listed in the order given: for a package they are in alphabetic",
             "order of the \\name sections.",
@@ -773,7 +767,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             "Options:",
             "  -h, --help		print short help message and exit",
             "  -v, --version		print version info and exit",
-            "      --batch		no interaction",
+            "  -q, --quiet		no output unless errors",
             "      --no-clean	do not remove created temporary files",
             "      --no-preview	do not preview generated PDF file",
             "      --encoding=enc    use 'enc' as the default input encoding",
@@ -811,13 +805,12 @@ function(pkgdir, outfile, title, batch = FALSE,
         stop("current working directory cannot be ascertained")
     build_dir <- paste0(".Rd2pdf", Sys.getpid())
     title <- ""
-    batch <- FALSE
+    quiet <- FALSE
     clean <- TRUE
     only_meta <- FALSE
     out_ext <- "pdf"
     output <- ""
     enc <- "unknown"
-    ## FIXME: outputEncoding
     outenc <- "UTF-8"
     index <- TRUE
     description <- TRUE
@@ -848,7 +841,9 @@ function(pkgdir, outfile, title, batch = FALSE,
                 sep="\n")
             q("no", runLast = FALSE)
         } else if (a == "--batch") {
-            batch <- TRUE
+            # ignore for back-compatibility (now always use batch)
+        } else if (a %in% c("-q", "--quiet")) {
+            quiet <- TRUE
         } else if (a == "--no-clean") {
             clean <- FALSE
         } else if (a == "--no-preview") {
@@ -897,17 +892,17 @@ function(pkgdir, outfile, title, batch = FALSE,
     if(WINDOWS) files[1L] <- sub("[\\/]$", "", files[1L])
     if(dir.exists(files[1L])) {
         if(file.exists(file.path(files[1L], "DESCRIPTION"))) {
-            cat("Hmm ... looks like a package\n")
+            if (!quiet) cat("Hmm ... looks like a package\n")
             dir <- files[1L]
             if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
         } else if (file.exists(f <- file.path(files[1L], "DESCRIPTION.in"))
                    && any(grepl("^Priority: *base", readLines(f)))) {
-            cat("Hmm ... looks like a package from the R distribution\n")
+            if (!quiet) cat("Hmm ... looks like a package from the R distribution\n")
             dir <- files[1L]
             if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
             if(index && basename(dir) == "base") {
                 index <- FALSE
-                cat("_not_ indexing 'base' package\n")
+                if (!quiet) cat("_not_ indexing 'base' package\n")
             }
         } else {
             dir <- if(dir.exists(d <- file.path(files[1L], "man"))) d else files[1L]
@@ -933,18 +928,18 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     res <-
         try(.Rd2pdf(files[1L], file.path(build_dir, "Rd2.tex"),
-                    title, batch, description, only_meta,
+                    title, quiet, description, only_meta,
                     enc, outenc, dir, OSdir, internals, index,
                     pkglist))
     if (inherits(res, "try-error"))
         q("no", status = 11L, runLast = FALSE)
 
-    if (!batch)  cat("Creating", out_ext, "output from LaTeX ...\n")
+    if (!quiet)  cat("Creating", out_ext, "output from LaTeX ...\n")
     setwd(build_dir)
 
-    res <- try(texi2pdf('Rd2.tex', quiet = FALSE, index = index))
+    res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index))
     if(inherits(res, "try-error")) {
-        res <- try(texi2pdf('Rd2.tex', quiet = FALSE, index = index))
+        res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index))
         if(inherits(res, "try-error")) {
             message("Error in running tools::texi2pdf()")
             do_cleanup()
@@ -953,12 +948,12 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     setwd(startdir)
-    cat("Saving output to", sQuote(output), "...\n")
+    if (!quiet)  cat("Saving output to", sQuote(output), "...\n")
     file.copy(file.path(build_dir, paste0("Rd2.", out_ext)), output,
               overwrite = force)
-    cat("Done\n")
+    if (!quiet)  cat("Done\n")
 
-    do_cleanup()
+    do_cleanup(quiet)
     if(preview != "false") system(paste(preview, output))
     if (quit)
     	q("no", runLast = FALSE)

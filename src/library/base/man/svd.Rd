@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -37,6 +37,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   error giving a positive error code (most often \code{1}): these can
   only be interpreted by detailed study of the FORTRAN code but mean
   that the algorithm failed to converge.
+
+  Missing, \code{NaN}  or infinite values in \code{x} will given
+  an error.
 }
 \value{
   The SVD decomposition of the matrix as computed by LAPACK, \deqn{
@@ -67,14 +70,14 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   The main functions used are the LAPACK routines \code{DGESDD} and
   \code{ZGESDD}.
 
-  LAPACK is from \url{https://www.netlib.org/lapack/} and its guide is
+  LAPACK is from \url{https://netlib.org/lapack/} and its guide is
   listed in the references.
 }
 \references{
   Anderson. E. and ten others (1999)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
-  \url{https://www.netlib.org/lapack/lug/lapack_lug.html}.
+  \url{https://netlib.org/lapack/lug/lapack_lug.html}.
 
   The \href{https://en.wikipedia.org/wiki/Singular-value_decomposition}{%
     \sQuote{Singular-value decomposition}} Wikipedia article.

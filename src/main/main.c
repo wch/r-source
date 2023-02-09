@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2021   The R Core Team
+ *  Copyright (C) 1998-2022   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -43,7 +43,7 @@
 #include <R_ext/Print.h>
 
 #ifdef ENABLE_NLS
-void attribute_hidden nl_Rdummy(void)
+attribute_hidden void nl_Rdummy(void)
 {
     /* force this in as packages use it */
     dgettext("R", "dummy - do not translate");
@@ -78,7 +78,6 @@ static int ParseBrowser(SEXP, SEXP);
 static void R_ReplFile(FILE *fp, SEXP rho)
 {
     ParseStatus status;
-    int count=0;
     int savestack;
     RCNTXT cntxt;
 
@@ -94,7 +93,6 @@ static void R_ReplFile(FILE *fp, SEXP rho)
 	    R_Visible = FALSE;
 	    R_EvalDepth = 0;
 	    resetTimeLimits();
-	    count++;
 	    PROTECT(R_CurrentExpr);
 	    R_CurrentExpr = eval(R_CurrentExpr, rho);
 	    SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
@@ -325,7 +323,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE+1], *DLLbufp;
 
-static void check_session_exit()
+static void check_session_exit(void)
 {
     if (! R_Interactive) {
 	/* This funtion will be called again after a LONGJMP if an
@@ -719,13 +717,15 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 
 int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
-const char* get_workspace_name();  /* from startup.c */
+const char* get_workspace_name(void);  /* from startup.c */
 
-void attribute_hidden BindDomain(char *R_Home)
+attribute_hidden void BindDomain(char *R_Home)
 {
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
+# if defined(LC_MESSAGES) && !defined(Win32)
     setlocale(LC_MESSAGES,"");
+# endif
     textdomain(PACKAGE);
     char *p = getenv("R_TRANSLATIONS");
     if (p) snprintf(localedir, PATH_MAX+20, "%s", p);
@@ -743,7 +743,7 @@ void attribute_hidden BindDomain(char *R_Home)
    than the detection itself. */
 
 #ifdef DEBUG_STACK_DETECTION
-static uintptr_t almostFillStack() {
+static uintptr_t attribute_no_sanitizer_instrumentation almostFillStack() {
     volatile uintptr_t dummy;
 
     dummy = (uintptr_t) &dummy;
@@ -754,6 +754,51 @@ static uintptr_t almostFillStack() {
 }
 #endif
 
+#ifdef Win32
+static void invalid_parameter_handler_abort(
+    const wchar_t* expression,
+    const wchar_t* function,
+    const wchar_t* file,
+    unsigned int line,
+    uintptr_t reserved)
+{
+    R_OutputCon = 2;
+    R_ErrorCon = 2;
+    REprintf(" ----------- FAILURE REPORT -------------- \n");
+    REprintf(" --- failure: %s ---\n", "invalid parameter passed to a C runtime function");
+    REprintf(" --- srcref --- \n");
+    SrcrefPrompt("", R_getCurrentSrcref());
+    REprintf("\n");
+    REprintf(" --- call from context --- \n");
+    PrintValue(R_GlobalContext->call);
+    REprintf(" --- R stacktrace ---\n");
+    printwhere();
+    REprintf(" --- function from context --- \n");
+    if (R_GlobalContext->callfun != NULL &&
+        TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+        PrintValue(R_GlobalContext->callfun);
+    REprintf(" --- function search by body ---\n");
+    if (R_GlobalContext->callfun != NULL &&
+        TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+        findFunctionForBody(R_ClosureExpr(R_GlobalContext->callfun));
+    REprintf(" ----------- END OF FAILURE REPORT -------------- \n");
+    R_Suicide("invalid parameter passed to a C runtime function"); 
+}
+
+extern void _invoke_watson(const wchar_t*, const wchar_t*, const wchar_t*,
+    unsigned int, uintptr_t);
+
+static void invalid_parameter_handler_watson(
+    const wchar_t* expression,
+    const wchar_t* function,
+    const wchar_t* file,
+    unsigned int line,
+    uintptr_t reserved)
+{
+    _invoke_watson(expression, function, file, line, reserved);    
+}
+#endif
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;
@@ -761,6 +806,16 @@ void setup_Rmainloop(void)
     SEXP cmd;
     char deferred_warnings[12][250];
     volatile int ndeferred_warnings = 0;
+
+#ifdef Win32
+    {
+	char *p = getenv("_R_WIN_CHECK_INVALID_PARAMETERS_");
+	if (p && StringTrue(p))
+	    _set_invalid_parameter_handler(invalid_parameter_handler_abort);
+	else if (p && !strcmp(p, "watson"))
+	    _set_invalid_parameter_handler(invalid_parameter_handler_watson);
+    }
+#endif
 
 #ifdef DEBUG_STACK_DETECTION 
     /* testing stack base and size detection */
@@ -783,6 +838,8 @@ void setup_Rmainloop(void)
 	 */
 	printf("almost filling up stack...\n");
 	printf("filled stack up to %lx\n", almostFillStack());
+	/* the loop below writes outside the local variables and the frame,
+	   which is detected e.g. by ASAN as stack-buffer-overflow */
 	printf("accessing all bytes...\n");
 	for(uintptr_t o = 0; o < R_CStackLimit; o++)
 	    /* with exact bounds, o==-1 and o==R_CStackLimit will segfault */
@@ -857,27 +914,27 @@ void setup_Rmainloop(void)
     if(!setlocale(LC_TIME, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_TIME failed, using \"C\"\n");
-#ifdef ENABLE_NLS
+# if defined(ENABLE_NLS) && defined(LC_MESSAGES)
     if(!setlocale(LC_MESSAGES, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MESSAGES failed, using \"C\"\n");
-#endif
+# endif
     /* NB: we do not set LC_NUMERIC */
-#ifdef LC_MONETARY
+# ifdef LC_MONETARY
     if(!setlocale(LC_MONETARY, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MONETARY failed, using \"C\"\n");
-#endif
-#ifdef LC_PAPER
+# endif
+# ifdef LC_PAPER
     if(!setlocale(LC_PAPER, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_PAPER failed, using \"C\"\n");
-#endif
-#ifdef LC_MEASUREMENT
+# endif
+# ifdef LC_MEASUREMENT
     if(!setlocale(LC_MEASUREMENT, ""))
 	snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		 "Setting LC_MEASUREMENT failed, using \"C\"\n");
-#endif
+# endif
 #endif /* not Win32 */
 #endif
 
@@ -1147,7 +1204,7 @@ void mainloop(void)
 /*this functionality now appears in 3
   places-jump_to_toplevel/profile/here */
 
-void attribute_hidden printwhere(void)
+attribute_hidden void printwhere(void)
 {
   RCNTXT *cptr;
   int lct = 1;
@@ -1251,7 +1308,7 @@ static void PrintCall(SEXP call, SEXP rho)
 
 /* browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
  * ------- but also called from ./eval.c */
-SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
@@ -1285,6 +1342,13 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !asLogical(CADDR(argList)) ) {
 	UNPROTECT(1);
 	return R_NilValue;
+    }
+
+    /* trap non-interactive debugger invocation */
+    if(!R_Interactive) {
+        char *p = getenv("_R_CHECK_BROWSER_NONINTERACTIVE_");
+        if (p != NULL && StringTrue(p))
+            error(_("non-interactive browser() -- left over from debugging?"));
     }
 
     /* Save the evaluator state information */
@@ -1375,7 +1439,7 @@ void R_dot_Last(void)
     UNPROTECT(1);
 }
 
-SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     const char *tmp;
     SA_TYPE ask=SA_DEFAULT;
@@ -1777,14 +1841,14 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 # if defined FC_LEN_T
 # include <stddef.h>
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
-void attribute_hidden dummy54321(void)
+attribute_hidden void dummy54321(void)
 {
     int nc = 5;
     F77_CALL(rwarnc)("dummy", &nc, (FC_LEN_T) 5);
 }
 # else
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
-void attribute_hidden dummy54321(void)
+attribute_hidden void dummy54321(void)
 {
     int nc = 5;
     F77_CALL(rwarnc)("dummy", &nc);

@@ -34,23 +34,20 @@ _D_e_t_a_i_l_s:
      
      group-weighting from $[N_iP_i(1-P_i)]$
 
-     
-     
          % a
          \
          \% c
          {
          \{
-       
-
+     
 _U_R_L_s _a_n_d _e_m_a_i_l_s:
 
-     URLs need to be verbatim: <URL: testit ~^_$#<>|>.
+     URLs need to be verbatim: <testit%20~%5E_$#%3C%3E%7C>.
 
-     Markus Kuhn, "ASCII and Unicode quotation marks".  <URL:
-     http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html>
+     Markus Kuhn, "ASCII and Unicode quotation marks".
+     <http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html>
 
-     No escape is needed in <email: Micah_Altman@harvard.edu>
+     No escape is needed in <mailto:Micah_Altman@harvard.edu>
 
 _E_x_a_m_p_l_e_s:
 

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2021  The R Core Team
+ *             (C) 2007-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
+#include <versionhelpers.h>
 #include <mmsystem.h> /* for timeGetTime */
 #include <string.h>
 #include <stdlib.h>
@@ -48,10 +49,10 @@ static char RunError[501] = "";
 static char *expandcmd(const char *cmd, int whole)
 {
     char c = '\0';
-    char *s, *p, *q = NULL, *f, *dest, *src;
-    int   d, ext, len = strlen(cmd)+1;
-    char buf[len], fl[len], fn[MAX_PATH];
-    DWORD res = 0;
+    char *s = NULL, *p, *q = NULL, *f, *dest, *src, *fn = NULL;
+    int  ext, len = strlen(cmd)+1;
+    char buf[len], fl[len + 4];
+    DWORD d, res = 0;
 
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
@@ -69,13 +70,7 @@ static char *expandcmd(const char *cmd, int whole)
 	    return NULL;
 	}
 	c = *q; /* character after the command, normally a space */
-	*q = '\0';
-    }
-
-    // This is the return value.
-    if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)");
-	return NULL;
+	*q = '\0'; /* modifies buf */
     }
 
     /*
@@ -97,20 +92,40 @@ static char *expandcmd(const char *cmd, int whole)
 	 * it might get an error after; but maybe sometimes
 	 * in the future every extension will be executable
 	 */
-	d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
+	d = SearchPath(NULL, fl, NULL, 0, NULL, &f);
     } else {
 	int iexts = 0;
+	/* update the size of fl above if adding extensions longer than 3 chars */
 	const char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
 	while (exts[iexts]) {
-	    strcpy(dest, exts[iexts]);
-	    if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;
+	    strcpy(dest, exts[iexts]); /* modifies fl */
+	    if ((d = SearchPath(NULL, fl, NULL, 0, NULL, &f))) break;
 	    iexts++ ;
 	}
     }
-    if (!d) {
-	free(s);
+    if (d > 0) {
+	/* perform the search again with the right buffer size */
+
+	/* The +10 below is a hack to work-around what appears to be a bug
+	   observerd on Windows 10 (build 19045). When the corresponding PATH
+	   entry ends with one or more extra separators (e.g. dir\/,
+	   dir\\ or dir//), the nBufferLength argument must be increased by
+	   that number, otherwise SearchPath reports the path doesn't fit.
+	   When the number is increased, the path is returned correctly
+	   without the extra separators. */
+	if (!(fn = (char *) malloc(d + 10))) {
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	DWORD oldd = d;
+	d = SearchPath(NULL, fl, NULL, d + 10, fn, &f);
+	if (d >= oldd)
+	    /* treat as error when path doesn't fit now */
+	    d = 0;
+    }
+    if (!d)    {
+	if (fn) free(fn);
 	snprintf(RunError, 500, "'%s' not found", p);
-	if(!whole) *q = c;
 	return NULL;
     }
     /*
@@ -122,17 +137,37 @@ static char *expandcmd(const char *cmd, int whole)
     */
     /* NOTE: short names are not always enabled/available. In that case,
        GetShortPathName may succeed and return the original (long) name. */
-    res = GetShortPathName(fn, s, MAX_PATH);
-    if (res == 0) 
+
+    res = GetShortPathName(fn, NULL, 0);
+    if (res > 0) {
+	/* perform the translation again with sufficient buffer size */
+	// This is the return value.
+	if (!(s = (char *) malloc(res + len))) { /* over-estimate */
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
+	res = GetShortPathName(fn, s, res);
+    }
+    if (res == 0) {
 	/* Use full name if GetShortPathName fails, i.e. due to insufficient
 	   permissions for some component of the path. */
+	if (s) free(s);
+	// This is the return value.
+	if (!(s = (char *) malloc(d + len))) { /* over-estimate */
+	    if (fn) free(fn);
+	    strcpy(RunError, "Insufficient memory (expandcmd)");
+	    return NULL;
+	}
         strncpy(s, fn, d + 1);
+    }
 
     /* FIXME: warn if the path contains space? */
     if (!whole) {
-	*q = c;
-	strcat(s, q);
+	*q = c;         /* restore character after command */
+	strcat(s, q);   /* add the rest of input (usually arguments) */
     }
+    if (fn) free(fn);
     return s;
 }
 
@@ -256,16 +291,20 @@ static void pcreate(const char* cmd, cetype_t enc,
 
        In addition, we try to be easy on applications coded to rely on that
        they do not run in a job, when running in old Windows that do not
-       support nested jobs. With nested jobs support, it might make sense
-       to not breakaway to better support nested R processes.
+       support nested jobs. On newer versions of Windows, we use nested jobs.
     */
 
     /* Creating the process with CREATE_BREAKAWAY_FROM_JOB is safe when
        the process is not in any job or when it is in a job that allows it.
        The documentation does not say what would happen if we set the flag,
-       but run in a job that does not allow it, so better don't. */
+       but run in a job that does not allow it, so better don't.
+
+       Do not consider breakaway on Windows 8 (Windows Server 2012) and newer,
+       but instead use nested jobs.
+    */
     breakaway = FALSE;
-    if (IsProcessInJob(GetCurrentProcess(), NULL, &inJob) && inJob) {
+    if (!IsWindows8OrGreater() &&
+        IsProcessInJob(GetCurrentProcess(), NULL, &inJob) && inJob) {
 	/* The documentation does not say that it would be ok to use
 	   QueryInformationJobObject when the process is not in the job,
 	   so we have better tested that upfront. */
@@ -285,7 +324,11 @@ static void pcreate(const char* cmd, cetype_t enc,
     job = CreateJobObject(NULL, NULL);
     if (job) {
 	ZeroMemory(&jeli, sizeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION));
-	jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_BREAKAWAY_OK;
+	jeli.BasicLimitInformation.LimitFlags =
+	    /* JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE helps to terminate grand
+	       child processes when the child process executed is R
+	       and breakaway is used. */
+	    JOB_OBJECT_LIMIT_BREAKAWAY_OK | JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
 	ret = SetInformationJobObject(
 		job,
 		JobObjectExtendedLimitInformation,
@@ -532,8 +575,10 @@ static void terminate_process(void *p)
 	TerminateProcess(pi->pi.hProcess, 99);
     }
 
-    if (pi->job)
+    if (pi->job) {
+	TerminateJobObject(pi->job, 99);
 	waitForJob(pi, 2000, NULL);
+    }
 }
 
 static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
@@ -554,6 +599,8 @@ static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
 		    *timedout = 1;
 		/* wait up to 10s for the process to actually terminate */
 		WaitForSingleObject(pi->pi.hProcess, 10000);
+		if (pi->job)
+		    TerminateJobObject(pi->job, 124);
 		break;
 	    }
 	}
@@ -1031,7 +1078,9 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nm, ans;
     int i, n;
+    const void *vmax = NULL;
 
+    vmax = vmaxget();
     checkArity(op, args);
     nm = CAR(args);
     if(!isString(nm))
@@ -1042,13 +1091,14 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(nm, i) == NA_STRING) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    const char *this = CHAR(STRING_ELT(nm, i));
+	    const char *this = translateChar(STRING_ELT(nm, i));
 	    char *that = expandcmd(this, 1);
 	    SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
 	    free(that);
 	}
     }
     setAttrib(ans, R_NamesSymbol, nm);
+    vmaxset(vmax);
     UNPROTECT(1);
     return ans;
 }

@@ -1,5 +1,6 @@
 The Fortran routines here were extracted from LAPACK 3.1.0, then
-3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0, 3.7.1, 3.8.0, 3.9.0
+3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0, 3.7.1, 3.8.0, 3.9.0,
+3.10.0,3.10.1 3.11.0
 (Sources from http://www.netlib.org/lapack and mirrors).
 
 dlapack.f contains support routines for `real' LAPACK calls.  
@@ -14,8 +15,10 @@ We have tried to avoid including any single-precision routines.
 Preparation
 -----------
 
+For 3.11.0 SRC/dlatrs.f needed patching for gfortran 12: see R.patch.
+
 dlapack.f and cmplx.f were created at the top level in the LAPACK
-3.9.0 sources by copying {dble,cmplx}.txt there and running in R
+3.x.y sources by copying {dble,cmplx}.txt there and running in R
 
 dir.create('dble')
 foo <- scan('dble.txt', "")
@@ -29,10 +32,15 @@ foo <- scan('cmplx.txt', "")
 file.copy(file.path("SRC", foo), 'cmplx')
 system("cat cmplx/* > cmplx.f")
 
+cat INSTALL/droundup_lwork.f >> dlapack.f
+
 If you update the LAPACK version, you need to copy over the LICENSE
 file and update it in doc/COPYRIGHTS.  And if you patch the sources,
-*DO* mention it here and add the patch to a file R.patch (not
-currently used).
+*DO* mention it here and add the patch to a file R.patch.
+
+la_xisnan.f90 was created by
+
+cpp SRC/la_xisnan.F90 > la_xisnan.f90
 
 New LAPACK versions (even point releases) often add new auxiliary
 routines, and these can be hard to track down.  We found it helpful to
@@ -73,6 +81,22 @@ zgetrf2 zpotrf2
 were new in LAPACK 3.6.0 and added in R 3.3.0.
 
 dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
+
+dcombssq.f was patched in R 3.6.3 (see the R-admin manual).
+
+Patches from LAPACK 3.9.0 to 3.10.0 were applied for R 4.2.0 but not
+the new .f90 files replacing dlartg.f dlassq.f zlartg.f zlassq.f
+
+Those 4 routines were replaced by their .f90 versions in R 4.3.0.
+
+R 4.2.2 added
+
+zgbcon zgbequ zgbrfs zgbsv zgbsvx zgbtf2 zgbtrf zgbtrs zgeevx zgtcon
+zgtrfs zgtsv zgtsvx zgttrf zgttrs zgtts2 zlagtm zlangb zlangt zlansy
+zlantb zlaqgb zlaqhe zlatbs zpbtf2 zpbtrf zpocon zpoequ zporfs zposv
+zposvx zpotrs zpstf2 zpstrf ztrsna
+
+for recent RcppArmadillo with LLVM clang 15.
 
 -------------------------------------------------
 

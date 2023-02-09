@@ -1,13 +1,13 @@
 % File src/library/base/man/delayedAssign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{delayedAssign}
+\title{Delay Evaluation and Promises}
 \alias{delayedAssign}
 \alias{promise}
 \alias{promises}
-\title{Delay Evaluation}
 \description{
   \code{delayedAssign} creates a \emph{promise} to evaluate the given
   expression if its value is requested.  This provides direct access
@@ -39,7 +39,7 @@ delayedAssign(x, value, eval.env = parent.frame(1),
   When the promise is eventually forced, it is evaluated within the
   environment specified by \code{eval.env} (whose contents may have changed in
   the meantime).  After that, the value is fixed and the expression will
-  not be evaluated again.
+  not be evaluated again, where the promise still keeps its expression.
 }
 \seealso{
   \code{\link{substitute}}, to see the expression associated with a
@@ -71,15 +71,17 @@ substitute(x, ne) #  'pi + 2'
 
 e <- (function(x, y = 1, z) environment())(cos, "y", {cat(" HO!\n"); pi+2})
 ## How can we look at all promises in an env (w/o forcing them)?
-gete <- function(e_)
-   lapply(lapply(ls(e_), as.name),
+gete <- function(e_) {
+   ne <- names(e_)
+   names(ne) <- ne
+   lapply(lapply(ne, as.name),
           function(n) eval(substitute(substitute(X, e_), list(X=n))))
-
+}
 (exps <- gete(e))
 sapply(exps, typeof)
 
 (le <- as.list(e)) # evaluates ("force"s) the promises
-stopifnot(identical(unname(le), lapply(exps, eval))) # and another "Ho!"
+stopifnot(identical(le, lapply(exps, eval))) # and another "Ho!"
 }
 \keyword{programming}
 \keyword{data}

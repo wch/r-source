@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,14 +69,15 @@
                                       "15" = "Catalina",
                                       ## used for early pre-releases of Big Sur
                                       ## and still reported by Xcode 10's SDK
-                                      "16" = "Big Sur/Monterey",
+                                      "16" = "Big Sur ...",
                                       ""),
                                ver)
-                   else if(ver1[1L] <= "12")
+                   else if(ver1[1L] <= "13")
                         sprintf("macOS %s %s",
                                switch(ver1[1L],
                                       "11" = "Big Sur",
-                                      "12" = "Monterey"),
+                                      "12" = "Monterey",
+                                      "13" = "Ventura"),
                                ver)
                    else
                        sprintf("macOS %s", ver)
@@ -100,6 +101,8 @@ sessionInfo <- function(package = NULL)
         z$platform <- paste(z$platform, .Platform$r_arch, sep = "/")
     z$platform <- paste0(z$platform, " (", 8*.Machine$sizeof.pointer, "-bit)")
     z$locale <- Sys.getlocale()
+    z$tzone <-Sys.timezone()
+    z$tzcode_type <- .Call(C_tzcode_type)
     z$running <- osVersion
     z$RNGkind <- RNGkind()
     if(is.null(package)){
@@ -118,7 +121,7 @@ sessionInfo <- function(package = NULL)
     ## Hmm, see tools:::.get_standard_package_names()$base
     z$basePkgs <- package[basePkgs]
     if(any(!basePkgs)){
-        z$otherPkgs <- pkgDesc[!basePkgs]
+              z$otherPkgs  <- pkgDesc[!basePkgs]
         names(z$otherPkgs) <- package[!basePkgs]
     }
     loadedOnly <- loadedNamespaces()
@@ -132,16 +135,17 @@ sessionInfo <- function(package = NULL)
     es <- extSoftVersion()
     z$BLAS <- as.character(es["BLAS"]) #drop name
     z$LAPACK <- La_library()
+    z$LA_version <- La_version()
     l10n <- l10n_info()
-    if (!is.null(l10n["system.codepage"]))
-        z$system.codepage <- as.character(l10n["system.codepage"])
-    if (!is.null(l10n["codepage"]))
-        z$codepage <- as.character(l10n["codepage"])
+    if (!is.null(l10n[["system.codepage"]]))
+        z$system.codepage <- l10n[["system.codepage"]]
+    if (!is.null(l10n[["codepage"]]))
+        z$codepage <- l10n[["codepage"]]
     class(z) <- "sessionInfo"
     z
 }
 
-print.sessionInfo <- function(x, locale = TRUE,
+print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
 			      RNG = !identical(x$RNGkind, .RNGdefaults),
 			      ...)
 {
@@ -161,12 +165,14 @@ print.sessionInfo <- function(x, locale = TRUE,
     lapack <- x$LAPACK
     if (is.null(lapack)) lapack <- ""
     if (blas == lapack && nzchar(blas))
-        cat("BLAS/LAPACK: ", blas, "\n", sep = "")
+        cat("BLAS/LAPACK:", blas)
     else {
-        if(nzchar(blas))   cat("BLAS:   ",   blas, "\n", sep = "")
-        if(nzchar(lapack)) cat("LAPACK: ", lapack, "\n", sep = "")
+        if(nzchar(blas))   cat("BLAS:  ",   blas, "\n")
+        if(nzchar(lapack)) cat("LAPACK:", lapack)
     }
-    cat("\n")
+    if(nzchar(lapack) && nzchar(LAver <- x$LA_version) && !grepl(LAver, lapack, fixed=TRUE))
+        cat(";  LAPACK version", LAver)
+    cat("\n\n")
     if(RNG) {
         cat("Random number generation:\n"
           , "RNG:    ", x$RNGkind[1], "\n"
@@ -177,9 +183,13 @@ print.sessionInfo <- function(x, locale = TRUE,
     if(locale) {
         cat("locale:\n")
         print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE, ...)
-        if (!is.null(x$system.codepage) && !is.null(x$codepage) &&
-            x$system.codepage != x$codepage)
+        if (!is.null(x$system.codepage) && x$system.codepage != x$codepage)
             cat("system code page: ", x$system.codepage, "\n", sep = "")
+        cat("\n")
+    }
+    if(tzone) {
+        cat("time zone: ", x$tzone,  "\n", sep = "")
+        cat("tzcode source: ", x$tzcode_type,  "\n", sep = "")
         cat("\n")
     }
     cat("attached base packages:\n")
@@ -205,7 +215,7 @@ toLatexPDlist <- function(pdList, sep = "~") {
 }
 
 toLatex.sessionInfo <-
-    function(object, locale = TRUE,
+    function(object, locale = TRUE, tzone = locale,
 	     RNG = !identical(object$RNGkind, .RNGdefaults),
 	     ...)
 {
@@ -214,7 +224,11 @@ toLatex.sessionInfo <-
 		  ", \\verb|", object$R.version$platform, "|"),
 	   if(locale)
 	       paste0("  \\item Locale: \\verb|",
-		  gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
+                  gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
+           if(locale && !is.null(object$system.codepage) && object$system.codepage != object$codepage)
+               paste0("  \\item System code page: \\verb|", object$system.codepage,  "|"),
+           if (tzone) paste0("  \\item Time zone: \\verb|", object$tzone, "|"),
+           if (tzone) paste0("  \\item TZcode source: \\verb|", object$tzcode_type, "|"),
 	   paste0("  \\item Running under: \\verb|",
 		  gsub(";", "|, \\verb|", object$running, fixed=TRUE), "|"),
 	   if(RNG)
@@ -238,6 +252,8 @@ toLatex.sessionInfo <-
         if (nzchar(lapack))
             z <- c(z, paste0("  \\item LAPACK: \\verb|", lapack, "|"))
     }
+    if(nzchar(lapack) && nzchar(LAver <- object$LA_version) && !grepl(LAver, lapack, fixed=TRUE))
+        z <- c(z, paste0("; \\quad\\ LAPACK version", LAver))
 
     z <- c(z, strwrap(paste("\\item Base packages: ",
 			    paste(sort(object$basePkgs), collapse = ", ")),

@@ -5685,7 +5685,7 @@
 
       \item \code{utils::URLencode()} was updated to use unreserved and
       reserved characters from RFC 3986
-      (\url{http://tools.ietf.org/html/rfc3986}) instead of RFC 1738.
+      (\url{https://www.rfc-editor.org/rfc/rfc3986}) instead of RFC 1738.
 
       \item \code{unique(warnings())} and \code{c(warnings())} are now
       supported.

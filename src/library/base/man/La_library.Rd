@@ -1,6 +1,6 @@
 % File src/library/base/man/La_library.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2017 R Core Team
+% Copyright 2013-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{La_library}
@@ -24,7 +24,15 @@ La_library()
   also be shown for an external \code{LAPACK} implementation that had been
   copied, hard-linked or renamed by the system administrator.  Otherwise,
   the shared object file will be given and its path/name may indicate
-  the vendor/version.  The detection does not work on Windows.
+  the vendor/version.
+
+  The detection does not work on Windows, nor for the Accelerate
+  framework on macOS, nor in the rare (and unsupported) case of a static
+  external library.
+
+  It is possible to build \R against an enhanced BLAS which contains
+  some but not all LAPACK routines, in which case this function reports
+  the library containing routine \code{ILAVER}.
 }
 \seealso{
   \code{\link{extSoftVersion}} for versions of other third-party software

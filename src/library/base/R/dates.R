@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,12 +28,17 @@ as.Date <- function(x, ...) UseMethod("as.Date")
 
 as.Date.POSIXct <- function(x, tz = "UTC", ...)
 {
-    if(tz == "UTC") {
+    switch(tz,
+           "UTC" =, "GMT" =, "Etc/UTC" =, "Etc/GMT" =,
+           "UTC0" =, "UTC+0" =, "UTC-0" =,
+           "GMT0" =, "GMT+0" =, "GMT-0" =
+      {
         z <- floor(unclass(x)/86400)
         attr(z, "tzone") <- NULL
         .Date(z)
-    } else
+      }, # all other timezones:
         as.Date(as.POSIXlt(x, tz = tz))
+      )
 }
 
 as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
@@ -70,16 +75,7 @@ as.Date.character <- function(x, format,
 }
 
 as.Date.numeric <- function(x, origin, ...)
-{
-    if(missing(origin)) {
-        if(!length(x))
-            return(.Date(numeric()))
-        if(!any(is.finite(x)))
-            return(.Date(x))
-        stop("'origin' must be supplied")
-    }
-    as.Date(origin, ...) + x
-}
+    if(missing(origin)) .Date(x) else as.Date(origin, ...) + x
 
 as.Date.default <- function(x, ...)
 {
@@ -119,12 +115,7 @@ as.Date.default <- function(x, ...)
 ##                          deparse1(substitute(x)) ))
 ## }
 
-format.Date <- function(x, ...)
-{
-    xx <- format(as.POSIXlt(x), ...)
-    names(xx) <- names(x)
-    xx
-}
+format.Date <- function(x, ...) format(as.POSIXlt(x), ...) # does keep names
 
 ## keep in sync with  print.POSIX?t()  in ./datetime.R
 print.Date <- function(x, max = NULL, ...)
@@ -234,7 +225,7 @@ Summary.Date <- function (..., na.rm)
 `length<-.Date` <- function(x, value)
     .Date(NextMethod(), oldClass(x))
 
-as.character.Date <- function(x, ...) format(x, ...)
+as.character.Date <- function(x, ...) as.character(as.POSIXlt(x), ...)
 
 as.data.frame.Date <- as.data.frame.vector
 
@@ -452,8 +443,14 @@ round.Date <- function(x, ...)
 }
 
 ## must avoid truncating forwards dates prior to 1970-01-01.
-trunc.Date <- function(x, ...)
-    round(x - 0.4999999)
+trunc.Date <- function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
+{
+    units <- match.arg(units)
+    if (units == "months" || units == "years")
+        as.Date(trunc.POSIXt(x, units, ...))
+    else
+        round(x - 0.4999999)
+}
 
 rep.Date <- function(x, ...)
 {

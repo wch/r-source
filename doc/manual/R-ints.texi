@@ -5,8 +5,6 @@
 @setchapternewpage on
 @c %**end of header
 
-@c @documentencoding ISO-8859-1
-
 @syncodeindex fn vr
 
 @dircategory Programming
@@ -1411,7 +1409,7 @@ primitive/@code{.Internal} .  This is exactly what one wants for a
 @code{.Internal}, and so may not correspond to any @R{} function.)
 However, it is unlikely to be what is needed for a primitive.
 
-The upshot is that that @code{warningcall} and @code{errorcall} should
+The upshot is that @code{warningcall} and @code{errorcall} should
 normally be used for code called from a primitive, and @code{warning}
 and @code{error} should be used for code called from a @code{.Internal}
 (and necessarily from @code{.Call}, @code{.C} and so on, where the call
@@ -3129,6 +3127,13 @@ this component should be set to 1.
 If the device does not provide support, this component should
 be set to 0.
 
+@item The @code{glyphs} component reports whether rendering glyphs
+(e.g., via @code{grid::grid.glyph()}) is supported.
+If the device supports rendering glyphs, 
+this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
 @end itemize
 
 The graphics engine provides constants like 
@@ -3297,6 +3302,19 @@ for multi-line strings.
 
 @code{yLineBias} is used in the base graphics system in @code{axis()} and
 @code{mtext()} to provide a default for their @samp{padj} argument.
+
+From @code{R_GE_version} 16 (@code{R_GE_glyphs}), there is also a @code{glyph}
+callback.
+
+@example
+    void glyph(int n, int *glyphs, double *x, double *y, 
+               SEXP font, double size,
+               int colour, double rot, pDevDesc dd);
+@end example
+
+This instructs the device to draw a specific glyph within a given font, where
+the font is specified by filename (and index), with font family, weight, and
+style also provided as fallbacks.
 
 @node Conventions, 'Mode', Handling text, Graphics devices
 @subsection Conventions
@@ -4106,7 +4124,7 @@ Times with an elapsed component over 10 mins are reported in minutes
 in elapsed seconds that should be reported: non-numerical values
 indicate that no report is required, a value of @samp{0} that a report
 is always required.
-Default: @code{""}. (@code{10} for CRAN checks.)
+Default: @code{""}. (@code{10} for CRAN checks unless set in the environment.)
 
 @item _R_CHECK_EXAMPLE_TIMING_THRESHOLD_
 If timings are being recorded, set the threshold in seconds for
@@ -4289,13 +4307,12 @@ unsafe).
 Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_} can be set
 to a space-separated set of flags which come from the @R{} build used
 for testing (flags such as @option{-Wall} and @option{-Wextra} are
-already known).  For example, for CRAN build of @R{} >= 4.0.0 on macOS
+already known).  For example, for CRAN builds of @R{} >= 4.0.0 on macOS
 one could use
 @example
 _R_CHECK_COMPILATION_FLAGS_KNOWN_="-mmacosx-version-min=10.13" 
 @end example
-@noindent
-Default: false (but true for CRAN submission checks).
+Default: unset.
 
 @item _R_CHECK_R_DEPENDS_
 Check that any dependence on R is not on a recent patch-level version
@@ -4346,27 +4363,6 @@ Default: false (but true for CRAN submission checks).
 @item _R_CHECK_LENGTH_1_CONDITION_
 No longer in use: conditions of length greater than one in @code{if} or
 @code{while} statements are now an error.
-
-@item _R_CHECK_LENGTH_1_LOGIC2_
-Optionally check if an argument of the binary operators @code{&&} and
-@code{||} has length greater than one, the right-hand side being checked
-only if it is used.  For a false value (@samp{F}, @samp{False},
-@samp{FALSE} or @samp{false}) or when unset, print a warning.  Any other
-non-true non-empty value needs to be a list of commands separated by
-commas: @samp{abort} causes R to terminate unconditionally instead of
-signalling an error (which is useful in pinpointing issues in code
-called from @code{try} or @code{tryCatch}), @samp{verbose} prints a very
-detailed diagnostic message, @samp{package:pkg} restricts the check to
-if/while statements executing in the namespace of package @samp{pkg}
-(but @code{all_base} refers to all the standard packages),
-@samp{package:_R_CHECK_PACKAGE_NAME_} restricts the check to if/while
-statements executing in the package that is currently being checked by
-@code{R CMD check}, @samp{warn} causes R to report a warning instead of
-signalling an error.  (More than one package specification can be given:
-a report, error or warning will be given if any are satisfied.)
-Default: unset (a warning is reported), but
-@samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
-submission checks.
 
 @item _R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_
 Should running the @R{} code in the vignettes be skipped if vignette
@@ -4488,7 +4484,7 @@ second pass including the @code{\donttest} sections, (for the main
 architecture only).  Only for the first pass are the results compared
 to any @file{.Rout.save} file and timings analysed.  Overridden by
 @option{--run-donttest}.
-Default: false unless @option{-as-cran} is specified (which can be
+Default: false unless @option{--as-cran} is specified (which can be
 overridden by setting @samp{_R_CHECK_DONTTEST_EXAMPLES_=false}).
 
 @item _R_CHECK_XREFS_PKGS_ARE_DECLARED_
@@ -4519,15 +4515,47 @@ Default: false (but true for CRAN submission checks).
 Check if package code has @code{if()} condition which compare the class
 of an object to a string.
 See
-@uref{https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html}
+@uref{https://blog.r-project.org/2019/11/09/when-you-think-class.-think-again/}
 why this is a bad idea.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_RD_VALIDATE_RD2HTML_
-Check the validity of the package HTML help pages using HTML tidy
-(@uref{https://www.html-tidy.org/}) (if available on the system path for
-executables). 
+Check the validity of the package HTML help pages using HTML Tidy
+(@uref{https://www.html-tidy.org/}) (if a suitable version is available
+on the system path for executables or its path is specified by
+environment variable @env{R_TIDYCMD}).  macOS users are advised to
+install 5.8.0 or later from @uref{https://binaries.html-tidy.org/}.
+Default: false (but true for CRAN submission checks). @option{--as-cran}
+can be overridden by setting this variable to a false value.
+
+@item _R_CHECK_RD_MATH_RENDERING_
+Check whether HTML math rendering via KaTeX works (if package
+@CRANpkg{V8} is available).
+See 
+@uref{https://blog.r-project.org/2022/04/08/enhancements-to-html-documentation/}.
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_NEWS_IN_PLAIN_TEXT_
+Check whether @code{news()} can successfully read package news in plain
+text (file @file{NEWS}) format.
+Default: false (but true for CRAN submission checks).
+
+@item _R_WIN_CHECK_INVALID_PARAMETERS_
+Check whether arguments passed to the Windows C runtime are valid. When
+enabled and a C runtime function is called with an invalid parameter, R
+prints diagnostic information and unconditionally terminates. By default,
+R for Windows following MinGW-W64 default causes UCRT to ignore invalid
+parameters, but they may cause R to abort e.g. when R is embedded into
+applications built with a different compiler toolchain. One may set the
+value to @code{"watson"} for interactive debugging on Windows via
+@code{_invoke_watson}.
+Default: disabled.
+
+@item _R_CHECK_BROWSER_NONINTERACTIVE_
+If set to a true value, trap non-interactive debugger invocations.
+These are most likely caused by leftover @code{browser()} statements
+in package code.
+Default: unset (but true for CRAN submission checks).
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4537,7 +4565,7 @@ directory and setting @code{.libPaths()} to just that and
 installed somewhere other than @code{.Library}.  The temporary library
 is populated by symbolic links@footnote{under Windows, junction points,
 or copies if environment variable @env{R_WIN_NO_JUNCTIONS} has a
-non-empty value.} to installed packages not also in @code{.library}.
+non-empty value.} to installed packages not also in @code{.Library}.
 
 @vtable @code
 @item _R_CHECK_INSTALL_DEPENDS_
@@ -4577,7 +4605,7 @@ Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the checking of
 examples, tests or vignettes.  These can be used on their own, or
 with a false value to override @env{_R_CHECK_DEPENDS_ONLY_}.
 @c
-Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset..
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset.
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
@@ -4636,6 +4664,9 @@ _R_CHECK_BOGUS_RETURN_=true
 _R_CHECK_MATRIX_DATA_=TRUE
 _R_CHECK_CODE_CLASS_IS_STRING_=true
 _R_CHECK_RD_VALIDATE_RD2HTML_=true
+_R_CHECK_RD_MATH_RENDERING_=true
+_R_CHECK_NEWS_IN_PLAIN_TEXT_=true
+_R_CHECK_BROWSER_NONINTERACTIVE_=true
 @end example
 
 @noindent
@@ -4786,13 +4817,14 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is only needed for the maintainer-only script
+Perl version 5 is needed for the maintainer-only script
 @file{tools/help2man.pl}.
 @findex Perl
 
 @item
-Makeinfo version 4.7 or later is needed to build the Info files for the
-@R{} manuals written in the @acronym{GNU} Texinfo system.
+@command{texinfo} version 5.1 or later is needed to build the HTML, PDF
+and Info files for the @R{} manuals written in the @acronym{GNU} Texinfo
+system.  And that requires Perl.
 @findex makeinfo
 @end itemize
 
@@ -4861,7 +4893,7 @@ if you change internal structures.]
 
 Various dialects of TeX are used for different purposes in @R{}.  The
 policy is that manuals be written in @samp{texinfo}, and for convenience
-the main and Windows FAQs are also.  This has the advantage that is is
+the main and Windows FAQs are also.  This has the advantage that it is
 easy to produce @HTML{} and plain text versions as well as typeset manuals.
 
 @LaTeX{} is not used directly, but rather as an intermediate format for

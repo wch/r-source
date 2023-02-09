@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-02-22 r81797) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.2.0 (64-bit)
+R Under development (unstable) (2023-02-09 r83784) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1790,35 +1790,11 @@ Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    317.2 
 Residual Deviance: 228.5 	AIC: 344.7
 There were 27 warnings (use warnings() to see them)
-> warnings()
-Warning messages:
-1: step size truncated: out of bounds
-2: step size truncated: out of bounds
-3: step size truncated: out of bounds
-4: step size truncated: out of bounds
-5: step size truncated: out of bounds
-6: step size truncated: out of bounds
-7: step size truncated: out of bounds
-8: step size truncated: out of bounds
-9: step size truncated: out of bounds
-10: step size truncated: out of bounds
-11: step size truncated: out of bounds
-12: step size truncated: out of bounds
-13: step size truncated: out of bounds
-14: step size truncated: out of bounds
-15: step size truncated: out of bounds
-16: step size truncated: out of bounds
-17: step size truncated: out of bounds
-18: step size truncated: out of bounds
-19: step size truncated: out of bounds
-20: step size truncated: out of bounds
-21: step size truncated: out of bounds
-22: step size truncated: out of bounds
-23: step size truncated: out of bounds
-24: step size truncated: out of bounds
-25: step size truncated: out of bounds
-26: glm.fit: algorithm did not converge
-27: glm.fit: algorithm stopped at boundary value
+> summary(warnings())
+Summary of (a total of 27) warning messages:
+25x : step size truncated: out of bounds
+ 1x : glm.fit: algorithm did not converge
+ 1x : glm.fit: algorithm stopped at boundary value
 > 
 > 
 > ## extending char arrrays
@@ -2574,6 +2550,7 @@ In `[.data.frame`(women, "height", drop = TRUE) :
  [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
 > ## second and third were interpreted as women["height", , drop] in 1.7.x
 > 
+> op <- options(warn = 2) # *no* warnings (for now)
 > 
 > ## make.names
 > make.names("")
@@ -2764,7 +2741,10 @@ Residuals 10 2.7404 0.27404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2778,9 +2758,8 @@ $df
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(fit, data.frame(x = x), se = TRUE) :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -2969,7 +2948,10 @@ x     0        0        10     2.7404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
-> predict(fit, data.frame(x=x), se=TRUE)
+> tools::assertWarning(
++  predict(fit, data.frame(x=x), se=TRUE) -> p0
++ )
+> p0
 $fit
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2980,9 +2962,8 @@ $se.fit
 $residual.scale
 [1] 0.5234843
 
-Warning message:
-In predict.lm(object, newdata, se.fit, scale = residual.scale, type = if (type ==  :
-  prediction from a rank-deficient fit may be misleading
+> if(FALSE)## not yet:
++ stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -3724,6 +3705,7 @@ probability of success
              0.9876543 
 
 > 
+> options(op) # revert: warnings allowed
 > 
 > ## aov with a singular error model
 > rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
@@ -3737,7 +3719,7 @@ probability of success
 +                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
 +                         f2=factor(rep(c("g1","g2","g3"),each=18))
 + )
-> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+> sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df) # warning: singular
 Warning message:
 In aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) :
   Error() model is singular
@@ -5095,6 +5077,7 @@ Reaction ~ Days + (Days | Subject) + I(Days^2)
 > 
 > 
 > ## Limiting lines on deparse (wishlist PR#8638)
+> Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
 > op <- options(deparse.max.lines = 3)
 > f <- function(...) browser()
 > do.call(f, mtcars)
@@ -5116,6 +5099,8 @@ Calls: do.call -> <Anonymous>
    19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
     ...
 1: do.call(f, mtcars)
+> ## unlimited < 2.3.0
+> options(op)
 > 
 > ## Debugger can handle a function that has a single function call as its body
 > g <- function(fun) fun(1)
@@ -5123,11 +5108,17 @@ Calls: do.call -> <Anonymous>
 > g(function(x) x+1)
 debugging in: g(function(x) x + 1)
 debug: fun(1)
-Browse[2]> 
+Browse[2]> c
 exiting from: g(function(x) x + 1)
 [1] 2
-> options(op)
-> ## unlimited < 2.3.0
+> 
+> ## Trap debugger in non-interactive sessions
+> if (!interactive()) {
++     Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "true")
++     tools::assertError(browser())
++     browser(expr = FALSE) # but this passes (with no output)
++     Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
++ }
 > 
 > 
 > ## row names in as.table (PR#8652)
@@ -5711,7 +5702,7 @@ $y
 > 
 > 
 > ## tests of deparsing
-> x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
+> x <-list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 +          e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
 +          i = as.character(NA), j = c("foo", NA, "bar")
 +          )
@@ -6042,7 +6033,7 @@ numeric(0)
 [11] "1982-07-01" "1983-07-01" "1982-07-01" "1981-07-01" "1980-01-01"
 [16] "1979-01-01" "1978-01-01" "1977-01-01" "1976-01-01" "1975-01-01"
 [21] "1974-01-01" "1973-01-01" "1972-07-01"
-> class(pmin(x, y))
+> class (pmin(y, x))  ## (updating "filled")
 [1] "POSIXlt" "POSIXt" 
 > stopifnot(identical(pmin(x, y), pmin(y, x)))
 > format(pmin(x, y, na.rm=TRUE), tz="GMT")
@@ -6066,7 +6057,7 @@ numeric(0)
 [16] "1991-01-01" "1992-07-01" "1993-07-01" "1994-07-01" "1996-01-01"
 [21] "1997-07-01" "1999-01-01" "2006-01-01"
 > stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
-> ## regresion tests
+> ## regression tests
 > 
 > 
 > ## regression tests on names of 1D arrays
@@ -6377,7 +6368,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x25ac880>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6388,7 +6379,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x25ac880>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6400,7 +6391,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x138577838>
+<bytecode: 0x25ac880>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7164,7 +7155,7 @@ g(y)(x)
 [1] 1
 Warning message:
 In pl$ab : partial match of 'ab' to 'abc'
->   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+>   options(saveopt)
 > ## 'abc' was just ''
 > 
 > 
@@ -8251,4 +8242,14 @@ a < !b & d
 > ## deparse--parse roundtrip is stable (basically)
 > stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
 > ## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}
+> 
+> 
+> ## packageDate(<pkg>) w/o valid package
+> dput(packageDate("foo"))
+structure(NA, class = "Date")
+Warning message:
+In packageDescription(pkg, lib.loc = lib.loc, fields = date.fields) :
+  no package 'foo' was found
+> ## gave *five* warnings* in R <= 4.2.x
+> 
 > 

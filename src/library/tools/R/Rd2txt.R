@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -457,13 +457,11 @@ Rd2txt <-
          ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
         li[["UTF-8"]]
 
-    if(!isFALSE(getOption("useFancyQuotes")) &&
-       use_fancy_quotes) {
-        ## On Windows, Unicode literals are translated to local code page
-    	LSQM <- intToUtf8("0x2018") # Left single quote
-    	RSQM <- intToUtf8("0x2019") # Right single quote
-    	LDQM <- intToUtf8("0x201c") # Left double quote
-    	RDQM <- intToUtf8("0x201d") # Right double quote
+    if(!isFALSE(getOption("useFancyQuotes")) && use_fancy_quotes) {
+    	LSQM <- "\u2018"                # Left single quote
+    	RSQM <- "\u2019"                # Right single quote
+    	LDQM <- "\u201c"                # Left double quote
+    	RDQM <- "\u201d"                # Right double quote
     } else {
         LSQM <- RSQM <- "'"
         LDQM <- RDQM <- '"'
@@ -599,16 +597,17 @@ Rd2txt <-
                    else writeContent(block,tag)
                },
                "\\email" = {
-                   put("<email: ", lines2str(as.character(block)), ">")
+                   # for legibility, do not URLencode: some use ". at ." etc
+                   put("<mailto:", lines2str(as.character(block)), ">")
                },
                "\\url" = {
-                   put("<URL: ", lines2str(as.character(block)), ">")
+                   put("<", utils::URLencode(lines2str(as.character(block))), ">")
                },
                "\\href" = {
                    opts <- Rd2txt_options()
                    writeContent(block[[2L]], tag)
                    if (opts$showURLs)
-  			put(" (URL: ", lines2str(as.character(block[[1L]])), ")")
+  			put(" <", utils::URLencode(lines2str(as.character(block[[1L]]))), ">")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
@@ -636,7 +635,13 @@ Rd2txt <-
                    writeCodeBlock(block, tag)
                    blankLine()
                },
-               "\\verb"= put(block),
+               "\\verb"= {
+                   writeContent(block[1L], tag)
+                   if (length(block) > 1L) {
+                       wrap(FALSE) # flush and keep subsequent linebreaks/formatting
+                       writeContent(block[-1L], tag)
+                   }
+               },
                "\\linkS4class" =,
                "\\link" = writeContent(block, tag),
                "\\cr" = {
@@ -897,6 +902,9 @@ Rd2txt <-
                        if (tag == "TEXT") {
                            txt <- psub("^ ", "", as.character(tabExpand(block)))
                            put(txt)
+                           if (!haveBlanks &&
+                               blocktag %in% c("\\describe", "\\value", "\\arguments"))
+                           dropBlank <<- FALSE  # keep blank line for following text
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
                })

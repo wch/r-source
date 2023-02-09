@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2021 The R Core Team
+#  Copyright (C) 2011-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ read_symbols_from_object_file <- function(f)
     if(!nzchar(nm)) {
         ## reasonable to assume nm is on the path
         nm <- Sys.which("nm")
-        if(!nzchar(nm)) nm <- shQuote(nm)
+        if(nzchar(nm)) nm <- shQuote(nm)
     }
     if(!nzchar(nm)) {
         warning("this requires 'nm' to be on the PATH")
@@ -120,8 +120,12 @@ so_symbol_names_table <-
       "linux, C, gcc, putchar, putchar",
       "linux, C, gcc, stderr, stderr",
       "linux, C, gcc, stdout, stdout",
+      "linux, C, gcc, sprintf, sprintf",
+      "linux, C, gcc, sprintf, __sprintf_chk",
       "linux, C, gcc, vprintf, vprintf",
       "linux, C, gcc, vprintf, __vprintf_chk",
+      "linux, C, gcc, vsprintf, vsprintf",
+      "linux, C, gcc, vsprintf, __vsprintf_chk",
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
       #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
@@ -168,7 +172,11 @@ so_symbol_names_table <-
       "macos, C, gcc, putchar, _putchar",
       "macos, C, gcc, stderr, ___stderrp",
       "macos, C, gcc, stdout, ___stdoutp",
+      "macos, C, gcc, sprintf, _sprintf",
+      "macos, C, gcc, sprintf, ___sprintf_chk",
       "macos, C, gcc, vprintf, _vprintf",
+      "macos, C, gcc, vsprintf, _vsprintf",
+      "macos, C, gcc, vsprintf, _vsprintf_chk",
       "macos, C++, gxx, std::cout, __ZSt4cout",
       "macos, C++, gxx, std::cerr, __ZSt4cerr",
       #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
@@ -202,7 +210,9 @@ so_symbol_names_table <-
       "freebsd, C, gcc, putchar, putchar",
       "freebsd, C, gcc, stderr, __stderrp",
       "freebsd, C, gcc, stdout, __stdoutp",
+      "freebsd, C, gcc, sprintf, sprintf",
       "freebsd, C, gcc, vprintf, vprintf",
+      "freebsd, C, gcc, vsprintf, vsprintf",
       "freebsd, C++, gxx, std::cout, _ZSt4cout",
       "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
       "freebsd, C, gcc, rand, rand",
@@ -229,7 +239,9 @@ so_symbol_names_table <-
       "solaris, C, solcc, printf, printf",
       "solaris, C, solcc, putchar, putchar",
       "solaris, C, solcc, puts, puts",
+      "solaris, C, solcc, sprintf, sprintf",
       "solaris, C, solcc, vprintf, vprintf",
+      "solaris, C, solcc, vsprintf, vsprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
       #"solaris, C++, solCC, std::terminate, _ZSt9terminatev",
@@ -264,7 +276,9 @@ so_symbol_names_table <-
       "solaris, C, gcc, printf, puts",
       "solaris, C, gcc, puts, puts",
       "solaris, C, gcc, putchar, putchar",
+      "solaris, C, gcc, sprintf, sprintf",
       "solaris, C, gcc, vprintf, vprintf",
+      "solaris, C, gcc, vsprintf, vsprintf",
       "solaris, C, gcc, rand, rand",
       "solaris, C, gcc, random, random",
       "solaris, C, gcc, rand_r, rand_r",
@@ -307,7 +321,9 @@ so_symbol_names_table <-
       "windows, C, gcc, printf, puts",
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
+      "windows, C, gcc, sprintf, sprintf",
       "windows, C, gcc, vprintf, vprintf",
+      "windows, C, gcc, vsprintf, vsprintf",
       ## Windows does not have (s)random
       "windows, C, gcc, rand, rand",
       "windows, C, gcc, rand_r, rand_r",
@@ -425,7 +441,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
             "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
             "R_ClearerrConsole", "R_CleanTempDir", "R_Consolefile",
-            "R_DefParams", "R_DirtyImage", "R_GUIType", "R_GlobalContext",
+            "R_DefCallbacks", "R_DefParams", "R_DefParamsEx",
+            "R_DirtyImage", "R_GUIType", "R_GlobalContext",
             "R_HistoryFile", "R_HistorySize", "R_Home", "R_HomeDir",
             "R_InputHandlers", "R_Interactive", "R_Outputfile",
             "R_PolledEvents", "R_ReplDLLdo1", "R_ReplDLLinit",
@@ -441,6 +458,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_KillAllDevices", "Rf_endEmbeddedR", "Rf_initEmbeddedR",
             "Rf_initialize_R", "Rf_jump_to_toplevel", "Rf_mainloop",
             "SaveAction", "addInputHandler", "editorcleanall", "fpu_setup",
+            "freeRUser", "free_R_HOME",
             "getDLLVersion", "getInputHandler", "getRUser", "get_R_HOME",
             "getSelectedHandler", "initStdinHandler",
             "process_site_Renviron", "process_system_Renviron",
@@ -1007,27 +1025,27 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
         "*/")
 
     if(include_declarations) {
+        prepare <- function(nargs)
+            if(nargs > 0) paste(rep.int("void *", nargs), collapse=", ")
+            else "void"
         decls <- c(
             "/* FIXME: ",
             "   Check these declarations against the C/Fortran source code.",
             "*/",
             if(NROW(y <- nrdb$.C)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .C calls */",
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n) if(n >= 0)
-                               paste(rep.int("SEXP", n), collapse=", ")
+                args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                else "/* FIXME */")
                c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
             },
             if(NROW(y <- nrdb$.Fortran)) {
-                 args <- sapply(y$n, function(n) if(n >= 0)
-                                paste(rep.int("void *", n), collapse=", ")
+                 args <- sapply(y$n, function(n) if(n >= 0) prepare(n)
                                 else "/* FIXME */")
                 c("", "/* .Fortran calls */",
                   paste0("extern void F77_NAME(", y$s, ")(", args, ");"))

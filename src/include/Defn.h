@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2021  The R Core Team.
+ *  Copyright (C) 1998--2023  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,15 @@
 # define extern0 attribute_hidden
 #else
 # define extern0 extern
+#endif
+
+#define attribute_no_sanitizer_instrumentation
+#ifdef __has_attribute
+# if __has_attribute(disable_sanitizer_instrumentation)
+#  undef attribute_no_sanitizer_instrumentation
+#  define attribute_no_sanitizer_instrumentation \
+          __attribute__((disable_sanitizer_instrumentation))
+# endif
 #endif
 
 #define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
@@ -422,6 +431,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CADDR(e)	CAR(CDR(CDR(e)))
 #define CADDDR(e)	CAR(CDR(CDR(CDR(e))))
 #define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
+#define CAD5R(e)	CAR(CDR(CDR(CDR(CDR(CDR(e))))))
 #define MISSING_MASK	15 /* reserve 4 bits--only 2 uses now */
 #define MISSING(x)	((x)->sxpinfo.gp & MISSING_MASK)/* for closure calls */
 #define SET_MISSING(x,v) do { \
@@ -529,7 +539,7 @@ typedef union {
 #define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 #ifdef LONG_VECTOR_SUPPORT
-    R_len_t NORET R_BadLongVector(SEXP, const char *, int);
+    NORET R_len_t R_BadLongVector(SEXP, const char *, int);
 #endif
 
 /* checking for mis-use of multi-threading */
@@ -694,14 +704,14 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_printwhere(void);
 void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
 
-void NORET R_signal_protect_error(void);
-void NORET R_signal_unprotect_error(void);
-void NORET R_signal_reprotect_error(PROTECT_INDEX i);
+NORET void R_signal_protect_error(void);
+NORET void R_signal_unprotect_error(void);
+NORET void R_signal_reprotect_error(PROTECT_INDEX i);
 
-const char *R_curErrorBuf();
+const char *R_curErrorBuf(void);
 Rboolean R_cycle_detected(SEXP s, SEXP child);
 
-void R_init_altrep();
+void R_init_altrep(void);
 void R_reinit_altrep_classes(DllInfo *);
 
 /* Defining NO_RINLINEDFUNS disables use to simulate platforms where
@@ -752,21 +762,26 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 
 /* macro version of R_CheckStack */
 #define R_CheckStack() do {						\
-	void NORET R_SignalCStackOverflow(intptr_t);				\
+	NORET void R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
-#endif /* USE_RINTERNALS */
 
-void R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
-        const char *errmsg, const char *warnmsg, const char *varname,
-        Rboolean warnByDefault);
+#ifdef __has_feature
+# if __has_feature(address_sanitizer)
+#  undef R_CheckStack
+# endif
+#endif
+
+#endif /* USE_RINTERNALS */
 
 const char * Rf_translateCharFP(SEXP);
 const char * Rf_translateCharFP2(SEXP);
 const char * Rf_trCharUTF8(SEXP);
+const char * Rf_trCharUTF82(SEXP);
+const wchar_t * Rf_wtransChar2(SEXP);
 
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
@@ -950,9 +965,13 @@ extern int putenv(char *string);
 
 /* Maximal length in bytes of an entire path name.
    POSIX has required this to be at least 255/256, and X/Open at least 1024.
-   Solaris has 1024, Linux glibc has 4192.
+   Solaris, macOS, *BSD have 1024, Linux glibc has 4192.
    File names are limited to FILENAME_MAX bytes (usually the same as PATH_MAX)
    or NAME_MAX (often 255/256).
+
+   POSIX requires PATH_MAX to be defined in limits.h (included above)
+   if independent of the file path (file system?).  However, if it can
+   vary by filepath, it is required to be undefined there.
  */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)
@@ -1515,8 +1534,8 @@ extern void R_initAssignSymbols(void);
 #ifdef R_USE_SIGNALS
 extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
 #endif
-extern SEXP R_getCurrentSrcref();
-extern SEXP R_getBCInterpreterExpression();
+extern SEXP R_getCurrentSrcref(void);
+extern SEXP R_getBCInterpreterExpression(void);
 
 void R_BCProtReset(R_bcstack_t *);
 
@@ -1581,7 +1600,7 @@ extern0 int R_PCRE_limit_recursion;
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 /* Internal type coercions */
-int Rf_asLogical2(SEXP x, int checking, SEXP call, SEXP rho);
+int Rf_asLogical2(SEXP x, int checking, SEXP call);
 
 
 typedef enum { iSILENT, iWARN, iERROR } warn_type;
@@ -1717,6 +1736,7 @@ void R_RestoreHashCount(SEXP rho);
 # define mbtoucs		Rf_mbtoucs
 # define mbcsToUcs2		Rf_mbcsToUcs2
 # define memtrace_report	Rf_memtrace_report
+# define mkCharWUTF8		Rf_mkCharWUTF8
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkFalse		Rf_mkFalse
 # define mkPROMISE		Rf_mkPROMISE
@@ -1763,6 +1783,7 @@ void R_RestoreHashCount(SEXP rho);
 # define translateCharFP	Rf_translateCharFP
 # define translateCharFP2	Rf_translateCharFP2
 # define trCharUTF8      	Rf_trCharUTF8
+# define trCharUTF82      	Rf_trCharUTF82
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
@@ -1779,6 +1800,7 @@ void R_RestoreHashCount(SEXP rho);
 # define WarningMessage		Rf_WarningMessage
 # define wcstoutf8		Rf_wcstoutf8
 # define wtransChar		Rf_wtransChar
+# define wtransChar2		Rf_wtransChar2
 # define yychar			Rf_yychar
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
@@ -1808,7 +1830,7 @@ char	*R_HomeDir(void);
 Rboolean R_FileExists(const char *);
 Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
-int	R_GetFDLimit();
+int	R_GetFDLimit(void);
 int	R_EnsureFDLimit(int);
 
 /* environment cell access */
@@ -1905,7 +1927,7 @@ R_xlen_t any_duplicated3(SEXP, SEXP, Rboolean);
 SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
-void NORET findcontext(int, SEXP, SEXP);
+NORET void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
 SEXP frameSubscript(int, SEXP, SEXP);
@@ -1939,7 +1961,7 @@ void InitS3DefaultTypes(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
-void NORET jump_to_toplevel(void);
+NORET void jump_to_toplevel(void);
 void KillAllDevices(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
@@ -1952,6 +1974,7 @@ SEXP matchArgs_NR(SEXP, SEXP, SEXP);
 SEXP matchArgs_RC(SEXP, SEXP, SEXP);
 SEXP matchPar(const char *, SEXP*);
 void memtrace_report(void *, void *);
+SEXP mkCharWUTF8(const wchar_t *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 SEXP mkFalse(void);
 SEXP mkPRIMSXP (int, int);
@@ -2031,7 +2054,7 @@ SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int framedepth(RCNTXT*);
 void R_InsertRestartHandlers(RCNTXT *, const char *);
-void NORET R_JumpToContext(RCNTXT *, int, SEXP);
+NORET void R_JumpToContext(RCNTXT *, int, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
@@ -2040,20 +2063,20 @@ RCNTXT *R_findExecContext(RCNTXT *, SEXP);
 RCNTXT *R_findParentContext(RCNTXT *, int);
 
 void R_run_onexits(RCNTXT *);
-void NORET R_jumpctxt(RCNTXT *, int, SEXP);
+NORET void R_jumpctxt(RCNTXT *, int, SEXP);
 #endif
 
 /* ../main/bind.c */
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
-void NORET errorcall_cpy(SEXP, const char *, ...);
-void NORET ErrorMessage(SEXP, int, ...);
+NORET void errorcall_cpy(SEXP, const char *, ...);
+NORET void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
-void NORET R_signalErrorCondition(SEXP cond, SEXP call);
-void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
+NORET void R_signalErrorCondition(SEXP cond, SEXP call);
+NORET void R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
 SEXP R_vmakeErrorCondition(SEXP call,
 			   const char *classname, const char *subclassname,
 			   int nextra, const char *format, va_list ap);
@@ -2062,13 +2085,15 @@ SEXP R_makeErrorCondition(SEXP call,
 			  int nextra, const char *format, ...);
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError(SEXP x, SEXP call);
+SEXP R_makeMissingSubscriptError1(SEXP call);
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix);
 SEXP R_makeCStackOverflowError(SEXP call, intptr_t usage);
-SEXP R_getProtectStackOverflowError();
-SEXP R_getExpressionStackOverflowError();
-SEXP R_getNodeStackOverflowError();
-void R_InitConditions();
+SEXP R_getProtectStackOverflowError(void);
+SEXP R_getExpressionStackOverflowError(void);
+SEXP R_getNodeStackOverflowError(void);
+void R_InitConditions(void);
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);
@@ -2115,8 +2140,8 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 #include <wchar.h>
 
 /* main/util.c */
-void NORET UNIMPLEMENTED_TYPE(const char *s, SEXP x);
-void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
+NORET void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
+NORET void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);
@@ -2153,7 +2178,7 @@ int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
 void resetICUcollator(Rboolean disable); /* from util.c */
-void dt_invalidate_locale(); /* from Rstrptime.h */
+void dt_invalidate_locale(void); /* from Rstrptime.h */
 extern int R_OutputCon; /* from connections.c */
 extern int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
 void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
@@ -2171,6 +2196,8 @@ void R_CleanTempDir(void);
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
+void R_wfixbackslash(wchar_t *s);
+void R_wfixslash(wchar_t *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #endif
 

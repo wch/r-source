@@ -475,18 +475,18 @@ static size_t unz_read(void *ptr, size_t size, size_t nitems,
     return unzReadCurrentFile(uf, ptr, (unsigned int)(size*nitems))/size;
 }
 
-static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
+NORET static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error(_("printing not enabled for this connection"));
 }
 
-static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
+NORET static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error(_("write not enabled for this connection"));
 }
 
-static double NORET null_seek(Rconnection con, double where, int origin, int rw)
+NORET static double null_seek(Rconnection con, double where, int origin, int rw)
 {
     error(_("seek not enabled for this connection"));
 }
@@ -539,6 +539,7 @@ R_newunz(const char *description, const char *const mode)
        /* =================== second part ====================== */
 
 /* From minizip contribution to zlib 1.2.3, updated for 1.2.5 */
+/* cherry-picked fix for PR18390 */
 
 /* unzip.c -- IO for uncompress .zip files using zlib
    Version 1.01e, February 12th, 2005
@@ -1409,21 +1410,21 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
 	    {
 		uLong uL;
 
-		if(file_info.uncompressed_size == (ZPOS64_T)(unsigned long)-1)
+		if(file_info.uncompressed_size == MAXU32)
 		{
 		    if (unz64local_getLong64(s->filestream,
 					     &file_info.uncompressed_size) != UNZ_OK)
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info.compressed_size == (ZPOS64_T)(unsigned long)-1)
+		if(file_info.compressed_size == MAXU32)
 		{
 		    if (unz64local_getLong64(s->filestream,
 					     &file_info.compressed_size) != UNZ_OK)
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info_internal.offset_curfile == (ZPOS64_T)(unsigned long)-1)
+		if(file_info_internal.offset_curfile == MAXU32)
 		{
 		    /* Relative Header offset */
 		    if (unz64local_getLong64(s->filestream,
@@ -1431,7 +1432,9 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
 			err = UNZ_ERRNO;
 		}
 
-		if(file_info.disk_num_start == (unsigned long)-1)
+		if(file_info.disk_num_start == 0xffff)
+		    /* minizip checks against MAXU32, but the specification
+		       says 0xffff, see also PR18390 */
 		{
 		    /* Disk Start Number */
 		    if (unz64local_getLong(s->filestream,&uL) != UNZ_OK)

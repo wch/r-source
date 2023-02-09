@@ -1,4 +1,23 @@
 
+Changes from grid_4.2.* to grid_4.3.0:
+-------------------------------------
+
+1.  New isClosed() function so can provide (sensible) default for 'closed'
+    argument in grobCoords().
+
+2.  Bug fix:  grid.display.list(TRUE) incorrectly initialised the 'grid'
+    display list.  Thanks to Kaiguang Zhao for the bug report.
+
+3.  Bug fix:  fix for "polygon edge not found" (at least when font
+    cannot be found).  Fixes ggplot2 issue 2252 (hopefully).
+
+4.  Improvements to polygonEdge() for very tall and thin or wide and short
+    polygons; fix to textRect() so that it returns vertices anti-clockwise;
+    changes to L_textBounds() so that edgex/edgey are not calculated if theta is
+    NA (which is set by, e.g., widthDetails()).  May also have positive
+    impact for ggplot2 issue 2252.
+
+
 Changes from grid_4.1.* to grid_4.2.0:
 -------------------------------------
 

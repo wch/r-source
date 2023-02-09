@@ -96,7 +96,7 @@ For each slot and superclass, the existence of the specified class is
 checked.
 For each slot, the object in the slot is tested for inheritance from
 the corresponding class.
-If  \code{complete} is {TRUE},   \code{validObject} is called
+If  \code{complete} is \code{TRUE},   \code{validObject} is called
 recursively for the object in the slot.
 
 Then, for each of the classes that this class

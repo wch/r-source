@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -253,9 +253,11 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 
 ### ** lines2str
 lines2str <-
-function(txt, sep = "")
-    trimws(gsub("\n", sep, paste(txt, collapse = sep),
-                fixed = TRUE, useBytes = TRUE))
+function(txt, sep = "") {
+    bytes <- gsub("\n", sep, paste(txt, collapse = sep),
+                  fixed = TRUE, useBytes = TRUE)
+    trimws(iconv(bytes, to = "UTF-8", sub = "byte"))
+}
 
 
 ### * LaTeX utilities
@@ -554,13 +556,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### * Internal utility variables.
 
-### ** .BioC_version_associated_with_R_version
-
-.BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.14"))
-## Things are more complicated from R-2.15.x with still two BioC
-## releases a year, so we do need to set this manually.
-
 ### ** .ORCID_iD_regexp
 
 .ORCID_iD_regexp <-
@@ -711,10 +706,8 @@ function(txt)
     txt <- as.character(txt)
     if(!length(txt)) return(txt)
     enc <- Encoding(txt)
-    txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
-    txt <- gsub(paste0("(", intToUtf8(0x201c), "|", intToUtf8(0x201d), ")"),
-                '"', txt, perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\u2018|\u2019)", "'", txt, perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\u201c|\u201d)", '"', txt, perl = TRUE, useBytes = TRUE)
     Encoding(txt) <- enc
     txt
 }
@@ -765,8 +758,8 @@ function(expr, type = NULL)
 
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, encoding = "UTF-8", warn = FALSE),
-         message = readLines(msgcon, encoding = "UTF-8", warn = FALSE))
+         output = readLines(outcon, warn = FALSE),
+         message = readLines(msgcon, warn = FALSE))
 }
 
 ### ** .expand_anchored_Rd_xrefs
@@ -1073,20 +1066,6 @@ function(dir, installed = FALSE)
     stop("invalid package layout")
 }
 
-### ** .get_repositories
-
-.get_repositories <-
-function()
-{
-    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
-    if(is.na(rfile) || !file_test("-f", rfile)) {
-        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-        if(!file_test("-f", rfile))
-            rfile <- file.path(R.home("etc"), "repositories")
-    }
-    .read_repositories(rfile)
-}
-
 ### ** .get_requires_from_package_db
 
 .get_requires_from_package_db <-
@@ -1245,7 +1224,7 @@ local({
     out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
     names(out) <-
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
-    eval(substitute(function() {out}, list(out=out)), envir=NULL)
+    eval(substitute(function() {out}, list(out=out)), envir = topenv())
     })
 
 ### ** .get_standard_package_dependencies
@@ -1270,30 +1249,42 @@ function(reverse = FALSE, recursive = FALSE)
 
 ### ** .get_standard_repository_URLs
 
+## Usage in e.g. CRAN_baseurl_for_web_area assumes this returns a
+## valid CRAN mirror as its first element.
+## That used not to be guaranteed, and it is still unchecked.
 .get_standard_repository_URLs <-
-function()
-{
-    repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
-    if(nzchar(repos)) {
-        repos <-
-            .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
-    } else {
-        nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
-        repos <- getOption("repos")
-        ## This is set by utils:::.onLoad(), hence may be NULL.
-        if(!is.null(repos) &&
-           !anyNA(repos[nms]) &&
-           (repos["CRAN"] != "@CRAN@"))
-            repos <- repos[nms]
-        else {
-            repos <- .get_repositories()[nms, "URL"]
-            names(repos) <- nms
-            if(repos["CRAN"] == "@CRAN@")
-                repos["CRAN"] <- "https://CRAN.R-project.org"
-        }
-    }
-    repos
+function(ForXrefs = FALSE)
+ {
+     if(ForXrefs &&
+        nzchar(repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")))
+         return(utils:::.expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]]))
+
+     nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
+     repos <- getOption("repos")
+     ## This is set by utils:::.onLoad(), hence may be NULL.
+     if(!is.null(repos) && !anyNA(repos[nms]) && (repos["CRAN"] != "@CRAN@"))
+         repos <- repos[nms]
+     else {
+         repos <- utils:::.get_repositories()[nms, "URL"]
+         names(repos) <- nms
+         ## That might not contain an entry for CRAN
+         if(is.na(repos["CRAN"]) || repos["CRAN"] == "@CRAN@")
+             repos["CRAN"] <- "https://CRAN.R-project.org"
+     }
+     repos
 }
+
+.get_CRAN_repository_URL <-
+function()
+ {
+     repos <- getOption("repos")
+     if(!is.null(repos) && !is.na(cr <- repos["CRAN"]) && (cr != "@CRAN@"))
+         return(cr)
+     cr <- utils:::.get_repositories()["CRAN", "URL"]
+     ## That might not contain an entry for CRAN
+     if(is.na(cr) || cr == "@CRAN@") cr <- "https://CRAN.R-project.org"
+     cr
+ }
 
 ### ** .get_standard_repository_db_fields
 
@@ -1706,6 +1697,26 @@ function(parent = parent.frame())
              hash=TRUE, parent=parent)
 }
 
+### ** .make_KaTeX_checker
+
+.make_KaTeX_checker <- local({
+    fun <- NULL
+    ctx <- NULL
+    function() {
+        if(is.null(fun) && requireNamespace("V8", quietly = TRUE)) {
+            dir <- file.path(R.home(), "doc", "html")
+            ctx <<- V8::v8("window")
+            ctx$source(file.path(dir, "katex", "katex.js"))
+            ## Provides additional macros:
+            ctx$source(file.path(dir, "katex-config.js"))
+            ## Provides checkTex():
+            ctx$source(file.path(dir, "katex-check.js"))
+            fun <<- function(tex) ctx$call('checkTex', tex)
+        }
+        fun
+    }
+})
+
 ### ** nonS3methods [was .make_S3_methods_stop_list ]
 
 nonS3methods <- function(package)
@@ -1715,7 +1726,9 @@ nonS3methods <- function(package)
     ## Using package = NULL returns all known examples
 
     stopList <-
-        list(base = c("all.equal", "all.names", "all.vars", "expand.grid",
+        list(base = c("all.equal", "all.names", "all.vars",
+             "as.data.frame.vector",
+             "expand.grid",
              "format.char", "format.info", "format.pval",
              "max.col",
              "pmax.int", "pmin.int",
@@ -1825,7 +1838,7 @@ function()
     ind <- grepl("^[[:alpha:]]", generics)
     generics <- c(generics[!ind], generics[ind])
     ## The foo.bar objects in base:
-    objects <- grep("[^.]+[.]", objects, value = TRUE)
+    objects <- grep("[^.]+[.][[:alpha:]]", objects, value = TRUE)
     ## Make our lives easier ...
     objects <- setdiff(objects, nonS3methods("base"))
     ## Find the ones matching GENERIC.CLASS from the list of generics.
@@ -1845,6 +1858,8 @@ function()
 .deparse_S3_methods_table_for_base <-
 function()
 {
+    if(!identical("C", Sys.getlocale("LC_COLLATE")))
+        warning("*not* using 'C' for LC_COLLATE locale")
     mdb <- .make_S3_methods_table_for_base()
     n <- nrow(mdb)
     c(sprintf("%s\"%s\", \"%s\"%s",
@@ -2082,32 +2097,6 @@ function(x, dfile)
     }
 }
 
-### ** .read_repositories
-
-.read_repositories <-
-function(file)
-{
-    db <- utils::read.delim(file, header = TRUE, comment.char = "#",
-                            colClasses =
-                            c(rep.int("character", 3L),
-                              rep.int("logical", 4L))) # allow for win64.binary
-    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
-    db
-}
-
-### default changed to https: for R 3.3.0
-.expand_BioC_repository_URLs <-
-function(x)
-{
-    x <- sub("%bm",
-             as.character(getOption("BioC_mirror",
-                                    "https://bioconductor.org")),
-             x, fixed = TRUE)
-    sub("%v",
-        as.character(.BioC_version_associated_with_R_version()),
-        x, fixed = TRUE)
-}
-
 .expand_package_description_db_R_fields <-
 function(x)
 {
@@ -2176,7 +2165,8 @@ function(file, envir, enc = NA)
     exprs <- parse(n = -1L, file = con)
     exprs <- exprs[lengths(exprs) > 0L]
     for(e in exprs) {
-	if(is.call(e) && as.character(e[[1L]]) %in% assignmentSymbols)
+	if(is.call(e) &&
+           as.character(e[[1L]])[1L] %in% assignmentSymbols)
             tryCatch(eval(e, envir), error = identity)
     }
     invisible()

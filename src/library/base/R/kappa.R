@@ -19,8 +19,10 @@
 
 norm <- function(x, type = c("O", "I", "F", "M", "2")) {
     if(identical("2", type)) {
-	if(anyNA(x)) return(NA_real_)
-	svd(x, nu = 0L, nv = 0L)$d[1L]
+	if(anyNA(x))
+	    NA_real_
+	else
+	    svd(x, nu = 0L, nv = 0L)$d[1L]
 	## *faster* at least on some platforms {but possibly less accurate}:
 	##sqrt(eigen(crossprod(x), symmetric=TRUE, only.values=TRUE)$values[1L])
     } else

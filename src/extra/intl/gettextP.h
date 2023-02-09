@@ -60,9 +60,9 @@ extern char *__bindtextdomain (const char *__domainname,
 			       const char *__dirname);
 extern char *__bind_textdomain_codeset (const char *__domainname,
 					const char *__codeset);
-extern void _nl_finddomain_subfreeres (void) attribute_hidden;
-extern void _nl_unload_domain (struct loaded_domain *__domain)
-     internal_function attribute_hidden;
+attribute_hidden extern void _nl_finddomain_subfreeres (void) ;
+attribute_hidden extern void _nl_unload_domain (struct loaded_domain *__domain)
+    internal_function;
 #else
 /* Declare the exported libintl_* functions, in a way that allows us to
    call them under their real name.  */
@@ -290,10 +290,10 @@ extern struct binding *_nl_domain_bindings;
 #endif
 
 /* Name of the default text domain.  */
-extern const char _nl_default_default_domain[] attribute_hidden;
+attribute_hidden extern const char _nl_default_default_domain[];
 
 /* Default text domain in which entries for gettext(3) are to be found.  */
-extern const char *_nl_current_default_domain attribute_hidden;
+attribute_hidden extern const char *_nl_current_default_domain;
 
 /* @@ begin of epilog @@ */
 

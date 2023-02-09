@@ -1,7 +1,7 @@
 #  File src/library/utils/R/example.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,11 +20,29 @@
 example <-
 function(topic, package = NULL, lib.loc = NULL,
          character.only = FALSE, give.lines = FALSE, local = FALSE,
-	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
-         ask = getOption("example.ask"),
+	 type = c("console", "html"), echo = TRUE, verbose = getOption("verbose"),
+         setRNG = FALSE, ask = getOption("example.ask"),
 	 prompt.prefix = abbreviate(topic, 6),
 	 run.dontrun = FALSE, run.donttest = interactive())
 {
+    type <- match.arg(type)
+    html <- type == "html" ## only two options for now
+    if (html) {
+        enhancedHTML <- str2logical(Sys.getenv("_R_HELP_ENABLE_ENHANCED_HTML_", "TRUE"))
+        ## silently ignore (but note in documentation)
+        if (!interactive() || !enhancedHTML || !requireNamespace("knitr", quietly = TRUE))
+            html <- FALSE
+    }
+    if (html) {
+        port <- tools::startDynamicHelp(NA)
+        if (port <= 0L) html <- FALSE # silently fall back to console output
+        else {
+            if (!is.null(lib.loc)) lib.loc <- NULL
+            browser <- if (.Platform$GUI == "AQUA") {
+                           get("aqua.browser", envir = as.environment("tools:RGUI"))
+                       } else getOption("browser")
+        }
+    }
     if (!character.only) {
         topic <- substitute(topic)
         if(!is.character(topic)) topic <- deparse(topic)[1L]
@@ -40,6 +58,15 @@ function(topic, package = NULL, lib.loc = NULL,
     if(verbose) cat("Found file =", sQuote(file), "\n")
     packagePath <- dirname(dirname(file))
     pkgname <- basename(packagePath)
+
+    ## At this point, we are ready to invoke HTML help if requested
+    if (html) {
+        query <- if (local) "" else "?local=FALSE"
+        browseURL(paste0("http://127.0.0.1:", port,
+                         "/library/", pkgname, "/Example/", topic, query),
+                  browser)
+        return(invisible())
+    }
     lib <- dirname(packagePath)
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf, commentDontrun = !run.dontrun,
@@ -86,20 +113,19 @@ function(topic, package = NULL, lib.loc = NULL,
     if(ask == "default")
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
-	if(.Device != "null device") {
-	    oldask <- grDevices::devAskNewPage(ask = TRUE)
-            if(!oldask) on.exit(grDevices::devAskNewPage(oldask), add = TRUE)
-        }
-        ## <FIXME>
+        ## set ask=TRUE for a plotting device used, but do *not* leave it unless it was already
+        oldask <- if(.Device != "null device")
+                      grDevices::devAskNewPage(ask = TRUE)
+                  else
+                      getOption("device.ask.default", FALSE)
+        on.exit(if(.Device != "null device") grDevices::devAskNewPage(oldask), add = TRUE)
         ## This ensures that any device opened by the examples will
-        ## have ask = TRUE set, but it does not return the device to
-        ## the expected 'ask' state if it is left as the current device.
-        ## </FIXME>
+        ## have ask = TRUE set
         op <- options(device.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
     source(tf, local, echo = echo,
-           prompt.echo = paste0(prompt.prefix, getOption("prompt")),
+             prompt.echo = paste0(prompt.prefix, getOption("prompt")),
            continue.echo = paste0(prompt.prefix, getOption("continue")),
            verbose = verbose, max.deparse.length = Inf, encoding = "UTF-8",
     	   skip.echo = skips, keep.source=TRUE)

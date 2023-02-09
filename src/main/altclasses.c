@@ -286,7 +286,7 @@ static SEXP compact_intseq_Sum(SEXP x, Rboolean narm)
 
 R_altrep_class_t R_compact_intseq_class;
 
-static void InitCompactIntegerClass()
+static void InitCompactIntegerClass(void)
 {
     R_altrep_class_t cls = R_make_altinteger_class("compact_intseq", "base",
 						   NULL);
@@ -519,7 +519,7 @@ static SEXP compact_realseq_Sum(SEXP x, Rboolean narm)
 
 R_altrep_class_t R_compact_realseq_class;
 
-static void InitCompactRealClass()
+static void InitCompactRealClass(void)
 {
     R_altrep_class_t cls = R_make_altreal_class("compact_realseq", "base",
 						NULL);
@@ -572,7 +572,7 @@ static SEXP new_compact_realseq(R_xlen_t n, double n1, double inc)
  ** Compact Integer/Real Sequences
  **/
 
-SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
+attribute_hidden SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 {
     R_xlen_t n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
 
@@ -838,7 +838,7 @@ static SEXP deferred_string_Extract_subset(SEXP x, SEXP indx, SEXP call)
 
 static R_altrep_class_t R_deferred_string_class;
 
-static void InitDefferredStringClass()
+static void InitDefferredStringClass(void)
 {
     R_altrep_class_t cls = R_make_altstring_class("deferred_string", "base",
 						  NULL);
@@ -867,7 +867,7 @@ static void InitDefferredStringClass()
  * Constructor
  */
 
-SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP info)
+attribute_hidden SEXP R_deferred_coerceToString(SEXP v, SEXP info)
 {
     SEXP ans = R_NilValue;
     switch (TYPEOF(v)) {
@@ -1346,7 +1346,7 @@ SEXP do_mmap_file(SEXP args)
 {
     args = CDR(args);
 #else
-SEXP attribute_hidden do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #endif
     SEXP file = CAR(args);
@@ -1382,7 +1382,7 @@ static SEXP do_munmap_file(SEXP args)
 {
     args = CDR(args);
 #else
-SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #endif
     SEXP x = CAR(args);
@@ -1960,7 +1960,7 @@ static SEXP wrap_meta(SEXP x, int srt, int no_na)
     return make_wrapper(x, meta);
 }
 
-SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP x = CAR(args);
@@ -1974,7 +1974,7 @@ SEXP /*attribute_hidden*/ R_tryWrap(SEXP x)
     return wrap_meta(x, UNKNOWN_SORTEDNESS, FALSE);
 }
 
-SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP x = CAR(args);
@@ -1993,7 +1993,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
    operation. It could be used in other places, but extreme caution is
    needed to make sure there is no possibliity that the wrapper object
    will be referenced from C code after it is cleared. */
-SEXP attribute_hidden R_tryUnwrap(SEXP x)
+attribute_hidden SEXP R_tryUnwrap(SEXP x)
 {
     if (! MAYBE_SHARED(x) && is_wrapper(x) &&
 	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS && ! WRAPPER_NO_NA(x)) {
@@ -2026,7 +2026,7 @@ SEXP attribute_hidden R_tryUnwrap(SEXP x)
  ** Initialize ALTREP Classes
  **/
 
-void attribute_hidden R_init_altrep()
+attribute_hidden void R_init_altrep(void)
 {
     InitCompactIntegerClass();
     InitCompactRealClass();

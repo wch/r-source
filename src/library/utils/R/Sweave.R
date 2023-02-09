@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 ### drivers re-encode the output back to 'encoding', and preserve the
 ### "UTF-8" encoding on both input and output.  (Up to 3.6, the Rtangle
 ### driver left things in the encoding of the current locale and recorded
-### what that was in a comment.) 
+### what that was in a comment.)
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
 ### inputen[cx] and deduces the vignette encoding from that, falling
@@ -627,6 +627,12 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         args <- c(args, opts)
     }
     output <- do.call(tools::buildVignette, args)
-    message("Output file:  ", output)
+    ## == names of all files there in 'keep'; e.g. source()d ones.
+    ##   'Output/used' was 'Output' :
+    message(ngettext(length(output),
+                     "Output/used file:  ",
+                     "Output/used files:  "),
+            paste(output, collapse=", "),
+            domain = NA)
     do_exit()
 }

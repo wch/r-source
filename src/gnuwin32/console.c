@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2021   The R Core Team
+ *  Copyright (C) 2004-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -349,8 +349,8 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
 	p->kbuf = NULL;
     }
     BM = NULL;
-    p->rows = rows;
-    p->cols = cols;
+    p->rows = rows; /* ROWS */
+    p->cols = cols; /* COLS */
     for (int i=0; i<numGuiColors; i++)
 	p->guiColors[i] = guiColors[i];
     p->f = f;
@@ -425,7 +425,7 @@ static int intersect_input(ConsoleData p, int apply)
 
 /* Here fch and lch are columns, and we have to cope with both MBCS
    and double-width chars. */
-
+/* caller must manage R_alloc stack */
 static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, wchar_t *s)
 {
@@ -497,7 +497,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
     int   c1, c2, c3, x0, y0, x1, y1;
     rect r;
     int   bg, fg, highlight, base;
+    const void *vmax = NULL;
 
+    vmax = vmaxget();
     if (p->kind == CONSOLE) base = consolebg;
     else if (p->kind == PAGER) base = pagerbg;
     else base = dataeditbg;
@@ -506,14 +508,18 @@ static int writeline(control c, ConsoleData p, int i, int j)
     fg = p->guiColors[base+1];
     highlight = p->guiColors[base+2];
 
-    if ((i < 0) || (i >= NUMLINES)) return 0;
+    if ((i < 0) || (i >= NUMLINES)) {
+	vmaxset(vmax);
+	return 0;
+    }
     stmp = s = LINE(i);
     len = wcswidth(stmp);
     /* If there is a \r in the line, we need to preprocess it */
     if((p0 = wcschr(s, L'\r'))) {
 	int l, l1;
 	stmp = LINE(i);
-	s = (wchar_t *) alloca((wcslen(stmp) + 1) * sizeof(wchar_t));
+	/* stmp may be large particularly when using txtProgressBar */
+	s = (wchar_t *) R_alloc(wcslen(stmp) + 1, sizeof(wchar_t));
 	l = p0 - stmp;
 	wcsncpy(s, stmp, l);
 	stmp = p0 + 1;
@@ -540,6 +546,7 @@ static int writeline(control c, ConsoleData p, int i, int j)
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
     if (insel < 0) {
 	WLHELPER(0, col1, bg, fg);
+	vmaxset(vmax);
 	return len;
     }
     if ((USER(i) >= 0) && (USER(i) < FC + COLS)) {
@@ -558,11 +565,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
     if ((CURROW >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
 	(i == NUMLINES - 1) && (p->sel == 0 || !intersect_input(p, 0))) {
 	if (!p->overwrite) {
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 	    	setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 	    	            p->cursor_blink == 1 ? 1 : FW/4, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    
 	    if (p->cursor_blink < 2) {
 	    	r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, FW/4, FH);
@@ -579,11 +584,9 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	    /* term string '\0' box width = 1 fix */
 	    w0 = wc ? Ri18n_wcwidth(wc) : 1;
 	    nn[0] = wc;
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 	    	setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 	    		    p->cursor_blink == 1 ? 1 : FW/4, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    if (p->cursor_blink < 2) {
 	    	r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH,
 		         w0 * FW, FH);
@@ -591,16 +594,17 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	    	gdrawwcs(BM, p->f, bg, pt(r.x, r.y), nn);
 	    }
 	} else {
-	    if (p->cursor_blink) {
+	    if (p->cursor_blink) 
 		setcaret(c, BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, 
 		            p->cursor_blink == 1 ? 1 : FW, FH);
-	    	showcaret(c, 1);
-	    } else showcaret(c, 0);
 	    if (p->cursor_blink < 2) 
 	    	WLHELPER(CURCOL - FC, CURCOL - FC, bg, highlight); 
 	}
     }
-    if (insel != 0) return len;
+    if (insel != 0) {
+	vmaxset(vmax);
+	return len;
+    }
     c1 = (p->my0 < p->my1);
     c2 = (p->my0 == p->my1);
     c3 = (p->mx0 < p->mx1);
@@ -612,7 +616,10 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	x1 = p->mx0; y1 = p->my0;
     }
     if (i == y0) {
-	if (FC + COLS < x0) return len;
+	if (FC + COLS < x0) {
+	    vmaxset(vmax);
+	    return len;
+	}
 	if(mbcslocale) {
 	    int w0, w1 = 1;
 	    wchar_t *P = s;
@@ -627,7 +634,10 @@ static int writeline(control c, ConsoleData p, int i, int j)
     } else
 	c1 = 0;
     if (i == y1) {
-	if (FC > x1) return len;
+	if (FC > x1) {
+	    vmaxset(vmax);
+	    return len;
+	}
 	if(mbcslocale) {
 	    int w0;
 	    wchar_t *P = s;
@@ -641,6 +651,7 @@ static int writeline(control c, ConsoleData p, int i, int j)
     } else
 	c2 = COLS - 1;
     WLHELPER(c1, c2, bg, fg);
+    vmaxset(vmax);
     return len;
 }
 
@@ -693,7 +704,7 @@ void setfirstvisible(control c, int fv)
     if (p->needredraw) {
 	ww = min(NUMLINES, ROWS) - 1;
 	rw = FV + ww;
-	writeline(c, p, rw, ww);
+	WRITELINE(rw, ww);
 	if (ds == 0) {
 	    RSHOW(RLINE(ww));
 	    return;;
@@ -890,6 +901,25 @@ static void storekey(control c, int k)
     p->numkeys++;
 }
 
+static void storekeys(control c, const char *str)
+{
+    if (strlen(str) == 0) return; 
+    if(isUnicodeWindow(c)) {
+	size_t sz = (strlen(str) + 1) * sizeof(wchar_t);
+	const void *vmax = NULL;
+	vmax = vmaxget();
+	wchar_t *wcs = (wchar_t*) R_alloc(strlen(str) + 1, sizeof(wchar_t));
+	memset(wcs, 0, sz);
+	mbstowcs(wcs, str, sz-1);
+	int i;
+	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
+	vmaxset(vmax);
+    } else {
+	const char *ch;
+	for (ch = str; *ch; ch++) storekey(c, (unsigned char) *ch);
+    }
+}
+
 static void storetab(control c)
 {
     ConsoleData p = getdata(c);
@@ -912,11 +942,12 @@ void set_completion_available(int x)
 static void performCompletion(control c)
 {
     ConsoleData p = getdata(c);
-    int i, alen, alen2, max_show = 10, cursor_position = CURCOL - prompt_wid;
+    int i, alen, max_show = 10, cursor_position = CURCOL - prompt_wid;
     wchar_t *partial_line = LINE(NUMLINES - 1) + prompt_wid;
     const char *additional_text;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
+    const void *vmax = NULL;
 
     if(!completion_available) {
 	storetab(c);
@@ -978,6 +1009,7 @@ static void performCompletion(control c)
     for(i = 0; i < length(cmdexpr); i++)
 	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
     UNPROTECT(2);
+    PROTECT(ans);
 
     /* ans has the form list(addition, possible), where 'addition' is
        unique additional text if any, and 'possible' is a character
@@ -990,9 +1022,10 @@ static void performCompletion(control c)
 #define ADDITION 0
 #define POSSIBLE 1
 
+    vmax = vmaxget();
     alen = length(VECTOR_ELT(ans, POSSIBLE));
-    additional_text = CHAR(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
-    alen2 = strlen(additional_text);
+    /* could translate directly to wchar_t */
+    additional_text = translateChar(STRING_ELT( VECTOR_ELT(ans, ADDITION), 0 ));
     if (alen) {
 	/* make a copy of the current string first */
 	wchar_t p1[wcslen(LINE(NUMLINES - 1)) + 1];
@@ -1005,16 +1038,16 @@ static void performCompletion(control c)
 
 	for (i = 0; i < min(alen, max_show); i++) {
             consolewrites(c, "\n");
-	    consolewrites(c, CHAR(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
+	    consolewrites(c, translateChar(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
 	}
 	if (alen > max_show)
 	    consolewrites(c, "\n[...truncated]");
 	consolewrites(c, "\n");
 	p->wipe_completion = 1;
     }
-
-    if (alen2)
-	for (i = 0; i < alen2; i++) storekey(c, additional_text[i]);
+    vmaxset(vmax);
+    UNPROTECT(1); /* ans */
+    storekeys(c, additional_text);
     return;
 }
 
@@ -1055,16 +1088,7 @@ void consolecmd(control c, const char *cmd)
     }
     storekey(c, BEGINLINE);
     storekey(c, KILLRESTOFLINE);
-    if(isUnicodeWindow(c)) {
-	size_t sz = (strlen(cmd) + 1) * sizeof(wchar_t);
-	wchar_t *wcs = (wchar_t*) R_alloc(strlen(cmd) + 1, sizeof(wchar_t));
-	memset(wcs, 0, sz);
-	mbstowcs(wcs, cmd, sz-1);
-	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
-    } else {
-	const char *ch;
-	for (ch = cmd; *ch; ch++) storekey(c, (unsigned char) *ch);
-    }
+    storekeys(c, cmd);
     storekey(c, '\n');
 /* if we are editing we save the actual line
    FIXME: not right if Unicode */
@@ -1726,6 +1750,10 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 {
     ConsoleData p = getdata(c);
 
+    if (p->cursor_blink == 2)
+	/* The caret may be visible via SetUpCaret flag (see newconsole) for
+	   startup. It needs to be hidden now to be protected agains redraw. */
+	showcaret(c, 0);
     wchar_t *cur_line, *P;
     wchar_t *aLine;
     int ns0 = NUMLINES, w0 = 0, pre_prompt_len;
@@ -1754,13 +1782,20 @@ int consolereads(control c, const char *prompt, char *buf, int len,
     max_pos = 0;
     cur_line = &aLine[prompt_len];
     cur_line[0] = L'\0';
-    showcaret(c, 1);
     REDRAW;
     for(;;) {
 	wchar_t cur_char;
 	char chtype; /* boolean */
 	p->input = 1;
+	/* The caret must not be shown when drawing, because it would
+	   be erased by redraws. We thus only show it when waiting for the
+	   keyboard input. REDRAW is also called when processing events,
+	   e.g. while the console window is loosing focus, so changing the
+	   caret visibility there was error prone. */
+	if (p->cursor_blink)
+	   showcaret(c, 1);
 	cur_char = consolegetc(c);
+	showcaret(c, 0);
 	p->input = 0;
 	chtype = ((unsigned int) cur_char > 0x1f);
 	if(NUMLINES != ns0) { /* we scrolled, e.g. cleared screen */
@@ -1871,7 +1906,6 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 		    if (max_pos && addtohistory) wgl_histadd(cur_line);
 		    xbuffixl(p->lbuf);
 		    consolewrites(c, "\n");
-		    showcaret(c, 0);
 		    REDRAW;
 		    return cur_char == EOFKEY;
 		}
@@ -1990,6 +2024,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
     pointsize = fnpoints;
     if (consolefn) del(consolefn);
     consolefn = NULL;
+    /* keep in step with applyGUI() in preferences.c */
     if (strcmp(fontname, "FixedFont")) {
 	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0, 1);
 	if (!consolefn) {
@@ -2219,6 +2254,14 @@ console newconsole(char *name, int flags)
 		       guiColors,
 		       CONSOLE, consolebuffered, consoleblink);
     if (!p) return NULL;
+    if (p->cursor_blink == 2)
+	/* Arrange for a dummy caret to be created when the new window
+	   gets focus. This is to help NVDA (screen reader) to choose
+	   a correct display model and correctly detect characters
+	   under the caret. After the first redraw, which will happen
+	   right away in consolereads, a correct caret will be set up
+	   and destroyed/restored when loosing/gaining focus. */
+	flags |= SetUpCaret;
     c = (console) newwindow(name, rect(consolex, consoley, WIDTH, HEIGHT),
 			    flags | TrackMouse | VScrollbar | HScrollbar);
     HEIGHT = getheight(c);

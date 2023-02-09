@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2021 R Core Team.
+ *      Copyright 2011-2022 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,9 @@
 
 #include "parallel.h"
 
-#include <sys/types.h>
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h> // for size_t
+#endif
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -275,7 +277,7 @@ static int rm_child(int pid)
 }
 
 /* delete entries for waited-for children and children that are not of this process */
-static void compact_children() {
+static void compact_children(void) {
     child_info_t *ci = children, *prev = NULL;
     pid_t ppid = getpid();
 
@@ -312,7 +314,7 @@ static void compact_children() {
 }
 
 /* insert a cleanup mark into children */
-SEXP mc_prepare_cleanup()
+SEXP mc_prepare_cleanup(void)
 {
     child_info_t *ci;
 
@@ -359,7 +361,7 @@ SEXP mc_prepare_cleanup()
      sKill = tools:SIGKILL, sDetach = TRUE, sShutdown = TRUE
        (clean_pids - finalizer on a private object in the package namespace)
 */
-static void restore_sig_handler();
+static void restore_sig_handler(void);
 
 SEXP mc_cleanup(SEXP sKill, SEXP sDetach, SEXP sShutdown)
 {
@@ -472,8 +474,10 @@ static void child_sig_handler(int sig)
 {
     if (sig == SIGUSR1) {
 #ifdef MC_DEBUG
+	int old_errno = errno;
 	Dprintf("child process %d got SIGUSR1; child_exit_status=%d\n", 
 		getpid(), child_exit_status);
+	errno = old_errno;
 #endif
 	child_can_exit = 1;
 	if (child_exit_status >= 0)
@@ -489,6 +493,7 @@ static int parent_handler_set = 0;
    all detached children, anyway, so it won't really help. */
 static void parent_sig_handler(int sig)
 {
+    int old_errno = errno;
     child_info_t *ci = children;
     while(ci) {
 	if (ci->detached && !ci->waitedfor)
@@ -497,9 +502,10 @@ static void parent_sig_handler(int sig)
     }
 
     /* TODO: chain to old sig handler */
+    errno = old_errno;
 }
 
-static void setup_sig_handler()
+static void setup_sig_handler(void)
 {
     if (!parent_handler_set) {
 	parent_handler_set = 1;
@@ -511,7 +517,7 @@ static void setup_sig_handler()
     }
 }
 
-static void restore_sig_handler()
+static void restore_sig_handler(void)
 {
     if (parent_handler_set) {
 	parent_handler_set = 0;
@@ -1082,7 +1088,7 @@ SEXP mc_rm_child(SEXP sPid)
     return ScalarLogical(rm_child(pid));
 }
 
-SEXP mc_children() 
+SEXP mc_children(void) 
 {
     child_info_t *ci = children;
     unsigned int count = 0;
@@ -1130,12 +1136,12 @@ SEXP mc_fds(SEXP sFdi)
 }
 
 /* not used */
-SEXP mc_master_fd() 
+SEXP mc_master_fd(void) 
 {
     return ScalarInteger(master_fd);
 }
 
-SEXP mc_is_child() 
+SEXP mc_is_child(void) 
 {
     return ScalarLogical(is_master ? FALSE : TRUE);
 }
@@ -1152,7 +1158,7 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
 
 extern int R_ignore_SIGPIPE; /* defined in src/main/main.c on unix */
 
-SEXP NORET mc_exit(SEXP sRes)
+NORET SEXP mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG

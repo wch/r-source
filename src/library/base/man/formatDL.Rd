@@ -50,6 +50,6 @@ formatDL(x, y, style = c("table", "list"),
 writeLines(formatDL(unlist(.Machine)))
 ## Inspect Sys.getenv() results in "list" style (by default, these are
 ## printed in "table" style):
-writeLines(formatDL(Sys.getenv(), style = "list"))
+\donttest{writeLines(formatDL(Sys.getenv(), style = "list"))}
 }
 \keyword{print}

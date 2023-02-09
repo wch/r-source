@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2020 The R Core Team
+ *  Copyright (C) 2015-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -233,12 +233,22 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
     if (verify) {
+#ifdef Win32
+	struct curl_tlssessioninfo *tls_backend_info = NULL;
+	CURLcode ret = curl_easy_getinfo(hnd, CURLINFO_TLS_SSL_PTR,
+	                                 &tls_backend_info);
+	if (!ret && tls_backend_info->backend == CURLSSLBACKEND_SCHANNEL) {
+	    capath = NULL;
+# if LIBCURL_VERSION_NUM >= 0x074600
+	    const char *rbe = getenv("R_LIBCURL_SSL_REVOKE_BEST_EFFORT");
+	    if (rbe && StringTrue(rbe)) 
+		curl_easy_setopt(hnd, CURLOPT_SSL_OPTIONS,
+				 CURLSSLOPT_REVOKE_BEST_EFFORT);
+# endif
+	}
+#endif
 	if (capath && capath[0])
 	    curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
-#ifdef Win32
-	else
-	    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
-#endif
     } else {
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -412,7 +422,6 @@ static void putdashes(int *pold, int new)
 }
 
 # ifdef Win32
-// ------- Windows progress bar -----------
 #include <ga.h>
 
 /* We could share this window with internet.c, then re-positioning
@@ -432,62 +441,19 @@ static void doneprogressbar(void *data)
     winprogressbar *pbar = data;
     hide(pbar->wprog);
 }
+# endif // Win32
 
 static
-int progress(void *clientp, double dltotal, double dlnow,
-	     double ultotal, double ulnow)
-{
-    static int factor = 1;
-    // we only use downloads.  dltotal may be zero.
-    if (dltotal > 0.) {
-	if (total == 0.) {
-	    total = dltotal;
-	    char *type = NULL;
-	    CURL *hnd = (CURL *) clientp;
-	    curl_easy_getinfo(hnd, CURLINFO_CONTENT_TYPE, &type);
-	    if (total > 1024.0*1024.0)
-		// might be longer than long, and is on 64-bit windows
-		REprintf(" length %0.0f bytes (%0.1f MB)\n",
-			 total, total/1024.0/1024.0);
-	    else if (total > 10240)
-		REprintf("Content length %d bytes (%d KB)\n",
-			 (int)total, (int)(total/1024));
-	    else
-		REprintf("Content length %d bytes\n", (int)total);
-	    R_FlushConsole();
-	    if(R_Interactive) {
-		if (total > 1e9) factor = total/1e6; else factor = 1;
-		setprogressbarrange(pbar.pb, 0, total/factor);
-		show(pbar.wprog);
-	    }
-	}
-	if (R_Interactive) {
-	    setprogressbar(pbar.pb, dlnow/factor);
-	    if (total > 0) {
-		static char pbuf[30];
-		int pc = 0.499 + 100.0*dlnow/total;
-		if (pc > pbar.pc) {
-		    snprintf(pbuf, 30, "%d%% downloaded", pc);
-		    settext(pbar.wprog, pbuf);
-		    pbar.pc = pc;
-		}
-	    }
-	} else putdashes(&ndashes, (int)(50*dlnow/total));
-    }
-    R_ProcessEvents();
-    return 0;
-}
-
-# else
-// ------- Unix-alike progress bar -----------
-
-static
-int progress(void *clientp, double dltotal, double dlnow,
-	     double ultotal, double ulnow)
+int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
+	     curl_off_t ultotal, curl_off_t ulnow)
 {
     CURL *hnd = (CURL *) clientp;
     long status;
     curl_easy_getinfo(hnd, CURLINFO_RESPONSE_CODE, &status);
+
+# ifdef Win32
+    static int factor = 1;
+# endif
 
     // we only use downloads.  dltotal may be zero.
     if ((status < 300) && (dltotal > 0.)) {
@@ -505,13 +471,38 @@ int progress(void *clientp, double dltotal, double dlnow,
 			 (int)total, (int)(total/1024));
 	    else
 		REprintf(" length %d bytes\n", (int)total);
+# ifdef Win32
+	    R_FlushConsole();
+	    if(R_Interactive) {
+		if (total > 1e9) factor = total/1e6; else factor = 1;
+		setprogressbarrange(pbar.pb, 0, total/factor);
+		show(pbar.wprog);
+	    }
+	}
+	if (R_Interactive) {
+	    setprogressbar(pbar.pb, 1.0*dlnow/factor);
+	    if (total > 0) {
+		static char pbuf[30];
+		int pc = 0.499 + 100.0*dlnow/total;
+		if (pc > pbar.pc) {
+		    snprintf(pbuf, 30, "%d%% downloaded", pc);
+		    settext(pbar.wprog, pbuf);
+		    pbar.pc = pc;
+		}
+	    }
+	} else putdashes(&ndashes, (int)(50.0*dlnow/total));
+    }
+    R_ProcessEvents();
+    return 0;
+# else
+
 	    if (R_Consolefile) fflush(R_Consolefile);
 	}
-	putdashes(&ndashes, (int)(50*dlnow/total));
+	putdashes(&ndashes, (int)(50.0*dlnow/total));
     }
     return 0;
+# endif
 }
-# endif // Win32
 #endif // HAVE_LIBCURL
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
@@ -642,9 +633,9 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 		pbar.cntxt.cenddata = &pbar;
 	    }
 #endif
-	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
-	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
-	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
+	    // For libcurl >= 7.32.0
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFOFUNCTION, progress);
+	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFODATA, hnd[i]);
 	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 
 	/* This would allow the negotiation of compressed HTTP transfers,
@@ -698,17 +689,27 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nurls == 1) {
 	long status;
 	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);
-	double cl, dl;
+	// new interface in libcurl >= 7.55.0
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_off_t cl, dl;
+	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
+	double cl ,dl;
 	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	if (!quiet && status == 200) {
 	    if (dl > 1024*1024)
 		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
 	    else if (dl > 10240)
-		REprintf("downloaded %d KB\n\n", (int) dl/1024);
+		REprintf("downloaded %d KB\n\n", (int) (dl/1024.0));
 	    else
 		REprintf("downloaded %d bytes\n\n", (int) dl);
 	}
+#if LIBCURL_VERSION_NUM >= 0x073700
+	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD_T, &cl);
+#else
 	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
+#endif
 	if (cl >= 0 && dl != cl)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
@@ -719,8 +720,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
 	    fclose(out[i]);
+#if LIBCURL_VERSION_NUM >= 0x073700
+	    curl_off_t dl;
+	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD_T, &dl);
+#else
 	    double dl;
 	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
+#endif
 	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
 	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))

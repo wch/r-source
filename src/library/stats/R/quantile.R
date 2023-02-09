@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -100,6 +100,7 @@ quantile.default <-
             if(any(other)) qs[other] <- ((1-h)*x[j+2L] + h*x[j+3L])[other]
         }
     }
+    qs[!p.ok] <- probs[!p.ok] # propagate NAs and NaNs
     if(is.character(lx))
         qs <- factor(qs, levels = seq_along(lx), labels = lx, ordered = TRUE)
     if(names && np > 0L) {

@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -17,7 +17,7 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'",
            dec = ".", numerals = c("allow.loss", "warn.loss", "no.loss"),
-           row.names, col.names, as.is = !stringsAsFactors,
+           row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,
            na.strings = "NA", colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
@@ -116,11 +116,16 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     columns to be skipped.
   }
 
+  \item{tryLogical}{a \code{\link{logical}} determining if columns
+    consisting entirely of \code{"F"}, \code{"T"}, \code{"FALSE"}, and
+    \code{"TRUE"} should be converted to \code{\link{logical}}; passed to
+    \code{\link{type.convert}}, true by default.}
+
   \item{na.strings}{a character vector of strings which are to be
     interpreted as \code{\link{NA}} values.  Blank fields are also
     considered to be missing values in logical, integer, numeric and
-    complex fields.  Note that the test happens \emph{after} 
-    white space is stripped from the input, so \code{na.strings} 
+    complex fields.  Note that the test happens \emph{after}
+    white space is stripped from the input, so \code{na.strings}
     values may need their own white space stripped in advance.}
 
   \item{colClasses}{character.  A vector of classes to be assumed for
@@ -172,7 +177,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     \samp{\\n} be processed or read verbatim (the default)?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
     as a comment character).  For more details see \code{\link{scan}}.}
-
+ 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
     This allows putting comments after the last field.}
@@ -326,7 +331,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   reading files which result in reports of incorrect record lengths (see
   the \sQuote{Examples} below).
 
-  \url{https://tools.ietf.org/html/rfc4180} for the IANA definition of
+  \url{https://www.rfc-editor.org/rfc/rfc4180} for the IANA definition of
   CSV files (which requires comma as separator and CRLF line endings).
 }
 

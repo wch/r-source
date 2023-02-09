@@ -648,7 +648,7 @@ install.packages <-
     env <- character()
 
     tlim <- Sys.getenv("_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_")
-    tlim <- if(is.na(tlim)) 0 else tools:::get_timeout(tlim)
+    tlim <- if(!nzchar(tlim)) 0 else tools:::get_timeout(tlim)
 
     outdir <- getwd()
     if(is.logical(keep_outputs)) {
@@ -792,7 +792,14 @@ install.packages <-
         if (Ncpus > 1L && nrow(update) > 1L) {
             tlim_cmd <- character()
             if(tlim > 0) {
-                if(nzchar(timeout <- Sys.which("timeout"))) {
+                if(.Platform$OS.type == "windows" &&
+                   !nzchar(Sys.getenv("R_TIMEOUT")) &&
+                   grepl("\\windows\\system32\\", tolower(Sys.which("timeout")),
+                         fixed=TRUE)) {
+
+                    warning("Windows default 'timeout' command is not usable for parallel installs")
+
+                } else if(nzchar(timeout <- Sys.which(Sys.getenv("R_TIMEOUT", "timeout")))) {
                     ## SIGINT works better and is used for system.
                     tlim_cmd <- c(shQuote(timeout), "-s INT", tlim)
                 } else
@@ -864,9 +871,21 @@ install.packages <-
                 tss <- sub("[.]ts$", "", dir(".", pattern = "[.]ts$"))
                 failed <- pkgs[!pkgs %in% tss]
 		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
-                warning(gettextf("installation of one or more packages failed,\n  probably %s",
-                                 paste(sQuote(failed), collapse = ", ")),
-                        domain = NA)
+                n <- length(failed)
+                if (n == 1L)
+                    warning(gettextf("installation of package %s failed",
+                                     sQuote(failed)), domain = NA)
+                else if (n > 1L) {
+                    msg <- paste(sQuote(failed), collapse = ", ")
+                    if(nchar(msg) < 40)
+                        warning(gettextf( "installation of %d packages failed:  %s",
+                                         n, msg),
+                                domain = NA)
+                    else
+                        warning(gettextf( "installation of %d packages failed:\n  %s",
+                                         n, msg),
+                                domain = NA)
+                     }
             }
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)

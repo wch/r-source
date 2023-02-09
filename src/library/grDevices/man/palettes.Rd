@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/palettes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Palettes}
@@ -36,7 +36,7 @@ cm.colors(n, alpha, rev = FALSE)
   \item{alpha}{an alpha-transparency level in the range [0,1]
     (0 means transparent and 1 means opaque), see argument
     \code{alpha} in \code{\link{hsv}} and \code{\link{hcl}}, respectively.\cr
-    Since \R 4.0.0, a \code{\link{missing}}, i.e., not explicitly specified
+    A \code{\link{missing}}, i.e., not explicitly specified
     \code{alpha} is equivalent to \code{alpha = NULL}, which does \emph{not}
     add opacity codes (\code{"FF"}) to the individual color hex codes.}
   \item{rev}{logical indicating whether the ordering of the colors should

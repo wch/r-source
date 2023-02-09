@@ -66,6 +66,7 @@
 \alias{.find.package}
 \alias{.path.package}
 \alias{unix.time}
+\alias{default.stringsAsFactors}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -161,6 +162,9 @@ is.real(x)
 
 # Defunct in 4.2.0
 unix.time(\dots)  ### -- use  system.time(...)  instead
+
+# Defunct in 4.3.0
+default.stringsAsFactors() # use stringsAsFactors = FALSE instead.
 }
 \details{
   Some of these have stubs which report that they are defunct, but most

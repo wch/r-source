@@ -59,7 +59,7 @@ MkRules: MkRules.rules
 endif
 
 CFLAGS = -O3 -Wall -pedantic $(EOPTS) $(LTO)
-FFLAGS = -O3 $(EOPTS) $(GF7OPTS) $(LTO)
+FFLAGS = -O3 $(EOPTS) $(LTO)
 
 ifdef DEBUG
  CFLAGS += $(G_FLAG)
@@ -90,7 +90,7 @@ EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/tre/libtre.a
 
 R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp \
-  -lRiconv -lcomctl32 -lwinmm -lversion $(LIBEXTRAS)
+  -lRiconv -lcomctl32 -lole32 -luuid -lwinmm -lversion $(LIBEXTRAS)
 
 
 .PHONY:  clean veryclean rlibs fixfiles front-ends rmodules
@@ -314,7 +314,6 @@ distclean: cleaninstaller distcleaninstaller clean0
 	done
 	$(RM) ../../SVN-REVISION.bak
 	$(RM) ../../doc/manual/rw-FAQ
-	$(MAKE) -C cran clean
 	$(RM) -R ../library/.vignettes # it gets left behind if there is an error
 	$(RM) -R ../../share/locale # relic of earlier versions
 	$(RM) MkRules Rpwd.exe # do this last of all
@@ -386,14 +385,6 @@ bytecode-recommended:
 	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  $(MK) -C ../library/Recommended -f Makefile.win
 
-RVER-MAJOR-MINOR = $(shell echo `cut -d'.' -f1,2 ../../VERSION`)
-CRANEXT = cran.r-project.org::CRAN/bin/windows/extsoft/$(RVER-MAJOR-MINOR)/
-
-rsync-extsoft:
-	($(MKDIR) -p ../../extsoft; \
-	cd ../../extsoft; \
-	rsync --timeout=60 -rcvp --delete $(CRANEXT) . ) 
-
 
 docfiles:
 	@$(MK) -C ../../doc/manual -f Makefile.win FAQ
@@ -404,11 +395,6 @@ rinstaller:
 	@$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
 	@$(MAKE) -C installer clean
 
-crandir:
-ifeq "$(WIN)" "64"
-	$(MAKE) -C cran all
-endif
-
 distribution:
 	@$(MK) all
 	@$(MK) cairodevices
@@ -416,14 +402,7 @@ distribution:
 	@$(MK) vignettes
 	@$(MK) manuals
 	@$(MK) rinstaller
-	@$(MK) crandir
 	@$(RM) -f ../../SVN-REVISION.bak
-
-## Builds what is needed in a 32-bit build to copy to 64/32-bit installer
-32-bit:
-	@$(MK) all
-	@$(MK) cairodevices
-	@$(MK) recommended
 
 
 ## ============= End of maintainer targets ========================

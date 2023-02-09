@@ -147,16 +147,21 @@ if(!dir.exists(pkgPath))  {
 dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
            showWarnings = FALSE)
 ## (how can this happen reliably more easily?)
-##' Copy directory d1 to (new/cleaned directory location) d2
+##' Copy directory d1 to  *(newly created |cleaned)* directory d2 -- also with*in* same directory
 ##'     "cp -a d1/ d2/"
 dirCopy <- function(d1, d2) {
     stopifnot(exprs = {
+        length(d1) == length(d2) ; length(d1) == 1L
         dir.exists(d1)
-        dir.exists(dirname(d2))
+        dir.exists(D2 <- dirname(d2)) || dir.create(D2, recursive=TRUE)
         !dir.exists(d2) || unlink(d2, recursive=TRUE) == 0
-        dir.create(d2)
-        file.copy(list.files(d1, full.names = TRUE, recursive = TRUE),
-                  d2)
+        ## unbelievable contortion just so it works within the *same* directory  (really ??)
+        ## 1. copy to *other dir* :
+        dir.create(tD <- tempfile("dirCp"))
+        file.copy(d1, tD, recursive = TRUE)
+        ## 2. correctly "rename" ( i.e., *move*) to "this" dir:
+        file.rename(file.path(tD, basename(d1)),
+                    file.path(D2, basename(d2)))
     })
 }
 ##
@@ -171,20 +176,39 @@ if(okB2 <- file.exists(DN <- file.path(pB2p, "DESCRIPTION"))) {
 }
 if(okB3 <- file.exists(DN <- file.path(pB3p, "DESCRIPTION"))) {
   Dlns <- readLines(DN); i <- grep("^Imports:", Dlns)
-  ## Only keep the first 'Imports: '  (and replace [Pp]kgB by [Pp]kgB2):
+  ## Only keep the first 'Imports: '  (and replace [Pp]kgB by [Pp]kgB3):
   Dlns[i] <- sub(",.*", "", Dlns[i])
   writeLines(gsub("kgB", "kgB3", Dlns), con = DN)
 }
+## PR17859.3 := PR17859.2, but with missing '}' in <pkg>/R/f3.3 :
+pP2 <- file.path(pkgPath, "PR17859.2"); f2nm <- file.path(pP2, "R", "f3.R")
+pP3 <- file.path(pkgPath, "PR17859.3"); f3nm <- file.path(pP3, "R", "f3.R")
+dirCopy(pP2, pP3); DN <- "DESCRIPTION" # --> fix up pkg name
+writeLines(sub("^(Package: .*)\\.2$", "\\1.3", readLines(file.path(pP2, DN))),
+           file.path(pP3, DN))
+f3lns <- f2lns <- readLines(f2nm)
+iBrace <- grep("closing brace", f2lns, fixed=TRUE)
+(f3lns[iBrace] <- sub("^", "#> ", f2lns[iBrace]))
+(writeLines(f3lns, f3nm))
+p.fails <- paste0("PR17859.", 1:3)
+io859 <- c("--no-help", "--no-test-load", "--no-byte-compile")
+InstOpts <- list("exSexpr" = "--html")
+for(p in p.fails) InstOpts <- c(InstOpts, `names<-`(list(io859), p))
 p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
                c("pkgA", "pkgB", if(okB2) "pkgB2", if(okB3) "pkgB3", "pkgC"),
            "PR17501",
+           p.fails,
            "exNSS4", "exNSS4nil", "exSexpr")
 p.lis; (pBlis <- grep("^pkgB", p.lis, value=TRUE))
-InstOpts <- list("exSexpr" = "--html")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
+    # on Windows, 'pkgA' may end up being a text file with a single line
+    # with a note it is meant to be a link to xDir/pkg
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
-    file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
+    unlink(d, recursive=TRUE)
+    dir.create(d) # ensure it is a single existing directory
+    pkgdir <- file.path(pkgPath, "xDir", "pkg")
+    file.copy(file.path(pkgdir, list.files(pkgdir)), to = d, recursive=TRUE)
     ## if even the copy failed (NB: pkgB, pkgC depend on pkgA)
     if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", pBlis, "pkgC"))]
 }
@@ -199,7 +223,7 @@ for(p in p.lis) {
     p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
     cat("===--===\nFrom pkgPath sub directory", p, " building package", p., "...\n")
     pkgP <- file.path(pkgPath, p)
-    r <- build.pkg(pkgP, ignore.stderr = (p != "exSexpr"))
+    r <- build.pkg(pkgP, ignore.stderr = (p != "exSexpr")) # 1-2 sec
     showProc.time()
     if(!length(r)) # so some sort of failure, show log
         cat(attr(r, "log3"), sep = "\n")
@@ -223,6 +247,32 @@ for(p in p.lis) {
                  })
                )
         showProc.time()
+    } else if(p %in% p.fails) {
+        ## NB: Fail with *parse* errors which are *not* tryCatch-able ==> need to call R
+        ## tryCatch(error = identity,
+        ##          install.packages(r, lib = "myLib", repos=NULL, type = "source",
+        ##                           INSTALL_opts = InstOpts[[p.]])) -> err
+        ## cat("tryCatch gave "); dput(err)
+        ## stopifnot(inherits(err, "error"))
+        ## FIXME: do a bit more
+        tf <- tempfile(paste0("regP-inst_",p))
+        status <- tools:::run_Rcmd(c("INSTALL", r, InstOpts[[p.]]),
+                                   out=tf, timeout = 10)
+        writeLines(errlns <- readLines(tf))
+        stopifnot(exprs = {
+            status > 0 # see status == 1L
+            length(iE <- grep("Error in parse(", errlns, fixed=TRUE)) > 0
+            local({
+                parseM1 <- "(syntax error|unexpected symbol)"       # may depend on bison version
+                parseM2 <- "(syntax error|unexpected end of input)" #   (ditto)
+                switch(p
+                 , "PR17859.1" = grepl(paste0(p, "/R/f2.R:3:[0-9]+: ", parseM1), errlns[iE+1])
+                 , "PR17859.2" =
+                 , "PR17859.3" = grepl(paste0(p, "/R/f2.R:6:0: ",      parseM2), errlns[iE+1])
+                 , stop("invalid package p=",  p))
+            })
+        })
+        next # pkg in for(...)
     }
     ## otherwise install the tar file:
     cat("installing package", p., "using built file", r, "...\n")
@@ -236,7 +286,7 @@ for(p in p.lis) {
 }
 cat("\n-------------------end { for(p in p.lis) }----------------------------\n")
 (res <- installed.packages(lib.loc = "myLib", priority = "NA"))
-(p.lis <- dir2pkg(p.lis)) # so from now, it contains package names
+(p.lis <- dir2pkg(setdiff(p.lis, p.fails))) # --> *package* names of installed pkgs
 stopifnot(exprs = {
     identical(res[,"Package"], setNames(, sort(c(p.lis, "myTst"))))
     res[,"LibPath"] == "myLib"
@@ -260,7 +310,8 @@ stopifnot(exprs = {
     (lenN <- length(print(iN <- grep("^[1-9][0-9]:", tlines)))) >= 2
     iN - iw == seq_len(lenN) # these (3) lines come immediately after 'Warning',
     ## and "related" to the some 'missing .. paren' above:
-    8 <= print(iw - i) & iw - i <= 20 # see ~14
+    !is.na(ierr <- as.integer(substr(print(tlines[iN[1]]), 1, 2)))
+    8 <= print(ierr - i) & ierr - i <= 14 # see 11
 }) ## failed in R <= 4.1.1
 
 
@@ -305,9 +356,13 @@ if(okA) {
   Dlns <- readLines(DN); i <- grep("^LazyData:", Dlns)
   Dlns[i] <- paste0(Dlns[i], ",") ## adding a ","
   writeLines(Dlns, con = DN)
+  ## do not test installation failure in myLib as previous pkgA would be removed
+  ## from there (because no.q=TRUE causes do_exit_on_error() to be called twice)
+  ## and if getNamespaceInfo("pkgA", "path") no longer exists,
+  ## sessionInfo() fails in the "exSexpr" test below
   instEXPR <- quote(
-      tools:::.install_packages(c("--clean", "--library=myLib", pkgApath), no.q = TRUE)
-  )   ##      -----------------                                 ----
+      tools:::.install_packages(c("--clean", paste0("--library=", tempdir()), pkgApath), no.q = TRUE)
+  )   ##      -----------------                                               ----
   if(interactive()) { ## << "FIXME!"  This (sink(.) ..) fails, when run via 'make'.
     ## install.packages() should give "the correct" error but we cannot catch it
     ## One level lower is not much better, needing sink() as capture.output() fails
@@ -491,8 +546,8 @@ checkMatrix(ap, 4)
 
 
 ## clean up
-rmL <- c("myLib", if(has.symlink) "myLib_2", "myTst", file.path(pkgPath),
-         oldpkgdir, newpkgdir, repodir, backupPfiles)
+rmL <- c("myLib", if(has.symlink) "myLib_2", "myTst", "myTst2",
+         "PR17501.Rcheck")
 if(do.cleanup) {
     for(nm in rmL) unlink(nm, recursive = TRUE)
 } else {

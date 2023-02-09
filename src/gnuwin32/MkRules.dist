@@ -4,8 +4,8 @@
 ## etc/*/Makeconf: see fixed/Makefile
 
 ## Customize by copying to MkRules.local and uncommenting and editing 
-## some of the definitions there. The values are tailored to Rtools42, the
-## currently recommented toolchain using gcc 10.3, MinGW-w64 9, 64-bit only,
+## some of the definitions there. The values are tailored to Rtools43, the
+## currently recommented toolchain using gcc 12.2, MinGW-w64 10, 64-bit only,
 ## UCRT. R is only intended to be built for 64-bit UCRT as of R 4.2. 
 
 ## =========== configuration macros for building packages ================
@@ -32,7 +32,7 @@
 # collection via LOCAL_SOFT, so LOCAL_SOFT is set up by default to also
 # point to the Rtools software. This may be changed in the future.
 #
-# To build R from source with Rtools42 (installed from installer as well as
+# To build R from source with Rtools43 (installed from installer as well as
 # tarball), gcc has to be on PATH and LOCAL_SOFT can be computed as follows:
 #
 # LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
@@ -41,7 +41,6 @@
 
 # Path of library directory containing zlib, bzlib, liblzma, pcre,
 # libpng, libjpeg, libtiff, xz.
-# Use 'make rsync-extsoft' to populate the default directory.
 # EXT_LIBS = $(LOCAL_SOFT)
 
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
@@ -64,21 +63,12 @@
 # TOOL_PATH =
 # for other toolchains leave these empty and set the more detailed options below
 
-# With the previously recommended gcc 8.3.0 toolchain, set
-# BINPREF and BINPREF64 (below) to the respective bin directories.  
-# Include the trailing /, and use / not \.
-# Do this in the more detailed options below
-# Set this to 32 or 64 (in previously recommended toolchains)
-# WIN = 64
-
 
 ### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
 # including a trailing / .  
 # BINPREF = 
-# prefix for 64-bit:
-# BINPREF64 =
 # Set this to indicate a non-gcc compiler and version
 # COMPILED_BY = <determined automatically>
 
@@ -90,9 +80,6 @@
 # RC_ARCH =
 # and for dlltool ("-m i386 --as-flags --32" vs "-m i386:x86-64 --as-flags --64")
 # DT_ARCH =
-
-# 32- or 64-bit Windows?
-# WIN = 32
 
 # The gcc 4.9.3 64 bit toolchain is set up for the 'medium code' model and needs
 # to remove the .refptr and .weak entries from the exports list; this is the default
@@ -118,17 +105,10 @@
 # USE_LIBCURL = YES
 # path to parent of libcurl headers
 # CURL_PATH =
-# libs: for 32-bit (previously recommended toolchain)
-# CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm -lidn
-# libs: for 64-bit (previously recommended toolchain)
-# CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm
 # libs: currently recommended gcc 10.3 64-bit toolchain
 # CURL_LIBS=-lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
 
-# For the cairographics devices, with the previously recommended toolchains
-# one would optionally use a static build of cairographics from
-# https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
-#
+# For the cairographics devices:
 # set to build cairo devices in "cairodevices" or "distribution" targets
 # (they are not built in "all" even if this is set)
 # USE_CAIRO = YES
@@ -174,9 +154,6 @@
 #   should no longer be needed for newer versions of GCC and the recommended
 #   gcc 10.3 toolchain)
 #
-# See MkRules.rules where -fno-optimize-sibling-calls is optionally added to
-# work around issues with gfortran/legacy calls from C.
-#
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
@@ -198,9 +175,6 @@
 
 # optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.
 # QPDF =
-
-# home of 32-bit files for combined installer on 64-bit build
-# HOME32 =
 
 # Full paths of extra DLLs that need to be shipped
 # e.g

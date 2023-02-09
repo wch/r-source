@@ -56,7 +56,7 @@ besselY(x, nu)
 }
 \source{
   The C code is a translation of Fortran routines from
-  \url{https://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
+  \url{https://netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
   The four source code files for bessel[IJKY] each contain a paragraph
   \dQuote{Acknowledgement} and \dQuote{References}, a short summary of
   which is

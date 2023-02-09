@@ -72,11 +72,11 @@ export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        SSasympOff, SSasympOrig, SSbiexp, SSfol, SSfpl, SSgompertz,
        SSlogis, SSmicmen, SSweibull, start, stat.anova, step, stepfun,
        stl, StructTS, summary.manova, supsmu, symnum, termplot, terms,
-       time, toeplitz, ts, ts.intersect, ts.plot, ts.union, tsdiag,
+       time, toeplitz, toeplitz2, ts, ts.intersect, ts.plot, ts.union, tsdiag,
        tsp, "tsp<-", tsSmooth, TukeyHSD, uniroot, update, var,
        variable.names, varimax, .vcov.aliased, vcov, weighted.mean,
        weighted.residuals, weights, window, "window<-", write.ftable,
-       xtabs, pbirthday, qbirthday)
+       xtabs, pbirthday, qbirthday, psmirnov, qsmirnov, rsmirnov)
 
 ## from ctest
 export(ansari.test, bartlett.test, binom.test, chisq.test, cor.test,

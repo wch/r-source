@@ -1,6 +1,6 @@
 % File src/library/base/man/round.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{round.POSIXt}
@@ -8,7 +8,7 @@
 \alias{trunc.POSIXt}
 \alias{round.Date}
 \alias{trunc.Date}
-\title{Round / Truncate Data-Time Objects}
+\title{Round / Truncate Date-Time Objects}
 \description{
   Round or truncate date-time objects.
 }
@@ -20,11 +20,13 @@
       \dots)
 
 \method{round}{Date}(x, \dots)
-\method{trunc}{Date}(x, \dots)
+\method{trunc}{Date}(x,
+      units = c("secs", "mins", "hours", "days", "months", "years"),
+      \dots)
 }
 \arguments{
-  \item{x}{an object inheriting from \code{"POSIXt"} or \code{"Date"}.}
-  \item{units}{one of the units listed.  Can be abbreviated.}
+  \item{x}{an object inheriting from \code{"\link{POSIXt}"} or \code{"\link{Date}"}.}
+  \item{units}{one of the units listed, a string.  Can be abbreviated.}
   \item{\dots}{arguments to be passed to or from other methods, notably
     \code{digits} for \code{round}.}
 }
@@ -33,7 +35,8 @@
   month or year.  Time zones are only relevant to days or more, when
   midnight in the current \link{time zone} is used.
 
-  The methods for class \code{"Date"} are of little use except to remove
+  For \code{units} arguments besides \dQuote{months} and \dQuote{years},
+  the methods for class \code{"Date"} are of little use except to remove
   fractional days.
 }
 \value{
@@ -47,6 +50,17 @@
 
 \examples{
 round(.leap.seconds + 1000, "hour")
-\donttest{trunc(Sys.time(), "day")}
+## IGNORE_RDIFF_BEGIN
+         trunc(Sys.time(), "day")
+(timM <- trunc(Sys.time() -> St, "months")) # shows timezone
+(datM <- trunc(Sys.Date() -> Sd, "months"))
+(timY <- trunc(St, "years")) # + timezone
+(datY <- trunc(Sd, "years"))
+## IGNORE_RDIFF_END
+stopifnot(inherits(datM, "Date"), inherits(timM, "POSIXt"),
+          substring(format(datM), 9,10) == "01", # first of month
+          substring(format(datY), 6,10) == "01-01", # Jan 1
+          identical(format(datM), format(timM)),
+          identical(format(datY), format(timY)))
 }
 \keyword{chron}

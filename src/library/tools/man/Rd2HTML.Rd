@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2020 R Core Team
+% Copyright 2008-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -19,7 +19,12 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
-        stylesheet = "R.css", ...)
+        stylesheet = if (dynamic) "/doc/html/R.css" else "R.css",
+        texmath = getOption("help.htmlmath"),
+        concordance = FALSE,
+        standalone = TRUE,
+        Rhtml = FALSE,
+        ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "",
@@ -27,7 +32,8 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          stages = "render", outputEncoding = "UTF-8",
-         fragment = FALSE, ..., writeEncoding = TRUE)
+         fragment = FALSE, ..., writeEncoding = TRUE,
+         concordance = FALSE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8",
@@ -52,6 +58,24 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       notes below.}
   \item{stylesheet}{character: a URL for a stylesheet to be used in the header
       of the HTML output page.}
+  \item{texmath}{character: controls how mathematics in \verb{\eqn} and
+      \verb{\deqn} commands are typeset in HTML output. Useful values
+      are \code{"katex"} (default) and \code{"mathjax"} to use
+      \href{https://katex.org/}{KaTeX} or
+      \href{https://www.mathjax.org/}{MathJax} respectively, otherwise
+      basic substitutions are used. May be ignored under certain
+      circumstances, e.g., if the help page already uses macros from the
+      \code{\link[mathjaxr]{mathjaxr}} package.
+    }
+  \item{concordance}{Whether concordance data should be embedded in the
+    output file and attached to the return value.}
+  \item{standalone}{logical: whether the output is intended to be a
+    standalone HTML file. If \code{FALSE}, the header and footer are
+    omitted, so that the output can be combined with other fragments.
+  }
+  \item{Rhtml}{logical: whether the output is intended to be a Rhtml
+      file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
+      examples section is wrapped inside a \code{rcode} block. }
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to
@@ -87,12 +111,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   the rendering in versions of \R < 2.10.0.
 
   \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
-  if option \code{"useFancyQuotes"} is true (the default) and
+  if option \code{"useFancyQuotes"} is true (usually the default,
+  see \code{\link{sQuote}}) and
 #ifdef unix
   the current encoding is UTF-8.
 #endif
 #ifdef windows
-  the current locale uses a single-byte encoding (except C).
+  the current encoding is UTF-8 or a single-byte encoding (except C).
   (Directional quotes are not attempted in East Asian locales as they are
   usually double-width, which looks wrong with English text.)
 #endif
@@ -126,7 +151,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 }
 
 \note{
-  The \verb{\Sexpr} macro is a new addition to Rd files.  It includes
+  The \verb{\Sexpr} macro includes
   \R code that will be executed at one of three times: \emph{build} time
   (when a package's source code is built into a tarball),
   \emph{install} time (when the package is installed or
@@ -150,6 +175,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   file (invisibly).  For \code{Rd2latex}, the output name is given an
   attribute \code{"latexEncoding"} giving the encoding of the file in a
   form suitable for use with the LaTeX \samp{inputenc} package.
+  
+For \code{Rd2HTML} and \code{Rd2latex} with \code{concordance = TRUE}, a 
+\code{"concordance"} attribute is added, containing an
+\code{\link{Rconcordance}} object.
 }
 \author{
   Duncan Murdoch, Brian Ripley
@@ -157,7 +186,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \references{ \url{https://developer.r-project.org/parseRd.pdf} }
 \seealso{
   \code{\link{parse_Rd}}, \code{\link{checkRd}},
-  \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}}.
+  \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}},
+  \code{\link{matchConcordance}}.
 }
 \examples{\donttest{
 

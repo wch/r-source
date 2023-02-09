@@ -43,6 +43,7 @@
 ## To override this choice, specify the name or path of the command
 ## which runs the compiler, for example 'c99'.
 ## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## CC=
 
 ## Debugging and optimization options for the C compiler.
@@ -53,6 +54,35 @@
 ## Be wary of aggressive settings such as -ffast-math, -Ofast and
 ## -Werror (which is likely to cause configure to fail).
 ## CFLAGS=
+
+## Ditto for a compiler that supports C17 features and not C23 ones.
+## For example, 'CC17=gcc -std=gnu17', omit -Wstrict-prototypes from C17FLAGS.
+## With LLCM clang may even want -Wno-strict-prototypes.
+## It is assumed that this uses the same runtime library as CC, so the
+## latter can be used to link the code it generates.
+## Default to CC and CFLAGS with any -std options removed, then
+## -std=gmu117 appended to CC.
+## If your compiler is so old as to not support C17, select C11 or even C99
+## by e.g. 'CC17=gcc -std=gnu11'
+## CC17=
+## C17FLAGS=
+
+## Ditto for a compiler that supports C23 features.
+## For example 'CC23=clang-15 -std=gnu2x'
+## Eventually -std=gnu23 will be supported and preferred.
+## Default to CC and CFLAGS with any -std options removed, then
+## -std=gmu2x appended to CC.
+## CC23=
+## C23FLAGS=
+
+## Ditto for a compiler that follows the C90 or C99 standard.
+## For example 'CC99=gcc -std=gnu99'
+### Default to CC and CFLAGS with any -std options removed, then
+## -std=gmu90 or gnu99 appended to CC.
+## CC90=
+## C90FLAGS=
+## CC99=
+## C99FLAGS=
 
 ## Defines for C compilation.
 ## Use this to specify defines to be used in the compilation of R,
@@ -73,6 +103,7 @@
 
 ## The command which runs the Fortran compiler.
 ## Used for both fixed-form and free-form Fortran
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## FC=
 
 ## Options for the Fortran compiler.
@@ -132,6 +163,12 @@
 ## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
+## The following variable can be used to provide any PIE flags for the
+## Fortran compiler.  Currently only needed when using gfortran on
+## Linux in conjuunction with a default build of clang 15 where it needs
+## to be set to -fPIE: configure tries that value if unset.
+## FPIEFLAGS=
+
 ## The command to be used to create shared objects which contain object
 ## files from a C or Fortran compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
@@ -169,6 +206,7 @@
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
 ## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
 ## names (from autoconf).
+## If this is a wrappwr it should pass on --version to the real compiler.
 ## CXX=
 
 ## Options for the C++ compiler.
@@ -317,6 +355,24 @@
 ## SHLIB_CXX20LD=
 ## SHLIB_CXX20LDFLAGS=
 
+## C++23 compiler, optional for use in packages.
+## Introduced in R 4.3.0
+## The command which runs the C++23 compiler: defaults to $(CXX17), but
+## empty if that (plus standard) cannot compile the tested C++23 code.
+## CXX23=
+
+## The 'standard' for the C++23 compiler, which is invoked as
+## $(CXX23) $(CXX23STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++23' and '-std=gnu++2a" are tried by configure, also
+## '-std=c++23' and '-std=c++2a"
+## CXX23STD=
+
+## Analogues for the C++23 compiler: default to the settings for C++17
+## CXX23FLAGS=
+## CXX23PICFLAGS=
+## SHLIB_CXX23LD=
+## SHLIB_CXX23LDFLAGS=
+
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
@@ -348,7 +404,7 @@
 ## The configure code is conservative about enabling OpenMP 
 ## so use can be forced here (or non-use if set but empty).
 ## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
-## necessarily for CXX11/14/17/20).
+## necessarily for CXX11/14/17/20/23).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
 ## SHLIB_OPENMP_FFLAGS=
@@ -370,11 +426,13 @@
 ## F_VISIBILITY=
 
 ## Fortran-C compatibility
-## The C type used by Fortran to pass 'hidden' character lengths (if any)
+## The C type used (if any) by Fortran to pass 'hidden' character lengths.
 ## Often size_t (unsigned int or long, or long long in Win64)
+## configure tests if size_t works (which it does on gfortran < 8
+##   where int is used).
 ## Allow user to override the configure checks if they know what they
-## are doing (the value is unchecked).
-## FC_LEN_T=
+##   are doing (the value is unchecked).  Empty values are ignored.
+## FC_LEN_T=size_t
 
 ## C Stack Direction
 ## In case optimization defeats the configure test: 'down' (the usual) or 'up'

@@ -49,6 +49,7 @@
  IS_SPECIAL_SYMBOL
  InitDynload
  InitParser
+ Init_R_Machine
  Init_R_Variables
  LOCK_BINDING
  LoadInitFile
@@ -73,6 +74,7 @@
  R_ConsoleIob
  R_CurrentExpr
  R_Decode2Long
+ R_DefCallbacks
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol
@@ -255,6 +257,8 @@
  R_warn_partial_match_args
  R_warn_partial_match_attr
  R_warn_partial_match_dollar
+ R_wfixbackslash
+ R_wfixslash
  R_wfopen
  Rconn_getline
  Rcons_vprintf
@@ -400,12 +404,16 @@
  Rf_stringSuffix
  Rf_strmat2intmat
  Rf_substituteList
+ Rf_trCharUTF8
+ Rf_trCharUTF82
+ Rf_translateCharFP2
  Rf_tspgets
  Rf_ucstomb
  Rf_unbindVar
  Rf_usemethod
  Rf_utf8toucs
  Rf_vectorIndex
+ Rf_wtransChar2
  Rf_yychar
  Rf_yylval
  Rf_yynerrs
@@ -593,6 +601,9 @@
  do_baseenv
  do_basename
  do_bcclose
+ do_bcprofcounts
+ do_bcprofstart
+ do_bcprofstop
  do_bcversion
  do_begin
  do_bincode
@@ -624,11 +635,15 @@
  do_closewinprogressbar
  do_cmathfuns
  do_colon
+ do_colon2
+ do_colon3
  do_colsum
  do_commandArgs
  do_comment
  do_commentgets
+ do_compareNumericVersion
  do_compilepkgs
+ do_compilerVersion
  do_complex
  do_copyDFattr
  do_crc64
@@ -1020,6 +1035,7 @@
  do_transpose
  do_trunc
  do_truncate
+ do_tryCatchHelper
  do_typeof
  do_tzone_name
  do_unclass
@@ -1311,6 +1327,7 @@
  menueditornew
  menueditoropen
  mkPRIMSXP
+ mkCharWUTF8
  mkdtemp
  nCPFun
  newWpipe

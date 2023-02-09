@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2021-02-10 17:40+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2022-08-31 15:04+0000\n"
+"Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
@@ -25,7 +25,7 @@ msgstr "'%s' doit être numérique et de longueur %d"
 
 #: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
-msgstr ""
+msgstr "Chemin de détourage ignoré (l'appareil ajoute un chemin)"
 
 #: colors.c:69
 #, c-format
@@ -93,7 +93,7 @@ msgstr "vecteur 'names' incorrect"
 
 #: colors.c:491 colors.c:500
 msgid "invalid gray level, must be in [0,1]."
-msgstr "niveau de gris incorrect, doit être dans l'intervalle [0,1]"
+msgstr "niveau de gris incorrect, doit être dans l'intervalle [0,1]."
 
 #: colors.c:556 cairo/cairoBM.c:615
 #, c-format
@@ -419,7 +419,7 @@ msgstr "nom de fichier vide"
 
 #: devPS.c:5154 devPS.c:5206 devPS.c:7222 devPS.c:7266 devPS.c:8794
 msgid "write failed"
-msgstr "écriture non exécutée"
+msgstr "échec de l'écriture"
 
 #: devPS.c:5411
 #, c-format
@@ -427,9 +427,8 @@ msgid "unable to use encoding '%s'"
 msgstr "impossible d'utiliser l'encodage '%s'"
 
 #: devPS.c:5768
-#, fuzzy
 msgid "Failed to allocate PDF definition string"
-msgstr "échec d'allocation de définitions"
+msgstr "Impossible d'allouer la chaîne de définition PDF"
 
 #: devPS.c:5790
 msgid "failed to increase definition string (shut down PDF device)"
@@ -441,27 +440,29 @@ msgstr "échec d'augmentation de 'maxDefns'"
 
 #: devPS.c:6471
 msgid "Drawing not appended to path (contains text)"
-msgstr ""
+msgstr "Dessin non ajouté au chemin (contient du texte)"
 
 #: devPS.c:6694
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
 msgstr ""
+"L'opérateur de composition n'a pas de mode de fusion correspondant ; par "
+"défaut sur Normal"
 
 #: devPS.c:6909
 msgid "Failed to write PDF clipping path"
-msgstr ""
+msgstr "Impossible d'écrire le chemin de détourage PDF"
 
 #: devPS.c:6934
 msgid "Failed to write PDF stroke"
-msgstr ""
+msgstr "Échec de l'écriture du trait PDF"
 
 #: devPS.c:6955
 msgid "Failed to write PDF fill"
-msgstr ""
+msgstr "Échec de l'écriture du remplissage PDF"
 
 #: devPS.c:6976
 msgid "Failed to write PDF fillStroke"
-msgstr ""
+msgstr "Échec de l'écriture du PDF fillStroke"
 
 #: devPS.c:6996
 msgid "invalid 'alpha' value in PDF"
@@ -569,7 +570,7 @@ msgstr "impossible de trouver ou de charger la police PDF"
 
 #: devPS.c:9676 devPS.c:9735
 msgid "Text not added to path containing other drawing"
-msgstr ""
+msgstr "Texte non ajouté au chemin contenant un autre dessin"
 
 #: devPS.c:9785 devPS.c:9949
 msgid "failed to find or load PDF CID font"
@@ -781,15 +782,15 @@ msgstr "un arguments NA est incorrect"
 
 #: group.c:38
 msgid "Group definition ignored (device is appending path)"
-msgstr ""
+msgstr "Définition de groupe ignorée (le périphérique ajoute le chemin)"
 
 #: group.c:57
 msgid "Group use ignored (device is appending path)"
-msgstr ""
+msgstr "Utilisation de groupe ignorée (le périphérique ajoute le chemin)"
 
 #: mask.c:37
 msgid "Mask ignored (device is appending path)"
-msgstr ""
+msgstr "Masque ignoré (le périphérique ajoute un chemin)"
 
 #: qdBitmap.c:79
 #, c-format
@@ -809,75 +810,80 @@ msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
 #: cairo/cairoBM.c:193 cairo/cairoBM.c:362
-#, fuzzy
 msgid "unimplemented cairo-based device"
-msgstr "%s n'est pas implémenté pour ce périphérique graphique"
+msgstr "appareil basé sur Cairo non implémenté"
 
 #: cairo/cairoBM.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "could not open file '%s'"
 msgstr "impossible d'ouvrir le fichier '%s'"
 
 #: cairo/cairoBM.c:653
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start device '%s'"
-msgstr "impossible de démarrer le périphérique pdf"
+msgstr "impossible de démarrer le périphérique '%s'"
 
 #: cairo/cairoFns.c:148
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Modèles du Cairo épuisés (échec de l'augmentation de maxPatterns)"
 
 #: cairo/cairoFns.c:195
 msgid "Cairo patterns exhausted"
-msgstr ""
+msgstr "Modèles du Cairo épuisés"
 
 #: cairo/cairoFns.c:350
+#, fuzzy
 msgid "Attempt to release non-existent pattern"
-msgstr ""
+msgstr "Tentative de libération d'un modèle inexistant"
 
 #: cairo/cairoFns.c:392
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
 msgstr ""
+"Chemins de détourage du Cairo épuisés (échec de l'augmentation de "
+"maxClipPaths)"
 
 #: cairo/cairoFns.c:439
 msgid "Cairo clipping paths exhausted"
-msgstr ""
+msgstr "Chemins de détourage du Cairo épuisés"
 
 #: cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
-msgstr ""
+msgstr "Tenter de réutiliser un chemin de détourage inexistant"
 
 #: cairo/cairoFns.c:541
+#, fuzzy
 msgid "Attempt to release non-existent clipping path"
-msgstr ""
+msgstr "Tentative de libération d'un chemin de détourage inexistant"
 
 #: cairo/cairoFns.c:571
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Masques du Cairo épuisés (échec de l'augmentation de maxMasks)"
 
 #: cairo/cairoFns.c:619
 msgid "Cairo masks exhausted"
-msgstr ""
+msgstr "Masques du Cairo épuisés"
 
 #: cairo/cairoFns.c:682
+#, fuzzy
 msgid "Attempt to release non-existent mask"
-msgstr ""
+msgstr "Tentative de libération d'un masque inexistant"
 
 #: cairo/cairoFns.c:711
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Groupes du Cairo épuisés (échec de l'augmentation de maxGroups)"
 
 #: cairo/cairoFns.c:758
 msgid "Cairo groups exhausted"
-msgstr ""
+msgstr "Les groupes du Cairo épuisés"
 
 #: cairo/cairoFns.c:853
 msgid "Groups exhausted"
-msgstr ""
+msgstr "Groupes épuisés"
 
 #: cairo/cairoFns.c:907
+#, fuzzy
 msgid "Attempt to release non-existent group"
-msgstr ""
+msgstr "Tentative de libération d'un groupe inexistant"
 
 #~ msgid "Impossible to load Rbitmap.dll"
 #~ msgstr "Impossible to charger Rbitmap.dll"

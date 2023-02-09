@@ -26,6 +26,7 @@ RDIFF = $(R_HOME)/$(BINDIR)/R CMD Rdiff
 RVAL_IF_DIFF=0
 ## suppress fancy quotes for diff-ing
 RDCONV = LC_ALL=C $(R_HOME)/$(BINDIR)/Rcmd Rdconv
+RD2PDF = $(R_HOME)/$(BINDIR)/Rcmd Rd2pdf --quiet --no-preview --force
 
 ECHO = echo
 ECHO_C = 
@@ -69,8 +70,9 @@ clean:
 	  p-qbeta-strict-tst.pdf
 	@rm -f R-exts_res.rc Makedeps
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
-	@rm -f testit.txt testit.html testit.tex testit-Ex.R
-	@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
+	@rm -f testit.txt testit.html testit.tex testit-Ex.R testit.pdf
+	@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R ver20.pdf
+	@rm -Rf .Rd2pdf*
 	@rm -Rf anRpackage myTst* myLib
 	@rm -f *.tar.gz
 	@rm -f keepsource.tex test-system2.exe test-system.Rout
@@ -86,7 +88,9 @@ distclean: clean
 	-@rm -f *.fail
 
 install-tests:
-	@for f in Makefile.common $(INSTFILES) eval-fns.R; do \
+	@mkdir -p "$(INST_TO)/Packages"
+	@for f in Makefile.common $(INSTFILES) reg-translation.R eval-fns.R; do \
 	  cp $(srcdir)/$${f} "$(INST_TO)"; \
 	done
+	@cp  $(srcdir)/Makefile.install.win "$(INST_TO)/Makefile"
 	@$(MAKE) -C Examples -f Makefile.win install-tests INST_TO="$(INST_TO)"

@@ -27,7 +27,7 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 
-SEXP attribute_hidden getParseContext(void)
+attribute_hidden SEXP getParseContext(void)
 {
     int i, last = PARSE_CONTEXT_SIZE;
     char context[PARSE_CONTEXT_SIZE+1];
@@ -122,7 +122,7 @@ static SEXP tabExpand(SEXP strings)
     return result;
 }
 
-void NORET parseError(SEXP call, int linenum)
+NORET void parseError(SEXP call, int linenum)
 {
     SEXP context;
     int len, width;
@@ -196,7 +196,7 @@ static void parse_cleanup(void *data)
  .Internal( parse(file, n, text, prompt, srcfile, encoding) )
  If there is text then that is read and the other arguments are ignored.
 */
-SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))

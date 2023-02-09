@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", domain= "R")
+Sys.setLanguage(lang, unset = "en")
 
 }
 \arguments{
@@ -49,22 +49,25 @@ Sys.setLanguage(lang, unset = "en", domain= "R")
     empty.}
 }
 \details{
-  If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
+  If \code{domain} is \code{NULL} (the default) in \code{gettext}
+  or \code{ngettext}, the domain is inferred.  If \code{gettext}
   or \code{ngettext}  is called from a function in the namespace of
   package \pkg{pkg} including called via \code{\link{stop}()},
   \code{\link{warning}()}, or \code{\link{message}()} from the function,
   or, say, evaluated as if called from that namespace, see the
   \code{evalq()} example, % and more in ../../../../tests/reg-translation.R
   the domain is set to \code{"R-pkg"}.  Otherwise there is no default
-  domain and messages are not translated unless \code{domain} is provided
-  explicitly.  Note in particular that \code{.onAttach}
-  and \code{\link{.onLoad}} are not called from the package namespace, so
-  messages there should always provide a domain explicitly.
+  domain and messages are not translated.
 
-  If a suitable domain is found, each character string is offered for
+  Setting \code{domain = NA} in \code{gettext} or \code{ngettext}
+  suppresses any translation.
+
+  \code{""} does not match any domain.  In \code{gettext} or \code{ngettext},
+  \code{domain = ""} is effectively the same as \code{domain = NA}.
+
+  If the domain is found, each character string is offered for
   translation, and replaced by its translation into the current language
-  if one is found.  The value (logical) \code{NA} suppresses any
-  translation.
+  if one is found.
 
   The \emph{language} to be used for message translation is determined by
   your OS default and/or the locale setting at \R's startup, see
@@ -89,10 +92,12 @@ Sys.setLanguage(lang, unset = "en", domain= "R")
   name: your system may have a \command{man} page for it.  With a
   non-\code{NULL} \code{dirname} it specifies where to look for message
   catalogues: with \code{dirname = NULL} it returns the current location.
+  If NLS is not enabled, \code{bindtextdomain(*,*)} returns \code{NULL}.
   %%
   The special case \code{bindtextdomain(NULL)} calls C level
   \code{textdomain(textdomain(NULL))} for the purpose of flushing (i.e.,
-  emptying) the cache of already translated strings.
+  emptying) the cache of already translated strings; it returns \code{TRUE}
+  when NLS is enabled.
 }
 \value{
   For \code{gettext}, a character vector, one element per string in
@@ -105,10 +110,11 @@ Sys.setLanguage(lang, unset = "en", domain= "R")
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
 
-  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting
-  with \code{\link{attributes}} \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
-  indicating success and \code{\link{attr}(*, "dir")} specifying the result
-  of the last \code{bindtextdomain()} called from \code{Sys.setLanguage()}.
+  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting with
+  attribute \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
+  indicating success.
+  Note that currently, using a non-existing language \code{lang} is still
+  set and no translation will happen, without any \code{\link{message}}.
 }
 \seealso{
   \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
@@ -181,10 +187,10 @@ if(capabilities("NLS")) withAutoprint({
 })
 ## IGNORE_RDIFF_END
 ## Here, we reset to the *original* setting before the full example started:
- if(nzchar(thisLang)) { ## reset to previous and check
+if(nzchar(thisLang)) { ## reset to previous and check
   Sys.setLanguage(thisLang)
   stopifnot(identical(errMsg(1 + "2"), err))
-}  # else staying at 'de' ..
+} # else staying at 'de' ..
 }
 \keyword{ utilities }
 \keyword{ character }

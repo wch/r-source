@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2020 R Core Team
+### Copyright (C) 1998-2023 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -237,7 +237,7 @@ fi])
 ## xdg-open is the freedesktop.org interface to kfmclient/gnome-open
 AC_DEFUN([R_PROG_BROWSER],
 [if test -z "${R_BROWSER}"; then
-  AC_PATH_PROGS(R_BROWSER, [firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open])
+  AC_PATH_PROGS(R_BROWSER, [xdg-open firefox mozilla epiphany galeon opera kfmclient gnome-moz-remote open lynx links])
 fi
 if test -z "${R_BROWSER}"; then
   warn_browser="I could not determine a browser"
@@ -255,7 +255,7 @@ AC_SUBST(R_BROWSER)
 ## the FreeBSD acroread port.
 AC_DEFUN([R_PROG_PDFVIEWER],
 [AC_PATH_PROGS(R_PDFVIEWER,
-               [${R_PDFVIEWER} acroread acroread4 xdg-open evince xpdf gv gnome-gv ggv okular kpdf open gpdf kghostview])
+               [${R_PDFVIEWER} xdg-open acroread acroread4 evince atril xpdf gv gnome-gv ggv okular kpdf open gpdf kghostview])
 if test -z "${R_PDFVIEWER}"; then
   warn_pdfviewer="I could not determine a PDF viewer"
   AC_MSG_WARN([${warn_pdfviewer}])
@@ -1062,7 +1062,6 @@ AC_DEFUN([R_PROG_FC_CHAR_LEN_T],
       call xerbla('abcde', -10)
       end
 EOF
-${FC} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 [cat > conftest.c <<EOF
 /* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
@@ -1076,7 +1075,7 @@ ${FC} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 # define F77_SYMBOL(x)   x
 #endif
 
-extern void F77_SYMBOL(testit)();
+extern void F77_SYMBOL(testit)(void);
 
 void F77_SYMBOL(xerbla)(const char *srname, int *info, 
 			const size_t srname_len)
@@ -1087,12 +1086,16 @@ void F77_SYMBOL(xerbla)(const char *srname, int *info,
     if (*info != -10) exit(-3);
 }
 
-int main()
+int main(void)
 {
     F77_SYMBOL(testit)();
     return 0;
 }
 EOF]
+r_cv_prog_fc_char_len_t=unknown
+for fpieflags in "${FPIEFLAGS}" "-fPIE"; do
+echo "Trying FPIEFLAGS = ${fpieflags}" 1>&AS_MESSAGE_LOG_FD
+${FC} ${FFLAGS} ${fpieflags} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -1102,9 +1105,13 @@ if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_
     output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_fc_char_len_t=size_t
+      FPIEFLAGS="${fpieflags}"
+    else
+      break
     fi
   fi
 fi
+done
 ])
 rm -Rf conftest conftest.* conftestf.* core
 ])# R_PROG_FC_CHAR_LEN_T
@@ -1506,7 +1513,7 @@ AC_DEFUN([R_FUNC_FTELL],
 # include <unistd.h> // for unlink
 #endif
 
-int main() {
+int main(void) {
     FILE *fp;
     long pos;
 
@@ -1603,7 +1610,7 @@ AC_CACHE_VAL([r_cv_type_socklen],
 done])
 dnl size_t works on Windows but is unsigned and int is correct
 case "${host_os}" in
-  cygwin*|mingw*|windows*|winnt)
+  cygwin*|mingw*|windows*|winnt|msys)
     r_cv_type_socklen=int
     ;;
 esac
@@ -1896,7 +1903,13 @@ fi
 AC_DEFUN([R_BSD_NETWORKING],
 [AC_CACHE_CHECK([for BSD networking],
                 [r_cv_bsd_networking],
-[if test "${ac_cv_header_netdb_h}" = yes \
+[case "${host_os}" in
+  cygwin*|mingw*|windows*|winnt|msys)
+    r_cv_bsd_networking=yes
+    ;;
+esac
+if test "${ac_cv_bsd_networking}" != yes \
+     && test "${ac_cv_header_netdb_h}" = yes \
 dnl needed for Rhttpd.c but missed before R 3.2.4
      && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
@@ -1904,7 +1917,8 @@ dnl needed for Rhttpd.c but missed before R 3.2.4
      && test "${ac_cv_search_connect}" != no \
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
-else
+fi
+if test "${ac_cv_bsd_networking}" = no; then
   AC_MSG_ERROR([BSD networking functions are required])
 fi])
 ])# R_BSD_NETWORKING
@@ -1982,7 +1996,19 @@ if test "${use_libtiff}" = yes; then
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
-        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
+        BITMAP_LIBS="-ltiff -lwebp -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # also try with webp and zstd (needed with libtiff 4.4 from MXE/Rtools)
+      unset ac_cv_lib_tiff_TIFFOpen
+      AC_MSG_NOTICE([checking for libtiff with -lwebp -lzstd])
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -lzstd -llzma ${BITMAP_LIBS}])
+      if test "x${have_tiff}" = xyes; then
+        AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+        BITMAP_LIBS="-ltiff -lwebp -lzstd -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -2621,11 +2647,17 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 dnl Taken from 2008 version of ax_blas.m4
-# BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
+# BLAS in OpenBLAS library? (https://www.openblas.net/)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for OpenBLAS])
         AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"])
+fi
+
+# BLAS in BLIS library? (https://github.com/flame/blis)
+if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for BLIS])
+        AC_CHECK_LIB(blis, $sgemm, [acx_blas_ok=yes BLAS_LIBS="-lblis"])
 fi
 
 dnl BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
@@ -2638,6 +2670,7 @@ if test "${acx_blas_ok}" = no; then
 			     [], [-latlas])])
 fi
 
+dnl Unable to find a URL for PhiPACK in 2022 ....
 dnl BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   AC_MSG_NOTICE([searching for PhiPACK])
@@ -2648,6 +2681,21 @@ if test "${acx_blas_ok}" = no; then
                                             BLAS_LIBS="-lsgemm -ldgemm -lblas"],
 			                   [], [-lblas])],
 			     [], [-lblas])])
+fi
+
+dnl BLAS in Apple Accelerate?  Based on ax_blas.m4 #37
+if test $acx_blas_ok = no; then
+  case "${host_os}" in
+    darwin*)
+      AC_MSG_NOTICE([searching for Accelerate])
+      save_LIBS="$LIBS"; LIBS="-framework Accelerate $LIBS"
+      AC_MSG_CHECKING([for $dgemm in -framework Accelerate])
+      AC_LINK_IFELSE([AC_LANG_CALL([], [$dgemm])],
+	              [acx_blas_ok=yes;BLAS_LIBS="-framework Accelerate"])
+      AC_MSG_RESULT($acx_blas_ok)
+      LIBS="$save_LIBS"
+    ;;
+  esac
 fi
 
 dnl BLAS in Sun Performance library?
@@ -3034,6 +3082,7 @@ fi
 
 # We cannot use LAPACK if BLAS is not found
 if test "x${acx_blas_ok}" != xyes; then
+  AC_MSG_NOTICE([cannot use --with-lapack without --with-blas])
   acx_lapack_ok=noblas
 fi
 
@@ -3069,6 +3118,78 @@ LIBS="${acx_lapack_save_LIBS}"
 
 AC_SUBST(LAPACK_LIBS)
 ])# R_LAPACK_LIBS
+
+## R_LAPACK_SYSTEM_LIB
+## -------------------
+## New for R 4.2.0
+## Look for system -llapack of version at least 3.10.0.
+## We have to test with a system BLAS.
+## We don't want an external lapack which contains a BLAS.
+AC_DEFUN([R_LAPACK_SYSTEM_LIB],
+[AC_REQUIRE([R_PROG_FC_FLIBS])
+AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
+
+acx_lapack_ok=no
+
+acx_lapack_save_LIBS="${LIBS}"
+
+dnl Generic LAPACK library?
+if test "${r_cv_prog_fc_append_underscore}" = yes; then
+  dgemm=dgemm_
+  lapack=dpstrf_
+  ilaver=ilaver_
+else
+  dgemm=dgemm
+  lapack=dpstrf
+  ilaver=ilaver
+fi
+acx_lapack_ok=yes
+LIBS="${FLIBS} ${LIBS}"
+AC_CHECK_LIB(lapack, ${dgemm}, [acx_lapack_ok=no])
+if test "${acx_lapack_ok}" = no; then
+  AC_MSG_NOTICE([Not using liblapack as it contains BLAS routines])
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+LIBS="-lblas ${FLIBS} ${acx_lapack_save_LIBS}"
+AC_CHECK_LIB(lapack, ${lapack}, [acx_lapack_ok=yes])
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+  LIBS="-lblas -llapack ${FLIBS} ${acx_lapack_save_LIBS}"
+
+AC_CACHE_CHECK([if LAPACK version >= 3.10.0], [r_cv_lapack_ver],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+extern void ${ilaver}(int *major, int *minor, int *patch);
+
+#include <stdlib.h>
+#include <stdio.h>
+int main(void) {
+  int major, minor, patch;
+  ${ilaver}(&major, &minor, &patch);
+  printf("%d.%d.%d, so ", major, minor, patch);
+  if (major < 3 || (major == 3 && minor < 10)) exit(1);
+  exit(0);
+}
+]])],
+[r_cv_lapack_ver=yes],
+[r_cv_lapack_ver=no],
+[r_cv_lapack_ver=no])])
+
+LIBS="${acx_lapack_save_LIBS}"
+
+if test "${r_cv_lapack_ver}" = no; then
+ acx_lapack_ok=no
+fi
+fi
+
+if test "${acx_lapack_ok}" = yes; then
+  LAPACK_LIBS=-llapack
+fi
+
+AC_SUBST(LAPACK_LIBS)
+])# R_LAPACK_SYSTEM_LIB
+
 
 ## R_XDR
 ## -----
@@ -3143,7 +3264,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
-int main() {
+int main(void) {
 #ifdef ZLIB_VERNUM
   if (ZLIB_VERNUM < 0x1250) {
     exit(1);
@@ -3188,7 +3309,7 @@ AC_CACHE_CHECK([if PCRE1 version >= 8.32 and has UTF-8 support], [r_cv_have_pcre
 #endif
 #endif
 #include <stdlib.h>
-int main() {
+int main(void) {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
@@ -3262,7 +3383,7 @@ if test "x${have_pcre2}" = "xyes"; then
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>
 #include <stdlib.h>
-int main() {
+int main(void) {
     int ans;
     int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
     if (res || ans != 1) exit(1); else exit(0);
@@ -3302,7 +3423,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
-int main() {
+int main(void) {
     const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
@@ -3361,7 +3482,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <lzma.h>
 #endif
 #include <stdlib.h>
-int main() {
+int main(void) {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
@@ -3463,7 +3584,7 @@ AC_DEFUN([R_SIZE_MAX],
 #endif
 
 int
-main() {
+main(void) {
 #ifndef SIZE_MAX
   char *p = (char *) SIZE_MAX;
 #endif
@@ -3579,7 +3700,7 @@ int main () {
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_latin1=yes
       ;;
   esac
@@ -3623,7 +3744,7 @@ int main () {
 
   ## on Windows we supply iconv ourselves
   case "${host_os}" in
-    mingw*)
+    mingw*|msys)
       r_cv_iconv_cp1252=yes
       ;;
   esac
@@ -3908,7 +4029,7 @@ AC_DEFUN([R_PUTENV_AS_UNSETENV],
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -3936,7 +4057,7 @@ int main()
 #include "confdefs.h"
 #include <stdlib.h>
 #include <string.h>
-int main()
+int main(void)
 {
     char *p;
 #ifdef HAVE_PUTENV
@@ -4004,12 +4125,11 @@ AC_DEFUN([R_MKTIME_ERRNO],
 #include <time.h>
 #include <errno.h>
 
-int main()
+int main(void)
 {
     struct tm tm;
     /* It's hard to know what is an error, since mktime is allowed to
-       fix up times and there are 64-bit time_t about.
-       But this works for now (yes on Solaris, no on glibc). */
+       fix up times. But this worked for now (yes on Solaris, no on glibc). */
     tm.tm_year = 3000; tm.tm_mon = 0; tm.tm_mday = 0;
     tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
     errno = 0;
@@ -4021,7 +4141,7 @@ int main()
               [r_cv_mktime_errno=no],
               [r_cv_mktime_errno=no])])
 if test "${r_cv_mktime_errno}" = yes; then
-  AC_DEFINE(MKTIME_SETS_ERRNO,, [Define if mktime sets errno.])
+  AC_DEFINE(MKTIME_SETS_ERRNO, 1, [Define if mktime sets errno.])
 fi
 ])# R_MKTIME_ERRNO
 
@@ -4139,34 +4259,155 @@ fi
 AC_SUBST(R_SYSTEM_ABI)
 ]) # R_ABI
 
-## R_FUNC_MKTIME
+## Sanity check, failed by platforms without tzdata
+## (possible on Alpine Linux).
+## R_WORKING_MKTIME
 ## ------------
-AC_DEFUN([R_FUNC_MKTIME],
-[AC_CACHE_CHECK([whether mktime works correctly outside 1902-2037],
+AC_DEFUN([R_WORKING_MKTIME],
+[AC_CACHE_CHECK([whether mktime, gmtime, localtime work correctly in 2020],
                 [r_cv_working_mktime],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
-int main() {
-    if(sizeof(time_t) < 8) exit(1);
+//#define PRINT
 
-    struct tm tm;
+int main(void) {
+    struct tm tm, *stm;
     time_t res;
+    putenv("TZ=UTC");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = 0;
+    // test 2020-01-01
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("day %ld\n", res);
+#else
+    if(res != 1577880000L) exit(1);
+#endif
+    // and can we go back to POSIXlt?
+#ifdef HAVE_GMTIME_R
+    stm = gmtime_r(&res, &tm);
+#else
+    stm = gmtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec); 
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(10);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = 0;
+    // test 2020-07-01
+    res = mktime(&tm);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593604800L) exit(2);
+#endif
+#ifdef HAVE_GMTIME_R
+    stm = gmtime_r(&res, &tm);
+#else
+    stm = gmtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(20);
+#endif
+    
     putenv("TZ=Europe/London");
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
-    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 80; tm.tm_isdst = 0;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = -1;
+    // test 2020-01-01, whoch is assumed to be in GMT
     res = mktime(&tm);
-    if(res == (time_t)-1) exit(2);
-    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1577880000L) exit(3);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+       || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(30);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = -1;
+    // test 2020-07-01 which is assumed to be in BST
     res = mktime(&tm);
-    if(res == (time_t)-1) exit(3);
-    tm.tm_year = 140;
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593601200L) exit(4);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 1) exit(40);
+#endif  
+    putenv("TZ=Pacific/Auckland");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = -1;
     res = mktime(&tm);
-    if(res != 2209032000L) exit(4);
-    tm.tm_mon = 6; tm.tm_isdst = 1;
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1577833200L) exit(5);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 0 || stm->tm_mday != 1
+      || stm->tm_hour != 12 || stm-> tm_isdst != 1) exit(50);
+#endif
+    tm.tm_mon = 6; tm.tm_isdst = -1;
     res = mktime(&tm);
-    if(res != 2224753200L) exit(5);
+#ifdef PRINT
+    printf("res %ld\n", res);
+#else
+    if(res != 1593561600L) exit(6);
+#endif
+#ifdef HAVE_LOCALTIME_R
+    stm = localtime_r(&res, &tm);
+#else
+    stm = localtime(&res);
+#endif
+#ifdef PRINT
+    printf("%d-%02d-%02d %02d:%02d:%02d\n",
+	   1900+stm->tm_year, 1+stm->tm_mon, stm->tm_mday,
+	   stm->tm_hour, stm->tm_min, stm->tm_sec);
+#else
+    if(stm->tm_year != 120 || stm->tm_mon != 6 || stm->tm_mday != 1
+       || stm->tm_hour != 12 || stm-> tm_isdst != 0) exit(60);
+#endif
 
     exit(0);
 }
@@ -4174,15 +4415,124 @@ int main() {
               [r_cv_working_mktime=yes],
               [r_cv_working_mktime=no],
               [r_cv_working_mktime=no])])
-if test "x${r_cv_working_mktime}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_64BIT_MKTIME, 1,
-            [Define if your mktime works correctly outside 1902-2037.])
+])# R_WORKING_MKTIME
+
+## 32-bit time_t will not
+## R_FUNC_MKTIME
+## ------------
+AC_DEFUN([R_FUNC_MKTIME],
+[AC_CACHE_CHECK([whether mktime works correctly after 2037],
+                [r_cv_working_mktime1],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 140; tm.tm_isdst = 0;
+    // test 2040-01-01, whoch is assumed to be in GMT
+    res = mktime(&tm);
+    if(res != 2209032000L) exit(4);
+    tm.tm_mon = 6; tm.tm_isdst = 1;
+    // test 2040-07-01 which is assumed to be in BST
+    res = mktime(&tm);
+    if(res != 2224753200L) exit(5);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime1=yes],
+              [r_cv_working_mktime1=no],
+              [r_cv_working_mktime1=no])])
+if test "x${r_cv_working_mktime1}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_MKTIME_AFTER_2037, 1,
+            [Define if your mktime works correctly after 2037.])
 fi
 ])# R_FUNC_MKTIME
 
+## 32-bit time_t will fail in 1901
+## macOS (at leat 13) failed for < 1900
+## R_FUNC_MKTIME2
+## ------------
+AC_DEFUN([R_FUNC_MKTIME2],
+[AC_CACHE_CHECK([whether mktime works correctly before 1902],
+                [r_cv_working_mktime2],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1901-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_isdst = 0;
+    tm.tm_year = 01;
+    // test 1901-01-01, where 32-bit time_t may fail.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(3);
+    tm.tm_year = -52; // macOS 13 fails for 1848.
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+    tm.tm_year = -1; // and for 1899
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(5);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime2=yes],
+              [r_cv_working_mktime2=no],
+              [r_cv_working_mktime2=no])])
+if test "x${r_cv_working_mktime2}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1902, 1,
+            [Define if your mktime works correctly before 1902.])
+fi
+])# R_FUNC_MKTIME2
+
+## R_FUNC_MKTIME3
+## ------------
+AC_DEFUN([R_FUNC_MKTIME3],
+[AC_CACHE_CHECK([whether mktime works correctly in 1969],
+                [r_cv_working_mktime3],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    // test 1969-01-01 12:00:00
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 69; tm.tm_isdst = 0;
+    tm.tm_year = 69; // TK says Windows UCRT fails prior to 1970
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(4);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime3=yes],
+              [r_cv_working_mktime3=no],
+              [r_cv_working_mktime3=no])])
+if test "x${r_cv_working_mktime3}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_MKTIME_BEFORE_1970, 1,
+            [Define if your mktime works correctly in 1969.])
+fi
+])# R_FUNC_MKTIME3
+
 ## R_STDCXX
 ## --------
-## Support for C++ standards (C++11, C++14, C++17, C++20), for use in packages.
+## Support for C++ standards (C++11, C++14, C++17, C++20, C++23), for use in packages.
 ## R_STDCXX(VERSION, PREFIX, DEFAULT)
 AC_DEFUN([R_STDCXX],
 [r_save_CXX="${CXX}"
@@ -4270,16 +4620,16 @@ LIBS="${CURL_LIBS} ${LIBS}"
 AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
 
 if test "x${have_libcurl}" = "xyes"; then
-AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
+AC_CACHE_CHECK([if libcurl is version 7 and >= 7.32.0], [r_cv_have_curl732],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
-int main() 
+int main(void) 
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 32
   exit(0);
 #else
   exit(1);
@@ -4288,9 +4638,9 @@ int main()
   exit(1);
 #endif
 }
-]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
+]])], [r_cv_have_curl732=yes], [r_cv_have_curl732=no], [r_cv_have_curl732=no])])
 fi
-if test "x${r_cv_have_curl728}" = xno; then
+if test "x${r_cv_have_curl732}" = xno; then
   have_libcurl=no
 fi
 
@@ -4300,7 +4650,7 @@ AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
 #include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
-int main()
+int main(void)
 {
     curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
     const char * const *p  = data->protocols;
@@ -4353,8 +4703,8 @@ double ssum(double *x, int n) {
 #endif
 }
 
-int main() {
-    /* use volatiles to reduce the risk of the
+int main(void) {
+    /* use 'volatile's to reduce the risk of the
        computation being inlined and constant-folded */
     volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
     volatile int n = 8;
@@ -4454,7 +4804,7 @@ AC_DEFUN([R_SEARCH_OPTS],
 ## POSIX threads.
 AC_DEFUN([R_PTHREAD],
 [case "${host_os}" in
-  mingw*|windows*|winnt)
+  mingw*|windows*|winnt|msys)
     ;;
   *)
     r_save_CFLAGS=${CFLAGS}
@@ -4496,7 +4846,16 @@ AC_DEFUN([R_CSTACK_DIRECTION],
 AC_CACHE_VAL([r_cv_cstack_direction],
 [cat > conftest.c <<EOF
 /* based on gnulib, alloca.c */
-int find_stack_direction(int *addr, int depth) {
+
+#define attribute_no_sanitizer_instrumentation
+#ifdef __has_attribute
+# undef attribute_no_sanitizer_instrumentation
+# define attribute_no_sanitizer_instrumentation \
+    __attribute__((disable_sanitizer_instrumentation))
+#endif
+
+int attribute_no_sanitizer_instrumentation
+find_stack_direction(int *addr, int depth) {
   int dir, dummy = 0;
   if (! addr)
     addr = &dummy;
@@ -4537,6 +4896,122 @@ else
   r_cv_cstack_direction=down
 fi
 ])# R_CSTACK_DIRECTION
+
+AC_DEFUN([R_C17],
+[AC_CACHE_CHECK([whether ${CC} is a C17 compiler], [r_cv_C17],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ > 201710L
+# error "Compiler claims to be later than C17"
+# elif __STDC_VERSION__ < 199901L
+# error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+// C89 example from autoconf 2.71.
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+// From rmumps
+typedef enum { true=1, false=0 } bool;
+
+// simplified from survival
+static void addup();
+void agsurv3(int *sn)
+{
+    addup(4, 0.0, 0.0);
+}
+static void addup(int itime, double haz, double var){}
+
+int main(void) {
+     return 0;
+}
+
+]])],
+               [r_cv_C17=yes],
+               [r_cv_C17=no],
+               [r_cv_C17=no])])
+])# R_C17
+
+AC_DEFUN([R_C23],
+[AC_CACHE_CHECK([whether ${CC} is a C23 compiler], [r_cv_C23],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ < 202000L
+#  error "Compiler does not claim C23 conformance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+int main(void) {
+     return 0;
+}
+
+]])],
+               [r_cv_C23=yes],
+               [r_cv_C23=no],
+               [r_cv_C23=no])])
+])# R_C23
+
+AC_DEFUN([R_C90],
+[AC_CACHE_CHECK([whether ${CC} is a C90 compiler], [r_cv_C90],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#if defined  __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
+# error "Compiler claims to be later than C90"
+#endif
+
+/* C90 example from autoconf 2.71 */
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+int main(void) {
+     return 0;
+}
+
+]])],
+               [r_cv_C90=yes],
+               [r_cv_C90=no],
+               [r_cv_C90=no])])
+])# R_C90
+
+AC_DEFUN([R_C99],
+[AC_CACHE_CHECK([whether ${CC} is a C99 compiler], [r_cv_C99],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef __STDC_VERSION__
+# if __STDC_VERSION__ != 199901L
+#  error "Compiler does not claim C99 compliance"
+# endif
+#else
+# error "Compiler does not advertise ISO C conformance"
+#endif
+
+/* C90 example from autoconf 2.71. */
+static char *e (p, i)
+     char **p;
+     int i;
+{
+  return p[i];
+}
+
+int main(void) {
+     return 0;
+}
+
+]])],
+               [r_cv_C99=yes],
+               [r_cv_C99=no],
+               [r_cv_C99=no])])
+])# R_C90
 
 ### Local variables: ***
 ### mode: outline-minor ***

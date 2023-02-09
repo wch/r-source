@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-01-01 r81419) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.2.0 (64-bit)
+Platform: aarch64-apple-darwin21.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -123,7 +123,7 @@ Loading required package: Matrix
 [2,]  TRUE  TRUE     .
 [3,]  TRUE  TRUE  TRUE
 > (l3s <- as(l3, "CsparseMatrix"))# "lgCMatrix"
-3 x 3 sparse Matrix of class "lgCMatrix"
+3 x 3 sparse Matrix of class "ltCMatrix"
           
 [1,] . | |
 [2,] . . |
@@ -210,8 +210,8 @@ Aa: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L,
     NULL, NULL), x = c(9, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-As: new("dsyMatrix", x = c(2, 1, 1, 2), Dim = c(2L, 2L), Dimnames = list(
-    NULL, NULL), uplo = "U", factors = list())
+As: new("dsyMatrix", Dim = c(2L, 2L), Dimnames = list(NULL, NULL), 
+    x = c(2, 1, 1, 2), uplo = "U", factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
 D5.: new("ddiMatrix", diag = "N", Dim = c(5L, 5L), Dimnames = list(
@@ -230,9 +230,9 @@ L4: new("ldiMatrix", diag = "U", Dim = c(4L, 4L), Dimnames = list(
     NULL, NULL), x = logical(0))
  --> checking list(*): Ok
 --=--=--=--=--
-L4d: new("lsyMatrix", x = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
-TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE), Dim = c(4L, 
-4L), Dimnames = list(NULL, NULL), uplo = "U", factors = list())
+L4d: new("lsyMatrix", Dim = c(4L, 4L), Dimnames = list(NULL, NULL), 
+    x = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
+    TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE), uplo = "U", factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
 M: new("ltCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
@@ -240,17 +240,17 @@ M: new("ltCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L,
     diag = "N")
  --> checking list(*): Ok
 --=--=--=--=--
-Nl3: new("ltrMatrix", x = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, 
-FALSE, TRUE), Dim = c(3L, 3L), Dimnames = list(NULL, NULL), uplo = "L", 
-    diag = "N")
+Nl3: new("ltrMatrix", Dim = c(3L, 3L), Dimnames = list(NULL, NULL), 
+    x = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, 
+    TRUE), uplo = "L", diag = "N")
  --> checking list(*): Ok
 --=--=--=--=--
 Z22.: new("ddiMatrix", diag = "N", Dim = c(2L, 2L), Dimnames = list(
     NULL, NULL), x = c(0, 0))
  --> checking list(*): Ok
 --=--=--=--=--
-Z22d: new("dsyMatrix", x = c(0, 0, 0, 0), Dim = c(2L, 2L), Dimnames = list(
-    NULL, NULL), uplo = "U", factors = list())
+Z22d: new("dsyMatrix", Dim = c(2L, 2L), Dimnames = list(NULL, NULL), 
+    x = c(0, 0, 0, 0), uplo = "U", factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
 Z22s: new("dsCMatrix", i = integer(0), p = c(0L, 0L, 0L), Dim = c(2L, 
@@ -472,8 +472,9 @@ l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE,
 FALSE), dim = c(3L, 3L))
  --> checking list(*): Ok
 --=--=--=--=--
-l3s: new("lgCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
-3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), factors = list())
+l3s: new("ltCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
+3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), uplo = "U", 
+    diag = "N")
  --> checking list(*): Ok
 --=--=--=--=--
 m: new("dgCMatrix", i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
@@ -565,8 +566,8 @@ tA: new("dtCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L,
 x: c(7, 14, 21, 28, 35, 42, 49)
  --> checking list(*): Ok
 --=--=--=--=--
-z32: new("dgeMatrix", x = c(0, 0, 0, 0, 0, 0), Dim = 3:2, Dimnames = list(
-    NULL, NULL), factors = list())
+z32: new("dgeMatrix", Dim = 3:2, Dimnames = list(NULL, NULL), x = c(0, 
+0, 0, 0, 0, 0), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
 > 
@@ -575,5 +576,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  0.482 0.031 0.518 0.001 0.002 
+Time elapsed:  0.529 0.028 0.559 0.001 0.001 
 > 

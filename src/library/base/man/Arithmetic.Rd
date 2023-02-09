@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -52,8 +52,12 @@ x \%/\% y
   \code{-} for subtraction, \code{*} for multiplication, \code{/} for
   division and \code{^} for exponentiation.
 
-  \code{\%\%} indicates \code{x mod y} (\dQuote{x modulo y}) and
-  \code{\%/\%} indicates integer division.  It is guaranteed that
+  \code{\%\%} indicates \code{x mod y} (\dQuote{x modulo y}), i.e.,
+  computes the \sQuote{remainder} \code{r <- x \%\% y}, and
+  \code{\%/\%} indicates integer division, where \R uses \dQuote{floored}
+  integer division, i.e., \code{q <- x \%/\% y := floor(x/y)}, as promoted
+  by Donald Knuth, see the Wikipedia page on \sQuote{Modulo operation},
+  and hence \code{sign(r) == sign(y)}.  It is guaranteed that
   \describe{
     \item{\code{ x == (x \%\% y) + y * (x \%/\% y) }}{\sspace (up to rounding error)}
   }
@@ -192,6 +196,11 @@ x \%/\% y
   For the IEC 60559 (aka IEEE 754) standard:
   \url{https://www.iso.org/standard/57469.html} and
   \url{https://en.wikipedia.org/wiki/IEEE_754}.
+
+  On the integer division and remainder (modulo) computations, \code{\%\%}
+  and \code{\%/\%}:  \url{https://en.wikipedia.org/wiki/Modulo_operation}, and
+  Donald Knuth (1972)
+  \emph{The Art of Computer Programming}, Vol.1.
 }
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
@@ -205,7 +214,8 @@ x \%/\% y
 x <- -1:12
 x + 1
 2 * x + 3
-x \%\% 2 #-- is periodic
+x \%\%  3 # is periodic  2 0  1  2 0  1 ...
+x \%\% -3 #  (ditto)    -1 0 -2 -1 0 -2 ...
 x \%/\% 5
 x \%\% Inf # now is defined by limit (gave NaN in earlier versions of R)
 }

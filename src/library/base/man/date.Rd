@@ -1,6 +1,6 @@
 % File src/library/base/man/date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{date}
@@ -34,6 +34,7 @@
 nchar(d) == 24
 
 ## something similar in the current locale
-format(Sys.time(), "\%a \%b \%d \%H:\%M:\%S \%Y")
+##   depending on ctime; e.g. \%e could be \%d:
+format(Sys.time(), "\%a \%b \%e \%H:\%M:\%S \%Y")
 }}
 \keyword{utilities}

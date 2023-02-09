@@ -61,6 +61,13 @@ tools::assertWarning(verbose = TRUE,
 coef(summary(fm))
 ## IGNORE_RDIFF_END
 
+## getInitial.formula() gets selfStart function from environment(formula)
+plogis <- stats::SSlogis
+in2 <- getInitial(circumference ~ plogis(age, Asym, xmid, scal), Orange)
+## in R <= 4.2.x gave Error:
+##   no 'getInitial' method found for "function" objects
+rm(plogis)
+
 
 ## lower and upper in algorithm="port"
 set.seed(123)

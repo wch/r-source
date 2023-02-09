@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,72 +16,102 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+
+### internal function used by axis.Date() and axis.POSIXct(). Extends the current format 
+### if not sufficiently precise for value in argument at.
+extendDateTimeFormat <- function(x, z){
+    # used format:
+    format <- formatx <- attr(grDevices:::prettyDate(x), "format")
+    formatparts <- gsub("%", "", strsplit(formatx, " |:|-")[[1]])
+
+    # appropriate format for z
+    chz <- format(z, "%Y-%m-%d %H:%M:%OS6")  # max. detailed format
+    chz <- as.numeric(strsplit(chz, "-| |:|\\.")[[1]])
+    default <- c(1, 1, 1, 0, 0, 0, 0)
+    names(chz) <- names(chz)
+        
+    if(length(z) > 1L){
+        formats <- sapply(z, function(zz) extendDateTimeFormat(x, zz))
+        return(formats[which.max(nchar(formats))])
+    }
+    
+    names(chz) <- names(default) <-  c("Y", ifelse("m" %in% formatparts, "m", "b"), "d", "H", "M", "S", "OS6") 
+    
+    if(any(w <- names(chz) %in% formatparts)){
+        if(max(which(w))+1 <= length(chz)){
+            add <- chz[(max(which(w))+1):length(chz)]
+            # add month
+            if(chz[2] > default[2]){
+                if("b" %in% names(add)) format <- paste(format, "%b")
+                if("m" %in% names(add)) format <- paste(format, "-%m")
+            }
+            # add day
+            if(chz[3] > default[3] && "d" %in% names(add)){
+                if("Y" %in% formatparts & "b" %in% formatparts) format <- paste("%d", format)
+                if("Y" %in% formatparts & "m" %in% formatparts) format <- paste0(format, "-%d")
+                if(!"Y" %in% formatparts) format <- paste0(format, ifelse("m" %in% formatparts, "-%d",  " %d"))
+            }
+            add <- add[add > 0L]
+            if(length(add) && any(c("H", "M", "S", "OS6") %in% names(add))){
+                if(!all(c("H", "M") %in% formatparts)) format <- paste(format, "%H:%M")
+                if("S" %in% names(add) & !"OS6" %in% names(add)) format <- paste0(format, ":%S")
+                if("OS6" %in% names(add)) format <- gsub(":%S", "", paste0(format, ":%OS6"))
+            }
+            
+        }
+    }
+    return(format)
+}
+
+
 axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
+
+    args <- as.list(match.call())[-1]
     has.at <- !missing(at) && !is.null(at)
-    x <- as.POSIXct(if(has.at) at else x)
     range <- sort(par("usr")[if(side %% 2) 1L:2L else 3L:4L])
-    ## find out the scale involved
-    d <- range[2L] - range[1L]
-    z <- c(range, x[is.finite(x)])
-    attr(z, "tzone") <- attr(x, "tzone")
-    if(d < 1.1*60) { # seconds
-        sc <- 1
-        if(missing(format)) format <- "%S"
-    } else if (d < 1.1*60*60) { # minutes
-        sc <- 60
-        if(missing(format)) format <- "%M:%S"
-    } else if (d < 1.1*60*60*24) {# hours
-        sc <- 60*60
-        if(missing(format)) format <- "%H:%M"
-    } else if (d < 2*60*60*24) {
-        sc <- 60*60
-        if(missing(format)) format <- "%a %H:%M"
-    } else if (d < 7*60*60*24) {# days of a week
-        sc <- 60*60*24
-        if(missing(format)) format <- "%a"
-    } else { # days, up to a couple of months
-        sc <- 60*60*24
+    tz <- ifelse(!missing(x) && ("tzone" %in% names(attributes(x))), attr(x, "tzone"), "")
+    rangeTime <- .POSIXct(range, tz = tz)
+    
+    
+    if(has.at){
+        # convert at to POSIXct:
+        if(is.numeric(at))
+            z <- .POSIXct(at, tz = tz)
+        else{
+            if(inherits(at, "POSIXt")){
+                z <- if(inherits(at, "POSIXlt")) .POSIXct(as.numeric(at), tz = tz) else at
+                attr(z, "tzone") <- tz
+            }else{
+                z <- sapply(at, function(a) as.POSIXct(as.character(a), tz = tz))
+                if(is.numeric(z)) z <- .POSIXct(z, tz = tz)
+            }
+        }    
+        z <- z[is.finite(z)] 
+        
+        # find format if missing:
+        if(missing(format)){
+#            format <- if(!missing(x)) attr(grDevices:::prettyDate(x), "format") else attr(grDevices:::prettyDate(rangeTime), "format")
+#        }else if(is.null(format)){ # exdend format if needed for proper representation of at
+            format <- if(!missing(x)) extendDateTimeFormat(x, z) else extendDateTimeFormat(rangeTime, z)
+        }
+    } else {
+        z <- grDevices:::prettyDate(rangeTime)
+        if(missing(format)) format <- attr(z, "format")
     }
-    if(d < 60*60*24*50) {
-        zz <- pretty(z/sc)
-        z <- zz*sc
-        z <- .POSIXct(z,  attr(x, "tzone"))
-        if(sc == 60*60*24) z <- as.POSIXct(round(z, "days"))
-        if(missing(format)) format <- "%b %d"
-    } else if(d < 1.1*60*60*24*365) { # months
-        z <- .POSIXct(z,  attr(x, "tzone"))
-        zz <- unclass(as.POSIXlt(z))
-        zz$mday <- zz$wday <- zz$yday <- 1
-        zz$isdst <- -1; zz$hour <- zz$min <- zz$sec <- 0
-        zz$mon <- pretty(zz$mon)
-        m <- length(zz$mon); M <- 2*m
-        m <- rep.int(zz$year[1L], m)
-        zz$year <- c(m, m+1)
-        zz <- lapply(zz, function(x) rep(x, length.out = M))
-        zz <- .POSIXlt(zz, attr(x, "tzone"))
-        z <- as.POSIXct(zz)
-        if(missing(format)) format <- "%b"
-    } else { # years
-        z <- .POSIXct(z,  attr(x, "tzone"))
-        zz <- unclass(as.POSIXlt(z))
-        zz$mday <- zz$wday <- zz$yday <- 1
-        zz$isdst <- -1; zz$mon <- zz$hour <- zz$min <- zz$sec <- 0
-        zz$year <- pretty(zz$year); M <- length(zz$year)
-        zz <- lapply(zz, function(x) rep(x, length.out = M))
-        z <- as.POSIXct(.POSIXlt(zz))
-        if(missing(format)) format <- "%Y"
-    }
-    if(has.at) z <- x[is.finite(x)] # override changes
+
     keep <- z >= range[1L] & z <= range[2L]
     z <- z[keep]
-    if (!is.logical(labels)) labels <- labels[keep]
+    if (!is.logical(labels)) 
+        labels <- labels[keep]
     else if (isTRUE(labels))
-	labels <- format(z, format = format)
+        labels <- format(z, format = format)
     else if (isFALSE(labels))
-	labels <- rep("", length(z)) # suppress labelling of ticks
+        labels <- rep("", length(z)) # suppress labelling of ticks
+        
     axis(side, at = z, labels = labels, ...)
 }
+
 
 hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                         plot = TRUE, freq = FALSE,
@@ -214,44 +244,41 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
 axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 {
     has.at <- !missing(at) && !is.null(at)
-    x <- as.Date(if(has.at) at else x)
+    
     range <- sort(par("usr")[if(side %% 2) 1L:2L else 3:4L])
     range[1L] <- ceiling(range[1L])
     range[2L] <- floor(range[2L])
-    ## find out the scale involved
-    d <- range[2L] - range[1L]
-    z <- c(range, x[is.finite(x)])
-    class(z) <- "Date"
-    if (d < 7) # days of a week
-        if(missing(format)) format <- "%a"
-    if(d < 100) { # month and day
-        z <- .Date(pretty(z))
-        if(missing(format)) format <- "%b %d"
-    } else if(d < 1.1*365) { # months
-        zz <- as.POSIXlt(z)
-        zz$mday <- 1
-        zz$mon <- pretty(zz$mon)
-        m <- length(zz$mon)
-        m <- rep.int(zz$year[1L], m)
-        zz$year <- c(m, m+1)
-        z <- as.Date(zz)
-        if(missing(format)) format <- "%b"
-    } else { # years
-        zz <- as.POSIXlt(z)
-        zz$mday <- 1; zz$mon <- 0
-        zz$year <- pretty(zz$year)
-        z <- as.Date(zz)
-        if(missing(format)) format <- "%Y"
+    rangeDate <- range
+    class(rangeDate) <- "Date"
+
+    if(has.at){
+        # convert at to Date:
+        if(is.numeric(at))
+            class(at) <- "Date"
+        else 
+            at <- as.Date(at)
+        z <- at[is.finite(at)]
+
+        # find format if missing:
+        if(missing(format)){
+#            format <- if(!missing(x)) attr(grDevices:::prettyDate(x), "format") else attr(grDevices:::prettyDate(rangeDate), "format")
+#        }else if(is.null(format)){ # exdend format if needed for proper representation of at
+            format <- if(!missing(x)) extendDateTimeFormat(x, z) else extendDateTimeFormat(rangeDate, z)
+            }
+    } else {
+        z <- grDevices:::prettyDate(rangeDate)
+        if(missing(format)) format <- attr(z, "format")
     }
-    if(has.at) z <- x[is.finite(x)] # override changes
+
     keep <- z >= range[1L] & z <= range[2L]
     z <- z[keep]
-    z <- sort(unique(z)); class(z) <- "Date"
-    if (!is.logical(labels)) labels <- labels[keep]
+    if (!is.logical(labels)) 
+        labels <- labels[keep]
     else if (isTRUE(labels))
-	labels <- format.Date(z, format = format)
+        labels <- format(z, format = format)
     else if (isFALSE(labels))
-	labels <- rep("", length(z)) # suppress labelling of ticks
+        labels <- rep("", length(z)) # suppress labelling of ticks
+
     axis(side, at = z, labels = labels, ...)
 }
 

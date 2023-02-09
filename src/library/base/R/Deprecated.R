@@ -44,14 +44,14 @@
 ## <entry>
 ## Docu-deprecated in 4.1.0
 ## Formally deprecated in 4.2.0
-default.stringsAsFactors <- function()
-{
-    .Deprecated("`stringsAsFactors = FALSE`")
-    val <- getOption("stringsAsFactors")
-    if(is.null(val)) val <- FALSE
-    if(length(val) != 1L || !is.logical(val) || is.na(val))
-        stop('options("stringsAsFactors") not set to TRUE or FALSE')
-    val
-}
+## default.stringsAsFactors <- function()
+## {
+##     .Deprecated("`stringsAsFactors = FALSE`")
+##     val <- getOption("stringsAsFactors")
+##     if(is.null(val)) val <- FALSE
+##     if(length(val) != 1L || !is.logical(val) || is.na(val))
+##         stop('options("stringsAsFactors") not set to TRUE or FALSE')
+##     val
+## }
 ## </entry>
 

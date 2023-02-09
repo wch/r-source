@@ -3,7 +3,7 @@
  *  file pager.c
  *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004--8     The R Foundation
- *  Copyright (C) 2004--2020  The R Core Team
+ *  Copyright (C) 2004--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,10 +78,20 @@ static xbuf file2xbuf(const char *name, int enc, int del)
     wchar_t *wp, *q;
 
     if (enc == CE_UTF8) {
-	wchar_t wfn[MAX_PATH+1];
-	Rf_utf8towcs(wfn, name, MAX_PATH+1);
+	size_t len = Rf_utf8towcs(NULL, name, 0);
+	if (len == (size_t)-1) {
+	    R_ShowMessage(G_("Error opening file"));
+	    return NULL;
+	}
+	wchar_t *wfn = (wchar_t *)malloc((len + 1)*sizeof(wchar_t));
+	if (!wfn) {
+	    R_ShowMessage(G_("Insufficient memory to display file in internal pager"));
+	    return NULL;
+	}
+	Rf_utf8towcs(wfn, name, len + 1);
 	f = CreateFileW(wfn, GENERIC_READ, FILE_SHARE_READ,
 			NULL, OPEN_EXISTING, 0, NULL);
+	free(wfn);
     } else
 	f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		       NULL, OPEN_EXISTING, 0, NULL);

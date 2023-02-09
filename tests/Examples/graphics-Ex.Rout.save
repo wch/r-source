@@ -1,11 +1,13 @@
 
-R Under development (unstable) (2022-01-05 r81451) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-01-13 r83608) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -147,9 +149,8 @@ Hair    Brown Blue Hazel Green
 > 
 > x <- 9.9*10^(-3:10)
 > plot(x, 1:14, log = "x")
-> axTicks(1) # now length 7, in R <= 2.13.x gave 'nintLog = Inf' res; then
+> axTicks(1) # now length 7
 [1] 1e-02 1e+00 1e+02 1e+04 1e+06 1e+08 1e+10
-> ## 1e-01 1e+01 1e+03 1e+05 1e+07 1e+09 1e+11 ; since R 4.2.0: 1e-2 1e0 1e2 .. 1e10
 > axTicks(1, nintLog = Inf) # rather too many
  [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 1e+07 1e+08 1e+09
 [13] 1e+10 1e+11
@@ -195,13 +196,15 @@ Hair    Brown Blue Hazel Green
 > ### ** Examples
 > 
 > with(beaver1, {
-+ time <- strptime(paste(1990, day, time %/% 100, time %% 100),
-+                  "%Y %j %H %M")
-+ plot(time, temp, type = "l") # axis at 4-hour intervals.
-+ # now label every hour on the time axis
-+ plot(time, temp, type = "l", xaxt = "n")
-+ r <- as.POSIXct(round(range(time), "hours"))
-+ axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
++     opar <- par(mfrow = c(2,1))
++     time <- strptime(paste(1990, day, time %/% 100, time %% 100),
++                      "%Y %j %H %M")
++     plot(time, temp, type = "l") # axis at 5-hour intervals.
++     # now label every hour on the time axis
++     plot(time, temp, type = "l", xaxt = "n")
++     r <- as.POSIXct(round(range(time), "hours"))
++     axis.POSIXct(1, at = seq(r[1], r[2], by = "hour"), format = "%H")
++     par(opar) # reset changed par settings
 + })
 > 
 > plot(.leap.seconds, seq_along(.leap.seconds), type = "n", yaxt = "n",
@@ -223,8 +226,57 @@ Hair    Brown Blue Hazel Green
 > axis.Date(1, at = seq(as.Date("2001/1/1"), max(random.dates)+6, "days"),
 +      labels = FALSE, tcl = -0.2)
 > 
+> ## axis.Date() with various data types:
+> x <- seq(as.Date("2022-01-20"), as.Date("2023-03-21"), by = "days")
+> plot(data.frame(x, y = 1), xaxt = "n")
+> legend("topleft", title = "input",
++        legend = c("character", "Date", "POSIXct", "POSIXlt", "numeric"),
++        fill = c("violet", "red", "orange", "coral1", "darkgreen"))
+> axis.Date(1)
+> axis.Date(3, at = "2022-04-01", col.axis = "violet")
+> axis.Date(3, at = as.Date("2022-07-01"), col.axis = "red")
+> axis.Date(3, at = as.POSIXct(as.Date("2022-10-01")), col.axis = "orange")
+> axis.Date(3, at = as.POSIXlt(as.Date("2023-01-01")), col.axis = "coral1")
+> axis.Date(3, at = as.integer(as.Date("2023-04-01")), col.axis = "darkgreen")
+> ## automatically extends the format:
+> axis.Date(1, at = "2022-02-15", col.axis = "violet",
++          col = "violet", tck = -0.05, mgp = c(3,2,0))
+> 
+> ## axis.POSIXct() with various data types (2 minutes):
+> x <- as.POSIXct("2022-10-01") + c(0, 60, 120)
+> attributes(x)   # no timezone
+$class
+[1] "POSIXct" "POSIXt" 
+
+> plot(data.frame(x, y = 1), xaxt = "n")
+> legend("topleft", title = "input",
++        legend = c("character", "Date", "POSIXct", "POSIXlt", "numeric"),
++        fill = c("violet", "red", "orange", "coral1", "darkgreen"))
+> axis.POSIXct(1)
+> axis.POSIXct(3, at = "2022-10-01 00:01", col.axis = "violet")
+> axis.POSIXct(3, at = as.Date("2022-10-01"), col.axis = "red")
+> axis.POSIXct(3, at = as.POSIXct("2022-10-01 00:01:30"), col.axis = "orange")
+> axis.POSIXct(3, at = as.POSIXlt("2022-10-01 00:02"), col.axis = "coral1")
+> axis.POSIXct(3, at = as.numeric(as.POSIXct("2022-10-01 00:00:30")),
++                 col.axis = "darkgreen")
+> ## automatically extends format (here: subseconds):
+> axis.POSIXct(3, at = as.numeric(as.POSIXct("2022-10-01 00:00:30")) + 0.25,
++                 col.axis = "forestgreen", col = "darkgreen", mgp = c(3,2,0))
+> 
+> ## axis.POSIXct: 2 time zones
+> HST <- as.POSIXct("2022-10-01", tz = "HST") + c(0, 60, 60*60)
+> CET <- HST
+> attr(CET, "tzone") <- "CET"
+> plot(data.frame(HST, y = 1), xaxt = "n", xlab = "Hawaii Standard Time (HST)")
+> axis.POSIXct(1, HST)
+> axis.POSIXct(1, HST, at = "2022-10-01 00:10", col.axis = "violet")
+> axis.POSIXct(3, CET)
+> mtext(3, text = "Central European Time (CET)", line = 3)
+> axis.POSIXct(3, CET, at="2022-10-01 12:10", col.axis = "violet")
 > 
 > 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("axis")
 > ### * axis
@@ -1194,9 +1246,26 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +       xlab = expression(cos(r^2) * e^{-r/6}))
 > contour(z, add = TRUE, drawlabels = FALSE)
 > 
-> # Volcano data visualized as matrix. Need to transpose and flip
-> # matrix horizontally.
-> image(t(volcano)[ncol(volcano):1,])
+> # Visualize as matrix.  Need to transpose matrix and then flip it horizontally:
+> tf <- function(m) t(m)[, nrow(m):1]
+> imageM <- function(m, grid = max(dim(m)) <= 25, asp = (nrow(m)-1)/(ncol(m)-1), ...) {
++     image(tf(m), asp=asp, axes = FALSE, ...)
++     mAxis <- function(side, at, ...) # using 'j'
++         axis(side, at=at, labels=as.character(j+1L), col="gray", col.axis=1, ...)
++     n <- ncol(m); n1 <- n-1L; j <- 0L:n1; mAxis(1, at= j/n1)
++     if(grid) abline(v = (0:n - .5)/n1, col="gray77", lty="dotted")
++     n <- nrow(m); n1 <- n-1L; j <- 0L:n1; mAxis(2, at=1-j/n1, las=1)
++     if(grid) abline(h = (0:n - .5)/n1, col="gray77", lty="dotted")
++ }
+> (m <- outer(1:5, 1:14))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+[1,]    1    2    3    4    5    6    7    8    9    10    11    12    13    14
+[2,]    2    4    6    8   10   12   14   16   18    20    22    24    26    28
+[3,]    3    6    9   12   15   18   21   24   27    30    33    36    39    42
+[4,]    4    8   12   16   20   24   28   32   36    40    44    48    52    56
+[5,]    5   10   15   20   25   30   35   40   45    50    55    60    65    70
+> imageM(m, main = "image(<5 x 14 matrix>)   with rows and columns")
+> imageM(volcano)
 > 
 > # A prettier display of the volcano
 > x <- 10*(1:nrow(volcano))
@@ -1828,12 +1897,11 @@ armed.forces
 > y <- x
 > f <- function(x, y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
 > z <- outer(x, y, f)
-> z[is.na(z)] <- 1
 > op <- par(bg = "white")
 > persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue")
 > persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
 +       ltheta = 120, shade = 0.75, ticktype = "detailed",
-+       xlab = "X", ylab = "Y", zlab = "Sinc( r )"
++       xlab = "X", ylab = "Y", zlab = "Sinc( r )", cex.axis = 0.8
 + ) -> res
 > round(res, 3)
       [,1]   [,2]   [,3]   [,4]
@@ -2206,7 +2274,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x55daca5416a8>
+<bytecode: 0x0000019cccf29bf8>
 <environment: namespace:graphics>
 > 
 > 
@@ -3076,7 +3144,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x55dacadb84e8>
+<bytecode: 0x0000019ccc7ed9a0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3157,7 +3225,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.98 0.04 3.02 0 0 
+Time elapsed:  3.054 0.221 3.303 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-11-24 r81238) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-02-07 r83775) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1667,6 +1667,11 @@ List of 6
 +           gp=gpar(fontsize=20, col="grey"))
 > grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
 +           gp=gpar(fontsize=20), check.overlap=TRUE)
+> 
+> grid.newpage() ## plotmath example
+> grid.text(quote(frac(e^{-x^2/2}, sqrt(2*pi))), x=x, y=y, rot=stats::runif(20, -45,45),
++           gp=gpar(fontsize=17, col=4), check.overlap=TRUE)
+> 
 > grid.newpage()
 > draw.text <- function(just, i, j) {
 +   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -1921,7 +1926,7 @@ List of 6
 > 
 > ### Name: unit
 > ### Title: Function to Create a Unit Object
-> ### Aliases: unit
+> ### Aliases: unit is.unit
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -2436,7 +2441,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.212 0.024 2.232 0 0 
+Time elapsed:  1.744 0.012 1.759 0 0 
 > grDevices::dev.off()
 null device 
           1 

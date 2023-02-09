@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -94,7 +94,7 @@ X11.options(\dots, reset = FALSE)
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
     cairographics.  The default is \code{"cairo"} where \R was built
-    using \code{pangocairo} (so not usually on macOS), otherwise
+    using \code{pangocairo} (often not the case on macOS), otherwise
     \code{"Xlib"}.}
 
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
@@ -156,11 +156,11 @@ X11.options(\dots, reset = FALSE)
   connections \code{type = "dbcairo"} will probably give the best
   performance.
 
-  Because of known problems with font selection on macOS without
-  Pango (for example, the CRAN distribution), \code{type = "cairo"} is
-  not the default there.  These problems have included mixing up bold
-  and italic (since worked around), selecting incorrect glyphs and ugly
-  or missing symbol glyphs.
+  Because of known problems with font selection on macOS without Pango
+  (for example, most CRAN distributions), \code{type = "cairo"} is not
+  the default there.  These problems have included mixing up bold and
+  italic (since worked around), selecting incorrect glyphs and ugly or
+  missing symbol glyphs.
 
   All devices which use an X11 server (including the \code{type =
     "Xlib"} versions of bitmap devices such as \code{\link{png}}) share

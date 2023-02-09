@@ -52,6 +52,6 @@ span.env {
     font-family: monospace;
 }
 
-ul.menu {
-    list-style-type: decimal;
+#Top > .header, #Top > h1 {     /* for Texinfo 6.8 */
+    display: none
 }

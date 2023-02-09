@@ -141,7 +141,7 @@ static SEXP matchPar_int(const char *tag, SEXP *list, Rboolean exact)
 }
 
 /* unused outside this file */
-SEXP attribute_hidden matchPar(const char *tag, SEXP * list)
+attribute_hidden SEXP matchPar(const char *tag, SEXP * list)
 {
     return matchPar_int(tag, list, FALSE);
 }
@@ -152,7 +152,7 @@ SEXP attribute_hidden matchPar(const char *tag, SEXP * list)
 /* Returns the first partially matching tag found. */
 /* Pattern is a symbol. */
 
-SEXP attribute_hidden matchArg(SEXP tag, SEXP * list)
+attribute_hidden SEXP matchArg(SEXP tag, SEXP * list)
 {
     return matchPar(CHAR(PRINTNAME(tag)), list);
 }
@@ -162,7 +162,7 @@ SEXP attribute_hidden matchArg(SEXP tag, SEXP * list)
 /* Returns the first exactly matching tag found. */
 /* Pattern is a symbol. */
 
-SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
+attribute_hidden SEXP matchArgExact(SEXP tag, SEXP * list)
 {
       return matchPar_int(CHAR(PRINTNAME(tag)), list, TRUE);
 }
@@ -181,7 +181,7 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 /* Renamed to matchArgs_NR to reflect that it returns a
    non-reference-tracking list */
 
-SEXP attribute_hidden matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
+attribute_hidden SEXP matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
 {
     Rboolean seendots;
     int i, arg_i = 0;
@@ -383,7 +383,7 @@ SEXP attribute_hidden matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
 }
 
 /* Use matchArgs_RC if the result might escape into R. */
-SEXP attribute_hidden matchArgs_RC(SEXP formals, SEXP supplied, SEXP call)
+attribute_hidden SEXP matchArgs_RC(SEXP formals, SEXP supplied, SEXP call)
 {
     SEXP args = matchArgs_NR(formals, supplied, call);
     /* it would be better not to build this arglist with CONS_NR in
@@ -433,7 +433,7 @@ void patchArgument(SEXP suppliedSlot, SEXP name, fstype_t *farg, SEXP cloenv) {
     SETCAR(suppliedSlot, mkPROMISE(name, cloenv));
 }
 
-SEXP attribute_hidden
+attribute_hidden SEXP
 patchArgsByActuals(SEXP formals, SEXP supplied, SEXP cloenv)
 {
     int i, seendots, farg_i;

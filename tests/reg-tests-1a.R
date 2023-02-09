@@ -12,6 +12,7 @@ envLst <- c(t(outer(c("R_ENVIRON","R_PROFILE"), c("","_USER"), paste0)),
 cbind(Sys.getenv(envLst))
 .libPaths()
 
+(have_cat <- nzchar(Sys.which("cat")))
 assertError <- tools::assertError
 
 ## regression test for PR#376
@@ -353,14 +354,16 @@ stopifnot(identical(it, as.integer(rowSums(outer(tt, X, ">=")))),
 	  is.na(it[ina]))
 
 
+if (have_cat) {
 ## fix
-oo <- options(editor="touch") # not really changing anything
+oo <- options(editor="cat") # not really changing anything
 fix(pi)
 if(!is.numeric(pi) || length(pi)!=1 ||
    !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
       stop("OOPS:  fix() is broken ...")
 rm(pi); options(oo)
 ## end of moved from fix.Rd
+}
 
 
 ## format
@@ -969,6 +972,13 @@ stopifnot(diff(x) > 0)
 m <- matrix(1, 0, 0)  # 1 to force numeric not logical
 try(eigen(m))
 ## segfaults on 1.2.2
+
+
+## PR 979 expand.model.frame() failed for models fitted with a subset
+df <- data.frame(y = 1:10, z = 1:10, m = 1:10)
+fit <- lm(y ~ 1, data = df, subset = m < 8)
+mf <- expand.model.frame(fit, ~ z)  # failed in 1.2.3
+stopifnot(identical(names(mf), c("y", "z")), identical(mf$z, 1:7))
 
 
 ## 1.3.0 had poor compression on gzfile() with lots of small pieces.
@@ -1833,6 +1843,7 @@ stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
 
+if (have_cat) {
 ## Formerly undocumented line limit in system(intern=TRUE)
 ## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
 tmp <- tempfile()
@@ -1841,6 +1852,7 @@ cat(long, "\n", sep="", file=tmp)
 junk <- system(paste("cat", shQuote(tmp)), intern = TRUE)
 stopifnot(length(junk) == 1L, nchar(junk[1]) == 200L)
 ## and split truncated on 1.6.1
+}
 
 
 ## missing group generics for `difftime' (related to PR#2345)

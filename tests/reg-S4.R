@@ -957,6 +957,7 @@ if(require("Matrix", lib.loc = .Library, quietly = TRUE)) { withAutoprint({
     setClass("C2", contains = "C")
     setClass("C3", contains = "C2")
     m <- matrix(c(0,0,2:0), 3,5, dimnames = list(NULL,NULL))
+    m2 <- matrix(c(0,0,2:0), 3,5)
     (mC <- as(m, "dgCMatrix"))
     (cc <- as(mC, "C"))
      c2 <- as(mC, "C2")
@@ -964,9 +965,9 @@ if(require("Matrix", lib.loc = .Library, quietly = TRUE)) { withAutoprint({
     stopifnot(
         identical(capture.output(c2),
                   sub("C3","C2", capture.output(c3)))
-      , identical(as(cc, "matrix"), m)
-      , identical(as(c2, "matrix"), m)
-      , identical(as(c3, "matrix"), m)
+      , identical(as(cc, "matrix"), m2) # changed for Matrix 1.5-x
+      , identical(as(c2, "matrix"), m2)
+      , identical(as(c3, "matrix"), m2)
     )
     invisible(lapply(c("Z","C","C2","C3"), removeClass))
  })

@@ -1,6 +1,6 @@
 % File src/library/base/man/curlGetHeaders.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2021 R Core Team
+% Copyright 2015-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{curlGetHeaders}
@@ -11,7 +11,6 @@
 \description{
   Retrieve the headers for a URL for a supported protocol such as
   \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
-  Prior to \R 4.2.0, an optional function not supported on all platforms.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE, verify = TRUE,
@@ -85,5 +84,5 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
 \examples{\donttest{## needs Internet access, results vary
 curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
 curlGetHeaders("https://httpbin.org/status/404")  ## returns status
-curlGetHeaders("ftp://cran.r-project.org")
+## curlGetHeaders("ftp://cran.r-project.org") ## ftp::// support is vanishing
 }}

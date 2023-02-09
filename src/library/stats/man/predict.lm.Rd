@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -16,7 +16,10 @@
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
         terms = NULL, na.action = na.pass,
-        pred.var = res.var/weights, weights = 1, \dots)
+        pred.var = res.var/weights, weights = 1,
+        rankdeficient = c("warnif", "simple", "non-estim", "NA", "NAwarn"),
+        tol = 1e-6, verbose = FALSE,
+        \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -37,6 +40,30 @@
   \item{weights}{variance weights for prediction.  This can be a numeric
     vector or a one-sided model formula.  In the latter case, it is
     interpreted as an expression evaluated in \code{newdata}.}
+  \item{rankdeficient}{a \code{\link{character}} string specifying what
+    should happen in the case of a rank deficient model, i.e., when
+    \code{object$rank < ncol(model.matrix(object))}.
+    \describe{
+      \item{\code{"warnif"}:}{gives a \code{\link{warning}} only in case of
+	predicting \sQuote{non-estimable} cases, i.e., vectors not in the
+	same predictor subspace as the original data (with tolerance \code{tol}).}
+      \item{\code{"simple"}:}{is back compatible, possibly giving dubious
+	predictions in non-estimable cases, and always signals a \code{\link{warning}}.}
+      \item{\code{"non-estim"}:}{gives the same predictions without
+	\code{\link{warning}}, but with an
+	attribute \code{\link{attr}(*, "non-estim")} with indices
+	in \code{1:nrow(newdata)} of new data observations which are deemed
+	non-estimable.}
+      \item{\code{"NA"}:    }{predicts \code{NA} for non-estimable new data,
+	silently.}
+      \item{\code{"NAwarn"}:}{predicts \code{NA} for non-estimable new data
+	with a \code{\link{warning}}.}
+    }
+  }
+  \item{tol}{non-negative number determining how non-estimability is
+    determined in rank deficient cases.}
+  \item{verbose}{\code{\link{logical}} indicating if messages should be
+    produced about rank deficiency handling.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -52,9 +79,19 @@
   referred to as narrow vs. wide intervals.
 
   If the fit is rank-deficient, some of the columns of the design matrix
-  will have been dropped.  Prediction from such a fit only makes sense
-  if \code{newdata} is contained in the same subspace as the original
-  data.  That cannot be checked accurately, so a warning is issued.
+  will have been dropped during the \code{\link{lm}} computations, and
+  corresponding \code{\link{coef}()} components set to \code{\link{NA}}.
+  Prediction from such a fit only makes sense if \code{newdata} is
+  contained in the same subspace as the original data.  Other
+  \code{newdata} entries (rows) are \code{non-estimable}.  This is now
+  checked (up to numerical tolerance \code{tol}) unless \code{rankdeficient
+    == "simple"}, which corresponds to previous behaviour, warns always and
+  predicts using the non-\code{NA} coefficients with the corresponding
+  columns of the design matrix.  The new default option,
+  \code{rankdeficient == "warnif"} checks if there are
+  \dQuote{non-estimable} cases (up to tolerance \code{tol}) and only warns
+  in that case.  All further \code{rankdeficient} options also check and
+  either predict \code{NA} or mark the non-estimable cases differently.
 
   If \code{newdata} is omitted the predictions are based on the data
   used for the fit.  In that case how cases with missing values in the

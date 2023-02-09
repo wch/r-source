@@ -1,7 +1,7 @@
 #  File src/library/stats/R/add.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2020 The R Core Team
+#  Copyright (C) 1998-2022 The R Core Team
 #  Copyright (C) 1994-8 W. N. Venables and B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -215,8 +215,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     aod
 }
 
-add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
-                                                 "Chisq", "F"),
+add1.glm <- function(object, scope, scale = 0,
+                     test = c("none", "Rao", "LRT", "Chisq", "F"),
 		     x = NULL, k = 2, ...)
 {
     Fstat <- function(table, rdf) {
@@ -382,14 +382,14 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
-	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+	ans[i+1L, ] <- extractAIC(nfit, scale, k = k, ...)
         nnew <- nobs(nfit, use.fallback = TRUE)
         if(all(is.finite(c(n0, nnew))) && nnew != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
-    dfs <- ans[1L , 1L] - ans[, 1L]
+    dfs <- ans[1L, 1L] - ans[, 1L]
     dfs[1L] <- NA
-    aod <- data.frame(Df = dfs, AIC = ans[,2])
+    aod <- data.frame(Df = dfs, AIC = ans[, 2])
     test <- match.arg(test)
     if(test == "Chisq") {
         dev <- ans[, 2L] - k*ans[, 1L]
@@ -614,7 +614,7 @@ drop.scope <- function(terms1, terms2)
 factor.scope <- function(factor, scope)
 {
     drop <- scope$drop
-    add <- scope$add
+    add  <- scope$add
 
     if(length(factor) && !is.null(drop)) {# have base model
 	nmdrop <- colnames(drop)

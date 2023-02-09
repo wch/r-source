@@ -23,7 +23,14 @@ finaliseGroup <- function(x) {
         ## Current viewport layout and scales are preserved so that
         ## locations and dimensions of viewports and grobs in x$src
         ## retain their original meaning.
-        pushViewport(viewport(mask="none",
+        ##
+        ## Justification of the current viewport must also be preserved
+        ## so that transformation on group use is calculated correctly.
+        hjust <- resolveHJust(cvp$just, cvp$hjust)
+        vjust <- resolveVJust(cvp$just, cvp$vjust)
+        pushViewport(viewport(hjust, vjust,
+                              just=c(hjust, vjust),
+                              mask="none",
                               layout=cvp$layout,
                               xscale=cvp$xscale, yscale=cvp$yscale),
                      recording=FALSE)
@@ -33,7 +40,11 @@ finaliseGroup <- function(x) {
     if (is.grob(x$dst)) {
         destination <- function() {
             cvp <- current.viewport()
-            pushViewport(viewport(mask="none",
+            hjust <- resolveHJust(cvp$just, cvp$hjust)
+            vjust <- resolveVJust(cvp$just, cvp$vjust)
+            pushViewport(viewport(hjust, vjust,
+                                  just=c(hjust, vjust),
+                                  mask="none",
                                   layout=cvp$layout,
                                   xscale=cvp$xscale, yscale=cvp$yscale),
                          recording=FALSE)
@@ -51,25 +62,41 @@ finaliseGroup <- function(x) {
 groupIndex <- 18
 
 ## Record group definition (in 'grid' state)
-recordGroup <- function(name, ref) {
+recordGroup <- function(x, ref) {
     devState <- get(".GRID.STATE", envir=.GridEvalEnv)[[dev.cur() - 1]]
     devStateGroups <- devState[[groupIndex]]
     cvp <- current.viewport()
+    ct <- current.transform()
+    if (x$coords) {
+        ## Points of group definition, in inches, on the device
+        pts <- groupPoints(x, TRUE)
+        closedPoints <- transformCoords(pts, ct)
+        pts <- groupPoints(x, FALSE)
+        openPoints <- transformCoords(pts, ct)
+    } else {
+        closedPoints <- emptyGrobCoords(x$name)
+        openPoints <- emptyGrobCoords(x$name)
+    }
     group <- list(ref=ref,
                   ## Record location, size, angle for re-use in
                   ## different viewport
                   xy=deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
                                unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
                                valueOnly=TRUE, device=TRUE),
+                  xyin=deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
+                                 unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
+                                 valueOnly=TRUE, device=FALSE),
                   wh=c(convertX(unit(1, "npc"), "in", valueOnly=TRUE),
                        convertY(unit(1, "npc"), "in", valueOnly=TRUE)),
-                  r=current.rotation())
+                  r=current.rotation(),
+                  closedPoints=closedPoints,
+                  openPoints=openPoints)
     if (is.null(devStateGroups)) {
         grps <- list(group)
-        names(grps) <- name
+        names(grps) <- x$name
         devStateGroups <- grps
     } else {
-        devStateGroups[[name]] <- group
+        devStateGroups[[x$name]] <- group
     }
     grid.Call.graphics(C_setGridState,
                        as.integer(groupIndex - 1),
@@ -92,19 +119,12 @@ groupTranslate <- function(dx=0, dy=0) {
     translate
 }
 
-defnTranslate <- function(group, inverse=FALSE, ...) {
-    if (inverse) {
-        groupTranslate(-group$xy$x, -group$xy$y)
+defnTranslate <- function(group, inverse=FALSE, device=TRUE) {
+    if (device) {
+        xy <- group$xy
     } else {
-        groupTranslate(group$xy$x, group$xy$y)
+        xy <- group$xyin
     }
-}
-
-useTranslate <- function(group, inverse=FALSE, ...) {
-    cvp <- current.viewport()
-    xy <- deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
-                    unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
-                    valueOnly=TRUE, device=TRUE)
     if (inverse) {
         groupTranslate(-xy$x, -xy$y)
     } else {
@@ -112,13 +132,26 @@ useTranslate <- function(group, inverse=FALSE, ...) {
     }
 }
 
-viewportTranslate <- function(group, ...) {
-    defnTranslate(group, inverse=TRUE) %*% useTranslate(group)
+useTranslate <- function(inverse=FALSE, device=TRUE) {
+    cvp <- current.viewport()
+    xy <- deviceLoc(unit(resolveHJust(cvp$just, cvp$hjust), "npc"),
+                    unit(resolveVJust(cvp$just, cvp$vjust), "npc"),
+                    valueOnly=TRUE, device=device)
+    if (inverse) {
+        groupTranslate(-xy$x, -xy$y)
+    } else {
+        groupTranslate(xy$x, xy$y)
+    }
 }
 
-groupRotate <- function(r=0) {
+viewportTranslate <- function(group, device=TRUE) {
+    defnTranslate(group, inverse=TRUE, device=device) %*%
+        useTranslate(device=device)
+}
+
+groupRotate <- function(r=0, device=TRUE) {
     ## Account for devices that have origin at top-left
-    if (!.devUp()) r <- -r
+    if (device && !.devUp()) r <- -r
     rotate <- diag(3)
     theta <- r/180*pi
     costheta <- cos(theta)
@@ -130,32 +163,29 @@ groupRotate <- function(r=0) {
     rotate    
 }
 
-defnRotate <- function(group, inverse=FALSE, ...) {
+defnRotate <- function(group, inverse=FALSE, device=TRUE) {
     if (inverse) {
-        groupRotate(-group$r)
+        groupRotate(-group$r, device)
     } else {
-        groupRotate(group$r)
+        groupRotate(group$r, device)
     }
 }
 
-useRotate <- function(group, inverse=FALSE, ...) {
+useRotate <- function(inverse=FALSE, device=TRUE) {
     r <- current.rotation()
     if (inverse) {
-        groupRotate(-r)
+        groupRotate(-r, device)
     } else {
-        groupRotate(r)
+        groupRotate(r, device)
     }    
 }
 
-viewportRotate <- function(group, ...) {
-    r <- current.rotation()
-    if (r != group$r) {
-        defnTranslate(group, inverse=TRUE) %*%
-            groupRotate(r - group$r) %*%
-            defnTranslate(group)
-    } else {
-        diag(3)
-    }
+viewportRotate <- function(group, device=TRUE) {
+    defnTranslate(group, inverse=TRUE, device=device) %*%
+        defnRotate(group, inverse=TRUE, device=device) %*%
+        useRotate(device=device) %*%
+        ## NOTE: NOT useTranslate() because we are ONLY rotating
+        defnTranslate(group, device=device)
 }
 
 groupScale <- function(sx=1, sy=1) {
@@ -165,29 +195,33 @@ groupScale <- function(sx=1, sy=1) {
     scale    
 }
 
-defnScale <- function(group, inverse=FALSE, ...) {
-    diag(1)
-}
-
-useScale <- function(group, inverse=FALSE, ...) {
-    wh <- c(convertX(unit(1, "npc"), "in", valueOnly=TRUE),
-            convertY(unit(1, "npc"), "in", valueOnly=TRUE))
+defnScale <- function(group, inverse=FALSE) {
     if (inverse) {
-        groupScale(group$wh[1]/wh[1], group$wh[2]/wh[2])
+        groupScale(1/group$wh[1], 1/group$wh[2])
     } else {
-        groupScale(wh[1]/group$wh[1], wh[2]/group$wh[2])
+        groupScale(group$wh[1], group$wh[2])
     }
 }
 
-viewportScale <- function(group, ...) {
-    defnTranslate(group, inverse=TRUE) %*%
-        useScale(group) %*%
-        defnTranslate(group)
+useScale <- function(inverse=FALSE) {
+    wh <- c(convertX(unit(1, "npc"), "in", valueOnly=TRUE),
+            convertY(unit(1, "npc"), "in", valueOnly=TRUE))
+    if (inverse) {
+        groupScale(1/wh[1], 1/wh[2])
+    } else {
+        groupScale(wh[1], wh[2])
+    }
+}
+
+viewportScale <- function(group, device=TRUE) {
+    defnTranslate(group, inverse=TRUE, device=device) %*%
+        defnScale(group, inverse=TRUE) %*%
+        useScale() %*%
+        ## NOTE: NOT useTranslate() because we are ONLY scaling
+        defnTranslate(group, device=device)
 }
 
 groupShear <- function(sx=0, sy=0) {
-    ## Account for devices that have origin at top-left
-    if (!.devUp()) { sx <- -sx; sy <- -sy }
     shear <- diag(3)
     shear[1, 2] <- sy
     shear[2, 1] <- sx
@@ -205,14 +239,21 @@ groupFlip <- function(flipX=FALSE, flipY=FALSE) {
 
 viewportTransform <- function(group,
                               shear=groupShear(),
-                              flip=groupFlip(), ...) {
-    r <- current.rotation()
-    defnTranslate(group, inverse=TRUE) %*%
+                              flip=groupFlip(),
+                              device=TRUE) {
+    ## Account for devices that have origin at top-left
+    if (device && !.devUp()) {
+        shear[1, 2] <- -shear[1, 2]
+        shear[2, 1] <- -shear[2, 1]
+    }
+    defnTranslate(group, inverse=TRUE, device=device) %*%
+        defnRotate(group, inverse=TRUE, device=device) %*%
+        defnScale(group, inverse=TRUE) %*%
         flip %*%
-        useScale(group) %*%
+        useScale() %*%
         shear %*%
-        groupRotate(r - group$r) %*%
-        useTranslate(group)
+        useRotate(device=device) %*%
+        useTranslate(device=device)
 }
 
 ##########################
@@ -221,7 +262,7 @@ drawDetails.GridGroup <- function(x, recording) {
     grp <- finaliseGroup(x)
     ref <- .defineGroup(grp$src, grp$op, grp$dst)
     ## Record group to allow later reuse
-    recordGroup(x$name, ref)
+    recordGroup(x, ref)
     if (is.null(ref))
         warning("Group definition failed")
     else 
@@ -231,6 +272,7 @@ drawDetails.GridGroup <- function(x, recording) {
 groupGrob <- function(src,
                       op = "over",
                       dst = NULL,
+                      coords = TRUE,
                       name = NULL, gp=gpar(), vp=NULL) {
     
     if (!is.grob(src))
@@ -239,7 +281,7 @@ groupGrob <- function(src,
         stop("Invalid destination")
     ## Check valid 'op'
     .opIndex(op)
-    group <- gTree(src=src, op=op, dst=dst,
+    group <- gTree(src=src, op=op, dst=dst, coords=coords,
                    name=name, gp=gp, vp=vp, cl="GridGroup")
     group
 }
@@ -247,8 +289,9 @@ groupGrob <- function(src,
 grid.group <- function(src,
                        op = "over",
                        dst = NULL,
+                       coords = TRUE, 
                        name = NULL, gp=gpar(), vp=NULL) {
-    grid.draw(groupGrob(src, op, dst, name, gp, vp))
+    grid.draw(groupGrob(src, op, dst, coords, name, gp, vp))
 }
 
 ##########################
@@ -257,12 +300,13 @@ grid.group <- function(src,
 drawDetails.GridDefine <- function(x, recording) {
     group <- finaliseGroup(x)
     ref <- .defineGroup(group$src, group$op, group$dst)
-    recordGroup(x$name, ref)
+    recordGroup(x, ref)
 }
-
+    
 defineGrob <- function(src,
                        op = "over",
                        dst = NULL,
+                       coords = TRUE,
                        name = NULL, gp=gpar(), vp=NULL) {
     if (!is.grob(src))
         stop("Invalid source")
@@ -270,7 +314,7 @@ defineGrob <- function(src,
         stop("Invalid destination")
     ## Check valid 'op'
     .opIndex(op)
-    group <- gTree(src=src, op=op, dst=dst,
+    group <- gTree(src=src, op=op, dst=dst, coords=coords,
                    name=name, gp=gp, vp=vp, cl="GridDefine")
     group
 }
@@ -278,8 +322,9 @@ defineGrob <- function(src,
 grid.define <- function(src,
                         op = "over",
                         dst = NULL,
+                        coords = TRUE,
                         name = NULL, gp=gpar(), vp=NULL) {
-    grid.draw(defineGrob(src, op, dst, name, gp, vp))
+    grid.draw(defineGrob(src, op, dst, coords, name, gp, vp))
 }
 
 drawDetails.GridUse <- function(x, recording) {
@@ -287,10 +332,13 @@ drawDetails.GridUse <- function(x, recording) {
     if (is.null(group))
         warning(paste0("Unknown group: ", x$group))
     else {
-        transform <- x$transform(group)
+        transform <- x$transform(group, device=TRUE)
         if (!is.matrix(transform) ||
             !is.numeric(transform) ||
-            !all(dim(transform) == 3)) {
+            !all(dim(transform) == 3) ||
+            transform[1, 3] != 0 ||
+            transform[2, 3] != 0 ||
+            transform[3, 3] != 1) {
             warning("Invalid transform (nothing drawn)")
             return()
         }
@@ -315,6 +363,14 @@ grid.use <- function(group, transform=viewportTransform,
 ################################
 ## Other grob methods
 
+groupPoints <- function(x, closed, ...) {
+    if (is.null(x$dst))
+        children <- gList(x$src)
+    else
+        children <- gList(x$src, x$dst)
+    grobPoints(gTree(children=children), closed, ...)
+}
+    
 grobCoords.GridGroup <- function(x, closed, ...) {
     if (is.null(x$dst))
         children <- gList(x$src)
@@ -328,13 +384,119 @@ grobCoords.GridGroup <- function(x, closed, ...) {
 ## via grobPoints.gList(), will still call grobCoords() on the
 ## "child" src and dst
 grobPoints.GridGroup <- function(x, closed, ...) {
-    if (is.null(x$dst))
-        children <- gList(x$src)
-    else
-        children <- gList(x$src, x$dst)
-    grobPoints(gTree(children=children), closed, ...)
+    groupPoints(x, closed, ...)
 }
 
-grobCoords.GridDefine <- grobCoords.GridGroup
+## A group definition does not draw anything BUT coords
+## may be needed to resolve pattern fill
+## AND group definition may be a sibling of a group use
+## in which case the group use needs definition coordinates
+## BY DEFAULT, coordinates are recorded (but that can be turned
+## of by setting x$coords=FALSE) but NOT returned (but that
+## can be turned on by setting return=TRUE)
+definePoints <- function(x, closed, return=TRUE, ...) {
+    ## Record definition so GridUse can find it,
+    ## including calculating coordinates
+    ## (no actual drawing required)
+    recordGroup(x, "ignored")
+    if (return) {
+        ## Access the stored coordinates
+        ## (for the case when the definition itself needs them,
+        ##  e.g., for bbox to resolve pattern fill)
+        group <- lookupGroup(x$name)
+        if (closed)
+            pts <- group$closedPoints
+        else
+            pts <- group$openPoints
+        ## Coordinates recorded relative to device, so transform back to
+        ## relative to current viewport
+        ct <- current.transform()
+        transformCoords(pts, solve(ct))
+    } else {
+        emptyGrobCoords(x$name)
+    }
+}
 
-grobPoints.GridDefine <- grobPoints.GridGroup
+grobCoords.GridDefineChild <- function(x, closed, return=FALSE, ...) {
+    definePoints(x, closed, return, ...)
+}
+
+grobCoords.GridDefine <- function(x, closed, return=FALSE, ...) {
+    ## Create gTree to get automatic enforcement of 'gp' and 'vp'
+    ## BUT avoid infinite loop by setting temporary class
+    ## on GridUse grob
+    class(x) <- c("GridDefineChild", class(x))
+    grobCoords(gTree(children=gList(x), gp=x$gp, vp=x$vp),
+               closed, return, ...)
+}
+
+grobPoints.GridDefine <- function(x, closed, return=FALSE, ...) {
+    definePoints(x, closed, return, ...)
+}
+
+## A group use retrieves points from group definition
+## and applies transformation to them
+transformCoords <- function(coords, transform) {
+    if (isEmptyCoords(coords)) return(coords)
+    UseMethod("transformCoords")
+}
+
+transformCoords.GridCoords <- function(coords, transform) {
+    new <- cbind(coords$x, coords$y, 1) %*% transform
+    gridCoords(new[, 1], new[, 2])
+}
+
+transformCoords.GridGrobCoords <- function(coords, transform) {
+    new <- lapply(coords, transformCoords, transform)
+    gridGrobCoords(new, attr(coords, "name"), attr(coords, "rule"))
+}
+
+transformCoords.GridGTreeCoords <- function(coords, transform) {
+    new <- lapply(coords, transformCoords, transform)
+    gridGTreeCoords(new, attr(coords, "name"))
+}
+
+usePoints <- function(x, closed, ...) {
+    group <- lookupGroup(x$group)
+    if (is.null(group)) {
+        warning(paste0("Unknown group: ", x$group))
+        emptyGrobCoords(x$name)
+    } else {
+        transform <- x$transform(group, device=FALSE)
+        if (!is.matrix(transform) ||
+            !is.numeric(transform) ||
+            !all(dim(transform) == 3) ||
+            transform[1, 3] != 0 ||
+            transform[2, 3] != 0 ||
+            transform[3, 3] != 1) {
+            warning("Invalid transform")
+            emptyGrobCoords(x$name)
+        }
+        ## Apply inverse of viewport transform
+        ## (because grobCoords() are supposed to be relative to
+        ##  current viewport NOT device)
+        transform <- transform %*% solve(current.transform())
+        if (closed) {
+            transformCoords(group$closedPoints, transform)
+        } else {
+            transformCoords(group$openPoints, transform)
+        }
+    }
+}
+
+grobCoords.GridUseChild <- function(x, closed, ...) {
+    usePoints(x, closed, ...)
+}
+
+grobCoords.GridUse <- function(x, closed, ...) {
+    ## Create gTree to get automatic enforcement of 'gp' and 'vp'
+    ## BUT avoid infinite loop by setting temporary class
+    ## on GridUse grob
+    class(x) <- c("GridUseChild", class(x))
+    grobCoords(gTree(children=gList(x), gp=x$gp, vp=x$vp),
+               closed, ...)
+}
+
+grobPoints.GridUse <- function(x, closed, ...) {
+    usePoints(x, closed, ...)
+}

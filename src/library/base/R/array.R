@@ -1,7 +1,7 @@
 #  File src/library/base/R/array.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -107,12 +107,12 @@ function(x, sep = "", base = list(LETTERS), unique = TRUE)
     x
 }
 
-## The array split part used by apply():
+## The array split part used by apply() { ./apply.R }
 ## (With 'X' replaced by 'x').
 
 asplit <-
 function(x, MARGIN)
- {
+{
     ## Ensure that x is an array object
     dl <- length(dim(x))
     if(!dl) stop("dim(x) must have a positive length")
@@ -123,7 +123,7 @@ function(x, MARGIN)
     d <- dim(x)
     dn <- dimnames(x)
     ds <- seq_len(dl)
-    
+
     ## Extract the margins and associated dimnames
 
     if (is.character(MARGIN)) {
@@ -133,20 +133,19 @@ function(x, MARGIN)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
     }
-    s.call <- ds[-MARGIN]
-    s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]
-    d.ans <- d[MARGIN]
+    d.ans  <- d[ MARGIN]
+    if (anyNA(d.call) || anyNA(d.ans))
+        stop("'MARGIN' does not match dim(X)")
+    s.call <- ds[-MARGIN]
+    s.ans  <- ds[ MARGIN]
     dn.call <- dn[-MARGIN]
-    dn.ans <- dn[MARGIN]
+    dn.ans  <- dn[ MARGIN]
+    dimnames(x) <- NULL
 
     d2 <- prod(d.ans)
     newx <- aperm(x, c(s.call, s.ans))
     dim(newx) <- c(prod(d.call), d2)
-    ans <- vector("list", d2)
-    for(i in seq_len(d2)) {
-        ans[[i]] <- array(newx[,i], d.call, dn.call)
-    }
-
+    ans <- lapply(seq_len(d2), function(i) array(newx[,i], d.call, dn.call))
     array(ans, d.ans, dn.ans)
 }

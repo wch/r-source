@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 
-## Defaults for user settings, see MkRules.dist for descriptions. Rtools42
+## Defaults for user settings, see MkRules.dist for descriptions. Rtools43
 ## assumes that the compiler toolchain (e.g. gcc, as, ...) is on PATH
 LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
@@ -16,16 +16,17 @@ M_ARCH ?=
 AS_ARCH ?=
 RC_ARCH ?=
 DT_ARCH ?=
-WIN ?= 64
+## only WIN=64 is supported from R 4.2.0
+WIN = 64
 USE_ICU ?= YES
 ICU_PATH ?= 
 ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
 USE_CAIRO ?= YES
-CAIRO_CPPFLAGS ?= -I$(EXT_LIBS)/include/cairo
+CAIRO_CPPFLAGS ?= "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2"
 CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
-CURL_LIBS ?= -lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
+CURL_LIBS ?= -lcurl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
 
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE
@@ -77,9 +78,6 @@ arch_DEFS = -DR_ARCH='"i386"'
 SYMPAT = 's/^.* [BCDRT] _/ /p'
 endif
 
-## -std=c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
-C99FLAG=-std=gnu99
-
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
 
@@ -93,7 +91,7 @@ endif
 
 AR = $(BINPREF)ar
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
@@ -115,7 +113,7 @@ RESCOMP=$(BINPREF)windres $(RC_ARCH)
 SHLIB_LD=$(CC)
 SHLIB_LDFLAGS=-shared
 
-## If the Fortran compiler is gfortran >= 7, add
+## If the Fortran compiler is gfortran >= 7, R used to add
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
@@ -124,12 +122,15 @@ SHLIB_LDFLAGS=-shared
 ## restrictive, and has been added after the breakages were discovered.
 ## However, it is documented that this option may be removed in the future.
 ## https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90329
+##
+## -fno-optimize-sibling-calls is no longer forced once all packages are
+## passing char lengths.
 
-GFVER = $(shell echo "__GNUC__" | $(FC) -E -P -)
-GF7OPTS =
-ifneq ($(GFVER),"")
-GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
-endif
+## GF7OPTS =
+## GFVER = $(shell echo "__GNUC__" | $(FC) -E -P -)
+## ifneq ($(GFVER),"")
+## GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
+## endif
 
 ifneq "$(LTO)" ""
 AR = $(BINPREF)gcc-ar
@@ -154,6 +155,10 @@ SORT=sort
 	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
 
 .f.o:
+	$(FC) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+## used in src/extra/blas
+.f90.o:
 	$(FC) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
 ## $($*-LINKFLAGS) is used for Rgui Rterm and Rscript

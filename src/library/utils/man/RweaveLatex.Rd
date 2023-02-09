@@ -98,11 +98,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output in non-UTF-8 locales (note that pdfTeX assumes
   UTF-8 by default since 2018).  Either set
-  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX is
-  aware of the encoding used (in \R < 4.2.0, Windows users needed a
-  \samp{\\usepackage[cp1252]\{inputenc\}} declaration or similar,
-  see \code{\link{l10n_info}()}) and
-  ensure that typewriter fonts containing directional quotes are used.
+  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX
+  is aware of the encoding used and ensure that typewriter fonts
+  containing directional quotes are used.
 
   Some \LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
   in the list of known extensions.  To enable them, add something like
@@ -221,9 +219,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       \code{100} is a better choice for package vignettes.}
 
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
-      file to link the input line numbers to the output line numbers.
-      This is an experimental feature; see the source code for the
-      output format, which is subject to change in future releases.}
+      file to link the input line numbers to the output line numbers.}
 
     \item{figs.only:}{logical (\code{FALSE}).
       By default each figure chunk is run once, then re-run for each

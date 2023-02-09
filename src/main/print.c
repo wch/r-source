@@ -114,7 +114,7 @@ void PrintDefaults(void)
     PrintInit(&R_print, R_GlobalEnv);
 }
 
-SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     switch (length(args)) {
     case 0:
@@ -129,7 +129,7 @@ SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* This is *only* called via outdated R_level prmatrix() : */
-SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;
     SEXP a, x, rowlab, collab, naprint;
@@ -217,7 +217,7 @@ static void advancePrintArgs(SEXP* args, SEXP* prev,
 }
 
 /* .Internal(print.default(x, args, missings)) */
-SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -553,6 +553,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	PROTECT(names = getAttrib(s, R_NamesSymbol));
 	int taglen = (int) strlen(tagbuf);
 	char *ptag = tagbuf + taglen;
+	size_t sz = TAGBUFLEN0 * 2 - taglen;
 
 	if(ns > 0) {
 	    R_xlen_t n_pr = (ns <= data->max +1) ? ns : data->max;
@@ -581,29 +582,29 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 #endif
 		    if (taglen + strlen(ss) > TAGBUFLEN) {
 			if (taglen <= TAGBUFLEN)
-			    sprintf(ptag, "$...");
+			    snprintf(ptag, sz, "$...");
 		    } else {
 			/* we need to distinguish character NA from "NA", which
 			   is a valid (if non-syntactic) name */
 			if (STRING_ELT(names, i) == NA_STRING)
-			    sprintf(ptag, "$<NA>");
+			    snprintf(ptag, sz, "$<NA>");
 #ifdef Win32
 			else if( isValidName(st) )
 #else
 			else if( isValidName(ss) )
 #endif
-			    sprintf(ptag, "$%s", ss);
+			    snprintf(ptag, sz, "$%s", ss);
 			else
-			    sprintf(ptag, "$`%s`", ss);
+			    snprintf(ptag, sz, "$`%s`", ss);
 		    }
 		    vmaxset(vmax);
 		}
 		else {
 		    if (taglen + IndexWidth(i) > TAGBUFLEN) {
 			if (taglen <= TAGBUFLEN)
-			    sprintf(ptag, "$...");
+			    snprintf(ptag, sz, "$...");
 		    } else
-			sprintf(ptag, "[[%lld]]", (long long)i+1);
+			snprintf(ptag, sz, "[[%lld]]", (long long)i+1);
 		}
                 Rprintf("%s\n", tagbuf);
 		PrintDispatch(VECTOR_ELT(s, i), data);
@@ -724,29 +725,31 @@ static void printList(SEXP s, R_PrintData *data)
 	i = 1;
 	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
+	size_t sz = TAGBUFLEN0 * 2 - taglen;
+
 	while (TYPEOF(s) == LISTSXP) {
 	    if (i > 1) Rprintf("\n");
 	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
 		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN) {
 		    if (taglen <= TAGBUFLEN)
-			sprintf(ptag, "$...");
+			snprintf(ptag, sz, "$...");
 		} else {
 		    /* we need to distinguish character NA from "NA", which
 		       is a valid (if non-syntactic) name */
 		    if (PRINTNAME(TAG(s)) == NA_STRING)
-			sprintf(ptag, "$<NA>");
+			snprintf(ptag, sz, "$<NA>");
 		    else if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
-			sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
+			snprintf(ptag, sz,  "$%s", CHAR(PRINTNAME(TAG(s))));
 		    else
-			sprintf(ptag, "$`%s`", EncodeChar(PRINTNAME(TAG(s))));
+			snprintf(ptag, sz, "$`%s`", EncodeChar(PRINTNAME(TAG(s))));
 		}
 	    }
 	    else {
 		if (taglen + IndexWidth(i) > TAGBUFLEN) {
 		    if (taglen <= TAGBUFLEN)
-			sprintf(ptag, "$...");
+			snprintf(ptag, sz, "$...");
 		} else
-		    sprintf(ptag, "[[%d]]", i);
+		    snprintf(ptag, sz, "[[%d]]", i);
 	    }
 
             Rprintf("%s\n", tagbuf);
@@ -823,7 +826,7 @@ static void print_cleanup(void *data)
 
  * This is the "dispatching" function for  print.default()
  */
-void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
+attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 {
     SEXP t;
 
@@ -1063,7 +1066,7 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 /* Print an S-expression using (possibly) local options.
    This is used for auto-printing from main.c */
 
-void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
+attribute_hidden void PrintValueEnv(SEXP s, SEXP env)
 {
     PrintDefaults();
     tagbuf[0] = '\0';
@@ -1098,7 +1101,7 @@ void R_PV(SEXP s)
 }
 
 
-void attribute_hidden CustomPrintValue(SEXP s, SEXP env)
+attribute_hidden void CustomPrintValue(SEXP s, SEXP env)
 {
     tagbuf[0] = '\0';
 
@@ -1190,10 +1193,10 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 /* Fortran-callable error routine for lapack */
 
 #ifdef FC_LEN_T
-void NORET F77_NAME(xerbla)(const char *srname, int *info,
+NORET void F77_NAME(xerbla)(const char *srname, int *info,
 			    const FC_LEN_T srname_len)
 #else
-void NORET F77_NAME(xerbla)(const char *srname, int *info)
+NORET void F77_NAME(xerbla)(const char *srname, int *info)
 #endif
 {
    /* srname is not null-terminated.  It will be 6 characters for

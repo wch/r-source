@@ -1,6 +1,6 @@
 % File src/library/base/man/c.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 \name{c}
 \title{Combine Values into a Vector or List}
@@ -37,9 +37,8 @@ c(\dots)
   are treated as one-element \code{\link{list}}s
   which cannot be unlisted even if \code{recursive = TRUE}.
 
-  Note that in \R < 4.1.0, \code{\link{factor}}s were treated only via
-  their internal \code{\link{integer}} codes: now there is
-  \code{\link{c.factor}} method which combines factors into a factor.
+    There is a \code{\link{c.factor}} method which combines factors into
+  a factor.
 
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an \code{\link{array}} into a vector.

@@ -77,6 +77,11 @@ enc2utf8(x)
   \code{\link{sub}} and \code{gsub} will give a marked UTF-8 result if
   any of the inputs are UTF-8.
 
+ %% \code{\link{strsplit}}, \code{\link{sub}} 
+ %%  and \code{gsub} will mark their result \code{"bytes"} if it is non-ASCII
+ %%  and any of the inputs are marked \code{"bytes"} or \code{useBytes = TRUE}
+ %% was used.
+
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
   as bytes if any of the corresponding inputs is marked as bytes, and
   otherwise marked as UTF-8 if any of the inputs is marked as UTF-8.

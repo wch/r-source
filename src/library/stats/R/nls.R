@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nls.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2000-2020 The R Core Team
+#  Copyright (C) 2000-2023 The R Core Team
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -39,8 +39,12 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir = 1,
 nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral = FALSE)
 {
     ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
-    env <- new.env(hash = TRUE, parent=environment(form))
-    for(i in names(data)) env[[i]] <- data[[i]]
+    if(is.environment(data))
+        env <- data
+    else {
+        env <- new.env(hash = TRUE, parent=environment(form))
+        list2env(data, env)
+    }
     ind <- as.list(start)
     p2 <- 0L #{non-linear parameters}
     for(i in names(ind)) {
@@ -221,8 +225,12 @@ nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral 
 nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcentral = FALSE)
 {
     ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
-    env <- new.env(hash = TRUE, parent = environment(form))
-    for(i in names(data)) env[[i]] <- data[[i]]
+    if(is.environment(data))
+        env <- data
+    else {
+        env <- new.env(hash = TRUE, parent=environment(form))
+        list2env(data, env)
+    }
     ind <- as.list(start)
     parLength <- 0L
     for(i in names(ind) ) {
@@ -288,8 +296,8 @@ nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcent
         attr(ans, "gradient") <- eval(gradCall)
         ans
     }
-    if(length(gr <- attr(rhs, "gradient")) == 1L)
-		    attr(rhs, "gradient") <- gr <- as.vector(gr)
+    if(length(gr <- attr(rhs, "gradient")) == 1L && !is.vector(gr))
+        attr(rhs, "gradient") <- gr <- as.vector(gr)
     QR <- qr(.swts * gr)
     qrDim <- min(dim(QR$qr))
     if(QR$rank < qrDim)
@@ -479,15 +487,9 @@ nls <-
 	if (missing(start)) {
 	    if(!is.null(attr(data, "parameters"))) {
 		names(attr(data, "parameters"))
-	    } else { ## try selfStart - like object
-		cll <- formula[[length(formula)]]
-		if(is.symbol(cll)) { ## replace  y ~ S   by   y ~ S + 0 :
-		    ## formula[[length(formula)]] <-
-		    cll <- substitute(S + 0, list(S = cll))
-		}
-		fn <- as.character(cll[[1L]])
-		if(is.null(func <- tryCatch(get(fn), error=function(e)NULL)))
-		    func <- get(fn, envir=parent.frame()) ## trying "above"
+	    } else if (is.call(cll <- formula[[length(formula)]])) {
+		## possibly a selfStart - like object
+		func <- eval(cll[[1L]], environment(formula))
 		if(!is.null(pn <- attr(func, "pnames")))
 		    as.character(as.list(match.call(func, call = cll))[-1L][pn])
 	    }
@@ -608,8 +610,8 @@ nls <-
     ## Less nice, but more tolerant (to "garbage" which is also put into 'ctrl'):
     ctrl <- nls.control()
     if(!missing(control)) {
-	control <- as.list(control)
-	ctrl[names(control)] <- control
+        control <- as.list(control)
+        ctrl[names(control)] <- control
     }
     scOff  <- ctrl$scaleOffset
     nDcntr <- ctrl$nDcentral

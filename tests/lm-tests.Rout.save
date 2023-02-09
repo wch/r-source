@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-12-20 r83481) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -48,24 +48,18 @@ Type 'q()' to quit R.
 attr(,"constant")
 [1] 6.743646
 > 
-> ## FIXME : glm()$residual [1] is NA,  lm()'s is ok.
-> ## all.equal(residuals(roller.glm0, type = "partial"),
-> ##          residuals(roller.lm0,  type = "partial") )
-> 
-> 
-> all.equal(deviance(roller.lm),
-+           deviance(roller.glm))
-[1] TRUE
-> all.equal(weighted.residuals(roller.lm),
-+           residuals         (roller.glm))
-[1] TRUE
-> 
-> all.equal(deviance(roller.lm0),
-+           deviance(roller.glm0))
-[1] TRUE
-> all.equal(weighted.residuals(roller.lm0, drop=FALSE),
-+           residuals         (roller.glm0))
-[1] TRUE
+> stopifnot(exprs = {
++     all.equal(residuals(roller.glm0, type = "partial"),
++               residuals(roller.lm0,  type = "partial"), tol = 1e-14)  # 4.0e-16
++     all.equal(deviance(roller.lm),
++               deviance(roller.glm), tol = 1e-14) # 2.4e-16
++     all.equal(weighted.residuals(roller.lm),
++               residuals         (roller.glm), tol = 2e-14) # 9.17e-16
++     all.equal(deviance(roller.lm0),
++               deviance(roller.glm0), tol = 1e-14) # 2.78e-16
++     all.equal(weighted.residuals(roller.lm0, drop=FALSE),
++               residuals         (roller.glm0),  tol = 2e-14) # 6.378e-16
++ })
 > 
 > (im.lm0 <- influence.measures(roller.lm0))
 Influence measures of
@@ -82,41 +76,34 @@ Influence measures of
 9   0.1225  -0.2067 -0.2664 2.391 0.04079 0.4470   *
 10 -0.3348   1.1321  2.0937 0.233 0.89584 0.2826   *
 > 
-> all.equal(unname(im.lm0 $ infmat),
-+           unname(cbind(  dfbetas      (roller.lm0)
-+                        , dffits       (roller.lm0)
-+                        , covratio     (roller.lm0)
-+                        ,cooks.distance(roller.lm0)
-+                        ,lm.influence  (roller.lm0)$hat)
-+                  ))
-[1] TRUE
-> 
-> all.equal(rstandard(roller.lm9),
-+           rstandard(roller.lm0),tolerance = 1e-14)
-[1] TRUE
-> all.equal(rstudent(roller.lm9),
-+           rstudent(roller.lm0),tolerance = 1e-14)
-[1] TRUE
-> all.equal(rstudent(roller.lm),
-+           rstudent(roller.glm))
-[1] TRUE
-> all.equal(cooks.distance(roller.lm),
-+           cooks.distance(roller.glm))
-[1] TRUE
-> 
-> 
-> all.equal(summary(roller.lm0)$coefficients,
-+           summary(roller.lm9)$coefficients, tolerance = 1e-14)
-[1] TRUE
-> all.equal(print(anova(roller.lm0), signif.st=FALSE),
-+                 anova(roller.lm9), tolerance = 1e-14)
+> stopifnot(exprs = {
++     all.equal(unname(im.lm0 $ infmat),
++               unname(cbind(  dfbetas      (roller.lm0)
++                          , dffits       (roller.lm0)
++                          , covratio     (roller.lm0)
++                           ,cooks.distance(roller.lm0)
++                           ,lm.influence  (roller.lm0)$hat)
++                      ))
++     all.equal(rstandard(roller.lm9),
++               rstandard(roller.lm0),tolerance = 1e-14)
++     all.equal(rstudent(roller.lm9),
++               rstudent(roller.lm0),tolerance = 1e-14)
++     all.equal(rstudent(roller.lm),
++               rstudent(roller.glm))
++     all.equal(cooks.distance(roller.lm),
++               cooks.distance(roller.glm))
++ 
++     all.equal(summary(roller.lm0)$coefficients,
++               summary(roller.lm9)$coefficients, tolerance = 1e-14)
++     all.equal(print(anova(roller.lm0), signif.st=FALSE),
++                     anova(roller.lm9), tolerance = 1e-14)
++ })
 Analysis of Variance Table
 
 Response: weight
            Df Sum Sq Mean Sq F value  Pr(>F)
 depression  1 158.41 158.408  5.4302 0.05259
 Residuals   7 204.20  29.172                
-[1] TRUE
 > 
 > 
 > ###  more regression tests for lm(), glm(), etc :
@@ -244,9 +231,10 @@ United States  0.33_*
 Zambia         0.06  
 Libya          0.53_*
 > ## colnames will differ in the next line
-> all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
-+           tolerance = 1e-12)
-[1] TRUE
+> stopifnot(
++     all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
++               tolerance = 1e-12)
++ )
 > signif(dfbeta(lm.SR), 3)
                (Intercept)     pop15    pop75       dpi      ddpi
 Australia           0.0916 -1.53e-03 -0.02910  4.27e-05 -3.16e-05

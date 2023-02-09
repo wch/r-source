@@ -138,8 +138,7 @@ sQuote <- function(x, q = getOption("useFancyQuotes"))
                     before <- rawToChar(as.raw(0x91))
                     after <- rawToChar(as.raw(0x92))
                 } else {
-                    z <- iconv(c(intToUtf8(0x2018), intToUtf8(0x2019)),
-                               "UTF-8", "")
+                    z <- iconv(c("\u2018", "\u2019"), "UTF-8", "")
                     before <- z[1L]; after <- z[2L]
                 }
             }
@@ -148,7 +147,7 @@ sQuote <- function(x, q = getOption("useFancyQuotes"))
             before <- "`"; after <- "'"
         }
         if(identical(q, "UTF-8")) {
-            before <- intToUtf8(0x2018); after <- intToUtf8(0x2019)
+            before <- "\u2018"; after <- "\u2019"
         }
         if(is.character(q) && length(q) >= 4L) {
             before <- q[1L]; after <- q[2L]
@@ -171,8 +170,7 @@ dQuote <- function(x, q = getOption("useFancyQuotes"))
                     before <- rawToChar(as.raw(0x93))
                     after <- rawToChar(as.raw(0x94))
                 } else {
-                    z <- iconv(c(intToUtf8(0x201c), intToUtf8(0x201d)),
-                               "UTF-8", "")
+                    z <- iconv(c("\u201c", "\u201d"), "UTF-8", "")
                     before <- z[1L]; after <- z[2L]
                 }
             }
@@ -181,7 +179,7 @@ dQuote <- function(x, q = getOption("useFancyQuotes"))
             before <- "``"; after <- "''"
         }
         if(identical(q, "UTF-8")) {
-            before <- intToUtf8(0x201c); after <- intToUtf8(0x201d)
+            before <- "\u201c"; after <- "\u201d"
         }
         if(is.character(q) && length(q) >= 4L) {
             before <- q[3L]; after <- q[4L]

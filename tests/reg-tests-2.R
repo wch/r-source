@@ -678,7 +678,7 @@ glm(y ~ x, family = poisson(identity), start = c(1,0))
 set.seed(123)
 y <- rpois(100, pmax(3*x, 0))
 glm(y ~ x, family = poisson(identity), start = c(1,0))
-warnings()
+summary(warnings())
 
 
 ## extending char arrrays
@@ -897,6 +897,7 @@ women[,"height", drop = FALSE] # no warning
 women[,"height", drop = TRUE]  # a vector
 ## second and third were interpreted as women["height", , drop] in 1.7.x
 
+op <- options(warn = 2) # *no* warnings (for now)
 
 ## make.names
 make.names("")
@@ -948,7 +949,12 @@ model.matrix(fit)
 summary(fit)
 anova(fit)
 predict(fit)
-predict(fit, data.frame(x=x), se=TRUE)
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
+stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 variable.names(fit) #should be empty
 model.matrix(fit)
@@ -964,7 +970,12 @@ predict(fit, type="terms", se=TRUE)
 summary(fit)
 anova(fit)
 predict(fit)
-predict(fit, data.frame(x=x), se=TRUE)
+tools::assertWarning(
+ predict(fit, data.frame(x=x), se=TRUE) -> p0
+)
+p0
+if(FALSE)## not yet:
+stopifnot(identical(p0$fit, predict(fit, data.frame(x=x), rankdeficient = "NA")))
 predict(fit, type="terms", se=TRUE)
 ## Lots of problems in 1.7.x
 
@@ -1150,6 +1161,7 @@ aov(y ~ a + b - 1 + Error(c), data=test.df)
 
 binom.test(c(800,10))# p-value < epsilon
 
+options(op) # revert: warnings allowed
 
 ## aov with a singular error model
 rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
@@ -1163,7 +1175,7 @@ sample.df <- data.frame(dep.variable=rd,
                         f1=factor(rep(rep(c("f1","f2","f3"),each=6),3)),
                         f2=factor(rep(c("g1","g2","g3"),each=18))
 )
-sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
+sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df) # warning: singular
 sample.aov
 summary(sample.aov)
 sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
@@ -1745,6 +1757,7 @@ c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
 
 
 ## Limiting lines on deparse (wishlist PR#8638)
+Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
 op <- options(deparse.max.lines = 3)
 f <- function(...) browser()
 do.call(f, mtcars)
@@ -1754,14 +1767,22 @@ op <- c(op, options(error = expression(NULL)))
 f <- function(...) stop()
 do.call(f, mtcars)
 traceback()
+## unlimited < 2.3.0
+options(op)
 
 ## Debugger can handle a function that has a single function call as its body
 g <- function(fun) fun(1)
 debug(g)
 g(function(x) x+1)
+c
 
-options(op)
-## unlimited < 2.3.0
+## Trap debugger in non-interactive sessions
+if (!interactive()) {
+    Sys.setenv("_R_CHECK_BROWSER_NONINTERACTIVE_" = "true")
+    tools::assertError(browser())
+    browser(expr = FALSE) # but this passes (with no output)
+    Sys.unsetenv("_R_CHECK_BROWSER_NONINTERACTIVE_")
+}
 
 
 ## row names in as.table (PR#8652)
@@ -2009,7 +2030,7 @@ x[2, invisible(3)]
 
 
 ## tests of deparsing
-x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
+x <-list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
          e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
          i = as.character(NA), j = c("foo", NA, "bar")
          )
@@ -2188,7 +2209,7 @@ stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
 
 x <- as.POSIXlt(x, tz="GMT"); y <- as.POSIXlt(y, tz="GMT")
 format(pmin(x, y), tz="GMT")
-class(pmin(x, y))
+class (pmin(y, x))  ## (updating "filled")
 stopifnot(identical(pmin(x, y), pmin(y, x)))
 format(pmin(x, y, na.rm=TRUE), tz="GMT")
 stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
@@ -2196,7 +2217,7 @@ format(pmax(x, y), tz="GMT")
 stopifnot(identical(pmax(x, y), pmax(y, x)))
 format(pmax(x, y, na.rm=TRUE), tz="GMT")
 stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
-## regresion tests
+## regression tests
 
 
 ## regression tests on names of 1D arrays
@@ -2731,7 +2752,7 @@ str(d)
   saveopt <- options(warnPartialMatchDollar=TRUE)
   pl <- pairlist(abc=1, def=2)
   pl$ab
-  if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+  options(saveopt)
 ## 'abc' was just ''
 
 
@@ -3284,3 +3305,9 @@ quote(`&`(a < !b, d))
 ## deparse--parse roundtrip is stable (basically)
 stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
 ## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}
+
+
+## packageDate(<pkg>) w/o valid package
+dput(packageDate("foo"))
+## gave *five* warnings* in R <= 4.2.x
+

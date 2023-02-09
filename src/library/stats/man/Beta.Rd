@@ -43,7 +43,8 @@ rbeta(n, shape1, shape2, ncp = 0)
   by continuity (as limits).
   \cr
   The mean is \eqn{a/(a+b)} and the variance is \eqn{ab/((a+b)^2 (a+b+1))}.
-  These moments and all distributional properties can be defined as
+  If \eqn{a,b > 1}, (or one of them \eqn{=1}), the mode is \eqn{(a-1)/(a+b-2)}.
+  These and all other distributional properties can be defined as
   limits (leading to point masses at 0, 1/2, or 1) when \eqn{a} or
   \eqn{b} are zero or infinite, and the corresponding
   \code{[dpqr]beta()} functions are defined correspondingly.

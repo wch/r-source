@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -28,7 +28,7 @@ OlsonNames(tzdir = NULL)
 
 \arguments{
   \item{location}{logical: defunct: ignored, with a warning for false values.}
-  
+
   \item{tzdir}{The time-zone database to be used: the default is to try
     known locations until one is found.}
 }
@@ -52,7 +52,7 @@ OlsonNames(tzdir = NULL)
   override the OS setting or if the \sQuote{try} does not get this
   right, it should be set before the \R process is started or (probably
   early enough) in file \code{\link{.Rprofile}}).
-  
+
   %% glibc silently uses UTC but uses the invalid name as the
   %% abbreviations.  tzcode as used by R warns and uses UTC.
   If \env{TZ} is set but invalid, most platforms default to \samp{UTC},
@@ -75,8 +75,8 @@ OlsonNames(tzdir = NULL)
   \sQuote{standard} time and a different name is used in winter.  And
   there can be multiple changes during a year, for example for Ramadan.
 
-  A quite common system implementation of \code{POSIXct} is as signed
-  32-bit integers and so only goes back to the end of 1901: on such
+  A quite common system implementation of \code{POSIXct} was as signed
+  32-bit integers and so only went back to the end of 1901: on such
   systems \R assumes that dates prior to that are in the same time zone
   as they were in 1902.  Most of the world had not adopted time zones by
   1902 (so used local \sQuote{mean time} based on longitude) but for a
@@ -85,9 +85,8 @@ OlsonNames(tzdir = NULL)
   the database information is 32-bit and so only available for the range
   1901--2038, and incompletely for the end years.
 
-  As from \R 3.5.0, when a time zone location is first found in a
-  session, its value is cached in object \code{.sys.timezone} in the
-  base environment.
+  When a time zone location is first found in a session its value is
+  cached in object \code{.sys.timezone} in the base environment.
 }
 
 \value{
@@ -97,16 +96,18 @@ OlsonNames(tzdir = NULL)
   ascertained.
 
   A time zone region may be known by several names: for example
-  \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
+  \samp{"Europe/London"} may also be known as \samp{GB}, \samp{GB-Eire},
   \samp{Europe/Belfast}, \samp{Europe/Guernsey},
-  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions
-  are also known by a summary of their time zone,
+  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions are
+  also known by a summary of their time zone,
   e.g.\sspace{}\samp{PST8PDT} is an alias for
   \samp{America/Los_Angeles}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.  It may have an attribute \code{"Version"}, something
-  like \samp{"2020a"}.
+  like \samp{"2020a"}.  (It does on systems using
+  \option{--with-internal-tzcode} and those like Fedora distributing
+  file \file{tzdata.zi}.)
 }
 
 \section{Time zone names}{
@@ -163,17 +164,17 @@ OlsonNames(tzdir = NULL)
   also \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
-  (the default on Windows: recommended on Solaris), the database at
+  (the default on Windows), the database at
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  That option is
   also the default on macOS but there whichever is more recent of the
   system database at \file{/var/db/timezone/zoneinfo} and that
   distributed with \R is used by default.  Environment variable
-  \env{TZDIR} can be used to point to a different \file{zoneinfo}
-  database: value \code{"internal"} indicates the database from the
-  \R sources and \code{"macOS"} indicates the system database. (Setting
-  either of those values would not be recognized by other software using
-  \env{TZDIR}.)
+  \env{TZDIR} can be used to give the full path to a different
+  \file{zoneinfo} database: value \code{"internal"} indicates the
+  database from the \R sources and \code{"macOS"} indicates the system
+  database. (Setting either of those values would not be recognized by
+  other software using \env{TZDIR}.)
 
   Setting \env{TZDIR} is also supported by the native services on some
   OSes, e.g.\sspace{}Linux using \code{glibc} except in secure modes.
@@ -183,15 +184,14 @@ OlsonNames(tzdir = NULL)
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
   perhaps the system time zone) are loaded from the currently selected
   \file{zoneinfo} database.
-#ifdef windows
 
+  \emph{On Windows only:}
   An attempt is made (once only per session) to map Windows' idea of the
   current time zone to a location, following a version of
   \url{http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml}
   with additional values deduced from the Windows Registry and documentation.
   It can be overridden by setting the \env{TZ} environment variable
   before any date-times are used in the session.
-#endif
 
   Most platforms support time zones of the form \samp{Etc/GMT+n} and
   \samp{Etc/GMT-n} (possibly also without prefix \samp{Etc/}), which
@@ -216,7 +216,7 @@ OlsonNames(tzdir = NULL)
   names.
 }
 
-\section{Warning}{
+\section{Warnings}{
 %% glibc and macOS have _POSIX_TZNAME_MAX and define it as 6.
 %% Earlier versions of R's code assumed 10, and it was discovered
 %% that some implemntations did not abbreviate unusual names, thereby
@@ -229,12 +229,24 @@ OlsonNames(tzdir = NULL)
   (abbreviated) time-zone names which can be as low as 6 (as required by
   POSIX).  Some OSes allow the setting of time zones with names which
   exceed their limit, and that can crash the \R session.
-  
+
+  Information about future times is speculative: the database provides
+  the best-known information based on current rules set by civil
+  authorities.  For the period 1900--1970 those rules (and which of any
+  authority's rules were enacted) is often obscure, and the databases do
+  get corrected frequently.
+
   \code{OlsonNames} tries to find an Olson database in known locations.
   It might not succeed (when it returns an empty vector with a warning)
   and even if it does it might not locate the database used by the
   date-time code linked into \R.  Fortunately names are added rarely
-  and most databases are pretty complete.
+  and most databases are pretty complete.  On the other hand, many names
+  which duplicate other named timezones have been moved to the
+  \file{backward} list -- these are regarded as optional and omitted on
+  minimal installations.  Similarly, there are timezones named in file
+  \file{backzone} which differ only from those in the main lists prior
+  to 1970 -- these are usually included but may not be in minimalist
+  systems.
 }
 
 \note{
@@ -255,10 +267,8 @@ OlsonNames(tzdir = NULL)
   Incorrect results will never be an \R issue, so please ensure that you
   have the courtesy not to blame \R for them.
 }
-% Unlike Tony Plate and John Pfuntner
 
-#ifdef unix
-\section{How the system time zone is found}{
+\section{How the system time zone is found -- on Unix-alikes}{
   This section is of background interest for users of a Unix-alike, but
   may help if an \code{NA} value is returned unexpectedly.
 
@@ -302,7 +312,6 @@ OlsonNames(tzdir = NULL)
   file in the database.  This is deliberate as they may be from
   different dates.)
 }
-#endif
 
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.

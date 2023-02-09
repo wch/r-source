@@ -19,14 +19,14 @@
   affine transformations (see the Details section).
 }
 \usage{
-groupGrob(src, op = "over", dst = NULL,
+groupGrob(src, op = "over", dst = NULL, coords = TRUE,
           name = NULL, gp=gpar(), vp=NULL) 
-grid.group(src, op = "over", dst = NULL,
+grid.group(src, op = "over", dst = NULL, coords = TRUE,
            name = NULL, gp=gpar(), vp=NULL)
 
-defineGrob(src, op = "over", dst = NULL,
+defineGrob(src, op = "over", dst = NULL, coords = TRUE,
            name = NULL, gp=gpar(), vp=NULL) 
-grid.define(src, op = "over", dst = NULL,
+grid.define(src, op = "over", dst = NULL, coords = TRUE,
             name = NULL, gp=gpar(), vp=NULL)
 
 useGrob(group, transform=viewportTransform,
@@ -39,6 +39,8 @@ grid.use(group, transform=viewportTransform,
   \item{src}{A grob.}
   \item{op}{The name of a compositing operator (see Details).}
   \item{dst}{A grob.}
+  \item{coords}{A logical indicating whether grob coordinates should be
+    calculated for the group.}
   \item{group}{A character identified referring to the name of a defined group.}
   \item{transform}{A function that returns an affine transformation
     matrix; see \code{\link{viewportTransform}}.}
@@ -62,8 +64,21 @@ grid.use(group, transform=viewportTransform,
   both \code{src} and \code{dst} and combine them
   using a compositing operator other than the default
   \code{"over"}, before combining the result with the main image.
-  For example, if we use the \code{"clear"} operator then \code{dst}
+  For example, if we use the \code{"dest.out"} operator then \code{dst}
   is only drawn where it is NOT overlapped by \code{src}.
+  The following (extended) Porter-Duff operators are available:
+  \code{"clear"}, \code{"source"}, \code{"over"},
+  \code{"in"}, \code{"out"}, \code{"atop"},
+  \code{"dest"}, \code{"dest.over"}, \code{"dest.in"},
+  \code{"dest.out"}, \code{"dest.atop"}, \code{"xor"},
+  \code{"add"}, and \code{"saturate"}.
+  In addition, there are operators corresponding to PDF blend modes:
+  \code{"multiply"}, \code{"screen"}, \code{"overlay"},
+  \code{"darken"}, \code{"lighten"}, \code{"color.dodge"}, \code{"color.burn"},
+  \code{"hard.light"}, \code{"soft.light"}, \code{"difference"}, and
+  \code{"exclusion"}.
+  However, even if a graphics device supports groups, it may not support all
+  compositing operators;  see \code{\link{dev.capabilities}}.
 
   It is also possible to break the process into two steps by
   first using \code{grid.define()} to define a group and

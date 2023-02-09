@@ -1,7 +1,7 @@
 #  File src/library/base/R/octhex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,14 +35,15 @@ format.octmode <- function(x, width = NULL, ...)
     ans
 }
 
-as.character.octmode <- function(x, ...) {
+as.character.octmode <- function(x, keepStr = FALSE, ...) {
     ans <- rep_len(NA_character_, length(x))
     notNA <- !is.na(x)
     ans[notNA] <- sprintf("%o", as.integer(x[notNA]))
-    ## keep dim{names}(), names() if there were:
-    dim(ans) <- dim(x)
-    dimnames(ans) <- dimnames(x)
-    names(ans) <- names(x)
+    if(keepStr) { ## keep dim{names}(), names() if there were:
+        dim(ans) <- dim(x)
+        dimnames(ans) <- dimnames(x)
+        names(ans) <- names(x)
+    }
     ans
 }
 
@@ -50,7 +51,8 @@ as.character.octmode <- function(x, ...) {
 
 print.octmode <- function(x, ...)
 {
-    print(format(x), ...)
+    if(length(x)) print(format(x), ...)
+    else          cat("<0-length octmode>\n")
     invisible(x)
 }
 
@@ -96,20 +98,23 @@ format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
     ans
 }
 
-as.character.hexmode <- function(x, ...) {
+as.character.hexmode <- function(x, keepStr = FALSE, ...) {
     ans <- rep_len(NA_character_, length(x))
     notNA <- !is.na(x)
     ans[notNA] <- sprintf("%x", as.integer(x[notNA]))
-    dim(ans) <- dim(x)
-    dimnames(ans) <- dimnames(x)
-    names(ans) <- names(x)
+    if(keepStr) { ## keep dim{names}(), names() if there were:
+        dim(ans) <- dim(x)
+        dimnames(ans) <- dimnames(x)
+        names(ans) <- names(x)
+    }
     ans
 }
 
 
 print.hexmode <- function(x, ...)
 {
-    print(format(x), ...)
+    if(length(x)) print(format(x), ...)
+    else          cat("<0-length hexmode>\n")
     invisible(x)
 }
 

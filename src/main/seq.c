@@ -138,7 +138,7 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
     return ans;
 }
 
-SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s1, s2;
     double n1, n2;
@@ -339,7 +339,7 @@ static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
 }
 
 // .Internal(rep.int(x, times))
-SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP s = CAR(args), ncopy = CADR(args);
@@ -403,7 +403,7 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     return a;
 }
 
-SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_xlen_t ns, na;
     SEXP a, s, len;
@@ -633,7 +633,7 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
    rep(1:3,,8) matches length.out */
 
 /* This is a primitive SPECIALSXP with internal argument matching */
-SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, times = R_NilValue;
     R_xlen_t i, lx, len = NA_INTEGER, each = 1, nt;
@@ -798,7 +798,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 #define FEPS 1e-10
 /* to match seq.default */
-SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue /* -Wall */, from, to, by, len, along;
     R_xlen_t i, lout = NA_INTEGER;
@@ -1047,7 +1047,7 @@ done:
     return ans;
 }
 
-SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     R_xlen_t len;
@@ -1083,7 +1083,7 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_compact_intrange(1, len);
 }
 
-SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_xlen_t len;
 
@@ -1112,7 +1112,7 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_compact_intrange(1, len);
 }
 
-SEXP attribute_hidden do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
+attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_xlen_t lengths_len, from_len, by_len, ans_len, i, i2, i3;
     int from_elt, by_elt, length, j, k, *ans_elt;

@@ -1,15 +1,35 @@
 tidy_validate <-
-function(f) {
-    z <- suppressWarnings(system2("tidy", c("-qe", f),
+function(f, tidy = "tidy") {
+    z <- suppressWarnings(system2(tidy,
+                                  c("-language en", "-qe",
+                                    ## <FIXME>
+                                    ## HTML Tidy complains about empty
+                                    ## spans, which may be ok.
+                                    ## To suppress all such complaints:
+                                    ##   "--drop-empty-elements no",
+                                    ## To allow experimenting for now:
+                                    Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_OPTS_",
+                                               "--drop-empty-elements no"),
+                                    ## </FIXME>
+                                    f),
                                   stdout = TRUE, stderr = TRUE))
     if(!length(z)) return(NULL)
+    ## Strip trailing \r from HTML Tidy output on Windows:
+    z <- trimws(z, which = "right")
+    ## (Alternatively, replace '$' by '[ \t\r\n]+$' in the regexp below.)
     s <- readLines(f, warn = FALSE)
     m <- regmatches(z,
                     regexec("^line ([0-9]+) column ([0-9]+) - (.+)$",
                             z))
-    m <- do.call(rbind, m[lengths(m) == 4L])
+    m <- unique(do.call(rbind, m[lengths(m) == 4L]))
     p <- m[, 2L]
-    cbind(line = p, col = m[, 3L], msg = m[, 4L], txt = s[as.numeric(p)])
+    concordance <- as.Rconcordance(grep("^<!-- concordance:", s, value = TRUE))
+    result <- cbind(line = p, col = m[, 3L], msg = m[, 4L], txt = s[as.numeric(p)])
+    
+    if (!is.null(concordance))
+    	result <- cbind(result, matchConcordance(p, concordance = concordance))
+    
+    result
 }
 
 tidy_validate_db <-
@@ -33,7 +53,7 @@ function(files, verbose = interactive()) {
                             }),
                      files)
 }
-    
+
 tidy_validate_R_httpd_path <-
 function(path) {
     y <- httpd(path, query = NULL)
@@ -56,7 +76,7 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
 {
     if(!missing(dir))
         return(tidy_validate_package_Rd_files_from_dir(dir, auto, verbose))
-    
+
     if(!length(package)) return(NULL)
 
     n <- 3L
@@ -89,7 +109,7 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
 tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
 
     if(!length(dir)) return(NULL)
-    
+
     out <- tempfile()
     on.exit(unlink(out))
 
@@ -118,7 +138,7 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
         results <-
             lapply(db,
                    function(x) {
-                       tools::Rd2HTML(x, out)
+                       tools::Rd2HTML(x, out, concordance = TRUE)
                        tidy_validate(out)
                    })
         tidy_validate_db(results,

@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -78,7 +78,7 @@
     the smallest positive power of \code{double.base} that overflows.  Normally
     \code{1024}.}
   \item{integer.max}{the largest integer which can be represented.
-    Always \eqn{2^31 - 1 = 2147483647}.}
+    Always \eqn{2^{31} - 1 = 2147483647}{2^31 - 1 = 2147483647}.}
   \item{sizeof.long}{the number of bytes in a C \code{long} type:
     \code{4} or \code{8} (most 64-bit systems, but not Windows).}
   \item{sizeof.longlong}{the number of bytes in a C \code{long long}
@@ -88,13 +88,18 @@
     type.  Will be zero if there is no such type (or its use was
     disabled when \R was built), otherwise possibly
     \code{12} (most 32-bit builds),  \code{16} (most 64-bit builds) or 8
-    % 64-bit ARM Linux compilers have a software-implemented
-    % quad-precison as long double
     (CPUs such as ARM where for most compilers \code{long double} is
     identical to \code{double}).}
-  \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
+    % 64-bit ARM Linux compilers have a software-implemented
+    % quad-precison as long double
+  \item{sizeof.pointer}{the number of bytes in the C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
+  \item{sizeof.time_t}{the number of \emph{bytes} in the C \code{time_t}
+    type: a  64-bit \code{time_t} (value \code{8}) is much preferred these
+    days.  Note that this is the type used by code in \R itself, not
+    necessarily the \emph{system} type if \R was configured with
+    \option{--with-internal-tzcode} as also used on Windows.}
 
   \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{
     introduced in \R 4.0.0. When

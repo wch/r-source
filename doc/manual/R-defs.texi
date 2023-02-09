@@ -1,5 +1,5 @@
 @documentlanguage en
-@documentencoding ISO-8859-1
+@documentencoding UTF-8
 
 @macro R{}
 R
@@ -44,7 +44,7 @@ $\t\$%
 
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2021 R Core Team
+Copyright @copyright{} \year\--2022 R Core Team
 @end macro
 
 @macro permission{}
