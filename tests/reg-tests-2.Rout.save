@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-01-09 r83585) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-02-09 r83784) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8242,4 +8242,14 @@ a < !b & d
 > ## deparse--parse roundtrip is stable (basically)
 > stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
 > ## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}
+> 
+> 
+> ## packageDate(<pkg>) w/o valid package
+> dput(packageDate("foo"))
+structure(NA, class = "Date")
+Warning message:
+In packageDescription(pkg, lib.loc = lib.loc, fields = date.fields) :
+  no package 'foo' was found
+> ## gave *five* warnings* in R <= 4.2.x
+> 
 > 
