@@ -7934,10 +7934,10 @@ again with @code{fragment = TRUE}, the older behavior.
 Insert no output.
 @end itemize
 
-@item @code{strip.white=TRUE}
-Remove leading and trailing white space from each line of
-output if @code{strip.white=TRUE}.  With
-@code{strip.white=all}, also remove blank lines.
+@item @code{strip.white=true}
+Remove leading and trailing blank lines in verbatim
+output if @code{strip.white=true}.  With
+@code{strip.white=all}, remove all blank lines.
 
 @item @code{stage=install}
 Control when this macro is run.  Possible values are
