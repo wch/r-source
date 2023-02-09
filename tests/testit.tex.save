@@ -58,7 +58,8 @@ Yihui Xie's example:
 \AsIs{\texttt{
 > cat("\bsl{}noutput\bsl{}n")
 
-output}}
+output
+}}
 --
 \end{Section}
 %

@@ -276,7 +276,7 @@ processRdChunk <- function(code, stage, options, env, macros)
 		    if(options$strip.white == "all")
 		      output <- sub("\n[[:space:]]*\n", "\n", output)
 		}
-		res <- c(res, output)
+		res <- c(res, output, "\n")
 		remove(output)
 	    }
 	}

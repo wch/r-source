@@ -47,7 +47,9 @@ _V_a_l_u_e:
 
      > cat("\noutput\n")
 
-     output -
+     output
+
+     -
 
 _E_x_a_m_p_l_e_s:
 
