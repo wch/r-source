@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2022  The R Core Team
- *  Copyright (C) 2003-2019  The R Foundation
+ *  Copyright (C) 1997-2023  The R Core Team
+ *  Copyright (C) 2003-2023  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2975,17 +2975,30 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	PROTECT(dup = duplicate(value));
 	PROTECT(value = coerceVector(dup, STRSXP));
 	nProtect += 2;
+	if(length(value) == 0)
+	    error(_("invalid replacement object to be a class string"));
     }
-    if(length(value) > 1) {
-	setAttrib(obj, R_ClassSymbol, value);
+    // length(value) >= 1
+    const char *valueString = CHAR(asChar(value)); /* ASCII ; the *first* in case of multiple strings */
+    if(!strcmp("matrix", valueString)) { // value : just "matrix" or  c("matrix", "<some>" [, ...])
+	if(length(getAttrib(obj, R_DimSymbol)) != 2)
+	    error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
+		  length(getAttrib(obj, R_DimSymbol)));
+	if(length(value) == 1 ||
+	   (length(value) == 2 && !strcmp("array", CHAR(STRING_ELT(value, 1)))))
+	{ // "matrix"  or  c("matrix", "array") :
+	    setAttrib(obj, R_ClassSymbol, R_NilValue); // NULL;  and that's not for S4:
+	    if(IS_S4_OBJECT(obj))
+		do_unsetS4(obj, value);
+	    goto done_set_class;
+	}
+    }
+
+    if(length(value) > 1) { // multiple strings ==> S3
+        setAttrib(obj, R_ClassSymbol, value);
 	if(IS_S4_OBJECT(obj)) /*  multiple strings only valid for S3 objects */
-	  do_unsetS4(obj, value);
-    }
-    else if(length(value) == 0) {
-	error(_("invalid replacement object to be a class string"));
-    }
-    else {
-	const char *valueString = CHAR(asChar(value)); /* ASCII */
+	    do_unsetS4(obj, value);
+    } else { // length(value) == 1 -- use valueString
 	int whichType = class2type(valueString);
 	SEXPTYPE valueType = (whichType == -1) ? (SEXPTYPE) -1
 	    : classTable[whichType].sexp;
@@ -3016,14 +3029,6 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	}
 	/* the next 2 special cases mirror the special code in
 	 * R_data_class */
-	else if(!strcmp("matrix", valueString)) {
-	    if(length(getAttrib(obj, R_DimSymbol)) != 2)
-		error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
-		 length(getAttrib(obj, R_DimSymbol)));
-	    setAttrib(obj, R_ClassSymbol, R_NilValue);
-	    if(IS_S4_OBJECT(obj))
-	      do_unsetS4(obj, value);
-	}
 	else if(!strcmp("array", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol)) <= 0)
 		error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"));
@@ -3036,42 +3041,38 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	    setAttrib(obj, R_ClassSymbol, value);
 	}
     }
+
+done_set_class:
     UNPROTECT(nProtect);
     return obj;
 }
 
 attribute_hidden SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
     checkArity(op, args);
     check1arg(args, call, "x");
 
     if (MAYBE_SHARED(CAR(args)) ||
 	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	SETCAR(args, shallow_duplicate(CAR(args)));
-    ans = R_set_class(CAR(args), CADR(args), call);
+    SEXP ans = R_set_class(CAR(args), CADR(args), call);
     SETTER_CLEAR_NAMED(CAR(args));
     return ans;
 }
 
-/* primitive */
+/* primitive:  storage.mode(obj) <- value  */
 attribute_hidden SEXP do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-/* storage.mode(obj) <- value */
-    SEXP obj, value, ans;
-    SEXPTYPE type;
-
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    obj = CAR(args);
-
-    value = CADR(args);
+    SEXP
+      obj = CAR(args),
+      value = CADR(args);
     if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
 	error(_("'value' must be non-null character string"));
-    type = str2type(CHAR(STRING_ELT(value, 0)));
+    SEXPTYPE type = str2type(CHAR(STRING_ELT(value, 0)));
     if(type == (SEXPTYPE) -1) {
-	/* For backwards compatibility we allow "real" and "single" */
 	if(streql(CHAR(STRING_ELT(value, 0)), "real")) {
 	    error("use of 'real' is defunct: use 'double' instead");
 	} else if(streql(CHAR(STRING_ELT(value, 0)), "single")) {
@@ -3082,8 +3083,8 @@ attribute_hidden SEXP do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     if(TYPEOF(obj) == type) return obj;
     if(isFactor(obj))
 	error(_("invalid to change the storage mode of a factor"));
-    PROTECT(ans = coerceVector(obj, type));
-    SHALLOW_DUPLICATE_ATTRIB(ans, obj);
+    SEXP ans = PROTECT(coerceVector(obj, type));
+    SHALLOW_DUPLICATE_ATTRIB(ans, obj); // keeping attributes plus OBJECT & S4 bits
     UNPROTECT(1);
     return ans;
 }

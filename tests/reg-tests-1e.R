@@ -490,6 +490,22 @@ is.na(x)[1] <- TRUE; stopifnot(identical(is.na(x), c(TRUE, FALSE)))
 ## gave two spurious warnings in R <= 4.2.2
 
 
+mChk <- function(m) stopifnot(exprs = {
+    identical(attributes(m), list(dim=2:3))
+    identical(class(m), c("matrix", "array"))
+})
+(m <- m0 <- diag(1:3, 2,3))
+mChk(m)
+##
+class(m) <- "matrix"  # instead of c("matrix", "array") ...
+mChk(m); stopifnot(identical(m, m0))# .. m is *unchanged* - back compatibly
+## since R 4.0.0,
+class(m) # is  "matrix" "array"
+class(m) <- class(m) # should *not* change 'm'
+mChk(m); stopifnot(identical(m, m0))# m is unchanged as it should, but
+## failed in R version v  4.0.0 <= v <= 4.2.x : 'm' got a class *attribute* there.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

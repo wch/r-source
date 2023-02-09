@@ -630,6 +630,9 @@
       \item Fix for possible segfault when using recently-added graphics
       features, such as gradients, clipping paths, masks, and groups with
       \code{pdf(file=NULL)}.
+
+      \item \code{class(m) <- class(m)} no longer changes a matrix \code{m}
+      by adding a class \emph{attribute}.
     }
   }
 }
