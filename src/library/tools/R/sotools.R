@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2022 The R Core Team
+#  Copyright (C) 2011-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -458,6 +458,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_KillAllDevices", "Rf_endEmbeddedR", "Rf_initEmbeddedR",
             "Rf_initialize_R", "Rf_jump_to_toplevel", "Rf_mainloop",
             "SaveAction", "addInputHandler", "editorcleanall", "fpu_setup",
+            "freeRUser", "free_R_HOME",
             "getDLLVersion", "getInputHandler", "getRUser", "get_R_HOME",
             "getSelectedHandler", "initStdinHandler",
             "process_site_Renviron", "process_system_Renviron",

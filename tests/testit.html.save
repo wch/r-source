@@ -16,7 +16,7 @@ function processMathHTML() {
 
 <table style="width: 100%;"><tr><td>testit</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>An Rd Regression Test</h2>
+<h2 id='testit'>An Rd Regression Test</h2>
 
 <h3>Description</h3>
 
@@ -65,17 +65,28 @@ weighted.mean, <code>{</code>
   
   From gap: pedtodot.Rd -- n=split(m,par,"\034") 
   </pre>
+
+
+<h3>Value</h3>
+
+<p>[NULL]<br />...
+</p>
+
+
+<h3><code style="white-space: pre;">&#8288;\Sexpr&#8288;</code></h3>
+
 <p>Yihui Xie's example:
 </p>
 <dl>
 <dt>def</dt><dd><p>ghi</p>
 </dd></dl>
 
-
-
-<h3>Value</h3>
-
-<p>[NULL]<br />...
+<p>&ndash;
+<code style="white-space: pre;">&#8288;
+&gt; cat("\noutput\n")
+output
+&#8288;</code>
+&ndash;
 </p>
 
 

@@ -262,11 +262,15 @@ for(p in p.lis) {
         stopifnot(exprs = {
             status > 0 # see status == 1L
             length(iE <- grep("Error in parse(", errlns, fixed=TRUE)) > 0
-            switch(p
-                 , "PR17859.1" = grepl(paste0(p, "/R/f2.R:3:[0-9]+: unexpected symbol"), errlns[iE+1])
+            local({
+                parseM1 <- "(syntax error|unexpected symbol)"       # may depend on bison version
+                parseM2 <- "(syntax error|unexpected end of input)" #   (ditto)
+                switch(p
+                 , "PR17859.1" = grepl(paste0(p, "/R/f2.R:3:[0-9]+: ", parseM1), errlns[iE+1])
                  , "PR17859.2" =
-                 , "PR17859.3" = grepl(paste0(p, "/R/f2.R:6:0: unexpected end of input"), errlns[iE+1])
+                 , "PR17859.3" = grepl(paste0(p, "/R/f2.R:6:0: ",      parseM2), errlns[iE+1])
                  , stop("invalid package p=",  p))
+            })
         })
         next # pkg in for(...)
     }

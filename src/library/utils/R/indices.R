@@ -176,6 +176,8 @@ packageDate <- function(pkg, lib.loc = NULL,
 	desc = packageDescription(pkg, lib.loc=lib.loc, fields=date.fields))
 {
     useDesc <- is.list(desc) && length(names(desc)) >= 1
+    if(!useDesc && is.na(desc)) # also got warning
+        return(.Date(NA))
     for (fld in date.fields) {
 	res <- if(useDesc) {
 		   r <- desc[[fld]]
@@ -189,7 +191,7 @@ packageDate <- function(pkg, lib.loc = NULL,
 				NA_character_
 			    })
 	       else as.Date(res, tryFormats=tryFormats,
-			    optional = TRUE)# NA instead of errror
+			    optional = TRUE)# NA instead of error
 	if (!is.na(res))
 	    break
     }

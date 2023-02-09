@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2022   The R Core Team
+  Copyright (C) 1997-2023   The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -114,13 +114,23 @@ static char workspace_name[1000] = ".RData";
   drag-and-drop on Windows.
  */
 #else
-static char workspace_name[PATH_MAX] = ".RData";
+static char *workspace_name = ".RData";
 
 attribute_hidden
-void set_workspace_name(const char *fn)
+Rboolean set_workspace_name(const char *fn)
 {
-    strncpy(workspace_name, fn, PATH_MAX);
-    workspace_name[PATH_MAX - 1] = '\0';
+    static Rboolean previously_allocated = FALSE;
+    size_t needed = strlen(fn) + 1;
+    char *new_wsn = (char *)malloc(needed);
+
+    if (!new_wsn)
+	return FALSE;
+    if (previously_allocated)
+	free(workspace_name);
+    previously_allocated = TRUE;
+    strncpy(new_wsn, fn, needed);
+    workspace_name = new_wsn;
+    return TRUE;
 }
 #endif
 
@@ -302,5 +312,7 @@ void R_SetParams(Rstart Rp)
     R_SetPPSize(Rp->ppsize);
 #ifdef Win32
     R_SetWin32(Rp);
+    if (strlen(Rp->rhome) >= PATH_MAX)
+	R_Suicide("Invalid R_HOME");
 #endif
 }

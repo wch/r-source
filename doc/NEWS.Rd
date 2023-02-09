@@ -146,6 +146,12 @@
       \item The drop-field control in GraphApp can now be left with the TAB
       key, improving accessibility of the \command{Rgui} configuration
       editor.
+
+      \item \code{qnorm(<very large negative>, log.p=TRUE)} is now fully
+      accurate (instead of to \dQuote{only} minimally five digits).
+
+      \item \code{demo(error.catching)} now also shows off
+      \code{withWarnings()} and \code{tryCatchWEMs()}.
     }
   }
 
@@ -233,12 +239,12 @@
       \item The \pkg{grDevices} and \pkg{grid} packages have new
       functions for rendering typeset glyphs, primarily:
       \code{grDevices::glyphInfo()} and \code{grid::grid.glyph()}.
-    
+
       Rendering of typeset glyphs is only supported so far on the
       Cairo-based graphics devices and on the \code{pdf()} device.
     }
   }
-  
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item A system installation of generic LAPACK 3.10.0 or later will
@@ -627,6 +633,11 @@
       \item Fix for possible segfault when using recently-added graphics
       features, such as gradients, clipping paths, masks, and groups with
       \code{pdf(file=NULL)}.
+
+      \item \code{class(m) <- class(m)} no longer changes a matrix \code{m}
+      by adding a class \emph{attribute}.
+
+      \item \code{packageDate(pkg)} now only warns once if there is no \code{pkg}.
     }
   }
 }

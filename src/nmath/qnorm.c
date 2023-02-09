@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000--2022 The R Core Team
+ *  Copyright (C) 2000--2023 The R Core Team
  *  Copyright (C) 1998       Ross Ihaka
  *  based on AS 241 (C) 1988 Royal Statistical Society
  *
@@ -36,6 +36,9 @@
  *      Wichura, M.J. (1988).
  *      Algorithm AS 241: The Percentage Points of the Normal Distribution.
  *      Applied Statistics, 37, 477-484.
+ *
+ *      Maechler, M. (2022). Asymptotic tail formulas for gaussian quantiles;
+ *      https://CRAN.R-project.org/package=DPQ/vignettes/qnorm-asymp.pdf
  */
 
 #include "nmath.h"
@@ -88,13 +91,14 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     }
     else { /* closer than 0.075 from {0,1} boundary :
 	    *  r := log(p~);  p~ = min(p, 1-p) < 0.075 :  */
+	double lp;
 	if(log_p && ((lower_tail && q <= 0) || (!lower_tail && q > 0))) {
-	    r = p;
+	    lp = p;
 	} else {
-	    r = log( (q > 0) ? R_DT_CIv(p) /* 1-p */ : p_ /* = R_DT_Iv(p) ^=  p */);
+	    lp = log( (q > 0) ? R_DT_CIv(p) /* 1-p */ : p_ /* = R_DT_Iv(p) ^=  p */);
 	}
 	// r = sqrt( - log(min(p,1-p)) )  <==>  min(p, 1-p) = exp( - r^2 ) :
-        r = sqrt(-r);
+        r = sqrt(-lp);
 #ifdef DEBUG_qnorm
 	REprintf("\t close to 0 or 1: r = %7g\n", r);
 #endif
@@ -113,11 +117,11 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
                      r + 1.6763848301838038494) * r +
                     2.05319162663775882187) * r + 1.);
         }
-        else if(r >= 816) { // p is *extremly* close to 0 or 1 - only possibly when log_p =TRUE
-	    // Using the asymptotical formula -- is *not* optimal but uniformly better than branch below
-	    val = r * M_SQRT2;
-        }
-	else { // p is very close to  0 or 1:  r > 5 <==> min(p,1-p) < exp(-25) = 1.3888..e-11
+	else if(r <= 27) { /* p is very close to  0 or 1: r in (5, 27] :
+		*  r >   5 <==> min(p,1-p)  < exp(-25) = 1.3888..e-11
+		*  r <= 27 <==> min(p,1-p) >= exp(-27^2) = exp(-729) ~= 2.507972e-317
+		* i.e., we are just barely in the range where min(p, 1-p) has not yet underflowed to zero.
+		*/
 	    // Wichura, p.478: minimax rational approx R_3(t) is for 5 <= t <= 27  (t :== r)
             r += -5.;
             val = (((((((r * 2.01033439929228813265e-7 +
@@ -133,10 +137,33 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
                      * r + .13692988092273580531) * r +
                     .59983220655588793769) * r + 1.);
         }
-
+        else { // r > 27: p is *really* close to 0 or 1 .. practically only when log_p =TRUE
+	    if(r >= 6.4e8) { // p is *very extremly* close to 0 or 1
+		// Using the asymptotical formula ("0-th order"): qn = sqrt(2*s)
+		val = r * M_SQRT2;
+	    } else {
+		double s2 = -ldexp(lp, 1), // = -2*lp = 2s
+		    x2 = s2 - log(M_2PI * s2); // = xs_1
+		// if(r >= 36000.)  # <==> s >= 36000^2   use x2 = xs_1  above
+		if(r < 36000.) {
+		    x2 = s2 - log(M_2PI * x2) - 2./(2. + x2); // == xs_2
+		    if(r < 840.) { // 27 < r < 840
+			x2 = s2 - log(M_2PI * x2) + 2*log1p(- (1 - 1/(4 + x2))/(2. + x2)); // == xs_3
+			if(r < 109.) { // 27 < r < 109
+			  x2 = s2 - log(M_2PI * x2) +
+			      2*log1p(- (1 - (1 - 5/(6 + x2))/(4. + x2))/(2. + x2)); // == xs_4
+			  if(r < 55.) { // 27 < r < 55
+			    x2 = s2 - log(M_2PI * x2) +
+			      2*log1p(- (1 - (1 - (5 - 9/(8. + x2))/(6. + x2))/(4. + x2))/(2. + x2)); // == xs_5
+			  }
+			}
+		    }
+		}
+                val = sqrt(x2);
+	    }
+	}
 	if(q < 0.0)
 	    val = -val;
-        /* return (q >= 0.)? r : -r ;*/
     }
     return mu + sigma * val;
 }

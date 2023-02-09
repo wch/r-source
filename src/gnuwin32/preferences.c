@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000      Guido Masarotto and Brian Ripley
- *                2004-2022 R Core Team
+ *                2004-2023 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -311,6 +311,7 @@ void applyGUI(Gui newGUI)
 	askok(G_("The language for menus cannot be changed on a\n running console.\n\nSave the preferences and restart Rgui to apply to menus.\n"));
 	snprintf(buf, 50, "LANGUAGE=%s", newGUI->language);
 	putenv(buf);
+	/* no free here: storage remains in use */
     }
 
 

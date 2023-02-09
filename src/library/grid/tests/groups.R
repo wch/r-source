@@ -490,7 +490,7 @@ group defined then used", y=.1)
 ## (so linear gradient starts at bottom left of page NOT at centre of page)
 grid.newpage()
 grid.group(circleGrob(.25, .25, .5, gp=gpar(fill="black")),
-           "clear",
+           "dest.out",
            rectGrob(.75, .75, .5, .5),
            gp=gpar(fill=linearGradient()))
 HersheyLabel("group based on circle and rect

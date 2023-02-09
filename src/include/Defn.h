@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  The R Core Team.
+ *  Copyright (C) 1998--2023  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1736,6 +1736,7 @@ void R_RestoreHashCount(SEXP rho);
 # define mbtoucs		Rf_mbtoucs
 # define mbcsToUcs2		Rf_mbcsToUcs2
 # define memtrace_report	Rf_memtrace_report
+# define mkCharWUTF8		Rf_mkCharWUTF8
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkFalse		Rf_mkFalse
 # define mkPROMISE		Rf_mkPROMISE
@@ -1973,6 +1974,7 @@ SEXP matchArgs_NR(SEXP, SEXP, SEXP);
 SEXP matchArgs_RC(SEXP, SEXP, SEXP);
 SEXP matchPar(const char *, SEXP*);
 void memtrace_report(void *, void *);
+SEXP mkCharWUTF8(const wchar_t *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 SEXP mkFalse(void);
 SEXP mkPRIMSXP (int, int);
@@ -2194,6 +2196,8 @@ void R_CleanTempDir(void);
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
+void R_wfixbackslash(wchar_t *s);
+void R_wfixslash(wchar_t *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
 #endif
 

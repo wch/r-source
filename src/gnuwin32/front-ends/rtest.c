@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  R Core Team
+ *  Copyright (C) 1998--2023  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ int main (int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25], *RHome;
+    char Rversion[25], *RHome, *RUser;
 
     snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
@@ -87,7 +87,8 @@ int main (int argc, char **argv)
 	exit(1);
     }
     Rp->rhome = RHome;
-    Rp->home = getRUser();
+    RUser = getRUser();
+    Rp->home = RUser;
     Rp->CharacterMode = LinkDLL;
     Rp->EmitEmbeddedUTF8 = FALSE;
     Rp->ReadConsole = myReadConsole;
@@ -103,6 +104,8 @@ int main (int argc, char **argv)
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
     R_SetParams(Rp);
+    freeRUser(RUser);
+    free_R_HOME(RHome);
     R_set_command_line_arguments(argc, argv);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));

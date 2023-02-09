@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2022   The R Core Team.
+ *  Copyright (C) 2000-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -678,7 +678,7 @@ typedef struct fileconn {
     Rboolean use_fgetwc;
     Rboolean have_wcbuffered;
     char wcbuf;
-    char name[PATH_MAX+1];
+    char *name;
 #endif
 } *Rfileconn;
 
@@ -763,11 +763,15 @@ static Rboolean file_open(Rconnection con)
 	    fp = _wfopen(wname, wmode);
 	    if(!fp) {
 		warning(_("cannot open file '%ls': %s"), wname, strerror(errno));
+		if (temp)
+		    free((char *)name);
 		return FALSE;
 	    }
 	    if (isDir(fp)) {
 		warning(_("cannot open file '%ls': it is a directory"), wname);
 		fclose(fp);
+		if (temp)
+		    free((char *)name);
 		return FALSE;
 	    }
 	} else {
@@ -793,11 +797,15 @@ static Rboolean file_open(Rconnection con)
     }
     if(!fp) {
 	warning(_("cannot open file '%s': %s"), name, strerror(errno));
+	if (temp)
+	    free((char *)name);
 	return FALSE;
     }
     if (isDir(fp)) {
 	warning(_("cannot open file '%s': it is a directory"), name);
 	fclose(fp);
+	if (temp)
+	    free((char *)name);
 	return FALSE;
     }
     if(temp) {
@@ -808,13 +816,15 @@ static Rboolean file_open(Rconnection con)
 	 * via CreateFile, get an fd by _open_osfhandle and a file
 	 * stream by fdopen.  See
 	 * e.g. http://www.codeproject.com/KB/files/handles.aspx
+	 *
+	 * unlink(name);
 	 */
-	unlink(name);
 #ifdef Win32
-	strncpy(this->name, name, PATH_MAX);
-	this->name[PATH_MAX - 1] = '\0';
-#endif
+	this->name = (char *)name; /* malloc'd in R_tmpnam */
+#else
+	unlink(name);
 	free((char *) name); /* only free if allocated by R_tmpnam */
+#endif
     }
 #ifdef Win32
     this->anon_file = temp;
@@ -853,7 +863,11 @@ static void file_close(Rconnection con)
 	con->status = fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
-    if(this->anon_file) unlink(this->name);
+    if(this->anon_file && this->name) {
+	unlink(this->name);
+	free(this->name);
+	this->name = NULL;
+    }
 #endif
 }
 

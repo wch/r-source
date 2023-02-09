@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@
 
 #ifdef Win32
 void R_UTF8fixslash(char *s);
-static void R_wfixslash(wchar_t *s);
+void R_wfixslash(wchar_t *s);
 #endif
 
 #ifdef __cplusplus
@@ -1698,12 +1698,12 @@ void R_UTF8fixslash(char *s)
 {
     char *p = s;
 
-	for (; *p; p++) if (*p == '\\') *p = '/';
-	/* preserve network shares */
-	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
+    for (; *p; p++) if (*p == '\\') *p = '/';
+    /* preserve network shares */
+    if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
 }
 
-static void R_wfixslash(wchar_t *s)
+void R_wfixslash(wchar_t *s)
 {
     wchar_t *p = s;
 
@@ -1711,7 +1711,6 @@ static void R_wfixslash(wchar_t *s)
     /* preserve network shares */
     if(s[0] == L'/' && s[1] == L'/') s[0] = s[1] = L'\\';
 }
-
 
 void R_fixbackslash(char *s)
 {
@@ -1727,6 +1726,14 @@ void R_fixbackslash(char *s)
     } else
 	for (; *p; p++) if (*p == '/') *p = '\\';
 }
+
+void R_wfixbackslash(wchar_t *s)
+{
+    wchar_t *p = s;
+
+    for (; *p; p++) if (*p == L'/') *p = L'\\';
+}
+
 #endif
 
 #if defined FC_LEN_T

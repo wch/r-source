@@ -103,9 +103,8 @@ RweaveRdOptions <- function(options)
 
     for(opt in names(options)){
         if(opt %notin% NOLOGOPTS) {
-            oldval <- options[[opt]]
-            if(!is.logical(options[[opt]])){
-                options[[opt]] <- c2l(options[[opt]])
+            if(!is.logical(oldval <- options[[opt]])){
+                options[[opt]] <- c2l(oldval)
             }
             if(is.na(options[[opt]]))
                 stop(gettextf("invalid value for '%s' : %s", opt, oldval),
@@ -117,13 +116,14 @@ RweaveRdOptions <- function(options)
     }
 
     if(!is.null(options$results))
-        options$results <- tolower(as.character(options$results))
-    options$results <- match.arg(options$results,
-                                 c("text", "verbatim", "rd", "hide"))
+        options$results <- match.arg(tolower(options$results),
+                                     c("text", "verbatim", "rd", "hide"))
     if(!is.null(options$stage))
-    	options$stage <- tolower(as.character(options$stage))
-    options$stage <- match.arg(options$stage,
-    				 c("build", "install", "render"))
+        options$stage <- match.arg(tolower(options$stage),
+                                   c("build", "install", "render"))
+    if(!is.null(options$strip.white))
+        options$strip.white <- tolower(options$strip.white)
+
     options
 }
 
@@ -276,7 +276,7 @@ processRdChunk <- function(code, stage, options, env, macros)
 		    if(options$strip.white == "all")
 		      output <- sub("\n[[:space:]]*\n", "\n", output)
 		}
-		res <- c(res, output)
+		res <- c(res, output, "\n")
 		remove(output)
 	    }
 	}

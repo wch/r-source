@@ -5,6 +5,7 @@
 
 \name{unit}
 \alias{unit}
+\alias{is.unit}
 \title{Function to Create a Unit Object}
 \description{
   This function creates a unit object --- a vector of unit values.
@@ -13,9 +14,12 @@
 }
 \usage{
 unit(x, units, data=NULL)
+is.unit(x)
 }
 \arguments{
-  \item{x}{A numeric vector.}
+  \item{x}{A numeric vector.
+
+    For \code{is.unit}, any R object.}
   \item{units}{A character vector specifying the units for the
     corresponding numeric values.}
   \item{data}{This argument is used to supply extra information
@@ -98,6 +102,9 @@ unit(x, units, data=NULL)
   the arguments for the default \code{format} method, e.g.,
   \code{digits} to control the number of significant digits
   printed for numeric values.
+
+  The \code{is.unit()} function is a convenience for checking whether
+  \code{x} inherits from the \code{"unit"} class.
 }
 \section{WARNING}{
   There is a special function \code{unit.c} for concatenating

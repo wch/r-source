@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2022   The R Core Team
+ *   Copyright (C) 1997-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -404,6 +404,7 @@ void process_site_Renviron (void)
 
 #ifdef Win32
 extern char *getRUser(void);
+extern void freeRUser(char *);
 #endif
 
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
@@ -416,10 +417,10 @@ void process_user_Renviron(void)
 	return;
     }
 
-    char buff[1024]; /* MAX_PATH on Windows is less than this */
+    char buff[PATH_MAX];  /* FIXME: to be increased on Windows */
 
 #ifdef R_ARCH
-    snprintf(buff, 1024, ".Renviron.%s", R_ARCH);
+    snprintf(buff, PATH_MAX, ".Renviron.%s", R_ARCH);
     if(process_Renviron(buff)) return;
 #endif
 
@@ -430,13 +431,25 @@ void process_user_Renviron(void)
 #endif
 #ifdef Win32
     /* R_USER is not necessarily set yet, so we have to work harder */
-    snprintf(buff, 1024, "%s/.Renviron", getRUser());
-    s = buff;
+    char *RUser = getRUser();
+    if (strlen(RUser) + strlen("/.Renviron") + 1 > PATH_MAX) {
+	Renviron_warning("path to user Renviron is too long: skipping");
+	freeRUser(RUser);
+	return;
+    } else {
+	snprintf(buff, PATH_MAX, "%s/.Renviron", RUser);
+	freeRUser(RUser);
+	s = buff;
+    }
 #endif
 
 #ifdef R_ARCH
-    snprintf(buff, 1024, "%s.%s", s, R_ARCH);
-    if(process_Renviron(buff)) return;
+    if (strlen(s) + 1 + strlen(R_ARCH) + 1 > PATH_MAX)
+	Renviron_warning("path to arch-specific user Renviron is too long: skipping");
+    else {
+	snprintf(buff, PATH_MAX, "%s.%s", s, R_ARCH);
+	if(process_Renviron(buff)) return;
+    }
 #endif
     process_Renviron(s);
 }

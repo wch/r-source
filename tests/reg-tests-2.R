@@ -3305,3 +3305,9 @@ quote(`&`(a < !b, d))
 ## deparse--parse roundtrip is stable (basically)
 stopifnot(eval(x) == 4, eval(parse(text = deparse(x))) == 4)
 ## eval()ed to 1 since R 3.5.0 {also because of the weak precedence of `!`}
+
+
+## packageDate(<pkg>) w/o valid package
+dput(packageDate("foo"))
+## gave *five* warnings* in R <= 4.2.x
+

@@ -108,6 +108,11 @@ addNextMethod(method, f, mlist, optional, envir)
 insertClassMethods(methods, Class, value, fieldNames, returnAll)
 
 balanceMethodsList(mlist, args, check = TRUE) # <- deprecated since R 3.2.0
+
+substituteFunctionArgs(def, newArgs, args = formalArgs(def),
+                       silent = FALSE, functionName = "a function") 
+
+.valueClassTest(object, classes, fname)
 }
 \section{Summary of Functions}{
 

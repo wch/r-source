@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -635,7 +635,13 @@ Rd2txt <-
                    writeCodeBlock(block, tag)
                    blankLine()
                },
-               "\\verb"= put(block),
+               "\\verb"= {
+                   writeContent(block[1L], tag)
+                   if (length(block) > 1L) {
+                       wrap(FALSE) # flush and keep subsequent linebreaks/formatting
+                       writeContent(block[-1L], tag)
+                   }
+               },
                "\\linkS4class" =,
                "\\link" = writeContent(block, tag),
                "\\cr" = {

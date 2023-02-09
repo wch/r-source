@@ -16,6 +16,7 @@
   Invoke a text editor on an \R object.
 }
 \usage{
+edit(name, \dots)
 \method{edit}{default}(name = NULL, file = "", title = NULL,
      editor = getOption("editor"), \dots)
 
@@ -26,8 +27,9 @@ xemacs(name = NULL, file = "")
 xedit(name = NULL, file = "")
 }
 \arguments{
-  \item{name}{a named object that you want to edit. If name is missing
-    then the file specified by \code{file} is opened for editing.}
+  \item{name}{a named object that you want to edit.  For the default
+    method, if \code{name} is missing then the file specified by
+    \code{file} is opened for editing.}
   \item{file}{a string naming the file to write the edited version to.}
   \item{title}{a display name for the object being edited.}
   \item{editor}{usually a character string naming (or giving the path

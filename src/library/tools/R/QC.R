@@ -5829,7 +5829,9 @@ function(package, dir, lib.loc = NULL)
                     as.name(paste0(deparse(e21[[3L]])[1L], "<-"))
             }
             for(i in seq_along(e)) Recall(e[[i]])
-        }
+        } else if (is.pairlist(e))
+            for(i in seq_along(e)) Recall(e[[i]])
+        	
     }
 
     if(!missing(package)) {
@@ -5844,7 +5846,7 @@ function(package, dir, lib.loc = NULL)
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env) # get is expensive
-			    if(typeof(f) == "closure") body(f) # else NULL
+			    if(typeof(f) == "closure") pairlist(formals(f), body(f)) # else NULL
                         })
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
@@ -5871,7 +5873,6 @@ function(package, dir, lib.loc = NULL)
                                    .massage_file_parse_error_message(conditionMessage(e))),
                                domain = NA, call. = FALSE))
     }
-
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
     if(length(ns)) {
@@ -7423,10 +7424,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## return value using $ will fail (as this needs lists);
         ## subscripting by other means, or using specific fields,
         ## incorrectly results in NAs.
-        ## The warnings are currently not caught by the direct check.
-        ## (We could need a suitably package-not-found condition for
-        ## reliable analysis: the condition messages are locale
-        ## specific.)
+        ## Hence, we also catch and report all warnings ...
         libpaths <- .libPaths()
         .libPaths(character())
         on.exit(.libPaths(libpaths))
@@ -7454,26 +7452,28 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                           c("packageDescription", "library", "require"))
             if(length(cnames))
                 out$citation_calls <- cnames
-            cinfo <-
-                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
-                                                                    meta),
-                                            error = identity))$value
-            if(inherits(cinfo, "error")) {
+        }
+        .warnings <- character()
+        cinfo <-
+            withCallingHandlers(tryCatch(utils::readCitationFile(cfile,
+                                                                 meta),
+                                         error = identity),
+                                warning = function(e) {
+                                    .warnings <<- c(.warnings,
+                                                    conditionMessage(e))
+                                    tryInvokeRestart("muffleWarning")
+                                })
+        if(inherits(cinfo, "error")) {
+            if(installed)
                 out$citation_error_reading_if_installed <-
                     conditionMessage(cinfo)
-                return(out)
-            }
-        } else {
-            cinfo <-
-                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
-                                                                    meta),
-                                            error = identity))$value
-            if(inherits(cinfo, "error")) {
+            else
                 out$citation_error_reading_if_not_installed <-
                     conditionMessage(cinfo)
-                return(out)
-            }
+            return(out)
         }
+        if(length(.warnings))
+            out$citation_trouble_when_reading <- unique(.warnings)
         ## If we can successfully read in the citation file, also check
         ## whether we can at least format the bibentries we obtained.
         cfmt <- tryCatch(format(cinfo, style = "text"),
@@ -7499,14 +7499,13 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         if(any(cnames %in% c("personList", "as.personList")))
             out$citation_has_calls_to_personList_et_al <- TRUE
         ## Prior to c83706, there was no convenient way to get citation
-        ## headers/footers for bibentries with length > 1.  So for now
-        ## only complain when citHeader()/citFooter() is used with a
-        ## single bibentry.
+        ## headers/footers for bibentries with length > 1, so one really
+        ## needed to use the old-style citHeader() and citFooter().
+        ## For now one could complain when citHeader()/citFooter() is
+        ## used with a single bibentry ...
         ## <FIXME>
         ## Change eventually ...
-        if(any(cnames == "citEntry") ||
-           (any(cnames %in% c("citHeader", "citFooter")) &&
-            length(cinfo) <= 1L))
+        if(any(cnames == "citEntry"))
             out$citation_has_calls_to_citEntry_et_al <- TRUE
         ## </FIXME>
         
@@ -8483,6 +8482,11 @@ function(x, ...)
                         "when package is not installed."),
                       collapse = "\n")
             },
+            if(length(y <- x$citation_trouble_when_reading)) {
+                paste(c("Problems when reading CTIATION file:",
+                        paste0("  ", y)),
+                      collapse = "\n")
+            },
             if(length(y <- x$citation_problem_when_formatting)) {
                 paste(c("Problems when formatting CITATION entries:",
                         paste0("  ", y)),
@@ -8493,7 +8497,7 @@ function(x, ...)
                       collapse = "\n")
             },
             if(isTRUE(x$citation_has_calls_to_citEntry_et_al)) {
-                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry() or citHeader()/citFooter().  Please use bibentry() instead, possibly with arguments 'header' and 'footer'."),
+                paste(strwrap("Package CITATION file contains call(s) to old-style citEntry().  Please use bibentry() instead."),
                       collapse = "\n")
             }
             )),

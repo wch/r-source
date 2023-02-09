@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-10  R Core Team
+ *  Copyright (C) 2001-23  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,13 @@
 #endif
 
 extern char *getRHOMElong(int m); /* in ../rhome.c */
+extern void freeRHOMElong(char *s);
+
+void R_Suicide(char *s) /* for call from ../rhome.o */
+{
+    fprintf(stderr, "FATAL ERROR:%s\n", s);
+    exit(2);
+}
 
 int main (int argc, char **argv)
 {
@@ -124,6 +131,7 @@ int main (int argc, char **argv)
 	}
 	if(rc != ERROR_SUCCESS) {
 	    fprintf(stderr, "\nError: failed to open key '%s'\n", keyname);
+	    freeRHOMElong(RHome);
 	    exit(1);
 	}
 	
@@ -151,6 +159,7 @@ int main (int argc, char **argv)
 	}
 	if(rc != ERROR_SUCCESS) {	    
 	    fprintf(stderr, "\nError: failed to open key '%s'\n", keyname);
+	    freeRHOMElong(RHome);
 	    exit(1);
 	}
 	
@@ -165,8 +174,10 @@ int main (int argc, char **argv)
 	    RegCloseKey(hkey2);
 	}
 	RegCloseKey(hkey);	
+	freeRHOMElong(RHome);
 
 	printf("succeeded\n");
     }
     exit(0);
 }
+

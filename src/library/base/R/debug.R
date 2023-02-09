@@ -20,7 +20,7 @@ debug <- function(fun, text = "", condition = NULL, signature = NULL) {
     if(is.null(signature))
         .Internal(debug(fun, text, condition))
     else if(requireNamespace("methods"))
-        methods::.debugMethod(fun, text, condition, signature, once = FALSE)
+        methods:::.debugMethod(fun, text, condition, signature, once = FALSE)
     else stop("failed to load the methods package for debugging by signature")
 }
 
@@ -28,7 +28,7 @@ debugonce <- function(fun, text = "", condition = NULL, signature = NULL) {
     if(is.null(signature))
         .Internal(debugonce(fun, text, condition))
     else if(requireNamespace("methods"))
-        methods::.debugMethod(fun, text, condition, signature, once = TRUE)
+        methods:::.debugMethod(fun, text, condition, signature, once = TRUE)
     else stop("failed to load the methods package for debugging by signature")
 }
 
@@ -36,7 +36,7 @@ undebug <- function(fun, signature = NULL) {
     if(is.null(signature))
         .Internal(undebug(fun))
     else if(requireNamespace("methods"))
-        methods::.undebugMethod(fun, signature = signature)
+        methods:::.undebugMethod(fun, signature = signature)
     else stop("failed to load methods package for undebugging by signature")
 }
 
@@ -44,7 +44,7 @@ isdebugged <- function(fun, signature = NULL) {
     if(is.null(signature))
         .Internal(isdebugged(fun))
     else if(requireNamespace("methods"))
-        methods::.isMethodDebugged(fun, signature)
+        methods:::.isMethodDebugged(fun, signature)
     else stop("failed to load methods package for handling signature")
 }
 
