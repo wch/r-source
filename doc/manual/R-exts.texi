@@ -12671,7 +12671,7 @@ At times it may also be useful to create a new environment frame in C code.
 
 @example
 @group
-SEXP R_NewEnv(SEXP enclos, int hash, ins size)
+SEXP R_NewEnv(SEXP enclos, int hash, int size)
 @end group
 @end example
 @findex R_NewEnv
