@@ -41,16 +41,26 @@ var in \var{text}.
   From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034") 
   \end{alltt}
 
-Yihui Xie's example:
-\begin{description}
-\item[def] ghi
-\end{description}
-
 \end{Details}
 %
 \begin{Value}
 [NULL]\\{}\dots
 \end{Value}
+%
+\begin{Section}{\AsIs{\texttt{\bsl{}Sexpr}}}
+Yihui Xie's example:
+\begin{description}
+\item[def] ghi
+\end{description}
+
+
+--
+\AsIs{\texttt{
+> cat("\bsl{}noutput\bsl{}n")
+
+output}}
+--
+\end{Section}
 %
 \begin{Examples}
 \begin{ExampleCode}

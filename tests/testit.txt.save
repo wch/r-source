@@ -32,14 +32,22 @@ _D_e_t_a_i_l_s:
        
        From gap: pedtodot.Rd -- n=split(m,par,"\034") 
      
-     Yihui Xie's example:
-
-     def ghi
-
 _V_a_l_u_e:
 
      [NULL]
      ...
+
+\_S_e_x_p_r:
+
+     Yihui Xie's example:
+
+     def ghi
+
+     -
+
+     > cat("\noutput\n")
+
+     output -
 
 _E_x_a_m_p_l_e_s:
 
