@@ -22,7 +22,9 @@
 }
 \usage{
 ts(data = NA, start = 1, end = numeric(), frequency = 1,
-   deltat = 1, ts.eps = getOption("ts.eps"), class = , names = )
+   deltat = 1, ts.eps = getOption("ts.eps"),
+   class = if(nseries > 1) c("mts", "ts", "matrix", "array") else "ts",
+   names = )
 as.ts(x, \dots)
 is.ts(x)
 
@@ -47,11 +49,11 @@ is.mts(x)
     considered equal if their absolute difference is less than
     \code{ts.eps}.}
   \item{class}{class to be given to the result, or none if \code{NULL}
-    or \code{"none"}.  The default is \code{"ts"} for a single series,
-    \code{c("mts", "ts", "matrix")} for multiple series.}
+    or \code{"none"}.  The default is \code{"ts"} for a single series, or
+    \code{c("mts", "ts", "matrix", "array")} for multiple series.}
   \item{names}{a character vector of names for the series in a multiple
-    series: defaults to the colnames of \code{data}, or \code{Series 1},
-    \code{Series 2}, \dots.}
+    series: defaults to the colnames of \code{data}, or \code{"Series 1"},
+    \code{"Series 2"}, \dots.}
   \item{x}{an arbitrary \R object.}
   \item{\dots}{arguments passed to methods (unused for the default method).}
 }
@@ -91,12 +93,12 @@ is.mts(x)
   \code{\link{tsp}} attribute of the object if it has one to set the
   start and end times and frequency.
 
-  \code{is.ts} tests if an object is a time series.  It is generic: you
-  can write methods to handle specific classes of objects,
-  see \link{InternalMethods}.
+  \code{is.ts()} tests if an object is a time series, i.e., inherits from
+  \code{"ts"} and is of positive length.
 
-  \code{is.mts} tests if an object is a multivariate time series
-  (inherits from class \code{"mts"}).
+  \code{is.mts(x)} tests if an object \code{x} is a multivariate time series,
+  i.e., fulfills \code{is.ts(x)}, \code{is.matrix(x)} and inherits from
+  class \code{"mts"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

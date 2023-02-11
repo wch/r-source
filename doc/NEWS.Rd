@@ -638,6 +638,10 @@
       by adding a class \emph{attribute}.
 
       \item \code{packageDate(pkg)} now only warns once if there is no \code{pkg}.
+
+      \item When \code{ts()} creates a multivariate time series,
+      \code{"mts"}, it also inherits from \code{"array"} now, and
+      \code{is.mts()} is documented \emph{and} stricter.
     }
   }
 }

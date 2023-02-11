@@ -139,7 +139,7 @@ stopifnot(all.equal(fr1[i], fit[i], tol=4e-4))# 64b: 9e-5 is ok
 ap <- log10(AirPassengers) - 2
 (fit <- StructTS(ap, type= "BSM"))
 par(mfrow=c(1,2))
-plot(cbind(ap, fitted(fit)), plot.type = "single")
+plot(cbind(ap,   fitted(fit)), plot.type = "single")
 plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
 
 ## PR14925
@@ -147,5 +147,34 @@ a <- ts(matrix(1:36, 12), start = 2000, freq = 12)
 b <- ts(matrix(1:48, 16), start = c(1999,9), freq = 12)
 window(a, start = c(2000,6)) <- window(b, start = c(2000,6), end = c(2000,12))
 ## failed in R < 2.15.1
+
+
+## ts() and t(ts(.)) classes and  is.mts()
+(mCls   <- class(aics))             # == c("matrix", "array")
+(nmAmat <- names(attributes(aics))) # == c("dim", "dimnames")
+ata <- attributes(ta <- t(a))
+str(att <- attributes(tts <- t(TS <- ts(cbind(1, 1:20)))))
+cat("TS: "); class(TS) ; cat(" attributes(TS):  "); str(attributes(TS), indent.str="  attr> ")
+tools::assertError(verbose = TRUE, ts(numeric()))
+stopifnot(exprs = {
+    is.mts(a)
+    is.mts(b)
+    identical(class(ta), mCls)    # no "ts"
+    identical(names(ata), nmAmat) # no "class"
+    is.mts(EuStockMarkets)
+    is.mts(Seatbelts)
+    !is.mts(t(b))
+    { ap3 <- AiP <- AirPassengers; dim(ap3) <- c(3,4,12)
+        is.character(class(ap3) <- class(AiP) <- class(Seatbelts)) }
+    !is.mts(AiP) # is.mts(.) was TRUE, wrongly in R <= 4.2.x
+    identical(class(tts), mCls)
+    identical(names(att), nmAmat)# had "class" at some point
+    is.ts(ts())# an NA
+    !is.mts(structure(numeric(), class = "mts"))
+    !is.mts(structure(numeric(), class = c("mts", "ts", "matrix")))
+})
+## is.mts() was too simplistic in R <= 4.2.x
+
+
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
