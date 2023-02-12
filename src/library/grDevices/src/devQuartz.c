@@ -1151,7 +1151,10 @@ static int QuartzOperator(int op) {
     case R_GE_compositeDestOut: blendmode = kCGBlendModeDestinationOut; break;
     case R_GE_compositeDestAtop: blendmode = kCGBlendModeDestinationAtop; break;
     case R_GE_compositeXor: blendmode = kCGBlendModeXOR; break;
-    /* case R_GE_compositeAdd: blendmode = kCGBlendModeADD; break; */
+    case R_GE_compositeAdd: 
+        warning(_("Add compositing operator not supported; falling back to over"));
+        blendmode = kCGBlendModeNormal; 
+        break;
     case R_GE_compositeSaturate: blendmode = kCGBlendModeSaturation; break;
     case R_GE_compositeMultiply: blendmode = kCGBlendModeMultiply; break;
     case R_GE_compositeScreen: blendmode = kCGBlendModeScreen; break;
