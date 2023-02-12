@@ -1215,7 +1215,7 @@ static void checkTooManyPlaceholders(SEXP rhs, SEXP args, YYLTYPE *lloc)
     for (SEXP rest = args; rest != R_NilValue; rest = CDR(rest))
 	if (CAR(rest) == R_PlaceholderToken)
 	    raiseParseError("tooManyPlaceholders", rhs, NO_VALUE, NULL, lloc,
-	                    "pipe placeholder may only appear once (%s:%d:%d)");
+	                    _("pipe placeholder may only appear once (%s:%d:%d)"));
 }
 
 #define ALLOW_EXTRACTOR_CHAINS
@@ -1228,7 +1228,8 @@ static int checkForPlaceholderList(SEXP placeholder, SEXP list)
     return FALSE;
 }
 
-static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr)
+static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr,
+				     YYLTYPE *lloc)
 {
     SEXP fun = CAR(expr);
     if (fun == R_BracketSymbol ||
@@ -1242,12 +1243,13 @@ static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr)
 	SEXP arg1 = CADR(expr);
 	SEXP phcell = arg1 == placeholder ?
 	    CDR(expr) :
-	    findExtractorChainPHCell(placeholder, rhs,  arg1);
+	    findExtractorChainPHCell(placeholder, rhs,  arg1, lloc);
 	/* If a placeholder is found, then check on the way back out
 	  that there are no other placeholders. */
 	if (phcell != NULL &&
 	    checkForPlaceholderList(placeholder, CDDR(expr)))
-	    errorcall(rhs, _("pipe placeholder may only appear once"));
+	    raiseParseError("tooManyPlaceholders", rhs, NO_VALUE, NULL, lloc,
+			    _("pipe placeholder may only appear once (%s:%d:%d)"));
 	return phcell;
     }
     else return NULL;
@@ -1283,7 +1285,8 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 
 #ifdef ALLOW_EXTRACTOR_CHAINS
 	/* allow for _$a[1]$b and the like */
-	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs);
+	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs,
+					       lloc_rhs);
 	if (phcell != NULL) {
 	    SETCAR(phcell, lhs);
 	    return rhs;
