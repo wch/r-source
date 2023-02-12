@@ -642,6 +642,10 @@
       \item When \code{ts()} creates a multivariate time series,
       \code{"mts"}, it also inherits from \code{"array"} now, and
       \code{is.mts()} is documented \emph{and} stricter.
+
+      \item \code{Rd2txt()} now preserves line breaks of \verb{\verb} Rd
+      content.  This also fixes the rendering of verbatim output from Rd
+      \verb{\Sexpr} in plain-text help.
     }
   }
 }
