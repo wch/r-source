@@ -3416,8 +3416,6 @@ static void checkTooManyPlaceholders(SEXP rhs, SEXP args, YYLTYPE *lloc)
 	                    _("pipe placeholder may only appear once (%s:%d:%d)"));
 }
 
-#define ALLOW_EXTRACTOR_CHAINS
-#ifdef ALLOW_EXTRACTOR_CHAINS
 static int checkForPlaceholderList(SEXP placeholder, SEXP list)
 {
     for (; list != R_NilValue; list = CDR(list))
@@ -3452,7 +3450,6 @@ static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr,
     }
     else return NULL;
 }
-#endif
 
 static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 {
@@ -3481,7 +3478,6 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 	                    NO_VALUE, NULL, lloc_rhs,
 	                    _("pipe placeholder cannot be used in the RHS function (%s:%d:%d)"));
 
-#ifdef ALLOW_EXTRACTOR_CHAINS
 	/* allow for _$a[1]$b and the like */
 	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs,
 					       lloc_rhs);
@@ -3489,7 +3485,6 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 	    SETCAR(phcell, lhs);
 	    return rhs;
 	}
-#endif
 
 	/* allow top-level placeholder */
 	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
