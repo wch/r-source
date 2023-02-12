@@ -1215,7 +1215,42 @@ static void checkTooManyPlaceholders(SEXP rhs, SEXP args, YYLTYPE *lloc)
     for (SEXP rest = args; rest != R_NilValue; rest = CDR(rest))
 	if (CAR(rest) == R_PlaceholderToken)
 	    raiseParseError("tooManyPlaceholders", rhs, NO_VALUE, NULL, lloc,
-	                    "pipe placeholder may only appear once (%s:%d:%d)");
+	                    _("pipe placeholder may only appear once (%s:%d:%d)"));
+}
+
+static int checkForPlaceholderList(SEXP placeholder, SEXP list)
+{
+    for (; list != R_NilValue; list = CDR(list))
+	if (checkForPlaceholder(placeholder, CAR(list)))
+	    return TRUE;
+    return FALSE;
+}
+
+static SEXP findExtractorChainPHCell(SEXP placeholder, SEXP rhs, SEXP expr,
+				     YYLTYPE *lloc)
+{
+    SEXP fun = CAR(expr);
+    if (fun == R_BracketSymbol ||
+	fun == R_Bracket2Symbol ||
+	fun == R_DollarSymbol ||
+	fun == R_AtsignSymbol) {
+	/* If the RHS is a call to an extractor ([, [[, $), then
+	   recursively follow the chain of extractions to the
+	   expression for the object from which elements are being
+	   extracted. */
+	SEXP arg1 = CADR(expr);
+	SEXP phcell = arg1 == placeholder ?
+	    CDR(expr) :
+	    findExtractorChainPHCell(placeholder, rhs,  arg1, lloc);
+	/* If a placeholder is found, then check on the way back out
+	  that there are no other placeholders. */
+	if (phcell != NULL &&
+	    checkForPlaceholderList(placeholder, CDDR(expr)))
+	    raiseParseError("tooManyPlaceholders", rhs, NO_VALUE, NULL, lloc,
+			    _("pipe placeholder may only appear once (%s:%d:%d)"));
+	return phcell;
+    }
+    else return NULL;
 }
 
 static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
@@ -1244,6 +1279,14 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 	    raiseParseError("placeholderInRHSFn",R_NilValue, 
 	                    NO_VALUE, NULL, lloc_rhs,
 	                    _("pipe placeholder cannot be used in the RHS function (%s:%d:%d)"));
+
+	/* allow for _$a[1]$b and the like */
+	SEXP phcell = findExtractorChainPHCell(R_PlaceholderToken, rhs, rhs,
+					       lloc_rhs);
+	if (phcell != NULL) {
+	    SETCAR(phcell, lhs);
+	    return rhs;
+	}
 
 	/* allow top-level placeholder */
 	for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))

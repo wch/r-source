@@ -152,6 +152,12 @@
 
       \item \code{demo(error.catching)} now also shows off
       \code{withWarnings()} and \code{tryCatchWEMs()}.
+
+      \item As an experimental feature the placeholder \code{_} can now
+      also be used in the \code{rhs} of a forward pipe \code{|>}
+      expression as the first argument in an extraction call, such as
+      \code{_$coef}. More generally, it can be used as the head of a
+      chain of extractions, such as \code{_$coef[[2]]}.
     }
   }
 
