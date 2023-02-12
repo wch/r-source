@@ -1240,9 +1240,19 @@ static void QuartzUseGroup(SEXP ref, SEXP trans,
     CGLayerRef layer = xd->groups[index];
     CGPoint contextOrigin = CGPointMake(0 ,0);
 
-    /* Ignore 'trans' for now */
-
+    CGContextSaveGState(ctx);
+    if (trans != R_NilValue) {
+        CGAffineTransform transform = 
+            CGAffineTransformMake(REAL(trans)[0],
+                                  REAL(trans)[3],
+                                  REAL(trans)[1],
+                                  REAL(trans)[4],
+                                  REAL(trans)[2],
+                                  REAL(trans)[5]);
+        CGContextConcatCTM(ctx, transform);
+    } 
     CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
+    CGContextRestoreGState(ctx);    
 }
 
 /* END definitions */
