@@ -158,10 +158,9 @@ maintainer <- function(pkg)
 
 packageVersion <- function(pkg, lib.loc = NULL)
 {
-    res <- suppressWarnings(packageDescription(pkg, lib.loc=lib.loc,
-                                               fields = "Version"))
-    if (!is.na(res)) package_version(res) else
-    stop(packageNotFoundError(pkg, lib.loc, sys.call()))
+    res <- packageDescription(pkg, lib.loc = lib.loc,
+                              fields = "Version")
+    package_version(res, strict = !is.na(res))
 }
 
 ##' Auxiliary: generalize extraction from "Built"
