@@ -2226,25 +2226,46 @@ static void RQuartz_Circle(double x, double y, double r, CTXDESC)
     }
 }
 
+static void QuartzLinePath(double x1, double y1, double x2, double y2,
+                           CGContextRef ctx)
+{
+    CGContextMoveToPoint(ctx, x1, y1);
+    CGContextAddLineToPoint(ctx, x2, y2);
+}
+    
+static void QuartzLine(double x1, double y1, double x2, double y2,
+                       CGContextRef ctx, const pGEcontext gc, 
+                       QuartzDesc *xd)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzLinePath(x1, y1, x2, y2, ctx);
+    QuartzStroke(ctx, gc, xd);
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
 static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
 {
     DRAWSPEC;
     if (!ctx) NOCTX;
-    SET(RQUARTZ_STROKE | RQUARTZ_LINE);
-    CGContextBeginPath(ctx);
-    CGContextMoveToPoint(ctx, x1, y1);
-    CGContextAddLineToPoint(ctx, x2, y2);
-    CGContextStrokePath(ctx);
+
+    if (xd->appending) {
+        QuartzLinePath(x1, y1, x2, y2, ctx);
+    } else {
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (stroke) {
+            QuartzLine(x1, y1, x2, y2, ctx, gc, xd);
+        }        
+    }
 }
 
-static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
+static void QuartzPolylinePath(int n, double *x, double *y,
+                               CGContextRef ctx)
 {
-    if (n < 2) return;
-    int i = 0;
-    DRAWSPEC;
-    if (!ctx) NOCTX;
-    SET(RQUARTZ_STROKE | RQUARTZ_LINE);
-
     /* CGContextStrokeLineSegments turned out to be a bad idea due to
        Leopard restarting dashes for each segment.
        CGContextAddLineToPoint is fast enough. 
@@ -2253,12 +2274,42 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
        subpaths, e.g: plot(log10(1:1e4), lty = 2, type="l")
        so now we create one path and hope the rendering engine is
        good enough. */
-
-    CGContextBeginPath(ctx);
+    int i = 0;
     CGContextMoveToPoint(ctx, x[0], y[0]);
     while(++i < n)
 	CGContextAddLineToPoint(ctx, x[i], y[i]);
-    CGContextStrokePath(ctx);
+}
+
+static void QuartzPolyline(int n, double *x, double *y,
+                           CGContextRef ctx, const pGEcontext gc, 
+                           QuartzDesc *xd)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzPolylinePath(n, x, y, ctx);
+    QuartzStroke(ctx, gc, xd);
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
+
+static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
+{
+    if (n < 2) return;
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+
+    if (xd->appending) {
+        QuartzPolylinePath(n, x, y, ctx);
+    } else {
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (stroke) {
+            QuartzPolyline(n, x, y, ctx, gc, xd);
+        }        
+    }
 }
 
 static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
