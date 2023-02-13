@@ -2735,6 +2735,17 @@ static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd)
 {
     DRAWSPEC;
     SEXP R_fcall;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+    Rboolean grouping;
+
+    Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+    if (!stroke) 
+        return;
+
+    if (!xd->appending) {
+        grouping = QuartzBegin(&ctx, &layer, xd);
+    }
 
     /* Increment the "appending" count */
     xd->appending++;
@@ -2749,8 +2760,8 @@ static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd)
     /* Stroke the path */
 
     if (!xd->appending) {
-        SET(RQUARTZ_STROKE | RQUARTZ_LINE);
-        CGContextDrawPath(ctx, kCGPathStroke);
+        QuartzStroke(ctx, gc, xd);
+        QuartzEnd(grouping, layer, ctx, savedCTX, xd);
     }
 }
 
@@ -2759,6 +2770,17 @@ static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
 {
     DRAWSPEC;
     SEXP R_fcall;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+    Rboolean grouping;
+
+    Rboolean fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
+    if (!fill)
+        return;
+
+    if (!xd->appending) {
+        grouping = QuartzBegin(&ctx, &layer, xd);
+    }
 
     /* Increment the "appending" count */
     xd->appending++;
@@ -2773,22 +2795,19 @@ static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
     /* Fill the path */
 
     if (!xd->appending) {
-        SET(RQUARTZ_FILL);
         switch(rule) {
         case R_GE_nonZeroWindingRule:
-            CGContextDrawPath(ctx, kCGPathFill); break;
+            QuartzFill(ctx, gc, xd); break;
         case R_GE_evenOddRule:
-            CGContextDrawPath(ctx, kCGPathEOFill); break;
+            QuartzEOFill(ctx, gc, xd); break;
         }
+        QuartzEnd(grouping, layer, ctx, savedCTX, xd);
     }
 }
 
-static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
-                               pDevDesc dd) 
+static void QuartzFillStrokePath(SEXP path, CGContextRef ctx, QuartzDesc *xd)
 {
-    DRAWSPEC;
     SEXP R_fcall;
-
     /* Increment the "appending" count */
     xd->appending++;
     /* Clear the current path */
@@ -2799,14 +2818,50 @@ static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc,
     UNPROTECT(1);
     /* Decrement the "appending" count */
     xd->appending--;
-    /* Fill and stroke the path */
-    if (!xd->appending) {
-        SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
+}
+
+static void QuartzFillStroke(SEXP path, int rule, const pGEcontext gc, 
+                             CGContextRef ctx, QuartzDesc *xd, int op)
+{
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+    Rboolean grouping;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    QuartzFillStrokePath(path, ctx, xd);
+    if (op) { /* fill */
         switch(rule) {
         case R_GE_nonZeroWindingRule:
-            CGContextDrawPath(ctx, kCGPathFillStroke); break;
+            QuartzFill(ctx, gc, xd); break;
         case R_GE_evenOddRule:
-            CGContextDrawPath(ctx, kCGPathEOFillStroke); break;
+            QuartzEOFill(ctx, gc, xd); break;
+        }
+    } else {
+        QuartzStroke(ctx, gc, xd);
+    }
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
+static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
+                               pDevDesc dd) 
+{
+    DRAWSPEC;
+
+    Rboolean fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
+    Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+    if (!(stroke || fill))
+        return;
+
+    if (xd->appending) {
+        QuartzFillStrokePath(path, ctx, xd);
+    } else {
+        if (fill && stroke) {
+            QuartzFillStroke(path, rule, gc, ctx, xd, 1);
+            QuartzFillStroke(path, rule, gc, ctx, xd, 0);
+        } else if (fill) {
+            QuartzFillStroke(path, rule, gc, ctx, xd, 1);
+        } else if (stroke) {
+            QuartzFillStroke(path, rule, gc, ctx, xd, 0);
         }
     }
 }
