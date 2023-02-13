@@ -2131,6 +2131,14 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
     CGDataProviderRef dp;
     CGColorSpaceRef cs;
     CGImageRef img;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    /* 
+     * A raster image adds nothing to a (clipping) path
+     */
+    if (xd->appending) 
+        return;
     
     /* Create a "data provider" containing the raster data */
     dp = CGDataProviderCreateWithData(NULL, (void *) raster, 4*w*h, NULL);
@@ -2159,6 +2167,8 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
         height = -height;
     }
 
+    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+
     CGContextSaveGState(ctx);
     /* Translate by height of image */
     CGContextTranslateCTM(ctx, 0.0, height);
@@ -2176,6 +2186,8 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
     /* Draw the quartz image */
     CGContextDrawImage(ctx, CGRectMake(0, 0, width, height), img);
     CGContextRestoreGState(ctx);
+
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 
     /* Tidy up */
     CGColorSpaceRelease(cs);
