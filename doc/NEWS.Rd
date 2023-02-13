@@ -275,9 +275,6 @@
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
       (which has been seen on platforms missing \code{tzdata}) is fatal.
 
-      \item The minimum required version of \code{libcurl} has been
-      increased from 7.28.0 to 7.32.0 (released in Aug 2013).
-
       \item If \command{configure} option
       \option{--with-valgrind-instrumentation} is given value \code{1}
       or \code{2}, option \option{--with-system-valgrind-headers} is now
@@ -344,7 +341,8 @@
 	  intention is to allow legacy packages to still be installed when
 	  later C standards become the default, including packages
 	  using new keywords as identifiers or with K&R-style function
-	  declarations.
+	  declarations.  This will use C17 if available, falling back
+	  to C11.
 	}
 	\item{USE_C90}{Use the C90 (aka C89) standard.  (As that standard
 	  did not require compilers to identify that version, all we can
