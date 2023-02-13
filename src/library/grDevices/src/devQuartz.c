@@ -1939,6 +1939,15 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
 {
     DRAWSPEC;
     if (!ctx) NOCTX;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    /* Not able to add glyphs to the current path. */
+    if (xd->appending) 
+        return;
+
+    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+
     /* A stupid hack because R isn't consistent. */
     int fill = gc->fill;
     gc->fill = gc->col;
@@ -1977,6 +1986,9 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CGContextSetTextPosition(ctx, x - ax, y - ay);
     /*      Rprintf("%s,%.2f %.2f (%.2f,%.2f) (%d,%f)\n",text,hadj,width,ax,ay,CGFontGetUnitsPerEm(CGContextGetFont(ctx)),CGContextGetFontSize(ctx));       */
     CGContextShowGlyphsWithAdvances(ctx,glyphs, g_adv, len);
+
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+
     free(glyphs);
     free(g_adv);
     if(Free) free(buffer);
