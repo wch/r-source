@@ -541,12 +541,11 @@ static void QuartzDestroyPatterns(QuartzDesc *xd)
     free(xd->patterns);
 }
 
-static int QuartzNewPatternIndex(QuartzDesc *xd, Rboolean gradient)
+static int QuartzNewPatternIndex(QuartzDesc *xd)
 {
     int i;
     for (i = 0; i < xd->numPatterns; i++) {
-        if ((gradient && xd->gradients[i] == NULL) ||
-            (!gradient && xd->patterns[i] == NULL)) {
+        if ((xd->gradients[i] == NULL) && (xd->patterns[i] == NULL)) {
             return i;
         } else {
             if (i == (xd->numPatterns - 1) &&
@@ -1062,7 +1061,7 @@ static void QuartzInitGroups(QuartzDesc *xd)
 {
     int i;
     xd->numGroups = maxGroups;
-    xd->groups = malloc(sizeof(CGLayerRef) * xd->numPatterns);
+    xd->groups = malloc(sizeof(CGLayerRef) * xd->numGroups);
     for (i = 0; i < xd->numGroups; i++) {
         xd->groups[i] = NULL;
     }
@@ -2311,12 +2310,12 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     int patternType = R_GE_patternType(pattern);
     if (patternType == R_GE_linearGradientPattern ||
         patternType == R_GE_radialGradientPattern) {
-        index = QuartzNewPatternIndex(xd, 1);
+        index = QuartzNewPatternIndex(xd);
         QGradientRef quartz_gradient = 
             QuartzCreateGradient(pattern, patternType, xd);
         xd->gradients[index] = quartz_gradient;
     } else {
-        index = QuartzNewPatternIndex(xd, 0);
+        index = QuartzNewPatternIndex(xd);
         int savedPattern = xd->appendingPattern;
         int savedType = xd->appendingType; 
         xd->appendingPattern = index;
