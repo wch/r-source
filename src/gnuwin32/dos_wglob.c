@@ -76,7 +76,7 @@ static char sscsid[]=  "$OpenBSD: glob.c,v 1.8.10.1 2001/04/10 jason Exp $";
 void Rprintf(const char *, ...);
 #endif
 
-#define	MAXPATHLEN	255
+#define	MAXPATHLEN	65536	
 #define DOSISH
 #define ARG_MAX		14500
 

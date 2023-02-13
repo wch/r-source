@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022 The R Core Team
+ *  Copyright (C) 1998--2023 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -577,15 +577,13 @@ attribute_hidden SEXP do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to, *p;
+	    wchar_t *from, *to, *p;
 	    struct _stati64 sb;
-	    from[PATH_MAX] = L'\0';
 	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
-	    if (wcslen(p) >= PATH_MAX)
-	    	error(_("'%s' path too long"), "from");
-	    wcsncpy(from, p, PATH_MAX);
+	    from = (wchar_t*) R_alloc(wcslen(p) + 1, sizeof(wchar_t));
+	    wcscpy(from, p);
 	    /* This Windows system call does not accept slashes */
-	    for (wchar_t *p = from; *p; p++) if (*p == L'/') *p = L'\\';
+	    R_wfixbackslash(from);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    _wstati64(from, &sb);
 	    int isDir = (sb.st_mode & S_IFDIR) > 0;
@@ -656,10 +654,9 @@ attribute_hidden SEXP do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to, *p;
+	    wchar_t *from, *to, *p;
 	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
-	    if (wcslen(p) >= PATH_MAX)
-	    	error(_("'%s' path too long"), "from");
+	    from = (wchar_t*) R_alloc(wcslen(p) + 1, sizeof(wchar_t));
 	    wcscpy(from, p);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    LOGICAL(ans)[i] = CreateHardLinkW(to, from, NULL) != 0;
@@ -711,7 +708,7 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n1, n2;
     int res;
 #ifdef Win32
-    wchar_t from[PATH_MAX], to[PATH_MAX];
+    wchar_t *from, *to;
     const wchar_t *w;
 #else
     char from[PATH_MAX], to[PATH_MAX];
@@ -737,13 +734,11 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 #ifdef Win32
 	w = filenameToWchar(STRING_ELT(f1, i), TRUE);
-	if (wcslen(w) >= PATH_MAX - 1)
-	    error(_("expanded 'from' name too long"));
-	wcsncpy(from, w, PATH_MAX - 1);
+	from = (wchar_t *) R_alloc(wcslen(w) + 1, sizeof(wchar_t));
+	wcscpy(from, w);
 	w = filenameToWchar(STRING_ELT(f2, i), TRUE);
-	if (wcslen(w) >= PATH_MAX - 1)
-	    error(_("expanded 'to' name too long"));
-	wcsncpy(to, w, PATH_MAX - 1);
+	to = (wchar_t *) R_alloc(wcslen(w) + 1, sizeof(wchar_t));
+	wcscpy(to, w);
 	res = Rwin_wrename(from, to);
 	if(res) {
 	    warning(_("cannot rename file '%ls' to '%ls', reason '%s'"),
@@ -1084,7 +1079,7 @@ attribute_hidden SEXP do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
-// A filenamw cannot be that long, but avoid GCC warnings
+// A filename cannot be that long, but avoid GCC warnings
 #define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
@@ -1377,13 +1372,8 @@ attribute_hidden SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[i] = 0;
 	if (STRING_ELT(file, i) != NA_STRING) {
 #ifdef Win32
-	    /* Package XML sends arbitrarily long strings to file.exists! */
-	    size_t len = strlen(CHAR(STRING_ELT(file, i)));
-	    if (len > MAX_PATH)
-		LOGICAL(ans)[i] = FALSE;
-	    else
-		LOGICAL(ans)[i] =
-		    R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
+	    LOGICAL(ans)[i] =
+		R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
 #else
 	    // returns NULL if not translatable
 	    const char *p = translateCharFP2(STRING_ELT(file, i));
@@ -1461,18 +1451,7 @@ attribute_hidden SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static int R_rmdir(const wchar_t *dir)
 {
-    wchar_t tmp[MAX_PATH];
-    DWORD res = 0;
-    /* FIXME: GetShortPathName is probably not needed here anymore. */
-    res = GetShortPathNameW(dir, tmp, MAX_PATH);
-    if (res == 0) 
-	/* GetShortPathName mail fail if there are insufficient permissions
-	   on a component of the path. */
-        return _wrmdir(dir);
-    else
-	/* Even when GetShortPathName succeeds, "tmp" may be the long name,
-	   because short names may not be enabled/available. */
-        return _wrmdir(tmp);
+    return _wrmdir(dir);
 }
 
 /* Junctions and symbolic links are fundamentally reparse points, so
@@ -2306,11 +2285,10 @@ end:
     return ScalarLogical(res == 0);
 }
 #else /* Win32 */
-#include <io.h> /* mkdir is defined here */
 attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path;
-    wchar_t *p, dir[MAX_PATH];
+    wchar_t *p, *dir;
     int res, show, recursive, serrno = 0, maybeshare;
 
     checkArity(op, args);
@@ -2323,10 +2301,9 @@ attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     recursive = asLogical(CADDR(args));
     if (recursive == NA_LOGICAL) recursive = 0;
     p = filenameToWchar(STRING_ELT(path, 0), TRUE);
-    if (wcslen(p) >= MAX_PATH)
-    	error(_("'%s' too long"), "path");
-    wcsncpy(dir, p, MAX_PATH);
-    for (p = dir; *p; p++) if (*p == L'/') *p = L'\\';
+    dir = (wchar_t*) R_alloc(wcslen(p) + 1, sizeof(wchar_t));
+    wcscpy(dir, p);
+    R_wfixbackslash(dir);
     /* remove trailing slashes */
     p = dir + wcslen(dir) - 1;
     while (*p == L'\\' && wcslen(dir) > 1 && *(p-1) != L':') *p-- = L'\0';
