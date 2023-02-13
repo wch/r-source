@@ -2177,15 +2177,52 @@ static SEXP RQuartz_Cap(pDevDesc dd)
     return raster;
 }
 
+static void QuartzCirclePath(double x, double y, double r,
+                             CGContextRef ctx)
+{
+    double r2 = 2.0*r;
+    CGContextAddEllipseInRect(ctx, CGRectMake(x-r, y-r, r2, r2));
+}
+
+static void QuartzCircle(double x, double y, double r,
+                         CGContextRef ctx, const pGEcontext gc, 
+                         QuartzDesc *xd, int op)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzCirclePath(x, y, r, ctx);
+    if (op) {
+        QuartzFill(ctx, gc, xd);
+    } else {
+        QuartzStroke(ctx, gc, xd);
+    }
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
 static void RQuartz_Circle(double x, double y, double r, CTXDESC)
 {
     DRAWSPEC;
     if (!ctx) NOCTX;
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
-    double r2 = 2.0*r;
-    CGContextBeginPath(ctx);
-    CGContextAddEllipseInRect(ctx,CGRectMake(x-r,y-r,r2,r2));
-    CGContextDrawPath(ctx,kCGPathFillStroke);
+
+    if (xd->appending) {
+        QuartzCirclePath(x, y, r, ctx);
+    } else {
+        Rboolean fill = (gc->patternFill != R_NilValue) || 
+            (R_ALPHA(gc->fill) > 0);
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (fill && stroke) {
+            QuartzCircle(x, y, r, ctx, gc, xd, 1); /* fill */
+            QuartzCircle(x, y, r, ctx, gc, xd, 0); /* stroke */
+        } else if (fill) {
+            QuartzCircle(x, y, r, ctx, gc, xd, 1);
+        } else if (stroke) {
+            QuartzCircle(x, y, r, ctx, gc, xd, 0);
+        }        
+    }
 }
 
 static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
