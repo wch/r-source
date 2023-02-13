@@ -1972,6 +1972,94 @@ static Rboolean implicitGroup(CGContextRef ctx, QuartzDesc *xd) {
          op == kCGBlendModeDestinationAtop);
 }
 
+static Rboolean QuartzBegin(CGContextRef *ctx,
+                            CGLayerRef *layer,
+                            QuartzDesc *xd)
+{
+    double devWidth, devHeight;
+    Rboolean grouping = implicitGroup(*ctx, xd);
+    if (grouping) {
+        devWidth = QuartzDevice_GetScaledWidth(xd);
+        devHeight = QuartzDevice_GetScaledHeight(xd);
+        *layer = CGLayerCreateWithContext(*ctx, 
+                                          CGSizeMake(devWidth, devHeight), 
+                                          NULL);
+        *ctx = CGLayerGetContext(*layer);
+    }
+    if (xd->currentMask >= 0) {
+        /* Set the clipping region from the mask */
+        CGContextSaveGState(*ctx); 
+        devWidth = QuartzDevice_GetScaledWidth(xd);
+        devHeight = QuartzDevice_GetScaledHeight(xd);
+        CGContextClipToMask(*ctx, CGRectMake(0, 0, devWidth, devHeight), 
+                            xd->masks[xd->currentMask]->mask);
+    }
+    return grouping;
+}
+
+static void QuartzEnd(Rboolean grouping,
+                      CGLayerRef layer,
+                      CGContextRef ctx,
+                      CGContextRef savedCTX,
+                      QuartzDesc *xd)
+{
+    if (xd->currentMask >= 0) {
+        CGContextRestoreGState(ctx); 
+    }
+    if (grouping) {
+        CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0, 0), layer);
+        CGLayerRelease(layer);
+    }
+}
+
+static void QuartzFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
+{
+    SET(RQUARTZ_FILL);
+    if (QuartzGradientFill(gc->patternFill, xd)) {
+        CGContextSaveGState(ctx);
+        CGContextClip(ctx);
+        QuartzDrawGradientFill(ctx, gc->patternFill, xd);
+        CGContextRestoreGState(ctx);
+    } else {
+        if (QuartzPatternFill(gc->patternFill, xd)) {
+            /* Override simple colour fill */
+            QuartzSetPatternFill(ctx, gc->patternFill, xd);
+        }
+        CGContextDrawPath(ctx, kCGPathFill);
+    }
+}
+
+static void QuartzStroke(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
+{
+    SET(RQUARTZ_STROKE | RQUARTZ_LINE);
+    CGContextDrawPath(ctx, kCGPathStroke);
+}
+
+static void QuartzRectPath(double x0, double y0, double x1, double y1,
+                           CGContextRef ctx)
+{
+    CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
+}
+
+static void QuartzRect(double x0, double y0, double x1, double y1, 
+                       CGContextRef ctx, const pGEcontext gc, 
+                       QuartzDesc *xd, int op)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzRectPath(x0, y0, x1, y1, ctx);
+    if (op) {
+        QuartzFill(ctx, gc, xd);
+    } else {
+        QuartzStroke(ctx, gc, xd);
+    }
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
 static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
 {
     DRAWSPEC;
@@ -1995,66 +2083,21 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
 	    if (y0 == y1 && (oy0 != oy1)) y1 += oy1 - oy0;
         }
     }
-    Rboolean grouping;
-    double devWidth;
-    double devHeight;
-    CGContextRef savedCTX;
-    CGLayerRef layer;
 
-    if (!xd->appending) {
-        grouping = implicitGroup(ctx, xd);
-        if (grouping) {
-            savedCTX = ctx;
-            devWidth = QuartzDevice_GetScaledWidth(xd);
-            devHeight = QuartzDevice_GetScaledHeight(xd);
-            layer = CGLayerCreateWithContext(ctx, 
-                                             CGSizeMake(devWidth, devHeight), 
-                                             NULL);
-            ctx = CGLayerGetContext(layer);
-        }
-        SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
-        CGContextBeginPath(ctx);
-        if (xd->currentMask >= 0) {
-            /* Set the clipping region from the mask */
-            CGContextSaveGState(ctx); 
-            devWidth = QuartzDevice_GetScaledWidth(xd);
-            devHeight = QuartzDevice_GetScaledHeight(xd);
-            CGContextClipToMask(ctx, CGRectMake(0, 0, devWidth, devHeight), 
-                                xd->masks[xd->currentMask]->mask);
-        }
-    }
-
-    CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
-
-    if (!xd->appending) {
-        if (QuartzGradientFill(gc->patternFill, xd)) {
-            CGContextSaveGState(ctx);
-            CGContextClip(ctx);
-            QuartzDrawGradientFill(ctx, gc->patternFill, xd);
-            CGContextRestoreGState(ctx);
-            /* Still may need to draw the border */
-            if (R_ALPHA(gc->col) > 0) {
-                CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
-                CGContextDrawPath(ctx, kCGPathStroke);
-            }
-        } else {
-            if (QuartzPatternFill(gc->patternFill, xd)) {
-                /* Override simple colour fill */
-                QuartzSetPatternFill(ctx, gc->patternFill, xd);
-            }
-            CGContextDrawPath(ctx, kCGPathFillStroke);
-        }
-        if (xd->currentMask >= 0) {
-            CGContextRestoreGState(ctx); 
-            /*
-            CGContextDrawImage(ctx, CGRectMake(0, 0, devWidth, devHeight), 
-                               xd->masks[xd->currentMask]->mask);
-            */
-        }
-        if (grouping) {
-            CGContextDrawLayerAtPoint(savedCTX, CGPointMake(0, 0), layer);
-            CGLayerRelease(layer);
-        }
+    if (xd->appending) {
+        QuartzRectPath(x0, y0, x1, y1, ctx);
+    } else {
+        Rboolean fill = (gc->patternFill != R_NilValue) || 
+            (R_ALPHA(gc->fill) > 0);
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (fill && stroke) {
+            QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 1); /* fill */
+            QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 0); /* stroke */
+        } else if (fill) {
+            QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 1);
+        } else if (stroke) {
+            QuartzRect(x0, y0, x1, y1, ctx, gc, xd, 0);
+        }        
     }
 }
 
