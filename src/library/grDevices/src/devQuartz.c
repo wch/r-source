@@ -1222,6 +1222,16 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     return result;
 }
 
+static Rboolean QuartzBegin(CGContextRef *ctx,
+                            CGLayerRef *layer,
+                            QuartzDesc *xd);
+
+static void QuartzEnd(Rboolean grouping,
+                      CGLayerRef layer,
+                      CGContextRef ctx,
+                      CGContextRef savedCTX,
+                      QuartzDesc *xd);
+
 static void QuartzUseGroup(SEXP ref, SEXP trans, 
                            CGContextRef ctx, QuartzDesc *xd) {
     int index = INTEGER(ref)[0];
@@ -1238,6 +1248,13 @@ static void QuartzUseGroup(SEXP ref, SEXP trans,
 
     CGLayerRef layer = xd->groups[index];
     CGPoint contextOrigin = CGPointMake(0 ,0);
+    Rboolean grouping = FALSE;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef implicitLayer;
+
+    if (!xd->appending) {
+        grouping = QuartzBegin(&ctx, &implicitLayer, xd);
+    }
 
     CGContextSaveGState(ctx);
     if (trans != R_NilValue) {
@@ -1252,6 +1269,10 @@ static void QuartzUseGroup(SEXP ref, SEXP trans,
     } 
     CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
     CGContextRestoreGState(ctx);    
+
+    if (!xd->appending) {
+        QuartzEnd(grouping, implicitLayer, ctx, savedCTX, xd);
+    }
 }
 
 /* END definitions */
