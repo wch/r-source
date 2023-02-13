@@ -1369,6 +1369,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->stroke          = RQuartz_stroke;
     dev->fill            = RQuartz_fill;
     dev->fillStroke      = RQuartz_fillStroke;
+    dev->capabilities    = RQuartz_capabilities;
     dev->deviceVersion   = R_GE_group;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
@@ -2633,7 +2634,66 @@ static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc,
     }
 }
 
-static SEXP RQuartz_capabilities(SEXP cap) { return cap; }
+static SEXP RQuartz_capabilities(SEXP capabilities) { 
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+
+    PROTECT(patterns = allocVector(INTSXP, 3));
+    INTEGER(patterns)[0] = R_GE_linearGradientPattern;
+    INTEGER(patterns)[1] = R_GE_radialGradientPattern;
+    INTEGER(patterns)[2] = R_GE_tilingPattern;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_patterns, patterns);
+    UNPROTECT(1);
+
+    PROTECT(clippingPaths = allocVector(INTSXP, 1));
+    INTEGER(clippingPaths)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_clippingPaths, clippingPaths);
+    UNPROTECT(1);
+
+    PROTECT(masks = allocVector(INTSXP, 1));
+    INTEGER(masks)[0] = R_GE_luminanceMask;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_masks, masks);
+    UNPROTECT(1);
+
+    PROTECT(compositing = allocVector(INTSXP, 24));
+    INTEGER(compositing)[0] = R_GE_compositeMultiply;
+    INTEGER(compositing)[1] = R_GE_compositeScreen;
+    INTEGER(compositing)[2] = R_GE_compositeOverlay;
+    INTEGER(compositing)[3] = R_GE_compositeDarken;
+    INTEGER(compositing)[4] = R_GE_compositeLighten;
+    INTEGER(compositing)[5] = R_GE_compositeColorDodge;
+    INTEGER(compositing)[6] = R_GE_compositeColorBurn;
+    INTEGER(compositing)[7] = R_GE_compositeHardLight;
+    INTEGER(compositing)[8] = R_GE_compositeSoftLight;
+    INTEGER(compositing)[9] = R_GE_compositeDifference;
+    INTEGER(compositing)[10] = R_GE_compositeExclusion;
+    INTEGER(compositing)[11] = R_GE_compositeClear;
+    INTEGER(compositing)[12] = R_GE_compositeSource;
+    INTEGER(compositing)[13] = R_GE_compositeOver;
+    INTEGER(compositing)[14] = R_GE_compositeIn;
+    INTEGER(compositing)[15] = R_GE_compositeOut;
+    INTEGER(compositing)[16] = R_GE_compositeAtop;
+    INTEGER(compositing)[17] = R_GE_compositeDest;
+    INTEGER(compositing)[18] = R_GE_compositeDestOver;
+    INTEGER(compositing)[19] = R_GE_compositeDestIn;
+    INTEGER(compositing)[20] = R_GE_compositeDestOut;
+    INTEGER(compositing)[21] = R_GE_compositeDestAtop;
+    INTEGER(compositing)[22] = R_GE_compositeXor;
+    INTEGER(compositing)[23] = R_GE_compositeSaturate;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_compositing, compositing);
+    UNPROTECT(1);
+
+    PROTECT(transforms = allocVector(INTSXP, 1));
+    INTEGER(transforms)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_transformations, transforms);
+    UNPROTECT(1);
+
+    PROTECT(paths = allocVector(INTSXP, 1));
+    INTEGER(paths)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
+    UNPROTECT(1);
+
+    return capabilities; 
+}
 
 #pragma mark -
 #pragma mark R Interface
