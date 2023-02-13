@@ -2295,7 +2295,6 @@ static void QuartzPolyline(int n, double *x, double *y,
     QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 }
 
-
 static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
 {
     if (n < 2) return;
@@ -2312,19 +2311,58 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
     }
 }
 
-static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
+static void QuartzPolygonPath(int n, double *x, double *y,
+                              CGContextRef ctx)
 {
-    if (n < 2) return;
     int i;
-    DRAWSPEC;
-    if (!ctx) NOCTX;
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
-    CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x[0], y[0]);
     for(i = 1; i < n; i++)
 	CGContextAddLineToPoint(ctx, x[i], y[i]);
     CGContextClosePath(ctx);
-    CGContextDrawPath(ctx, kCGPathFillStroke);
+}
+
+static void QuartzPolygon(int n, double *x, double *y,
+                          CGContextRef ctx, const pGEcontext gc, 
+                          QuartzDesc *xd, int op)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzPolygonPath(n, x, y, ctx);
+    if (op) {
+        QuartzFill(ctx, gc, xd);
+    } else {
+        QuartzStroke(ctx, gc, xd);
+    }
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
+
+
+static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
+{
+    if (n < 2) return;
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+
+    if (xd->appending) {
+        QuartzPolygonPath(n, x, y, ctx);
+    } else {
+        Rboolean fill = (gc->patternFill != R_NilValue) || 
+            (R_ALPHA(gc->fill) > 0);
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (fill && stroke) {
+            QuartzPolygon(n, x, y, ctx, gc, xd, 1); /* fill */
+            QuartzPolygon(n, x, y, ctx, gc, xd, 0); /* stroke */
+        } else if (fill) {
+            QuartzPolygon(n, x, y, ctx, gc, xd, 1);
+        } else if (stroke) {
+            QuartzPolygon(n, x, y, ctx, gc, xd, 0);
+        }        
+    }
 }
 
 static void RQuartz_Path(double *x, double *y, 
