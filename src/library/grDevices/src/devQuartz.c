@@ -2013,12 +2013,16 @@ static void QuartzEnd(Rboolean grouping,
     }
 }
 
-static void QuartzFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
+static void qFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd,
+                  Rboolean winding) 
 {
     SET(RQUARTZ_FILL);
     if (QuartzGradientFill(gc->patternFill, xd)) {
         CGContextSaveGState(ctx);
-        CGContextClip(ctx);
+        if (winding)
+            CGContextClip(ctx);
+        else
+            CGContextEOClip(ctx);            
         QuartzDrawGradientFill(ctx, gc->patternFill, xd);
         CGContextRestoreGState(ctx);
     } else {
@@ -2026,8 +2030,21 @@ static void QuartzFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd)
             /* Override simple colour fill */
             QuartzSetPatternFill(ctx, gc->patternFill, xd);
         }
-        CGContextDrawPath(ctx, kCGPathFill);
+        if (winding)
+            CGContextDrawPath(ctx, kCGPathFill);
+        else 
+            CGContextDrawPath(ctx, kCGPathEOFill);
     }
+}
+
+static void QuartzFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
+{
+    qFill(ctx, gc, xd, TRUE);
+}
+
+static void QuartzEOFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
+{
+    qFill(ctx, gc, xd, FALSE);
 }
 
 static void QuartzStroke(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) 
@@ -2340,8 +2357,6 @@ static void QuartzPolygon(int n, double *x, double *y,
     QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 }
 
-
-
 static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
 {
     if (n < 2) return;
@@ -2365,17 +2380,12 @@ static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
     }
 }
 
-static void RQuartz_Path(double *x, double *y, 
-                         int npoly, int* nper,
-                         Rboolean winding,
-                         CTXDESC)
+static void QuartzPathPath(double *x, double *y, 
+                           int npoly, int* nper,
+                           CGContextRef ctx)
 {
     int i, j, index;
-    DRAWSPEC;
-    if (!ctx) NOCTX;
-    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
     index = 0;
-    CGContextBeginPath(ctx);
     for (i=0; i < npoly; i++) {
         CGContextMoveToPoint(ctx, x[index], y[index]);
         index++;
@@ -2385,10 +2395,55 @@ static void RQuartz_Path(double *x, double *y,
         }
         CGContextClosePath(ctx);
     }
-    if (winding) {
-        CGContextDrawPath(ctx, kCGPathFillStroke);
+}
+
+static void QuartzPath(double *x, double *y, 
+                       int npoly, int* nper,
+                       Rboolean winding,
+                       CGContextRef ctx, const pGEcontext gc, 
+                       QuartzDesc *xd, int op)
+{
+    Rboolean grouping;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    grouping = QuartzBegin(&ctx, &layer, xd);
+    CGContextBeginPath(ctx);
+    QuartzPathPath(x, y, npoly, nper, ctx);
+    if (op) {
+        if (winding) {
+            QuartzFill(ctx, gc, xd);
+        } else {
+            QuartzEOFill(ctx, gc, xd);
+        }
     } else {
-        CGContextDrawPath(ctx, kCGPathEOFillStroke);
+        QuartzStroke(ctx, gc, xd);
+    }
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
+}
+
+static void RQuartz_Path(double *x, double *y, 
+                         int npoly, int* nper,
+                         Rboolean winding, 
+                         CTXDESC)
+{
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+
+    if (xd->appending) {
+        QuartzPathPath(x, y, npoly, nper, ctx);
+    } else {
+        Rboolean fill = (gc->patternFill != R_NilValue) || 
+            (R_ALPHA(gc->fill) > 0);
+        Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
+        if (fill && stroke) {
+            QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 1); /* fill */
+            QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 0); /* stroke */
+        } else if (fill) {
+            QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 1);
+        } else if (stroke) {
+            QuartzPath(x, y, npoly, nper, winding, ctx, gc, xd, 0);
+        }        
     }
 }
 
