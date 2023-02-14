@@ -1318,6 +1318,9 @@ static void     RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
 static void     RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc, 
                                    pDevDesc dd);
 static SEXP     RQuartz_capabilities(SEXP cap);
+static void     RQuartz_glyph(int n, int *glyphs, double *x, double *y, 
+                              SEXP font, double size,
+                              int colour, double rot, pDevDesc dd);
 
 #pragma mark Quartz device implementation
 
@@ -1391,7 +1394,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->fill            = RQuartz_fill;
     dev->fillStroke      = RQuartz_fillStroke;
     dev->capabilities    = RQuartz_capabilities;
-    dev->deviceVersion   = R_GE_group;
+    dev->glyph           = RQuartz_glyph;
+    dev->deviceVersion   = R_GE_glyphs;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -2937,6 +2941,66 @@ static SEXP RQuartz_capabilities(SEXP capabilities) {
     UNPROTECT(1);
 
     return capabilities; 
+}
+
+void RQuartz_glyph(int n, int *glyphs, double *x, double *y, 
+                   SEXP font, double size,
+                   int colour, double rot, pDevDesc dd)
+{
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+    CGContextRef savedCTX = ctx;
+    CGLayerRef layer;
+
+    if (n < 1) 
+        return;
+
+    /* Not able to add glyphs to the current path. */
+    if (xd->appending) 
+        return;
+
+    Rboolean grouping = QuartzBegin(&ctx, &layer, xd);
+
+    char url[501];
+    snprintf(url, 500, "file://%s", R_GE_glyphFontFile(font));
+    CFStringRef cfFontFileName = 
+        CFStringCreateWithCString(NULL, url, kCFStringEncodingUTF8);
+    CFURLRef cfFontURL = CFURLCreateWithString(NULL, cfFontFileName, NULL);
+    CFArrayRef cfFontDescriptors = 
+        CTFontManagerCreateFontDescriptorsFromURL(cfFontURL);
+    CFRelease(cfFontFileName);
+    CFRelease(cfFontURL);
+    int n_fonts = CFArrayGetCount(cfFontDescriptors);
+    if (n_fonts > 0) {
+        /* NOTE: that the font needs an inversion (in y) matrix
+           because the device has an inversion in user space 
+           (for bitmap devices anyway) */
+        CGAffineTransform trans = CGAffineTransformMakeScale(1.0, -1.0);
+	if (rot != 0.0) trans = CGAffineTransformRotate(trans, rot/180.*M_PI);
+        CTFontRef ctFont = 
+            CTFontCreateWithFontDescriptor((CTFontDescriptorRef) CFArrayGetValueAtIndex(cfFontDescriptors, 0), size, &trans);
+
+        CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        CGFloat fillColor[] = { R_RED(colour)/255.0, 
+                                R_GREEN(colour)/255.0, 
+                                R_BLUE(colour)/255.0, 
+                                R_ALPHA(colour)/255.0 };
+        CGColorRef fillColorRef = CGColorCreate(cs, fillColor);
+        CGContextSetFillColorWithColor(ctx, fillColorRef);
+        int i;
+        for (i=0; i<n; i++) {
+            CGGlyph glyph = glyphs[i];
+            CGPoint loc = CGPointMake(x[i], y[i]);
+            CTFontDrawGlyphs(ctFont, &glyph, &loc, 1, ctx);
+        }
+        CGColorRelease(fillColorRef);
+        CFRelease(ctFont);
+    } else {
+        warning(_("Failed to load font"));
+    }
+    CFRelease(cfFontDescriptors);
+    
+    QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 }
 
 #pragma mark -
