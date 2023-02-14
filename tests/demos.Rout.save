@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-12-18 r83471) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.2.0 (64-bit)
+R Under development (unstable) (2023-02-13 r83829) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -65,11 +65,11 @@ Type 'q()' to quit R.
 > ##' @return a list with 'value' and 'warning', where
 > ##'   'value' may be an error caught.
 > ##' @author Martin Maechler;
-> ##' Copyright (C) 2010-2012  The R Core Team
+> ##' Copyright (C) 2010-2023  The R Core Team
 > tryCatch.W.E <- function(expr)
 + {
 +     W <- NULL
-+     w.handler <- function(w){ # warning handler
++     w.handler <- function(w) { # warning handler
 + 	W <<- w
 + 	invokeRestart("muffleWarning")
 +     }
@@ -98,6 +98,129 @@ List of 2
   ..$ call   : language log("a")
   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
  $ warning: NULL
+
+> ##' @title Catch *all* warnings and the value
+> ##' @param expr an \R expression to evaluate
+> ##' @return a list with 'value' and 'warnings'
+> ##' @author Luke Tierney (2004), R-help post
+> ##'	https://stat.ethz.ch/pipermail/r-help/2004-June/052132.html
+> withWarnings <- function(expr) {
++     W <- NULL
++     wHandler <- function(w) {
++ 	W <<- c(W, list(w))
++ 	invokeRestart("muffleWarning")
++     }
++     val <- withCallingHandlers(expr, warning = wHandler)
++     list(value = val, warnings = W)
++ }
+
+> withWarnings({ warning("first"); warning("2nd"); pi })
+$value
+[1] 3.141593
+
+$warnings
+$warnings[[1]]
+<simpleWarning in withCallingHandlers(expr, warning = wHandler): first>
+
+$warnings[[2]]
+<simpleWarning in withCallingHandlers(expr, warning = wHandler): 2nd>
+
+
+
+> r <- withWarnings({ log(-1) + sqrt(-4); exp(1) })
+
+> str(r, digits=14)
+List of 2
+ $ value   : num 2.718281828459
+ $ warnings:List of 2
+  ..$ :List of 2
+  .. ..$ message: chr "NaNs produced"
+  .. ..$ call   : language log(-1)
+  .. ..- attr(*, "class")= chr [1:3] "simpleWarning" "warning" "condition"
+  ..$ :List of 2
+  .. ..$ message: chr "NaNs produced"
+  .. ..$ call   : language sqrt(-4)
+  .. ..- attr(*, "class")= chr [1:3] "simpleWarning" "warning" "condition"
+
+> ##' @title tryCatch *all* warnings and messages, and an error or the final value
+> ##' @param expr an \R expression to evaluate
+> ##' @return a list with `messages`, `warnings`, and
+> ##'         `value` which may be an error caught.
+> ##' @author Martin Maechler (combining the above)
+> tryCatch_WEMs <- function(expr)
++ {
++     W <- M <- NULL
++     w.handler <- function(w) { # warning handler
++ 	W <<- c(W, list(w)); invokeRestart("muffleWarning")
++     }
++     m.handler <- function(m) { # message handler
++ 	M <<- c(M, list(m)); invokeRestart("muffleMessage")
++     }
++     list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
++ 				     warning = w.handler, message = m.handler),
++ 	 messages = M,
++ 	 warnings = W)
++ }
+
+> f3 <- function(x) {
++     r <- log(-x) + sqrt(-x) # produce warnings when x >= 0
++     if(anyNA(r)) message(sprintf("%d NA's produced by log(.) + sqrt(.)", sum(is.na(r))))
++     r <- exp(-x)
++     if(any(ii <- is.infinite(r))) message(sprintf("Got +/- Inf from x[%s]", deparse(which(ii))))
++     r
++ }
+
+> str( r0 <- tryCatch_WEMs(f3("A")) ) # just an error from '-x'
+List of 3
+ $ value   :List of 2
+  ..$ message: chr "invalid argument to unary operator"
+  ..$ call   : language -x
+  ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+ $ messages: NULL
+ $ warnings: NULL
+
+> stopifnot(exprs = {
++     inherits (r0$value, "error")
++     identical(r0$value$call, quote(-x))
++     sapply(r0[c("messages","warnings")], is.null)
++ })
+
+> (x <- c(-1:1, (-1:1)/0))
+[1]   -1    0    1 -Inf  NaN  Inf
+
+> str( rI <- tryCatch_WEMs(f3(x) ))
+List of 3
+ $ value   : num [1:6] 2.718 1 0.368 Inf NaN ...
+ $ messages:List of 2
+  ..$ :List of 2
+  .. ..$ message: chr "3 NA's produced by log(.) + sqrt(.)\n"
+  .. ..$ call   : language message(sprintf("%d NA's produced by log(.) + sqrt(.)", sum(is.na(r))))
+  .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 78 5 78 88 5 88 78 78
+  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x14704d040> 
+  .. ..- attr(*, "class")= chr [1:3] "simpleMessage" "message" "condition"
+  ..$ :List of 2
+  .. ..$ message: chr "Got +/- Inf from x[4L]\n"
+  .. ..$ call   : language message(sprintf("Got +/- Inf from x[%s]", deparse(which(ii))))
+  .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 80 5 80 96 5 96 80 80
+  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x14704d040> 
+  .. ..- attr(*, "class")= chr [1:3] "simpleMessage" "message" "condition"
+ $ warnings:List of 2
+  ..$ :List of 2
+  .. ..$ message: chr "NaNs produced"
+  .. ..$ call   : language log(-x)
+  .. ..- attr(*, "class")= chr [1:3] "simpleWarning" "warning" "condition"
+  ..$ :List of 2
+  .. ..$ message: chr "NaNs produced"
+  .. ..$ call   : language sqrt(-x)
+  .. ..- attr(*, "class")= chr [1:3] "simpleWarning" "warning" "condition"
+
+> stopifnot(exprs = {
++     identical(lengths(rI), c(value = length(x), messages = 2L, warnings = 2L))
++     rI$value[4] == Inf
++     all.equal(rI$value, exp(-x))
++     length(rI$messages) == 2; sapply(rI$messages, inherits, what="message")
++     length(rI$warnings) == 2; sapply(rI$warnings, inherits, what="warning")
++ })
 
 
 	demo(is.things)
@@ -1527,5 +1650,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  0.656 0.049 0.707 0 0 
+Time elapsed:  0.658 0.041 0.702 0 0 
 > 
