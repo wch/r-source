@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1187,7 +1187,8 @@ void R_CleanTempDir(void)
 	/* On Solaris the working directory must be outside this one */
 	chdir(R_HomeDir());
 #endif
-	snprintf(buf, 1024, "rm -Rf %s", Sys_TempDir);
+	/* might contain space */
+	snprintf(buf, 1024, "rm -Rf '%s'", Sys_TempDir);
 	buf[1023] = '\0';
 	R_system(buf);
     }
