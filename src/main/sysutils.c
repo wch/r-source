@@ -1874,7 +1874,7 @@ extern char * mkdtemp (char *template);
 
 void R_reInitTempDir(int die_on_fail)
 {
-    char *tmp = NULL, *tm, *p;
+    char *tmp = NULL, *tm;
     size_t len;
 
 #define ERROR_MAYBE_DIE(MSG_) do {		\
