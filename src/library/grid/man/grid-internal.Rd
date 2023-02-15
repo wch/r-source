@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid-internal}
@@ -201,6 +201,27 @@
 \title{Internal Grid Functions}
 \description{
   Internal Grid functions
+}
+\usage{
+current.rotation() 
+grid.multipanel(x = stats::runif(90), y = stats::runif(90),
+                z = stats::runif(90), nplots = 9, nrow = 5, ncol = 2,
+                newpage = TRUE, vp = NULL) 
+grid.panel(x = stats::runif(10), y = stats::runif(10),
+           zrange = c(0, 1), zbin = stats::runif(2),
+           xscale = extendrange(x), yscale = extendrange(y), 
+           axis.left = TRUE, axis.left.label = TRUE, axis.right = FALSE, 
+           axis.right.label = TRUE, axis.bottom = TRUE,
+           axis.bottom.label = TRUE, axis.top = FALSE,
+           axis.top.label = TRUE, vp = NULL) 
+grid.strip(label = "whatever", range.full = c(0, 1),
+           range.thumb = c(0.3, 0.6), fill = "#FFBF00",
+           thumb = "#FF8000", vp = NULL) 
+layout.heights(lay) 
+layout.torture() 
+layout.widths(lay) 
+layoutRegion(layout.pos.row = 1, layout.pos.col = 1) 
+viewport.layout(vp)
 }
 \details{
   These are not to be called by the user (or in some cases are just
