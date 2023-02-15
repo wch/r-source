@@ -5,7 +5,6 @@
 
 \name{recover}
 \alias{recover}
-\alias{limitedLabels}
 \title{Browsing after an Error}
 \description{
   This function allows the user to browse directly on any of the
