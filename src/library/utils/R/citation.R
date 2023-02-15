@@ -518,6 +518,8 @@ function(x)
     x
 }
 
+as.data.frame.person <- as.data.frame.vector
+
 ######################################################################
 
 bibentry <-
@@ -764,9 +766,7 @@ function(x, style = "text", .bibstyle = NULL,
             m <- gettextf("To cite package %s in publications use:",
                           sQuote(p))
         i <- !is.null(m)
-        c(character(),
-          if(i)
-              paste(strwrap(m), collapse = "\n"),
+        c(paste(strwrap(m), collapse = "\n"),
           unlist(lapply(x, function(y) {
               h <- y$header
               j <- !is.null(h)
@@ -1168,6 +1168,8 @@ function(x, ...)
     class(y) <- class(x)
     y
 }
+
+as.data.frame.bibentry <- as.data.frame.vector
 
 ######################################################################
 
