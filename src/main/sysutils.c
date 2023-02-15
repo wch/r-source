@@ -1908,6 +1908,7 @@ void R_reInitTempDir(int die_on_fail)
 #ifdef Win32
     /* make sure no spaces in path */
     int hasspace = 0;
+    char *p;
     for (p = tm; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
     if (hasspace) {
