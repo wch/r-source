@@ -159,6 +159,7 @@ S3method("print", "person")
 S3method("rep", "bibentry")
 S3method("sort", "bibentry")
 S3method("toBibtex", "bibentry")
+S3method("transform", "bibentry")
 S3method("unique", "bibentry")
 
 S3method(.DollarNames, default)
