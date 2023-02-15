@@ -887,14 +887,19 @@ function(x, style = "text", .bibstyle = NULL, ...)
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
             ## differently.
-            n <- length(y)
-            if(nzchar(header <- y[1L]))
-                header <- c("", header, "")
-            if(nzchar(footer <- y[n]))
-                footer <- c("", footer, "")
-            writeLines(c(header,
-                         paste(y[-c(1L, n)], collapse = "\n\n"),
-                         footer))
+            ## Old-style with extra empty lines before/after outer
+            ## footer/header: 
+            ##   n <- length(y)
+            ##   if(nzchar(header <- y[1L]))
+            ##       header <- c("", header, "")
+            ##   if(nzchar(footer <- y[n]))
+            ##       footer <- c("", footer, "")
+            ##   writeLines(c(header,
+            ##                paste(y[-c(1L, n)], collapse = "\n\n"),
+            ##                footer))
+            ## New-style without:
+            writeLines(paste(y[nzchar(y)], collapse = "\n\n"))
+            ## Which could be used for all print styles ...?
         } else {
             writeLines(paste(y, collapse = "\n\n"))
         }
