@@ -46,6 +46,8 @@ as.factor(x)
 as.ordered(x)
 
 addNA(x, ifany = FALSE)
+
+.valid.factor(object)
 }
 \arguments{
   \item{x}{a vector of data, usually taking a small number of distinct
@@ -70,6 +72,7 @@ addNA(x, ifany = FALSE)
     \code{ordered} itself.}
   \item{ifany}{only add an \code{NA} level if it is used, i.e.
     if \code{any(is.na(x))}.}
+  \item{object}{an \R object.}
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a

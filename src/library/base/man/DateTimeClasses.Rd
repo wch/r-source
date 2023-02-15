@@ -47,7 +47,6 @@
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
-\alias{.check_tzones}
 \alias{duplicated.POSIXlt}
 \alias{unique.POSIXlt}
 \alias{split.POSIXct}
