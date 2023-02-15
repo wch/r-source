@@ -144,8 +144,9 @@
       screen readers on Windows.
 
       \item The drop-field control in GraphApp can now be left with the TAB
-      key, improving accessibility of the \command{Rgui} configuration
-      editor.
+      key and all controls can be navigated in the reverse order using the
+      Shift+TAB key, improving accessibility of the \command{Rgui}
+      configuration editor.
 
       \item \code{qnorm(<very large negative>, log.p=TRUE)} is now fully
       accurate (instead of to \dQuote{only} minimally five digits).
