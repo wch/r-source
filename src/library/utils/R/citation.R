@@ -753,8 +753,10 @@ function(x, style = "text", .bibstyle = NULL,
                    rd <- tools:::processRdSexprs(rd,
                                                  "install",
                                                  macros = attr(rd, "macros"))
-                   f(rd, fragment = TRUE, out = out, ...)
-                   paste(readLines(out), collapse = "\n")
+                   f(rd, fragment = TRUE, out = out,
+                     outputEncoding = "UTF-8", ...)
+                   paste(readLines(out, encoding = "UTF-8"),
+                         collapse = "\n")
                })
     }
 
