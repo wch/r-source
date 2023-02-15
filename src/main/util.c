@@ -825,7 +825,7 @@ attribute_hidden SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 static void R_wrmtrailingslash(wchar_t *s)
 {
     /* remove trailing forward slashes */
-    if (*s) {
+    if (s && *s) {
 	wchar_t *p = s + wcslen(s) - 1;
 	while (p >= s && *p == L'/') *(p--) = L'\0';
     }

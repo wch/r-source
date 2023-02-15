@@ -1904,53 +1904,51 @@ void R_reInitTempDir(int die_on_fail)
 	}
     }
 
-    size_t suffix_len = strlen("/RtmpXXXXXX");
-#ifdef Win32
     /* make sure no spaces in path */
     int hasspace = 0;
     char *p;
     for (p = tm; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
+#ifdef Win32
+    char *suffix = "\\RtmpXXXXXX";
     if (hasspace) {
 	DWORD res = GetShortPathName(tm, NULL, 0);
 	if (res > 0) {
-	    len = res + suffix_len;
+	    len = res + strlen(suffix);
 	    tmp = (char *)malloc(len);
 	    if (!tmp)
 		ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
 	    DWORD res1 = GetShortPathName(tm, tmp, res);
 	    if (res1 > 0 && res1 < res)
-		strcat(tmp, "\\RtmpXXXXXX");
+		strcat(tmp, suffix);
 	    else { /* very unlikely */
 		free(tmp);
 		tmp = NULL;
 	    }
 	}
 	if (tmp) {
-	    /* GetShortPathName may return a long name */
+	    /* GetShortPathName may return a long name, so check again */
 	    hasspace = 0;
 	    for (p = tmp; *p; p++)
 		if (isspace(*p)) { hasspace = 1; break; }
 	}
-	if (hasspace) {
-	    if (tmp)
-		free(tmp);
-	    ERROR_MAYBE_DIE(_("'R_TempDir' contains space"));
-	}
-    } else {
-	len = strlen(tm) + suffix_len + 1;
+    }
+#else
+    char *suffix = "/RtmpXXXXXX";
+#endif
+    if (hasspace) {
+	if (tmp)
+	    free(tmp);
+	ERROR_MAYBE_DIE(_("'R_TempDir' contains space"));
+    }
+    if (!tmp) {
+	len = strlen(tm) + strlen(suffix) + 1;
 	tmp = (char *)malloc(len);
 	if (!tmp)
 	    ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
-	snprintf(tmp, len, "%s\\RtmpXXXXXX", tm);
+	strcpy(tmp, tm);
+	strcat(tmp, suffix);
     }
-#else
-    len = strlen(tm) + suffix_len + 1;
-    tmp = (char *)malloc(len);
-    if (!tmp)
-	ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
-    snprintf(tmp, len, "%s/RtmpXXXXXX", tm);
-#endif
     if(!mkdtemp(tmp)) {
 	free(tmp);
 	ERROR_MAYBE_DIE(_("cannot create 'R_TempDir'"));
