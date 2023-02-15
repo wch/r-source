@@ -177,6 +177,8 @@ typedef struct QuartzSpecific_s {
     /* are we currently appending a pattern or a group (or neither) */
     int           appendingType;  
 
+    int           blendMode; /* Track the current blend mode */
+
     /* callbacks - except for getCGContext all others are optional */
     CGContextRef (*getCGContext)(QuartzDesc_t dev, void *userInfo);
     int          (*locatePoint)(QuartzDesc_t dev, void *userInfo, double *x, double *y);
@@ -1191,6 +1193,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     CGContextRef layerContext = CGLayerGetContext(layer);
 
     /* Start with OVER operator */
+    xd->blendMode = R_GE_compositeOver;
     CGContextSetBlendMode(layerContext, kCGBlendModeNormal);
     
     if (dst != R_NilValue) {
@@ -1205,6 +1208,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
          * NOT drawing 'src'.
          * This works because DEST is always drawn with the OVER operator. */
     } else {
+        xd->blendMode = op;
         CGContextSetBlendMode(layerContext, QuartzOperator(op));
         /* Play the source function to draw the source */
         R_fcall = PROTECT(lang1(src));
@@ -1425,6 +1429,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     QuartzInitGroups(qd);
     qd->appending = 0;
     qd->appendingType = QNoAppend;
+    qd->blendMode = R_GE_compositeOver;
 
     dev->deviceSpecific = qd;
     qd->dev             = dev;
@@ -1815,6 +1820,7 @@ static void RQuartz_NewPage(CTXDESC)
             xd->appendingPattern = -1;
             xd->appendingGroup = -1;
             xd->appendingType = QNoAppend;
+            xd->blendMode = R_GE_compositeOver;
 
             CGRect bounds = CGRectMake(0, 0,
 				       QuartzDevice_GetScaledWidth(xd) * 72.0,
@@ -1999,15 +2005,15 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     CFRelease(str);
 }
 
-static Rboolean implicitGroup(CGContextRef ctx, QuartzDesc *xd) {
-    int op = CGContextGetBlendMode(ctx);
+static Rboolean implicitGroup(QuartzDesc *xd) {
+    int op = xd->blendMode;
     return xd->appendingGroup >= 0 &&
-        (op == kCGBlendModeClear ||
-         op == kCGBlendModeCopy ||
-         op == kCGBlendModeSourceIn ||
-         op == kCGBlendModeSourceOut ||
-         op == kCGBlendModeDestinationIn ||
-         op == kCGBlendModeDestinationAtop);
+        (op == R_GE_compositeClear ||
+         op == R_GE_compositeSource ||
+         op == R_GE_compositeIn ||
+         op == R_GE_compositeOut ||
+         op == R_GE_compositeDestIn ||
+         op == R_GE_compositeDestAtop);
 }
 
 static Rboolean QuartzBegin(CGContextRef *ctx,
@@ -2015,7 +2021,7 @@ static Rboolean QuartzBegin(CGContextRef *ctx,
                             QuartzDesc *xd)
 {
     double devWidth, devHeight;
-    Rboolean grouping = implicitGroup(*ctx, xd);
+    Rboolean grouping = implicitGroup(xd);
     if (grouping) {
         devWidth = QuartzDevice_GetScaledWidth(xd);
         devHeight = QuartzDevice_GetScaledHeight(xd);
