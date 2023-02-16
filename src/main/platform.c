@@ -1634,7 +1634,7 @@ void R_CleanTempDir(void)
 	/* On Solaris the working directory must be outside this one */
 	chdir(R_HomeDir());
 #endif
-	char *special = "\\`$\"\n";
+	char *special = "'\\`$\"\n";
 	int hasspecial = 0;
 	for(int i = 0; special[i] != '\0'; i++)
 	    if (strchr(Sys_TempDir, special[i])) {
