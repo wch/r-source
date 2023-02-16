@@ -1155,15 +1155,14 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 #endif
 		    if (!res && (sb.st_mode & S_IFDIR) > 0) {
 			if (not_dot) {
-			    if (idirs) {
-				if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
-				    add_to_ans(pans, filename(stem, de->d_name),
-				               count, countmax, idx);
-			    }
 			    res = filename_buf(stem2, PATH_MAX, stem, de->d_name);
 			    if (res >= PATH_MAX)
 				warning(_("over-long path"));
-
+			    if (idirs) {
+				if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
+				    add_to_ans(pans, mkChar(stem2),
+				               count, countmax, idx);
+			    }
 			    list_files(p, stem2, count, pans, allfiles,
 				       recursive, reg, countmax, idx, idirs,
 				       allowdots);
