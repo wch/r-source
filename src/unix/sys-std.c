@@ -1173,28 +1173,6 @@ attribute_hidden void Rstd_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
-/* Note: now there is R_unlink(), but rm -Rf may be optimized for specific
-   file-systems. Some file systems allow to delete directory trees without
-   explicit/synchronous traversal so that deletion appears to be very
-   fast (see e.g. zfs). */
-void R_CleanTempDir(void)
-{
-    char buf[1024];
-
-    if((Sys_TempDir)) {
-// Only __sun is neeed on Solaris >= 10 (2005).
-#if defined(__sun) || defined(sun)
-	/* On Solaris the working directory must be outside this one */
-	chdir(R_HomeDir());
-#endif
-	/* might contain space */
-	snprintf(buf, 1024, "rm -Rf '%s'", Sys_TempDir);
-	buf[1023] = '\0';
-	R_system(buf);
-    }
-}
-
-
 attribute_hidden NORET
 void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {

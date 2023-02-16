@@ -1624,6 +1624,37 @@ static int R_unlink(const char *name, int recursive, int force)
     return (res2 == 0 || res != 0) ? 0 : 1;
 }
 
+void R_CleanTempDir(void)
+{
+    char buf[PATH_MAX + 20];
+
+    if((Sys_TempDir)) {
+// Only __sun is neeed on Solaris >= 10 (2005).
+#if defined(__sun) || defined(sun)
+	/* On Solaris the working directory must be outside this one */
+	chdir(R_HomeDir());
+#endif
+	char *special = "\\`$\"\n";
+	int hasspecial = 0;
+	for(int i = 0; special[i] != '\0'; i++)
+	    if (strchr(Sys_TempDir, special[i])) {
+		hasspecial = 1;
+		break;
+	    }
+	if (!hasspecial) {
+	    /* rm -Rf may be optimized for specific file-systems.
+	       Some file systems allow to delete directory trees without
+	       explicit/synchronous traversal so that deletion appears to be
+	       very fast (see e.g. zfs). */
+
+	    /* might contain space */
+	    snprintf(buf, sizeof(buf), "rm -Rf '%s'", Sys_TempDir);
+	    buf[sizeof(buf)-1] = '\0';
+	    R_system(buf);
+	} else
+	    R_unlink(Sys_TempDir, 1, 1); /* recursive=TRUE, force=TRUE */
+    }
+}
 #endif
 
 /* Note that wildcards are allowed in 'names' */
