@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2020  The R Core Team
+ *  first part Copyright (C) 2002-2023  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,7 @@
 # include <sys/stat.h>
 #endif
 #include <errno.h>
+#include <stdlib.h>
 
 #ifdef Win32
 #include <io.h> /* for mkdir */
@@ -41,11 +42,17 @@
 static int R_mkdir(char *path)
 {
 #ifdef Win32
-    char local[PATH_MAX];
+    char *local = (char *)malloc(strlen(path) + 1);
+    if (!local) {
+	errno = ENOMEM;
+	return -1;
+    }
     strcpy(local, path);
     /* needed DOS paths on Win 9x */
     R_fixbackslash(local);
-    return mkdir(local);
+    int res = mkdir(local);
+    free(local);
+    return res;
 #endif
 #ifdef Unix
     return mkdir(path, 0777);
