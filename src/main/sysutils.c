@@ -2011,16 +2011,16 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end.  Need at least 6 hex digits */
-#if RAND_MAX > 16777215
-# define TMPNAM2_SNPRINTF(BUF, SIZE, RAND1, RAND2) \
-	snprintf(BUF, SIZE, "%s%s%s%x%x%s", tempdir, filesep, prefix, pid, RAND1, fileext)
-#else
-# define TMPNAM2_SNPRINTF(BUF, SIZE, RAND1, RAND2) \
-	snprintf(BUF, SIZE, "%s%s%s%x%x%x%s", tempdir, filesep, prefix, pid, RAND1, RAND2, fileext)
-#endif
 	int r1 = rand();
+#if RAND_MAX > 16777215
+# define TMPNAM2_SNPRINTF(BUF, SIZE) \
+	snprintf(BUF, SIZE, "%s%s%s%x%x%s", tempdir, filesep, prefix, pid, r1, fileext)
+#else
 	int r2 = rand();
-	size_t needed = TMPNAM2_SNPRINTF(NULL, 0, r1, r2) + 1;
+# define TMPNAM2_SNPRINTF(BUF, SIZE) \
+	snprintf(BUF, SIZE, "%s%s%s%x%x%x%s", tempdir, filesep, prefix, pid, r1, r2, fileext)
+#endif
+	size_t needed = TMPNAM2_SNPRINTF(NULL, 0) + 1;
 #ifdef Unix
 	if (needed > PATH_MAX)
 	    error(_("temporary name too long"));
@@ -2028,7 +2028,7 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 	char *res = (char *) malloc(needed);
 	if(!res)
 	    error(_("allocation failed in R_tmpnam2"));
-	TMPNAM2_SNPRINTF(res, needed, r1, r2);
+	TMPNAM2_SNPRINTF(res, needed);
 	if (!R_FileExists(res))
 	    return res;
 	free(res);
