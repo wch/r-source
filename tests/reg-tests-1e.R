@@ -436,7 +436,8 @@ options(op)
 dir.create(pkgpath <- tempfile())
 writeLines(c("Version: 1.0", "Encoding: FTU-8"), # (sic!)
            file.path(pkgpath, "DESCRIPTION"))
-stopifnot(packageVersion(basename(pkgpath), dirname(pkgpath)) == "1.0")
+stopifnot(suppressWarnings(packageVersion(basename(pkgpath),
+                                          dirname(pkgpath))) == "1.0")
 ## outputs try()-catched iconv() errors but does not fail
 ## gave a "packageNotFoundError" in 3.5.0 <= R <= 4.2.2
 

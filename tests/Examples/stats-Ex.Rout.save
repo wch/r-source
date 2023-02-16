@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-01-26 r83698) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-02-09 r83797) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -17939,7 +17939,7 @@ Loading required namespace: Matrix
 > ## Multivariate
 > z <- ts(matrix(rnorm(300), 100, 3), start = c(1961, 1), frequency = 12)
 > class(z)
-[1] "mts"    "ts"     "matrix"
+[1] "mts"    "ts"     "matrix" "array" 
 > is.mts(z)
 [1] TRUE
 > head(z) # as "matrix"

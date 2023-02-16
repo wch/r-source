@@ -151,6 +151,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
   There is also a \code{\link{toBibtex}} method for direct conversion to
   BibTeX.
+
+  As of \R 4.3.0, there is also a \code{\link{transform}} method which
+  allows to directly use the current fields, see the examples.
 }
 \value{
   \code{bibentry} produces an object of class \code{"bibentry"}.
@@ -296,6 +299,9 @@ stopifnot(identical(rref$year, R.version$year))
 
 ## Convert to BibTeX
 toBibtex(bref)
+
+## Transform
+transform(rref, address = paste0(address, ", Europe"))
 
 ## Format in R style
 ## One bibentry() call for each bibentry:

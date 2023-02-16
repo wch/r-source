@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2022   The R Core Team
+ *  Copyright (C) 1997-2023   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1874,94 +1874,119 @@ extern char * mkdtemp (char *template);
 
 void R_reInitTempDir(int die_on_fail)
 {
-    char *tmp, *tm, tmp1[PATH_MAX+11], *p;
-#ifdef Win32
-    char tmp2[PATH_MAX];
-    int hasspace = 0;
-    DWORD res = 0;
-#endif
+    char *tmp = NULL, *tm;
+    size_t len;
 
-#define ERROR_MAYBE_DIE(MSG_)			\
+#define ERROR_MAYBE_DIE(MSG_) do {		\
     if(die_on_fail)				\
 	R_Suicide(MSG_);			\
     else					\
-	errorcall(R_NilValue, MSG_)
+	errorcall(R_NilValue, MSG_);            \
+} while (0)
 
     if(R_TempDir) return; /* someone else set it */
-    tmp = NULL; /* getenv("R_SESSION_TMPDIR");   no longer set in R.sh */
-    if (!tmp) {
-	tm = getenv("TMPDIR");
-	if (!R_isWriteableDir(tm)) {
-	    tm = getenv("TMP");
-	    if (!R_isWriteableDir(tm)) {
-		tm = getenv("TEMP");
-		if (!R_isWriteableDir(tm))
-#ifdef Win32
-		    tm = getenv("R_USER"); /* this one will succeed */
-#else
-		    tm = "/tmp";
-#endif
-	    }
-	}
-#ifdef Win32
-	/* make sure no spaces in path */
-	for (p = tm; *p; p++)
-	    if (isspace(*p)) { hasspace = 1; break; }
-	if (hasspace) {
-	    res = GetShortPathName(tm, tmp2, MAX_PATH);
-	    if (res != 0) 
-	        tm = tmp2;
+    /* getenv("R_SESSION_TMPDIR");   no longer set in R.sh */
 
-	    hasspace = 0;
-	    for (p = tm; *p; p++)
-		if (isspace(*p)) { hasspace = 1; break; }
-	    if (hasspace) {
-		ERROR_MAYBE_DIE(_("'R_TempDir' contains space"));
+    tm = getenv("TMPDIR");
+    if (!R_isWriteableDir(tm)) {
+	tm = getenv("TMP");
+	if (!R_isWriteableDir(tm)) {
+	    tm = getenv("TEMP");
+	    if (!R_isWriteableDir(tm)) {
+#ifdef Win32
+		tm = getenv("R_USER"); /* this one will succeed */
+		if (!tm)
+		    ERROR_MAYBE_DIE(_("'R_USER' not set"));
+#else
+		tm = "/tmp";
+#endif
 	    }
 	}
-	snprintf(tmp1, PATH_MAX+11, "%s\\RtmpXXXXXX", tm);
-#else
-	snprintf(tmp1, PATH_MAX+11, "%s/RtmpXXXXXX", tm);
-#endif
-	tmp = mkdtemp(tmp1);
-	if(!tmp) {
-	    ERROR_MAYBE_DIE(_("cannot create 'R_TempDir'"));
+    }
+
+    /* make sure no spaces in path */
+    int hasspace = 0;
+    char *p;
+    for (p = tm; *p; p++)
+	if (isspace(*p)) { hasspace = 1; break; }
+#ifdef Win32
+    char *suffix = "\\RtmpXXXXXX";
+    if (hasspace) {
+	DWORD res = GetShortPathName(tm, NULL, 0);
+	if (res > 0) {
+	    len = res + strlen(suffix);
+	    tmp = (char *)malloc(len);
+	    if (!tmp)
+		ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
+	    DWORD res1 = GetShortPathName(tm, tmp, res);
+	    if (res1 > 0 && res1 < res)
+		strcat(tmp, suffix);
+	    else { /* very unlikely */
+		free(tmp);
+		tmp = NULL;
+	    }
 	}
+	if (tmp) {
+	    /* GetShortPathName may return a long name, so check again */
+	    hasspace = 0;
+	    for (p = tmp; *p; p++)
+		if (isspace(*p)) { hasspace = 1; break; }
+	}
+    }
+#else
+    char *suffix = "/RtmpXXXXXX";
+#endif
+    if (hasspace) {
+	if (tmp)
+	    free(tmp);
+	ERROR_MAYBE_DIE(_("'R_TempDir' contains space"));
+    }
+    if (!tmp) {
+	len = strlen(tm) + strlen(suffix) + 1;
+	tmp = (char *)malloc(len);
+	if (!tmp)
+	    ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
+	strcpy(tmp, tm);
+	strcat(tmp, suffix);
+    }
+    if(!mkdtemp(tmp)) {
+	free(tmp);
+	ERROR_MAYBE_DIE(_("cannot create 'R_TempDir'"));
+    }
 #ifndef Win32
 # ifdef HAVE_SETENV
-	if(setenv("R_SESSION_TMPDIR", tmp, 1))
-	    errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
+    if(setenv("R_SESSION_TMPDIR", tmp, 1)) {
+	free(tmp);
+	errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
+    }
 # elif defined(HAVE_PUTENV)
-	{
-	    size_t len = strlen(tmp) + 20;
-	    char * buf = (char *) malloc((len) * sizeof(char));
-	    if(buf) {
-		snprintf(buf, len, "R_SESSION_TMPDIR=%s", tmp);
-		if(putenv(buf))
-		    errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
-		/* no free here: storage remains in use */
-	    } else
+    {
+	len = strlen(tmp) + 20;
+	char * buf = (char *) malloc((len) * sizeof(char));
+	if(buf) {
+	    snprintf(buf, len, "R_SESSION_TMPDIR=%s", tmp);
+	    if(putenv(buf)) {
+		free(tmp);
+		free(buf);
 		errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
+	    }
+	    /* no free here: storage remains in use */
+	} else {
+	    free(tmp);
+	    errorcall(R_NilValue, _("unable to set R_SESSION_TMPDIR"));
 	}
+    }
 # endif
 #endif
-    }
-
-    size_t len = strlen(tmp) + 1;
-    p = (char *) malloc(len);
-    if(!p)
-	ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
-    else {
-	R_TempDir = p;
-	strcpy(R_TempDir, tmp);
-	Sys_TempDir = R_TempDir;
-    }
+    R_TempDir = tmp;
+    Sys_TempDir = tmp;
 }
 
 attribute_hidden void InitTempDir(void) {
     R_reInitTempDir(/* die_on_fail = */ TRUE);
 }
 
+/* returns malloc'd result */
 char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     return R_tmpnam2(prefix, tempdir, "");
@@ -1971,10 +1996,10 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
    session directory and run in parallel.
    So as from 2.14.1, we make sure getpid() is part of the process.
 */
+/* returns malloc'd result */
 char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 {
-    char tm[PATH_MAX], *res;
-    unsigned int n, done = 0, pid = getpid();
+    unsigned int n, pid = getpid();
 #ifdef Win32
     char filesep[] = "\\";
 #else
@@ -1984,34 +2009,31 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
     if(!prefix) prefix = "";	/* NULL */
     if(!fileext) fileext = "";  /*  "   */
 
-#if RAND_MAX > 16777215
-#define RAND_WIDTH 8
-#else
-#define RAND_WIDTH 12
-#endif
-
-    if(strlen(tempdir) + 1 + strlen(prefix) + RAND_WIDTH + strlen(fileext) >= PATH_MAX)
-	error(_("temporary name too long"));
-
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end.  Need at least 6 hex digits */
+	int r1 = rand();
 #if RAND_MAX > 16777215
-	snprintf(tm, PATH_MAX, "%s%s%s%x%x%s", tempdir, filesep, prefix, pid, rand(), fileext);
+# define TMPNAM2_SNPRINTF(BUF, SIZE) \
+	snprintf(BUF, SIZE, "%s%s%s%x%x%s", tempdir, filesep, prefix, pid, r1, fileext)
 #else
-	snprintf(tm, PATH_MAX, "%s%s%s%x%x%x%s", tempdir, filesep, prefix, pid, rand(), rand(), fileext);
+	int r2 = rand();
+# define TMPNAM2_SNPRINTF(BUF, SIZE) \
+	snprintf(BUF, SIZE, "%s%s%s%x%x%x%s", tempdir, filesep, prefix, pid, r1, r2, fileext)
 #endif
-	if(!R_FileExists(tm)) {
-	    done = 1;
-	    break;
-	}
+	size_t needed = TMPNAM2_SNPRINTF(NULL, 0) + 1;
+#ifdef Unix
+	if (needed > PATH_MAX)
+	    error(_("temporary name too long"));
+#endif
+	char *res = (char *) malloc(needed);
+	if(!res)
+	    error(_("allocation failed in R_tmpnam2"));
+	TMPNAM2_SNPRINTF(res, needed);
+	if (!R_FileExists(res))
+	    return res;
+	free(res);
     }
-    if(!done)
-	error(_("cannot find unused tempfile name"));
-    res = (char *) malloc((strlen(tm)+1) * sizeof(char));
-    if(!res)
-	error(_("allocation failed in R_tmpnam2"));
-    strcpy(res, tm);
-    return res;
+    error(_("cannot find unused tempfile name"));
 }
 
 void R_free_tmpnam(char *name)
@@ -2313,11 +2335,28 @@ int attribute_hidden R_is_redirection_tty(int fd)
     if (h == INVALID_HANDLE_VALUE || GetFileType(h) != FILE_TYPE_PIPE)
 	return 0;
     FILE_NAME_INFO *fnInfo;
-    DWORD size = sizeof(FILE_NAME_INFO) + MAX_PATH*sizeof(WCHAR);
+
+    /* find out the required FileNameLength */
+    DWORD size = sizeof(FILE_NAME_INFO);
     if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
 	return 0;
+    fnInfo->FileNameLength = 0; /* most likely not needed */
+    BOOL r = gfibh(h, FileNameInfo, fnInfo, size);
+    if (r || GetLastError() != ERROR_MORE_DATA) {
+	free(fnInfo);
+	return 0;
+    }
+    /* use the right length */
+    DWORD fnLength = fnInfo->FileNameLength; /* most likely not needed */
+    size = sizeof(FILE_NAME_INFO) + fnLength;
+    free(fnInfo);
+    if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
+	return 0;
+    fnInfo->FileNameLength = fnLength;
+    r = gfibh(h, FileNameInfo, fnInfo, size);
     int res = 0;
-    if (gfibh(h, FileNameInfo, fnInfo, size)) 
+    if (r)
+	/* note that fnInfo->FileName is not null terminated */
 	/* e.g. msys-1888ae32e00d56aa-pty0-from-master,
 	        cygwin-e022582115c10879-pty0-from-master */
 	/* test borrowed from git */

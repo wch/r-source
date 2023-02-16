@@ -800,6 +800,12 @@ CC=${CC17}
 CFLAGS=${C17FLAGS}
 R_C17
 if test x${r_cv_C17} = xno; then
+unset r_cv_C17
+CC17="${CC_SUB} -std=gnu11"
+CC=${CC17}
+R_C17
+fi
+if test x${r_cv_C17} = xno; then
 CC17=
 C17FLAGS=
 fi

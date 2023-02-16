@@ -35,10 +35,6 @@
 \alias{unique.numeric_version}
 \alias{xtfrm.numeric_version}
 \alias{$.package_version}
-% Internal.
-\alias{.encode_numeric_version}
-\alias{.decode_numeric_version}
-\alias{.make_numeric_version}
 \title{Numeric Versions}
 \description{A simple S3 class for representing numeric versions
   including package versions, and associated methods.}

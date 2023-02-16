@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -58,6 +58,18 @@
 
 \alias{.doWrap}
 \alias{.doSortWrap}
+
+\alias{.amatch_bounds}
+\alias{.amatch_costs}
+\alias{.check_tzones}
+\alias{.encode_numeric_version}
+\alias{.decode_numeric_version}
+\alias{.make_numeric_version}
+\alias{.expand_R_libs_env_var}
+\alias{.kronecker}
+\alias{.packageStartupMessage}
+\alias{.rmpkg}
+
 \title{Internal Objects in Package \pkg{base}}
 \description{% 'most': see e.g., .detach
   Internal objects in the base package most of which are only user-visible
@@ -110,6 +122,20 @@ lazyLoadDBfetch(key, file, compressed, hook)
 ## Only on Windows:
 .fixupGFortranStdout()
 .fixupGFortranStderr()
+
+.doWrap(vec, decr, nalast, noNA = NA) 
+.doSortWrap(vec, decr, nalast, noNA = NA)
+
+.amatch_bounds(x = 0.1) 
+.amatch_costs(x = NULL)
+.check_tzones(...)
+.decode_numeric_version(x)
+.encode_numeric_version(x) 
+.make_numeric_version(x, strict = TRUE, regexp, classes = NULL) 
+.expand_R_libs_env_var(x) 
+.kronecker(X, Y, FUN = "*", make.dimnames = FALSE, ...) 
+.packageStartupMessage(message, call = NULL) 
+.rmpkg(pkg) 
 }
 \arguments{
   \item{x}{an object

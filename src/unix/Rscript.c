@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2022  The R Core Team
+ *  Copyright (C) 2006-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ R --no-echo --no-restore --vanilla --file=foo [script_args]
 
 #include <Rversion.h>
 
-
+/* See comments in Defn.h and keep in step. */
 /* Maximal length of an entire file name */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)
@@ -89,6 +89,27 @@ static char rarch[] = R_ARCH;
 static int verbose = 0;
 #endif
 
+void R_putenv_cpy(char *varname, char *value)
+{
+#ifdef HAVE_PUTENV
+    size_t needed = strlen(varname) + 1 + strlen(value) + 1;
+    char *buf = (char *)malloc(needed);
+    if (!buf) {
+	fprintf(stderr, "malloc failure\n");
+	exit(1);
+    }
+    snprintf(buf, needed, "%s=%s", varname, value);
+    if (putenv(buf)) {
+	fprintf(stderr, "unable to set %s\n", varname);
+	exit(1);
+    }
+    /* no free here: storage remains in use */
+#else
+    fprintf(stderr, "unable to set %s\n", varname);
+    exit(1);
+#endif
+}
+
 void usage(void)
 {
     fprintf(stdout, "Usage: Rscript [options] file [args]\n");
@@ -118,7 +139,7 @@ void usage(void)
 int main(int argc_, char *argv_[])
 {
 #ifdef HAVE_EXECV
-    char cmd[PATH_MAX+1], buf[PATH_MAX+8], buf2[1100], *p;
+    char *cmd = NULL, buf[PATH_MAX+8], *p;
     int i, i0 = 0, ac = 0, res = 0, e_mode = 0, set_dp = 0;
     char **av;
     int have_cmdarg_default_packages = 0;
@@ -201,20 +222,47 @@ int main(int argc_, char *argv_[])
 
     p = getenv("RHOME");
 #ifdef _WIN32
-    if(p && *p)
-	snprintf(cmd, PATH_MAX+1, "%s\\%s\\Rterm.exe",  p, BINDIR);
-    else {
-	char rhome[MAX_PATH];
-	GetModuleFileName(NULL, rhome, MAX_PATH);
-	p = strrchr(rhome,'\\');
-	if(!p) {fprintf(stderr, "installation problem\n"); exit(1);}
-	*p = '\0';
-	if (snprintf(cmd, PATH_MAX+1, "%s\\Rterm.exe",  rhome) > PATH_MAX) {
-	    fprintf(stderr, "impossibly long path for Rterm.exe\n");
+    size_t rterm_len = strlen("\\Rterm.exe");
+    if(p && *p) {
+	size_t len = strlen(p) + 1 + strlen(BINDIR) + rterm_len + 1;
+	cmd = (char *)malloc(len);
+	if (!cmd) {
+	    fprintf(stderr, "malloc failure\n");
 	    exit(1);
 	}
+	snprintf(cmd, len, "%s\\%s\\Rterm.exe",  p, BINDIR);
+    } else {
+	DWORD size = 1;
+	/* GetModuleFileName doesn't return the needed buffer size. */
+	for(;;) {
+	    cmd = (char *)malloc(size + rterm_len);
+	    if (!cmd) {
+		fprintf(stderr, "malloc failure\n");
+		exit(1);
+	    }
+	    DWORD res = GetModuleFileName(NULL, cmd, size);
+	    if (res > 0 && res < size) /* success */
+		break;
+	    free(cmd);
+	    cmd = NULL;
+	    if (res != size) { /* error */
+		fprintf(stderr, "installation problem\n");
+		exit(1);
+	    }
+	    size *= 2; /* try again with 2x larger buffer */
+	}
+
+	p = strrchr(cmd,'\\');
+	if(!p) {fprintf(stderr, "installation problem\n"); exit(1);}
+	*p = '\0';
+	strcat(cmd, "\\Rterm.exe");
     }
 #else
+    cmd = (char *)malloc(PATH_MAX + 1);
+    if (!cmd) {
+	fprintf(stderr, "malloc failure\n");
+	exit(1);
+    }
     if(!(p && *p)) p = rhome;
     /* avoid snprintf here */
     if(strlen(p) + 6 > PATH_MAX) {
@@ -268,21 +316,10 @@ int main(int argc_, char *argv_[])
 	}
 	if(strncmp(argv[i], "--default-packages=", 18) == 0) {
 	    set_dp = 1;
-	    if(strlen(argv[i]) > 1000) {
-		fprintf(stderr, "unable to set R_DEFAULT_PACKAGES\n");
-		exit(1);
-	    }
-	    snprintf(buf2, 1100, "R_DEFAULT_PACKAGES=%s", argv[i]+19);
+	    R_putenv_cpy("R_DEFAULT_PACKAGES", argv[i]+19);
 	    if(verbose)
-		fprintf(stderr, "setting '%s'\n", buf2);
-#ifdef HAVE_PUTENV
-	    if(putenv(buf2))
-#endif
-	    {
-		fprintf(stderr, "unable to set R_DEFAULT_PACKAGES\n");
-		exit(1);
-	    }
-	    else have_cmdarg_default_packages = 1;
+		fprintf(stderr, "setting '%s=%s'\n", "R_DEFAULT_PACKAGES", argv[i]+19);
+	    have_cmdarg_default_packages = 1;
 	    i0 = i;
 	    continue;
 	}
@@ -310,38 +347,36 @@ int main(int argc_, char *argv_[])
 	    av[ac++] = argv[i];
     }
     av[ac] = (char *) NULL;
-#ifdef HAVE_PUTENV
     /* If provided, and default packages are not specified on the
        command line, then R_SCRIPT_DEFAULT_PACKAGES takes precedence
        over R_DEFAULT_PACKAGES. */
     if (! have_cmdarg_default_packages) {
-	char *rdpvar = "R_DEFAULT_PACKAGES";
 	char *rsdp = getenv("R_SCRIPT_DEFAULT_PACKAGES");
-	if (rsdp && strlen(rdpvar) + strlen(rsdp) + 1 < sizeof(buf2)) {
-	    snprintf(buf2, sizeof(buf2), "%s=%s", rdpvar, rsdp);
-	    putenv(buf2);
-	}
+	if (rsdp)
+	    R_putenv_cpy("R_DEFAULT_PACKAGES", rsdp);
     }
 
     p = getenv("R_SCRIPT_LEGACY");
     int legacy = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
     //int legacy = (p && (strcmp(p, "no") == 0)) ? 0 : 1;
     if(legacy && !set_dp && !getenv("R_DEFAULT_PACKAGES"))
-	putenv("R_DEFAULT_PACKAGES=datasets,utils,grDevices,graphics,stats");
+	/* R_putenv_cpy to get error handling */
+	R_putenv_cpy("R_DEFAULT_PACKAGES",
+	             "datasets,utils,grDevices,graphics,stats");
 
 #ifndef _WIN32
     /* pass on r_arch from this binary to R as a default */
     if (!getenv("R_ARCH") && *rarch) {
-	/* we have to prefix / so we may as well use putenv */
-	if (strlen(rarch) + 9 > sizeof(buf2)) {
-	    fprintf(stderr, "impossibly long string for R_ARCH\n");
+	char *slrarch = (char *)malloc(1 + strlen(rarch) + 1);
+	if (!slrarch) {
+	    fprintf(stderr, "malloc failure\n");
 	    exit(1);
 	}
-	strcpy(buf2, "R_ARCH=/");
-	strcat(buf2, rarch);
-	putenv(buf2);
+	strcpy(slrarch, "/");
+	strcat(slrarch, rarch);
+	R_putenv_cpy("R_ARCH", slrarch);
+	free(slrarch);
     }
-#endif
 #endif
     if(verbose) {
 	fprintf(stderr, "running\n  '%s", cmd);
@@ -360,3 +395,4 @@ int main(int argc_, char *argv_[])
     exit(1);
 #endif
 }
+

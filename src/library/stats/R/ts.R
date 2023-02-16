@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ deltat    <- function(x, ...) UseMethod("deltat")
 
 ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 	       deltat = 1, ts.eps  =  getOption("ts.eps"),
-	       class = if(nseries > 1) c("mts", "ts", "matrix") else "ts",
+	       class = if(nseries > 1) c("mts", "ts", "matrix", "array") else "ts",
                names = if(!is.null(dimnames(data))) colnames(data)
                        else paste("Series", seq(nseries))
                )
@@ -307,7 +307,7 @@ na.omit.ts <- function(object, ...)
     object
 }
 
-is.mts <- function (x) inherits(x, "mts")
+is.mts <- function (x) is.ts(x) && inherits(x, "mts") && is.matrix(x)
 
 start.default <- function(x, ts.eps = getOption("ts.eps"), ...)
 {

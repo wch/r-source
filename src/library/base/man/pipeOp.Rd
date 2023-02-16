@@ -32,6 +32,11 @@
   \code{_} in the \code{rhs} call to specify where the \code{lhs} is to
   be inserted.  The placeholder can only appear once on the \code{rhs}.
   
+  As an experimental feature the placeholder can also be used as the
+  first argument in an extraction call, such as \code{_$coef}. More
+  generally, it can be used as the head of a chain of extractions, such as
+  \code{_$coef[[2]]}.
+
   Pipe notation allows a nested sequence of calls to be written in a way
   that may make the sequence of processing steps easier to follow.
 
@@ -65,6 +70,9 @@ mtcars |> subset(cyl == 4) |> (function(d) lm(mpg ~ disp, data = d))()
 mtcars |> subset(cyl == 4) |> (\(d) lm(mpg ~ disp, data = d))()
 # or explicitly name the argument(s) before the "one":
 mtcars |> subset(cyl == 4) |> lm(formula = mpg ~ disp)
+
+# using the placeholder as the head of an extraction chain:
+mtcars |> subset(cyl == 4) |> lm(formula = mpg ~ disp) |> _$coef[[2]]
 
 # the pipe operator is implemented as a syntax transformation:
 quote(mtcars |> subset(cyl == 4) |> nrow())

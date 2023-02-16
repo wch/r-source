@@ -518,6 +518,8 @@ function(x)
     x
 }
 
+as.data.frame.person <- as.data.frame.vector
+
 ######################################################################
 
 bibentry <-
@@ -751,8 +753,10 @@ function(x, style = "text", .bibstyle = NULL,
                    rd <- tools:::processRdSexprs(rd,
                                                  "install",
                                                  macros = attr(rd, "macros"))
-                   f(rd, fragment = TRUE, out = out, ...)
-                   paste(readLines(out), collapse = "\n")
+                   f(rd, fragment = TRUE, out = out,
+                     outputEncoding = "UTF-8", ...)
+                   paste(readLines(out, encoding = "UTF-8"),
+                         collapse = "\n")
                })
     }
 
@@ -764,9 +768,7 @@ function(x, style = "text", .bibstyle = NULL,
             m <- gettextf("To cite package %s in publications use:",
                           sQuote(p))
         i <- !is.null(m)
-        c(character(),
-          if(i)
-              paste(strwrap(m), collapse = "\n"),
+        c(paste(strwrap(m), collapse = "\n"),
           unlist(lapply(x, function(y) {
               h <- y$header
               j <- !is.null(h)
@@ -887,14 +889,19 @@ function(x, style = "text", .bibstyle = NULL, ...)
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
             ## differently.
-            n <- length(y)
-            if(nzchar(header <- y[1L]))
-                header <- c("", header, "")
-            if(nzchar(footer <- y[n]))
-                footer <- c("", footer, "")
-            writeLines(c(header,
-                         paste(y[-c(1L, n)], collapse = "\n\n"),
-                         footer))
+            ## Old-style with extra empty lines before/after outer
+            ## footer/header: 
+            ##   n <- length(y)
+            ##   if(nzchar(header <- y[1L]))
+            ##       header <- c("", header, "")
+            ##   if(nzchar(footer <- y[n]))
+            ##       footer <- c("", footer, "")
+            ##   writeLines(c(header,
+            ##                paste(y[-c(1L, n)], collapse = "\n\n"),
+            ##                footer))
+            ## New-style without:
+            writeLines(paste(y[nzchar(y)], collapse = "\n\n"))
+            ## Which could be used for all print styles ...?
         } else {
             writeLines(paste(y, collapse = "\n\n"))
         }
@@ -1167,6 +1174,31 @@ function(x, ...)
     y <- NextMethod("unique")
     class(y) <- class(x)
     y
+}
+
+as.data.frame.bibentry <- as.data.frame.vector
+
+transform.bibentry <-
+function(`_data`, ...)
+{
+    tags <- unique(unlist(lapply(unclass(`_data`), names)))
+    vals <- lapply(tags, function(e) eval(call("$", `_data`, e)))
+    ## Or use eval(substitute(`$`(`_data`, e), list(e = e))) ...
+    names(vals) <- tags
+    
+    e <- eval(substitute(list(...)), vals, parent.frame())
+
+    for(i in setdiff(names(e), c("mheader", "mfooter"))) {
+        `_data` <- eval(call("$<-", `_data`, i, e[[i]]))
+    }
+    ## Or use eval(substitute(`$<-`(`_data`, i, e[[i]]), list(i = i))) ...
+
+    if("mheader" %in% names(e))
+        attr(`_data`, "mheader") <- e[["mheader"]]
+    if("mfooter" %in% names(e))
+        attr(`_data`, "mfooter") <- e[["mfooter"]]
+
+    return(`_data`)
 }
 
 ######################################################################

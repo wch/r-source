@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2021   The R Core Team
+ *  Copyright (C) 2004-2023   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -3620,6 +3620,20 @@ static void SaveAsBitmap(pDevDesc dd, int res)
     xd->fp = NULL;
 }
 
+static void err_cannot_open(const char *fn)
+{
+    char *msg = (char *)malloc(strlen(fn) + 32 + 1);
+    if (!msg)
+	R_ShowMessage("Not enough memory to create error message.");
+    else {
+	strcpy(msg, _("Impossible to open "));
+	strcat(msg, fn);
+	R_ShowMessage(msg);
+	free(msg);
+    }
+    return;
+}
+
 /* These are the menu item versions */
 static void SaveAsPng(pDevDesc dd, const char *fn)
 {
@@ -3629,11 +3643,7 @@ static void SaveAsPng(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn, "wb")) == NULL) {
-	char msg[MAX_PATH+32];
-
-	strcpy(msg, "Impossible to open ");
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3658,10 +3668,7 @@ static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn,"wb")) == NULL) {
-	char msg[MAX_PATH+32];
-	strcpy(msg, "Impossible to open ");
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3687,11 +3694,7 @@ static void SaveAsBmp(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if ((fp = R_fopen(fn, "wb")) == NULL) {
-	char msg[MAX_PATH+32];
-
-	strcpy(msg, _("Impossible to open "));
-	strncat(msg, fn, MAX_PATH);
-	R_ShowMessage(msg);
+	err_cannot_open(fn);
 	return;
     }
     r = ggetcliprect(xd->bm);
@@ -3824,16 +3827,15 @@ SEXP devga(SEXP args)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
-	char type[100], *file = NULL, fn[MAX_PATH];
+	char type[100], *file = NULL;
 	strcpy(type, "windows");
 	if (display[0]) {
 	    strncpy(type, display, 100 - 1);
 	    type[100 - 1] = '\0';
 	    char *p = strchr(display, ':');
 	    if (p) {
-		strncpy(fn, p+1, MAX_PATH - 1);
-		fn[MAX_PATH - 1] = '\0';
-		file = fn;
+		file = R_alloc(strlen(p+1) + 1, 1);
+		strcpy(file, p+1);
 	    }
 	    // Package tkrplot assumes the exact form here,
 	    // but remove suffix for all the others.

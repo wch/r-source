@@ -746,17 +746,22 @@ attribute_hidden SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <windows.h>
 #endif
 
+/* uses R_alloc */
 SEXP static intern_getwd(void)
 {
     SEXP rval = R_NilValue;
-    char buf[4*PATH_MAX+1];
 
 #ifdef Win32
     {
-	wchar_t wbuf[PATH_MAX+1];
-	int res = GetCurrentDirectoryW(PATH_MAX, wbuf);
-	if(res > 0) {
-	    wcstoutf8(buf, wbuf, sizeof(buf));
+	DWORD res = GetCurrentDirectoryW(0, NULL);
+	if (res > 0) {
+	    wchar_t *wbuf = (wchar_t*)R_alloc(res, sizeof(wchar_t));
+	    DWORD res1 = GetCurrentDirectoryW(res, wbuf);
+	    if (res1 <= 0 || res1 >= res)
+		return R_NilValue;
+	    size_t needed = wcstoutf8(NULL, wbuf, INT_MAX);
+	    char *buf = R_alloc(needed + 1, 1);
+	    wcstoutf8(buf, wbuf, needed + 1);
 	    R_UTF8fixslash(buf);
 	    PROTECT(rval = allocVector(STRSXP, 1));
 	    SET_STRING_ELT(rval, 0, mkCharCE(buf, CE_UTF8));
@@ -764,6 +769,7 @@ SEXP static intern_getwd(void)
 	}
     }
 #else
+    char buf[4*PATH_MAX+1];
     char *res = getcwd(buf, PATH_MAX); /* can return NULL */
     if(res) rval = mkString(buf);
 #endif
@@ -816,11 +822,20 @@ attribute_hidden SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* remove portion of path before file separator if one exists */
 
 #ifdef Win32
+static void R_wrmtrailingslash(wchar_t *s)
+{
+    /* remove trailing forward slashes */
+    if (s && *s) {
+	wchar_t *p = s + wcslen(s) - 1;
+	while (p >= s && *p == L'/') *(p--) = L'\0';
+    }
+}
+
 attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char sp[4*PATH_MAX+1];
-    wchar_t  buf[PATH_MAX], *p;
+    char *sp;
+    wchar_t  *buf, *p;
     const wchar_t *pp;
     int i, n;
 
@@ -833,16 +848,14 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	    if (wcslen(pp) > PATH_MAX - 1) error(_("path too long"));
+	    buf = (wchar_t *)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
 	    wcscpy(buf, pp);
 	    R_wfixslash(buf);
-	    /* remove trailing file separator(s) */
-	    if (*buf) {
-		p = buf + wcslen(buf) - 1;
-		while (p >= buf && *p == L'/') *(p--) = L'\0';
-	    }
+	    R_wrmtrailingslash(buf);
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	    wcstoutf8(sp, p, sizeof(sp));
+	    size_t needed = wcstoutf8(NULL, p, INT_MAX);
+	    sp = R_alloc(needed + 1, 1);
+	    wcstoutf8(sp, p, needed + 1);
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }
@@ -893,9 +906,9 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    wchar_t buf[PATH_MAX], *p;
+    wchar_t *buf, *p;
     const wchar_t *pp;
-    char sp[4*PATH_MAX+1];
+    char *sp;
     int i, n;
 
     checkArity(op, args);
@@ -906,17 +919,13 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    memset(sp, 0, 4*PATH_MAX);
+	    sp = "";
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
-	    if (wcslen(pp) > PATH_MAX - 1)
-		error(_("path too long"));
 	    if (wcslen(pp)) {
+		buf = (wchar_t*)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
 		wcscpy (buf, pp);
 		R_wfixslash(buf);
-		/* remove trailing file separator(s) */
-		p = buf + wcslen(buf) - 1;
-		while (p > buf && *p == L'/'
-		       && (p > buf+2 || *(p-1) != L':')) *p-- = L'\0';
+		R_wrmtrailingslash(buf);
 		p = wcsrchr(buf, L'/');
 		if(p == NULL) wcscpy(buf, L".");
 		else {
@@ -925,7 +934,9 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 			  && (p > buf+2 || *(p-1) != L':')) --p;
 		    p[1] = L'\0';
 		}
-		wcstoutf8(sp, buf, sizeof(sp));
+		size_t needed = wcstoutf8(NULL, buf, INT_MAX);
+		sp = R_alloc(needed + 1, 1);
+		wcstoutf8(sp, buf, needed + 1);
 	    }
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
@@ -1076,6 +1087,8 @@ const char *getTZinfo(void)
     if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
 	SEXP el = STRING_ELT(ans, 0);
 	if (el != NA_STRING) {
+	    if (strlen(CHAR(el)) + 1 > sizeof(def_tz))
+		error("time zone specification is too long");
 	    strcpy(def_tz, CHAR(el));
 	    // printf("tz is %s\n", CHAR(el));
 	    UNPROTECT(3);

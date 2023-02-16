@@ -7,7 +7,6 @@
 \alias{message}
 \alias{suppressMessages}
 \alias{packageStartupMessage}
-\alias{.packageStartupMessage}
 \alias{suppressPackageStartupMessages}
 \alias{.makeMessage}
 \title{Diagnostic Messages}

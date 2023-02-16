@@ -1,14 +1,12 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
 \alias{agrep}
 \alias{agrepl}
 \alias{fuzzy matching}
-\alias{.amatch_bounds}
-\alias{.amatch_costs}
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{
   Searches for approximate matches to \code{pattern} (the first argument)

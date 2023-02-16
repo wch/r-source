@@ -443,9 +443,15 @@ static void doneprogressbar(void *data)
 }
 # endif // Win32
 
+#if LIBCURL_VERSION_NUM >= 0x072000
+# define CURL_LEN curl_off_t
+#else
+# define CURL_LEN double
+#endif
+
 static
-int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
-	     curl_off_t ultotal, curl_off_t ulnow)
+int progress(void *clientp, CURL_LEN dltotal, CURL_LEN dlnow,
+	     CURL_LEN ultotal, CURL_LEN ulnow)
 {
     CURL *hnd = (CURL *) clientp;
     long status;
@@ -633,9 +639,14 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 		pbar.cntxt.cenddata = &pbar;
 	    }
 #endif
-	    // For libcurl >= 7.32.0
+	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
+#if LIBCURL_VERSION_NUM >= 0x072000
 	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFOFUNCTION, progress);
 	    curl_easy_setopt(hnd[i], CURLOPT_XFERINFODATA, hnd[i]);
+#else
+	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
+	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
+#endif
 	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 
 	/* This would allow the negotiation of compressed HTTP transfers,

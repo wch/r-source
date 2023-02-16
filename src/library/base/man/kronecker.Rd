@@ -6,7 +6,6 @@
 \name{kronecker}
 
 \alias{kronecker}
-\alias{.kronecker} % an internal version.
 \alias{\%x\%}
 
 \title{Kronecker Products on Arrays}

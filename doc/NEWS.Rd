@@ -144,14 +144,21 @@
       screen readers on Windows.
 
       \item The drop-field control in GraphApp can now be left with the TAB
-      key, improving accessibility of the \command{Rgui} configuration
-      editor.
+      key and all controls can be navigated in the reverse order using the
+      Shift+TAB key, improving accessibility of the \command{Rgui}
+      configuration editor.
 
       \item \code{qnorm(<very large negative>, log.p=TRUE)} is now fully
       accurate (instead of to \dQuote{only} minimally five digits).
 
       \item \code{demo(error.catching)} now also shows off
       \code{withWarnings()} and \code{tryCatchWEMs()}.
+
+      \item As an experimental feature the placeholder \code{_} can now
+      also be used in the \code{rhs} of a forward pipe \code{|>}
+      expression as the first argument in an extraction call, such as
+      \code{_$coef}. More generally, it can be used as the head of a
+      chain of extractions, such as \code{_$coef[[2]]}.
     }
   }
 
@@ -269,9 +276,6 @@
       between \code{POSIXlt} and \code{POSIXct} around year 2020.  Failure
       (which has been seen on platforms missing \code{tzdata}) is fatal.
 
-      \item The minimum required version of \code{libcurl} has been
-      increased from 7.28.0 to 7.32.0 (released in Aug 2013).
-
       \item If \command{configure} option
       \option{--with-valgrind-instrumentation} is given value \code{1}
       or \code{2}, option \option{--with-system-valgrind-headers} is now
@@ -338,7 +342,8 @@
 	  intention is to allow legacy packages to still be installed when
 	  later C standards become the default, including packages
 	  using new keywords as identifiers or with K&R-style function
-	  declarations.
+	  declarations.  This will use C17 if available, falling back
+	  to C11.
 	}
 	\item{USE_C90}{Use the C90 (aka C89) standard.  (As that standard
 	  did not require compilers to identify that version, all we can
@@ -638,6 +643,14 @@
       by adding a class \emph{attribute}.
 
       \item \code{packageDate(pkg)} now only warns once if there is no \code{pkg}.
+
+      \item When \code{ts()} creates a multivariate time series,
+      \code{"mts"}, it also inherits from \code{"array"} now, and
+      \code{is.mts()} is documented \emph{and} stricter.
+
+      \item \code{Rd2txt()} now preserves line breaks of \verb{\verb} Rd
+      content.  This also fixes the rendering of verbatim output from Rd
+      \verb{\Sexpr} in plain-text help.
     }
   }
 }
