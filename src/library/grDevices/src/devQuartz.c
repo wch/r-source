@@ -497,8 +497,7 @@ static void QuartzCleanPatterns(QuartzDesc *xd)
         }
         if (xd->patterns[i] != NULL) {
             CGPatternRelease(xd->patterns[i]->pattern);
-            CGLayerRelease(xd->patterns[i]->layer);
-            free(xd->patterns[i]->info);
+	    /* layer and info get released by the pattern finaliser */
             free(xd->patterns[i]);
             xd->patterns[i] = NULL;
         }
@@ -513,8 +512,6 @@ static void QuartzReleasePattern(int i, QuartzDesc *xd)
         xd->gradients[i] = NULL;
     } else if (xd->patterns[i]) {
         CGPatternRelease(xd->patterns[i]->pattern);
-        CGLayerRelease(xd->patterns[i]->layer);
-        free(xd->patterns[i]->info);
         free(xd->patterns[i]);
         xd->patterns[i] = NULL;
     } else {
@@ -534,8 +531,6 @@ static void QuartzDestroyPatterns(QuartzDesc *xd)
     for (i = 0; i < xd->numPatterns; i++) {
         if (xd->patterns[i] != NULL) {
             CGPatternRelease(xd->patterns[i]->pattern);
-            CGLayerRelease(xd->patterns[i]->layer);
-            free(xd->patterns[i]->info);
             free(xd->patterns[i]);
         }
     }    
@@ -707,6 +702,14 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
     return quartz_gradient;
 }
 
+/* Pattern finaliser callback */
+static void QuartzPatternReleaseCallback(void *info) {
+    QPatternCallbackInfo *patternInfo = (QPatternCallbackInfo*) info;
+    CGLayerRef layer = patternInfo->layer;
+    CGLayerRelease(layer);
+    free(info);
+}
+
 /* Called to draw the pattern.
  * Will be passed the pattern layer via 'info' */
 static void QuartzPatternCallback(void *info, CGContextRef ctx) {
@@ -744,7 +747,7 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
         yStep = height;
     }
     CGRect bounds = CGRectMake(x, y, width, height);
-    CGPatternCallbacks callback = { 0, &QuartzPatternCallback, NULL };
+    CGPatternCallbacks callback = { 0, &QuartzPatternCallback, &QuartzPatternReleaseCallback };
     QPatternCallbackInfoRef info = malloc(sizeof(QPatternCallbackInfo));
     if (!info) error(_("Failed to create pattern"));
     info->layer = layer;
