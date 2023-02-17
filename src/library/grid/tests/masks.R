@@ -12,8 +12,6 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
     grid.text(lines, y=y, gp=gpar(fontfamily="HersheySans"))
 }
 
-################################################################################
-
 devMask <- function(aMask, lMask) {
     support <- dev.capabilities()$masks
     if (is.character(support)) {
@@ -30,6 +28,8 @@ devMask <- function(aMask, lMask) {
         FALSE
     }
 }
+
+################################################################################
 
 ## Simple mask
 mask <- devMask(circleGrob(r=.3, gp=gpar(fill="black")),

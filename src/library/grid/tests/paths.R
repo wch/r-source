@@ -12,6 +12,23 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
     grid.text(lines, y=y, gp=gpar(fontfamily="HersheySans"))
 }
 
+devMask <- function(aMask, lMask) {
+    support <- dev.capabilities()$masks
+    if (is.character(support)) {
+        if (support == "alpha") {
+            aMask
+        } else {
+            if (support == "luminance") {
+                as.mask(lMask, type="luminance")
+            } else {
+                FALSE
+            }
+        }
+    } else {
+        FALSE
+    }
+}
+
 ################################################################################
 ## Paths that produce same result as normal drawing
 
@@ -190,7 +207,9 @@ result is two half-moons", .8)
     
 ## path that is masked
 grid.newpage()
-pushViewport(viewport(mask=circleGrob(r=.2, gp=gpar(fill="black"))))
+pushViewport(viewport(mask=devMask(circleGrob(r=.2, gp=gpar(fill="black")),
+                                   circleGrob(r=.2, gp=gpar(col="white",
+                                                            fill="white")))))
 grid.fill(circleGrob(1:2/3, r=.1), gp=gpar(fill="grey"))
 popViewport()
 HersheyLabel("filled path (two circles)
