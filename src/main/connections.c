@@ -713,6 +713,7 @@ attribute_hidden Rboolean R_IsDirPath(const char *path)
     struct _stati64 sb;
     if (!_stati64(path, &sb) && (sb.st_mode & S_IFDIR))
 	return TRUE;
+    /* This is FALSE for D: */
 # else
     struct stat sb;
     if (!stat(path, &sb) && S_ISDIR(sb.st_mode))

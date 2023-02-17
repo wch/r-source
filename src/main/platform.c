@@ -1091,8 +1091,8 @@ size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
     memcpy(pb->data + len, name, namelen);
     pb->data[newlen - 1] = '\0';
 #ifdef Unix
-		if (newlen > PATH_MAX) 
-		    warning(_("over-long path"));
+    if (newlen > PATH_MAX) 
+	warning(_("over-long path"));
 #endif
     return newlen;
 }
@@ -1119,6 +1119,9 @@ Rboolean search_setup(R_StringBuffer *pb, SEXP path, DIR **dir,
     /* open directory */
     pb->data[len] = '\0';
     *dir = opendir(pb->data);
+    /* This happens to succeed even for "d:".
+       Note though R_IsDirPath() returns FALSE, because _wstati64() returns -1
+       (file not found). */
     if (!*dir)
 	return FALSE;
 
@@ -1523,11 +1526,20 @@ static int delReparsePoint(const wchar_t *name)
     return res == 0;
 }
 
+/* returns FALSE on error */
+static Rboolean R_WIsDirPath(const wchar_t *path)
+{
+    struct _stati64 sb;
+    if (!_wstati64(path, &sb) && (sb.st_mode & S_IFDIR))
+	return TRUE;
+    else
+	return FALSE;
+}
+
 static int R_unlink(const wchar_t *name, int recursive, int force)
 {
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
-    //printf("R_unlink(%ls)\n", name);
     /* We cannot use R_WFileExists here since it is false for broken
        symbolic links
        if (!R_WFileExists(name)) return 0; */
@@ -1540,36 +1552,37 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
     if (name_exists && recursive) {
 	_WDIR *dir;
 	struct _wdirent *de;
-	wchar_t p[PATH_MAX];
-	struct _stati64 sb;
+	wchar_t *p;
 	int n, ans = 0;
+	int is_drive = (name[0] != '\0' && name[1] == L':' &&
+	                name[2] == L'\0');
 
-	_wstati64(name, &sb);
 	/* We need to test for a junction first, as junctions
 	   are detected as directories. */
-	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	if (R_WIsDirPath(name) || is_drive) {
 	    if ((dir = _wopendir(name)) != NULL) {
 		while ((de = _wreaddir(dir))) {
 		    if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 			continue;
 		    /* On Windows we need to worry about trailing seps */
 		    n = wcslen(name);
-		    if (name[n] == L'/' || name[n] == L'\\') {
+		    const void *vmax = vmaxget();
+		    p = (wchar_t *)R_alloc(n + 1 + wcslen(de->d_name) + 1,
+		                           sizeof(wchar_t));
+		    if (is_drive || name[n] == L'/' || name[n] == L'\\') {
 			wcscpy(p, name); wcscat(p, de->d_name);
 		    } else {
 			wcscpy(p, name); wcscat(p, L"/"); wcscat(p, de->d_name);
 		    }
-		    /* printf("stat-ing %ls\n", p); */
-		    _wstati64(p, &sb);
 		    if (isReparsePoint(name)) ans += delReparsePoint(name);
-		    else if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
-			/* printf("is a directory\n"); */
+		    else if (R_WIsDirPath(p)) {
 			if (force) _wchmod(p, _S_IWRITE);
 			ans += R_unlink(p, recursive, force);
 		    } else {
 			if (force) _wchmod(p, _S_IWRITE);
 			ans += (_wunlink(p) == 0) ? 0 : 1;
 		    }
+		    vmaxset(vmax);
 		}
 		_wclosedir(dir);
 	    } else { /* we were unable to read a dir */
@@ -2439,27 +2452,28 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	warning(_("too deep nesting"));
 	return 1;
     }
+    const void *vmax = vmaxget();
     struct _stati64 sb;
     int nfail = 0, res;
-    wchar_t dest[PATH_MAX + 1], this[PATH_MAX + 1];
+    wchar_t *dest, *this;
 
-    if (wcslen(from) + wcslen(name) >= PATH_MAX) {
-	warning(_("over-long path"));
-	return 1;
-    }
-    wsprintfW(this, L"%ls%ls", from, name);
+    this = (wchar_t *) R_alloc(wcslen(from) + wcslen(name) + 1, sizeof(wchar_t));
+    wcscpy(this, from);
+    wcscat(this, name);
     _wstati64(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	_WDIR *dir;
 	struct _wdirent *de;
-	wchar_t p[PATH_MAX + 1];
+	wchar_t *p;
 
-	if (!recursive) return 1;
-	if (wcslen(to) + wcslen(name) >= PATH_MAX) {
-	    warning(_("over-long path"));
+	if (!recursive) {
+	    vmaxset(vmax);
 	    return 1;
 	}
-	wsprintfW(dest, L"%ls%ls", to, name);
+	dest = (wchar_t *) R_alloc(wcslen(to) + wcslen(name) + 1,
+	                           sizeof(wchar_t));
+	wcscpy(dest, to);
+	wcscat(dest, name);
 	/* We could set the mode (only the 200 part matters) later */
 	res = _wmkdir(dest);
 	if (res) {
@@ -2470,11 +2484,13 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 
 		    warning(_("cannot overwrite non-directory %ls with directory %ls"),
 		            dest, this);
+		    vmaxset(vmax);
 		    return 1;
 		}
 	    } else {
 		warning(_("problem creating directory %ls: %s"),
 		          dest, strerror(errno));
+		vmaxset(vmax);
 		return 1;
 	    }
 	}
@@ -2484,12 +2500,11 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	    while ((de = _wreaddir(dir))) {
 		if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 		    continue;
-		if (wcslen(name) + wcslen(de->d_name) + 1 >= PATH_MAX) {
-		    warning(_("over-long path"));
-		    _wclosedir(dir);
-		    return 1;
-		}
-		wsprintfW(p, L"%ls%\\%ls", name, de->d_name);
+		p = (wchar_t *) R_alloc(wcslen(name) + 1 + wcslen(de->d_name) + 1,
+		                        sizeof(wchar_t));
+		wcscpy(p, name);
+		wcscat(p, L"\\");
+		wcscat(p, de->d_name);
 		nfail += do_copy(from, p, to, over, recursive,
 				 perms, dates, depth);
 	    }
@@ -2504,13 +2519,11 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	FILE *fp1 = NULL, *fp2 = NULL;
 
 	nfail = 0;
-	int nc = wcslen(to);
-	if (nc + wcslen(name) >= PATH_MAX) {
-	    warning(_("over-long path"));
-	    nfail++;
-	    goto copy_error;
-	}
-	wsprintfW(dest, L"%ls%ls", to, name);
+	int nc;
+	dest = (wchar_t *) R_alloc(wcslen(to) + wcslen(name) + 1,
+	                           sizeof(wchar_t));
+	wcscpy(dest, to);
+	wcscat(dest, name);
 	if (over || !R_WFileExists(dest)) { /* FIXME */
 	    if ((fp1 = _wfopen(this, L"rb")) == NULL ||
 		(fp2 = _wfopen(dest, L"wb")) == NULL) {
@@ -2550,6 +2563,7 @@ copy_error:
 	if(fp2) fclose(fp2);
 	if(fp1) fclose(fp1);
     }
+    vmaxset(vmax);
     return nfail;
 }
 
@@ -2581,42 +2595,37 @@ attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (dates == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "copy.date");
 	wchar_t *p = filenameToWchar(STRING_ELT(to, 0), TRUE);
-	if (wcslen(p) >= PATH_MAX)
-	    error(_("'%s' path too long"), "to");
-	wchar_t dir[PATH_MAX];
-	wcsncpy(dir, p, PATH_MAX);
-	dir[PATH_MAX - 1] = L'\0';
+	wchar_t *dir = (wchar_t *) R_alloc(wcslen(p) + 2, sizeof(wchar_t));
+	wcscpy(dir, p);
 	if (*(dir + (wcslen(dir) - 1)) !=  L'\\')
-	    wcsncat(dir, L"\\", PATH_MAX);
+	    wcscat(dir, L"\\");
 	int nfail;
 	for (int i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 	    	p = filenameToWchar(STRING_ELT(fn, i), TRUE);
-	    	if (wcslen(p) >= PATH_MAX)
-	    	    error(_("'%s' path too long"), "from");
-		wchar_t from[PATH_MAX];
-		wcsncpy(from, p, PATH_MAX);
-		from[PATH_MAX - 1] = L'\0';
+		/* the +2 defensively for the .\\ copied below */
+		wchar_t *from;
+		from = (wchar_t *) R_alloc(wcslen(p) + 1 + 2, sizeof(wchar_t));
+		wcscpy(from, p);
 		size_t ll = wcslen(from);
 		if (ll) {  // people do pass ""
 		    /* If there is a trailing sep, this is a mistake */
 		    p = from + (ll - 1);
 		    if(*p == L'\\') *p = L'\0';
 		    p = wcsrchr(from, L'\\') ;
-		    wchar_t name[PATH_MAX];
+		    wchar_t *name = (wchar_t *) R_alloc(ll + 1,
+		                                        sizeof(wchar_t));;
+		    /* move the last element of "from" into "name" */
 		    if (p) {
-			wcsncpy(name, p+1, PATH_MAX);
-			name[PATH_MAX - 1] = L'\0';
+			wcscpy(name, p+1);
 			*(p+1) = L'\0';
 		    } else {
 			if(wcslen(from) > 2 && from[1] == L':') {
-			    wcsncpy(name, from+2, PATH_MAX);
-			    name[PATH_MAX - 1] = L'\0';
+			    wcscpy(name, from+2);
 			    from[2] = L'\0';
 			} else {
-			    wcsncpy(name, from, PATH_MAX);
-			    name[PATH_MAX - 1] = L'\0';
-			    wcsncpy(from, L".\\", PATH_MAX);
+			    wcscpy(name, from);
+			    wcscpy(from, L".\\");
 			}
 		    }
 		    nfail = do_copy(from, name, dir, over, recursive,
