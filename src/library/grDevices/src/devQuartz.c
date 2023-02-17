@@ -644,10 +644,10 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
         for (i = 0; i < num_locations; i++) {
             locations[i] = R_GE_linearGradientStop(gradient, i);
             col = R_GE_linearGradientColour(gradient, i);
-            components[i*4] = R_RED(col)/255;
-            components[i*4 + 1] = R_GREEN(col)/255;
-            components[i*4 + 2] = R_BLUE(col)/255;
-            components[i*4 + 3] = R_ALPHA(col)/255;
+            components[i*4] = R_RED(col)/255.0;
+            components[i*4 + 1] = R_GREEN(col)/255.0;
+            components[i*4 + 2] = R_BLUE(col)/255.0;
+            components[i*4 + 3] = R_ALPHA(col)/255.0;
         }
         switch (R_GE_linearGradientExtend(gradient)) {
         case R_GE_patternExtendNone:
@@ -677,10 +677,10 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
         for (i = 0; i < num_locations; i++) {
             locations[i] = R_GE_radialGradientStop(gradient, i);
             col = R_GE_radialGradientColour(gradient, i);
-            components[i*4] = R_RED(col)/255;
-            components[i*4 + 1] = R_GREEN(col)/255;
-            components[i*4 + 2] = R_BLUE(col)/255;
-            components[i*4 + 3] = R_ALPHA(col)/255;
+            components[i*4] = R_RED(col)/255.0;
+            components[i*4 + 1] = R_GREEN(col)/255.0;
+            components[i*4 + 2] = R_BLUE(col)/255.0;
+            components[i*4 + 3] = R_ALPHA(col)/255.0;
         }
         switch (R_GE_radialGradientExtend(gradient)) {
         case R_GE_patternExtendNone:
@@ -696,7 +696,7 @@ static QGradientRef QuartzCreateGradient(SEXP gradient, int type,
         }
         break;
     }
-    colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+    colorspace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
     quartz_gradient->gradient = 
         CGGradientCreateWithColorComponents(colorspace, 
                                             components,
