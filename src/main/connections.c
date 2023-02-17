@@ -705,10 +705,11 @@ static Rboolean isDir(FILE *fd)
 }
 
 /* returns FALSE on error */
-static Rboolean isDirPath(const char *path)
+attribute_hidden Rboolean R_IsDirPath(const char *path)
 {
 #ifdef HAVE_SYS_STAT_H
 # ifdef Win32
+    /* to support > 2GB files */
     struct _stati64 sb;
     if (!_stati64(path, &sb) && (sb.st_mode & S_IFDIR))
 	return TRUE;
@@ -1716,7 +1717,7 @@ static Rboolean gzfile_open(Rconnection con)
     name = R_ExpandFileName(con->description);
     /* We cannot use isDir, because we cannot get the fd from gzFile
        (it would be possible with gzdopen, if supported) */
-    if (isDirPath(name)) {
+    if (R_IsDirPath(name)) {
 	warning(_("cannot open file '%s': it is a directory"), name);
 	return FALSE;
     }

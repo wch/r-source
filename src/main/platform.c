@@ -38,9 +38,11 @@
 # include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
 #include <Rinterface.h>
+#include "RBufferUtils.h"
 #include <Fileio.h>
 #include <ctype.h>			/* toupper */
 //#include <float.h> // -> FLT_RADIX
@@ -1079,108 +1081,135 @@ attribute_hidden SEXP do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
-static int filename_buf(char *buf, size_t bufsize,
-                        const char *dir, const char *file)
+static
+size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
 {
-    int res;
-    if (dir && dir[0]) {
-#ifdef Win32
-	if ((strlen(dir) == 2 && dir[1] == ':') ||
-	    dir[strlen(dir) - 1] == '/' || dir[strlen(dir) - 1] == '\\')
-	    res = snprintf(buf, bufsize, "%s%s", dir, file);
-	else
-	    res = snprintf(buf, bufsize, "%s%s%s", dir, R_FileSep, file);
-#else
-	res = snprintf(buf, bufsize, "%s%s%s", dir, R_FileSep, file);
+    size_t namelen = strlen(name);
+    size_t newlen = len + namelen + 1;
+    if (newlen > pb->bufsize)
+	R_AllocStringBuffer(newlen, pb);
+    memcpy(pb->data + len, name, namelen);
+    pb->data[newlen - 1] = '\0';
+#ifdef Unix
+		if (newlen > PATH_MAX) 
+		    warning(_("over-long path"));
 #endif
-    } else {
-	res = snprintf(buf, bufsize, "%s", file);
-    }
-    return res;
+    return newlen;
 }
 
-// A filename cannot be that long, but avoid GCC warnings
-#define CBUFSIZE 2*PATH_MAX+1
-static SEXP filename(const char *dir, const char *file)
+/* added_separator is a hack to once be removed, see comment in list_dirs */
+static
+Rboolean search_setup(R_StringBuffer *pb, SEXP path, DIR **dir,
+                      size_t *pathlen, Rboolean *added_separator)
 {
-    char cbuf[CBUFSIZE];
-    filename_buf(cbuf, CBUFSIZE, dir, file);
-    return mkChar(cbuf);
+    if (added_separator)
+	*added_separator = FALSE;
+    if (path == NA_STRING)
+	return FALSE;
+    const char *p = translateCharFP2(path);
+    if (!p)
+	return FALSE;
+    const char *dnp = R_ExpandFileName(p);
+
+    size_t len = strlen(dnp);
+    if (len + 1 > pb->bufsize)
+	R_AllocStringBuffer(len + 1, pb);
+    memcpy(pb->data, dnp, len);
+
+    /* open directory */
+    pb->data[len] = '\0';
+    *dir = opendir(pb->data);
+    if (!*dir)
+	return FALSE;
+
+    /* add separator if needed */
+#ifdef Win32
+    /* don't turn D: into D:\, don't duplicate existing separator */
+    if ((len == 2 && dnp[1] == ':') ||
+        (len >= 1 && (dnp[len - 1] == '/' || dnp[len - 1] == '\\'))) {
+
+	*pathlen = len;
+	return (int) len;
+    }
+#endif
+    pb->data[len] = FILESEP[0];
+    if (added_separator)
+	*added_separator = TRUE;
+    *pathlen = len + 1;
+    return TRUE;
 }
 
-/* callee-protect for pathstr */
-static void add_to_ans(SEXP *pans, SEXP pathstr, int *count, int *countmax,
-                       PROTECT_INDEX idx)
+static void search_cleanup(void *data)
+{
+    R_StringBuffer *pb = (R_StringBuffer *)data;
+    R_FreeStringBuffer(pb);
+}
+
+static void add_to_ans(SEXP *pans, const char *pathstr, int *count,
+                       int *countmax, PROTECT_INDEX idx)
 {
     if (*count == *countmax - 1) {
 	*countmax *= 2;
-	PROTECT(pathstr);
 	REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
-	UNPROTECT(1);
     }
-    SET_STRING_ELT(*pans, (*count)++, pathstr);
+    SET_STRING_ELT(*pans, (*count)++, mkChar(pathstr));
 }
 
 #include <tre/tre.h>
 
+/* when a match is found, (pb->data + offset) is the path added to the result
+
+   len is the number of bytes of the path, which includes a trailing
+   separator if needed, so that appending another element is done to
+   (pb->data + len)
+
+   pb->data is not null terminated by the caller
+
+   dir is already opened by the caller
+*/
 static void
-list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
+list_files(R_StringBuffer *pb, size_t offset, size_t len, int *count, SEXP *pans,
 	   Rboolean allfiles, Rboolean recursive,
 	   const regex_t *reg, int *countmax, PROTECT_INDEX idx,
-	   Rboolean idirs, Rboolean allowdots)
+	   Rboolean idirs, Rboolean allowdots, DIR *dir)
 {
-    DIR *dir;
     struct dirent *de;
-    char p[PATH_MAX], stem2[PATH_MAX];
-#ifdef Windows
-    /* > 2GB files might be skipped otherwise */
-    struct _stati64 sb;
-#else
-    struct stat sb;
-#endif
     R_CheckUserInterrupt(); // includes stack check
-    if ((dir = opendir(dnp)) != NULL) {
-	while ((de = readdir(dir))) {
-	    if (allfiles || !R_HiddenFile(de->d_name)) {
-		Rboolean not_dot = strcmp(de->d_name, ".") && strcmp(de->d_name, "..");
-		if (recursive) {
-		    int res;
-		    res = filename_buf(p, PATH_MAX, dnp, de->d_name);
-		    if (res >= PATH_MAX) 
-			warning(_("over-long path"));
-#ifdef Windows
-		    res = _stati64(p, &sb);
-#else
-		    res = stat(p, &sb);
-#endif
-		    if (!res && (sb.st_mode & S_IFDIR) > 0) {
-			if (not_dot) {
-			    res = filename_buf(stem2, PATH_MAX, stem, de->d_name);
-			    if (res >= PATH_MAX)
-				warning(_("over-long path"));
-			    if (idirs) {
-				if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
-				    add_to_ans(pans, mkChar(stem2),
-				               count, countmax, idx);
-			    }
-			    list_files(p, stem2, count, pans, allfiles,
-				       recursive, reg, countmax, idx, idirs,
-				       allowdots);
+    while ((de = readdir(dir))) {
+	if (allfiles || !R_HiddenFile(de->d_name)) {
+	    /* append current name and null terminate */
+	    size_t newlen = path_buffer_append(pb, de->d_name, len);
+	    Rboolean not_dot = strcmp(de->d_name, ".") && strcmp(de->d_name, "..");
+	    if (recursive) {
+		if (R_IsDirPath(pb->data)) {
+		    if (not_dot) {
+			if (idirs) {
+			    if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
+				add_to_ans(pans, pb->data + offset,
+					   count, countmax, idx);
 			}
-			continue;
+			DIR *newdir = opendir(pb->data);
+			if (newdir != NULL) {
+			    /* turn terminator into file separator */
+			    pb->data[newlen - 1] = FILESEP[0];
+			    list_files(pb, offset, newlen,
+				       count, pans, allfiles, recursive, reg,
+				       countmax, idx, idirs, allowdots, newdir);
+			    /* FIXME: arrange to close on error */
+			    closedir(newdir);
+			}
 		    }
-		} // end if(recursive)
-
-		if (not_dot || allowdots) {
-		    if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
-			add_to_ans(pans, filename(stem, de->d_name),
-			           count, countmax, idx);
+		    continue;
 		}
+	    } // end if(recursive)
+	    if (not_dot || allowdots) {
+		if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
+		    add_to_ans(pans, pb->data + offset,
+			       count, countmax, idx);
 	    }
+	}
 
-	} // end while()
-	closedir(dir);
-    }
+    } // end while()
 }
 
 attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1224,15 +1253,24 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
     int count = 0;
+    R_StringBuffer pb = {NULL, 0, 16};
+    RCNTXT cntxt;
+    /* set up a context which will free the string buffer if
+       there is an error */
+    cntxt.cend = &search_cleanup;
+    cntxt.cenddata = &pb;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
     for (int i = 0; i < LENGTH(d) ; i++) {
-	if (STRING_ELT(d, i) == NA_STRING) continue;
-	const char *p = translateCharFP2(STRING_ELT(d, i));
-	if (!p) continue;
-	const char *dnp = R_ExpandFileName(p);
-	list_files(dnp, fullnames ? dnp : NULL, &count, &ans, allfiles,
-		   recursive, pattern ? &reg : NULL, &countmax, idx,
-		   idirs, /* allowdots = */ !nodots);
+	DIR *dir;
+	size_t len;
+	if (search_setup(&pb, STRING_ELT(d, i), &dir, &len, NULL))
+	    list_files(&pb, fullnames ? 0 : len, len, &count, &ans, allfiles,
+		       recursive, pattern ? &reg : NULL, &countmax, idx,
+		       idirs, /* allowdots = */ !nodots, dir);
     }
+    endcontext(&cntxt);
+    search_cleanup(&pb);
     REPROTECT(ans = lengthgets(ans, count), idx);
     if (pattern) tre_regfree(&reg);
     ssort(STRING_PTR(ans), count);
@@ -1240,54 +1278,31 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-static void list_dirs(const char *dnp, const char *nm,
-		      Rboolean full, int *count,
-		      SEXP *pans, int *countmax, PROTECT_INDEX idx,
-		      Rboolean recursive)
+/* see comments in list_files for how the path buffer works */
+static void list_dirs(R_StringBuffer *pb, size_t offset, size_t len,
+                      int *count, SEXP *pans, int *countmax,
+                      PROTECT_INDEX idx, Rboolean recursive, DIR *dir)
 {
-    DIR *dir;
     struct dirent *de;
-    char p[PATH_MAX];
-#ifdef Windows
-    /* > 2GB files might be skipped otherwise */
-    struct _stati64 sb;
-#else
-    struct stat sb;
-#endif
     R_CheckUserInterrupt(); // includes stack check
 
-    if ((dir = opendir(dnp)) != NULL) {
-	if (recursive) {
-	    add_to_ans(pans, mkChar(full ? dnp : nm),
-	               count, countmax, idx);
-	}
-	while ((de = readdir(dir))) {
-	    int res;
-	    res = filename_buf(p, PATH_MAX, dnp, de->d_name);
-	    if (res >= PATH_MAX)
-		warning(_("over-long path"));
-#ifdef Windows
-	    res = _stati64(p, &sb);
-#else
-	    res = stat(p, &sb);
-#endif
-	    if (!res && (sb.st_mode & S_IFDIR) > 0) {
-		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
-		    if(recursive) {
-			char nm2[PATH_MAX];
-			res = filename_buf(nm2, PATH_MAX, nm, de->d_name);
-			if (res >= PATH_MAX)
-			    warning(_("over-long path"));
-			list_dirs(p, nm2, full, count, pans, countmax, idx,
-			          recursive);
-		    } else {
-			add_to_ans(pans, mkChar(full ? p : de->d_name),
-			           count, countmax, idx);
-		    }
+    while ((de = readdir(dir))) {
+	/* append current name and null terminate */
+	size_t newlen = path_buffer_append(pb, de->d_name, len);
+	if (R_IsDirPath(pb->data)) {
+	    if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+		add_to_ans(pans, pb->data + offset, count, countmax, idx);
+		DIR *newdir;
+		if (recursive && ((newdir = opendir(pb->data)) != NULL)) {
+		    /* turn terminator into file separator */
+		    pb->data[newlen - 1] = FILESEP[0];
+		    list_dirs(pb, offset, newlen, count, pans, countmax,
+			      idx, recursive, newdir);
+		    /* FIXME: arrange to close on error */
+		    closedir(newdir);
 		}
 	    }
 	}
-	closedir(dir);
     }
 }
 
@@ -1309,13 +1324,48 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
     int count = 0;
+    R_StringBuffer pb = {NULL, 0, 16};
+    RCNTXT cntxt;
+    /* set up a context which will free the string buffer if
+       there is an error */
+    cntxt.cend = &search_cleanup;
+    cntxt.cenddata = &pb;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
     for (int i = 0; i < LENGTH(d) ; i++) {
-	if (STRING_ELT(d, i) == NA_STRING) continue;
-	const char *p = translateCharFP2(STRING_ELT(d, i));
-	if (!p) continue;
-	const char *dnp = R_ExpandFileName(p);
-	list_dirs(dnp, "", fullnames, &count, &ans, &countmax, idx, recursive);
+	Rboolean added_separator = FALSE;
+	DIR *dir;
+	size_t len;
+	if (!search_setup(&pb, STRING_ELT(d, i), &dir, &len,
+	                      &added_separator))
+	    continue;
+
+	/* Historically list.dirs(recursive = TRUE) returned also the initial
+	   directory with full.names == TRUE and "" with full.names = FALSE.
+	   list.files(recursive = TRUE, include.dirs = TRUE) does not do
+	   that.
+    
+	   This block mimicks the previous behavior but could be removed when
+	   that is no longer needed (from here and search_setup). */
+	if (recursive) {
+	    if (!fullnames) {
+		add_to_ans(&ans, "", &count, &countmax, idx);
+	    } else {
+		char *dnp = R_alloc(len + 1, 1);
+		memcpy(dnp, pb.data, len);
+		/* remove trailing separator if added by search_setup */
+		if (added_separator)
+		    dnp[len - 1] = '\0';
+		else
+		    dnp[len] = '\0';
+		add_to_ans(&ans, dnp, &count, &countmax, idx);
+	    }
+	}
+	list_dirs(&pb, fullnames ? 0 : len, len, &count, &ans,
+	          &countmax, idx, recursive, dir);
     }
+    endcontext(&cntxt);
+    search_cleanup(&pb);
     REPROTECT(ans = lengthgets(ans, count), idx);
     ssort(STRING_PTR(ans), count);
     UNPROTECT(1);

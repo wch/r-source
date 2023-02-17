@@ -312,7 +312,5 @@ void R_SetParams(Rstart Rp)
     R_SetPPSize(Rp->ppsize);
 #ifdef Win32
     R_SetWin32(Rp);
-    if (strlen(Rp->rhome) >= PATH_MAX)
-	R_Suicide("Invalid R_HOME");
 #endif
 }

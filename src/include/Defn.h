@@ -1832,6 +1832,7 @@ Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 int	R_GetFDLimit(void);
 int	R_EnsureFDLimit(int);
+Rboolean R_IsDirPath(const char *);
 
 /* environment cell access */
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */

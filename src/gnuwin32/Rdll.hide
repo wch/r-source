@@ -112,6 +112,7 @@
  R_IoBufferReadOffset
  R_IoBufferReadReset
  R_IoBufferWriteReset
+ R_IsDirPath
  R_Is_Running
  R_JumpToContext
  R_KeepSource
