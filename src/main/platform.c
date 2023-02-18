@@ -1267,10 +1267,12 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (int i = 0; i < LENGTH(d) ; i++) {
 	DIR *dir;
 	size_t len;
-	if (search_setup(&pb, STRING_ELT(d, i), &dir, &len, NULL))
+	if (search_setup(&pb, STRING_ELT(d, i), &dir, &len, NULL)) {
 	    list_files(&pb, fullnames ? 0 : len, len, &count, &ans, allfiles,
 		       recursive, pattern ? &reg : NULL, &countmax, idx,
 		       idirs, /* allowdots = */ !nodots, dir);
+	    closedir(dir);
+	}
     }
     endcontext(&cntxt);
     search_cleanup(&pb);
@@ -1366,6 +1368,7 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	list_dirs(&pb, fullnames ? 0 : len, len, &count, &ans,
 	          &countmax, idx, recursive, dir);
+	closedir(dir);
     }
     endcontext(&cntxt);
     search_cleanup(&pb);
