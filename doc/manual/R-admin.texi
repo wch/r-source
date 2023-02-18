@@ -273,8 +273,8 @@ want or need.  Ensure that either the environment variable @env{TMPDIR}
 is either unset (and @file{/tmp} exists and can be written in and
 scripts can be executed from) or points to the absolute path to a valid
 temporary directory (one from which execution of scripts is allowed)
-which does not contain spaces.@footnote{Most aspects will work with
-paths containing spaces, but external software used by @R{} may not.}
+which does not contain spaces.@footnote{Spaces were discouraged but
+allowed prior to @R{} 4.3.0.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -1873,8 +1873,10 @@ first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
 @enindex R_USER
 @env{R_USER} on Windows.  The path should be an absolute path not
-containing spaces (and it is best to avoid non-alphanumeric characters
-such as @code{+}).
+containing spaces@footnote{On Windows a path containing spaces will be
+replaced by the `short path' version if that does not contain spaces.}
+(and it is best to avoid non-alphanumeric characters such as @code{+} or
+quotes).
 
 Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job

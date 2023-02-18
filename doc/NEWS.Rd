@@ -159,6 +159,12 @@
       expression as the first argument in an extraction call, such as
       \code{_$coef}. More generally, it can be used as the head of a
       chain of extractions, such as \code{_$coef[[2]]}.
+
+      \item Spaces in the environment variable used to choose the \R
+      session's temporary directory (\env{TMPDIR}, \env{TMP} and
+      \env{TEMP} are tried in turn) are now fatal.  (On Windows the
+      \sQuote{short path} version of the path is tried and used if that
+      does not contain a space.)
     }
   }
 
