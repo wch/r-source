@@ -103,6 +103,7 @@ sessionInfo <- function(package = NULL)
     z$locale <- Sys.getlocale()
     z$tzone <-Sys.timezone()
     z$tzcode_type <- .Call(C_tzcode_type)
+    z$exe_info <- .Call(C_exe_info)
     z$running <- osVersion
     z$RNGkind <- RNGkind()
     if(is.null(package)){
@@ -156,6 +157,10 @@ print.sessionInfo <- function(x, locale = TRUE, tzone = locale,
     }
 
     cat(x$R.version$version.string, "\n", sep = "")
+    if (!is.null(x$exe_info))
+        cat("Application: ", x$exe_info$name,
+            if (!is.null(x$exe_info$id)) paste0(" (", x$exe_info$id, ")") else "",
+            "\n", sep = "")
     cat("Platform: ", x$platform, "\n", sep = "")
     if (!is.null(x$running)) cat("Running under: ",  x$running, "\n", sep = "")
     cat("\n")

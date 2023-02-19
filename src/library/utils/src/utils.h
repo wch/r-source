@@ -73,6 +73,7 @@ SEXP clrhash_Ext(SEXP args);
 SEXP ishashtab_Ext(SEXP args);
 
 SEXP tzcode_type(void);
+SEXP exe_info(void);
 
 #ifdef Win32
 SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);

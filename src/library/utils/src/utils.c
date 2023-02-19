@@ -189,3 +189,78 @@ SEXP tzcode_type(void)
     return mkString("system");
 #endif
 }
+
+/* We define low-level bundle_id() and getprogname()
+   which return the application ID and name respectively.
+   They may return NULL where not supported or unset.
+   Currently, the applicaiton ID is only supported on macOS.
+   Then this is used to construct exe_info() string. */
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+static char bundle_id_buf[128];
+static const char *bundle_id(void) {
+    CFBundleRef b = CFBundleGetMainBundle();
+    if (b) {
+	CFStringRef s = CFBundleGetIdentifier(b);
+	if (s &&
+	    CFStringGetCString(s, bundle_id_buf, sizeof(bundle_id_buf),
+			       kCFStringEncodingUTF8))
+	    return bundle_id_buf;
+    }
+    return 0;
+}
+#else
+static const char *bundle_id(void) {
+    return NULL;
+}
+#endif
+
+#ifdef HAVE_GETPROGNAME
+/* BSD */
+#include <stdlib.h>
+#elif defined (HAVE_DECL_PROGRAM_INVOCATION_NAME) && HAVE_DECL_PROGRAM_INVOCATION_NAME
+/* GNU */
+extern char *program_invocation_name;
+static const char *getprogname(void) {
+    return program_invocation_name;
+}
+#elif defined (WIN32)
+/* WIN32 */
+#define MAX_EXE_NAME_LEN 512
+static wchar_t exeNameW[MAX_EXE_NAME_LEN];
+static char exeName[MAX_EXE_NAME_LEN];
+static const char *getprogname(void) {
+    exeNameW[0] = 0;
+    if (!GetModuleFileNameW(NULL, exeNameW, MAX_EXE_NAME_LEN))
+	return NULL;
+    wcstoutf8(exeName, exeNameW, sizeof(exeName));
+    exeName[MAX_EXE_NAME_LEN - 1] = 0;
+    return exeName;
+}
+#else
+/* unknown */
+static const char *getprogname(void) {
+    return NULL;
+}
+#endif
+
+static char exe_info_buf[1024];
+
+SEXP exe_info(void) {
+    int i = 0;
+    const char *names[] = { "name", "id", "" };
+    SEXP res;
+    const char *exe = getprogname();
+    const char *id  = bundle_id();
+    if (!exe && !id)
+	return R_NilValue;
+    if (!id) /* just name? */
+	names[1] = "";
+    res = PROTECT(mkNamed(VECSXP, exe ? names : (names + 1)));
+    /* FIXME: encoding? BSD/GNU will use native,
+       Win32 converts to UTF-8 - should all be UTF-8? */
+    if (exe) SET_VECTOR_ELT(res, i++, mkString(exe));
+    if (id)  SET_VECTOR_ELT(res, i++, mkString(id));
+    UNPROTECT(1);
+    return res;
+}

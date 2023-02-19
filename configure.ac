@@ -2336,6 +2336,16 @@ if test "x${r_cv_have_tm_gmtoff}" = xyes; then
   AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define to 1 if your 'struct tm' has tm_gmtoff.])
 fi
 
+## Getting program name (for sessionInfo() when embedded)
+## BSD extension
+AC_CHECK_FUNCS(getprogname)
+AC_CHECK_DECLS([getprogname], , , [#include <stdlib.h>]) 
+## GNU extension
+AC_CHECK_DECL([program_invocation_name],
+[AC_DEFINE(HAVE_DECL_PROGRAM_INVOCATION_NAME, 1, [Define to 1 if program_invocation_name is declared.])],,
+[#define _GNU_SOURCE
+#include<errno.h>])
+
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for (fixed-form) Fortran compiler/converter

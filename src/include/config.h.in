@@ -187,6 +187,10 @@
    don't. (For intl) */
 #undef HAVE_DECL_GETC_UNLOCKED
 
+/* Define to 1 if you have the declaration of `getprogname', and to 0 if you
+   don't. */
+#undef HAVE_DECL_GETPROGNAME
+
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #undef HAVE_DECL_ISFINITE
@@ -198,6 +202,9 @@
 /* Define to 1 if you have the declaration of `mkdtemp', and to 0 if you
    don't. */
 #undef HAVE_DECL_MKDTEMP
+
+/* Define to 1 if program_invocation_name is declared. */
+#undef HAVE_DECL_PROGRAM_INVOCATION_NAME
 
 /* Define to 1 if you have the declaration of `putenv', and to 0 if you don't.
    */
@@ -336,6 +343,9 @@
 
 /* Define to 1 if you have the `getpriority' function. */
 #undef HAVE_GETPRIORITY
+
+/* Define to 1 if you have the `getprogname' function. */
+#undef HAVE_GETPROGNAME
 
 /* Define to 1 if you have the `getpwnam' function. */
 #undef HAVE_GETPWNAM
