@@ -655,7 +655,8 @@
       \code{is.mts()} is documented \emph{and} stricter.
 
       \item \code{Rd2txt()} now preserves line breaks of \verb{\verb} Rd
-      content.  This also fixes the rendering of verbatim output from Rd
+      content and from duplicated \verb{\cr}.  The former also
+      fixes the rendering of verbatim output from Rd
       \verb{\Sexpr} in plain-text help.
     }
   }
