@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1172,27 +1172,6 @@ void attribute_hidden Rstd_Busy(int which)
    In all these cases run .Last() unless quitting is cancelled.
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
-
-/* Note: now there is R_unlink(), but rm -Rf may be optimized for specific
-   file-systems. Some file systems allow to delete directory trees without
-   explicit/synchronous traversal so that deletion appears to be very
-   fast (see e.g. zfs). */
-void R_CleanTempDir(void)
-{
-    char buf[1024];
-
-    if((Sys_TempDir)) {
-// Only __sun is neeed on Solaris >= 10 (2005).
-#if defined(__sun) || defined(sun)
-	/* On Solaris the working directory must be outside this one */
-	chdir(R_HomeDir());
-#endif
-	snprintf(buf, 1024, "rm -Rf %s", Sys_TempDir);
-	buf[1023] = '\0';
-	R_system(buf);
-    }
-}
-
 
 void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
