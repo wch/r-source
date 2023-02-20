@@ -366,8 +366,8 @@
 	  be useful if a package assumes them if C17 is specified and
 	  they are not implemented.}
 	\item{USE_C23}{Use C23 (or in future, later).  Compiler/library
-	  support for C23 is still being implemented, but LLVM clang 15 and
-	  the upcoming GCC 13 have quite extensive support.
+	  support for C23 is still being implemented, but LLVM clang
+	  from 15.0.0 and the upcoming GCC 13 have quite extensive support.
 	}
       }
       These can be specified as part of the \samp{SystemRequirements}
