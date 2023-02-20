@@ -100,7 +100,6 @@ void initOtherState(pGEDevDesc dd)
     /* Clear all device patterns */
     dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
-    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
@@ -299,6 +298,10 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                     }
                 }
 		initGPar(dd);
+                /* This needs to happen before initVP() because that
+                 * pushes ROOT viewport with clipping ON */
+                setGridStateElement(dd, GSS_RESOLVINGPATH, 
+                                    ScalarLogical(FALSE));
 		initVP(dd);
 		initOtherState(dd);
 	    } else {
