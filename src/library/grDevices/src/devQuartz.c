@@ -2587,6 +2587,7 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
 
 static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTXR(R_NilValue);
     SEXP ref;
     PROTECT(ref = allocVector(INTSXP, 1));
     int index = 0;
@@ -2622,6 +2623,7 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
 
 static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTX;
     /* NULL means release all patterns */
     if (ref == R_NilValue) {
         QuartzCleanPatterns(xd);
@@ -2632,6 +2634,7 @@ static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {
 
 static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTXR(R_NilValue);
     SEXP newref = R_NilValue;
     int index;
 
@@ -2664,6 +2667,7 @@ static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
 
 static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTX;
     /* NULL means release all patterns */
     if (isNull(ref)) {
         QuartzCleanClipPaths(xd);
@@ -2683,6 +2687,7 @@ static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {
 
 static SEXP RQuartz_setMask(SEXP mask, SEXP ref, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTXR(R_NilValue);
     int index;
     QMaskRef quartz_mask;
     SEXP newref = R_NilValue;
@@ -2719,6 +2724,7 @@ static SEXP RQuartz_setMask(SEXP mask, SEXP ref, pDevDesc dd) {
 static void RQuartz_releaseMask(SEXP ref, pDevDesc dd) 
 {
     DEVSPEC;
+    if (!ctx) NOCTX;
     if (isNull(ref)) {
         QuartzCleanMasks(xd);
     } else {
@@ -2738,16 +2744,19 @@ static void RQuartz_releaseMask(SEXP ref, pDevDesc dd)
 static SEXP RQuartz_defineGroup(SEXP source, int op, SEXP destination, 
                                     pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTXR(R_NilValue);
     return QuartzCreateGroup(source, op, destination, ctx, xd);
 }
 
 static void RQuartz_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
     DRAWSPEC;
+    if (!ctx) NOCTX;
     QuartzUseGroup(ref, trans, ctx, xd);
 }
 
 static void RQuartz_releaseGroup(SEXP ref, pDevDesc dd) {
     DEVSPEC;
+    if (!ctx) NOCTX;
     /* NULL means release all patterns */
     if (ref == R_NilValue) {
         QuartzCleanGroups(xd);
@@ -2759,6 +2768,7 @@ static void RQuartz_releaseGroup(SEXP ref, pDevDesc dd) {
 static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) 
 {
     DRAWSPEC;
+    if (!ctx) NOCTX;
     SEXP R_fcall;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
@@ -2794,6 +2804,7 @@ static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
                          pDevDesc dd) 
 {
     DRAWSPEC;
+    if (!ctx) NOCTX;
     SEXP R_fcall;
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
@@ -2871,6 +2882,7 @@ static void RQuartz_fillStroke(SEXP path, int rule, const pGEcontext gc,
                                pDevDesc dd) 
 {
     DRAWSPEC;
+    if (!ctx) NOCTX;
 
     Rboolean fill = (gc->patternFill != R_NilValue) || (R_ALPHA(gc->fill) > 0);
     Rboolean stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
