@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ sessionInfo <- function(package = NULL)
     loadedOnly <- loadedOnly[!(loadedOnly %in% package)]
     if (length(loadedOnly)) {
         names(loadedOnly) <- loadedOnly
-        pkgDesc <- c(pkgDesc, lapply(loadedOnly, packageDescription))
+        pkgDesc <- c(pkgDesc, lapply(loadedOnly, packageDescription, encoding = NA))
         z$loadedOnly <- pkgDesc[loadedOnly]
     }
     z$matprod <- as.character(options("matprod"))
