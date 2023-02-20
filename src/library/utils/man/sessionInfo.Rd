@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -54,7 +54,8 @@ osVersion
     \code{\link{l10n_info}()["system.codepage"]}.}
 #endif
   \item{basePkgs}{a character vector of base packages which are attached.}
-  \item{otherPkgs}{(not always present): a character vector of other
+  \item{otherPkgs}{(not always present): a named list of the results of
+    calling \code{\link{packageDescription}} on other
     attached packages.}
   \item{loadedOnly}{(not always present): a named list of the results of
     calling \code{\link{packageDescription}} on packages whose
