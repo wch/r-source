@@ -15,10 +15,10 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
 devMask <- function(aMask, lMask) {
     support <- dev.capabilities()$masks
     if (is.character(support)) {
-        if (support == "alpha") {
+        if ("alpha" %in% support) {
             aMask
         } else {
-            if (support == "luminance") {
+            if ("luminance" %in% support) {
                 as.mask(lMask, type="luminance")
             } else {
                 FALSE
