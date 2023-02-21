@@ -2986,7 +2986,7 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
 
 #define NC 100
 static int used = 0;
-static char names[NC][PATH_MAX];
+static char *names[NC];
 static char *ptr[NC];
 
 attribute_hidden SEXP
@@ -2999,8 +2999,9 @@ do_lazyLoadDBflush(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* fprintf(stderr, "flushing file %s", cfile); */
     for (i = 0; i < used; i++)
-	if(strcmp(cfile, names[i]) == 0) {
-	    strcpy(names[i], "");
+	if(names[i] != NULL && strcmp(cfile, names[i]) == 0) {
+	    free(names[i]);
+	    names[i] = NULL;
 	    free(ptr[i]);
 	    /* fprintf(stderr, " found at pos %d in cache", i); */
 	    break;
@@ -3037,7 +3038,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
     val = allocVector(RAWSXP, len);
     /* Do we have this database cached? */
     for (i = 0; i < used; i++)
-	if(strcmp(cfile, names[i]) == 0) {icache = i; break;}
+	if(names[i] != NULL && strcmp(cfile, names[i]) == 0) {icache = i; break;}
     if (icache >= 0) {
 	memcpy(RAW(val), ptr[icache]+offset, len);
 	vmaxset(vmax);
@@ -3046,8 +3047,11 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 
     /* find a vacant slot? */
     for (i = 0; i < used; i++)
-	if(strcmp("", names[i]) == 0) {icache = i; break;}
-    if(icache < 0 && used < NC) icache = used++;
+	if(names[i] == NULL) {icache = i; break;}
+    if(icache < 0 && used < NC) {
+	icache = used++;
+	names[icache] = NULL;
+    }
 
     if(icache >= 0) {
 	if ((fp = R_fopen(cfile, "rb")) == NULL)
@@ -3058,11 +3062,13 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	}
 	filelen = ftell(fp);
 	if (filelen < LEN_LIMIT) {
-	    char *p;
+	    char *p, *n;
 	    /* fprintf(stderr, "adding file '%s' at pos %d in cache, length %d\n",
 	       cfile, icache, filelen); */
 	    p = (char *) malloc(filelen);
-	    if (p) {
+	    n = (char *) malloc(strlen(cfile) + 1);
+	    if (p && n) {
+		names[icache] = n;
 		strcpy(names[icache], cfile);
 		ptr[icache] = p;
 		if (fseek(fp, 0, SEEK_SET) != 0) {
@@ -3074,6 +3080,10 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 		if (filelen != in) error(_("read failed on %s"), cfile);
 		memcpy(RAW(val), p+offset, len);
 	    } else {
+		if (p)
+		    free(p);
+		if (n)
+		    free(n);
 		if (fseek(fp, offset, SEEK_SET) != 0) {
 		    fclose(fp);
 		    error(_("seek failed on %s"), cfile);
