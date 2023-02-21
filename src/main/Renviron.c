@@ -361,7 +361,7 @@ void process_system_Renviron(void)
 #endif
 
 #ifdef Unix
-    if(needed > PATH_MAX) {
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to system Renviron is too long: skipping");
 	return;
     }
@@ -401,7 +401,7 @@ void process_site_Renviron (void)
     needed = strlen(R_Home) + strlen("/etc/Renviron.site") + 2 + strlen(R_ARCH);
     int skip = 0;
 # ifdef Unix
-    if(needed > PATH_MAX) {
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to arch-specific Renviron.site is too long: skipping");
 	skip = 1;
     } 
@@ -420,7 +420,7 @@ void process_site_Renviron (void)
 
     needed = strlen(R_Home) + strlen("/etc/Renviron.site") + 1;
 # ifdef Unix
-    if(needed > PATH_MAX) {
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to Renviron.site is too long: skipping");
 	return;
     }
@@ -442,7 +442,7 @@ static void process_arch_specific_user_Renviron(const char *s)
     size_t needed = strlen(s) + 1 + strlen(R_ARCH) + 1;
     int skip = 0;
 # ifdef Unix
-    if (needed > PATH_MAX) {
+    if (needed > R_PATH_MAX) {
 	Renviron_warning("path to arch-specific user Renviron is too long: skipping");
 	skip = 1;
     }
@@ -475,7 +475,7 @@ void process_user_Renviron(void)
     needed = strlen(".Renviron.") + strlen(R_ARCH) + 1;
     skip = 0;
 # ifdef Unix
-    if(needed > PATH_MAX) {
+    if(needed > R_PATH_MAX) {
 	Renviron_warning("path to user Renviron is too long: skipping");
 	skip = 1;
     }

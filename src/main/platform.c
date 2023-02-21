@@ -594,17 +594,17 @@ attribute_hidden SEXP do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning(_("cannot symlink '%ls' to '%ls', reason '%s'"),
 			from, to, formatError(GetLastError()));
 #else
-	    char from[PATH_MAX], to[PATH_MAX];
+	    char from[R_PATH_MAX], to[R_PATH_MAX];
 	    const char *p;
 	    p = R_ExpandFileName(translateCharFP(STRING_ELT(f1, i%n1)));
-	    if (strlen(p) >= PATH_MAX - 1) {
+	    if (strlen(p) >= R_PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
 		continue;
 	    }
 	    strcpy(from, p);
 
 	    p = R_ExpandFileName(translateCharFP(STRING_ELT(f2, i%n2)));
-	    if (strlen(p) >= PATH_MAX - 1) {
+	    if (strlen(p) >= R_PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
 		continue;
 	    }
@@ -667,17 +667,17 @@ attribute_hidden SEXP do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 			from, to, formatError(GetLastError()));
 	    }
 #else
-	    char from[PATH_MAX], to[PATH_MAX];
+	    char from[R_PATH_MAX], to[R_PATH_MAX];
 	    const char *p;
 	    p = R_ExpandFileName(translateCharFP(STRING_ELT(f1, i%n1)));
-	    if (strlen(p) >= PATH_MAX - 1) {
+	    if (strlen(p) >= R_PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
 		continue;
 	    }
 	    strcpy(from, p);
 
 	    p = R_ExpandFileName(translateCharFP(STRING_ELT(f2, i%n2)));
-	    if (strlen(p) >= PATH_MAX - 1) {
+	    if (strlen(p) >= R_PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
 		continue;
 	    }
@@ -713,7 +713,7 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
     wchar_t *from, *to;
     const wchar_t *w;
 #else
-    char from[PATH_MAX], to[PATH_MAX];
+    char from[R_PATH_MAX], to[R_PATH_MAX];
     const char *p;
 #endif
 
@@ -749,13 +749,13 @@ attribute_hidden SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[i] = (res == 0);
 #else
 	p = R_ExpandFileName(translateCharFP(STRING_ELT(f1, i)));
-	if (strlen(p) >= PATH_MAX - 1)
+	if (strlen(p) >= R_PATH_MAX - 1)
 	    error(_("expanded 'from' name too long"));
-	strncpy(from, p, PATH_MAX - 1);
+	strncpy(from, p, R_PATH_MAX - 1);
 	p = R_ExpandFileName(translateCharFP(STRING_ELT(f2, i)));
-	if (strlen(p) >= PATH_MAX - 1)
+	if (strlen(p) >= R_PATH_MAX - 1)
 	    error(_("expanded 'to' name too long"));
-	strncpy(to, p, PATH_MAX - 1);
+	strncpy(to, p, R_PATH_MAX - 1);
 	res = rename(from, to);
 	if(res) {
 	    warning(_("cannot rename file '%s' to '%s', reason '%s'"),
@@ -1091,7 +1091,7 @@ size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
     memcpy(pb->data + len, name, namelen);
     pb->data[newlen - 1] = '\0';
 #ifdef Unix
-    if (newlen > PATH_MAX) 
+    if (newlen > R_PATH_MAX) 
 	warning(_("over-long path"));
 #endif
     return newlen;
@@ -1414,7 +1414,7 @@ attribute_hidden SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    // returns NULL if not translatable
 	    const char *p = translateCharFP2(STRING_ELT(file, i));
 	    /* Package XML sends arbitrarily long strings to file.exists! */
-	    if (!p || strlen(p) > PATH_MAX)
+	    if (!p || strlen(p) > R_PATH_MAX)
 		LOGICAL(ans)[i] = FALSE;
 	    else
 		LOGICAL(ans)[i] = R_FileExists(p);
@@ -1630,7 +1630,7 @@ static int R_unlink(const char *name, int recursive, int force)
     if (!res && recursive) {
 	DIR *dir;
 	struct dirent *de;
-	char p[PATH_MAX];
+	char p[R_PATH_MAX];
 	int ans = 0;
 
 	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
@@ -1642,11 +1642,11 @@ static int R_unlink(const char *name, int recursive, int force)
 		    int pres;
 		    if (name[n] == R_FileSep[0])
 			/* FIXME: do we have to test on Unix? cf filename_buf */
-			pres = snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+			pres = snprintf(p, R_PATH_MAX, "%s%s", name, de->d_name);
 		    else
-			pres = snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
+			pres = snprintf(p, R_PATH_MAX, "%s%s%s", name, R_FileSep,
 				 de->d_name);
-		    if (pres >= PATH_MAX)
+		    if (pres >= R_PATH_MAX)
 			error(_("path too long"));
 		    lstat(p, &sb);
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
@@ -1673,7 +1673,7 @@ static int R_unlink(const char *name, int recursive, int force)
 
 void R_CleanTempDir(void)
 {
-    char buf[PATH_MAX + 20];
+    char buf[R_PATH_MAX + 20];
 
     if((Sys_TempDir)) {
 // Only __sun is neeed on Solaris >= 10 (2005).
@@ -2308,7 +2308,7 @@ attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP path;
     int res, show, recursive, mode, serrno = 0;
-    char *p, dir[PATH_MAX];
+    char *p, dir[R_PATH_MAX];
 
     checkArity(op, args);
     path = CAR(args);
@@ -2699,8 +2699,8 @@ static int do_copy(const char* from, const char* name, const char* to,
     struct stat sb;
     int nfail = 0, res; // we only use nfail == 0
     size_t len;
-    // After POSIX clarification, PATH_MAX would do
-    char dest[PATH_MAX + 1], this[PATH_MAX + 1];
+    // After POSIX clarification, PATH_MAX would do (?)
+    char dest[R_PATH_MAX + 1], this[R_PATH_MAX + 1];
 
     int mask;
 #ifdef HAVE_UMASK
@@ -2712,7 +2712,7 @@ static int do_copy(const char* from, const char* name, const char* to,
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
     // We use snprintf to compute lengths to pacify GCC 12
     len = snprintf(NULL, 0, "%s%s", from, name);
-    if (len >= PATH_MAX) {
+    if (len >= R_PATH_MAX) {
 	warning(_("over-long path"));
 	return 1;
     }
@@ -2722,11 +2722,11 @@ static int do_copy(const char* from, const char* name, const char* to,
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	DIR *dir;
 	struct dirent *de;
-	char p[PATH_MAX + 1];
+	char p[R_PATH_MAX + 1];
 
 	if (!recursive) return 1;
 	len = snprintf(NULL, 0, "%s%s", to, name);
-	if (len >= PATH_MAX) {
+	if (len >= R_PATH_MAX) {
 	    warning(_("over-long path"));
 	    return 1;
 	}
@@ -2758,7 +2758,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
 		len = snprintf(NULL, 0, "%s/%s", name, de->d_name);
-		if (len >= PATH_MAX) {
+		if (len >= R_PATH_MAX) {
 		    warning(_("over-long path"));
 		    closedir(dir);
 		    return 1;
@@ -2779,7 +2779,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 
 	nfail = 0;
 	len = snprintf(NULL, 0, "%s%s", to, name);
-	if (len >= PATH_MAX) {
+	if (len >= R_PATH_MAX) {
 	    warning(_("over-long path"));
 	    nfail++;
 	    goto copy_error;
@@ -2856,37 +2856,37 @@ attribute_hidden SEXP do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (dates == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "copy.date");
 	const char* q = R_ExpandFileName(translateCharFP(STRING_ELT(to, 0)));
-	if(strlen(q) > PATH_MAX - 2) // allow for '/' and terminator
+	if(strlen(q) > R_PATH_MAX - 2) // allow for '/' and terminator
 	    error(_("invalid '%s' argument"), "to");
-	char dir[PATH_MAX];
-	// gcc 10 with sanitizers objects to PATH_MAX here.
-	strncpy(dir, q, PATH_MAX - 1);
-	dir[PATH_MAX - 1] = '\0';
+	char dir[R_PATH_MAX];
+	// gcc 10 with sanitizers objects to R_PATH_MAX here.
+	strncpy(dir, q, R_PATH_MAX - 1);
+	dir[R_PATH_MAX - 1] = '\0';
 	if (*(dir + (strlen(dir) - 1)) !=  '/')
 	    strcat(dir, "/");
 	int nfail;
 	for (int i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		char from[PATH_MAX];
+		char from[R_PATH_MAX];
 		strncpy(from,
 			R_ExpandFileName(translateCharFP(STRING_ELT(fn, i))),
-			PATH_MAX - 1);
-		from[PATH_MAX - 1] = '\0';
+			R_PATH_MAX - 1);
+		from[R_PATH_MAX - 1] = '\0';
 		size_t ll = strlen(from);
 		if (ll) {  // people do pass ""
 		    /* If there is a trailing sep, this is a mistake */
 		    char* p = from + (ll - 1);
 		    if(*p == '/') *p = '\0';
 		    p = strrchr(from, '/') ;
-		    char name[PATH_MAX];
+		    char name[R_PATH_MAX];
 		    if (p) {
-			strncpy(name, p+1, PATH_MAX - 1);
-			name[PATH_MAX - 1] = '\0';
+			strncpy(name, p+1, R_PATH_MAX - 1);
+			name[R_PATH_MAX - 1] = '\0';
 			*(p+1) = '\0';
 		    } else {
-			strncpy(name, from, PATH_MAX);
-			name[PATH_MAX - 1] = '\0';
-			strncpy(from, "./", PATH_MAX);
+			strncpy(name, from, R_PATH_MAX);
+			name[R_PATH_MAX - 1] = '\0';
+			strncpy(from, "./", R_PATH_MAX);
 		    }
 		    nfail = do_copy(from, name, dir, over, recursive,
 				    perms, dates, 1);
@@ -3036,13 +3036,13 @@ attribute_hidden SEXP do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
     int n = LENGTH(paths);
     SEXP ans = PROTECT(allocVector(STRSXP, n));
 #ifdef HAVE_READLINK
-    char buf[PATH_MAX+1];
+    char buf[R_PATH_MAX+1];
     for (int i = 0; i < n; i++) {
 	const char *p = translateCharFP2(STRING_ELT(paths, i));
 	if (p) {
-	    memset(buf, 0, PATH_MAX+1);
-	    ssize_t res = readlink(R_ExpandFileName(p), buf, PATH_MAX);
-	    if (res == PATH_MAX) {
+	    memset(buf, 0, R_PATH_MAX+1);
+	    ssize_t res = readlink(R_ExpandFileName(p), buf, R_PATH_MAX);
+	    if (res == R_PATH_MAX) {
 		SET_STRING_ELT(ans, i, mkChar(buf));
 		warning("possible truncation of value for element %d", i + 1);
 	    } else if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
@@ -3406,7 +3406,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    char buf[PATH_MAX+1];
+    char buf[R_PATH_MAX+1];
     if (ok && dladdr(dgemm_addr, &dl_info1)) {
 	char *res = realpath(dl_info1.dli_fname, buf);
 	if (res)

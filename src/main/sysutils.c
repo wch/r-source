@@ -2022,7 +2022,7 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 #endif
 	size_t needed = TMPNAM2_SNPRINTF(NULL, 0) + 1;
 #ifdef Unix
-	if (needed > PATH_MAX)
+	if (needed > R_PATH_MAX)
 	    error(_("temporary name too long"));
 #endif
 	char *res = (char *) malloc(needed);

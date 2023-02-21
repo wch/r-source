@@ -771,8 +771,8 @@ SEXP static intern_getwd(void)
 	}
     }
 #else
-    char buf[4*PATH_MAX+1];
-    char *res = getcwd(buf, PATH_MAX); /* can return NULL */
+    char buf[4*R_PATH_MAX+1];
+    char *res = getcwd(buf, R_PATH_MAX); /* can return NULL */
     if(res) rval = mkString(buf);
 #endif
     return(rval);
@@ -868,7 +868,7 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+    char  buf[R_PATH_MAX], *p, fsp = FILESEP[0];
     const char *pp;
     int i, n;
 
@@ -881,7 +881,7 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
-	    if (strlen(pp) > PATH_MAX - 1)
+	    if (strlen(pp) > R_PATH_MAX - 1)
 		error(_("path too long"));
 	    strcpy (buf, pp);
 	    if (*buf) {
@@ -950,7 +950,7 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char buf[PATH_MAX], *p, fsp = FILESEP[0];
+    char buf[R_PATH_MAX], *p, fsp = FILESEP[0];
     const char *pp;
     int i, n;
 
@@ -963,7 +963,7 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
-	    if (strlen(pp) > PATH_MAX - 1)
+	    if (strlen(pp) > R_PATH_MAX - 1)
 		error(_("path too long"));
 	    size_t ll = strlen(pp);
 	    if (ll) { // svMisc calls this with ""
@@ -997,7 +997,7 @@ attribute_hidden SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, paths = CAR(args), elp;
     int i, n = LENGTH(paths);
     const char *path;
-    char abspath[PATH_MAX+1];
+    char abspath[R_PATH_MAX+1];
 
     checkArity(op, args);
     if (!isString(paths))
@@ -1050,12 +1050,12 @@ attribute_hidden SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    continue;
 	}
 	path = translateCharFP(elp);
-	OK = strlen(path) <= PATH_MAX;
+	OK = strlen(path) <= R_PATH_MAX;
 	if (OK) {
-	    if (path[0] == '/') strncpy(abspath, path, PATH_MAX);
+	    if (path[0] == '/') strncpy(abspath, path, R_PATH_MAX);
 	    else {
-		OK = getcwd(abspath, PATH_MAX) != NULL;
-		OK = OK && (strlen(path) + strlen(abspath) + 1 <= PATH_MAX);
+		OK = getcwd(abspath, R_PATH_MAX) != NULL;
+		OK = OK && (strlen(path) + strlen(abspath) + 1 <= R_PATH_MAX);
 		if (OK) {strcat(abspath, "/"); strcat(abspath, path);}
 	    }
 	}
@@ -1079,7 +1079,8 @@ attribute_hidden SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef USE_INTERNAL_MKTIME
 const char *getTZinfo(void)
 {
-    static char def_tz[PATH_MAX+1] = "";
+    /* FIXME: use filesystem-agnostic limit?*/
+    static char def_tz[R_PATH_MAX+1] = "";
     if (def_tz[0]) return def_tz;
 
     // call Sys.timezone()
