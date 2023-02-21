@@ -261,6 +261,7 @@
  R_wfixbackslash
  R_wfixslash
  R_wfopen
+ Rasprintf_malloc
  Rconn_getline
  Rcons_vprintf
  Rconsolesetwidth

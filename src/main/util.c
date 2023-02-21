@@ -42,6 +42,8 @@
 #include <unistd.h>
 #endif
 
+#include <stdarg.h>
+
 #ifdef Win32
 void R_UTF8fixslash(char *s);
 void R_wfixslash(wchar_t *s);
@@ -3114,4 +3116,41 @@ SEXP do_compareNumericVersion(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-    
+attribute_hidden int Rasprintf_malloc(char **str, const char *fmt, ...)
+{
+    va_list ap;
+    int ret;
+    char dummy[1];
+
+    *str = NULL;
+
+    va_start(ap, fmt);
+    /* could optimize by using non-zero initial size, large
+       enough so that most prints with fill */
+    /* trio does not accept NULL as str */
+    ret = vsnprintf(dummy, 0, fmt, ap); 
+    va_end(ap);
+
+    if (ret <= 0)
+	/* error or empty print */
+	return ret;
+
+    size_t needed = ret + 1;
+    char *buf = (char *) malloc(needed);
+    if (!buf) {
+	errno = ENOMEM;
+	return -1;
+    }
+
+    va_start(ap, fmt);
+    ret = vsnprintf(buf, needed, fmt, ap);
+    va_end(ap);
+
+    if (ret < 0 || (size_t)ret >= needed)
+	/* error */
+	free(buf);
+    else
+	*str = buf;
+    return ret;
+}
+ 

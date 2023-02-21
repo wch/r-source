@@ -2175,6 +2175,7 @@ char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
 int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap);
 int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
+int Rasprintf_malloc(char **str, const char *fmt, ...);
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
