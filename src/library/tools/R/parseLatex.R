@@ -236,5 +236,20 @@ makeLatexTable <- function(utf8table)
     }
     table[["\\textemdash"]] <- "\u2014"
     latexArgCount[["\\textemdash"]] <<- 0
+
+    ## Variants of latin A/a with ring above.
+    table[["\\AA"]] <- "\u00c5"
+    latexArgCount[["\\AA"]] <<- 0
+    table[["\\aa"]] <- "\u00e5"
+    latexArgCount[["\\aa"]] <<- 0
+
+    ## Also handle (some) LaTeX specials:
+    table[["\\&"]] <- "&"
+    latexArgCount[["\\&"]] <<- 0    
+    table[["\\~"]] <- "~"
+    latexArgCount[["\\~"]] <<- 0
+    table[["\\%"]] <- "%"
+    latexArgCount[["\\%"]] <<- 0    
+    
     table
 }
