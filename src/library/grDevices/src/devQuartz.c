@@ -99,7 +99,6 @@ typedef QGradient* QGradientRef;
 
 typedef struct QuartzPatternCallbackInfo {
     CGLayerRef layer;
-    CGRect tile;
 } QPatternCallbackInfo;
 
 typedef QPatternCallbackInfo* QPatternCallbackInfoRef;
@@ -715,9 +714,7 @@ static void QuartzPatternReleaseCallback(void *info) {
 static void QuartzPatternCallback(void *info, CGContextRef ctx) {
     QPatternCallbackInfo *patternInfo = (QPatternCallbackInfo*) info;
     CGLayerRef layer = patternInfo->layer;
-    CGRect tile = patternInfo->tile;
     CGContextSaveGState(ctx);
-    CGContextClipToRect(ctx, tile);
     CGPoint contextOrigin = CGPointMake(0 ,0);
     CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
     CGContextRestoreGState(ctx);
@@ -735,6 +732,14 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
     double y = R_GE_tilingPatternY(pattern);
     double width = R_GE_tilingPatternWidth(pattern);
     double height = R_GE_tilingPatternHeight(pattern);
+
+    /* Translate tile to centre of layer 
+     * (so that tile drawing is not clipped to edge of layer) */
+    CGContextRef layerCTX = CGLayerGetContext(layer);
+    CGContextTranslateCTM(layerCTX, 
+                          devWidth/2 - width/2, devHeight/2 - height/2);
+    CGContextTranslateCTM(layerCTX, -x, -y);
+
     double xStep, yStep;
     if (R_GE_tilingPatternExtend(pattern) == R_GE_patternExtendNone) {
         xStep = 0;
@@ -746,18 +751,27 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
         xStep = width;
         yStep = height;
     }
-    CGRect bounds = CGRectMake(x, y, width, height);
+    /* Pattern space (so centre of pattern space) */
+    CGRect bounds = CGRectMake(devWidth/2 - width/2, devHeight/2 - height/2, 
+                               width, height);
     CGPatternCallbacks callback = { 0, &QuartzPatternCallback, &QuartzPatternReleaseCallback };
     QPatternCallbackInfoRef info = malloc(sizeof(QPatternCallbackInfo));
     if (!info) error(_("Failed to create pattern"));
     info->layer = layer;
-    info->tile = bounds;
     quartz_pattern->info = info;
+
+    /* Pattern CTM 
+     * (reverse the translation to centre of layer) */
+    CGContextSaveGState(ctx);
+    CGContextTranslateCTM(ctx, 
+                          -(devWidth/2 - width/2), -(devHeight/2 - height/2));
+    CGContextTranslateCTM(ctx, x, y);
+    CGAffineTransform patternCTM = CGContextGetCTM(ctx);
+    CGContextRestoreGState(ctx);
+    
     quartz_pattern->pattern = CGPatternCreate((void*) info,
                                               bounds,
-                                              /* Match pattern CTM to 
-                                               * device CTM */
-                                              CGContextGetCTM(ctx), 
+                                              patternCTM, 
                                               xStep, yStep, /* xStep, yStep */
                                               kCGPatternTilingNoDistortion,
                                               true,
@@ -2064,13 +2078,15 @@ static void qFill(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd,
 {
     SET(RQUARTZ_FILL);
     if (QuartzGradientFill(gc->patternFill, xd)) {
-        CGContextSaveGState(ctx);
-        if (winding)
-            CGContextClip(ctx);
-        else
-            CGContextEOClip(ctx);            
-        QuartzDrawGradientFill(ctx, gc->patternFill, xd);
-        CGContextRestoreGState(ctx);
+        if (!CGContextIsPathEmpty(ctx)) {
+            CGContextSaveGState(ctx);
+            if (winding)
+                CGContextClip(ctx);
+            else
+                CGContextEOClip(ctx);            
+            QuartzDrawGradientFill(ctx, gc->patternFill, xd);
+            CGContextRestoreGState(ctx);
+        }
     } else {
         if (QuartzPatternFill(gc->patternFill, xd)) {
             /* Override simple colour fill */
