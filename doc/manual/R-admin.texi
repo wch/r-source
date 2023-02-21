@@ -3994,7 +3994,7 @@ for @R{} on those platforms.
 
 The MKL interface has changed several times but has been stable in
 recent years: the following examples have been used with versions 10.3
-to 2022.0.2, for GCC compilers on @cputype{x86_64} CPUs.
+to 2023.0.0, for GCC compilers on @cputype{x86_64} CPUs.
 
 To use a sequential version of MKL we used
 
