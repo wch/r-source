@@ -663,6 +663,11 @@
       content and from duplicated \verb{\cr}.  The former also
       fixes the rendering of verbatim output from Rd
       \verb{\Sexpr} in plain-text help.
+
+      \item \code{uniroot(f, interval)} should no longer wrongly converge
+      \emph{outside} the interval in some cases where \code{abs(f(x)) == Inf}
+      for an \code{x} at the interval boundary, thanks to posts by Ben
+      Bolker and Serguei Sokol on R-devel.
     }
   }
 }

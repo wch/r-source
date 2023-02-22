@@ -1,6 +1,6 @@
 % File src/library/stats/man/uniroot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{uniroot}
@@ -71,7 +71,7 @@ uniroot(f, interval, \dots,
   possibly is extended to be such that \eqn{S\cdot f(l)\le 0}{%
     S * f(l) <= 0} and \eqn{S \cdot f(u) \ge 0}{S * f(u) >= 0}.
 
-  \code{uniroot()} uses Fortran subroutine \file{"zeroin"} (from Netlib)
+  \code{uniroot()} uses Fortran subroutine \code{zeroin} (from Netlib)
   based on algorithms given in the reference below.  They assume a
   continuous function (which then is known to have at least one root in
   the interval).
@@ -91,15 +91,18 @@ uniroot(f, interval, \dots,
 }
 
 \value{
-  A list with at least four components: \code{root} and \code{f.root}
+  A list with at least five components: \code{root} and \code{f.root}
   give the location of the root and the value of the function evaluated
   at that point. \code{iter} and \code{estim.prec} give the number of
   iterations used and an approximate estimated precision for
   \code{root}.  (If the root occurs at one of the endpoints, the
   estimated precision is \code{NA}.)
+  \code{init.it} contains the number of \emph{init}ial \code{extendInt}
+  \emph{it}erations if there were any and is \code{NA} otherwise.
+  In the case of such \code{extendInt} iterations, \code{iter} contains the
+  \code{sum} of these and the \code{zeroin} iterations.
 
-  Further components may be added in future: component \code{init.it}
-  was added in \R 3.1.0.  
+  Further components may be added in the future.
 }
 %\author{of \code{extendInt} and \code{check.conv}: Martin Maechler.}% originally as
 % safeUroot() in CRAN packages nor1mix and copula
