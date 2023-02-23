@@ -824,15 +824,6 @@ attribute_hidden SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* remove portion of path before file separator if one exists */
 
 #ifdef Win32
-static void R_wrmtrailingslash(wchar_t *s)
-{
-    /* remove trailing forward slashes */
-    if (s && *s) {
-	wchar_t *p = s + wcslen(s) - 1;
-	while (p >= s && *p == L'/') *(p--) = L'\0';
-    }
-}
-
 attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
@@ -853,7 +844,13 @@ attribute_hidden SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    buf = (wchar_t *)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
 	    wcscpy(buf, pp);
 	    R_wfixslash(buf);
-	    R_wrmtrailingslash(buf);
+	    /* remove trailing file separator(s) */
+	    if (*buf) {
+		p = buf + wcslen(buf) - 1;
+		/* turns D:/ to D: */
+		/* FIXME: basename of D:/ is D:, is that a good behavior? */
+		while (p >= buf && *p == L'/') *(p--) = L'\0';
+	    }
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
 	    size_t needed = wcstoutf8(NULL, p, INT_MAX);
 	    sp = R_alloc(needed + 1, 1);
@@ -927,8 +924,12 @@ attribute_hidden SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		buf = (wchar_t*)R_alloc(wcslen(pp) + 1, sizeof(wchar_t));
 		wcscpy (buf, pp);
 		R_wfixslash(buf);
-		R_wrmtrailingslash(buf);
+		/* remove trailing file separator(s), preserve D:/, / */
+		p = buf + wcslen(buf) - 1;
+		while (p > buf && *p == L'/'
+		       && (p > buf+2 || *(p-1) != L':')) *p-- = L'\0';
 		p = wcsrchr(buf, L'/');
+		/* FIXME: dirname of D: is ., is this a good behavior? */
 		if(p == NULL) wcscpy(buf, L".");
 		else {
 		    while(p > buf && *p == L'/'
