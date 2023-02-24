@@ -23,6 +23,11 @@
  *  This file should be compiled only if AQUA is enabled
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <Defn.h>
 
 #include "qdBitmap.h"
 
