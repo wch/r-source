@@ -1071,14 +1071,266 @@ attribute_hidden SEXP do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <sys/types.h>
 #endif
 
-#if HAVE_DIRENT_H
-# include <dirent.h>
-#elif HAVE_SYS_NDIR_H
-# include <sys/ndir.h>
-#elif HAVE_SYS_DIR_H
-# include <sys/dir.h>
-#elif HAVE_NDIR_H
-# include <ndir.h>
+/* POSIX opendir/readdir/closedir is not supported by Windows. MinGW-W64 has
+   an implementation, which however does not support long paths.
+
+   R_opendir/R_readdir/R_closedir implement a subset of the functionality,
+   on Unix they fall back to POSIX API, on Windows they support long paths.
+
+   R_wopendir/R_wreaddir/R_wclosedir are wide-string variants for Windows. */
+
+#ifdef Unix
+# if HAVE_DIRENT_H
+#  include <dirent.h>
+# elif HAVE_SYS_NDIR_H
+#  include <sys/ndir.h>
+# elif HAVE_SYS_DIR_H
+#  include <sys/dir.h>
+# elif HAVE_NDIR_H
+#  include <ndir.h>
+# endif
+#endif
+
+struct R_DIR_INTERNAL {
+#ifdef Win32
+    char *pattern;
+    WIN32_FIND_DATA fdata;
+    HANDLE hfind;
+#else
+    DIR *dirp;
+#endif
+    struct R_dirent de;
+};
+
+R_DIR *R_opendir(const char *name)
+{
+    R_DIR *rdir = malloc(sizeof(R_DIR));
+    if (!rdir) {
+	errno = ENOMEM;
+	return NULL;
+    }
+#ifdef Win32
+    DWORD r = GetFileAttributes(name);
+    if (r == INVALID_FILE_ATTRIBUTES) {
+	errno = ENOENT;
+	free(rdir);
+	return NULL;
+    }
+    if (!(r & FILE_ATTRIBUTE_DIRECTORY)) {
+	errno = ENOTDIR;
+	free(rdir);
+	return NULL;
+    }
+
+    const void *vmax = vmaxget();
+    char *apath = R_getFullPathName(name);
+    if (!apath) {
+	errno = EFAULT;
+	vmaxset(vmax);
+	free(rdir);
+	return NULL;
+    }
+    size_t len = strlen(apath);
+    char *pattern = malloc(len + 3); /* <slash><star><null> */
+    if (!pattern) {
+	errno = EFAULT;
+	vmaxset(vmax);
+	free(rdir);
+	return NULL;
+    }
+    memcpy(pattern, apath, len);
+    /* apath is not D: (that would have been expanded) */
+
+    /* add separator if not present and pattern not empty */
+    if (len > 0 && pattern[len-1] != '\\' && pattern[len-1] != '/')
+	pattern[len++] = '/';
+    pattern[len++] = '*';
+    pattern[len] = '\0';
+
+    rdir->pattern = pattern;
+    rdir->hfind = INVALID_HANDLE_VALUE;
+    vmaxset(vmax);
+#else
+    rdir->dirp = opendir(name);
+    if (!rdir->dirp) {
+	free(rdir);
+	return NULL;
+    }
+#endif
+    return rdir;
+}
+
+struct R_dirent *R_readdir(R_DIR *rdir)
+{
+    if (!rdir) {
+	errno = EFAULT;
+	return NULL; 
+    }
+#ifdef Win32
+    if (rdir->pattern) {
+	/* starting the search */
+	rdir->hfind = FindFirstFile(rdir->pattern, &rdir->fdata);
+	free(rdir->pattern);
+	rdir->pattern = NULL;
+	if (rdir->hfind == INVALID_HANDLE_VALUE)
+	    /* keep errno, no files, even though not likely (., ..) */
+	    return NULL;
+	rdir->de.d_name = (char *)&rdir->fdata.cFileName;
+	return &rdir->de;
+    } else if (rdir->hfind != INVALID_HANDLE_VALUE) {
+	/* continuing the search */
+	if (!FindNextFile(rdir->hfind, &rdir->fdata))
+	    /* keep errno, no more files */
+	    return NULL;
+	return &rdir->de;
+    } else {
+	errno = EFAULT;
+	return NULL;
+    }
+#else
+    struct dirent *de;
+    de = readdir(rdir->dirp);
+    if (de) {
+	rdir->de.d_name = de->d_name;
+	return &rdir->de;
+    } else
+	return NULL;
+#endif
+}
+
+int R_closedir(R_DIR *rdir)
+{
+    if (!rdir) {
+	errno = EFAULT;
+	return -1;
+    }
+#ifdef Win32
+    if (rdir->pattern)
+	free(rdir->pattern);
+    BOOL r = 0;
+    if (rdir->hfind != INVALID_HANDLE_VALUE)
+	r = FindClose(rdir->hfind);
+    free(rdir);
+    if (r)
+	return 0;
+    else {
+	errno = EFAULT;
+	return -1;
+    }
+#else
+    int res = closedir(rdir->dirp);
+    free(rdir);
+    return res;
+#endif    
+}
+
+#ifdef Win32
+
+struct R_WDIR_INTERNAL {
+    wchar_t *pattern;
+    WIN32_FIND_DATAW fdata;
+    HANDLE hfind;
+    struct R_wdirent de;
+};
+
+attribute_hidden R_WDIR *R_wopendir(const wchar_t *name)
+{
+    R_WDIR *rdir = malloc(sizeof(R_WDIR));
+    if (!rdir) {
+	errno = ENOMEM;
+	return NULL;
+    }
+    DWORD r = GetFileAttributesW(name);
+    if (r == INVALID_FILE_ATTRIBUTES) {
+	errno = ENOENT;
+	free(rdir);
+	return NULL;
+    }
+    if (!(r & FILE_ATTRIBUTE_DIRECTORY)) {
+	errno = ENOTDIR;
+	free(rdir);
+	return NULL;
+    }
+
+    const void *vmax = vmaxget();
+    wchar_t *apath = R_getFullPathNameW(name);
+    if (!apath) {
+	errno = EFAULT;
+	vmaxset(vmax);
+	free(rdir);
+	return NULL;
+    }
+    size_t len = wcslen(apath);
+    /* <slash><star><null> */
+    wchar_t *pattern = malloc((len + 3) * sizeof(wchar_t));
+    if (!pattern) {
+	errno = EFAULT;
+	vmaxset(vmax);
+	free(rdir);
+	return NULL;
+    }
+    memcpy(pattern, apath, len * sizeof(wchar_t));
+    /* apath is not D: (that would have been expanded) */
+
+    /* add separator if not present and pattern not empty */
+    if (len > 0 && pattern[len-1] != L'\\' && pattern[len-1] != L'/')
+	pattern[len++] = L'/';
+    pattern[len++] = L'*';
+    pattern[len] = L'\0';
+
+    rdir->pattern = pattern;
+    rdir->hfind = INVALID_HANDLE_VALUE;
+    vmaxset(vmax);
+    return rdir;
+}
+
+attribute_hidden struct R_wdirent *R_wreaddir(R_WDIR *rdir)
+{
+    if (!rdir) {
+	errno = EFAULT;
+	return NULL; 
+    }
+    if (rdir->pattern) {
+	/* starting the search */
+	rdir->hfind = FindFirstFileW(rdir->pattern, &rdir->fdata);
+	free(rdir->pattern);
+	rdir->pattern = NULL;
+	if (rdir->hfind == INVALID_HANDLE_VALUE)
+	    /* keep errno, no files, even though not likely (., ..) */
+	    return NULL;
+	rdir->de.d_name = (wchar_t *)&rdir->fdata.cFileName;
+	return &rdir->de;
+    } else if (rdir->hfind != INVALID_HANDLE_VALUE) {
+	/* continuing the search */
+	if (!FindNextFileW(rdir->hfind, &rdir->fdata))
+	    /* keep errno, no more files */
+	    return NULL;
+	return &rdir->de;
+    } else {
+	errno = EFAULT;
+	return NULL;
+    }
+}
+
+attribute_hidden int R_wclosedir(R_WDIR *rdir)
+{
+    if (!rdir) {
+	errno = EFAULT;
+	return -1;
+    }
+    if (rdir->pattern)
+	free(rdir->pattern);
+    BOOL r = 0;
+    if (rdir->hfind != INVALID_HANDLE_VALUE)
+	r = FindClose(rdir->hfind);
+    free(rdir);
+    if (r)
+	return 0;
+    else {
+	errno = EFAULT;
+	return -1;
+    }
+}
 #endif
 
 static
@@ -1099,7 +1351,7 @@ size_t path_buffer_append(R_StringBuffer *pb, const char *name, size_t len)
 
 /* added_separator is a hack to once be removed, see comment in list_dirs */
 static
-Rboolean search_setup(R_StringBuffer *pb, SEXP path, DIR **dir,
+Rboolean search_setup(R_StringBuffer *pb, SEXP path, R_DIR **dir,
                       size_t *pathlen, Rboolean *added_separator)
 {
     if (added_separator)
@@ -1118,7 +1370,7 @@ Rboolean search_setup(R_StringBuffer *pb, SEXP path, DIR **dir,
 
     /* open directory */
     pb->data[len] = '\0';
-    *dir = opendir(pb->data);
+    *dir = R_opendir(pb->data);
     /* This happens to succeed even for "d:".
        Note though R_IsDirPath() returns FALSE, because _wstati64() returns -1
        (file not found). */
@@ -1174,11 +1426,11 @@ static void
 list_files(R_StringBuffer *pb, size_t offset, size_t len, int *count, SEXP *pans,
 	   Rboolean allfiles, Rboolean recursive,
 	   const regex_t *reg, int *countmax, PROTECT_INDEX idx,
-	   Rboolean idirs, Rboolean allowdots, DIR *dir)
+	   Rboolean idirs, Rboolean allowdots, R_DIR *dir)
 {
-    struct dirent *de;
+    struct R_dirent *de;
     R_CheckUserInterrupt(); // includes stack check
-    while ((de = readdir(dir))) {
+    while ((de = R_readdir(dir))) {
 	if (allfiles || !R_HiddenFile(de->d_name)) {
 	    /* append current name and null terminate */
 	    size_t newlen = path_buffer_append(pb, de->d_name, len);
@@ -1191,7 +1443,7 @@ list_files(R_StringBuffer *pb, size_t offset, size_t len, int *count, SEXP *pans
 				add_to_ans(pans, pb->data + offset,
 					   count, countmax, idx);
 			}
-			DIR *newdir = opendir(pb->data);
+			R_DIR *newdir = R_opendir(pb->data);
 			if (newdir != NULL) {
 			    /* turn terminator into file separator */
 			    pb->data[newlen - 1] = FILESEP[0];
@@ -1199,7 +1451,7 @@ list_files(R_StringBuffer *pb, size_t offset, size_t len, int *count, SEXP *pans
 				       count, pans, allfiles, recursive, reg,
 				       countmax, idx, idirs, allowdots, newdir);
 			    /* FIXME: arrange to close on error */
-			    closedir(newdir);
+			    R_closedir(newdir);
 			}
 		    }
 		    continue;
@@ -1265,13 +1517,13 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
                  R_NilValue, R_NilValue);
     for (int i = 0; i < LENGTH(d) ; i++) {
-	DIR *dir;
+	R_DIR *dir;
 	size_t len;
 	if (search_setup(&pb, STRING_ELT(d, i), &dir, &len, NULL)) {
 	    list_files(&pb, fullnames ? 0 : len, len, &count, &ans, allfiles,
 		       recursive, pattern ? &reg : NULL, &countmax, idx,
 		       idirs, /* allowdots = */ !nodots, dir);
-	    closedir(dir);
+	    R_closedir(dir);
 	}
     }
     endcontext(&cntxt);
@@ -1286,25 +1538,25 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* see comments in list_files for how the path buffer works */
 static void list_dirs(R_StringBuffer *pb, size_t offset, size_t len,
                       int *count, SEXP *pans, int *countmax,
-                      PROTECT_INDEX idx, Rboolean recursive, DIR *dir)
+                      PROTECT_INDEX idx, Rboolean recursive, R_DIR *dir)
 {
-    struct dirent *de;
+    struct R_dirent *de;
     R_CheckUserInterrupt(); // includes stack check
 
-    while ((de = readdir(dir))) {
+    while ((de = R_readdir(dir))) {
 	/* append current name and null terminate */
 	size_t newlen = path_buffer_append(pb, de->d_name, len);
 	if (R_IsDirPath(pb->data)) {
 	    if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
 		add_to_ans(pans, pb->data + offset, count, countmax, idx);
-		DIR *newdir;
-		if (recursive && ((newdir = opendir(pb->data)) != NULL)) {
+		R_DIR *newdir;
+		if (recursive && ((newdir = R_opendir(pb->data)) != NULL)) {
 		    /* turn terminator into file separator */
 		    pb->data[newlen - 1] = FILESEP[0];
 		    list_dirs(pb, offset, newlen, count, pans, countmax,
 			      idx, recursive, newdir);
 		    /* FIXME: arrange to close on error */
-		    closedir(newdir);
+		    R_closedir(newdir);
 		}
 	    }
 	}
@@ -1339,7 +1591,7 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
                  R_NilValue, R_NilValue);
     for (int i = 0; i < LENGTH(d) ; i++) {
 	Rboolean added_separator = FALSE;
-	DIR *dir;
+	R_DIR *dir;
 	size_t len;
 	if (!search_setup(&pb, STRING_ELT(d, i), &dir, &len,
 	                      &added_separator))
@@ -1368,7 +1620,7 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	list_dirs(&pb, fullnames ? 0 : len, len, &count, &ans,
 	          &countmax, idx, recursive, dir);
-	closedir(dir);
+	R_closedir(dir);
     }
     endcontext(&cntxt);
     search_cleanup(&pb);
@@ -1553,8 +1805,8 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	return delReparsePoint(name);
 
     if (name_exists && recursive) {
-	_WDIR *dir;
-	struct _wdirent *de;
+	R_WDIR *dir;
+	struct R_wdirent *de;
 	wchar_t *p;
 	int n, ans = 0;
 	int is_drive = (name[0] != '\0' && name[1] == L':' &&
@@ -1563,8 +1815,8 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	/* We need to test for a junction first, as junctions
 	   are detected as directories. */
 	if (R_WIsDirPath(name) || is_drive) {
-	    if ((dir = _wopendir(name)) != NULL) {
-		while ((de = _wreaddir(dir))) {
+	    if ((dir = R_wopendir(name)) != NULL) {
+		while ((de = R_wreaddir(dir))) {
 		    if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 			continue;
 		    /* On Windows we need to worry about trailing seps */
@@ -1587,7 +1839,7 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 		    }
 		    vmaxset(vmax);
 		}
-		_wclosedir(dir);
+		R_wclosedir(dir);
 	    } else { /* we were unable to read a dir */
 		ans++;
 	    }
@@ -2465,8 +2717,8 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
     wcscat(this, name);
     _wstati64(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
-	_WDIR *dir;
-	struct _wdirent *de;
+	R_WDIR *dir;
+	struct R_wdirent *de;
 	wchar_t *p;
 
 	if (!recursive) {
@@ -2498,9 +2750,9 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	    }
 	}
 	// NB Windows' mkdir appears to require \ not /.
-	if ((dir = _wopendir(this)) != NULL) {
+	if ((dir = R_wopendir(this)) != NULL) {
 	    depth++;
-	    while ((de = _wreaddir(dir))) {
+	    while ((de = R_wreaddir(dir))) {
 		if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 		    continue;
 		p = (wchar_t *) R_alloc(wcslen(name) + 1 + wcslen(de->d_name) + 1,
@@ -2511,7 +2763,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 		nfail += do_copy(from, p, to, over, recursive,
 				 perms, dates, depth);
 	    }
-	    _wclosedir(dir);
+	    R_wclosedir(dir);
 	} else {
 	    warning(_("problem reading directory %ls: %s"), this, strerror(errno));
 	    nfail++; /* we were unable to read a dir */

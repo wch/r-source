@@ -1922,6 +1922,30 @@ typedef struct {
     SEXP callArgs;
 } R_PrintData;
 
+/* Dirent wrappers/implementation */
+
+struct R_dirent {
+    char *d_name; /* null-terminated filename */
+};
+
+typedef struct R_DIR_INTERNAL R_DIR;
+
+R_DIR *R_opendir(const char *name);
+struct R_dirent *R_readdir(R_DIR *rdir);
+int R_closedir(R_DIR *rdir);
+
+#ifdef Win32
+struct R_wdirent {
+    wchar_t *d_name; /* null-terminated filename */
+};
+
+typedef struct R_WDIR_INTERNAL R_WDIR;
+
+R_WDIR *R_wopendir(const wchar_t *name);
+struct R_wdirent *R_wreaddir(R_WDIR *rdir);
+int R_wclosedir(R_WDIR *rdir);
+#endif
+
 /* Other Internally Used Functions */
 
 SEXP Rf_allocCharsxp(R_len_t);
@@ -2140,6 +2164,10 @@ void R_try_clear_args_refcnt(SEXP);
 
 /* ../main/devices.c, used in memory.c, gnuwin32/extra.c */
 #define R_MaxDevices 64
+
+/* gnuwin32/extra.c */
+wchar_t *R_getFullPathNameW(const wchar_t *);
+char *R_getFullPathName(const char *);
 
 /* ../../main/printutils.c : */
 typedef enum {

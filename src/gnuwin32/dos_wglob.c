@@ -76,6 +76,17 @@ static char sscsid[]=  "$OpenBSD: glob.c,v 1.8.10.1 2001/04/10 jason Exp $";
 void Rprintf(const char *, ...);
 #endif
 
+/* declarations from Defn.h, definitions in platform.c */
+struct R_wdirent {
+    wchar_t *d_name; /* null-terminated filename */
+};
+
+typedef struct R_WDIR_INTERNAL R_WDIR;
+
+R_WDIR *R_wopendir(const wchar_t *name);
+struct R_wdirent *R_wreaddir(R_WDIR *rdir);
+int R_wclosedir(R_WDIR *rdir);
+
 #define	MAXPATHLEN	65536	
 #define DOSISH
 #define ARG_MAX		14500
@@ -113,14 +124,14 @@ void Rprintf(const char *, ...);
 
 typedef size_t STRLEN;
 typedef struct _stat Stat_t;
-typedef struct _wdirent Direntry_t;
+typedef struct R_wdirent Direntry_t;
 
 
 static int	 compare(const void *, const void *);
 static int	 ci_compare(const void *, const void *);
 static int	 g_Ctoc(const wchar_t *, wchar_t *, STRLEN);
 static int	 g_lstat(wchar_t *, Stat_t *, wglob_t *);
-static _WDIR	*g_opendir(wchar_t *, wglob_t *);
+static R_WDIR	*g_opendir(wchar_t *, wglob_t *);
 static const wchar_t *
 		 g_strchr(const wchar_t *, int);
 static int	 glob0(const wchar_t *, wglob_t *);
@@ -711,7 +722,7 @@ glob3(wchar_t *pathbuf, wchar_t *pathbuf_last, wchar_t *pathend, wchar_t *pathen
       wchar_t *restpattern, wchar_t *restpattern_last, wglob_t *pglob, size_t *limitp)
 {
     Direntry_t *dp;
-    _WDIR *dirp;
+    R_WDIR *dirp;
     int err;
     int nocase;
     wchar_t buf[MAXPATHLEN];
@@ -737,7 +748,7 @@ glob3(wchar_t *pathbuf, wchar_t *pathbuf_last, wchar_t *pathend, wchar_t *pathen
     nocase = ((pglob->gl_flags & GLOB_NOCASE) != 0);
 
     /* Search directory for matching names. */
-    while ((dp = _wreaddir(dirp))) {
+    while ((dp = R_wreaddir(dirp))) {
 	wchar_t *sc, *dc;
 
 	/* Initial BG_DOT must be matched literally. */
@@ -763,7 +774,7 @@ glob3(wchar_t *pathbuf, wchar_t *pathbuf_last, wchar_t *pathend, wchar_t *pathen
 	    break;
     }
 
-    _wclosedir(dirp);
+    R_wclosedir(dirp);
     return(err);
 }
 
@@ -919,7 +930,7 @@ dos_wglobfree(wglob_t *pglob)
     }
 }
 
-static _WDIR *
+static R_WDIR *
 g_opendir(wchar_t *str, wglob_t *pglob)
 {
     wchar_t buf[MAXPATHLEN];
@@ -927,7 +938,7 @@ g_opendir(wchar_t *str, wglob_t *pglob)
     if (!*str) wcscpy(buf, L".");
     else
 	if (g_Ctoc(str, buf, sizeof(buf))) return(NULL);
-    return _wopendir(buf);
+    return R_wopendir(buf);
 }
 
 static int

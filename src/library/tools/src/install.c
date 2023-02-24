@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2021 The R Core Team
+ *  Copyright (C) 1998--2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,9 +52,9 @@ static const char  * const R_FileSep = FILESEP;
 
 static void chmod_one(const char *name, const int grpwrt)
 {
-    DIR *dir;
-    struct dirent *de;
-    char p[PATH_MAX];
+    R_DIR *dir;
+    struct R_dirent *de;
+    char *p;
 #ifdef Win32
     struct _stati64 sb;
 #else
@@ -84,21 +84,26 @@ static void chmod_one(const char *name, const int grpwrt)
 #ifndef Win32
 	chmod(name, dirmask);
 #endif
-	if ((dir = opendir(name)) != NULL) {
-	    while ((de = readdir(dir))) {
+	if ((dir = R_opendir(name)) != NULL) {
+	    while ((de = R_readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
 		size_t n = strlen(name);
-		int res;
-		if (name[n-1] == R_FileSep[0])
-		    res = snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
-		else
-		    res = snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
-		if (res >= PATH_MAX)
+		size_t needed = n + 1 + strlen(de->d_name) + 1;
+#ifdef Unix
+		if (needed >= PATH_MAX)
 		    error(_("path too long"));
+#endif
+		const void *vmax = vmaxget();
+		p = R_alloc(needed, 1);
+		if (name[n-1] == R_FileSep[0])
+		    snprintf(p, needed, "%s%s", name, de->d_name);
+		else
+		    snprintf(p, needed, "%s%s%s", name, R_FileSep, de->d_name);
 		chmod_one(p, grpwrt);
+		vmaxset(vmax);
 	    }
-	    closedir(dir);
+	    R_closedir(dir);
 	} else { 
 	    /* we were unable to read a dir */
 	}
