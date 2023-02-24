@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2022  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -433,7 +433,7 @@ static int GetNextItem(FILE *fp, char *dest, int c, EncodingInputState *state)
  */
 
 static int pathcmp(const char *encpath, const char *comparison) {
-    char pathcopy[PATH_MAX];
+    char pathcopy[R_PATH_MAX];
     char *p1, *p2;
     strcpy(pathcopy, encpath);
     /*
@@ -945,7 +945,7 @@ typedef struct T1FontInfo {
  * Information about a font encoding
  */
 typedef struct EncInfo {
-    char encpath[PATH_MAX];
+    char encpath[R_PATH_MAX];
     char name[100]; /* Name written to PostScript/PDF file */
     char convname[50]; /* Name used in mbcsToSbcs() with iconv() */
     CNAME encnames[256];
@@ -1349,7 +1349,7 @@ static encodinginfo addEncoding(const char *encpath, Rboolean isPDF)
 	    } else {
 		encodinglist enclist =
 		    isPDF ? PDFloadedEncodings : loadedEncodings;
-		safestrcpy(encoding->encpath, encpath, PATH_MAX);
+		safestrcpy(encoding->encpath, encpath, R_PATH_MAX);
 		newenc->encoding = encoding;
 		if (!enclist) {
 		    if(isPDF) PDFloadedEncodings = newenc;
@@ -2208,7 +2208,7 @@ static type1fontlist addDeviceFont(type1fontfamily font,
 /* Part 2.  Device Driver State. */
 
 typedef struct {
-    char filename[PATH_MAX];
+    char filename[R_PATH_MAX];
     int open_type;
 
     char papername[64];	/* paper name */
@@ -2226,7 +2226,7 @@ typedef struct {
     double pageheight;	/* page height in inches */
     Rboolean pagecentre;/* centre image on page? */
     Rboolean printit;	/* print page at close? */
-    char command[2*PATH_MAX];
+    char command[2*R_PATH_MAX];
     char title[1024];
     char colormodel[30];
 
@@ -3142,7 +3142,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     /* Check and extract the device parameters */
 
-    if(strlen(file) > PATH_MAX - 1) {
+    if(strlen(file) > R_PATH_MAX - 1) {
 	free(dd);
 	error(_("filename too long in %s()"), "postscript");
     }
@@ -3166,7 +3166,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->useKern = (useKern != 0);
     pd->fillOddEven = fillOddEven;
 
-    if(strlen(encoding) > PATH_MAX - 1) {
+    if(strlen(encoding) > R_PATH_MAX - 1) {
 	PS_cleanup(1, dd, pd);
 	error(_("encoding path is too long in %s()"), "postscript");
     }
@@ -3336,7 +3336,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("invalid foreground/background color (postscript)"));
     }
     pd->printit = printit;
-    if(strlen(cmd) > 2*PATH_MAX - 1) {
+    if(strlen(cmd) > 2*R_PATH_MAX - 1) {
 	PS_cleanup(4, dd, pd);
 	error(_("'command' is too long"));
     }
@@ -3779,11 +3779,11 @@ static void PostScriptClose(pDevDesc dd)
     else {
 	fclose(pd->psfp);
 	if (pd->printit) {
-	    char buff[3*PATH_MAX+ 10];
+	    char buff[3*R_PATH_MAX+ 10];
 	    int err = 0;
 	    /* This should not be possible: the command is limited
-	       to 2*PATH_MAX */
-	    if(strlen(pd->command) + strlen(pd->filename) > 3*PATH_MAX) {
+	       to 2*R_PATH_MAX */
+	    if(strlen(pd->command) + strlen(pd->filename) > 3*R_PATH_MAX) {
 		warning(_("error from postscript() in running:\n    %s"),
 			pd->command);
 		return;
@@ -4578,7 +4578,7 @@ static SEXP PS_capabilities(SEXP capabilities) { return capabilities; }
 
 
 typedef struct {
-    char filename[PATH_MAX];
+    char filename[R_PATH_MAX];
 
     char papername[64];	 /* paper name */
     int paperwidth;	 /* paper width in big points (1/72 in) */
@@ -4605,7 +4605,7 @@ typedef struct {
 
     FILE *psfp;		 /* output file */
     FILE *tmpfp;         /* temp file */
-    char tmpname[PATH_MAX];
+    char tmpname[R_PATH_MAX];
 
     Rboolean onefile;
     Rboolean warn_trans; /* have we warned about translucent cols? */
@@ -4831,7 +4831,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     /* Check and extract the device parameters */
 
-    if(strlen(file) > PATH_MAX - 1) {
+    if(strlen(file) > R_PATH_MAX - 1) {
 	free(dd);
 	error(_("filename too long in %s()"), "xfig");
     }
@@ -5099,7 +5099,7 @@ static Rboolean XFig_Open(pDevDesc dd, XFigDesc *pd)
 	error(_("cannot open file '%s'"), buf);
 	return FALSE;
     }
-    /* assume tmpname is less than PATH_MAX */
+    /* assume tmpname is less than R_PATH_MAX */
     tmp = R_tmpnam("Rxfig", R_TempDir);
     strcpy(pd->tmpname, tmp);
     free(tmp);
@@ -5137,7 +5137,7 @@ static void XFig_Size(double *left, double *right,
 static void XFig_NewPage(const pGEcontext gc,
 			 pDevDesc dd)
 {
-    char buf[PATH_MAX];
+    char buf[R_PATH_MAX];
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
     pd->pageno++;
@@ -5161,7 +5161,7 @@ static void XFig_NewPage(const pGEcontext gc,
 	}
 	fclose(pd->tmpfp);
 	fclose(pd->psfp);
-	snprintf(buf, PATH_MAX, pd->filename, pd->pageno);
+	snprintf(buf, R_PATH_MAX, pd->filename, pd->pageno);
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
 	pd->tmpfp = R_fopen(pd->tmpname, "w");
 	XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
@@ -5553,9 +5553,9 @@ typedef struct {
 } PDFdefn;
 
 typedef struct {
-    char filename[PATH_MAX];
+    char filename[R_PATH_MAX];
     int open_type;
-    char cmd[PATH_MAX];
+    char cmd[R_PATH_MAX];
 
     char papername[64];	/* paper name */
     int paperwidth;	/* paper width in big points (1/72 in) */
@@ -5626,7 +5626,7 @@ typedef struct {
     Rboolean dingbats, useKern;
     Rboolean fillOddEven; /* polygon fill mode */
     Rboolean useCompression;
-    char tmpname[PATH_MAX]; /* used before compression */
+    char tmpname[R_PATH_MAX]; /* used before compression */
 
     /*
      * Fonts and encodings used on the device
@@ -7516,7 +7516,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* Check and extract the device parameters */
 
     /* 'file' could be NULL */
-    if(file && strlen(file) > PATH_MAX - 1) {
+    if(file && strlen(file) > R_PATH_MAX - 1) {
 	/* not yet created PDFcleanup(0, pd); */
 	free(dd);
 	error(_("filename too long in %s()"), "pdf");
@@ -7586,7 +7586,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     else 
         pd->offline = TRUE;
 
-    if(strlen(encoding) > PATH_MAX - 1) {
+    if(strlen(encoding) > R_PATH_MAX - 1) {
 	PDFcleanup(3, pd);
 	free(dd);
 	error(_("encoding path is too long in %s()"), "pdf");
@@ -8821,11 +8821,11 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
         return TRUE;
     
     if (pd->filename[0] == '|') {
-	strncpy(pd->cmd, pd->filename + 1, PATH_MAX - 1);
-	pd->cmd[PATH_MAX - 1] = '\0';
+	strncpy(pd->cmd, pd->filename + 1, R_PATH_MAX - 1);
+	pd->cmd[R_PATH_MAX - 1] = '\0';
 	char *tmp = R_tmpnam("Rpdf", R_TempDir);
-	strncpy(pd->filename, tmp, PATH_MAX - 1);
-	pd->filename[PATH_MAX - 1] = '\0';
+	strncpy(pd->filename, tmp, R_PATH_MAX - 1);
+	pd->filename[R_PATH_MAX - 1] = '\0';
 	free(tmp);
 	errno = 0;
 	pd->pipefp = R_popen(pd->cmd, "w");
@@ -8998,7 +8998,7 @@ static void PDF_NewPage(const pGEcontext gc,
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     if (pd->useCompression) {
 	char *tmp = R_tmpnam("pdf", R_TempDir);
-	/* assume tmpname is less than PATH_MAX */
+	/* assume tmpname is less than R_PATH_MAX */
 	strcpy(pd->tmpname, tmp);
 	pd->pdffp = fopen(tmp, "w+b");
 	if (! pd->pdffp) {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1340,12 +1340,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no png support in this version of R"));
 	return FALSE;
 #else
-	char buf[PATH_MAX]; /* allow for pageno formats */
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
-	if(strlen(dsp+5) >= PATH_MAX)
+	if(strlen(dsp+5) >= R_PATH_MAX)
 	    error(_("filename too long in png() call"));
 	strcpy(xd->filename, dsp+5);
-	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open PNG file '%s'"), buf);
 	    return FALSE;
@@ -1362,16 +1362,16 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no jpeg support in this version of R"));
 	return FALSE;
 #else
-	char buf[PATH_MAX]; /* allow for pageno formats */
-	char tmp[PATH_MAX], *pp;
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
+	char tmp[R_PATH_MAX], *pp;
 	FILE *fp;
 	strcpy(tmp, dsp+6);
 	pp = strchr(tmp, ':'); *pp='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(pp+1) >= PATH_MAX)
+	if(strlen(pp+1) >= R_PATH_MAX)
 	    error(_("filename too long in jpeg() call"));
 	strcpy(xd->filename, pp+1);
-	snprintf(buf, PATH_MAX, pp+1, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, pp+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open JPEG file '%s'"), buf);
 	    return FALSE;
@@ -1388,11 +1388,11 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	warning(_("no tiff support in this version of R"));
 	return FALSE;
 #else
-	char tmp[PATH_MAX], *pp;
+	char tmp[R_PATH_MAX], *pp;
 	strcpy(tmp, dsp+6);
 	pp = strchr(tmp, ':'); *pp='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(pp+1) >= PATH_MAX)
+	if(strlen(pp+1) >= R_PATH_MAX)
 	    error(_("filename too long in tiff() call"));
 	strcpy(xd->filename, pp+1);
 	xd->fp = NULL;
@@ -1402,12 +1402,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	dd->displayListOn = FALSE;
 #endif
     } else if (!strncmp(dsp, "bmp::", 5)) {
-	char buf[PATH_MAX]; /* allow for pageno formats */
+	char buf[R_PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
-	if(strlen(dsp+5) >= PATH_MAX)
+	if(strlen(dsp+5) >= R_PATH_MAX)
 	    error(_("filename too long in bmp() call"));
 	strcpy(xd->filename, dsp+5);
-	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
+	snprintf(buf, R_PATH_MAX, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning(_("could not open BMP file '%s'"), buf);
 	    return FALSE;
@@ -1971,8 +1971,8 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
 	    if (xd->type == PNG || xd->type == JPEG || xd->type == BMP) {
-		char buf[PATH_MAX];
-		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+		char buf[R_PATH_MAX];
+		snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
 		    error(_("could not open file '%s'"), buf);
@@ -2071,8 +2071,8 @@ static void X11_Close_bitmap(pX11Desc xd)
 	R_SaveAsBmp(xi, xd->windowWidth, xd->windowHeight,
 		    bitgp, 0, xd->fp, xd->res_dpi);
     else if (xd->type == TIFF) {
-	char buf[PATH_MAX];
-	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	char buf[R_PATH_MAX];
+	snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
 		     bitgp, 0, R_ExpandFileName(buf), xd->res_dpi,
 		     xd->quality);

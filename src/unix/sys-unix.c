@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@
 attribute_hidden
 FILE *R_OpenInitFile(void)
 {
-    char buf[PATH_MAX], *home, *p = getenv("R_PROFILE_USER");
+    char buf[R_PATH_MAX], *home, *p = getenv("R_PROFILE_USER");
     FILE *fp;
 
     fp = NULL;
@@ -80,7 +80,7 @@ FILE *R_OpenInitFile(void)
 	    return fp;
 	if((home = getenv("HOME")) == NULL)
 	    return NULL;
-	snprintf(buf, PATH_MAX, "%s/.Rprofile", home);
+	snprintf(buf, R_PATH_MAX, "%s/.Rprofile", home);
 	if((fp = R_fopen(buf, "r")))
 	    return fp;
     }
@@ -116,7 +116,7 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
     if(s[0] != '~') return s;
 
     const char *user, *temp, *s2, *home;
-    char buff2[PATH_MAX];
+    char buff2[R_PATH_MAX];
     struct passwd *pass;
 
     temp = strchr(s + 1, '/');
@@ -157,8 +157,8 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 	// ask snprintf to compute the length, as GCC 12 complains otherwise.
 	size_t len = snprintf(NULL, 0, "%s/%s", home, s2);
 	// buff is passed from R_ExpandFileName, uses static array of
-	// size PATH_MAX.
-	if (len >= PATH_MAX) {
+	// size R_PATH_MAX.
+	if (len >= R_PATH_MAX) {
 	    warning(_("expanded path length %d would be too long for\n%s\n"),
 		       len, s);
 	    return s;
@@ -181,7 +181,7 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 */
 
 extern Rboolean UsingReadline;
-static char newFileName[PATH_MAX];
+static char newFileName[R_PATH_MAX];
 
 const char *R_ExpandFileName(const char *s)
 {

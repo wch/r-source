@@ -500,9 +500,9 @@ char *R_ExpandFileName_readline(const char *s, char *buff)
     char *s2 = tilde_expand_word(s);
     size_t len = strlen(s2);
 
-    strncpy(buff, s2, PATH_MAX);
-    if(len >= PATH_MAX) {
-	buff[PATH_MAX-1] = '\0';
+    strncpy(buff, s2, R_PATH_MAX);
+    if(len >= R_PATH_MAX) {
+	buff[R_PATH_MAX-1] = '\0';
 	warning(_("expanded path length %d would be too long for\n%s\n"), len, s);
     }
     free(s2);
@@ -1352,14 +1352,14 @@ attribute_hidden void Rstd_read_history(const char *s)
 attribute_hidden void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[R_PATH_MAX];
     const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
-    if(strlen(p) > PATH_MAX - 1)
+    if(strlen(p) > R_PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
@@ -1375,14 +1375,14 @@ attribute_hidden void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 attribute_hidden void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX];
+    char file[R_PATH_MAX];
     const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
-    if(strlen(p) > PATH_MAX - 1)
+    if(strlen(p) > R_PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
