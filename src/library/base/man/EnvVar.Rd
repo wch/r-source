@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-2022 R Core Team
+% Copyright 2007-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -146,7 +146,7 @@
     \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
       order) when setting the temporary directory for the session: see
       \code{\link{tempdir}}.  \env{TMPDIR} is also used by some of the
-      utilities see the help for \code{\link{build}}.}
+      utilities: see the help for \code{\link{build}}.}
     \item{\env{TZ}:}{Optional.  The current time zone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}

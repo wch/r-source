@@ -45,7 +45,7 @@ foo(\var{x}, \var{y})
   --
 }
 \value{
-  [NULL]\cr\dots
+  [NULL]\cr\cr\dots
 }
 \examples{
 \\x

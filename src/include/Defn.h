@@ -962,17 +962,22 @@ extern char *Rstrdup(const char *s);
 extern int putenv(char *string);
 #endif
 
+/* PATH_MAX has historically been understood to be the maximal length in
+   bytes of an entire path name that may exist.  In current POSIX, when
+   defined, it is the maximum number of bytes that will be stored to a
+   user-supplied buffer by file-system operations which do not allow the
+   caller to provide actual size of the buffer (and such calls are rare). 
+   If the system limited path names to a certain value, it shall not be less
+   than this value, if defined.
 
-/* Maximal length in bytes of an entire path name.
-   POSIX has required this to be at least 255/256, and X/Open at least 1024.
-   Solaris, macOS, *BSD have 1024, Linux glibc has 4192.
-   File names are limited to FILENAME_MAX bytes (usually the same as PATH_MAX)
-   or NAME_MAX (often 255/256).
+   POSIX has required this to be at least 255/256, and X/Open at least 1024. 
+   Solaris, macOS, *BSD have 1024, Linux glibc has 4192 (but glibc does not
+   enforce the limit).  File names are limited to FILENAME_MAX bytes
+   (usually the same as PATH_MAX) or NAME_MAX (often 255/256).
 
-   POSIX requires PATH_MAX to be defined in limits.h (included above)
-   if independent of the file path (file system?).  However, if it can
-   vary by filepath, it is required to be undefined there.
- */
+   POSIX requires PATH_MAX to be defined in limits.h (included above) if
+   independent of the file path (file system).  However, if it can vary by
+   filepath, it is required to be undefined there. */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)
 #  include <sys/param.h>
@@ -982,12 +987,25 @@ extern int putenv(char *string);
 /* Try BSD name */
 #    define PATH_MAX MAXPATHLEN
 #  elif defined(Win32)
-/* seems this is now defined by MinGW to be 259, whereas FILENAME_MAX
-   and MAX_PATH are 260.  It is not clear that this really is in bytes,
-   but might be chars for the Unicode interfaces.
+/* MinGW-W64 defines PATH_MAX to MAX_PATH, which is 260 in Windows. It used to
+   be the maximal length of an entire path name (depending on the API used,
+   in bytes or in UCS-2 units, including the terminator).  This is no longer
+   the case and like PATH_MAX on Unix, MAX_PATH is only used as the limit in
+   several old API calls for the user buffer when the size cannot be passed
+   by user.  Some additional old components of Windows and old APIs seem not
+   to support longer paths.
 
-   260 is d:\ plus 256 chars plus nul.  Some but not all API calls
-   allow filepaths of the form \\?\D:\very_long_path .
+   But longer paths can and do exist, they can be created using some API,
+   usually UCS-2, sometimes using the extended syntax
+   (\\?\D:\very_long_path) but sometimes using the common syntax. 
+   Applications that haven't opted for "long paths" (and those also have to
+   be enabled system-wide) are shielded from seeing the long paths in some
+   API calls to prevent buffer-overflow and other errors in user code that
+   did not check the lengths.
+
+   Like on Unix, user/library code should not depend on that there is a
+   maximum to the path length.  The actual real maximum on Windows is not
+   even precisely specified.
 */
 #    define PATH_MAX 260
 #  else
@@ -995,6 +1013,18 @@ extern int putenv(char *string);
 #    define PATH_MAX 5000
 #  endif
 # endif
+#endif
+
+/* R_PATH_MAX is an R-defined limit on the length of entire path name,
+   including the terminator.  It may be used in some older code that has not
+   yet been rewritten to support arbitrary path lengths.  Such code still
+   has to detect longer paths, but may not support them, e.g.  may throw an
+   error. R_PATH_MAX shall be at least PATH_MAX, when PATH_MAX is defined. */
+#ifdef Unix
+# define R_PATH_MAX PATH_MAX
+#else
+  /* On Windows, 260 is too limiting */
+# define R_PATH_MAX 5000
 #endif
 
 #ifdef R_USE_SIGNALS
@@ -1832,6 +1862,7 @@ Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 int	R_GetFDLimit(void);
 int	R_EnsureFDLimit(int);
+Rboolean R_IsDirPath(const char *);
 
 /* environment cell access */
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */
@@ -2174,6 +2205,7 @@ char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
 int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap);
 int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
+int Rasprintf_malloc(char **str, const char *fmt, ...);
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */

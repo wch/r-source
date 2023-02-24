@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -722,19 +722,22 @@ const char* get_workspace_name(void);  /* from startup.c */
 attribute_hidden void BindDomain(char *R_Home)
 {
 #ifdef ENABLE_NLS
-    char localedir[PATH_MAX+20];
+    char *localedir = NULL;
 # if defined(LC_MESSAGES) && !defined(Win32)
     setlocale(LC_MESSAGES,"");
 # endif
     textdomain(PACKAGE);
     char *p = getenv("R_TRANSLATIONS");
-    if (p) snprintf(localedir, PATH_MAX+20, "%s", p);
-    else snprintf(localedir, PATH_MAX+20, "%s/library/translations", R_Home);
+    if (p) Rasprintf_malloc(&localedir, "%s", p);
+    else Rasprintf_malloc(&localedir, "%s/library/translations", R_Home);
+    if (!localedir)
+	R_Suicide("allocation failure in BindDomain");
     bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
     bindtextdomain("R-base", localedir);
 # ifdef _WIN32
     bindtextdomain("RGui", localedir);
 # endif
+    free(localedir);
 #endif
 }
 
@@ -1065,10 +1068,13 @@ void setup_Rmainloop(void)
     }
 
     if (strcmp(R_GUIType, "Tk") == 0) {
-	char buf[PATH_MAX];
+	char *buf = NULL;
 
-	snprintf(buf, PATH_MAX, "%s/library/tcltk/exec/Tk-frontend.R", R_Home);
+	Rasprintf_malloc(&buf, "%s/library/tcltk/exec/Tk-frontend.R", R_Home);
+	if (!buf)
+	    R_Suicide("allocation failure in setup_Rmainloop");
 	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
+	free(buf);
     }
 
     /* Print a platform and version dependent greeting and a pointer to

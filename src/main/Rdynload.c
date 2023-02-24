@@ -881,7 +881,7 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
 
 static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
 {
-    char *dpath,  DLLname[PATH_MAX], *p;
+    char *dpath,  DLLname[R_PATH_MAX], *p;
     DllInfo *info;
 
     dpath = (char *) malloc(strlen(path)+1);
@@ -897,7 +897,7 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     /* keep only basename from path */
     p = Rf_strrchr(dpath, FILESEP[0]);
     if(!p) p = dpath; else p++;
-    if(strlen(p) < PATH_MAX) strcpy(DLLname, p);
+    if(strlen(p) < R_PATH_MAX) strcpy(DLLname, p);
     else error(_("DLLname '%s' is too long"), p);
 
     /* remove SHLIB_EXT if present */
@@ -1203,7 +1203,7 @@ GetFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *const path)
 
 attribute_hidden SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[2 * PATH_MAX];
+    char buf[2 * R_PATH_MAX];
     DllInfo *info;
 
     checkArity(op,args);
@@ -1221,7 +1221,7 @@ attribute_hidden SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 attribute_hidden SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[2 * PATH_MAX];
+    char buf[2 * R_PATH_MAX];
 
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
@@ -1235,15 +1235,15 @@ attribute_hidden SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 int R_moduleCdynload(const char *module, int local, int now)
 {
-    char dllpath[PATH_MAX], *p = getenv("R_HOME");
+    char dllpath[R_PATH_MAX], *p = getenv("R_HOME");
     DllInfo *res;
 
     if(!p) return 0;
 #ifdef R_ARCH
-    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s%s%s", p, FILESEP, FILESEP,
+    snprintf(dllpath, R_PATH_MAX, "%s%smodules%s%s%s%s%s", p, FILESEP, FILESEP,
 	     R_ARCH, FILESEP, module, SHLIB_EXT);
 #else
-    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", p, FILESEP, FILESEP,
+    snprintf(dllpath, R_PATH_MAX, "%s%smodules%s%s%s", p, FILESEP, FILESEP,
 	     module, SHLIB_EXT);
 #endif
     res = AddDLL(dllpath, local, now, "");
@@ -1255,15 +1255,15 @@ int R_moduleCdynload(const char *module, int local, int now)
 
 int R_cairoCdynload(int local, int now)
 {
-    char dllpath[PATH_MAX], *p = getenv("R_HOME"), *module = "cairo";
+    char dllpath[R_PATH_MAX], *p = getenv("R_HOME"), *module = "cairo";
     DllInfo *res;
 
     if(!p) return 0;
 #ifdef R_ARCH
-    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s/%s%s",
+    snprintf(dllpath, R_PATH_MAX, "%s/library/grDevices/libs/%s/%s%s",
 	     p, R_ARCH, module, SHLIB_EXT);
 #else
-    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s%s",
+    snprintf(dllpath, R_PATH_MAX, "%s/library/grDevices/libs/%s%s",
 	     p, module, SHLIB_EXT);
 #endif
     res = AddDLL(dllpath, local, now, "");

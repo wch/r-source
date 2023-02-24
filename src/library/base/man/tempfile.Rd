@@ -1,6 +1,6 @@
 % File src/library/base/man/tempfile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tempfile}
@@ -55,13 +55,13 @@ tempdir(check = FALSE)
   \env{TEMP} are checked in turn and the first found which points to a
   writable directory is used:
 #ifdef unix
-  if none succeeds \file{/tmp} is used.  The path should not contain spaces.
+  if none succeeds \file{/tmp} is used.  The path must not contain spaces.
 #endif
 #ifdef windows
   if none succeeds the value of \env{R_USER} (see
   \code{\link{Rconsole}}) is used.  If the path to the directory
   contains a space in any of the components, the path returned will use
-  the shortnames version of the path.
+  the shortnames version of the path (if that does not contain a space).
 #endif
   Note that setting any of these environment variables in the \R session
   has no effect on \code{tempdir()}: the per-session temporary directory

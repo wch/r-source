@@ -159,6 +159,12 @@
       expression as the first argument in an extraction call, such as
       \code{_$coef}. More generally, it can be used as the head of a
       chain of extractions, such as \code{_$coef[[2]]}.
+
+      \item Spaces in the environment variable used to choose the \R
+      session's temporary directory (\env{TMPDIR}, \env{TMP} and
+      \env{TEMP} are tried in turn) are now fatal.  (On Windows the
+      \sQuote{short path} version of the path is tried and used if that
+      does not contain a space.)
     }
   }
 
@@ -249,6 +255,11 @@
 
       Rendering of typeset glyphs is only supported so far on the
       Cairo-based graphics devices and on the \code{pdf()} device.
+
+      \item The defined behaviour for \code{"clear"} and \code{"source"}
+      compositing operators (via \code{grid::grid.group()}) has been
+      changed (to align better with
+      simple interpretation of original Porter-Duff definitions).
     }
   }
 
@@ -355,8 +366,8 @@
 	  be useful if a package assumes them if C17 is specified and
 	  they are not implemented.}
 	\item{USE_C23}{Use C23 (or in future, later).  Compiler/library
-	  support for C23 is still being implemented, but LLVM clang 15 and
-	  the upcoming GCC 13 have quite extensive support.
+	  support for C23 is still being implemented, but LLVM clang
+	  from 15.0.0 and the upcoming GCC 13 have quite extensive support.
 	}
       }
       These can be specified as part of the \samp{SystemRequirements}
@@ -649,8 +660,14 @@
       \code{is.mts()} is documented \emph{and} stricter.
 
       \item \code{Rd2txt()} now preserves line breaks of \verb{\verb} Rd
-      content.  This also fixes the rendering of verbatim output from Rd
+      content and from duplicated \verb{\cr}.  The former also
+      fixes the rendering of verbatim output from Rd
       \verb{\Sexpr} in plain-text help.
+
+      \item \code{uniroot(f, interval)} should no longer wrongly converge
+      \emph{outside} the interval in some cases where \code{abs(f(x)) == Inf}
+      for an \code{x} at the interval boundary, thanks to posts by Ben
+      Bolker and Serguei Sokol on R-devel.
     }
   }
 }

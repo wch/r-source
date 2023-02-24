@@ -44,7 +44,7 @@ var in \var{text}.
 \end{Details}
 %
 \begin{Value}
-[NULL]\\{}\dots
+[NULL]\\{}\\{}\dots
 \end{Value}
 %
 \begin{Section}{\AsIs{\texttt{\bsl{}Sexpr}}}

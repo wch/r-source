@@ -350,7 +350,7 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
 showProc.time()
 
 ## Check error from invalid logical field in DESCRIPTION:
-(okA <- dir.exists(pkgApath) &&
+(okA <- ("pkgA" %in% p.lis) && dir.exists(pkgApath) &&
      file.exists(DN <- file.path(pkgApath, "DESCRIPTION")))
 if(okA) {
   Dlns <- readLines(DN); i <- grep("^LazyData:", Dlns)

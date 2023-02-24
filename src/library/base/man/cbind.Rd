@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -8,8 +8,6 @@
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}
-\alias{.__H__.cbind}
-\alias{.__H__.rbind}
 \concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{

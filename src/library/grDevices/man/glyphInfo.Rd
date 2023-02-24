@@ -84,7 +84,7 @@ glyphJust(just, ...)
   The metric information (widths and anchors) are stored as attributes
   of the data frame.
 
-  \code{glypAnchor()}, \code{glyphWidth()}, and \code{glyphHeight()}
+  \code{glyphAnchor()}, \code{glyphWidth()}, and \code{glyphHeight()}
   return values that can be used to specify \code{width}, \code{height},
   \code{hAnchor}, and \code{vAnchor} values to \code{glyphInfo()}.
 }

@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -90,19 +90,6 @@ cbind <- function(..., deparse.level = 1)
 
 rbind <- function(..., deparse.level = 1)
     .Internal(rbind(deparse.level, ...))
-
-## methods:::bind_activation defunct as of 2018-02-05 (R >= 3.5.0)
-## Deprecating these aliases now
-.__H__.cbind <- function(..., deparse.level = 1) {
-    .Deprecated("base::cbind")
-    .Internal(cbind(deparse.level, ...))
-}
-.__H__.rbind <- function(..., deparse.level = 1) {
-    .Deprecated("base::rbind")
-    .Internal(rbind(deparse.level, ...))
-}
-
-
 
 # convert deparsing options to bitmapped integer
 ..deparseOpts <-

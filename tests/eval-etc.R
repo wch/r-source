@@ -191,18 +191,18 @@ stopifnot(identical(deparse(lf, control="all"), # no longer quote()s
 		    deparse(lf)))
 abc <- setNames(letters[1:4], c("one", "recursive", "use.names", "four"))
 r13 <- i13 <- setNames(1:3, names(abc)[3:1]); mode(r13) <- "double"
-if(getRversion() >= "3.5.0") {
-    ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
+
+## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
 example(new) # creating t1 & t2 at least
 ## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
 setClass("mp1", slots = c(prec = "integer", d = "integer"))
-setClass("mp", contains = "list", ## of "mp" entries:
+setClass("mp", contains = "list", ## of "mp1" entries:
          validity = function(object) {
 	     if(all(vapply(object@.Data, class, "") == "mp1"))
 		 return(TRUE)
 	     ## else
-		 "Not all components are of class 'mp'"
+		 "Not all components are of class 'mp1'"
 	 })
 validObject(m0 <- new("mp"))
 validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
@@ -218,10 +218,9 @@ attrS4 <- function(x)
 attrS4(ml <- mList(list(1, letters[1:3])))# use *unnamed* list
 attrS4(mf <- mForm( ~ f(x)))
 attrS4(E2 <- mExpr(expression(x^2)))
-## Now works, but fails for  deparse(*, control="all"):  __FIXME__
 stopifnot(identical(mf, eval(parse(text=deparse(mf)))))
-##
-}# S4 deparse()ing only since R 3.5.0
+stopifnot(identical(mf, eval(parse(text=deparse(mf, control="all"))))) # w/ a warning
+
 
 ## Action!  Check deparse <--> parse  consistency for *all* objects:
 runEPD_checks()

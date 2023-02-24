@@ -645,6 +645,10 @@ Rd2txt <-
                "\\linkS4class" =,
                "\\link" = writeContent(block, tag),
                "\\cr" = {
+                   if (!length(buffer)) { # \cr\cr
+                       dropBlank <<- FALSE
+                       put("\n")
+                   }
                    ## we want to print out what we have, and if
                    ## followed immediately by \n (as it usually is)
                    ## discard that.  This is not entirely correct,

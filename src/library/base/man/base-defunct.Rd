@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -67,6 +67,8 @@
 \alias{.path.package}
 \alias{unix.time}
 \alias{default.stringsAsFactors}
+\alias{.__H__.cbind}
+\alias{.__H__.rbind}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
