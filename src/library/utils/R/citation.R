@@ -1374,6 +1374,17 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
+    if((is.null(meta$Repository) ||
+        identical(meta$Repository, "Bioconductor")) &&
+       !is.null(meta$git_url) &&
+       startsWith(meta$git_url,
+                  "https://git.bioconductor.org/packages")) {
+        z$url <-
+            sprintf("https://bioconductor.org/packages/%s", package)
+        z$doi <-
+            sprintf("10.18129/B9.bioc.%s", package)
+    }
+
     if(!length(z$url) && !is.null(url <- meta$URL)) {
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
