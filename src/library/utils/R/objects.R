@@ -89,11 +89,7 @@ function(generic.function, class, envir=parent.frame())
     S3MethodsStopList <- tools::nonS3methods(NULL)
     knownGenerics <- getKnownS3generics()
     sp <- search()
-    if(nzchar(lookup <-
-                  Sys.getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_"))) {
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) sp <- sp[c(1L, length(sp))]
-    }
+    sp <- sp[c(1L, length(sp))]
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(seq_along(sp), ls)
     lens <- lengths(an)
