@@ -160,7 +160,7 @@ so_symbol_names_table <-
       "linux, Fortran, flang, stop, f90_stop08",
       "linux, Fortran, flang, rand, rand",
 
-      ## clang identifies itself as gcc, so configure has used that
+      ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort",
       "macos, C, gcc, assert, ___assert_rtn",
       "macos, C, gcc, exit, _exit",
@@ -176,7 +176,7 @@ so_symbol_names_table <-
       "macos, C, gcc, sprintf, ___sprintf_chk",
       "macos, C, gcc, vprintf, _vprintf",
       "macos, C, gcc, vsprintf, _vsprintf",
-      "macos, C, gcc, vsprintf, _vsprintf_chk",
+      "macos, C, gcc, vsprintf, ___vsprintf_chk",
       "macos, C++, gxx, std::cout, __ZSt4cout",
       "macos, C++, gxx, std::cerr, __ZSt4cerr",
       #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
