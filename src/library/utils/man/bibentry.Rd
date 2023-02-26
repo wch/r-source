@@ -11,6 +11,7 @@
 \alias{sort.bibentry}
 \alias{print.citation}
 \alias{format.citation}
+\alias{toBibtex.bibentry}
 \description{
   Functionality for representing and manipulating bibliographic
   information in enhanced BibTeX style.
@@ -31,6 +32,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
 \method{print}{citation}(x, style = "citation", \dots)
 \method{format}{citation}(x, style = "citation", \dots)
+
+\method{toBibtex}{bibentry}(object, escape = FALSE, ...)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -59,6 +62,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
     For the \code{citation} class methods, arguments passed to the next
     method, i.e., the corresponding \code{bibentry} one.
+
+    For the \code{toBibtex()} method, currently not used.
   }
   \item{other}{a list of arguments as in \code{\dots} (useful in
     particular for fields named the same as formals of
@@ -93,6 +98,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     macros, see \bold{Details}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
     \code{sort()} method.}
+  \item{object}{an object inheriting from class \code{"bibentry"}.}  
+  \item{escape}{a logical indicating whether non-ASCII characters should
+    be translated to LaTeX escape sequences.}
 }
 \details{
   The bibentry objects created by \code{bibentry} can represent an

@@ -35,7 +35,9 @@ as.person(x)
                        role = ", ", comment = ", "),
        ...,
        style = c("text", "R")
-       )
+)
+
+\method{toBibtex}{person}(object, escape = FALSE, ...)
 }
 \arguments{
   \item{given}{a character vector with the \emph{given} names,
@@ -66,6 +68,9 @@ as.person(x)
   \item{\dots}{currently not used.}
   \item{style}{a character string specifying the print style, with 
     \code{"R"} yielding formatting as R code.}
+  \item{object}{an \R object inhering from class \code{"person"}.}
+  \item{escape}{a logical indicating whether non-ASCII characters should
+    be translated to LaTeX escape sequences.}
 }
 \value{
   \code{person()} and \code{as.person()} return objects of class
