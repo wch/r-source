@@ -612,14 +612,7 @@ function(x)
 function(genfun)
 {
     if (typeof(genfun) == "closure") {
-        lookup <- Sys.getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_",
-                             "TRUE")
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) {
-            topenv(environment(genfun))
-        } else {
-            environment(genfun)
-        }
+        topenv(environment(genfun))
     }
     else .BaseNamespaceEnv
 }

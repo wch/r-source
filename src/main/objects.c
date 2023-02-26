@@ -515,13 +515,6 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(generic) || LENGTH(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
 
-    static int lookup_use_topenv_as_defenv = -1;
-    if(lookup_use_topenv_as_defenv == -1) {
-	char *lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
-	lookup_use_topenv_as_defenv =
-	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
-    }
-
     /* get environments needed for dispatching.
        callenv = environment from which the generic was called
        defenv = environment where the generic was defined */
@@ -541,19 +534,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
     */
-    SEXP defenv;
-    if(lookup_use_topenv_as_defenv) {
-	defenv = topenv(R_NilValue, env);
-    } else {
-	SEXP val = findVar1(installTrChar(STRING_ELT(generic, 0)),
-			    ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
-							 * promises */
-	if(TYPEOF(val) == CLOSXP)
-	    defenv = CLOENV(val);
-	else
-	    defenv = R_BaseNamespace;
-    }
-
+    SEXP defenv = topenv(R_NilValue, env);
     SEXP obj = PROTECT((CADR(argList) != R_MissingArg)
 		       ? eval(CADR(argList), env)
 		       : GetObject(cptr));
