@@ -820,6 +820,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	        wfull[1] == L':') wnorm = NULL;
 	    if (!wnorm && wfull)
 		/* silently fall back to GetFullPathName/GetLongPathName */
+		/* getLongPathName will fail for non-existent paths */
 		wnorm = getLongPathNameW(wfull);
 	    if (wnorm) {
 		if (fslash)
@@ -833,14 +834,20 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    warningcall(call, "path[%d]=\"%ls\": %s", i+1, 
 				wel, formatError(GetLastError()));
 		}
-		const char *elutf8 = translateCharUTF8(el);
-		if (fslash) {
-		    char *normutf8 = R_alloc(strlen(elutf8) + 1, 1);
-		    strcpy(normutf8, elutf8);
-		    R_UTF8fixslash(normutf8);
-		    result = mkCharCE(normutf8, CE_UTF8);
-		} else
-		    result = mkCharCE(elutf8, CE_UTF8);
+		if (wfull) {
+		    if (fslash)
+			R_wfixslash(wfull);
+		    result = mkCharWUTF8(wfull);
+		} else {
+		    const char *elutf8 = translateCharUTF8(el);
+		    if (fslash) {
+			char *normutf8 = R_alloc(strlen(elutf8) + 1, 1);
+			strcpy(normutf8, elutf8);
+			R_UTF8fixslash(normutf8);
+			result = mkCharCE(normutf8, CE_UTF8);
+		    } else
+			result = mkCharCE(elutf8, CE_UTF8);
+		}
 	    }
 	} else {
 	    const char *tel = translateChar(el);
@@ -853,6 +860,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		full && isalpha(full[0]) && full[1] == ':') norm = NULL;
 	    if (!norm && full)
 		/* silently fall back to GetFullPathName/GetLongPathName */
+		/* getLongPathName will fail for non-existent paths */
 		norm = getLongPathName(full);
 	    if (norm) {
 		if (fslash)
@@ -866,7 +874,11 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    warningcall(call, "path[%d]=\"%s\": %s", i+1, 
 				tel, formatError(GetLastError()));
 		}
-		if (fslash) {
+		if (full) {
+		    if (fslash)
+			R_fixslash(full);
+		    result = mkChar(full);
+		} else if (fslash) {
 		    norm = R_alloc(strlen(tel) + 1, 1);
 		    strcpy(norm, tel);
 		    R_fixslash(norm);
