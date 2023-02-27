@@ -745,7 +745,7 @@ char *askcdstring(const char *question, const char *default_str)
     IFileOpenDialog *fileOpen = NULL;
     IShellItem *dirsi = NULL;
     DWORD flags = 0;
-    int ok;
+    int ok = 0;
     wchar_t *wquestion, *wdefault_str, *wdir = NULL;
     size_t nb;
 
