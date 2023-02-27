@@ -99,6 +99,7 @@ typedef QGradient* QGradientRef;
 
 typedef struct QuartzPatternCallbackInfo {
     CGLayerRef layer;
+    CGRect tile;
 } QPatternCallbackInfo;
 
 typedef QPatternCallbackInfo* QPatternCallbackInfoRef;
@@ -714,7 +715,9 @@ static void QuartzPatternReleaseCallback(void *info) {
 static void QuartzPatternCallback(void *info, CGContextRef ctx) {
     QPatternCallbackInfo *patternInfo = (QPatternCallbackInfo*) info;
     CGLayerRef layer = patternInfo->layer;
+    CGRect tile = patternInfo->tile;
     CGContextSaveGState(ctx);
+    CGContextClipToRect(ctx, tile);
     CGPoint contextOrigin = CGPointMake(0 ,0);
     CGContextDrawLayerAtPoint(ctx, contextOrigin, layer);
     CGContextRestoreGState(ctx);
@@ -758,6 +761,7 @@ static QPatternRef QuartzCreatePattern(SEXP pattern, CGContextRef ctx,
     QPatternCallbackInfoRef info = malloc(sizeof(QPatternCallbackInfo));
     if (!info) error(_("Failed to create pattern"));
     info->layer = layer;
+    info->tile = bounds;
     quartz_pattern->info = info;
 
     /* Pattern CTM 
