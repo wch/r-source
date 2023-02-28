@@ -137,6 +137,9 @@ hcl.colors <- function(n, palette = "viridis",
     n <- as.integer(n[1L])
     if(n < 1L) return(character())
 
+    ## expand alpha to length n (if any)
+    if(!is.null(alpha)) alpha <- rep_len(alpha, n)
+
     ## match palette (ignoring case, space, -, _)
     fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
     p <- charmatch(fx(palette), fx(rownames(.hcl_colors_parameters)))
@@ -151,7 +154,7 @@ hcl.colors <- function(n, palette = "viridis",
     tritrj <- function(i, j, p1, p2, pm) ifelse(i <= j,
         p2 - (p2 - pm) * i/j,
         pm - (pm - p1) * abs((i - j)/(1 - j)))
-    seqhcl <- function(i, h1, h2, c1, c2, l1, l2, p1, p2, cmax) {
+    seqhcl <- function(i, h1, h2, c1, c2, l1, l2, p1, p2, cmax, alpha) {
         j <- 1/(1 + abs(cmax - c1) / abs(cmax - c2))
         if (!is.na(j) && (j <= 0 || 1 <= j)) j <- NA
         hcl(h = lintrj(i, h1, h2),
@@ -177,25 +180,25 @@ hcl.colors <- function(n, palette = "viridis",
         ## h/c/l trajectories
         i <- seq.int(1, 0, length.out = n)
 	col <- seqhcl(i, p[["h1"]], p[["h2"]], p[["c1"]], p[["c2"]],
-			 p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]])
+			 p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha)
     }, "diverging" = {
 	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
         ## h/c/l trajectories
         n2 <- ceiling(n/2)
-	i <- seq.int(1, by = -2/(n - 1), length.out = n2)
-	col <- c(seqhcl(i, p[["h1"]], p[["h1"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]]),
-	     rev(seqhcl(i, p[["h2"]], p[["h2"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]])))
+	i <- if(n2 == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
+	col <- c(seqhcl(i, p[["h1"]], p[["h1"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[seq_len(n2)]),
+	     rev(seqhcl(i, p[["h2"]], p[["h2"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[rev(seq_len(n))[seq_len(n2)]])))
         if(n%/%2 < n2) col <- col[-n2]
     }, "divergingx" = {
 	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
 	if(is.na(p[["p4"]])) p[["p4"]] <- p[["p2"]]
         ## h/c/l trajectories
         n2 <- ceiling(n/2)
-	i <- seq.int(1, by = -2/(n - 1), length.out = n2)
+	i <- if(n2 == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
 	col <- c(seqhcl(i, p[["h1"]], if(is.na(p[["h2"]])) p[["h1"]] else p[["h2"]], p[["c1"]], p[["c2"]],
-			   p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]]),
+			   p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[seq_len(n2)]),
 		 rev(seqhcl(i, p[["h3"]], if(is.na(p[["h2"]])) p[["h3"]] else p[["h2"]], p[["c3"]], p[["c2"]],
-			       p[["l3"]], p[["l2"]], p[["p3"]], p[["p4"]], p[["cmax2"]])))
+			       p[["l3"]], p[["l2"]], p[["p3"]], p[["p4"]], p[["cmax2"]], alpha[rev(seq_len(n))[seq_len(n2)]])))
         if(n%/%2 < n2) col <- col[-n2]
     },
     stop("wrong 'type'; should never happen, please report!"))

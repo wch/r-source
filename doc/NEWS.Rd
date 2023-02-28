@@ -668,6 +668,11 @@
       \emph{outside} the interval in some cases where \code{abs(f(x)) == Inf}
       for an \code{x} at the interval boundary, thanks to posts by Ben
       Bolker and Serguei Sokol on R-devel.
+
+      \item Vectorized alpha handling in palette functions such as in
+      \code{gray()}, \code{rainbow()}, or \code{hcl.colors()} works
+      correctly now, thanks to Achim Zeileis' report and patch in
+      \PR{18476}.
     }
   }
 }
