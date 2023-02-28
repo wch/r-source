@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016--2021   The R Core Team
+ *  Copyright (C) 2016--2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1418,6 +1418,7 @@ static R_altrep_class_t wrap_real_class;
 static R_altrep_class_t wrap_complex_class;
 static R_altrep_class_t wrap_raw_class;
 static R_altrep_class_t wrap_string_class;
+static R_altrep_class_t wrap_list_class;
 
 /* Wrapper objects are ALTREP objects designed to hold the attributes
    of a potentially large object and/or meta data for the object. */
@@ -1712,6 +1713,20 @@ static int wrapper_string_no_NA(SEXP x)
 
 
 /*
+ * ALTLIST Methods
+ */
+
+static SEXP wrapper_list_Elt(SEXP x, R_xlen_t i)
+{
+    return VECTOR_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static void wrapper_list_Set_elt(SEXP x, R_xlen_t i, SEXP v)
+{
+    SET_VECTOR_ELT(WRAPPER_WRAPPED_RW(x), i, v);
+}
+
+/*
  * Class Objects and Method Tables
  */
 
@@ -1863,6 +1878,24 @@ static void InitWrapStringClass(DllInfo *dll)
     R_set_altstring_No_NA_method(cls, wrapper_string_no_NA);
 }
 
+static void InitWrapListClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altlist_class("wrap_list", WRAPPKG, dll);
+    wrap_list_class = cls;
+
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTLIST methods */
+    R_set_altlist_Elt_method(cls, wrapper_list_Elt);
+    R_set_altlist_Set_elt_method(cls, wrapper_list_Set_elt);
+}
+
 
 /*
  * Constructor
@@ -1879,6 +1912,7 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     case CPLXSXP: cls = wrap_complex_class; break;
     case RAWSXP: cls = wrap_raw_class; break;
     case STRSXP: cls = wrap_string_class; break;
+    case VECSXP: cls = wrap_list_class; break;
     default: error("unsupported type");
     }
 
@@ -1915,6 +1949,7 @@ static R_INLINE int is_wrapper(SEXP x)
 	case CPLXSXP: return R_altrep_inherits(x, wrap_complex_class);
 	case RAWSXP: return R_altrep_inherits(x, wrap_raw_class);
 	case STRSXP: return R_altrep_inherits(x, wrap_string_class);
+	case VECSXP: return R_altrep_inherits(x, wrap_list_class);
 	default: return FALSE;
 	}
     else return FALSE;
@@ -2039,4 +2074,5 @@ attribute_hidden void R_init_altrep(void)
     InitWrapComplexClass(NULL);
     InitWrapRawClass(NULL);
     InitWrapStringClass(NULL);
+    InitWrapListClass(NULL);
 }
