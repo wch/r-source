@@ -12,6 +12,23 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
     grid.text(lines, y=y, gp=gpar(fontfamily="HersheySans"))
 }
 
+devMask <- function(aMask, lMask) {
+    support <- dev.capabilities()$masks
+    if (is.character(support)) {
+        if ("alpha" %in% support) {
+            aMask
+        } else {
+            if ("luminance" %in% support) {
+                as.mask(lMask, type="luminance")
+            } else {
+                FALSE
+            }
+        }
+    } else {
+        FALSE
+    }
+}
+
 ################################################################################
 ## Basic sanity checks
 
@@ -42,7 +59,10 @@ HersheyLabel("no mask
 each shape composite over")
 popViewport()
 pushViewport(viewport(layout.pos.row=1, layout.pos.col=2),
-             viewport(mask=circleGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))))
+             viewport(mask=devMask(circleGrob(gp=gpar(col=NA,
+                                                      fill=rgb(0,0,0,.5))),
+                                   circleGrob(gp=gpar(col=NA,
+                                                      fill=grey(.5))))))
 grid.rect(height=.5, gp=gpar(fill="red"))
 grid.rect(width=.5, gp=gpar(fill="blue"))
 popViewport()
@@ -50,7 +70,10 @@ HersheyLabel("mask
 each shape masked then composite over")
 popViewport()
 pushViewport(viewport(layout.pos.row=2, layout.pos.col=1),
-             viewport(mask=circleGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))))
+             viewport(mask=devMask(circleGrob(gp=gpar(col=NA,
+                                                      fill=rgb(0,0,0,.5))),
+                                   circleGrob(gp=gpar(col=NA,
+                                                      fill=grey(.5))))))
 grid.group(rectGrob(width=.5, gp=gpar(fill="blue")),
                "over",
                rectGrob(height=.5, gp=gpar(fill="red")))
@@ -74,7 +97,10 @@ grid.draw(circles)
 HersheyLabel("circle grob")
 popViewport()
 pushViewport(viewport(layout.pos.row=1, layout.pos.col=2,
-                      mask=rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))))
+                      mask=devMask(rectGrob(gp=gpar(col=NA,
+                                                    fill=rgb(0,0,0,.5))),
+                                   rectGrob(gp=gpar(col=NA,
+                                                    fill=grey(.5))))))
 grid.draw(circles)
 HersheyLabel("masked
 circle grob")
@@ -85,7 +111,10 @@ HersheyLabel("group
 circle grob")
 popViewport()
 pushViewport(viewport(layout.pos.row=2, layout.pos.col=2,
-                      mask=rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))))
+                      mask=devMask(rectGrob(gp=gpar(col=NA,
+                                                    fill=rgb(0,0,0,.5))),
+                                   rectGrob(gp=gpar(col=NA,
+                                                    fill=grey(.5))))))
 grid.group(circles)
 HersheyLabel("masked
 group
@@ -130,7 +159,10 @@ popViewport()
 grid.newpage()
 gt <- gTree(children=gList(rectGrob(vp=viewport()),
                            circleGrob(1:2/3, r=.3, gp=gpar(fill="black"))))
-pushViewport(viewport(mask=rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))))
+pushViewport(viewport(mask=devMask(rectGrob(gp=gpar(col=NA,
+                                                    fill=rgb(0,0,0,.5))),
+                                   rectGrob(gp=gpar(col=NA,
+                                                    fill=grey(.5))))))
 grid.group(gt)
 HersheyLabel("group is gTree with child with vp
 group drawn with mask", y=.9)
@@ -326,14 +358,16 @@ result is grey circle")
            
 ## Mask in group
 grid.newpage()
-vp <- viewport(mask=circleGrob(gp=gpar(fill="black")))
+vp <- viewport(mask=devMask(circleGrob(gp=gpar(fill="black")),
+                            circleGrob(gp=gpar(col="white", fill="white"))))
 grid.group(rectGrob(gp=gpar(fill="grey")), vp=vp)
 HersheyLabel("group with vp
 vp is viewport with mask
 result is grey circle")
 
 grid.newpage()
-vp <- viewport(mask=circleGrob(gp=gpar(fill="black")))
+vp <- viewport(mask=devMask(circleGrob(gp=gpar(fill="black")),
+                            circleGrob(gp=gpar(col="white", fill="white"))))
 grid.group(rectGrob(gp=gpar(fill="grey"), vp=vp))
 HersheyLabel("group with grob with vp
 vp is viewport with mask
@@ -369,7 +403,8 @@ pat <- pattern(rects,
 grid.rect(gp=gpar(fill=pat))
 gt1 <- gTree(children=gList(rectGrob(width=.5, gp=gpar(fill=2)),
                             rectGrob(height=.5, gp=gpar(fill=4))))
-vp <- viewport(mask=rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.7))))
+vp <- viewport(mask=devMask(rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.7))),
+                            rectGrob(gp=gpar(col=NA, fill=grey(.7)))))
 g1 <- groupGrob(gt1, vp=vp)
 gt2 <- gTree(children=gList(g1, segmentsGrob(gp=gpar(lwd=100))))
 g2 <- groupGrob(gt2, vp=vp)

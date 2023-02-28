@@ -12,6 +12,23 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
     grid.text(lines, y=y, gp=gpar(fontfamily="HersheySans"))
 }
 
+devMask <- function(aMask, lMask) {
+    support <- dev.capabilities()$masks
+    if (is.character(support)) {
+        if ("alpha" %in% support) {
+            aMask
+        } else {
+            if ("luminance" %in% support) {
+                as.mask(lMask, type="luminance")
+            } else {
+                FALSE
+            }
+        }
+    } else {
+        FALSE
+    }
+}
+
 ################################################################################
 ## Gradients
 
@@ -436,9 +453,13 @@ grid.newpage()
 pat <-
     pattern(circleGrob(gp=gpar(col=NA, fill="grey"),
                        vp=viewport(width=.2, height=.2,
-                                   mask=rectGrob(x=c(1, 3)/4,
-                                                 width=.3,
-                                                 gp=gpar(fill="black")))),
+                                   mask=devMask(rectGrob(x=c(1, 3)/4,
+                                                         width=.3,
+                                                         gp=gpar(fill="black")),
+                                                rectGrob(x=c(1, 3)/4,
+                                                         width=.3,
+                                                         gp=gpar(col="white",
+                                                                 fill="white"))))),
             width=1/4, height=1/4,
             extend="repeat")
 grid.rect(width=.5, height=.5, gp=gpar(fill=pat))

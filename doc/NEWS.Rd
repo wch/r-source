@@ -254,12 +254,17 @@
       \code{grDevices::glyphInfo()} and \code{grid::grid.glyph()}.
 
       Rendering of typeset glyphs is only supported so far on the
-      Cairo-based graphics devices and on the \code{pdf()} device.
+      Cairo-based graphics devices and on the \code{pdf()} and
+      \code{quartz()} devices.
 
       \item The defined behaviour for \code{"clear"} and \code{"source"}
       compositing operators (via \code{grid::grid.group()}) has been
       changed (to align better with
       simple interpretation of original Porter-Duff definitions).
+
+      \item Support for gradients, patterns, clipping paths, masks,
+      groups, compositing operators, and affine transformations has
+      been added to the \code{quartz()} device.
     }
   }
 
