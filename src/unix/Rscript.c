@@ -70,6 +70,13 @@ R --no-echo --no-restore --vanilla --file=foo [script_args]
 # endif
 #endif
 
+#ifdef Unix
+# define R_PATH_MAX PATH_MAX
+#else
+  /* On Windows, 260 is too limiting */
+# define R_PATH_MAX 5000
+#endif
+
 #ifndef _WIN32
 #ifndef R_ARCH /* R_ARCH should be always defined, but for safety ... */
 #define R_ARCH ""
@@ -139,7 +146,7 @@ void usage(void)
 int main(int argc_, char *argv_[])
 {
 #ifdef HAVE_EXECV
-    char *cmd = NULL, buf[PATH_MAX+8], *p;
+    char *cmd = NULL, buf[R_PATH_MAX+8], *p;
     int i, i0 = 0, ac = 0, res = 0, e_mode = 0, set_dp = 0;
     char **av;
     int have_cmdarg_default_packages = 0;
@@ -258,18 +265,18 @@ int main(int argc_, char *argv_[])
 	strcat(cmd, "\\Rterm.exe");
     }
 #else
-    cmd = (char *)malloc(PATH_MAX + 1);
+    cmd = (char *)malloc(R_PATH_MAX + 1);
     if (!cmd) {
 	fprintf(stderr, "malloc failure\n");
 	exit(1);
     }
     if(!(p && *p)) p = rhome;
     /* avoid snprintf here */
-    if(strlen(p) + 6 > PATH_MAX) {
+    if(strlen(p) + 6 > R_PATH_MAX) {
 	fprintf(stderr, "impossibly long path for RHOME\n");
 	exit(1);
     }
-    snprintf(cmd, PATH_MAX+1, "%s/bin/R", p);
+    snprintf(cmd, R_PATH_MAX+1, "%s/bin/R", p);
 #endif
     av[ac++] = cmd;
     av[ac++] = "--no-echo";
@@ -332,11 +339,11 @@ int main(int argc_, char *argv_[])
 	    fprintf(stderr, "file name is missing\n");
 	    exit(1);
 	}
-	if(strlen(argv[i0]) > PATH_MAX) {
+	if(strlen(argv[i0]) > R_PATH_MAX) {
 	    fprintf(stderr, "file name is too long\n");
 	    exit(1);
 	}
-	snprintf(buf, PATH_MAX+8, "--file=%s", argv[i0]);
+	snprintf(buf, R_PATH_MAX+8, "--file=%s", argv[i0]);
 	av[ac++] = buf;
     }
     // copy any user arguments, preceded by "--args"

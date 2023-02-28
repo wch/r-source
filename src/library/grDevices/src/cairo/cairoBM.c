@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ static void cbm_Size(double *left, double *right,
 static Rboolean
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
-    char buf[PATH_MAX];
+    char buf[R_PATH_MAX];
     cairo_status_t res;
     if (xd->type == PNG || xd->type == JPEG ||
 	xd->type == TIFF || xd->type == BMP ||
@@ -119,7 +119,7 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     }
 #ifdef HAVE_CAIRO_SVG
     else if(xd->type == SVG) {
-        snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
+        snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
         xd->cs = cairo_svg_surface_create(buf,
                                           (double)xd->windowWidth,
                                           (double)xd->windowHeight);
@@ -142,7 +142,7 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 #endif
 #ifdef HAVE_CAIRO_PDF
     else if(xd->type == PDF) {
-        snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
+        snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
         xd->cs = cairo_pdf_surface_create(buf,
                                           (double)xd->windowWidth,
                                           (double)xd->windowHeight);
@@ -164,7 +164,7 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 #endif
 #ifdef HAVE_CAIRO_PS
     else if(xd->type == PS) {
-        snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
+        snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages + 1);
         xd->cs = cairo_ps_surface_create(buf,
                                          (double)xd->windowWidth,
                                          (double)xd->windowHeight);
@@ -213,8 +213,8 @@ static unsigned int Cbitgp(void *xi, int x, int y)
 static void BM_Close_bitmap(pX11Desc xd)
 {
     if (xd->type == PNGdirect) {
-	char buf[PATH_MAX];
-	snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages);
+	char buf[R_PATH_MAX];
+	snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages);
 	cairo_surface_write_to_png(xd->cs, buf);
 	return;
     } 
@@ -236,8 +236,8 @@ static void BM_Close_bitmap(pX11Desc xd)
 	R_SaveAsBmp(xi, xd->windowWidth, xd->windowHeight,
 		    Cbitgp, 0, xd->fp, xd->res_dpi);
     else {
-	char buf[PATH_MAX];
-	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	char buf[R_PATH_MAX];
+	snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 	/* filename in native encoding on Windows */
 	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
 		     Cbitgp, 0, buf, xd->res_dpi,
@@ -248,7 +248,7 @@ static void BM_Close_bitmap(pX11Desc xd)
 static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    char buf[PATH_MAX];
+    char buf[R_PATH_MAX];
     cairo_status_t res;
 
     xd->npages++;
@@ -258,7 +258,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    BM_Close_bitmap(xd);
 	    if (xd->fp) fclose(xd->fp);
 	}
-	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	snprintf(buf, R_PATH_MAX, xd->filename, xd->npages);
 	/* filename in native encoding on Windows */
 	xd->fp = R_fopen(buf, "wb");
 	if (!xd->fp)
@@ -278,7 +278,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if(!xd->onefile) {
 		cairo_surface_destroy(xd->cs);
 		cairo_destroy(xd->cc);
-                snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages);
+                snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages);
                 xd->cs = cairo_svg_surface_create(buf,
                                                   (double)xd->windowWidth,
                                                   (double)xd->windowHeight);
@@ -306,7 +306,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if(!xd->onefile) {
 		cairo_surface_destroy(xd->cs);
 		cairo_destroy(xd->cc);
-                snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages);
+                snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages);
                 xd->cs = cairo_pdf_surface_create(buf,
                                                   (double)xd->windowWidth,
                                                   (double)xd->windowHeight);
@@ -333,7 +333,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if(!xd->onefile) {
                 cairo_surface_destroy(xd->cs);
                 cairo_destroy(xd->cc);
-                snprintf(buf, PATH_MAX, R_CAIRO_FN(xd), xd->npages);
+                snprintf(buf, R_PATH_MAX, R_CAIRO_FN(xd), xd->npages);
                 xd->cs = cairo_ps_surface_create(buf,
                                                  (double)xd->windowWidth,
                                                  (double)xd->windowHeight);
@@ -410,21 +410,21 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     /* allocate new device description */
     if (!(xd = (pX11Desc) calloc(1, sizeof(X11Desc)))) return FALSE;
     strncpy(xd->filename, R_ExpandFileName(translateCharFP(filename)),
-            PATH_MAX - 1);
-    xd->filename[PATH_MAX - 1] = '\0';
+            R_PATH_MAX - 1);
+    xd->filename[R_PATH_MAX - 1] = '\0';
 #ifdef R_CAIRO_UTF8_FILENAMES
     // not currently in use
     strncpy(xd->filename, R_ExpandFileName(translateChar(filename)),
-            PATH_MAX - 1);
-    xd->filename[PATH_MAX - 1] = '\0';
+            R_PATH_MAX - 1);
+    xd->filename[R_PATH_MAX - 1] = '\0';
     strncpy(xd->filenameUTF8, R_ExpandFileNameUTF8(translateCharUTF8(filename)),
-            PATH_MAX - 1);
-    xd->filenameUTF8[PATH_MAX - 1] = '\0';
+            R_PATH_MAX - 1);
+    xd->filenameUTF8[R_PATH_MAX - 1] = '\0';
 #else
     // thow error if cannot be translated.
     strncpy(xd->filename, R_ExpandFileName(translateCharFP(filename)),
-            PATH_MAX - 1);
-    xd->filename[PATH_MAX - 1] = '\0';
+            R_PATH_MAX - 1);
+    xd->filename[R_PATH_MAX - 1] = '\0';
 #endif
     xd->quality = quality;
     xd->windowWidth = width;

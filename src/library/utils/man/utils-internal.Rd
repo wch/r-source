@@ -7,7 +7,6 @@
 \alias{de.ncols}
 \alias{de.restore}
 \alias{de.setup}
-\alias{limitedLabels}
 \title{Internal utils Functions}
 \description{
   Internal utils functions
@@ -16,7 +15,6 @@
 de.ncols(inlist) 
 de.restore(inlist, ncols, coltypes, argnames, args) 
 de.setup(ilist, list.names, incols) 
-limitedLabels(value, maxwidth = getOption("width") - 5L) 
 }
 \details{
   These are not to be called by the user.

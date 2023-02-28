@@ -490,12 +490,16 @@ function(x, ...)
     format(x, ...)
 
 toBibtex.person <-
-function(object, ...)
+function(object, escape = FALSE, ...)
 {
     object <- sapply(object, function(p) {
          br <- if(is.null(p$family)) c("{", "}") else c("", "")
-         format(p, include = c("family", "given"),
-                braces = list(given = br, family = c("", ",")))
+         s <- format(p, include = c("family", "given"),
+                     braces = list(given = br, family = c("", ",")))
+         if(isTRUE(escape) &&
+            (Encoding(s <- enc2utf8(s)) == "UTF-8"))
+             tools::encoded_text_to_latex(s, "UTF-8")
+         else s
     })
     paste(object[nzchar(object)], collapse = " and ")
 }
@@ -1113,7 +1117,7 @@ function(..., recursive = FALSE)
 }
 
 toBibtex.bibentry <-
-function(object, ...)
+function(object, escape = FALSE, ...)
 {
     format_author <- function(author) paste(sapply(author, function(p) {
 	fnms <- p$family
@@ -1140,6 +1144,12 @@ function(object, ...)
                   sapply(names(object), function (n)
                          paste0("  ", n, " = {", object[[n]], "},")),
                   "}", "")
+        if(isTRUE(escape)) {
+            rval <- enc2utf8(rval)
+            ind <- (Encoding(rval) == "UTF-8")
+            rval[ind] <-
+                tools::encoded_text_to_latex(rval[ind], "UTF-8")
+        }
         return(rval)
     }
 
@@ -1372,6 +1382,17 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             "https://R-Forge.R-project.org/"
         if(!is.null(rfr <- meta$"Repository/R-Forge/Revision"))
             z$note <- paste(z$note, rfr, sep = "/r")
+    }
+
+    if((is.null(meta$Repository) ||
+        identical(meta$Repository, "Bioconductor")) &&
+       !is.null(meta$git_url) &&
+       startsWith(meta$git_url,
+                  "https://git.bioconductor.org/packages")) {
+        z$url <-
+            sprintf("https://bioconductor.org/packages/%s", package)
+        z$doi <-
+            sprintf("10.18129/B9.bioc.%s", package)
     }
 
     if(!length(z$url) && !is.null(url <- meta$URL)) {

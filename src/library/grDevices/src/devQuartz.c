@@ -1804,6 +1804,7 @@ static void RQuartz_Close(DEVDESC)
     if (xd->close) xd->close(xd, xd->userInfo);
     QuartzDestroyPatterns(xd);
     QuartzDestroyClipPaths(xd);
+    QuartzDestroyMasks(xd);
     QuartzDestroyGroups(xd);
 }
 
@@ -2709,7 +2710,6 @@ static SEXP RQuartz_setMask(SEXP mask, SEXP ref, pDevDesc dd) {
     DEVSPEC;
     if (!ctx) NOCTXR(R_NilValue);
     int index;
-    QMaskRef quartz_mask;
     SEXP newref = R_NilValue;
 
     if (isNull(mask)) {

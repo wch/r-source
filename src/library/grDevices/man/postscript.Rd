@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -104,7 +104,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{command}{the command to be used for \sQuote{printing}.  Defaults
     to \code{"default"}, the value of option \code{"printcmd"}.  The
     length limit is \code{2*PATH_MAX},
-    typically 8096 bytes on Unix-alikes and 520 bytes on Windows.
+    typically 8096 bytes on Unix-alikes and 520 bytes on Windows. Recent
+    Windows systems may be configured to use long paths, raising this
+    limit currently to 10000.
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"srgb"}, \code{"srgb+gray"},

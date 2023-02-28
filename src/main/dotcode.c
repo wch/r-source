@@ -2025,14 +2025,19 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			    type2char(t), na + 1);
 	    /* Used read-only, so this is safe */
 #ifdef USE_RINTERNALS
-	    cargs[na] = (void*) DATAPTR(s);
+            if (!ALTREP(s))
+                cargs[na] = (void*) DATAPTR(s);
+            else {
 #else
-	    n = XLENGTH(s);
-	    SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
-	    for (R_xlen_t i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
-	    cargs[na] = (void*) lptr;
+                n = XLENGTH(s);
+                SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
+                for (R_xlen_t i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+                cargs[na] = (void*) lptr;
 #endif
-	    break;
+#ifdef USE_RINTERNALS
+            }
+#endif
+            break;
 	case CLOSXP:
 	case BUILTINSXP:
 	case SPECIALSXP:

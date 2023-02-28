@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -888,8 +888,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
     if (!d->active) return;
 
-    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
-    if (IS_S4_OBJECT(s) || hasS4_t) {
+    if (IS_S4_OBJECT(s)) {
 	d->isS4 = TRUE;
 	/* const void *vmax = vmaxget(); */
 	SEXP class = getAttrib(s, R_ClassSymbol),
@@ -912,6 +911,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    UNPROTECT(2); // (e, cl_def)
 	    int n;
 	    Rboolean has_Data = FALSE;// does it have ".Data" slot?
+	    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
 	    if(TYPEOF(slotNms) == STRSXP && (n = LENGTH(slotNms))) {
 		PROTECT(slotNms);
 		SEXP slotlist = PROTECT(allocVector(VECSXP, n));
@@ -1178,7 +1178,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    deparse2buff(CAR(s), d);
 		    print2buff(") ", d);
 		    if (d->incurly && !d->inlist ) {
-			lookahead = curlyahead(CAR(CDR(s)));
+			lookahead = curlyahead(CADR(s));
 			if (!lookahead) {
 			    writeline(d);
 			    d->indent++;
@@ -1186,7 +1186,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    /* need to find out if there is an else */
 		    if (length(s) > 2) {
-			deparse2buff(CAR(CDR(s)), d);
+			deparse2buff(CADR(s), d);
 			if (d->incurly && !d->inlist) {
 			    writeline(d);
 			    if (!lookahead)
@@ -1195,10 +1195,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			else
 			    print2buff(" ", d);
 			print2buff("else ", d);
-			deparse2buff(CAR(CDDR(s)), d);
+			deparse2buff(CADDR(s), d);
 		    }
 		    else {
-			deparse2buff(CAR(CDR(s)), d);
+			deparse2buff(CADR(s), d);
 			if (d->incurly && !lookahead && !d->inlist )
 			    d->indent--;
 		    }
@@ -1215,7 +1215,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(" in ", d);
 		    deparse2buff(CADR(s), d);
 		    print2buff(") ", d);
-		    deparse2buff(CADR(CDR(s)), d);
+		    deparse2buff(CADDR(s), d);
 		    break;
 		case PP_REPEAT:
 		    print2buff("repeat ", d);

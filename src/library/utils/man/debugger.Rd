@@ -1,12 +1,13 @@
 % File src/library/utils/man/debugger.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debugger}
+\title{Post-Mortem Debugging}
 \alias{debugger}
 \alias{dump.frames}
-\title{Post-Mortem Debugging}
+\alias{limitedLabels}
 \description{
   Functions to dump the evaluation environments (frames) and to examine
   dumped frames.
@@ -15,6 +16,8 @@
 dump.frames(dumpto = "last.dump", to.file = FALSE,
             include.GlobalEnv = FALSE)
 debugger(dump = last.dump)
+
+limitedLabels(value, maxwidth = getOption("width") - 5L)
 }
 \arguments{
   \item{dumpto}{a character string. The name of the object or file to
@@ -26,6 +29,11 @@ debugger(dump = last.dump)
     to the \code{\link{sys.frames}()}.  Will be particularly useful when
     used in a batch job.}
   \item{dump}{an \R dump object created by \code{dump.frames}.}
+  %% limitedLabels():
+  \item{value}{a \code{\link{list}} of \code{\link{call}}s to be formatted,
+    e.g., for user menus.}
+  \item{maxwidth}{optional length to which to trim the result of \code{limitedLabels()};
+    values smaller than 40 or larger than 1000 are winsorized.}
 }
 \details{
   To use post-mortem debugging, set the option \code{error} to be a call
@@ -49,6 +57,11 @@ debugger(dump = last.dump)
   If \code{dump.frames} is installed as the error handler, execution
   will continue even in non-interactive sessions.  See the examples for
   how to dump and then quit.
+
+  \code{limitedLabels(v)} takes a \code{\link{list}} of calls whose
+  elements may have a \code{srcref} attribute and returns a vector that
+  pastes a formatted version of those attributes onto the formatted version
+  of the elements, all finally \code{\link{strtrim}()}med to \code{maxwidth}.
 }
 \value{
   Invisible \code{NULL}.

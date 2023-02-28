@@ -32,6 +32,12 @@ function(cfile, encoding = NULL)
     ## FIXME: if parse() could be told to read strings bytewise,
     ## we could simply convert to UTF-8.
     if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
+        ## NOTE: in an MBCS locale, calling parse() with a "UTF-8" or
+        ## "latin1" encoding argument in order to get character strings
+        ## marked as UTF-8 or latin1 does not work, as such encoding
+        ## arguments are ignored with a warning.  So one needs to use a
+        ## file connection to re-encode as below, and cannot get strings
+        ## marked.  One might consider this a bug and not a feature ...
         parse(file = cfile, encoding = encoding)
     } else if(encoding %in% c("C", "ASCII")) {
         ## We do want to make sure this is ASCII: in single-byte

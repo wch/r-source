@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2020  The R Foundation
+ *  Copyright (C) 2007-2023  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,11 @@
  *  This file should be compiled only if AQUA is enabled
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <Defn.h>
 
 #include "qdBitmap.h"
 
@@ -53,8 +58,8 @@ void QuartzBitmap_Output(QuartzDesc_t dev, QuartzBitmapDevice *qbd)
         /* On 10.4+ we can employ the CGImageDestination API to create a
            variety of different bitmap formats */
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
-	char buf[PATH_MAX+1];
-	snprintf(buf, PATH_MAX, qbd->path, qbd->page); buf[PATH_MAX] = '\0';
+	char buf[R_PATH_MAX+1];
+	snprintf(buf, R_PATH_MAX, qbd->path, qbd->page); buf[R_PATH_MAX] = '\0';
         CFStringRef pathString = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) buf, strlen(buf), kCFStringEncodingUTF8, FALSE);
         CFURLRef path;
         if(CFStringFind(pathString, CFSTR("://"), 0).location != kCFNotFound) {

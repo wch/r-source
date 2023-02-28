@@ -424,6 +424,9 @@
 
       \item New macro \code{CAD5R()} is provided in \file{Rinternals.h}
       and used in a few places in the \R sources.
+
+      \item ALTREP now supports \code{VECSXP} vectors. Contributed by
+      Gabor Csardi in \PR{17620}.
     }
   }
 
@@ -668,6 +671,11 @@
       \emph{outside} the interval in some cases where \code{abs(f(x)) == Inf}
       for an \code{x} at the interval boundary, thanks to posts by Ben
       Bolker and Serguei Sokol on R-devel.
+
+      \item Vectorized alpha handling in palette functions such as in
+      \code{gray()}, \code{rainbow()}, or \code{hcl.colors()} works
+      correctly now, thanks to Achim Zeileis' report and patch in
+      \PR{18476}.
     }
   }
 }

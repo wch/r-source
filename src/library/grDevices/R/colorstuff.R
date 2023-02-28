@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/colorstuff.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -81,6 +81,7 @@ rainbow <- function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n,
     if ((n <- as.integer(n[1L])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
+	alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
 	cols <- hsv(h = seq.int(start, (start > end)*1 + end,
 				length.out = n) %% 1,
 		    s, v, alpha)
@@ -94,12 +95,13 @@ topo.colors <- function (n, alpha, rev = FALSE)
 	j <- n %/% 3
 	k <- n %/% 3
 	i <- n - j - k
+	alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
 	cols <- c(if(i > 0) hsv(h = seq.int(from = 43/60, to = 31/60,
-                                            length.out = i), alpha = alpha),
+                                            length.out = i), alpha = alpha[seq_len(i)]),
                   if(j > 0) hsv(h = seq.int(from = 23/60, to = 11/60,
-                                            length.out = j), alpha = alpha),
+                                            length.out = j), alpha = alpha[i + seq_len(j)]),
                   if(k > 0) hsv(h = seq.int(from = 10/60, to =  6/60,
-                                            length.out = k), alpha = alpha,
+                                            length.out = k), alpha = alpha[i + j + seq_len(k)],
                                 s = seq.int(from = 1, to = 0.3,
                                             length.out = k), v = 1))
         if(rev) rev(cols) else cols
@@ -113,13 +115,14 @@ terrain.colors <- function (n, alpha, rev = FALSE)
 	h <- c(4/12, 2/12, 0/12)
 	s <- c(1, 1, 0)
 	v <- c(0.65, 0.9, 0.95)
+	alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
 	cols <- c(hsv(h = seq.int(h[1L], h[2L], length.out = k),
                       s = seq.int(s[1L], s[2L], length.out = k),
-                      v = seq.int(v[1L], v[2L], length.out = k), alpha = alpha),
+                      v = seq.int(v[1L], v[2L], length.out = k), alpha = alpha[seq_len(k)]),
                   hsv(h = seq.int(h[2L], h[3L], length.out = n - k + 1)[-1L],
                       s = seq.int(s[2L], s[3L], length.out = n - k + 1)[-1L],
                       v = seq.int(v[2L], v[3L], length.out = n - k + 1)[-1L],
-                      alpha = alpha))
+                      alpha = alpha[k + seq_len(n - k)]))
         if(rev) rev(cols) else cols
     } else character()
 }
@@ -129,12 +132,13 @@ heat.colors <- function (n, alpha, rev = FALSE)
     if ((n <- as.integer(n[1L])) > 0) {
 	j <- n %/% 4
 	i <- n - j
-	cols <- c(rainbow(i, start = 0, end = 1/6, alpha = alpha),
+	alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
+	cols <- c(rainbow(i, start = 0, end = 1/6, alpha = alpha[seq_len(i)]),
                   if (j > 0)
                       hsv(h = 1/6,
                           s = seq.int(from = 1-1/(2*j), to = 1/(2*j),
                                       length.out = j),
-                          v = 1, alpha = alpha))
+                          v = 1, alpha = alpha[i + seq_len(n - i)]))
         if(rev) rev(cols) else cols
     } else character()
 }
@@ -146,20 +150,22 @@ cm.colors <- function (n, alpha, rev = FALSE)
 	k <- n %/% 2L
 	l1 <- k + 1L - even.n
 	l2 <- n - k + even.n
+	alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
 	cols <- c(if(l1 > 0L)
                       hsv(h =  6/12,
                           s = seq.int(.5, if(even.n) .5/k else 0,
                                       length.out = l1),
-                          v = 1, alpha = alpha),
+                          v = 1, alpha = alpha[seq_len(l1)]),
                   if(l2 > 1)
                       hsv(h = 10/12, s = seq.int(0, 0.5, length.out = l2)[-1L],
-                          v = 1, alpha = alpha))
+                          v = 1, alpha = alpha[seq_len(n)[-seq_len(l1)]]))
         if(rev) rev(cols) else cols
     } else character()
 }
 
 gray.colors <- function(n, start = 0.3, end = 0.9, gamma = 2.2, alpha,
                         rev = FALSE) {
+    alpha <- if(missing(alpha) || is.null(alpha)) NULL else rep_len(alpha, n)
     cols <- gray(seq.int(from = start^gamma,
                          to = end^gamma, length.out = n)^(1/gamma),
                  alpha)
@@ -230,6 +236,7 @@ palette.colors <- function(n = NULL, palette = "Okabe-Ito",
 
     ## add alpha if specified as number:
     if (!(missing(alpha) || is.null(alpha))) {
+        alpha <- rep_len(alpha, n)
         alpha <- format(as.hexmode(round(alpha * 255 + 0.0001)),
                         width = 2L, upper.case = TRUE)
 	cols <- paste0(cols, alpha)

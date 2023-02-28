@@ -129,7 +129,7 @@ typedef struct {
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a bitmap device */
     FILE *fp;				/* file for a bitmap device */
-    char filename[PATH_MAX];		/* filename for a bitmap device */
+    char filename[R_PATH_MAX];		/* filename for a bitmap device */
     int quality;			/* JPEG quality/TIFF compression */
 
     Rboolean handleOwnEvents;           /* Flag indicating whether events will

@@ -89,11 +89,7 @@ function(generic.function, class, envir=parent.frame())
     S3MethodsStopList <- tools::nonS3methods(NULL)
     knownGenerics <- getKnownS3generics()
     sp <- search()
-    if(nzchar(lookup <-
-                  Sys.getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_"))) {
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) sp <- sp[c(1L, length(sp))]
-    }
+    sp <- sp[c(1L, length(sp))]
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(seq_along(sp), ls)
     lens <- lengths(an)
@@ -612,14 +608,7 @@ function(x)
 function(genfun)
 {
     if (typeof(genfun) == "closure") {
-        lookup <- Sys.getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_",
-                             "TRUE")
-        lookup <- tools:::config_val_to_logical(lookup)
-        if(lookup) {
-            topenv(environment(genfun))
-        } else {
-            environment(genfun)
-        }
+        topenv(environment(genfun))
     }
     else .BaseNamespaceEnv
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019   The R Core Team
+ *  Copyright (C) 1997--2020   The R Core Team
  *  Copyright (C) 1995, 1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -135,7 +135,7 @@ static void
 R_approxfun(double *x, double *y, R_xlen_t nxy, double *xout, double *yout,
 	    R_xlen_t nout, int method, double yleft, double yright, double f, int na_rm)
 {
-    appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
+    appr_meth M = {0.0, 0.0, 0.0, 0.0, 0, 0}; /* -Wall */
 
     M.f2 = f;
     M.f1 = 1 - f;
@@ -145,7 +145,7 @@ R_approxfun(double *x, double *y, R_xlen_t nxy, double *xout, double *yout,
     M.na_rm = na_rm;
 #ifdef DEBUG_approx
     REprintf("R_approxfun(x,y, nxy = %.0f, .., nout = %.0f, method = %d, ...)",
-	     (double)nxy, (double)nout, Meth->kind);
+	     (double)nxy, (double)nout, method);
 #endif
     for(R_xlen_t i = 0; i < nout; i++)
 	yout[i] = ISNAN(xout[i]) ? xout[i] : approx1(xout[i], x, y, nxy, &M);

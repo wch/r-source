@@ -39,7 +39,6 @@
 #include <direct.h>
 #include "graphapp/ga.h"
 #include "rlocale.h"
-/* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
 # define _WIN32_WINNT 0x0502 /* for GetLongPathName, KEY_WOW64_64KEY */
 #endif
@@ -694,7 +693,7 @@ static wchar_t *getFinalPathNameW(const wchar_t *orig)
 }
 
 /* returns R_alloc'd result */
-static wchar_t *getFullPathNameW(const wchar_t *orig)
+attribute_hidden wchar_t *R_getFullPathNameW(const wchar_t *orig)
 {
     DWORD ret, ret1;
 
@@ -710,7 +709,7 @@ static wchar_t *getFullPathNameW(const wchar_t *orig)
 }
 
 /* returns R_alloc'd result */
-static char *getFullPathName(const char *orig)
+attribute_hidden char *R_getFullPathName(const char *orig)
 {
     DWORD ret, ret1;
 
@@ -724,7 +723,7 @@ static char *getFullPathName(const char *orig)
 	    cnt++;
 	    wchar_t *worig = (wchar_t*) R_alloc(cnt, sizeof(wchar_t));
 	    mbstowcs(worig, orig, cnt);
-	    wchar_t *wres = getFullPathNameW(worig);
+	    wchar_t *wres = R_getFullPathNameW(worig);
 	    if (wres) {
 		cnt = wcstombs(NULL, wres, 0) + 1;
 		if (cnt != (size_t)-1) {
@@ -811,7 +810,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warningcall(call, "path[%d]=NA", i+1);
 	} else if(getCharCE(el) == CE_UTF8) {
 	    const wchar_t *wel = filenameToWchar(el, FALSE);
-	    wchar_t *wfull = getFullPathNameW(wel);
+	    wchar_t *wfull = R_getFullPathNameW(wel);
 	    wchar_t *wnorm = getFinalPathNameW(wel);
 
 	    /* if normalized to UNC path but full path is D:..., fall back
@@ -821,6 +820,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	        wfull[1] == L':') wnorm = NULL;
 	    if (!wnorm && wfull)
 		/* silently fall back to GetFullPathName/GetLongPathName */
+		/* getLongPathName will fail for non-existent paths */
 		wnorm = getLongPathNameW(wfull);
 	    if (wnorm) {
 		if (fslash)
@@ -834,18 +834,24 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    warningcall(call, "path[%d]=\"%ls\": %s", i+1, 
 				wel, formatError(GetLastError()));
 		}
-		const char *elutf8 = translateCharUTF8(el);
-		if (fslash) {
-		    char *normutf8 = R_alloc(strlen(elutf8) + 1, 1);
-		    strcpy(normutf8, elutf8);
-		    R_UTF8fixslash(normutf8);
-		    result = mkCharCE(normutf8, CE_UTF8);
-		} else
-		    result = mkCharCE(elutf8, CE_UTF8);
+		if (wfull) {
+		    if (fslash)
+			R_wfixslash(wfull);
+		    result = mkCharWUTF8(wfull);
+		} else {
+		    const char *elutf8 = translateCharUTF8(el);
+		    if (fslash) {
+			char *normutf8 = R_alloc(strlen(elutf8) + 1, 1);
+			strcpy(normutf8, elutf8);
+			R_UTF8fixslash(normutf8);
+			result = mkCharCE(normutf8, CE_UTF8);
+		    } else
+			result = mkCharCE(elutf8, CE_UTF8);
+		}
 	    }
 	} else {
 	    const char *tel = translateChar(el);
-	    char *full = getFullPathName(tel);
+	    char *full = R_getFullPathName(tel);
 	    char *norm = getFinalPathName(tel);
 
 	    /* if normalized to UNC path but full path is D:..., fall back
@@ -854,6 +860,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		full && isalpha(full[0]) && full[1] == ':') norm = NULL;
 	    if (!norm && full)
 		/* silently fall back to GetFullPathName/GetLongPathName */
+		/* getLongPathName will fail for non-existent paths */
 		norm = getLongPathName(full);
 	    if (norm) {
 		if (fslash)
@@ -867,7 +874,11 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    warningcall(call, "path[%d]=\"%s\": %s", i+1, 
 				tel, formatError(GetLastError()));
 		}
-		if (fslash) {
+		if (full) {
+		    if (fslash)
+			R_fixslash(full);
+		    result = mkChar(full);
+		} else if (fslash) {
 		    norm = R_alloc(strlen(tel) + 1, 1);
 		    strcpy(norm, tel);
 		    R_fixslash(norm);

@@ -233,9 +233,6 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 {
     SEXP val, top = R_NilValue;	/* -Wall */
     static SEXP s_S3MethodsTable = NULL;
-    static int lookup_baseenv_after_globalenv = -1;
-    static int lookup_report_search_path_uses = -1;
-    char *lookup;
     PROTECT_INDEX validx;
 
     if (TYPEOF(callrho) != ENVSXP) {
@@ -251,18 +248,6 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	    error(_("use of NULL environment is defunct"));
 	else
 	    error(_("bad generic definition environment"));
-    }
-
-    if(lookup_baseenv_after_globalenv == -1) {
-	lookup = getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_");
-	lookup_baseenv_after_globalenv = 
-	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
-    }
-
-    if(lookup_report_search_path_uses == -1) {
-	lookup = getenv("_R_S3_METHOD_LOOKUP_REPORT_SEARCH_PATH_USES_");
-	lookup_report_search_path_uses = 
-	    ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
     }
 
     /* This evaluates promises */
@@ -295,34 +280,12 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	}
     } 
 
-    if(lookup_baseenv_after_globalenv) {
-	if (top == R_GlobalEnv)
-	    top = R_BaseEnv;
-	else
-	    top = ENCLOS(top);
-	REPROTECT(val = findFunWithBaseEnvAfterGlobalEnv(method, top),
-	          validx);
-    }
-    else if(lookup_report_search_path_uses) {
-	if(top != R_GlobalEnv) 
-	    REPROTECT(val = findFunInEnvRange(method, ENCLOS(top),
-	                                      R_GlobalEnv), validx);
-	if(val == R_UnboundValue) {
-	    REPROTECT(val = findFunInEnvRange(method, ENCLOS(R_GlobalEnv),
-	                                      R_EmptyEnv), validx);
-	    if((val != R_UnboundValue) && 
-	       (CLOENV(val) != R_BaseNamespace) &&
-	       (CLOENV(val) != R_BaseEnv)) {
-		/* Note that we do not really know where on the search
-		   path we found the method. */
-		REprintf("S3 method lookup found '%s' on search path \n",
-			 CHAR(PRINTNAME(method)));
-	    }
-	}
-    }
+    if (top == R_GlobalEnv)
+	top = R_BaseEnv;
     else
-	REPROTECT(val = findFunInEnvRange(method, ENCLOS(top), R_EmptyEnv),
-	          validx);
+	top = ENCLOS(top);
+    REPROTECT(val = findFunWithBaseEnvAfterGlobalEnv(method, top),
+	      validx);
 
     UNPROTECT(2); /* top, val */
     return val;
@@ -515,13 +478,6 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(generic) || LENGTH(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
 
-    static int lookup_use_topenv_as_defenv = -1;
-    if(lookup_use_topenv_as_defenv == -1) {
-	char *lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
-	lookup_use_topenv_as_defenv =
-	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
-    }
-
     /* get environments needed for dispatching.
        callenv = environment from which the generic was called
        defenv = environment where the generic was defined */
@@ -541,19 +497,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
     */
-    SEXP defenv;
-    if(lookup_use_topenv_as_defenv) {
-	defenv = topenv(R_NilValue, env);
-    } else {
-	SEXP val = findVar1(installTrChar(STRING_ELT(generic, 0)),
-			    ENCLOS(env), FUNSXP, TRUE); /* That has evaluated
-							 * promises */
-	if(TYPEOF(val) == CLOSXP)
-	    defenv = CLOENV(val);
-	else
-	    defenv = R_BaseNamespace;
-    }
-
+    SEXP defenv = topenv(R_NilValue, env);
     SEXP obj = PROTECT((CADR(argList) != R_MissingArg)
 		       ? eval(CADR(argList), env)
 		       : GetObject(cptr));

@@ -192,6 +192,9 @@ static void *mempcpy (void *dest, const void *src, size_t n);
 /* Non-POSIX BSD systems might have gcc's limits.h, which doesn't define
    PATH_MAX but might cause redefinition warnings when sys/param.h is
    later included (as on MORE/BSD 4.3).  */
+
+/* NOTE: PATH_MAX below is only used as initial buffer size for getcwd(),
+   it doesn't have to be precise, any positive number should do */
 #if defined _POSIX_VERSION || (defined HAVE_LIMITS_H && !defined __GNUC__)
 # include <limits.h>
 #endif

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -412,12 +412,12 @@ int Rf_initialize_R(int ac, char **av)
 #define R_INIT_TREAT_F(_AV_)						\
 		Rp->R_Interactive = FALSE;				\
 		if(strcmp(_AV_, "-")) {					\
-		    if(strlen(_AV_) >= PATH_MAX) {			\
+		    if(strlen(_AV_) >= R_PATH_MAX) {			\
 			snprintf(msg, 1024,				\
 				 _("path given in -f/--file is too long"));	\
 			R_Suicide(msg);					\
 		    }							\
-		    char path[PATH_MAX], *p = path;			\
+		    char path[R_PATH_MAX], *p = path;			\
 		    p = unescape_arg(p, _AV_);				\
 		    *p = '\0';						\
 		    ifp = R_fopen(path, "r");				\
@@ -467,7 +467,7 @@ int Rf_initialize_R(int ac, char **av)
     if(strlen(cmdlines)) { /* had at least one -e option */
 	size_t res;
 	char *tm;
-	static char ifile[PATH_MAX] = "\0";
+	static char ifile[R_PATH_MAX] = "\0";
 	int ifd;
 
 	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));    
@@ -482,7 +482,7 @@ int Rf_initialize_R(int ac, char **av)
 		    tm = "/tmp";
 	    }
 	}
-	snprintf(ifile, PATH_MAX, "%s/Rscript%x.XXXXXX", tm, getpid());
+	snprintf(ifile, R_PATH_MAX, "%s/Rscript%x.XXXXXX", tm, getpid());
 	ifd = mkstemp(ifile);
 	if (ifd >= 0) /* -1 on error, can be 0 if stdin is closed */
 	    ifp = fdopen(ifd, "w+");

@@ -3,7 +3,7 @@
  *  file selectlist.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2020  The R Core Team
+ *  Copyright (C) 2005--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -169,8 +169,9 @@ static int countFilenamesW(const wchar_t *list)
 
 static SEXP mkCharUTF8(const wchar_t *wc)
 {
-    char s[4*MAX_PATH + 1];
-    wcstoutf8(s, wc, sizeof(s));
+    size_t needed = wcstoutf8(NULL, wc, INT_MAX) + 1;
+    char *s = R_alloc(needed, 1);
+    wcstoutf8(s, wc, needed);
     return mkCharCE(s, CE_UTF8);
 }
 
@@ -181,6 +182,7 @@ SEXP chooseFiles(SEXP def, SEXP caption, SEXP smulti, SEXP filters, SEXP sindex)
     const wchar_t *p;
     wchar_t path[32768], filename[32768];
     int multi, filterindex, i, count, lfilters, pathlen;
+    const void *vmax = vmaxget();
 
     multi = asLogical(smulti);
     filterindex = asInteger(sindex);
@@ -244,19 +246,21 @@ SEXP chooseFiles(SEXP def, SEXP caption, SEXP smulti, SEXP filters, SEXP sindex)
 	}
     }
     UNPROTECT(1);
+    vmaxset(vmax);
     return ans;
 }
 
 SEXP chooseDir(SEXP def, SEXP caption)
 {
     const char *p;
-    char path[MAX_PATH];
+    char *path;
+    const void *vmax = vmaxget();
 
     if(!isString(def) || length(def) != 1 )
 	error(_("'default' must be a character string"));
-    p = translateChar(STRING_ELT(def, 0));
-    if(strlen(p) >= MAX_PATH) error(_("'default' is overlong"));
-    strcpy(path, R_ExpandFileName(p));
+    p = R_ExpandFileName(translateChar(STRING_ELT(def, 0)));
+    path = R_alloc(strlen(p) + 1, 1);
+    strcpy(path, p);
     R_fixbackslash(path);
     if(!isString(caption) || length(caption) != 1 )
 	error(_("'caption' must be a character string"));
@@ -265,5 +269,6 @@ SEXP chooseDir(SEXP def, SEXP caption)
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, p ? mkChar(p): NA_STRING);
     UNPROTECT(1);
+    vmaxset(vmax);
     return ans;
 }

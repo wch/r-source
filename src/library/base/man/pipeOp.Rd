@@ -34,8 +34,9 @@
   
   As an experimental feature the placeholder can also be used as the
   first argument in an extraction call, such as \code{_$coef}. More
-  generally, it can be used as the head of a chain of extractions, such as
-  \code{_$coef[[2]]}.
+  generally, it can be used as the head of a chain of extractions, such
+  as \code{_$coef[[2]]}, using a sequence of the extraction functions
+  \code{$}, \code{[}, \code{[[}, or \code{@}.
 
   Pipe notation allows a nested sequence of calls to be written in a way
   that may make the sequence of processing steps easier to follow.
