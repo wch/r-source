@@ -5484,7 +5484,8 @@ add_dummies <- function(dir, Log)
                              "\\[-Wrange-loop-construct\\]",
                              "\\[-Warray-parameter=\\]",
                              ## clang version (not Apple clang)
-                             "\\[-Warray-parameter\\]"
+                             "\\[-Warray-parameter\\]",
+                             "\\[-Wuse-after-free\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
@@ -5607,6 +5608,10 @@ add_dummies <- function(dir, Log)
                 ## and gfortran 10 warnings
                 ex_re <- "^Warning: Array.*is larger than limit set"
 ##                ex_re <- "^(Warning: Rank mismatch between actual argument|Warning: Array.*is larger than limit set)"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out gcc 12 warnings that are not certain
+                ex_re <- "may be used after.*\\[-Wuse-after-free\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## And deprecated declarations in Eigen and boost
