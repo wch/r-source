@@ -44,7 +44,10 @@
 
 \RequirePackage{amsmath}         % for \lVert, \text etc, and KaTeX consistency
 \RequirePackage{amsfonts,amssymb}
-\IfFileExists{mathrsfs.sty}% assume that the rsfs font is installed
+\newboolean{Rd@has@rsfs}
+\IfFileExists{mathrsfs.sty}{\IfFileExists{rsfs/scrload.tex}%
+  {\setboolean{Rd@has@rsfs}{true}}{}}{}
+\ifthenelse{\boolean{Rd@has@rsfs}}%
   {\RequirePackage{mathrsfs}}%
   {\usepackage[mathscr]{eucal}}% part of amsfonts
 
