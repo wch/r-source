@@ -14,7 +14,7 @@ isMask <- function(x) {
 }
 
 ## "resolve" masks
-resolveMask <- function(path) {
+resolveMask <- function(mask) {
     UseMethod("resolveMask")
 }
 

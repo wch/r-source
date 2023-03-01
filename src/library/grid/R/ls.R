@@ -82,7 +82,8 @@ gridListDL <- function(x, grobs=TRUE, viewports=FALSE,
     result
 }
 
-gridList <- function(x, ...) {
+gridList <- function(x, grobs=TRUE, viewports=FALSE,
+                     fullNames=FALSE, recursive=TRUE) {
     UseMethod("gridList")
 }
 
