@@ -21,11 +21,12 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
          key = NULL, \dots, other = list(),
          mheader = NULL, mfooter = NULL)
 
-\method{print}{bibentry}(x, style = "text", .bibstyle, \dots)
+\method{print}{bibentry}(x, style = "text", .bibstyle,
+      bibtex = length(x) <= getOption("citation.bibtex.max", 1),
+      \dots)
 
 \method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
-       citation.bibtex.max = getOption("citation.bibtex.max", 1),
-       bibtex = length(x) <= citation.bibtex.max,
+       bibtex = length(x) <= 1,
        sort = FALSE, macros = NULL, \dots)
 
 \method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
@@ -80,25 +81,19 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     the sort direction.}
   \item{.bibstyle}{a character string naming a bibliography style,
     see \code{\link{bibstyle}}.}
-  \item{citation.bibtex.max}{(\emph{deprecated}, use
-    \code{bibtex = T|F}
-    instead!) a number, say \eqn{m}, indicating that the bibtex
-    code should be given in addition to the formatted text \emph{when}
-    there are not more than \eqn{m} entries.  The default is taken as
-    \code{\link{getOption}("citation.bibtex.max", 1)} which is \code{1}
-    typically.  For example, to see no bibtex at all, you can change the
-    default by \code{\link{options}(citation.bibtex.max = 0)}.}
-  \item{bibtex}{logical indicating if bibtex code should be given
+  \item{bibtex}{\code{\link{logical}} indicating if BibTeX code should be given
     additionally; currently applies only to \code{style = "citation"}.
-    The default depends on the number of (bib) entries and
-    \code{\link{getOption}("citation.bibtex.max")}.}
+    The default for the \code{print()} method depends on the number of
+    (bib) entries and \code{\link{getOption}("citation.bibtex.max")} (which
+    itself is 1 by default).  For example, to see no bibtex at all, you can change the
+    default by \code{\link{options}(citation.bibtex.max = 0)}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
   \item{macros}{a character string or an object with already loaded Rd
     macros, see \bold{Details}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
     \code{sort()} method.}
-  \item{object}{an object inheriting from class \code{"bibentry"}.}  
+  \item{object}{an object inheriting from class \code{"bibentry"}.}
   \item{escape}{a logical indicating whether non-ASCII characters should
     be translated to LaTeX escape sequences.}
 }
@@ -137,8 +132,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   already loaded.
   Note that the \code{"latex"} result may contain commands from the
   \LaTeX style file \file{Rd.sty} shipped with \R;
-  put \verb{\usepackage{Rd}} in the preamble of a LaTeX document 
-  to make these available when compiling, 
+  put \verb{\usepackage{Rd}} in the preamble of a LaTeX document
+  to make these available when compiling,
   e.g. with \code{\link{texi2pdf}}.
 
   When printing bibentry objects in citation style, a

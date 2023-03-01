@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.6.0 (64-bit)
+R Under development (unstable) (2023-03-01 r83918) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -934,4 +934,136 @@ standardGeneric("chol2inv")
 <environment: 0x1500e88d0>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
+> 
+> ## citation() / bibentry: year will change; even more below (yr, ver., ..), but check is sloppy/may fail
+> options(width=88) # format.bibentry() using strwrap()
+> print(c1 <- citation())
+To cite R in publications use:
+
+  R Core Team (2023). _R: A Language and Environment for Statistical
+  Computing_. R Foundation for Statistical Computing, Vienna, Austria.
+  <https://www.R-project.org/>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2023},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when
+using it for data analysis. See also 'citation("pkgname")' for citing R
+packages.
+> fc1B <- format(c1)
+> fc1N <- format(c1, bibtex=FALSE)
+> stopifnot(exprs = {
++     identical(fc1B[-2], fc1N[-2])
++     (b2 <- fc1B[2]) != (n2 <- fc1N[2]) # bibtex left away (at end of line 2)
++     startsWith(b2, n2)
++ })
+> 
+> pkg <- "nlme"
+> (hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
+[1] TRUE
+> if(hasME) withAutoprint({
++     cat(sprintf("package '%s' version: '%s'\n", pkg, packageVersion(pkg)))
++     c2 <- citation(package=pkg)
++     print(c2)
++     print(c2, bibtex=FALSE) # no final message
++     print(c2, bibtex=TRUE)  # w/ two bibTeX
++     stopifnot(length(c2) >= 2)
++     f2N <- format(c2) # -> format.bibentry(*, style="citation")
++     f2B <- format(c2, bibtex=TRUE)
++     stopifnot(exprs = {
++         print(n <- length(f2N)) == length(f2B)
++         identical(f2N[1], f2B[1])
++         grepl("see these entries in BibTeX",       f2N[n], fixed=TRUE)
++         grepl("'format(<citation>, bibtex=TRUE)'", f2N[n], fixed=TRUE) # "format(..)" was "print(..)"
++         f2B[n] == ""
++         (ie <- -c(1,n)) < 0
++         grepl("A BibTeX entry ", f2B[ie], fixed=TRUE)
++         grepl(" @[A-Z]", f2B[ie]) # @Book etc
++        !grepl(" @[A-Z]", f2N[ie]) # *not* there
++         nchar(f2N[ie]) < nchar(f2B[ie])
++         startsWith(f2B[ie], f2N[ie])
++       })
++ })
+> cat(sprintf("package '%s' version: '%s'\n", pkg, packageVersion(pkg)))
+package 'nlme' version: '3.1.162'
+> c2 <- citation(package = pkg)
+> print(c2)
+To cite package 'nlme' in publications use:
+
+  Pinheiro J, Bates D, R Core Team (2023). _nlme: Linear and Nonlinear Mixed
+  Effects Models_. R package version 3.1-162,
+  <https://CRAN.R-project.org/package=nlme>.
+
+  Pinheiro JC, Bates DM (2000). _Mixed-Effects Models in S and S-PLUS_.
+  Springer, New York. doi:10.1007/b98882 <https://doi.org/10.1007/b98882>.
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)',
+'toBibtex(.)', or set 'options(citation.bibtex.max=999)'.
+> print(c2, bibtex = FALSE)
+To cite package 'nlme' in publications use:
+
+  Pinheiro J, Bates D, R Core Team (2023). _nlme: Linear and Nonlinear Mixed
+  Effects Models_. R package version 3.1-162,
+  <https://CRAN.R-project.org/package=nlme>.
+
+  Pinheiro JC, Bates DM (2000). _Mixed-Effects Models in S and S-PLUS_.
+  Springer, New York. doi:10.1007/b98882 <https://doi.org/10.1007/b98882>.
+> print(c2, bibtex = TRUE)
+To cite package 'nlme' in publications use:
+
+  Pinheiro J, Bates D, R Core Team (2023). _nlme: Linear and Nonlinear Mixed
+  Effects Models_. R package version 3.1-162,
+  <https://CRAN.R-project.org/package=nlme>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {nlme: Linear and Nonlinear Mixed Effects Models},
+    author = {Jos? Pinheiro and Douglas Bates and {R Core Team}},
+    year = {2023},
+    note = {R package version 3.1-162},
+    url = {https://CRAN.R-project.org/package=nlme},
+  }
+
+  Pinheiro JC, Bates DM (2000). _Mixed-Effects Models in S and S-PLUS_.
+  Springer, New York. doi:10.1007/b98882 <https://doi.org/10.1007/b98882>.
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    title = {Mixed-Effects Models in S and S-PLUS},
+    author = {Jos<U+00E9> C. Pinheiro and Douglas M. Bates},
+    year = {2000},
+    publisher = {Springer},
+    address = {New York},
+    doi = {10.1007/b98882},
+  }
+> stopifnot(length(c2) >= 2)
+> f2N <- format(c2)
+> f2B <- format(c2, bibtex = TRUE)
+> stopifnot(exprs = {
++     print(n <- length(f2N)) == length(f2B)
++     identical(f2N[1], f2B[1])
++     grepl("see these entries in BibTeX", f2N[n], fixed = TRUE)
++     grepl("'format(<citation>, bibtex=TRUE)'", f2N[n], fixed = TRUE)
++     f2B[n] == ""
++     (ie <- -c(1, n)) < 0
++     grepl("A BibTeX entry ", f2B[ie], fixed = TRUE)
++     grepl(" @[A-Z]", f2B[ie])
++     !grepl(" @[A-Z]", f2N[ie])
++     nchar(f2N[ie]) < nchar(f2B[ie])
++     startsWith(f2B[ie], f2N[ie])
++ })
+[1] 4
+> 
+> cat('Time elapsed: ', proc.time(),'\n')
+Time elapsed:  2.475 0.269 3.013 0.002 0.001 
 > 

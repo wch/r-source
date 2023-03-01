@@ -710,8 +710,8 @@ function(style)
 
 format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
-         citation.bibtex.max = getOption("citation.bibtex.max", 1),
-         bibtex = length(x) <= citation.bibtex.max,
+         bibtex = length(x) <= 1, # *NOT* using option("citation.bibtex.max") here
+         citMsg = missing(bibtex),
          sort = FALSE,
          macros = NULL,
          ...)
@@ -722,10 +722,6 @@ function(x, style = "text", .bibstyle = NULL,
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
-    if(!missing(citation.bibtex.max))
-	warning(gettextf("Argument '%s' is deprecated; rather set '%s' instead.",
-			 "citation.bibtex.max", "bibtex=*"),
-                domain = NA)
 
     format_via_Rd <- function(f) {
         out <- file()
@@ -793,10 +789,15 @@ function(x, style = "text", .bibstyle = NULL,
           })),
 	  paste(strwrap(c(attr(x, "mfooter"),
 			  if(!bibtex && msg)
-  "To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)',
-  'toBibtex(.)', or set 'options(citation.bibtex.max=999)'."
-		)), collapse = "\n")
-          )
+                          {
+			      prt <- sys.nframe() > 4L && sys.call(-4L)[[1L]] == quote(print.bibentry)
+			      paste0(
+		"To see these entries in BibTeX format, use '", if(prt) "print" else "format",
+		"(<citation>, bibtex=TRUE)', ",
+		if(prt)"'toBibtex(.)', or set 'options(citation.bibtex.max=999)'." else "or 'toBibtex(.)'.")
+                          }
+                )), collapse = "\n")
+         )
     }
 
     out <-
@@ -814,9 +815,7 @@ function(x, style = "text", .bibstyle = NULL,
                    out[!lengths(out)] <- ""
                    unlist(out)
                },
-               "citation" = format_as_citation(.bibentry(x),
-                                               msg = missing(bibtex) &&
-                                                   missing(citation.bibtex.max)),
+               "citation" = format_as_citation(.bibentry(x), msg = citMsg),
                "R" = .format_bibentry_as_R_code(x, ...)
                )
     as.character(out)
@@ -876,7 +875,9 @@ function(x, more = list())
 }
 
 print.bibentry <-
-function(x, style = "text", .bibstyle = NULL, ...)
+function(x, style = "text", .bibstyle = NULL,
+         bibtex = length(x) <= getOption("citation.bibtex.max", 1L), # using option() here
+         ...)
 {
     style <- .bibentry_match_format_style(style)
 
@@ -886,15 +887,15 @@ function(x, style = "text", .bibstyle = NULL, ...)
                    "bibentry" = "bibentry()",
                    sprintf("<0-length %s>", cl)), sep="", "\n")
     } else if(style == "R") {
-	writeLines(format(x, "R", collapse = TRUE, ...))
+	writeLines(format(x, "R", bibtex=bibtex, collapse = TRUE, ...))
     } else {
-	y <- format(x, style, .bibstyle, ...)
+	y <- format(x, style, .bibstyle, bibtex=bibtex, citMsg = missing(bibtex), ...)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
             ## differently.
             ## Old-style with extra empty lines before/after outer
-            ## footer/header: 
+            ## footer/header:
             ##   n <- length(y)
             ##   if(nzchar(header <- y[1L]))
             ##       header <- c("", header, "")
@@ -1111,7 +1112,7 @@ function(..., recursive = FALSE)
     if(length(mfooter) >= 1L) {
         attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
     }
-    
+
     ## return as bibentry object
     .bibentry(rval)
 }
@@ -1195,7 +1196,7 @@ function(`_data`, ...)
     vals <- lapply(tags, function(e) eval(call("$", `_data`, e)))
     ## Or use eval(substitute(`$`(`_data`, e), list(e = e))) ...
     names(vals) <- tags
-    
+
     e <- eval(substitute(list(...)), vals, parent.frame())
 
     for(i in setdiff(names(e), c("mheader", "mfooter"))) {

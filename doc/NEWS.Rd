@@ -681,6 +681,12 @@
       \code{gray()}, \code{rainbow()}, or \code{hcl.colors()} works
       correctly now, thanks to Achim Zeileis' report and patch in
       \PR{18476}.
+
+      \item Formatting and \code{print()}ing of \code{bibentry} objects has
+      dropped the deprecated \code{citation.bibtex.max} argument, such that
+      the \code{bibtex} argument's default for \code{print.bibentry()}
+      depends directly on the \code{citation.bibtex.max} option, whereas in
+      \code{format.bibentry()} the option no longer applies.
     }
   }
 }
