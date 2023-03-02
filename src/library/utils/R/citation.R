@@ -760,7 +760,7 @@ function(x, style = "text", .bibstyle = NULL,
                })
     }
 
-    format_as_citation <- function(x, msg) {
+    format_as_citation <- function(x, msg) { # also (.., bibtex)
         m <- attr(x, "mheader")
         if(is.null(m) &&
            is.null(unlist(x$header)) &&

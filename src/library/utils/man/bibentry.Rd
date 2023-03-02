@@ -27,11 +27,12 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
 \method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
        bibtex = length(x) <= 1,
+       citMsg = missing(bibtex),
        sort = FALSE, macros = NULL, \dots)
 
 \method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
 
-\method{print}{citation}(x, style = "citation", \dots)
+\method{print}{citation} (x, style = "citation", \dots)
 \method{format}{citation}(x, style = "citation", \dots)
 
 \method{toBibtex}{bibentry}(object, escape = FALSE, ...)
@@ -87,6 +88,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     (bib) entries and \code{\link{getOption}("citation.bibtex.max")} (which
     itself is 1 by default).  For example, to see no bibtex at all, you can change the
     default by \code{\link{options}(citation.bibtex.max = 0)}.}
+  \item{citMsg}{\code{\link{logical}} indicating if a \dQuote{message} should be
+    added (to the footer) about how to get BibTeX code when \code{bibtex}
+    is false \emph{and} \code{style = "citation"}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
   \item{macros}{a character string or an object with already loaded Rd
@@ -305,6 +309,9 @@ toBibtex(bref)
 
 ## Transform
 transform(rref, address = paste0(address, ", Europe"))
+
+## BibTeX reminder message (in case of >= 2 refs):
+print(bref, style = "citation")
 
 ## Format in R style
 ## One bibentry() call for each bibentry:

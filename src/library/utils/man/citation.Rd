@@ -1,6 +1,6 @@
 % File src/library/utils/man/citation.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{citation}
@@ -114,7 +114,7 @@ cm <- tryCatch(citation("mgcv"),
                error = function(e) {
                  warning("Recommended package 'mgcv' is not installed properly")
                  stop(e$message) })
-cm # short entries (2-3 lines each)
+cm # short entries (2-3 lines each), plus "reminder message" about getting BibTeX
 print(cm, bibtex = TRUE) # each showing its bibtex code
 }%dont
 }
