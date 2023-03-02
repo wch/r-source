@@ -19,8 +19,7 @@
 
 C <- function(object, contr, how.many, ...)
 {
-    if(isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_"))))
-        object <- as.factor(object)
+    object <- as.factor(object)
     if(!nlevels(object)) stop("object not interpretable as a factor")
     if(!missing(contr) && is.name(Xcontr <- substitute(contr)))
 	contr <- switch(as.character(Xcontr),

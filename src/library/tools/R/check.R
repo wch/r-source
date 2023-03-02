@@ -6726,7 +6726,6 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_ORPHANED_" = "TRUE")
         Sys.setenv("_R_CHECK_EXCESSIVE_IMPORTS_" = "20")
         Sys.setenv("_R_CHECK_DEPENDS_ONLY_DATA_" = "TRUE")
-        Sys.setenv("_R_OPTIONS_STRINGS_AS_FACTORS_" = "FALSE")
 ##        Sys.setenv("_R_CHECK_XREFS_PKGS_ARE_DECLARED_" = "TRUE")
 ##        Sys.setenv("_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_" = "TRUE")
         ## allow this to be overridden if there is a problem elsewhere

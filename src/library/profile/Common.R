@@ -40,13 +40,6 @@ options(scipen = 0)
 options(max.print = 99999)# max. #{entries} in internal printMatrix()
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
 
-if(isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_",
-                                 "FALSE")))) {
-    options(stringsAsFactors = FALSE)
-} else {
-    options(stringsAsFactors = TRUE)
-}
-
 if(!interactive())
     options(showErrorCalls = TRUE)
 
