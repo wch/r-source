@@ -8483,7 +8483,7 @@ function(x, ...)
                       collapse = "\n")
             },
             if(length(y <- x$citation_trouble_when_reading)) {
-                paste(c("Problems when reading CTIATION file:",
+                paste(c("Problems when reading CITATION file:",
                         paste0("  ", y)),
                       collapse = "\n")
             },
