@@ -49,7 +49,7 @@
       separate processes by default (regression in \R 4.2.0).
 
       \item Running examples from HTML documentation now restores
-      previous knitr settings and options (\PR{18420}).
+      previous \pkg{knitr} settings and options (\PR{18420}).
 
       \item Quartz: fonts are now located using Core Graphics API
       instead of deprecated ATS which is no longer supported in the
