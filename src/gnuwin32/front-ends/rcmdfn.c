@@ -293,8 +293,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		return(0);
 	    }
 	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
-		fprintf(stderr, "BATCH %s\n%s%s%s\n", "1.2",
-"Copyright (C) 1997-2004 R Core Team.\n",
+		fprintf(stderr, "R batch front end: %s.%s (r%d)\n\n%s%s%s%s%s\n",
+R_MAJOR, R_MINOR, R_SVN_REVISION,
+"Copyright (C) 1997-", R_YEAR, " The R Core Team.\n",
 "This is free software; see the GNU General Public Licence version 2\n",
 "or later for copying conditions.  There is NO warranty.");
 		return(0);
