@@ -1308,17 +1308,11 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         return(.citation(cit, package))
     }
 
-    year <- sub("-.*", "", meta$`Date/Publication`)
-    if(!length(year)) {
-        if(is.null(meta$Date)) {
-            warning(gettextf("no date field in DESCRIPTION file of package %s",
-                             sQuote(package)),
-                    domain = NA)
-        } else {
-            date <- trimws(as.vector(meta$Date))[1L]
-            date <- strptime(date, "%Y-%m-%d", tz = "GMT")
-            if(!is.na(date)) year <- format(date, "%Y")
-        }
+    year <- sub("-.*", "", meta[["Date/Publication"]])
+    if(!length(year) && !is.null(date <- meta[["Date"]])) {
+        date <- trimws(as.vector(date))[1L]
+        date <- strptime(date, "%Y-%m-%d", tz = "GMT")
+        if(!is.na(date)) year <- format(date, "%Y")
     }
     ## If neither Date/Publication nor Date work, try Packaged (build
     ## time stamp): if this fails too, use NA (PR #16550).
