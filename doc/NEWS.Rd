@@ -697,7 +697,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.2 patched}{
+\section{\Rlogo CHANGES IN R 4.2.3}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
