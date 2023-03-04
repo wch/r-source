@@ -29,7 +29,7 @@ all.equal(target, current, \dots)
           tolerance = sqrt(.Machine$double.eps), scale = NULL,
           countEQ = FALSE,
           formatFUN = function(err, what) format(err),
-          \dots, check.attributes = TRUE)
+          \dots, check.attributes = TRUE, giveErr = FALSE)
 
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
@@ -68,6 +68,8 @@ attr.all.equal(target, current, \dots,
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
+  \item{giveErr}{\code{\link{logical}} indicating if the result should
+    contain the numerical error as an \code{"err"} attribute.}
   \item{use.names}{logical indicating if \code{\link{list}} comparison
     should report differing components by name (if matching) instead of
     integer index.  Note that this comes after \code{\dots} and so must
@@ -164,8 +166,10 @@ attr.all.equal(target, current, \dots,
 all.equal(pi, 355/113)
 # not precise enough (default tol) > relative error
 
-d45 <- pi*(1/4 + 1:10) ; one <- rep(1, 10)
-tan(d45) == one  # mostly FALSE, as not exactly
+quarts <- 1/4 + 1:10 # exact
+d45 <- pi*quarts ; one <- rep(1, 10)
+tan(d45) == one  # mostly FALSE, as typically exact; embarrassingly,
+tanpi(quarts) == one # (is always FALSE (Fedora 34; gcc 11.2.1))
 stopifnot(all.equal(
           tan(d45), one)) # TRUE, but not if we are picky:
 all.equal(tan(d45), one, tolerance = 0)  # to see difference
@@ -196,6 +200,26 @@ mtext(paste("mean(all.equal(x1, x2*(1 + eps_k))) {100 x} Mean rel.diff.=",
 ## With argument  countEQ=TRUE, get "the same" (w/o need for jittering):
 mtext(paste("all.equal(x1,x2, countEQ=TRUE) :",
           signif(all.eqNum(x1,x2, countEQ=TRUE), 3)), line= -6, col=2)
+
+## Using giveErr=TRUE :
+x1. <- x1 * (1+ 1e-9*rnorm(x1))
+str(all.equal(x1, x1., giveErr=TRUE))
+## logi TRUE
+## - attr(*,  "err")= num 8.66e-10
+## - attr(*, "what")= chr "relative"
+
+## Used with stopifnot(), still *showing* diff:
+all.equalShow <- function (...) {
+   r <- all.equal(..., giveErr=TRUE)
+   cat(attr(r,"what"), "err:", attr(r,"err"), "\n")
+   c(r) # can drop attributes, as not used anymore
+}
+# checks, showing error in any case:
+stopifnot(all.equalShow(x1, x1.)) # -> relative err: 8.66002e-10
+tryCatch(error=identity, stopifnot(all.equalShow(x1, 2*x1))) -> eAe
+cat(eaMsg <- conditionMessage(eAe), "\n")
+stopifnot(inherits(eAe, "error"), # stopifnot() giving smart msg:
+          grepl("are not equal", eaMsg, fixed=TRUE))
 
 ## comparison of date-time objects
 now <- Sys.time()

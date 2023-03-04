@@ -165,6 +165,12 @@
       \env{TEMP} are tried in turn) are now fatal.  (On Windows the
       \sQuote{short path} version of the path is tried and used if that
       does not contain a space.)
+
+      \item \code{all.equal.numeric()} gets a new optional switch
+      \code{giveErr} to return the numeric error as attribute.  Relatedly,
+      \code{stopifnot(all.equal<some>(a, b, ..))} is as \dQuote{smart} now,
+      as \code{stopifnot(all.equal(....))} has been already, thus allowing
+      customized \code{all.equal<Some>()} wrappers.
     }
   }
 

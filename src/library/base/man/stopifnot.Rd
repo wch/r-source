@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -75,7 +75,10 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
   true \emph{and} is a call to \code{\link{all.equal}}, the error
   message will report the (first part of the) differences reported by
-  \code{\link{all.equal}(*)}.
+  \code{\link{all.equal}(*)}; since \R 4.3.0, this happens for all calls
+  where \code{"all.equal"} \code{\link{pmatch}()}es the function called,
+  e.g., when that is called \code{all.equalShow}, see the example in
+  \code{\link{all.equal}}.
 }
 \note{
  Trying to use the \code{stopifnot(exprs = ..)} version via a shortcut,

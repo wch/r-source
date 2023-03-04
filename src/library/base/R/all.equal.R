@@ -100,7 +100,7 @@ all.equal.numeric <-
     function(target, current, tolerance = sqrt(.Machine$double.eps),
              scale = NULL, countEQ = FALSE,
              formatFUN = function(err, what) format(err),
-             ..., check.attributes = TRUE)
+             ..., check.attributes = TRUE, giveErr = FALSE)
 {
     if (!is.numeric(tolerance))
         stop("'tolerance' should be numeric")
@@ -170,7 +170,8 @@ all.equal.numeric <-
     if(is.na(xy) || xy > tolerance)
         msg <- c(msg, paste("Mean", what, "difference:", formatFUN(xy, what)))
 
-    if(is.null(msg)) TRUE else msg
+    r <- if(is.null(msg)) TRUE else msg
+    if(giveErr) structure(r, err = xy, what = what) else r
 }
 
 all.equal.character <-
@@ -501,7 +502,7 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
         return("'target' is not a POSIXt")
     if(!inherits(current, "POSIXt"))
         return("'current' is not a POSIXt")
-    target <- as.POSIXct(target)
+    target  <- as.POSIXct(target)
     current <- as.POSIXct(current)
     msg <- NULL
     if(check.tzone) {

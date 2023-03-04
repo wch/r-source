@@ -69,8 +69,9 @@ stopifnot <- function(..., exprs, exprObject, local = TRUE)
 	  dots <- match.call()[-1L]
           if(is.null(msg <- names(dots)) || !nzchar(msg <- msg[i])) {
 	    cl.i <- dots[[i]]
-	    msg <- ## special case for decently written 'all.equal(*)':
-		if(is.call(cl.i) && identical(cl.i[[1]], quote(all.equal)) &&
+	    msg <- ## special case for decently written 'all.equal*(*)':
+		if(is.call(cl.i) &&
+                   identical(1L, pmatch(quote(all.equal), cl.i[[1]])) &&
 		   (is.null(ni <- names(cl.i)) || length(cl.i) == 3L ||
 		    length(cl.i <- cl.i[!nzchar(ni)]) == 3L))
 
