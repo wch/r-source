@@ -1974,11 +1974,11 @@ add_dummies <- function(dir, Log)
                       sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
         out <- R_runR2(Rcmd)
         if (length(out)) {
-            pos <- which(startsWith(out,
-                                    "Found the following apparent S3 methods"))
+            pos <- which(startsWith(out, "Mismatches for") |
+                         startsWith(out, "Apparent methods"))
             if(!length(pos)) {
                 out1 <- out
-                out2 <-character()
+                out2 <- character()
             } else {
                 pos <- pos[1L]
                 out1 <- out[seq_len(pos - 1L)]
