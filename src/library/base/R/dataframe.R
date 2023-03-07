@@ -1702,13 +1702,7 @@ Summary.data.frame <- function(..., na.rm)
 }
 
 xtfrm.data.frame <- function(x) {
-    if(tolower(Sys.getenv("_R_STOP_ON_XTFRM_DATA_FRAME_")) %in%
-       c("1", "yes", "true"))
-        stop("cannot xtfrm data frames")
-    else {
-        warning("cannot xtfrm data frames")
-        NextMethod("xtfrm")
-    }
+    stop("cannot xtfrm data frames")
 }
 
 list2DF <-
