@@ -5003,7 +5003,8 @@ to all the C, C++ and Fortran compiler flags (even though
 @code{glibc} and none of these are documented for @code{gfortran}).
 Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 @code{printf} into almost all C++ code, and @command{R CMD check
---as-cran} will warn.
+--as-cran} will warn.  As from Fedora 38 it will use
+@code{-D_FORTIFY_SOURCE=3}.
 
 @menu
 * Clang::
