@@ -171,6 +171,15 @@
       \code{stopifnot(all.equal<some>(a, b, ..))} is as \dQuote{smart} now,
       as \code{stopifnot(all.equal(....))} has been already, thus allowing
       customized \code{all.equal<Some>()} wrappers.
+
+      \item \R on Windows is now able to work with path names longer than
+      260 characters when these are enabled in the system (requires at least
+      Windows 10 version 1607).  Packages should be updated to work with
+      long paths as well, instead of assuming \code{PATH_MAX} to be the
+      maximum length.  Custom front-ends and applications embedding \R need
+      to update their manifests if they wish to allow this feature.  See
+      \url{https://blog.r-project.org/2023/03/07/path-length-limit-on-windows}
+      for more information.
     }
   }
 
