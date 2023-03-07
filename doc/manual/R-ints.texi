@@ -4251,11 +4251,6 @@ Default: true.
 If set to a true value, the check will exit on the first error.
 Default: false.
 
-@item _R_CHECK_S3_METHODS_NOT_REGISTERED_
-If set to a true value, report (apparent) S3 methods exported but not
-registered.
-Default: true.
-
 @item _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_
 If set to a true value, report already registered S3 methods in
 base/recommended packages which are overwritten when this package's
@@ -4640,7 +4635,6 @@ _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
 _R_CHECK_REPLACING_IMPORTS_=TRUE
 _R_CHECK_SCREEN_DEVICE_=stop
 _R_CHECK_TOPLEVEL_FILES_=TRUE
-_R_CHECK_S3_METHODS_NOT_REGISTERED_=TRUE
 _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_=TRUE
 _R_CHECK_PRAGMAS_=TRUE
 _R_CHECK_COMPILATION_FLAGS_=TRUE

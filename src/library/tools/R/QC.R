@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -2370,7 +2370,7 @@ function(package, dir, lib.loc = NULL)
     ## registered (in fact, looking at GEN.CLS matches also for generics
     ## found in the former base packages and the direct strong package
     ## dependencies), controllable via the environment variable
-    ## _R_CHECK_S3_METHODS_NOT_REGISTERED_.  Should we contiue doing so?
+    ## _R_CHECK_S3_METHODS_NOT_REGISTERED_.  Should we continue doing so?
     ## Such functions have not been used for S3 dispatch for several
     ## years now, so it would seem that reporting these functions is no
     ## longer necessary.
