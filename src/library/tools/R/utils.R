@@ -826,6 +826,7 @@ function(x, predicate = NULL, recursive = FALSE)
     calls <- list()
     gatherer <- function(e) {
         if(f(e)) calls <<- c(calls, list(e))
+        if(is.function(e)) e <- as.list(e)
         if(is.recursive(e))
             for(i in seq_along(e)) gatherer(e[[i]])
     }
