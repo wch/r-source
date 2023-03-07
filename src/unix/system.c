@@ -189,10 +189,7 @@ extern int R_isWriteableDir(char *path);
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
-#ifdef HAVE_X11
-    Rboolean useX11 = TRUE;
-#endif
-    Rboolean  useTk = FALSE;
+    Rboolean useX11 = TRUE, useTk = FALSE;
     char *p, msg[1024], cmdlines[10000], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -365,19 +362,14 @@ int Rf_initialize_R(int ac, char **av)
 		    p = "X11";
 		}
 	    }
-#ifdef HAVE_X11
 	    if(!strcmp(p, "none"))
 		useX11 = FALSE; // not allowed from R.sh
-	    else
-#endif
 #ifdef HAVE_AQUA
-	    if(!strcmp(p, "aqua"))
+	    else if(!strcmp(p, "aqua"))
 		useaqua = TRUE; // not allowed from R.sh but used by R.app
 #endif
-#ifdef HAVE_X11
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
-#endif
 	    else if(!strcmp(p, "Tk") || !strcmp(p, "tk"))
 		useTk = TRUE;
 	    else {
