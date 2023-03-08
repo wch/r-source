@@ -53,6 +53,7 @@ S3method("as.raster", "numeric")
 S3method("as.raster", "character")
 S3method("as.raster", "matrix")
 S3method("as.raster", "array")
+S3method("as.raster", "raw")
 
 S3method("as.matrix", "raster")
 S3method("is.na", "raster")
