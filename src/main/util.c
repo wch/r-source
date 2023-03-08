@@ -2414,7 +2414,16 @@ attribute_hidden SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(streql(s, "ASCII")) {
 		collationLocaleSet = 2;
 	    } else {
-		if(strcmp(s, "none")) {
+		int usable_icu = 1;
+#ifdef Win32
+		/* ICU 72 requires this function (and other from Windows 7) */
+		if (!GetProcAddress(GetModuleHandle(TEXT("kernel32")),
+		                    "ResolveLocaleName")) {
+		    usable_icu = 0;
+		    warning("cannot use ICU on this system");
+		}
+#endif
+		if(usable_icu && strcmp(s, "none")) {
 		    if(streql(s, "default"))
 			uloc_setDefault(getLocale(), &status);
 		    else uloc_setDefault(s, &status);
@@ -2502,7 +2511,16 @@ int Scollate(SEXP a, SEXP b)
 	/* FIXME: as ICU does not support C as locale, could we use the Unix
 	   behavior on all systems? */
 	const char *p = getenv("R_ICU_LOCALE");
-	if(p && p[0] && (!useC || !strcmp(p, "C"))) {
+	int use_icu = p && p[0] && (!useC || !strcmp(p, "C"));
+
+	/* ICU 72 requires this function (and other from Windows 7) */
+	if (use_icu &&
+	    !GetProcAddress(GetModuleHandle(TEXT("kernel32")),
+			    "ResolveLocaleName")) {
+	    use_icu = 0;
+	    warning("cannot use ICU on this system");
+	}
+	if(use_icu) {
 #endif
 	    UErrorCode status = U_ZERO_ERROR;
 	    uloc_setDefault(getLocale(), &status);

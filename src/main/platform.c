@@ -3558,11 +3558,21 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("PCRE"));
 #ifdef USE_ICU
-    UVersionInfo icu;
-    char pu[U_MAX_VERSION_STRING_LENGTH];
-    u_getVersion(icu);
-    u_versionToString(icu, pu);
-    SET_STRING_ELT(ans, i, mkChar(pu));
+    int use_icu = 1;
+#ifdef Win32
+    /* ICU 72 requires this function (and other from Windows 7) */
+    if (!GetProcAddress(GetModuleHandle(TEXT("kernel32")),
+                        "ResolveLocaleName"))
+	use_icu = 0;
+#endif
+    if (use_icu) {
+	UVersionInfo icu;
+	char pu[U_MAX_VERSION_STRING_LENGTH];
+	u_getVersion(icu);
+	u_versionToString(icu, pu);
+	SET_STRING_ELT(ans, i, mkChar(pu));
+    } else
+	SET_STRING_ELT(ans, i, mkChar(""));
 #else
     SET_STRING_ELT(ans, i, mkChar(""));
 #endif

@@ -445,16 +445,20 @@ const char *getTZinfo(void)
 	    Olson[63] = '\0';
 	} else {
 #ifdef USE_ICU
-	    wchar_t zone[64];
-	    UErrorCode status = U_ZERO_ERROR;
-	    ucal_getDefaultTimeZone(zone, 64, &status);
-	    if (U_SUCCESS(status) && wcscmp(zone, L"Etc/Unknown")) {
-		wcstombs(Olson, zone, 64);
-		Olson[63] = '\0';
+	    /* ICU 72 requires this function (and other from Windows 7) */
+	    if (GetProcAddress(GetModuleHandle(TEXT("kernel32")),
+	                       "ResolveLocaleName")) {
+		wchar_t zone[64];
+		UErrorCode status = U_ZERO_ERROR;
+		ucal_getDefaultTimeZone(zone, 64, &status);
+		if (U_SUCCESS(status) && wcscmp(zone, L"Etc/Unknown")) {
+		    wcstombs(Olson, zone, 64);
+		    Olson[63] = '\0';
 # ifdef DEBUG
-		printf("TZ = %s\n", Olson);
+		    printf("TZ = %s\n", Olson);
 # endif
-		return Olson;
+		    return Olson;
+		}
 	    }
 #endif
 	    GetTimeZoneInformation(&tzi);
