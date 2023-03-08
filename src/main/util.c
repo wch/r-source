@@ -2370,19 +2370,13 @@ static const char *getLocale(void)
     //        use ICU by default on Windows yet for collation, even though
     //        already having UTF-8 as the native encoding.
 
-    // This call is >= Vista/Server 2008
     // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
-    PGSDLN pGSDLN = (PGSDLN)
-	GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
-		       "GetSystemDefaultLocaleName");
-    if(pGSDLN) {
-	WCHAR wcBuffer[BUFFER_SIZE];
-	pGSDLN(wcBuffer, BUFFER_SIZE);
-	static char locale[BUFFER_SIZE];
-	WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
-			    locale, BUFFER_SIZE, NULL, NULL);
-	return locale;
-    } else return "root";
+    WCHAR wcBuffer[BUFFER_SIZE];
+    GetSystemDefaultLocaleName(wcBuffer, BUFFER_SIZE);
+    static char locale[BUFFER_SIZE];
+    WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
+			locale, BUFFER_SIZE, NULL, NULL);
+    return locale;
 }
 #else
 static const char *getLocale(void)

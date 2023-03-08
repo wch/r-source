@@ -2276,61 +2276,9 @@ attribute_hidden SEXP do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef Win32
 
-#if _WIN32_WINNT < 0x0600
-/* available from Windows Vista */
-typedef enum _FILE_INFO_BY_HANDLE_CLASS {
-  FileBasicInfo,
-  FileStandardInfo,
-  FileNameInfo,
-  FileRenameInfo,
-  FileDispositionInfo,
-  FileAllocationInfo,
-  FileEndOfFileInfo,
-  FileStreamInfo,
-  FileCompressionInfo,
-  FileAttributeTagInfo,
-  FileIdBothDirectoryInfo,
-  FileIdBothDirectoryRestartInfo,
-  FileIoPriorityHintInfo,
-  FileRemoteProtocolInfo,
-  FileFullDirectoryInfo,
-  FileFullDirectoryRestartInfo,
-  FileStorageInfo,
-  FileAlignmentInfo,
-  FileIdInfo,
-  FileIdExtdDirectoryInfo,
-  FileIdExtdDirectoryRestartInfo,
-  FileDispositionInfoEx,
-  FileRenameInfoEx,
-  MaximumFileInfoByHandleClass,
-  FileCaseSensitiveInfo,
-  FileNormalizedNameInfo
-} FILE_INFO_BY_HANDLE_CLASS, *PFILE_INFO_BY_HANDLE_CLASS;
-
-typedef struct _FILE_NAME_INFO {
-  DWORD FileNameLength;
-  WCHAR FileName[1];
-} FILE_NAME_INFO, *PFILE_NAME_INFO;
-#endif
-
-typedef BOOL (WINAPI *LPFN_GFIBH_EX) (HANDLE, FILE_INFO_BY_HANDLE_CLASS,
-                                      LPVOID, DWORD);
-
 int attribute_hidden R_is_redirection_tty(int fd)
 {
     /* for now detects only msys/cygwin redirection tty */
-    static LPFN_GFIBH_EX gfibh = NULL;
-    static Rboolean initialized = FALSE;
-
-    if (!initialized) {
-	initialized = TRUE;
-	gfibh = (LPFN_GFIBH_EX) GetProcAddress(
-	    GetModuleHandle(TEXT("kernel32")),
-	    "GetFileInformationByHandleEx");
-    }
-    if (gfibh == NULL)
-	return 0;
-
     HANDLE h = (HANDLE) _get_osfhandle(fd);
     if (h == INVALID_HANDLE_VALUE || GetFileType(h) != FILE_TYPE_PIPE)
 	return 0;
@@ -2341,7 +2289,7 @@ int attribute_hidden R_is_redirection_tty(int fd)
     if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
 	return 0;
     fnInfo->FileNameLength = 0; /* most likely not needed */
-    BOOL r = gfibh(h, FileNameInfo, fnInfo, size);
+    BOOL r = GetFileInformationByHandleEx(h, FileNameInfo, fnInfo, size);
     if (r || GetLastError() != ERROR_MORE_DATA) {
 	free(fnInfo);
 	return 0;
@@ -2353,7 +2301,7 @@ int attribute_hidden R_is_redirection_tty(int fd)
     if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
 	return 0;
     fnInfo->FileNameLength = fnLength;
-    r = gfibh(h, FileNameInfo, fnInfo, size);
+    r = GetFileInformationByHandleEx(h, FileNameInfo, fnInfo, size);
     int res = 0;
     if (r)
 	/* note that fnInfo->FileName is not null terminated */

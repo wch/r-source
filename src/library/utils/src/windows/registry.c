@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file registry.c
- *  Copyright (C) 2005--2013  The R Core Team
+ *  Copyright (C) 2005--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,13 +24,7 @@
 
 #include "win-nls.h"
 
-
 #include "Defn.h"
-/* Mingw-w64 defines this to be 0x0502 */
-#ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0502 /* for KEY_WOW64_64KEY */
-#endif
-
 #include <windows.h>
 
 

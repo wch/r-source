@@ -41,10 +41,6 @@
 #include "console.h"
 #include "rui.h"
 #define WIN32_LEAN_AND_MEAN 1
-/* Mingw-w64 defines this to be 0x0502 */
-#ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0500
-#endif
 #include <windows.h>
 #include "devWindows.h"
 #define DEVWINDOWS 1

@@ -35,9 +35,6 @@
 #include "getline/getline.h"
 #include "getline/wc_history.h"
 #define WIN32_LEAN_AND_MEAN 1
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0500     /* for MEMORYSTATUSEX */
-#endif
 #include <windows.h>		/* for CreateEvent,.. */
 #include <shlobj.h>		/* for SHGetKnownFolderPath */
 #include <knownfolders.h>
