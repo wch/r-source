@@ -814,7 +814,20 @@ function(x, dir, add = FALSE)
 .find_calls <-
 function(x, predicate = NULL, recursive = FALSE)
 {
-    x <- if(is.call(x)) list(x) else as.list(x)
+    calls <- list()
+
+    ## FIXME:
+    ## As of 2023-03-07, as.list() fails for classed functions or
+    ## environments.
+    
+    if(!is.recursive(x) || is.environment(x)) return(calls)
+    
+    x <- if(is.call(x))
+             list(x)
+         else if(is.function(x))
+             as.list.function(x)
+         else
+             as.list(x)
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
@@ -823,13 +836,14 @@ function(x, predicate = NULL, recursive = FALSE)
 
     if(!recursive) return(Filter(f, x))
 
-    calls <- list()
     gatherer <- function(e) {
         if(f(e)) calls <<- c(calls, list(e))
-        if(is.function(e)) e <- as.list(e)
-        if(is.recursive(e))
+        if(is.function(e))
+            e <- as.list.function(e)
+        if(is.recursive(e) && !is.environment(e))
             for(i in seq_along(e)) gatherer(e[[i]])
     }
+
     gatherer(x)
 
     calls

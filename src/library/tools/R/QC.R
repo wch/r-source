@@ -2641,6 +2641,34 @@ function(package, dir, lib.loc = NULL)
         i1 <- !(names(bad_methods) %in% g.c)
         ## Generic not generic?  One can register an S3 method for an S4
         ## generic.
+        if(any(i3 <- i1 & (gen %in% generics_in_base))) {
+            ## Check whether the base generics are actually called.
+            ## Note that these things are hard to find out: we check for
+            ## calls to names of base generics, but these could be local
+            ## functions ...
+            p3 <- which(i3)
+            ## See .predicate_for_calls_with_names().
+            gennames <- intersect(gen, generics_in_base)
+            predicate <- function(e) {
+                (is.call(e) &&
+                 ((is.name(x <- e[[1L]]) &&
+                   (as.character(x) %in% gennames)) ||
+                  (is.call(x <- e[[1L]]) &&
+                   is.name(x[[1L]]) &&
+                   (as.character(x[[1L]]) == "::") &&
+                   (as.character(x[[2L]]) == "base") &&
+                   (as.character(x[[3L]]) %in% gennames))))
+            }
+            calls <- lapply(code_env, .find_calls, predicate,
+                            recursive = TRUE)
+            used <- (gen[p3] %in% unique(.call_names(unlist(calls))))
+            if(!all(used)) {
+                keep <- - p3[!used]
+                bad_methods <- bad_methods[keep]
+                gen <- gen[keep]
+                i1 <- i1[keep]
+            }
+        }
         i2 <- !(gen %in% generics)
         if(any(i2) && .isMethodsDispatchOn()) {
             p2 <- which(i2)
@@ -2690,40 +2718,49 @@ function(package, dir, lib.loc = NULL)
 format.checkS3methods <-
 function(x, ...)
 {
-    format_args <- function(s)
+    .fmt_args <- function(s)
         paste0("function(", paste(s, collapse = ", "), ")")
 
-    .fmt <- function(entry) {
-        c(paste0(names(entry)[1L], ":"),
-          strwrap(format_args(entry[[1L]]), indent = 2L, exdent = 11L),
-          paste0(names(entry)[2L], ":"),
-          strwrap(format_args(entry[[2L]]), indent = 2L, exdent = 11L),
-          "")
+    .fmt_bad_one <- function(e) {
+        paste(c(paste0(names(e)[1L], ":"),
+                strwrap(.fmt_args(e[[1L]]), indent = 2L, exdent = 11L),
+                paste0(names(e)[2L], ":"),
+                strwrap(.fmt_args(e[[2L]]), indent = 2L, exdent = 11L)),
+              collapse = "\n")
+    }
+
+    .fmt_bad_all <- function(x) {
+        if(!length(x)) return(character())
+        paste(vapply(x, .fmt_bad_one, ""), collapse = "\n\n")
     }
 
     show_possible_issues <-
         config_val_to_logical(Sys.getenv("_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_",
                                          "FALSE"))
 
-    c(as.character(unlist(lapply(x, .fmt))),
-      if(show_possible_issues) {
-          c(character(),
-            if(length(bad <- c(attr(x,
-                                    "bad_methods_not_registered_with_generic_in_code"),
-                               attr(x,
-                                    "bad_methods_not_registered_with_generic_not_in_code"))))
-                c("Mismatches for apparent methods not registered:",
-                  as.character(unlist(lapply(bad, .fmt)))),
-            if(length(bad <- attr(x,
-                                  "bad_methods_registered_for_non_generic")))
-                c("Mismatches for methods registered for non-generic:",
-                  as.character(unlist(lapply(bad, .fmt)))),
-            if(length(met <- attr(x,
-                                  "methods_not_registered_with_exported_generic")))
-                c("Apparent methods for exported generics not registered:",
-                  strwrap(paste(sort(met), collapse = " "),
-                          exdent = 2L, indent = 2L)))
-      })
+    s <- .fmt_bad_all(x)
+    if(show_possible_issues)
+        s <- c(s,
+               if(length(bad <- c(attr(x,
+                                       "bad_methods_not_registered_with_generic_in_code"),
+                                  attr(x,
+                                       "bad_methods_not_registered_with_generic_not_in_code"))))
+                   paste0("Mismatches for apparent methods not registered:\n",
+                          .fmt_bad_all(bad)),
+               if(length(bad <- attr(x,
+                                     "bad_methods_registered_for_non_generic")))
+                   paste0("Mismatches for methods registered for non-generic:\n",
+                          .fmt_bad_all(bad)),
+               if(length(met <- attr(x,
+                                     "methods_not_registered_with_exported_generic")))
+                   paste0("Apparent methods for exported generics not registered:\n",
+                          paste(strwrap(paste(sort(met), collapse = " "),
+                                        exdent = 2L, indent = 2L),
+                                collapse = "\n")))
+    if(length(s))
+        paste(s, collapse = "\n\n")
+    else
+        character()
 }
 
 ### * checkReplaceFuns
