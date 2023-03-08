@@ -3858,27 +3858,29 @@ add_dummies <- function(dir, Log)
             } else resultLog(Log, "OK")
         }
 
-        ## Look to see if there is a startup function.
-        Rcmd <- sprintf("ls(asNamespace('%s'), all = TRUE)", pkgname)
-        out <- R_runR0(Rcmd, opts, arch = arch)
-        if (any(grepl("[.]on(Load|Attach)", out))) {
-            checkingLog(Log, "startup messages can be suppressed")
-            Rcmd <- sprintf("suppressPackageStartupMessages(library(%s, lib.loc = '%s',  warn.conflicts=FALSE))", pkgname, libdir)
-            opts <- if(nzchar(arch)) R_opts4 else R_opts2
-            env <- character()
-            if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
-            t1 <- proc.time()
-            out <- R_runR0(Rcmd, opts, env, arch = arch)
-            t2 <- proc.time()
-            print_time(t1, t2, Log)
-            if (length(out)) {
-                noteLog(Log)
-                printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                wrapLog("\nIt looks like this package",
-                        "(or a package it requires)",
-                        "has a startup message which cannot be suppressed:",
-                        "see ?packageStartupMessage.\n")
-            } else resultLog(Log, "OK")
+        if(!extra_arch && !is_base_pkg) {
+            ## Look to see if there is a startup function.
+            Rcmd <- sprintf("ls(asNamespace('%s'), all = TRUE)", pkgname)
+            out <- R_runR0(Rcmd, opts, arch = arch)
+            if (any(grepl("[.]on(Load|Attach)", out))) {
+                checkingLog(Log, "startup messages can be suppressed")
+                Rcmd <- sprintf("suppressPackageStartupMessages(library(%s, lib.loc = '%s',  warn.conflicts=FALSE))", pkgname, libdir)
+                opts <- if(nzchar(arch)) R_opts4 else R_opts2
+                env <- character()
+                if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
+                t1 <- proc.time()
+                out <- R_runR0(Rcmd, opts, env, arch = arch)
+                t2 <- proc.time()
+                print_time(t1, t2, Log)
+                if (length(out)) {
+                    noteLog(Log)
+                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                    wrapLog("\nIt looks like this package",
+                            "(or a package it requires)",
+                            "has a startup message which cannot be suppressed:",
+                            "see ?packageStartupMessage.\n")
+                } else resultLog(Log, "OK")
+            }
         }
 
         if(!extra_arch && !is_base_pkg) {
