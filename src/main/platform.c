@@ -1646,9 +1646,18 @@ attribute_hidden SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < nfile; i++) {
 	LOGICAL(ans)[i] = 0;
 	if (STRING_ELT(file, i) != NA_STRING) {
+	    /* documented to silently report false for paths that would be too
+	       long after expansion */
 #ifdef Win32
-	    LOGICAL(ans)[i] =
-		R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
+	    /* Package XML sends arbitrarily long strings to file.exists! */
+	    size_t len = strlen(CHAR(STRING_ELT(file, i)));
+	    /* 32767 bytes will still fit to the wide char buffer used
+	       by filenameToWchar */
+	    if (len > 32767)
+		LOGICAL(ans)[i] = FALSE;
+	    else
+		LOGICAL(ans)[i] =
+		    R_WFileExists(filenameToWchar(STRING_ELT(file, i), TRUE));
 #else
 	    // returns NULL if not translatable
 	    const char *p = translateCharFP2(STRING_ELT(file, i));
