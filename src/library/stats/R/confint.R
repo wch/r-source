@@ -19,7 +19,7 @@
 
 confint <- function(object, parm, level = 0.95, ...) UseMethod("confint")
 
-format.perc <- function(probs, digits)
+format_perc_tmp <- function(probs, digits)
     ## Not yet exported, maybe useful in other contexts:
     ## quantile.default() sometimes uses a version of it
     paste(format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits),
@@ -37,7 +37,7 @@ confint.lm <- function(object, parm, level = 0.95, ...)
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     fac <- qt(a, object$df.residual) # difference from default method
-    pct <- format.perc(a, 3)
+    pct <- format_perc_tmp(a, 3)
     ci <- array(NA_real_,
                 dim = c(length(parm), 2L), dimnames = list(parm, pct))
     ci[] <- cf[parm] + ses[parm] %o% fac
@@ -68,7 +68,7 @@ confint.default <- function (object, parm, level = 0.95, ...)
     else if(is.numeric(parm)) parm <- pnames[parm]
     a <- (1 - level)/2
     a <- c(a, 1 - a)
-    pct <- format.perc(a, 3)
+    pct <- format_perc_tmp(a, 3)
     fac <- qnorm(a)
     ci <- array(NA, dim = c(length(parm), 2L),
 		dimnames = list(parm, pct))
