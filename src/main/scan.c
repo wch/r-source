@@ -311,8 +311,14 @@ static int scanchar(Rboolean inQuote, LocalData *d)
 static void scan_cleanup(void *data)
 {
     LocalData *ld = data;
-    if(!ld->ttyflag && !ld->wasopen) ld->con->close(ld->con);
-    if (ld->quoteset[0]) free(ld->quoteset);
+    if(ld->con && !ld->ttyflag && !ld->wasopen) {
+	ld->con->close(ld->con);
+	ld->con = NULL;
+    }
+    if(ld->quoteset && ld->quoteset[0]) {
+	free(ld->quoteset);
+	ld->quoteset = NULL;
+    }
 }
 
 #include "RBufferUtils.h"
@@ -909,6 +915,13 @@ attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	error(_("invalid decimal separator"));
 
+    /* set up a context which will close the connection if there is
+       an error or user interrupt */
+    begincontext(&cntxt, CTXT_CCODE, R_GlobalContext->call, R_BaseEnv,
+		 R_BaseEnv, R_NilValue, R_NilValue);
+    cntxt.cend = &scan_cleanup;
+    cntxt.cenddata = &data;
+
     if (isString(quotes)) {
 	const char *sc = translateChar(STRING_ELT(quotes, 0));
 	if (strlen(sc)) data.quoteset = Rstrdup(sc);
@@ -958,13 +971,6 @@ attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     ans = R_NilValue;		/* -Wall */
     data.save = 0;
-
-    /* set up a context which will close the connection if there is
-       an error or user interrupt */
-    begincontext(&cntxt, CTXT_CCODE, R_GlobalContext->call, R_BaseEnv,
-		 R_BaseEnv, R_NilValue, R_NilValue);
-    cntxt.cend = &scan_cleanup;
-    cntxt.cenddata = &data;
 
     switch (TYPEOF(what)) {
     case LGLSXP:
