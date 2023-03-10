@@ -970,7 +970,7 @@ attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		c = scanchar(FALSE, &data);
 		if (!j--) {
 		    R_CheckUserInterrupt();
-		    j = 1000;
+		    j = 10000;
 		}
 		if (c == '\n' || c == R_EOF)
 		    break;
