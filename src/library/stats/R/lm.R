@@ -708,11 +708,12 @@ predict.lm <-
     p1 <- seq_len(p)
     piv <- if(p) (qrX <- qr.lm(object))$pivot[p1]
     hasNonest <- (p < ncol(X) && !noData)
+    nonest <- integer(0L)
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     if(hasNonest) {
-      msg <- "prediction from a rank-deficient fit may be misleading"
+      msg1 <- gettext("prediction from rank-deficient fit")
       if(rankdeficient == "simple") {
-        warning(msg)
+        warning(gettextf('%s; consider predict(., rankdeficient="NA")', msg1), domain=NA)
       } else { # rankdeficient more than "simple"
         if(verbose) message("lower-rank qr: determining non-estimable cases")
         stopifnot(is.numeric(tol), tol > 0)
@@ -740,22 +741,23 @@ predict.lm <-
         ## Find indices of non-estimable cases;  estimable <==> "Xb is basically 0"
         nonest <- which(tol * X.norm <= Xb.norm)
         if(rankdeficient == "warnif" && length(nonest))# warn only if there's a case
-            warning(msg)
+            warning(gettextf('%s; attr(*, "non-estim") has doubtful cases', msg1), domain=NA)
+                   ## newdata[i, ] is doubtful for indices in attr(*, "non-estim")
       }
-    } else # otherwise everything is estimable
-        nonest <- integer(0L)
+    } # otherwise everything is estimable
 
     beta <- object$coefficients
     if(type != "terms") { # type == "terms" re-computes {predictor, ip}
         predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
-        if(startsWith(rankdeficient, "NA") && length(nonest)) {
-            predictor[nonest] <- NA
-            if(rankdeficient == "NAwarn") warning(msg)
-        }
-        else if(rankdeficient == "non-estim")
-            attr(predictor, "non-estim") <- nonest
         if (!is.null(offset))
             predictor <- predictor + offset
+        if(startsWith(rankdeficient, "NA") && length(nonest)) {
+            predictor[nonest] <- NA
+            if(rankdeficient == "NAwarn")
+                warning(gettextf("%s: NAs produced for non-estimable cases", msg1), domain=NA)
+        }
+        else if(rankdeficient == "non-estim" || (hasNonest && length(nonest)))
+            attr(predictor, "non-estim") <- nonest
     }
     interval <- match.arg(interval)
     if (interval == "prediction") {
@@ -901,7 +903,7 @@ predict.lm <-
 	list(fit = predictor, se.fit = se,
 	     df = df, residual.scale = sqrt(res.var))
     else predictor
-}
+} ## {predict.lm}
 
 effects.lm <- function(object, set.sign = FALSE, ...)
 {

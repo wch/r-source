@@ -46,16 +46,17 @@
     \describe{
       \item{\code{"warnif"}:}{gives a \code{\link{warning}} only in case of
 	predicting \sQuote{non-estimable} cases, i.e., vectors not in the
-	same predictor subspace as the original data (with tolerance \code{tol}).}
-      \item{\code{"simple"}:}{is back compatible, possibly giving dubious
-	predictions in non-estimable cases, and always signals a \code{\link{warning}}.}
+	same predictor subspace as the original data (with tolerance
+	\code{tol}).  In that case, the non-estimable indices are also
+	returned as attribute \code{"non-estim"} (see \code{rankdeficient="non-estim"}).}
+      \item{\code{"simple"}:}{is back compatible to \R < 4.3.0, possibly giving dubious
+	predictions in non-estimable cases, and always signalling a \code{\link{warning}}.}
       \item{\code{"non-estim"}:}{gives the same predictions without
-	\code{\link{warning}}, but with an
-	attribute \code{\link{attr}(*, "non-estim")} with indices
-	in \code{1:nrow(newdata)} of new data observations which are deemed
-	non-estimable.}
+	\code{\link{warning}}, and with an attribute \code{\link{attr}(*, "non-estim")}
+	with indices in \code{1:nrow(newdata)} of new data observations
+	which are deemed non-estimable.}
       \item{\code{"NA"}:    }{predicts \code{NA} for non-estimable new data,
-	silently.}
+	silently.  Often recommmended in new code.}
       \item{\code{"NAwarn"}:}{predicts \code{NA} for non-estimable new data
 	with a \code{\link{warning}}.}
     }
