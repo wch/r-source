@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3613,7 +3613,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP m
 	macros = InstallKeywords();
 	
     PROTECT(macros);
-    PROTECT(parseState.xxMacroList = R_NewHashedEnv(macros, ScalarInteger(0)));
+    PROTECT(parseState.xxMacroList = R_NewHashedEnv(macros, 0));
     PROTECT(parseState.mset = R_NewPreciousMSet(50));
     
     parseState.Value = R_NilValue;
@@ -3833,7 +3833,7 @@ static SEXP InstallKeywords(void)
     int i, num;
     SEXP result, name, val;
     num = sizeof(keywords)/sizeof(keywords[0]);
-    PROTECT(result = R_NewHashedEnv(R_EmptyEnv, ScalarInteger(num)));
+    PROTECT(result = R_NewHashedEnv(R_EmptyEnv, num));
     for (i = 0; keywords[i].name; i++) {
         name = install(keywords[i].name);
         PROTECT(val = ScalarInteger(keywords[i].token));

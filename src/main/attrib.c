@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -694,7 +694,7 @@ static SEXP R_S4_extends_table = 0;
 static SEXP cache_class(const char *class, SEXP klass)
 {
     if(!R_S4_extends_table) {
-	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
+	R_S4_extends_table = R_NewHashedEnv(R_NilValue, 0);
 	R_PreserveObject(R_S4_extends_table);
     }
     if(isNull(klass)) {
@@ -713,7 +713,7 @@ static SEXP S4_extends(SEXP klass, Rboolean use_tab) {
     if(!s_extends) {
 	s_extends = install("extends");
 	s_extendsForS3 = install(".extendsForS3");
-	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
+	R_S4_extends_table = R_NewHashedEnv(R_NilValue, 0);
 	R_PreserveObject(R_S4_extends_table);
     }
     if(!isMethodsDispatchOn()) {

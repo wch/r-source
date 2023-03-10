@@ -368,15 +368,14 @@ static SEXP R_NewHashTable(int size)
   size.  The only non-static hash table function.
 */
 
-SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
+SEXP R_NewHashedEnv(SEXP enclos, int size)
 {
     SEXP s;
 
     PROTECT(enclos);
-    PROTECT(size);
     PROTECT(s = NewEnvironment(R_NilValue, R_NilValue, enclos));
-    SET_HASHTAB(s, R_NewHashTable(asInteger(size)));
-    UNPROTECT(3);
+    SET_HASHTAB(s, R_NewHashTable(size));
+    UNPROTECT(2);
     return s;
 }
 
@@ -672,7 +671,7 @@ attribute_hidden void InitGlobalEnv(void)
 {
     R_NamespaceSymbol = install(".__NAMESPACE__.");
 
-    R_GlobalEnv = R_NewHashedEnv(R_BaseEnv, ScalarInteger(0));
+    R_GlobalEnv = R_NewHashedEnv(R_BaseEnv, 0);
     R_MethodsNamespace = R_GlobalEnv; // so it is initialized.
 #ifdef NEW_CODE /* Not used */
     HASHTAB(R_GlobalEnv) = R_NewHashTable(100);
@@ -688,7 +687,7 @@ attribute_hidden void InitGlobalEnv(void)
     SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
     R_BaseNamespaceName = ScalarString(mkChar("base"));
     R_PreserveObject(R_BaseNamespaceName);
-    R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
+    R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, 0);
     R_PreserveObject(R_NamespaceRegistry);
     defineVar(R_BaseSymbol, R_BaseNamespace, R_NamespaceRegistry);
     /**** needed to properly initialize the base namespace */
@@ -3619,12 +3618,8 @@ attribute_hidden SEXP do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* C version of new.env */
 SEXP R_NewEnv(SEXP enclos, int hash, int size)
 {
-    if (hash) {
-	SEXP ssize = PROTECT(ScalarInteger(size));
-	SEXP ans = R_NewHashedEnv(enclos, ssize);
-	UNPROTECT(1); /* ssize */
-	return ans;
-    }
+    if (hash) 
+	return R_NewHashedEnv(enclos, size);
     else
 	return NewEnvironment(R_NilValue, R_NilValue, enclos);
 }

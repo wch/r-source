@@ -2925,7 +2925,7 @@ attribute_hidden void R_initAssignSymbols(void)
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);
 
-    R_ReplaceFunsTable = R_NewHashedEnv(R_EmptyEnv, ScalarInteger(1099));
+    R_ReplaceFunsTable = R_NewHashedEnv(R_EmptyEnv, 1099);
     R_PreserveObject(R_ReplaceFunsTable);
 
     R_SubsetSym = install("[");
