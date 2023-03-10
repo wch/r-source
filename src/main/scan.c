@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2022   The R Core Team.
+ *  Copyright (C) 1998-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -965,8 +965,17 @@ attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!data.con->canread)
 		error(_("cannot read from this connection"));
 	}
-	for (R_xlen_t i = 0; i < nskip; i++) /* MBCS-safe */
-	    while ((c = scanchar(FALSE, &data)) != '\n' && c != R_EOF);
+	for(R_xlen_t i = 0, j = 1000; i < nskip; i++) { /* MBCS-safe */
+	    for(;;) {
+		c = scanchar(FALSE, &data);
+		if (!j--) {
+		    R_CheckUserInterrupt();
+		    j = 1000;
+		}
+		if (c == '\n' || c == R_EOF)
+		    break;
+	    }
+	}
     }
 
     ans = R_NilValue;		/* -Wall */
