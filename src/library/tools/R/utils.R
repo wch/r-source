@@ -816,18 +816,15 @@ function(x, predicate = NULL, recursive = FALSE)
 {
     calls <- list()
 
-    ## FIXME:
-    ## As of 2023-03-07, as.list() fails for classed functions or
-    ## environments.
-    
-    if(!is.recursive(x) || is.environment(x)) return(calls)
+    if(!is.recursive(x) || isS4(x)) return(calls)
     
     x <- if(is.call(x))
              list(x)
-         else if(is.function(x))
-             as.list.function(x)
-         else
+         else {
+             if(is.object(x))
+                 class(x) <- NULL
              as.list(x)
+         }
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
@@ -838,10 +835,12 @@ function(x, predicate = NULL, recursive = FALSE)
 
     gatherer <- function(e) {
         if(f(e)) calls <<- c(calls, list(e))
-        if(is.function(e))
-            e <- as.list.function(e)
-        if(is.recursive(e) && !is.environment(e))
+        if(is.recursive(e) && !is.environment(e) && !isS4(e)) {
+            if(is.object(e))
+                class(e) <- NULL
+            e <- as.list(e)
             for(i in seq_along(e)) gatherer(e[[i]])
+        }
     }
 
     gatherer(x)
@@ -1773,15 +1772,13 @@ nonS3methods <- function(package)
     stopList <-
         list(base = c("all.equal", "all.names", "all.vars",
              "as.data.frame.vector",
-             "expand.grid",
-             "format.char", "format.info", "format.pval",
+             "format.info", "format.pval",
              "max.col",
-             "pmax.int", "pmin.int",
              ## the next two only exist in *-defunct.Rd.
-             "print.atomic", "print.coefmat",
+             ## "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
-             "rep.int", "sample.int", "seq.int", "sort.int", "sort.list"),
+             "rep.int", "seq.int", "sort.int", "sort.list"),
              AMORE = "sim.MLPnet",
              BSDA = "sign.test",
              ChemometricsWithR = "lda.loofun",
