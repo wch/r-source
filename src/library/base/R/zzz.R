@@ -160,7 +160,9 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
     "c", "dim", "dim<-", "dimnames", "dimnames<-",
     "is.array", "is.finite",
     "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
-    "length", "length<-", "levels<-", "names", "names<-", "rep",
+    "length", "length<-", "levels<-",
+    "log2", "log10",
+    "names", "names<-", "rep",
     "seq.int", "xtfrm")
 
 .GenericArgsEnv <- local({
