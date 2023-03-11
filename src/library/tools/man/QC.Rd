@@ -1,6 +1,6 @@
 % File src/library/tools/man/QC.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{QC}
@@ -78,11 +78,9 @@ nonS3methods(package)
   (see \link{InternalMethods}), and S3 group generics (see
   \code{\link[=S3groupGeneric]{Math}}).  Possible dispatch under a
   different name is not taken into account.  The generics are sought
-  first in the given package, then in the \pkg{base} package and
-  (currently) the packages \pkg{graphics}, \pkg{stats}, and \pkg{utils}
-  added in R 1.9.0 by splitting the former \pkg{base}, and, if an
-  installed package is tested, also in the loaded namespaces/packages
-  listed in the package's \file{DESCRIPTION} Depends field.
+  first in the given package, then in the package imports and the
+  namespace environment for the \pkg{base} package.  If not given an
+  installed package, no check is performed.
 
   \code{checkRdContents()} checks Rd content, e.g., whether arguments of
   functions in the usage section have non empty descriptions.
