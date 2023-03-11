@@ -734,9 +734,18 @@ function(package, dir, lib.loc = NULL,
             if(is_base)
                 functions <-
                     setdiff(functions,
-                            sprintf("%s.%s",
-                                    .S3_methods_table[, 1L],
-                                    .S3_methods_table[, 2L]))
+                            c(sprintf("%s.%s",
+                                      .S3_methods_table[, 1L],
+                                      .S3_methods_table[, 2L]),
+                              c(".First.sys", ".OptRequireMethods",
+                                "+", "-")))
+            else {
+                pname <- basename(dir)
+                if(pname == "utils")
+                    functions <- functions %w/o% "?"
+                else if(pname == "grDevices")
+                    functions <- functions %w/o% "x11"
+            }
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
                 functions <-
