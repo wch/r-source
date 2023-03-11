@@ -3864,7 +3864,7 @@ add_dummies <- function(dir, Log)
             out <- R_runR0(Rcmd, opts, arch = arch)
             if (any(grepl("[.]on(Load|Attach)", out))) {
                 checkingLog(Log, "startup messages can be suppressed")
-                Rcmd <- sprintf("suppressPackageStartupMessages(library(%s, lib.loc = '%s',  warn.conflicts=FALSE))", pkgname, libdir)
+                Rcmd <- sprintf("suppressWarnings(suppressPackageStartupMessages(library(%s, lib.loc = '%s',  warn.conflicts=FALSE)))", pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
                 env <- character()
                 if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
