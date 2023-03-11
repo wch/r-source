@@ -965,7 +965,7 @@ attribute_hidden SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!data.con->canread)
 		error(_("cannot read from this connection"));
 	}
-	for(R_xlen_t i = 0, j = 1000; i < nskip; i++) { /* MBCS-safe */
+	for(R_xlen_t i = 0, j = 10000; i < nskip; i++) { /* MBCS-safe */
 	    for(;;) {
 		c = scanchar(FALSE, &data);
 		if (!j--) {
