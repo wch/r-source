@@ -22,6 +22,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Beijing 2) [https]",China,Beijing,https://mirrors.bfsu.edu.cn/CRAN/,"Beijing Foreign Studies University","Aron Xu <aron # bfsu.edu.cn>",1,cn,"secure_mirror_from_master"
 "China (Beijing 3) [https]",China,Beijing,https://mirrors.pku.edu.cn/CRAN/,"Peking University","mirror # pku.edu.cn",1,cn,"secure_mirror_from_master"
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn,"secure_mirror_from_master"
+"China (Hangzhou) [https]",China,Hangzhou,https://mirrors.zju.edu.cn/CRAN/,"Zhejiang University","mirrors # zju.edu.cn",1,cn
 "China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
 "China (Guangzhou) [https]",China,Guangzhou,https://mirrors.e-ducation.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Jinan) [https]",China,Jinan,https://mirrors.qlu.edu.cn/CRAN/,"Qilu University of Technology","admin # qlunet.cn",1,cn,"secure_mirror_from_master"
