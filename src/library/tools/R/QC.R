@@ -108,7 +108,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirdir)
         code_env <- .package_env(package)
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
@@ -349,7 +349,7 @@ function(package, dir, lib.loc = NULL,
 
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
         code_env <- .package_env(package)
 
         objects_in_code <- sort(names(code_env))
@@ -999,7 +999,7 @@ function(package, lib.loc = NULL)
 
     ## Load package into code_env.
     if(!is_base)
-        .load_package_quietly(package, lib.loc)
+        .load_package_quietly(package, dirname(dir))
     code_env <- .package_env(package)
 
     if(!.isMethodsDispatchOn())
@@ -1166,7 +1166,7 @@ function(package, lib.loc = NULL)
 
     ## Load package into code_env.
     if(!is_base)
-        .load_package_quietly(package, lib.loc)
+        .load_package_quietly(package, dirname(dir))
     code_env <- .package_env(package)
     if(has_namespace) ns_env <- asNamespace(package)
 
@@ -1622,7 +1622,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
         code_env <- .package_env(package)
 
         objects_in_code <- sort(names(code_env))
@@ -1890,7 +1890,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         have_registration <- FALSE
         if(basename(dir) != "base") {
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             if(!is.null(DLLs <- get0("DLLs", envir = code_env$.__NAMESPACE__.))) {
                 ## fake installs have this, of class DLLInfoList
@@ -2366,8 +2366,8 @@ function(package, dir, lib.loc = NULL)
     ## PKG::GEN) and possibly quite time consuming.  For generics from
     ## the package itself or its imports, not restricting should not
     ## make a difference (why define or import when not calling?), but
-    ## for generics from base it may: for now, one can use the S3
-    ## methods stoplist mechanism to avoid "incorrect" inconsistencies.
+    ## for generics from base it may: hence we filter out the mismatches
+    ## for base GEN not called in the package.
     ##
     ## If a package provides an S3 generic GEN, there is no need to
     ## register GEN.CLS functions for "internal use" (see above).
@@ -2794,7 +2794,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
         ## In case the package has a namespace, we really want to check
         ## all replacement functions in the package.  (If not, we need
         ## to change the code for the non-installed case to only look at
@@ -5854,7 +5854,7 @@ function(package, dir, lib.loc = NULL)
                           dir),
                  domain = NA)
         if(basename(dir) != "base")
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
         code_env <- if(packageHasNamespace(package, dirname(dir)))
             asNamespace(package)
         else
@@ -6676,7 +6676,7 @@ function(package, dir, lib.loc = NULL)
         dir <- find.package(package, lib.loc)
         if((package != "base")
            && !packageHasNamespace(package, dirname(dir))) {
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
             code_env <- .package_env(package)
             bad_closures <- find_bad_closures(code_env)
         }
@@ -6781,7 +6781,7 @@ function(package, dir, lib.loc = NULL)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             bad_closures <- find_bad_closures(code_env)
         }
@@ -6873,7 +6873,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
             code_env <- if(packageHasNamespace(package, dirname(dir)))
                            asNamespace(package)
             else .package_env(package)
@@ -7160,7 +7160,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            .load_package_quietly(package, lib.loc)
+            .load_package_quietly(package, dirname(dir))
             code_env <- if(packageHasNamespace(package, dirname(dir)))
                            asNamespace(package)
             else .package_env(package)
