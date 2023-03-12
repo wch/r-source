@@ -56,7 +56,7 @@
 	with indices in \code{1:nrow(newdata)} of new data observations
 	which are deemed non-estimable.}
       \item{\code{"NA"}:    }{predicts \code{NA} for non-estimable new data,
-	silently.  Often recommmended in new code.}
+	silently.  Often recommended in new code.}
       \item{\code{"NAwarn"}:}{predicts \code{NA} for non-estimable new data
 	with a \code{\link{warning}}.}
     }
