@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -183,7 +183,7 @@ plot.density <- function(x, main = NULL, xlab = NULL, ylab = "Density",
 	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
     if(is.null(main)) main <- deparse(x$call)
     plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
-    if(zero.line) abline(h = 0, lwd = 0.1, col = "gray")
+    if(zero.line) abline(h = 0, lwd = 0.25, col = "gray")
     invisible(NULL)
 }
 
