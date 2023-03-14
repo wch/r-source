@@ -55,7 +55,7 @@ dots.or.missing <- function(args) {
     return(FALSE)
 }
 
-any.dots <- function(args) {
+anyDots <- function(args) {
     for (i in 1:length(args)) {
         a <-args[[i]]
         if (! missing(a) && typeof(a) == "symbol" && a == "...")
@@ -1245,7 +1245,7 @@ cmpConstArg <- function(a, cb, cntxt) {
 checkCall <- function(def, call, signal = warning) {
     if (typeof(def) %in% c("builtin", "special"))
         def <- args(def)
-    if (typeof(def) != "closure" || any.dots(call))
+    if (typeof(def) != "closure" || anyDots(call))
         NA
     else {
         msg <- tryCatch({match.call(def, call); NULL},
@@ -1806,7 +1806,7 @@ getAssignFun <- function(fun) {
 }
 
 cmpSetterDispatch <- function(start.op, dflt.op, afun, place, call, cb, cntxt) {
-    if (any.dots(place))
+    if (anyDots(place))
         FALSE ## punt
     else {
         ci <- cb$putconst(call)
@@ -1827,7 +1827,7 @@ setInlineHandler("=", cmpAssign)
 setInlineHandler("<<-", cmpAssign)
 
 setSetterInlineHandler("$<-", function(afun, place, origplace, call, cb, cntxt) {
-    if (any.dots(place) || length(place) != 3)
+    if (anyDots(place) || length(place) != 3)
         FALSE
     else {
         sym <- place[[3]]
@@ -1853,7 +1853,7 @@ setSetterInlineHandler("$<-", function(afun, place, origplace, call, cb, cntxt) 
 #                       afun, place, call, cb, cntxt))
 
 cmpGetterDispatch <- function(start.op, dflt.op, call, cb, cntxt) {
-    if (any.dots(call))
+    if (anyDots(call))
         FALSE ## punt
     else {
         ci <- cb$putconst(call)
@@ -1872,7 +1872,7 @@ cmpGetterDispatch <- function(start.op, dflt.op, call, cb, cntxt) {
 }
 
 setGetterInlineHandler("$", function(call, cb, cntxt) {
-    if (any.dots(call) || length(call) != 3)
+    if (anyDots(call) || length(call) != 3)
         FALSE
     else {
         sym <- call[[3]]
@@ -2250,7 +2250,7 @@ setInlineHandler("!", function(e, cb, cntxt)
 ##
 
 setInlineHandler("(", function(e, cb, cntxt) {
-    if (any.dots(e))
+    if (anyDots(e))
         cmpBuiltin(e, cb, cntxt) ## punt
     else if (length(e) != 2) {
         notifyWrongArgCount("(", cntxt, loc = cb$savecurloc())
@@ -2364,7 +2364,7 @@ setInlineHandler(".Internal", cmpDotInternalCall)
 ##
 
 cmpDispatch <- function(start.op, dflt.op, e, cb, cntxt, missingOK = TRUE) {
-    if ((missingOK && any.dots(e)) ||
+    if ((missingOK && anyDots(e)) ||
         (! missingOK && dots.or.missing(e)) ||
         length(e) == 1)
         cmpSpecial(e, cb, cntxt) ## punt
@@ -2403,7 +2403,7 @@ cmpDispatch <- function(start.op, dflt.op, e, cb, cntxt, missingOK = TRUE) {
 #     cmpDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, e, cb, cntxt))
 
 setInlineHandler("$", function(e, cb, cntxt) {
-    if (any.dots(e) || length(e) != 3)
+    if (anyDots(e) || length(e) != 3)
         cmpSpecial(e, cb, cntxt)
     else {
         sym <- if (is.character(e[[3]]) && length(e[[3]]) == 1
@@ -2461,7 +2461,7 @@ setInlineHandler("return", function(e, cb, cntxt) {
 ##
 
 cmpIs <- function(op, e, cb, cntxt) {
-    if (any.dots(e) || length(e) != 2)
+    if (anyDots(e) || length(e) != 2)
         cmpBuiltin(e, cb, cntxt)
     else {
         ## **** check that the function is a builtin somewhere??
@@ -2578,7 +2578,7 @@ inlineSimpleInternalCall <- function(e, def) {
 }
 
 cmpSimpleInternal <- function(e, cb, cntxt) {
-    if (any.dots(e))
+    if (anyDots(e))
         FALSE
     else {
         name <- as.character(e[[1]])
@@ -2625,7 +2625,7 @@ findActionIndex <- function(name, nm, miss) {
 }
 
 setInlineHandler("switch", function(e, cb, cntxt) {
-    if (length(e) < 2 || any.dots(e))
+    if (length(e) < 2 || anyDots(e))
         cmpSpecial(e, cb, cntxt)
     else {
         ## **** check name on EXPR, if any, partially matches EXPR?
