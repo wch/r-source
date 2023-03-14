@@ -1020,13 +1020,17 @@ SEXP eval(SEXP e, SEXP rho)
 	else
 	    tmp = findVar(e, rho);
 	if (tmp == R_UnboundValue)
-	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(e)));
+	    errorcall(getLexicalCall(rho),
+		      _("object '%s' not found"),
+		      EncodeChar(PRINTNAME(e)));
 	/* if ..d is missing then ddfindVar will signal */
 	else if (tmp == R_MissingArg && !DDVAL(e) ) {
 	    const char *n = CHAR(PRINTNAME(e));
-	    if(*n) error(_("argument \"%s\" is missing, with no default"),
-			 CHAR(PRINTNAME(e)));
-	    else error(_("argument is missing, with no default"));
+	    if(*n) errorcall(getLexicalCall(rho),
+			     _("argument \"%s\" is missing, with no default"),
+			     CHAR(PRINTNAME(e)));
+	    else errorcall(getLexicalCall(rho),
+			   _("argument is missing, with no default"));
 	}
 	else if (TYPEOF(tmp) == PROMSXP) {
 	    if (PRVALUE(tmp) == R_UnboundValue) {
@@ -5387,19 +5391,23 @@ static R_INLINE SEXP GET_BINDING_CELL_CACHE(SEXP symbol, SEXP rho,
     }
 }
 
-NORET static void MISSING_ARGUMENT_ERROR(SEXP symbol)
+NORET static void MISSING_ARGUMENT_ERROR(SEXP symbol, SEXP rho)
 {
     const char *n = CHAR(PRINTNAME(symbol));
-    if(*n) error(_("argument \"%s\" is missing, with no default"), n);
-    else error(_("argument is missing, with no default"));
+    if(*n) errorcall(getLexicalCall(rho),
+		     _("argument \"%s\" is missing, with no default"), n);
+    else errorcall(getLexicalCall(rho),
+		   _("argument is missing, with no default"));
 }
 
-#define MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss) \
-    do { if (! keepmiss) MISSING_ARGUMENT_ERROR(symbol); } while (0)
+#define MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss, rho) \
+    do { if (! keepmiss) MISSING_ARGUMENT_ERROR(symbol, rho); } while (0)
 
-NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol)
+NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol, SEXP rho)
 {
-    error(_("object '%s' not found"), EncodeChar(PRINTNAME(symbol)));
+    errorcall(getLexicalCall(rho),
+	      _("object '%s' not found"),
+	      EncodeChar(PRINTNAME(symbol)));
 }
 
 static R_INLINE SEXP FORCE_PROMISE(SEXP value, SEXP symbol, SEXP rho,
@@ -5443,9 +5451,9 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 	value = findVar(symbol, rho);
 
     if (value == R_UnboundValue)
-	UNBOUND_VARIABLE_ERROR(symbol);
+	UNBOUND_VARIABLE_ERROR(symbol, rho);
     else if (value == R_MissingArg)
-	MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss);
+	MAYBE_MISSING_ARGUMENT_ERROR(symbol, keepmiss, rho);
     else if (TYPEOF(value) == PROMSXP) {
 	SEXP pv = PRVALUE(value);
 	if (pv == R_UnboundValue) {

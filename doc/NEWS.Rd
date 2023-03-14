@@ -180,6 +180,10 @@
       to update their manifests if they wish to allow this feature.  See
       \url{https://blog.r-project.org/2023/03/07/path-length-limit-on-windows}
       for more information.
+
+      \item \sQuote{Object not found} and \sQuote{Missing argument}
+      errors now give a more accurate error context. Patch provided by
+      Lionel Henry in \PR{18241}.
     }
   }
 
