@@ -3099,7 +3099,7 @@ CXXFLAGS = $@{CXX14FLAGS@}
 On a Unix-alike C++ compilation defaulted to C++11 from @R{} 3.6.0, to
 C++14 from @R{} 4.1.0 and to C++17 from @R{} 4.3.0. However, only `if
 available', so platforms using very old OSes might have used the
-previous default.  Even older versions of @R{} defau;ted to the
+previous default.  Even older versions of @R{} defaulted to the
 compiler's default, almost certainly C++98 for compilers of comparable
 vintage.
 
