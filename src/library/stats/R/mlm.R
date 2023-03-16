@@ -85,12 +85,12 @@ estVar.mlm <- function(object, ...)
 
 ### Convenience functions:
 ###  Tr: is the trace operator
-###  proj: the projection operator possibly generalized to matrices.
+###  Proj: the projection operator possibly generalized to matrices.
 ###  Rg: matrix rank
 ###  Thin.row, Thin.col: thin matrix to full (row/column) rank
 
 Tr <- function(matrix) sum(diag(matrix))
-proj.matrix <- function(X, orth=FALSE){
+Proj <- function(X, orth=FALSE){
     X <- Thin.col(X)
     P <- if (ncol(X) == 0)
         matrix(0,nrow(X),nrow(X))
@@ -128,7 +128,7 @@ mauchly.test.mlm <- function(object, ...)
 
 
 mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
-                          T = Thin.row(proj(M)-proj(X)),
+                          T = Thin.row(Proj(M)-Proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
                           idata=data.frame(index=seq_len(p)),...)
@@ -187,7 +187,7 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
 }
 
 sphericity <- function(object, Sigma=diag(nrow=p),
-                          T = Thin.row(proj(M)-proj(X)),
+                          T = Thin.row(Proj(M)-Proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
                           idata=data.frame(index=seq_len(p)))
@@ -216,7 +216,7 @@ anova.mlm <-
     function(object, ...,
              test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
              Sigma = diag(nrow = p),
-             T = Thin.row(proj(M) - proj(X)),
+             T = Thin.row(Proj(M) - Proj(X)),
              M = diag(nrow = p),
              X = ~0,
              idata = data.frame(index = seq_len(p)), tol = 1e-7)
@@ -409,7 +409,7 @@ anova.mlmlist <- function (object, ...,
                            test=c("Pillai", "Wilks",
                            "Hotelling-Lawley", "Roy","Spherical"),
                            Sigma=diag(nrow=p),
-                           T = Thin.row(proj(M)-proj(X)),
+                           T = Thin.row(Proj(M)-Proj(X)),
                            M = diag(nrow=p),
                            X = ~0,
                            idata=data.frame(index=seq_len(p)), tol = 1e-7)
