@@ -349,8 +349,15 @@ R_xlen_t /*attribute_hidden*/ ALTREP_TRUELENGTH(SEXP x) { return 0; }
  * Generic ALTVEC support
  */
 
-static R_INLINE void *ALTVEC_DATAPTR_EX(SEXP x, Rboolean writeable)
+static R_INLINE void *ALTVEC_DATAPTR_EX(SEXP x, Rboolean writable)
 {
+    /* Disallow taking the writable `DATAPTR()` of an ALTLIST. This
+       check could be moved to `DATAPTR()` to catch more faulty
+       usages. */
+    if (TYPEOF(x) == VECSXP && writable)
+        ALTREP_ERROR_IN_CLASS("cannot take a writable DATAPTR of an ALTLIST",
+			      x);
+
     /**** move GC disabling into methods? */
     if (R_in_gc)
 	error("cannot get ALTVEC DATAPTR during GC");
@@ -358,7 +365,7 @@ static R_INLINE void *ALTVEC_DATAPTR_EX(SEXP x, Rboolean writeable)
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
-    void *val = ALTVEC_DISPATCH(Dataptr, x, writeable);
+    void *val = ALTVEC_DISPATCH(Dataptr, x, writable);
 
     R_GCEnabled = enabled;
     return val;
@@ -728,7 +735,7 @@ static R_xlen_t altrep_Length_default(SEXP x)
     ALTREP_ERROR_IN_CLASS("no ALTREP Length method defined", x);
 }
 
-static void *altvec_Dataptr_default(SEXP x, Rboolean writeable)
+static void *altvec_Dataptr_default(SEXP x, Rboolean writable)
 {
     ALTREP_ERROR_IN_CLASS("cannot access data pointer for this ALTVEC object", x);
 }
@@ -842,22 +849,22 @@ static int altstring_No_NA_default(SEXP x) { return 0; }
 
 static SEXP altlist_Elt_default(SEXP x, R_xlen_t i)
 {
-    error("ALTLIST classes must provide an Elt method");
+    ALTREP_ERROR_IN_CLASS("ALTLIST classes must provide an Elt method", x);
 }
 
 static void altlist_Set_elt_default(SEXP x, R_xlen_t i, SEXP v)
 {
-    error("ALTLIST classes must provide a Set_elt method");
+    ALTREP_ERROR_IN_CLASS("ALTLIST classes must provide a Set_elt method", x);
 }
 
-static void *altlist_Dataptr_default(SEXP x, Rboolean writeable)
+static void *altlist_Dataptr_default(SEXP x, Rboolean writable)
 {
-    error("ALTLIST classes do not have a Dataptr method");
+    ALTREP_ERROR_IN_CLASS("No Dataptr method found for ALTLIST class", x);
 }
 
 static const void *altlist_Dataptr_or_null_default(SEXP x)
 {
-    error("ALTLIST classes do not have a Dataptr_or_null method");
+    return NULL;
 }
 
 /**
@@ -1087,18 +1094,6 @@ static void reinit_altrep_class(SEXP class)
 	m->MNAME = fun;							\
     }
 
-#define DEFINE_METHOD_SETTER_NOLIST(CNAME, MNAME)                       \
-    void R_set_##CNAME##_##MNAME##_method(R_altrep_class_t cls,         \
-                                          R_##CNAME##_##MNAME##_method_t fun) \
-    {                                                                   \
-        CNAME##_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));        \
-        if (m->MNAME == altlist_##MNAME##_default) {                    \
-            error("ALTLIST classes do not have a ##MNAME## method");    \
-        } else {                                                        \
-            m->MNAME = fun;                                             \
-        }                                                               \
-    }
-
 DEFINE_METHOD_SETTER(altrep, UnserializeEX)
 DEFINE_METHOD_SETTER(altrep, Unserialize)
 DEFINE_METHOD_SETTER(altrep, Serialized_state)
@@ -1108,8 +1103,8 @@ DEFINE_METHOD_SETTER(altrep, Coerce)
 DEFINE_METHOD_SETTER(altrep, Inspect)
 DEFINE_METHOD_SETTER(altrep, Length)
 
-DEFINE_METHOD_SETTER_NOLIST(altvec, Dataptr)
-DEFINE_METHOD_SETTER_NOLIST(altvec, Dataptr_or_null)
+DEFINE_METHOD_SETTER(altvec, Dataptr)
+DEFINE_METHOD_SETTER(altvec, Dataptr_or_null)
 DEFINE_METHOD_SETTER(altvec, Extract_subset)
 
 DEFINE_METHOD_SETTER(altinteger, Elt)

@@ -1891,6 +1891,11 @@ static void InitWrapListClass(DllInfo *dll)
     R_set_altrep_Inspect_method(cls, wrapper_Inspect);
     R_set_altrep_Length_method(cls, wrapper_Length);
 
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+    R_set_altvec_Extract_subset_method(cls, wrapper_Extract_subset);
+
     /* override ALTLIST methods */
     R_set_altlist_Elt_method(cls, wrapper_list_Elt);
     R_set_altlist_Set_elt_method(cls, wrapper_list_Set_elt);
