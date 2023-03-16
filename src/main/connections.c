@@ -1451,6 +1451,31 @@ static Rconnection newfifo(const char *description, const char *mode)
     return new;
 }
 
+static void cend_con_destroy(void *data)
+{
+    int ncon = *(int *)data;
+    con_destroy(ncon);
+} 
+
+static void checked_open(int ncon)
+{
+    Rconnection con = Connections[ncon];
+    RCNTXT cntxt;
+
+    /* Set up a context which will destroy the connection on error,
+       including warning turned into error (PR#18491) */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &cend_con_destroy;
+    cntxt.cenddata = &ncon;
+    Rboolean success = con->open(con);
+    endcontext(&cntxt);
+    if(!success) {
+	con_destroy(ncon);
+	error(_("cannot open the connection"));
+    }
+}
+
 attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
@@ -1493,13 +1518,8 @@ attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
@@ -1664,13 +1684,8 @@ attribute_hidden SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
@@ -2351,13 +2366,8 @@ attribute_hidden SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
@@ -3548,13 +3558,8 @@ attribute_hidden SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
@@ -3602,13 +3607,8 @@ attribute_hidden SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
@@ -3760,7 +3760,6 @@ static int con_close1(Rconnection con)
     return status;
 }
 
-
 static void con_destroy(int i)
 {
     Rconnection con=NULL;
@@ -3770,7 +3769,6 @@ static void con_destroy(int i)
     free(Connections[i]);
     Connections[i] = NULL;
 }
-
 
 attribute_hidden SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -5674,13 +5672,8 @@ attribute_hidden SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 					    R_NilValue));
 
     /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
+    if(strlen(open))
+	checked_open(ncon);
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
