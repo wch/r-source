@@ -82,8 +82,8 @@
 #endif
 
 /* For speed in cases when the argument is known to not be an ALTREP list. */
-#define VECTOR_ELT_0(x,i)        ((SEXP *) DATAPTR(x))[i]
-#define SET_VECTOR_ELT_0(x,i, v) (((SEXP *) DATAPTR(x))[i] = (v))
+#define VECTOR_ELT_0(x,i)        ((SEXP *) STDVEC_DATAPTR(x))[i]
+#define SET_VECTOR_ELT_0(x,i, v) (((SEXP *) STDVEC_DATAPTR(x))[i] = (v))
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
