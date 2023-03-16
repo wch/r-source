@@ -205,15 +205,24 @@ static void conFinalizer(SEXP ptr)
 	    break;
 	}
     if(i >= NCONNECTIONS) return;
+
+    char buf[R_PATH_MAX + 50]; /* much longer than limit for warning */
+    Rboolean warn = FALSE;
     {
 	Rconnection this = getConnection(ncon);
-	if(this->isopen && strcmp(this->class, "textConnection"))
-	    warning(_("closing unused connection %d (%s)\n"),
-		    ncon, this->description);
+	if(this->isopen && strcmp(this->class, "textConnection")) {
+	    warn = TRUE;
+	    snprintf(buf, sizeof(buf),
+	             _("closing unused connection %d (%s)\n"),
+	             ncon, this->description);
+	}
     }
 
     con_destroy(ncon);
     R_ClearExternalPtr(ptr); /* not really needed */
+
+    if (warn)
+	warning(buf); /* may be turned into error */
 }
 
 
