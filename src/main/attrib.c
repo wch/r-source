@@ -1590,8 +1590,11 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	nlist = CADR(args);
 	if (isSymbol(nlist))
 	    SET_STRING_ELT(input, 0, PRINTNAME(nlist));
-	else if(isString(nlist) )
+	else if(isString(nlist) ) {
+	    if (LENGTH(nlist) != 1)
+		error(_("invalid slot name length"));
 	    SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+	}
 	else {
 	    error(_("invalid type '%s' for slot name"),
 		  type2char(TYPEOF(nlist)));

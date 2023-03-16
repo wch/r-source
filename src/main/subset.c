@@ -1224,8 +1224,11 @@ fixSubset3Args(SEXP call, SEXP args, SEXP env, SEXP* syminp)
 	if (syminp != NULL)
 	    *syminp = nlist;
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
-    } else if(isString(nlist) )
+    } else if(isString(nlist) ) {
+	if (LENGTH(nlist) != 1)
+	    error(_("invalid subscript length"));
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+    }
     else {
 	errorcall(call,_("invalid subscript type '%s'"),
 		  type2char(TYPEOF(nlist)));
