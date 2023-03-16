@@ -1963,7 +1963,8 @@ static SEXP wrap_meta(SEXP x, int srt, int no_na)
     case LGLSXP:
     case CPLXSXP:
     case RAWSXP:
-    case STRSXP: break;
+    case STRSXP:
+    case VECSXP: break;
     default: return x;
     }
 
