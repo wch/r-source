@@ -773,16 +773,16 @@ static Rboolean file_open(Rconnection con)
 	    Rf_utf8towcs(wname, name, n+1);
 	    fp = _wfopen(wname, wmode);
 	    if(!fp) {
-		warning(_("cannot open file '%ls': %s"), wname, strerror(errno));
 		if (temp)
 		    free((char *)name);
+		warning(_("cannot open file '%ls': %s"), wname, strerror(errno));
 		return FALSE;
 	    }
 	    if (isDir(fp)) {
-		warning(_("cannot open file '%ls': it is a directory"), wname);
 		fclose(fp);
 		if (temp)
 		    free((char *)name);
+		warning(_("cannot open file '%ls': it is a directory"), wname);
 		return FALSE;
 	    }
 	} else {
@@ -813,8 +813,8 @@ static Rboolean file_open(Rconnection con)
 	return FALSE;
     }
     if (isDir(fp)) {
-	warning(_("cannot open file '%s': it is a directory"), name);
 	fclose(fp);
+	warning(_("cannot open file '%s': it is a directory"), name);
 	if (temp)
 	    free((char *)name);
 	return FALSE;
@@ -1894,8 +1894,8 @@ static Rboolean bzfile_open(Rconnection con)
 	return FALSE;
     }
     if (isDir(fp)) {
-	warning(_("cannot open file '%s': it is a directory"), name);
 	fclose(fp);
+	warning(_("cannot open file '%s': it is a directory"), name);
 	return FALSE;
     }
     if(con->canread) {
@@ -2090,8 +2090,8 @@ static Rboolean xzfile_open(Rconnection con)
 	return FALSE;
     }
     if (isDir(xz->fp)) {
-	warning(_("cannot open file '%s': it is a directory"), name);
 	fclose(xz->fp);
+	warning(_("cannot open file '%s': it is a directory"), name);
 	return FALSE;
     }
     if(con->canread) {
@@ -2491,12 +2491,12 @@ static void clp_writeout(Rconnection con)
 	s[wlen] = L'\0';
 	GlobalUnlock(hglb);
 	if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-	    warning(_("unable to open the clipboard"));
 	    GlobalFree(hglb);
+	    warning(_("unable to open the clipboard"));
 	} else {
 	    if(!SetClipboardData(CF_UNICODETEXT, hglb)) {
-		warning(_("unable to write to the clipboard"));
 		GlobalFree(hglb);
+		warning(_("unable to write to the clipboard"));
 	    }
 	    CloseClipboard();
 	}
@@ -2609,8 +2609,8 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 #endif
 
     if (used < len && !this->warned) {
-	warning(_("clipboard buffer is full and output lost"));
 	this->warned = TRUE;
+	warning(_("clipboard buffer is full and output lost"));
     }
     if(this->last < this->pos) this->last = this->pos;
     return (size_t) used/size;
