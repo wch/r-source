@@ -3667,10 +3667,15 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     char buf[R_PATH_MAX+1];
     if (ok && dladdr(dgemm_addr, &dl_info1)) {
 	char *res = realpath(dl_info1.dli_fname, buf);
-	if (res)
-	    SET_STRING_ELT(ans, i, mkChar(res));
-	else if (errno == ENOENT)
-	    /* macOs (Big Sur) has uses a cache for system-provided dynamic
+	if (res) {
+	    SEXP nfo = R_NilValue;
+	    if (strstr(res, "flexiblas"))
+		nfo = R_flexiblas_info();
+	    if (isNull(nfo))
+		nfo = mkChar(res);
+	    SET_STRING_ELT(ans, i, nfo);
+	} else if (errno == ENOENT)
+	    /* macOs (Big Sur) has a cache for system-provided dynamic
 	       libraries and they no longer exist as regular files. The 
 	       dynamic linker knows how to find them, but not regular file
 	       operations such as realpath(). Hence, when the file is not

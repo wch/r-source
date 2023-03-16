@@ -28,6 +28,7 @@
 #include <ctype.h>  /* for toupper */
 #include <limits.h> /* for PATH_MAX */
 #include <stdlib.h> /* for realpath */
+#include <string.h> /* for strcpy */
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h> /* for realpath on some systems */
@@ -1411,7 +1412,12 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	    char buf[PATH_MAX+1];
 	    char *res = realpath(dl_info.dli_fname, buf);
 	    if (res) {
-		ans = mkString(res);
+		SEXP nfo = R_NilValue;
+		if (strstr(res, "flexiblas"))
+		    nfo = R_flexiblas_info();
+		if (isNull(nfo))
+		    nfo = mkChar("");
+		ans = ScalarString(nfo);
 		break;
 	    }
 	}

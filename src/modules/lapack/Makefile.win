@@ -11,6 +11,7 @@ endif
 	@$(MAKE) --no-print-directory -f Makefile.win install
 
 CSOURCES = Lapack.c
+# flexiblas not supported on Windows
 OBJS=$(CSOURCES:.c=.o) dllversion.o
 LIBSOURCES = dlamch.f dlapack.f cmplx.f
 LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \

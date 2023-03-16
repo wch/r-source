@@ -2084,6 +2084,7 @@ Rboolean R_seemsOldStyleS4Object(SEXP object);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(const char *);
+SEXP R_flexiblas_info(void);
 void R_getProcTime(double *data);
 int R_isMissing(SEXP symbol, SEXP rho);
 const char *sexptype2char(SEXPTYPE type);

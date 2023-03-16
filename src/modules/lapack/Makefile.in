@@ -21,7 +21,7 @@ SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 ## BUILD_LTO_CHECK_TRUE relies on using the internal LAPACK
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_F90)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) flexiblas.o
 HEADERS = Lapack.h
 
 ## Sources for the -lRlapack.  On OSX this may be linked directly to
@@ -64,6 +64,9 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 ALL_FCFLAGS = $(ALL_FFLAGS_LO)
 
 all: R
+
+flexiblas.o: ../../main/flexiblas.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c  $< -o $@
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
