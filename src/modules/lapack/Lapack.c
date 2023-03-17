@@ -1416,7 +1416,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (strstr(res, "flexiblas"))
 		    nfo = R_flexiblas_info();
 		if (isNull(nfo))
-		    nfo = mkChar("");
+		    nfo = mkChar(res);
 		ans = ScalarString(nfo);
 		break;
 	    }
