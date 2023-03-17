@@ -1146,53 +1146,81 @@ function(db,
 
 ### ** .get_S3_generics_as_seen_from_package
 
-.get_S3_generics_as_seen_from_package <-
-function(dir, installed = TRUE, primitive = FALSE)
-{
-    ## Get the S3 generics "as seen from a package" rooted at
-    ## @code{dir}.  Tricky ...
-    if(basename(dir) == "base")
-        env_list <- list()
-    else {
-        ## Always look for generics in the whole of the former base.
-        ## (Not right, but we do not perform run time analyses when
-        ## working off package sources.)  Maybe change this eventually,
-        ## but we still cannot rely on packages to fully declare their
-        ## dependencies on base packages.
-        env_list <-
-            list(baseenv(),
-                 as.environment("package:graphics"),
-                 as.environment("package:stats"),
-                 as.environment("package:utils"))
-        if(installed) {
-            ## Also use the loaded namespaces and attached packages
-            ## listed in the DESCRIPTION Depends and Imports fields.
-            ## Not sure if this is the best approach: we could also try
-            ## to determine which namespaces/packages were made
-            ## available by loading the package (which should work at
-            ## least when run from R CMD check), or we could simply
-            ## attach every package listed as a dependency ... or
-            ## perhaps do both.
-            db <- .read_description(file.path(dir, "DESCRIPTION"))
-            depends <- .get_requires_from_package_db(db, "Depends")
-            imports <- .get_requires_from_package_db(db, "Imports")
-            reqs <- intersect(c(depends, imports), loadedNamespaces())
-            if(length(reqs))
-                env_list <- c(env_list, lapply(reqs, getNamespace))
-            reqs <- intersect(setdiff(depends, loadedNamespaces()),
-                              .packages())
-            if(length(reqs))
-                env_list <- c(env_list, lapply(reqs, .package_env))
-            env_list <- unique(env_list)
-        }
-    }
-    ## some BioC packages warn here
-    suppressWarnings(
-    unique(c(.get_internal_S3_generics(primitive),
-             unlist(lapply(env_list, .get_S3_generics_in_env))))
-    )
-}
+## .get_S3_generics_as_seen_from_package <-
+## function(dir, installed = TRUE, primitive = FALSE)
+## {
+##     ## Get the S3 generics "as seen from a package" rooted at
+##     ## @code{dir}.  Tricky ...
+##     if(basename(dir) == "base")
+##         env_list <- list()
+##     else {
+##         ## Always look for generics in the whole of the former base.
+##         ## (Not right, but we do not perform run time analyses when
+##         ## working off package sources.)  Maybe change this eventually,
+##         ## but we still cannot rely on packages to fully declare their
+##         ## dependencies on base packages.
+##         env_list <-
+##             list(baseenv(),
+##                  as.environment("package:graphics"),
+##                  as.environment("package:stats"),
+##                  as.environment("package:utils"))
+##         if(installed) {
+##             ## Also use the loaded namespaces and attached packages
+##             ## listed in the DESCRIPTION Depends and Imports fields.
+##             ## Not sure if this is the best approach: we could also try
+##             ## to determine which namespaces/packages were made
+##             ## available by loading the package (which should work at
+##             ## least when run from R CMD check), or we could simply
+##             ## attach every package listed as a dependency ... or
+##             ## perhaps do both.
+##             db <- .read_description(file.path(dir, "DESCRIPTION"))
+##             depends <- .get_requires_from_package_db(db, "Depends")
+##             imports <- .get_requires_from_package_db(db, "Imports")
+##             reqs <- intersect(c(depends, imports), loadedNamespaces())
+##             if(length(reqs))
+##                 env_list <- c(env_list, lapply(reqs, getNamespace))
+##             reqs <- intersect(setdiff(depends, loadedNamespaces()),
+##                               .packages())
+##             if(length(reqs))
+##                 env_list <- c(env_list, lapply(reqs, .package_env))
+##             env_list <- unique(env_list)
+##         }
+##     }
+##     ## some BioC packages warn here
+##     suppressWarnings(
+##     unique(c(.get_internal_S3_generics(primitive),
+##              unlist(lapply(env_list, .get_S3_generics_in_env))))
+##     )
+## }
 
+### ** .get_S3_generics_in_base
+
+.get_S3_generics_in_base <-
+function() 
+{
+    ## .get_S3_generics_in_env(.BaseNamespaceEnv) gets all UseMethod
+    ## generics.
+    ## .get_internal_S3_generics() gets the internal S3 generics.  By
+    ## default this also adds the primitive generics.
+    ## .get_S3_group_generics() gets the S3 group generics.
+    ## Note that
+    ##   .make_S3_group_generic_env()
+    ## generates an env with the group generics and appropriate
+    ## signatures, so we should always have
+    ##    identical(sort(.get_S3_group_generics()),
+    ##              sort(names(.make_S3_group_generic_env())))
+    ## and that
+    ##    .make_S3_primitive_generic_env()
+    ##  generates and env with the primitive generics and appropriate
+    ##  signatures (in turn using base::.GenericArgsEnv), so we should
+    ##  always have
+    ##    identical(sort(.get_S3_primitive_generics()),
+    ##              sort(names(.make_S3_primitive_generic_env())))
+    c(.get_S3_generics_in_env(.BaseNamespaceEnv),
+      .get_internal_S3_generics(),
+      .get_S3_group_generics())
+}
+    
 ### ** .get_S3_generics_in_env
 
 .get_S3_generics_in_env <-
