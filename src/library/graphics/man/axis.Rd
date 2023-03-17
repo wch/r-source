@@ -54,8 +54,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     axis otherwise).}
   \item{padj}{adjustment for each tick label \emph{perpendicular} to the
     reading direction.  For labels parallel to the axes, \code{padj = 0}
-    means right or top alignment, and \code{padj = 1} means left or bottom
-    alignment.  This can be a vector given a value for each string, and
+    means left or bottom alignment, and \code{padj = 1} means right or top
+    alignment (relative to the line).  This can be a vector given a value for each string, and
     will be recycled as necessary.
 
     If \code{padj} is not a finite value (the default), the value of

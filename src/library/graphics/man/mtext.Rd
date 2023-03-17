@@ -35,9 +35,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     parallel to the axis the default is to centre the string.}
   \item{padj}{adjustment for each string perpendicular to the reading
     direction (which is controlled by \code{adj}).  For strings parallel
-    to the axes, \code{padj = 0} means right or top alignment,
-    and \code{padj = 1} means left or bottom alignment.
-
+    to the axes, \code{padj = 0} means left or bottom alignment,
+    and \code{padj = 1} means right or top alignment (relative to the line).
+    
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
