@@ -1865,9 +1865,26 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 
 attribute_hidden SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  nlist, object, ans, klass;
+    SEXP  nlist, object, ans;
 
     checkArity(op, args);
+
+    PROTECT(object = eval(CAR(args), env));
+
+    if (OBJECT(object) && ! IS_S4_OBJECT(object)) {
+	//**** could modify fixSubset3Args to provide abetter error message
+	// could also use in more places, e.g. for @<-
+	PROTECT(args = fixSubset3Args(call, args, env, NULL));
+	SETCAR(args, R_mkEVPROMISE_NR(CAR(args), object));
+	if (DispatchOrEval(call, op, "@", args, env, &ans, 0, 0)) {
+	    UNPROTECT(2); /* object, args */
+	    return ans;
+	}
+	UNPROTECT(1); /* args */
+
+	/* fall through to handle @.Data or signal an error */
+    }
+
     if(!isMethodsDispatchOn())
 	error(_("formal classes cannot be used without the 'methods' package"));
     nlist = CADR(args);
@@ -1876,22 +1893,18 @@ attribute_hidden SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!(isSymbol(nlist) || (isString(nlist) && LENGTH(nlist) == 1)))
 	error(_("invalid type or length for slot name"));
     if(isString(nlist)) nlist = installTrChar(STRING_ELT(nlist, 0));
-    PROTECT(object = eval(CAR(args), env));
     if(!s_dot_Data) init_slot_handling();
     if(nlist != s_dot_Data && !IS_S4_OBJECT(object)) {
-	klass = getAttrib(object, R_ClassSymbol);
-	if(length(klass) == 0)
-	    error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
-		  CHAR(PRINTNAME(nlist)),
-		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
-	else
-	    error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
-		  CHAR(PRINTNAME(nlist)),
+	SEXP klass = getAttrib(object, R_ClassSymbol);
+	errorcall(call, _("no applicable method for `@` "
+			  "applied to an object of class \"%s\""),
+		  length(klass) == 0 ?
+		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)) :
 		  translateChar(STRING_ELT(klass, 0)));
     }
 
     ans = R_do_slot(object, nlist);
-    UNPROTECT(1);
+    UNPROTECT(1); /* object */
     return ans;
 }
 

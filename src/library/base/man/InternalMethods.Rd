@@ -53,6 +53,8 @@
   \code{\link{names<-}},%     % do_namesgets()       [attrib.c]
   % DispatchOrEval internal generic: levels<-
   \code{\link{levels<-}},%    % do_levelsgets()      [attrib.c]
+  % DispatchOrEval internal generic: @
+  \code{\link{@}},%           % do_AT()              [attrib.c]
   % DispatchOrEval internal generic: @<-
   \code{\link{@<-}},%         % do_attrgets()        [attrib.c]  
 

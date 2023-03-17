@@ -184,6 +184,9 @@
       \item \sQuote{Object not found} and \sQuote{Missing argument}
       errors now give a more accurate error context. Patch provided by
       Lionel Henry in \PR{18241}.
+
+      \item The \code{@} operator is now an S3 generic. Based on
+      contributions by Tomasz Kalinowski in \PR{18482}.
     }
   }
 

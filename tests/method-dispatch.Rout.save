@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-03-16 r83996) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -104,4 +104,79 @@ abc: Before dispatching; x has class `(': language, mode "(": (x)
 > abc(e1[[1]])
 abc: Before dispatching; x has class `call': language sin(x)
 abc.default(e1[[1]])
+> 
+> 
+> ## Some tests for `@` dispatching
+> ## make sure that
+> ## - `@` evals the first args only once,
+> ## -  doesn't dispatch for S4
+> ## -  works on `.Data` even for nonS4 objects
+> 
+> x <- structure(list(), class = "foo", prop1 = 'prop1val')
+> registerS3method("@", "foo",
++     function(x, name) {
++         stopifnot(typeof(name) == "character", length(name) == 1L)
++         cat(sprintf("called `@.foo`(x = %s, name = '%s')\n",
++                      deparse1(substitute(x), "\n"), name))
++         attr(x, name, TRUE)
++     }
++ )
+> x@prop1
+called `@.foo`(x = x, name = 'prop1')
+[1] "prop1val"
+> 
+> abc <- x
+> abc@prop1
+called `@.foo`(x = abc, name = 'prop1')
+[1] "prop1val"
+> 
+> {
++     cat("new x\n")
++     structure(list(), class = "foo", prop1 = 'prop1val')
++ }@prop1
+new x
+called `@.foo`(x = {
+    cat("new x\n")
+    structure(list(), class = "foo", prop1 = "prop1val")
+}, name = 'prop1')
+[1] "prop1val"
+> 
+> makeActiveBinding("ax", function(x) {
++     cat("evaluating ax\n")
++     get("x", envir = parent.frame())
++ }, environment())
+> 
+> ax@prop1
+evaluating ax
+called `@.foo`(x = ax, name = 'prop1')
+[1] "prop1val"
+> 
+> stopifnot(exprs = {
++     identical( x@prop1, "prop1val")
++     identical(ax@prop1, "prop1val")
++ 
++     identical(letters@.Data, letters)
++ })
+called `@.foo`(x = x, name = 'prop1')
+evaluating ax
+called `@.foo`(x = ax, name = 'prop1')
+> 
+> try(letters@foo) # error
+Error in letters@foo : 
+  no applicable method for `@` applied to an object of class "character"
+> 
+> # doesn't dispatch for S4
+> setClass("Person",
++   slots = c(
++     name = "character",
++     age = "numeric"
++   )
++ )
+> 
+> `@.Person` <- function(x, name) {
++   stop("called @.Person()\n")
++ }
+> 
+> p <- new("Person", name = "Who", age = -1)
+> stopifnot(p@name == "Who")
 > 
