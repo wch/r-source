@@ -1817,6 +1817,7 @@ nonS3methods <- function(package)
              "rep.int", "seq.int", "sort.int", "sort.list"),
              AMORE = "sim.MLPnet",
              BSDA = "sign.test",
+             BiocGenerics = "rep.int",
              ChemometricsWithR = "lda.loofun",
              ElectoGraph = "plot.wedding.cake",
              FrF2 = "all.2fis.clear.catlg",

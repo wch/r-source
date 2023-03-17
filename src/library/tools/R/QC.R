@@ -347,17 +347,18 @@ function(package, dir, lib.loc = NULL,
                  domain = NA)
         is_base <- basename(dir) == "base"
 
+        dirdir <- dirname(dir)        
+
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, dirname(dir))
+            .load_package_quietly(package, dirdir)
         code_env <- .package_env(package)
 
         objects_in_code <- sort(names(code_env))
 
-        dirdir <- dirname(dir)
-        ## FIXME: every non-base package must have a namespace.
-        ## Does the package have a namespace?
-        if(packageHasNamespace(package, dirdir)) {
+        if(is_base) {
+	    objects_in_code_or_namespace <- objects_in_code
+        } else {
             has_namespace <- TRUE
             ns_env <- asNamespace(package)
             S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
@@ -376,9 +377,7 @@ function(package, dir, lib.loc = NULL,
                 unique(c(objects_in_code, objects_in_ns, ns_S3_methods))
             objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
-	else { ## typically only 'base'
-	    objects_in_code_or_namespace <- objects_in_code
-	}
+        
         package_name <- package
     }
     else {
@@ -1164,19 +1163,14 @@ function(package, lib.loc = NULL)
 
     is_base <- basename(dir) == "base"
 
-    ## FIXME: every non-base package must have a namespace.
-    has_namespace <-
-        !is_base && packageHasNamespace(package, dirname(dir))
-
     ## Load package into code_env.
     if(!is_base)
         .load_package_quietly(package, dirname(dir))
     code_env <- .package_env(package)
-    if(has_namespace) ns_env <- asNamespace(package)
+    ns_env <- asNamespace(package)
 
     ## Could check here whether the package has any variables or data
     ## sets (and return if not).
-
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1292,7 +1286,7 @@ function(package, lib.loc = NULL)
         al <- aliases[i]
 	if(!is.null(A <- get0(al, envir = code_env, mode = "list", inherits = FALSE)))
 	    al <- A
-	else if(has_namespace &&
+	else if(!is_base &&
 		!is.null(A <- get0(al, envir = ns_env, mode = "list", inherits = FALSE)))
 	    al <- A
 	else if(has_data) {
@@ -1626,14 +1620,12 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into code_env.
         if(!is_base)
-            .load_package_quietly(package, dirname(dir))
-        code_env <- .package_env(package)
+            .load_namespace_quietly(package, dirname(dir))
+        code_env <- asNamespace(package)
 
         objects_in_code <- sort(names(code_env))
 
-        ## FIXME: every non-base package must have a namespace.        
-        ## Does the package have a namespace?
-        if(packageHasNamespace(package, dirname(dir))) {
+        if(!is_base) {
             has_namespace <- TRUE
             ## Determine names of declared S3 methods and associated S3
             ## generics.
@@ -1702,17 +1694,18 @@ function(package, dir, lib.loc = NULL)
                objects_in_code)
 
     ## Find all S3 generics "as seen from the package".
-    all_S3_generics <-
-        unique(c(Filter(function(f) .is_S3_generic(f, envir = code_env),
-                        functions_in_code),
-                 .get_S3_generics_as_seen_from_package(dir,
-                                                       !missing(package),
-                                                       TRUE),
-                 .get_S3_group_generics()))
-    ## <FIXME>
-    ## Not yet:
+    all_S3_generics <- .get_S3_generics_in_base()
+    if(!is_base) {
+        all_S3_generics <-
+            unique(c(Filter(function(f)
+                                .is_S3_generic(f, envir = code_env),
+                            functions_in_code),
+                     if(!missing(package))
+                         .get_S3_generics_in_env(parent.env(code_env)),
+                     all_S3_generics))
+    }
+    ## Make the group S3 generics "visible" from code_env.
     code_env <- .make_S3_group_generic_env(parent = code_env)
-    ## </FIXME>
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
@@ -1722,8 +1715,7 @@ function(package, dir, lib.loc = NULL)
     methods_stop_list <- nonS3methods(package_name)
     methods_in_package <-
         Map(function(g) {
-                ## This isn't really right: it assumes the generics are
-                ## visible.
+                ## This shouldn't happen any more ...
                 if(!exists(g, envir = code_env)) return(character())
                 ## <FIXME>
                 ## We should really determine the name g dispatches for,
@@ -1893,8 +1885,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         have_registration <- FALSE
         if(basename(dir) != "base") {
-            ## FIXME: why is loading the namespace not enough?
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             if(!is.null(DLLs <- get0("DLLs", envir = code_env$.__NAMESPACE__.))) {
                 ## fake installs have this, of class DLLInfoList
@@ -2781,7 +2772,7 @@ function(x, ...)
 checkReplaceFuns <-
 function(package, dir, lib.loc = NULL)
 {
-    has_namespace <- FALSE
+    ns_S3_methods_db <- NULL
 
     ## Argument handling.
     if(!missing(package)) {
@@ -2799,18 +2790,10 @@ function(package, dir, lib.loc = NULL)
         ## Load package into code_env.
         if(!is_base)
             .load_namespace_quietly(package, dirname(dir))
-        ## FIXME: every non-base package must have a namespace.
-        ## In case the package has a namespace, we really want to check
-        ## all replacement functions in the package.  (If not, we need
-        ## to change the code for the non-installed case to only look at
-        ## exported (replacement) functions.)
-        if(packageHasNamespace(package, dirname(dir))) {
-            has_namespace <- TRUE
-            code_env <- asNamespace(package)
+        code_env <- asNamespace(package)
+
+        if(!is_base)
             ns_S3_methods_db <- .getNamespaceInfo(code_env, "S3methods")
-        }
-        else
-            code_env <- .package_env(package)
     } else { # missing(package)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
@@ -2839,7 +2822,6 @@ function(package, dir, lib.loc = NULL)
 
         ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
-            has_namespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
             ns_S3_methods_db <- .get_namespace_S3_methods_db(nsInfo)
         }
@@ -2848,7 +2830,7 @@ function(package, dir, lib.loc = NULL)
     objects_in_code <- sort(names(code_env))
     replace_funs <- character()
 
-    if(has_namespace) {
+    if(!is.null(ns_S3_methods_db)) {
         ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
         ns_S3_methods <- ns_S3_methods_db[, 3L]
         if(!is.character(ns_S3_methods)) {
@@ -6676,13 +6658,6 @@ function(package, dir, lib.loc = NULL)
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        ## FIXME: every non-base package must have a namespace.
-        if((package != "base")
-           && !packageHasNamespace(package, dirname(dir))) {
-            .load_package_quietly(package, dirname(dir))
-            code_env <- .package_env(package)
-            bad_closures <- find_bad_closures(code_env)
-        }
         if(check_examples)
             example_texts <-
                 .get_example_texts_from_example_dir(file.path(dir, "R-ex"))
@@ -6693,7 +6668,6 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        ## FIXME: every non-base package must have a namespace.
         if(!packageHasNamespace(basename(dir), dirname(dir))
            && dir.exists(code_dir)) {
             code_env <- new.env(hash = TRUE)
@@ -9900,7 +9874,9 @@ function(package, lib.loc = NULL)
                          Class = reg[, 2L],
                          Method = reg[, 3L])
 
-    .load_package_quietly(package, dirname(dir))
+    .load_namespace_quietly(package, dirname(dir))
+    code_env <- asNamespace(package)
+    
     ok <- vapply(suggests, requireNamespace, quietly = TRUE,
                  FUN.VALUE = NA)
     out$bad <- suggests[!ok]
@@ -9921,9 +9897,8 @@ function(package, lib.loc = NULL)
     ind <- (generics %notin%
             c(Filter(function(f) .is_S3_generic(f, code_env),
                      functions_in_code),
-              .get_S3_generics_as_seen_from_package(dir, TRUE, TRUE),
-              .get_S3_group_generics(),
-              .get_S3_primitive_generics()))
+              .get_S3_generics_in_env(parent.env(code_env)),
+              .get_S3_generics_in_base()))
     if(!all(ind)) {
         generics <- generics[ind]
         packages <- packages[ind]
