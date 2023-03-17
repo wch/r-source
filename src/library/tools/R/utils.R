@@ -1605,6 +1605,14 @@ function(fname, envir, mustMatch = TRUE)
     if(mustMatch) res == fname else nzchar(res)
 }
 
+### ** .load_namespace_quietly
+
+.load_namespace_quietly <-
+function(package, lib.loc) {
+    if(package != "base")
+        .try_quietly(loadNamespace(package, lib.loc))
+}
+
 ### ** .load_namespace_rather_quietly
 
 .load_namespace_rather_quietly <-

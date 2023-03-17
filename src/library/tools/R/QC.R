@@ -2411,7 +2411,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into code_env.
         if(!is_base)
-            .try_quietly(loadNamespace(package, dirname(dir)))
+            .load_namespace_quietly(package, dirname(dir))
 
         code_env <- asNamespace(package)
     }
@@ -2797,9 +2797,8 @@ function(package, dir, lib.loc = NULL)
         is_base <- basename(dir) == "base"
 
         ## Load package into code_env.
-        ## FIXME: why is loading the namespace not enough?
         if(!is_base)
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
         ## FIXME: every non-base package must have a namespace.
         ## In case the package has a namespace, we really want to check
         ## all replacement functions in the package.  (If not, we need
@@ -5859,9 +5858,8 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        ## FIXME: why is loading the namespace not enough?
         if(basename(dir) != "base")
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
         code_env <- asNamespace(package)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
@@ -6787,8 +6785,7 @@ function(package, dir, lib.loc = NULL)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            ## FIXME: why is loading the namespace not enough?
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             bad_closures <- find_bad_closures(code_env)
         }
@@ -6880,8 +6877,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            ## FIXME: why is loading the namespace not enough?
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             bad_closures <- find_bad_closures(code_env)
             if(.isMethodsDispatchOn()) {
@@ -7166,8 +7162,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         if(package %notin% .get_standard_package_names()$base) {
-            ## FIXME: why is loading the namespace not enough?
-            .load_package_quietly(package, dirname(dir))
+            .load_namespace_quietly(package, dirname(dir))
             code_env <- asNamespace(package)
             bad_closures <- find_bad_closures(code_env)
             if(.isMethodsDispatchOn()) {
