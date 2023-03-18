@@ -151,8 +151,10 @@ rdocdir = @rdocdir@
 ## Overrides for installing R as a framework (macOS).
 @WANT_R_FRAMEWORK_TRUE@FW_VERSION = @FW_VERSION@
 @WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources
+## Note: scripts install doesn't like bindir and Rexecbindir to be the same
 @WANT_R_FRAMEWORK_TRUE@bindir = $(rhome)
-@WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)
+@WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)/share/man
+@WANT_R_FRAMEWORK_TRUE@libdir = $(rhome)/lib
 
 Rexecbindir = $(rhome)/bin
 Rexecbindir2 = $(rhome)/bin/exec$(R_ARCH)
