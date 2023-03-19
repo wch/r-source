@@ -10,6 +10,7 @@
 \alias{as.Rconcordance.default}
 \alias{Rconcordance}
 \alias{activeConcordance}
+\alias{followConcordance}
 \title{
 Concordance between source and target lines.
 }
@@ -32,6 +33,7 @@ by \code{matchConcordance}.
 matchConcordance(linenum, concordance)
 \method{as.character}{Rconcordance}(x, targetfile = "", ...)
 as.Rconcordance(x, ...)
+followConcordance(concordance, prevConcordance)
 }
 \arguments{
   \item{linenum}{
@@ -40,6 +42,9 @@ One or more line numbers being queried.
   \item{concordance}{
 The concordance data for the file containing the lines: an object
 of class \code{"Rconcordance"}.
+}
+  \item{prevConcordance}{
+A concordance object retrieved from the current file.
 }
   \item{targetfile}{
 The output filename.  
@@ -75,6 +80,13 @@ output file.
 The default method of \code{as.Rconcordance} searches for strings matching the
 pattern of \code{as.character.Rconcordance} output, then converts
 those lines back to a single concordance.
+
+\code{followConcordance} is used when a file is transformed
+more than once.  The first transformation records a
+concordance in the file which is read as \code{prevConcordance}. 
+\code{followConcordance} chains this with the current 
+\code{concordance}, relating the final result to the original
+source.
 
 There are 3 kinds of objects used to hold concordances.  
 
