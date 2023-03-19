@@ -709,6 +709,13 @@
       the \code{bibtex} argument's default for \code{print.bibentry()}
       depends directly on the \code{citation.bibtex.max} option, whereas in
       \code{format.bibentry()} the option no longer applies.
+
+      \item Attepting to use a character string naming a foreign
+      function entry point in a foreign fuction call in a package will
+      now signal an error if the packages has called
+      \code{R_forceSymbols} to specify that symbols must be
+      used. Temporarily this is only enforced if the environment
+      variable \code{R_REALLY_FORCE_SYMBOLS} is set.
     }
   }
 }
