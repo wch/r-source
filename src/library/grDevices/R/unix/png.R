@@ -39,6 +39,8 @@ png <- function(filename = "Rplot%03d.png",
                 pointsize = 12, bg = "white", res = NA, ...,
                 type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -83,6 +85,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -121,6 +125,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
@@ -160,6 +166,8 @@ bmp <- function(filename = "Rplot%03d.bmp",
                 bg = "white", res = NA, ...,
                 type = c("cairo", "Xlib", "quartz"), antialias)
 {
+    if(!is.character(filename) || length(filename) != 1L || !nzchar(filename))
+        stop("'filename' must be a non-empty character string")
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)

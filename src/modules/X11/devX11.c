@@ -3234,7 +3234,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
+    if (ISNAN(width) || ISNAN(height) || width <= 0 || height <= 0)
 	errorcall(call, _("invalid 'width' or 'height'"));
     ps = asReal(CAR(args)); args = CDR(args);
     gamma = asReal(CAR(args)); args = CDR(args);
