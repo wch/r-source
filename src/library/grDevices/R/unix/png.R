@@ -18,6 +18,15 @@
 
 .geometry <- function(width, height, units, res)
 {
+    width <- as.numeric(width)
+    if (length(width) == 0 || !is.finite(width[1]))
+        stop("invalid width")
+    else width <- width[1]
+    height <- as.numeric(height)
+    if (length(height) == 0 || !is.finite(height[1]))
+        stop("invalid height")
+    else height <- height[1]
+
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
