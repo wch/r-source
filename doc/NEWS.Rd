@@ -187,6 +187,9 @@
 
       \item The \code{@} operator is now an S3 generic. Based on
       contributions by Tomasz Kalinowski in \PR{18482}.
+
+      \item Detection of BLAS/LAPACK in use (\code{sessionInfo()}) with
+      FlexiBLAS now reports the current backend.
     }
   }
 
