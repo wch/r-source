@@ -190,6 +190,10 @@
 
       \item Detection of BLAS/LAPACK in use (\code{sessionInfo()}) with
       FlexiBLAS now reports the current backend.
+
+      \item \code{subset.data.frame()} now warns about extraneous
+      arguments, typically catching the use of \samp{=} instead of
+      \samp{==} in the \code{subset} expression.
     }
   }
 

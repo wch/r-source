@@ -510,8 +510,13 @@ mChk(m); stopifnot(identical(m, m0))# m is unchanged as it should, but
 ## uniroot() close to Inf function values could wrongly converge outside interval
 f <- function(x) 4469/x - 572/(1-x)
 str(urf <- uniroot(f, c(1e-6, 1))) # interval = (eps, 1]; f(1) = Inf
-stopifnot(all.equal(urf$root, 0.88653, tol = 1e-4))
-## Instead of 0.886.., gave a small *negative* root in R <= 4.3.0
+stopifnot(all.equal(urf$root, 0.88653, tolerance = 1e-4))
+## Instead of 0.886.., gave a small *negative* root in R < 4.3.0
+
+
+## chkDots() in subset.data.frame() to prevent usage errors
+tools::assertWarning(subset(data.frame(y = 1), y = 2), verbose = TRUE)
+## R < 4.3.0 was silent about unused ... arguments
 
 
 

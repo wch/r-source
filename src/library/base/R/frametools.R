@@ -1,7 +1,7 @@
 #  File src/library/base/R/frametools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 {
+    chkDots(...)
     r <- if(missing(subset))
 	rep_len(TRUE, nrow(x)) # cannot rely on recycling in 0-row case
     else {
