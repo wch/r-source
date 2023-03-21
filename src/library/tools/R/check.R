@@ -5563,6 +5563,9 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wempty-body\\]",
                              "warning: .* \\[-Wformat\\]",
                              "warning: .* \\[-Wreturn-stack-address\\]",
+                             "warning: .* \\[-Wuninitialized\\]",
+                             ## clang only
+                             "warning: .* \\[-Wuninitialized-const-reference\\]",
                              ## also gcc
                              "warning: .* \\[-Wsizeof-pointer-div\\]",
                              "warning: .* \\[-Wnon-c-typedef-for-linkage\\]",
