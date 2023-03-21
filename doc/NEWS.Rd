@@ -717,14 +717,14 @@
       depends directly on the \code{citation.bibtex.max} option, whereas in
       \code{format.bibentry()} the option no longer applies.
 
-      \item Attepting to use a character string naming a foreign
-      function entry point in a foreign fuction call in a package will
+      \item Attempting to use a character string naming a foreign
+      function entry point in a foreign function call in a package will
       now signal an error if the packages has called
       \code{R_forceSymbols} to specify that symbols must be
       used.
 
       \item An error in \code{table()} could permanently set
-      \code{options(warn=2)} promoting all subdequent warnings to errors.
+      \code{options(warn=2)} promoting all subsequent warnings to errors.
     }
   }
 }
