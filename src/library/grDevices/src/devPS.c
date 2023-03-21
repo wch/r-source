@@ -4941,13 +4941,15 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	pd->pageheight = 14.0;
     }
     else {
+        char papername[64];
+        strcpy(papername, pd->papername);
 	freeDeviceFontList(pd->fonts);
 	freeDeviceEncList(pd->encodings);
 	pd->fonts = NULL;
 	pd->encodings = NULL;
 	free(dd);
 	free(pd);
-	error(_("invalid page type '%s' (xfig)"), pd->papername);
+	error(_("invalid page type '%s' (xfig)"), papername);
     }
     pd->pagecentre = pagecentre;
     pd->paperwidth = (int)(72 * pd->pagewidth);
