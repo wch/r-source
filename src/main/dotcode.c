@@ -1745,16 +1745,8 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 	info = (DllInfo *) R_ExternalPtrAddr(tmp);
 	if(!info)
 	    error(_("NULL value for DLLInfoReference when looking for DLL"));
-
-	static int fs_check_inited = FALSE;
-	static int fs_check = FALSE;
-	if (! fs_check_inited) {
-	    fs_check_inited = TRUE;
-	    fs_check = getenv("R_REALLY_FORCE_SYMBOLS") != NULL;
-	}
-	if (fs_check && info->forceSymbols)
+	if (info->forceSymbols)
 	    error(_("DLL requires the use of native symbols"));
-
 	fun = R_dlsym(info, name, symbol);
     }
 
