@@ -723,6 +723,9 @@
       \code{R_forceSymbols} to specify that symbols must be
       used. Temporarily this is only enforced if the environment
       variable \code{R_REALLY_FORCE_SYMBOLS} is set.
+
+      \item An error in \code{table()} could permanently set
+      \code{options(warn=2)} promoting all subdequent warnings to errors.
     }
   }
 }
