@@ -1314,8 +1314,8 @@ add_dummies <- function(dir, Log)
                 for (f in c("configure", "cleanup")) {
                     ## /bin/bash is not portable
                     if (file.exists(f) &&
-                        grepl("^#! */bin/bash",
-                              readLines(f, 1L, warn = FALSE))) {
+                        any(grepl("^#! */bin/bash",
+                                  readLines(f, 1L, warn = FALSE)))) {
                         if(!any) {
                             any <- TRUE
                             msg <- paste0(sQuote(f), ": /bin/bash is not portable")
@@ -1324,8 +1324,8 @@ add_dummies <- function(dir, Log)
                     }
                     ## and bash need not be installed at all.
                     if (file.exists(f) &&
-                        grepl("^#!.*env bash",
-                              readLines(f, 1L, warn = FALSE))) {
+                        any(grepl("^#!.*env bash",
+                                  readLines(f, 1L, warn = FALSE)))) {
                         if(!any) {
                             any <- TRUE
                             msg <- paste0(sQuote(f), ": 'env bash' is not portable as bash need not be installed")
