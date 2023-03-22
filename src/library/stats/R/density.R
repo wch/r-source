@@ -24,6 +24,7 @@ density.default <-
 	     "triangular", "biweight", "cosine", "optcosine"),
 	     weights = NULL, window = kernel, width,
 	     give.Rkern = FALSE, subdensity = FALSE,
+             warnWbw = var(weights) > 0,# sd(weights) > mean(weights) "better", but arbitrary
 	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
     chkDots(...)
@@ -118,6 +119,9 @@ density.default <-
     if (is.character(bw)) {
         if(nx < 2)
             stop("need at least 2 points to select a bandwidth automatically")
+        ##cat(sprintf("density(): sd(wts)/mean(wts) = %g\n", sd(weights)/mean(weights)))
+        if(has.wts && warnWbw)
+            warning("Selecting bandwidth *not* using 'weights'")
         bw <- switch(tolower(bw),
                      nrd0 = bw.nrd0(x),
                      nrd = bw.nrd(x),
@@ -136,9 +140,9 @@ density.default <-
     if (missing(to))
 	to   <- max(x) + cut * bw
     if (!is.finite(from)) stop("non-finite 'from'")
-    if (!is.finite(to)) stop("non-finite 'to'")
+    if (!is.finite(to))   stop("non-finite 'to'")
     lo <- from - 4 * bw
-    up <- to + 4 * bw
+    up <- to   + 4 * bw
     ## This bins weighted distances
     y <- .Call(C_BinDist, x, weights, lo, up, n) * totMass
 
@@ -181,7 +185,7 @@ plot.density <- function(x, main = NULL, xlab = NULL, ylab = "Density",
 {
     if(is.null(xlab))
 	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
-    if(is.null(main)) main <- deparse(x$call)
+    if(is.null(main)) main <- sub("[.]default", "", deparse(x$call))
     plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
     if(zero.line) abline(h = 0, lwd = 0.25, col = "gray")
     invisible(NULL)

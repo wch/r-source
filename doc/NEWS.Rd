@@ -199,6 +199,11 @@
       than one may now be made into an error by setting environment variable
       \env{_R_CHECK_LENGTH_COLON_} to a true value, along the proposal in
       \PR{18419} by Henrik Bengtsson.
+
+      \item \code{density(x, weights=*)} now warns if automatic bandwidth
+      selection happens without using \code{weights}; new optional
+      \code{warnWbw} may suppress the warning.  Prompted by Christoph
+      Dalitz' \PR{18490} and its discussants.
     }
   }
 

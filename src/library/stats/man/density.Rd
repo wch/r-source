@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -59,7 +59,13 @@ density(x, \dots)
     and there are \code{NA}'s in \code{x}, they \emph{and} the
     corresponding weights are removed before computations.  In that case,
     when the original weights have summed to one, they are re-scaled to
-    keep doing so.}
+    keep doing so.
+
+    Note that weights are \emph{not} taken into account for automatic
+    bandwidth rules, i.e., when \code{bw} is a string.  When the weights
+    are proportional to true counts \code{cn}, \code{density(x = rep(x, cn))}
+    may be used instead of \code{weights}.
+  }
 
   \item{width}{this exists for compatibility with S; if given, and
     \code{bw} is not, will set \code{bw} to \code{width} if this is a
@@ -74,6 +80,13 @@ density(x, \dots)
     to one.  When true, it indicates that a \dQuote{sub-density}
     is desired and no warning should be signalled.  By default, when false,
     a \code{\link{warning}} is signalled when the weights do not sum to one.}
+
+  \item{warnWbw}{\code{\link{logical}}, used only when \code{weights} are specified \emph{and}
+    \code{bw} is \code{character}, i.e., automatic bandwidth selection is
+    chosen (as by default).  When true (as by default), a
+    \code{\link{warning}} is signalled to alert the user that automatic
+    bandwidth selection will not take the weights into account and hence
+    may be suboptimal.}
 
   \item{n}{the number of equally spaced points at which the density is
     to be estimated.  When \code{n > 512}, it is rounded up to a power
