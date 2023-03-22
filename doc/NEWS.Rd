@@ -204,6 +204,9 @@
       selection happens without using \code{weights}; new optional
       \code{warnWbw} may suppress the warning.  Prompted by Christoph
       Dalitz' \PR{18490} and its discussants.
+
+      \item \code{rm(list = *)} is faster and more readable thanks to Kevin
+      Ushey's \PR{18492}.
     }
   }
 
