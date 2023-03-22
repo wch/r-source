@@ -5443,8 +5443,10 @@ stopifnot({
 ## had a trailing ".1" for a while in R-devel only
 ##
 ## table(<d.fr.>, <d.fr.>) now signals an error (PR#18224):
+options(warn=0) -> op2
 r <- tryCid( table(warpbreaks[2], warpbreaks[3]) )
 stopifnot(inherits(r, "error"),
+          getOption("warn") == 0,
           grepl("cannot\\b.* data frame", conditionMessage(r)))
 m1 <- tryCmsg(table(exclude=NA, warpbreaks[2], warpbreaks[3]))
 m2 <- tryCmsg(table(data.frame(a = 1, d = I(data.frame(x = 1)))))
@@ -5453,6 +5455,7 @@ stopifnot(exprs = {
     identical(m1, m2)
     !englishMsgs || grepl("cannot xtfrm data frames", m1)
 })
+options(op2)
 ## factor(<POSIXlt>) works fine, hence table(), does too:
 tm <- as.POSIXlt(c("1990-07-01", "1990-07-01", "1991-01-01"))
 stopifnot(exprs = {
