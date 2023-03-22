@@ -194,6 +194,11 @@
       \item \code{subset.data.frame()} now warns about extraneous
       arguments, typically catching the use of \samp{=} instead of
       \samp{==} in the \code{subset} expression.
+
+      \item Calling \code{a:b} when numeric \code{a} or \code{b} is longer
+      than one may now be made into an error by setting environment variable
+      \env{_R_CHECK_LENGTH_COLON_} to a true value, along the proposal in
+      \PR{18419} by Henrik Bengtsson.
     }
   }
 

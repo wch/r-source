@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2021  The R Core Team.
+ *  Copyright (C) 1998-2023  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -140,29 +140,25 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
 
 attribute_hidden SEXP do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s1, s2;
-    double n1, n2;
-
     checkArity(op, args);
-    if (inherits(CAR(args), "factor") && inherits(CADR(args), "factor"))
-	return(cross_colon(call, CAR(args), CADR(args)));
+    SEXP s1 = CAR(args),
+	s2 = CADR(args);
+    if (inherits(s1, "factor") && inherits(s2, "factor"))
+	return(cross_colon(call, s1, s2));
+    double
+	n1 = length(s1),
+	n2 = length(s2);
+    if (n1 != 1 || n2 != 1) {
+	if (n1 == 0 || n2 == 0)
+	    errorcall(call, _("argument of length 0"));
+	char *check = getenv("_R_CHECK_LENGTH_COLON_");
+	if (check ? StringTrue(check) : FALSE) // warn by default
+	    errorcall(call, _("numerical expression has length > 1"));
+	else
+	    warningcall(call, _("numerical expression has %d elements: only the first used"),
+			(n1 > 1) ? (int) n1 : (int) n2);
+    }
 
-    s1 = CAR(args);
-    s2 = CADR(args);
-    n1 = length(s1);
-    n2 = length(s2);
-    if (n1 == 0 || n2 == 0)
-	errorcall(call, _("argument of length 0"));
-    if (n1 > 1)
-	warningcall(call,
-		    ngettext("numerical expression has %d element: only the first used",
-			     "numerical expression has %d elements: only the first used",
-			     (int) n1), (int) n1);
-    if (n2 > 1)
-	warningcall(call,
-		    ngettext("numerical expression has %d element: only the first used",
-			     "numerical expression has %d elements: only the first used",
-			     (int) n2), (int) n2);
     n1 = asReal(s1);
     n2 = asReal(s2);
     if (ISNAN(n1) || ISNAN(n2))
