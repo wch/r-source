@@ -2192,10 +2192,6 @@ Call:
 glm(formula = cbind(ncases, ncontrols) ~ agegp + unclass(tobgp) + 
     unclass(alcgp), family = binomial(), data = esoph)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3018  -0.7234  -0.2306   0.5737   2.4290  
-
 Coefficients:
                Estimate Std. Error z value Pr(>|z|)    
 (Intercept)    -4.92067    0.37344 -13.177  < 2e-16 ***
@@ -2410,10 +2406,6 @@ Call:
 glm(formula = case ~ spontaneous + induced, family = binomial(), 
     data = infert)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.6678  -0.8360  -0.5772   0.9030   1.9362  
-
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)  -1.7079     0.2677  -6.380 1.78e-10 ***
@@ -2437,10 +2429,6 @@ Number of Fisher Scoring iterations: 4
 Call:
 glm(formula = case ~ age + parity + education + spontaneous + 
     induced, family = binomial(), data = infert)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7603  -0.8162  -0.4956   0.8349   2.6536  
 
 Coefficients:
                  Estimate Std. Error z value Pr(>|z|)    
@@ -2728,10 +2716,6 @@ Model 2: Speed ~ Run + Expt
 Call:
 glm(formula = Freq ~ origin + destination + Diag + Rscore:Cscore, 
     family = poisson, data = occupationalStatus)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.6521  -0.6267   0.0000   0.5913   2.0964  
 
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    

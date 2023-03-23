@@ -2444,10 +2444,6 @@ Residual Deviance: 4.551 	AIC: 28.51
 Call:
 glm(formula = y ~ x1 + x2 + x3)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.0572  -0.4836   0.0799   0.4424   1.2699  
-
 Coefficients: (1 not defined because of singularities)
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)   1.4719     0.9484   1.552    0.165
@@ -2830,10 +2826,6 @@ Residual Deviance: 2.74 	AIC: 17.43
 Call:
 glm(formula = y ~ 0)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.36919  -0.21073   0.00840   0.08437   0.55292  
-
 No Coefficients
 
 (Dispersion parameter for gaussian family taken to be 0.2740358)
@@ -2918,10 +2910,6 @@ Residual Deviance: 2.74 	AIC: 17.43
 
 Call:
 glm(formula = y ~ x + 0)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.36919  -0.21073   0.00840   0.08437   0.55292  
 
 Coefficients: (1 not defined because of singularities)
   Estimate Std. Error t value Pr(>|t|)
@@ -5172,10 +5160,6 @@ D1 30 60
 Call:
 glm(formula = y ~ x, weights = w)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7806  -0.1416   0.1863   0.5690   1.2057  
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)  -0.7532     0.7862  -0.958    0.370
@@ -5196,10 +5180,6 @@ In summary.glm(glm(y ~ x, weights = w)) :
 
 Call:
 glm(formula = y ~ x, subset = w > 0)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7806  -0.1582   0.3726   0.5896   1.2057  
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)

@@ -189,7 +189,8 @@ poisson <- function (link = "log")
 		   initialize = initialize,
 		   validmu = validmu,
 		   valideta = stats$valideta,
-                   simulate = simfun),
+                   simulate = simfun,
+                   dispersion = 1),
 	      class = "family")
 }
 
@@ -241,7 +242,8 @@ quasipoisson <- function (link = "log")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   dispersion = NA_real_),
 	      class = "family")
 }
 
@@ -288,7 +290,8 @@ gaussian <- function (link = "identity")
 
 		       mustart <- y }),
 		   validmu = function(mu) TRUE,
-		   valideta = stats$valideta
+		   valideta = stats$valideta,
+                   dispersion = NA_real_
 		   ),
 	      class = "family")
 }
@@ -395,7 +398,8 @@ binomial <- function (link = "logit")
 		   initialize = binomInitialize(family),
 		   validmu = validmu,
 		   valideta = stats$valideta,
-                   simulate = simfun),
+                   simulate = simfun,
+                   dispersion = 1),
 	      class = "family")
 }
 
@@ -432,7 +436,8 @@ quasibinomial <- function (link = "logit")
 		   mu.eta = stats$mu.eta,
 		   initialize = binomInitialize(family),
 		   validmu = function(mu) all(is.finite(mu)) && all(0 < mu & mu < 1),
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   dispersion = NA_real_),
 	      class = "family")
 }
 
@@ -492,7 +497,8 @@ Gamma <- function (link = "inverse")
 		   initialize = initialize,
 		   validmu = validmu,
 		   valideta = stats$valideta,
-                   simulate = simfun),
+                   simulate = simfun,
+                   dispersion = NA_real_),
 	      class = "family")
 }
 
@@ -550,7 +556,8 @@ inverse.gaussian <- function(link = "1/mu^2")
 		   initialize = initialize,
 		   validmu = validmu,
 		   valideta = stats$valideta,
-                   simulate = simfun),
+                   simulate = simfun,
+                   dispersion = NA_real_),
 	      class = "family")
 }
 
@@ -644,6 +651,7 @@ quasi <- function (link = "identity", variance = "constant")
 		   validmu = validmu,
 		   valideta = stats$valideta,
                    ## character form of the var fun is needed for gee
-                   varfun = variance_nm),
+                   varfun = variance_nm,
+                   dispersion = NA_real_),
 	      class = "family")
 }

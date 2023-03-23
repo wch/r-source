@@ -158,7 +158,10 @@ quasipoisson(link = "log")
     called by the \code{"lm"} method of \code{\link{simulate}}.  It will
     normally return a matrix with \code{nsim} columns and one row for
     each fitted value, but it can also return a list of length
-    \code{nsim}. Clearly this will be missing for \sQuote{quasi-} families.}
+    \code{nsim}. Clearly this will be missing for \sQuote{quasi-}
+    families.}
+  \item{dispersion}{(optional since \R version 4.3.0) numeric: value of the
+    dispersion parameter, if fixed, or \code{NA} if free.}
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)

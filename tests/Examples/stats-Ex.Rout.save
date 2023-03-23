@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-02-09 r83797) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-03-22 r84020) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5047,7 +5047,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x559cc7b53620>
+<bytecode: 0x5637260>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7162,7 +7162,7 @@ Family: gaussian
 Link function: identity 
 
 > str(nf)
-List of 11
+List of 12
  $ family    : chr "gaussian"
  $ link      : chr "identity"
  $ linkfun   :function (mu)  
@@ -7174,6 +7174,7 @@ List of 11
  $ initialize:  expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link| __truncated__
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
+ $ dispersion: num NA
  - attr(*, "class")= chr "family"
 > 
 > gf <- Gamma()
@@ -7183,7 +7184,7 @@ Family: Gamma
 Link function: inverse 
 
 > str(gf)
-List of 12
+List of 13
  $ family    : chr "Gamma"
  $ link      : chr "inverse"
  $ linkfun   :function (mu)  
@@ -7196,6 +7197,7 @@ List of 12
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  $ simulate  :function (object, nsim)  
+ $ dispersion: num NA
  - attr(*, "class")= chr "family"
 > gf$linkinv
 function (eta) 
@@ -7669,7 +7671,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x559cc745af60>
+<environment: 0x506c1e8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8116,10 +8118,6 @@ treatment  2   0.0000         4     5.1291
 Call:
 glm(formula = lot1 ~ log(u), family = Gamma, data = clotting)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.04008  -0.03756  -0.02637   0.02905   0.08641  
-
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
 (Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
@@ -8139,10 +8137,6 @@ Number of Fisher Scoring iterations: 3
 
 Call:
 glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06371  
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
@@ -12529,14 +12523,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x559cc678ac48>
-<environment: 0x559cc67943c0>
+<bytecode: 0x32d0388>
+<environment: 0x32d8a18>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x559cc678aaf8>
-<environment: 0x559cc67943c0>
+<bytecode: 0x32d0238>
+<environment: 0x32d8a18>
 
 > 
 > 
@@ -13234,10 +13228,6 @@ $se
 
 Call:
 glm(formula = SF ~ sex * ldose, family = binomial)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.39849  -0.32094  -0.07592   0.38220   1.10375  
 
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
@@ -16081,7 +16071,7 @@ W = 0.93092, p-value = 5.616e-05
 > 
 > ### Name: sigma
 > ### Title: Extract Residual Standard Deviation 'Sigma'
-> ### Aliases: sigma sigma.default sigma.mlm
+> ### Aliases: sigma sigma.default sigma.mlm sigma.glm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -16106,7 +16096,7 @@ W = 0.93092, p-value = 5.616e-05
 > sex <- factor(rep(c("M", "F"), c(6, 6)))
 > SF <- cbind(numdead, numalive = 20-numdead)
 > sigma(budworm.lg <- glm(SF ~ sex*ldose, family = binomial))
-[1] 0.7900734
+[1] 1
 > 
 > ## -- b) Poisson -- from ?glm :
 > ## Dobson (1990) Page 93: Randomized Controlled Trial :
@@ -16114,15 +16104,15 @@ W = 0.93092, p-value = 5.616e-05
 > outcome <- gl(3,1,9)
 > treatment <- gl(3,3)
 > sigma(glm.D93 <- glm(counts ~ outcome + treatment, family = poisson()))
-[1] 1.13238
-> ## (currently) *differs* from
-> summary(glm.D93)$dispersion # == 1
+[1] 1
+> ## equal to
+> sqrt(summary(glm.D93)$dispersion) # == 1
 [1] 1
 > ## and the *Quasi*poisson's dispersion
 > sigma(glm.qD93 <- update(glm.D93, family = quasipoisson()))
-[1] 1.13238
-> sigma (glm.qD93)^2 # 1.282285 is close, but not the same
-[1] 1.282285
+[1] 1.137234
+> sigma (glm.qD93)^2 # 1.2933 equal to
+[1] 1.2933
 > summary(glm.qD93)$dispersion # == 1.2933
 [1] 1.2933
 > 
@@ -16875,8 +16865,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x559cc5e2a130>
-<environment: 0x559cc6c7fd00>
+<bytecode: 0x3a23c68>
+<environment: 0x4045bf0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19356,10 +19346,6 @@ Call:
 glm(formula = cbind(ncases, ncontrols) ~ agegp + C(tobgp, , 1) + 
     C(alcgp, , 1), family = binomial(), data = esoph)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3018  -0.7234  -0.2306   0.5737   2.4290  
-
 Coefficients:
                 Estimate Std. Error z value Pr(>|z|)    
 (Intercept)     -1.15264    0.20326  -5.671 1.42e-08 ***
@@ -19390,7 +19376,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.39 0.204 6.597 0 0 
+Time elapsed:  3.766 0.167 3.98 0 0 
 > grDevices::dev.off()
 null device 
           1 

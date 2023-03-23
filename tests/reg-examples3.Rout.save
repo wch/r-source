@@ -284,10 +284,6 @@ Call:
 glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
     data = anorexia)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--14.1083   -4.2773   -0.5484    5.4838   15.2922  
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  49.7711    13.3910   3.717 0.000410 ***

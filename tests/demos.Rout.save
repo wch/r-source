@@ -1361,10 +1361,6 @@ Call:
 glm(formula = Fr ~ M.user * Temp * Soft + Brand, family = poisson, 
     data = detg)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--2.20876  -0.99190  -0.00126   0.93542   1.97601  
-
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)                  4.01524    0.10034  40.018  < 2e-16 ***
@@ -1402,10 +1398,6 @@ Call:
 glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user * 
     Temp, keep.order = TRUE), family = poisson, data = detg)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.91365  -0.35585   0.00253   0.33027   0.92146  
-
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)                  4.14887    0.10603  39.128  < 2e-16 ***
@@ -1441,10 +1433,6 @@ Number of Fisher Scoring iterations: 4
 Call:
 glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user * 
     Temp, keep.order = TRUE), family = poisson, data = detg)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.91365  -0.35585   0.00253   0.33027   0.92146  
 
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    

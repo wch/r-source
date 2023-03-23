@@ -13,7 +13,8 @@
 
 \method{print}{summary.glm}(x, digits = max(3, getOption("digits") - 3),
       symbolic.cor = x$symbolic.cor,
-      signif.stars = getOption("show.signif.stars"), \dots)
+      signif.stars = getOption("show.signif.stars"),
+      show.residuals = FALSE, \dots)
 }
 \arguments{
   \item{object}{an object of class \code{"glm"}, usually, a result of a
@@ -30,6 +31,8 @@
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
   \item{signif.stars}{logical. If \code{TRUE}, \sQuote{significance stars}
     are printed for each coefficient.}
+  \item{show.residuals}{logical. If \code{TRUE} then a summary of the
+    the deviance residuals is printed at the head of the output.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

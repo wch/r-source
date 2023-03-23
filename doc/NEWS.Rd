@@ -207,6 +207,14 @@
 
       \item \code{rm(list = *)} is faster and more readable thanks to Kevin
       Ushey's \PR{18492}.
+
+      \item The \code{plot.lm()} function no longer produces a normal
+      Q-Q plot for GLMs. Instead it plots a half-normal Q-Q plot of the
+      absolute value of the standardized deviance residuals.
+
+      \item The \code{print.summary.glm()} function no longer shows summary
+      statistics for the deviance residuals by default. The optional
+      argument \code{show.residuals} can be used to show them if required.
     }
   }
 
@@ -738,6 +746,11 @@
 
       \item An error in \code{table()} could permanently set
       \code{options(warn=2)} promoting all subsequent warnings to errors.
+
+      \item The \code{sigma()} function gave misleading results for
+      binary GLMs.  A new method for objects of class "glm" returns the
+      square root of the estimate of the disperson parameter using the
+      same calculation as \code{summary.glm()}.
     }
   }
 }

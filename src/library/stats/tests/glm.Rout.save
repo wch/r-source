@@ -131,10 +131,6 @@ List of 9
 Call:
 glm(formula = lot1 ~ log(u), family = Gamma, data = clotting)
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.04008  -0.03756  -0.02637   0.02905   0.08641  
-
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
 (Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
@@ -154,10 +150,6 @@ Number of Fisher Scoring iterations: 3
 
 Call:
 glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06371  
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    

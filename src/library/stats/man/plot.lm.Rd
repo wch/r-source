@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -9,7 +9,7 @@
 \title{Plot Diagnostics for an \code{lm} Object}
 \usage{
 \method{plot}{lm}(x, which = c(1,2,3,5), %% was which = 1:4
-     caption = list("Residuals vs Fitted", "Normal Q-Q",
+     caption = list("Residuals vs Fitted", "Q-Q Residuals",
        "Scale-Location", "Cook's distance",
        "Residuals vs Leverage",
        expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
@@ -34,7 +34,7 @@
   \item{which}{a subset of the numbers \code{1:6}, by default \code{1:3, 5},
     referring to \enumerate{
       \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot % 1
-      \item "Normal Q-Q" plot, an enhanced \code{\link{qqnorm}(resid(.))} % 2
+      \item "Residual Q-Q" plot  % 2
       \item "Scale-Location"     % 3
       \item "Cook's distance"    % 4
       \item "Residuals   vs  Leverage"      % 5
@@ -97,7 +97,7 @@
   Six plots (selectable by \code{which}) are currently available: a plot
   of residuals against fitted values, a Scale-Location plot of
   \eqn{\sqrt{| residuals |}}{sqrt(| residuals |)}
-  against fitted values, a Normal Q-Q plot, a
+  against fitted values, a Q-Q plot of residuals, a
   plot of Cook's distances versus row labels, a plot of residuals
   against leverages, and a plot of Cook's distances against
   leverage/(1-leverage).  By default, the first three and \code{5} are
@@ -138,9 +138,13 @@
   the magnitudes.  The x-axis is labeled with the (non equidistant)
   leverages \eqn{h_{ii}}{h.ii}.
 
-  Notice that some plots may not make much sense for the \code{glm}
-  case; e.g., the normal Q-Q plot only makes sense if the distribution
-  is approximately normal.
+  For the \code{glm} case, the Q-Q plot is based on the absolute value
+  of the standardized deviance residuals. When the saddlepoint
+  approximation applies, these have an approximate half-normal
+  distribution.  The saddlepoint approximtion is exact for the normal
+  and inverse gaussian family, and holds approximately for the Gamma
+  family with small dispersion (large shape) and for the poisson and
+  binomial family with large counts (Dunn and Smyth 2018).
 }
 
 \references{
@@ -166,6 +170,10 @@
   McCullagh, P. and Nelder, J. A. (1989).
   \emph{Generalized Linear Models}.
   London: Chapman and Hall.
+
+  Dunn, P.K. and Smyth G.K. (2018)
+  \emph{Generalized Linear Models with Examples in R}.
+  New York: Springer-Verlag.
 }
 \author{
   John Maindonald and Martin Maechler.

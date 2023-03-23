@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+
 plot.lm <-
 function (x, which = c(1,2,3,5), ## was which = 1L:4L,
-	  caption = list("Residuals vs Fitted", "Normal Q-Q",
+	  caption = list("Residuals vs Fitted", "Q-Q Residuals",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage",
 	  expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
@@ -80,13 +81,15 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
     }
     if (any(show[c(2L,3L,5L)])) {
         ## (Defensive programming used when fusing code for 2:3 and 5)
-	ylab5 <- ylab23 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
+	ylab5 <- ylab3 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
+        ylab2 <- if(isGlm) "Std. Deviance resid." else ylab3
 	## nowhere used:  r.w <- if(is.null(w)) r else sqrt(w) * r
         ## NB: rs is already NaN if r=0, hii=1
         rs <- dropInf(if(isGlm) rstandard(x, type="pearson")
                       else # r.w / (s*sqrt(1 - hii))
                           (if(is.null(w)) r else sqrt(w) * r) / (s * sqrt(1 - hii)),
                       hii)
+        rds <- if(isGlm) suppressWarnings(dropInf(rstandard(x, type="deviance"), hii)) else rs
     }
 
     if (any(show[5L:6L])) { # using 'leverages'
@@ -108,8 +111,10 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	    labels.id <- paste(1L:n)
 	iid <- 1L:id.n
 	show.r <- sort.list(abs(r), decreasing = TRUE)[iid]
-	if(any(show[2L:3L]))
+	if(any(show[2L:3L])) {
 	    show.rs <- sort.list(abs(rs), decreasing = TRUE)[iid]
+            show.rds <- sort.list(abs(rds), decreasing = TRUE)[iid]
+        }
 	text.id <- function(x, y, ind, adj.x = TRUE, usr = par("usr")) {
 	    labpos <-
 		if(adj.x) label.pos[(x > mean(usr[1:2]))+1L] else 3
@@ -143,7 +148,8 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	if(id.n > 0)
 	    ylim <- extendrange(r = ylim, f = extend.ylim.f)
         dev.hold()
-	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
+        ylab1 <- if(isGlm) "Pearson Residuals" else "Residuals"
+	plot(yh, r, xlab = l.fit, ylab = ylab1, main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yh, r, ...)
 	if (one.fig)
@@ -158,22 +164,55 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
         dev.flush()
     }
     if (show[2L]) { ## Normal
-	ylim <- range(rs, na.rm=TRUE)
-	ylim[2L] <- ylim[2L] + diff(ylim) * 0.075
-        dev.hold()
-	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
-	if (qqline) qqline(rs, lty = 3, col = "gray50")
+        if (isGlm) {
+            ## Half-normal QQ plot of deviance residuals
+            qhalfnorm <- function(p) qnorm((p + 1)/2)
+
+            qqhalfnorm <- function (y, xlab="Theoretical Quantiles", ...)
+            {
+                if (has.na <- any(ina <- is.na(y))) {
+                    yN <- y
+                    y <- y[!ina]
+                }
+                if (0 == (n <- length(y)))
+                    stop("y is empty or has only NAs")
+                x <- qhalfnorm(ppoints(n))[order(order(y))]
+                if (has.na) {
+                    y <- x
+                    x <- rep.int(NA_real_, length(ina))
+                    x[!ina] <- y
+                    y <- yN
+                }
+                plot(x, y, xlab=xlab, ...)
+                invisible(list(x = x, y = y))
+            }
+
+            absr <- abs(rds)
+            ylim <- c(0, max(absr, na.rm=TRUE) * 1.075)
+            yl <- as.expression(substitute(abs(YL), list(YL=as.name(ylab2))))
+            dev.hold()
+            qq <- qqhalfnorm(absr, main = main, ylab = yl, ylim = ylim, ...)
+            if (qqline) qqline(absr, distribution=qhalfnorm, lty = 3, col = "gray50")
+        }
+        else {
+            ## Normal QQ plot of residuals
+            ylim <- range(rds, na.rm=TRUE)
+            ylim[2L] <- ylim[2L] + diff(ylim) * 0.075
+            dev.hold()
+            qq <- qqnorm(rds, main = main, ylab = ylab2, ylim = ylim, ...)
+            if (qqline) qqline(rs, lty = 3, col = "gray50")
+        }
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(getCaption(2), 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
-	    text.id(qq$x[show.rs], qq$y[show.rs], show.rs)
+	    text.id(qq$x[show.rds], qq$y[show.rds], show.rds)
         dev.flush()
     }
     if (show[3L]) {
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr, na.rm=TRUE))
-	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
+	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab3))))
 	yhn0 <- if(is.null(w)) yh else yh[w!=0]
         dev.hold()
 	plot(yhn0, sqrtabsr, xlab = l.fit, ylab = yl, main = main,
