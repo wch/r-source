@@ -200,7 +200,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
             ylim[2L] <- ylim[2L] + diff(ylim) * 0.075
             dev.hold()
             qq <- qqnorm(rds, main = main, ylab = ylab2, ylim = ylim, ...)
-            if (qqline) qqline(rs, lty = 3, col = "gray50")
+            if (qqline) qqline(rds, lty = 3, col = "gray50")
         }
 	if (one.fig)
 	    title(sub = sub.caption, ...)
