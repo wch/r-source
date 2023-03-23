@@ -2974,7 +2974,10 @@ allows @command{R CMD SHLIB} to work correctly in the package's
 A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
 @file{src/Makefile}) so this is shown on the package's summary pages on
-@acronym{CRAN} or similar.
+@acronym{CRAN} or similar.  This is also good practice for a requirement
+of C++14.  Note that support of C++14 or C++17 is only available from
+@R{} 3.4.0, so if the package has an @R{} version requiremnt it needs to
+take that into account.
 
 Essentially complete C++14 support is available from GCC 5, LLVM
 @command{clang} 3.4 and currently-used versions of Apple
