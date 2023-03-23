@@ -8,6 +8,37 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
+      \item .
+    }
+  }
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item .
+    }
+  }
+}
+\section{\Rlogo CHANGES IN R 4.3.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
       \item Calling \code{&&} or \code{||} with LHS or (if evaluated) RHS of
       length greater than one is now always an error, with a report of
       the form
