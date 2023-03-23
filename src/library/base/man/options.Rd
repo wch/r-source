@@ -781,7 +781,7 @@ local({
   These will be set when package \pkg{parallel} (or its namespace)
   is loaded if not already set.
   \describe{
-    \item{\code{mc.cores}:}{a integer giving the maximum allowed number
+    \item{\code{mc.cores}:}{an integer giving the maximum allowed number
       of \emph{additional} \R processes allowed to be run in parallel to
       the current \R process.  Defaults to the setting of the
       environment variable \env{MC_CORES} if set.  Most applications

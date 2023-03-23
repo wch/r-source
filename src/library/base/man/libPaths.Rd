@@ -61,7 +61,7 @@
   semicolon-separated on Windows.  For the latter two, a value of
   \code{NULL} indicates an empty list of directories. (Note that as from
   \R 4.2.0, both are set by \R start-up code if not already set or empty
-  so can be interrogated from an \R session to find the their defaults:
+  so can be interrogated from an \R session to find their defaults:
   in earlier versions this was true only for \env{R_LIBS_USER}.)
 
   First, \code{.Library.site} is initialized from \env{R_LIBS_SITE}.  If

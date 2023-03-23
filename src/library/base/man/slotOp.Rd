@@ -1,6 +1,6 @@
 % File src/library/base/man/slotOp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{slotOp}
@@ -22,7 +22,7 @@ object@name <- value
     code{name} must be the name of a slot in the definition of the class
     of \code{object}.}
   \item{value}{A suitable replacement value for the slot or
-    property. For and S4 object this must be from a class compatible
+    property. For an S4 object this must be from a class compatible
     with the class defined for this slot in the definition of the class
     of \code{object}.}
 }

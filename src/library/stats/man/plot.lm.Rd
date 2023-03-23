@@ -141,10 +141,10 @@
   For the \code{glm} case, the Q-Q plot is based on the absolute value
   of the standardized deviance residuals. When the saddlepoint
   approximation applies, these have an approximate half-normal
-  distribution.  The saddlepoint approximtion is exact for the normal
-  and inverse gaussian family, and holds approximately for the Gamma
-  family with small dispersion (large shape) and for the poisson and
-  binomial family with large counts (Dunn and Smyth 2018).
+  distribution.  The saddlepoint approximation is exact for the normal
+  and inverse Gaussian family, and holds approximately for the Gamma
+  family with small dispersion (large shape) and for the Poisson and
+  binomial families with large counts (Dunn and Smyth 2018).
 }
 
 \references{

@@ -748,8 +748,8 @@
       \code{options(warn=2)} promoting all subsequent warnings to errors.
 
       \item The \code{sigma()} function gave misleading results for
-      binary GLMs.  A new method for objects of class "glm" returns the
-      square root of the estimate of the disperson parameter using the
+      binary GLMs.  A new method for objects of class \code{"glm"} returns the
+      square root of the estimate of the dispersion parameter using the
       same calculation as \code{summary.glm()}.
     }
   }

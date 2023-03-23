@@ -1,6 +1,6 @@
 % File src/library/stats/man/summary.glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summary.glm}
@@ -31,7 +31,7 @@
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
   \item{signif.stars}{logical. If \code{TRUE}, \sQuote{significance stars}
     are printed for each coefficient.}
-  \item{show.residuals}{logical. If \code{TRUE} then a summary of the
+  \item{show.residuals}{logical. If \code{TRUE} then a summary of
     the deviance residuals is printed at the head of the output.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -90,7 +90,7 @@
   \item{aliased}{named logical vector showing if the original
     coefficients are aliased.}
   \item{dispersion}{either the supplied argument or the inferred/estimated
-    dispersion if the latter is \code{NULL}.}
+    dispersion if the former is \code{NULL}.}
   \item{df}{a 3-vector of the rank of the model and the number of
     residual degrees of freedom, plus number of coefficients (including
     aliased ones).}
