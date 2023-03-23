@@ -36,8 +36,11 @@ devWindows-CPPFLAGS = -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS
 
 winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)/include"
 
-PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lzstd -lz -lwebp -llzma
+## webp has libsharpyuv.a as a separate library, but we support also older
+## versions which included the code in libwebp.a
+LIBSHARPYUV = $(or $(and $(wildcard $(EXT_LIBS)/lib/libsharpyuv.a),-lsharpyuv),)
 
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lzstd -lz -lwebp $(LIBSHARPYUV) -llzma
 
 all: makeMakedeps shlib
 
