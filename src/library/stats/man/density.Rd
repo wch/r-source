@@ -16,6 +16,7 @@ density(x, \dots)
                    "cosine", "optcosine"),
         weights = NULL, window = kernel, width,
         give.Rkern = FALSE, subdensity = FALSE,
+        warnWbw = var(weights) > 0,
         n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
 }
 \arguments{
