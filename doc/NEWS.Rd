@@ -536,9 +536,13 @@
 
       Where a C++ standard is specified, it is reported.
 
-      \item \command{check}'s \sQuote{checking compilation flags in
+      \item \command{R CMD check}'s \sQuote{checking compilation flags in
 	Makevars} has been relaxed to accept the use of flags such as
       \option{-std=f2008} in \samp{PKG_FFLAGS}.
+
+      \item \code{tools::buildVignettes()} has a new argument \code{skip},
+      which is used by \command{R CMD check} to skip (and note)
+      vignettes with unavailable \samp{\VignetteDepends} (\PR{18318}).
     }
   }
 
