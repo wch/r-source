@@ -582,7 +582,7 @@ We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible causes.
 
 (a) A proxy needs to be set up: see @code{?download.file}. Note that this is
-specific to the download method and the default method changed in \R 4.2.0.
+specific to the download method and the default method changed in R 4.2.0.
 
 (b) Firewall settings are blocking the R executables from contacting the
 Internet (but this should result in informative error messages from the
@@ -878,7 +878,7 @@ process to take advantage of more than 4GB of RAM (if available) and for
 R's memory manager to more easily handle large objects (in particular
 those of 1GB or more).  The disadvantages are that all the pointers are
 8 rather than 4 bytes and so small objects are larger and more data has
-to be moved around, and that less external software is available for
+to be moved around, and that less external software is (was) available for
 64-bit versions of the OS. The 64-bit compilers are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
 instructions, @dots{}) and so the code may run faster despite using
