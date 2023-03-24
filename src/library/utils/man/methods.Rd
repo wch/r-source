@@ -1,6 +1,6 @@
 % File src/library/utils/man/methods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods}
@@ -39,9 +39,11 @@ methods(generic.function, class)
 
 \details{
   \code{methods()} finds S3 and S4 methods associated with either the
-  \code{generic.function} or \code{class} argument.  Methods are found in
+  \code{generic.function} or \code{class} argument.
+  Methods found are those provided by all loaded namespaces via
+  registration, see \code{\link{UseMethod}}; normally, this includes
   all packages on the current \code{search()} path.  \code{.S3methods()}
-  finds only S3 methods, \code{.S4methods()} finds only S4 methods.
+  finds only S3 methods, \code{\link{.S4methods}()} finds only S4 methods.
 
   When invoked with the \code{generic.function} argument, the
   \code{"byclass"} attribute (see Details) is \code{FALSE}, and the
