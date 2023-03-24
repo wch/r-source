@@ -25,7 +25,7 @@ R's implemntation (by default), where time_t is int_fast64_t, hence signed.)
 To remake it, download the current version of tzdataXXXXx.tar.gz from
 https://www.iana.org/time-zones to this directory and run
 
-make -f Make.zi VERSION=2022g
+make -f Make.zi VERSION=2023b
 
 for the appropriate version.  If zic is not on the path, use something like
 
