@@ -526,6 +526,17 @@ short name (something like @samp{PROGRA~1}; you can get it as the
 Windows, and from @command{dir /X} in a @samp{Command Prompt} window),
 and using the function @code{shortPathName} from R code. See also Q2.2.
 
+Yet another complication is a 260 character limit on the length of the
+entire path name imposed by Windows.  The limit applies only to some system
+functions, and hence it is possible to create a long path using one
+application yet inaccessible to another.  It is sometimes possible to
+reduce the path length by creating a drive mapping using @command{subst} and
+accessing files via that drive.  As of Windows 10 version 1607 and R 4.3,
+one can remove this limit via Windows registry by setting
+@code{Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled}
+to @code{1}.  Long paths still may not always work reliably: some
+applications or packages may not be able to work with them and Windows
+cannot execute an application with long path as the current directory.
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
 @section Does R use the Registry?
