@@ -1252,7 +1252,9 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     if (event->error_code == BadWindow) return 0;
 
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    warning(_("X11 protocol error: %s"), buff);
+    /* Unsafe to use warning() as it can be escalated to error() */
+    REprintf(_("X11 protocol error: %s"), buff);
+    REprintf("\n");
     return 0;
 }
 
