@@ -170,9 +170,6 @@ if(require("Matrix")) {
  print(xtabs(~ inner + outer, fr, sparse = TRUE))
 }
 
-## From utils
-example(packageDescription)
-
 
 ## From splines
 library(splines)

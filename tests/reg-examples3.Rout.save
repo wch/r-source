@@ -503,32 +503,6 @@ inner A B C E
     x . . 3 .
     y 2 . . .
 > 
-> ## From utils
-> example(packageDescription)
-
-pckgDs> ## No test: 
-pckgDs> ##D packageDescription("stats")
-pckgDs> ##D packageDescription("stats", fields = c("Package", "Version"))
-pckgDs> ##D 
-pckgDs> ##D packageDescription("stats", fields = "Version")
-pckgDs> ##D packageDescription("stats", fields = "Version", drop = FALSE)
-pckgDs> ##D 
-pckgDs> ##D if(packageVersion("MASS") < "7.3.29")
-pckgDs> ##D   message("you need to update 'MASS'")
-pckgDs> ## End(No test)
-pckgDs> pu <- packageDate("utils")
-
-pckgDs> ## No test: 
-pckgDs> ##D str(pu)
-pckgDs> ## End(No test)
-pckgDs> stopifnot(identical(pu, packageDate(desc = packageDescription("utils"))),
-pckgDs+           identical(pu, packageDate("stats"))) # as "utils" and "stats" are
-
-pckgDs>                                    # both 'base R' and "Built" at same time
-pckgDs> 
-pckgDs> 
-pckgDs> 
-> 
 > 
 > ## From splines
 > library(splines)
