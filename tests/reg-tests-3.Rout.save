@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-03-01 r83918) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-03-24 r84039) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin22.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -930,8 +930,8 @@ standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x1500f1468>
-<environment: 0x1500e88d0>
+<bytecode: 0x11e3f50e0>
+<environment: 0x11e3f0458>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
@@ -1027,7 +1027,7 @@ A BibTeX entry for LaTeX users is
 
   @Manual{,
     title = {nlme: Linear and Nonlinear Mixed Effects Models},
-    author = {Jos? Pinheiro and Douglas Bates and {R Core Team}},
+    author = {Jos'e Pinheiro and Douglas Bates and {R Core Team}},
     year = {2023},
     note = {R package version 3.1-162},
     url = {https://CRAN.R-project.org/package=nlme},
@@ -1065,5 +1065,5 @@ A BibTeX entry for LaTeX users is
 [1] 4
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  2.475 0.269 3.013 0.002 0.001 
+Time elapsed:  1.467 0.085 1.559 0.001 0.003 
 > 
