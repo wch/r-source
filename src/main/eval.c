@@ -4006,7 +4006,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	return 0;
 
     SEXP s;
-    Rboolean isOps = strcmp(group, "Ops") == 0;
+    Rboolean isOps = strcmp(group, "Ops") == 0 || strcmp(group, "matrixOps") == 0;
 
     /* try for formal method */
     if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) {

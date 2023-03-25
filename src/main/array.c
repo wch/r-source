@@ -1238,13 +1238,17 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rboolean sym;
 
     if (PRIMVAL(op) == 0 && /* %*% is primitive, the others are .Internal() */
-       (IS_S4_OBJECT(x) || IS_S4_OBJECT(y))
-       && R_has_methods(op)) {
+	(OBJECT(x) || OBJECT(y))) {
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
 	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
-	value = R_possible_dispatch(call, op, args, rho, FALSE);
-	if (value) return value;
+
+	if ((IS_S4_OBJECT(x) || IS_S4_OBJECT(y)) && R_has_methods(op)){
+	    value = R_possible_dispatch(call, op, args, rho, FALSE);
+	    if (value) return value;
+	}
+	else if (DispatchGroup("matrixOps", call, op, args, rho, &ans))
+	    return ans;
     }
 
     checkArity(op, args);

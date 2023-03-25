@@ -25,7 +25,7 @@ is.name <- is.symbol
 .knownS3Generics <- local({
 
     ## include the S3 group generics here
-    baseGenerics <- c("Math", "Ops", "Summary", "Complex",
+    baseGenerics <- c("Math", "Ops", "Summary", "Complex", "matrixOps",
         "as.character", "as.data.frame", "as.environment", "as.matrix", "as.vector",
         "cbind", "labels", "print", "rbind", "rep", "seq", "seq.int",
         "plot", "sequence", "solve", "summary", "t")
@@ -58,7 +58,6 @@ is.name <- is.symbol
 
 assign("::", function(pkg, name) NULL, envir = .ArgsEnv)
 assign(":::", function(pkg, name) NULL, envir = .ArgsEnv)
-assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign("...length", function() NULL, envir = .ArgsEnv)
 assign("...names",  function() NULL, envir = .ArgsEnv)
 assign("...elt", function(n) NULL, envir = .ArgsEnv)
@@ -227,6 +226,8 @@ assign("as.double", function(x, ...) UseMethod("as.double"),
 assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
+       envir = .GenericArgsEnv)
+assign("%*%", function(x, y) UseMethod("%*%"),
        envir = .GenericArgsEnv)
 #assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
 ## Conceptually, this is the argument list of  *default* method, not the generic :

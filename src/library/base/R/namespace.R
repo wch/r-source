@@ -1539,7 +1539,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 		      c(generic, class, method, NA_character_))
         setNamespaceInfo(ns, "S3methods", regs)
     }
-    groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
+    groupGenerics <- c("Math", "Ops", "matrixOps", "Summary", "Complex")
     defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)

@@ -32,9 +32,10 @@
 \special{Ops(e1, e2)}
 \special{Complex(z)}
 \special{Summary(\dots, na.rm = FALSE)}
+\special{matrixOps(x, y)}
 }
 \arguments{
-  \item{x, z, e1, e2}{objects.}
+  \item{x, y, z, e1, e2}{objects.}
   \item{\dots}{further arguments passed to methods.}
   \item{na.rm}{logical: should missing values be removed?}
 }
@@ -150,6 +151,15 @@
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
     }
     Members of this group dispatch on \code{z}.
+
+    \item Group \code{"matrixOps"}:
+    \itemize{
+      \item \code{"\%*\%"}
+      % do_matprod [array.c:1251]: if (DispatchGroup("matrixOps", ...))
+    }
+    This group contains only the matrix multiply operator \code(\%*\%)
+    binary operator presently. It has the same dispatch semantics as
+    the "Ops" group.
   }
 
   Note that a method will be used for one of these groups or one of its

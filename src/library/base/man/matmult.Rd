@@ -26,9 +26,10 @@ x \%*\% y
   Promotion of a vector to a 1-row or 1-column matrix happens when one
   of the two choices allows \code{x} and \code{y} to get conformable
   dimensions.
-  
-  This operator is S4 generic but not S3 generic.  S4 methods need to be
-  written for a function of two arguments named \code{x} and \code{y}.
+
+  This operator is a group generic, belonging to the matrixOps group. It
+  dispatches to S3 and S4 methods. Methods need to be written for a
+  function that takes two arguments named \code{x} and \code{y}.
 }
 \value{
   A double or complex matrix product.  Use \code{\link{drop}} to remove

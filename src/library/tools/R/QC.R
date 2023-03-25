@@ -212,7 +212,7 @@ function(package, dir, lib.loc = NULL)
         ## and are documented in base's groupGenerics.Rd.
         code_objs <- setdiff(code_objs,
                              c("Arith", "Compare", "Complex", "Logic",
-                               "Math", "Math2", "Ops", "Summary"))
+                               "Math", "Math2", "Ops", "Summary", "matrixOps"))
     }
 
     undoc_things <-
@@ -9189,7 +9189,7 @@ function(package_name)
     c("<-", "=",
       if(package_name == "base")
       c("(", "{", "function", "if", "for", "while", "repeat",
-        "Math", "Ops", "Summary", "Complex"),
+        "Math", "Ops", "Summary", "Complex", "matrixOps"),
       if(package_name == "utils") "?",
       if(package_name == "methods") "@")
 }
