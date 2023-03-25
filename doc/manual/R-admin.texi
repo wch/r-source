@@ -3344,13 +3344,12 @@ by calling @code{pcre_config()}.
 @c libcurl 7.28.0 was released in Oct 2012
 @c libcurl 7.32.0 was released in Aug 2013
 @c Ubuntu 14.04LTS has 7.35.0  RHEL/Centos 7 has 7.29.0 (we are told)
-Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
-version greater than 7 should there ever be one: the major version has
-been 7 since 2000.}) is required.  Information on @code{libcurl} is
-found from the @command{curl-config} script: if that is missing or needs
-to be overridden@footnote{for example to specify static linking with a
-build which has both shared and static libraries.} there are macros to
-do so described in file @file{config.site}.
+Library @code{libcurl} (version 7.28.0 or later) is required.
+Information on @code{libcurl} is found from the @command{curl-config}
+script: if that is missing or needs to be overridden@footnote{for
+example to specify static linking with a build which has both shared and
+static libraries.} there are macros to do so described in file
+@file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
