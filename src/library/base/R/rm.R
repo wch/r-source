@@ -25,9 +25,7 @@ rm <-
     if(
        !all(vapply(dots, function(x) is.symbol(x) || is.character(x), NA, USE.NAMES=FALSE)))
        stop("... must contain names or character strings")
-    names <- vapply(dots, as.character, "")
-    if (length(names) == 0L) names <- character()
-    list <- .Primitive("c")(list, names)
+    list <- .Primitive("c")(list, vapply(dots, as.character, ""))
   }
     .Internal(remove(list, envir, inherits))
 }

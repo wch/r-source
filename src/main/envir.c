@@ -1973,17 +1973,15 @@ attribute_hidden SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* .Internal(remove(list, envir, inherits)) */
 
-    SEXP name, envarg, tsym, tenv;
-    int ginherits = 0;
-    int done, i, hashcode;
     checkArity(op, args);
 
-    name = CAR(args);
+    SEXP name = CAR(args);
+    if(TYPEOF(name) == NILSXP) return R_NilValue;
     if (!isString(name))
 	error(_("invalid first argument"));
     args = CDR(args);
 
-    envarg = CAR(args);
+    SEXP envarg = CAR(args);
     if (TYPEOF(envarg) == NILSXP)
 	error(_("use of NULL environment is defunct"));
     if (TYPEOF(envarg) != ENVSXP &&
@@ -1991,18 +1989,18 @@ attribute_hidden SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "envir");
     args = CDR(args);
 
-    ginherits = asLogical(CAR(args));
+    int ginherits = asLogical(CAR(args));
     if (ginherits == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "inherits");
 
-    for (i = 0; i < LENGTH(name); i++) {
-	done = 0;
-	tsym = installTrChar(STRING_ELT(name, i));
+    for (int i = 0, done = 0; i < LENGTH(name); i++) {
+	SEXP tsym = installTrChar(STRING_ELT(name, i));
+	int hashcode;
 	if( !HASHASH(PRINTNAME(tsym)) )
 	    hashcode = R_Newhashpjw(CHAR(PRINTNAME(tsym)));
 	else
 	    hashcode = HASHVALUE(PRINTNAME(tsym));
-	tenv = envarg;
+	SEXP tenv = envarg;
 	while (tenv != R_EmptyEnv) {
 	    done = RemoveVariable(tsym, hashcode, tenv);
 	    if (done || !ginherits)
@@ -3762,6 +3760,7 @@ static SEXP checkNSname(SEXP call, SEXP name)
     return name;
 }
 
+// .Internal(registerNamespace(name, env))
 attribute_hidden SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val;
@@ -3774,6 +3773,7 @@ attribute_hidden SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+// .Internal(unregisterNamespace(nsname))
 attribute_hidden SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name;
@@ -3790,6 +3790,8 @@ attribute_hidden SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+// .Internal(getRegisteredNamespace(name))  ==  .getNamespace(name)
+// .Internal(isRegisteredNamespace (name))  ==  isNamespaceLoaded(name)
 attribute_hidden SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val;
