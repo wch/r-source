@@ -3314,13 +3314,12 @@ by calling @code{pcre_config()}.
 @c   end-of-life May 2018. 
 @c libcurl 7.28.0 was released in Oct 2012
 @c Ubuntu 16.04LTS has 7.47.0
-Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
-version greater than 7 should there ever be one: the major version has
-been 7 since 2000.}) is required.  Information on @code{libcurl} is
-found from the @command{curl-config} script: if that is missing or needs
-to be overridden@footnote{for example to specify static linking with a
-build which has both shared and static libraries.} there are macros to
-do so described in file @file{config.site}.
+Library @code{libcurl} (version 7.28.0 or later) is required.
+Information on @code{libcurl} is found from the @command{curl-config}
+script: if that is missing or needs to be overridden@footnote{for
+example to specify static linking with a build which has both shared and
+static libraries.} there are macros to do so described in file
+@file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
