@@ -354,6 +354,10 @@
 
       The system headers will be required in a future release of \R
       to build with \command{valgrind} instrumentation.
+
+      \item \code{libcurl} 8.x is now accepted by \command{configure}:
+      despite a change in major version number it changes neither API
+      nor ABI.
     }
   }
 
