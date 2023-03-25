@@ -533,6 +533,12 @@ Sys.setenv("_R_CHECK_LENGTH_COLON_" = oldV)# reset
 ## always only warned in R <= 4.2.z
 
 
+## keep rm(list=NULL) working (now documentedly) {PR#18422}
+a <- ls() # 'a' is part
+rm() ; rm(list=NULL)
+stopifnot(identical(a, ls()))
+##
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
