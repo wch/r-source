@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -256,8 +256,7 @@ assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 #assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make this the same object as as.double
-assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
-       envir = .GenericArgsEnv)
+assign("as.numeric", .GenericArgsEnv$as.double, envir = .GenericArgsEnv)
 
 ## Keep this in sync with ../../tools/R/utils.R
 ##   tools:::.make_S3_methods_table_for_base()

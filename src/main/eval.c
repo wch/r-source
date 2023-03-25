@@ -2505,10 +2505,10 @@ attribute_hidden SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(Cond = eval(CAR(args), rho));
     if (asLogicalNoNA(Cond, call, rho))
-	Stmt = CAR(CDR(args));
+	Stmt = CADR(args);
     else {
 	if (length(args) > 2)
-	    Stmt = CAR(CDR(CDR(args)));
+	    Stmt = CADDR(args);
 	else
 	    vis = 1;
     }

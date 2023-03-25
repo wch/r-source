@@ -100,7 +100,7 @@ attribute_hidden SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     static int nowarn = -1;
     if (nowarn == -1) {
 	char *p = getenv("_R_CHECK_MATRIX_DATA_");
-	nowarn = (p && StringTrue(p)) ? 1 : 0;
+	nowarn = (p && StringTrue(p)) ? 1 : 0; // if(nowarn) <error>
     }
     if (!miss_nr) {
 	if (!isNumeric(snr)) error(_("non-numeric matrix extent"));
