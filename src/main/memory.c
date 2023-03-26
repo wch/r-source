@@ -3931,8 +3931,14 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-        return CHK(ALTLIST_ELT(CHK(x), i));
+    if (ALTREP(x)) {
+	SEXP ans = CHK(ALTLIST_ELT(CHK(x), i));
+	/* the element is marges as not mutable since complex
+	   assignment can't see reference counts on any intermediate
+	   containers in an ALTREP */
+	MARK_NOT_MUTABLE(ans);
+        return ans;
+    }
     else
         return CHK(VECTOR_ELT_0(CHK(x), i));
 }
