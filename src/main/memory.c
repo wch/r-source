@@ -4097,11 +4097,8 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lld/%lld in SET_VECTOR_ELT"),
 	      (long long)i, (long long)XLENGTH(x));
-    if (ALTREP(x)) {
-        FIX_REFCNT(x, VECTOR_ELT(x, i), v);
-        CHECK_OLD_TO_NEW(x, v);
+    if (ALTREP(x))
         ALTLIST_SET_ELT(x, i, v);
-    }
     else {
         FIX_REFCNT(x, VECTOR_ELT_0(x, i), v);
         CHECK_OLD_TO_NEW(x, v);
