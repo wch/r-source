@@ -73,12 +73,7 @@
 #endif
 
 #ifndef NVALGRIND
-# ifdef HAVE_VALGRIND_MEMCHECK_H
-#  include "valgrind/memcheck.h"
-# else
-// internal version of headers
-#  include "vg/memcheck.h"
-# endif
+# include "valgrind/memcheck.h"
 #endif
 
 /* For speed in cases when the argument is known to not be an ALTREP list. */

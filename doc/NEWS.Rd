@@ -6,11 +6,11 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-    \itemize{
-      \item .
-    }
-  }
+  %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+  %%   \itemize{
+  %%     \item .
+  %%   }
+  %% }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -18,9 +18,11 @@
     }
   }
 
-  \subsection{INSTALLATION}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item .
+      \item System valgrind headers are required to use
+      \command{configure} option \option{--with-valgrind-instrumentation}
+      with value \code{1} or \code{2}.
     }
   }
 
