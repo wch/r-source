@@ -8683,7 +8683,15 @@ SEXP R_ParseEvalString(const char *str, SEXP env)
 	LENGTH(ps) != 1)
 	error("parse error");
 
-    SEXP val = eval(VECTOR_ELT(ps, 0), env);
+    SEXP val = VECTOR_ELT(ps, 0);
+    if (env != NULL)
+	val = eval(val, env);
+
     UNPROTECT(2); /* s, ps */
     return val;
+}
+
+SEXP R_ParseString(const char *str)
+{
+    return R_ParseEvalString(str, NULL);
 }
