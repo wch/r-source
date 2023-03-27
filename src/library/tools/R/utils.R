@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1025,7 +1025,7 @@ function(nsInfo)
     ## names of the generic, class and method (as a function).
     S3_methods_db <- nsInfo$S3methods
     if(!length(S3_methods_db))
-        return(matrix(character(), ncol = 3L))
+        return(matrix(character(), ncol = 4L))
     idx <- is.na(S3_methods_db[, 3L])
     S3_methods_db[idx, 3L] <-
         paste(S3_methods_db[idx, 1L],
