@@ -72,7 +72,9 @@ for(i in seq_along(years)) {
     zz$year = years[i] - 1900
     y[i] <- strftime(zz)
 }
+## IGNORE_RDIFF_BEGIN
 y
+## IGNORE_RDIFF_END
 
 y <- double(length(years))
 for(i in seq_along(years)) {
@@ -82,7 +84,9 @@ for(i in seq_along(years)) {
 }
 print(y, digits=14)
 y <- .POSIXct(y)
+## IGNORE_RDIFF_BEGIN
 (y1 <- strftime(y)) # leading zeros or spaces is platform-dependant
+## IGNORE_RDIFF_END
 y2 <- strftime(y, "%_4Y-%m-%d") # not all platforms interpret this
 if(y2[1] != "4Y-07-01") print(y2) else message('format "%_4Y" unsupported')
 
@@ -94,7 +98,9 @@ for(i in seq_along(years)) {
 }
 y
 class(y) <- "Date"
+## IGNORE_RDIFF_BEGIN
 (y3 <- strftime(y))
+## IGNORE_RDIFF_END
 y4 <- strftime(y, "%_4Y-%m-%d")
 stopifnot(identical(y3, y1))
 

@@ -17,10 +17,12 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
 \arguments{
   \item{X}{an \R object for which a \code{\link{split}} method
     exists.  Typically vector-like, allowing subsetting with
-    \code{\link{[}}.}
+    \code{\link{[}}, or a data frame. }
   \item{INDEX}{a \code{\link{list}} of one or more \code{\link{factor}}s,
     each of same length as \code{X}.  The elements are coerced to
-    factors by \code{\link{as.factor}}.}
+    factors by \code{\link{as.factor}}. Can also be a formula, which is
+    useful if \code{X} is a data frame; see the \code{f} argument in
+    \code{\link{split}} for interpretation. }
   \item{FUN}{a function (or name of a function) to be applied, or \code{NULL}.
     In the case of functions like \code{+}, \code{\%*\%}, etc.,
     the function name must be backquoted or quoted.  If \code{FUN} is

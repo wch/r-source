@@ -73,12 +73,7 @@
 #endif
 
 #ifndef NVALGRIND
-# ifdef HAVE_VALGRIND_MEMCHECK_H
-#  include "valgrind/memcheck.h"
-# else
-// internal version of headers
-#  include "vg/memcheck.h"
-# endif
+# include "valgrind/memcheck.h"
 #endif
 
 /* For speed in cases when the argument is known to not be an ALTREP list. */
@@ -3936,8 +3931,14 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-        return CHK(ALTLIST_ELT(CHK(x), i));
+    if (ALTREP(x)) {
+	SEXP ans = CHK(ALTLIST_ELT(CHK(x), i));
+	/* the element is marges as not mutable since complex
+	   assignment can't see reference counts on any intermediate
+	   containers in an ALTREP */
+	MARK_NOT_MUTABLE(ans);
+        return ans;
+    }
     else
         return CHK(VECTOR_ELT_0(CHK(x), i));
 }
@@ -4102,11 +4103,8 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lld/%lld in SET_VECTOR_ELT"),
 	      (long long)i, (long long)XLENGTH(x));
-    if (ALTREP(x)) {
-        FIX_REFCNT(x, VECTOR_ELT(x, i), v);
-        CHECK_OLD_TO_NEW(x, v);
+    if (ALTREP(x))
         ALTLIST_SET_ELT(x, i, v);
-    }
     else {
         FIX_REFCNT(x, VECTOR_ELT_0(x, i), v);
         CHECK_OLD_TO_NEW(x, v);

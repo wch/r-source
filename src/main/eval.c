@@ -2505,10 +2505,10 @@ attribute_hidden SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(Cond = eval(CAR(args), rho));
     if (asLogicalNoNA(Cond, call, rho))
-	Stmt = CAR(CDR(args));
+	Stmt = CADR(args);
     else {
 	if (length(args) > 2)
-	    Stmt = CAR(CDR(CDR(args)));
+	    Stmt = CADDR(args);
 	else
 	    vis = 1;
     }
@@ -8683,7 +8683,15 @@ SEXP R_ParseEvalString(const char *str, SEXP env)
 	LENGTH(ps) != 1)
 	error("parse error");
 
-    SEXP val = eval(VECTOR_ELT(ps, 0), env);
+    SEXP val = VECTOR_ELT(ps, 0);
+    if (env != NULL)
+	val = eval(val, env);
+
     UNPROTECT(2); /* s, ps */
     return val;
+}
+
+SEXP R_ParseString(const char *str)
+{
+    return R_ParseEvalString(str, NULL);
 }

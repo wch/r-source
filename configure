@@ -53272,8 +53272,7 @@ then :
 fi
 
   if test "${ac_cv_header_valgrind_memcheck_h}" != yes; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: system valgrind headers not found -- using internal copies" >&5
-printf "%s\n" "$as_me: WARNING: system valgrind headers not found -- using internal copies" >&2;}
+  as_fn_error $? "system valgrind headers not found." "$LINENO" 5
   fi
 fi
 

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2022-11-09 r83320) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
+R Under development (unstable) (2023-03-21 r84017) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.1.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -247,6 +247,7 @@ List of 11
 "2022-09-01" "2022-09-08" "2022-09-15" "2022-09-22" "2022-09-29" "2022-10-06" 
       week 7       week 8       week 9      week 10 
 "2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
+> ## IGNORE_RDIFF_BEGIN
 > as.POSIXct(y)
           week 1           week 2           week 3           week 4 
 "2022-09-01 BST" "2022-09-08 BST" "2022-09-15 BST" "2022-09-22 BST" 
@@ -315,7 +316,7 @@ attr(,"balanced")
 "2022-10-13" "2022-10-20" "2022-10-27" "2022-11-03" 
 > y2 <- paste(y, "10:01:02"); names(y2) <- names(y)
 > fmt <- c("%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M:%S %Z")
-> strptime(y2, fmt[1:2])
+>  (strptime(y2, fmt[1:2]) -> sy2)
                    week 1                    week 2                    week 3 
 "2022-09-01 00:00:00 BST" "2022-09-08 10:01:02 BST" "2022-09-15 00:00:00 BST" 
                    week 4                    week 5                    week 6 
@@ -324,38 +325,37 @@ attr(,"balanced")
 "2022-10-13 00:00:00 BST" "2022-10-20 10:01:02 BST" "2022-10-27 00:00:00 BST" 
                   week 10 
 "2022-11-03 10:01:02 GMT" 
-> strptime(y2, rep(fmt[1:2], length = 15)) # failed to recycle names
-                   week 1                    week 2                    week 3 
-"2022-09-01 00:00:00 BST" "2022-09-08 10:01:02 BST" "2022-09-15 00:00:00 BST" 
-                   week 4                    week 5                    week 6 
-"2022-09-22 10:01:02 BST" "2022-09-29 00:00:00 BST" "2022-10-06 10:01:02 BST" 
-                   week 7                    week 8                    week 9 
-"2022-10-13 00:00:00 BST" "2022-10-20 10:01:02 BST" "2022-10-27 00:00:00 BST" 
-                  week 10                    week 1                    week 2 
-"2022-11-03 10:01:02 GMT" "2022-09-01 00:00:00 BST" "2022-09-08 10:01:02 BST" 
-                   week 3                    week 4                    week 5 
-"2022-09-15 00:00:00 BST" "2022-09-22 10:01:02 BST" "2022-09-29 00:00:00 BST" 
+> ## IGNORE_RDIFF_END
+> sy2.15 <- strptime(y2, rep(fmt[1:2], length = 15)) # failed to recycle names
+> stopifnot(suppressWarnings(sy2 == sy2.15))
 > 
-> strftime(xl, fmt)
+> xl. <- xl[1:9] # length(fmt) == 3 -- fully recycles in xl.
+> (strftime(xl., fmt) -> sx)
+                  week 1                    week 2                    week 3 
+             "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
+                   week 4                    week 5                    week 6 
+             "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
+                   week 7                    week 8                    week 9 
+             "2022-10-13"     "2022-10-20 00:00:00" "2022-10-27 00:00:00 UTC" 
+> (strftime(xl., rep(fmt, length = 15)) -> sx15)
                    week 1                    week 2                    week 3 
              "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
                    week 4                    week 5                    week 6 
              "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
                    week 7                    week 8                    week 9 
              "2022-10-13"     "2022-10-20 00:00:00" "2022-10-27 00:00:00 UTC" 
-                  week 10 
-             "2022-11-03" 
-> strftime(xl, rep(fmt, length = 15))
                    week 1                    week 2                    week 3 
              "2022-09-01"     "2022-09-08 00:00:00" "2022-09-15 00:00:00 UTC" 
                    week 4                    week 5                    week 6 
              "2022-09-22"     "2022-09-29 00:00:00" "2022-10-06 00:00:00 UTC" 
-                   week 7                    week 8                    week 9 
-             "2022-10-13"     "2022-10-20 00:00:00" "2022-10-27 00:00:00 UTC" 
-                  week 10                    week 1                    week 2 
-             "2022-11-03"     "2022-09-01 00:00:00" "2022-09-08 00:00:00 UTC" 
-                   week 3                    week 4                    week 5 
-             "2022-09-15"     "2022-09-22 00:00:00" "2022-09-29 00:00:00 UTC" 
+> stopifnot(exprs = { # with warnings  ".. length is not a multiple of shorter .."
++     sx == sx15
++     names(sx) == names(sx15)
++ })
+Warning in sx == sx15 :
+  longer object length is not a multiple of shorter object length
+Warning in names(sx) == names(sx15) :
+  longer object length is not a multiple of shorter object length
 > 
 > x2 <- xl[1:5]
 > x2$year <- xl$year[1:3]

@@ -2388,6 +2388,9 @@ function(package, dir, lib.loc = NULL)
     ## should really start to deprecate the 'dir' argument (and remove
     ## it eventually).  For now, checkS3methods(dir = DIR) does nothing.
 
+    S3_methods_info <- matrix(character(), 0L, 4L)
+    exports <- character()
+    
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
@@ -2405,13 +2408,56 @@ function(package, dir, lib.loc = NULL)
             .load_namespace_quietly(package, dirname(dir))
 
         code_env <- asNamespace(package)
+        if(!is_base) {
+            S3_methods_info <- getNamespaceInfo(code_env, "S3methods")
+            exports <- getNamespaceExports(code_env)
+        }
     }
     else {
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
-        bad_methods <- list()
-        class(bad_methods) <- "checkS3methods"
-        return(bad_methods)
+        ## Using sources from directory @code{dir} ...
+        if(!dir.exists(dir))
+            stop(gettextf("directory '%s' does not exist", dir),
+                 domain = NA)
+        else
+            dir <- file_path_as_absolute(dir)
+        code_dir <- file.path(dir, "R")
+        if(!dir.exists(code_dir))
+            stop(gettextf("directory '%s' does not contain R code",
+                          dir),
+                 domain = NA)
+        is_base <- basename(dir) == "base"
+
+        code_env <- new.env(hash = TRUE, parent = .BaseNamespaceEnv)
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
+        .source_assignments_in_code_dir(code_dir, code_env, meta)
+        sys_data_file <- file.path(code_dir, "sysdata.rda")
+        if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
+
+        objects_in_code <- sort(names(code_env))
+
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           ## Code in NAMESPACE could e.g. check the version of one of
+           ## its Imports.
+           !inherits(tryCatch(nsInfo <-
+                                  parseNamespaceFile(basename(dir),
+                                                     dirname(dir)),
+                              error = identity),
+                     "error")) {
+            ## Determine exported objects.
+            exports <- intersect(objects_in_code, nsInfo$exports)
+            for(p in nsInfo$exportPatterns)
+                exports <- c(exports,
+                             grep(p, objects_in_code, value = TRUE))
+            exports <- unique(exports)
+            ## Determine S3 methods info.
+            S3_methods_info <- .get_namespace_S3_methods_db(nsInfo)
+        }
     }
 
     funs_in_env <- function(env, nms = NULL) {
@@ -2441,7 +2487,7 @@ function(package, dir, lib.loc = NULL)
         ## got the S4 group generics from methods, which for Summary 
         ## and Math changes the formals.  So we need to check where we
         ## found the closure.
-        gcode <- get0(gname, envir = env)
+        gcode <- get0(gname, envir = env, mode = "function")
         if(gname %in% names(S3_group_generics_env)) {
             if(is.null(gcode) ||
                identical(gcode, get0(gname, .BaseNamespaceEnv)))
@@ -2483,6 +2529,9 @@ function(package, dir, lib.loc = NULL)
                                  names(S3_group_generics_env),
                                  names(S3_primitive_generics_env),
                                  .get_internal_S3_generics()))
+    ## Alternatively, can do
+    ##   generics_in_base <- .get_S3_generics_in_base()
+    ## but we need the S3 group and primitive generics envs anyway.
 
     if(is_base) {
         generics <- generics_in_code <- generics_in_base
@@ -2490,14 +2539,16 @@ function(package, dir, lib.loc = NULL)
         generics_in_code <- gens_in_env(code_env)
         generics <- c(generics_in_code,
                       ## Generics from imports
-                      setdiff(gens_in_env(parent.env(code_env)),
-                              functions_in_code),
+                      if(!missing(package))
+                          setdiff(gens_in_env(parent.env(code_env)),
+                                  functions_in_code),
                       ## Generics from base
                       setdiff(generics_in_base,
                               c(functions_in_code,
                                 funs_in_env(parent.env(code_env)))))
     }
 
+    nsm <- nonS3methods(basename(dir))
     gnm <- lapply(generics,
                   function(g) {
                       methods <-
@@ -2515,21 +2566,18 @@ function(package, dir, lib.loc = NULL)
                       } else NULL
                   })
     gnm <- do.call(c, gnm)
-    gnm <- gnm[setdiff(names(gnm), nonS3methods(package))]
+    gnm <- gnm[setdiff(names(gnm), nsm)]
 
     if(!is_base) {
-        S3_methods_info <- getNamespaceInfo(code_env, "S3methods")
         g.c <- sprintf("%s.%s",
                        S3_methods_info[, 1L],
                        S3_methods_info[, 2L])
         ## Record apparent S3 methods not registered for exported
         ## generics.
         ind <- (vapply(gnm, `[[`, "", 1L) %in%
-                intersect(generics_in_code,
-                          getNamespaceExports(code_env)))
+                intersect(generics_in_code, exports))
         methods_not_registered_with_exported_generic <-
-            setdiff(names(gnm)[ind],
-                    c(g.c, nonS3methods(package)))
+            setdiff(names(gnm)[ind], c(g.c, nsm))
         ## Add additional generics and methods from the registry.
         S3_methods_info <-
             S3_methods_info[!(g.c %in% names(gnm)), ,
@@ -2545,51 +2593,6 @@ function(package, dir, lib.loc = NULL)
         }
     }
                       
-    check_args <- function(gName, gArgs, mName, mArgs) {
-        ## Drop the ones where gArgs is NULL (presumably the language
-        ## elements) or mArgs is NULL (a primitive?).
-        if(is.null(gArgs) || is.null(mArgs)) return()
-        if(gName == "round" && mName == "round.POSIXt") return() # exception
-        if(gName == "plot") gArgs <- gArgs[-2L] # drop "y"
-        ## FIXME: not quite right, could be another plot generic ...
-        ogArgs <- gArgs
-        omArgs <- mArgs
-        ## If m is a formula method, its first argument *may* be called
-        ## formula.  (Note that any argument name mismatch throws an
-        ## error in current S-PLUS versions.)
-        if(endsWith(mName, ".formula")) {
-            if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
-            if(mArgs[1L] != "...") mArgs <- mArgs[-1L]
-        }
-        dotsPos <- which(gArgs == "...")
-        ipos <- if(length(dotsPos))
-            seq_len(dotsPos[1L] - 1L)
-        else
-            seq_along(gArgs)
-        ## careful, this could match multiply in incorrect funs.
-        dotsPos <- which(mArgs == "...")
-        if(length(dotsPos))
-            ipos <- ipos[seq_len(dotsPos[1L] - 1L)]
-        posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
-        argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0L
-        margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
-        if(posMatchOK && argMatchOK && margMatchOK)
-            NULL
-        else if (gName %in% c("+", "-", "*", "/", "^", "%%", "%/%", "&", "|",
-                              "!", "==", "!=", "<", "<=", ">=", ">")
-                 && (length(ogArgs) == length(omArgs)) )
-            NULL
-        else {
-            l <- list(ogArgs, omArgs)
-            names(l) <- c(gName, mName)
-            l
-        }
-    }
-
-    bad_methods <- Filter(length,
-                          lapply(gnm,
-                                 function(e)
-                                     do.call(check_args, e)))
     check_args <- function(gName, gArgs, mName, mArgs) {
         ## Drop the ones where gArgs is NULL (presumably the language
         ## elements) or mArgs is NULL (a primitive?).

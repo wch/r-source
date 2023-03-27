@@ -59,7 +59,7 @@ ks.test.default <-
         if(length(unique(w)) < (n.x + n.y)) {
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
             TIES <- TRUE
-            if (!exact & !simulate.p.value)
+            if (!exact && !simulate.p.value)
                 warning("p-value will be approximate in the presence of ties")
         }
         STATISTIC <- switch(alternative,
@@ -277,13 +277,13 @@ function(q, sizes, z = NULL, two.sided = TRUE,
             Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
             ### need P(D < q)
             ret[IND] <- ecdf(Dsim)(q[IND] - sqrt(.Machine$double.eps)) 
-            if (log.p & lower.tail)
+            if (log.p && lower.tail)
                 return(log(ret))
-            if (!log.p & lower.tail)
+            if (!log.p && lower.tail)
                 return(ret)
-            if (log.p & !lower.tail)
+            if (log.p && !lower.tail)
                 return(log1p(-ret))
-            if (!log.p & !lower.tail)
+            if (!log.p && !lower.tail)
                 return(1 - ret)
         }
         ## <FIXME> let m and n be the min and max of the sample
@@ -298,13 +298,13 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         } else {
             ret[IND] <- 1 - exp(- 2 * n * q^2)
         }
-        if (log.p & lower.tail)
+        if (log.p && lower.tail)
             return(log(ret))
-        if (!log.p & lower.tail)
+        if (!log.p && lower.tail)
             return(ret)
-        if (log.p & !lower.tail)
+        if (log.p && !lower.tail)
             return(log1p(-ret))
-        if (!log.p & !lower.tail)
+        if (!log.p && !lower.tail)
             return(1 - ret)
     }
 
@@ -312,13 +312,13 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     if (is.null(z)) {
         ret[IND] <- sapply(q[IND],
                            function(x) .Call(C_pSmirnov2x, x, n.x, n.y))
-        if (log.p & lower.tail)
+        if (log.p && lower.tail)
             return(log(ret))
-        if (!log.p & lower.tail)
+        if (!log.p && lower.tail)
             return(ret)
-        if (log.p & !lower.tail)
+        if (log.p && !lower.tail)
             return(log1p(-ret))
-        if (!log.p & !lower.tail)
+        if (!log.p && !lower.tail)
             return(1 - ret)
     }
 
@@ -359,13 +359,13 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     }
 
     logdenom <- lgamma(N + 1) - lgamma(n.x + 1) - lgamma(n.y + 1)
-    if (log.p & lower.tail)
+    if (log.p && lower.tail)
         return(log(ret) - logdenom)
-    if (!log.p & lower.tail)
+    if (!log.p && lower.tail)
         return(ret / exp(logdenom))
-    if (log.p & !lower.tail)
+    if (log.p && !lower.tail)
         return(log1p(-ret / exp(logdenom)))
-    if (!log.p & !lower.tail)
+    if (!log.p && !lower.tail)
         return(1 - ret / exp(logdenom))
 }
 

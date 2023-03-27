@@ -37,9 +37,7 @@ split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
 ## This is documented to work for matrices too
 split.data.frame <- function(x, f, drop = FALSE, ...)
 {
-    ## If formula, maybe should check that there is no LHS?
-    if (inherits(f, "formula"))
-        f <- eval(attr(stats::terms(f), "variables"), x, environment(f))
+    if (inherits(f, "formula")) f <- .formula2varlist(f, x)
     lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
 }
@@ -85,4 +83,26 @@ unsplit <- function (value, f, drop = FALSE)
         x <- value[[1L]][rep(NA_integer_, len)]
     split(x, f, drop = drop) <- value
     x
+}
+
+## utility to convert formula to list suitable for split(f = )
+
+
+.formula2varlist <- function(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
+{
+    if (!inherits(formula, "formula")) stop("'formula' must be a formula")
+    if (!is.list(data) && !is.environment(data)) data <- as.data.frame(data)
+    if (length(formula) == 3) {
+        if (warnLHS) {
+            if (ignoreLHS)
+                warning("Unexpected LHS in 'formula' has been ignored.")
+            else
+                warning("Unexpected LHS in 'formula' has been combined with RHS.")
+        }
+        if (ignoreLHS) formula <- formula[-2]
+    }
+    fterms <- stats::terms(formula)
+    ans <- eval(attr(fterms, "variables"), data, environment(formula))
+    names(ans) <- attr(fterms, "term.labels")
+    ans
 }
