@@ -7641,7 +7641,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
             out$citation_has_calls_to_personList_et_al <- TRUE
         ## Prior to c83706, there was no convenient way to get citation
         ## headers/footers for bibentries with length > 1, so one really
-        ## needed to use the old-style citHeader() and citFooter().
+        ## needed to use citHeader() and citFooter().
         ## For now one could complain when citHeader()/citFooter() is
         ## used with a single bibentry ...
         ## <FIXME>

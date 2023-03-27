@@ -7,13 +7,18 @@
 \alias{CITATION}
 \alias{citation}
 \alias{readCitationFile}
+\alias{citHeader}
+\alias{citFooter}
 \title{Citing R and R Packages in Publications}
 \description{
   How to cite \R and \R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL, auto = NULL)
+
 readCitationFile(file, meta = NULL)
+citHeader(...)
+citFooter(...)
 }
 \arguments{
   \item{package}{a character string with the name of a single package.
@@ -32,6 +37,7 @@ readCitationFile(file, meta = NULL)
   \item{file}{a file name.}
   \item{meta}{a list of package metadata as obtained by
     \code{\link{packageDescription}}, or \code{NULL} (the default).}
+  \item{...}{character strings (which will be \code{\link{paste}}d).}
 }
 \details{
   The \R core development team and the very active community of package
@@ -47,17 +53,19 @@ readCitationFile(file, meta = NULL)
   or auto-generates citation information from the \file{DESCRIPTION}
   file.
 
-  In \R >= 2.14.0, one can use a \samp{Authors@R} field in
+  Packages can use an \samp{Authors@R} field in their
   \file{DESCRIPTION} to provide (\R code giving) a
   \code{\link{person}} object with a refined, machine-readable
   description of the package \dQuote{authors} (in particular specifying
   their precise roles).  Only those with an author role will be
   included in the auto-generated citation.
 
-  If only one reference is given, the print method for the object
-  returned by \code{citation()} shows both a text version and a BibTeX
-  entry for it, if a package has more than one reference then only the
-  text versions are shown.  The BibTeX versions can be obtained using
+  If the object returned by \code{citation()} contains only one reference,
+  the associated print method shows both a text version and a BibTeX
+  entry for it. If a package has more than one reference then only the
+  text versions are shown. This threshold is controlled by
+  \code{\link{options}("citation.bibtex.max")}.
+  The BibTeX versions can also be obtained using
   function \code{toBibtex()} (see the examples below).
 
   The \file{CITATION} file of an R package should be placed in the
@@ -67,20 +75,11 @@ readCitationFile(file, meta = NULL)
   used by \code{citation()} to extract the information in
   \file{CITATION} files.  The file is \code{source()}ed by the R
   parser in a temporary environment and all resulting bibliographic
-  objects (specifically, of class \code{"\link{bibentry}"}) are
+  objects (specifically, inheriting from \code{"\link{bibentry}"}) are
   collected.
-
-  Traditionally, the \file{CITATION} file contained zero or more calls
-  to \code{citHeader}, then one or more calls to \code{\link{citEntry}},
-  and finally zero or more calls to \code{citFooter}, where in fact
-  \code{citHeader} and \code{citFooter} are simply wrappers to
-  \code{\link{paste}}, with their \code{\dots} argument passed on to
-  \code{\link{paste}} as is.  The \code{"\link{bibentry}"} class
-  makes for improved representation and manipulation of bibliographic
-  information (in fact, the old mechanism is implemented using the new
-  one), and one can write \file{CITATION} files using the unified
-  \code{\link{bibentry}} interface.
-
+  These are typically produced by one or more \code{\link{bibentry}()}
+  calls, optionally preceded by a \code{citHeader()} and followed
+  by a \code{citFooter()} call.
   One can include an auto-generated package citation in the
   \file{CITATION} file via \code{citation(auto = meta)}.
 
@@ -91,6 +90,10 @@ readCitationFile(file, meta = NULL)
   An object of class \code{"citation"}, inheriting from class
   \code{"\link{bibentry}"}; see there, notably for the
   \code{\link{print}} and \code{\link{format}} methods.
+
+  \code{citHeader} and \code{citFooter} return an empty
+  \code{"\link{bibentry}"} storing \dQuote{outer} header/footer text
+  for the package citation.
 }
 \seealso{
   \code{\link{bibentry}}
@@ -100,21 +103,23 @@ readCitationFile(file, meta = NULL)
 ## the basic R reference
 citation()
 
-## references for a package -- might not have these installed
-if(nchar(system.file(package = "lattice"))) citation("lattice")
-if(nchar(system.file(package = "foreign"))) citation("foreign")
-
-## extract the bibtex entry from the return value
+## extract the BibTeX entry from the return value
 x <- citation()
 toBibtex(x)
+\donttest{% requires recommended packages and gives volatile output
+## references for a package
+citation("lattice")
+citation("lattice", auto = TRUE)  # request the Manual-type reference
+citation("foreign")
 
-\donttest{
-## A citation with more than one bibentry:
-cm <- tryCatch(citation("mgcv"),
-               error = function(e) {
-                 warning("Recommended package 'mgcv' is not installed properly")
-                 stop(e$message) })
-cm # short entries (2-3 lines each), plus "reminder message" about getting BibTeX
+## a CITATION file with more than one bibentry:
+file.show(system.file("CITATION", package="mgcv"))
+cm <- citation("mgcv")
+cm # header, text references, plus "reminder" about getting BibTeX
 print(cm, bibtex = TRUE) # each showing its bibtex code
+
+## a CITATION file including citation(auto = meta)
+file.show(system.file("CITATION", package="nlme"))
+citation("nlme")
 }%dont
 }
