@@ -791,10 +791,11 @@ function(x, style = "text", .bibstyle = NULL,
 			  if(!bibtex && msg)
                           {
 			      prt <- sys.nframe() > 4L && sys.call(-4L)[[1L]] == quote(print.bibentry)
-			      paste0(
+			      c(if(!is.null(attr(x, "mfooter"))) "",
+                                paste0(
 		"To see these entries in BibTeX format, use '", if(prt) "print" else "format",
 		"(<citation>, bibtex=TRUE)', ",
-		if(prt)"'toBibtex(.)', or set 'options(citation.bibtex.max=999)'." else "or 'toBibtex(.)'.")
+		if(prt)"'toBibtex(.)', or set 'options(citation.bibtex.max=999)'." else "or 'toBibtex(.)'."))
                           }
                 )), collapse = "\n")
          )
