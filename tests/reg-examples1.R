@@ -46,6 +46,7 @@ if(require("microbenchmark")) {
 
 ## utils
 example(news, run.donttest = TRUE)
+example(packageDescription, run.donttest = TRUE)
 example(sessionInfo, run.donttest = TRUE)
 
 ## datasets
