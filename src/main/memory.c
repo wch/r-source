@@ -3933,7 +3933,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
     if (ALTREP(x)) {
 	SEXP ans = CHK(ALTLIST_ELT(CHK(x), i));
-	/* the element is marges as not mutable since complex
+	/* the element is marked as not mutable since complex
 	   assignment can't see reference counts on any intermediate
 	   containers in an ALTREP */
 	MARK_NOT_MUTABLE(ans);
