@@ -20,7 +20,7 @@
 tapply <- function (X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
 {
     FUN <- if (!is.null(FUN)) match.fun(FUN)
-    if (inherits(INDEX, "formula")) INDEX <- formula2varlist(INDEX, X)
+    if (inherits(INDEX, "formula")) INDEX <- .formula2varlist(INDEX, X)
     if (!is.list(INDEX)) INDEX <- list(INDEX)
     INDEX <- lapply(INDEX, as.factor)
     nI <- length(INDEX)  # now, 'INDEX' is not classed

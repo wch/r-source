@@ -8,6 +8,7 @@
 \alias{.subset2}
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
+\alias{.formula2varlist}
 % removed for R 3.6.
 %\alias{testPlatformEquivalence}
 \alias{.isMethodsDispatchOn}
@@ -136,6 +137,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .kronecker(X, Y, FUN = "*", make.dimnames = FALSE, ...) 
 .packageStartupMessage(message, call = NULL) 
 .rmpkg(pkg) 
+.formula2varlist(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
 }
 \arguments{
   \item{x}{an object
@@ -188,7 +190,13 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{same}{character vector of \emph{same} objects, masking others.}
   \item{pkg}{character string naming the package which is masked from or by.}
   \item{by}{logical indicating if the masking happens \emph{by}
-  \code{pkg}, or (\code{by = FALSE}) from \code{pkg}.}
+    \code{pkg}, or (\code{by = FALSE}) from \code{pkg}.}
+  \item{formula}{typically a one sided formula, with no LHS.}
+  \item{data}{a data frame where terms in the formula are to be evaluated.}
+  \item{warnLHS}{logical flag, indicating whether the presence of an LHS
+    should trigger a warning.}
+  \item{ignoreLHS}{logical flag, indicating whether variables in the LHS
+    should be ignored.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -285,5 +293,10 @@ lazyLoadDBfetch(key, file, compressed, hook)
   return \code{invisible()}.
 
   \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
-}
+
+  \code{.formula2varlist} returns a list of variables found in
+  \code{formula}, evaluated in \code{data}, following standard
+  non-standard evaluation rules. Used in \code{\link{split}} and
+  \code{\link{tapply}} to interpret a fomula as a list of categorial
+  variables to split on. }
 \keyword{internal}

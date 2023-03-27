@@ -37,7 +37,7 @@ split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
 ## This is documented to work for matrices too
 split.data.frame <- function(x, f, drop = FALSE, ...)
 {
-    if (inherits(f, "formula")) f <- formula2varlist(f, x)
+    if (inherits(f, "formula")) f <- .formula2varlist(f, x)
     lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
 }
@@ -88,7 +88,7 @@ unsplit <- function (value, f, drop = FALSE)
 ## utility to convert formula to list suitable for split(f = )
 
 
-formula2varlist <- function(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
+.formula2varlist <- function(formula, data, warnLHS = TRUE, ignoreLHS = warnLHS)
 {
     if (!inherits(formula, "formula")) stop("'formula' must be a formula")
     if (!is.list(data) && !is.environment(data)) data <- as.data.frame(data)
