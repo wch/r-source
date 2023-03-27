@@ -1,6 +1,6 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
@@ -9,6 +9,7 @@
 \alias{.Group}
 \alias{Math}
 \alias{Math.data.frame}
+\alias{matrixOps}
 \alias{Ops}
 \alias{Ops.data.frame}
 \alias{Summary}
@@ -18,10 +19,10 @@
 \concept{group generic}
 \title{S3 Group Generic Functions}
 \description{
-  Group generic methods can be defined for four pre-specified groups of
-  functions, \code{Math}, \code{Ops}, \code{Summary} and \code{Complex}.
+  Group generic methods can be defined for the following pre-specified groups of
+  functions, \code{Math}, \code{Ops}, \code{matrixOps}, \code{Summary} and \code{Complex}.
   (There are no objects of these names in base \R, but there are in the
-  \pkg{methods} package.)
+  \pkg{methods} package, not yet for \code{matrixOps}.)
 
   A method defined for an individual member of the group takes
   precedence over a method defined for the group as a whole.
@@ -43,8 +44,8 @@
 \details{
   %% --------------- grep -nw DispatchGroup src/*/*[ch]
 
-  There are four \emph{groups} for which S3 methods can be written,
-  namely the \code{"Math"}, \code{"Ops"}, \code{"Summary"} and
+  There are five \emph{groups} for which S3 methods can be written,
+  namely the \code{"Math"}, \code{"Ops"}, \code{"Summary"}, \code{"matrixOps"}, and
   \code{"Complex"} groups.  These are not \R objects in base \R, but
   methods can be supplied for them and base \R contains
   \code{\link{factor}}, \code{\link{data.frame}} and
@@ -128,6 +129,17 @@
     If the members of this group are called as functions, any argument
     names are removed to ensure that positional matching is always used.
 
+    \item Group \code{"matrixOps"}:
+    \itemize{
+      \item \code{"\%*\%"}
+      % do_matprod [array.c:1251]: if (DispatchGroup("matrixOps", ...))
+    }
+    This group currently contains the matrix multiply \code(\%*\%) binary operator
+    only, where at least \code{\link{crossprod}()} and \code{tcrossprod()}
+    are meant to follow.
+    Members of the group have the same dispatch semantics (using \emph{both} arguments)
+    as the \code{Ops} group.
+
     \item Group \code{"Summary"}:
     \itemize{
       \item \code{all}, \code{any}
@@ -151,15 +163,6 @@
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
     }
     Members of this group dispatch on \code{z}.
-
-    \item Group \code{"matrixOps"}:
-    \itemize{
-      \item \code{"\%*\%"}
-      % do_matprod [array.c:1251]: if (DispatchGroup("matrixOps", ...))
-    }
-    This group contains only the matrix multiply operator \code(\%*\%)
-    binary operator presently. It has the same dispatch semantics as
-    the "Ops" group.
   }
 
   Note that a method will be used for one of these groups or one of its

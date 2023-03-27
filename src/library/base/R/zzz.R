@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -197,6 +197,13 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
         assign(f, fx, envir = env)
     }
 
+    fx <- function(x, y) {} ## "matrixOps"
+    for(f in c("%*%")) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- .BaseNamespaceEnv
+        assign(f, fx, envir = env)
+    }
+
     for(f in c("all", "any", "sum", "prod", "max", "min", "range")) {
         fx <- function(..., na.rm = FALSE) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
@@ -227,8 +234,6 @@ assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
        envir = .GenericArgsEnv)
-assign("%*%", function(x, y) UseMethod("%*%"),
-       envir = .GenericArgsEnv)
 #assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
 ## Conceptually, this is the argument list of  *default* method, not the generic :
 ## assign("c", function(..., recursive = FALSE, use.names = TRUE) UseMethod("c"),
@@ -257,8 +262,7 @@ assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 #assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make this the same object as as.double
-assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
-       envir = .GenericArgsEnv)
+assign("as.numeric", .GenericArgsEnv$as.double, envir = .GenericArgsEnv)
 
 ## Keep this in sync with ../../tools/R/utils.R
 ##   tools:::.make_S3_methods_table_for_base()

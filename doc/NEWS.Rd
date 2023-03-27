@@ -14,7 +14,9 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item .
+      \item The matrix multiply operator \code{\%*\%} is now an S3
+      generic, belonging to new group generic \code{matrixOps}.  Contributed by
+      Tomasz Kalinowski, see \PR{18483}.
     }
   }
 
@@ -51,10 +53,6 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-
-      \item The matrix multiply operator \code{"\%*\%"} is now an S3 group
-      generic, belonging to new group "matrixOps". Contributed by Tomasz Kalinowski.
-
       \item The included BLAS sources have been updated to those shipped
       with LAPACK version 3.10.1.  (This caused some platform-dependent
       changes to package check output.)  And then to the sources from

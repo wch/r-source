@@ -27,7 +27,8 @@ x \%*\% y
   of the two choices allows \code{x} and \code{y} to get conformable
   dimensions.
 
-  This operator is a group generic, belonging to the matrixOps group. It
+  This operator is a generic function: methods can be written for it individually or via the
+  \code{\link[=S3groupGeneric]{matOps}} group generic function.  
   dispatches to S3 and S4 methods. Methods need to be written for a
   function that takes two arguments named \code{x} and \code{y}.
 }
