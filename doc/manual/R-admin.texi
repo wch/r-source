@@ -1465,11 +1465,11 @@ for Windows}. See
 @uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
-The toolset includes compilers (GCC version 10.3.0 with selected additional
+The toolset includes compilers (GCC version 12.2.0 with selected additional
 patches) and runtime libraries from @uref{http://mingw-w64.org/,the
 `MinGW-w64' project} and a number of pre-compiled static libraries and
 headers used by @R{} and @R{} packages, compiled by
-@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates by Tomas
+@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates maintained by Tomas
 Kalibera).  The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
