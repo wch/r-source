@@ -1415,9 +1415,9 @@ binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on 64-bit Windows.
 
 R is best tested on current versions of Windows 10 and Windows Server 2022
-with UTF-8 as the charset encoding. It runs on older versions of Windows,
-but normally with other charset encoding and may require manual installation
-of the Universal C Runtime (UCRT). 
+with UTF-8 as the charset encoding.  It works also on Windows 11.  It runs
+on older versions of Windows, but normally with other charset encoding and
+may require manual installation of the Universal C Runtime (UCRT).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).  If it does not also support
