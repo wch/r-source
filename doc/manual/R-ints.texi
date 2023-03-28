@@ -4022,6 +4022,11 @@ Off by default because this can result in false positives.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
 Controls the minimum level for reporting warnings from @code{checkRd}.
 Default: -1.
+@item _R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_
+Control whether empty items inside @code{\\describe} are allowed without
+a warning. This is a temporary stop gap measure meant to support legacy
+packages, and is likely to be removed in future versions of R.
+Default: false.
 @item _R_CHECK_XREFS_REPOSITORIES_
 If set to a non-empty value, a space-separated list of repositories to
 use to determine known packages.  Default: empty, when the CRAN
