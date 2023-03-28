@@ -224,6 +224,20 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
     return(ret)
 }
 
+psmirnov_exact <-
+function(q, sizes, z = NULL, two.sided = TRUE, lower.tail = TRUE) {
+    if(!is.null(z)) {
+        z <- (diff(sort(z)) != 0)
+        z <- if(any(z))
+            c(0L, z, 1L)
+        else
+            NULL
+    }
+    .Call(C_psmirnov_exact, q, sizes[1L], sizes[2L], z,
+          two.sided, lower.tail)
+}
+
+
 psmirnov <-
 function(q, sizes, z = NULL, two.sided = TRUE,
          exact = TRUE, simulate = FALSE, B = 2000,
@@ -236,19 +250,12 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     ##
     ##   D = sup_c ( ECDF_x(c) - ECDF_y(c) ) 	(!two.sided)
     ##
-    ## Implementation translated from APL code in Appendix C.2.3 of
-    ##
-    ##   Gunar Schröer, Computergestützte statistische Inferenz am
-    ##   Beispiel der Kolmogorov-Smirnov Tests,
-    ##   Diplomarbeit Universität Osnabrück, 1991
-    ##
-    ## see also
+    ## See
     ##     
     ##   Gunar Schröer and Dietrich Trenkler (1995),
     ##   Exact and Randomization Distributions of Kolmogorov-Smirnov
     ##   Tests for Two or Three Samples,
     ##   Computational Statistics & Data Analysis, 20, 185--202
-    ##
 
     if (is.numeric(q)) 
         q <- as.double(q)
@@ -308,48 +315,11 @@ function(q, sizes, z = NULL, two.sided = TRUE,
             return(1 - ret)
     }
 
-    ### no ties, use C_pSmirnov2x
-    if (is.null(z)) {
-        ret[IND] <- sapply(q[IND],
-                           function(x) .Call(C_pSmirnov2x, x, n.x, n.y))
-        if (log.p && lower.tail)
-            return(log(ret))
-        if (!log.p && lower.tail)
-            return(ret)
-        if (log.p && !lower.tail)
-            return(log1p(-ret))
-        if (!log.p && !lower.tail)
-            return(1 - ret)
-    }
+    pfun <- function(q)
+        psmirnov_exact(q, sizes = c(n.x, n.y), z = z,
+                       two.sided = two.sided, lower.tail = lower.tail)
 
-    TIES <- if (!is.null(z))
-        c(diff(sort(z)) != 0, TRUE)
-    else
-        rep.int(TRUE, N)
-
-    ### see stats/src/ks.c line 103ff
-    stat <- (0.5 + floor(as.double(q) * n.x * n.y - 1e-7)) / (n.x * n.y);
-
-    pfun <- function(q) {
-        k <- diag <- 1
-        u <- 0
-        repeat {
-            u <- c(u, 1 + u[length(u)])
-            v <- k - u
-            diag_bit <- (u <= n.x) & (v <= n.y) & (u >= 0) & (v >= 0)
-            u <- u[diag_bit]
-            v <- v[diag_bit]
-            d <- u / n.x - v / n.y
-            if (two.sided) d <- abs(d)
-            diag <- (c(diag, 0) + c(0, diag))[diag_bit]
-            if (TIES[k])
-                diag <- diag * (q > d)
-            k <- k + 1
-            if (N < k) break
-        }
-        diag
-    }
-    ret[IND] <- sapply(stat[IND], pfun)
+    ret[IND] <- vapply(q[IND], pfun, 0)
     if (any(!is.finite(ret[IND]))) {
         warning("computation of exact probability failed, returning Monte Carlo approximation")
         return(psmirnov(q = q, sizes = c(n.x, n.y), z = z,
@@ -358,23 +328,16 @@ function(q, sizes, z = NULL, two.sided = TRUE,
                         lower.tail = lower.tail, log.p = log.p))
     }
 
-    logdenom <- lgamma(N + 1) - lgamma(n.x + 1) - lgamma(n.y + 1)
-    if (log.p && lower.tail)
-        return(log(ret) - logdenom)
-    if (!log.p && lower.tail)
-        return(ret / exp(logdenom))
-    if (log.p && !lower.tail)
-        return(log1p(-ret / exp(logdenom)))
-    if (!log.p && !lower.tail)
-        return(1 - ret / exp(logdenom))
+    if (log.p) ret <- log(ret)
+    ret
 }
 
 qsmirnov <-
 function(p, sizes, z = NULL, two.sided = TRUE,
          exact = TRUE, simulate = FALSE, B = 2000)
 {
-    n.x <- floor(sizes[1])
-    n.y <- floor(sizes[2])
+    n.x <- floor(sizes[1L])
+    n.y <- floor(sizes[2L])
     if (n.x * n.y < 1e4) {
         ### note: The support is also OK in case of ties
         stat <- sort(unique(c(outer(0:n.x/n.x, 0:n.y/n.y, "-"))))

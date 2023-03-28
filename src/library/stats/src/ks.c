@@ -30,6 +30,13 @@
 
 #include "stats.h"		// for rcont2
 
+static int psmirnov_exact_test_one(double q, double r, double s);
+static int psmirnov_exact_test_two(double q, double r, double s);
+static double psmirnov_exact_uniq_lower(double q, int m, int n, int two);
+static double psmirnov_exact_uniq_upper(double q, int m, int n, int two);
+static double psmirnov_exact_ties_lower(double q, int m, int n, int *z, int two);
+static double psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two);
+
 static double K(int n, double d);
 static void m_multiply(double *A, double *B, double *C, int m);
 static void m_power(double *A, int eA, double *V, int *eV, int m, int n);
@@ -90,15 +97,180 @@ pkstwo(int n, double *x, double tol)
     }
 }
 
-/* Two-sided two-sample */
-static double psmirnov2x(double *x, int m, int n)
-{
-    double md, nd, q, *u, w;
-    int i, j;
+static int
+psmirnov_exact_test_one(double q, double r, double s) {
+    return ((r - s) >= q);
+}
 
-    if(m > n) {
-	i = n; n = m; m = i;
+static int
+ psmirnov_exact_test_two(double q, double r, double s) {
+    return (fabs(r - s) >= q);
+}
+
+static double
+psmirnov_exact_uniq_lower(double q, int m, int n, int two) {
+    double md, nd, *u, w;
+    int i, j;
+    int (*test)(double, double, double);
+
+    md = (double) m;
+    nd = (double) n;
+    if(two)
+	test = psmirnov_exact_test_two;
+    else
+	test = psmirnov_exact_test_one;
+
+    u = (double *) R_alloc(n + 1, sizeof(double));
+
+    u[0] = 1.;
+    for(j = 1; j <= n; j++) {
+        if(test(q, 0., j / nd))
+            u[j] = 0.;
+        else
+            u[j] = u[j - 1];
     }
+    for(i = 1; i <= m; i++) {
+        w = (double)(i) / ((double)(i + n));
+        if(test(q, i / md, 0.))
+            u[0] = 0.;
+        else
+            u[0] = w * u[0];
+        for(j = 1; j <= n; j++) {
+            if(test(q, i / md, j / nd))
+                u[j] = 0.;
+            else
+                u[j] = w * u[j] + u[j - 1];
+        }
+    }
+    return u[n];
+}
+
+static double
+psmirnov_exact_uniq_upper(double q, int m, int n, int two) {
+    double md, nd, *u, v, w;
+    int i, j;
+    int (*test)(double, double, double);
+
+    md = (double) m;
+    nd = (double) n;
+    if(two)
+	test = psmirnov_exact_test_two;
+    else
+	test = psmirnov_exact_test_one;
+
+    u = (double *) R_alloc(n + 1, sizeof(double));
+
+    u[0] = 0.;
+    for(j = 1; j <= n; j++) {
+        if(test(q, 0., j / nd))
+            u[j] = 1.;
+        else
+            u[j] = u[j - 1];
+    }
+    for(i = 1; i <= m; i++) {
+        if(test(q, i / md, 0.))
+            u[0] = 1.;
+        for(j = 1; j <= n; j++) {
+            if(test(q, i / md, j / nd))
+                u[j] = 1.;
+            else {
+                v = (double)(i) / (double)(i + j);
+                w = (double)(j) / (double)(i + j); /* 1 - v */
+                u[j] = v * u[j] + w * u[j - 1];
+            }
+        }
+    }
+    return u[n];
+}
+
+static double
+psmirnov_exact_ties_lower(double q, int m, int n, int *z, int two) {
+    double md, nd, *u, w;
+    int i, j;
+    int (*test)(double, double, double);
+
+    md = (double) m;
+    nd = (double) n;
+    if(two)
+	test = psmirnov_exact_test_two;
+    else
+	test = psmirnov_exact_test_one;
+
+    u = (double *) R_alloc(n + 1, sizeof(double));
+
+    u[0] = 1.;
+    for(j = 1; j <= n; j++) {
+        if(test(q, 0., j / nd) && z[j])
+            u[j] = 0.;
+        else
+            u[j] = u[j - 1];
+    }
+    for(i = 1; i <= m; i++) {
+        w = (double)(i) / ((double)(i + n));
+        if(test(q, i / md, 0.) && z[i])
+            u[0] = 0.;
+        else
+            u[0] = w * u[0];
+        for(j = 1; j <= n; j++) {
+            if(test(q, i / md, j / nd) && z[i + j])
+                u[j] = 0.;
+            else
+                u[j] = w * u[j] + u[j - 1];
+        }
+    }
+    return u[n];
+}
+
+static double
+psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two) {
+    double md, nd, *u, v, w;
+    int i, j;
+    int (*test)(double, double, double);
+
+    md = (double) m;
+    nd = (double) n;
+    if(two)
+	test = psmirnov_exact_test_two;
+    else
+	test = psmirnov_exact_test_one;
+
+    u = (double *) R_alloc(n + 1, sizeof(double));
+
+    u[0] = 0.;
+    for(j = 1; j <= n; j++) {
+        if(test(q, 0., j / nd) && z[j])
+            u[j] = 1.;
+        else
+            u[j] = u[j - 1];
+    }
+    for(i = 1; i <= m; i++) {
+        if(test(q, i / md, 0.) && z[i])
+            u[0] = 1.;
+        for(j = 1; j <= n; j++) {
+            if(test(q, i / md, j / nd) && z[i + j])
+                u[j] = 1.;
+            else {
+                v = (double)(i) / (double)(i + j);
+                w = (double)(j) / (double)(i + j); /* 1 - v */
+                u[j] = v * u[j] + w * u[j - 1];
+            }
+        }
+    }
+    return u[n];
+}
+
+/* Two-sample exact distributions. */
+SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz,
+		    SEXP stwo, SEXP slower) {
+    double md, nd, p, q;
+    int m, n, *z, two, lower;
+
+    q = asReal(sq);
+    m = asInteger(sm);
+    n = asInteger(sn);
+    two = asInteger(stwo);
+    lower = asInteger(slower);
+
     md = (double) m;
     nd = (double) n;
     /*
@@ -106,26 +278,21 @@ static double psmirnov2x(double *x, int m, int n)
        turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
 
     */
-    q = (0.5 + floor(*x * md * nd - 1e-7)) / (md * nd);
-    u = (double *) R_alloc(n + 1, sizeof(double));
+    q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);
 
-    for(j = 0; j <= n; j++) {
-	u[j] = ((j / nd) > q) ? 0 : 1;
-    }
-    for(i = 1; i <= m; i++) {
-	w = (double)(i) / ((double)(i + n));
-	if((i / md) > q)
-	    u[0] = 0;
+    if(sz == R_NilValue) {
+	if(lower)
+	    p = psmirnov_exact_uniq_lower(q, m, n, two);
 	else
-	    u[0] = w * u[0];
-	for(j = 1; j <= n; j++) {
-	    if(fabs(i / md - j / nd) > q) 
-		u[j] = 0;
-	    else
-		u[j] = w * u[j] + u[j - 1];
-	}
+	    p = psmirnov_exact_uniq_upper(q, m, n, two);
+    } else {
+	z = INTEGER(sz);
+	if(lower)
+	    p = psmirnov_exact_ties_lower(q, m, n, z, two);
+	else
+	    p = psmirnov_exact_ties_upper(q, m, n, z, two);
     }
-    return u[n];
+    return ScalarReal(p);
 }
 
 static double
@@ -238,14 +405,6 @@ m_power(double *A, int eA, double *V, int *eV, int m, int n)
     R_Free(B);
 }
 
-/* Two-sided two-sample */
-SEXP pSmirnov2x(SEXP statistic, SEXP snx, SEXP sny)
-{
-    int nx = asInteger(snx), ny = asInteger(sny);
-    double st = asReal(statistic);
-    return ScalarReal(psmirnov2x(&st, nx, ny));
-}
-
 /* Two-sample two-sided asymptotic distribution */
 SEXP pKS2(SEXP statistic, SEXP stol)
 {
@@ -256,8 +415,7 @@ SEXP pKS2(SEXP statistic, SEXP stol)
     return ans;
 }
 
-
-/* The two-sided one-sample 'exact' distribution */
+/* One-sample two-sided exact distribution */
 SEXP pKolmogorov2x(SEXP statistic, SEXP sn)
 {
     int n = asInteger(sn);
