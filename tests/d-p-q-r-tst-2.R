@@ -680,6 +680,8 @@ p201 <- proportions( rep( c(1, epsilon), c(201, 999-201)))
 x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
 
+arch <- Sys.info()[["machine"]]
+if(!(onWindows && arch == "x86")) {
 ## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
 stopifnot(exprs = {
     all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
@@ -688,10 +690,12 @@ stopifnot(exprs = {
     all.equal(dgamma(2^-1048, shape = 1e-7, scale = 1e-315, log=TRUE),
               709.96858768, tol=1e-10)
 })
+## all gave Inf in R <= 3.6.1
+} else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
+                                        # on Windows 32-bit (8087 proc).
 
-if(FALSE) {
-    ## This gave a practically infinite loop (on 64-bit Linux, Windoows)
-    ## but not 32-but Windows nor recent arm64 macOS
+if(!(onWindows && arch == "x86")) {
+ ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
     tools::assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
                          "simpleWarning", verbose=TRUE)
     stopifnot(p == 1)
