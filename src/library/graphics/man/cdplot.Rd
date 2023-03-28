@@ -20,14 +20,14 @@ cdplot(x, \dots)
   plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-  yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots)
+  yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), weights = NULL, \dots)
 
 \method{cdplot}{formula}(formula, data = list(),
   plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
   yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots,
-  subset = NULL)
+  subset = NULL, weights = NULL)
 }
 \arguments{
   \item{x}{an object, the default method expects a single numerical
@@ -52,6 +52,9 @@ cdplot(x, \dots)
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
+  \item{weights}{numeric. A vector of frequency weights for each
+    observation in the data. If \code{NULL} all weights are implicitly
+    assumed to be 1.}
 }
 \details{
   \code{cdplot} computes the conditional densities of \code{x} given
