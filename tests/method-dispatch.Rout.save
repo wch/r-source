@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-03-16 r83996) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-03-26 r84067) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -104,6 +104,26 @@ abc: Before dispatching; x has class `(': language, mode "(": (x)
 > abc(e1[[1]])
 abc: Before dispatching; x has class `call': language sin(x)
 abc.default(e1[[1]])
+> 
+> 
+> ## Some tests for `nameOfClass()`, called from inherits()
+> ClassX <- structure(list(), name = "ClassX",
++                     class = c("S3pp_class", "S3pp_object"))
+> 
+> classx_instance <- structure(list(), class = c("ClassX", "S3pp_object"))
+> 
+> nameOfClass.S3pp_class <- function(x) attr(x, "name", TRUE)
+> nameOfClass.foo <- function(x) "bar"
+> 
+> stopifnot(exprs = {
++     inherits(classx_instance, "ClassX")
++     inherits(classx_instance, ClassX)
++     ## ignore class on a character object
++     isTRUE(inherits(1, structure("numeric", class = "foo")))
++     ## make sure class is nor evaluated in calling nameOfClass
++     isFALSE(inherits(1, structure(quote(stop("should not be evaluated")),
++                                   class = "foo")))
++ })
 > 
 > 
 > ## Some tests for `@` dispatching
