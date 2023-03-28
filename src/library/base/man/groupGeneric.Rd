@@ -1,6 +1,6 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
@@ -114,7 +114,11 @@
     examined to see if there is a matching specific (preferred) or
     \code{Ops} method.  If a method is found for just one argument or
     the same method is found for both, it is used.
-    If different methods are found, there is a warning about
+    If different methods are found, then the generic
+    \code{chooseOpsMethod()} is called to
+    pick the appropriate method. (See \code{?chooseOpsMethod} for
+    details).  If \code{chooseOpsMethod()} does not resolve the method,
+    then there is a warning about
     \sQuote{incompatible methods}: in that case or if no method is found
     for either argument the internal method is used.
 

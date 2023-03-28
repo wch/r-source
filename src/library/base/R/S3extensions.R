@@ -19,3 +19,8 @@
 nameOfClass <- function(x) UseMethod("nameOfClass")
 
 nameOfClass.default <- function(x) NULL
+
+chooseOpsMethod <- function(x, y, mx, my, cl, reverse)
+    UseMethod("chooseOpsMethod")
+
+chooseOpsMethod.default <- function(x, y, mx, my, cl, reverse) FALSE

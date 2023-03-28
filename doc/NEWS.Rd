@@ -221,6 +221,12 @@
       \item The \code{@} operator is now an S3 generic. Based on
       contributions by Tomasz Kalinowski in \PR{18482}.
 
+      \item new generic \code{chooseOpsMethod()} provides a mechanism
+      for objects to resolve cases where two suitable methods are found
+      for an Ops Group Generic. This supports experimenting with
+      alternative object systems. Based on contributions by Tomasz
+      Kalinowski in \PR{18484}.
+
       \item \code{inherits(x, what)} now accepts values other than a
       simple character vector for argument \code{what}. A new generic,
       \code{nameOfClass()}, is called to resolve the class name from

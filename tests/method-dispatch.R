@@ -137,3 +137,21 @@ setClass("Person",
 
 p <- new("Person", name = "Who", age = -1)
 stopifnot(p@name == "Who")
+
+
+## Some tests for `chooseOpsMethod()`, called from C DispatchGroup() when
+## 2 methods are found
+foo_obj <- structure(1, class = "foo")
+bar_obj <- structure(1, class = "bar")
+
+`+.foo` <- function(e1, e2) "foo"
+`+.bar` <- function(e1, e2) "bar"
+
+invisible(foo_obj + bar_obj)  # Warning: Incompatible methods
+
+chooseOpsMethod.bar <- function(x, y, mx, my, cl, reverse) TRUE
+
+stopifnot(exprs = {
+    identical(foo_obj + bar_obj, "bar")
+    identical(bar_obj + foo_obj, "bar")
+})
