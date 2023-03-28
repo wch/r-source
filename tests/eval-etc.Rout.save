@@ -338,7 +338,7 @@ new>
 new> 
 > ## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
 > setClass("mp1", slots = c(prec = "integer", d = "integer"))
-> setClass("mp", contains = "list", ## of "mp1"entries:
+> setClass("mp", contains = "list", ## of "mp1" entries:
 +          validity = function(object) {
 + 	     if(all(vapply(object@.Data, class, "") == "mp1"))
 + 		 return(TRUE)
