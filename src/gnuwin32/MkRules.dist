@@ -105,7 +105,7 @@
 # USE_LIBCURL = YES
 # path to parent of libcurl headers
 # CURL_PATH =
-# libs: currently recommended gcc 10.3 64-bit toolchain
+# libs: currently recommended gcc 12 64-bit toolchain
 # CURL_LIBS=-lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
 
 # For the cairographics devices:
@@ -152,7 +152,7 @@
 #
 #   (reorder-blocks-and-partition has been fixed in GCC, so -fexceptions
 #   should no longer be needed for newer versions of GCC and the recommended
-#   gcc 10.3 toolchain)
+#   toolchain)
 #
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
