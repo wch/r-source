@@ -532,20 +532,30 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 
     ## calculate test statistics if needed
 
-    df.dispersion <- Inf
-    if (is.null(dispersion)) {
-        dispersion <- summary(object)$dispersion
-        if (!is.null(object$family$dispersion) && is.na(object$family$dispersion)) {
-            df.dispersion <- object$df.residual
+    fam <- object$family
+    if (is.null(test)) {
+        ## Attempt to determine default test statistic
+        if (!is.null(dispersion)) {
+            test <- "Chisq"
+        }
+        else if (!is.null(fam$dispersion)) {
+            test <- if (is.na(fam$dispersion)) "F" else "Chisq"
         }
     }
 
-    if(!is.null(test)) {
+    if (!is.null(test) && !isFALSE(test)) {
+        df.dispersion <- Inf
+        if (is.null(dispersion)) {
+            dispersion <- summary(object)$dispersion
+            if (!is.null(fam$dispersion) && is.na(fam$dispersion)) {
+                df.dispersion <- object$df.residual
+            }
+        }
         if(test == "F" && df.dispersion == Inf) {
-            fam <- object$family$family
-            if(fam == "binomial" || fam == "poisson")
+            fname <- fam$family
+            if(fname == "binomial" || fname == "poisson")
                 warning(gettextf("using F test with a '%s' family is inappropriate",
-                                 fam),
+                                 fname),
                         domain = NA)
             else
                 warning("using F test with a fixed dispersion is inappropriate")
@@ -563,7 +573,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     doscore <- !is.null(test) && test=="Rao"
 
     ## find responses for all models and remove
-    ## any models with a different response
+    ## any models with a different response or a different family
 
     responses <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[2L]])} ))
@@ -629,13 +639,24 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 
     ## calculate test statistic if needed
 
-    if(!is.null(test)) {
-	bigmodel <- object[[order(resdf)[1L]]]
+    bigmodel <- object[[order(resdf)[1L]]]
+    bigdispersion <- bigmodel$family$dispersion
+    if (is.null(test)) {
+        ## Try to determine default test statistic
+        if (!is.null(dispersion)) {
+            test <- "Chisq"
+        }
+        else if (!is.null(bigdispersion)) {
+            test <- if (is.na(bigdispersion)) "F" else "Chisq"
+        }
+    }
+
+    if (!is.null(test) && !isFALSE(test)) {
         if (is.null(dispersion)) {
             dispersion <- summary(bigmodel)$dispersion
         }
 	df.dispersion <- if (dispersion == 1) Inf
-                         else if (!is.null(bigmodel$family$dispersion) && !is.na(bigmodel$family$dispersion)) Inf
+                         else if (!is.null(bigdispersion) && !is.na(bigdispersion)) Inf
                          else min(resdf)
         if(test == "F" && df.dispersion == Inf) {
             fam <- bigmodel$family$family

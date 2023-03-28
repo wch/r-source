@@ -251,6 +251,11 @@
 
       \item The \code{tapply()} function now accepts a data frame as the
       \code{X}, and allows \code{INDEX} to be a formula in that case.
+
+      \item \code{anova.glm()} prints test statistics and p-values by
+      default, using either a Chisq test or an F test, depending on
+      whether the dispersion is fixed or free. Test statistics can be
+      suppressed with \code{test=FALSE}.
     }
   }
 

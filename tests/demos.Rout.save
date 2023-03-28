@@ -1,7 +1,7 @@
 
 R Under development (unstable) (2023-03-28 r84086) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.4.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -196,13 +196,13 @@ List of 3
   .. ..$ message: chr "3 NA's produced by log(.) + sqrt(.)\n"
   .. ..$ call   : language message(sprintf("%d NA's produced by log(.) + sqrt(.)", sum(is.na(r))))
   .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 78 5 78 88 5 88 78 78
-  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x12e6acc58> 
+  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ae9fe8> 
   .. ..- attr(*, "class")= chr [1:3] "simpleMessage" "message" "condition"
   ..$ :List of 2
   .. ..$ message: chr "Got +/- Inf from x[4L]\n"
   .. ..$ call   : language message(sprintf("Got +/- Inf from x[%s]", deparse(which(ii))))
   .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 80 5 80 96 5 96 80 80
-  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x12e6acc58> 
+  .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ae9fe8> 
   .. ..- attr(*, "class")= chr [1:3] "simpleMessage" "message" "condition"
  $ warnings:List of 2
   ..$ :List of 2
@@ -1485,7 +1485,7 @@ attr(,"legend")
 [1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 
 
-> anova(detg.m0, detg.mod)
+> anova(detg.m0, detg.mod, test=FALSE)
 Analysis of Deviance Table
 
 Model 1: Fr ~ M.user * Temp * Soft + Brand
@@ -1638,5 +1638,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  0.667 0.039 0.709 0 0 
+Time elapsed:  0.733 0.025 0.773 0 0 
 > 

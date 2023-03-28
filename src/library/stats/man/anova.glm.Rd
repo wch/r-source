@@ -21,7 +21,9 @@
     By default it is obtained from the object(s).}
   \item{test}{a character string, (partially) matching one of \code{"Chisq"},
   \code{"LRT"}, \code{"Rao"},
-    \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.}
+    \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.
+    Or logical \code{FALSE}, which suppresses any test.
+}
 }
 \details{
   Specifying a single object gives a sequential analysis of deviance
@@ -42,7 +44,12 @@
   the chi-squared test is most appropriate, and for those with
   dispersion estimated by moments (e.g., \code{gaussian},
   \code{quasibinomial} and \code{quasipoisson} fits) the F test is
-  most appropriate.  Mallows' \eqn{C_p}{Cp} statistic is the residual
+  most appropriate.  If \code{anova.glm} can determine which of these
+  cases applies then by default it will use one of the above tests.
+  If the \code{dispersion} argument is supplied, the dispersion is
+  considered known and the chi-squared test will be used.
+  Argument \code{test=FALSE} suppresses the test statistics and P values.
+  Mallows' \eqn{C_p}{Cp} statistic is the residual
   deviance plus twice the estimate of \eqn{\sigma^2} times
   the residual degrees of freedom, which is closely related to AIC (and
   a multiple of it if the dispersion is known).
@@ -82,7 +89,7 @@
 ## --- Continuing the Example from  '?glm':
 \dontshow{require(utils)
 example("glm", echo = FALSE)}
-anova(glm.D93)
+anova(glm.D93, test = FALSE)
 anova(glm.D93, test = "Cp")
 anova(glm.D93, test = "Chisq")
 glm.D93a <-
