@@ -114,12 +114,12 @@ extern char *libintl_dcigettext (const char *__domainname,
 # define SWAP(i) bswap_32 (i)
 #else
 static inline nls_uint32
-# ifdef __cplusplus
+//# ifdef __cplusplus
 SWAP (nls_uint32 i)
-# else
-SWAP (i)
-     nls_uint32 i;
-# endif
+//# else
+//SWAP (i)
+//     nls_uint32 i;
+//# endif
 {
   return (i << 24) | ((i & 0xff00) << 8) | ((i >> 8) & 0xff00) | (i >> 24);
 }
