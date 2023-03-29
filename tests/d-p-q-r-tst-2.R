@@ -681,7 +681,7 @@ x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
 
 arch <- Sys.info()[["machine"]]
-if(!(onWindows && arch == "x86")) {
+## had if(!(onWindows && arch == "x86"))
 ## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
 stopifnot(exprs = {
     all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
@@ -691,15 +691,16 @@ stopifnot(exprs = {
               709.96858768, tol=1e-10)
 })
 ## all gave Inf in R <= 3.6.1
-} else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
-                                        # on Windows 32-bit (8087 proc).
+## } else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
 
-if(!(onWindows && arch == "x86")) {
- ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
-    tools::assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
-                         "simpleWarning", verbose=TRUE)
-    stopifnot(p == 1)
-}
+
+## if(!(onWindows && arch == "x86")) {
+  ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
+  suppressWarnings(# typically warns, but not on Apple clang 14.0.3
+    p <- pchisq(1.00000012e200, df=1e200, ncp=100)
+  )
+  stopifnot(p == 1)
+## }
 
 
 ## Extreme tails  for  qnorm(*, log.p=TRUE)   :
