@@ -225,7 +225,8 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
 }
 
 psmirnov_exact <-
-function(q, sizes, z = NULL, two.sided = TRUE, lower.tail = TRUE) {
+function(q, sizes, z = NULL,
+         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE) {
     if(!is.null(z)) {
         z <- (diff(sort(z)) != 0)
         z <- if(any(z))
@@ -233,10 +234,62 @@ function(q, sizes, z = NULL, two.sided = TRUE, lower.tail = TRUE) {
         else
             NULL
     }
-    .Call(C_psmirnov_exact, q, sizes[1L], sizes[2L], z,
-          two.sided, lower.tail)
+    p <- .Call(C_psmirnov_exact, q, sizes[1L], sizes[2L], z,
+               two.sided, lower.tail)
+    if(log.p)
+        p <- log(p)
+    p
 }
 
+psmirnov_asymp <-
+function(q, sizes,
+         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE) {
+    n <- prod(sizes) / sum(sizes)
+    ## <FIXME>
+    ## Let m and n be the min and max of the sample sizes, respectively.
+    ## Then, according to Kim and Jennrich (1973), if m < n/10, we
+    ## should use the 
+    ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
+    ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
+    if (two.sided) {
+        ret <- .Call(C_pKS2, p = sqrt(n) * q, tol = 1e-6)
+        ## note: C_pKS2(0) = NA but Prob(D < 0) = 0
+        ret[q < .Machine$double.eps] <- 0
+    } else {
+        ret <- 1 - exp(- 2 * n * q^2)
+    }
+    if(log.p) {
+        if(lower.tail)
+            log(ret)
+        else
+            log1p(-ret)
+    } else {
+        if(lower.tail)
+            ret
+        else
+            1 - ret
+    }
+}
+
+psmirnov_simul <-
+function(q, sizes, z = NULL,
+         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE,
+         B) {
+    Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
+    ## need P(D < q)
+    ret <- ecdf(Dsim)(q - sqrt(.Machine$double.eps)) 
+    if(log.p) {
+        if(lower.tail)
+            log(ret)
+        else
+            log1p(-ret)
+    } else {
+        if(lower.tail)
+            ret
+        else
+            1 - ret
+    }
+}   
 
 psmirnov <-
 function(q, sizes, z = NULL, two.sided = TRUE,
@@ -280,55 +333,30 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     exact <- exact && !simulate
 
     if (!exact) {
-        if (simulate) {
-            Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
-            ### need P(D < q)
-            ret[IND] <- ecdf(Dsim)(q[IND] - sqrt(.Machine$double.eps)) 
-            if (log.p && lower.tail)
-                return(log(ret))
-            if (!log.p && lower.tail)
-                return(ret)
-            if (log.p && !lower.tail)
-                return(log1p(-ret))
-            if (!log.p && !lower.tail)
-                return(1 - ret)
-        }
-        ## <FIXME> let m and n be the min and max of the sample
-        ## sizes, respectively.  Then, according to Kim and Jennrich
-        ## (1973), if m < n/10, we should use the
-        ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
-        ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
-        if (two.sided) {
-            ret[IND] <- .Call(C_pKS2, p = sqrt(n) * q[IND], tol = 1e-6)
-            ### note: C_pKS2(0) = NA but Prob(D < 0) = 0
-            ret[q < .Machine$double.eps] <- 0
-        } else {
-            ret[IND] <- 1 - exp(- 2 * n * q^2)
-        }
-        if (log.p && lower.tail)
-            return(log(ret))
-        if (!log.p && lower.tail)
-            return(ret)
-        if (log.p && !lower.tail)
-            return(log1p(-ret))
-        if (!log.p && !lower.tail)
-            return(1 - ret)
+        ret[IND] <-
+            if (simulate)
+                psmirnov_simul(q[IND], sizes, z,
+                               two.sided, lower.tail, log.p,
+                               B)
+            else
+                psmirnov_asymp(q[IND], sizes,
+                               two.sided, lower.tail, log.p)
+        return(ret)
     }
 
     pfun <- function(q)
-        psmirnov_exact(q, sizes = c(n.x, n.y), z = z,
-                       two.sided = two.sided, lower.tail = lower.tail)
+        psmirnov_exact(q, sizes, z, two.sided, lower.tail, log.p)
 
     ret[IND] <- vapply(q[IND], pfun, 0)
     if (any(!is.finite(ret[IND]))) {
         warning("computation of exact probability failed, returning Monte Carlo approximation")
-        return(psmirnov(q = q, sizes = c(n.x, n.y), z = z,
-                        two.sided = two.sided, exact = FALSE, 
-                        simulate = TRUE, B = B,
-                        lower.tail = lower.tail, log.p = log.p))
+        ret[IND] <-
+            psmirnov_simul(q[IND], sizes, z,
+                           two.sided, lower.tail, log.p,
+                           B)
+        return(ret)
     }
 
-    if (log.p) ret <- log(ret)
     ret
 }
 
