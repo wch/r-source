@@ -30,6 +30,8 @@
 
 #include "stats.h"		// for rcont2
 
+static void pkstwo(int n, double *x, double tol);
+
 static int psmirnov_exact_test_one(double q, double r, double s);
 static int psmirnov_exact_test_two(double q, double r, double s);
 static double psmirnov_exact_uniq_lower(double q, int m, int n, int two);
@@ -41,7 +43,23 @@ static double K(int n, double d);
 static void m_multiply(double *A, double *B, double *C, int m);
 static void m_power(double *A, int eA, double *V, int *eV, int m, int n);
 
+static void
+Smirnov_sim_wrk(int nrow, int ncol,
+		const int nrowt[], const int ncolt[],
+		int n, int B, int *observed, int twosided,
+		double *fact, int *jwork, double *results);
+
 /* Two-sample two-sided asymptotic distribution */
+
+SEXP pKS2(SEXP statistic, SEXP stol)
+{
+    int n = LENGTH(statistic);
+    double tol = asReal(stol);
+    SEXP ans = duplicate(statistic);
+    pkstwo(n, REAL(ans), tol);
+    return ans;
+}
+
 static void
 pkstwo(int n, double *x, double tol)
 {
@@ -95,6 +113,101 @@ pkstwo(int n, double *x, double tol)
 	    x[i] = new;
 	}
     }
+}
+
+/* Two-sample exact distributions.
+
+   See 
+
+     Gunar Schröer and Dietrich Trenkler (1995),
+     Exact and Randomization Distributions of Kolmogorov-Smirnov Tests
+     for Two or Three Samples,
+     Computational Statistics & Data Analysis, 20, 185--202
+
+   and
+
+     Thomas Viehmann (2021),
+     Numerically more stable computation of the p-values for the
+     two-sample Kolmogorov=Smirnov test,
+     <https://arxiv.org/abs/2102.08037>.
+
+   For the lower tail probabilities p = P(D < q), we have
+
+     p = A_{m,n} / choose(m + n, m)
+
+   where for the case of no ties, the A_{i,j} can be computed via the
+   basic recursion
+   
+      A_{i,j} = D_{i,j} (A_{i-1,j} + A_{i,j-1})
+
+   with 
+
+      D_{i,j} = 0 if FUN(i/m - j/n) >= q
+                1 otherwise
+
+   where FUN = abs in the two-sided case and identity otherwise.
+
+   In case of ties, the test needs to be changed to
+
+      FUN(i/m - j/n) >= q && z_{(i+j)} == z_{(i+j+1)}
+
+   for i + j < m + n.
+
+   We actually recusively compute
+
+     p_{i,j} = A_{i,j} / choose(i + n, i)
+
+  (inner loop over j, outer loop over i).
+
+  For the upper tail probabilities one has
+
+    p = P(D >= q) = 1 - A_{m,n} / choose(m + n, m)
+
+  one can compute
+
+     C_{i,j} = 1 - A_{i,j} / choose(i + j, i)
+
+  via the recursion
+
+     C_{i,j} = 1 if D_{i,j} = 0
+               w * C_{i-1,j} + (1 - w) C_{i,j-1},  w = i / (i + j)
+
+  given in Viehmann (2021).
+*/
+
+SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz,
+		    SEXP stwo, SEXP slower) {
+    double md, nd, p, q;
+    int m, n, *z, two, lower;
+
+    q = asReal(sq);
+    m = asInteger(sm);
+    n = asInteger(sn);
+    two = asInteger(stwo);
+    lower = asInteger(slower);
+
+    md = (double) m;
+    nd = (double) n;
+    /*
+       q has 0.5/mn added to ensure that rounding error doesn't
+       turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
+
+    */
+    q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);
+
+    if(sz == R_NilValue) {
+	if(lower)
+	    p = psmirnov_exact_uniq_lower(q, m, n, two);
+	else
+	    p = psmirnov_exact_uniq_upper(q, m, n, two);
+    } else {
+	z = INTEGER(sz);
+	if(lower)
+	    p = psmirnov_exact_ties_lower(q, m, n, z, two);
+	else
+	    p = psmirnov_exact_ties_upper(q, m, n, z, two);
+    }
+    return ScalarReal(p);
 }
 
 static int
@@ -259,39 +372,12 @@ psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two) {
     return u[n];
 }
 
-/* Two-sample exact distributions. */
-SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz,
-		    SEXP stwo, SEXP slower) {
-    double md, nd, p, q;
-    int m, n, *z, two, lower;
-
-    q = asReal(sq);
-    m = asInteger(sm);
-    n = asInteger(sn);
-    two = asInteger(stwo);
-    lower = asInteger(slower);
-
-    md = (double) m;
-    nd = (double) n;
-    /*
-       q has 0.5/mn added to ensure that rounding error doesn't
-       turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
-
-    */
-    q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);
-
-    if(sz == R_NilValue) {
-	if(lower)
-	    p = psmirnov_exact_uniq_lower(q, m, n, two);
-	else
-	    p = psmirnov_exact_uniq_upper(q, m, n, two);
-    } else {
-	z = INTEGER(sz);
-	if(lower)
-	    p = psmirnov_exact_ties_lower(q, m, n, z, two);
-	else
-	    p = psmirnov_exact_ties_upper(q, m, n, z, two);
-    }
+/* One-sample two-sided exact distribution */
+SEXP pKolmogorov2x(SEXP statistic, SEXP sn)
+{
+    int n = asInteger(sn);
+    double st = asReal(statistic), p;
+    p = K(n, st);
     return ScalarReal(p);
 }
 
@@ -405,23 +491,30 @@ m_power(double *A, int eA, double *V, int *eV, int m, int n)
     R_Free(B);
 }
 
-/* Two-sample two-sided asymptotic distribution */
-SEXP pKS2(SEXP statistic, SEXP stol)
-{
-    int n = LENGTH(statistic);
-    double tol = asReal(stol);
-    SEXP ans = duplicate(statistic);
-    pkstwo(n, REAL(ans), tol);
-    return ans;
-}
+/* Generation from the Smirnov distribution. */
 
-/* One-sample two-sided exact distribution */
-SEXP pKolmogorov2x(SEXP statistic, SEXP sn)
+SEXP Smirnov_sim(SEXP sr, SEXP sc, SEXP sB, SEXP twosided)
 {
-    int n = asInteger(sn);
-    double st = asReal(statistic), p;
-    p = K(n, st);
-    return ScalarReal(p);
+    sr = PROTECT(coerceVector(sr, INTSXP));
+    sc = PROTECT(coerceVector(sc, INTSXP));
+    int nr = LENGTH(sr), nc = LENGTH(sc), B = asInteger(sB);
+    if (nc != 2)
+        error("Smirnov statistic only defined for two groups"); 
+    int n = 0, *isr = INTEGER(sr);
+    for (int i = 0; i < nr; i++) {
+        /* avoid integer overflow */
+        if (n > INT_MAX - isr[i]) 
+            error("Sample size too large");
+        n += isr[i];
+    }
+    int *observed = (int *) R_alloc(nr * nc, sizeof(int));
+    double *fact = (double *) R_alloc(n+1, sizeof(double));
+    int *jwork = (int *) R_alloc(nc, sizeof(int));
+    SEXP ans = PROTECT(allocVector(REALSXP, B));
+    Smirnov_sim_wrk(nr, nc, isr, INTEGER(sc), n, B, observed, 
+		    INTEGER(twosided)[0], fact, jwork, REAL(ans));
+    UNPROTECT(3);
+    return ans;
 }
 
 static void
@@ -454,28 +547,4 @@ Smirnov_sim_wrk(int nrow, int ncol,
     PutRNGstate();
 
     return;
-}
-
-SEXP Smirnov_sim(SEXP sr, SEXP sc, SEXP sB, SEXP twosided)
-{
-    sr = PROTECT(coerceVector(sr, INTSXP));
-    sc = PROTECT(coerceVector(sc, INTSXP));
-    int nr = LENGTH(sr), nc = LENGTH(sc), B = asInteger(sB);
-    if (nc != 2)
-        error("Smirnov statistic only defined for two groups"); 
-    int n = 0, *isr = INTEGER(sr);
-    for (int i = 0; i < nr; i++) {
-        /* avoid integer overflow */
-        if (n > INT_MAX - isr[i]) 
-            error("Sample size too large");
-        n += isr[i];
-    }
-    int *observed = (int *) R_alloc(nr * nc, sizeof(int));
-    double *fact = (double *) R_alloc(n+1, sizeof(double));
-    int *jwork = (int *) R_alloc(nc, sizeof(int));
-    SEXP ans = PROTECT(allocVector(REALSXP, B));
-    Smirnov_sim_wrk(nr, nc, isr, INTEGER(sc), n, B, observed, 
-		    INTEGER(twosided)[0], fact, jwork, REAL(ans));
-    UNPROTECT(3);
-    return ans;
 }
