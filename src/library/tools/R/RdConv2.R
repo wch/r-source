@@ -947,8 +947,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
             switch(tag,
             "\\item" = {
     	    	if (!inlist) inlist <- TRUE
-                if((blocktag %in% c("\\describe", "\\arguments",
-                                    "\\value")) &&
+                CHECK_BLOCKS <- 
+                    if (config_val_to_logical(Sys.getenv("_R_CHECK_RD_ALLOW_EMPTY_ITEM_IN_DESCRIBE_", "FALSE")))
+                        c("\\arguments", "\\value")
+                    else
+                        c("\\describe", "\\arguments", "\\value")
+                if((blocktag %in% CHECK_BLOCKS) &&
                     isBlankRd(block[[1L]]))
                     warnRd(block, Rdfile, level = 5,
                            "\\item in ", blocktag,
