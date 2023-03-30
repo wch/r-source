@@ -1156,9 +1156,10 @@ be used as identifiers.  Those for C23 should support new types such as
 
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
-However, versions 15 and later of LLVM @command{clang} warn by default
-in all modes if @option{-Wall} or @option{-pedantic} is used, and may
-need @option{-Wno-strict-prototypes}.
+However, versions 15 and later of LLVM @command{clang} and 14.0.3 and
+later on Apple clang warn by default in all modes if @option{-Wall} or
+@option{-pedantic} is used, and may need
+@option{-Wno-strict-prototypes}.
 
 @node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
@@ -5586,6 +5587,13 @@ often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
 to use Accelerate's BLAS.
+
+@c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
+@c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
+As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
+framework are now inline with reference version 3.9.1'.  The release
+notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
+headers.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
