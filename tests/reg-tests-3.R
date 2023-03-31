@@ -237,7 +237,7 @@ if(require("Matrix", .Library)) {
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}
 
-## citation() / bibentry: year will change; even more below (yr, ver., ..), but check is sloppy/may fail
+## citation() / bibentry: year will change but check is sloppy
 options(width=88) # format.bibentry() using strwrap()
 print(c1 <- citation())
 fc1B <- format(c1)
@@ -251,8 +251,11 @@ stopifnot(exprs = {
 pkg <- "nlme"
 (hasME <- requireNamespace(pkg, quietly=TRUE, lib.loc = .Library))
 if(hasME) withAutoprint({
-    cat(sprintf("package '%s' version: '%s'\n", pkg, packageVersion(pkg)))
     c2 <- citation(package=pkg)
+    ## avoid spurious diffs:
+    c2$author[[1]]$given[[1]] <- "J."
+    c2$year[[1]] <- "9999"
+    c2$note[[1]] <- sub("3.1-[0-9]*$", "3.1-999", c2$note[[1]])
     print(c2)
     print(c2, bibtex=FALSE) # no final message
     print(c2, bibtex=TRUE)  # w/ two bibTeX
