@@ -165,22 +165,25 @@ write.csv2(\dots)
 }
 
 \examples{
-\dontrun{
-## To write a CSV file for input to Excel one might use
 x <- data.frame(a = I("a \" quote"), b = pi)
-write.table(x, file = "foo.csv", sep = ",", col.names = NA,
+tf <- tempfile(fileext = ".csv")
+
+## To write a CSV file for input to Excel one might use
+write.table(x, file = tf, sep = ",", col.names = NA,
             qmethod = "double")
+file.show(tf)
 ## and to read this file back into R one needs
-read.table("foo.csv", header = TRUE, sep = ",", row.names = 1)
+read.table(tf, header = TRUE, sep = ",", row.names = 1)
 ## NB: you do need to specify a separator if qmethod = "double".
 
 ### Alternatively
-write.csv(x, file = "foo.csv")
-read.csv("foo.csv", row.names = 1)
+write.csv(x, file = tf)
+read.csv(tf, row.names = 1)
 ## or without row names
-write.csv(x, file = "foo.csv", row.names = FALSE)
-read.csv("foo.csv")
+write.csv(x, file = tf, row.names = FALSE)
+read.csv(tf)
 
+\dontrun{
 ## To write a file in Mac Roman for simple use in Mac Excel 2004/8
 write.csv(x, file = "foo.csv", fileEncoding = "macroman")
 ## or for Windows Excel 2007/10
