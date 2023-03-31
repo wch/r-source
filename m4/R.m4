@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2022 R Core Team
+### Copyright (C) 1998-2023 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -989,9 +989,12 @@ dnl Yes we need to double quote this ...
 # define F77_SYMBOL(x)   x
 #endif
 
-typedef struct {
-        double r;
-        double i;
+typedef union {
+    struct {
+	double r;
+	double i;
+    };
+    double _Complex private_data_c;
 } Rcomplex;
 
 extern void F77_SYMBOL(cftest)(Rcomplex *x);
