@@ -221,7 +221,7 @@
       \item The \code{@} operator is now an S3 generic. Based on
       contributions by Tomasz Kalinowski in \PR{18482}.
 
-      \item new generic \code{chooseOpsMethod()} provides a mechanism
+      \item New generic \code{chooseOpsMethod()} provides a mechanism
       for objects to resolve cases where two suitable methods are found
       for an Ops Group Generic. This supports experimenting with
       alternative object systems. Based on contributions by Tomasz
@@ -237,16 +237,16 @@
       \item Detection of BLAS/LAPACK in use (\code{sessionInfo()}) with
       FlexiBLAS now reports the current backend.
 
-      \item \code{subset.data.frame()} now warns about extraneous
-      arguments, typically catching the use of \samp{=} instead of
-      \samp{==} in the \code{subset} expression.
+      \item The \code{"data.frame"} method for \code{subset()} now warns
+      about extraneous arguments, typically catching the use of \samp{=}
+      instead of \samp{==} in the \code{subset} expression.
 
       \item Calling \code{a:b} when numeric \code{a} or \code{b} is longer
       than one may now be made into an error by setting environment variable
       \env{_R_CHECK_LENGTH_COLON_} to a true value, along the proposal in
       \PR{18419} by Henrik Bengtsson.
 
-      \item \code{density(x, weights=*)} now warns if automatic bandwidth
+      \item \code{density(x, weights = *)} now warns if automatic bandwidth
       selection happens without using \code{weights}; new optional
       \code{warnWbw} may suppress the warning.  Prompted by Christoph
       Dalitz' \PR{18490} and its discussants.
@@ -258,17 +258,18 @@
       Q-Q plot for GLMs. Instead it plots a half-normal Q-Q plot of the
       absolute value of the standardized deviance residuals.
 
-      \item The \code{print.summary.glm()} function no longer shows summary
-      statistics for the deviance residuals by default. The optional
-      argument \code{show.residuals} can be used to show them if required.
+      \item The \code{print()} method for class \code{"summary.glm"} no
+      longer shows summary statistics for the deviance residuals by
+      default.  Its optional argument \code{show.residuals} can be used
+      to show them if required.
 
-      \item The \code{tapply()} function now accepts a data frame as the
-      \code{X}, and allows \code{INDEX} to be a formula in that case.
+      \item The \code{tapply()} function now accepts a data frame as its
+      \code{X} argument, and allows \code{INDEX} to be a formula in that case.
 
       \item The \code{"glm"} method for \code{anova()} computes test
       statistics and p-values by default, using a Chisq test or
       an F test depending on whether the dispersion is fixed or
-      free. Test statistics can be suppressed by giving argument
+      free.  Test statistics can be suppressed by giving argument
       \code{test} a false logical value.
     }
   }
