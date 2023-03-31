@@ -271,6 +271,11 @@
       an F test depending on whether the dispersion is fixed or
       free.  Test statistics can be suppressed by giving argument
       \code{test} a false logical value.
+
+      \item The performance of \code{write.table()} has been improved
+      for data frames with a large number of unclassed columns.
+      (Thanks to Gabriel Becker's \PR{18500}, prompted by a report from
+      Toby Dylan Hocking on the R-devel mailing list.)
     }
   }
 
