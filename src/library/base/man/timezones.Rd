@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -39,8 +39,7 @@ OlsonNames(tzdir = NULL)
   AIX and FreeBSD, and installed with \R on Windows.  (Unfortunately
   there are many system-specific errors in the implementations.)  It is
   possible to use the \R sources' version of the code on Unix-alikes as
-  well as on Windows: this is the default for macOS and recommended for
-  Solaris.
+  well as on Windows: this is the default on macOS.
 
   It should be possible to set the current time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
@@ -62,14 +61,14 @@ OlsonNames(tzdir = NULL)
   If it is unset or empty the \emph{system} time zone is used (the one
   returned by \code{Sys.timezone}).
 
-  %% arguably, 'railway time' in the UK in 1840 was earliest.
-  Time zones did not come into use until the middle of the nineteenth
-  century and were not widely adopted until the twentieth, and
-  \emph{daylight saving time} (DST, also known as \emph{summer time})
-  was first introduced in the early twentieth century, most widely in
-  1916.  Over the last 100 years places have changed their affiliation
-  between major time zones, have opted out of (or in to) DST in various
-  years or adopted DST rule changes late or not at all.  (The UK
+  %% arguably, 'railway time' in the UK in 1840 was earliest.  Time
+  zones did not come into use until the middle of the nineteenth century
+  and were not widely adopted until the twentieth, and \emph{daylight
+  saving time} (DST, also known as \emph{summer time}) was first
+  introduced in the early twentieth century, most widely in 1916.  Over
+  the last 100 years places have changed their affiliation between major
+  time zones, have opted out of (or in to) DST in various years or
+  adopted DST rule changes late or not at all.  (For example, the UK
   experimented with DST throughout 1971, only.)  In a few countries (one
   is the Irish Republic) it is the summer time which is the
   \sQuote{standard} time and a different name is used in winter.  And
@@ -81,9 +80,10 @@ OlsonNames(tzdir = NULL)
   as they were in 1902.  Most of the world had not adopted time zones by
   1902 (so used local \sQuote{mean time} based on longitude) but for a
   few places there had been time-zone changes before then.  64-bit
-  representations are becoming common; unfortunately on some 64-bit OSes
-  the database information is 32-bit and so only available for the range
-  1901--2038, and incompletely for the end years.
+  representations are becoming by far the most common; unfortunately on
+  some 64-bit OSes the database information is 32-bit and so only
+  available for the range 1901--2038, and incompletely for the end
+  years.
 
   When a time zone location is first found in a session its value is
   cached in object \code{.sys.timezone} in the base environment.
@@ -105,7 +105,7 @@ OlsonNames(tzdir = NULL)
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.  It may have an attribute \code{"Version"}, something
-  like \samp{"2020a"}.  (It does on systems using
+  like \samp{"2023a"}.  (It does on systems using
   \option{--with-internal-tzcode} and those like Fedora distributing
   file \file{tzdata.zi}.)
 }
@@ -197,8 +197,8 @@ OlsonNames(tzdir = NULL)
   \samp{Etc/GMT-n} (possibly also without prefix \samp{Etc/}), which
   assume a fixed offset from UTC (hence no DST).  Contrary to some
   expectations (but consistent with names such as \samp{PST8PDT}),
-  negative offsets are times ahead of (east of) UTC, positive offsets
-  are times behind (west of) UTC.
+  negative offsets are times ahead of (East of) UTC, positive offsets
+  are times behind (West of) UTC.
 
   Immediately prior to the advent of legislated time zones, most people
   used time based on their longitude (or that of a nearby town), known
@@ -230,11 +230,11 @@ OlsonNames(tzdir = NULL)
   POSIX).  Some OSes allow the setting of time zones with names which
   exceed their limit, and that can crash the \R session.
 
-  Information about future times is speculative: the database provides
-  the best-known information based on current rules set by civil
-  authorities.  For the period 1900--1970 those rules (and which of any
-  authority's rules were enacted) is often obscure, and the databases do
-  get corrected frequently.
+  Information about future times is speculative (\sQuote{proleptic}):
+  the database provides the best-known information based on current
+  rules set by civil authorities.  For the period 1900--1970 those rules
+  (and which of any authority's rules were enacted) are often obscure,
+  and the databases do get corrected frequently.
 
   \code{OlsonNames} tries to find an Olson database in known locations.
   It might not succeed (when it returns an empty vector with a warning)
@@ -255,7 +255,9 @@ OlsonNames(tzdir = NULL)
   conservation.  These often have short notice and time-zone databases
   may not be up to date.  (Morocco in 2013 announced a change to the end
   of DST at \emph{a days} notice, and in 2015 North Korea gave imprecise
-  information about a change a week in advance.)
+  information about a change a week in advance. In 2023 there was chaos
+  in Lebanon as the authorities changed their minds repeatedly and some
+  changes were not widely implemented.)
 
   On platforms with case-insensitive file systems, time zone names will be
   case-insensitive.  They may or may not be on other platforms and so,
@@ -299,7 +301,7 @@ OlsonNames(tzdir = NULL)
     \item \sQuote{Modern} Linux systems use \code{systemd} which
     provides mechanisms to set and retrieve the time zone (amongst other
     things).  There is a command \command{timedatectl} to give details.
-    (Unfortunately RHEL/Centos 6.x are not \sQuote{modern}.)
+    (Unfortunately RHEL/Centos 6.x were not \sQuote{modern}.)
 
     \item Debian-derived systems since \emph{ca} 2007 have supplied a
     file \file{/etc/timezone}.  Its format is undocumented but
@@ -327,7 +329,7 @@ OlsonNames(tzdir = NULL)
 \examples{
 Sys.timezone()
 
-str(OlsonNames()) ## typically close to six hundred names,
+str(OlsonNames()) ## typically around six hundred names,
 ## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ..., but
 ## mostly pairs (and triplets) such as "Pacific/Auckland"
 table(sl <- grepl("/", OlsonNames()))
