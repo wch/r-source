@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -5624,6 +5624,10 @@ add_dummies <- function(dir, Log)
                 ## and -Wstrict-prototypes in what should be thought of
                 ## as system headers.
                 ex_re <- "^ *(/usr/include|/opt/R/arm64/include).*\\[-Wstrict-prototypes\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## filter out Complex.h warnings as users can do nothing about these
+                ex_re <-"/include/R_ext/Complex.h"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and ODS 12.5 warnings
