@@ -1,6 +1,6 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
@@ -153,7 +153,10 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 
 ## random starts do help here with too many clusters
 ## (and are often recommended anyway!):
+## The ordering of the clusters may be platform-dependent.
+## IGNORE_RDIFF_BEGIN
 (cl <- kmeans(x, 5, nstart = 25))
+## IGNORE_RDIFF_END
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
 }
