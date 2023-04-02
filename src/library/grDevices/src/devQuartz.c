@@ -1035,8 +1035,8 @@ static int QuartzCreateMask(SEXP mask,
         /* Create bitmap grahics context 
          * drawing is redirected to this context */
         quartz_bitmap = CGBitmapContextCreate(NULL,
-                                              devWidth,
-                                              devHeight,
+                                              (size_t) devWidth,
+                                              (size_t) devHeight,
                                               8,
                                               0,
                                               cs,
@@ -3261,7 +3261,7 @@ SEXP Quartz(SEXP args)
 static double cached_darwin_version = 0.0;
 
 /* Darwin version X.Y maps to macOS version 10.(X - 4).Y */
-static double darwin_version() {
+static double darwin_version(void) {
     char ver[32];
     size_t len = sizeof(ver) - 1;
     int mib[2] = { CTL_KERN, KERN_OSRELEASE };
@@ -3294,7 +3294,7 @@ extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
    be registered in the session namespace which is the last in the
    chain. However, this could change in the future.
  */
-static int has_wss() {
+static int has_wss(void) {
     int res = 0;
 
     if (darwin_version() < 11.0) { /* before Lion we get reliable information from the bootstrap info */
@@ -3357,7 +3357,7 @@ static int has_wss() {
     return res;
 }
 
-SEXP makeQuartzDefault() {
+SEXP makeQuartzDefault(void) {
     return ScalarLogical(has_wss());
 }
 

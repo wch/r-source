@@ -34,7 +34,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/QuartzDevice.h>
-#define _(String) (String)
+// #define _(String) (String) /* defined in Defn.h */
 
 typedef struct {
     CGContextRef bitmap;	/* Bitmap drawing context */
