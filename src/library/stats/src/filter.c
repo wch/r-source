@@ -31,7 +31,7 @@
 #endif
 
 // currently ISNAN includes NAs
-#define my_isok(x) (!ISNA(x) & !ISNAN(x))
+#define my_isok(x) (!ISNA(x) && !ISNAN(x))
 
 SEXP cfilter(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
 {

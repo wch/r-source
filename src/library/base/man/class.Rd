@@ -1,6 +1,6 @@
 % File src/library/base/man/class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{class}
@@ -14,6 +14,7 @@
 \alias{inherits}
 \alias{isa}
 \alias{nameOfClass}
+\alias{nameOfClass.default}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method dispatch takes place

@@ -7,6 +7,7 @@
 \title{Choose the Appropriate Method for Ops}
 \usage{chooseOpsMethod(x, y, mx, my, cl, reverse)}
 \alias{chooseOpsMethod}
+\alias{chooseOpsMethod.default}
 
 \description{
   \code{chooseOpsMethod} is a function called by the Ops Group Generic when two
