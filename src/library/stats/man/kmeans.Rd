@@ -153,7 +153,7 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 
 ## random starts do help here with too many clusters
 ## (and are often recommended anyway!):
-## The ordering of the clusters may be platform-dependent.
+## The ordering of the clusters may be platform-dependent.
 ## IGNORE_RDIFF_BEGIN
 (cl <- kmeans(x, 5, nstart = 25))
 ## IGNORE_RDIFF_END
