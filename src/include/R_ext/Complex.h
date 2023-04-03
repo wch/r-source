@@ -35,9 +35,9 @@ extern "C" {
 /* This definition does not work with optimizing compilers which take
 advantage of strict aliasing rules.  It is not safe to use with Fortran
 COMPLEX*16 (PR#18430) or in arguments to library calls expecting C99
-_Complex double.  This old definition should not be used, but if it were
-still necessary, one should at least disable LTO.  This may be removed at
-any time.  */
+_Complex double.  This definition should not be used, but if it were still
+necessary, one should at least disable LTO.
+*/
 
 typedef struct {
  	double r;
@@ -54,7 +54,12 @@ when interfacing with Fortran COMPLEX*16 or directly C99 _Complex double
 (PR#18430).
 
 This form of static initialization works with both definitions:
-Rcomplex z = { .r = 1, .i = 2 }; */
+Rcomplex z = { .r = 1, .i = 2 };
+
+Anonymous structures and C99 _Complex were not incorporated into C++
+standard.  While they are usually supported as compiler extensions, warnings
+are typically issued (-pedantic) by a C++ compiler.
+*/
 
 typedef union {
     struct {
