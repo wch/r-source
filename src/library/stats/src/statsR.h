@@ -169,7 +169,7 @@ SEXP tukeyline(SEXP x, SEXP y, SEXP iter, SEXP call);
 SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev);
 SEXP influence(SEXP mqr, SEXP e, SEXP stol);
 
-SEXP pSmirnov2x(SEXP statistic, SEXP snx, SEXP sny);
+SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz, SEXP stwo, SEXP slower);
 SEXP pKolmogorov2x(SEXP statistic, SEXP sn);
 SEXP pKS2(SEXP sn, SEXP stol);
 

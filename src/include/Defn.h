@@ -305,7 +305,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 /* The same bit can be used to mark calls used in complex assignments
    to allow replacement functions to determine when they are being
    called in an assignment context and can modify an object with one
-   refrence */
+   reference */
 #define MARK_ASSIGNMENT_CALL(call) SET_ASSIGNMENT_PENDING(call, TRUE)
 #define IS_ASSIGNMENT_CALL(call) ASSIGNMENT_PENDING(call)
 

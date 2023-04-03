@@ -108,7 +108,7 @@ typedef struct
 	   encoding, escaped by UTF8in and UTF8out (rgui_UTF8.h). The setting
 	   has no effect in Rgui (escaping happens iff the system codepage is 
 	   not UTF-8) neither in Rterm (never enabled). For UTF-8 to be the
-	   system codepage, the embeddeding application must set UTF-8 as the
+	   system codepage, the embedding application must set UTF-8 as the
 	   active code page (system encoding) via its fusion manifest. When
 	   using version 0 of the structure, this field must be initialized
 	   by the embedding application/front-end.

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-03-22 r84020) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-04-02 r84142) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2628,7 +2628,7 @@ Frequency = 1
 > require(utils)
 > example("glm", echo = FALSE)
 > ## End(Don't show)
-> anova(glm.D93)
+> anova(glm.D93, test = FALSE)
 Analysis of Deviance Table
 
 Model: poisson, link: log
@@ -5047,7 +5047,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5637260>
+<bytecode: 0x56b73a8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7671,7 +7671,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x506c1e8>
+<environment: 0x50d8f58>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8088,10 +8088,12 @@ Response: counts
 Terms added sequentially (first to last)
 
 
-          Df Deviance Resid. Df Resid. Dev
-NULL                          8    10.5814
-outcome    2   5.4523         6     5.1291
-treatment  2   0.0000         4     5.1291
+          Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                          8    10.5814           
+outcome    2   5.4523         6     5.1291  0.06547 .
+treatment  2   0.0000         4     5.1291  1.00000  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > ## Computing AIC [in many ways]:
 > (A0 <- AIC(glm.D93))
 [1] 56.76132
@@ -8897,6 +8899,8 @@ totss        60.99123 60.99123
 > 
 > ## random starts do help here with too many clusters
 > ## (and are often recommended anyway!):
+> ## The ordering of the clusters may be platform-dependent.
+> ## IGNORE_RDIFF_BEGIN
 > (cl <- kmeans(x, 5, nstart = 25))
 K-means clustering with 5 clusters of sizes 12, 24, 24, 15, 25
 
@@ -8914,13 +8918,14 @@ Clustering vector:
  [75] 3 1 4 4 4 4 3 4 1 3 1 3 4 3 3 3 3 1 3 4 3 3 1 3 4 3
 
 Within cluster sum of squares by cluster:
-[1] 1.0314888 1.2816507 1.5056575 0.7104553 2.5330710
+[1] 1.0314888 0.7104553 2.5330710 1.2816507 1.5056575
  (between_SS / total_SS =  88.4 %)
 
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
 [6] "betweenss"    "size"         "iter"         "ifault"      
+> ## IGNORE_RDIFF_END
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:5, pch = 8)
 > 
@@ -12523,14 +12528,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x32d0388>
-<environment: 0x32d8a18>
+<bytecode: 0x47a1140>
+<environment: 0x40b9c20>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x32d0238>
-<environment: 0x32d8a18>
+<bytecode: 0x47a0ff0>
+<environment: 0x40b9c20>
 
 > 
 > 
@@ -16801,10 +16806,12 @@ Response: counts
 Terms added sequentially (first to last)
 
 
-          Df Deviance Resid. Df Resid. Dev
-NULL                          8    10.5814
-outcome    2   5.4523         6     5.1291
-treatment  2   0.0000         4     5.1291
+          Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                          8    10.5814           
+outcome    2   5.4523         6     5.1291  0.06547 .
+treatment  2   0.0000         4     5.1291  1.00000  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > stat.anova(ag$table, test = "Cp",
 +            scale = sum(resid(glm.D93, "pearson")^2)/4,
 +            df.scale = 4, n = 9)
@@ -16865,8 +16872,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x3a23c68>
-<environment: 0x4045bf0>
+<bytecode: 0x3a7eda8>
+<environment: 0x28ee920>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19376,7 +19383,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.766 0.167 3.98 0 0 
+Time elapsed:  3.33 0.139 3.478 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -39,7 +39,7 @@
   The signature of the C routine that a callback must implement.
   expr - the expression for the top-level task that was evaluated.
   value - the result of the top-level task, i.e. evaluating expr.
-  succeeded - a logical value indicating whether the task completed propertly.
+  succeeded - a logical value indicating whether the task completed properly.
   visible - a logical value indicating whether the result was printed to the R ``console''/stdout.
   data - user-level data passed to the registration routine.
  */

@@ -145,9 +145,14 @@ function(package, dir, lib.loc = NULL)
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
 
-        ## Does the package have a NAMESPACE file?
-        if(file.exists(file.path(dir, "NAMESPACE"))) {
-            nsInfo <- parseNamespaceFile(pkgname, dirdir)
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           ## Code in NAMESPACE could e.g. check the version of one of
+           ## its Imports.
+           !inherits(tryCatch(nsInfo <-
+                                  parseNamespaceFile(pkgname,
+                                                     dirdir),
+                              error = identity),
+                     "error")) {
             ## Look only at exported objects (and not declared S3
             ## methods).
             OK <- intersect(code_objs, nsInfo$exports)
@@ -411,12 +416,19 @@ function(package, dir, lib.loc = NULL,
 
         ## Does the package have a NAMESPACE file?
         ## Also, do not attempt to find S3 methods.
-        if(file.exists(file.path(dir, "NAMESPACE"))) {
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           ## Code in NAMESPACE could e.g. check the version of one of
+           ## its Imports.
+           !inherits(tryCatch(nsInfo <-
+                                  parseNamespaceFile(package_name,
+                                                     dirdir),
+                              error = identity),
+                     "error")) {
             has_namespace <- TRUE
             objects_in_ns <- objects_in_code
             functions_in_S3Table <- character()
             ns_env <- code_env
-            nsInfo <- parseNamespaceFile(package_name, dirdir)
+
             ## Look only at exported objects.
             OK <- intersect(objects_in_code, nsInfo$exports)
             for(p in nsInfo$exportPatterns)
@@ -1670,10 +1682,13 @@ function(package, dir, lib.loc = NULL)
 
         objects_in_code <- sort(names(code_env))
 
-        ## Do the package sources have a NAMESPACE file?
-        if(file.exists(file.path(dir, "NAMESPACE"))) {
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           !inherits(tryCatch(nsInfo <-
+                                  parseNamespaceFile(package_name,
+                                                     dirname(dir)),
+                              error = identity),
+                     "error")) {
             has_namespace <- TRUE
-            nsInfo <- parseNamespaceFile(package_name, dirname(dir))
             ## Determine exported objects.
             OK <- intersect(objects_in_code, nsInfo$exports)
             for(p in nsInfo$exportPatterns)
@@ -1920,8 +1935,11 @@ function(package, dir, file, lib.loc = NULL,
             enc <- db["Encoding"]
         }
         if(pkg == "base") has_namespace <- TRUE
-        if(file.exists(file.path(dir, "NAMESPACE"))) {
-            nm <- parseNamespaceFile(basename(dir), dirname(dir))
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           !inherits(tryCatch(nm <- parseNamespaceFile(basename(dir),
+                                                       dirname(dir)),
+                              error = identity),
+                     "error")) {
             has_namespace <- length(nm$dynlibs) > 0L
         }
         code_dir <- file.path(dir, "R")
@@ -2379,14 +2397,12 @@ function(package, dir, lib.loc = NULL)
     ## years now, so it would seem that reporting these functions is no
     ## longer necessary.
     
-    ## NOTE:
-    ## As most QC functions, checkS3methods(dir = DIR) could be used for
-    ## checking S3 generic/method consistency using the unpacked package
-    ## sources in DIR.  However, we really need to load the package
-    ## namespace to find the generics the package provides methods for
-    ## (unless the generics are provided by the package itself), so we
-    ## should really start to deprecate the 'dir' argument (and remove
-    ## it eventually).  For now, checkS3methods(dir = DIR) does nothing.
+    ## Note that checkS3methods(dir = DIR) cannot easily know about
+    ## imported generics.  One could try to approximate the imports
+    ## based on already loaded or available namespaces imported from,
+    ## but that's a lot of effort for very little benefit, so for now we
+    ## simply only look for generics in the package and base namespaces
+    ## in case we work on the package sources only.
 
     S3_methods_info <- matrix(character(), 0L, 4L)
     exports <- character()
@@ -2824,8 +2840,12 @@ function(package, dir, lib.loc = NULL)
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
         ## Does the package have a NAMESPACE file?
-        if(file.exists(file.path(dir, "NAMESPACE"))) {
-            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+        if(file.exists(file.path(dir, "NAMESPACE")) &&
+           !inherits(tryCatch(nsInfo <-
+                                  parseNamespaceFile(basename(dir),
+                                                     dirname(dir)),
+                              error = identity),
+                     "error")) {
             ns_S3_methods_db <- .get_namespace_S3_methods_db(nsInfo)
         }
     }
@@ -5536,9 +5556,13 @@ function(dir)
                            Filter(length,
                                   Map(.check_unload_function,
                                       e, names(e)))))
-    if(length(LL)) {
+    if(length(LL) &&
+       !inherits(tryCatch(nsInfo <-
+                              parseNamespaceFile(basename(dir),
+                                                 dirname(dir)),
+                          error = identity),
+                 "error")) {
         code_objs <- ".Last.lib"
-        nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
         OK <- intersect(code_objs, nsInfo$exports)
         for(p in nsInfo$exportPatterns)
             OK <- c(OK, grep(p, code_objs, value = TRUE))
@@ -5867,8 +5891,12 @@ function(package, dir, lib.loc = NULL)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
         nsfile <- file.path(dir, "NAMESPACE")
-        if(file.exists(nsfile))
-           ns <- parseNamespaceFile(basename(dir), dirname(dir))
+        if(file.exists(nsfile) &&
+           inherits(tryCatch(ns <- parseNamespaceFile(basename(dir),
+                                                      dirname(dir)),
+                             error = identity),
+                    "error"))
+            ns <- NULL
         code_dir <- file.path(dir, "R")
         if(dir.exists(code_dir)) {
             file <- tempfile()

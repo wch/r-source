@@ -78,9 +78,9 @@ nonS3methods(package)
   (see \link{InternalMethods}), and S3 group generics (see
   \code{\link[=S3groupGeneric]{Math}}).  Possible dispatch under a
   different name is not taken into account.  The generics are sought
-  first in the given package, then in the package imports and the
-  namespace environment for the \pkg{base} package.  If not given an
-  installed package, no check is performed.
+  first in the given package, then (if given an installed package) in
+  the package imports, and finally the namespace environment for the
+  \pkg{base} package.
 
   \code{checkRdContents()} checks Rd content, e.g., whether arguments of
   functions in the usage section have non empty descriptions.

@@ -180,7 +180,7 @@ if(l10n_info()[['Latin-1']]) {
     stopifnot(Encoding(strsplit(xl, "", useBytes=TRUE)[[1]]) == "unknown",
               Encoding(strsplit(xl, "")[[1]]) == "latin1",
               Encoding(strsplit(xl, "\x98")[[1]]) == "latin1",
-              Encoding(strsplit(xl, x98)[[1]]) == "unknown")
+              Encoding(strsplit(xl, x98)[[1]]) == "bytes")
 }
 
 ## from strsplit.Rd

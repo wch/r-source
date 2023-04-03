@@ -1,6 +1,6 @@
 % File src/library/base/man/class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{class}
@@ -13,6 +13,8 @@
 \alias{unclass}
 \alias{inherits}
 \alias{isa}
+\alias{nameOfClass}
+\alias{nameOfClass.default}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method dispatch takes place
@@ -23,6 +25,7 @@ class(x)
 class(x) <- value
 unclass(x)
 inherits(x, what, which = FALSE)
+nameOfClass(x)
 isa(x, what)
 
 oldClass(x)
@@ -31,8 +34,9 @@ oldClass(x) <- value
 }
 \arguments{
   \item{x}{a \R object}
-  \item{what, value}{a character vector naming classes.  \code{value}
-    can also be \code{NULL}.}
+  \item{what, value}{a character vector naming classes. \code{value}
+    can also be \code{NULL}. \code{what} can also be a
+    non-character R object with a \code{nameOfClass()} method.}
   \item{which}{logical affecting return value: see \sQuote{Details}.}
 }
 
@@ -103,6 +107,11 @@ oldClass(x) <- value
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
+
+  \code{nameOfClass} is an S3 generic. It is called by \code{inherits} to 
+  get the class name for \code{what}, allowing for \code{what} to be 
+  values other than a character vector. \code{nameOfClass} methods are 
+  expected to return a character vector of length 1.
 
   \code{isa} tests whether \code{x} is an object of class(es) as given
   in \code{what} by using \code{\link[methods]{is}} if \code{x} is an S4

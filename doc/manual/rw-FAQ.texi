@@ -158,10 +158,12 @@ Windows Vista SP2 and Windows Server 2008 SP2.
 @c 8 went end of life 2016-01-12, but 8.1 is still supported
 @c Server 2008 R2 went end of life 2020-01-14
 
-We only test on versions of Windows currently supported by Microsoft,
-recently mainly Windows 10, Windows Server 2022 and Windows 11.  The most
-thorough testing is done via CRAN packages checks: for R 4.3 this has been
-on Windows Server 2022.
+We primarily test on versions of Windows currently supported by Microsoft,
+recently mainly Windows 10, Windows Server 2022 and sometimes on Windows 11. 
+The most thorough testing is done via CRAN packages checks: for R 4.3 this
+has been on Windows Server 2022.  R 4.3.0 has been tested to install, start
+and pass its own checks also on Windows 7 and Windows 8.1, but it has not
+been tested with contributed packages.
 
 For UTF-8 to be the native encoding, you need R at least 4.2 and at least
 Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
@@ -679,7 +681,7 @@ use multiple CPUs or multiple threads.
 
 R 4.3 code base still conservatively uses features of Windows 7 and
 later only when available, and otherwise falls back to older features, so it
-might still run on 7, but this is not tested (see Q2.2), and the code
+might still run on 7, but this is minimally tested (see Q2.2), and the code
 is tuned for newer systems.  Some performance work-arounds for old Windows
 systems past their end of support may be removed, such as a custom memory
 allocator removed in R 4.2.

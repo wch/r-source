@@ -83,7 +83,7 @@ extern void R_chk_free(void *);
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 
-/* Depreacated in R 2.15.0, non-API
+/* Deprecated in R 2.15.0, non-API
 #if !defined(NO_CALL_R) && defined(DECLARE_LEGACY_CALL_R)
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 #endif

@@ -21,4 +21,4 @@ detg.mod <- glm(terms(Fr ~ M.user*Temp*Soft + Brand*M.user*Temp,
 summary(detg.mod)
 summary(detg.mod, correlation = TRUE, symbolic.cor = TRUE)
 
-anova(detg.m0, detg.mod)
+anova(detg.m0, detg.mod, test=FALSE)

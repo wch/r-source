@@ -1,7 +1,7 @@
 #  File src/library/utils/R/write.table.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,9 +135,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(is.matrix(x) && !is.atomic(x)) mode(x) <- "character"
     if(is.data.frame(x)) {
         ## convert columns we can't handle in C code
-        x[] <- lapply(x, function(z) {
-            if(is.object(z) && !is.factor(z)) as.character(z) else z
-        })
+        needconv <- vapply(x, function(z) is.object(z) && !is.factor(z), TRUE)
+        x[needconv] <- lapply(x[needconv], as.character)
     }
 
     invisible(.External2(C_writetable, x, file, nrow(x), p, rnames, sep, eol,

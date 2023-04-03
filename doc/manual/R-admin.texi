@@ -1156,9 +1156,10 @@ be used as identifiers.  Those for C23 should support new types such as
 
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
-However, versions 15 and later of LLVM @command{clang} warn by default
-in all modes if @option{-Wall} or @option{-pedantic} is used, and may
-need @option{-Wno-strict-prototypes}.
+However, versions 15 and later of LLVM @command{clang} and 14.0.3 and
+later on Apple clang warn by default in all modes if @option{-Wall} or
+@option{-pedantic} is used, and may need
+@option{-Wno-strict-prototypes}.
 
 @node Link-Time Optimization,  , C standards, Other Options
 @subsection Link-Time Optimization
@@ -1415,9 +1416,9 @@ binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on 64-bit Windows.
 
 R is best tested on current versions of Windows 10 and Windows Server 2022
-with UTF-8 as the charset encoding. It runs on older versions of Windows,
-but normally with other charset encoding and may require manual installation
-of the Universal C Runtime (UCRT). 
+with UTF-8 as the charset encoding.  It works also on Windows 11.  It runs
+on older versions of Windows, but normally with other charset encoding and
+may require manual installation of the Universal C Runtime (UCRT).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).  If it does not also support
@@ -1465,11 +1466,11 @@ for Windows}. See
 @uref{https://CRAN.R-project.org/bin/windows/base/howto-R-devel.html, Building
 R and packages} for more details on how to use it.
 
-The toolset includes compilers (GCC version 10.3.0 with selected additional
+The toolset includes compilers (GCC version 12.2.0 with selected additional
 patches) and runtime libraries from @uref{http://mingw-w64.org/,the
 `MinGW-w64' project} and a number of pre-compiled static libraries and
 headers used by @R{} and @R{} packages, compiled by
-@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates by Tomas
+@uref{https://mxe.cc/,'MXE'} (M cross environment, with updates maintained by Tomas
 Kalibera).  The toolset also includes build tools from the
 @uref{https://www.msys2.org/, the 'MSYS2' project}.  Additional build tools
 packaged by 'MSYS2' may be installed via a package manager (@samp{pacman}).
@@ -5586,6 +5587,13 @@ often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
 to use Accelerate's BLAS.
+
+@c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
+@c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
+As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
+framework are now inline with reference version 3.9.1'.  The release
+notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
+headers.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
