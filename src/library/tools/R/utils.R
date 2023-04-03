@@ -1238,7 +1238,7 @@ function(env, nms = NULL)
 
 .get_S3_group_generics <-
 function()
-    c("Ops", "Math", "Summary", "Complex")
+    c("Ops", "Math", "Summary", "Complex", "matrixOps")
 
 ### ** .get_S3_primitive_generics
 
@@ -1269,7 +1269,9 @@ function(include_group_generics = TRUE)
           ## Group 'Summary':
           "all", "any", "sum", "prod", "max", "min", "range",
           ## Group 'Complex':
-          "Arg", "Conj", "Im", "Mod", "Re")
+          "Arg", "Conj", "Im", "Mod", "Re",
+          ## Group 'matrixOps'
+          "%*%")
     else
         base::.S3PrimitiveGenerics
 }
@@ -1736,6 +1738,8 @@ function(parent = parent.frame())
     assign("Math", function(x, ...) UseMethod("Math"),
            envir = env)
     assign("Ops", function(e1, e2) UseMethod("Ops"),
+           envir = env)
+    assign("matrixOps", function(e1, e2) UseMethod("matrixOps"),
            envir = env)
     assign("Summary", function(..., na.rm = FALSE) UseMethod("Summary"),
            envir = env)

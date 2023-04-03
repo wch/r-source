@@ -1,6 +1,6 @@
 % File src/library/base/man/matmult.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matmult}
@@ -26,9 +26,11 @@ x \%*\% y
   Promotion of a vector to a 1-row or 1-column matrix happens when one
   of the two choices allows \code{x} and \code{y} to get conformable
   dimensions.
-  
-  This operator is S4 generic but not S3 generic.  S4 methods need to be
-  written for a function of two arguments named \code{x} and \code{y}.
+
+  This operator is a generic function: methods can be written for it
+  individually or via the \code{\link[=S3groupGeneric]{matOps}} group
+  generic function; it dispatches to S3 and S4 methods.  Methods need to be
+  written for a function that takes two arguments named \code{x} and \code{y}.
 }
 \value{
   A double or complex matrix product.  Use \code{\link{drop}} to remove
