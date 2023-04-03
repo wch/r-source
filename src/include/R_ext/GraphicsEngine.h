@@ -272,7 +272,7 @@ struct _GEDevDesc {
     Rboolean displayListOn;  /* toggle for display list status */
     SEXP displayList;        /* display list */
     SEXP DLlastElt;          /* A pointer to the end of the display list
-				to avoid tranversing pairlists */
+				to avoid traversing pairlists */
     SEXP savedSnapshot;      /* The last element of the display list
 			      * just prior to when the display list
 			      * was last initialised

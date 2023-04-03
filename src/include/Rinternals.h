@@ -166,7 +166,7 @@ typedef enum {
     RAWSXP	= 24,	/* raw bytes */
     S4SXP	= 25,	/* S4 non-vector */
 
-    NEWSXP      = 30,   /* fresh node creaed in new page */
+    NEWSXP      = 30,   /* fresh node created in new page */
     FREESXP     = 31,   /* node released by GC */
 
     FUNSXP	= 99	/* Closure or Builtin */

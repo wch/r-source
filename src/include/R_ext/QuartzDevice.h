@@ -202,7 +202,7 @@ typedef struct QuartzFunctons_s {
     void*  (*GetParameter)(QuartzDesc_t desc, const char *key);
 } QuartzFunctions_t;
 
-#define QuartzParam_EmbeddingFlags "embeddeding flags" /* value: int[1] */
+#define QuartzParam_EmbeddingFlags "embedding flags" /* value: int[1] */
 #define QP_Flags_CFLoop 0x0001  /* drives application event loop */
 #define QP_Flags_Cocoa  0x0002  /* Cocoa is fully initialized */
 #define QP_Flags_Front  0x0004  /* is front application */
