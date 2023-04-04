@@ -26,7 +26,6 @@ class(x) <- value
 unclass(x)
 inherits(x, what, which = FALSE)
 nameOfClass(x)
-\method{nameOfClass}{default}(x)
 isa(x, what)
 
 oldClass(x)

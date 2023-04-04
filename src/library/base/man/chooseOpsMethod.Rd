@@ -5,10 +5,7 @@
 
 \name{chooseOpsMethod}
 \title{Choose the Appropriate Method for Ops}
-\usage{
-chooseOpsMethod(x, y, mx, my, cl, reverse)
-\method{chooseOpsMethod}{default}(x, y, mx, my, cl, reverse)
-}
+\usage{chooseOpsMethod(x, y, mx, my, cl, reverse)}
 \alias{chooseOpsMethod}
 \alias{chooseOpsMethod.default}
 
