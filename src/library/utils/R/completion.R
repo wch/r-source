@@ -120,9 +120,10 @@ findFuzzyMatches <- function(pattern, values) {
 }
 
 
-findMatches <- function(pattern, values)
+findMatches <- function(pattern, values, fuzzy)
 {
-    if (.CompletionEnv$settings[["fuzzy"]])
+    if (missing(fuzzy)) fuzzy <- .CompletionEnv$settings[["fuzzy"]]
+    if (fuzzy)
         findFuzzyMatches(pattern, values)
     else
         findExactMatches(pattern, values)
@@ -158,6 +159,18 @@ fuzzyApropos <- function(what)
         ls(x, all.names = TRUE, pattern = pattern) # more efficient
     else
         findMatches(pattern, ls(x, all.names = TRUE))
+}
+
+## generic and default method to generate completion after @
+
+.AtNames <- function(x, pattern)
+    UseMethod(".AtNames")
+
+.AtNames.default <- function(x, pattern = "") {
+    if (isS4(x))
+        findMatches(pattern, methods::slotNames(x))
+    else
+        character()
 }
 
 ## if (is.environment(object))
@@ -360,7 +373,6 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                        suffix
                    else
                    {
-                       ## ## suffix must match names(object) (or ls(object) for environments)
                        .DollarNames(object, pattern = sprintf("^%s", makeRegexpSafe(suffix)))
                    }
                } else suffix
@@ -373,8 +385,7 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                        suffix
                    else
                    {
-                       findMatches(sprintf("^%s", makeRegexpSafe(suffix)),
-                                   methods::slotNames(object))
+                       .AtNames(object, pattern = sprintf("^%s", makeRegexpSafe(suffix)))
                    }
                } else suffix
            },

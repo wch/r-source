@@ -1,7 +1,7 @@
 # Refer to all C routines by their name prefixed by C_
 useDynLib(utils, .registration = TRUE, .fixes = "C_")
 
-export("?", .DollarNames, .S3methods, .romans, Rprof, Rprofmem,
+export("?", .AtNames, .DollarNames, .S3methods, .romans, Rprof, Rprofmem,
        RShowDoc, RSiteSearch, URLdecode, URLencode, View, adist,
        alarm, apropos, aregexec, argsAnywhere, asDateBuilt, askYesNo,
        assignInMyNamespace, assignInNamespace, as.roman, as.person,
@@ -17,7 +17,7 @@ export("?", .DollarNames, .S3methods, .romans, Rprof, Rprofmem,
        data.entry, dataentry, de, de.ncols, de.restore, de.setup,
        debugger, debugcall, demo, download.file, download.packages,
        dump.frames, edit, emacs, example, file_test, file.edit,
-       fileSnapshot, find, findCRANmirror, fix, fixInNamespace, findLineNum,
+       fileSnapshot, find, findCRANmirror, findMatches, fix, fixInNamespace, findLineNum,
        flush.console, formatOL, formatUL, getAnywhere, getCRANmirrors,
        getFromNamespace, getParseData, getParseText, getS3method,
        getSrcDirectory, getSrcFilename, getSrcLocation, getSrcref,
@@ -165,6 +165,7 @@ S3method("unique", "bibentry")
 S3method(.DollarNames, default)
 S3method(.DollarNames, list)
 S3method(.DollarNames, environment)
+S3method(.AtNames, default)
 
 export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        Sweave, SweaveSyntConv, SweaveSyntaxLatex, SweaveSyntaxNoweb,
