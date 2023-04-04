@@ -551,6 +551,14 @@
 
       \item ALTREP now supports \code{VECSXP} vectors. Contributed by
       Gabor Csardi in \PR{17620}.
+
+      \item \code{Rcomplex} definition has been extended to prevent
+      mis-compilation when interfacing with Fortran (\PR{18430}).  The new
+      definition causes compiler warnings with static initializers such as
+      \code{\{1, 2\}}, which can be changed to \code{\{.r=1,
+      .i=2\}}. The new definition depends on C++ compiler extensions
+      supporting C features that haven't been incorporated into the C++
+      standards, which may result in C++ compiler warnings.
     }
   }
 
