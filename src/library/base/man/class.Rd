@@ -14,6 +14,7 @@
 \alias{inherits}
 \alias{isa}
 \alias{nameOfClass}
+\alias{nameOfClass.default}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method dispatch takes place
@@ -25,6 +26,7 @@ class(x) <- value
 unclass(x)
 inherits(x, what, which = FALSE)
 nameOfClass(x)
+\method{nameOfClass}{default}(x)
 isa(x, what)
 
 oldClass(x)

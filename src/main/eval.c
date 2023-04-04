@@ -3991,6 +3991,43 @@ static SEXP classForGroupDispatch(SEXP obj) {
 	    : getAttrib(obj, R_ClassSymbol);
 }
 
+static Rboolean R_chooseOpsMethod(SEXP x, SEXP y, SEXP mx, SEXP my,
+				  SEXP call, Rboolean rev, SEXP rho) {
+    static SEXP expr = NULL;
+    static SEXP xSym = NULL;
+    static SEXP ySym = NULL;
+    static SEXP mxSym = NULL;
+    static SEXP mySym = NULL;
+    static SEXP clSym = NULL;
+    static SEXP revSym = NULL;
+    if (expr == NULL) {
+	xSym = install("x");
+	ySym = install("y");
+	mxSym = install("mx");
+	mySym = install("my");
+	clSym = install("cl");
+	revSym = install("rev");
+	expr = R_ParseString("base::chooseOpsMethod(x, y, mx, my, cl, rev)");
+	R_PreserveObject(expr);
+    }
+    
+    SEXP newrho = PROTECT(R_NewEnv(rho, FALSE, 0));
+    defineVar(xSym, x, newrho); INCREMENT_NAMED(x);
+    defineVar(ySym, y, newrho); INCREMENT_NAMED(y);
+    defineVar(mxSym, mx, newrho); INCREMENT_NAMED(mx);
+    defineVar(mySym, my, newrho); INCREMENT_NAMED(my);
+    defineVar(clSym, call, newrho); INCREMENT_NAMED(cl);
+    defineVar(revSym, ScalarLogical(rev), newrho);
+
+    SEXP ans = eval(expr, newrho);
+#ifdef ADJUST_ENVIR_REFCNTS
+    R_CleanupEnvir(newrho, R_NilValue);
+#endif
+    UNPROTECT(1); /* newrho */
+
+    return ans == R_NilValue ? FALSE : asLogical(ans);
+}
+
 attribute_hidden
 int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
@@ -4086,10 +4123,20 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	         srcref ignored (as per default)
 	    */
 	    else if (!R_compute_identical(lsxp, rsxp, 16 + 1 + 2 + 4)) {
-		warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
-			lname, rname, generic);
-		UNPROTECT(4);
-		return 0;
+		SEXP x = CAR(args), y = CADR(args);
+		if (R_chooseOpsMethod(x, y, lsxp, rsxp, call, FALSE, rho)) {
+		    rsxp = R_NilValue;
+		}
+		else if (R_chooseOpsMethod(y, x, rsxp, lsxp, call, TRUE, rho)) {
+		    lsxp = R_NilValue;
+		}
+		else {
+		    warning(_("Incompatible methods "
+			      "(\"%s\", \"%s\") for \"%s\""),
+			    lname, rname, generic);
+		    UNPROTECT(4);
+		    return 0;
+		}
 	    }
 	}
 	/* if the right hand side is the one */
