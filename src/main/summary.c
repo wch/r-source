@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -534,7 +534,7 @@ static R_INLINE SEXP complex_mean(SEXP x)
 	}
 	s += t/n; si += ti/n;
     }
-    Rcomplex val = { (double)s, (double)si };
+    Rcomplex val = { .r = (double)s, .i = (double)si };
     return ScalarComplex(val);
 }
 
@@ -618,7 +618,7 @@ attribute_hidden SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	   or *value ([ir]min / max) is assigned;  */
     SEXP a;
     double tmp = 0.0, s;
-    Rcomplex ztmp, zcum={0.0, 0.0} /* -Wall */;
+    Rcomplex ztmp, zcum={.r = 0.0, .i = 0.0} /* -Wall */;
     int itmp = 0, icum = 0, warn = 0 /* dummy */;
     Rboolean use_isum = TRUE; // indicating if isum() should used; otherwise irsum()
     isum_INT iLtmp = (isum_INT)0, iLcum = iLtmp; // for isum() only

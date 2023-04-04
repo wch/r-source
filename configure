@@ -27976,9 +27976,12 @@ cat > conftest.c <<EOF
 # define F77_SYMBOL(x)   x
 #endif
 
-typedef struct {
-        double r;
-        double i;
+typedef union {
+    struct {
+	double r;
+	double i;
+    };
+    double _Complex private_data_c;
 } Rcomplex;
 
 extern void F77_SYMBOL(cftest)(Rcomplex *x);
