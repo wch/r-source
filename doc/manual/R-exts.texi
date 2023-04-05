@@ -14801,7 +14801,7 @@ that the bound definition is correct is to compile the package with LTO
 @command{gcc} and @command{gfortran}).
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
+@uref{https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-0/bind-c.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of

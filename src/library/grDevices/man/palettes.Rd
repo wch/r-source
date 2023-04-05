@@ -148,7 +148,7 @@ suitable palette from \code{hcl.colors} instead of
   \dQuote{Colour for presentation graphics.}
   Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003),
   March 20-22, 2003, Technische Universität Wien, Vienna, Austria.
-  \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/}.
+  \url{https://www.R-project.org/conferences/DSC-2003/}.
 
   Zeileis, A., Hornik, K. and Murrell, P. (2009).
   Escaping RGBland: Selecting colors for statistical graphics.

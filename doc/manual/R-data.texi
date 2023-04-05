@@ -1509,7 +1509,7 @@ running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is part of the OS.  On Unix/Linux you will need
 an @acronym{ODBC} Driver Manager such as unixODBC
-(@uref{http://www.unixODBC.org}) or iOBDC (@uref{https://www.iodbc.org/}:
+(@uref{https://www.unixodbc.org/}) or iOBDC (@uref{https://www.iodbc.org/}:
 this is pre-installed in macOS) and an installed driver for your
 database system.
 
