@@ -12,6 +12,7 @@ CPPFLAGS = -I../../include
 
 CSOURCES =  win_iconv.c
 OBJS = $(CSOURCES:.c=.o)
+DLLFLAGS = -s
 
 Riconv.dll: $(OBJS)
 
