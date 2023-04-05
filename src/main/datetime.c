@@ -1343,6 +1343,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     SEXP nm = getAttrib(VECTOR_ELT(x, 5), R_NamesSymbol);
+    PROTECT(nm);
     // nm has length nlen[5] ; ans has length N
     // so first pad nm to length n, then recycle to length N.
     if (nm != R_NilValue) {
@@ -1355,7 +1356,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(settz) reset_tz(oldtz);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 
@@ -1563,11 +1564,12 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	INTEGER(VECTOR_ELT(ans, 10))[i] = 0;
     }
     SEXP tzone = mkString(tz);
+    PROTECT(tzone);
     Rboolean settz = FALSE;
     char oldtz[1] = ""; // unused
     END_MAKElt
 
-    UNPROTECT(4);
+    UNPROTECT(5);
     return ans;
 }
 

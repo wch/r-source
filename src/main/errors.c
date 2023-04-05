@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2022  The R Core Team.
+ *  Copyright (C) 1995--2023  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2721,7 +2721,7 @@ SEXP R_vmakeErrorCondition(SEXP call,
     if (call == R_CurrentExpression)
 	/* behave like error() */
 	call = getCurrentCall();
-
+    PROTECT(call);
     int nelem = nextra + 2;
     SEXP cond = PROTECT(allocVector(VECSXP, nelem));
 
@@ -2748,7 +2748,7 @@ SEXP R_vmakeErrorCondition(SEXP call,
 	SET_STRING_ELT(klass, 3, mkChar("condition"));
     }
 
-    UNPROTECT(1); /* cond */
+    UNPROTECT(2); /* cond, call */
 
     return cond;
 }
