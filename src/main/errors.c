@@ -401,7 +401,9 @@ void warning(const char *format, ...)
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     RprintTrunc(buf, pval >= psize);
-    warningcall(getCurrentCall(), "%s", buf);
+    SEXP call = PROTECT(getCurrentCall());
+    warningcall(call, "%s", buf);
+    UNPROTECT(1);
 }
 
 /* declarations for internal condition handling */

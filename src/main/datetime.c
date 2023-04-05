@@ -1043,8 +1043,8 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     END_MAKElt
-    UNPROTECT(6);
     if(settz) reset_tz(oldtz);
+    UNPROTECT(6);
     return ans;
 } // asPOSIXlt
 
@@ -1500,8 +1500,8 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm3);
 	}
     }
-    UNPROTECT(5);
     if(settz) reset_tz(oldtz);
+    UNPROTECT(5);
     return ans;
 } // strptime()
 
