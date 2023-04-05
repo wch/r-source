@@ -238,9 +238,9 @@ if test "${JAVA_LIBS}" = '~autodetect~'; then
 	IFS=${save_IFS}
 	# replace occurrences of JAVA_HOME with $(JAVA_HOME)
 	# If JAVA_HOME was a link, it will be the canonical path we
-	# want to replace.  We need realpath to determine what that is.
-	if test "@REALPATH@" != "false"; then
-             java_home=`@REALPATH@ "${JAVA_HOME}"`
+	# want to replace.  We need working realpath to determine what that is.
+	if @REALPATH@ "${JAVA_HOME}" >/dev/null 2>&1; then
+            java_home=`@REALPATH@ "${JAVA_HOME}"`
 	else
        	    java_home="${JAVA_HOME}"
 	fi
