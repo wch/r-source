@@ -1607,11 +1607,11 @@ Remember that @LaTeX{} needs to be on the path.
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}.pkg} and @file{R-@value{VERSIONno}-arm64.pkg}.
-The first runs on macOS 10.13 and later on @cputype{x86_64} (Intel) CPU
-(High Sierra, Mojave, Catalina, Big Sur, Monterey, Ventura, @dots{}).  Package
-@file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for `Apple
-Silicon' (aka `M1') Macs and runs on macOS 11 or later (Big Sur,
-Monterey, Ventura, @dots{}).
+The first runs on macOS 11 and later on @cputype{x86_64} (Intel) CPU
+(Big Sur, Monterey, Ventura, @dots{}).  Package
+@file{R-@value{VERSIONno}-arm64.pkg} is for `Apple Silicon' (aka `M1' or
+`M2') Macs and runs on macOS 11 or later (Big Sur, Monterey, Ventura,
+@dots{}).
 
 @file{R-@value{VERSIONno}.pkg} also be installed on `Apple Silicon' CPUs
 using `Rosetta' emulation@footnote{You may be asked to install Rosetta
@@ -1624,7 +1624,7 @@ lacks extended-precision floating-point operations.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
-(`Updates' from the `App Store' on Mojave and earlier) to be sure.
+to be sure.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -2256,7 +2256,7 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
 @samp{CXX17} and @samp{CXX20} variants
 
-So for example on Mojave or later you could select a specific LLVM
+So for example you could select a specific LLVM
 @command{clang} for both C and C++ with extensive checking by having in
 @file{~/.R/Makevars}
 @example
@@ -5148,9 +5148,10 @@ SAFE_FFLAGS=-axsse2
 @cindex macOS
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-macOS 10.13--10.15 (High Sierra, Mojave and Catalina), 11 (Big Sur), 12
-(Monterey) and 13 (Ventura), or `Apple Silicon' (@cputype{arm64}) builds
-on macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura).
+macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura), or `Apple Silicon'
+(@cputype{arm64}) builds on macOS 11 (Big Sur), 12 (Monterey) and 13
+(Ventura).  (They may well work on macOS 10.14 or 10.15, but are
+untested there.)
 
 @menu
 * Prerequisites::
@@ -5406,23 +5407,11 @@ the Olson database contains the correct information.
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compilers
 
-An installer for Intel @command{gfortran} which runs on High Sierra or
-later is available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg}. This
-installs into @file{/usr/local/gfortran}.
-
-A more recent Fortran compiler for (Intel) Catalina and later is
-available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg}.
-(That does not run on High Sierra.)  This supports the option
-@option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
-manual.
-
-For Intel Big Sur and later there is
+For Intel Big Sur and later there is an installer for a Fortran compiler at
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
 and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-Intel-12.1-Monterey.dmg}.
-
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-Intel-12.1-Monterey.dmg}. These
+install into @file{/usr/local/gfortran}.
 
 For @cputype{arm64}, we use the fork of @command{gfortran} from
 @url{https://github.com/iains/gcc-darwin-arm64} of which there are
@@ -5442,6 +5431,10 @@ appropriate path can be found by running @command{xcrun
 @end example
 @noindent
 to do this.)
+
+Finally, there is `universal' build of @command{gfortran} 12.2 at
+@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0}.
+
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
@@ -5635,19 +5628,15 @@ inconsolata texinfo} .} @pkg{helvetic}, @pkg{inconsolata} and
 @pkg{texinfo} which brought this to about 310MB.@footnote{Adding all the
 packages needed to check @acronym{CRAN} increased this to about 600MB.}
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  MacTeX 2021/2
-require Mojave or later: for earlier macOS versions see the
-instructions@footnote{which amount to installing MacTeX 2020 (whose
-LaTeX packages are frozen) or TeXLive 2022 (which has been tried and has
-current updates).} on the MacTeX front page.  They contains executables
-which run natively on both @cputype{x86_64} and @cputype{arm64}.
+provides a graphical means to manage @TeX{} packages.  These contains
+executables which run natively on both @cputype{x86_64} and
+@cputype{arm64}.
 
 Checking packages thoroughly requires ghostscript (part of the full
 MacTeX distribution or separately from
-@uref{https://www.tug.org/mactex/morepackages.html}, including for High
-Sierra) and @command{qpdf} (from @uref{https://mac.r-project.org/bin//},
-a version of which is in the @file{bin} directory of a binary
-installation of @R{}, usually
+@uref{https://www.tug.org/mactex/morepackages.html}) and @command{qpdf}
+(from @uref{https://mac.r-project.org/bin//}, a version of which is in
+the @file{bin} directory of a binary installation of @R{}, usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
 @command{R CMD check --as-cran} makes use of `HTML Tidy'.  macOS has
