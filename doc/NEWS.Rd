@@ -239,10 +239,11 @@
       free.  Test statistics can be suppressed by giving argument
       \code{test} a false logical value.
 
-      \item The performance of \code{write.table()} has been improved
-      for data frames with a large number of unclassed columns.
-      (Thanks to Gabriel Becker's \PR{18500}, prompted by a report from
-      Toby Dylan Hocking on the R-devel mailing list.)
+      \item The performance of \code{df[j] <- value} (including for
+      missing \code{j}) and \code{write.table(df)} has been improved for
+      data frames \code{df} with a large number of columns.  (Thanks to
+      Gabriel Becker's \PR{18500}, \PR{18503} and discussants, prompted
+      by a report from Toby Dylan Hocking on the R-devel mailing list.)
 
       \item The matrix multiply operator \code{\%*\%} is now an S3 generic,
       belonging to new group generic \code{matrixOps}.  From Tomasz
