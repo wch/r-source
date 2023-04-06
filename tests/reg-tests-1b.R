@@ -1213,6 +1213,13 @@ stopifnot(nchar(char.dec) == nchar(char))
 ## short in R <= 2.11.0
 
 
+## right-to-left assignment/removal of columns (PR#14263)
+X <- data.frame(A1 = 1, A2 = 2, A3 = 3, A4 = 4)
+X[3:2] <- list(NULL)
+stopifnot(identical(names(X), c("A1", "A4")))
+## R <= 2.11.0 removed columns 2 and 4
+
+
 ## rbeta() with mass very close to 1 -- bug PR#14291
 set.seed(1)
 if(any(ii <- is.na(rbeta(5000, 100, 0.001))))
