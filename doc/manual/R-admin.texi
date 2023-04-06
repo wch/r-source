@@ -1634,6 +1634,10 @@ component is needed to use package @pkg{tcltk}. The `Texinfo' component
 is only needed by those installing source packages or @R{} from its
 sources.)
 
+Note for Ventura users: installation from the @file{Downloads} folder
+may not be allowed or may require additional authorization, so we
+suggest you download somewhere else such as your desktop or home folder.
+
 These are Apple Installer packages.  If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
@@ -1646,10 +1650,9 @@ Various parts of the build require XQuartz to be installed: see
 @uref{https://www.xquartz.org/releases/}.@footnote{At the time of
 writing the Intel distribution was built/tested against 2.7.11 for
 compatibility with @R{} 4.0.0: the @cputype{arm64} one against 2.8.1.}
-These include the @pkg{tcltk} package and the @code{X11} graphics device:
-attempting to use these without XQuartz will if possible remind
-you.@footnote{If @command{otool} is installed: it is part of the macOS
-Command Line Tools.}  This is also needed for some
+These include the @pkg{tcltk} package and the @code{X11} graphics
+device: attempting to use these without XQuartz will remind you.  This
+is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")} and @code{svg()} and some
@@ -1760,7 +1763,7 @@ upright ones.
 
 @R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
 framework. Un-installation is as simple as removing those folders
-(e.g.@: by dragging them onto the Trash aka Bin). The typical installation will
+(e.g.@: by dragging them onto the Bin aka Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
 links to @file{R} and @file{Rscript} in @file{/usr/local/bin} should
@@ -2214,7 +2217,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages which include compiled code are tied to a
-particular series (e.g.@: @R{} 4.1.x or 4.2.x) of @R{}.
+particular series (e.g.@: @R{} 4.2.x or 4.3.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -2233,28 +2236,27 @@ distributed with @R{} but no longer is; @code{Tktable} has been
 distributed with most versions of @R{} (but not 4.0.0 and not
 @cputype{arm64} builds of 4.1.0 or 4.1.1).
 
-A few of the binary packages need other software to be installed on your
-system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
-@CRANpkg{cairoDevice} and those that depend on them) need the GTK
-framework installed from @uref{https://mac.R-project.org/libs/}: the
-appropriate version at the time of writing was
-@uref{https://mac.R-project.org/libs/GTK_2.24.17-X11.pkg}.
+@c A few of the binary packages need other software to be installed on your
+@c system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
+@c @CRANpkg{cairoDevice} and those that depend on them) need the GTK
+@c framework installed from @uref{https://mac.R-project.org/libs/}: the
+@c appropriate version at the time of writing was
+@c @uref{https://mac.R-project.org/libs/GTK_2.24.17-X11.pkg}.
 
-The same instructions apply when installing binary packages into the
-@acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
-`Apple Silicon' aka `M1') Mac.
+@c The same instructions apply when installing binary packages into the
+@c @acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
+@c `Apple Silicon' aka `M1') Mac.
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
 the time of writing those settings assumed that the C, Fortran and C++
-compilers were on the path, using @command{gfortran} 8.2.0 (see
-@ref{macOS}).  The settings can be changed, either by editing that file
-or in a file such as @file{~/.R/Makevars} (see the next section).
-Entries which may need to be changed include @samp{CC}, @samp{CXX},
-@samp{FC}, @samp{FLIBS} and the corresponding flags, and perhaps
-@samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD} and
-@samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
-@samp{CXX17} and @samp{CXX20} variants
+compilers were on the path (see @ref{macOS}).  The settings can be
+changed, either by editing that file or in a file such as
+@file{~/.R/Makevars} (see the next section).  Entries which may need to
+be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{FLIBS} and
+the corresponding flags, and perhaps @samp{CXXCPP}, @samp{DYLIB_LD},
+@samp{MAIN_LD}, @samp{SHLIB_CXXLD} and @samp{SHLIB_LD}, as well as their
+@samp{CXX11}, @samp{CXX14}, @samp{CXX17} and @samp{CXX20} variants.
 
 So for example you could select a specific LLVM
 @command{clang} for both C and C++ with extensive checking by having in
@@ -2276,10 +2278,11 @@ CXX17FLAGS = $CXXFLAGS
 CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
-(long lines split for the manual only) and @command{gfortran} by
+(long lines split for the manual only) and a particular Intel
+@command{gfortran} by
 @example
 FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/12.2.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 @noindent
@@ -2315,13 +2318,12 @@ without the corresponding headers (not even in Xcode nor the Command
 Line Tools): they are often rather old versions.  If installing packages
 from source using them it is usually easiest to install a
 statically-linked up-to-date copy of the Open Source package from its
-sources or from @uref{https://mac.r-project.org/bin/darwin17/x86_64/}.
+sources or from @uref{https://mac.r-project.org/bin/}.
 But sometimes it is desirable/necessary to use Apple's dynamically
 linked library, in which case appropriate headers could be extracted
 from the sources@footnote{Note that capitalization and versioning may
 differ from the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
-@code{OpenSSL}@footnote{no longer a system library in macOS 11.} and
 @code{iodbc}.
 
 Those using Command Line Tools / Xcode 12 or later (as released for
@@ -2333,10 +2335,9 @@ macOS 11 `Big Sur') probably want to arrange that the flag
 
 @noindent
 is part of @code{CFLAGS}.  Apple has changed the default to make
-implicit declarations a compilation error (something seen in no other
-compiler) and understandably authors of packages and external software
-have been unaware that this might be done --- most issues seen were in
-@command{configure} scripts.
+implicit declarations a compilation error and authors of packages and
+external software have been unaware that this might be done --- most
+issues seen were in @command{configure} scripts.
 
 Some care may be needed with selecting compilers when installing external
 software for use with packages.  The `system' compilers as used when
@@ -2360,7 +2361,9 @@ contains (real) @command{gcc} and @command{g++} which may be found
 rather the Apple-provided commands, and may not be able to find the
 headers and libraries@footnote{From Big Sur those libraries are not
 publicly visible: rather the system compilers link to `text-based
-definition' (@file{.tbd}) files.} of the SDK.
+definition' (@file{.tbd}) files.} of the SDK.  As from @R{} 4.3.0,
+@command{R CMD INSTALL} and @code{install.packages()} try to invoke
+@command{configure} with the same compilers and flags used to build @R{}.
 
 For @cputype{arm64}, not all configure scripts have been updated to
 recognize the platform and so might need the flag
@@ -2540,9 +2543,10 @@ export R_LD_LIBRARY_PATH="`R RHOME`/lib:/opt/local/lib"
 The precise rules for where Windows looks for DLLs are complex and
 depend on the version of Windows.  But for present purposes the main
 solution is to put the directories containing the DLLs the package
-links to (and any those DLLs link to) on the @env{PATH}.  64-bit
-versions of Windows will ignore 32-bit DLLs from 64-bit @R{} and
-@emph{vice versa}.
+links to (and any those DLLs link to) on the @env{PATH}.
+
+@c 64-bit versions of Windows will ignore 32-bit DLLs from 64-bit @R{} and
+@c @emph{vice versa}.
 
 The danger with any of the methods which involve setting environment
 variables is of inadvertently masking a system library.  This is less
@@ -2936,11 +2940,12 @@ prepare and install translation catalogues.
 @chapter Choosing between 32- and 64-bit builds
 
 Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
-instructions.  Most OSes running on such @acronym{CPU}s offer the choice
+instructions.  Some OSes running on such @acronym{CPU}s offer the choice
 of building a 32-bit or a 64-bit version of @R{} (and details are given
-below under specific OSes).  For most a 32-bit version is the default,
-but for some (e.g., @cputype{x86_64} Linux and macOS @geq{} 10.6)
-64-bit is.
+below under specific OSes).  For most a 64-bit version is the default
+and increasingly only that is supported---for example macOS has been
+64-bit-only since Catalina (released in 2019) and @R{} supports only
+64-bit Windows since @R{} 4.2.0.
 
 All current versions of @R{} use 32-bit integers (this is enforced in
 the build) and @acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also
@@ -2977,8 +2982,7 @@ vector).
 Most 32-bit OSes by default limit file sizes to 2GB (and this may also
 apply to 32-bit builds on 64-bit OSes).  This can often be worked
 around: @command{configure} selects suitable defines if this is
-possible.  (We have also largely worked around that limit on 32-bit
-Windows.)  64-bit builds have much larger limits.
+possible.  64-bit builds have much larger limits.
 
 @item
 Because the pointers are larger, @R{}'s basic structures are larger.
@@ -2999,8 +3003,7 @@ version of @R{} has been around 10% faster on both Linux and macOS.
 So, for speed you may want to use a 32-bit build (especially on a
 laptop), but to handle large datasets (and perhaps large files) a 64-bit
 build.  You can often build both and install them in the same place:
-@xref{Sub-architectures}.  (This is done for the Windows binary
-distributions.)
+@xref{Sub-architectures}.
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}), some of which stem from the
@@ -5147,11 +5150,10 @@ SAFE_FFLAGS=-axsse2
 @section macOS
 @cindex macOS
 
-The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-macOS 11 (Big Sur), 12 (Monterey) and 13 (Ventura), or `Apple Silicon'
-(@cputype{arm64}) builds on macOS 11 (Big Sur), 12 (Monterey) and 13
-(Ventura).  (They may well work on macOS 10.14 or 10.15, but are
-untested there.)
+The instructions here are for Intel 64-bit (@cputype{x86_64}) or `Apple
+Silicon' (@cputype{arm64}) builds on macOS 11 (Big Sur), 12 (Monterey)
+and 13 (Ventura).  (They may well work on Intel macOS 10.14 or 10.15,
+but are untested there.)
 
 @menu
 * Prerequisites::
@@ -5334,16 +5336,15 @@ requirements such as component @command{pkgconfig} (and to set
 @env{PKG_CONFIG_PATH=} as above).
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
-A subversion client, @command{svn} version 1.10, used to be part of
-macOS@footnote{but as a stub invoking an executable provided by the
-Command Line Tools and the latter is not in versions 11.5 and later of
-the Command Line Tools.}.  A more recent client can be obtained from
+A subversion client can be obtained from
 @uref{https://mac.r-project.org/tools/}, for example by
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
 tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn $LOCAL/bin
 @end example
+@noindent
+(There also an @code{arm64} version on that web page.)
 
 If building software or installing source packages with @command{cmake}
 (or a non-Apple @command{make}) for `Apple Silicon' ensure it contains
@@ -5358,13 +5359,7 @@ generate @cputype{x86_64} code @dots{}.
 
 Updating an @cputype{arm64} build will often fail because of the bug
 described at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab
-initio} builds work.  This has been far rarer from macOS 13.
-
-
-@c As from Command Line Tools version 12,
-@c @option{-Wno-implicit-function-declaration} needs to be included in
-@c @code{CFLAGS} to configure @R{} 4.0.2 and earlier as well as some
-@c external software.
+initio} builds work.  This has been far rarer since macOS 13.
 
 @menu
 * Notes for Catalina and later::
@@ -5396,7 +5391,7 @@ above) or @command{xattr -c} to remove extended attributes.
 @command{configure} defaults to @option{--with-internal-tzcode} on
 macOS.  The native implementation was unusable on earlier versions of
 even 64-bit macOS (with a 32-bit @code{time_t} and/or timezone tables
-missing information beyond the 32-bit range).  For, e.g.@:, macOS 12.6
+missing information beyond the 32-bit range).  For, e.g.@:, macOS 12.6,
 option @option{--without-internal-tzcode} can be used to override this
 and @R{} contains sufficient workarounds (for example, the native code
 fails to recognize dates with a negative @code{tm_year}, that is dates
@@ -5472,25 +5467,25 @@ Note that the list of components is liable to change: running
 @command{pkg-config cairo --exists --print-errors} should tell you if
 any others are required.
 
-If you have XQuartz 2.7.x installed (not 2.8.x) and ensure XQuartz's
-@code{pkg-config} files are found first on its configuration path, Cairo
-will be linked dynamically.  This can be done by setting something like
-@example
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-@noindent
-or by appending that variable to the @command{configure} command.  (Note
-that this uses rather old versions of the graphics software.)
+@c If you have XQuartz 2.7.x installed (not 2.8.x) and ensure XQuartz's
+@c @code{pkg-config} files are found first on its configuration path, Cairo
+@c will be linked dynamically.  This can be done by setting something like
+@c @example
+@c export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
+@c @end example
+@c @noindent
+@c or by appending that variable to the @command{configure} command.  (Note
+@c that this uses rather old versions of the graphics software.)
 
-@c Homebrew is another with dynamic libraries
-If you use XQuartz or another build of @code{cairo} with dynamic
-libraries, you can add option @option{--without-static-cairo} to the
-@command{configure} call (it may work without).
-@c A possible issue is that --static will require the private
-@c dependencies of fontconfig, usually either xml2 or expat, and a
-@c dynamic installation might not have the pkg-config files for those.
-@c Another issue seen in XQuartz 2.8.0 is that pkg-config requires
-@c the private dependencies of cairo of which xproto is not included.
+@c @c Homebrew is another with dynamic libraries
+@c If you use XQuartz or another build of @code{cairo} with dynamic
+@c libraries, you can add option @option{--without-static-cairo} to the
+@c @command{configure} call (it may work without).
+@c @c A possible issue is that --static will require the private
+@c @c dependencies of fontconfig, usually either xml2 or expat, and a
+@c @c dynamic installation might not have the pkg-config files for those.
+@c @c Another issue seen in XQuartz 2.8.0 is that pkg-config requires
+@c @c the private dependencies of cairo of which xproto is not included.
 
 @cindex Pango
 The best font experience of Cairo graphics will be to use it in
@@ -5588,7 +5583,7 @@ to use Accelerate's BLAS.
 @c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
 @c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
 As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
-framework are now inline with reference version 3.9.1'.  The release
+framework are `now inline with reference version 3.9.1'.  The release
 notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
 headers.
 
@@ -5596,9 +5591,6 @@ headers.
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
-
-@code{sessionInfo()} does not detect the use of Accelerate for either
-BLAS or LAPACK.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5620,7 +5612,7 @@ The main @TeX{} implementation used by the developers is
 MacTeX@footnote{An essentially equivalent @TeX{} installation can be
 obtained by the Unix TeX Live installation scripts.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-7.5GB, but a much smaller version (`Basic TeX') is available at
+8.5GB, but a much smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2022 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install helvetic
@@ -5628,7 +5620,7 @@ inconsolata texinfo} .} @pkg{helvetic}, @pkg{inconsolata} and
 @pkg{texinfo} which brought this to about 310MB.@footnote{Adding all the
 packages needed to check @acronym{CRAN} increased this to about 600MB.}
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  These contains
+provides a graphical means to manage @TeX{} packages.  These contain
 executables which run natively on both @cputype{x86_64} and
 @cputype{arm64}.
 
@@ -5675,9 +5667,7 @@ or
 --with-tcl-config=$LOCAL/lib/tclConfig.sh
 --with-tk-config=$LOCAL/lib/tkConfig.sh
 @end example
-Note that this requires a matching@footnote{At the time of writing the
-Intel distribution used 2.7.11 and the @cputype{arm64} one used 2.8.1.}
-XQuartz installation.
+Note that this requires a matching XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
