@@ -34,7 +34,7 @@
 ## info - specifies which information is desired:
 ##  "loads" - LC_LOAD_DYLIB (default, character vector)
 ##  "id"    - LC_ID_DYLIB (string)
-##  "rpath" - LC_RPATH (character vector)
+##  "rpaths"- LC_RPATH (character vector)
 ##  "fat"   - returns the list of archs (empty if not
 ##            a fat file)
 ##  "head"  - returns the Mach-O header
@@ -43,7 +43,7 @@
 ## errors in the structures, arch not found, no matching load
 ## commands)
 macDynLoads <- function(filename, arch,
-                        info=c("loads", "id", "rpath", "fat", "head")) {
+                        info=c("loads", "id", "rpaths", "fat", "head")) {
     if (inherits(filename, "connection")) {
         if (!isSeekable(f))
             stop("Source must be a seekable connection")
@@ -127,7 +127,7 @@ macDynLoads <- function(filename, arch,
             ## cmd, size
             if ((lc[1L] == LC_LOAD_DYLIB && info == "loads" && lc[2L] > 24L) ||
                 (lc[1L] == LC_ID_DYLIB && info == "id" && lc[2L] > 24L) ||
-                (lc[1L] == LC_RPATH && info == "rpath" && lc[2L] > 12L)) {
+                (lc[1L] == LC_RPATH && info == "rpaths" && lc[2L] > 12L)) {
                 ## all of them use lc_str first, but loads and id have
                 ## additional entries that we may be interested in...
                 nent <- if (lc[1L] == LC_RPATH) 1L else 4L
