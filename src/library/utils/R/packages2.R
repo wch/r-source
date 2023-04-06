@@ -467,6 +467,14 @@ install.packages <-
         action <- getOption("install.packages.compile.from.source",
                             "interactive")
         if(!nzchar(Sys.which(Sys.getenv("MAKE", "make")))) action <- "never"
+
+        ## Combining sources and binaries is currently broken (#18396), so
+        ## at least on macOS we want to avoid it as much as we can. If
+        ## binaries exist for all desired packages (regardless of version),
+        ## sources will be ignored.
+        if (grepl("darwin", R.version$platform) && !length(srcOnly))
+            later[later] <- FALSE
+
         if(any(later)) {
             msg <- ngettext(sum(later),
                             "There is a binary version available but the source version is later",
@@ -497,6 +505,8 @@ install.packages <-
         }
         bins <- bins[!later]
 
+        ## This is unsafe (see above), but if there is no binary, there is really no choice.
+        ## If this fails, the user can still use type='source' to recover.
         if(length(srcOnly)) {
             s2 <- srcOnly[!( available[srcOnly, "NeedsCompilation"] %in% "no" )]
             if(length(s2)) {
