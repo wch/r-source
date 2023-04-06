@@ -9,10 +9,13 @@
 \alias{rc.status}
 \alias{rc.getOption}
 \alias{rc.options}
+\alias{findMatches}
 \alias{.DollarNames}
 \alias{.DollarNames.default}
 \alias{.DollarNames.list}
 \alias{.DollarNames.environment}
+\alias{.AtNames}
+\alias{.AtNames.default}
 \alias{completion}
 
 \title{A Completion Generator for R}
@@ -36,10 +39,14 @@ rc.getOption(name)
 rc.options(\dots)
 
 .DollarNames(x, pattern)
+.AtNames(x, pattern)
 
 \S3method{.DollarNames}{default}(x, pattern = "")
 \S3method{.DollarNames}{list}(x, pattern = "")
 \S3method{.DollarNames}{environment}(x, pattern = "")
+\S3method{.AtNames}{default}(x, pattern = "")
+
+findMatches(pattern, values, fuzzy)
 
 }
 
@@ -95,7 +102,8 @@ rc.options(\dots)
   \item{fuzzy}{ Logical flag. Enables fuzzy matching, where close but
     non-exact matches (e.g., with different case) are considered if no
     exact matches are found.  This feature is experimental and the
-    details can change.  }
+    details can change. In \code{findMatches}, this argument defaults to
+    the current setting. }
 
   \item{quotes}{ Logical flag. Enables completion in \R code when inside
     quotes.  This normally leads to filename completion, but can be
@@ -122,6 +130,10 @@ rc.options(\dots)
 
   \item{pattern}{ A regular expression.  Only matching names are
     returned.
+  }
+
+  \item{values}{ character string giving set of candidate values
+    in which matches are to be found.
   }
 }
 
@@ -151,9 +163,11 @@ rc.options(\dots)
       function call (implicit function calls involving the use of
       \code{[}, \code{$}, etc \emph{do not} inhibit evaluation).
 
-      Valid completions after the \code{$} extractor are determined by
-      the generic function \code{.DollarNames}.  Some basic methods are
-      provided, and more can be written for custom classes.
+      Valid completions after the \code{$} and \code{@} extractors are
+      determined by the generic functions \code{.DollarNames} and
+      \code{.AtNames} respectively. A few basic methods are provided,
+      and more can be written for custom classes. The \code{findMatches}
+      function can be useful for this purpose.
     }
 
     \item{\bold{Completion inside namespaces}:}{
@@ -244,6 +258,12 @@ rc.options(\dots)
     }
 
   }
+
+  \code{findMatches} is an utility function that is used internally to
+  determine matches. It can be used for writing methods for
+  \code{.DollarNames} or \code{.AtNames}, the main benefit being that it
+  will take the current \code{fuzzy} setting into account.
+
 }
 
 \value{
@@ -282,6 +302,9 @@ rc.options(\dots)
 
   \code{rc.getOption} and \code{rc.options} behave much like
   \code{\link{getOption}} and \code{\link{options}} respectively.
+
+  \code{findMatches} returns values that match the input pattern, taking
+  the \code{fuzzy} flag into account.
 }
 
 

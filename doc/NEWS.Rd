@@ -583,6 +583,12 @@
       \item \code{tools::buildVignettes()} has a new argument \code{skip},
       which is used by \command{R CMD check} to skip (and note)
       vignettes with unavailable \samp{\VignetteDepends} (\PR{18318}).
+
+      \item New generic \code{.AtNames()} added to enable class-specific
+      completions after \code{@}. The formerly internal function
+      \code{findMatches()} is now exported, mainly for use in methods
+      for \code{.DollarNames()} and \code{.AtNames()}.
+
     }
   }
 
