@@ -25,7 +25,7 @@ is.name <- is.symbol
 .knownS3Generics <- local({
 
     ## include the S3 group generics here
-    baseGenerics <- c("Math", "Ops", "Summary", "Complex",
+    baseGenerics <- c("Math", "Ops", "Summary", "Complex", "matrixOps",
         "as.character", "as.data.frame", "as.environment", "as.matrix", "as.vector",
         "cbind", "labels", "print", "rbind", "rep", "seq", "seq.int",
         "plot", "sequence", "solve", "summary", "t")
@@ -58,7 +58,6 @@ is.name <- is.symbol
 
 assign("::", function(pkg, name) NULL, envir = .ArgsEnv)
 assign(":::", function(pkg, name) NULL, envir = .ArgsEnv)
-assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign("...length", function() NULL, envir = .ArgsEnv)
 assign("...names",  function() NULL, envir = .ArgsEnv)
 assign("...elt", function(n) NULL, envir = .ArgsEnv)
@@ -193,6 +192,13 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
     fx <- function(e1, e2) {}
     for(f in c("+", "-", "*", "/", "^", "%%", "%/%", "&", "|",
                "==", "!=", "<", "<=", ">=", ">")) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- .BaseNamespaceEnv
+        assign(f, fx, envir = env)
+    }
+
+    fx <- function(x, y) {} ## "matrixOps"
+    for(f in c("%*%")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)

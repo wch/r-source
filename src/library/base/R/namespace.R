@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1539,7 +1539,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 		      c(generic, class, method, NA_character_))
         setNamespaceInfo(ns, "S3methods", regs)
     }
-    groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
+    groupGenerics <- c("Math", "Ops", "matrixOps", "Summary", "Complex")
     defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)

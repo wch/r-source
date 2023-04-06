@@ -243,6 +243,10 @@
       for data frames with a large number of unclassed columns.
       (Thanks to Gabriel Becker's \PR{18500}, prompted by a report from
       Toby Dylan Hocking on the R-devel mailing list.)
+
+      \item The matrix multiply operator \code{\%*\%} is now an S3 generic,
+      belonging to new group generic \code{matrixOps}.  From Tomasz
+      Kalinowski's contribution in \PR{18483}.
     }
   }
 

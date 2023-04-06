@@ -104,7 +104,7 @@ function(generic.function, class, envir=parent.frame())
 	    generic.function <- deparse1(substitute(generic.function))
         ## else
         if(!exists(generic.function, mode = "function", envir = envir) &&
-           !any(generic.function == c("Math", "Ops", "Complex", "Summary")))
+           !any(generic.function == c("Math", "Ops", "Complex", "Summary", "matrixOps")))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         warn.not.generic <- FALSE
