@@ -8,8 +8,8 @@
 \title{Apply a Function Over a Ragged Array}
 \description{
   Apply a function to each cell of a ragged array, that is to each
-  (non-empty) group of values given by a unique combination of the
-  levels of certain factors.
+  (non-empty) group of values or data rows given by a unique
+  combination of the levels of certain factors.
 }
 \usage{
 tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
@@ -76,6 +76,10 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
 
   For a list result, the elements corresponding to empty cells are
   \code{NULL}.
+
+  The \code{\link{array2DF}} function can be used to convert the array
+  returned by \code{tapply} into a data frame, which may be more
+  convenient for further analysis.
 }
 \note{
   Optional arguments to \code{FUN} supplied by the \code{...} argument
@@ -94,6 +98,8 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   \code{\link{apply}},
   \code{\link{lapply}} with its versions
   \code{\link{sapply}} and \code{\link{mapply}}.
+
+  \code{\link{array2DF}} to convert the result into a data frame.
 }
 \examples{
 require(stats)

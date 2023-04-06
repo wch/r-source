@@ -1,7 +1,7 @@
 #  File src/library/base/R/array.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,4 +148,72 @@ function(x, MARGIN)
     dim(newx) <- c(prod(d.call), d2)
     ans <- lapply(seq_len(d2), function(i) array(newx[,i], d.call, dn.call))
     array(ans, d.ans, dn.ans)
+}
+
+
+## Convert to data frame, mainly for list arrays produced by tapply()
+
+array2DF <-
+function (x, responseName = "Value", sep = "",
+          base = list(LETTERS),
+          simplify = FALSE, allowLong = TRUE)
+{
+    .df_helper <- function(x) # for data frames
+    {
+        ## check whether all components of list array 'x' 
+        ## - are data frames
+        ## - have same column names
+        ## If TRUE, return value is a vector of corresponding nrow()-s 
+        ## If FALSE, return value is integer(0)
+        if (!is.list(x)) return(integer(0))
+        if (!all(vapply(x, inherits, TRUE, "data.frame"))) return(integer(0))
+        if (length(unique(vapply(x, ncol, 1L))) > 1L) return(integer(0))
+        if (length(unique(lapply(x, colnames))) > 1L) return(integer(0))
+        return(vapply(x, nrow, 1L))
+    }
+    .unvec_helper <- function(x) # for unnamed vectors
+    {
+        ## check whether all components of list array 'x' 
+        ## - are atomic vectors
+        ## - have no names
+        ## If TRUE, return value is a vector of corresponding nrow()-s 
+        ## If FALSE, return value is integer(0)
+        if (!is.list(x)) return(integer(0))
+        if (!all(vapply(x, is.atomic, TRUE))) return(integer(0))
+        if (!all(vapply(x, function(v) is.null(names(v)), TRUE))) return(integer(0))
+        return(vapply(x, length, 1L))
+    }
+    keys <-
+        do.call(expand.grid,
+                c(dimnames(provideDimnames(x, sep = sep, base = base)),
+                  KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE))
+    vals <- NULL
+    if(simplify) {
+        ## handle data frames with identical colnames
+        dfrows <- .df_helper(x)
+        if (length(dfrows))
+            return(cbind(keys[ rep(seq_along(dfrows), dfrows), , drop = FALSE],
+                         do.call(rbind, x)))
+        ## handle unnamed vectors
+        if (allowLong) {
+            unvecrows <- .unvec_helper(x)
+            if (length(unvecrows))
+                return(cbind(keys[ rep(seq_along(unvecrows), unvecrows), , drop = FALSE],
+                             structure(data.frame(V = do.call(c, x)),
+                                       names = responseName)))
+        }
+        ## handle generic case
+        x <- simplify2array(c(x))
+        if(is.array(x)) {
+            vals <- asplit(x, 1L)
+            if(is.null(names(vals)))
+                names(vals) <-
+                    paste0(responseName, sep, seq_along(vals))
+        }
+    }
+    if(is.null(vals)) {
+        vals <- list(c(x))
+        names(vals) <- responseName
+    }
+    cbind(keys, list2DF(vals))
 }
