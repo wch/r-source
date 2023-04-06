@@ -21,22 +21,29 @@
 ## on Mach-based operating systems such as macOS.
 ## All functions are currently internal and not exported.
 
-## macDynLoads - list LC_LOAD_DYLIB entries from a Mach-O file.
+## macDynLoads - list entries from a Mach-O file.
 ##
 ## Supports both fat and thin files and tries to be as silent
 ## as possible.
+##
 ## filename - can be a seekable connection or a string.
 ## arch - used for fat files, if missing, defaults to the
 ##        architecture of this R and if not found, picks
 ##        the first one in the arch list. If specified
 ##        and not matched in the fat file, returns NULL.
-## info - if TRUE returns architecture info (either from
-##        the fat header or the Mach-O header of a thin file)
+## info - specifies which information is desired:
+##  "loads" - LC_LOAD_DYLIB (default, character vector)
+##  "id"    - LC_ID_DYLIB (string)
+##  "rpaths"- LC_RPATH (character vector)
+##  "fat"   - returns the list of archs (empty if not
+##            a fat file)
+##  "head"  - returns the Mach-O header
 ##
-## Returns NULL if something is wrong (not a Mach-O file,
-## errors in the structures, arch not found etc.) or
-## a character vector of the load entries.
-macDynLoads <- function(filename, arch, info=FALSE) {
+## Returns NULL if result could not be found (not a Mach-O file,
+## errors in the structures, arch not found, no matching load
+## commands)
+macDynLoads <- function(filename, arch,
+                        info=c("loads", "id", "rpaths", "fat", "head")) {
     if (inherits(filename, "connection")) {
         if (!isSeekable(f))
             stop("Source must be a seekable connection")
@@ -47,7 +54,10 @@ macDynLoads <- function(filename, arch, info=FALSE) {
     }
     if (missing(arch))
         arch <- NULL
-    
+    ## for compatibility with its original meaning, deprecated
+    if (is.logical(info)) info <- if(isTRUE(info)) "head" else "loads"
+    info <- match.arg(info)
+
     magic <- readBin(f, 1L, 1L, endian="big")
 
     magic.fat  <- -889275714L  # 0xcafebabe
@@ -59,6 +69,11 @@ macDynLoads <- function(filename, arch, info=FALSE) {
     cpu.types <- c(vax=1L, i386=7L, x86_64=0x1000007L,
                    arm=12L, arm64=0x100000cL, `arm64-32`=0x200000cL,
                    sparc=14L, ppc=18L, ppc64=0x1000012)
+
+    ## load commands that we care about
+    LC_LOAD_DYLIB <- 12L
+    LC_ID_DYLIB   <- 13L
+    LC_RPATH      <- 0x8000001c
 
     ## convert 32-bit unsigned int to R's double
     i2r <- function(i) ifelse(i < 0, 4294967296 + i, i)
@@ -82,7 +97,7 @@ macDynLoads <- function(filename, arch, info=FALSE) {
             list(cpu=cpu2name(ai[1L]), type=ai[1:2], offset=ai[3L], size=ai[4L])
         }, FALSE)
         names(archs) <- sapply(archs, function(o)o $cpu)
-        if (isTRUE(info))
+        if (info == "fat")
             return(archs)
         ## find matching arch
         if (is.null(arch)) {
@@ -95,31 +110,36 @@ macDynLoads <- function(filename, arch, info=FALSE) {
             return(NULL)
         seek(f, r.arch$offset, "start", "read")
         magic <- readBin(f, 1L, 1L, endian="big")
-    }
+    } else if (info == "fat")
+        return(NULL)
 
     ## Mach-O file
     if (magic == magic.mh || magic == magic.hm ||
         magic == magic.mh64 || magic == magic.hm64) {
         end <- if (magic == magic.mh || magic == magic.mh64) "big" else "little"
-        api <- if (magic == magic.mh || magic == magic.hm) 32L else 64L
-        mh <- i2r(readBin(f, 1L, 6L + if (api == 64L) 1L else 0L, endian=end))
+        abi <- if (magic == magic.mh || magic == magic.hm) 32L else 64L
+        mh <- i2r(readBin(f, 1L, 6L + if (abi == 64L) 1L else 0L, endian=end))
         ## cputype, subtype, filetype, ncmds, sizeofcmds, flags[, res (64 only)]
-        if (isTRUE(info)) {
-            res <- list(list(cpu=cpu2name(mh[1L]), type=mh[1:2]))
-            names(res) <- res[[1]]$cpu
-            return(res)
-        }
+        if (info == "head")
+            return(list(cpu=cpu2name(mh[1L]), type=mh[1:2], filetype=mh[3L], endian=end, abi=abi))
         unlist(replicate(mh[4L], {
-            ## cmd, size
             lc <- i2r(readBin(f, 1L, 2L, endian=end))
-            if (lc[1L] == 12L && lc[2L] > 24L) { ## LC_LOAD_DYLIB
-                ld <- i2r(readBin(f, 1L, 4L, endian=end))
-                ## name-offset, timestamp, current_ver, compat_ver
-                r <- readBin(f, raw(), lc[2L] - 24L)
-                o <- ld[1L] - 24
+            ## cmd, size
+            if ((lc[1L] == LC_LOAD_DYLIB && info == "loads" && lc[2L] > 24L) ||
+                (lc[1L] == LC_ID_DYLIB && info == "id" && lc[2L] > 24L) ||
+                (lc[1L] == LC_RPATH && info == "rpaths" && lc[2L] > 12L)) {
+                ## all of them use lc_str first, but loads and id have
+                ## additional entries that we may be interested in...
+                nent <- if (lc[1L] == LC_RPATH) 1L else 4L
+                ld <- i2r(readBin(f, 1L, nent, endian=end))
+                ## name-offset[, timestamp, current_ver, compat_ver]
+                ## read the rest of the command as raw vector
+                r <- readBin(f, raw(), lc[2L] - (8L + nent * 4L))
+                ## get the string offset in that part
+                o <- ld[1L] - (8L + nent * 4L)
                 if (o < length(r) && o > 0)
                     r <- r[seq.int(o + 1L, length(r))]
-                if (any(r == 0L))
+                if (any(r == 0L)) ## should be NUL terminated
                     r <- r[1:(which(r == 0L)[1L] - 1L)]
                 rawToChar(r)
             } else {
