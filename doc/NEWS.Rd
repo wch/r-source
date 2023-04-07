@@ -248,6 +248,10 @@
       \item The matrix multiply operator \code{\%*\%} is now an S3 generic,
       belonging to new group generic \code{matrixOps}.  From Tomasz
       Kalinowski's contribution in \PR{18483}.
+
+      \item New function \code{array2DF()} to convert arrays to data
+      frames, particularly useful for the list arrays created by
+      \code{tapply()}.
     }
   }
 
