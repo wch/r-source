@@ -297,6 +297,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.formula2varlist} returns a list of variables found in
   \code{formula}, evaluated in \code{data}, following standard
   non-standard evaluation rules. Used in \code{\link{split}} and
-  \code{\link{tapply}} to interpret a fomula as a list of categorial
+  \code{\link{tapply}} to interpret a formula as a list of categorical
   variables to split on. }
 \keyword{internal}
