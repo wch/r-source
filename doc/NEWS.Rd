@@ -188,7 +188,7 @@
       \item The \code{@} operator is now an S3 generic. Based on
       contributions by Tomasz Kalinowski in \PR{18482}.
 
-      \item new generic \code{chooseOpsMethod()} provides a mechanism
+      \item New generic \code{chooseOpsMethod()} provides a mechanism
       for objects to resolve cases where two suitable methods are found
       for an Ops Group Generic. This supports experimenting with
       alternative object systems. Based on contributions by Tomasz
@@ -234,7 +234,7 @@
       \code{X} argument, and allows \code{INDEX} to be a formula in that case.
 
       \item The \code{"glm"} method for \code{anova()} computes test
-      statistics and p-values by default, using a Chisq test or
+      statistics and p-values by default, using a chi-squared test or
       an F test depending on whether the dispersion is fixed or
       free.  Test statistics can be suppressed by giving argument
       \code{test} a false logical value.
