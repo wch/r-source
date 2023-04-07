@@ -171,7 +171,7 @@ installs it in a library using @command{R CMD INSTALL} or
 @item
 Source packages can be @emph{built}.  This involves taking a source
 directory and creating a tarball ready for distribution, including
-cleaning it up and creating PDF documentation from any @emph{vignettes}
+cleaning it up and creating PDF/@HTML{} documentation from any @emph{vignettes}
 it may contain.  Source packages (and most often tarballs) can be
 @emph{checked}, when a test installation is done and tested (including
 running its examples); also, the contents of the package are tested in
@@ -3532,8 +3532,8 @@ Other names that have been suggested are, for example,
 occasionally fail by chance, etc.)
 
 @item
-The code in package vignettes (@pxref{Writing package vignettes}) is
-executed, and the vignette PDFs re-made from their sources as a check of
+The @R{} code in package vignettes (@pxref{Writing package vignettes}) is
+executed, and the vignettes re-made from their sources as a check of
 completeness of the sources (unless there is a @samp{BuildVignettes}
 field in the package's @file{DESCRIPTION} file with a false value).  If
 there is a target output file @file{.Rout.save} in the vignette source
@@ -3548,7 +3548,7 @@ used or environment variable @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_}
 is set to a true value or if there are differences from a target output
 file} in executing the @R{} code in vignette @file{@var{foo.ext}}, a log
 file @file{@var{foo.ext}.log} is created in the check directory.  The
-vignette PDFs are re-made in a copy of the package sources in the
+vignettes are re-made in a copy of the package sources in the
 @file{vign_test} subdirectory of the check directory, so for further
 information on errors look in directory
 @file{@var{pkgname}/vign_test/vignettes}.  (It is only retained if there
@@ -3991,12 +3991,14 @@ the form
 @end example
 @noindent
 Others you may see are @code{\VignettePackage} (currently ignored),
-@code{\VignetteDepends} and @code{\VignetteKeyword} (which replaced
+@code{\VignetteDepends} (a comma-separated list of package names)
+and @code{\VignetteKeyword} (which replaced
 @code{\VignetteKeywords}).  These are processed at package installation
-time to create the saved data frame @file{Meta/vignette.rds}, but only
-the @code{\VignetteIndexEntry} and @code{\VignetteKeyword} statements
-are currently used.  The @code{\VignetteEngine} statement
+time to create the saved data frame @file{Meta/vignette.rds}.
+The @code{\VignetteEngine} statement
 is described in @ref{Non-Sweave vignettes}.
+Vignette metadata can be extracted from a source file using
+@code{tools::vignetteInfo}.
 
 At install time an @HTML{} index for all vignettes in the package is
 automatically created from the @code{\VignetteIndexEntry} statements
@@ -6799,8 +6801,8 @@ carried out by functions in the @pkg{tools} package called by the
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
 
-@c 1324 as of 2011-01-16
-The @R{} distribution contains more than 1300 such files which can be
+@c 1442 as of 2023-04-07
+The @R{} distribution contains more than 1400 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
 source tree, where @var{pkg} stands for one of the standard packages
 which are included in the @R{} distribution.
