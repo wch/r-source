@@ -19,7 +19,9 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
 \arguments{
  \item{data}{an \R object, normally a data frame, possibly a matrix.}
  \item{INDICES}{a factor or a list of factors, each of length
-   \code{nrow(data)}.}
+   \code{nrow(data)}. For the data frame method, \code{INDICES} can also
+   be a formula as in the \code{f} argument of the \code{\link{split}}
+   method for data frames.}
  \item{FUN}{a function to be applied to (usually data-frame) subsets of
    \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
@@ -41,7 +43,8 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
   array (see \code{\link{tapply}}).
 }
 \seealso{\code{\link{tapply}}, \code{\link{simplify2array}}.
-  \code{\link{ave}} also applies a function block-wise.
+  \code{\link{array2DF}} to convert result to a data
+  frame. \code{\link{ave}} also applies a function block-wise.
 }
 \examples{
 require(stats)
@@ -51,10 +54,15 @@ by(warpbreaks, warpbreaks[,"tension"],
    function(x) lm(breaks ~ wool, data = x))
 
 ## now suppose we want to extract the coefficients by group
-tmp <- with(warpbreaks,
+tmp1 <- with(warpbreaks,
             by(warpbreaks, tension,
                function(x) lm(breaks ~ wool, data = x)))
-sapply(tmp, coef)
+sapply(tmp1, coef)
+
+## another way
+tmp2 <- by(warpbreaks, ~ tension,
+           with, coef(lm(breaks ~ wool)))
+array2DF(tmp2, simplify = TRUE)
 }
 \keyword{iteration}
 \keyword{category}

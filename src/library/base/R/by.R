@@ -41,6 +41,8 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
 
 by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
 {
+    if(inherits(INDICES, "formula"))
+        INDICES <- .formula2varlist(INDICES, data)
     if(!is.list(INDICES)) { # record the names for print.by
         IND <- list(INDICES)
         names(IND) <- deparse(substitute(INDICES))[1L]
