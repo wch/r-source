@@ -231,7 +231,9 @@
       to show them if required.
 
       \item The \code{tapply()} function now accepts a data frame as its
-      \code{X} argument, and allows \code{INDEX} to be a formula in that case.
+      \code{X} argument, and allows \code{INDEX} to be a formula in that
+      case. \code{by.data.frame()} similarly allows \code{INDICES} to be
+      a formula.
 
       \item The \code{"glm"} method for \code{anova()} computes test
       statistics and p-values by default, using a chi-squared test or
