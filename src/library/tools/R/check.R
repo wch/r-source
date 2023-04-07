@@ -5626,7 +5626,10 @@ add_dummies <- function(dir, Log)
                 ex_re <- "^ *(/usr/include|/opt/R/arm64/include).*\\[-Wstrict-prototypes\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
-                ## filter out Complex.h warnings as users can do nothing about these
+                ## filter out Complex.h warnings from C++ compilers
+                ## (g++ -pedantic,
+                ## clang++ -Wgnu-anonymous-struct, -Wc99-extensions)
+                ## as users can do nothing about these.
                 ex_re <-"/include/R_ext/Complex.h"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
