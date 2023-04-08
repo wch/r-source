@@ -10496,13 +10496,15 @@ compiled code is a mixture of C functions and Fortran subprograms the
 argument types must match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
-@code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}
-included by @file{R.h}.  (On most platforms this is stored in a way
-compatible with the C99 @code{double complex} type: however, it may not
-be possible to pass @code{Rcomplex} to a C99 function expecting a
-@code{double complex} argument.  Nor need it be compatible with a C++
-@code{complex} type.  Moreover, the compatibility can depend on the
-optimization level set for the compiler.)
+@code{r} and @code{i} defined in the header file
+@file{R_ext/Complex.h}.@footnote{This is currently included by
+@file{R.h} but may not be in future, so it should be included by code
+needing the type.}  (On most platforms this is stored in a way compatible
+with the C99 @code{double complex} type: however, it may not be possible
+to pass @code{Rcomplex} to a C99 function expecting a @code{double
+complex} argument.  Nor need it be compatible with a C++ @code{complex}
+type.  Moreover, the compatibility can depend on the optimization level
+set for the compiler.)
 
 Only a single character string of fixed length can be passed to or from
 Fortran (the length is not passed), and the success of this is
