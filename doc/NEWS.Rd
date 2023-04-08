@@ -849,6 +849,11 @@
       binary GLMs.  A new method for objects of class \code{"glm"} returns the
       square root of the estimate of the dispersion parameter using the
       same calculation as \code{summary.glm()}.
+
+      \item \code{bs()} and \code{ns()} in the (typical) case of automatic
+      knot construction, when some of the supposedly inner knots coincide
+      with boundary knots, now moves them inside (with a warning), building
+      on \PR{18442} by Ben Bolker.
     }
   }
 }

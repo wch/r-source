@@ -537,7 +537,19 @@ Sys.setenv("_R_CHECK_LENGTH_COLON_" = oldV)# reset
 a <- ls() # 'a' is part
 rm() ; rm(list=NULL)
 stopifnot(identical(a, ls()))
-##
+## (for a short time, list=NULL failed)
+
+
+## ns() fails when quantiles end on the boundary {PR#18442}
+if(no.splines <- !("splines" %in% loadedNamespaces())) require("splines")
+tt <- c(55, 251, 380, 289, 210, 385, 361, 669)
+nn <- rep(0:7, tt) # => knots at (0.25,0.5,0.75); quantiles = (2,5,7)
+tools::assertWarning(verbose=TRUE, ns.n4 <- ns(nn,4))
+stopifnot(is.matrix(ns.n4), ncol(ns.n4) == 4, qr(ns.n4)$rank == 4)
+if(no.splines) unloadNamespace("splines")
+## ns() gave  Error in qr.default(t(const)) : NA/NaN/Inf in foreign function call
+
+
 
 
 ## keep at end
