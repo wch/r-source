@@ -189,12 +189,12 @@ INLINE_FUN const double *REAL_OR_NULL(SEXP x) {
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN const double *COMPLEX_OR_NULL(SEXP x) {
+INLINE_FUN const Rcomplex *COMPLEX_OR_NULL(SEXP x) {
     CHECK_VECTOR_CPLX(x);
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN const double *RAW_OR_NULL(SEXP x) {
+INLINE_FUN const Rbyte *RAW_OR_NULL(SEXP x) {
     CHECK_VECTOR_RAW(x);
     return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
