@@ -61,17 +61,6 @@ standard.  While they are usually supported as compiler extensions, warnings
 are typically issued (-pedantic) by a C++ compiler.
 */
 
-#if defined(__GNUC__) && defined(__cplusplus)
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wpedantic"
-#endif
-
-#if defined(__clang__) && defined(__cplusplus)
-# pragma clang diagnostic push
-# pragma clang diagnostic ignored "-Wgnu-anonymous-struct"
-# pragma clang diagnostic ignored "-Wc99-extensions"
-#endif
-
 typedef union {
     struct {
 	double r;
@@ -79,14 +68,6 @@ typedef union {
     };
     double _Complex private_data_c;
 } Rcomplex;
-
-#if defined(__GNUC__) && defined(__cplusplus)
-# pragma GCC diagnostic pop
-#endif
-
-#if defined(__clang__) && defined(__cplusplus)
-# pragma clang diagnostic pop
-#endif
 
 # endif 
 
