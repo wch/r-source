@@ -9446,13 +9446,14 @@ versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
-On platforms where @code{valgrind} is installed you can build a version
-of @R{} with extra instrumentation to help @code{valgrind} detect errors
-in the use of memory allocated from the @R{} heap.  The
-@command{configure} option is
+On platforms where @code{valgrind} and its headers@footnote{in some
+distriutions packaged separately, for example as @file{valgrind-devel}.}
+are installed you can build a version of @R{} with extra instrumentation
+to help @code{valgrind} detect errors in the use of memory allocated
+from the @R{} heap.  The @command{configure} option is
 @option{--with-valgrind-instrumentation=@var{level}}, where @var{level}
-is 0, 1 or 2.  Level 0 is the default and does not add anything.
-Level 1 will detect some uses@footnote{Those in some numeric, logical,
+is 0, 1 or 2.  Level 0 is the default and does not add anything.  Level
+1 will detect some uses@footnote{Those in some numeric, logical,
 integer, raw, complex vectors and in memory allocated by
 @code{R_alloc}.} of uninitialised memory and has little impact on speed
 (compared to level 0). Level 2 will detect many other memory-use
@@ -9460,10 +9461,6 @@ bugs@footnote{including using the data sections of @R{} vectors after
 they are freed.}  but make @R{} much slower when running under
 @code{valgrind}.  Using this in conjunction with @code{gctorture} can be
 even more effective (and even slower).
-
-It is highly recommended that the @command{valgrind} headers (sometimes
-packaged separately, for example as @file{valgrind-devel}) are installed
-to build an instrumented @R{}: this will be required in future.
 
 An example of @code{valgrind} output is
 @smallexample
