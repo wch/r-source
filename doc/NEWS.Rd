@@ -570,6 +570,11 @@
       extensions supporting C features that have not been incorporated
       into the C++ standards but are available in \command{g++} and
       \command{clang++}: this may result in C++ compiler warnings.
+
+      It is intended to change the inclusion of header
+      \file{R_ext/Complex.h} by other \R{} headers, so C/C++ code files
+      which make use of \code{Rcomplex} should include that header
+      explicitly.
     }
   }
 
