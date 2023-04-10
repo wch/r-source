@@ -98,6 +98,7 @@ typedef Rbyte (*R_altraw_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altraw_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rbyte *);
 
+#include <R_ext/Complex.h>
 typedef Rcomplex (*R_altcomplex_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altcomplex_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rcomplex *);
