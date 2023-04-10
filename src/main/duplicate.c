@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 #include <R_ext/RS.h> /* S4 bit */
 

@@ -34,8 +34,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Print.h>
 #include <R_ext/Itermacros.h> /* for ITERATE_BY_REGION */
 
 #ifdef Win32

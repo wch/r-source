@@ -26,7 +26,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 #include "Fileio.h" /* for R_fopen */
 #include "Startup.h"
 

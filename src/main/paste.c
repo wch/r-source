@@ -28,7 +28,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 #include <Internal.h>
 
 #define imax2(x, y) ((x < y) ? y : x)

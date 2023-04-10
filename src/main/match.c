@@ -42,7 +42,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 
 /* used in subscript.c and subassign.c */

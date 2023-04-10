@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 #include <Internal.h>
 #include <R_ext/Itermacros.h>
 

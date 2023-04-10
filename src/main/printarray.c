@@ -32,8 +32,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Print.h>
 
 #include <stdlib.h> /* for div() */
 
