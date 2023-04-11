@@ -85,7 +85,7 @@ typedef union {
 # if defined(__clang__)
 #  pragma clang diagnostic pop
 # elif defined(__GNUC__)
-#  pragma GCC diagnostic pod
+#  pragma GCC diagnostic pop
 # endif
 #endif
 
