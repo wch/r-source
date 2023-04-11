@@ -5301,7 +5301,7 @@ installers mentioned below, use a file @file{config.site} containing
 @example
 CC=clang
 OBJC=$CC
-FC="$LOCAL/gfortran/bin/gfortran -mtune=native"
+FC="/opt/gfortran/bin/gfortran -mtune=native"
 CPPFLAGS='-isystem $LOCAL/include'
 CXX=clang++
 @end example
@@ -5357,9 +5357,9 @@ generate @cputype{x86_64} code @dots{}.
 @c option @option{--without-static-cairo} to the @command{configure} call
 @c (it probably would work anyway).
 
-Updating an @cputype{arm64} build will often fail because of the bug
-described at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab
-initio} builds work.  This has been far rarer since macOS 13.
+Updating an @cputype{arm64} build may fail because of the bug described
+at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab initio}
+builds work.  This has been far rarer since macOS 13.
 
 @menu
 * Notes for Catalina and later::
@@ -5370,7 +5370,7 @@ initio} builds work.  This has been far rarer since macOS 13.
 
 If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
 -show-sdk-path`} in a terminal will show you which SDK is selected.},
-you will need to add something like @code{-mmacosx-version-min=12.0} to
+you may need to add something like @code{-mmacosx-version-min=12.0} to
 @samp{CFLAGS}.
 
 The default security settings for Catalina and later can make it
@@ -5400,36 +5400,29 @@ discrepancies, notably in Europe in the 1900s and 1940s, even though
 the Olson database contains the correct information.
 
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
-@subsection Fortran compilers
+@subsection Fortran compiler
 
-For Intel Big Sur and later there is an installer for a Fortran compiler at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/11.2-bigsur-intel/gfortran-Intel-11.2-BigSur.dmg}
-and for Intel Monterey there is
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-Intel-12.1-Monterey.dmg}. These
-install into @file{/usr/local/gfortran}.
+There is `universal' (Inttel and @code{arm64}) build of
+@command{gfortran} 12.2 at
+@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0}. This
+installs into @file{/opt/gfortran}. This has a symbolic link
+@file{/opt/gfortran/SDK} that needs to be set to point to the SDK
+installed as part of CLT or Xcode on your system: the appreopriate path
+can be found by running @command{xcrun -show-sdk-path}.
 
-For @cputype{arm64}, we use the fork of @command{gfortran} from
-@url{https://github.com/iains/gcc-darwin-arm64} of which there are
-binary distributions at @uref{https://mac.r-project.org/tools/} and
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.  It
-seems some of these have been built using the SDK path for Xcode and not
-that for the Command Line Tools which causes some problems@footnote{such
-as being unable to find @code{-lm}.} when using the Fortran compiler to
-link: to fix that change the symbolic link
-@file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
-@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
-appropriate path can be found by running @command{xcrun
--show-sdk-path}).  (The distribution from
-@uref{https://mac.r-project.org/tools/} includes a script at
+In more detail, in a Terminal run
 @example
-/opt/R/arm64/gfortran/bin/gfortran-update-sdk
+curl -OL https://github.com/R-macos/gcc-12-branch/releases/download/12.2-darwin-r0/gfortran-12.2-darwin20-r0-universal.tar.xz
+sudo tar -xf gfortran-12.2-darwin20-r0-universal.tar.xz -C/
+cd /opt/gfprtran
+sudo rm SDK
+sudo ln -s `xcrun -show-sdk-path` SDK
 @end example
 @noindent
-to do this.)
-
-Finally, there is `universal' build of @command{gfortran} 12.2 at
-@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0}.
-
+Unfortunately the distribution links to a specific SDK,
+@file{/Library/Developer/CommandLineTools/SDKs/MacOSX11.sdk}, rather
+than the generic
+@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} .
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
