@@ -49,7 +49,7 @@ compare the outputs of
 nm -g dlapack.o | grep ' T ' | cut -b20-
 nm -g dlapack.o | grep ' U ' | cut -b20-
 
-before and after upating (ditto for cmplx.o).  (This may need
+before and after updating (ditto for cmplx.o).  (This may need
 adjusting for your platform's nm.)
 
 

@@ -782,7 +782,7 @@ glob3(wchar_t *pathbuf, wchar_t *pathbuf_last, wchar_t *pathend, wchar_t *pathen
 #include <R_ext/RS.h> /* for R_Calloc, R_Realloc, R_Free */
 
 /*
- * Extend the gl_pathv member of a glob_t structure to accomodate a new item,
+ * Extend the gl_pathv member of a glob_t structure to accommodate a new item,
  * add the new item, and update gl_pathc.
  *
  * This assumes the BSD realloc, which only copies the block when its size

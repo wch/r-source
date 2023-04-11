@@ -313,7 +313,7 @@ gl_getc(void)
 	    /* Handle Alt+xxx (Alt+xx).
 	       Console implementations differ in whether and how they interpret
 	       Alt+xxx sequences. Some translate internally and do not send
-	       Alt+xxx to R. Some send the Alt+xxx to R but also intepret and
+	       Alt+xxx to R. Some send the Alt+xxx to R but also interpret and
 	       send the result in Alt key up event (wc). See PR#18391. */
 	    c = gl_alt_to_ucs(bbb);
 	} else
@@ -1307,7 +1307,7 @@ size_t (*func)();
     }
 }
 
-/* lenght of string in widths */
+/* length of string in widths */
 static size_t
 gl_w_strlen(const char *s)
 {

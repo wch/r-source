@@ -35,7 +35,7 @@
   mixture of central chisquares with integer degrees of freedom),
   see Formula (29.5b-c) in Johnson, Kotz, Balakrishnan (1995).
 
-  The noncentral chisquare with arbitary degrees of freedom is of interest
+  The noncentral chisquare with arbitrary degrees of freedom is of interest
   for simulating the Cox-Ingersoll-Ross model for interest rates in
   finance.
 

@@ -142,7 +142,7 @@ int R_finite(double);
 #define ME_PRECISION	8
 /*	does not have "full" precision */
 #define ME_UNDERFLOW	16
-/*	and underflow occured (important for IEEE)*/
+/*	and underflow occurred (important for IEEE)*/
 
 
 #define ML_WARN_return_NAN { ML_WARNING(ME_DOMAIN, ""); return ML_NAN; }
