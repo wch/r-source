@@ -27,11 +27,15 @@ glyphHOffset <- function(glyphInfo, hjust) {
     if (is.numeric(hjust)) {
         justName <- names(hjust)
         if (is.null(justName)) {
-            gx - hjust*width[1]
+            gx - convertWidth(unit(hAnchor["left"], "bigpts"), "in",
+                              valueOnly=TRUE) -
+                hjust*width[1]
         } else {
             if (!justName %in% names(width)) {
                 warning("Unknown width; using first width")
-                gx - hjust*width[1]
+                gx - convertWidth(unit(hAnchor["left"], "bigpts"), "in",
+                                  valueOnly=TRUE) -
+                    hjust*width[1]
             } else {
                 anchor <- glyphWidthLeft(glyphWidth, justName)
                 gx - convertWidth(unit(hAnchor[anchor], "bigpts"), "in",
@@ -67,11 +71,15 @@ glyphVOffset <- function(glyphInfo, vjust) {
     if (is.numeric(vjust)) {
         justName <- names(vjust)
         if (is.null(justName)) {
-            gy - vjust*height[1]
+            gy - convertHeight(unit(vAnchor["bottom"], "bigpts"), "in",
+                               valueOnly=TRUE) -
+                vjust*height[1]
         } else {
             if (!justName %in% names(height)) {
                 warning("Unknown height; using first height")
-                gy - vjust*height[1]
+                gy - convertHeight(unit(vAnchor["bottom"], "bigpts"), "in",
+                                   valueOnly=TRUE) -
+                    vjust*height[1]
             } else {
                 anchor <- glyphHeightBottom(glyphHeight, justName)
                 gy - convertHeight(unit(vAnchor[anchor], "bigpts"), "in",
