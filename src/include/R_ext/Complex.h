@@ -56,10 +56,22 @@ when interfacing with Fortran COMPLEX*16 or directly C99 _Complex double
 This form of static initialization works with both definitions:
 Rcomplex z = { .r = 1, .i = 2 };
 
-Anonymous structures and C99 _Complex were not incorporated into C++
+Anonymous structures and C99 _Complex have not been incorporated into C++
 standard.  While they are usually supported as compiler extensions, warnings
 are typically issued (-pedantic) by a C++ compiler.
 */
+
+#ifdef __cplusplus
+// Look for clang first as it defines __GNUC__ and reacts to #praema GCC
+# if defined(__clang__)
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wgnu-anonymous-struct"
+#  pragma clang diagnostic ignored "-Wc99-extensions"
+# elif defined(__GNUC__)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wpedantic"
+# endif
+#endif
 
 typedef union {
     struct {
@@ -68,6 +80,14 @@ typedef union {
     };
     double _Complex private_data_c;
 } Rcomplex;
+
+#ifdef __cplusplus
+# if defined(__clang__)
+#  pragma clang diagnostic pop
+# elif defined(__GNUC__)
+#  pragma GCC diagnostic pop
+# endif
+#endif
 
 # endif 
 
