@@ -566,10 +566,12 @@
       such as \code{\{1, 2\}}, which can be changed to \code{\{.r=1,
 	.i=2\}}.
 
-      Using the new definition from C++ depends on compiler
-      extensions supporting C features that have not been incorporated
-      into the C++ standards but are available in \command{g++} and
-      \command{clang++}: this may result in C++ compiler warnings.
+      Using the new definition from C++ depends on compiler extensions
+      supporting C features that have not been incorporated into the C++
+      standards but are available in \command{g++} and
+      \command{clang++}: this may result in C++ compiler warnings but
+      these have been worked around for recent versions of common
+      compilers (GCC, Apple/LLVM clang, Intel).
 
       It is intended to change the inclusion of header
       \file{R_ext/Complex.h} by other \R{} headers, so C/C++ code files
