@@ -5169,14 +5169,14 @@ but are untested there.)
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Intel components install into @file{/usr/local/lib}, the
+The Intel components install into @file{/usr/local}, the
 @cputype{arm64} ones into @file{/opt/R/arm64} which may not exist so it
 it is simplest to first create that directory and adjust its ownership
 if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64
-sudo chown -R myaccount /opt/R
+sudo chown -R $USER /opt/R
 @end example
 @noindent
 and add @file{/opt/R/arm64/bin} to your path.
@@ -5204,7 +5204,7 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 13 is unrelated to LLVM clang 13).
+versioning (so Apple clang 14 is unrelated to LLVM clang 14).
 
 @item
 A Fortran compiler. @xref{Fortran compilers}.
@@ -5281,9 +5281,8 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently version 5.18 (High Sierra) -- 5.30 is a
-default part of macOS but it has been announced that it may not be in
-future).
+@command{perl} (currently a default part of macOS but it has been
+announced that it may not be in future).
 @c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
@@ -5292,8 +5291,8 @@ distribution of @R{} and there is a @code{texinfo} component at
 @end itemize
 
 To build @R{} itself from the sources with the C/C++ compilers in the
-Command Line Tools (or Xcode) and @command{gfortran} from one of the
-installers mentioned below, use a file @file{config.site} containing
+Command Line Tools (or Xcode) and @command{gfortran} from the installer
+mentioned below, use a file @file{config.site} containing
 @example
 CC=clang
 OBJC=$CC
@@ -5320,9 +5319,9 @@ FFLAGS="-g -O2 -mmacosx-version-min=11.0"
 FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
 @end example
 @noindent
-(the first flag in @code{CFLAGS} has been needed to inter-work with the
+(the first flag in @code{CFLAGS} is needed to inter-work with the
 @command{gfortran} without segfaulting in some packages, and some builds
-of @command{gfortran} target the current version of macOS (unlike
+of @command{gfortran} have targetted the current version of macOS (unlike
 @command{clang}, causing linker warnings).
 
 To install packages using compiled code one needs the Command Line Tools
@@ -5357,43 +5356,35 @@ Updating an @cputype{arm64} build may fail because of the bug described
 at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab initio}
 builds work.  This has been far rarer since macOS 13.
 
-@menu
-* Notes for Catalina and later::
-@end menu
-
-@node Notes for Catalina and later,  , Prerequisites, Prerequisites
-@subsubsection Notes for Catalina and later
-
 If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
 -show-sdk-path`} in a terminal will show you which SDK is selected.},
 you may need to add something like @code{-mmacosx-version-min=12.0} to
 @samp{CFLAGS}.
 
-The default security settings for Catalina and later can make it
-difficult to install recently-built Apple packages which have not been
-`notarized'@footnote{See
+The default security settings can make it difficult to install Apple
+packages which have not been `notarized'@footnote{See
 @uref{https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in
 Finder), then select @samp{Installer} and @samp{Open} if you get a
-further warning message.  This applies also to some `nightly builds'
-from @uref{https://mac.R-project.org/}.
+further warning message.  This sometimes applies also to `nightly
+builds' from @uref{https://mac.R-project.org/}.
 
 If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
 
 @command{configure} defaults to @option{--with-internal-tzcode} on
-macOS.  The native implementation was unusable on earlier versions of
-even 64-bit macOS (with a 32-bit @code{time_t} and/or timezone tables
-missing information beyond the 32-bit range).  For, e.g.@:, macOS 12.6,
-option @option{--without-internal-tzcode} can be used to override this
-and @R{} contains sufficient workarounds (for example, the native code
-fails to recognize dates with a negative @code{tm_year}, that is dates
-before 1900) for @R{} to pass its checks.  However, there are
-discrepancies, notably in Europe in the 1900s and 1940s, even though
-the Olson database contains the correct information.
+macOS.  The native implementation used to be unusable on earlier
+versions (with a 32-bit @code{time_t} and/or timezone tables missing
+information beyond the 32-bit range).  For, e.g.@:, macOS 12.6, option
+@option{--without-internal-tzcode} can be used to override this and @R{}
+contains sufficient workarounds (for example, the native code fails to
+recognize dates with a negative @code{tm_year}, that is dates before
+1900) for @R{} to pass its checks.  However, there are discrepancies,
+notably in Europe in the 1900s and 1940s, even though the Olson database
+contains the correct information.
 
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compiler
@@ -5404,7 +5395,9 @@ There is `universal' (Inttel and @code{arm64}) build of
 installs into @file{/opt/gfortran}. This has a symbolic link
 @file{/opt/gfortran/SDK} that needs to be set to point to the SDK
 installed as part of CLT or Xcode on your system: the appreopriate path
-can be found by running @command{xcrun -show-sdk-path}.
+can be found by running @command{xcrun -show-sdk-path}.  (Problems will
+otherwise be seen when using Fortran to link: this is not used when
+building @R{} but is when installing a few @acronym{CRAN} packages.)
 
 In more detail, in a Terminal run
 @example
@@ -5418,7 +5411,8 @@ sudo ln -s `xcrun -show-sdk-path` SDK
 Unfortunately the distribution links to a specific SDK,
 @file{/Library/Developer/CommandLineTools/SDKs/MacOSX11.sdk}, rather
 than the generic
-@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} .
+@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} and recent
+CLT/Xcode do not contain a macOS 11 SDK.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
@@ -5493,26 +5487,30 @@ what is missing.  At the time of writing using pre-built components
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://github.com/llvm/llvm-project/releases/} (sometimes only
-for Intel and usually unsigned/not notarized which makes them hard to
-use, especially on @code{arm64}).  In particular, these include support
-for OpenMP which Apple @command{clang} does not.  Some of these have
-included support for the ASAN and UBSAN sanitizers.
+@uref{https://github.com/llvm/llvm-project/releases/} (recently only for
+@code{arm64} and usually unsigned/not notarized which makes them hard to
+use).  In particular, these include support for OpenMP which Apple
+@command{clang} does not.  Some of these have included support for the
+ASAN and UBSAN sanitizers.
 
 Suppose one of these distributions is installed under
 @file{$LOCAL/llvm}. Use a file @file{config.site} containing
 @example
-CC=$LOCAL/llvm/bin/clang
+CC="$LOCAL/llvm/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CXX="$LOCAL/llvm/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 OBJC=$CC
 FC=$LOCAL/gfortran/bin/gfortran
-CXX=$LOCAL/llvm/bin/clang++
 LDFLAGS="-L$LOCAL/llvm/lib -L$LOCAL/lib"
 R_LD_LIBRARY_PATH=$LOCAL/llvm/lib:$LOCAL/lib
 @end example
 @noindent
+Should the location of the SDK change (or where Xcode provides the SDK
+rather than the Command Line Tools), it can be found by running
+@command{xcrun -show-sdk-path}.
+
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{$LOCAL/llvm/lib/libomp.dylib}, is found when
-needed.  If this works, you should see the line
+library, here @file{$LOCAL/llvm/lib/libomp.dylib}, is found when needed.
+If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
 @end example
@@ -5520,18 +5518,6 @@ checking whether OpenMP SIMD reduction is supported... yes
 in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
-
-For Mojave and later the system paths need to be specified @emph{via}
-@example
-CC="$LOCAL/llvm/bin/clang -isysroot
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="$LOCAL/llvm/bin/clang++ -isysroot
- /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-@end example
-@noindent
-(Long lines split for the manual, only.)  Should the location of the SDK
-change (or where Xcode provides the SDK rather than the Command Line
-Tools), it can be found by running @command{xcrun -show-sdk-path}.
 
 It is usually possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
@@ -5559,10 +5545,9 @@ can be used @emph{via} the configuration option
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
-@code{-D__ACCELERATE__}: not needed for @command{clang} from
-@uref{https://releases.llvm.org}.}  This also includes a full
-LAPACK which can be used @emph{via} @option{--with-lapack}: however, the
-version of LAPACK it contains has
+@code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}  his
+also includes a full LAPACK which can be used @emph{via}
+@option{--with-lapack}: however, the version of LAPACK it contains has
 @c 3.2.1 in Monterey.
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
@@ -5592,10 +5577,6 @@ non-default options
 @end example
 @noindent
 were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
-
-Configure option @option{--with-internal-tzcode} is the default on macOS,
-as the system implementation of time zones did not work correctly for
-times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The main @TeX{} implementation used by the developers is
 MacTeX@footnote{An essentially equivalent @TeX{} installation can be
@@ -5702,10 +5683,10 @@ writing for @cputype{arm64}.}  Builds of OpenJDK may also be available,
 e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 11 or 17 or (in 2023) 21 but not 12--16 nor
-18--20 which have/had a 6-month lifetime.  (Note that these sources may
-use unusual designations for Intel macOS builds such as @code{x86
-64-bit} and @code{x64}.)
+long-term support, e.g.@: 11 or 17 or (expected in 2023-09) 21 but not
+12--16 nor 18--20 which have/had a 6-month lifetime.  (Note that these
+sources may use unusual designations for Intel macOS builds such as
+@code{x86 64-bit} and @code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6 or 17.0.1) of Java so @command{sudo R CMD javareconf}
@@ -5773,8 +5754,7 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from
-@uref{https://releases.llvm.org} do.)
+support frameworks correctly but those from LLVM do.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -5833,21 +5813,18 @@ However, there are some important details.
 @itemize
 
 @item
-Current @acronym{CRAN} @cputype{x86_64} macOS distributions are targeted
-at High Sierra so it is wise to ensure that the compilers generate code
-that will run on High Sierra or later.  With the recommended compilers
-we can use
+Current @acronym{CRAN} macOS distributions are targeted at Big Sur so it
+is wise to ensure that the compilers generate code that will run on Big
+Sur or later.  With the recommended compilers we can use
 @example
-CC="clang -mmacosx-version-min=10.13"
-CXX="clang++ -mmacosx-version-min=10.13"
-FC="/usr/local/gfortran/bin/gfortran -mmacosx-version-min=10.13"
+CC="clang -mmacosx-version-min=11.0"
+CXX="clang++ -mmacosx-version-min=11.0"
+FC="/usr/local/gfortran/bin/gfortran -mmacosx-version-min=11.0"
 @end example
-
-For @cputype{arm64}, use the flag @option{-mmacosx-version-min=11.0}.
 
 @item
 Using the flag @option{-Werror=partial-availability} can help trigger
-compilation errors on functionality not in High Sierra.
+compilation errors on functionality not in Big Sur.
 
 @item
 Check that any compiled code is not dynamically linked to libraries only
@@ -5861,8 +5838,14 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 /usr/lib/libc++.1.dylib \
 @var{pkg}.so
 
-install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
+install_name_tool -change
+opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
+@var{pkg}.so
+
+install_name_tool -change
+opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libquadmath.0.dylib \
+/Library/Frameworks/R.framework/Resources/lib/libquadmath.0.dylib \
 @var{pkg}.so
 @end example
 
@@ -5903,7 +5886,7 @@ Mac, add the target for the C and C++ compilers:
 CC="clang -arch x86_64
 OBJC=$CC
 CXX="clang++ -arch x86_64"
-FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
+FC="/opt//gfortran/bin/gfortran -arch x86_64 -mtune=native -mmacosx-version-min=11"
 @end example
 
 @noindent
