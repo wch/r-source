@@ -27,6 +27,8 @@
  GAI_del_context
  GAI_del_string
  GAI_deletion_traversal
+ GAI_edit_control_proc
+ GAI_edit_control_procedure
  GAI_find_next_valid_sibling
  GAI_find_object
  GAI_find_prev_valid_sibling
@@ -40,6 +42,7 @@
  GAI_get_image_pixel
  GAI_get_modeless
  GAI_get_monochrome_pixel
+ GAI_gmaskimage
  GAI_hAccel
  GAI_handle_control
  GAI_handle_findreplace
