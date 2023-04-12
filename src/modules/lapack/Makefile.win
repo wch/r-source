@@ -44,7 +44,7 @@ Rlapack.def: $(LIBOBJECTS)
 
 $(MODULE).dll: $(OBJS)
 
-../../../$(BINDIR)/Rlapack.dll: $(LIBOBJECTS)
+../../../$(BINDIR)/Rlapack.dll: $(LIBOBJECTS) Rlapack.def
 	$(DLL) -shared -s -o $@ $^ -L../../../$(IMPDIR) -lR -lRblas $(FLIBS)
 
 clean:
