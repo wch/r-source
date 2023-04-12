@@ -57,7 +57,7 @@ extern void Rsleep(double timeint);
 
 static int current_timeout = 0;
 
-# if (LIBCURL_VERSION_MAJOR > 7) && (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
+# if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 
 // curl/curl.h includes <sys/select.h> and headers it requires.
 
@@ -590,7 +590,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
 	curlCommon(hnd[i], 1, 1);
-#if (LIBCURL_VERSION_MINOR >= 25)
+	// all but Unix-alikes with ancient libcurl (before 2012-03-22)
+#if (LIBCURL_VERSION_MAJOR > 7) || (LIBCURL_VERSION_MINOR >= 25)
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
 #endif
 	curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, headers);
