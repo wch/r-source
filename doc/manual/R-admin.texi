@@ -5389,30 +5389,18 @@ contains the correct information.
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compiler
 
-There is `universal' (Inttel and @code{arm64}) build of
+There is `universal' (Intel and @code{arm64}) build of
 @command{gfortran} 12.2 at
-@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0}. This
-installs into @file{/opt/gfortran}. This has a symbolic link
-@file{/opt/gfortran/SDK} that needs to be set to point to the SDK
-installed as part of CLT or Xcode on your system: the appreopriate path
-can be found by running @command{xcrun -show-sdk-path}.  (Problems will
-otherwise be seen when using Fortran to link: this is not used when
-building @R{} but is when installing a few @acronym{CRAN} packages.)
+@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0.1}.
+This installs into @file{/opt/gfortran}.
 
-In more detail, in a Terminal run
-@example
-curl -OL https://github.com/R-macos/gcc-12-branch/releases/download/12.2-darwin-r0/gfortran-12.2-darwin20-r0-universal.tar.xz
-sudo tar -xf gfortran-12.2-darwin20-r0-universal.tar.xz -C/
-cd /opt/gfprtran
-sudo rm SDK
-sudo ln -s `xcrun -show-sdk-path` SDK
-@end example
-@noindent
-Unfortunately the distribution links to a specific SDK,
-@file{/Library/Developer/CommandLineTools/SDKs/MacOSX11.sdk}, rather
-than the generic
-@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} and recent
-CLT/Xcode do not contain a macOS 11 SDK.
+The @file{/opt/gfortran/SDK} symlink should point to the desired path to
+the SDK (defaults to the command line tools SDK). This can be updated by
+running @file{/opt/gfortran/bin/gfortran-update-sdk} or manually. If the
+symlink is broken, the driver will issue a warning and use @code{xcrun
+-show-sdk-path} to try to find an SDK and use its path.  (The SDK path
+is used when using @command{gfortran} to link, so not when building @R{}
+but when installing a few packages.)
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
@@ -5542,6 +5530,7 @@ can be used @emph{via} the configuration option
 @end example
 
 @noindent
+@c LAPACK in Accelerate was still 3.2.1 in macOS 13.3 / CLT 14.3
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
@@ -5557,7 +5546,8 @@ to use Accelerate's BLAS.
 @c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
 @c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
 As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
-framework are `now inline with reference version 3.9.1'.  The release
+framework are `now inline with reference version
+3.9.1'.@footnote{Released 2021-04-01.}  The release
 notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
 headers.
 
