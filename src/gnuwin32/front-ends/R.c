@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-11  R Core Team
+ *  Copyright (C) 2000-23  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ int main (int argc, char **argv)
 		}
 	    if (cmdarg >= 3) { /* something before CMD */
 		/* Cannot set to empty value on Windows */
-		char *Init = "R_PROFILE_USER=\r", *Site="R_RPOFILE=\r",
+		char *Init = "R_PROFILE_USER=\r", *Site="R_PROFILE=\r",
 		    *Env1="R_ENVIRON=\r", *Env2="R_ENVIRON_USER=\r";
 		for(int i = 1; i < cmdarg; i++) {
 		    char *a = argv[i];
