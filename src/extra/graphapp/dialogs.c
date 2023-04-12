@@ -31,6 +31,7 @@
    Modify find and replace for RichEdit20W.
    Path length limits.
    Update askcdstring to IFileOpenDialog (Vista).
+   Add clickbutton, handle WM_CLOSE in askstr_dialog.
 */
 
 #ifndef _WIN32_WINNT
@@ -675,6 +676,20 @@ static int handle_message_dialog(window w)
     return d->hit;
 }
 
+void clickbutton(window w, button b) {
+    sendmessage(w->handle, WM_COMMAND,
+	(BN_CLICKED << 16) | GetWindowLong(b->handle, GWL_ID),
+	b->handle);
+}
+
+static void askstr_dialog_close(window win)
+{
+    dialog_data *d;
+
+    d = data(win);
+    clickbutton(win, d->cancel);
+}
+
 static window init_askstr_dialog(const char *title, const char *question,
 				 const char *default_str)
 {
@@ -715,6 +730,7 @@ static window init_askstr_dialog(const char *title, const char *question,
 			  rect(middle+10, h*7, bw, h+10), hit_button);
     setvalue(d->cancel, CANCEL);
 
+    setclose(win, askstr_dialog_close);
     setkeydown(win, hit_key);
 
     return win;

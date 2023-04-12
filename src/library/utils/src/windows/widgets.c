@@ -63,6 +63,11 @@ static void key1(control c, int ch)
 rect getSysFontSize(void); /* in graphapp/fonts.c */
 RECT *RgetMDIsize(void); /* in rui.c */
 
+static void selectlist_close(window win)
+{
+    clickbutton(win, bCancel);
+}
+
 SEXP Win_selectlist(SEXP args)
 {
     SEXP choices, preselect, ans = R_NilValue;
@@ -120,6 +125,7 @@ SEXP Win_selectlist(SEXP args)
     }
     bFinish = newbutton(G_("OK"), rect(xmax-160, ymax-40, 70, 25), finish);
     bCancel = newbutton(G_("Cancel"), rect(xmax-80, ymax-40, 70, 25), cancel);
+    setclose(wselect, selectlist_close);
     setkeydown(wselect, key1);
     show(wselect);
     done = 0;

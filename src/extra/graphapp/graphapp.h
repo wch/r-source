@@ -239,6 +239,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define checklimittext		GA_checklimittext
 #define clear		GA_clear
 #define cleartext		GA_cleartext
+#define clickbutton             GA_clickbutton
 #define clipboardhastext		GA_clipboardhastext
 #define clipr		GA_clipr
 #define compare_strings		GAI_compare_strings
@@ -1187,6 +1188,7 @@ char *	askfilename(const char *title, const char *default_name);
 char *  askfilenamewithdir(const char *title, const char *default_name, const char *dir);
 char *	askfilesave(const char *title, const char *default_name);
 char *	askUserPass(const char *title);
+void    clickbutton(window w, button b);
 
 /*
  *  Time functions.
