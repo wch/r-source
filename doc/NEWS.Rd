@@ -823,6 +823,10 @@
       binary GLMs.  A new method for objects of class \code{"glm"} returns the
       square root of the estimate of the dispersion parameter using the
       same calculation as \code{summary.glm()}.
+
+      \item \command{R CMD} on Windows now skips the site profile with
+      \option{--no-site-file} and \option{--vanilla} even when
+      \env{R_PROFILE} is set (\PR{18512}, from Kevin Ushey).
     }
   }
 }
