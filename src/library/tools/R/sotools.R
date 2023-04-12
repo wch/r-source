@@ -862,7 +862,7 @@ function(calls, dir = NULL, character_only = TRUE)
         dir <- attr(calls, "dir")
 
     package <- # drop name
-        as.vector(.read_description(file.path(dir, "DESCRIPTION"))["Package"])
+        as.vector(.get_package_metadata(dir)["Package"])
 
     symbols <- character()
     nrdb <-
