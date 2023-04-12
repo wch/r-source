@@ -5541,19 +5541,11 @@ non-Apple toolchains @code{CPPFLAGS} needed to contain
 @code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}  his
 also includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains has
-@c 3.2.1 in Monterey.
+@c 3.2.1 even in Ventura 13.3.
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
 to use Accelerate's BLAS.
-
-@c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
-@c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
-As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
-framework are `now inline with reference version
-3.9.1'.@footnote{Released 2021-04-01.}  The release
-notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
-headers.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
