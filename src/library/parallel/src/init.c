@@ -59,5 +59,5 @@ R_init_parallel(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-    R_forceSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 }
