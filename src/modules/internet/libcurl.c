@@ -57,7 +57,7 @@ extern void Rsleep(double timeint);
 
 static int current_timeout = 0;
 
-# if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
+# if (LIBCURL_VERSION_MAJOR > 7) && (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 
 // curl/curl.h includes <sys/select.h> and headers it requires.
 
