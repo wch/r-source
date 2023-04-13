@@ -156,7 +156,7 @@ function(x, MARGIN)
 array2DF <-
 function (x, responseName = "Value", sep = "",
           base = list(LETTERS),
-          simplify = FALSE, allowLong = TRUE)
+          simplify = TRUE, allowLong = TRUE)
 {
     .df_helper <- function(x) # for data frames
     {
