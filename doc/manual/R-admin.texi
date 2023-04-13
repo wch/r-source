@@ -5547,9 +5547,8 @@ to use Accelerate's BLAS.
 @c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
 As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
 framework are `now inline with reference version
-3.9.1'.@footnote{Released 2021-04-01.}  The release
-notes suggest defining @code{ACCELERATE_NEW_LAPACK} before including the
-headers.
+3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
+naming new entry points and so only accessible @emph{via} their C headers.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
