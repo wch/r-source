@@ -826,7 +826,7 @@ static R_size_t R_NodesInUse = 0;
 #define NO_FREE_NODES() (R_NodesInUse >= R_NSize)
 #define GET_FREE_NODE(s) CLASS_GET_FREE_NODE(0,s)
 
-/* versions that assume nodes are avaialble without adding a new page */
+/* versions that assume nodes are available without adding a new page */
 #define CLASS_QUICK_GET_FREE_NODE(c,s) do {		\
 	SEXP __n__ = R_GenHeap[c].Free;			\
 	if (__n__ == R_GenHeap[c].New)			\
@@ -1164,7 +1164,7 @@ static void AdjustHeapSize(R_size_t size_needed)
 	R_size_t change =
 	    (R_size_t)(R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize);
 
-	/* for early andjustments grow more agressively */
+	/* for early adjustments grow more aggressively */
 	static R_size_t last_in_use = 0;
 	static int adjust_count = 1;
 	if (adjust_count < 50) {
@@ -3319,7 +3319,7 @@ NORET void R_signal_protect_error(void)
     cntxt.cend = &reset_pp_stack;
     cntxt.cenddata = &oldpps;
 
-    /* condiiton is pre-allocated and protected with R_PreserveObject */
+    /* condition is pre-allocated and protected with R_PreserveObject */
     SEXP cond = R_getProtectStackOverflowError();
 
     if (R_PPStackSize < R_RealPPStackSize) {
@@ -4503,7 +4503,7 @@ attribute_hidden
 Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return NO_SPECIAL_SYMBOLS(CHK(b)); }
 
 /* R_FunTab accessors, only needed when write barrier is on */
-/* Not hidden to allow experimentaiton without rebuilding R - LT */
+/* Not hidden to allow experimentation without rebuilding R - LT */
 /* attribute_hidden */
 int (PRIMVAL)(SEXP x) { return PRIMVAL(CHK(x)); }
 /* attribute_hidden */

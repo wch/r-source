@@ -113,7 +113,7 @@ static GEDevDesc nullDevice;
 
 /* In many cases this is used to mean that the current device is
    the null device, and in others to mean that there is no open device.
-   The two condiions are currently the same, as no way is provided to
+   The two conditions are currently the same, as no way is provided to
    select the null device (selectDevice(0) immediately opens a device).
 
    But watch out if you intend to change the logic of any of this.
@@ -350,7 +350,7 @@ void KillAllDevices(void)
     */
     int i;
     for(i = R_MaxDevices-1; i > 0; i--) removeDevice(i, FALSE);
-    R_CurrentDevice = 0;  /* the null device, for tidyness */
+    R_CurrentDevice = 0;  /* the null device, for tidiness */
 
     /* <FIXME> Disable this for now */
     /*

@@ -1334,7 +1334,7 @@ attribute_hidden SEXP do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 attribute_hidden SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* NOTE: The following code ensures that when an attribute list */
-/* is attached to an object, that the "dim" attibute is always */
+/* is attached to an object, that the "dim" attribute is always */
 /* brought to the front of the list.  This ensures that when both */
 /* "dim" and "dimnames" are set that the "dim" is attached first. */
 

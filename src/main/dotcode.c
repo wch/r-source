@@ -1633,7 +1633,7 @@ attribute_hidden SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!GEcheckState(dd))
 	    errorcall(call, _("invalid graphics state"));
 	/* args is escaping, so make sure it is reference counting. */
-	/* should alread be handled in do_External, but be safe ... */
+	/* should already be handled in do_External, but be safe ... */
 	R_args_enable_refcnt(args);
 	GErecordGraphicOperation(op, args, dd);
     }

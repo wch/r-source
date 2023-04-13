@@ -992,7 +992,7 @@ SEXP eval(SEXP e, SEXP rho)
 	   stack overflow. LT */
 	R_Expressions = R_Expressions_keep + 500;
 
-	/* condiiton is pre-allocated and protected with R_PreserveObject */
+	/* condition is pre-allocated and protected with R_PreserveObject */
 	SEXP cond = R_getExpressionStackOverflowError();
 
 	R_signalErrorCondition(cond, R_NilValue);
@@ -2327,7 +2327,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 	    }
 	}
 #ifdef SWITCH_TO_REFCNT
-	/* re-promise to get referenve counts for references from rho
+	/* re-promise to get reference counts for references from rho
 	   and newrho right. */
 	if (TYPEOF(val) == PROMSXP)
 	    SETCAR(FRAME(newrho), mkPROMISE(val, rho));
@@ -2844,7 +2844,7 @@ attribute_hidden SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  Assignments for complex LVAL specifications. This is the stuff that
  *  nightmares are made of ...	Note that "evalseq" preprocesses the LHS
  *  of an assignment.  Given an expression, it builds a list of partial
- *  values for the exression.  For example, the assignment x$a[3] <- 10
+ *  values for the expression.  For example, the assignment x$a[3] <- 10
  *  with LHS x$a[3] yields the (improper) list:
  *
  *	 (eval(x$a[3])	eval(x$a)  eval(x)  .  x)
@@ -3336,8 +3336,8 @@ attribute_hidden SEXP evalList(SEXP el, SEXP rho, SEXP call, int n)
 	       symbol, but maybe not as efficiently as eval) and only
 	       serves to change the error message, not always for the
 	       better. Also, the byte code interpreter does not do
-	       this, so dropping this makes compiled and interreted
-	       cod emore consistent. */
+	       this, so dropping this makes compiled and interpreted
+	       code more consistent. */
 	} else if (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)) {
 	    /* It was missing */
 	    errorcall_cpy(call,
@@ -5204,7 +5204,7 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 
 NORET static void nodeStackOverflow(void)
 {
-    /* condiiton is pre-allocated and protected with R_PreserveObject */
+    /* condition is pre-allocated and protected with R_PreserveObject */
     SEXP cond = R_getNodeStackOverflowError();
 
     R_signalErrorCondition(cond, R_CurrentExpression);
@@ -6514,7 +6514,7 @@ static R_INLINE int LOOP_NEXT_OFFSET(int loop_state_size)
     return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 1 - loop_state_size);
 }
 
-/* Check whether a call is to a base function; if not use AST interpeter */
+/* Check whether a call is to a base function; if not use AST interpreter */
 /***** need a faster guard check */
 static R_INLINE SEXP SymbolValue(SEXP sym)
 {
@@ -6686,7 +6686,7 @@ static Rboolean maybePrimitiveCall(SEXP expr)
     return FALSE;
 }
 
-/* Inflate a (single-level) compiler-flattenned assignment call.
+/* Inflate a (single-level) compiler-flattened assignment call.
    For example,
            `[<-`(x, c(-1, 1), value = 2)
    becomes
@@ -7907,7 +7907,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 	/* For the typed stack it might be OK just to force boxing at
 	   this point, but for now this code tries to avoid doing
-	   that. The macros make the code a little more reabable. */
+	   that. The macros make the code a little more readable. */
 #define STACKVAL_MAYBE_REFERENCED(idx)				\
 	(IS_STACKVAL_BOXED(idx) &&				\
 	 MAYBE_REFERENCED(GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (idx))))
@@ -8478,8 +8478,8 @@ char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
 	return buf;
     }
     else if (ext == NULL) {
-	/* if the requested file has no extention, make a name that
-	   has the extenrion added on to the expanded name */
+	/* if the requested file has no extension, make a name that
+	   has the extension added on to the expanded name */
 	if (snprintf(buf, bsize, "%s%s", fname, R_COMPILED_EXTENSION) < 0)
 	    error("R_CompiledFileName: buffer too small");
 	return buf;

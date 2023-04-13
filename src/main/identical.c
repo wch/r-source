@@ -323,7 +323,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	} else { // !IGNORE_BYTECODE: use byte code for comparison of function bodies :
 	    if(!R_compute_identical(BODY(x), BODY(y), flags)) return FALSE;
 	}
-	// now, formals and body are equal, check the enviroment(.)s:
+	// now, formals and body are equal, check the environment(.)s:
 	return (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
     }
     case SPECIALSXP:

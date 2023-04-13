@@ -55,7 +55,7 @@ attribute_hidden void nl_Rdummy(void)
    src/gnuwin/front-ends/graphappmain.c on Windows, unless of course
    R is embedded */
 
-/* Global Variables:  For convenience, all interpeter global symbols
+/* Global Variables:  For convenience, all interpreter global symbols
  * ================   are declared in Defn.h as extern -- and defined here.
  *
  * NOTE: This is done by using some preprocessor trickery.  If __MAIN__
@@ -651,7 +651,7 @@ static void *signal_stack;
 #define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers(void)
 {
-    /* Do not set the (since 2005 experimantal) SEGV handler
+    /* Do not set the (since 2005 experimental) SEGV handler
        UI if R_NO_SEGV_HANDLER env var is non-empty.
        This is needed to debug crashes in the handler
        (which happen as they involve the console interface). */

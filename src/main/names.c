@@ -1024,7 +1024,7 @@ FUNTAB R_FunTab[] =
    This is now also used for screening out syntactically special
    functions fromuse on the RHS of a pipe. If a
    non-syntactically-special symbol is added here it would neet to be
-   explicutly allowed in the pipe code. */
+   explicitly allowed in the pipe code. */
 
 static char *Spec_name[] = {
     "if", "while", "repeat", "for", "break", "next", "return", "function",

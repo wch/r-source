@@ -532,7 +532,7 @@ attribute_hidden SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
    (i) It needs Windows >= Vista
    (ii) It matters whether 'from' is a file or a dir, and we could only
    know if it exists already.
-   (iii) This needs specific privileges which in general only Adminstrators
+   (iii) This needs specific privileges which in general only Administrators
    have, and which many people report granting in the Policy Editor
    fails to work.
 */

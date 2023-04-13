@@ -3735,7 +3735,7 @@ static SEXP SrcRefsToVectorList(void) {
  *
  *  The Following entry points provide language parsing facilities.
  *  Note that there are separate entry points for parsing IoBuffers
- *  (i.e. interactve use), files and R character strings.
+ *  (i.e. interactive use), files and R character strings.
  *
  *  The entry points provide the same functionality, they just
  *  set things up in slightly different ways.
