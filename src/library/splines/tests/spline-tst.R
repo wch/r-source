@@ -279,11 +279,8 @@ stopifnot(identical(coef(mns),  c("(Intercept)" = 5, "ns(u)" = NA))
 
 
 ## [Bug 18442] ns() fails when quantiles end up on the boundary  (2022-12-05)
-##  =========  ---- 1st example ===> ~/R/D/r-devel/R/tests/reg-tests-1e.R  'ns(nn,4)'
-" see here:
-
- ~/R/MM/MISC/Bugs+S-diffs/ns-boundary_PR-18442.R
-"
+##  =========  ---- 1st example ===> <R>/tests/reg-tests-1e.R  'ns(nn,4)'
+##
 ## a (more extreme) example where bs() is affected similarly:
 require(splines)
 ##
