@@ -276,3 +276,21 @@ stopifnot(identical(coef(mns),  c("(Intercept)" = 5, "ns(u)" = NA))
 	, identical(residuals(mbs), c(`1` = 0))
 	, identical(residuals(mbs1),c(`1` = 0))
 	  )
+
+
+## [Bug 18442] ns() fails when quantiles end up on the boundary  (2022-12-05)
+##  =========  ---- 1st example ===> <R>/tests/reg-tests-1e.R  'ns(nn,4)'
+##
+## a (more extreme) example where bs() is affected similarly:
+require(splines)
+##
+x <- c(rep(0L, 44), 1:10, 2L*(6:15), as.integer(round(1.25^(15:22))))
+y <- 10L*x + c(-1L,1L)
+B <- bs(x, df = 7)
+summary(m <- lm(y ~ B))
+stopifnot(exprs = {
+    qr(B)$rank == 7
+    all.equal(c(0, 0.03265, 20.53, 21.79, 73.27, 519.8, 964.3, 1361),
+              unname(coef(m)), tol = 1e-4)
+})
+## rank was 5, and coef(m) had 3 NA's in R <= 4.2.x

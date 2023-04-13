@@ -818,6 +818,11 @@
       square root of the estimate of the dispersion parameter using the
       same calculation as \code{summary.glm()}.
 
+      \item \code{bs()} and \code{ns()} in the (typical) case of automatic
+      knot construction, when some of the supposedly inner knots coincide
+      with boundary knots, now moves them inside (with a warning), building
+      on \PR{18442} by Ben Bolker.
+
       \item \command{R CMD} on Windows now skips the site profile with
       \option{--no-site-file} and \option{--vanilla} even when
       \env{R_PROFILE} is set (\PR{18512}, from Kevin Ushey).
