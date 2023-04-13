@@ -1494,6 +1494,20 @@ attribute_hidden SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static R_ToplevelCallbackEl *Rf_ToplevelTaskHandlers = NULL;
 
+  /* The handler currently running or NULL. */
+static R_ToplevelCallbackEl *Rf_CurrentToplevelHandler = NULL;
+
+  /* A running handler attempted to remove itself from Rf_ToplevelTaskHandlers,
+     do it after it finishes. */
+static Rboolean Rf_DoRemoveCurrentToplevelHandler = FALSE;
+
+  /* A handler has been removed from the Rf_ToplevelTaskHandlers. */
+static Rboolean Rf_RemovedToplevelHandlers = FALSE;
+
+  /* Flag to ensure that the top-level handlers aren't called recursively.
+     Simple state to indicate that they are currently being run. */
+static Rboolean Rf_RunningToplevelHandlers = FALSE;
+
 /**
   This is the C-level entry point for registering a handler
   that is to be called when each top-level task completes.
@@ -1544,6 +1558,19 @@ Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
     return(el);
 }
 
+static void removeToplevelHandler(R_ToplevelCallbackEl *e)
+{
+    if (Rf_CurrentToplevelHandler == e)
+	Rf_DoRemoveCurrentToplevelHandler = TRUE; /* postpone */
+    else {
+	Rf_RemovedToplevelHandlers = TRUE;
+	if(e->finalizer)
+	    e->finalizer(e->data);
+	free(e->name);
+	free(e);
+    }
+}
+
 Rboolean
 Rf_removeTaskCallbackByName(const char *name)
 {
@@ -1566,14 +1593,11 @@ Rf_removeTaskCallbackByName(const char *name)
 	prev = el;
 	el = el->next;
     }
-    if(el) {
-	if(el->finalizer)
-	    el->finalizer(el->data);
-	free(el->name);
-	free(el);
-    } else {
+    if(el)
+	removeToplevelHandler(el);
+    else 
 	status = FALSE;
-    }
+
     return(status);
 }
 
@@ -1607,14 +1631,10 @@ Rf_removeTaskCallbackByIndex(int id)
 	    }
 	}
     }
-    if(tmp) {
-	if(tmp->finalizer)
-	    tmp->finalizer(tmp->data);
-	free(tmp->name);
-	free(tmp);
-    } else {
+    if(tmp)
+	removeToplevelHandler(tmp);
+    else
 	status = FALSE;
-    }
 
     return(status);
 }
@@ -1681,10 +1701,6 @@ R_getTaskCallbackNames(void)
   We currently do not pass this to the handler.
  */
 
-  /* Flag to ensure that the top-level handlers aren't called recursively.
-     Simple state to indicate that they are currently being run. */
-static Rboolean Rf_RunningToplevelHandlers = FALSE;
-
 /* This is not used in R and in no header */
 void
 Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
@@ -1699,7 +1715,29 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
     h = Rf_ToplevelTaskHandlers;
     Rf_RunningToplevelHandlers = TRUE;
     while(h) {
+	Rf_RemovedToplevelHandlers = FALSE;
+	Rf_DoRemoveCurrentToplevelHandler = FALSE;
+	Rf_CurrentToplevelHandler = h;
 	again = (h->cb)(expr, value, succeeded, visible, h->data);
+	Rf_CurrentToplevelHandler = NULL;
+
+	if (Rf_DoRemoveCurrentToplevelHandler) {
+	    /* the handler attempted to remove itself, PR#18508 */
+	    Rf_DoRemoveCurrentToplevelHandler = FALSE;
+	    again = FALSE;
+	}
+	if (Rf_RemovedToplevelHandlers) {
+	    /* some handlers were removed, but not "h" -> recompute "prev" */
+	    prev = NULL;
+	    R_ToplevelCallbackEl *h2 = Rf_ToplevelTaskHandlers;
+	    while(h2 != h) {
+		prev = h2;
+		h2 = h2->next;
+		if (!h2)
+		    R_Suicide("list of toplevel callbacks was corrupted");
+	    }
+	}
+
 	if(R_CollectWarnings) {
 	    REprintf(_("warning messages from top-level task callback '%s'\n"),
 		     h->name);
