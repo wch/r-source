@@ -235,12 +235,6 @@
       case. \code{by.data.frame()} similarly allows \code{INDICES} to be
       a formula.
 
-      \item The \code{"glm"} method for \code{anova()} computes test
-      statistics and p-values by default, using a chi-squared test or
-      an F test depending on whether the dispersion is fixed or
-      free.  Test statistics can be suppressed by giving argument
-      \code{test} a false logical value.
-
       \item The performance of \code{df[j] <- value} (including for
       missing \code{j}) and \code{write.table(df)} has been improved for
       data frames \code{df} with a large number of columns.  (Thanks to
