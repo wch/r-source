@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2022 The R Core Team
+ *  Copyright (C) 2015-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -584,7 +584,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
 	curlCommon(hnd[i], 1, 1);
-#if (LIBCURL_VERSION_MINOR >= 25)
+	// all but Unix-alikes with ancient libcurl (before 2012-03-22)
+#if (LIBCURL_VERSION_MAJOR > 7) || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 25)
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
 #endif
 	curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, headers);
@@ -894,7 +895,7 @@ static Rboolean Curl_open(Rconnection con)
     curl_easy_setopt(ctxt->hnd, CURLOPT_FAILONERROR, 1L);
     curlCommon(ctxt->hnd, 1, 1);
     curl_easy_setopt(ctxt->hnd, CURLOPT_NOPROGRESS, 1L);
-#if (LIBCURL_VERSION_MINOR >= 25)
+#if LIBCURL_VERSION_MAJOR > 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 25)
     curl_easy_setopt(ctxt->hnd, CURLOPT_TCP_KEEPALIVE, 1L);
 #endif
 
