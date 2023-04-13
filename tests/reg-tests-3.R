@@ -133,8 +133,8 @@ print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
 ## adapted from adaptsmoFMRI
 if(suppressMessages(require("Matrix"))) {
     x <- matrix(c(1,2,3,4))
-    print(median(x))
-    print(median(as(x, "dgeMatrix")))
+    print(m <- median(x))
+    stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
     detach("package:Matrix")
 }
 

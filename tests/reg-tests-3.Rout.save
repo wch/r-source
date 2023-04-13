@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-03-24 r84039) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-04-13 r84246) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.3.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -757,13 +757,11 @@ x1     a b <NA>
 > ## median should work by default for a suitable S4 class.
 > ## adapted from adaptsmoFMRI
 > if(suppressMessages(require("Matrix"))) {
-+     x <- matrix(c(1,2,3,4))
-+     print(median(x))
-+     print(median(as(x, "dgeMatrix")))
-+     detach("package:Matrix")
++ x <- matrix(c(1,2,3,4))
++ print(m <- median(x))
++ stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
++ detach("package:Matrix")
 + }
-[1] 2.5
-as(<matrix>, "dgeMatrix") is deprecated since Matrix 1.5-0; do as(as(as(., "dMatrix"), "generalMatrix"), "unpackedMatrix") instead
 [1] 2.5
 > 
 > ## Various arguments were not duplicated:  PR#15352 to 15354
@@ -1069,5 +1067,5 @@ A BibTeX entry for LaTeX users is
 [1] 4
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  1.467 0.085 1.559 0.001 0.003 
+Time elapsed:  2.368 0.234 2.875 0.001 0.002 
 > 
