@@ -2253,7 +2253,7 @@ attribute_hidden SEXP do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	wchar_t *w = globbuf.gl_pathv[i];
 	char *buf;
-	int nb = wcstoutf8(NULL, w, INT_MAX);
+	size_t nb = wcstoutf8(NULL, w, (size_t)INT_MAX + 2);
 	buf = R_AllocStringBuffer(nb, &cbuff);
 	wcstoutf8(buf, w, nb);
 	SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));

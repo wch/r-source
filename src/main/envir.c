@@ -4067,13 +4067,13 @@ SEXP mkChar(const char *name)
 attribute_hidden SEXP mkCharWUTF8(const wchar_t *wname)
 {
     const void *vmax = vmaxget();
-    size_t nb = wcstoutf8(NULL, wname, INT_MAX);
-    if ((int)nb-1 > INT_MAX) {
+    size_t nb = wcstoutf8(NULL, wname, (size_t)INT_MAX + 2);
+    if (nb-1 > INT_MAX) {
 	error("R character strings are limited to 2^31-1 bytes");
     }
     char *name = R_alloc(nb, 1);
     nb = wcstoutf8(name, wname, nb);
-    SEXP ans = mkCharLenCE(name, (int)nb-1, CE_UTF8);
+    SEXP ans = mkCharLenCE(name, (int)(nb-1), CE_UTF8);
     vmaxset(vmax);
     return ans;
 }

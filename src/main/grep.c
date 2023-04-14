@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -179,17 +179,19 @@ static SEXP mkCharWLenASCII(const wchar_t *wc, int nc, Rboolean maybe_ascii)
     }
 
     /* possibly not ASCII */
-    size_t nb = (nc + 1) * 4;
+    size_t nb = ((size_t)nc + 1) * 4;
     if (nb <= 8192) {
 	char xi[8192];
 	nb = wcstoutf8(xi, wc, nb);
-	return mkCharLenCE(xi, (int)nb-1, CE_UTF8);
+	return mkCharLenCE(xi, (int)(nb-1), CE_UTF8);
     }
 
-    nb = wcstoutf8(NULL, wc, INT_MAX);
+    nb = wcstoutf8(NULL, wc, (size_t)INT_MAX+2);
+    if (nb-1 > INT_MAX)
+	error("R character strings are limited to 2^31-1 bytes");
     char *xi = R_Calloc(nb, char);
     nb = wcstoutf8(xi, wc, nb);
-    SEXP ans = mkCharLenCE(xi, (int)nb-1, CE_UTF8);
+    SEXP ans = mkCharLenCE(xi, (int)(nb-1), CE_UTF8);
     R_Free(xi);
     return ans;
 }

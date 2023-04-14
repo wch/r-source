@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -909,7 +909,7 @@ donewsc:
 		if (iswspace((int)wc[i])) mywcscpy(wc + i, wc + i + 1);
     }
 
-    int nb = (int) wcstoutf8(NULL, wc, INT_MAX);
+    size_t nb = wcstoutf8(NULL, wc, (size_t)INT_MAX + 2);
     char *cbuf = CallocCharBuf(nb);
     wcstoutf8(cbuf, wc, nb);
     SEXP ans = mkCharCE(cbuf, CE_UTF8);

@@ -175,7 +175,7 @@ static int countFilenamesW(const wchar_t *list)
 
 static SEXP mkCharUTF8(const wchar_t *wc)
 {
-    size_t needed = wcstoutf8(NULL, wc, INT_MAX) + 1;
+    size_t needed = wcstoutf8(NULL, wc, (size_t)INT_MAX + 2) + 1;
     char *s = R_alloc(needed, 1);
     wcstoutf8(s, wc, needed);
     return mkCharCE(s, CE_UTF8);
