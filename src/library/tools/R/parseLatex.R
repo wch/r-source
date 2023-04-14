@@ -25,8 +25,7 @@ parseLatex <- function(text, filename = deparse1(substitute(text)),
     ## the internal function must get some sort of srcfile
     srcfile <- srcfilecopy(filename, text, file.mtime(filename))
     text <- paste(text, collapse="\n")
-    .External2("parseLatex", text, srcfile, verbose, as.character(verbatim),
-               PACKAGE = "tools")
+    .External2(C_parseLatex, text, srcfile, verbose, as.character(verbatim))
 }
 
 

@@ -39,10 +39,14 @@ SIGCHLD <- .Call(PS_sigs, 20L)
 SIGUSR1 <- .Call(PS_sigs, 30L)
 SIGUSR2 <- .Call(PS_sigs, 31L)
 
+rm(PS_sigs)
+
 ## This calls C code in the package too
+C_parseLatex <-
+    getDLLRegisteredRoutines("tools")[[c(".External", "parseLatex")]]
 latexArgCount <- integer()              # The next line modifies this
 latexTable <- makeLatexTable(utf8table)  # FIXME: Should latexTable be hardcoded instead?
-rm(PS_sigs)
+rm(C_parseLatex)
 
 .onLoad <- function(libname, pkgname) {
     ## see if we can render Unicode bullet: not C locales, nor CJK on Windows.
