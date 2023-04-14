@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseLatex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## This is called during package installation via makeLatex()
-## so we can't use the symbol C_parseLatex here
 parseLatex <- function(text, filename = deparse1(substitute(text)),
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput") )
