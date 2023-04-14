@@ -9447,7 +9447,7 @@ that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
 On platforms where @code{valgrind} and its headers@footnote{in some
-distriutions packaged separately, for example as @file{valgrind-devel}.}
+distributions packaged separately, for example as @file{valgrind-devel}.}
 are installed you can build a version of @R{} with extra instrumentation
 to help @code{valgrind} detect errors in the use of memory allocated
 from the @R{} heap.  The @command{configure} option is
