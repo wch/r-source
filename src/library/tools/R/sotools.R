@@ -826,7 +826,10 @@ function(dir)
     ## A few packages such as CDM use base::.Call
     ff_call_names <- c(".C", ".Call", ".Fortran", ".External",
                        "base::.C", "base::.Call",
-                       "base::.Fortran", "base::.External")
+                       "base::.Fortran", "base::.External",
+                       ## internal ones
+                       ".Call.graphics", ".External.graphics", 
+                       ".External2")
 
     predicate <- function(e) {
         (length(e) > 1L) &&
@@ -849,7 +852,9 @@ function(calls, dir = NULL, character_only = TRUE)
 {
     if(!length(calls)) return(NULL)
 
-    ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
+    ff_call_names <-
+        c(".C", ".Call", ".Fortran", ".External",
+          ".Call.graphics", ".External.graphics", ".External2")
     ff_call_args <- lapply(ff_call_names,
                            function(e) args(get(e, baseenv())))
     names(ff_call_args) <- ff_call_names
@@ -893,6 +898,7 @@ function(calls, dir = NULL, character_only = TRUE)
                    ## Only keep ff calls where .NAME is character
                    ## or (optionally) a name.
                    s <- e[[".NAME"]]
+                   t <- typeof(s)
                    if(is.name(s)) {
                        s <- deparse(s)[1L]
                        if(character_only) {
@@ -920,12 +926,12 @@ function(calls, dir = NULL, character_only = TRUE)
                         }
                    ## Could perhaps also record whether 's' was a symbol
                    ## or a character string ...
-                   cbind(cname, s, n)
+                   cbind(cname, s, n, t)
                })
     nrdb <- do.call(rbind, nrdb)
     nrdb <- as.data.frame(unique(nrdb), stringsAsFactors = FALSE)
 
-    if(NROW(nrdb) == 0L || length(nrdb) != 3L) {
+    if(NROW(nrdb) == 0L || length(nrdb) != 4L) {
         message("no native symbols were extracted")
         return(NULL)
     }
