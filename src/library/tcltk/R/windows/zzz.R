@@ -44,7 +44,7 @@
 {
     ## precaution in case the DLL has been unloaded without the namespace
     if(is.loaded("tcltk_end", PACKAGE="tcltk"))
-        .C("tcltk_end", PACKAGE="tcltk")
+        .C(C_tcltk_end)
 }
 
 
