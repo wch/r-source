@@ -1376,7 +1376,7 @@ Rf_MakeDLLInfo(DllInfo *info)
     SEXP ref, elNames, tmp;
     int i, n;
     const char *const names[] = {"name", "path", "dynamicLookup",
-				 "handle", "info"};
+				 "handle", "info", "forceSymbols"};
 
     n = sizeof(names)/sizeof(names[0]);
 
@@ -1394,6 +1394,7 @@ Rf_MakeDLLInfo(DllInfo *info)
     SEXP einfo = Rf_makeDllInfoReference(info);
     SET_VECTOR_ELT(ref, 4, einfo);
     R_registerSymbolEptr(ehandle, einfo);
+    SET_VECTOR_ELT(ref, 5, ScalarLogical(info->forceSymbols));
 
     PROTECT(elNames = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
