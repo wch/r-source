@@ -43,8 +43,8 @@
 .onUnload <- function(libpath)
 {
     ## precaution in case the DLL has been unloaded without the namespace
-    if(is.loaded("tcltk_end", PACKAGE="tcltk"))
-        .C(C_tcltk_end)
+    if(!is.null(getLoadedDLLs()[["tcltk"]]))
+        .C(.C_tcltk_end)
 }
 
 
