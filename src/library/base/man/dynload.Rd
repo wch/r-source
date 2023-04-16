@@ -162,7 +162,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{is.loaded} requires the name you would give to \code{.C} etc.
   It must be a character string and so cannot be an \R object as used
   for registered native symbols (see \dQuote{Writing R Extensions}
-  §5.4.).  Some registered symbols are available by name but most are
+  section 5.4.).  Some registered symbols are available by name but most are
   not, including those in the examples below.
 
   By default, the maximum number of DLLs that can be loaded is now 614
