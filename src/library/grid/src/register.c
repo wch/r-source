@@ -114,5 +114,5 @@ void attribute_visible R_init_grid(DllInfo *dll)
      */
     R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-    R_forceSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 }
