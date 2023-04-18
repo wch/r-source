@@ -1,7 +1,7 @@
 #  File src/library/stats/R/birthday.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 qbirthday <- function(prob = 0.5, classes = 365, coincident = 2)
 {
+    if(!length(prob)) return(prob)
     k <- coincident
     c <- classes
     p <- prob
@@ -41,6 +42,7 @@ qbirthday <- function(prob = 0.5, classes = 365, coincident = 2)
 
 pbirthday <- function(n, classes = 365, coincident = 2)
 {
+    if(!length(n)) return(n)
     k <- coincident
     c <- classes
     if (k < 2) return(1)

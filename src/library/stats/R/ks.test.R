@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ks.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -196,10 +196,10 @@ function(formula, data, subset, na.action, ...)
 
 rsmirnov <- 
 function(n, sizes, z = NULL, two.sided = TRUE) {
-
+    if(!length(n) || n == 0L)
+        return(numeric(0L))
     if (n < 0)
         stop("invalid arguments")
-    if (n == 0L) return(numeric(0))
     n <- floor(n)
 
     if (length(sizes) != 2L)
@@ -211,17 +211,12 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
     n.x <- floor(n.x)
     n.y <- floor(n.y)
 
-    if (is.null(z)) {
-        rt <- rep.int(1, n.x + n.y)
-    } else {
-        rt <- table(z)
-    }
-    ret <- .Call(C_Smirnov_sim,
-                 as.integer(rt),
-                 as.integer(c(n.x, n.y)),
-                 as.integer(n),
-                 as.integer(two.sided))
-    return(ret)
+    rt <- if (is.null(z)) rep.int(1L, n.x + n.y) else table(z)
+    .Call(C_Smirnov_sim,
+          as.integer(rt),
+          as.integer(c(n.x, n.y)),
+          as.integer(n),
+          as.integer(two.sided))
 }
 
 psmirnov_exact <-
@@ -229,16 +224,14 @@ function(q, sizes, z = NULL,
          two.sided = TRUE, lower.tail = TRUE, log.p = FALSE) {
     if(!is.null(z)) {
         z <- (diff(sort(z)) != 0)
-        z <- if(any(z))
-            c(0L, z, 1L)
-        else
-            NULL
+        z <- if(any(z)) c(0L, z, 1L) # else NULL
     }
     p <- .Call(C_psmirnov_exact, q, sizes[1L], sizes[2L], z,
                two.sided, lower.tail)
     if(log.p)
-        p <- log(p)
-    p
+        log(p)
+    else 
+        p
 }
 
 psmirnov_asymp <-
@@ -256,7 +249,7 @@ function(q, sizes,
         ## note: C_pKS2(0) = NA but Prob(D < 0) = 0
         ret[q < .Machine$double.eps] <- 0
     } else {
-        ret <- 1 - exp(- 2 * n * q^2)
+        ret <- -expm1(- 2 * n * q^2) # 1 - exp(*)
     }
     if(log.p) {
         if(lower.tail)
@@ -278,7 +271,7 @@ function(q, sizes, z = NULL,
     Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
     ## need P(D < q)
     ret <- ecdf(Dsim)(q - sqrt(.Machine$double.eps)) 
-    if(log.p) {
+    if(log.p) { 
         if(lower.tail)
             log(ret)
         else
@@ -310,10 +303,10 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     ##   Tests for Two or Three Samples,
     ##   Computational Statistics & Data Analysis, 20, 185--202
 
-    if (is.numeric(q)) 
-        q <- as.double(q)
-    else stop("argument 'q' must be numeric")
-    ret <- rep.int(0, length(q))
+    if (is.numeric(q)) {
+        if(!is.double(q)) storage.mode(q) <- "double" # keeping dim() etc
+    } else stop("argument 'q' must be numeric")
+    ret <- q # with attr.
     ret[is.na(q) | q < -1 | q > 1] <- NA
     IND <- which(!is.na(ret))
     if (!length(IND)) return(ret)
@@ -347,16 +340,15 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     pfun <- function(q)
         psmirnov_exact(q, sizes, z, two.sided, lower.tail, log.p)
 
-    ret[IND] <- vapply(q[IND], pfun, 0)
-    if (any(!is.finite(ret[IND]))) {
-        warning("computation of exact probability failed, returning Monte Carlo approximation")
-        ret[IND] <-
+    r <- vapply(q[IND], pfun, 0)
+    ret[IND] <- 
+        if(all(is.finite(r))) r
+        else {
+            warning("computation of exact probability failed, returning Monte Carlo approximation")
             psmirnov_simul(q[IND], sizes, z,
                            two.sided, lower.tail, log.p,
                            B)
-        return(ret)
-    }
-
+        }
     ret
 }
 
@@ -377,14 +369,13 @@ function(p, sizes, z = NULL, two.sided = TRUE,
                     exact = exact, simulate = simulate, B = B,
                     log.p = FALSE, lower.tail = TRUE)
     if (is.null(p)) return(list(stat = stat, prob = prb))
-    if (is.numeric(p)) 
-        p <- as.double(p)
-    else stop("argument 'p' must be numeric")
-    ret <- rep.int(0, length(p))
+    if (is.numeric(p)) {
+        if(!is.double(p)) storage.mode(p) <- "double" # keeping dim() etc
+    } else stop("argument 'p' must be numeric")
+    ret <- p # inheriting dim(), etc
     ret[is.na(p) | p < 0 | p > 1] <- NA
     IND <- which(!is.na(ret))
-    if (!length(IND)) return(ret)
-    ret[IND] <- sapply(p[IND], function(u) min(stat[prb >= u]))
+    ret[IND] <- vapply(p[IND], function(u) min(stat[prb >= u]), 1.)
     ret
 }
 
