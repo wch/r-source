@@ -1789,7 +1789,7 @@ deleted the files. @strong{NB:} the package names are case-sensitive and
 the @R{} domain is given inconsistently.
 
 Uninstalling the Tcl/Tk and Texinfo components (which are installed under
-@file{/usr/local} on a @cputype{x86_64} build and @file{/opt/R/arm64}
+@file{/opt/R/x86_64} on a @cputype{x86_64} build and @file{/opt/R/arm64}
 for an @cputype{arm64} one) is not as simple.  You can list the files
 they installed in a Terminal by e.g.@:
 
@@ -5169,7 +5169,7 @@ but are untested there.)
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Intel components install into @file{/usr/local}, the
+The Intel components install into @file{/opt/R/x86_64}, the
 @cputype{arm64} ones into @file{/opt/R/arm64} which may not exist so it
 it is simplest to first create that directory and adjust its ownership
 if desired:
@@ -5183,7 +5183,7 @@ and add @file{/opt/R/arm64/bin} to your path.
 
 Define an appropriate variable in your Terminal:
 @example
-set LOCAL=/usr/local # Intel
+set LOCAL=//opt/R/x86_64 # Intel
 set LOCAL=/opt/R/arm64 # Apple Silicon
 @end example
 @noindent
@@ -5220,18 +5220,21 @@ help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
 those needed to support Pango.)
 
+Intel users want the @code{darwin20} compoonents: the @code{darwin17}
+ones are for macOS 10.13--10.15.
+
 Or this can be done manually, by for example
 @example
-curl -OL https://mac.r-project.org/bin/darwin17/x86_64/pcre2-10.39-darwin.17-x86_64.tar.xz
-sudo tar -xvzf pcre2-10.39-darwin.17-x86_64.tar.gz -C /
-curl -OL https://mac.r-project.org/bin/darwin17/x86_64/xz-5.2.5-darwin.17-x86_64.tar.xz
-sudo tar -xvzf xz-5.2.5-darwin.17-x86_64.tar.xz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/x86_64/pcre2-10.42-darwin.20-x86_64.tar.xz
+sudo tar -xvzf pcre2-10.42-darwin.20-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin20/x86_64/xz-5.4.2-darwin.20-x86_64.tar.xz
+sudo tar -xvzf xz-5.4.2-darwin.20-x86_64.tar.xz -C /
 @end example
 @noindent
-(@command{sudo} is not needed if your account owns @file{/usr/local} or
+(@command{sudo} is not needed if your account owns @file{/opt/R/x86_64} or
 @file{/opt/R/arm64} as appropriate.)
 
-Messages like @samp{usr/local/: Can't restore time} should be ignored.
+Messages like @samp{opt/R/: Can't restore time} should be ignored.
 @end itemize
 @noindent
 and desirable
@@ -5832,7 +5835,7 @@ compilation errors on functionality not in Big Sur.
 Check that any compiled code is not dynamically linked to libraries only
 on your machine, for example by using @command{otool -L} or
 @command{objdump -macho -dylibs-used}.  This can include C++ and Fortran
-run-time libraries under @file{/usr/local/lib} or
+run-time libraries under @file{/opt/R/x86_64/lib} or
 @file{/opt/R/arm64/lib}: one can use @command{install_name_tool} to
 point these at system versions or those shipped with @R{}, for example
 @example
@@ -5893,7 +5896,7 @@ FC="/opt//gfortran/bin/gfortran -arch x86_64 -mtune=native -mmacosx-version-min=
 
 @noindent
 and install the Fortran compiler and external software described above
-for Intel builds (and have @file{/usr/local/bin} before
+for Intel builds (and have @file{/opt/R/x86_64/bin} before
 @file{/opt/R/arm64/bin} in your path).
 
 To set the correct architecture (which will be auto-detected as
