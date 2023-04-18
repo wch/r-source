@@ -2043,7 +2043,7 @@ sub_buffer_expand(int needed, int *nns, char **cbuf, char **u)
 {
     if (sub_buffer_size_expand(needed, nns)) {
        char *tmp;
-       tmp = R_Realloc(cbuf, *nns, char);
+       tmp = R_Realloc(*cbuf, *nns, char);
        *u = tmp + (*u - *cbuf);
        *cbuf = tmp;
    }
@@ -2054,7 +2054,7 @@ wsub_buffer_expand(int needed, int *nns, wchar_t **cbuf, wchar_t **u)
 {
     if (sub_buffer_size_expand(needed, nns)) {
        wchar_t *tmp;
-       tmp = R_Realloc(cbuf, *nns, wchar_t);
+       tmp = R_Realloc(*cbuf, *nns, wchar_t);
        *u = tmp + (*u - *cbuf);
        *cbuf = tmp;
    }
