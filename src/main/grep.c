@@ -2009,6 +2009,15 @@ static int wcount_subs(const wchar_t *repl)
     return i;
 }
 
+static int sub_buffer_check_overflow(double d)
+{
+    /* 2147483647 is a length limit for R strings and only 32-bit ints can be
+       precisely represented in IEEE double */
+    if (!(d < INT_MAX) || !(d < 2147483647))
+	error(_("result string is too long"));
+    return (int)d;
+}
+
 static void
 sub_buffer_size_init(size_t replen, int ns, int nsubs, int global,
                      int *nns, int *maxrep)
@@ -2016,30 +2025,34 @@ sub_buffer_size_init(size_t replen, int ns, int nsubs, int global,
    /* worst possible scenario is to put a copy of the
       replacement after every character, unless there are
       backrefs */
-    *maxrep = (int)(replen + (ns-2) * nsubs);
+    *maxrep = sub_buffer_check_overflow((double)replen + (ns-2.) * nsubs);
     if (global) {
-	/* Integer overflow has been seen */
-	double dnns = ns * (*maxrep + 1.) + 1000;
-	if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
-	*nns = (int) dnns;
-    } else *nns = ns + *maxrep + 1000;
+	double dnns = (double)ns * (*maxrep + 1.) + 1000.;
+	if (dnns > 10000) dnns = 2.*ns + (double)replen + 1000.;
+	*nns = sub_buffer_check_overflow(dnns);
+    } else
+	*nns = sub_buffer_check_overflow((double)ns +
+	                                 (double)*maxrep + 1000.);
 }
 
 static int
-sub_buffer_size_expand(int needed, int *nns)
+sub_buffer_size_expand(double needed, int *nns)
 {
-   if (*nns < needed) {
+    int ineeded = sub_buffer_check_overflow(needed);
+    if (*nns < ineeded) {
 	/* This could fail at smaller value on a 32-bit platform:
 	   it is merely an integer overflow check */
-	if (*nns > INT_MAX/2) error(_("result string is too long"));
-	(*nns) *= 2;
+	if (*nns < INT_MAX/2)
+	    (*nns) *= 2;
+	if (*nns < ineeded)
+	    (*nns) = ineeded;
 	return 1; 
-   } else
+    } else
 	return 0;
 }
 
 static void
-sub_buffer_expand(int needed, int *nns, char **cbuf, char **u)
+sub_buffer_expand(double needed, int *nns, char **cbuf, char **u)
 {
     if (sub_buffer_size_expand(needed, nns)) {
        char *tmp;
@@ -2050,7 +2063,7 @@ sub_buffer_expand(int needed, int *nns, char **cbuf, char **u)
 }
 
 static void
-wsub_buffer_expand(int needed, int *nns, wchar_t **cbuf, wchar_t **u)
+wsub_buffer_expand(double needed, int *nns, wchar_t **cbuf, wchar_t **u)
 {
     if (sub_buffer_size_expand(needed, nns)) {
        wchar_t *tmp;
@@ -2333,8 +2346,9 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   } else
 		       *u++ = s[offset++];
 	       }
-	       sub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
-	                         &nns, &cbuf, &u);
+	       double needed = (double)(u-cbuf) + (double)(ns-offset)
+	                       + (double)maxrep + 100.;
+	       sub_buffer_expand(needed, &nns, &cbuf, &u);
 #ifdef HAVE_PCRE2
 	       eflag = PCRE2_NOTBOL;  /* probably not needed */
 	       if (use_UTF8) eflag |= PCRE2_NO_UTF_CHECK;
@@ -2350,8 +2364,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       SET_STRING_ELT(ans, i, NA_STRING);
 	   else {
 	       /* copy the tail */
-	       sub_buffer_expand((u - cbuf) + (ns-offset) + 1,
-	                         &nns, &cbuf, &u);
+	       double needed = (double)(u-cbuf) + (double)(ns-offset) + 1.0;
+	       sub_buffer_expand(needed, &nns, &cbuf, &u);
 	       for (j = offset ; s[j] ; j++) *u++ = s[j];
 	       *u = '\0';
 	       if (useBytes)
@@ -2386,8 +2400,9 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (s[offset] == '\0' || !global) break;
 		if (regmatch[0].rm_eo == regmatch[0].rm_so)
 		    *u++ = s[offset++];
-		sub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
-		                  &nns, &cbuf, &u);
+		double needed = (double)(u-cbuf) + (double)(ns-offset)
+		                + (double)maxrep + 100.;
+		sub_buffer_expand(needed, &nns, &cbuf, &u);
 		eflags = REG_NOTBOL;
 	    }
 	    // AFAICS the only possible error report is REG_ESPACE
@@ -2402,8 +2417,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
-		sub_buffer_expand((u - cbuf) + (ns-offset) + 1,
-		                  &nns, &cbuf, &u);
+		double needed = (double)(u-cbuf) + (double)(ns-offset) + 1.0;
+		sub_buffer_expand(needed, &nns, &cbuf, &u);
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = '\0';
 		if (useBytes)
@@ -2435,8 +2450,9 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (ws[offset] == L'\0' || !global) break;
 		if (regmatch[0].rm_eo == regmatch[0].rm_so)
 		    *u++ = ws[offset++];
-		wsub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
-		                   &nns, &cbuf, &u);
+		double needed = (double)(u-cbuf) + (double)(ns-offset)
+		                + (double)maxrep + 100.;
+		wsub_buffer_expand(needed, &nns, &cbuf, &u);
 		eflags = REG_NOTBOL;
 	    }
 	    if (nmatch == 0)
@@ -2446,8 +2462,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
-		wsub_buffer_expand((u - cbuf) + (ns-offset) + 1,
-		                   &nns, &cbuf, &u);
+		double needed = (double)(u-cbuf) + (double)(ns-offset) + 1.;
+		wsub_buffer_expand(needed, &nns, &cbuf, &u);
 		for (j = offset ; ws[j] ; j++) *u++ = ws[j];
 		*u = L'\0';
 		SET_STRING_ELT(ans, i,
