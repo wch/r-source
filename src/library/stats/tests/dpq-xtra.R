@@ -124,5 +124,5 @@ stopifnot(is.list(val),
 	  length(val) == length(dpqCalls),
           ## all calls return `x`, the 0x0-matrix w/ dimnames :
 	  length(unique(val)) == 1,
-	  identical(val[[1]], x)) 
-osvn
+	  identical(val[[1]], x))
+
