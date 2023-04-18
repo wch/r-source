@@ -2011,8 +2011,8 @@ static int wcount_subs(const wchar_t *repl)
 
 static int sub_buffer_check_overflow(double d)
 {
-    /* 2147483647 is a length limit for R strings and only 32-bit ints can be
-       precisely represented in IEEE double */
+    /* 2147483647 is a length limit for R strings and 32-bit ints can be
+       precisely represented in IEEE double (but not 64-bit ints) */
     if (!(d < INT_MAX) || !(d < 2147483647))
 	error(_("result string is too long"));
     return (int)d;
