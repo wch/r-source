@@ -636,6 +636,7 @@ void (SET_PRSEEN)(SEXP x, int v);
 void SET_PRENV(SEXP x, SEXP v);
 void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v);
+void IF_PROMSXP_SET_PRVALUE(SEXP x, SEXP v);
 
 /* Hashing Functions */
 int  (HASHASH)(SEXP x);
