@@ -2009,6 +2009,56 @@ static int wcount_subs(const wchar_t *repl)
     return i;
 }
 
+static void
+sub_buffer_size_init(size_t replen, int ns, int nsubs, int global,
+                     int *nns, int *maxrep)
+{
+   /* worst possible scenario is to put a copy of the
+      replacement after every character, unless there are
+      backrefs */
+    *maxrep = (int)(replen + (ns-2) * nsubs);
+    if (global) {
+	/* Integer overflow has been seen */
+	double dnns = ns * (*maxrep + 1.) + 1000;
+	if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
+	*nns = (int) dnns;
+    } else *nns = ns + *maxrep + 1000;
+}
+
+static int
+sub_buffer_size_expand(int needed, int *nns)
+{
+   if (*nns < needed) {
+	/* This could fail at smaller value on a 32-bit platform:
+	   it is merely an integer overflow check */
+	if (*nns > INT_MAX/2) error(_("result string is too long"));
+	(*nns) *= 2;
+	return 1; 
+   } else
+	return 0;
+}
+
+static void
+sub_buffer_expand(int needed, int *nns, char **cbuf, char **u)
+{
+    if (sub_buffer_size_expand(needed, nns)) {
+       char *tmp;
+       tmp = R_Realloc(cbuf, *nns, char);
+       *u = tmp + (*u - *cbuf);
+       *cbuf = tmp;
+   }
+}
+
+static void
+wsub_buffer_expand(int needed, int *nns, wchar_t **cbuf, wchar_t **u)
+{
+    if (sub_buffer_size_expand(needed, nns)) {
+       wchar_t *tmp;
+       tmp = R_Realloc(cbuf, *nns, wchar_t);
+       *u = tmp + (*u - *cbuf);
+       *cbuf = tmp;
+   }
+}
 
 /* The following R functions do substitution for regular expressions,
  * either once or globally.
@@ -2241,16 +2291,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	   memset(ovector, 0, ovecsize*sizeof(int));
 #endif
 	   ns = (int) strlen(s);
-	   /* worst possible scenario is to put a copy of the
-	      replacement after every character, unless there are
-	      backrefs */
-	   maxrep = (int)(replen + (ns-2) * count_subs(srep));
-	   if (global) {
-	       /* Integer overflow has been seen */
-	       double dnns = ns * (maxrep + 1.) + 1000;
-	       if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
-	       nns = (int) dnns;
-	   } else nns = ns + maxrep + 1000;
+	   sub_buffer_size_init(replen, ns, count_subs(srep), global,
+	                        &nns, &maxrep);
 	   u = cbuf = R_Calloc(nns, char);
 	   offset = 0; nmatch = 0; eflag = 0; last_end = -1;
 	   /* ncap is one more than the number of capturing patterns */
@@ -2291,14 +2333,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   } else
 		       *u++ = s[offset++];
 	       }
-	       if (nns < (u - cbuf) + (ns-offset) + maxrep + 100) {
-		   char *tmp;
-		   if (nns > INT_MAX/2) error(_("result string is too long"));
-		   nns *= 2;
-		   tmp = R_Realloc(cbuf, nns, char);
-		   u = tmp + (u - cbuf);
-		   cbuf = tmp;
-	       }
+	       sub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
+	                         &nns, &cbuf, &u);
 #ifdef HAVE_PCRE2
 	       eflag = PCRE2_NOTBOL;  /* probably not needed */
 	       if (use_UTF8) eflag |= PCRE2_NO_UTF_CHECK;
@@ -2314,14 +2350,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       SET_STRING_ELT(ans, i, NA_STRING);
 	   else {
 	       /* copy the tail */
-	       if (nns < (u - cbuf) + (ns-offset)+1) {
-		   char *tmp;
-		   if (nns > INT_MAX/2) error(_("result string is too long"));
-		   nns *= 2;
-		   tmp = R_Realloc(cbuf, nns, char);
-		   u = tmp + (u - cbuf);
-		   cbuf = tmp;
-	       }
+	       sub_buffer_expand((u - cbuf) + (ns-offset) + 1,
+	                         &nns, &cbuf, &u);
 	       for (j = offset ; s[j] ; j++) *u++ = s[j];
 	       *u = '\0';
 	       if (useBytes)
@@ -2337,15 +2367,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* extended regexp in bytes */
 
 	    ns = (int) strlen(s);
-	    /* worst possible scenario is to put a copy of the
-	       replacement after every character, unless there are
-	       backrefs */
-	    maxrep = (int)(replen + (ns-2) * count_subs(srep));
-	    if (global) {
-		double dnns = ns * (maxrep + 1.) + 1000;
-		if (dnns > 10000) dnns = (double)(2*ns + replen + 1000);
-		nns = (int) dnns;
-	    } else nns = ns + maxrep + 1000;
+	    sub_buffer_size_init(replen, ns, count_subs(srep), global,
+	                         &nns, &maxrep);
 	    u = cbuf = R_Calloc(nns, char);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
 	    while ((rc = tre_regexecb(&reg, s+offset, 10, regmatch, eflags))
@@ -2363,14 +2386,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (s[offset] == '\0' || !global) break;
 		if (regmatch[0].rm_eo == regmatch[0].rm_so)
 		    *u++ = s[offset++];
-		if (nns < (u - cbuf) + (ns-offset) + maxrep + 100) {
-		    char *tmp;
-		    if (nns > INT_MAX/2) error(_("result string is too long"));
-		    nns *= 2;
-		    tmp = R_Realloc(cbuf, nns, char);
-		    u = tmp + (u - cbuf);
-		    cbuf = tmp;
-		}
+		sub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
+		                  &nns, &cbuf, &u);
 		eflags = REG_NOTBOL;
 	    }
 	    // AFAICS the only possible error report is REG_ESPACE
@@ -2385,14 +2402,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
-		if (nns < (u - cbuf) + (ns-offset)+1) {
-		    char *tmp;
-		    if (nns > INT_MAX/2) error(_("result string is too long"));
-		    nns *= 2;
-		    tmp = R_Realloc(cbuf, nns, char);
-		    u = tmp + (u - cbuf);
-		    cbuf = tmp;
-		}
+		sub_buffer_expand((u - cbuf) + (ns-offset) + 1,
+		                  &nns, &cbuf, &u);
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = '\0';
 		if (useBytes)
@@ -2408,14 +2419,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Rboolean ascii_texti = IS_ASCII(STRING_ELT(text, i));
 
 	    ns = (int) wcslen(ws);
-	    maxrep = (int)(replen + (ns-2) * wcount_subs(wrep));
-	    if (global) {
-		/* worst possible scenario is to put a copy of the
-		   replacement after every character */
-		double dnns = ns * (maxrep + 1.) + 1000;
-		if (dnns > 10000) dnns = 2*ns + maxrep + 1000;
-		nns = (int) dnns;
-	    } else nns = ns + maxrep + 1000;
+	    sub_buffer_size_init(replen, ns, wcount_subs(wrep), global,
+	                         &nns, &maxrep);
 	    u = cbuf = R_Calloc(nns, wchar_t);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
 	    while (tre_regwexec(&reg, ws+offset, 10, regmatch, eflags) == 0) {
@@ -2430,16 +2435,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (ws[offset] == L'\0' || !global) break;
 		if (regmatch[0].rm_eo == regmatch[0].rm_so)
 		    *u++ = ws[offset++];
-		if (nns < (u - cbuf) + (ns-offset) + maxrep + 100) {
-		    wchar_t *tmp;
-		    /* This could fail at smaller value on a 32-bit platform:
-		       it is merely an integer overflow check */
-		    if (nns > INT_MAX/2) error(_("result string is too long"));
-		    nns *= 2;
-		    tmp = R_Realloc(cbuf, nns, wchar_t);
-		    u = tmp + (u - cbuf);
-		    cbuf = tmp;
-		}
+		wsub_buffer_expand((u - cbuf) + (ns-offset) + maxrep + 100,
+		                   &nns, &cbuf, &u);
 		eflags = REG_NOTBOL;
 	    }
 	    if (nmatch == 0)
@@ -2449,14 +2446,8 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
-		if (nns < (u - cbuf) + (ns-offset)+1) {
-		    wchar_t *tmp;
-		    if (nns > INT_MAX/2) error(_("result string is too long"));
-		    nns *= 2;
-		    tmp = R_Realloc(cbuf, nns, wchar_t);
-		    u = tmp + (u - cbuf);
-		    cbuf = tmp;
-		}
+		wsub_buffer_expand((u - cbuf) + (ns-offset) + 1,
+		                   &nns, &cbuf, &u);
 		for (j = offset ; ws[j] ; j++) *u++ = ws[j];
 		*u = L'\0';
 		SET_STRING_ELT(ans, i,
