@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-04-19 r84284) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -31,7 +31,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > # how on earth can sigma = 1.55216 be known?
 > 
 > # R >= 2.14.0 allows the equally invalid
@@ -45,7 +45,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > 
 > ## Try out the effects of rounding
 > set.seed(123)
@@ -77,7 +77,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(round(ds2, 2), "pnorm") :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > ks.test(round(ds2, 2), "pnorm", exact = TRUE)
 
 	Exact one-sample Kolmogorov-Smirnov test
@@ -88,7 +88,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(round(ds2, 2), "pnorm", exact = TRUE) :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > # now D has doubled, but p-values remain similar (if very different from ds2)
 > ks.test(round(ds2, 1), "pnorm")
 
@@ -100,7 +100,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(round(ds2, 1), "pnorm") :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > ks.test(round(ds2, 1), "pnorm", exact = TRUE)
 
 	Exact one-sample Kolmogorov-Smirnov test
@@ -111,7 +111,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > 
 > 
 > ### ------ Wilkoxon (Mann Whitney) --------------
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.796   0.076   0.849 
+  0.130   0.017   0.145 

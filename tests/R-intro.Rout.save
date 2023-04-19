@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-04-19 r84284) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -559,7 +559,7 @@ alternative hypothesis: two-sided
 
 Warning message:
 In ks.test.default(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
-  ties should not be present for the Kolmogorov-Smirnov test
+  ties should not be present for the one-sample Kolmogorov-Smirnov test
 > 
 > ##@section One- and two-sample tests
 > 
