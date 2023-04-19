@@ -372,13 +372,33 @@ attribute_hidden SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 # define APPENDBUFSIZE (128*1024)
 #endif
 
+/* RC_fopen but fails when fn is a directory.
+
+   On Linux, a directory can be opened for reading, but not on Windows
+   (PR#17337). */
+static FILE
+*RC_fopen_notdir(const SEXP fn, const char *mode, const Rboolean expand)
+{
+    FILE *f = RC_fopen(fn, mode, expand);
+#ifdef HAVE_SYS_STAT_H
+    if (f) {
+	struct stat sb;
+	if (!fstat(fileno(f), &sb) && S_ISDIR(sb.st_mode)) {
+	    fclose(f);
+	    return NULL;
+	}
+    }
+#endif
+    return f;
+}
+
 static int R_AppendFile(SEXP file1, SEXP file2)
 {
     FILE *fp1, *fp2;
     size_t nchar;
     int status = 0;
-    if ((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) return 0;
-    if ((fp2 = RC_fopen(file2, "rb", TRUE)) == NULL) {
+    if ((fp1 = RC_fopen_notdir(file1, "ab", TRUE)) == NULL) return 0;
+    if ((fp2 = RC_fopen_notdir(file2, "rb", TRUE)) == NULL) {
 	fclose(fp1);
 	return 0;
     }
@@ -425,12 +445,12 @@ attribute_hidden SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int status = 0;
 	size_t nchar;
 	if (STRING_ELT(f1, 0) == NA_STRING ||
-	    !(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
+	    !(fp1 = RC_fopen_notdir(STRING_ELT(f1, 0), "ab", TRUE)))
 	   goto done;
 	for (int i = 0; i < n; i++) {
 	    status = 0;
 	    if (STRING_ELT(f2, i) == NA_STRING ||
-	       !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
+	       !(fp2 = RC_fopen_notdir(STRING_ELT(f2, i), "rb", TRUE))) continue;
 	    char *buf = (char *)malloc(APPENDBUFSIZE);
 	    if (!buf) {
 		fclose(fp1);
