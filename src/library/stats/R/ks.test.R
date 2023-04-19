@@ -97,28 +97,9 @@ ks.test.default <-
                             "two.sided" = max(c(x, 1/n - x)),
                             "greater" = max(1/n - x),
                             "less" = max(x))
-        if(exact) {
-            PVAL <- 1 - if(alternative == "two.sided")
-                .Call(C_pKolmogorov2x, STATISTIC, n)
-            else {
-                pkolmogorov1x <- function(x, n) {
-                    ## Probability function for the one-sided
-                    ## one-sample Kolmogorov statistics, based on the
-                    ## formula of Birnbaum & Tingey (1951).
-                    if(x <= 0) return(0)
-                    if(x >= 1) return(1)
-                    j <- seq.int(from = 0, to = floor(n * (1 - x)))
-                    1 - x * sum(exp(lchoose(n, j)
-                                    + (n - j) * log(1 - x - j / n)
-                                    + (j - 1) * log(x + j / n)))
-                }
-                pkolmogorov1x(STATISTIC, n)
-            }
-        } else {
-            PVAL <- if(alternative == "two.sided")
-                        1 - .Call(C_pKS2, sqrt(n) * STATISTIC, tol = 1e-6)
-                    else exp(- 2 * n * STATISTIC^2)
-        }
+        PVAL <- pkolmogorov(STATISTIC, n,
+                            two.sided = (alternative == "two.sided"),
+                            exact = exact, lower.tail = FALSE)
         nm_alternative <-
             switch(alternative,
                    "two.sided" = "two-sided",
@@ -373,3 +354,51 @@ function(p, sizes, z = NULL, two.sided = TRUE,
     ret
 }
 
+pkolmogorov_two_exact <- function(q, n, lower.tail = TRUE) {
+    p <- .Call(C_pKolmogorov2x, q, n)
+    if(lower.tail) p else 1 - p
+}
+
+pkolmogorov_one_exact <- function(q, n, lower.tail = TRUE) {
+    ## Probability function for the one-sided one-sample Kolmogorov
+    ## statistics, based on the formula of Birnbaum & Tingey (1951).
+    j <- seq.int(from = 0, to = floor(n * (1 - q)))
+    p <- q * sum(exp(lchoose(n, j)
+                     + (n - j) * log(1 - q - j / n)
+                     + (j - 1) * log(q + j / n)))
+    if(lower.tail) 1 - p else p
+}
+
+pkolmogorov_two_asymp <- function(q, n, lower.tail = TRUE) {
+    p <- .Call(C_pKS2, sqrt(n) * q, tol = 1e-6)
+    if(lower.tail) p else 1 - p
+}
+
+pkolmogorov_one_asymp <- function(q, n, lower.tail = TRUE) {
+    p <- exp(- 2 * n * q^2)
+    if(lower.tail) 1 - p else p
+}
+
+pkolmogorov <- function(q, size, two.sided = TRUE, exact = TRUE,
+                        lower.tail = TRUE) {
+    ## Currently not vectorized ...
+    ## Note that we compute P(D < q) for the lower tail.
+    if(is.na(q))
+        return(NA_real_)
+    if(q <= 0)
+        return(1 - lower.tail)
+    if(q > 1)
+        return(as.numeric(lower.tail))
+
+    if(exact) {
+        if(two.sided)
+            pkolmogorov_two_exact(q, size, lower.tail)
+        else
+            pkolmogorov_one_exact(q, size, lower.tail)
+    } else {
+        if(two.sided)
+            pkolmogorov_two_asymp(q, size, lower.tail)
+        else
+            pkolmogorov_one_asymp(q, size, lower.tail)
+    }
+}
