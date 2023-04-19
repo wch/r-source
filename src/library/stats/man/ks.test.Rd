@@ -1,6 +1,6 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
@@ -37,7 +37,8 @@ ks.test(x, \dots)
     p-value should be computed.  See \sQuote{Details} for the meaning of
     \code{NULL}.}
   \item{simulate.p.value}{a logical indicating whether to compute
-    p-values by Monte Carlo simulation.}
+    p-values by Monte Carlo simulation.  (Ignored for the one-sample
+    test.)}
   \item{B}{an integer specifying the number of replicates used in the
     Monte Carlo test.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
@@ -55,16 +56,15 @@ ks.test(x, \dots)
     \code{getOption("na.action")}.}
 }
 \details{
-  If \code{y} is numeric, a two-sample (Smirnov) test of the null hypothesis
-  that \code{x} and \code{y} were drawn from the same \emph{continuous}
+  If \code{y} is numeric, a two-sample (Smirnov) test of the null
+  hypothesis that \code{x} and \code{y} were drawn from the same
   distribution is performed.
 
   Alternatively, \code{y} can be a character string naming a continuous
   (cumulative) distribution function, or such a function.  In this case,
-  a one-sample (Kolmogorov) test is carried out of the null that the distribution
-  function which generated \code{x} is distribution \code{y} with
-  parameters specified by \code{\dots}.
-
+  a one-sample (Kolmogorov) test is carried out of the null that the
+  distribution function which generated \code{x} is distribution
+  \code{y} with parameters specified by \code{\dots}.
   The presence of ties always generates a warning, since continuous
   distributions do not generate them.  If the ties arose from rounding
   the tests may be approximately valid, but even modest amounts of
@@ -95,7 +95,9 @@ ks.test(x, \dots)
   one-sample case \emph{and there are no ties}, and if the product of
   the sample sizes is less than 10000 in the two-sample case, with or
   without ties (using the algorithm described in Schröer and Trenkler, 1995).
-  Otherwise, asymptotic distributions are used whose approximations may
+  Otherwise, the p-value is computed via Monte Carlo similation in the
+  two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
+  asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
   exact p-values are obtained as described in Marsaglia, Tsang & Wang
   (2003) (but not using the optional approximation in the right tail, so
@@ -124,8 +126,8 @@ ks.test(x, \dots)
   Marsaglia, Tsang and Wang (2003).
 
   Exact distributions for the two-sample (Smirnov) test are computed
-  by the algorithm proposed Schröer (1991) and Schröer & Trenkler (1995).
- 
+  by the algorithm proposed Schröer (1991) and Schröer & Trenkler (1995)
+  using numerical improvements along the lines of Viehmann (2021).
 }
 \references{
   Z. W. Birnbaum and Fred H. Tingey (1951).
@@ -154,7 +156,7 @@ ks.test(x, \dots)
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \doi{10.18637/jss.v008.i18}.
 
-  Gunar Schröer (1991),
+  Gunar Schröer (1991).
   Computergestützte statistische Inferenz am Beispiel der
   Kolmogorov-Smirnov Tests.
   Diplomarbeit Universität Osnabrück.
@@ -165,6 +167,11 @@ ks.test(x, \dots)
   \emph{Computational Statistics & Data Analysis}, \bold{20}(2),
   185--202.
   \doi{10.1016/0167-9473(94)00040-P}.
+ 
+  Thomas Viehmann (2021).
+  Numerically more stable computation of the p-values for the two-sample
+  Kolmogorov-Smirnov test.
+  \url{https://arxiv.org/abs/2102.08037}.
 }
 \seealso{
   \code{\link{psmirnov}}.

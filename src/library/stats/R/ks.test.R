@@ -73,18 +73,12 @@ ks.test.default <-
         z <- NULL
         if (TIES)
             z <- w
-        PVAL <- switch(alternative,
-            "two.sided" = psmirnov(STATISTIC, sizes = c(n.x, n.y), z = w, exact = exact, 
-                                   simulate = simulate.p.value, B = B,
-                                   lower.tail = FALSE),
-            "less" = psmirnov(STATISTIC, sizes = c(n.x, n.y), , z = w, exact = exact,
-                              simulate = simulate.p.value, B = B,
-                              two.sided = FALSE, lower.tail = FALSE),
-            "greater" = psmirnov(STATISTIC, sizes = c(n.x, n.y), , z = w, exact = exact,
-                                 simulate = simulate.p.value, B = B,
-                                 two.sided = FALSE, lower.tail = FALSE))
-        ### match MC p-values to those reported by chisq.test
-        if (simulate.p.value) PVAL <- (1 + (PVAL * B)) / (B + 1)
+        PVAL <- psmirnov(STATISTIC, sizes = c(n.x, n.y), z = w,
+                         two.sided = (alternative == "two.sided"),
+                         exact = exact, simulate = simulate.p.value,
+                         B = B, lower.tail = FALSE)
+        ## match MC p-values to those reported by chisq.test
+        if(simulate.p.value) PVAL <- (1 + (PVAL * B)) / (B + 1)
     } else { ## one-sample case
         if(is.character(y)) # avoid matching anything in this function
             y <- get(y, mode = "function", envir = parent.frame())
@@ -92,7 +86,7 @@ ks.test.default <-
             stop("'y' must be numeric or a function or a string naming a valid function")
         TIES <- FALSE
         if(length(unique(x)) < n) {
-            warning("ties should not be present for the Kolmogorov-Smirnov test")
+            warning("ties should not be present for the one-sample Kolmogorov-Smirnov test")
             TIES <- TRUE
         }
         if(is.null(exact)) exact <- (n < 100) && !TIES

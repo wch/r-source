@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022   The R Core Team.
+ *  Copyright (C) 1999-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ pkstwo(int n, double *x, double tol)
 
      Thomas Viehmann (2021),
      Numerically more stable computation of the p-values for the
-     two-sample Kolmogorov=Smirnov test,
+     two-sample Kolmogorov-Smirnov test,
      <https://arxiv.org/abs/2102.08037>.
 
    For the lower tail probabilities p = P(D < q), we have
@@ -216,7 +216,7 @@ psmirnov_exact_test_one(double q, double r, double s) {
 }
 
 static int
- psmirnov_exact_test_two(double q, double r, double s) {
+psmirnov_exact_test_two(double q, double r, double s) {
     return (fabs(r - s) >= q);
 }
 
@@ -462,7 +462,7 @@ m_power(double *A, int eA, double *V, int *eV, int m, int n)
        Matrix power.
     */
     double *B;
-    int eB , i;
+    int eB, i;
 
     if(n == 1) {
 	for(i = 0; i < m * m; i++)
