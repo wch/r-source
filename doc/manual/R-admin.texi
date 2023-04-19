@@ -5529,6 +5529,13 @@ last tested@footnote{with @command{gcc} 10.2.} it was not possible to
 use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
+It usually possible to add some OpenMP support to the Apple
+@command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
+Note that that approach is somewhat fragile as it needs a
+@file{libomp.dylib} library matching the version of the compiler
+used---and for example at the time of writing none was offered for the
+current compilers in Xcode/CLT 14.3.
+
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
 
