@@ -550,6 +550,15 @@ if(no.splines) unloadNamespace("splines")
 ## ns() gave  Error in qr.default(t(const)) : NA/NaN/Inf in foreign function call
 
 
+## Krylov's issue with sum(), min(), etc on R-devel: Now errors instead of silently computing:
+mT <- tryCid( sum(3,4,na.rm=5, 6, NA, 8, na.rm=TRUE) )
+mF <- tryCid( min(3,4,na.rm=5, 6, NA, 8, na.rm=FALSE) )
+stopifnot(inherits(mT, "error"),
+          inherits(mF, "error"), all.equal(mT, mF))
+if(englishMsgs)
+    stopifnot(grepl("formal argument \"na.rm\" matched by multiple", conditionMessage(mT)))
+## these gave numeric (or NA) results without any warning in R <= 4.3.0
+
 
 
 ## keep at end

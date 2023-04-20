@@ -409,12 +409,15 @@ static Rboolean cprod(SEXP sx, Rcomplex *value, Rboolean narm)
 attribute_hidden
 SEXP fixup_NaRm(SEXP args)
 {
-    SEXP t, na_value;
-
     /* Need to make sure na.rm is last and exists */
-    na_value = ScalarLogical(FALSE);
+    SEXP na_value = ScalarLogical(FALSE);
+    Rboolean seen_NaRm = FALSE;
     for(SEXP a = args, prev = R_NilValue; a != R_NilValue; a = CDR(a)) {
 	if(TAG(a) == R_NaRmSymbol) {
+	    if(seen_NaRm)
+	        error(_("formal argument \"%s\" matched by multiple actual arguments"),
+		      "na.rm");
+	    seen_NaRm = TRUE;
 	    if(CDR(a) == R_NilValue) return args;
 	    na_value = CAR(a);
 	    if(prev == R_NilValue) args = CDR(a);
@@ -424,7 +427,7 @@ SEXP fixup_NaRm(SEXP args)
     }
 
     PROTECT(na_value);
-    t = CONS(na_value, R_NilValue);
+    SEXP t = CONS(na_value, R_NilValue);
     UNPROTECT(1);
     PROTECT(t);
     SET_TAG(t, R_NaRmSymbol);
