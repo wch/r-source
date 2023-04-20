@@ -119,8 +119,8 @@ ks.test.default <-
                  alternative = nm_alternative,
                  method = METHOD,
                  data.name = DNAME,
-                 data = list(x = x, y = y), # FIXME confband
-                 exact = exact)             # FIXME confband
+                 data = list(x = x, y = y),
+                 exact = exact)
     class(RVAL) <- c("ks.test", "htest")
     return(RVAL)
 }
@@ -156,8 +156,8 @@ function(formula, data, subset, na.action, ...)
         y <- ks.test(x = DATA[[1L]], y = DATA[[2L]], ...)        
         y$alternative <- gsub("x", levels(g)[1L], y$alternative)
         y$alternative <- gsub("y", levels(g)[2L], y$alternative)
-        y$response <- rname             # FIXME confband
-        y$groups <- levels(g)           # FIXME confband
+        y$response <- rname
+        y$groups <- levels(g)
     }
     else { # one-sample test
         respVar <- mf[[response]]
@@ -220,8 +220,8 @@ function(q, sizes,
     ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
     ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
     if (two.sided) {
-        ret <- .Call(C_pKS2, p = sqrt(n) * q, tol = 1e-6)
-        ## note: C_pKS2(0) = NA but Prob(D < 0) = 0
+        ret <- .Call(C_pkolmogorov_two_limit, p = sqrt(n) * q, tol = 1e-6)
+        ## note: C_pkolmogorov_two_limit(0) = NA but Prob(D < 0) = 0
         ret[q < .Machine$double.eps] <- 0
     } else {
         ret <- -expm1(- 2 * n * q^2) # 1 - exp(*)
@@ -355,7 +355,7 @@ function(p, sizes, z = NULL, two.sided = TRUE,
 }
 
 pkolmogorov_two_exact <- function(q, n, lower.tail = TRUE) {
-    p <- .Call(C_pKolmogorov2x, q, n)
+    p <- .Call(C_pkolmogorov_two_exact, q, n)
     if(lower.tail) p else 1 - p
 }
 
@@ -370,7 +370,7 @@ pkolmogorov_one_exact <- function(q, n, lower.tail = TRUE) {
 }
 
 pkolmogorov_two_asymp <- function(q, n, lower.tail = TRUE) {
-    p <- .Call(C_pKS2, sqrt(n) * q, tol = 1e-6)
+    p <- .Call(C_pkolmogorov_two_limit, sqrt(n) * q, tol = 1e-6)
     if(lower.tail) p else 1 - p
 }
 

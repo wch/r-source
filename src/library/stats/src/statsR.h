@@ -170,8 +170,8 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev);
 SEXP influence(SEXP mqr, SEXP e, SEXP stol);
 
 SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz, SEXP stwo, SEXP slower);
-SEXP pKolmogorov2x(SEXP statistic, SEXP sn);
-SEXP pKS2(SEXP sn, SEXP stol);
+SEXP pkolmogorov_two_exact(SEXP statistic, SEXP sn);
+SEXP pkolmogorov_two_limit(SEXP statistic, SEXP stol);
 
 SEXP ksmooth(SEXP x, SEXP y, SEXP snp, SEXP skrn, SEXP sbw);
 

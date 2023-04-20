@@ -51,7 +51,7 @@ Smirnov_sim_wrk(int nrow, int ncol,
 
 /* Two-sample two-sided asymptotic distribution */
 
-SEXP pKS2(SEXP statistic, SEXP stol)
+SEXP pkolmogorov_two_limit(SEXP statistic, SEXP stol)
 {
     int n = LENGTH(statistic);
     double tol = asReal(stol);
@@ -373,7 +373,7 @@ psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two) {
 }
 
 /* One-sample two-sided exact distribution */
-SEXP pKolmogorov2x(SEXP statistic, SEXP sn)
+SEXP pkolmogorov_two_exact(SEXP statistic, SEXP sn)
 {
     int n = asInteger(sn);
     double st = asReal(statistic), p;
