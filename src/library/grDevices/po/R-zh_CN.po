@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -169,7 +169,6 @@ msgstr ""
 msgid "Invalid fill rule"
 msgstr "'file'无效"
 
-#, fuzzy
 msgid "Invalid pattern type"
 msgstr "字体类型无效"
 
@@ -285,7 +284,7 @@ msgid "invalid raster subsetting"
 msgstr "栅格子集无效"
 
 msgid "invalid raster subassignment"
-msgstr "光栅子分配无效"
+msgstr "光栅子赋值无效"
 
 msgid "operator not meaningful for raster objects"
 msgstr "这种操作对光栅对象没有意义"

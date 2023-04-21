@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27\n"
-"PO-Revision-Date: 2021-01-27 10:19+0100\n"
-"Last-Translator: Martin.Maechler@r-project.org\n"
+"PO-Revision-Date: 2023-01-28 21:04+0000\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgid "See help(\"Defunct\")"
 msgstr "Siehe help(\"Defunct\")"
 
 msgid "defunctError"
-msgstr ""
+msgstr "defunctError"
 
 msgid "'%s' is deprecated."
 msgstr "'%s' ist veraltet."
@@ -43,7 +43,7 @@ msgid "See help(\"Deprecated\")"
 msgstr "Siehe help(\"Deprecated\")"
 
 msgid "deprecatedWarning"
-msgstr ""
+msgstr "deprecatedWarning"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "Argument zu 'La.svd' muss numerisch oder komplex sein"
@@ -54,9 +54,8 @@ msgstr "unendliche oder fehlende Werte in 'x'"
 msgid "a dimension is zero"
 msgstr "eine Dimension ist 0"
 
-#, fuzzy
 msgid "\"all\" and \"exact\" are mutually exclusive"
-msgstr "\"hexNumeric\" und \"digits17\" schliessen sich gegenseitig aus"
+msgstr "\"all\" und \"exact\" schließen sich gegenseitig aus"
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "\"hexNumeric\" und \"digits17\" schliessen sich gegenseitig aus"
@@ -79,9 +78,8 @@ msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."
 msgid "'%s' is not a valid choice"
 msgstr "'%s' ist keine gültige Wahl"
 
-#, fuzzy
 msgid "'sample.kind' must be a character string of length 1"
-msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."
+msgstr "'sample.kind' muss eine Zeichenkette der Länge 1 sein."
 
 msgid "malformed version string"
 msgstr "falsch aufgebaute Versionszeichenkette"
@@ -108,25 +106,22 @@ msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Namen von Dimensionen"
 
 msgid "'MARGIN' does not match dim(X)"
-msgstr ""
+msgstr "'MARGIN' passt nicht zu dim(X)"
 
-#, fuzzy
 msgid "'dim' cannot be of length 0"
-msgstr "'dims' kann nicht Länge 0 haben"
+msgstr "'dim' kann nicht Länge 0 haben"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' spezifiziert ein zu großes Array"
 
-#, fuzzy
 msgid "'x' must have named dimnames"
-msgstr "'X' muss benannte Dimensionen besitzten"
+msgstr "'x' muss benannte Dimensionen besitzen"
 
 msgid "incorrect value for 'MARGIN'"
 msgstr "falscher Wert für 'MARGIN'"
 
-#, fuzzy
 msgid "dim(x) must have a positive length"
-msgstr "dim(X) muss positive Länge haben"
+msgstr "dim(x) muss positive Länge haben"
 
 msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "'pos=1' ist nicht möglich und es wird seit Jahren davor gewarnt"
@@ -182,7 +177,7 @@ msgid "can only splice vectors"
 msgstr "kann nur Vektor-Objekte schreiben"
 
 msgid "the LINPACK argument has been defunct since R 3.1.0"
-msgstr ""
+msgstr "das LINPACK Argument funktioniert seit R 3.1.0 nicht mehr"
 
 msgid "complex matrices not permitted at present"
 msgstr "komplexe Matrizen momentan nicht zugelassen"

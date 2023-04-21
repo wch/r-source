@@ -904,7 +904,7 @@ msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' dev'essere \"\" o un oggetto connessione aperto"
 
 msgid "'char' must have a non-zero width"
-msgstr "'char' dev'essere di lunghezza diversa da zero"
+msgstr "'char' deve avere una larghezza non zero"
 
 msgid "must have 'max' > 'min'"
 msgstr "bisogna avere 'max' > 'min'"

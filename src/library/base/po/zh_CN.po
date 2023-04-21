@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2022-12-20 08:04+0000\n"
+"PO-Revision-Date: 2023-03-09 07:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -571,12 +571,12 @@ msgstr "RNGkind: RNG类型%d目前没有实现"
 msgid ""
 "RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-"
 "Multicarry"
-msgstr ""
+msgstr "RNGkind：Kinderman-Ramage + Marsaglia-Multicarry 与正态性严重偏差"
 
 #: src/main/RNG.c:495
 msgid ""
 "RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
-msgstr ""
+msgstr "RNGkind：Ahrens-Dieter + Marsaglia-Multicarry 的正态偏差"
 
 #: src/main/RNG.c:499
 msgid "invalid Normal type in 'RNGkind'"
@@ -587,9 +587,8 @@ msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand'不在载入表中"
 
 #: src/main/RNG.c:517
-#, fuzzy
 msgid "invalid sample type in 'RNGkind'"
-msgstr "'RNGkind'里的Normal类无效"
+msgstr "“RNGkind”中的样本类型无效"
 
 #: src/main/RNG.c:563
 msgid "supplied seed is not a valid integer"
@@ -598,31 +597,30 @@ msgstr "提供的随机种不是正确的正数"
 #: src/main/Rdynload.c:188
 #, c-format
 msgid "R_MAX_NUM_DLLS must be at least %d"
-msgstr ""
+msgstr "R_MAX_NUM_DLLS 必须至少为 %d"
 
 #: src/main/Rdynload.c:194
 #, c-format
 msgid "R_MAX_NUM_DLLS cannot be bigger than %d"
-msgstr ""
+msgstr "R_MAX_NUM_DLLS 不能大于 %d"
 
 #: src/main/Rdynload.c:203
 #, c-format
 msgid "R_MAX_NUM_DLLS cannot be bigger than %d when fd limit is not known"
-msgstr ""
+msgstr "当 fd 限制未知时，R_MAX_NUM_DLLS不能大于 %d"
 
 #: src/main/Rdynload.c:209 src/main/Rdynload.c:228
 msgid "the limit on the number of open files is too low"
-msgstr ""
+msgstr "打开文件数量的限制太低"
 
 #: src/main/Rdynload.c:212
 #, c-format
 msgid "R_MAX_NUM_DLLS bigger than %d may exhaust open files limit"
-msgstr ""
+msgstr "大于 %d R_MAX_NUM_DLLS可能会耗尽打开文件限制"
 
 #: src/main/Rdynload.c:235
-#, fuzzy
 msgid "could not allocate space for DLL table"
-msgstr "无法为'name'分配空间"
+msgstr "无法为 DLL 表分配空间"
 
 #: src/main/Rdynload.c:360
 msgid "R_RegisterRoutines called with invalid DllInfo object."
@@ -646,9 +644,8 @@ msgid "could not allocate space for 'name'"
 msgstr "无法为'name'分配空间"
 
 #: src/main/Rdynload.c:807
-#, fuzzy
 msgid "could not allocate space for 'DllInfo'"
-msgstr "无法为'name'分配空间"
+msgstr "无法为“DllInfo”分配空间"
 
 #: src/main/Rdynload.c:1075 src/main/Rdynload.c:1091 src/main/util.c:788
 msgid "character argument expected"
@@ -669,10 +666,10 @@ msgid "shared object '%s' was not loaded"
 msgstr "没有载入共享目标对象'%s'"
 
 #: src/main/Rdynload.c:1173
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d byte)"
 msgid_plural "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr[0] "无法给注册了的原始符号分配内存(%d字节)"
+msgstr[0] "无法为注册的本机符号（%d 字节）分配内存"
 
 #: src/main/Rdynload.c:1308 src/main/Rdynload.c:1507
 msgid "NULL value passed for DllInfo"
@@ -884,12 +881,16 @@ msgid ""
 "Recycling array of length 1 in array-vector arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead.\n"
 msgstr ""
+"不推荐使用数组向量算术中长度为 1 的回收数组。\n"
+"  请改用 c()或  as.vector()。\n"
 
 #: src/main/arithmetic.c:606
 msgid ""
 "Recycling array of length 1 in vector-array arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead.\n"
 msgstr ""
+"不推荐使用向量数组算术中长度为 1 的回收数组。\n"
+"  请改用  c()  或 as.vector()\n"
 
 #: src/main/arithmetic.c:620 src/main/logic.c:93 src/main/relop.c:180
 msgid "non-conformable arrays"
@@ -923,10 +924,10 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值参数的实数函数目前没有实现"
 
 #: src/main/arithmetic.c:1654
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
 msgid_plural "%d arguments passed to '%s' which requires 1 or 2 arguments"
-msgstr[0] "给了%d个参数到'%s'，但它最多只能用两个参数"
+msgstr[0] "传递给 '%s' 的 %d 参数需要 1 或 2 个参数"
 
 #: src/main/arithmetic.c:1665 src/main/arithmetic.c:1777
 #: src/main/arithmetic.c:1795 src/main/envir.c:1584 src/main/envir.c:2118
@@ -988,7 +989,7 @@ msgstr "数据长度与矩阵的大小不一致 [%d != %d x %d]"
 
 #: src/main/array.c:155
 msgid "non-empty data for zero-extent matrix"
-msgstr ""
+msgstr "零范围矩阵的非空数据"
 
 #: src/main/array.c:160 src/main/array.c:2081 src/main/array.c:2189
 msgid "too many elements specified"
@@ -1007,9 +1008,8 @@ msgid "negative extents to 3D array"
 msgstr "三维排列的范围不能是负值"
 
 #: src/main/array.c:252
-#, fuzzy
 msgid "'alloc3DArray': too many elements specified"
-msgstr "'alloc3Darray': 设定了太多的元素"
+msgstr "'alloc3DArray'：指定的元素太多"
 
 #: src/main/array.c:279
 msgid "'allocArray': too many elements specified by 'dims'"
@@ -1069,9 +1069,8 @@ msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
 #: src/main/array.c:1903
-#, fuzzy
 msgid "'x' is too short"
-msgstr "'object'太短"
+msgstr "'x' 太短"
 
 #: src/main/array.c:2077
 msgid "'dims' cannot be of length 0"
@@ -1103,14 +1102,13 @@ msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: 标记的类型(%s)无效"
 
 #: src/main/attrib.c:355
-#, fuzzy
 msgid "cannot set attribute on a symbol"
-msgstr "无法为本系统设时差区"
+msgstr "无法在符号上设置属性"
 
 #: src/main/attrib.c:403
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector or NULL"
-msgstr "'names'的类型(%s)无效: 必需是向量"
+msgstr "'names' 的类型（%s）无效：必须是向量或为NULL"
 
 #: src/main/attrib.c:406
 #, c-format
@@ -1150,9 +1148,9 @@ msgid "attempt to set invalid 'class' attribute"
 msgstr "无法设非适当'class'属性"
 
 #: src/main/attrib.c:916
-#, fuzzy, c-format
+#, c-format
 msgid "invalid to use names()<- on an S4 object of class '%s'"
-msgstr "在非向量类别('%s')里不能用names()<-来设'names'这个类型"
+msgstr "在类 '%s' 的 S4 对象上使用 names()<- 无效"
 
 #: src/main/attrib.c:959
 msgid "incompatible 'names' argument"
@@ -1168,9 +1166,9 @@ msgid "'dimnames' applied to non-array"
 msgstr "'dimnames'只能用于陈列"
 
 #: src/main/attrib.c:1093 src/main/coerce.c:2724
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
-msgstr "'%s'必需是列表"
+msgstr "'%s' 必须是列表"
 
 #: src/main/attrib.c:1096 src/main/attrib.c:1124
 #, c-format
@@ -1216,7 +1214,7 @@ msgstr "dims [product %d]与对象长度[%d]不匹配"
 #: src/main/attrib.c:1314
 #, c-format
 msgid "factor level [%d] is duplicated"
-msgstr ""
+msgstr "因子水平 [%d] 重复"
 
 #: src/main/attrib.c:1342
 msgid "attributes must be a list or NULL"
@@ -1379,7 +1377,6 @@ msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用"
 
 #: src/main/builtin.c:259 src/main/builtin.c:274
-#, fuzzy
 msgid "argument is not a function"
 msgstr "参数不能是函数"
 
@@ -1397,21 +1394,19 @@ msgstr "参数不是环境"
 
 #: src/main/builtin.c:375
 msgid "the empty environment has no parent"
-msgstr "空环境没有父母环境"
+msgstr "空环境没有父级环境"
 
 #: src/main/builtin.c:411
 msgid "can not set parent of the empty environment"
-msgstr "无法为空环境设父母环境"
+msgstr "无法设置空环境的父级"
 
 #: src/main/builtin.c:413
-#, fuzzy
 msgid "can not set the parent environment of a namespace"
-msgstr "无法为空环境设父母环境"
+msgstr "无法设置命名空间的父环境"
 
 #: src/main/builtin.c:415
-#, fuzzy
 msgid "can not set the parent environment of package imports"
-msgstr "无法为空环境设父母环境"
+msgstr "无法设置包导入的父级环境"
 
 #: src/main/builtin.c:423
 msgid "'parent' is not an environment"
@@ -1446,9 +1441,8 @@ msgid "vector: cannot make a vector of mode '%s'."
 msgstr "向量: 无法建立状态为\"%s\"的向量."
 
 #: src/main/builtin.c:836
-#, fuzzy
 msgid "cannot set length of non-(vector or list)"
-msgstr "不能设非向量的长度"
+msgstr "无法设置非（向量或列表）的长度"
 
 #: src/main/builtin.c:837 src/main/character.c:665 src/main/coerce.c:3090
 msgid "invalid value"
@@ -1456,7 +1450,7 @@ msgstr "无效值"
 
 #: src/main/builtin.c:839
 msgid "length of NULL cannot be changed"
-msgstr ""
+msgstr "无法更改 NULL 的长度"
 
 #: src/main/builtin.c:950 src/main/envir.c:2227 src/main/envir.c:2235
 #, c-format
@@ -1489,11 +1483,12 @@ msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
 " Consider using '%s' instead."
 msgstr ""
+"EXPR 是一个“因子”，被视为整数。\n"
+" 请考虑改用“%s”。"
 
 #: src/main/builtin.c:1099 src/main/eval.c:7642 src/main/eval.c:7671
-#, fuzzy
 msgid "'switch' with no alternatives"
-msgstr "没有名字替代的'switch'需要数值EXPR"
+msgstr "'switch' 没有备选项"
 
 #: src/main/character.c:117 src/main/character.c:305
 #, c-format
@@ -1520,38 +1515,37 @@ msgid "number of characters is not computable in \"bytes\" encoding, %s"
 msgstr "字符数在\"bytes\" 编码中不可计算，%s"
 
 #: src/main/character.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "width is not computable for %s in \"bytes\" encoding"
-msgstr "\"bytes\"编码里无法为％%d元素计算长度"
+msgstr "宽度对于\"bytes\" 编码中的 %s 不可计算"
 
 #: src/main/character.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte string, element %ld"
-msgstr "多字节字符串%d有错误"
+msgstr "无效的多字节字符串，元素 %ld"
 
 #: src/main/character.c:348
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "number of characters is not computable in \"bytes\" encoding, element %ld"
-msgstr "\"bytes\"编码里无法为％%d元素计算字符数"
+msgstr "字符数在 \"bytes\" 编码中不可计算，元素 %ld"
 
 #: src/main/character.c:351
-#, fuzzy, c-format
+#, c-format
 msgid "width is not computable in \"bytes\" encoding, element %ld"
-msgstr "\"bytes\"编码里无法为％%d元素计算长度"
+msgstr "宽度在 \"bytes\" 编码中不可计算，元素 %ld"
 
 #: src/main/character.c:429
 msgid "extracting substrings from a non-character object"
-msgstr "无法从非字符对象里抽取子字串"
+msgstr "无法从非字符对象里提取子字串"
 
 #: src/main/character.c:440 src/main/character.c:662
 msgid "invalid substring arguments"
 msgstr "子字符串参数无效"
 
 #: src/main/character.c:485
-#, fuzzy
 msgid "non-character object(s)"
-msgstr "不能有非字符名字"
+msgstr "非字符对象"
 
 #: src/main/character.c:657
 msgid "replacing substrings in a non-character object"
@@ -1630,9 +1624,8 @@ msgid "NAs introduced by coercion"
 msgstr "强制改变过程中产生了NA"
 
 #: src/main/coerce.c:83
-#, fuzzy
 msgid "NAs introduced by coercion to integer range"
-msgstr "强制改变过程中产生了NA"
+msgstr "强制到整数范围引入的 NA"
 
 #: src/main/coerce.c:85 src/main/errors.c:1442
 msgid "imaginary parts discarded in coercion"
@@ -1648,9 +1641,9 @@ msgid "invalid data of mode '%s' (too short)"
 msgstr "数据状态为\"%s\"无效(太短了)"
 
 #: src/main/coerce.c:1019 src/main/coerce.c:1141 src/main/coerce.c:1164
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' object cannot be coerced to type '%s'"
-msgstr "'pairlist'对象不能被强制改变成'%s'类型"
+msgstr "不能强制将“%s”对象强制为键入“%s”"
 
 #: src/main/coerce.c:1194 src/main/coerce.c:1564
 msgid "no method for coercing this S4 class to a vector"
@@ -1666,7 +1659,7 @@ msgstr "不能强迫改变非因子"
 
 #: src/main/coerce.c:1428 src/main/coerce.c:1438
 msgid "malformed factor"
-msgstr ""
+msgstr "畸形因子"
 
 #: src/main/coerce.c:1612
 msgid "list argument expected"
@@ -1685,19 +1678,17 @@ msgid "invalid body for function"
 msgstr "函数定义本体无效"
 
 #: src/main/coerce.c:1672
-#, fuzzy
 msgid "argument must be character"
-msgstr "参数'x'必需是字符串"
+msgstr "参数必须是字符"
 
 #: src/main/coerce.c:1677
-#, fuzzy
 msgid "argument must be a character string"
-msgstr "参数'x'必需是字符串"
+msgstr "参数必须是字符串"
 
 #: src/main/coerce.c:1718
 #, c-format
 msgid "parsing result not of length one, but %d"
-msgstr ""
+msgstr "解析结果长度不为 1，而应是 %d"
 
 #: src/main/coerce.c:1750
 msgid "invalid length 0 argument"
@@ -1705,7 +1696,7 @@ msgstr "长度为零的参数是无效的"
 
 #: src/main/coerce.c:1766
 msgid "as.call(<character>) not feasible; consider str2lang(<char.>)"
-msgstr ""
+msgstr "as.call(<character>) 不可行;考虑 str2lang(<char.>)"
 
 #: src/main/coerce.c:1769
 msgid "invalid argument list"
@@ -1714,7 +1705,7 @@ msgstr "参数列表无效"
 #: src/main/coerce.c:1790
 #, c-format
 msgid "'length(x) = %lld > 1' in coercion to '%s'"
-msgstr ""
+msgstr "'length(x) = %lld > 1' 强制转换为 '%s'"
 
 #: src/main/coerce.c:2134
 msgid "type \"single\" unimplemented in R"
@@ -1743,9 +1734,8 @@ msgid "first argument must be a character string"
 msgstr "第一个参数必需是字符串"
 
 #: src/main/coerce.c:2717
-#, fuzzy
 msgid "'what' must be a function or character string"
-msgstr "'text'必需为字符串"
+msgstr "“what”必须是函数或字符串"
 
 #: src/main/coerce.c:2728 src/main/unique.c:1855
 msgid "'envir' must be an environment"
@@ -1872,15 +1862,15 @@ msgid "cannot open file '%ls': %s"
 msgstr "无法打开文件'%ls': %s"
 
 #: src/main/connections.c:765
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%ls': it is a directory"
-msgstr "无法打开文件'%ls': %s"
+msgstr "无法打开文件“%ls”：它是一个目录"
 
 #: src/main/connections.c:795 src/main/connections.c:1702
 #: src/main/connections.c:1853 src/main/connections.c:2049
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s': it is a directory"
-msgstr "无法打开文件'%s': %s"
+msgstr "无法打开文件'%s'：它是一个目录"
 
 #: src/main/connections.c:908
 msgid "connection is not open for reading"
@@ -1938,14 +1928,13 @@ msgid "too large a block specified"
 msgstr "区组太大"
 
 #: src/main/connections.c:1222
-#, fuzzy
 msgid "allocation of fifo name failed"
-msgstr "先进先出链结分配失败"
+msgstr "先进先出名称分配失败"
 
 #: src/main/connections.c:1283
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open fifo '%s', reason '%s'"
-msgstr "无法打开URL'%s'，原因是'%s'"
+msgstr "无法打开 fifo '%s'，原因为“%s”"
 
 #: src/main/connections.c:1323 src/main/connections.c:1347
 #, fuzzy
@@ -2442,7 +2431,7 @@ msgstr "crc错误%x%x\n"
 
 #: src/main/connections.c:5926
 msgid "write error on 'gzcon' connection"
-msgstr "'gzcon'链结书写出错"
+msgstr "'gzcon'链结写入出错"
 
 #: src/main/connections.c:5961
 msgid "'level' must be one of 0 ... 9"
@@ -2486,7 +2475,7 @@ msgstr "非插坐列表"
 
 #: src/main/connections.c:6206
 msgid "bad write indicators"
-msgstr "书写指示器有错误"
+msgstr "写入指示器有错误"
 
 #: src/main/connections.c:6228
 #, fuzzy
@@ -2899,12 +2888,12 @@ msgstr "zip文件出了CRC错误"
 
 #: src/main/dounzip.c:385
 msgid "write error in extracting from zip file"
-msgstr "抽取zip文件时出现了书写错误"
+msgstr "提取zip文件时出现了写入错误"
 
 #: src/main/dounzip.c:388
 #, c-format
 msgid "error %d in extracting from zip file"
-msgstr "从zip文件中抽取%d时出了错"
+msgstr "从zip文件中提取%d时出了错"
 
 #: src/main/dounzip.c:414
 msgid "unz connections can only be opened for reading"
@@ -2930,7 +2919,7 @@ msgstr "此链结无法打印"
 
 #: src/main/dounzip.c:486
 msgid "write not enabled for this connection"
-msgstr "无法对这个链结书写"
+msgstr "无法对这个链结写入"
 
 #: src/main/dounzip.c:504 src/main/dounzip.c:508 src/main/dounzip.c:515
 #: src/main/dounzip.c:533
@@ -3964,9 +3953,9 @@ msgid "contextstack overflow"
 msgstr "节点堆叠上溢"
 
 #: src/main/gram.y:2244 src/main/gram.y:2250
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected input"
-msgstr "意外的%s"
+msgstr "意外的输入"
 
 #: src/main/gram.y:2247 src/main/main.c:319
 #, fuzzy, c-format
@@ -3984,14 +3973,14 @@ msgid "unexpected numeric constant"
 msgstr "数值量"
 
 #: src/main/gram.y:2259
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected symbol"
-msgstr "意外的%s"
+msgstr "意外的符号"
 
 #: src/main/gram.y:2262
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected assignment"
-msgstr "意外的%s"
+msgstr "意外的赋值"
 
 #: src/main/gram.y:2265
 #, fuzzy, c-format
@@ -4077,7 +4066,7 @@ msgstr "\\U{xxxxxxxx}顺序无效(%d行)"
 #: src/main/gram.y:2893
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "由\"%2$s\"开头的字符串中存在'\\%1$c'，但没有这种逸出号"
+msgstr "“\\%c”转义符号在以“%s”开头的字符串中无法识别"
 
 #: src/main/gram.y:2962 src/main/gram.y:3091
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
@@ -4919,7 +4908,7 @@ msgstr "文件名字设定无效"
 
 #: src/main/platform.c:549 src/main/platform.c:605
 msgid "write error during file append"
-msgstr "文件追加时书写出错"
+msgstr "文件追加时写入出错"
 
 #: src/main/platform.c:569
 msgid "nothing to append to"
@@ -5490,7 +5479,7 @@ msgstr "读取二进列字符串时发生了错误"
 
 #: src/main/saveload.c:1658
 msgid "an xdr integer data write error occurred"
-msgstr "xdr整数数据书写错误"
+msgstr "xdr整数数据写入错误"
 
 #: src/main/saveload.c:1665
 msgid "an xdr integer data read error occurred"
@@ -5498,11 +5487,11 @@ msgstr "xdr整数数据读取错误"
 
 #: src/main/saveload.c:1680 src/main/saveload.c:1699
 msgid "an xdr string data write error occurred"
-msgstr "xdr字符串数据书写错误"
+msgstr "xdr字符串数据写入错误"
 
 #: src/main/saveload.c:1707
 msgid "an xdr real data write error occurred"
-msgstr "xdr实数数据书写错误"
+msgstr "xdr实数数据写入错误"
 
 #: src/main/saveload.c:1714
 msgid "an xdr real data read error occurred"
@@ -5510,7 +5499,7 @@ msgstr "xdr实数数据读取错误"
 
 #: src/main/saveload.c:1721
 msgid "an xdr complex data write error occurred"
-msgstr "xdr复数数据书写错误"
+msgstr "xdr复数数据写入错误"
 
 #: src/main/saveload.c:1728
 msgid "an xdr complex data read error occurred"
@@ -5519,7 +5508,7 @@ msgstr "xdr复数数据读取错误"
 #: src/main/saveload.c:1805 src/main/serialize.c:2333 src/main/serialize.c:2960
 #: src/modules/internet/internet.c:390 src/modules/internet/internet.c:463
 msgid "write failed"
-msgstr "书写失败"
+msgstr "写入失败"
 
 #: src/main/saveload.c:1964
 msgid "restore file may be empty -- no data loaded"
@@ -5574,7 +5563,7 @@ msgstr "第一参数必需是文件名字"
 #: src/main/saveload.c:2212 src/main/saveload.c:2238 src/main/serialize.c:908
 #: src/main/serialize.c:945 src/main/serialize.c:983
 msgid "XDR write failed"
-msgstr "XDR书写失败"
+msgstr "XDR写入失败"
 
 #: src/main/saveload.c:2225 src/main/saveload.c:2250 src/main/serialize.c:1501
 #: src/main/serialize.c:1537 src/main/serialize.c:1575
@@ -5696,7 +5685,6 @@ msgid "NA/NaN argument"
 msgstr "NA/NaN参数"
 
 #: src/main/seq.c:357
-#, fuzzy, c-format
 msgid "invalid type (%s) for '%s' (must be a vector)"
 msgstr "设'dimnames'时的类型(%s)无效(必需为向量)"
 
@@ -6548,7 +6536,6 @@ msgid "'x' must be a character vector"
 msgstr "'x'必需是字符向量"
 
 #: src/main/sysutils.c:675
-#, fuzzy
 msgid "'x' must be a character vector or a list of NULL or raw vectors"
 msgstr "'x'必需是NULL列表或原始向量"
 
@@ -6707,7 +6694,7 @@ msgstr "(%d)类型目前没有在'%s'里实现\n"
 
 #: src/main/util.c:472
 msgid "invalid tag in name extraction"
-msgstr "抽取名字的标记无效"
+msgstr "提取名字的标记无效"
 
 #: src/main/util.c:489
 #, c-format

@@ -6459,7 +6459,7 @@ msgstr "gli argomenti non possono essere riciclati con la medesima lunghezza"
 #: src/main/sprintf.c:155 src/main/sprintf.c:266
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr "la lunghezza 'fmt' eccede la lunghezza massima del formato %d"
+msgstr "La lunghezza di 'fmt' supera la lunghezza massima del formato %d"
 
 #: src/main/sprintf.c:174
 #, c-format

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
-"PO-Revision-Date: 2009-10-07 14:34+0200\n"
+"PO-Revision-Date: 2023-01-28 21:05+0000\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -17,16 +17,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "named list expected"
-msgstr ""
+msgstr "benannte Liste erwartet"
 
-#, fuzzy
 msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
-"einige benannte Argumente in 'fixed' sind keine Argumente für die angegebene "
-"Log-Likelihood"
+"einige benannte Werte sind keine Argumente für die angegebene Log-Likelihood"
 
 msgid "Mismatch in length of start values"
-msgstr ""
+msgstr "Unterschiedliche Längen der Startwerte"
 
 msgid "fixed values violate constraints"
 msgstr ""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-04-15 19:36+0100\n"
-"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -66,7 +66,7 @@ msgstr "发送的内容必须是原始的，如果需要的话请用serialize（
 
 #: fork.c:762 fork.c:770 fork.c:1180
 msgid "write error, closing pipe to the master"
-msgstr "书写错误，请关闭通往主进程的管道"
+msgstr "写入错误，请关闭通往主进程的管道"
 
 #: fork.c:780
 msgid "only the master process can send data to a child process"
@@ -79,7 +79,7 @@ msgstr "不存在%d这个子进程"
 
 #: fork.c:794
 msgid "write error"
-msgstr "书写错误"
+msgstr "写入错误"
 
 #: fork.c:880
 #, fuzzy, c-format

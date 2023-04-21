@@ -48,7 +48,7 @@ msgstr "'fmt' dev'essere di lunghezza 1"
 #: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr "la lunghezza di 'fmt' eccede la lunghezza massima del formato %d"
+msgstr "La lunghezza di 'fmt' supera la lunghezza massima del formato %d"
 
 #: getfmts.c:96
 #, c-format

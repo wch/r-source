@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2018-04-05 08:30+0200\n"
+"PO-Revision-Date: 2023-01-28 21:04+0000\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -858,34 +858,28 @@ msgid "Arrange Icons"
 msgstr "Ordne Icons an"
 
 #: src/extra/graphapp/metafile.c:55
-#, fuzzy
 msgid "Unable to save metafile to the clipboard"
-msgstr "Kann Zwischenablage nicht öffnen"
+msgstr "Kann Metafile nicht ins Clipboard speichern"
 
 #: src/extra/graphapp/metafile.c:108
-#, fuzzy
 msgid "Unable to create metafile"
-msgstr "Kann kein Editor-Fenster öffnen"
+msgstr "Kann Metafile nicht erzeugen"
 
 #: src/extra/graphapp/metafile.c:113
-#, fuzzy
 msgid "Insufficient memory to create metafile"
-msgstr "Nicht genügend Speicher. Bitte Konsole schließen"
+msgstr "Nicht genügend Speicher um Metafile zu erzeugen"
 
 #: src/extra/graphapp/printer.c:90
-#, fuzzy
 msgid "Unable to choose printer"
-msgstr "Kann Anzeigen-Fenster nicht öffnen"
+msgstr "Kann keinen Drucker auswählen"
 
 #: src/extra/graphapp/printer.c:118
-#, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr "Ungenügend Speicher um Datei in interner Anzeige zu zeigen"
+msgstr "Ungenügend Speicher für einen neuen Drucker"
 
 #: src/extra/graphapp/printer.c:151
-#, fuzzy
 msgid "Unable to start the print job"
-msgstr "Kann Anzeigen-Fenster nicht öffnen"
+msgstr "Kann Druckauftrag nicht beginnen"
 
 #: src/library/utils/src/windows/dataentry.c:225
 #: src/library/utils/src/windows/dataentry.c:1853

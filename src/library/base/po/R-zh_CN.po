@@ -400,7 +400,6 @@ msgstr "只适用于全数值数据框"
 msgid "cannot xtfrm data frames"
 msgstr "不是数据框"
 
-#, fuzzy
 msgid "all variables should have the same length"
 msgstr "列表参数有错误：所有变量的长度都应该是一样的"
 

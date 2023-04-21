@@ -100,7 +100,7 @@ msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' dev'essere una matrice di caratteri a 2 colonne"
 
 msgid "tcltk DLL is linked to"
-msgstr "tcltk DLL collegata ha"
+msgstr "tcltk DLL è linkato a"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Il supporto Tcl/tk non è disponibile su questo sistema"

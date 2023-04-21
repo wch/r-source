@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: R-4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2023-01-20 19:04+0000\n"
-"Last-Translator: Ahmadou Dicko <mail@ahmadoudicko.com>\n"
+"PO-Revision-Date: 2023-04-14 03:05+0000\n"
+"Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
@@ -67,7 +67,7 @@ msgstr "trace, REPORT doit être >= 0 (method = \"SANN\")"
 #: src/appl/pretty.c:127
 #, c-format
 msgid "R_pretty(): infinite range; *ndiv=%d, should have ndiv >= 2"
-msgstr "R_pretty(): gamme infinie ; *ndiv=%d, devrait avoir ndiv >= 2"
+msgstr "R_pretty() : gamme infinie  ; *ndiv=%d, devrait avoir ndiv >= 2"
 
 #: src/appl/pretty.c:142
 #, fuzzy, c-format
@@ -580,7 +580,7 @@ msgstr "'.Random.seed' de taille incorrecte"
 
 #: src/main/RNG.c:463
 msgid "RNGkind: Marsaglia-Multicarry has poor statistical properties"
-msgstr "RNGkind: Marsaglia-Multicarry a des mauvaises propriétés statistiques"
+msgstr "RNGkind : Marsaglia-Multicarry a des mauvaises propriétés statistiques"
 
 #: src/main/RNG.c:473
 #, c-format
@@ -592,14 +592,14 @@ msgid ""
 "RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-"
 "Multicarry"
 msgstr ""
-"RNGkind: forts écarts à la normalité pour Kinderman-Ramage + Marsaglia-"
+"RNGkind : forts écarts à la normalité pour Kinderman-Ramage + Marsaglia-"
 "Multicarry"
 
 #: src/main/RNG.c:495
 msgid ""
 "RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
 msgstr ""
-"RNGkind: écarts à la normalité pour Ahrens-Dieter + Marsaglia-Multicarry"
+"RNGkind : écarts à la normalité pour Ahrens-Dieter + Marsaglia-Multicarry"
 
 #: src/main/RNG.c:499
 msgid "invalid Normal type in 'RNGkind'"
@@ -684,7 +684,7 @@ msgid ""
 "unable to load shared object '%s':\n"
 "  %s"
 msgstr ""
-"impossible de charger l'objet partagé '%s':\n"
+"impossible de charger l'objet partagé '%s' :\n"
 "  %s"
 
 #: src/main/Rdynload.c:1094
@@ -1587,9 +1587,9 @@ msgid "width is not computable for %s in \"bytes\" encoding"
 msgstr "largeur impossible à calculer pour %s dans l'encodage \"bytes\""
 
 #: src/main/character.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte string, element %ld"
-msgstr "chaîne de charactères multioctets incorrecte %d"
+msgstr "chaîne de charactères multioctets incorrecte %ld"
 
 #: src/main/character.c:348
 #, fuzzy, c-format
@@ -4720,7 +4720,7 @@ msgstr "le profilage de la mémoire n'est pas disponible sur ce système"
 #: src/main/memory.c:4586
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
-msgstr "Rprofmem: impossible d'ouvrir le fichier '%s'"
+msgstr "Rprofmem : impossible d'ouvrir le fichier '%s'"
 
 #: src/main/memory.c:4700
 #, c-format
@@ -5286,7 +5286,7 @@ msgstr ""
 #: src/main/platform.c:2559
 #, c-format
 msgid "problem creating directory %ls: %s"
-msgstr "problème lors de la création du répertoire %ls: %s"
+msgstr "problème lors de la création du répertoire %ls : %s"
 
 #: src/main/platform.c:2581
 #, c-format
@@ -5296,7 +5296,7 @@ msgstr "problème lors de la lecture du répertoire %ls : %s"
 #: src/main/platform.c:2600
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr "problème lors de la copie de %ls vers %ls: %s"
+msgstr "problème lors de la copie de %ls vers %ls : %s"
 
 #: src/main/platform.c:2816
 #, c-format
@@ -5308,17 +5308,17 @@ msgstr ""
 #: src/main/platform.c:2821
 #, c-format
 msgid "problem creating directory %s: %s"
-msgstr "problème lors de la création du répertoire %s: %s"
+msgstr "problème lors de la création du répertoire %s : %s"
 
 #: src/main/platform.c:2843
 #, c-format
 msgid "problem reading directory %s: %s"
-msgstr "problème lors de la lecture du répertoire %s: %s"
+msgstr "problème lors de la lecture du répertoire %s : %s"
 
 #: src/main/platform.c:2863
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr "problème lors de la copie de %s vers %s: %s"
+msgstr "problème lors de la copie de %s vers %s : %s"
 
 #: src/main/platform.c:3022
 msgid "'mode' must be of length at least one"

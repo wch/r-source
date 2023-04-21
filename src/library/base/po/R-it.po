@@ -1639,7 +1639,7 @@ msgid "additional arguments ignored in warning()"
 msgstr "ignorati gli argomenti aggiuntivi in warning()"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
-msgstr "Sys.setenv(LANGUAGE=\"%s\") potrebbe essere fallito"
+msgstr "Sys.setenv(LANGUAGE=\"%s\") potrebbe non essere riuscito"
 
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: 2022-12-15 08:04+0000\n"
+"PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -124,7 +124,7 @@ msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "使用文档对象'%s'里的\\usage对象没有\\alias这条目:"
 
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr "使用文档对象'%s'里\\usage分配:"
+msgstr "使用文档对象'%s'里\\usage赋值:"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "使用文档对象'%s'有些\\usage不对:"
@@ -195,7 +195,7 @@ msgid "Malformed package version."
 msgstr "畸形程序包版本."
 
 msgid "Malformed maintainer field."
-msgstr "畸形维修人员域."
+msgstr "维护人员域格式错误."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
 msgstr "Depends/Suggests/Imports/Enhances这些域中有些是畸形的."
@@ -238,7 +238,6 @@ msgstr ""
 msgid "Malformed Description field: should contain one or more complete sentences."
 msgstr ""
 
-#, fuzzy
 msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr "请参考'如何写R附加软件'文档'写R程序包'这一段中关于DESCRIPTION文件的信息."
 
@@ -246,7 +245,7 @@ msgid "Malformed Authors@R field:"
 msgstr "畸形Authors@R域."
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr "无法从Authors@R 域中抽取作者域"
+msgstr "无法从Authors@R 域中提取作者域"
 
 #, fuzzy
 msgid "Authors@R field gives no person with name and roles."
@@ -265,7 +264,7 @@ msgid "Authors@R field gives no person with name and author role"
 msgstr "Authors@R域没有提供有作者作用的人"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr "无法从Authors@R 抽取维修人域"
+msgstr "无法从 Authors@R 提取维护人域"
 
 #, fuzzy
 msgid "Authors@R field gives more than one person with maintainer role:"
@@ -273,7 +272,7 @@ msgstr "Authors@R域没有提供有作者作用的人"
 
 #, fuzzy
 msgid "Authors@R field gives no person with maintainer role, valid email address and non-empty name."
-msgstr "Authors@R域没有提供有维修作用的人和他的email"
+msgstr "Authors@R域没有提供有维护作用的人和他的email"
 
 #, fuzzy
 msgid "Authors@R field gives persons with invalid ORCID identifiers:"

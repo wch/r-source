@@ -571,8 +571,7 @@ msgstr "'.Random.seed' tiene una longitud errónea"
 
 #: src/main/RNG.c:463
 msgid "RNGkind: Marsaglia-Multicarry has poor statistical properties"
-msgstr ""
-"RNGkind: Marsaglia-Multicarry tiene unas propiedades estadísticas deficientes"
+msgstr "RNGkind: Marsaglia-Multicarry tiene unas propiedades estadísticas deficientes"
 
 #: src/main/RNG.c:473
 #, c-format
@@ -792,17 +791,17 @@ msgstr "string de entrada %d es inválida en este locale"
 #: src/main/grep.c:3149
 #, c-format
 msgid "argument '%s' will be ignored"
-msgstr "argumento '%s  será ignorado"
+msgstr "argumento '%s' será ignorado"
 
 #: src/main/agrep.c:615
 #, c-format
 msgid "input string x[%d] is invalid in this locale"
-msgstr "la cadena de entrada %d es inválida en esta localización"
+msgstr "la cadena de entrada x[%d] es inválida en esta localización"
 
 #: src/main/agrep.c:662
 #, c-format
 msgid "input string y[%d] is invalid in this locale"
-msgstr "la cadena de entrada %d es inválida en esta localización"
+msgstr "la cadena de entrada y[%d] es inválida en esta localización"
 
 #: src/main/agrep.c:835 src/main/grep.c:3196
 #, c-format
@@ -811,7 +810,7 @@ msgstr "error regcomp: '%s'"
 
 #: src/main/apply.c:111
 msgid "'FUN.VALUE' must be a vector"
-msgstr "'Valor.Función' debe ser un vector"
+msgstr "'FUN.VALUE' debe ser un vector"
 
 #: src/main/apply.c:114 src/main/array.c:528 src/main/character.c:989
 #: src/main/character.c:1843 src/main/connections.c:3952 src/main/context.c:696
@@ -841,12 +840,12 @@ msgstr "longitud no válida"
 #: src/main/apply.c:122
 msgid "long vectors are not supported for matrix/array results"
 msgstr ""
-"los vectores largos no son compatibles con los resultados de la matriz/array"
+"los vectores largos no son permitidos en resultados de tipo matriz o array"
 
 #: src/main/apply.c:129
 #, c-format
 msgid "type '%s' is not supported"
-msgstr "el tipo de '%s' no es soportado"
+msgstr "el tipo '%s' no es soportado"
 
 #: src/main/apply.c:177
 #, c-format
@@ -855,7 +854,7 @@ msgid ""
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
 "Los valores deben ser de longitud %d, \n"
-"pero el resultado FUN(X [[%d]]) es la longitud %d "
+"pero la longitud del resultado de FUN(X [[%d]]) es %d"
 
 #: src/main/apply.c:189
 #, c-format
@@ -913,6 +912,9 @@ msgid ""
 "Recycling array of length 1 in vector-array arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead.\n"
 msgstr ""
+"Reciclar un array de longitud 1 en la aritmética de  vector-array ha sido "
+"discontinuado\n"
+"  Utilice c() o as.vector() en su lugar.\n"
 
 #: src/main/arithmetic.c:620 src/main/logic.c:93 src/main/relop.c:180
 msgid "non-conformable arrays"
@@ -968,9 +970,9 @@ msgid "invalid argument 'base' of length 0"
 msgstr "argumento no válido de base de longitud 0"
 
 #: src/main/array.c:86 src/main/array.c:2069
-#, fuzzy, c-format
+#, c-format
 msgid "'data' must be of a vector type, was '%s'"
-msgstr "'path' debe ser un vector de caracteres"
+msgstr "'data' debe ser de tipo vector, era '%s'"
 
 #: src/main/array.c:106 src/main/array.c:114
 msgid "non-numeric matrix extent"
@@ -1010,13 +1012,14 @@ msgstr ""
 "columnas [%d] en la matriz"
 
 #: src/main/array.c:149 src/main/array.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "data length differs from size of matrix: [%d != %d x %d]"
-msgstr "la longitud de los datos excede el tamaño de la matriz"
+msgstr ""
+"la longitud de los datos difiere del tamaño de la matriz [%d != %d x %d]"
 
 #: src/main/array.c:155
 msgid "non-empty data for zero-extent matrix"
-msgstr ""
+msgstr "datos no vacíos para una matrix de extensión cero"
 
 #: src/main/array.c:160 src/main/array.c:2081 src/main/array.c:2189
 msgid "too many elements specified"
@@ -1035,29 +1038,26 @@ msgid "negative extents to 3D array"
 msgstr "extensión negativa para array 3D"
 
 #: src/main/array.c:252
-#, fuzzy
 msgid "'alloc3DArray': too many elements specified"
-msgstr "alloc3Darray: demasiados elementos especificados"
+msgstr "'alloc3Darray': demasiados elementos especificados"
 
 #: src/main/array.c:279
-#, fuzzy
 msgid "'allocArray': too many elements specified by 'dims'"
-msgstr "allocArray: demasiados elementos especificados para 'dims'"
+msgstr "'allocArray': demasiados elementos especificados para 'dims'"
 
 #: src/main/array.c:546
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list or atomic vector"
-msgstr "'x' debe ser un vector de caracteres"
+msgstr "'%s' debería ser una lista o un vector atómico"
 
 #: src/main/array.c:590
-#, fuzzy, c-format
+#, c-format
 msgid "a matrix-like object is required as argument to '%s'"
-msgstr "se requiere una matriz  como argumento de 'row/col'"
+msgstr "se requiere un objeto tipo matriz como argumento para '%s'"
 
 #: src/main/array.c:1254
-#, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
-msgstr "requiere argumentos numéricos matriz/vector"
+msgstr "requiere argumentos numéricos/complejos de tipo matriz/vector"
 
 #: src/main/array.c:1364 src/main/array.c:1368 src/main/array.c:1372
 msgid "non-conformable arguments"
@@ -1068,32 +1068,31 @@ msgid "argument is not a matrix"
 msgstr "el argumento no es una matriz"
 
 #: src/main/array.c:1706 src/main/attrib.c:1215
-#, fuzzy, c-format
+#, c-format
 msgid "invalid first argument, must be %s"
-msgstr "primer argumento no válido: debe ser un arreglo"
+msgstr "primer argumento no válido, debería ser %s"
 
 #: src/main/array.c:1720
-#, fuzzy, c-format
+#, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
-msgstr "'perm' tiene longitud errónea"
+msgstr "'perm' tiene longitud errónea %d (!= %d)"
 
 #: src/main/array.c:1725 src/main/array.c:1728
 msgid "'a' does not have named dimnames"
 msgstr "'a' no tiene un nombre en dimnames"
 
 #: src/main/array.c:1735
-#, fuzzy, c-format
+#, c-format
 msgid "'perm[%d]' does not match a dimension name"
-msgstr "perm[%d] no tiene un nombre en dimension"
+msgstr "'perm[%d]' no coincide con el nombre de una dimension"
 
 #: src/main/array.c:1748
 msgid "value out of range in 'perm'"
 msgstr "valor fuera de sus límites en 'perm'"
 
 #: src/main/array.c:1830
-#, fuzzy
 msgid "'resize' must be TRUE or FALSE"
-msgstr "'decreciente' debe ser TRUE o FALSE"
+msgstr "'resize' debería ser TRUE o FALSE"
 
 #: src/main/array.c:1900
 msgid "'x' must be numeric"
@@ -1101,24 +1100,21 @@ msgstr "'x' debe ser numérico"
 
 # No se en que contexto va este mensaje, puede estar bien o mal traducido. Vos sabes?
 #: src/main/array.c:1903
-#, fuzzy
 msgid "'x' is too short"
-msgstr "objecto demasiado pequeño"
+msgstr "'x' es demasiado corto"
 
 #: src/main/array.c:2077
-#, fuzzy
 msgid "'dims' cannot be of length 0"
-msgstr "'hadj' debe tener longitud 1"
+msgstr "'dims' no puede tener longitud 0"
 
 #: src/main/array.c:2185
-#, fuzzy
 msgid "'x' must have positive length"
-msgstr "argumento debe tener longitud positiva"
+msgstr "'x' debería tener una longitud positiva"
 
 #: src/main/array.c:2286
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr ""
+msgstr "matriz singular en 'backsolve'. Primer cero en la diagonal [%d]"
 
 #: src/main/attrib.c:40 src/main/attrib.c:249 src/main/attrib.c:281
 #: src/main/attrib.c:305 src/main/attrib.c:429 src/main/attrib.c:476
@@ -1137,9 +1133,8 @@ msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: tipo no válido (%s)  para TAG"
 
 #: src/main/attrib.c:355
-#, fuzzy
 msgid "cannot set attribute on a symbol"
-msgstr "no se puede especificar el uso horario en este sistema"
+msgstr "no se puede establecer un atributo en un símbolo"
 
 #: src/main/attrib.c:403
 #, fuzzy, c-format
@@ -1254,7 +1249,7 @@ msgstr "dims [producto %d] no coincide con la longitud del objeto [%d]"
 #: src/main/attrib.c:1314
 #, c-format
 msgid "factor level [%d] is duplicated"
-msgstr ""
+msgstr "el nivel [%d] del factor está duplicado"
 
 #: src/main/attrib.c:1342
 msgid "attributes must be a list or NULL"
@@ -1500,7 +1495,7 @@ msgstr "valor no válido"
 
 #: src/main/builtin.c:839
 msgid "length of NULL cannot be changed"
-msgstr ""
+msgstr "la longitud del valor NULL no se puede cambiar"
 
 #: src/main/builtin.c:950 src/main/envir.c:2227 src/main/envir.c:2235
 #, c-format

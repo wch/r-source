@@ -41,7 +41,7 @@ msgstr ""
 "non converge"
 
 msgid "levels truncated to positive values only"
-msgstr "livelli troncati solo a valori positivi"
+msgstr "livelli troncati solo ai valori positivi"
 
 msgid "extra arguments discarded"
 msgstr "argomenti extra ignorati"

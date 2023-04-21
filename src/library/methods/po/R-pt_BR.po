@@ -20,79 +20,68 @@ msgstr ""
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "OOPS: algo errado com '.OldClassesPrototypes[[%d]]'"
 
-#, fuzzy
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class definition; "
 "%s does not"
 msgstr ""
-"argumento não nomeado para initialize()  para classe S3 deve ter uma "
-"definição de classe; \"%s\" não tem"
+"argumento não nomeado para initialize() de classe S3 deve ter uma definição "
+"de classe; %s não tem"
 
-#, fuzzy
 msgid ""
 "unnamed argument must extend either the S3 class or the class of the data "
 "part; not true of class %s"
 msgstr ""
-"argumento sem nome deve estender a classe S3 ou a classe da parte de dados; "
-"não é verdadeiro da classe \"%s\""
+"argumento não nomeado deve estender a classe S3 ou a classe da parte de "
+"dados; não é o caso para classe %s"
 
-#, fuzzy
 msgid ""
 "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
 "equivalent"
 msgstr ""
-"Classe \"%s\" não tem uma parte de dados S3, e então é do tipo \"S4\"; não "
-"há S3 equivalente"
+"classe %s não tem uma parte de dados S3, e então é do tipo \"S4\"; não há "
+"equivalente S3"
 
-#, fuzzy
 msgid ""
 "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
 msgstr ""
-"Classe \"%s\" é VIRTUAL; não faz sentido criar um objeto S4 a partir dessa "
-"classe"
+"classe %s é VIRTUAL; não faz sentido criar um objeto S4 a partir dessa classe"
 
-#, fuzzy
 msgid "object must be a valid data part for class %s; not true of type %s"
 msgstr ""
-"Objeto deve ser uma parte de dados válida para a classe \"%s\"; não "
-"verdadeiro para o tipo \"%s\""
+"objeto deve ser uma parte de dados válida para a classe %s; não é o caso "
+"para o tipo %s"
 
-#, fuzzy
 msgid "cannot specify matrix() arguments when specifying '.Data'"
 msgstr ""
-"Não é possível especificar argumentos matrix() quando especificando .Data"
+"não é possível especificar argumentos para matrix() quando especificando '."
+"Data'"
 
 msgid "cannot specify array() arguments when specifying '.Data'"
 msgstr "não é possível especificar argumentos de array() ao especificar '.Data'"
 
-#, fuzzy
 msgid "cannot have more than one unnamed argument as environment"
-msgstr "Impossível ter mais de um argumento sem nome como ambiente"
+msgstr "não é possível ter mais de um argumento não nomeado como ambiente"
 
-#, fuzzy
 msgid "unnamed argument to new() must be an environment for the new object"
-msgstr "Argumento sem nome para new() deve ser um ambiente para o novo objeto"
+msgstr "argumento sem nome para new() deve ser um ambiente para o novo objeto"
 
-#, fuzzy
 msgid ""
 "methods may not be defined for primitive function %s in this version of R"
 msgstr ""
-"métodos não podem ser definidos para função primitiva '%s' nessa versão do R"
+"métodos não podem ser definidos para função primitiva %s nesta versão do R"
 
-#, fuzzy
 msgid ""
 "S3Part() is only defined for classes set up by setOldCLass(), basic classes "
 "or subclasses of these:  not true of class %s"
 msgstr ""
 "S3Part() só é definida para classes criadas por setOldCLass(), classes "
-"básicas ou subclasses destas: não verdadeiro para classe \"%s\""
+"básicas ou subclasses destas:  não é o caso para classe %s"
 
-#, fuzzy
 msgid ""
 "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
 msgstr ""
-"O argumento S3Class deve ser uma subclasse de\"%s\":  não se aplica à classe "
-"\"%s\""
+"o argumento 'S3Class' deve ser uma subclasse de %s:  não é o caso para a "
+"classe \"%s\""
 
 #, fuzzy
 msgid "replacement value must extend class %s, got %s"
@@ -145,7 +134,7 @@ msgstr ""
 "obtido de um objeto da classe \"%s\""
 
 msgid "the member classes must be defined: not true of %s"
-msgstr "as classes membro devem estar definidas: isso não se aplica para %s"
+msgstr "as classes membro devem ser definidas: não é o caso para %s"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "impossível criar classe união: não foi possível definir os membros %s"
@@ -1537,18 +1526,19 @@ msgid ""
 "classes?)"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "'S3Class' only defined for extensions of %s or classes with a data part:  "
 "not true of class %s"
 msgstr ""
-"S3Part() só é definida para classes criadas por setOldCLass(), classes "
-"básicas ou subclasses destas: não verdadeiro para classe \"%s\""
+"'S3Class' só é definido para extensão de %s ou classe com uma parte de dados:"
+"  não é o caso para a classe %s"
 
 msgid ""
 "'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true "
 "of class %s"
 msgstr ""
+"'S3Class' só pode atribuir a objetos S4 que estendam \"oldClass\"; não é o "
+"caso para a classe %s"
 
 msgid "Created a package name, %s, when none found"
 msgstr ""

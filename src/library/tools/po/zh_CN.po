@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2022-12-08 09:04+0000\n"
+"PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
 "Language: zh_CN\n"
@@ -158,7 +158,7 @@ msgstr "'%s'参数无效"
 
 #: install.c:165
 msgid "write error during file append"
-msgstr "文件追加写入时出了错"
+msgstr "文件追加时写入出错"
 
 #: pdscan.c:67
 msgid "too many items"
