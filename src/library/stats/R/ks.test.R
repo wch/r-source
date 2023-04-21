@@ -28,7 +28,6 @@ ks.test.default <-
     n <- length(x)
     if(n < 1L)
         stop("not enough 'x' data")
-    PVAL <- NULL
 
     ### ordered variables can be treated as numeric ones as ties are handled
     ### now
@@ -36,7 +35,7 @@ ks.test.default <-
 
     if(is.numeric(y)) { ## two-sample case
         args <- list(...)
-        if (length(args) > 0L) 
+        if (length(args) > 0L)
             warning("Parameter(s) ", paste(names(args), collapse = ", "), " ignored")
         DNAME <- paste(DNAME, "and", deparse1(substitute(y)))
         y <- y[!is.na(y)]
@@ -47,18 +46,16 @@ ks.test.default <-
         if(is.null(exact))
             exact <- (n.x * n.y < 10000)
         if (!simulate.p.value) {
-            METHOD <- paste(c("Asymptotic", "Exact")[exact + 1L], 
+            METHOD <- paste(c("Asymptotic", "Exact")[exact + 1L],
                             "two-sample Kolmogorov-Smirnov test")
         } else {
             METHOD <- "Monte-Carlo two-sample Kolmogorov-Smirnov test"
         }
-        TIES <- FALSE
         n <- n.x * n.y / (n.x + n.y)
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
-        if(length(unique(w)) < (n.x + n.y)) {
+        if(length(unique(w)) < (n.x + n.y)) { # have ties
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
-            TIES <- TRUE
             if (!exact && !simulate.p.value)
                 warning("p-value will be approximate in the presence of ties")
         }
@@ -70,9 +67,6 @@ ks.test.default <-
                                  "two.sided" = "two-sided",
                                  "less" = "the CDF of x lies below that of y",
                                  "greater" = "the CDF of x lies above that of y")
-        z <- NULL
-        if (TIES)
-            z <- w
         PVAL <- psmirnov(STATISTIC, sizes = c(n.x, n.y), z = w,
                          two.sided = (alternative == "two.sided"),
                          exact = exact, simulate = simulate.p.value,
@@ -90,7 +84,7 @@ ks.test.default <-
             TIES <- TRUE
         }
         if(is.null(exact)) exact <- (n < 100) && !TIES
-        METHOD <- paste(c("Asymptotic", "Exact")[exact + 1L], 
+        METHOD <- paste(c("Asymptotic", "Exact")[exact + 1L],
                         "one-sample Kolmogorov-Smirnov test")
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
@@ -109,8 +103,8 @@ ks.test.default <-
 
     names(STATISTIC) <- switch(alternative,
                                "two.sided" = "D",
-                               "greater" = "D^+",
-                               "less" = "D^-")
+                               "greater"   = "D^+",
+                               "less"      = "D^-")
 
     ## fix up possible overshoot (PR#14671)
     PVAL <- min(1.0, max(0.0, PVAL))
@@ -122,7 +116,7 @@ ks.test.default <-
                  data = list(x = x, y = y),
                  exact = exact)
     class(RVAL) <- c("ks.test", "htest")
-    return(RVAL)
+    RVAL
 }
 
 ks.test.formula <-
@@ -153,7 +147,7 @@ function(formula, data, subset, na.action, ...)
             stop("grouping factor must have exactly 2 levels")
         DATA <- split(mf[[response]], g)
         ## Call the default method.
-        y <- ks.test(x = DATA[[1L]], y = DATA[[2L]], ...)        
+        y <- ks.test(x = DATA[[1L]], y = DATA[[2L]], ...)
         y$alternative <- gsub("x", levels(g)[1L], y$alternative)
         y$alternative <- gsub("y", levels(g)[2L], y$alternative)
         y$response <- rname
@@ -169,7 +163,7 @@ function(formula, data, subset, na.action, ...)
     y
 }
 
-rsmirnov <- 
+rsmirnov <-
 function(n, sizes, z = NULL, two.sided = TRUE) {
     if(!length(n) || n == 0L)
         return(numeric(0L))
@@ -178,7 +172,7 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
     n <- floor(n)
 
     if (length(sizes) != 2L)
-        stop("argument 'sizes' must be a vector of length 2") 
+        stop("argument 'sizes' must be a vector of length 2")
     n.x <- sizes[1L]
     n.y <- sizes[2L]
     if (n.x < 1) stop("not enough 'x' data")
@@ -205,7 +199,7 @@ function(q, sizes, z = NULL,
                two.sided, lower.tail)
     if(log.p)
         log(p)
-    else 
+    else
         p
 }
 
@@ -216,7 +210,7 @@ function(q, sizes,
     ## <FIXME>
     ## Let m and n be the min and max of the sample sizes, respectively.
     ## Then, according to Kim and Jennrich (1973), if m < n/10, we
-    ## should use the 
+    ## should use the
     ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
     ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
     if (two.sided) {
@@ -245,8 +239,8 @@ function(q, sizes, z = NULL,
          B) {
     Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
     ## need P(D < q)
-    ret <- ecdf(Dsim)(q - sqrt(.Machine$double.eps)) 
-    if(log.p) { 
+    ret <- ecdf(Dsim)(q - sqrt(.Machine$double.eps))
+    if(log.p) {
         if(lower.tail)
             log(ret)
         else
@@ -257,7 +251,7 @@ function(q, sizes, z = NULL,
         else
             1 - ret
     }
-}   
+}
 
 psmirnov <-
 function(q, sizes, z = NULL, two.sided = TRUE,
@@ -272,7 +266,7 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     ##   D = sup_c ( ECDF_x(c) - ECDF_y(c) ) 	(!two.sided)
     ##
     ## See
-    ##     
+    ##
     ##   Gunar Schröer and Dietrich Trenkler (1995),
     ##   Exact and Randomization Distributions of Kolmogorov-Smirnov
     ##   Tests for Two or Three Samples,
@@ -287,7 +281,7 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     if (!length(IND)) return(ret)
 
     if (length(sizes) != 2L)
-        stop("argument 'sizes' must be a vector of length 2") 
+        stop("argument 'sizes' must be a vector of length 2")
     n.x <- sizes[1L]
     n.y <- sizes[2L]
     if (n.x < 1) stop("not enough 'x' data")
@@ -316,7 +310,7 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         psmirnov_exact(q, sizes, z, two.sided, lower.tail, log.p)
 
     r <- vapply(q[IND], pfun, 0)
-    ret[IND] <- 
+    ret[IND] <-
         if(all(is.finite(r))) r
         else {
             warning("computation of exact probability failed, returning Monte Carlo approximation")
