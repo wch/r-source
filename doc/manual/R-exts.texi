@@ -2436,16 +2436,17 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{src/Makevars}, @file{src/Makevars.win}
-or @file{Makevars.ucrt}.
-Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
-and so on, and also in @code{PKG_LIBS} (but see below for Fortran).
-C/C++ code that needs to be conditioned on the use of OpenMP can be used
-inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
-(including Apple's for macOS and some others using
-@command{clang}@footnote{Default builds of LLVM @command{clang} 3.8.0 and
-later have support for OpenMP, but the @code{libomp} run-time library
-may not be installed.}) have no OpenMP support at all, not even
+are available for use in @file{src/Makevars}, @file{src/Makevars.win} or
+@file{Makevars.ucrt}.  Include the appropriate macro in
+@code{PKG_CFLAGS}, @code{PKG_CXXFLAGS} and so on, and also in
+@code{PKG_LIBS} (but see below for Fortran).  C/C++ code that needs to
+be conditioned on the use of OpenMP can be used inside @code{#ifdef
+_OPENMP}: note that some toolchains used for @R{} (including Apple's for
+macOS@footnote{There are somewhat fragile workarounds: see
+@uref{https://mac.r-project.org/openmp/}.} and some others using
+@command{clang}@footnote{Default builds of LLVM @command{clang} 3.8.0
+and later have support for OpenMP, but the @code{libomp} run-time
+library may not be installed.}) have no OpenMP support at all, not even
 @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
@@ -5752,6 +5753,11 @@ and double quotes, ellipsis, bullet and en and em dashes) which are not
 supported in strict Latin-1 locales nor in CJK locales on Windows.  A
 surprisingly common misuse is to use a right quote in @samp{don't}
 instead of the correct apostrophe.
+
+Dataasets can include marked UTF-8 or Latin-1 character strings.  As \R
+is nowadays unlikely to be run in a Latin-1 or Windows' CP1252 locale,
+for performance reaaons these should be converted to UTF-8 (and
+@command{R CMD check} will warn on Latin-1 strings in datasets).
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets a package encoding in its @file{DESCRIPTION} file @emph{and do

@@ -159,9 +159,11 @@ is.loaded(symbol, PACKAGE = "", type = "")
   searchable, and other packages can be so marked.
 }
 \note{
-  \code{is.loaded} requires the name you would give to \code{.C} etc
-  and \strong{not} (as in S) that remapped by the defunct functions
-  \code{symbol.C} or \code{symbol.For}.
+  \code{is.loaded} requires the name you would give to \code{.C} etc.
+  It must be a character string and so cannot be an \R object as used
+  for registered native symbols (see \dQuote{Writing R Extensions}
+  section 5.4.).  Some registered symbols are available by name but most are
+  not, including those in the examples below.
 
   By default, the maximum number of DLLs that can be loaded is now 614
   when the OS limit on the number of open files allows or can be
@@ -256,7 +258,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{\link{.Call}}.
 }
 \examples{
-## expect all of these to be false in R >= 3.0.0.
+## expect all of these to be false in R >= 3.0.0 as these can only be
+## used via registered symbols.
 is.loaded("supsmu") # Fortran entry point in stats
 is.loaded("supsmu", "stats", "Fortran")
 is.loaded("PDF", type = "External") # pdf() device in grDevices

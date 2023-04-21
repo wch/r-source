@@ -5368,6 +5368,19 @@ If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
 you may need to add something like @code{-mmacosx-version-min=12.0} to
 @samp{CFLAGS}.
 
+Linker warnings like
+@example
+ld: warning: could not create compact unwind for _sort_:
+   register 26 saved somewhere other than in frame
+ld: warning: ld: warning:
+   could not create compact unwind for _arcoef_: registers 23 and 24 not saved contiguously in frame
+ld: warning: could not create compact unwind for ___emutls_get_address:
+   registers 23 and 24 not saved contiguously in frame
+@end example
+@noindent
+can be ignored.  These stem from compiled Fortran code, including its
+run-time libraries.
+
 The default security settings can make it difficult to install Apple
 packages which have not been `notarized'@footnote{See
 @uref{https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution}.}
@@ -5519,6 +5532,13 @@ from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
 last tested@footnote{with @command{gcc} 10.2.} it was not possible to
 use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
+
+It usually possible to add some OpenMP support to the Apple
+@command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
+Note that that approach is somewhat fragile as it needs a
+@file{libomp.dylib} library matching the version of the compiler
+used---and for example at the time of writing none was offered for the
+current compilers in Xcode/CLT 14.3.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
