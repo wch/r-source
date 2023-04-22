@@ -1,13 +1,29 @@
-# List of source files containing translatable strings.
+# List of source files containing translatable strings.				-*- sh -*-
 # The last line must not be a comment.
+#
+# Automatic creation of the list below:
+# ====================================
+# export LC_COLLATE=C
+# grep -lE  '\b_\('    src/{appl,gnuwin32,main,modules/*,nmath,unix}/*.[ch] | tee po/POTFILES_grep_\( | wc
+# grep -Fl 'gettext('  src/{appl,gnuwin32,main,modules/*,nmath,unix}/*.[ch] | tee po/POTFILES_gettext | wc
+# cat                  po/POTFILES_gettext po/POTFILES_grep_\(    | sort -u | tee po/POTFILES_both    | wc
+#
+## POTFILES_both has -- "wrongly"
+##		src/nmath/qgamma.c
+##		src/nmath/preferences.c  *different* gettext()
+##		src/gnuwin32/win-nls.h
+
+## in addition, need (and have below):
+##		src/include/Errormsg.h
+##		src/main/gram.y  	 instead of ..../gram.c
 
 src/appl/optim.c
 src/appl/pretty.c
+src/gnuwin32/console.c
 src/gnuwin32/dynload.c
+src/gnuwin32/editor.c
 src/gnuwin32/extra.c
-src/gnuwin32/rui.c
 src/gnuwin32/run.c
-src/gnuwin32/shext.c
 src/gnuwin32/sys-win32.c
 src/gnuwin32/system.c
 src/include/Errormsg.h
@@ -15,7 +31,6 @@ src/main/CommandLineArgs.c
 src/main/RNG.c
 src/main/Rdynload.c
 src/main/Renviron.c
-src/main/Rmain.c
 src/main/Rstrptime.h
 src/main/agrep.c
 src/main/apply.c
@@ -43,7 +58,6 @@ src/main/engine.c
 src/main/envir.c
 src/main/errors.c
 src/main/eval.c
-src/main/g_alab_her.c
 src/main/gevents.c
 src/main/gram.y
 src/main/graphics.c
@@ -60,6 +74,7 @@ src/main/names.c
 src/main/objects.c
 src/main/options.c
 src/main/paste.c
+src/main/patterns.c
 src/main/platform.c
 src/main/plot3d.c
 src/main/plotmath.c
@@ -67,6 +82,7 @@ src/main/print.c
 src/main/printarray.c
 src/main/printutils.c
 src/main/qsort.c
+src/main/radixsort.c
 src/main/random.c
 src/main/raw.c
 src/main/relop.c
@@ -76,6 +92,7 @@ src/main/seq.c
 src/main/serialize.c
 src/main/sort.c
 src/main/source.c
+src/main/split-incl.c
 src/main/split.c
 src/main/sprintf.c
 src/main/startup.c
@@ -90,28 +107,25 @@ src/main/version.c
 src/main/xspline.c
 src/modules/X11/dataentry.c
 src/modules/X11/devX11.c
-src/modules/internet/Rhttpd.c
 src/modules/internet/internet.c
 src/modules/internet/libcurl.c
 src/modules/internet/sockconn.c
 src/modules/lapack/Lapack.c
-src/modules/lapack/init_win.c
-src/modules/lapack/vecLibg95c.c
 src/nmath/bessel_i.c
 src/nmath/bessel_j.c
 src/nmath/bessel_k.c
 src/nmath/bessel_y.c
 src/nmath/choose.c
+src/nmath/dpq.h
 src/nmath/nmath.h
 src/nmath/pbeta.c
+src/nmath/pbinom.c
 src/nmath/pnbinom.c
 src/nmath/pnchisq.c
 src/nmath/polygamma.c
-src/nmath/qnorm.c
 src/nmath/rmultinom.c
 src/nmath/signrank.c
 src/nmath/snorm.c
-src/nmath/toms708.c
 src/nmath/wilcox.c
 src/unix/X11.c
 src/unix/dynload.c
