@@ -1,14 +1,14 @@
 # Spanish translations for R package.
-# Copyright (C) 2007 The R Foundation
+# Copyright (C) 2007-2023 The R Foundation
 # This file is distributed under the same license as the R package.
 # Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2022-10-16 14:04+0000\n"
+"POT-Creation-Date: 2023-04-22 16:18+0200\n"
+"PO-Revision-Date: 2023-04-22 22:09+0200\n"
 "Last-Translator: Patricia loto <patricia.andrea.loto@gmail.com>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
@@ -42,8 +42,7 @@ msgstr "tentativa de gráficar en un dispositivo nulo"
 
 #: graphics.c:1872
 msgid "outer margins too large (figure region too small)"
-msgstr ""
-"márgenes externos demasiado grandes (región de la figura demasiado pequeña)"
+msgstr "márgenes externos demasiado grandes (región de la figura demasiado pequeña)"
 
 #: graphics.c:1874
 msgid "figure region too large"
@@ -60,8 +59,7 @@ msgstr "región del gráfico muy grande"
 #: graphics.c:1946
 #, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr ""
-"límites de ejes no finitos [GScale(%g,%g,..); log=%s] -- corregido ahora"
+msgstr "límites de ejes=%d no finitos [GScale(%g,%g,..); log=%s] -- corregido ahora"
 
 #: graphics.c:2023
 #, c-format
@@ -158,21 +156,26 @@ msgstr "el parámetro gráfico \"%s\" es obsoleto"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" es un parámetro gráfico inválido"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\" es un parámetro gráfico inválido"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "el parámetro pasado a par() es inválido"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "muchas filas en la salida, el límite es %d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "muchas columnas en la salida, límite %d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "muchas celdas en la salida, límite %d"
@@ -446,9 +449,7 @@ msgstr "'thermometers[, %s]' inválidos"
 #: plot.c:3903
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr ""
-"'termómetros[,%s]' no están en el intervalo [0,1] - quizás este error puede "
-"parecer gracioso"
+msgstr "'termómetros[,%s]' no están en el intervalo [0,1] - quizás este error puede parecer gracioso"
 
 #: plot.c:3906
 msgid "invalid 'thermometers[, 1:2]'"
@@ -460,9 +461,7 @@ msgstr "datos de 'boxplots' no válidos (se necesitan 5 columnas)"
 
 #: plot.c:3954
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr ""
-"'boxplots[,5]' fuera del intervalo [0,1] - quizás este error puede resultar "
-"gracioso"
+msgstr "'boxplots[,5]' fuera del intervalo [0,1] - quizás este error puede resultar gracioso"
 
 #: plot.c:3956
 msgid "invalid 'boxplots[, 1:4]'"

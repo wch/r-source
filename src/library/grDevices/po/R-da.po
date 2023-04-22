@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2012-01-28 17:40+0200\n"
-"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2023-04-22 16:18\n"
+"PO-Revision-Date: 2023-04-22 22:04+0200\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -165,8 +165,80 @@ msgstr "intet egnet ubrugt filnavn for postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): bruger postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "ugyldig skrifttype"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "ugyldig skrifttype"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "ugyldig skrifttype"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "ukendt skrifttype"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "Ugyldigt uddataformat"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid mask type"
+msgstr "ugyldig skrifttype"
 
 #, fuzzy
 msgid "Invalid fill rule"
@@ -267,6 +339,10 @@ msgstr "Ugyldigt uddataformat"
 msgid "status %d in running command '%s'"
 msgstr "status %d i kørende kommando »%s«"
 
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "ugyldig »file«"
+
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr ""
 
@@ -335,6 +411,12 @@ msgstr ""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "»r« skal være et »range«, derfor af længde 2"
 
+msgid "log_le_0"
+msgstr ""
+
+msgid "plot_coords"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "ugyldigt første argument"
 
@@ -371,8 +453,20 @@ msgid ""
 "%s"
 msgstr "Tilgængelige enheder er %s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "ugyldig »title«"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "ugyldig »title«"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "»res« skal angives med mindre »units = \"px\"«"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "»file« skal være en udfyldt tegnstreng"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr ""
@@ -463,20 +557,21 @@ msgid_plural "differ between new and previous"
 msgstr[0] "forskellig mellem ny og forrige"
 msgstr[1] "forskellige mellem ny og forrige"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d x værdi <= 0 udeladt fra logaritmisk plot"
 msgstr[1] "%d x værdier <= 0 udeladt fra logaritmisk plot"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d y værdi <= 0 udeladt fra logaritmisk plot"
-msgstr[1] "%d y værdier <= 0 udeladt fra logaritmisk plot"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d y værdi <= 0 udeladt fra logaritmisk plot"
+#~ msgstr[1] "%d y værdier <= 0 udeladt fra logaritmisk plot"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
-msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
+#~ msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
 
 #, fuzzy
 #~ msgid "range too small for 'min.n'"

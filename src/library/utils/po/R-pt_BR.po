@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.13.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: 2022-10-23 00:04+0000\n"
+"POT-Creation-Date: 2023-04-22 16:18\n"
+"PO-Revision-Date: 2023-04-22 22:18+0200\n"
 "Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
@@ -25,6 +25,12 @@ msgstr "nenhuma documentação encontrada para %s no pacote %s"
 
 msgid "document not found"
 msgstr "documento não encontrado"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "Uma busca foi submetida para %s"
@@ -157,12 +163,10 @@ msgid "Timestamp file no longer exists."
 msgstr "Arquivo de timestamp não existe mais."
 
 msgid "Not all arguments are of the same length, the following need to be recycled: %s"
-msgstr ""
-"Nem todos os argumentos têm o mesmo comprimento, os seguintes devem ser "
-"reciclados: %s"
+msgstr "Nem todos os argumentos têm o mesmo comprimento, os seguintes devem ser reciclados: %s"
 
 msgid "Use either %s or %s/%s but not both."
-msgstr "Use %s ou %s, mas não ambos."
+msgstr "Use %s ou %s/%s, mas não ambos."
 
 msgid "It is recommended to use %s instead of %s."
 msgstr "É recomendado usar %s ao invés de %s."
@@ -191,8 +195,8 @@ msgstr "índice fora dos limites"
 msgid "%s should be one of %s"
 msgstr "%s deve ser um de %s"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "O argumento '%s' está obsoleto; use '%s' em seu lugar."
+msgid "To cite package %s in publications use:"
+msgstr "Para citar o pacote %s em publicações use:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "Uma entrada BibTeX para usuários(as) de LaTeX é"
@@ -204,20 +208,11 @@ msgstr ""
 "Descartando registro inválido %d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "nenhum campo date no arquivo DESCRIPTION do pacote %s"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr ""
-"não foi possível determinar o ano para %s do arquivo DESCRIPTION do pacote"
-
-msgid "To cite package %s in publications use:"
-msgstr "Para citar o pacote %s em publicações use:"
+msgstr "não foi possível determinar o ano para %s do arquivo DESCRIPTION do pacote"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
-msgstr ""
-"ATENÇÃO: Esta citação foi autogerada a partir do arquivo DESCRIPTION do "
-"pacote e pode precisar de edição manual, veja %s."
+msgstr "ATENÇÃO: Esta citação foi autogerada a partir do arquivo DESCRIPTION do pacote e pode precisar de edição manual, veja %s."
 
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' deve ser uma função ou NULL"
@@ -225,16 +220,9 @@ msgstr "'FUN' deve ser uma função ou NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "não é possível lidar com métodos S4 ainda"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package' deve ser uma string de caracteres ou NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr ""
-"conjuntos de dados foram movidos do pacote 'base' para o pacote 'datasets'"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr ""
-"conjuntos de dados foram movidos do pacote 'stats' para o pacote 'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "índice de dados para o pacote %s é inválido e será ignorado"
@@ -277,9 +265,7 @@ msgid "did not assign() anything"
 msgstr "nada foi assign()"
 
 msgid "Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)"
-msgstr ""
-"Não é possível depurar funções primitivas a menos que elas sejam genéricas "
-"implícitas (requer o carregamento do pacote methods)"
+msgstr "Não é possível depurar funções primitivas a menos que elas sejam genéricas implícitas (requer o carregamento do pacote methods)"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "erro ao tentar avaliar a expressão para o argumento %s (%s)"
@@ -303,9 +289,7 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr "Insira um número de ambiente ou 0 para sair"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr ""
-"recuperação chamada de forma não interativa; frames descartadas, use "
-"debugger() para visualizar"
+msgstr "recuperação chamada de forma não interativa; frames descartadas, use debugger() para visualizar"
 
 msgid "No suitable frames for recover()"
 msgstr "Nenhuma frame adequada para recover()"
@@ -383,18 +367,22 @@ msgstr "'from' deve ser uma fórmula de dois lados"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'from' deve ser uma fórmula de dois lados com um termo de cada lado"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "argumento 'socket' inválido"
+
+#, fuzzy
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr "'n' inválido -  deve conter pelo menos um elemento não ausente, nenhum foi recebido."
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
-"'n' inválido -  deve conter pelo menos um elemento não ausente, nenhum foi "
-"recebido."
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
-msgstr ""
-"'n' inválido - deve ter comprimento 1 quando dim(x) é NULL, %d foi recebido"
+msgstr "'n' inválido - deve ter comprimento 1 quando dim(x) é NULL, %d foi recebido"
 
 msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
-msgstr ""
-"'n' inválido - length(n) deve ser <= length(dim(x)), %d > %d foi recebido"
+msgstr "'n' inválido - length(n) deve ser <= length(dim(x)), %d > %d foi recebido"
 
 msgid "no method found for %s(., n=%s) and class %s"
 msgstr "nenhum método encontrado para %s(., n=%s) e classe %s"
@@ -423,9 +411,7 @@ msgid "tail(., keepnums=.) instead."
 msgstr "tail(., keepnums=.) em seu lugar."
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr ""
-"'topic' deveria ser um nome, um vetor de caracteres de comprimento 1 ou uma "
-"palavra reservada"
+msgstr "'topic' deveria ser um nome, um vetor de caracteres de comprimento 1 ou uma palavra reservada"
 
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "Nenhuma documentação para %s nos pacotes e bibliotecas especificados:"
@@ -434,9 +420,7 @@ msgid "you could try %s"
 msgstr "você poderia tentar %s"
 
 msgid "Help for topic %s is not in any loaded package but can be found in the following packages:"
-msgstr ""
-"Ajuda para o tópico %s não está em nenhum pacote carregado, mas pode ser "
-"encontrada nos seguintes pacotes:"
+msgstr "Ajuda para o tópico %s não está em nenhum pacote carregado, mas pode ser encontrada nos seguintes pacotes:"
 
 msgid "Package"
 msgstr "Pacote"
@@ -463,9 +447,7 @@ msgid "invalid %s argument"
 msgstr "argumento %s inválido"
 
 msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
-msgstr ""
-"o pacote %s existe mas não foi instalado no R >= 2.10.0 então a ajuda não "
-"pode ser acessada"
+msgstr "o pacote %s existe mas não foi instalado no R >= 2.10.0 então a ajuda não pode ser acessada"
 
 msgid "creation of %s failed"
 msgstr "criação de %s falhou"
@@ -495,9 +477,7 @@ msgid "incorrect type specification"
 msgstr "especificação de tipo incompleta"
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-"nenhuma informação na base de dados para o pacote %s: precisa 'rebuild = "
-"TRUE'?"
+msgstr "nenhuma informação na base de dados para o pacote %s: precisa 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "especificação 'agrep' incorreta"
@@ -506,8 +486,7 @@ msgid "package %s has empty hsearch data - strangely"
 msgstr "o pacote %s tem dados hsearch vazios - estranhamente"
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-"removendo todos os registros com dados inválidos de caracteres multi-byte"
+msgstr "removendo todos os registros com dados inválidos de caracteres multi-byte"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nome de navegador inválido, verifique options(\"browser\")."
@@ -523,9 +502,7 @@ msgstr ""
 "%s por conta própria"
 
 msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
-msgstr ""
-"Se o navegador aberto por '%s' já está rodando, ele *não* é reinicializado e "
-"você precisa trocar para a sua janela."
+msgstr "Se o navegador aberto por '%s' já está rodando, ele *não* é reinicializado e você precisa trocar para a sua janela."
 
 msgid "Otherwise, be patient ..."
 msgstr "Caso contrário, seja paciente ..."
@@ -546,9 +523,7 @@ msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "Arquivo DESCRIPTION do pacote '%s' está corrompido"
 
 msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
-msgstr ""
-"Arquivo 'DESCRIPTION' tem um campo 'Encoding' e sua recodificação não é "
-"possível"
+msgstr "Arquivo 'DESCRIPTION' tem um campo 'Encoding' e sua recodificação não é possível"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "Arquivo DESCRIPTION do pacote '%s' está ausente ou quebrado"
@@ -561,6 +536,10 @@ msgstr "não é possível atualizar índice HTML do pacote"
 
 msgid "done"
 msgstr "concluído"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file' deve ser uma string de caracteres ou conexão"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() não deve ser usada de forma não interativa"
@@ -581,9 +560,7 @@ msgid "Unit \"%s\" is not part of standard \"%s\""
 msgstr "Unidade \"%s\" não é parte do padrão \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr ""
-"'%s' é uma função genérica formal; métodos S3 provavelmente não serão "
-"encontrados"
+msgstr "'%s' é uma função genérica formal; métodos S3 provavelmente não serão encontrados"
 
 msgid "no function '%s' is visible"
 msgstr "nenhuma função '%s' está visível"
@@ -592,9 +569,7 @@ msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "a função genérica '%s' despacha métodos para a genérica '%s'"
 
 msgid "function '%s' appears not to be S3 generic; found functions that look like S3 methods"
-msgstr ""
-"a função '%s' parece não ser uma genérica S3; função que parecem métodos S2 "
-"encontradas"
+msgstr "a função '%s' parece não ser uma genérica S3; função que parecem métodos S2 encontradas"
 
 msgid "'class' is of length > 1; only the first element will be used"
 msgstr "'class' tem comprimento > 1; apenas o primeiro elemento vai ser usado"
@@ -642,9 +617,7 @@ msgid "directory '%s' already exists"
 msgstr "o diretório '%s' já existe"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
-msgstr ""
-"funções genéricas e outros objetos S4 (e.g., '%s') não podem ser descartados;"
-" use o argumento 'code_files'"
+msgstr "funções genéricas e outros objetos S4 (e.g., '%s') não podem ser descartados; use o argumento 'code_files'"
 
 msgid "invalid 'type'; must be a character string"
 msgstr "'type' inválido; deve ser uma string de caracteres"
@@ -656,17 +629,13 @@ msgid "invalid 'filters' argument."
 msgstr "argumento 'filters' inválido."
 
 msgid "specifying 'contriburl' or 'available' requires a single type, not type = \"both\""
-msgstr ""
-"a especificação de 'contriburl' ou 'available' requer um único tipo, não "
-"type = \"both\""
+msgstr "a especificação de 'contriburl' ou 'available' requer um único tipo, não type = \"both\""
 
 msgid "package '%s' in library '%s' will not be updated"
 msgstr "pacote '%s' na biblioteca '%s' não será atualizado"
 
 msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr ""
-"'oldPkgs' inválido; deve ser um vetor de caracteres ou um resultado de old."
-"packages()"
+msgstr "'oldPkgs' inválido; deve ser um vetor de caracteres ou um resultado de old.packages()"
 
 msgid "ill-formed 'instPkgs' matrix"
 msgstr "matriz 'instPkgs' malformada"
@@ -814,13 +783,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "arquivos: %s"
 
-msgid "timeouts for parallel installs require the 'timeout' command"
+msgid "Windows default 'timeout' command is not usable for parallel installs"
 msgstr ""
-"limites de tempo para instalações paralelas requerem o comando 'timeout'"
 
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr "limites de tempo para instalações paralelas requerem o comando 'timeout'"
+
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "download do pacote %s falhou"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"a instalação de um ou mais pacotes falhou,\n"
+"  provavelmente %s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "a instalação de um ou mais pacotes falhou,\n"
 "  provavelmente %s"
@@ -833,9 +815,7 @@ msgstr ""
 "\t%s"
 
 msgid "The namespace for package \"%s\" is locked; no changes in the global variables list may be made."
-msgstr ""
-"O namespace do pacote \"%s\" está trancado; nenhuma mudança na lista de "
-"variáveis globais pode ser feita."
+msgstr "O namespace do pacote \"%s\" está trancado; nenhuma mudança na lista de variáveis globais pode ser feita."
 
 msgid "'env' must be an environment"
 msgstr "'env' deve ser um ambiente"
@@ -868,14 +848,10 @@ msgid "cannot determine import name"
 msgstr "não é possível determinar o nome de importação"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
-msgstr ""
-"nenhuma documentação do tipo %s e tópico %s (ou erro no processamento da "
-"ajuda)"
+msgstr "nenhuma documentação do tipo %s e tópico %s (ou erro no processamento da ajuda)"
 
 msgid "the object of class %s in the function call %s could not be used as a documentation topic"
-msgstr ""
-"o objeto de classe %s na chamada de função %s não pode ser usado como um "
-"tópico de documentação"
+msgstr "o objeto de classe %s na chamada de função %s não pode ser usado como um tópico de documentação"
 
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "nenhum método para %s e nenhuma documentação para isso como função"
@@ -896,15 +872,13 @@ msgid "row and column counts not found"
 msgstr "números de linhas e colunas não encontrados"
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
-"Mais de uma linha especificada no cabeçalho; talvez use 'transpose=TRUE'"
+msgstr "Mais de uma linha especificada no cabeçalho; talvez use 'transpose=TRUE'"
 
 msgid "Unrecognized special data value"
 msgstr "Valor especial de dado não reconhecido"
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
-"Há mais colunas do que especificado no cabeçalho; talvez use 'transpose=TRUE'"
+msgstr "Há mais colunas do que especificado no cabeçalho; talvez use 'transpose=TRUE'"
 
 msgid "Unrecognized value indicator"
 msgstr "Indicador de valor desconhecido"
@@ -1009,8 +983,7 @@ msgid "argument is not a function or language object:"
 msgstr "argumento não é uma função ou objeto de linguagem:"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
-msgstr ""
-"str.data.frame() chamada com uma não data.frame -- fazendo coerção para uma."
+msgstr "str.data.frame() chamada com uma não data.frame -- fazendo coerção para uma."
 
 msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "options(\"str\") inválida -- usando os valores padrões em seu lugar"
@@ -1031,8 +1004,7 @@ msgid "'object' does not have valid levels()"
 msgstr "'object' não tem levels() válidos"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr ""
-"'digits' e 'digits.d' são ambos especificados e o o segundo não será usado"
+msgstr "'digits' e 'digits.d' são ambos especificados e o o segundo não será usado"
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr "O número de capturas em 'pattern' != 'length(proto)'"
@@ -1126,7 +1098,7 @@ msgid "file '%s' not found"
 msgstr "arquivo '%s' não encontrado"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr "arquivo '%' não tinha permissões de execução: corrigido"
+msgstr "arquivo '%s' não tinha permissões de execução: corrigido"
 
 msgid "file size is limited to 8GB"
 msgstr "o tamanho do arquivo é limitado a 8GB"
@@ -1141,6 +1113,8 @@ msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
+"vignette %s encontrada mais de uma vez,\n"
+"usando aquela encontrada em %s"
 
 msgid "vignette %s not found"
 msgstr "vignette %s não encontrada"
@@ -1223,6 +1197,10 @@ msgstr ""
 msgid "'curl' call had nonzero exit status"
 msgstr ""
 
+#, fuzzy
+msgid "invalid method:"
+msgstr "formato inválido"
+
 msgid "download had nonzero exit status"
 msgstr ""
 
@@ -1302,6 +1280,12 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d arquivos Sweave com o nome base '%s' encontrados:"
 msgstr[1] "%d arquivos Sweave com o nome base '%s' encontrados:"
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "Arquivo de saída:"
+msgstr[1] "Arquivo de saída:"
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] ""
@@ -1334,6 +1318,11 @@ msgstr[1] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1434,3 +1423,15 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "O argumento '%s' está obsoleto; use '%s' em seu lugar."
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "nenhum campo date no arquivo DESCRIPTION do pacote %s"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "conjuntos de dados foram movidos do pacote 'base' para o pacote 'datasets'"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "conjuntos de dados foram movidos do pacote 'stats' para o pacote 'datasets'"
