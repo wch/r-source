@@ -170,9 +170,7 @@ $(top_builddir)/etc/R.exp: $(OBJECTS) $(MAIN_LIBS)
 $(MAIN_LIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
-../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/pcre/libtre.a\
-  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/xz/liblzma.a \
-  ../extra/intl/libintl.a:
+../extra/intl/libintl.a:
 	(cd $(@D); $(MAKE))
 
 
