@@ -5380,11 +5380,13 @@ be for binary packages).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 (announced 19 20 21)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 (announced 21)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
 use.  Fortunately only the integer values are likely to be relevant.
+If at all possible, use one of the LTS versions (8, 11, 17, 21 @dots{})
+as the minimum version.
 
 A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
@@ -5413,16 +5415,13 @@ java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 @noindent
 (Where @uref{https://en.wikipedia.org/wiki/Java_class_file} maps
 class-file version numbers to Java versions.)  Compile with something
-like @command{javac -target 1.6} to ensure this is avoided. (As from
-Java 8, @command{javac} defaults to compiling for Java 8.  Versions as
-old as @samp{1.6} are already deprecated and will give a warning with
-Java 10's @command{javac}.)  Note this also applies to packages
-distributing (or even downloading) compiled Java code produced by
-others, so their requirements need to be checked (they are often not
-documented accurately) and accounted for.  It should be possible to
-check the class-file version @emph{via} command-line utility
-@command{javap}, if necessary after extracting the @file{.class} files
-from a @file{.jar} archive.
+like @command{javac -target 11} to ensure this is avoided.  Note this
+also applies to packages distributing (or even downloading) compiled
+Java code produced by others, so their requirements need to be checked
+(they are often not documented accurately) and accounted for.  It should
+be possible to check the class-file version @emph{via} command-line
+utility @command{javap}, if necessary after extracting the @file{.class}
+files from a @file{.jar} archive.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
@@ -5431,7 +5430,9 @@ interface.
 @c https://endoflife.date/java
 Java 8 is still in widespread use (and may remain so because of licence
 changes and support on older OSes: OpenJDK has security support until
-March 2026).
+March 2026).  On the other hand, newer platforms may only have support
+for recent versions of Java: for @cputype{arm64} macOS the first
+officially supported version was 17.
 
 @item
 A package with a hard-to-satisfy system requirement is by definition not
@@ -5503,6 +5504,15 @@ only usual situation when @env{R_HOME} is needed in the argument for
 @example
 $(MAKE) -f "$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -f Makefile.inner
 @end example
+
+@item
+If distributing datasets involving date-times, consider if a time zone
+needs to be specified. The most portable way to distribute date-times is
+as objects of class @code{"POSIXct"} and as these record the time in
+UTC, the time represented is independent of the time zone: but how it is
+printed may not be.  Objects of class @code{"POSIXlt"} should have a
+@code{"tzone"} attribute.  Dates (e.g,@: birthdays) are conventionally
+considered independently of time zone.
 @end itemize
 
 
