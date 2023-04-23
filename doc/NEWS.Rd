@@ -47,12 +47,14 @@
       \item Probablity distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} are now consistently preserving
       \code{attributes(x)} when \code{length(x) == 0}, e.g., for a
-      \eqn{2 \times 0}{2 x 0} matrix, thanks to Karolis Koncevičius report \PR{18509}.
+      \eqn{2 \times 0}{2 x 0} matrix, thanks to Karolis Koncevičius'
+      report \PR{18509}.
 
       \item Group \dQuote{Summary} computations such as
-      \code{sum(1:3, 4, na.rm=5, NA, 7, na.rm = LL)} now give an error
+      \code{sum(1:3, 4, na.rm = 5, NA, 7, na.rm = LL)} now give an error
       instead of either \code{17} or \code{NN} for \code{LL} true or false,
-      as proposed by Ivan Krylov on the R-devel mailing list.
+      as proposed by Ivan Krylov on the R-devel mailing list.  (This
+      also means it is now an error to specify \code{na.rm} more than once.)
     }
   }
 }
