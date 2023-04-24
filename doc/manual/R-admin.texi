@@ -1648,11 +1648,9 @@ want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
 @uref{https://www.xquartz.org/releases/}.@footnote{At the time of
-writing the Intel distribution was built/tested against 2.7.11 for
-compatibility with @R{} 4.0.0: the @cputype{arm64} one against 2.8.1.}
-These include the @pkg{tcltk} package and the @code{X11} graphics
-device: attempting to use these without XQuartz will remind you.  This
-is also needed for some
+writing, version 2.8.5 or later.}  These include the @pkg{tcltk} package
+and the @code{X11} graphics device: attempting to use these without
+XQuartz will remind you.  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")} and @code{svg()} and some
@@ -2278,16 +2276,20 @@ CXX17FLAGS = $CXXFLAGS
 CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
-(long lines split for the manual only) and for the current distribution
-of @command{gfortran} at @uref{https://mac.r-project.org/tools/}
+(long lines split for the manual only) and for the current macOS
+distribution of @command{gfortran} at
+@uref{https://mac.r-project.org/tools/}
 @example
 FC = /opt/gfortran/bin/gfortran
+(arm64)
 FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
   -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
+(Intel)
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 @noindent
-(line broken here for the manual only).  For Intel, replace
-@code{aarch64} by @code{x86_64}.
+(line broken here for the manual only).
 
 If that @command{clang} build
 supports OpenMP, you can add
@@ -2431,13 +2433,16 @@ For example, for the current distribution of @command{gfortran} at
 
 @example
 FC = /opt/gfortran/bin/gfortran
+(arm64)
 FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
   -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
+(Intel)
+FLIBS =  -L/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lquadmath
 @end example
 
 @noindent
-(line broken here for the manual only).  For Intel, replace
-@code{aarch64} by @code{x86_64}.
+(line broken here for the manual only).
 
 There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
