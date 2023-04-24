@@ -5764,7 +5764,7 @@ supported in strict Latin-1 locales nor in CJK locales on Windows.  A
 surprisingly common misuse is to use a right quote in @samp{don't}
 instead of the correct apostrophe.
 
-Dataasets can include marked UTF-8 or Latin-1 character strings.  As \R
+Datasets can include marked UTF-8 or Latin-1 character strings.  As \R
 is nowadays unlikely to be run in a Latin-1 or Windows' CP1252 locale,
 for performance reaaons these should be converted to UTF-8.
 
