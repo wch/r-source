@@ -1606,12 +1606,13 @@ Remember that @LaTeX{} needs to be on the path.
 @c
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
-@file{R-@value{VERSIONno}.pkg} and @file{R-@value{VERSIONno}-arm64.pkg}.
-The first runs on macOS 11 and later on @cputype{x86_64} (Intel) CPU
-(Big Sur, Monterey, Ventura, @dots{}).  Package
-@file{R-@value{VERSIONno}-arm64.pkg} is for `Apple Silicon' (aka `M1' or
-`M2') Macs and runs on macOS 11 or later (Big Sur, Monterey, Ventura,
-@dots{}).
+@file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}.pkg}.
+Both are for macOS 11 or later (Big Sur, Monterey, Ventura, @dots{}).
+
+The first runs is for `Apple Silicon' (aka `M1' or `M2') Macs, the
+second for older Macs with an @cputype{x86_64} (Intel) CPU.
+
+Package
 
 @file{R-@value{VERSIONno}.pkg} also be installed on `Apple Silicon' CPUs
 using `Rosetta' emulation@footnote{You may be asked to install Rosetta
@@ -1777,14 +1778,14 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
 
 The installation consists of up to four Apple packages:@footnote{At the
 time of writing: use @command{pkgutil --pkgs | grep -i org.r-project} to
-check.} for the Intel build, @code{org.R-project.R.fw.pkg},
-@code{org.R-project.R.GUI.pkg}, @code{org.r-project.x86_64.tcltk.x11}
+check.} for the Intel build, @code{org.R-project.x86_64.R.fw.pkg},
+@code{org.R-project.x86_64.R.GUI.pkg}, @code{org.r-project.x86_64.tcltk}
 and @code{org.r-project.x86_64.texinfo}. You can use @code{sudo pkgutil
 --forget} if you want the Apple Installer to forget about the package
 without deleting its files (useful for the @R{} framework when
 installing multiple @R{} versions in parallel), or after you have
 deleted the files. @strong{NB:} the package names are case-sensitive and
-the @R{} domain is given inconsistently.
+the @R{} domain is named inconsistently.
 
 Uninstalling the Tcl/Tk and Texinfo components (which are installed under
 @file{/opt/R/x86_64} on a @cputype{x86_64} build and @file{/opt/R/arm64}
@@ -1792,7 +1793,7 @@ for an @cputype{arm64} one) is not as simple.  You can list the files
 they installed in a Terminal by e.g.@:
 
 @example
-pkgutil --files org.r-project.x86_64.tcltk.x11
+pkgutil --files org.r-project.x86_64.tcltk
 pkgutil --files org.r-project.x86_64.texinfo
 @end example
 
@@ -1812,31 +1813,25 @@ These are paths relative to @file{/}, the root of the file system.
 @c @noindent
 @c run as the owner of @file{/usr/local}.
 
+If you are not compiling @R{} nor installing packages from source you
+could remove all of @file{/opt/R/x86_64} or @file{/opt/R/arm64}.
+
 @node Multiple versions,  , Uninstalling under macOS, Installing R under macOS
 @section Multiple versions
 
 The installer will remove any previous version@footnote{More precisely,
-of the Apple package of the same name: this means that installing a
-package for 3.6.x does not remove an installation for 4.0 or later, and
-that Intel and ARM versions can be installed together, apart from
-@code{org.R-project.R.GUI.pkg}.} of the @R{} framework which it finds
-installed.  This can be avoided by using @command{pkgutil --forget} (see
-the previous section).  However, note that different versions are
-installed under @file{/Library/Frameworks/R.framework/Versions} as
-@file{4.2} (or @file{4.2-arm64}), @file{4.1} and so on, so it is not
-possible to have different @samp{4.x.y} versions installed for the same
-@samp{x} and CPU type.
+of the Apple package of the same name: this means that Intel and ARM
+versions can be installed together.} of the @R{} framework which it
+finds installed.  This can be avoided by using @command{pkgutil
+--forget} (see the previous section).  However, note that different
+versions are installed under
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.4} (or
+@file{4.4-arm64}), @file{4.3} and so on, so it is not possible to have
+different @samp{4.x.y} versions installed for the same @samp{x} and CPU
+type.
 
 @Rapp{} will always run the `current' version, that is the last
 installed version.
-@c A small utility, @command{Rswitch.app} (available at
-@c @url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
-@c Catalina), can be used to change the `current' version.  This is of
-@c limited use as @Rapp{} is compiled against a particular version of @R{}
-@c and will likely crash if switched to an earlier version.  This may allow
-@c you to install a development version of @R{} (de-selecting @Rapp{}) and
-@c then switch back to the release version.
-
 
 @node Running R, Add-on packages, Installing R under macOS, Top
 @chapter Running R
