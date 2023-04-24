@@ -2278,15 +2278,18 @@ CXX17FLAGS = $CXXFLAGS
 CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
-(long lines split for the manual only) and a particular Intel
-@command{gfortran} by
+(long lines split for the manual only) and for the current distribution
+of @command{gfortran} at @uref{https://mac.r-project.org/tools/}
 @example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/12.2.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+FC = /opt/gfortran/bin/gfortran
+FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
 @end example
 @noindent
-(with lines broken here for legibility).  If that @command{clang} build
+(line broken here for the manual only).  For Intel, replace
+@code{aarch64} by @code{x86_64}.
+
+If that @command{clang} build
 supports OpenMP, you can add
 @example
 SHLIB_OPENMP_CFLAGS = -fopenmp
@@ -2423,16 +2426,18 @@ Note that if you have specified a non-default C++ or C standard, you need to
 set the flag(s) appropriate to that standard.
 
 Another use is to override the settings in a binary installation of R.
-For example, to use a different Fortran compiler on Intel macOS
+For example, for the current distribution of @command{gfortran} at
+@uref{https://mac.r-project.org/tools/}
 
 @example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+FC = /opt/gfortran/bin/gfortran
+FLIBS =  -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0
+  -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath
 @end example
 
 @noindent
-(line split for legibility here).
+(line broken here for the manual only).  For Intel, replace
+@code{aarch64} by @code{x86_64}.
 
 There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
@@ -5411,7 +5416,7 @@ contains the correct information.
 
 There is `universal' (Intel and @code{arm64}) build of
 @command{gfortran} 12.2 at
-@uref{https://github.com/R-macos/gcc-12-branch/releases/tag/12.2-darwin-r0.1}.
+@uref{https://mac.r-project.org/tools/gfortran-12.2-universal.pkg}.
 This installs into @file{/opt/gfortran}.
 
 The @file{/opt/gfortran/SDK} symlink should point to the desired path to
@@ -5828,7 +5833,12 @@ Sur or later.  With the recommended compilers we can use
 @example
 CC="clang -mmacosx-version-min=11.0"
 CXX="clang++ -mmacosx-version-min=11.0"
-FC="/usr/local/gfortran/bin/gfortran -mmacosx-version-min=11.0"
+FC="/opt//gfortran/bin/gfortran -mmacosx-version-min=11.0"
+@end example
+@noindent
+or set the envivonment variable
+@example
+export MACOSX_DEPLOYMENT_TARGET=11.0
 @end example
 
 @item
@@ -5848,12 +5858,12 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libgfortran.5.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libquadmath.0.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0/libquadmath.0.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libquadmath.0.dylib \
 @var{pkg}.so
 @end example
@@ -5875,10 +5885,9 @@ PKG_LIBS = /usr/local/llvm/lib/libc++.a /usr/local/llvm/lib/libc++abi.a
 @end example
 @noindent
 in @file{src/Makevars}.  It would also be possible to static link the
-Fortran runtime libraries @file{/usr/local/gfortran/lib/libgfortran.a}
-and @file{/usr/local/gfortran/lib/libquadmath.a} should the Fortran
-compiler have later versions (but @command{gfortran} 8--12 all
-have version @code{5}).
+Fortran runtime libraries @file{libgfortran.a} and @file{libquadmath.a}
+should the Fortran compiler have later versions (but @command{gfortran}
+8--13 all have version @code{5}).
 @end itemize
 @noindent
 The @acronym{CRAN} binary packages are built with the Apple compiler on
