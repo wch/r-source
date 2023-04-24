@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-04-02 r84142) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-04-24 r84313) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -9074,8 +9074,9 @@ alternative hypothesis: the CDF of x lies below that of y
 
 > 
 > # with ties, example from Schröer and Trenkler (1995)
-> # D = 3 / 7, p = 0.2424242
-> ks.test(c(1, 2, 2, 3, 3), c(1, 2, 3, 3, 4, 5, 6), exact = TRUE)
+> # D = 3/7, p = 8/33 = 0.242424..
+> ks.test(c(1, 2, 2, 3, 3),
++         c(1, 2, 3, 3, 4, 5, 6))# -> exact
 
 	Exact two-sample Kolmogorov-Smirnov test
 
@@ -9419,6 +9420,13 @@ List of 8
 >   stopifnot(id(unname(lm.$coef), lm..$coef),
 + 	    id(unname(lmw$coef), lm.w$coef))
 > ## End(Don't show)
+> ## fits w/o intercept:
+> all.equal(unname(coef(lm(y ~ X-1))),
++           unname(coef( lm.fit(X,y))))
+[1] TRUE
+> all.equal(unname(coef( lm.fit(X,y))),
++                  coef(.lm.fit(X,y)))
+[1] TRUE
 > 
 > 
 > 
@@ -9465,7 +9473,7 @@ $df
 
 > # to allow extrapolation
 > cars.lo2 <- loess(dist ~ speed, cars,
-+   control = loess.control(surface = "direct"))
++                   control = loess.control(surface = "direct"))
 > predict(cars.lo2, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 $fit
          1          2          3          4          5          6          7 

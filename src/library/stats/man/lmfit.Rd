@@ -1,6 +1,6 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
@@ -98,9 +98,14 @@ str(lm. <- lm.fit (x = X, y = y))
   stopifnot(id(unname(lm.$coef), lm..$coef),
 	    id(unname(lmw$coef), lm.w$coef))
 }
+## fits w/o intercept:
+all.equal(unname(coef(lm(y ~ X-1))),
+          unname(coef( lm.fit(X,y))))
+all.equal(unname(coef( lm.fit(X,y))),
+                 coef(.lm.fit(X,y)))
 \donttest{
 if(require("microbenchmark")) {
-  mb <- microbenchmark(lm(y~X), lm.fit(X,y), .lm.fit(X,y))
+  mb <- microbenchmark(lm(y~X-1), lm.fit(X,y), .lm.fit(X,y))
   print(mb)
   boxplot(mb, notch=TRUE)
 }
