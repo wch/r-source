@@ -44,7 +44,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Probablity distribution functions \code{[dpq]<distrib>(x, *)},
+      \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} are now consistently preserving
       \code{attributes(x)} when \code{length(x) == 0}, e.g., for a
       \eqn{2 \times 0}{2 x 0} matrix, thanks to Karolis Koncevičius'

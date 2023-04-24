@@ -94,7 +94,7 @@ ks.test(x, \dots)
   one-sample case \emph{and there are no ties}, and if the product of
   the sample sizes is less than 10000 in the two-sample case, with or
   without ties (using the algorithm described in Schröer and Trenkler, 1995).
-  Otherwise, the p-value is computed via Monte Carlo similation in the
+  Otherwise, the p-value is computed via Monte Carlo simulation in the
   two-sample case if \code{simulate.p.value} is \code{TRUE}, or else
   asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,

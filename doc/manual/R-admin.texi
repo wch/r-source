@@ -5220,7 +5220,7 @@ help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
 those needed to support Pango.)
 
-Intel users want the @code{darwin20} compoonents: the @code{darwin17}
+Intel users want the @code{darwin20} components: the @code{darwin17}
 ones are for macOS 10.13--10.15.
 
 Or this can be done manually, by for example
