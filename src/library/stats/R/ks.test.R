@@ -276,8 +276,19 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         if(!is.double(q)) storage.mode(q) <- "double" # keeping dim() etc
     } else stop("argument 'q' must be numeric")
     ret <- q # with attr.
-    ret[is.na(q) | q < -1 | q > 1] <- NA
-    IND <- which(!is.na(ret))
+    i1 <- is.na(q)
+    ret[i1] <- NA_real_
+    if(any(i2 <- (q <= 0))) {
+        p <- 1 - lower.tail
+        if(log.p) p <- log(p)
+        ret[i2] <- p
+    }
+    if(any(i3 <- (q > 1))) {
+        p <- as.numeric(lower.tail)
+        if(log.p) p <- log(p)
+        ret[i3] <- p
+    }
+    IND <- which(!(i1 | i2 | i3))
     if (!length(IND)) return(ret)
 
     if (length(sizes) != 2L)
