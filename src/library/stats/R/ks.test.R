@@ -51,11 +51,13 @@ ks.test.default <-
         } else {
             METHOD <- "Monte-Carlo two-sample Kolmogorov-Smirnov test"
         }
+        TIES <- FALSE
         n <- n.x * n.y / (n.x + n.y)
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) { # have ties
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
+            TIES <- TRUE
             if (!exact && !simulate.p.value)
                 warning("p-value will be approximate in the presence of ties")
         }
@@ -67,7 +69,7 @@ ks.test.default <-
                                  "two.sided" = "two-sided",
                                  "less" = "the CDF of x lies below that of y",
                                  "greater" = "the CDF of x lies above that of y")
-        PVAL <- psmirnov(STATISTIC, sizes = c(n.x, n.y), z = w,
+        PVAL <- psmirnov(STATISTIC, sizes = c(n.x, n.y), z = if(TIES) w, # else NULL
                          two.sided = (alternative == "two.sided"),
                          exact = exact, simulate = simulate.p.value,
                          B = B, lower.tail = FALSE)
