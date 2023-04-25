@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-01-20 r83643) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-04-25 r84324) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1512,13 +1512,6 @@ List of 150
  $ 189,189,189: chr [1:2] "gray74" "grey74"
  $ 190,190,190: chr [1:2] "gray" "grey"
   [list output truncated]
-> ## Not run: 
-> ##D  if(require(xgobi)) { ## Look at the color cube dynamically :
-> ##D    tc <- t(crgb[, !duplicated(ccodes)])
-> ##D    table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
-> ##D    xgobi(tc, color = c("gold", "gray")[1 + is.gray])
-> ##D  }
-> ## End(Not run)
 > 
 > 
 > 
@@ -3553,15 +3546,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2023-01-21" "2023-01-22" "2023-01-23" "2023-01-24" "2023-01-25"
-[6] "2023-01-26"
+[1] "2023-04-23" "2023-04-24" "2023-04-25" "2023-04-26" "2023-04-27"
+[6] "2023-04-28"
 > pretty(Sys.time(), n = 10)
- [1] "2023-01-23 09:00:53 NZDT" "2023-01-23 09:00:54 NZDT"
- [3] "2023-01-23 09:00:55 NZDT" "2023-01-23 09:00:56 NZDT"
- [5] "2023-01-23 09:00:57 NZDT" "2023-01-23 09:00:58 NZDT"
- [7] "2023-01-23 09:00:59 NZDT" "2023-01-23 09:01:00 NZDT"
- [9] "2023-01-23 09:01:01 NZDT" "2023-01-23 09:01:02 NZDT"
-[11] "2023-01-23 09:01:03 NZDT"
+ [1] "2023-04-25 19:55:10 BST" "2023-04-25 19:55:11 BST"
+ [3] "2023-04-25 19:55:12 BST" "2023-04-25 19:55:13 BST"
+ [5] "2023-04-25 19:55:14 BST" "2023-04-25 19:55:15 BST"
+ [7] "2023-04-25 19:55:16 BST" "2023-04-25 19:55:17 BST"
+ [9] "2023-04-25 19:55:18 BST" "2023-04-25 19:55:19 BST"
+[11] "2023-04-25 19:55:20 BST"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -3569,8 +3562,7 @@ attr(,"class")
 [6] "2000-03-04"
 > 
 > ## time ranges in diverse scales:% also in ../../../../tests/reg-tests-1c.R
-> require(stats)
-> steps <- setNames(,
+> steps <- stats::setNames(,
 +     c("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
 +       "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
 +       "10 years", "50 years", "1000 years"))
@@ -4219,8 +4211,7 @@ $number
 > ## Don't show: 
 > set.seed(1)
 > ## End(Don't show)
-> require(stats)
-> xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
+> xy <- data.frame(x = round(sort(stats::rnorm(100))), y = stats::rnorm(100))
 > xyTable(xy, digits = 1)
 $x
  [1] -2 -2 -2 -2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  0  0  0  0  0  0  0  0
@@ -4367,7 +4358,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  29.035 0.328 29.373 0 0 
+Time elapsed:  20.966 0.536 21.522 0 0 
 > grDevices::dev.off()
 null device 
           1 
