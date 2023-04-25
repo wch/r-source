@@ -1372,7 +1372,7 @@ if(FALSE) {
                     }
                     owd <- setwd("src")
                     system_makefile <-
-                        file.path(R.home(), paste0("etc", rarch), "Makeconf")
+                        file.path(paste0(R.home("etc"), rarch), "Makeconf")
                     makefiles <- c(system_makefile,
                                    makevars_site(),
                                    "Makefile",
@@ -2478,8 +2478,7 @@ if(FALSE) {
     }
 
     if (!WINDOWS) {
-        mconf <- readLines(file.path(R.home(),
-                                     paste0("etc", Sys.getenv("R_ARCH")),
+        mconf <- readLines(file.path(paste0(R.home("etc"), Sys.getenv("R_ARCH")),
                                      "Makeconf"))
         SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE,
                                           perl = TRUE))

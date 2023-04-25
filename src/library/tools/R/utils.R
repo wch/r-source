@@ -817,7 +817,7 @@ function(x, predicate = NULL, recursive = FALSE)
     calls <- list()
 
     if(!is.recursive(x) || isS4(x)) return(calls)
-    
+
     x <- if(is.call(x))
              list(x)
          else {
@@ -1196,7 +1196,7 @@ function(db,
 ### ** .get_S3_generics_in_base
 
 .get_S3_generics_in_base <-
-function() 
+function()
 {
     ## .get_S3_generics_in_env(.BaseNamespaceEnv) gets all UseMethod
     ## generics.
@@ -1220,7 +1220,7 @@ function()
       .get_internal_S3_generics(),
       .get_S3_group_generics())
 }
-    
+
 ### ** .get_S3_generics_in_env
 
 .get_S3_generics_in_env <-
@@ -1788,7 +1788,7 @@ function(parent = parent.frame())
     ctx <- NULL
     function() {
         if(is.null(fun) && requireNamespace("V8", quietly = TRUE)) {
-            dir <- file.path(R.home(), "doc", "html")
+            dir <- file.path(R.home("doc"), "html")
             ctx <<- V8::v8("window")
             ctx$source(file.path(dir, "katex", "katex.js"))
             ## Provides additional macros:
@@ -2490,6 +2490,8 @@ function(fun, args = list(), opts = character(), env = character(),
             tfi)
     cmd <- if(.Platform$OS.type == "windows") {
                if(nzchar(arch))
+                   ## R.home("bin") might be better, but Windows
+                   ## installation is monolithic
                    file.path(R.home(), "bin", arch, "Rterm.exe")
                else
                    file.path(R.home("bin"), "Rterm.exe")
