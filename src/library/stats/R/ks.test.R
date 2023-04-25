@@ -115,7 +115,6 @@ ks.test.default <-
                  alternative = nm_alternative,
                  method = METHOD,
                  data.name = DNAME,
-                 data = list(x = x, y = y),
                  exact = exact)
     class(RVAL) <- c("ks.test", "htest")
     RVAL
