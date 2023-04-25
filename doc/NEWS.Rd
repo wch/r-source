@@ -55,6 +55,17 @@
       instead of either \code{17} or \code{NN} for \code{LL} true or false,
       as proposed by Ivan Krylov on the R-devel mailing list.  (This
       also means it is now an error to specify \code{na.rm} more than once.)
+
+      \item \code{as.complex(x)} now returns \code{NA_complex_} also for
+      \code{NA_real_}, as it does for all other \code{NA}s.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.3.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item .
     }
   }
 }

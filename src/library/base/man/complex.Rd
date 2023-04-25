@@ -1,6 +1,6 @@
 % File src/library/base/man/complex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{complex}
@@ -139,12 +139,17 @@ plot(zz, xlim = c(-1,1), ylim = c(-1,1), col = "red", asp = 1,
 abline(h = 0, v = 0, col = "blue", lty = 3)
 points(zz.shift, col = "orange")
 
+## as.complex(<some NA>) --> NA_complex_
+NAs <- vapply(list(NA, NA_integer_, NA_character_, NA_real_, NA_complex_),
+              as.complex, 0+0i)
+stopifnot(identical(NA_complex_, unique(NAs)))
+
 showC <- function(z) noquote(sprintf("(R = \%g, I = \%g)", Re(z), Im(z)))
 
 ## The exact result of this *depends* on the platform, compiler, math-library:
 (NpNA <- NaN + NA_complex_) ; str(NpNA) # *behaves* as 'cplx NA' ..
 stopifnot(is.na(NpNA), is.na(NA_complex_), is.na(Re(NA_complex_)), is.na(Im(NA_complex_)))
-showC(NpNA)# but not always is {shows  '(R = NaN, I = NA)' on some platforms}
+showC(NpNA)# but does not always show '(R = NaN, I = NA)'
 ## and this is not TRUE everywhere:
 identical(NpNA, NA_complex_)
 showC(NA_complex_) # always == (R = NA, I = NA)

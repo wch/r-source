@@ -560,6 +560,11 @@ if(englishMsgs)
 ## these gave numeric (or NA) results without any warning in R <= 4.3.0
 
 
+## as.complex(NA_real_) |-> NA_complex_  as for all other NA, NA_*
+stopifnot(identical(as.complex(NA_real_), NA_complex_))
+## gave  complex(real = NA, imaginary=0) from R 3.3.0  to 4.3.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
