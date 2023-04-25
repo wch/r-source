@@ -420,12 +420,12 @@ static void timeout_handler(int sig)
 	/* parent, received a signal */
 
 	kill(tost.child_pid, sig);
-	/* NOTE: don't signal the group and  don't send SIGCONT
-	         for interactive jobs */
 	int saveerrno = errno;
 	/* on macOS, killpg fails with EPERM for groups with zombies */
 	killpg(tost.child_pid, sig);
 	errno = saveerrno;
+	/* NOTE: don't signal the group and don't send SIGCONT
+	         for interactive jobs */
 	if (sig != SIGKILL && sig != SIGCONT) {
 	    kill(tost.child_pid, SIGCONT);
 	    saveerrno = errno;
