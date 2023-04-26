@@ -82,6 +82,5 @@ names(cl) <- apply(col2rgb(sapply(cl, function(x)x[1])),
                    2, function(n)paste(n, collapse = ","))
 utils::str(cl)
 }
-}
 \keyword{color}
 \keyword{dplot}
