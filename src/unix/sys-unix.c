@@ -332,7 +332,7 @@ static struct {
     int kill_attempts; /* 1 after sending KILL_SIGNAL1, etc */
     sigset_t oldset;
     struct sigaction oldalrm, oldint, oldquit, oldhup, oldterm, oldttin,
-                     oldttou, oldchld;
+                     oldttou, oldcont, oldtstp, oldchld;
     RCNTXT cntxt; /* for popen/pclose */
     FILE *fp;     /* for popen/pclose, sanity check */
 } tost;
@@ -351,6 +351,8 @@ static void timeout_init(void)
     sigaction(SIGTERM, NULL, &tost.oldterm);
     sigaction(SIGTTIN, NULL, &tost.oldttin);
     sigaction(SIGTTOU, NULL, &tost.oldttou);
+    sigaction(SIGCONT, NULL, &tost.oldcont);
+    sigaction(SIGTSTP, NULL, &tost.oldtstp);
     sigaction(SIGCHLD, NULL, &tost.oldchld);
     tost.fp = NULL;
 
@@ -363,6 +365,8 @@ static void timeout_init(void)
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGQUIT, &sa, NULL);
     sigaction(SIGHUP, &sa, NULL);
+    sigaction(SIGCONT, &sa, NULL);
+    sigaction(SIGTSTP, &sa, NULL);
     sigaction(SIGTERM, &sa, NULL);
     sigaction(SIGCHLD, &sa, NULL);
 }
@@ -377,6 +381,8 @@ static void timeout_cleanup_set(sigset_t *ss)
     sigaddset(ss, SIGTERM);
     sigaddset(ss, SIGTTIN);
     sigaddset(ss, SIGTTOU);
+    sigaddset(ss, SIGCONT);
+    sigaddset(ss, SIGTSTP);
     sigaddset(ss, SIGCHLD);
 }
 
@@ -394,6 +400,8 @@ static void timeout_cleanup(void)
     sigaction(SIGTERM, &tost.oldterm, NULL);
     sigaction(SIGTTIN, &tost.oldttin, NULL);
     sigaction(SIGTTOU, &tost.oldttou, NULL);
+    sigaction(SIGCONT, &tost.oldcont, NULL);
+    sigaction(SIGTSTP, &tost.oldtstp, NULL);
     sigaction(SIGCHLD, &tost.oldchld, NULL);
 
     sigprocmask(SIG_SETMASK, &tost.oldset, NULL);
@@ -418,7 +426,14 @@ static void timeout_handler(int sig)
     }
     if (tost.child_pid > 0) {
 	/* parent, received a signal */
-
+	if (sig == SIGCONT) {
+	    /* restore our SIGTSTP handler */
+	    struct sigaction sa;
+	    sigemptyset(&sa.sa_mask);
+	    sa.sa_handler = &timeout_handler;
+	    sa.sa_flags = SA_RESTART;
+	    sigaction(SIGTSTP, &sa, NULL);
+	}
 	kill(tost.child_pid, sig);
 	int saveerrno = errno;
 	/* on macOS, killpg fails with EPERM for groups with zombies */
@@ -426,12 +441,17 @@ static void timeout_handler(int sig)
 	errno = saveerrno;
 	/* NOTE: don't signal the group and don't send SIGCONT
 	         for interactive jobs */
-	if (sig != SIGKILL && sig != SIGCONT) {
+	if (sig != SIGKILL && sig != SIGCONT && sig != SIGTSTP) {
 	    kill(tost.child_pid, SIGCONT);
 	    saveerrno = errno;
 	    /* on macOS, killpg fails with EPERM for groups with zombies */
 	    killpg(tost.child_pid, SIGCONT);
 	    errno = saveerrno;
+	}
+	if (sig == SIGTSTP) {
+	    /* restore and invoke the original SIGTSTP handler */
+	    sigaction(SIGTSTP, &tost.oldtstp, NULL);
+	    raise(SIGTSTP);
 	}
     } else if (tost.child_pid == 0) {
 	/* child */
