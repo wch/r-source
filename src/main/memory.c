@@ -4437,9 +4437,26 @@ SEXP (PRVALUE)(SEXP x) { return CHK(PRVALUE(CHK(x))); }
 int (PRSEEN)(SEXP x) { return PRSEEN(CHK(x)); }
 
 void (SET_PRENV)(SEXP x, SEXP v){ FIX_REFCNT(x, PRENV(x), v); CHECK_OLD_TO_NEW(x, v); PRENV(x) = v; }
-void (SET_PRVALUE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRVALUE(x), v); CHECK_OLD_TO_NEW(x, v); PRVALUE(x) = v; }
 void (SET_PRCODE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRCODE(x), v); CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
 void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
+
+void (SET_PRVALUE)(SEXP x, SEXP v)
+{
+    if (TYPEOF(x) != PROMSXP)
+	error("expecting a 'PROMSXP', not a '%s'", type2char(TYPEOF(x)));
+    FIX_REFCNT(x, PRVALUE(x), v);
+    CHECK_OLD_TO_NEW(x, v);
+    PRVALUE(x) = v;
+}
+
+attribute_hidden
+void IF_PROMSXP_SET_PRVALUE(SEXP x, SEXP v)
+{
+    /* promiseArgs produces a list containing promises or R_MissingArg.
+       Using IF_PROMSXP_SET_PRVALUE avoids corrupting R_MissingArg. */
+    if (TYPEOF(x) == PROMSXP)
+        SET_PRVALUE(x, v);
+}
 
 /* Hashing Accessors */
 #ifdef TESTING_WRITE_BARRIER

@@ -1572,7 +1572,7 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		PROTECT(s = promiseArgs(CDR(call), rho));
 		if (length(s) != length(args)) error(_("dispatch error"));
 		for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
-		    SET_PRVALUE(CAR(b), CAR(a));
+		    IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
 		value =  applyClosure(call, value, s, rho, suppliedvars);
 #ifdef ADJUST_ENVIR_REFCNTS
 		unpromiseArgs(s);
@@ -1602,7 +1602,7 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 	PROTECT(s = promiseArgs(CDR(call), rho));
 	if (length(s) != length(args)) error(_("dispatch error"));
 	for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
-	    SET_PRVALUE(CAR(b), CAR(a));
+	    IF_PROMSXP_SET_PRVALUE(CAR(b), CAR(a));
 	value = applyClosure(call, fundef, s, rho, R_NilValue);
 	UNPROTECT(1);
     } else {
