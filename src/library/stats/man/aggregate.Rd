@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -33,7 +33,7 @@ aggregate(x, \dots)
     \code{y} variables are numeric data to be split into groups according
     to the grouping \code{x} variables (usually factors).}
   \item{by}{a list of grouping elements, each as long as the variables
-    in the data frame \code{x}.  The elements are coerced to factors
+    in the data frame \code{x}, or a formula.  The elements are coerced to factors
     before use.}
   \item{FUN}{a function to compute the summary statistics which can be
     applied to all data subsets.}
@@ -42,7 +42,7 @@ aggregate(x, \dots)
   \item{drop}{a logical indicating whether to drop unused combinations
     of grouping values.  The non-default case \code{drop=FALSE} has been
     amended for \R 3.5.0 to drop unused combinations.}
-  \item{data}{a data frame (or list) from which the variables in formula
+  \item{data}{a data frame (or list) from which the variables in the formula
     should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
@@ -84,8 +84,11 @@ aggregate(x, \dots)
   the result.  (Note that versions of \R prior to 2.11.0 required
   \code{FUN} to be a scalar function.)
 
-  \code{aggregate.formula} is a standard formula interface to
+  The formula method provides a standard formula interface to
   \code{aggregate.data.frame}.
+  The latter invokes the formula method if \code{by} is a formula,
+  in which case \code{aggregate(x, by, FUN)} is the same as
+  \code{aggregate(by, x, FUN)} for a data frame \code{x}.
 
   \code{aggregate.ts} is the time series method, and requires \code{FUN}
   to be a scalar function.  If \code{x} is not a time series, it is
@@ -173,6 +176,8 @@ aggregate(len ~ ., data = ToothGrowth, mean)
 ag <- aggregate(len ~ ., data = ToothGrowth, mean)
 xtabs(len ~ ., data = ag)
 
+## Formula interface via 'by' (for pipe operations)
+ToothGrowth |> aggregate(len ~ ., FUN = mean)
 
 ## Compute the average annual approval ratings for American presidents.
 aggregate(presidents, nfrequency = 1, FUN = mean)
