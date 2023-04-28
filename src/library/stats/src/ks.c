@@ -89,7 +89,10 @@ pkstwo(int n, double *x, double tol)
     k_max = (int) sqrt(2 - log(tol));
 
     for(i = 0; i < n; i++) {
-	if(x[i] < 1) {
+	/* Note that for x[i] = 0.1 we get 6.609305e-53 ... */
+	if(x[i] <= 0.)
+	    x[i] = 0.;
+	else if(x[i] < 1.) {
 	    z = - (M_PI_2 * M_PI_4) / (x[i] * x[i]);
 	    w = log(x[i]);
 	    s = 0;

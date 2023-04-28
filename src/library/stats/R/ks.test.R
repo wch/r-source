@@ -216,8 +216,6 @@ function(q, sizes,
     ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
     if (two.sided) {
         ret <- .Call(C_pkolmogorov_two_limit, p = sqrt(n) * q, tol = 1e-6)
-        ## note: C_pkolmogorov_two_limit(0) = NA but Prob(D < 0) = 0
-        ret[q < .Machine$double.eps] <- 0
     } else {
         ret <- -expm1(- 2 * n * q^2) # 1 - exp(*)
     }
