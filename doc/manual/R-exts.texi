@@ -5386,7 +5386,10 @@ names, which are (confusingly)
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
 use.  Fortunately only the integer values are likely to be relevant.
 If at all possible, use one of the LTS versions (8, 11, 17, 21 @dots{})
-as the minimum version.
+as the minimum version.  The preferred form of version specification is
+@example
+SystemRequirements: Java (>= 11)
+@end example
 
 A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
