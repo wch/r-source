@@ -5767,9 +5767,9 @@ supported in strict Latin-1 locales nor in CJK locales on Windows.  A
 surprisingly common misuse is to use a right quote in @samp{don't}
 instead of the correct apostrophe.
 
-Datasets can include marked UTF-8 or Latin-1 character strings.  As \R
+Datasets can include marked UTF-8 or Latin-1 character strings.  As @R{}
 is nowadays unlikely to be run in a Latin-1 or Windows' CP1252 locale,
-for performance reaaons these should be converted to UTF-8.
+for performance reasons these should be converted to UTF-8.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets a package encoding in its @file{DESCRIPTION} file @emph{and do
@@ -14823,7 +14823,7 @@ that the bound definition is correct is to compile the package with LTO
 @command{gcc} and @command{gfortran}).
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
+@uref{https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-0/bind-c.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of

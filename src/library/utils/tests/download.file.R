@@ -1,3 +1,7 @@
+## 2023-04 this relies on eu.httpbin.org which has become slow/unreliable.
+
+site <- "httpbin.org"
+rx <- paste0("Host.*", site)
 
 ## Tests for HTTP headers -----------------------------------------------
 
@@ -5,10 +9,11 @@ is_online <- function() {
   tryCatch({
     con <- suppressWarnings(socketConnection("8.8.8.8", port = 53))
     close(con)
-    con <- url("http://eu.httpbin.org/headers")
+    URL <- paste0("http://", site, "/", "headers")
+    con <- url(URL)
     lines <- readLines(con)
     close(con)
-    stopifnot(any(grepl("Host.*eu.httpbin.org", lines)))
+    stopifnot(any(grepl(rx, lines)))
     TRUE
   }, error = function(e) FALSE)
 }
@@ -29,7 +34,7 @@ get_headers_url <- function(path = "anything", ..., protocol = "http") {
 }
 
 get_path <- function(path = "anything", protocol = "http") {
-  paste0(protocol, "://", "eu.httpbin.org/", path)
+  paste0(protocol, "://", site,  "/", path)
 }
 
 with_options <- function(opts, expr) {
@@ -121,7 +126,7 @@ tests <- function() {
   con <- file(get_path("anything", "http"))
   on.exit(close(con), add = TRUE)
   h <- readLines(con)
-  stopifnot(any(grepl("Host.*eu.httpbin.org", h)))
+  stopifnot(any(grepl(rx, h)))
 
   cat("- If headers not named, then url() errors\n")
   ret <- tryCatch(
@@ -168,3 +173,5 @@ main <- function() {
 options(warn = 1)
 
 if (is_online()) main()
+
+proc.time()
