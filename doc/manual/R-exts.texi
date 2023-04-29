@@ -5769,8 +5769,7 @@ instead of the correct apostrophe.
 
 Datasets can include marked UTF-8 or Latin-1 character strings.  As @R{}
 is nowadays unlikely to be run in a Latin-1 or Windows' CP1252 locale,
-for performance reasons these should be converted to UTF-8 (and
-@command{R CMD check} will warn on Latin-1 strings in datasets).
+for performance reasons these should be converted to UTF-8.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets a package encoding in its @file{DESCRIPTION} file @emph{and do
