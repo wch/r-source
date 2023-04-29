@@ -5838,7 +5838,7 @@ CXX="clang++ -mmacosx-version-min=11.0"
 FC="/opt//gfortran/bin/gfortran -mmacosx-version-min=11.0"
 @end example
 @noindent
-or set the envivonment variable
+or set the environment variable
 @example
 export MACOSX_DEPLOYMENT_TARGET=11.0
 @end example
