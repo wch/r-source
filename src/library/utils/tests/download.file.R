@@ -1,4 +1,5 @@
-## 2023-04 this relies on eu.httpbin.org which has become slow/unreliable.
+## 2023-04 this relied on eu.httpbin.org which had become slow/unreliable.
+## switched to httpbin,org which seems more reliable if sometimes slow.
 
 site <- "httpbin.org"
 rx <- paste0("Host.*", site)
@@ -6,16 +7,17 @@ rx <- paste0("Host.*", site)
 ## Tests for HTTP headers -----------------------------------------------
 
 is_online <- function() {
-  tryCatch({
-    con <- suppressWarnings(socketConnection("8.8.8.8", port = 53))
-    close(con)
-    URL <- paste0("http://", site, "/", "headers")
-    con <- url(URL)
-    lines <- readLines(con)
-    close(con)
-    stopifnot(any(grepl(rx, lines)))
-    TRUE
-  }, error = function(e) FALSE)
+    tryCatch({
+        ## 8.8.8,8 is Google DNS
+        con <- suppressWarnings(socketConnection("8.8.8.8", port = 53))
+        close(con)
+        URL <- paste0("http://", site, "/", "headers")
+        con <- url(URL)
+        lines <- readLines(con)
+        close(con)
+        stopifnot(any(grepl(rx, lines)))
+        TRUE
+    }, error = function(e) FALSE)
 }
 
 get_headers <- function(path = "anything", quiet = TRUE, ...,
@@ -172,6 +174,7 @@ main <- function() {
 
 options(warn = 1)
 
+## if URL is unresponsive or times out, this silently skips all the checks
 if (is_online()) main()
 
 proc.time()
