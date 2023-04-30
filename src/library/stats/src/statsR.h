@@ -171,7 +171,7 @@ SEXP influence(SEXP mqr, SEXP e, SEXP stol);
 
 SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz, SEXP stwo, SEXP slower);
 SEXP pkolmogorov_two_exact(SEXP sq, SEXP sn);
-SEXP pkolmogorov_two_limit(SEXP sq, SEXP stol);
+SEXP pkolmogorov_two_limit(SEXP sq, SEXP slower, SEXP stol);
 
 SEXP ksmooth(SEXP x, SEXP y, SEXP snp, SEXP skrn, SEXP sbw);
 

@@ -215,20 +215,24 @@ function(q, sizes,
     ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
     ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
     if (two.sided) {
-        ret <- .Call(C_pkolmogorov_two_limit, p = sqrt(n) * q, tol = 1e-6)
+        ret <- .Call(C_pkolmogorov_two_limit, sqrt(n) * q, lower.tail,
+                     tol = 1e-6)
+        if(log.p)
+            ret <- log(ret)
+        return(ret)
     } else {
         ret <- -expm1(- 2 * n * q^2) # 1 - exp(*)
-    }
-    if(log.p) {
-        if(lower.tail)
-            log(ret)
-        else
-            log1p(-ret)
-    } else {
-        if(lower.tail)
-            ret
-        else
-            1 - ret
+        if(log.p) {
+            if(lower.tail)
+                log(ret)
+            else
+                log1p(-ret)
+        } else {
+            if(lower.tail)
+                ret
+            else
+                1 - ret
+        }
     }
 }
 
@@ -371,8 +375,8 @@ pkolmogorov_one_exact <- function(q, n, lower.tail = TRUE) {
 }
 
 pkolmogorov_two_asymp <- function(q, n, lower.tail = TRUE) {
-    p <- .Call(C_pkolmogorov_two_limit, sqrt(n) * q, tol = 1e-6)
-    if(lower.tail) p else 1 - p
+    .Call(C_pkolmogorov_two_limit, sqrt(n) * q, lower.tail,
+          tol = 1e-6)
 }
 
 pkolmogorov_one_asymp <- function(q, n, lower.tail = TRUE) {

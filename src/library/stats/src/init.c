@@ -114,7 +114,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(runmed, 6),
     CALLDEF(influence, 3),
     CALLDEF(pkolmogorov_two_exact, 2),
-    CALLDEF(pkolmogorov_two_limit, 2),
+    CALLDEF(pkolmogorov_two_limit, 3),
     CALLDEF(psmirnov_exact, 6),
     CALLDEF(ksmooth, 5),
     CALLDEF(SplineCoef, 3),

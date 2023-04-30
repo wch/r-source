@@ -30,7 +30,7 @@
 
 #include "stats.h"		// for rcont2
 
-static double K2l(double x, double tol);
+static double K2l(double x, int lower, double tol);
 
 static int psmirnov_exact_test_one(double q, double r, double s);
 static int psmirnov_exact_test_two(double q, double r, double s);
@@ -51,15 +51,15 @@ Smirnov_sim_wrk(int nrow, int ncol,
 
 /* Two-sample two-sided asymptotic distribution */
 
-SEXP pkolmogorov_two_limit(SEXP sq, SEXP stol)
+SEXP pkolmogorov_two_limit(SEXP sq, SEXP slower, SEXP stol)
 {
-    int i;
+    int i, lower = asInteger(slower);
     double tol = asReal(stol);
     SEXP ans;
 
     PROTECT(ans = allocVector(REALSXP, LENGTH(sq)));
     for(i = 0; i < LENGTH(sq); i++) {
-	REAL(ans)[i] = K2l(REAL(sq)[i], tol);
+	REAL(ans)[i] = K2l(REAL(sq)[i], lower, tol);
     }
     UNPROTECT(1);
 
@@ -67,7 +67,7 @@ SEXP pkolmogorov_two_limit(SEXP sq, SEXP stol)
 }
 
 static double
-K2l(double x, double tol)
+K2l(double x, int lower, double tol)
 {
 /* Compute
  *   \sum_{k=-\infty}^\infty (-1)^k e^{-2 k^2 x^2}
@@ -93,8 +93,12 @@ K2l(double x, double tol)
     k_max = (int) sqrt(2 - log(tol));
 
     /* Note that for x = 0.1 we get 6.609305e-53 ... */
-    if(x <= 0.)
-	p = 0.;
+    if(x <= 0.) {
+	if(lower)
+	    p = 0.;
+	else
+	    p = 1.;
+    }
     else if(x < 1.) {
 	z = - (M_PI_2 * M_PI_4) / (x * x);
 	w = log(x);
@@ -103,13 +107,21 @@ K2l(double x, double tol)
 	    s += exp(k * k * z - w);
 	}
 	p = s / M_1_SQRT_2PI;
+	if(!lower)
+	    p = 1 - p;
     }
     else {
 	z = -2 * x * x;
 	s = -1;
-	k = 1;
-	old = 0;
-	new = 1;
+	if(lower) {
+	    k = 1;
+	    old = 0;
+	    new = 1;
+	} else {
+	    k = 2;
+	    old = 0;
+	    new = 2 * exp(z);
+	}
 	while(fabs(old - new) > tol) {
 	    old = new;
 	    new += 2 * s * exp(z * k * k);
