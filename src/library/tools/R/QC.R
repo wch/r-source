@@ -7836,6 +7836,9 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(length(placeholders))
         out$placeholders <- placeholders
 
+    if(!is.na(enc <- meta["Encoding"]) && (enc != "UTF-8"))
+        out$encoding <- enc
+
     ## Are there non-ASCII characters in the R source code without a
     ## package encoding in DESCRIPTION?
     ## Note that checking always runs .check_package_ASCII_code() which
@@ -8762,6 +8765,9 @@ function(x, ...)
                                      collapse = ", "))),
                     collapse = "\n")
           }),
+      fmt(if(length(y <- x$encoding))
+              c(sprintf("Package encoding '%s' is deprecated.", y),
+                "Please change to UTF-8 for non-ASCII content.")),
       if(length(y <- x$R_files_non_ASCII)) {
           paste(c("No package encoding and non-ASCII characters in the following R files:",
                   paste0("  ", names(y), "\n    ",
