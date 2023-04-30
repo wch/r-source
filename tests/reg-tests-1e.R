@@ -425,7 +425,8 @@ invisible(lapply(11:120, function(n) showC(n, 1030 %/% n)))
 
 ## download.file() with invalid option -- PR#18455
 op <- options(download.file.method = "no way")
-Edl <- tryCid(download.file("http://httpbin.org/get", "ping.txt"))
+# website does not matter as will not be contacted.
+Edl <- tryCid(download.file("http://cran.r-project.org/", "ping.txt"))
 stopifnot(inherits(Edl, "error"),
           !englishMsgs || grepl("should be one of .auto.,", conditionMessage(Edl)))
 options(op)
