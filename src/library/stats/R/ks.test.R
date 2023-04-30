@@ -316,10 +316,7 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         return(ret)
     }
 
-    pfun <- function(q)
-        psmirnov_exact(q, sizes, z, two.sided, lower.tail, log.p)
-
-    r <- vapply(q[IND], pfun, 0)
+    r <- psmirnov_exact(q[IND], sizes, z, two.sided, lower.tail, log.p)
     ret[IND] <-
         if(all(is.finite(r))) r
         else {

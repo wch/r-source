@@ -30,7 +30,7 @@
 
 #include "stats.h"		// for rcont2
 
-static void pkstwo(int n, double *x, double tol);
+static double K2l(double x, double tol);
 
 static int psmirnov_exact_test_one(double q, double r, double s);
 static int psmirnov_exact_test_two(double q, double r, double s);
@@ -39,7 +39,7 @@ static double psmirnov_exact_uniq_upper(double q, int m, int n, int two);
 static double psmirnov_exact_ties_lower(double q, int m, int n, int *z, int two);
 static double psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two);
 
-static double K(int n, double d);
+static double K2x(int n, double d);
 static void m_multiply(double *A, double *B, double *C, int m);
 static void m_power(double *A, int eA, double *V, int *eV, int m, int n);
 
@@ -51,21 +51,25 @@ Smirnov_sim_wrk(int nrow, int ncol,
 
 /* Two-sample two-sided asymptotic distribution */
 
-SEXP pkolmogorov_two_limit(SEXP statistic, SEXP stol)
+SEXP pkolmogorov_two_limit(SEXP sq, SEXP stol)
 {
-    int n = LENGTH(statistic);
+    int i;
     double tol = asReal(stol);
-    SEXP ans = duplicate(statistic);
-    pkstwo(n, REAL(ans), tol);
+    SEXP ans;
+
+    PROTECT(ans = allocVector(REALSXP, LENGTH(sq)));
+    for(i = 0; i < LENGTH(sq); i++) {
+	REAL(ans)[i] = K2l(REAL(sq)[i], tol);
+    }
+    UNPROTECT(1);
+
     return ans;
 }
 
-static void
-pkstwo(int n, double *x, double tol)
+static double
+K2l(double x, double tol)
 {
-/* x[1:n] is input and output
- *
- * Compute
+/* Compute
  *   \sum_{k=-\infty}^\infty (-1)^k e^{-2 k^2 x^2}
  *   = 1 + 2 \sum_{k=1}^\infty (-1)^k e^{-2 k^2 x^2}
  *   = \frac{\sqrt{2\pi}}{x} \sum_{k=1}^\infty \exp(-(2k-1)^2\pi^2/(8x^2))
@@ -83,39 +87,39 @@ pkstwo(int n, double *x, double tol)
  * the value for x < 0.2, and use the standard expansion otherwise.)
  *
  */
-    double new, old, s, w, z;
-    int i, k, k_max;
+    double new, old, s, w, z, p;
+    int k, k_max;
 
     k_max = (int) sqrt(2 - log(tol));
 
-    for(i = 0; i < n; i++) {
-	/* Note that for x[i] = 0.1 we get 6.609305e-53 ... */
-	if(x[i] <= 0.)
-	    x[i] = 0.;
-	else if(x[i] < 1.) {
-	    z = - (M_PI_2 * M_PI_4) / (x[i] * x[i]);
-	    w = log(x[i]);
-	    s = 0;
-	    for(k = 1; k < k_max; k += 2) {
-		s += exp(k * k * z - w);
-	    }
-	    x[i] = s / M_1_SQRT_2PI;
+    /* Note that for x = 0.1 we get 6.609305e-53 ... */
+    if(x <= 0.)
+	p = 0.;
+    else if(x < 1.) {
+	z = - (M_PI_2 * M_PI_4) / (x * x);
+	w = log(x);
+	s = 0;
+	for(k = 1; k < k_max; k += 2) {
+	    s += exp(k * k * z - w);
 	}
-	else {
-	    z = -2 * x[i] * x[i];
-	    s = -1;
-	    k = 1;
-	    old = 0;
-	    new = 1;
-	    while(fabs(old - new) > tol) {
-		old = new;
-		new += 2 * s * exp(z * k * k);
-		s *= -1;
-		k++;
-	    }
-	    x[i] = new;
-	}
+	p = s / M_1_SQRT_2PI;
     }
+    else {
+	z = -2 * x * x;
+	s = -1;
+	k = 1;
+	old = 0;
+	new = 1;
+	while(fabs(old - new) > tol) {
+	    old = new;
+	    new += 2 * s * exp(z * k * k);
+	    s *= -1;
+	    k++;
+	}
+	p = new;
+    }
+
+    return p;
 }
 
 /* Two-sample exact distributions.
@@ -180,37 +184,45 @@ pkstwo(int n, double *x, double tol)
 
 SEXP psmirnov_exact(SEXP sq, SEXP sm, SEXP sn, SEXP sz,
 		    SEXP stwo, SEXP slower) {
-    double md, nd, p, q;
-    int m, n, *z, two, lower;
+    double md, nd, *p, q;
+    int i, m, n, *z, two, lower, ties;
+    SEXP ans;
 
-    q = asReal(sq);
     m = asInteger(sm);
     n = asInteger(sn);
     two = asInteger(stwo);
     lower = asInteger(slower);
+    ties = (sz != R_NilValue);
+    if(ties)
+	z = INTEGER(sz);
 
     md = (double) m;
     nd = (double) n;
-    /*
-       q has 0.5/mn added to ensure that rounding error doesn't
-       turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
 
-    */
-    q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);
-
-    if(sz == R_NilValue) {
-	if(lower)
-	    p = psmirnov_exact_uniq_lower(q, m, n, two);
-	else
-	    p = psmirnov_exact_uniq_upper(q, m, n, two);
-    } else {
-	z = INTEGER(sz);
-	if(lower)
-	    p = psmirnov_exact_ties_lower(q, m, n, z, two);
-	else
-	    p = psmirnov_exact_ties_upper(q, m, n, z, two);
+    PROTECT(ans = allocVector(REALSXP, LENGTH(sq)));
+    p = REAL(ans);
+    for(i = 0; i < LENGTH(sq); i++) {
+	q = REAL(sq)[i];
+	/*
+	  q has 0.5/mn added to ensure that rounding error doesn't
+	  turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
+	*/
+	q = (0.5 + floor(q * md * nd - 1e-7)) / (md * nd);
+	if(ties) {
+	    if(lower)
+		p[i] = psmirnov_exact_ties_lower(q, m, n, z, two);
+	    else
+		p[i] = psmirnov_exact_ties_upper(q, m, n, z, two);
+	} else {
+	    if(lower)
+		p[i] = psmirnov_exact_uniq_lower(q, m, n, two);
+	    else
+		p[i] = psmirnov_exact_uniq_upper(q, m, n, two);
+	}
     }
-    return ScalarReal(p);
+    UNPROTECT(1);
+
+    return(ans);
 }
 
 static int
@@ -376,16 +388,22 @@ psmirnov_exact_ties_upper(double q, int m, int n, int *z, int two) {
 }
 
 /* One-sample two-sided exact distribution */
-SEXP pkolmogorov_two_exact(SEXP statistic, SEXP sn)
+SEXP pkolmogorov_two_exact(SEXP sq, SEXP sn)
 {
-    int n = asInteger(sn);
-    double st = asReal(statistic), p;
-    p = K(n, st);
-    return ScalarReal(p);
+    int n = asInteger(sn), i;
+    SEXP ans;
+
+    PROTECT(ans = allocVector(REALSXP, LENGTH(sq)));
+    for(i = 0; i < LENGTH(sq); i++) {
+	REAL(ans)[i] = K2x(n, REAL(sq)[i]);
+    }
+    UNPROTECT(1);
+
+    return ans;
 }
 
 static double
-K(int n, double d)
+K2x(int n, double d)
 {
     /* Compute Kolmogorov's distribution.
        Code published in
@@ -444,7 +462,7 @@ K(int n, double d)
 static void
 m_multiply(double *A, double *B, double *C, int m)
 {
-    /* Auxiliary routine used by K().
+    /* Auxiliary routine used by K2x().
        Matrix multiplication.
     */
     int i, j, k;
@@ -461,7 +479,7 @@ m_multiply(double *A, double *B, double *C, int m)
 static void
 m_power(double *A, int eA, double *V, int *eV, int m, int n)
 {
-    /* Auxiliary routine used by K().
+    /* Auxiliary routine used by K2x().
        Matrix power.
     */
     double *B;
