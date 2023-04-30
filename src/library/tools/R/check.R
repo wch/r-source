@@ -3958,7 +3958,16 @@ add_dummies <- function(dir, Log)
             ##       enc <- ""
             ##       any <- TRUE
             ##   }
-            Ropts <- if (nzchar(arch)) R_opts3 else R_opts
+            cprof <- Sys.getenv("_R_CHECK_EXAMPLES_PROFILE_", "")
+            cprof <- if(!file.exists(cprof)) "" else normalizePath(cprof)
+            Ropts <- if(nzchar(cprof)) {
+                         if(nzchar(arch)) {
+                             ## R_opts3 without --no-init-file
+                             "--no-site-file --no-save --no-restore"
+                         } else
+                             ## R_opts without --no-init-file
+                             "--no-site-file --no-save --no-restore --no-environ"
+                     } else if(nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             t1 <- proc.time()
             tlim <- get_timeout(Sys.getenv("_R_CHECK_EXAMPLES_ELAPSED_TIMEOUT_",
@@ -3968,7 +3977,9 @@ add_dummies <- function(dir, Log)
             status <- R_runR0(NULL, c(Ropts, enc),
                               c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
                                 if(nzchar(arch)) env0, jitstr,
-                                if(R_cdo_examples) elibs_cdo else elibs),
+                                if(R_cdo_examples) elibs_cdo else elibs,
+                                if(nzchar(cprof))
+                                    paste0("R_PROFILE_USER=", cprof)),
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
