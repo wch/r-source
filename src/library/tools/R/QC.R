@@ -7847,7 +7847,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     ## Note also that this does not catch the cases where non-ASCII
     ## content in R source code cannot be re-encoded using a given
     ## package encoding.  Ideally, this would be checked for as well.
-    if(is.na(meta["Encoding"]) && dir.exists(file.path(dir, "R"))) {
+    if(is.na(meta["Encoding"])) {
         ## A variation on showNonASCII():
         find_non_ASCII_lines <- function(f) {
             x <- readLines(f, warn = FALSE)
@@ -7859,10 +7859,17 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                        iconv(x[ind], "latin1", "ASCII", sub = "byte"))
             } else character()
         }
-        OS_subdirs <- c("unix", "windows")
-        code_files <- list_files_with_type(file.path(dir, "R"),
-                                           "code",
-                                           OS_subdirs = OS_subdirs)
+        code_files <- c(file.path(dir, "NAMESPACE"),
+                        file.path(dir, "inst", "CITATION"))
+        code_files <- code_files[file.exists(code_files)]
+        if(dir.exists(file.path(dir, "R"))) {
+            OS_subdirs <- c("unix", "windows")
+            code_files <-
+                c(code_files,
+                  list_files_with_type(file.path(dir, "R"),
+                                       "code",
+                                       OS_subdirs = OS_subdirs))
+        }
         names(code_files) <-
             file_path_relative_to(code_files, dir, parent = FALSE)
         lines <- Filter(length, lapply(code_files, find_non_ASCII_lines))
