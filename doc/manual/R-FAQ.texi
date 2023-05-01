@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2022
-@set FAQ_DATE @value{FAQ_YEAR}-09-08
+@set FAQ_YEAR 2023
+@set FAQ_DATE @value{FAQ_YEAR}-04-05
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @c %**end of header
@@ -835,8 +835,7 @@ all Open Source licenses, permits all and any use of the package.  It
 only restricts distribution of R or of other programs containing code
 from R.  This is made clear in clause 6 (``No Discrimination Against
 Fields of Endeavor'') of the
-@url{https://opensource.org/docs/definition.html, Open Source
-Definition}:
+@url{https://opensource.org/osd/, Open Source Definition}:
 
 @quotation
 The license must not restrict anyone from making use of the program in a

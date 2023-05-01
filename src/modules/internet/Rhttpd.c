@@ -56,7 +56,7 @@
 #define HttpdServerActivity 8
 #define HttpdWorkerActivity 9
 
-/* this is orignally from sisock.h - system independent sockets */
+/* this is originally from sisock.h - system independent sockets */
 
 #ifndef _WIN32
 # include <R_ext/eventloop.h>
@@ -988,7 +988,7 @@ static void worker_input_handler(void *data) {
 			remove_worker(c);
 			return;
 		    }
-		    /* move the line to the begining of the buffer for later requests */
+		    /* move the line to the beginning of the buffer for later requests */
 		    c->line_pos -= bol - c->line_buf;
 		    memmove(c->line_buf, bol, c->line_pos);
 		    return;

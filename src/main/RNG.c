@@ -659,7 +659,7 @@ MT_sgenrand(Int32 seed)
 }
 
 /* Initialization by "sgenrand()" is an example. Theoretically,
-   there are 2^19937-1 possible states as an intial state.
+   there are 2^19937-1 possible states as an initial state.
    Essential bits in "seed_array[]" is following 19937 bits:
     (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1].
    (seed_array[0]&LOWER_MASK) is discarded.

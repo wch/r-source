@@ -1400,7 +1400,7 @@ static R_INLINE int xtable_key_comp(const void *a, const void *b)
 
 #define COMPRESS(_base,_num,_TYPE,_comp)                       \
 {                                                              \
-/* supress even c_old. last use */                             \
+/* suppress even c_old. last use */                             \
     int _i,_j ;                                                \
     for ( _i = 0 ; _i < (*(_num)) - 1 ; _i++ ){                \
 	int rc = (*_comp)(_base+_i, _base+_i+1);               \

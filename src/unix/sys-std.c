@@ -138,8 +138,8 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	    myintr();
 
 	    if (timeout != NULL) {
-		/* Ajdust timeout for elapsed complete seconds; ignore
-		   microseconde for now. This modifies the data pointed to
+		/* Adjust timeout for elapsed complete seconds; ignore
+		   microseconds for now. This modifies the data pointed to
 		   by timeval, which is what select() on Linux does as
 		   well. */
 		double new_time = currentTime();
@@ -520,8 +520,8 @@ char *R_ExpandFileName_readline(const char *s, char *buff)
 
 /*
 
-There has been a general problem with asynchonous calls to browser and
-anything that uses the standard console reading facilties asynchronously
+There has been a general problem with asynchronous calls to browser and
+anything that uses the standard console reading facilities asynchronously
 (e.g. scan(), parse(), menu()).  The basic problem is as follows.  We
 are in the usual input loop awaiting characters typed by the user.  Then
 asynchronously, we enter the browser due to a callback that is invoked

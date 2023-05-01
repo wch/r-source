@@ -107,7 +107,7 @@ static char *expandcmd(const char *cmd, int whole)
 	/* perform the search again with the right buffer size */
 
 	/* The +10 below is a hack to work-around what appears to be a bug
-	   observerd on Windows 10 (build 19045). When the corresponding PATH
+	   observed on Windows 10 (build 19045). When the corresponding PATH
 	   entry ends with one or more extra separators (e.g. dir\/,
 	   dir\\ or dir//), the nBufferLength argument must be increased by
 	   that number, otherwise SearchPath reports the path doesn't fit.

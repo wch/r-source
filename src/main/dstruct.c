@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 
 /*  mkPRIMSXP - return a builtin function      */
@@ -42,7 +42,7 @@ attribute_hidden SEXP mkPRIMSXP(int offset, int eval)
     static int FunTabSize = 0;
     
     if (PrimCache == NULL) {
-	/* compute the number of entires in R_FunTab */
+	/* compute the number of entries in R_FunTab */
 	while (R_FunTab[FunTabSize].name)
 	    FunTabSize++;
 

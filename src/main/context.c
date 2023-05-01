@@ -88,7 +88,7 @@
  *
  *	void findcontext(int mask, SEXP env, SEXP val)
  *
- *  This causes "val" to be stuffed into a globally accessable place and
+ *  This causes "val" to be stuffed into a globally accessible place and
  *  then a search to take place back through the context list for an
  *  appropriate context.  The kind of context sort is determined by the
  *  value of "mask".  The value of mask should be the logical OR of all
@@ -315,7 +315,7 @@ void endcontext(RCNTXT * cptr)
     }
     if (R_ExitContext == cptr)
 	R_ExitContext = NULL;
-    /* continue jumping if this was reached as an intermetiate jump */
+    /* continue jumping if this was reached as an intermediate jump */
     if (jumptarget)
 	/* cptr->returnValue is undefined */
 	R_jumpctxt(jumptarget, cptr->jumpmask, R_ReturnedValue);
@@ -767,7 +767,7 @@ RCNTXT *R_findParentContext(RCNTXT *cptr, int n)
 }
 
 /* R_ToplevelExec - call fun(data) within a top level context to
-   insure that this functin cannot be left by a LONGJMP.  R errors in
+   insure that this function cannot be left by a LONGJMP.  R errors in
    the call to fun will result in a jump to top level. The return
    value is TRUE if fun returns normally, FALSE if it results in a
    jump to top level. */
@@ -939,7 +939,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
     SEXP result;
     Rboolean jump;
 
-    /* Allow simple usage with a NULL continuotion token. This _could_
+    /* Allow simple usage with a NULL continuation token. This _could_
        result in a failure in allocation or exceeding the PROTECT
        stack limit before calling fun(), so fun() and cleanfun should
        be written accordingly. */

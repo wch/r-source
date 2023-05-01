@@ -153,7 +153,7 @@
    any specially marked entry causes a call to the hook function with
    the reconstructed STRSXP and data value as arguments.  This should
    return the value to use for the reference object.  A reasonable
-   convention on how to use this mechanism is neded, but again the
+   convention on how to use this mechanism is needed, but again the
    format should be compatible with any reasonable convention.
 
    Eventually it may be useful to use these hooks to allow objects

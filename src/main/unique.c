@@ -384,7 +384,7 @@ static hlen vhash_one(SEXP _this, HashData *d)
     case LISTSXP:
 	R_CheckStack();
 	/* all attributes are ignored */
-	/* might be good to consider envirnments on formulas */
+	/* might be good to consider environments on formulas */
 	for (SEXP next = _this; next != R_NilValue; next = CDR(next)) {
 	    key ^= vhash_one(CAR(next), d);
 	    key *= 97;
@@ -2367,9 +2367,9 @@ static R_INLINE int HT_EQUAL(R_hashtab_type h, SEXP x, SEXP y)
     switch(HT_TYPE(h)) {
     case HT_TYPE_IDENTICAL:
 	{
-	    /* IDENT_USE_CLOENV correspnds to the default in identical().
+	    /* IDENT_USE_CLOENV corresponds to the default in identical().
 	       IDENT_EXTPTR_AS_REF ensures that EXTPTRSXP objects in
-	       keys unserialize senibly. */
+	       keys unserialize sensibly. */
 	    int flags = IDENT_USE_CLOENV | IDENT_EXTPTR_AS_REF;
 	    return R_compute_identical(x, y, flags);
 	}

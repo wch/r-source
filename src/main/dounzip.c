@@ -630,7 +630,7 @@ typedef struct
     uLong crc32_wait;           /* crc32 we must obtain after decompress all */
     ZPOS64_T rest_read_compressed; /* number of byte to be decompressed */
     ZPOS64_T rest_read_uncompressed;/*number of byte to be obtained after decomp*/
-    voidpf filestream;        /* io structore of the zipfile */
+    voidpf filestream;        /* io structure of the zipfile */
     uLong compression_method;   /* compression method (0 == store) */
     ZPOS64_T byte_before_the_zipfile;/* byte before the zipfile, (>0 for sfx)*/
     int   raw;
@@ -642,7 +642,7 @@ typedef struct
 typedef struct
 {
     int is64bitOpenFunction;
-    voidpf filestream;        /* io structore of the zipfile */
+    voidpf filestream;        /* io structure of the zipfile */
     unz_global_info64 gi;       /* public global information */
     ZPOS64_T byte_before_the_zipfile;/* byte before the zipfile, (>0 for sfx)*/
     ZPOS64_T num_file;             /* number of the current file in the zipfile*/
@@ -667,7 +667,7 @@ typedef struct
 /* ===========================================================================
      Read a byte from a gz_stream; update next_in and avail_in. Return EOF
    for end of file.
-   IN assertion: the stream s has been sucessfully opened for reading.
+   IN assertion: the stream s has been successfully opened for reading.
 */
 
 local int unz64local_getByte(voidpf filestream, int *pi)
@@ -820,8 +820,8 @@ strcmpcasenosensitive_internal (const char* fileName1, const char* fileName2)
 
 /*
    Compare two filename (fileName1,fileName2).
-   If iCaseSenisivity = 1, comparision is case sensitivity (like strcmp)
-   If iCaseSenisivity = 2, comparision is not case sensitivity (like strcmpi
+   If iCaseSenisivity = 1, comparison is case sensitivity (like strcmp)
+   If iCaseSenisivity = 2, comparison is not case sensitivity (like strcmpi
 								or strcasecmp)
    If iCaseSenisivity = 0, case sensitivity is defaut of your operating system
 	(like 1 on Unix, 2 on Windows)

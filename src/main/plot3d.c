@@ -220,7 +220,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
      */
     container = PROTECT(allocVector(VECSXP, 1));
     /*
-     * Create "large" list (will trim excess at the end if necesary)
+     * Create "large" list (will trim excess at the end if necessary)
      */
     SET_VECTOR_ELT(container, 0, allocVector(VECSXP, CONTOUR_LIST_STEP));
     nlines = 0;

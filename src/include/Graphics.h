@@ -61,7 +61,7 @@ typedef struct {
 
     /* GRZ-like Graphics Parameters */
     /* ``The horror, the horror ... '' */
-    /* Marlon Brando - Appocalypse Now */
+    /* Marlon Brando - Apocalypse Now */
 
     /* General Parameters -- set and interrogated directly */
 
@@ -76,7 +76,7 @@ typedef struct {
     rcolor col;		/* Plotting Color */
     double crt;		/* Character/string rotation */
     double din[2];	/* device size in inches */
-    int	err;		/* Error repporting level */
+    int	err;		/* Error reporting level */
     rcolor fg;		/* **R ONLY** Foreground Color */
     char family[201];  /* **R ONLY** Font family
 			   Simple name which is mapped by device-specific

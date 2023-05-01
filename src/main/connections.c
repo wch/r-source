@@ -385,7 +385,7 @@ void set_iconv(Rconnection con)
 	   glibc's iconv cannot. Aargh ... */
 	if(streql(con->encname, "UCS-2LE") ||
 	   streql(con->encname, "UTF-16LE")) con->inavail = -2;
-	/* Discaard BOM */
+	/* Discard BOM */
 	if(streql(con->encname, "UTF-8-BOM")) con->inavail = -3;
     }
     if(con->canwrite) {
@@ -1403,7 +1403,7 @@ static int fifo_fgetc_internal(Rconnection con)
     /* Check available bytes on named pipe */
     PeekNamedPipe(this->hdl_namedpipe, NULL, 0, NULL, &available_bytes, NULL);
 
-    /* Read char if available bytes > 0, otherwize, return R_EOF */
+    /* Read char if available bytes > 0, otherwise, return R_EOF */
     if (available_bytes > 0) {
 	ReadFile(this->hdl_namedpipe, &c, len, &read_byte, NULL);
 	return (read_byte == len) ? (char) c : R_EOF;
@@ -4131,7 +4131,7 @@ attribute_hidden SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* New for 2.7.0: split the output if sink was split.
        It would be slightly simpler just to call Rvprintf if the
-       connection was stdout(), but this way is more efficent */
+       connection was stdout(), but this way is more efficient */
     if(con_num == R_OutputCon) {
 	int j = 0;
 	Rconnection con0;

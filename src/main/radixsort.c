@@ -1180,7 +1180,7 @@ static void csort(SEXP * x, int *o, int n)
     }
     // all i* push onto stack. Using their counts may be faster here
     // than thrashing SEXP fetches over several passes as cgroup does
-    // (but cgroup needs that to keep orginal order, and cgroup saves
+    // (but cgroup needs that to keep original order, and cgroup saves
     // the sort in csort_pre).
 }
 
@@ -1490,7 +1490,7 @@ static void isort(int *x, int *o, int n)
                 x[i] = icheck(x[i]);
         iinsert(x, o, n);
     } else {
-        /* Tighter range (e.g. copes better with a few abormally large
+        /* Tighter range (e.g. copes better with a few abnormally large
            values in some groups), but also, when setRange was once at
            arg level that caused an extra scan of (long) x
            first. 10,000 calls to setRange takes just 0.04s

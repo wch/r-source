@@ -680,6 +680,12 @@ AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## 'which' is not POSIX, and might be a shell builtin or alias
 ##  (but should not be in 'sh')
 AC_PATH_PROGS(WHICH, which, which)
+if test "${WHICH}" = which ; then
+  ## needed to build and run R
+  ## ends up hard-coded in the utils package
+  AC_MSG_ERROR([[which is required but missing]])
+fi
+
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)

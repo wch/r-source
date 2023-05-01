@@ -39,7 +39,7 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
 /* PCRE supports only single-byte locales and UTF-8, so we convert
    inputs in all other MBCS locales to UTF-8.
 
-   In [g]sub and [g]regexpr we need to know match postions in
+   In [g]sub and [g]regexpr we need to know match positions in
    characters.  To avoid yet more cases we handle all MBCS locales in
    wchar in ERE for those functions.  (Byte positions suffice for
    [g]sub(fixed = TRUE), and [g]regexpr needs to convert to char

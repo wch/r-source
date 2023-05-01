@@ -676,7 +676,7 @@ static void FreeX11Colors(void)
 static Rboolean SetupX11Color(void)
 {
     if (depth <= 1) {
-	/* On monchome displays we must use black/white */
+	/* On monochrome displays we must use black/white */
 	model = MONOCHROME;
 	SetupMonochrome();
     }

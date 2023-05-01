@@ -471,7 +471,7 @@ static SEXP R_HashResize(SEXP table)
   R_HashSizeCheck
 
   Hash table size rechecking function.	Compares the load factor
-  (size/# of primary slots used)  to a particular threshhold value.
+  (size/# of primary slots used)  to a particular threshold value.
   Returns true if the table needs to be resized.
 
 */

@@ -132,7 +132,7 @@ There are two implementation paths here.
    mktime, gmtime_r, localtime_r, strftime with a R_ prefix.  The
    system strftime is used for locale-dependent names in R_strptime
    and R_strftime.  This uses the time-zone tables shipped with R and
-   installed into R_HOME/share/zoneinfo , with facilites to switch to
+   installed into R_HOME/share/zoneinfo , with facilities to switch to
    others using environment variable TZDIR.
 
    Our own versions of time_t (64-bit) and struct tm (including the

@@ -682,7 +682,7 @@ attribute_hidden SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
 
     /* If the first argument is an object and there is an */
-    /* approriate method, we dispatch to that method, */
+    /* appropriate method, we dispatch to that method, */
     /* otherwise we evaluate the arguments and fall through */
     /* to the generic code below.  Note that evaluation */
     /* retains any missing argument indicators. */
@@ -937,7 +937,7 @@ attribute_hidden SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
 
     /* If the first argument is an object and there is */
-    /* an approriate method, we dispatch to that method, */
+    /* an appropriate method, we dispatch to that method, */
     /* otherwise we evaluate the arguments and fall */
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
@@ -1259,7 +1259,7 @@ attribute_hidden SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(args = fixSubset3Args(call, args, env, NULL));
 
     /* If the first argument is an object and there is */
-    /* an approriate method, we dispatch to that method, */
+    /* an appropriate method, we dispatch to that method, */
     /* otherwise we evaluate the arguments and fall */
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */

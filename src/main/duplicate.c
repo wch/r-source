@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 #include <R_ext/RS.h> /* S4 bit */
 
@@ -571,7 +571,7 @@ FILL_ELT_WITH_RECYCLE(Vector, VECTOR_ELT, SET_VECTOR_ELT) /* xfillVectorMatrixWi
 /* For duplicating before modifying attributes duplicate_attr tries to
    wrap a larger vector object with an ALTREP wrapper, and falls back
    to duplicate or shallow_duplicate if the object can't be
-   wrapped. The size threshold used seems to be reaonable but could be
+   wrapped. The size threshold used seems to be reasonable but could be
    tested more extensively. */
 #define WRAP_THRESHOLD 64
 static SEXP duplicate_attr(SEXP x, Rboolean deep)

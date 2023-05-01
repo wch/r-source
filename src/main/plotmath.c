@@ -1377,7 +1377,7 @@ static BBOX RenderBin(SEXP expr, int draw, mathContext *mc,
 
 /*----------------------------------------------------------------------
  *
- *  Code for Subscript and Superscipt Expressions
+ *  Code for Subscript and Superscript Expressions
  *
  *  Rules 18, 18a, ..., 18f of the TeXBook.
  *
@@ -2395,7 +2395,7 @@ static BBOX RenderOp(SEXP expr, int draw, mathContext *mc,
  *
  *  Code for radical expressions (root, sqrt)
  *
- *  Tunable parameteters :
+ *  Tunable parameters :
  *
  *  RADICAL_GAP	   The gap between the nucleus and the radical extension.
  *  RADICAL_SPACE  Extra space to the left and right of the nucleus.

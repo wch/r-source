@@ -138,7 +138,7 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
                     .59983220655588793769) * r + 1.);
         }
         else { // r > 27: p is *really* close to 0 or 1 .. practically only when log_p =TRUE
-	    if(r >= 6.4e8) { // p is *very extremly* close to 0 or 1
+	    if(r >= 6.4e8) { // p is *very extremely* close to 0 or 1
 		// Using the asymptotical formula ("0-th order"): qn = sqrt(2*s)
 		val = r * M_SQRT2;
 	    } else {

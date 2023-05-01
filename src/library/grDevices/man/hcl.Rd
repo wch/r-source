@@ -67,7 +67,7 @@ Ihaka, R. (2003).
 Colour for Presentation Graphics, Proceedings of the 3rd International
 Workshop on Distributed Statistical Computing (DSC 2003), March 20-22,
 2003, Technische Universität Wien, Vienna, Austria.
-\url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/}.
+\url{https://www.R-project.org/conferences/DSC-2003/}.
 }
 \author{Ross Ihaka}
 \note{

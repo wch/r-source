@@ -424,7 +424,7 @@ attribute_hidden SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(TYPEOF(CAR(args)) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
 
-    /* we need consistent behaviour here, including dropping attibutes,
+    /* we need consistent behaviour here, including dropping attributes,
        so as from 2.3.0 we always duplicate. */
     PROTECT(ans = duplicate(CAR(args)));
     SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */

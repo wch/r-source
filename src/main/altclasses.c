@@ -2032,7 +2032,7 @@ attribute_hidden SEXP do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
 
    This function can be used at the end of a complex assignment
    operation. It could be used in other places, but extreme caution is
-   needed to make sure there is no possibliity that the wrapper object
+   needed to make sure there is no possibility that the wrapper object
    will be referenced from C code after it is cleared. */
 attribute_hidden SEXP R_tryUnwrap(SEXP x)
 {
