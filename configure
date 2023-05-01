@@ -5434,6 +5434,8 @@ done
 test -n "$WHICH" || WHICH="which"
 
 if test "${WHICH}" = which ; then
+  ## needed to build and run R
+  ## ends up hard-coded in the utils package
   as_fn_error $? "which is required but missing" "$LINENO" 5
 fi
 
@@ -27058,7 +27060,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27063: \"$ac_link\") >&5
+(eval echo $as_me:27065: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27134,7 +27136,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27139: \"$ac_link\") >&5
+(eval echo $as_me:27141: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
