@@ -5,6 +5,26 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.3.0 patched}{
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Many of the checks of esoteric Internet operations and those
+      using unreliable external sites have been moved to a new target
+      that is not run by default and primarily intended for the core
+      developers.  To run them use
+\preformatted{
+	cd tests; make test-Internet-dev
+}
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item .
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.3.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
