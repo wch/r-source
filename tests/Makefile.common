@@ -41,6 +41,7 @@ test-src-dt = datetime2.R datetime3.R datetime4.R datetime5.R
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-internet2 = internet2.R libcurl.R
+test-src-internet-dev = download.file.R httpbin.R sockets.R
 test-src-CRANtools = CRANtools.R
 test-src-large = reg-large.R
 test-src-isas = isas-tests.R
@@ -77,6 +78,7 @@ test-out-dt = $(test-src-dt:.R=.Rout)
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-internet2 = $(test-src-internet2:.R=.Rout)
+test-out-internet-dev = $(test-src-internet-dev:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-large = $(test-src-large:.R=.Rout)
@@ -92,7 +94,8 @@ test-out-cond = $(test-src-cond:.R=.Rout)
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
-	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
+	$(test-out-segfault) $(test-out-isas) \
+	$(test-out-internet2) $(test-out-internet-dev) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
 	utf8-regex.Rout PCRE.Rout utf8.Rout
 
@@ -285,6 +288,10 @@ test-IsAs:
 test-Internet2:
 	@$(ECHO) "running more Internet and socket tests"
 	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
+
+test-Internet-dev:
+	@$(ECHO) "running Internet tests for developers"
+	-@$(MK) $(test-out-internet-dev) RVAL_IF_DIFF=0
 
 test-CRANtools:
 	@$(ECHO) "running tests of CRAN tools"
@@ -516,7 +523,8 @@ INSTFILES = README \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-dt) datetime2.Rout.save datetime4.Rout.save datetime5.Rout.save \
 	$(test-src-demo) demos.Rout.save \
-	$(test-src-internet) $(test-src-internet2) internet.Rout.save \
+	$(test-src-internet) $(test-src-internet2) \
+	$(test-src-internet-dev) internet.Rout.save \
 	$(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \

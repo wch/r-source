@@ -22,6 +22,7 @@
     }
   }
 
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item System valgrind headers are required to use
@@ -71,6 +72,19 @@
       Stephen Wade.
     }
   }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Many of the checks of esoteric Internet operations and those
+      using unreliable external sites have been moved to a new target
+      that is not run by default and primarily intended for the core
+      developers.  To run them use
+\preformatted{
+	cd tests; make test-Internet-dev
+}
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item .

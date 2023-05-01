@@ -25,21 +25,6 @@ zz
 stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
 
-tf <- tempfile()
-testDownloadFile404 <- tryCatch(suppressWarnings({
-    download.file("http://httpbin.org/status/404", tf, method = "libcurl")
-}), error=function(e) {
-    conditionMessage(e) == "cannot open URL 'http://httpbin.org/status/404'"
-})
-stopifnot(testDownloadFile404, !file.exists(tf))
-
-test404.1 <- tryCatch({
-    open(zz <- url("http://httpbin.org/status/404", method = "libcurl"))
-}, warning=function(w) {
-    grepl("404 Not Found", conditionMessage(w))
-})
-close(zz)
-stopifnot(test404.1)
 
 ##  via read.table (which closes the connection)
 tail(read.table(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
@@ -50,14 +35,6 @@ options(url.method = "libcurl")
 zz <- url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
 stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
-
-test404.2 <- tryCatch({
-    open(zz <- url("http://httpbin.org/status/404"))
-}, warning = function(w) {
-    grepl("404 Not Found", conditionMessage(w))
-})
-close(zz)
-stopifnot(test404.2)
 
 showConnections(all = TRUE)
 
@@ -72,10 +49,12 @@ junk <- tryCatch(curlGetHeaders("http://bugs.r-project.org"),
 			 q()
 		 })
 
-example(curlGetHeaders, run.donttest = TRUE)
+## part of example(curlGetHeaders, run.donttest = TRUE)
+curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
+
 
 ## https URL
-head(readLines(zz <- url("https://httpbin.org", method = "libcurl"),
+head(readLines(zz <- url("https://cran.r-project.org", method = "libcurl"),
                warn = FALSE))
 close(zz)
 
@@ -85,4 +64,6 @@ head(readLines(zz <- url("http://bugs.r-project.org", method = "libcurl"),
 close(zz)
 
 options(url.method = "libcurl")
-head(readLines("https://httpbin.org", warn = FALSE))
+head(readLines("https://cran.r-project.org", warn = FALSE))
+
+proc.time()

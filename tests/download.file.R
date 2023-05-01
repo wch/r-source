@@ -1,6 +1,10 @@
 ## 2023-04 this relied on eu.httpbin.org which had become slow/unreliable.
 ## switched to httpbin,org which seems more reliable if sometimes slow.
 
+## original commit
+# r75890 | maechler | 2018-12-23 17:39:19 +0000 (Sun, 23 Dec 2018) | 1 line
+# provide `headers` option to url() and download.file(), thanks to Gábor Csárdi
+
 site <- "httpbin.org"
 rx <- paste0("Host.*", site)
 
@@ -53,7 +57,7 @@ tests <- function() {
   })
 
   with_options(list(HTTPUserAgent = "foobar"), {
-    h <- get_headers(headers = c(foo = "bar", zzzz = "bee"))
+      h <- get_headers(headers = c(foo = "bar", zzzz = "bee"))
     stopifnot(any(grepl("User-Agent.*foobar", h)))
     stopifnot(any(grepl("Foo.*bar", h)))
     stopifnot(any(grepl("Zzzz.*bee", h)))
