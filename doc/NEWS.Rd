@@ -31,17 +31,17 @@
     }
   }
 
-  \subsection{PACKAGE INSTALLATION}{
-    \itemize{
-      \item .
-    }
-  }
+  %% \subsection{PACKAGE INSTALLATION}{
+  %%   \itemize{
+  %%     \item .
+  %%   }
+  %% }
 
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item .
-    }
-  }
+  %% \subsection{C-LEVEL FACILITIES}{
+  %%   \itemize{
+  %%     \item .
+  %%   }
+  %% }
 
   \subsection{BUG FIXES}{
     \itemize{
