@@ -1,13 +1,5 @@
-## These are tests that require libcurl functionality and a working
-## Internet connection.
-
-## As from R 3.4.0 method = "libcurl" is the default on a Unix-alike
-## so this is in small part duplication -- but not on Windows.
-
-if(!capabilities("libcurl")) {
-    warning("no libcurl support")
-    q()
-}
+## These are tests that require libcurl functionality (available
+## everywhere ad from R 4.2.0) and a working Internet connection.
 
 ## check basic Internet access
 if(.Platform$OS.type == "unix" &&
