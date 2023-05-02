@@ -54,6 +54,14 @@ url(), download.file()) is changed by developers.  Some of these
 depended on the web site httpbin.org which in 2023-04 started to become
 slow/unreliable -- sockets.R still does.
 
+There are also
+
+      make test-Iconv
+      make test-Large
+      make test-Rd
+      make test-UTF-8
+
+
 A rarely-used target is
 
 	make test-Gct
