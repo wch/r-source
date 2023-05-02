@@ -59,6 +59,20 @@
 
       \item \code{as.complex(x)} now returns \code{NA_complex_} also for
       \code{NA_real_}, as it does for all other \code{NA}s.
+
+      \item Directories are now omitted in
+      \code{file.copy(,recursive=FALSE)} and in \code{file.append()}
+      (\PR{17337}).
+
+      \item \code{gsub()} and \code{sub()} are now more robust to integer
+      overflow when reporting erros caused by too large input strings
+      (\PR{18346}).
+
+      \item Toplevel handlers are now more robust to attempts to remove a
+      handler while handlers are running (\PR{18508}).
+
+      \item Handling of \code{Alt+F4} in dialogs created on Windows using
+      GraphApp has been fixed (\PR{13870}).
     }
   }
 }
