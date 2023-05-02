@@ -65,7 +65,7 @@
       (\PR{17337}).
 
       \item \code{gsub()} and \code{sub()} are now more robust to integer
-      overflow when reporting erros caused by too large input strings
+      overflow when reporting errors caused by too large input strings
       (\PR{18346}).
 
       \item Toplevel handlers are now more robust to attempts to remove a
