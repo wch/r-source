@@ -17,7 +17,9 @@ density(x, \dots)
         weights = NULL, window = kernel, width,
         give.Rkern = FALSE, subdensity = FALSE,
         warnWbw = var(weights) > 0,
-        n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
+        n = 512, from, to, cut = 3, ext = 4,
+        old.coords = FALSE,
+        na.rm = FALSE, \dots)
 }
 \arguments{
   \item{x}{the data from which the estimate is to be computed.  For the
@@ -103,7 +105,14 @@ density(x, \dots)
   \item{cut}{by default, the values of \code{from} and \code{to} are
     \code{cut} bandwidths beyond the extremes of the data.  This allows
     the estimated density to drop to approximately zero at the extremes.}
-
+  \item{ext}{a positive extension factor, \code{4} by default.  The values
+    \code{from} and \code{to} are further extended on both sides to
+    \code{lo <- from - ext * bw} and \code{up <- to + ext * bw} which are
+    then used to build the grid used for the FFT and interpolation, see
+    \code{n} above.
+    Do not change unless you know what you are doing!}
+  \item{old.coords}{\code{\link{logical}} to require pre-R 4.4.0 behaviour
+    which gives too large values by a factor of about \eqn{(1 + 1/(2n-2))}.}
   \item{na.rm}{logical; if \code{TRUE}, missing values are removed
     from \code{x}. If \code{FALSE} any missing values cause an error.}
   \item{\dots}{further arguments for (non-default) methods.}
@@ -179,7 +188,9 @@ density(x, \dots)
 }
 \seealso{
   \code{\link{bw.nrd}},
-  \code{\link{plot.density}}, \code{\link{hist}}.
+  \code{\link{plot.density}}, \code{\link{hist}};
+  \code{\link{fft}} and \code{\link{convolve}} for the computational short
+  cut used.
 }
 \examples{
 require(graphics)
@@ -217,6 +228,7 @@ plot(fit)
 lines(density(x.new), col = "blue")
 
 
+## The available kernels:
 (kernels <- eval(formals(density.default)$kernel))
 
 ## show the kernels in the R parametrization
@@ -238,6 +250,21 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 ##-------- Semi-advanced theoretic from here on -------------
 %% i.e. "secondary example" in a new help system ...
 
+## Explore the old.coords TRUE --> FALSE change:
+set.seed(7); x <- runif(2^12) # N = 4096
+den  <- density(x) # -> grid of n = 512 points
+den0 <- density(x, old.coords = TRUE)
+summary(den0$y / den$y) # 1.001 ... 1.011
+summary(    den0$y / den$y - 1) # ~= 1/(2n-2)
+summary(1/ (den0$y / den$y - 1))# ~=    2n-2 = 1022
+corr0 <- 1 - 1/(2*512-2) # 1 - 1/(2n-2)
+all.equal(den$y, den0$y * corr0)# ~ 0.0001
+plot(den$x, (den0$y - den$y)/den$y, type='o', cex=1/4)
+title("relative error of density(runif(2^12), old.coords=TRUE)")
+abline(h = 1/1022, v = range(x), lty=2); axis(2, at=1/1022, "1/(2n-2)", las=1)
+
+
+## The R[K] for our kernels:
 (RKs <- cbind(sapply(kernels,
                      function(k) density(kernel = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies

@@ -73,6 +73,12 @@
 
       \item Handling of \code{Alt+F4} in dialogs created on Windows using
       GraphApp has been fixed (\PR{13870}).
+
+      \item \code{density()} more consistently computes grid values for the
+      FFT based convolution, following Robert Schlicht's analysis and
+      proposal in \PR{18337}, correcting density values typically by a
+      factor of about 0.999.  Optional \code{old.coords=TRUE} provides
+      back compatibility.
     }
   }
 }

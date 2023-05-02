@@ -6194,12 +6194,12 @@ Call:
 Data: faithful$eruptions (272 obs.);	Bandwidth 'bw' = 0.14
 
        x               y            
- Min.   :1.180   Min.   :0.0001834  
- 1st Qu.:2.265   1st Qu.:0.0422638  
- Median :3.350   Median :0.1709243  
- Mean   :3.350   Mean   :0.2301726  
- 3rd Qu.:4.435   3rd Qu.:0.4134348  
- Max.   :5.520   Max.   :0.5945634  
+ Min.   :1.180   Min.   :0.0001814  
+ 1st Qu.:2.265   1st Qu.:0.0421820  
+ Median :3.350   Median :0.1706817  
+ Mean   :3.350   Mean   :0.2299476  
+ 3rd Qu.:4.435   3rd Qu.:0.4130131  
+ Max.   :5.520   Max.   :0.5940669  
 > plot(d)
 > 
 > plot(d, type = "n")
@@ -6217,14 +6217,15 @@ Data: faithful$eruptions (272 obs.);	Bandwidth 'bw' = 0.14
 > ## use 'counts / n' as weights:
 > dw <- density(unique(fe), weights = table(fe)/length(fe), bw = d$bw)
 > utils::str(dw) ## smaller n: only 126, but identical estimate:
-List of 7
- $ x        : num [1:512] 1.18 1.19 1.2 1.21 1.21 ...
- $ y        : num [1:512] 0.000183 0.000223 0.00027 0.000328 0.000397 ...
- $ bw       : num 0.14
- $ n        : int 126
- $ call     : language density.default(x = unique(fe), bw = d$bw, weights = table(fe)/length(fe))
- $ data.name: chr "unique(fe)"
- $ has.na   : logi FALSE
+List of 8
+ $ x         : num [1:512] 1.18 1.19 1.2 1.21 1.21 ...
+ $ y         : num [1:512] 0.000181 0.000221 0.000267 0.000325 0.000393 ...
+ $ bw        : num 0.14
+ $ n         : int 126
+ $ old.coords: logi FALSE
+ $ call      : language density.default(x = unique(fe), bw = d$bw, weights = table(fe)/length(fe))
+ $ data.name : chr "unique(fe)"
+ $ has.na    : logi FALSE
  - attr(*, "class")= chr "density"
 > stopifnot(all.equal(d[1:3], dw[1:3]))
 > 

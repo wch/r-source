@@ -25,7 +25,9 @@ density.default <-
 	     weights = NULL, window = kernel, width,
 	     give.Rkern = FALSE, subdensity = FALSE,
              warnWbw = var(weights) > 0,# sd(weights) > mean(weights) "better", but arbitrary
-	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
+	     n = 512, from, to, cut = 3, ext = 4,
+             old.coords = FALSE,
+             na.rm = FALSE, ...)
 {
     chkDots(...)
     if(!missing(window) && missing(kernel))
@@ -141,12 +143,12 @@ density.default <-
 	to   <- max(x) + cut * bw
     if (!is.finite(from)) stop("non-finite 'from'")
     if (!is.finite(to))   stop("non-finite 'to'")
-    lo <- from - 4 * bw
-    up <- to   + 4 * bw
+    lo <- from - ext * bw
+    up <- to   + ext * bw
     ## This bins weighted distances
     y <- .Call(C_BinDist, x, weights, lo, up, n) * totMass
 
-    kords <- seq.int(0, 2*(up-lo), length.out = 2L * n)
+    kords <- seq.int(0, (if(old.coords) 2 else (2L*n-1)/(n-1)) * (up-lo), length.out = 2L * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
 		    gaussian = dnorm(kords, sd = bw),
@@ -176,6 +178,7 @@ density.default <-
     xords <- seq.int(lo, up, length.out = n)
     x <- seq.int(from, to, length.out = n.user)
     structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
+                   old.coords = old.coords,
 		   call=match.call(), data.name=name, has.na = FALSE),
 	      class="density")
 }
