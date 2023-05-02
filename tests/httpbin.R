@@ -1,5 +1,5 @@
 ## These are tests that require libcurl functionality and a working
-## Internet connection. Those that usw the often unreliable httpbin.org
+## Internet connection.
 
 if(!capabilities("libcurl")) {
     warning("no libcurl support")
@@ -13,14 +13,14 @@ if(.Platform$OS.type == "unix" &&
 
 tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
-    download.file("http://httpbin.org/status/404", tf, method = "libcurl")
+    download.file("http://developer.R-project.org/inet-tests/not-found", tf, method = "libcurl")
 }), error=function(e) {
-    conditionMessage(e) == "cannot open URL 'http://httpbin.org/status/404'"
+    conditionMessage(e) == "cannot open URL 'http://developer.R-project.org/inet-tests/not-found'"
 })
 stopifnot(testDownloadFile404, !file.exists(tf))
 
 test404.1 <- tryCatch({
-    open(zz <- url("http://httpbin.org/status/404", method = "libcurl"))
+    open(zz <- url("http://developer.R-project.org/inet-tests/not-found", method = "libcurl"))
 }, warning=function(w) {
     grepl("404 Not Found", conditionMessage(w))
 })
@@ -30,7 +30,7 @@ stopifnot(test404.1)
 ## check option works
 options(url.method = "libcurl")
 test404.2 <- tryCatch({
-    open(zz <- url("http://httpbin.org/status/404"))
+    open(zz <- url("http://developer.R-project.org/inet-tests/not-found"))
 }, warning = function(w) {
     grepl("404 Not Found", conditionMessage(w))
 })
