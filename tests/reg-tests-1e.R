@@ -566,6 +566,16 @@ stopifnot(identical(as.complex(NA_real_), NA_complex_))
 ## gave  complex(real = NA, imaginary=0) from R 3.3.0  to 4.3.x
 
 
+## methods() in {base} pkg are visible
+mmeths <- methods(merge)
+imeth <- attr(mmeths, "info")
+stopifnot(exprs = {
+    sum(iB <- imeth[,"from"] == "base") >= 2 # 'default' and 'data.frame'
+    imeth[iB, "visible"] # {base} methods *are* visible
+})
+## was wrong in R 4.3.0 (and R-devel for a while)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

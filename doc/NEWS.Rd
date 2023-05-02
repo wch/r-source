@@ -107,7 +107,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item .
+      \item \code{.S3methods()}, typically called from \code{methods()},
+      again marks methods from package \pkg{base} as \code{visible}.
     }
   }
 }
