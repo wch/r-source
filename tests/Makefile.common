@@ -286,9 +286,10 @@ test-IsAs:
 
 ## As for test-Internet, allow to fail, possibly slowly
 test-Internet2:
-	@$(ECHO) "running more Internet and socket tests"
+	@$(ECHO) "running more Internet tests"
 	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
 
+## This is intended to be run as a standalone target
 test-Internet-dev:
 	@$(ECHO) "running Internet tests for developers"
 	-@$(MK) $(test-out-internet-dev) RVAL_IF_DIFF=0
@@ -298,6 +299,9 @@ test-CRANtools:
 	@$(ECHO) "  (can be slow unless mirror is local)"
 	@$(MK) $(test-out-CRANtools) RVAL_IF_DIFF=0
 
+## Not part of any other target.
+## On x86_64 Linux uses up to 220GB of VM and takes the best part of an hour.
+## On Linux tests are skipped if there is no enough memory.
 test-Large:
 	@$(ECHO) "running tests needing large amounts of processor memory"
 	@$(ECHO) "  (is slow, notably when memory is available)"
@@ -341,6 +345,7 @@ test-UTF-8:
 	@$(ECHO) "running regression tests for UTF-8 <--> int conversion (slow)"
 	@$(R2) < $(srcdir)/utf8.R > utf8.Rout 2>&1 || (mv utf8.Rout utf8.Rout.fail && exit 1)
 
+## Not part of any other target
 test-Iconv:
 	@$(ECHO) "running regression tests for iconv()"
 	@$(R2) < $(srcdir)/iconv.R > iconv.Rout 2>&1 || (mv iconv.Rout iconv.Rout.fail && exit 1)
