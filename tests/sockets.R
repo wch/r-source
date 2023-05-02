@@ -1,8 +1,8 @@
 ## These are tests that require socket functionality, and a working
 ## Internet connection without a proxy.
 
-con <- socketConnection("8.8.8.8", port = 53) ## Google DNS
-if(isOpen(con)) close(con) else stop("cannot open a socketConnection")
+if(.Platform$OS.type == "unix" &&
+   is.null(nsl("cran.r-project.org"))) q()
 
 # A simple http client via sockets
 httpget <- function (url, port = 80)

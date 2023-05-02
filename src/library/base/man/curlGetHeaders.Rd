@@ -83,6 +83,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
 
 \examples{\donttest{## needs Internet access, results vary
 curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
-## 2023-04: the next has become slow and unreliable
-curlGetHeaders("https://httpbin.org/status/404")  ## returns status
+## 2023-04: replaces slow and unreliable https://httpbin.org/status/404
+curlGetHeaders("https://developer.R-project.org/inet-tests/not-found")
+## returns status
 }}

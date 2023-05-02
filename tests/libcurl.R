@@ -49,9 +49,7 @@ junk <- tryCatch(curlGetHeaders("http://bugs.r-project.org"),
 			 q()
 		 })
 
-## part of example(curlGetHeaders, run.donttest = TRUE)
-curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
-
+example(curlGetHeaders, run.donttest = TRUE)
 
 ## https URL
 head(readLines(zz <- url("https://cran.r-project.org", method = "libcurl"),
