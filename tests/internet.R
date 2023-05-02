@@ -10,11 +10,11 @@ ap <- available.packages(contrib.url("http://cran.r-project.org"))
 nrow(ap)
 ## IGNORE_RDIFF_END
 
-# test url connections on http
+# test url connections on http -- this now redirects to http://
 zz <- url("http://cran.r-project.org/")
 readLines(zz)
 close(zz)
 
-# and via read.table
+# and via read.table -- this now redirects to http://
 
 read.table("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")

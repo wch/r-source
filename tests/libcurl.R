@@ -1,26 +1,27 @@
 ## These are tests that require libcurl functionality (available
-## everywhere ad from R 4.2.0) and a working Internet connection.
+## everywhere as from R 4.2.0) and a working Internet connection.
+
+## Nowadays method = "libcurl" is the default everwhere for http[s]://
 
 ## check basic Internet access
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
 tf <- tempfile()
-download.file("http://cran.r-project.org/", tf,  method = "libcurl")
+download.file("http://cran.r-project.org/", tf)
 file.size(tf)
 unlink(tf)
 
 
-## test url connections on http
-str(readLines(zz <- url("http://cran.r-project.org/", method = "libcurl")))
+## test url connections on http -- this now redirects to http://
+str(readLines(zz <- url("http://cran.r-project.org/")))
 zz
 stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
 
 
-##  via read.table (which closes the connection)
-tail(read.table(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
-                    method = "libcurl")))
+##  via read.table (which closes the connection) -- this now redirects to http://
+tail(read.table(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")))
 
 ## check option works
 options(url.method = "libcurl")
@@ -44,16 +45,11 @@ junk <- tryCatch(curlGetHeaders("http://bugs.r-project.org"),
 example(curlGetHeaders, run.donttest = TRUE)
 
 ## https URL
-head(readLines(zz <- url("https://cran.r-project.org", method = "libcurl"),
-               warn = FALSE))
+head(readLines(zz <- url("https://cran.r-project.org"), warn = FALSE))
 close(zz)
 
 ## redirection (to a https:// URL)
-head(readLines(zz <- url("http://bugs.r-project.org", method = "libcurl"),
-               warn = FALSE))
+head(readLines(zz <- url("http://bugs.r-project.org"), warn = FALSE))
 close(zz)
-
-options(url.method = "libcurl")
-head(readLines("https://cran.r-project.org", warn = FALSE))
 
 proc.time()

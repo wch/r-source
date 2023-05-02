@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-11-14 r83344) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2023-05-02 r84369) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -25,10 +25,10 @@ Type 'q()' to quit R.
 > ap <- available.packages(contrib.url("http://cran.r-project.org"))
 > ## IGNORE_RDIFF_BEGIN
 > nrow(ap)
-[1] 18844
+[1] 19436
 > ## IGNORE_RDIFF_END
 > 
-> # test url connections on http
+> # test url connections on http -- this now redirects to http://
 > zz <- url("http://cran.r-project.org/")
 > readLines(zz)
  [1] "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
@@ -57,7 +57,7 @@ Type 'q()' to quit R.
 [24] "</html>"                                                                                                  
 > close(zz)
 > 
-> # and via read.table
+> # and via read.table -- this now redirects to http://
 > 
 > read.table("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
      V1  V2   V3    V4 V5
