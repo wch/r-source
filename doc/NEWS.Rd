@@ -60,18 +60,18 @@
       \item \code{as.complex(x)} now returns \code{NA_complex_} also for
       \code{NA_real_}, as it does for all other \code{NA}s.
 
-      \item Directories are now omitted in
-      \code{file.copy(,recursive=FALSE)} and in \code{file.append()}
+      \item Directories are now omitted by
+      \code{file.copy(,recursive = FALSE)} and in \code{file.append()}
       (\PR{17337}).
 
       \item \code{gsub()} and \code{sub()} are now more robust to integer
       overflow when reporting errors caused by too large input strings
       (\PR{18346}).
 
-      \item Toplevel handlers are now more robust to attempts to remove a
-      handler while handlers are running (\PR{18508}).
+      \item Top-level handlers are now more robust to attempts to remove a
+      handler whilst handlers are running (\PR{18508}).
 
-      \item Handling of \code{Alt+F4} in dialogs created on Windows using
+      \item The handling of \code{Alt+F4} in dialogs created on Windows using
       GraphApp has been fixed (\PR{13870}).
 
       \item \code{density()} more consistently computes grid values for the
@@ -86,10 +86,10 @@
 \section{\Rlogo CHANGES IN R 4.3.0 patched}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item C API \file{Applic.h} version of \R's \code{integrate()},
-      \code{Rdqags()} now returns the correct number of integrand
-      evaluations \code{neval}, fixing \PR{18515} reported and diagnosed by
-      Stephen Wade.
+      \item The C-level API version of \R's \code{integrate()},
+      \code{Rdqags()} in \file{Applic.h}, now returns the correct number of
+      integrand evaluations \code{neval}, fixing \PR{18515} reported and
+      diagnosed by Stephen Wade.
     }
   }
 
