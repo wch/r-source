@@ -12,7 +12,8 @@ tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
     download.file(site, tf, method = "libcurl")
 }), error=function(e) {
-    conditionMessage(e) == sprintf("cannot open URL '%s'", site)
+    conditionMessage(e) ==
+        "cannot open URL 'https://developer.R-project.org/inet-tests/not-found'"
 })
 stopifnot(testDownloadFile404, !file.exists(tf))
 

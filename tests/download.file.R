@@ -174,10 +174,9 @@ tests <- function() {
 }
 
 main <- function() {
-    if (capabilities("libcurl")) {
-        cat("\nlibcurl method\n")
-        with_options(c(download.file.method = "libcurl"), tests())
-    }
+    ## all builds have libcurl as from R 4.2.0.
+    cat("\nlibcurl method\n")
+    with_options(c(download.file.method = "libcurl"), tests())
 
     if (.Platform$OS.type == "windows")  {
         ## This is deprecated and will give warnings.
@@ -186,7 +185,7 @@ main <- function() {
     }
 }
 
-options(warn = 1)
+options(warn = 1L)
 
 ## if URL is unresponsive or times out, this silently skips all the checks
 if (is_online()) main()
