@@ -13,14 +13,18 @@ httpget <- function (url, port = 80)
     rurl <- paste(c("", urlel[-(1:3)]), collapse = "/")
     a <- make.socket(host, port = port)
     on.exit(close.socket(a))
-    headreq <- paste("HEAD", rurl, "HTTP/1.0\r\nConnection: Keep-Alive\r\nAccept: text/plain\r\n\r\n")
+    ## Technically, Host: is not defined in HTTP/1.0, but it is required
+    ## to distinguish virtual servers on the same IP address. We could bump
+    ## required HTTP version to 1.1, but since HTTP/1.0 defines that
+    ## unrecognized headers should be ignored, it is legal as well (and works).
+    headreq <- paste0("HEAD ", rurl, " HTTP/1.0\r\nHost: ", host, "\r\nConnection: Keep-Alive\r\nAccept: text/plain\r\n\r\n")
     write.socket(a, headreq)
     head <- read.socket(a, maxlen = 8000)
     b <- strsplit(head, "\n")[[1]]
     if (length(grep("200 OK", b[1])) == 0) stop(b[1])
     len <- as.numeric(strsplit(grep("Content-Length", b, value = TRUE),
                                ":")[[1]][2])
-    getreq <- paste("GET", rurl, "HTTP/1.0\r\nConnection: Keep-Alive\r\nAccept: text/plain\r\n\r\n")
+    getreq <- paste0("GET ", rurl, " HTTP/1.0\r\nHost: ", host, "\r\nConnection: Keep-Alive\r\nAccept: text/plain\r\n\r\n")
     write.socket(a, getreq)
     junk <- read.socket(a, maxlen = nchar(head))
     data <- ""
@@ -39,10 +43,9 @@ httpget <- function (url, port = 80)
 if(nzchar(Sys.getenv("http_proxy")) || nzchar(Sys.getenv("HTTP_PROXY"))) {
     cat("http proxy is set, so skip test of http over sockets\n")
 } else {
-## 2022-04-07: needs a URL which does not redirect to https://
-    f <- httpget("http://httpbin.org/get")
-    cat(f, sep = "\n")
-    if (!length(grep('"headers":', f))) stop("Data not fetched via socket")
+    f <- httpget("http://developer.R-project.org/inet-tests/ch11b.dat")
+    str(f)
+    if (length(f) != 100L) stop("Data not fetched via socket")
 }
 
 proc.time()
