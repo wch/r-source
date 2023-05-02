@@ -5,15 +5,14 @@
 
 ## check basic Internet access
 if(.Platform$OS.type == "unix" &&
-   is.null(nsl("cran.r-project.org"))) q()
+   is.null(nsl("developer.R-project.org"))) q()
 
 site <- "https://developer.R-project.org/inet-tests/not-found"
 tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
     download.file(site, tf, method = "libcurl")
 }), error=function(e) {
-    conditionMessage(e) ==
-        "cannot open URL 'https://developer.R-project.org/inet-tests/not-found'"
+    conditionMessage(e) == sprintf("cannot open URL '%s'", site)
 })
 stopifnot(testDownloadFile404, !file.exists(tf))
 
