@@ -2930,8 +2930,8 @@ Unix-alike @command{configure} will try to identify a compiler and flags
 for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
-@c Apple clang 14 defaults to C++98
-@c LLVM clang 15, 16 default to C++14
+@c Apple clang 14 defaults to C++98 (even 14.0.3)
+@c LLVM clang 14, 15 default to C++14, 16 to C++17
 @c g++ 11, 12, 13 default to C++17
 
 The webpage
@@ -3066,9 +3066,9 @@ sublibs:
 The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  And compilers' default
-C++ standards varies widely and gets changed frequently by vendors -- for
-example Apple clang 14 defaults to C++98, LLVM clang 14 to C++14 and
-@command{g++} 12 to C++17.
+C++ standards varies widely and gets changed frequently by vendors --
+for example Apple clang 14 defaults to C++98, LLVM clang 14--15 to C++14,
+LLVM clang 16 to C++17 and @command{g++} 11--13 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
