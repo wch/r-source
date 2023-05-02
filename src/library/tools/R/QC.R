@@ -9592,7 +9592,7 @@ function(x)
 ## For matching \(S3)?method{GENERIC}{CLASS}.
 ## GENERIC can be
 ## * a syntactically valid name
-## * one of $ [ [[
+## * one of $ [ [[ @
 ## * one of the binary operators
 ##   + - * / ^ < <= > >= != == | & %something%
 ## * unary !
@@ -9630,7 +9630,7 @@ function(x)
     sprintf("(\\\\(S3)?method\\{(%s)\\}\\{(%s)\\})",
             paste(c("[._[:alnum:]]*",
                     ## Subscripting
-                    "\\$", "\\[\\[?",
+                    "\\$", "\\[\\[?", "\\@",
                     ## Binary operators and unary '!'.
                     "\\+", "\\-", "\\*", "\\/", "\\^",
                     "<=?", ">=?", "!=?", "==", "\\&", "\\|",

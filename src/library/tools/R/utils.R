@@ -984,7 +984,9 @@ function(primitive = TRUE) # primitive means 'include primitives'
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
         ## cf. ?InternalMethods).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-", "@<-",
+        c("[", "[[", "$", "[<-", "[[<-", "$<-", "@", "@<-",
+          ## The above are actually primitive but not listed in
+          ## base::.S3PrimitiveGenerics et al: not sure why?
           "as.vector", "cbind", "rbind", "unlist",
           "is.unsorted", "lengths", "nchar", "rep.int", "rep_len",
           .get_S3_primitive_generics()
