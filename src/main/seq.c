@@ -92,7 +92,8 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 }
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 1000000U
+/*   if re-enabling, consider a power of two */
+/* #define NINTERRUPT 1000000U */
 
 static SEXP seq_colon(double n1, double n2, SEXP call)
 {

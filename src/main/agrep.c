@@ -33,7 +33,8 @@
 #undef pmatch
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 1000000
+/*   if re-enabling, consider a power of two */
+/* #define NINTERRUPT 1000000 */
 
 #include <R_ext/RS.h>		/* for R_Calloc/R_Free */
 

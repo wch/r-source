@@ -24,7 +24,8 @@
 #endif
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 10000000
+/*   if re-enabling, consider a power of two */
+/* #define NINTERRUPT 10000000 */
 
 #include <Parse.h>
 #include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/

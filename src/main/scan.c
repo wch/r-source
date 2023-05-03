@@ -560,7 +560,7 @@ static SEXP scanVector(SEXPTYPE type, R_xlen_t maxitems, R_xlen_t maxlines,
 		       int flush, SEXP stripwhite, int blskip, LocalData *d)
 {
     SEXP ans, bns;
-    int c, strip, bch;
+    int c, strip, bch, ic;
     R_xlen_t i, blocksize, linesread, n, nprev;
     char *buffer;
     R_StringBuffer strBuf = {NULL, 0, MAXELTSIZE};
@@ -578,8 +578,12 @@ static SEXP scanVector(SEXPTYPE type, R_xlen_t maxitems, R_xlen_t maxlines,
 
     strip = asLogical(stripwhite);
 
+    ic = 9999;
     for (;;) {
-	if(n % 10000 == 9999) R_CheckUserInterrupt();
+	if(!ic) {
+	    R_CheckUserInterrupt();
+	    ic = 9999;
+	}
 	if (bch == R_EOF) {
 	    if (d->ttyflag) R_ClearerrConsole();
 	    break;
@@ -611,6 +615,7 @@ static SEXP scanVector(SEXPTYPE type, R_xlen_t maxitems, R_xlen_t maxlines,
 	}
 	else {
 	    extractItem(buffer, ans, n, d);
+	    ic--;
 	    if (++n == maxitems) {
 		if (d->ttyflag && bch != '\n') { /* MBCS-safe */
 		    while ((c = scanchar(FALSE, d)) != '\n')
@@ -677,7 +682,7 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
 {
     SEXP ans, new, old, w;
     char *buffer = NULL;
-    int c, strip, bch;
+    int c, strip, bch, ic;
     R_xlen_t blksize, i, ii, j, n, nc, linesread, colsread;
     R_xlen_t badline;
     R_StringBuffer buf = {NULL, 0, MAXELTSIZE};
@@ -717,14 +722,19 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
     Rboolean vec_strip = (xlength(stripwhite) == xlength(what));
     strip = lstrip[0];
 
+    ic = 999;
     for (;;) {
-	if(linesread % 1000 == 999) R_CheckUserInterrupt();
+	if(!ic) {
+	    R_CheckUserInterrupt();
+	    ic = 999;
+	}
 
 	if (bch == R_EOF) {
 	    if (d->ttyflag) R_ClearerrConsole();
 	    goto done;
 	}
 	else if (bch == '\n') {
+	    ic--;
 	    linesread++;
 	    if (colsread != 0) {
 		if (fill) {

@@ -55,7 +55,8 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
 #endif
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 1000000
+/*   if re-enabling, consider a power of two */
+/* #define NINTERRUPT 1000000 */
 
 /* How many encoding warnings to give */
 #define NWARN 5

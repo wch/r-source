@@ -27,6 +27,7 @@
 #include <R_ext/Itermacros.h>
 
 /* interval at which to check interrupts, a guess */
+/*   if re-enabling, consider a power of two */
 // #define NINTERRUPT 10000000
 
 
