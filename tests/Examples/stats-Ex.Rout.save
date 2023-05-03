@@ -2572,6 +2572,15 @@ supp   0.5     1     2
   OJ 13.23 22.70 26.06
   VC  7.98 16.77 26.14
 > 
+> ## Formula interface via 'by' (for pipe operations)
+> ToothGrowth |> aggregate(len ~ ., FUN = mean)
+  supp dose   len
+1   OJ  0.5 13.23
+2   VC  0.5  7.98
+3   OJ  1.0 22.70
+4   VC  1.0 16.77
+5   OJ  2.0 26.06
+6   VC  2.0 26.14
 > 
 > ## Compute the average annual approval ratings for American presidents.
 > aggregate(presidents, nfrequency = 1, FUN = mean)
