@@ -13,7 +13,7 @@
 }
 \usage{
 setRepositories(graphics = getOption("menu.graphics"),
-                ind = NULL, addURLs = character())
+                ind = NULL, addURLs = character(), name = NULL)
 }
 \arguments{
   \item{graphics}{Logical. If true, use a graphical list: on Windows or
@@ -23,6 +23,9 @@ setRepositories(graphics = getOption("menu.graphics"),
   \item{ind}{\code{NULL} or a vector of integer indices, which have the
     same effect as if they were entered at the prompt for
     \code{graphics = FALSE}.}
+  \item{name}{\code{NULL} or character vector of names of the
+    repositories in the repository table which has the same effect as
+    passing the corresponding indices to \code{ind}.}
   \item{addURLs}{A character vector of additional URLs: it is often
     helpful to use a named vector.}
 }
@@ -59,7 +62,9 @@ setRepositories(graphics = getOption("menu.graphics"),
   element \code{"CRAN"}: this ensures mirror selection is sticky.
 
   This function requires the \R session to be interactive unless
-  \code{ind} is supplied.
+  \code{ind} or \code{name} is supplied. The latter overrides the former
+  if both are supplied and values are not case-sensitive. If any of the
+  supplied names does not match, an error is raised.
 }
 \note{
   This does \strong{not} set the list of repositories at startup: to do
@@ -79,5 +84,6 @@ setRepositories(graphics = getOption("menu.graphics"),
 \examples{\dontrun{
 setRepositories(addURLs =
                 c(CRANxtras = "https://www.stats.ox.ac.uk/pub/RWin"))
+setRepositories(name = c("CRAN", "R-Forge", "CRANxtras"))
 }}
 \keyword{ utilities }

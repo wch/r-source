@@ -19,6 +19,9 @@
       an F test depending on whether the dispersion is fixed or
       free.  Test statistics can be suppressed by giving argument
       \code{test} a false logical value.
+
+      \item In \code{setRepositories()} the repositories can be set
+      using their names via \code{name=} instead of index \code{ind=}.
     }
   }
 
