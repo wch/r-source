@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-04-25 r84324) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-05-02 r84376) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
@@ -1398,7 +1398,7 @@ yellow4              139   139    0
 yellowgreen          154   205   50
 > 
 > ## How many names are 'aliases' of each other?
-> ccodes <- c(256^(2:0) %*% crgb)  # = internal codes
+> ccodes <- c(256^(2:0) %*% crgb)  #% = internal codes
 > cl <- split(cc, ccodes)
 > length(cl) # 502 distinct colors
 [1] 502
@@ -1521,6 +1521,35 @@ FALSE  TRUE
 > if(requireNamespace("lattice", quietly = TRUE))
 +     lattice::cloud(blue ~ red + green, data = as.data.frame(tc),
 +                    col = rownames(tc))
+> tc <- t(crgb[, !duplicated(ccodes)])
+> cNms <- rownames(tc)
+> ## The 8 corners of the color cube:
+> isC <- rowSums(tc == 0 | tc == 255) == 3
+> cNms[isC] # "white" "black" "blue" "cyan" "green" "magenta" "red" "yellow"
+[1] "white"   "black"   "blue"    "cyan"    "green"   "magenta" "red"    
+[8] "yellow" 
+> table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+
+FALSE  TRUE 
+  397   105 
+> ## Not run: ##D 
+> ##D  if(require("rgl")) { ## Look at the color cube dynamically :
+> ##D    open3d(windowRect = c(50,50, 950, 950)) # large, so we see details
+> ##D    plot3d (tc, col = cNms, size = 11) # --> rotate w/ mouse; enlarged corners:
+> ##D    points3d(tc[isC,], col = cNms[isC], size=22)
+> ##D    bg3d("darkgray") # (to "see more"); rotate around gray-axis:
+> ##D    play3d(spin3d(axis = c(1, 1, 1), rpm = 2), duration = 30)
+> ##D    if(FALSE) # add all names {zoom in with 2nd mouse button!}
+> ##D      text3d(tc[!is.gray,], texts = cNms[!is.gray],
+> ##D                              col = cNms[!is.gray], adj=-1/4, cex = 1/2)
+> ##D    if(FALSE) { ## next version of {rgl}
+> ##D      hover3d(tc, labels = cNms)
+> ##D      message("Move mouse over plot to identify points.")
+> ##D    } else { ##  click on blob to see colors()' name:
+> ##D      identify3d(tc, labels=cNms)
+> ##D    }
+> ##D  }
+> ## End(Not run)
 > 
 > 
 > 
