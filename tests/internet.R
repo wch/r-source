@@ -17,6 +17,7 @@ zz <- url("https://cran.r-project.org/")
 readLines(zz)
 close(zz)
 
-# and via read.table.  Use a copy on a r-project.org site.
-##read.table("https://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
-read.table("https://developer.r-project.org/pub/datasets/csb/ch11b.dat")
+# and via read.table, using an r-project.org site
+read.table("https://developer.R-project.org/inet-tests/ch11b.dat")
+
+showConnections(all = TRUE)
