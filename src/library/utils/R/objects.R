@@ -91,7 +91,7 @@ function(generic.function, class, envir=parent.frame())
     sp <- search()
     sp <- sp[c(1L, length(sp))]
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
-    an <- lapply(seq_along(sp), ls)
+    an <- lapply(sp, ls)
     lens <- lengths(an)
     an <- unlist(an, use.names=FALSE)
     names(an) <- rep.int(sp, lens)
