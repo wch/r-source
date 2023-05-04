@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-11-14 r83344) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 4.3.0 Patched (2023-05-04 r84393) -- "Already Tomorrow"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -16,20 +16,22 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > ## These are tests that require a working Internet connection.
-> ## We attempt to test for that.
+> ## We attempt to test for that on Unix.
 > 
 > if(.Platform$OS.type == "unix" &&
 +    is.null(nsl("cran.r-project.org"))) q()
 > 
+> ## As virtually all http sites redirect to https:, we only test the latter
+> 
 > # test do_download (and "record" #{packages}):
-> ap <- available.packages(contrib.url("http://cran.r-project.org"))
+> ap <- available.packages(contrib.url("https://cran.r-project.org"))
 > ## IGNORE_RDIFF_BEGIN
 > nrow(ap)
-[1] 18844
+[1] 19457
 > ## IGNORE_RDIFF_END
 > 
-> # test url connections on http
-> zz <- url("http://cran.r-project.org/")
+> # test url connections
+> zz <- url("https://cran.r-project.org/")
 > readLines(zz)
  [1] "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
  [2] "<html>"                                                                                                   
@@ -57,9 +59,8 @@ Type 'q()' to quit R.
 [24] "</html>"                                                                                                  
 > close(zz)
 > 
-> # and via read.table
-> 
-> read.table("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
+> # and via read.table, using an r-project.org site
+> read.table("https://developer.R-project.org/inet-tests/ch11b.dat")
      V1  V2   V3    V4 V5
 1     1 307  930 36.58  0
 2     2 307  940 36.73  0
@@ -161,4 +162,10 @@ Type 'q()' to quit R.
 98   98 308  140 38.01  1
 99   99 308  150 38.04  1
 100 100 308  200 38.07  1
+> 
+> showConnections(all = TRUE)
+  description class      mode text   isopen   can read can write
+0 "stdin"     "terminal" "r"  "text" "opened" "yes"    "no"     
+1 "stdout"    "terminal" "w"  "text" "opened" "no"     "yes"    
+2 "stderr"    "terminal" "w"  "text" "opened" "no"     "yes"    
 > 
