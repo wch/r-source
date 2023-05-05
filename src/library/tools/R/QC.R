@@ -366,7 +366,7 @@ function(package, dir, lib.loc = NULL,
         } else {
             has_namespace <- TRUE
             ns_env <- asNamespace(package)
-            S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
+            S3Table <- ns_env[[".__S3MethodsTable__."]]
             functions_in_S3Table <- ls(S3Table, all.names = TRUE)
             objects_in_ns <-
                 setdiff(sort(names(ns_env)),
