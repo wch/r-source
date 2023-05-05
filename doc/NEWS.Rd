@@ -22,6 +22,10 @@
 
       \item In \code{setRepositories()} the repositories can be set
       using their names via \code{name=} instead of index \code{ind=}.
+
+      \item \code{methods()} and \code{.S3methods()} gain a
+      \code{all.names} option for the (rare) case where functions starting
+      with a \samp{.} should be included.
     }
   }
 

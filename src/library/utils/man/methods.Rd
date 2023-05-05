@@ -14,8 +14,8 @@
   methods for an S3 or S4 class.
 }
 \usage{
-methods(generic.function, class)
-.S3methods(generic.function, class, envir=parent.frame())
+   methods(generic.function, class, all.names = FALSE)
+.S3methods(generic.function, class, envir=parent.frame(), all.names = FALSE)
 
 \S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 \S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
@@ -28,6 +28,9 @@ methods(generic.function, class)
   \item{envir}{the environment in which to look for the definition of
     the generic function, when the generic function is passed as a
     character string.}
+  \item{all.names}{a \code{\link{logical}} indicating if all
+    object names are returned.  When \code{FALSE} as by default, names
+    beginning with a \samp{.} are omitted.}
   \item{x}{typically the result of \code{methods(..)}, an \R object of S3
     class \code{"MethodsFunction"}, see \sQuote{Value} below.}
   \item{byclass}{an optional \code{\link{logical}} allowing to override
