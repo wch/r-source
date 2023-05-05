@@ -11,14 +11,16 @@
 \alias{Position}
 \title{Common Higher-Order Functions in Functional Programming Languages}
 \description{
-  \code{Reduce} uses a binary function to successively combine the
-  elements of a given vector and a possibly given initial value.
-  \code{Filter} extracts the elements of a vector for which a predicate
-  (logical) function gives true.  \code{Find} and \code{Position} give
-  the first or last such element and its position in the vector,
-  respectively.  \code{Map} applies a function to the corresponding
-  elements of given vectors.  \code{Negate} creates the negation of a
-  given function.
+  \describe{
+    \item{\code{Reduce}}{uses a binary function to successively combine the
+      elements of a given vector and a possibly given initial value.}
+    \item{\code{Filter}}{extracts the elements of a vector for which a predicate
+      (logical) function gives true.}
+    \item{\code{Find} and \code{Position}}{give the first or last such
+      element and its position in the vector, respectively.}
+    \item{\code{Map}}{applies a function to the corresponding elements of given vectors.}
+    \item{\code{Negate}}{creates the negation of a given function.}
+  }
 }
 \usage{
 Reduce(f, x, init, right = FALSE, accumulate = FALSE)
@@ -44,7 +46,8 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
     combination is used.}
   \item{nomatch}{the value to be returned in the case when
     \dQuote{no match} (no element satisfying the predicate) is found.}
-  \item{\dots}{vectors.}
+  \item{\dots}{vectors to which the function is \code{Map()}ped, and other
+    arguments of \code{\link{mapply}} passed to it, e.g., \code{MoreArgs}.}
 }
 \details{
   If \code{init} is given, \code{Reduce} logically adds it to the start
