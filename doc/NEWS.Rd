@@ -26,6 +26,10 @@
       \item \code{methods()} and \code{.S3methods()} gain a
       \code{all.names} option for the (rare) case where functions starting
       with a \samp{.} should be included.
+
+      \item Serializations can now be interrupted (e.g., by \kbd{Ctrl-C} on
+      a Unix-alike) if they take too long, as e.g., from \code{save.image()},
+      thanks to suggestions by Ivan Krylow and others on R-devel.
     }
   }
 
