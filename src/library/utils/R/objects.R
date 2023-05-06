@@ -141,7 +141,7 @@ function(generic.function, class, envir=parent.frame(), all.names = FALSE)
                 genfun <- methods::finalDefaultMethod(genfun@default)
             .defenv_for_S3_registry(genfun)
         }
-	S3reg <- names(get(".__S3MethodsTable__.", envir = defenv))
+	S3reg <- names(defenv[[".__S3MethodsTable__."]])
 	S3reg <- S3reg[startsWith(S3reg, paste0(generic.function,"."))]
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
@@ -183,7 +183,8 @@ function(generic.function, class, envir=parent.frame(), all.names = FALSE)
         ## Note that the generic will not necessarily be visible,
         ## as the package may not be loaded.
         S3reg <- unlist(lapply(loadedNamespaces(), function(i)
-	    ls(get(".__S3MethodsTable__.", envir = asNamespace(i)), pattern = name)))
+	    ls(getNamespace(i)[[".__S3MethodsTable__."]],
+               pattern = name, all.names = all.names)))
         ## now methods like print.summary.aov will be picked up,
         ## so we do look for such mismatches.
         if(length(S3reg))
@@ -294,7 +295,7 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
 		genfun <- methods::selectMethod(genfun, "ANY")
             .defenv_for_S3_registry(genfun)
 	}
-    S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+    S3Table <- defenv[[".__S3MethodsTable__."]]
     if(!is.null(m <- get0(method, envir = S3Table, inherits = FALSE)))
 	m
     else if(optional)
@@ -347,7 +348,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
 		genfun <- methods::selectMethod(genfun, "ANY")
             .defenv_for_S3_registry(genfun)
 	}
-    S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+    S3Table <- defenv[[".__S3MethodsTable__."]]
     ## return
     exists(method, envir = S3Table, inherits = FALSE)
 }
@@ -410,7 +411,7 @@ function(x, value)
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            S3Table <- defenv[[".__S3MethodsTable__."]]
             remappedName <- paste(S3[i, 1L], S3[i, 2L], sep = ".")
             if(exists(remappedName, envir = S3Table, inherits = FALSE))
                 assign(remappedName, value, S3Table)
@@ -470,7 +471,7 @@ function(x, value, ns, pos = -1, envir = as.environment(pos))
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::slot(genfun, "default")@methods$ANY
             defenv <- .defenv_for_S3_registry(genfun)
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            S3Table <- defenv[[".__S3MethodsTable__."]]
             remappedName <- paste(S3[i, 1L], S3[i, 2L], sep = ".")
             if(exists(remappedName, envir = S3Table, inherits = FALSE))
                 assign(remappedName, value, S3Table)
