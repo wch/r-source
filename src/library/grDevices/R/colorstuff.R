@@ -206,7 +206,7 @@ palette <- function (value)
 palette.pals <- function() names(.palette_colors_hex)
 
 palette.colors <- function(n = NULL, palette = "Okabe-Ito",
-                           alpha, recycle = FALSE)
+                           alpha, recycle = FALSE, names = FALSE)
 {
     ## number of colors
     if (!is.null(n)) {
@@ -241,7 +241,7 @@ palette.colors <- function(n = NULL, palette = "Okabe-Ito",
                         width = 2L, upper.case = TRUE)
 	cols <- paste0(cols, alpha)
     }
-    cols
+    if (names) cols else unname(cols)
 }
 
 ## underlying hex codes for palette color sets

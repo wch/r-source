@@ -90,6 +90,10 @@
       proposal in \PR{18337}, correcting density values typically by a
       factor of about 0.999.  Optional \code{old.coords=TRUE} provides
       back compatibility.
+
+      \item \code{palette.colors()} gains a \code{name} argument that
+      defaults to \code{FALSE} controlling whether the vector of colours
+      that is returned has names (where possible).  \PR{18529}.
     }
   }
 }
