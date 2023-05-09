@@ -50,7 +50,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \item{extra}{character vector of additional command-line arguments for
     the \code{"wget"} and \code{"curl"} methods.}
 
-  \item{headers}{named character vector of addiitonal HTTP headers to
+  \item{headers}{named character vector of additional HTTP headers to
     use in HTTP[S] requests.  It is ignored for non-HTTP[S] URLs.  The
     \code{User-Agent} header taken from the \code{HTTPUserAgent} option
     (see \code{\link{options}}) is automatically used as the first header.}
