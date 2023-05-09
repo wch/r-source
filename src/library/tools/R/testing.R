@@ -482,7 +482,7 @@ testInstalledPackage <-
                 message(gettextf("  comparing %s to %s ...",
                                  sQuote(outfile), sQuote(savefile)),
                         appendLF = FALSE, domain = NA)
-                res <- Rdiff(outfile, savefile)
+                res <- Rdiff(outfile, savefile, useDiff)
                 if (!res) message(" OK")
             }
         }
@@ -761,7 +761,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             if (f == "reg-plot") {
                 message("  comparing 'reg-plot.pdf' to 'reg-plot.pdf.save' ...",
                         appendLF = FALSE, domain = NA)
-                res <- Rdiff("reg-plot.pdf", "reg-plot.pdf.save")
+                res <- Rdiff("reg-plot.pdf", "reg-plot.pdf.save", TRUE)
                 if(res != 0L) message("DIFFERED") else message("OK")
             }
         }
@@ -774,7 +774,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         if (runone("reg-plot-latin1", TRUE, inC=FALSE) == 0L) {
             message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
                     appendLF = FALSE, domain = NA)
-            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
+            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save", TRUE)
             if(res != 0L) message("DIFFERED") else message("OK")
         }
     }
