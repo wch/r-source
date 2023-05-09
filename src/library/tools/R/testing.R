@@ -255,10 +255,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if(length(left) == length(right)) {
             ## The idea is to emulate diff -b, as documented by POSIX:
             ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
-            bleft  <- gsub("[[:space:]]*$", "", left)
-            bright <- gsub("[[:space:]]*$", "", right)
-            bleft  <- gsub("[[:space:]]+", " ", bleft)
-            bright <- gsub("[[:space:]]+", " ", bright)
+
+            ## useBytes=TRUE as some tests intentionally use invalid strings
+            bleft  <- gsub("[[:space:]]*$", "", left, useBytes=TRUE)
+            bright <- gsub("[[:space:]]*$", "", right, useBytes=TRUE)
+            bleft  <- gsub("[[:space:]]+", " ", bleft, useBytes=TRUE)
+            bright <- gsub("[[:space:]]+", " ", bright, useBytes=TRUE)
             if(all(bleft == bright))
                 return(if(Log) list(status = 0L, out = character()) else 0L)
             cat("\n")
