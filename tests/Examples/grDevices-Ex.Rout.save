@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-05-02 r84376) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-05-04 r84393) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin22.4.0 (64-bit)
 
@@ -1528,6 +1528,10 @@ FALSE  TRUE
 > cNms[isC] # "white" "black" "blue" "cyan" "green" "magenta" "red" "yellow"
 [1] "white"   "black"   "blue"    "cyan"    "green"   "magenta" "red"    
 [8] "yellow" 
+> ## Don't show: 
+> stopifnot(setequal(cNms[isC],
++      c("white","black","blue","cyan","green","magenta","red","yellow")))
+> ## End(Don't show)
 > table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
 
 FALSE  TRUE 
@@ -3584,15 +3588,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2023-04-23" "2023-04-24" "2023-04-25" "2023-04-26" "2023-04-27"
-[6] "2023-04-28"
+[1] "2023-05-02" "2023-05-03" "2023-05-04" "2023-05-05" "2023-05-06"
+[6] "2023-05-07"
 > pretty(Sys.time(), n = 10)
- [1] "2023-04-25 19:55:10 BST" "2023-04-25 19:55:11 BST"
- [3] "2023-04-25 19:55:12 BST" "2023-04-25 19:55:13 BST"
- [5] "2023-04-25 19:55:14 BST" "2023-04-25 19:55:15 BST"
- [7] "2023-04-25 19:55:16 BST" "2023-04-25 19:55:17 BST"
- [9] "2023-04-25 19:55:18 BST" "2023-04-25 19:55:19 BST"
-[11] "2023-04-25 19:55:20 BST"
+ [1] "2023-05-04 11:29:57 BST" "2023-05-04 11:29:58 BST"
+ [3] "2023-05-04 11:29:59 BST" "2023-05-04 11:30:00 BST"
+ [5] "2023-05-04 11:30:01 BST" "2023-05-04 11:30:02 BST"
+ [7] "2023-05-04 11:30:03 BST" "2023-05-04 11:30:04 BST"
+ [9] "2023-05-04 11:30:05 BST" "2023-05-04 11:30:06 BST"
+[11] "2023-05-04 11:30:07 BST"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4396,7 +4400,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  20.966 0.536 21.522 0 0 
+Time elapsed:  20.995 0.589 21.609 0 0 
 > grDevices::dev.off()
 null device 
           1 
