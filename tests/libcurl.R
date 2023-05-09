@@ -4,7 +4,7 @@
 ## Nowadays method = "libcurl" is the default everywhere for http[s]://
 
 ## This used to check that https:// worked and skip if not, but then
-## all the tests redirected to to https://
+## all the tests redirected to https://
 
 ## check basic Internet access
 if(.Platform$OS.type == "unix" &&
