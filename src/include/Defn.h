@@ -2278,6 +2278,10 @@ double R_atof(const char *str);
 /* unix/sys-std.c, main/options.c */
 void set_rl_word_breaks(const char *str);
 
+/* unix/sys-unix.c, main/connections.c */
+FILE *R_popen_pg(const char *cmd, const char *type);
+int R_pclose_pg(FILE *fp);
+
 /* From localecharset.c */
 extern const char *locale2charset(const char *);
 

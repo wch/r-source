@@ -678,7 +678,8 @@ static void init_signal_handlers(void)
 #endif
     }
 
-    signal(SIGINT,  handleInterrupt);
+    if (signal(SIGINT, handleInterrupt) == SIG_IGN)
+	signal(SIGINT, SIG_IGN);
     signal(SIGUSR1, onsigusr1);
     signal(SIGUSR2, onsigusr2);
     signal(SIGPIPE, handlePipe);
@@ -687,7 +688,8 @@ static void init_signal_handlers(void)
 #else /* not sigaltstack and sigaction and sigemptyset*/
 static void init_signal_handlers(void)
 {
-    signal(SIGINT,  handleInterrupt);
+    if (signal(SIGINT,  handleInterrupt) == SIG_IGN)
+	signal(SIGINT, SIG_IGN);
     signal(SIGUSR1, onsigusr1);
     signal(SIGUSR2, onsigusr2);
 #ifndef Win32

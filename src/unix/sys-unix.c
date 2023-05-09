@@ -307,7 +307,12 @@ double R_getClockIncrement(void)
    general implementation could use a linked list and identify entries by
    file pointer and child pid.
 
-   Background jobs (ending with &) are not supported. */
+   Timeouts with background jobs (ending with &) are not supported.
+
+   This code can also be used without an actual timeout (have_timeout == 0)
+   as a partial implementation of system/popen/pclose which uses process
+   groups, but it differs in signal handling and termination.
+*/
 
 #define KILL_SIGNAL1 SIGINT
 #define KILL_SIGNAL2 SIGTERM
@@ -325,7 +330,7 @@ double R_getClockIncrement(void)
    As follows from empirical observations, SIGTERM can sometimes terminate
    applications that cannot be terminated by SIGINT. */
 
-int kill_signals[] = { KILL_SIGNAL1, KILL_SIGNAL2, KILL_SIGNAL3 };
+static int kill_signals[] = { KILL_SIGNAL1, KILL_SIGNAL2, KILL_SIGNAL3 };
 static struct {
     pid_t child_pid;
     int timedout; /* set when the child has been timed out */
@@ -335,16 +340,19 @@ static struct {
                      oldttou, oldcont, oldtstp, oldchld;
     RCNTXT cntxt; /* for popen/pclose */
     FILE *fp;     /* for popen/pclose, sanity check */
+    int have_alarm; /* 0 when not really having a timeout */
 } tost;
 
 static void timeout_handler(int sig);
-static void timeout_init(void)
+static void timeout_init(int have_alarm)
 {
     tost.child_pid = 0;
     tost.timedout = 0;
     tost.kill_attempts = 0;
     sigprocmask(0, NULL, &tost.oldset);
-    sigaction(SIGALRM, NULL, &tost.oldalrm);
+    tost.have_alarm = have_alarm;
+    if (tost.have_alarm)
+	sigaction(SIGALRM, NULL, &tost.oldalrm);
     sigaction(SIGINT, NULL, &tost.oldint);
     sigaction(SIGQUIT, NULL, &tost.oldquit);
     sigaction(SIGHUP, NULL, &tost.oldhup);
@@ -361,7 +369,8 @@ static void timeout_init(void)
     sigemptyset(&sa.sa_mask);
     sa.sa_handler = &timeout_handler;
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGALRM, &sa, NULL);
+    if (tost.have_alarm)
+	sigaction(SIGALRM, &sa, NULL);
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGQUIT, &sa, NULL);
     sigaction(SIGHUP, &sa, NULL);
@@ -374,7 +383,8 @@ static void timeout_init(void)
 static void timeout_cleanup_set(sigset_t *ss)
 {
     sigemptyset(ss);
-    sigaddset(ss, SIGALRM);
+    if (tost.have_alarm)
+	sigaddset(ss, SIGALRM);
     sigaddset(ss, SIGINT);
     sigaddset(ss, SIGQUIT);
     sigaddset(ss, SIGHUP);
@@ -391,9 +401,10 @@ static void timeout_cleanup(void)
     sigset_t ss;
     timeout_cleanup_set(&ss);
     sigprocmask(SIG_BLOCK, &ss, NULL);
-    alarm(0); /* clear alarm */
-
-    sigaction(SIGALRM, &tost.oldalrm, NULL);
+    if (tost.have_alarm) {
+	alarm(0); /* clear alarm */
+	sigaction(SIGALRM, &tost.oldalrm, NULL);
+    }
     sigaction(SIGINT, &tost.oldint, NULL);
     sigaction(SIGQUIT, &tost.oldquit, NULL);
     sigaction(SIGHUP, &tost.oldhup, NULL);
@@ -411,7 +422,7 @@ static void timeout_handler(int sig)
 {
     if (sig == SIGCHLD)
 	return; /* needed for sigsuspend() to be interrupted */
-    if (tost.child_pid > 0 && sig == SIGALRM) {
+    if (tost.child_pid > 0 && sig == SIGALRM && tost.have_alarm) {
 	tost.timedout = 1;
 	if (tost.kill_attempts < 3) {
 	    sig = kill_signals[tost.kill_attempts];
@@ -488,7 +499,7 @@ static pid_t timeout_wait(int *wstatus)
 static void timeout_cend(void *data)
 {
     if (tost.child_pid > 0) {
-	timeout_handler(SIGALRM);
+	timeout_handler(tost.have_alarm ? SIGALRM : SIGQUIT);
 	timeout_wait(NULL);
     }
     timeout_cleanup();
@@ -512,7 +523,10 @@ static void timeout_fork(void)
    because the PID of the child process is not accessible via POSIX API.
 
    This simple implementation only supports a single pipe to be open at a time
-   and R_system_timeout cannot be used at the same time.
+   and R_system_timeout cannot be used at the same time. It installs signal
+   handlers which exist between R_popen_timeout and R_pclose timeout, therefore
+   the amount of code that can correctly run in between is limited - this is
+   intended only for implementing system(,intern=TRUE).
 
    It does not support close-on-exec ("e" flag).
    A pipe opened with R_popen_timeout cannot be closed by pclose.
@@ -543,7 +557,7 @@ static FILE *R_popen_timeout(const char *cmd, const char *type, int timeout)
        following Luke's recommendation on how to fix PR#1140 (see R_open,
        R_system). */
 
-    timeout_init();
+    timeout_init(timeout > 0);
 
     /* set up a context to recover from R error between popen and pclose */
     begincontext(&tost.cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
@@ -579,13 +593,13 @@ static FILE *R_popen_timeout(const char *cmd, const char *type, int timeout)
 	    close(parent_end);
 	    return NULL;
 	}
-
-	sigset_t ss;
-	sigemptyset(&ss);
-	sigaddset(&ss, SIGALRM);
-	sigprocmask(SIG_UNBLOCK, &ss, NULL);
-	alarm(timeout); /* will get SIGALRM on timeout */
-
+	if (tost.have_alarm) {
+	    sigset_t ss;
+	    sigemptyset(&ss);
+	    sigaddset(&ss, SIGALRM);
+	    sigprocmask(SIG_UNBLOCK, &ss, NULL);
+	    alarm(timeout); /* will get SIGALRM on timeout */
+	}
 	return tost.fp;
     } else {
 	close(parent_end);
@@ -631,7 +645,7 @@ static int R_system_timeout(const char *cmd, int timeout)
        following Luke's recommendation on how to fix PR#1140 (see R_open,
        R_system). */
 
-    timeout_init();
+    timeout_init(timeout > 0);
     signal(SIGTTIN, SIG_IGN);
     signal(SIGTTOU, SIG_IGN);
     timeout_fork();
@@ -652,11 +666,13 @@ static int R_system_timeout(const char *cmd, int timeout)
 	_exit(127); /* execl failed */
     } else if (tost.child_pid > 0) {
 	/* parent */
-	sigset_t ss;
-	sigemptyset(&ss);
-	sigaddset(&ss, SIGALRM);
-	sigprocmask(SIG_UNBLOCK, &ss, NULL);
-	alarm(timeout); /* will get SIGALRM on timeout */
+	if (tost.have_alarm) {
+	    sigset_t ss;
+	    sigemptyset(&ss);
+	    sigaddset(&ss, SIGALRM);
+	    sigprocmask(SIG_UNBLOCK, &ss, NULL);
+	    alarm(timeout); /* will get SIGALRM on timeout */
+	}
 
 	int wstatus;
 	timeout_wait(&wstatus);
@@ -679,6 +695,138 @@ static int R_system_timeout(const char *cmd, int timeout)
 	return wstatus;
     } else
 	return -1;
+}
+
+/* R_popen_pg, R_pclose_pg are implementations of popen/pclose which run the
+   background processes in a new process group, therefore guarding them from
+   signals sent to the group R is in. The advantage is that Ctrl+C does not
+   kill these processes. The disadvantage is that it is isolated also from
+   other signals (SIGTSTP/SIGCONT, SIGHUP, SIGQUIT). However, the pipe can
+   be expected to pause/terminate when the R's end keep quiet/is closed, so
+   it is probably less of a problem than with R_system_timeout.
+
+   Unlike R_popen_timeout/R_pclose_timeout, this does not install any signal
+   handlers and multiple instances may be used at a time. One must use
+   R_pclose_timeout on a pipe opened with R_popen_timeout.
+
+   The implementation is not thread safe. */
+
+typedef struct ppg_elt {
+    FILE *fp;
+    pid_t pid;
+    struct ppg_elt *next;
+} ppg_t;
+
+static ppg_t *ppg = NULL;
+
+FILE *R_popen_pg(const char *cmd, const char *type)
+{
+    /* close-on-exec is not supported */
+    if (!type || type[1] ||  (type[0] != 'r' && type[0] != 'w')) {
+	errno = EINVAL;
+	return NULL;
+    }
+
+    ppg_t *nfo = malloc(sizeof(ppg_t));
+    if (!nfo) {
+	errno = ENOMEM;
+	return NULL;
+    }
+
+    int doread = (type[0] == 'r');
+    int pipefd[2];
+    int parent_end, child_end;
+    if (pipe(pipefd) < 0) {
+	free(nfo);
+	return NULL;
+    }
+    if (doread) {
+	parent_end = pipefd[0];
+	child_end = pipefd[1];
+    } else {
+	parent_end = pipefd[1];
+	child_end = pipefd[0];
+    }
+
+    nfo->pid = fork();
+    if (nfo->pid == 0) {
+	/* child */
+	setpgid(0, 0);
+	/* close the parent ends of other pipes in the child, as required
+	   by POSIX */
+	for(ppg_t *p = ppg; p != NULL; p = p->next) {
+	    int fd = fileno(p->fp);
+	    if (fd >= 0)
+		close(fd);
+	}
+	dup2(child_end, doread ? 1 : 0);
+	close(child_end);
+	close(parent_end);
+	if (doread) {
+	    /* ensure there is no read from terminal to avoid SIGTTIN */
+	    close(0);
+	    if (open("/dev/null", O_RDONLY) < 0) {
+		perror("Cannot open /dev/null for reading:");
+		_exit(127);
+	    }
+	}
+	/* allow standard output with !doread, because originally R's pipe()
+	   allowed it via C popen(), but it would cause SIGTTOU with tostop */
+        execl("/bin/sh", "sh", "-c", cmd, (char *)NULL);
+        _exit(127); /* execl failed */
+    } else if (nfo->pid > 0) {
+	/* parent */
+	close(child_end);
+	nfo->fp = fdopen(parent_end, type);
+	if (!nfo->fp) {
+	    close(parent_end);
+	    free(nfo);
+	    return NULL;
+	}
+	nfo->next = ppg;
+	ppg = nfo;
+	return nfo->fp;
+    } else {
+	free(nfo);
+	close(parent_end);
+	return NULL;
+    }
+}
+
+int R_pclose_pg(FILE *fp)
+{
+    ppg_t *prev = NULL;
+    for (ppg_t *p = ppg; p != NULL; p = p->next) {
+	if (fp == p->fp) {
+	    if (prev == NULL)
+		ppg = p->next;
+	    else
+		prev->next = p->next;
+	    int fd = fileno(fp);
+	    if (fd >= 0)
+		close(fd); /* see timeout_wait for why not to use fclose */
+
+	    /* This may not reliably retrieve the status of the child process
+	       in case SIGCHLD was set to SIG_IGN or SA_NOCLDWAIT was set for
+	       SIGCHLD. In that case, we may get a status for another process
+	       or more likely ECHILD. */
+	    int saveerrno = errno;
+	    for(;;) {
+		int wstatus = 0;
+		pid_t res = waitpid(p->pid, &wstatus, 0);
+		if (res != -1 || errno != EINTR) {
+		    if (errno == EINTR)
+			/* protect against incorrect error checking */
+			errno = saveerrno;
+		    free(p);
+		    return wstatus;
+		}
+	    }
+	}
+	prev = p;
+    }
+    errno = ECHILD;
+    return -1;
 }
 
 static void warn_status(const char *cmd, int res)
@@ -739,26 +887,26 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (timeout == NA_INTEGER || timeout < 0)
 	error(_("invalid '%s' argument"), "timeout");
     const char *cmd = translateCharFP(STRING_ELT(CAR(args), 0));
-    if (timeout > 0) {
-	/* command ending with & is not supported by timeout */
-	const void *vmax = vmaxget();
-	const char *c = trCharUTF8(STRING_ELT(CAR(args), 0));
-	int last_is_amp = 0;
-	int len = 0;
-	for(;*c; c += len) {
-	    len = utf8clen(*c);
-	    if (len == 1) {
-		if (*c == '&')
-		    last_is_amp = 1;
-		else if (*c != ' ' && *c != '\t' && *c != '\r' && *c != '\n')
-		    last_is_amp = 0;
-	    } else
+
+    int last_is_amp = 0;
+    /* command ending with & is not supported by timeout */
+    const void *vmax = vmaxget();
+    const char *c = trCharUTF8(STRING_ELT(CAR(args), 0));
+    int len = 0;
+    for(;*c; c += len) {
+	len = utf8clen(*c);
+	if (len == 1) {
+	    if (*c == '&')
+		last_is_amp = 1;
+	    else if (*c != ' ' && *c != '\t' && *c != '\r' && *c != '\n')
 		last_is_amp = 0;
-	}
-	if (last_is_amp)
-	    error("Timeout with background running processes is not supported.");
-	vmaxset(vmax);
+	} else
+	    last_is_amp = 0;
     }
+    vmaxset(vmax);
+    if (last_is_amp && timeout > 0)
+	error("Timeout with background running processes is not supported.");
+
     if (intern) { /* intern = TRUE */
 	FILE *fp;
 	char *x = "r",
@@ -874,7 +1022,24 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	tlist = PROTECT(allocVector(INTSXP, 1));
 	fflush(stdout);
 	int res;
-	if (timeout == 0)
+	/* When running background processes (last_is_amp) in interactive mode,
+	   Ctrl+C (SIGINT) should just interrupt the currently executing R
+	   loop or cancel currently edited command, but it should not kill
+	   the background processes (PR#17764). The C library system() runs
+	   background processes as (orphaned) processes in the same process
+	   group as R, so they receive SIGINT, and may terminate themselves
+	   consequently, such as R itself used to. Applications which leave
+	   the SIG_IGN disposition of SIGINT (set by system()) alone will not
+	   be terminated.
+
+	   We hence use R_system_timeout (even without a real timeout), which
+	   runs the task in a new process group, and hence does not receive
+	   SIGINT as a result of Ctrl+C from R console. However, we only
+	   use R_system_timeout in this case, because it has undesirable
+	   consequences for job control (SIGTSTP, SIGCONT missed, so Ctrl+Z does
+	   not suspend) and termination (SIGHUP missed, so terminal close does
+	   not terminate). */
+	if (timeout == 0 && (!R_Interactive || !last_is_amp))
 	    res = R_system(cmd);
 	else 
 	    res = R_system_timeout(cmd, timeout);

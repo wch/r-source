@@ -1568,7 +1568,7 @@ static Rboolean pipe_open(Rconnection con)
 	}
     } else
 #endif
-	fp = R_popen(con->description, mode);
+	fp = R_popen_pg(con->description, mode);
     if(!fp) {
 	warning(_("cannot open pipe() cmd '%s': %s"), con->description,
 		strerror(errno));
@@ -1590,7 +1590,7 @@ static Rboolean pipe_open(Rconnection con)
 
 static void pipe_close(Rconnection con)
 {
-    con->status = pclose(((Rfileconn)(con->private))->fp);
+    con->status = R_pclose_pg(((Rfileconn)(con->private))->fp);
     con->isopen = FALSE;
 }
 
