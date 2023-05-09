@@ -1363,7 +1363,10 @@ if ( any(file.exists(execs)) ) @{
 
 @noindent
 Note the use of architecture-specific subdirectories of @file{bin} where
-needed.
+needed.  (Executables sbould installed under a @file{bin} directory and
+not under @file{libs}.  It is good practice to check that they can be
+executed as part of the installation script, so a broken package is not
+installed.)
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
 
