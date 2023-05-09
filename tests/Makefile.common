@@ -35,7 +35,6 @@ test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
   ${test-src-isas} ${test-src-segfault}
 test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
-test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-dt = datetime2.R datetime3.R datetime4.R datetime5.R
 test-src-demo = demos.R demos2.R
@@ -91,13 +90,14 @@ test-out-tz = $(test-src-tz:.R=.Rout)
 test-out-cond = $(test-src-cond:.R=.Rout)
 
 ## This macro is used only for dependencies and for distclean
-test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
+test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) \
 	$(test-out-internet2) $(test-out-internet-dev) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
-	utf8-regex.Rout PCRE.Rout utf8.Rout
+	$(test-out-regexp) $(test-out-tz) $(test-out-cond) \
+	utf8.Rout reg-translation.Rout iconv.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
@@ -258,13 +258,11 @@ test-Vgct: $(test-out-valgct)
 test-DateTime:
 	@$(ECHO) "running tests of date-time printing"
 	@$(ECHO) "  expect platform-specific differences"
-	@$(RM) -f $(test-out-dt)
 	@$(MK) $(test-out-dt) RVAL_IF_DIFF=0
 
 ## This should be allowed to fail, visibly.
 test-TimeZone:
 	@$(ECHO) "checking Sys.timezone ..."
-	@$(RM) -f $(test-out-tz)
 	@$(MK) $(test-out-tz) || $(ECHO) "  Sys.timezone() appears unknown"
 
 test-Docs:
@@ -337,7 +335,6 @@ test-Segfault:
 
 test-Translation:
 	@$(ECHO) "running tests of translation"
-	@rm -f reg-translation.Rout
 	@$(MK) reg-translation.Rout RVAL_IF_DIFF=0
 
 ## Not run by any other target
@@ -352,7 +349,6 @@ test-Iconv:
 
 test-Conditions:
 	@$(ECHO) "running unit tests for the condition system"
-	@rm -f $(test-out-cond)
 	@$(MK) $(test-out-cond) RVAL_IF_DIFF=0
 
 ## Avoid site library, which could be very large
@@ -537,6 +533,6 @@ INSTFILES = README \
 	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
-	  encodings.R utf8-regex.R PCRE.R CRANtools.R \
-	  timezone.R conditions.R iconv.R \
-	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv
+	  encodings.R $(test-src-regexp) $(test-src-CRANtools) \
+	  $(test-src-tz) $(test-src-cond) reg-translation.R iconv.R \
+	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv eval-fns.R

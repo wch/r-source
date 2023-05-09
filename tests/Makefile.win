@@ -80,7 +80,7 @@ clean:
 	@$(MK) -C Embedding $@
 	-@rm -f *.log *.tsin *.trin
 	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd'
-	-@rm -f p-r-random-tests_seed Rprof.out* condiitons.Rout timezone.Rout
+	-@rm -f p-r-random-tests_seed Rprof.out*
 
 distclean: clean
 	@$(MK) -C Examples $@
@@ -89,7 +89,7 @@ distclean: clean
 
 install-tests:
 	@mkdir -p "$(INST_TO)/Packages"
-	@for f in Makefile.common $(INSTFILES) reg-translation.R eval-fns.R; do \
+	@for f in Makefile.common $(INSTFILES); do \
 	  cp $(srcdir)/$${f} "$(INST_TO)"; \
 	done
 	@cp  $(srcdir)/Makefile.install.win "$(INST_TO)/Makefile"

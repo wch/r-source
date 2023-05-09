@@ -27,13 +27,13 @@ include $(srcdir)/Makefile.common
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.install.win Makefile.common \
-	$(INSTFILES) gct-foot.R reg-win.R eval-fns.R \
+	$(INSTFILES) gct-foot.R reg-win.R \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save \
 	test-system.R test-system.Rout.save test-system2.c \
-	reg-large.R utf8.R reg-translation.R
+	reg-large.R utf8.R
 
 SUBDIRS = Embedding Examples
 SUBDIRS_WITH_NO_BUILD = Pkgs
@@ -101,7 +101,7 @@ clean:
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
 	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd' .Rd .RData
-	-@rm -f p-r-random-tests_seed Rprof.out* conditions.Rout timezone.Rout
+	-@rm -f p-r-random-tests_seed Rprof.out*
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \
@@ -119,7 +119,7 @@ install-tests:
 	@$(ECHO) "installing specific tests"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Packages"
-	@for f in Makefile.common $(INSTFILES) eval-fns.R reg-translation.R; do \
+	@for f in Makefile.common $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests"; \
 	done
 	@$(INSTALL_DATA) $(srcdir)/Makefile.install \
