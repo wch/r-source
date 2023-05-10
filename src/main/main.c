@@ -651,6 +651,12 @@ static void *signal_stack;
 #define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers(void)
 {
+    /* On Windows, C signal handling functions are replaced by psignal.
+       Initialization of a psignal Ctrl handler happens on the first
+       signal-related call (typically here). Signal handlers for
+       Ctrl signals set using C API before psignal initialization
+       will have no effect. */
+
     /* Do not set the (since 2005 experimental) SEGV handler
        UI if R_NO_SEGV_HANDLER env var is non-empty.
        This is needed to debug crashes in the handler
