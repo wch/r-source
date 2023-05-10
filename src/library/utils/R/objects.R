@@ -141,7 +141,7 @@ function(generic.function, class, envir=parent.frame(), all.names = FALSE)
                 genfun <- methods::finalDefaultMethod(genfun@default)
             .defenv_for_S3_registry(genfun)
         }
-	S3reg <- names(defenv[[".__S3MethodsTable__."]])
+	S3reg <- names(get(".__S3MethodsTable__.", envir = defenv)) # may climb up search()
 	S3reg <- S3reg[startsWith(S3reg, paste0(generic.function,"."))]
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
@@ -295,7 +295,7 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
 		genfun <- methods::selectMethod(genfun, "ANY")
             .defenv_for_S3_registry(genfun)
 	}
-    S3Table <- defenv[[".__S3MethodsTable__."]]
+    S3Table <- get(".__S3MethodsTable__.", envir = defenv)# climb search()
     if(!is.null(m <- get0(method, envir = S3Table, inherits = FALSE)))
 	m
     else if(optional)

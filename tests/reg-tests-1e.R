@@ -576,6 +576,21 @@ stopifnot(exprs = {
 ## was wrong in R 4.3.0 (and R-devel for a while)
 
 
+## Methods of a non-generic function
+foo <- function(x) { bar(x) }
+(m <- methods(foo))
+stopifnot(inherits(m, "MethodsFunction"), length(m) == 0L)
+## .S3methods() failed in R-devel for a few days after r84400.
+
+
+## getS3method() error
+myFUN <- function(x) UseMethod("myFUN")
+(msg <- tryCmsg(getS3method("myFUN", "numeric")))
+if(englishMsgs)
+    stopifnot(grepl("S3 method 'myFUN.numeric' not found", msg))
+## failed with "wrong" message after r84400
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
