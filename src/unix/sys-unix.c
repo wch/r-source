@@ -748,6 +748,10 @@ FILE *R_popen_pg(const char *cmd, const char *type)
 	child_end = pipefd[0];
     }
 
+    /* Earlier version of R would block SIGPROF here on old Apple systems
+       following Luke's recommendation on how to fix PR#1140 (see R_open,
+       R_system). */
+
     nfo->pid = fork();
     if (nfo->pid == 0) {
 	/* child */
