@@ -1,7 +1,7 @@
 ####--- S4 Methods (and Classes)  --- see also ../src/library/methods/tests/
 
 #### Instead of adding more tests depending on recommended packages,
-#### re-facror into a separate script and treat like eval-etc-2.R
+#### re-factor into a separate script and treat like eval-etc-2.R
 
 options(useFancyQuotes=FALSE)
 require(methods)
