@@ -285,7 +285,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         bindTranslations <- function(pkgname, pkgpath)
         {
             ## standard packages are treated differently
-            std <- c("compiler", "foreign", "grDevices", "graphics", "grid",
+            std <- c("compiler", "grDevices", "graphics", "grid",
                      "methods", "parallel", "splines", "stats", "stats4",
                      "tcltk", "tools", "utils")
             popath <- if (pkgname %in% std) .popath else file.path(pkgpath, "po")
