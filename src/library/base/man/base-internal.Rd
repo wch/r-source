@@ -31,8 +31,6 @@
 \alias{.POSIXlt}
 \alias{.difftime}
 \alias{.cache_class}
-\alias{.Firstlib_as_onLoad}
-\alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 \alias{.detach}
 \alias{.maskedMsg}

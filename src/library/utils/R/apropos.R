@@ -1,7 +1,7 @@
 #  File src/library/utils/R/apropos.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,20 @@
 
 ## a list from ../../base/man/base-internal.Rd
 .dot_internals <- c(".subset", ".subset2", ".getRequiredPackages",
-                    ".getRequiredPackages2", ".isMethodsDispatchOn",
+                    ".getRequiredPackages2", ".formula2varlist",
+                    ".isMethodsDispatchOn",
                     ".row_names_info", ".set_row_names", ".ArgsEnv",
-                    ".genericArgsEnv", ".TAOCP1997init", ".gt",
+                    ".GenericArgsEnv", ".TAOCP1997init", ".gt",
                     ".gtn", ".primTrace", ".primUntrace",
-                    ".POSIXct", ".POSIXlt", ".cache_class",
-                    ".Firstlib_as_onload",
-                    ".popath", ".mapply", ".detach", ".maskedMsg")
+                    ".Date", ".POSIXct", ".POSIXlt", ".difftime",
+                    ".cache_class",
+                    ".popath", ".detach", ".maskedMsg",
+                    ".doWrap", ".doSortWrap",
+                    ".amatch_bounds", ".amatch_costs", ".check_tzones",
+                    ".encode_numeric_version", ".decode_numeric_version",
+                    ".make_numeric_version",
+                    ".expand_R_libs_env_var", ".kronecker",
+                    ".packageStartupMessage", ".rmpkg")
 
 
 apropos <- function (what, where = FALSE, ignore.case = TRUE,
