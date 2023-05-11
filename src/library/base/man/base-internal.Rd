@@ -268,8 +268,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   S3 method dispatch.  With \code{NULL} second argument it returns the
   cached inheritance, for diagnostic use.
 
-  \code{.popath} is a variable created at startup which records where
-  the \pkg{translations} package in use is.
+  \code{.popath} is a character string created at startup which records where
+  the \pkg{translations} package in use is, possibly \code{NA_character_}.
 
   \code{.detach} is a \sQuote{bare-bones} version of \code{\link{detach}} for
   use in other \R packages.
