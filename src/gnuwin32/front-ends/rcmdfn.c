@@ -149,6 +149,12 @@ char *quoted_arg_cat(char *dest, const char *arg)
     return dest;
 }
 
+static BOOL WINAPI CtrlHandler(DWORD type)
+{
+    /* ignore Ctrl-C; R handles Ctrl+Break the same way (see psignal) */
+    return (type == CTRL_C_EVENT || type == CTRL_BREAK_EVENT);
+}
+
 #define PROCESS_CMD(ARG)	if (cmdarg + 1 < argc) {\
 	    for (i = cmdarg + 1; i < argc; i++) {\
 		strcat(cmd, ARG);\
@@ -232,7 +238,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	snprintf(cmd, CMD_LEN, "\"\"%s/%s/Rterm.exe\"", RHome, BINDIR);
 	/* R.exe should ignore Ctrl-C, and let Rterm.exe handle it */
-	SetConsoleCtrlHandler(NULL, TRUE);
+        /*   don't SetConsoleCtrlHandler(NULL, TRUE) to preserve
+             the current setting of the inheritable attribute */
+        SetConsoleCtrlHandler(CtrlHandler, TRUE);
 	PROCESS_CMD(" ");
     }
 

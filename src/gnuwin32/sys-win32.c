@@ -323,7 +323,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid %s argument"), "flag");
 
 	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)), getCharCE(STRING_ELT(cmd, 0)),
-		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout);
+		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout, 0);
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
 	    if (flag == 3) error(runerror());

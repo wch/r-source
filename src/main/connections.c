@@ -1539,6 +1539,10 @@ attribute_hidden SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- pipe connections --------------------- */
 
+/* This implementation is no longer used on Windows, even in Rterm,
+   because of termination of background processes using Ctrl+C (PR#17764). */
+
+#ifndef Win32
 static Rboolean pipe_open(Rconnection con)
 {
     FILE *fp;
@@ -1567,6 +1571,8 @@ static Rboolean pipe_open(Rconnection con)
 	    return FALSE;
 	}
     } else
+	/* this implementation is prone to termination of background
+	   processes using Ctrl+C (PR#17764) */
 	fp = R_popen(con->description, mode);
 #else
 	fp = R_popen_pg(con->description, mode);
@@ -1637,7 +1643,7 @@ newpipe(const char *description, int ienc, const char *mode)
     return new;
 }
 
-#ifdef Win32
+#else
 extern Rconnection
 newWpipe(const char *description, int enc, const char *mode);
 #endif
@@ -1679,11 +1685,10 @@ attribute_hidden SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ncon = NextConnection();
 #ifdef Win32
-    if(CharacterMode != RTerm)
-	con = newWpipe(file, ienc, strlen(open) ? open : "r");
-    else
+    con = newWpipe(file, ienc, strlen(open) ? open : "r");
+#else
+    con = newpipe(file, ienc, strlen(open) ? open : "r");
 #endif
-	con = newpipe(file, ienc, strlen(open) ? open : "r");
     Connections[ncon] = con;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
     con->encname[100 - 1] = '\0';

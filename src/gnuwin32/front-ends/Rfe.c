@@ -39,6 +39,12 @@ static void Usage (char *RCMD, char *arch)
     fprintf(stderr, "%s --arch %s --help\n", RCMD, arch);
 }
 
+static BOOL WINAPI CtrlHandler(DWORD type)
+{
+    /* ignore Ctrl-C; R handles Ctrl+Break the same way (see psignal) */
+    return (type == CTRL_C_EVENT || type == CTRL_BREAK_EVENT);
+}
+
 #define CMD_LEN 10000
 int main (int argc, char **argv)
 {
@@ -102,7 +108,9 @@ int main (int argc, char **argv)
 
     if (interactive)
 	/* Ignore Ctrl-C so that Rterm.exe can handle it */
-	SetConsoleCtrlHandler(NULL, TRUE);   
+	/*   don't SetConsoleCtrlHandler(NULL, TRUE) to preserve
+	     the current setting of the inheritable attribute */
+	SetConsoleCtrlHandler(CtrlHandler, TRUE);
     
     exit(system(cmd));
  }

@@ -369,6 +369,9 @@ static void pcreate(const char* cmd, cetype_t enc,
 	flags |= CREATE_SUSPENDED; /* assign to job before it runs */
     if (newconsole && (visible == 1))
 	flags |= CREATE_NEW_CONSOLE;
+    else if (newconsole)
+	/* prevent interruption of background processes by Ctrl-C, PR#17764 */
+	flags |= CREATE_NEW_PROCESS_GROUP;
     if (job && breakaway)
 	flags |= CREATE_BREAKAWAY_FROM_JOB;
 
@@ -691,13 +694,16 @@ int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
 rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		  const char *finput, int io,
 		  const char *fout, const char *ferr,
-		  int timeout)
+		  int timeout, int newconsole)
 {
     rpipe *r;
     HANDLE hTHIS, hIN, hOUT, hERR, hReadPipe, hWritePipe;
     DWORD id;
     BOOL res;
     int close1 = 0, close2 = 0, close3 = 0;
+    /* newconsole (~"!wait") means gnore Ctrl handler attibute
+       is set for child. When also visible==1, an actual text
+       console is created */
 
     if (!(r = (rpipe *) malloc(sizeof(struct structRPIPE)))) {
 	strcpy(RunError, _("Insufficient memory (rpipeOpen)"));
@@ -715,46 +721,41 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 	strcpy(RunError, "CreatePipe failed");
 	return NULL;
     }
-    if(io == 1) { /* pipe for R to write to */
-	hTHIS = GetCurrentProcess();
+    hTHIS = GetCurrentProcess();
+    if (io == 1) { /* pipe for R to write to */
 	r->read = hReadPipe;
 	DuplicateHandle(hTHIS, hWritePipe, hTHIS, &r->write,
 			0, FALSE, DUPLICATE_SAME_ACCESS);
 	CloseHandle(hWritePipe);
-	CloseHandle(hTHIS);
-	/* This sends stdout and stderr to NUL: */
-	pcreate(cmd, enc, 1, visible,
-		r->read, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE,
-		&(r->pi));
-	r->active = 1;
-	if (!r->pi.pi.hProcess) return NULL; else return r;
+    } else { /* pipe for R to read from */
+	r->write = hWritePipe;
+	DuplicateHandle(hTHIS, hReadPipe, hTHIS, &r->read,
+			0, FALSE, DUPLICATE_SAME_ACCESS);
+	CloseHandle(hReadPipe);
     }
-
-    /* pipe for R to read from */
-    hTHIS = GetCurrentProcess();
-    r->write = hWritePipe;
-    DuplicateHandle(hTHIS, hReadPipe, hTHIS, &r->read,
-		    0, FALSE, DUPLICATE_SAME_ACCESS);
-    CloseHandle(hReadPipe);
     CloseHandle(hTHIS);
 
-    hIN = getInputHandle(finput); /* a file or (usually NUL:) */
-    
-    if (hIN && finput && finput[0]) close1 = 1;
-    
-    if ((io == 0 || io == 3)) 
+    if (io == 1)
+	hIN = r->read;
+    else {
+	hIN = getInputHandle(finput); /* a file or (usually NUL:) */
+	if (hIN && finput && finput[0]) close1 = 1;
+    }    
+    if (io == 0 || io == 3) 
 	hOUT = r->write;
     else {
-	if (fout && fout[0]) close2 = 1;
  	hOUT = getOutputHandle(fout, 0);
+	if (hOUT && fout && fout[0]) close2 = 1;
     }
     if (io >= 2) 
 	hERR = r->write;
     else {
-	if (ferr && ferr[0]) close3 = 1;
 	hERR = getOutputHandle(ferr, 1);
+	if (hERR && ferr && ferr[0]) close3 = 1;
     }
-    pcreate(cmd, enc, 0, visible, hIN, hOUT, hERR, &(r->pi));
+    
+    pcreate(cmd, enc, newconsole, visible, hIN, hOUT, hERR, &(r->pi));
+
     if (close1) CloseHandle(hIN);
     if (close2) CloseHandle(hOUT);
     if (close3) CloseHandle(hERR);
@@ -762,10 +763,13 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
     r->active = 1;
     if (!r->pi.pi.hProcess)
 	return NULL;
-    if (!(r->thread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
-	rpipeClose(r, NULL);
-	strcpy(RunError, "CreateThread failed");
-	return NULL;
+    if (io != 1) {
+	/* FIXME: if still needed, should it be used also for io == 1? */
+	if (!(r->thread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
+	    rpipeClose(r, NULL);
+	    strcpy(RunError, "CreateThread failed");
+	    return NULL;
+	}
     }
     return r;
 }
@@ -899,11 +903,24 @@ typedef struct Wpipeconn {
 static Rboolean Wpipe_open(Rconnection con)
 {
     rpipe *rp;
-    int visible = -1, io, mlen;
+    int visible = -1, io, mlen, newconsole;
+    const char *fin = NULL, *fout = NULL, *ferr = NULL;
 
-    io = con->mode[0] == 'w';
-    if(io) visible = 1; /* Somewhere to put the output */
-    rp = rpipeOpen(con->description, con->enc, visible, NULL, io, NULL, NULL, 0);
+    io = con->mode[0] == 'w'; /* 1 for write, 0 for read */
+    if (CharacterMode == RTerm) {
+	fin = fout = ferr = "";
+	newconsole = 1; /* ensures the child process runs in a new
+	                   process group (ignores Ctrl handler),
+	                   PR#17764 */
+    } else if(io) {
+	/* FIXME: this opens the extra console in Rgui, but it does not
+	   get the output */
+	visible = 1; /* Somewhere to put the output */
+	newconsole = 1;
+    } else
+	newconsole = 0;
+    rp = rpipeOpen(con->description, con->enc, visible, fin, io, fout, ferr, 0,
+                   newconsole);
     if(!rp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;

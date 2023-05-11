@@ -103,8 +103,6 @@ int AppMain(int argc, char **argv)
 		pos += snprintf(cmd + pos, len - pos, " \"%s\"",
 		                argv[i]);
 	    strcat(cmd + pos, "\"");
-	    /* Ignore Ctrl-C and let the child process handle it */
-	    SetConsoleCtrlHandler(NULL, TRUE);
 	    res = system(cmd);
 	    free(cmd);
 	    return res;
@@ -133,8 +131,6 @@ int AppMain(int argc, char **argv)
     if(R_Interactive) 
 	R_gl_tab_set();
     cmdlineoptions(argc, argv);
-    /* The following restores Ctrl-C handling if we were started from R.exe */
-    SetConsoleCtrlHandler(NULL, FALSE);
     GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
