@@ -21,6 +21,10 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item .
+
+      \item \code{tools::Rdiff()} is now more robust against invalid
+      strings, fixing installation tests on Windows without Rtools
+      installed (\PR{18530}).
     }
   }
 }
