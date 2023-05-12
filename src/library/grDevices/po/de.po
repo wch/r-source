@@ -1,13 +1,13 @@
 # Translation of src/library/grDevices/po/grDevices.pot to German.
-# Copyright (C) 2005-2021 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-4.1.0\n"
+"Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2018-04-05 09:21+0200\n"
+"PO-Revision-Date: 2022-04-14 10:42+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -23,7 +23,7 @@ msgstr "'%s' muss numerisch sein mit Länge %d"
 
 #: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
-msgstr ""
+msgstr "Clipping Pfad wird ignoriert (Gerät hängt Pfad an)"
 
 #: colors.c:69
 #, c-format
@@ -425,43 +425,40 @@ msgid "unable to use encoding '%s'"
 msgstr "kann Kodierung '%s' nicht nutzen"
 
 #: devPS.c:5768
-#, fuzzy
 msgid "Failed to allocate PDF definition string"
-msgstr "konnte Zeichensatzliste nicht allozieren"
+msgstr "Konnte PDF Definitionszeichenkette nicht allozieren"
 
 #: devPS.c:5790
-#, fuzzy
 msgid "failed to increase definition string (shut down PDF device)"
-msgstr "kann die Seitenbegrenzungen nicht anheben: bitte das PDF Gerät schliessen"
+msgstr "kann die Definitionszeichenkette nicht vergrößern (bitte das PDF Gerät schließen)"
 
 #: devPS.c:5840
-#, fuzzy
 msgid "failed to increase 'maxDefns'"
-msgstr "konnte 'maxRaster' nicht vergrößern"
+msgstr "konnte 'maxDefns' nicht erhöhen"
 
 #: devPS.c:6471
 msgid "Drawing not appended to path (contains text)"
-msgstr ""
+msgstr "Zeichnung nicht an Pfad gehängt (enthält Text)"
 
 #: devPS.c:6694
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
-msgstr ""
+msgstr "Der Kompositions-Operator hat keinen korrespondierenden blend Modus; Rückgriff auf Normal"
 
 #: devPS.c:6909
 msgid "Failed to write PDF clipping path"
-msgstr ""
+msgstr "PDF clipping path Schreiben fehlgeschlagen"
 
 #: devPS.c:6934
 msgid "Failed to write PDF stroke"
-msgstr ""
+msgstr "PDF stroke Schreiben fehlgeschlagen"
 
 #: devPS.c:6955
 msgid "Failed to write PDF fill"
-msgstr ""
+msgstr "PDF fill Schreiben fehlgeschlagen"
 
 #: devPS.c:6976
 msgid "Failed to write PDF fillStroke"
-msgstr ""
+msgstr "PDF fillStroke Schreiben fehlgeschlagen"
 
 #: devPS.c:6996
 msgid "invalid 'alpha' value in PDF"
@@ -508,9 +505,8 @@ msgid "failed to allocate masks"
 msgstr "konnte Masken nicht allozieren"
 
 #: devPS.c:7636
-#, fuzzy
 msgid "failed to allocate definitions"
-msgstr "konnte Zeichensatzliste nicht allozieren"
+msgstr "konnte Definitionen nicht allozieren"
 
 #: devPS.c:7708
 #, c-format
@@ -572,7 +568,7 @@ msgstr "konnte PDF Zeichensatz nicht finden oder nicht laden"
 
 #: devPS.c:9676 devPS.c:9735
 msgid "Text not added to path containing other drawing"
-msgstr ""
+msgstr "Text nicht zum Pfad hinzugefügt, der andere Zeichnung enthält"
 
 #: devPS.c:9785 devPS.c:9949
 msgid "failed to find or load PDF CID font"
@@ -586,7 +582,7 @@ msgstr "ungültiger 'family' Parameter in %s"
 #: devPS.c:10375 devPS.c:10534
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
-msgstr "ungültiger 'fonts' Parameter in %s<"
+msgstr "ungültiger 'fonts' Parameter in %s"
 
 #: devPS.c:10381 devPS.c:10544 devPS.c:10547 devWindows.c:3760
 #: devWindows.c:3764 devWindows.c:3772 devWindows.c:3783 devWindows.c:3789
@@ -698,7 +694,7 @@ msgstr "Dateiname zu lang in win.metafile() Aufruf"
 #: devWindows.c:1931
 #, c-format
 msgid "unable to open metafile '%s' for writing"
-msgstr "kann Metafile '%s' nicht zum Schreiben öffnen<"
+msgstr "kann Metafile '%s' nicht zum Schreiben öffnen"
 
 #: devWindows.c:1933
 msgid "unable to open clipboard to write metafile"
@@ -710,7 +706,7 @@ msgstr "Zu wenig Speicher für Größenänderung. Schalte Gerät ab."
 
 #: devWindows.c:2152
 msgid "Insufficient memory for resize. Disabling alpha blending"
-msgstr "Zu wenig Speicher für Größenänderung. Schalte Alpha-Blending ab.<"
+msgstr "Zu wenig Speicher für Größenänderung. Schalte Alpha-Blending ab."
 
 #: devWindows.c:2181
 msgid "a clipboard metafile can store only one figure."
@@ -785,15 +781,15 @@ msgstr "NA Argument ist unzulässig"
 
 #: group.c:38
 msgid "Group definition ignored (device is appending path)"
-msgstr ""
+msgstr "Gruppendefinition ignoriert (Gerät hängt Pfad an)"
 
 #: group.c:57
 msgid "Group use ignored (device is appending path)"
-msgstr ""
+msgstr "Gruppennutzung ignoriert (Gerät hängt Pfad an)"
 
 #: mask.c:37
 msgid "Mask ignored (device is appending path)"
-msgstr ""
+msgstr "Maske ignoriert (Gerät hängt Pfad an)"
 
 #: qdBitmap.c:79
 #, c-format
@@ -813,75 +809,74 @@ msgid "invalid '%s' argument"
 msgstr "unzulässiges '%s' Argument"
 
 #: cairo/cairoBM.c:193 cairo/cairoBM.c:362
-#, fuzzy
 msgid "unimplemented cairo-based device"
-msgstr "%s ist für dieses Gerät noch nicht implementiert"
+msgstr "nicht-implementiertes Cairo-basiertes Gerät"
 
 #: cairo/cairoBM.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "could not open file '%s'"
-msgstr "kann Datei '%s' nicht öffnen"
+msgstr "konnte Datei '%s' nicht öffnen"
 
 #: cairo/cairoBM.c:653
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start device '%s'"
-msgstr "konnte Gerät pdf nicht starten<"
+msgstr "konnte Gerät '%s' nicht starten"
 
 #: cairo/cairoFns.c:148
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Cairo Muster ausgeschöpft (Erhöhung von maxPatterns fehlgeschlagen)"
 
 #: cairo/cairoFns.c:195
 msgid "Cairo patterns exhausted"
-msgstr ""
+msgstr "Cairo Muster ausgeschöpft"
 
 #: cairo/cairoFns.c:350
 msgid "Attempt to release non-existent pattern"
-msgstr ""
+msgstr "Versuch ein nicht existierendes Muster freizugeben"
 
 #: cairo/cairoFns.c:392
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
-msgstr ""
+msgstr "Cairo Clipping-Pfade ausgeschöpft (Erhöhung von maxClipPaths fehlgeschlagen)"
 
 #: cairo/cairoFns.c:439
 msgid "Cairo clipping paths exhausted"
-msgstr ""
+msgstr "Cairo Clipping-Pfade ausgeschöpft"
 
 #: cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
-msgstr ""
+msgstr "Versuch einen nicht-existierenden Clipping-Pfad wiederzuverwenden"
 
 #: cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
-msgstr ""
+msgstr "Versuch einen nicht-existierenden Clipping-Pfad freizugeben"
 
 #: cairo/cairoFns.c:571
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Cairo Masken ausgeschöpft (Erhöhung von maxMasks fehlgeschlagen)"
 
 #: cairo/cairoFns.c:619
 msgid "Cairo masks exhausted"
-msgstr ""
+msgstr "Cairo Masken ausgeschöpft"
 
 #: cairo/cairoFns.c:682
 msgid "Attempt to release non-existent mask"
-msgstr ""
+msgstr "Versuch nicht-existierende Maske freizugeben"
 
 #: cairo/cairoFns.c:711
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Cairo Gruppen ausgeschöpft (Erhöhung von maxGroups fehlgeschlagen)"
 
 #: cairo/cairoFns.c:758
 msgid "Cairo groups exhausted"
-msgstr ""
+msgstr "Cairo Gruppen ausgeschöpft"
 
 #: cairo/cairoFns.c:853
 msgid "Groups exhausted"
-msgstr ""
+msgstr "Gruppen ausgeschöpft"
 
 #: cairo/cairoFns.c:907
 msgid "Attempt to release non-existent group"
-msgstr ""
+msgstr "Versuch eine nicht-existierende Gruppe freizugeben"
 
 #~ msgid "Impossible to load Rbitmap.dll"
 #~ msgstr "Kann Rbitmap.dll nicht laden"

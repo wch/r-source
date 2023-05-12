@@ -1,14 +1,14 @@
 # Translation of src/library/utils/po/R-utils.pot to German.
-# Copyright (C) 2008-2014 The R Foundation
+# Copyright (C) 2008-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.5.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18\n"
-"PO-Revision-Date: 2018-04-16 10:35+0200\n"
+"PO-Revision-Date: 2023-05-12 14:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -247,7 +247,7 @@ msgid "data set %s not found"
 msgstr "Datensatz %s nicht gefunden"
 
 msgid "an object named %s already exists and will not be overwritten"
-msgstr ""
+msgstr "ein Objekt namens %s existiert bereits und wird nicht überschrieben"
 
 msgid "only 'html = TRUE' is supported on this platform"
 msgstr "nur 'html = TRUE' wird auf dieser Plattform unterstützt"
@@ -380,36 +380,39 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' muss eine zweiseitige Formel mit einem Term auf jeder Seite sein"
 
 msgid "invalid 'n' -  must contain at least one non-missing element, got none."
-msgstr ""
+msgstr "ungültiges 'n' - muss mindestens ein nicht-fehlendes Element enthalten, hat keines"
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
-msgstr ""
+msgstr "ungültiges 'n' - muss Länge 1 haben, wenn dim(x) NULL ist, hat %d"
 
 msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
-msgstr ""
+msgstr "ungültiges 'n' - length(n) muss <= length(dim(x)), hat %d > %d"
 
-#, fuzzy
 msgid "no method found for %s(., n=%s) and class %s"
-msgstr "keine Methode für Funktion %s und Signatur %s definiert"
+msgstr "keine Methode für %s(., n=%s) und Klasse %s gefunden"
 
 msgid ""
 "tail(., addrownums = V) is deprecated.\n"
 "Use"
 msgstr ""
+"tail(., addrownums = V) ist veraltet.\n"
+"Nutze"
 
 msgid "tail(., keepnums = V) instead."
-msgstr ""
+msgstr "stattdessen tail(., keepnums = V)."
 
 msgid "tail(., addrownums=.) is"
-msgstr ""
+msgstr "tail(., addrownums=.) ist"
 
 msgid ""
 "deprecated.\n"
 "Use"
 msgstr ""
+"veraltet.\n"
+"Nutze"
 
 msgid "tail(., keepnums=.) instead."
-msgstr ""
+msgstr "stattdessen tail(., keepnums=.)."
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic' sollte ein Name, ein Zeichenkettenvektor der Länge 1 oder ein reserviertes Word sein"
@@ -569,7 +572,7 @@ msgstr ""
 "gefunden, die wie S3 Methoden aussehen"
 
 msgid "'class' is of length > 1; only the first element will be used"
-msgstr ""
+msgstr "'class' hat Länge > 1; nur das erste Element wird genutzt"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' oder 'class' muss angegeben werden"
@@ -596,7 +599,7 @@ msgid "only numeric indices can be used"
 msgstr "nur numerische Indizes können benutzt werden"
 
 msgid "Malformed package name."
-msgstr ""
+msgstr "Unmöglicher Paketname."
 
 msgid "cannot create directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -616,9 +619,8 @@ msgstr "Verzeichnis '%s' existiert bereits"
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "generische Funktionen und andere S4-Objekte (z.B. '%s') können nicht gedumped werden: nutze 'code_files' Argument"
 
-#, fuzzy
 msgid "invalid 'type'; must be a character string"
-msgstr "'unzip' muss eine einzelne Zeichenkette sein"
+msgstr "ungültiger 'type'; muss eine Zeichenkette sein"
 
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
@@ -661,9 +663,8 @@ msgstr "'destdir' ist kein Verzeichnis"
 msgid "no package %s at the repositories"
 msgstr "kein Paket %s in den Repositories"
 
-#, fuzzy
 msgid "invalid 'type'"
-msgstr "unzulässige Anfrage"
+msgstr "ungültiger 'type'"
 
 msgid "package %s does not exist on the local repository"
 msgstr "Paket %s existiert nicht in lokalem Repository"
@@ -692,9 +693,8 @@ msgstr "mirror nicht interaktiv"
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
 
-#, fuzzy
 msgid "invalid options(\"pkgType\"); must be a character string"
-msgstr "'package' muss eine Zeichenkette oder NULL sein"
+msgstr "ungültige options(\"pkgType\"); muss eine Zeichenkette sein"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Bitte Repositories für diese Sitzung auswählen ---"
@@ -815,7 +815,7 @@ msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' muss \"\" oder eine bereits geöffnetes Verbindungsobjekt sein"
 
 msgid "'char' must have a non-zero width"
-msgstr ""
+msgstr "'char' musse eine Breite ungleich Null haben"
 
 msgid "must have 'max' > 'min'"
 msgstr "es muss 'max' > 'min' sein"
@@ -926,7 +926,7 @@ msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "'as.is' should be specified by the caller; using TRUE"
-msgstr ""
+msgstr "'as.is' sollte vom Aufrufenden Spezifiziert werden; nutze TRUE"
 
 msgid "empty beginning of file"
 msgstr "leerer Anfang der Datei"
@@ -968,7 +968,7 @@ msgid "socket not established"
 msgstr "socket nicht etabliert"
 
 msgid "argument is not a function or language object:"
-msgstr ""
+msgstr "Argument ist weder eine Funktion noch ein Sprachobjekt:"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame() nicht mit einem data.frame aufgerufen -- umgewandelt in einen solchen."
@@ -986,7 +986,7 @@ msgid "'nchar.max = %d' is too small"
 msgstr "'nchar.max = %d' ist zu klein"
 
 msgid "Not a validObject():"
-msgstr ""
+msgstr "Kein validObject():"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' hat keine gültigen levels()"
@@ -997,16 +997,14 @@ msgstr "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignor
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
 
-#, fuzzy
 msgid "The number of tokens != 'length(proto)'"
-msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
+msgstr "Die Anzahl von Tokens != 'length(proto)'"
 
 msgid "The number of tokens is not consistent across 'x'"
-msgstr ""
+msgstr "Die Zahl der Token ist nicht konsistent in 'x'"
 
-#, fuzzy
 msgid "cannot coerce %s to logical"
-msgstr "kann 'x' nicht nach in römische Zahl unwandeln"
+msgstr "kann %s nicht in booleschen Wert unwandeln"
 
 msgid "no lines found in %s"
 msgstr "keine Zeilen in '%s'"
@@ -1021,7 +1019,7 @@ msgid "no events were recorded"
 msgstr "keine Ereignisse aufgezeichnet"
 
 msgid "argument 'compressed' is ignored for the internal method"
-msgstr ""
+msgstr "Argument 'compressed' wird für die interne Methode ignoriert"
 
 msgid "invalid 'tarfile' argument"
 msgstr "unzulässiges 'tarfile' Argument"
@@ -1029,18 +1027,17 @@ msgstr "unzulässiges 'tarfile' Argument"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' muss boolesch oder eine Zeichenkette sein"
 
-#, fuzzy
 msgid "No %s command found"
-msgstr "Objekt '%s' nicht gefunden"
+msgstr "Kein %s Kommando gefunden"
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "bzip2"
-msgstr ""
+msgstr "bzip2"
 
 msgid "xz"
-msgstr ""
+msgstr "xz"
 
 msgid "failed to create directory %s"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -1049,21 +1046,19 @@ msgid "invalid octal digit"
 msgstr "unzulässige Oktalziffer"
 
 msgid "removing drive '%s'"
-msgstr ""
+msgstr "entferene Laufwerk '%s'"
 
 msgid "removing leading '/'"
-msgstr ""
+msgstr "entferne führenden '/'"
 
 msgid "path starts with '~'"
-msgstr ""
+msgstr "Pfad beginnt mit '~'"
 
-#, fuzzy
 msgid "path contains '..'"
-msgstr "Pfad für %s enthält Leerzeichen,"
+msgstr "Pfad enthält '..'"
 
-#, fuzzy
 msgid "path is empty"
-msgstr "'dump' ist leer"
+msgstr "Pfad ist leer"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' muss eine Zeichenkette oder eine Verbindung sein"
@@ -1072,7 +1067,7 @@ msgid "incomplete block on file"
 msgstr "unvollständiger Block in Datei"
 
 msgid "incomplete block: rather use gzfile(.) created connection?"
-msgstr ""
+msgstr "unvollständiger Block: Besser Verbindung mit gzfile(.) erzeugen?"
 
 msgid "invalid name field in tarball"
 msgstr "ungültiger Name in tar-Datei"
@@ -1123,9 +1118,8 @@ msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr "'title' muss NULL oder ein Zeichenkettenvektor mit Länge 1 sein"
 
-#, fuzzy
 msgid "Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
-msgstr "Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere Zeile eingeben, um abzubrechen"
+msgstr "Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine 0 eingeben, um abzubrechen"
 
 msgid "Invalid input, please try again"
 msgstr "Unzulässige Eingabe, bitte nochmal probieren"
@@ -1154,13 +1148,11 @@ msgstr "Versuch ignoriert '%s' zu setzen"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' muss eine einzelne Zeichenkette sein"
 
-#, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
-msgstr "'files' muss ein Zeichenkettenvektor sein, der einen oder mehrere Pfade spezifiziert"
+msgstr "'files' muss ein Zeichenkettenvektor sein, der einen oder mehrere Dateipfade spezifiziert"
 
-#, fuzzy
 msgid "argument 'zip' must be a non-empty character string"
-msgstr "'url' muss eine nicht-leere Zeichenkette sein"
+msgstr "Argument 'zip' muss eine nicht-leere Zeichenkette sein"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "kein Programm um 'mailto' URIs zu öffnen: Rückfall auf 'method=\"none\"'"
@@ -1181,7 +1173,7 @@ msgid "'url' must be a length-one character vector"
 msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
 msgid "'headers' must have names and must not be NA"
-msgstr ""
+msgstr "'headers' müssen Namen haben und dürfen nicht NA sein"
 
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile' muss ein Zeichenkettenvektor mit Länge 1 sein"
@@ -1248,24 +1240,20 @@ msgstr "Erzeugen von %s fehlgeschlagen"
 msgid "there is no 'libs' directory in package %s"
 msgstr "kein 'libs' Verzeichnis im Paket %s"
 
-#, fuzzy
 msgid "unable to move temporary installation %s to %s, copying instead"
-msgstr "kann temporäre Installation %s nicht nach %s verschieben"
+msgstr "kann temporäre Installation %s nicht nach %s verschieben, kopiere stattdessen"
 
-#, fuzzy
 msgid "unable to copy temporary installation %s to %s"
 msgstr "kann temporäre Installation %s nicht nach %s verschieben"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Nur '*.zip' und '*.tar.gz' Dateien können installiert werden."
 
-#, fuzzy
 msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' ist spezifisch für Windows"
+msgstr "'memory.size()' ist nicht mehr unterstützt"
 
-#, fuzzy
 msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' ist spezifisch für Windows"
+msgstr "'memory.limit()' ist nicht mehr unterstützt"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
@@ -1338,13 +1326,16 @@ msgid_plural ""
 "Versions of these packages for your version of R might be available elsewhere,\n"
 "see the ideas at\n"
 msgstr[0] ""
+"Eine Version dieses Paketes für ihre R Version ist evtl woanders verfügbar,\n"
+"siehe unter\n"
 msgstr[1] ""
+"Versionen dieser Pakete für ihre R Version sind evtl. woanders verfügbar,\n"
+"siehe unter\n"
 
-#, fuzzy
 msgid "package %s is not available %s"
 msgid_plural "packages %s are not available %s"
-msgstr[0] "Paket %s ist nicht verfügbar (%s)"
-msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
+msgstr[0] "Paket %s ist nicht verfügbar %s"
+msgstr[1] "Pakete %s sind nicht verfügbar %s"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

@@ -1,13 +1,13 @@
 # Translation of /src/library/stats/po/stats.pot
-# Copyright (C) 2008-2014 The R Foundation
+# Copyright (C) 2008-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
-"PO-Revision-Date: 2018-04-05 16:17+0200\n"
+"PO-Revision-Date: 2022-04-13 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -23,16 +23,16 @@ msgstr "Bandbreite/Spannweite der gleitenden Mediane größer als n"
 #: Srunmed.c:262
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
-msgstr ""
+msgstr "runmed(x, .., na.action=\"na.fail\"): es gibt NAs beginnend bei x[%ld]"
 
 #: Srunmed.c:265
 msgid "runmed(): invalid 'na.action'"
-msgstr ""
+msgstr "runmed(): unzulässige 'na.action'"
 
 #: Srunmed.c:315
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr ""
+msgstr "na_action Logikfehler (%d), bitte melden!"
 
 #: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
@@ -52,7 +52,7 @@ msgstr "approx(): Versuch NAs zu interpolieren"
 
 #: approx.c:128
 msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
-msgstr ""
+msgstr "approx(x,y, .., na.rm=FALSE): NA Werte in x sind nicht erlaubt"
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
@@ -221,7 +221,7 @@ msgid ""
 "Try increasing the size of the workspace."
 msgstr ""
 "FEXACT Fehler 6 (f5xact). LDKEY=%d ist für dieses Problem zu klein: kval=%d\n"
-" Versuchen Sie größeren Workspace.<"
+"Versuchen Sie größeren Workspace."
 
 #: fexact.c:1417
 #, c-format
@@ -260,21 +260,20 @@ msgstr "vektorwertige (multivariate) Reihe verlangt"
 #: fourier.c:221
 #, c-format
 msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
-msgstr ""
+msgstr "nextn() fand keine Lösung < %d = INT_MAX (größte ganze Zahl); übergebe '0+ n' statt 'n'"
 
 #: fourier.c:233
 #, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
-msgstr ""
+msgstr "nextn<64>() fand keine Lösung < %ld = UINT64_MAX (größte ganze Zahl)"
 
 #: fourier.c:249
 msgid "no factors"
 msgstr "keine Faktoren"
 
 #: fourier.c:250
-#, fuzzy
 msgid "too many factors"
-msgstr "keine Faktoren"
+msgstr "zu viele Faktoren"
 
 #: fourier.c:253
 msgid "invalid factors"
@@ -282,12 +281,12 @@ msgstr "ungültige Faktoren"
 
 #: fourier.c:257
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
-msgstr ""
+msgstr "'n' muss typeof(.) \"integer\" oder \"double\" ergeben"
 
 #: fourier.c:298
 #, c-format
 msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
-msgstr ""
+msgstr "nextn() = %<PRIu64> > 2^53 ist eventuell in R nicht exakt darstellbar (als \"double\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -319,11 +318,11 @@ msgstr "Spannbreite ist zu klein"
 #: loessc.c:257
 #, c-format
 msgid "workspace required (%.0f) is too large%s."
-msgstr ""
+msgstr "verlangter workspace (%.0f) ist zu groß%s."
 
 #: loessc.c:258
 msgid " probably because of setting 'se = TRUE'"
-msgstr ""
+msgstr " wahrscheinlich wegen der Einstellung 'se = TRUE'"
 
 #: loglin.c:372
 msgid "this should not happen"
@@ -351,7 +350,7 @@ msgstr "'delta' muss endlich und > 0 sein"
 
 #: mAR.c:83
 msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
+msgstr "assert in src/library/ts/src/carray.c fehlgeschlagen"
 
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
@@ -507,7 +506,7 @@ msgstr "Argument 'data' hat falschen Typ"
 #: model.c:1873
 #, c-format
 msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
-msgstr ""
+msgstr "'varlist' hat sich geändert (von nvar=%d) zu neuem %d nach EncodeVars() -- sollte nicht mehr passieren!"
 
 #: model.c:2157
 msgid "'.' in formula and no 'data' argument"
@@ -579,7 +578,7 @@ msgstr "'dir' ist kein numerischer Vektor der richtigen Länge"
 
 #: nls.c:299
 msgid "'central' is NA, but must be TRUE or FALSE"
-msgstr ""
+msgstr "'central' ist NA, muss aber TRUE oder FALSE sein"
 
 #: nls.c:315
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -612,7 +611,7 @@ msgstr "Gradient in optim gibt Ergebnis der Länge %d zurück, nicht Länge %d"
 #: optim.c:152 optim.c:191
 #, c-format
 msgid "non-finite finite-difference value [%d]"
-msgstr ""
+msgstr "nicht-endlicher Wert für endlichen-differenzen Wert [%d]"
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"

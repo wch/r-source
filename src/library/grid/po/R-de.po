@@ -1,13 +1,13 @@
 # Translation of src/library/graphics/po/R-grid.pot to German.
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.5.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2018-04-16 10:31+0200\n"
+"PO-Revision-Date: 2022-04-13 14:32+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -118,9 +118,8 @@ msgstr "es dürfen nur ein gültige 'gpar' Namen angegeben werden"
 msgid "invalid display list element"
 msgstr "ungültiges Displaylisten-Element"
 
-#, fuzzy
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
-msgstr "ein oder mehrere grobs überschrieben (grab NICHT zuverlässig; versuche 'wrap=TRUE'"
+msgstr "ein oder mehrere grobs überschrieben (grab NICHT zuverlässig; versuche 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "Viewport überschrieben (grab EVTL. nicht zuverlässig)"
@@ -149,9 +148,8 @@ msgstr "es muss mindestens ein Viewport nach oben navigiert werden"
 msgid "Invalid number of generations"
 msgstr "Ungültige Anzahl von Generationen"
 
-#, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "ungültiges 'arrow' Argument"
+msgstr "ungültiges 'clearGroups' Argument"
 
 msgid "invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
@@ -268,28 +266,25 @@ msgid "Invalid 'order'"
 msgstr "ungültige 'order'"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "Gruppendefinition fehlgeschlagen"
 
-#, fuzzy
 msgid "Invalid source"
-msgstr "ungültige 'order'"
+msgstr "ungültige Quelle"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "unzulässige Ausrichtung"
+msgstr "unzulässiges Ziel"
 
 msgid "Invalid compositing operator"
-msgstr ""
+msgstr "Unzulässiger Zusammensetzungsoperator"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Unbekannte Gruppe:"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Unzulässige Transformation (nichts gezeichnet)"
 
-#, fuzzy
 msgid "Invalid transform"
-msgstr "ungültige 'order'"
+msgstr "ungültige Transformation"
 
 msgid "'l' must be a layout"
 msgstr "'l' muss ein Layout sein"
@@ -340,32 +335,28 @@ msgid "invalid 'origin'"
 msgstr "unzulässiger 'origin'"
 
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Nur ein grob kann in einen Pfad konvertiert werden"
 
-#, fuzzy
 msgid "colours and stops must be at least length 1"
-msgstr "'x' und 'y' müssen gleiche Länge haben"
+msgstr "'colours' und 'stops' müssen mindestens Länge 1 haben"
 
-#, fuzzy
 msgid "x1, y1, x2, and y2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
+msgstr "'x1', 'y1', 'x2' und 'y2' müssen alle Länge 1 haben"
 
-#, fuzzy
 msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
+msgstr "'cx1', 'cy1', 'cx2', 'cy2', 'r1' und 'r2' müssen alle Länge 1 haben"
 
-#, fuzzy
 msgid "x, y, width, and height must all be length 1"
 msgstr "'x', 'y', 'width' und 'height' müssen alle Länge 1 haben"
 
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "Muster müssen auf ein grob basiert sein"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "Fehlende Musterfüllung ist auf transparent gesetzt worden"
 
 msgid "Gradient fill applied to object with no inside"
-msgstr ""
+msgstr "Gradientenfüllung auf ein Objekt ohne Inneres angewendet"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' muss ein 'unit'-Objekt sein"
@@ -403,9 +394,8 @@ msgstr "'x' und 'y' müssen Einheiten oder NULL sein"
 msgid "corrupt 'arrows' object"
 msgstr "beschädigtes 'arrows' Objekt"
 
-#, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr "'x', 'y' und 'id.length' müssen dieselbe Gesamtlänge angeben"
+msgstr "'x', 'y' und 'pathId.lengths' müssen dieselbe Gesamtlänge angeben"
 
 msgid "x and y must be units"
 msgstr "x und y müssen Einheiten sein"
@@ -452,9 +442,8 @@ msgstr "'x' und 'units' müssen Länge > 0 haben"
 msgid "invalid 'axis' or 'type'"
 msgstr "Ungültige 'axis' oder ungültiger 'type'"
 
-#, fuzzy
 msgid "Not a unit object"
-msgstr "Unzulässiges 'unit' Objekt"
+msgstr "Kein 'unit' Objekt"
 
 msgid "'Summary' function '%s' not meaningful for units"
 msgstr "'Summary'-Funktion '%s' hat für Einheiten keine Bedeutung"
@@ -463,7 +452,7 @@ msgid "operator '%s' not meaningful for units"
 msgstr "Operator '%s' hat für Einheiten keine Bedeutung"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' oder '/' können nicht als unäre Operatoren genutzt werden"
 
 msgid "only one operand may be a unit"
 msgstr "nur ein Operand darf eine Einheit sein"
@@ -472,25 +461,22 @@ msgid "non-unit operand must be numeric"
 msgstr "non-unit Operand muss numerisch sein"
 
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "Kann nicht mit Einheiten dividieren"
 
 msgid "both operands must be units"
 msgstr "beide Operanden müssen Einheiten sein"
 
-#, fuzzy
 msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "Index außerhalb des Bereichs ('unit' Teilauswahl)"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
+msgstr "Kann keinen Einheitsvektor mit Länge 0 erzeugen (\"unit\" Teilmengenbildung)"
 
-#, fuzzy
 msgid "index must be of length 1"
-msgstr "'x' und 'y' müssen alle Einheiten der Länge 1 sein"
+msgstr "'index' muss Länge 1 haben"
 
-#, fuzzy
 msgid "replacement must be of length 1"
-msgstr "'gpar' Element '%s' darf nicht Länge 0 haben"
+msgstr "Ersetzung muss Länge 1 haben"
 
 msgid "invalid 'theta'"
 msgstr "unzulässiges 'theta'"
@@ -504,9 +490,8 @@ msgstr "ungültiger 'gp' Wert"
 msgid "invalid 'clip' value"
 msgstr "unzulässiger Wert für 'clip'"
 
-#, fuzzy
 msgid "invalid 'mask' value"
-msgstr "ungültiger Wert für 'ask'"
+msgstr "ungültiger Wert für 'mask'"
 
 msgid "invalid 'xscale' in viewport"
 msgstr "unzulässiger Wert für 'xscale' in viewport"

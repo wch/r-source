@@ -1,13 +1,13 @@
 # Translation of  src/library/grDevices/po/R-grDevices.pot to German.
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.4\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
-"PO-Revision-Date: 2018-04-05 10:53+0200\n"
+"PO-Revision-Date: 2022-04-13 13:19+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -20,13 +20,13 @@ msgid "invalid 'filename'"
 msgstr "unzulässiges 'filename' Argument"
 
 msgid "svg: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "svg: Cairo-basierte Geräte sind für diese Plattform nicht verfügbar"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "cairo_pdf: Cairo-basierte Geräte sind für diese Plattform nicht verfügbar"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "cairo_ps: Cairo-basierte Geräte sind für diese Plattform nicht verfügbar"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' darf nicht negativ sein"
@@ -68,13 +68,13 @@ msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start' und 'end' müssen unterschiedlich und in [0, 1] sein"
 
 msgid "'palette' does not match any given palette"
-msgstr ""
+msgstr "'palette' passt zu keiner angegebenen Palette"
 
 msgid "'palette' is ambiguous"
-msgstr ""
+msgstr "'palette' ist nicht eindeutig"
 
 msgid "'n' set to %s, the maximum available for %s palette"
-msgstr ""
+msgstr "'n' wird auf %s gesetzt, das Maximum für die %s Palette"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' muss ein Skalar oder 'sRGB' sein"
@@ -161,19 +161,16 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): nutze postscript(file=\"%s\")"
 
 msgid "wrong 'type'; should never happen, please report!"
-msgstr ""
+msgstr "falscher 'type'; sollte nie passieren, bitte melden!"
 
-#, fuzzy
 msgid "Invalid fill rule"
-msgstr "ungültiges 'file' Argument"
+msgstr "ungültige 'fill' Regel"
 
-#, fuzzy
 msgid "Invalid pattern type"
-msgstr "ungültiger Zeichensatztyp"
+msgstr "ungültiger Patterntyp"
 
-#, fuzzy
 msgid "Invalid 'extend' value"
-msgstr "unzulässiges 'filename' Argument"
+msgstr "unzulässiger 'extend' Wert"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt)"
@@ -200,7 +197,7 @@ msgid "invalid 'family' argument"
 msgstr "ungültiges 'family' Argument"
 
 msgid "'title' argument \"%s\" contains invalid characters"
-msgstr ""
+msgstr "'title' Argument \"%s\" enthält unzulässige Zeichen"
 
 msgid "invalid 'file' argument '%s'"
 msgstr "ungültiges 'file' Argument '%s'"
@@ -293,7 +290,7 @@ msgid "argument is not of class %s"
 msgstr "Argument ist nicht von Klasse %s"
 
 msgid "invalid \"recordedplot\":"
-msgstr ""
+msgstr "unzulässiger \"recordedplot\":"
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "Snapshot wurde in einer anderen R Version aufgenommen (pre 3.3.0)"
@@ -314,7 +311,7 @@ msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' muss positiv sein"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr ""
+msgstr "Das ('Recommended') Paket \"KernSmooth\" muss installiert sein"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' muss ein \"range\" sein, deshalb von Länge 2"
@@ -360,13 +357,13 @@ msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"quartz\" nicht verfügbar. Probiere \"Xlib\""
 
 msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo\" nicht verfügbar. Probiere \"Xlib\""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo-png\" nicht verfügbar. Probiere \"Xlib\""
 
 msgid "invalid 'title'"
 msgstr "unzulässiger 'title'"
@@ -410,7 +407,7 @@ msgid "invalid value for 'rescale'"
 msgstr "unzulässiger Wert für 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
+msgstr "Aufrufe wie '%s' sind unsicher und sollten durch '%s' ersetzt werden"
 
 msgid "can only bring windows devices to the front"
 msgstr "kann nur Windows-Devices nach vorne bringen"

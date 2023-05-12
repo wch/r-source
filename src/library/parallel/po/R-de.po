@@ -1,13 +1,13 @@
 # Translation of src/library/parallel/po/R-parallel.pot to German
-# Copyright (C) 2011-2014 The R Foundation
+# Copyright (C) 2011-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2011-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2011-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.4\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
-"PO-Revision-Date: 2018-04-05 14:54+0200\n"
+"PO-Revision-Date: 2022-04-13 11:57+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -52,7 +52,7 @@ msgid "node of a socket cluster on host %s with pid %d"
 msgstr "Knoten des Socketclusters auf System %s mit PID %d"
 
 msgid "Connection setup failed or timed out."
-msgstr ""
+msgstr "Verbindung konnte nicht hergestellt werden oder ist abgelaufen."
 
 msgid "PORT must be specified"
 msgstr "PORT muss angegeben werden"
@@ -61,7 +61,7 @@ msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' muss >= 1 sein"
 
 msgid "Cluster setup failed."
-msgstr ""
+msgstr "Clustersetup fehlgeschlagen."
 
 msgid "invalid 'child' argument"
 msgstr "unzulässiges Argument für 'child'"
@@ -117,8 +117,8 @@ msgstr "'mc.cores' > 1 ist unter Windows nicht unterstützt"
 
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Clustersetup fehlgeschlagen. %d Arbeitsprozess von %d konnte sich nicht verbinden."
+msgstr[1] "Clustersetup fehlgeschlagen. %d Arbeitsprozesse von %d konnten sich nicht verbinden."
 
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
@@ -127,22 +127,17 @@ msgstr[1] "Socketcluster mit %d Knoten auf Systemen %s"
 
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d paralleler Funktionsaufruf lieferte kein Ergebnis"
+msgstr[1] "%d parallele Funktionsaufrufe lieferten kein Ergebnis"
 
-#, fuzzy
 msgid ""
 "scheduled core %s did not deliver a result, all values of the job will be "
 "affected"
 msgid_plural ""
 "scheduled cores %s did not deliver results, all values of the jobs will be "
 "affected"
-msgstr[0] ""
-"eingeplanter Kern %s berichtet Fehler in Benutzerkode, alle Werte des Jobs "
-"werden betroffen sein"
-msgstr[1] ""
-"eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
-"werden betroffen sein"
+msgstr[0] "eingeplanter Kern %s lieferte kein Ergebnis, alle Werte des Jobs werden betroffen sein"
+msgstr[1] "eingeplante Kerne %s lieferten kein Ergebnis, alle Werte der Jobs werden betroffen sein"
 
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
@@ -159,8 +154,8 @@ msgstr[1] ""
 
 msgid "%d parallel job did not deliver a result"
 msgid_plural "%d parallel jobs did not deliver results"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d parallele Aufgabe lieferte kein Ergebnis"
+msgstr[1] "%d parallele Aufgaben lieferten kein Ergebnis"
 
 #~ msgid "socket cluster with %d nodes on hosts %s"
 #~ msgstr "Socketcluster mit %d Knoten auf den Systemen %s"

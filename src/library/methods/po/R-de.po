@@ -1,13 +1,13 @@
 # Translation of src/library/methods/po/R-methods.pot to German
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-02-01 13:58\n"
-"PO-Revision-Date: 2018-04-05 14:50+0200\n"
+"PO-Revision-Date: 2022-04-13 12:11+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -508,13 +508,11 @@ msgstr ""
 "%s ist, zusammen mit der Nutzung der \"MethodsList\" Metadatenobjekte, "
 "veraltet."
 
-#, fuzzy
 msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
-msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet"
+msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet."
 
-#, fuzzy
 msgid "Use %s instead."
-msgstr "nutze stattdessen %s."
+msgstr "Nutze stattdessen %s."
 
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
@@ -522,10 +520,8 @@ msgstr ""
 "%s ist, zusammen mit der Nutzung der \"MethodsList\" Metadatenobjekte,\n"
 " nicht mehr vorhanden."
 
-#, fuzzy
 msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
-msgstr ""
-"In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist nicht mehr möglich"
+msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist nicht mehr möglich."
 
 msgid "invalid object for formal method definition: type %s"
 msgstr "unzulässiges Objekt für die formale Methodendefinition: Typ %s"
@@ -685,20 +681,18 @@ msgstr ""
 "ein Prototyp der Klasse %s wurde angegeben, aber die Klassendefiniton "
 "verlangt eine Objekt der Klasse %s"
 
-#, fuzzy
 msgid ""
 "Definition of slot %s, in class %s, as %s conflicts with definition, "
 "inherited from class %s, as %s"
 msgstr ""
-"Slot %s in Klasse %s, momentan definiert (oder vererbt) als \"%s\", "
-"widerspricht einer vererbten Definition in Klasse %s"
+"Definition von slot %s, in Klasse %s, als %s widerspricht der geerbten "
+"Definition aus Klasse %s, als %s"
 
 msgid "class %s extends an undefined class (%s)"
 msgstr "Klasse %s erweitert eine nicht definierte Klasse (%s)"
 
-#, fuzzy
 msgid "The prototype for class %s has undefined slot(s): %s"
-msgstr "die '%s' Liste für Klasse %s enhält eine undefinierte Klasse %s"
+msgstr "Der Prototyp für Klasse %s hat nicht definierte Slot(s): %s"
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -900,20 +894,19 @@ msgid "Empty function name in .getGeneric"
 msgstr "Leerer Funktionsname in .getGeneric"
 
 msgid "--- caching class"
-msgstr ""
+msgstr "--- cache Klasse"
 
 msgid "--- done caching class"
-msgstr ""
+msgstr "--- Cachen der Klasse abgeschlossen"
 
 msgid "--- getting generic"
-msgstr ""
+msgstr "--- hole Generische"
 
-#, fuzzy
 msgid "(and methods)"
-msgstr "für Methode %s()"
+msgstr "(und Methoden)"
 
 msgid "--- done getting generic"
-msgstr ""
+msgstr "--- holen der Generischen abgeschlossen"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -1309,13 +1302,12 @@ msgstr ""
 "Klasse %s ist versiegelt; neue Superklassen können nur mit 'setClassUnion' "
 "erzeugt werden"
 
-#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
 "revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 "Klasse %s ist definiert (mit Paketslot %s) aber kein Metadatenobjekt "
-"gefunden, um %s Information zu überprüfen -- nicht exportiert? Erzeuge Kopie "
+"gefunden, um %s Information zu überprüfen -- nicht importiert? Erzeuge Kopie "
 "in Paket %s"
 
 msgid "class %s cannot extend class %s"

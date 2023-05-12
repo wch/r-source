@@ -1,13 +1,13 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17+0100\n"
-"PO-Revision-Date: 2018-04-05 09:13+0200\n"
+"PO-Revision-Date: 2022-04-13 12:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -54,9 +54,9 @@ msgid "plot region too large"
 msgstr "plot Bereich zu groß"
 
 #: graphics.c:1946
-#, fuzzy, c-format
+#, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr "unendliche Achsengrenzen [GDcale(%g,%g,%d, .); log=%d]"
+msgstr "unendliche axis=%d Grenzen [GDcale(%g,%g,..); log=%s] -- jetzt korrigiert"
 
 #: graphics.c:2023
 #, c-format
@@ -269,13 +269,12 @@ msgid "zero-length '%s' specified"
 msgstr "'%s' mit Länge 0 angegeben"
 
 #: plot.c:889
-#, fuzzy
 msgid "'gap.axis' must be of length one"
-msgstr "'hadj' muss Länge 1 haben"
+msgstr "'gap.axis' muss Länge 1 haben"
 
 #: plot.c:919
 msgid "'gap.axis' must be NA or a finite number"
-msgstr ""
+msgstr "'gap.axis' muss NA oder eine endliche Zahl sein"
 
 #: plot.c:977
 msgid "'labels' is supplied and not 'at'"
@@ -537,7 +536,7 @@ msgstr "contour(): zirkuläre/lange Segmentliste -- festgelegtes %s > %d?"
 
 #: plot3d.c:1935
 msgid "no 'levels'"
-msgstr ""
+msgstr "keine 'levels'"
 
 #: plot3d.c:1939
 msgid "missing 'x' values"
@@ -558,7 +557,7 @@ msgstr "'y' Werte aufsteigend erwartet"
 #: plot3d.c:1953
 #, c-format
 msgid "non-finite level values: levels[%d] = %g"
-msgstr ""
+msgstr "nicht-endliche Stufenwerte: levels[%d] = %g"
 
 #: plot3d.c:1966
 msgid "all z values are equal"

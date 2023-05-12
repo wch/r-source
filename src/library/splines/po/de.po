@@ -29,4 +29,4 @@ msgstr "derivs = %d >= ord = %d, sollte aber in {0,..,ord-1} liegen"
 #: splines.c:225
 #, c-format
 msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
-msgstr "derivs[%d] = %d >= ord = %d, sollte aber in {0,..,ord-1} liegen<"
+msgstr "derivs[%d] = %d >= ord = %d, sollte aber in {0,..,ord-1} liegen"

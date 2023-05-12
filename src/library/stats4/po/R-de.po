@@ -1,10 +1,10 @@
 # Translation of src/library/stats4/po/R-stats4.pot
-# Copyright (C) 2008-2014 The R Foundation
+# Copyright (C) 2008-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2023-01-28 21:05+0000\n"
@@ -27,10 +27,10 @@ msgid "Mismatch in length of start values"
 msgstr "Unterschiedliche Längen der Startwerte"
 
 msgid "fixed values violate constraints"
-msgstr ""
+msgstr "fixierte Werte verletzen die Randbedingungen"
 
 msgid "start values do not satisfy constraints"
-msgstr ""
+msgstr "Startwerte erfüllen nicht die Randbedingungen"
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"

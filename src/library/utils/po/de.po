@@ -1,11 +1,11 @@
 # Translation of src/library/utils/po/utils.pot to German.
-# Copyright (C) 2014 The R Foundation
+# Copyright (C) 2014-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2014-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.5.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2023-02-22 13:05+0000\n"
@@ -110,7 +110,6 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "Spalte %s behauptet Faktor zu sein, hat aber keine numerischen Kodes"
 
 #: io.c:1179
-#, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "beschädigte Matrix -- Dimensionen entsprechen nicht der Länge"
 
@@ -145,17 +144,16 @@ msgid "'%s' contains missing values"
 msgstr "'%s' enthält fehlende Werte"
 
 #: utils.c:68
-#, fuzzy
 msgid "argument 'class' must be a character string"
-msgstr "'text' muss eine Zeichenkette sein"
+msgstr "Argument 'class' muss eine Zeichenkette sein"
 
 #: utils.c:78
 msgid "argument 'x' must be a length-1 character vector"
-msgstr "Argument muss Zeichenkettenvektor der Länge 1 sein"
+msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
 
 #: utils.c:81
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr "Argument 'x' muss UTF-8 kodiert werden"
+msgstr "Argument 'x' muss UTF-8 kodiert sein (inkl. ASCII)"
 
 #: utils.c:147
 msgid "'hostname' must be a character vector of length 1"

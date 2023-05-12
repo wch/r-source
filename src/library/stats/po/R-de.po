@@ -1,11 +1,11 @@
 # Translation of /src/library/stats/po/R-stats.pot to German
-# Copyright (C) 2008-2014 The R Foundation
+# Copyright (C) 2008-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.5.0\n"
+"Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2023-01-28 21:05+0000\n"
@@ -15,8 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr "Modelle sind nicht alle mit der gleichen Datensatzgröße angepasst worden"
@@ -254,7 +253,7 @@ msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "Spalten von 'contrast.obj' müssen einen Kontrast definieren (Summe = 0)"
 
 msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
-msgstr ""
+msgstr "'ties' sind weder \"ordered\", noch eine Funktion, noch list(<string>, <function>)"
 
 msgid "collapsing to unique 'x' values"
 msgstr "Reduktion auf einmalige 'x' Werte"
@@ -805,9 +804,8 @@ msgstr "unzulässiges Argument 'lambda'"
 msgid "%s link not recognised"
 msgstr "Link %s nicht erkannt"
 
-#, fuzzy
 msgid "link \"%s\" not available for %s family; available links are %s"
-msgstr "Link \"%s\" für die Poisson-Familie nicht verfügbar: verfügbar sind %s"
+msgstr "Link \"%s\" für die %s-Familie nicht verfügbar: verfügbar sind %s"
 
 msgid "negative values not allowed for the 'Poisson' family"
 msgstr "negative Werte für die 'Poisson'-Familie nicht zugelassen"
@@ -824,28 +822,24 @@ msgstr "kann keine Startwerte finden; bitte welche angeben"
 msgid "y values must be 0 <= y <= 1"
 msgstr "y Werte müssen in [0, 1] liegen"
 
-#, fuzzy
 msgid "non-integer #successes in a %s glm!"
-msgstr "Nicht-ganzzahlige #Erfolge in einem Binomial-GLM"
+msgstr "Nicht-ganzzahlige #Erfolge in einem %s-GLM"
 
-#, fuzzy
 msgid "non-integer counts in a %s glm!"
-msgstr "nicht-ganzzahlige Anzahlen in einem Binomial-GLM"
+msgstr "nicht-ganzzahlige Anzahlen in einem %s-GLM"
 
-#, fuzzy
 msgid ""
 "for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
-"für die 'binomial'-Familie muss y entweder ein Vektor aus Nullen und\n"
+"für die '%s'-Familie muss y entweder ein Vektor aus Nullen und\n"
 "Einsen oder eine zweispaltige Matrix mit Erfolgen in der ersten und Misserfolgen in der zweiten Spalte sein"
 
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "kann keine Simulationen mit nicht ganzzahligen prior.weights durchführen"
 
-#, fuzzy
 msgid "non-positive values not allowed for the 'Gamma' family"
-msgstr "nicht-positive Werte sind für die 'gamma'-Familie nicht zulässig"
+msgstr "nicht-positive Werte sind für die 'Gamma'-Familie nicht zulässig"
 
 msgid "using weights as shape parameters"
 msgstr "nutze Gewichte als Gestaltparameter"
@@ -1310,9 +1304,8 @@ msgstr "ungültige Modell QR Matrix"
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "Länge der nicht-NA Residuen passt nicht zur Anzahl Fälle im Fit"
 
-#, fuzzy
 msgid "too few cases i with h_ii > 0), n < k"
-msgstr "zu wenig Fälle, n < k"
+msgstr "zu wenig Fälle i mit h_ii > 0), n < k"
 
 msgid "predictors must all be numeric"
 msgstr "Prädiktoren müssen alle numerisch sein"
@@ -1356,9 +1349,8 @@ msgstr "unzulässiges Argument 'cell'"
 msgid "invalid argument 'degree'"
 msgstr "unzulässiges Argument 'degree'"
 
-#, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
-msgstr "nicht befolgt, da iterations ="
+msgstr "iterTrace = %d nicht befolgt, da iterations = %d"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "erstes Argument muss ein \"loess\" Objekt sein"
@@ -1490,24 +1482,20 @@ msgstr "eff.aovlist: nicht-orthogonale Kontraste würde eine falsche Antwort geb
 msgid "cannot create a formula from a zero-column data frame"
 msgstr "kann aus einem Dataframe ohne Spalten keine Formel generieren"
 
-#, fuzzy
 msgid "invalid formula: %s"
-msgstr "unzulässige Formel"
+msgstr "unzulässige Formel: %s"
 
-#, fuzzy
 msgid "invalid formula %s: not a call"
-msgstr "unzulässige Formel in deriv"
+msgstr "unzulässige Formel %s: ist kein Aufruf"
 
-#, fuzzy
 msgid "invalid formula %s: assignment is deprecated"
-msgstr "unzulässige Formel in deriv"
+msgstr "unzulässige Formel %s: Zuweisung ist veraltet"
 
 msgid "invalid formula %s: extraneous call to `%s` is deprecated"
-msgstr ""
+msgstr "unzulässige Formel %s: Zusätzlicher Aufruf von `%s` ist veraltet"
 
-#, fuzzy
 msgid "invalid formula %s"
-msgstr "unzulässige Formel"
+msgstr "unzulässige Formel %s"
 
 msgid "no terms component nor attribute"
 msgstr "weder terms Komponente noch Attribut"
@@ -1516,10 +1504,10 @@ msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' muss ein Zeichenkettenvektor mit Länge >= 1 sein"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
+msgstr "Nicht zu parsende 'response' \"%s\"; Nutzung ist veraltet.  Nutze as.name(.) oder `..`!"
 
 msgid "reformulate"
-msgstr ""
+msgstr "reformulate"
 
 msgid "deprecatedWarning"
 msgstr "deprecatedWarning"
@@ -1536,9 +1524,8 @@ msgstr "die Variablen %s wurden mit anderen Typen als im Fit angegeben"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' muss ein Dataframe sein, weder Matrix noch Array"
 
-#, fuzzy
 msgid "'data' must be a data.frame, environment, or list"
-msgstr "'data' muss Liste oder Umgebung sein"
+msgstr "'data' muss data.frame, Umgebung oder Liste sein"
 
 msgid "variable '%s' is not a factor"
 msgstr "Variable '%s' is kein Faktor"
@@ -1549,13 +1536,11 @@ msgstr "'offset' muss numerisch sein"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "Modellframe und Formel passen in model.matrix() nicht zusammen"
 
-#, fuzzy
 msgid "non-list contrasts argument ignored"
-msgstr "unzulässiges 'contrasts.arg' Argument"
+msgstr "nicht-Listen Kontrastargument ignoriert"
 
-#, fuzzy
 msgid "'contrasts.arg' argument must be named"
-msgstr "'control' Argument muss eine benannte Liste sein"
+msgstr "'contrasts.arg' Argument muss benannt sein"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "Variable '%s' fehlt, ihre Kontraste werden ignoriert"
@@ -1636,7 +1621,7 @@ msgid "levels truncated to positive values only"
 msgstr "Stufen auf ausschließlich positive Werte reduziert"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
-msgstr ""
+msgstr "unzulässiges 'attr(rhs, \"gradient\")'"
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying : Länge von 'vary' muss Länge der Parameter entsprechen"
@@ -1773,20 +1758,17 @@ msgstr "genau ein Wert aus 'n', 'delta', 'sd', 'power', und 'sig.level' muss NUL
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "genau eine der Variablen 'n', 'p1', 'p2', 'power', und 'sig.level' muss NULL sein"
 
-#, fuzzy
 msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr "Es kann kein p1 in [0, p2] gefunden werden, um die gewünschte Power zu erreichen"
 
-#, fuzzy
 msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr "Es kann kein p2 in [p1, 1] gefunden werden, um die gewünschte Power zu erreichen"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Es kann kein Signifikanzniveau in [0, 1] gefunden werden, um die gewünschte Power zu erreichen"
 
-#, fuzzy
 msgid "'%s' must be numeric in [0, 1]"
-msgstr "'sig.level' muss numerisch aus [0, 1] sein"
+msgstr "'%s' muss numerisch aus [0, 1] sein"
 
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr "genau eine der Variablen 'groups', 'n', 'between.var', 'within.var', 'power' und 'sig.level' muss NULL sein"
@@ -1875,9 +1857,8 @@ msgstr "'formula' fehlt"
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' muss für geordnete Faktoren 1 oder 3 sein"
 
-#, fuzzy
 msgid "(unordered) factors are not allowed"
-msgstr "Faktoren sind nicht erlaubt"
+msgstr "(ungeordnete) Faktoren sind nicht erlaubt"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "fehlende Werte und NaNs sind nicht erlaubt, wenn 'na.rm' = FALSE"
@@ -1925,7 +1906,7 @@ msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr "'lengths(varying)' müssen alle 'length(times)' entsprechen"
 
 msgid "'idvar' must uniquely identify records"
-msgstr ""
+msgstr "'idvar' muss Einträge eindeutig identifizieren"
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "es gibt Datensätze mit fehlenden Zeiten; diese werden ignoriert"
@@ -2188,9 +2169,8 @@ msgstr "'ts' Objekt muss eine oder mehrere Beobachtungen enthalten"
 msgid "'start' cannot be after 'end'"
 msgstr "'start' kann nicht nach 'end' sein"
 
-#, fuzzy
 msgid "'end' must be a whole number of cycles after 'start'"
-msgstr "'centers' müssen eine Zahl oder eine Matrix sein"
+msgstr "'end' muss eine ganze Zahl von Zyklen hinter 'start' sein"
 
 msgid "no time series supplied"
 msgstr "keine Zeitreihe angegeben"
@@ -2198,9 +2178,8 @@ msgstr "keine Zeitreihe angegeben"
 msgid "not all series have the same frequency"
 msgstr "nicht alle Zeitreihen haben gleiche Frequenz"
 
-#, fuzzy
 msgid "not all series have the same phase"
-msgstr "nicht alle Zeitreihen haben gleiche Frequenz"
+msgstr "nicht alle Zeitreihen haben gleiche Phase"
 
 msgid "non-intersecting series"
 msgstr "schnittfreie Zeitreihen"
@@ -2226,9 +2205,8 @@ msgstr "Scatterplots nur für univariate Zeitreihen"
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels' müssen boolesch oder Zeichenkette sein"
 
-#, fuzzy
 msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
-msgstr "'frequency' und 'deltat' angegeben aber inkosistent"
+msgstr "'frequency' und 'deltat' sind beide nicht NULL und inkonsistent"
 
 msgid "'frequency' not changed"
 msgstr "'frequency' nicht geändert"
@@ -2299,9 +2277,8 @@ msgstr "'ratio' muss eine einzelne positive Zahl sein"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' und 'w' müssen die selbe Länge haben"
 
-#, fuzzy
 msgid "not enough (non-missing) 'x' observations"
-msgstr "nicht genug (endliche) 'x' Beobachtungen"
+msgstr "nicht genug (nicht-fehlende) 'x' Beobachtungen"
 
 msgid "requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"

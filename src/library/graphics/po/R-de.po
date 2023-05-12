@@ -1,13 +1,13 @@
 # Translation of src/library/graphics/po/R-graphics.pot to German.
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2022 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.5.0\n"
+"Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-02-01 13:58\n"
-"PO-Revision-Date: 2018-04-16 10:30+0200\n"
+"PO-Revision-Date: 2022-04-13 12:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -87,16 +87,14 @@ msgstr "falsche Anzahl von Namen"
 msgid "'formula' missing or incorrect"
 msgstr "'formula' fehlt oder fehlerhaft"
 
-#, fuzzy
 msgid "formula must specify 1 or 2 categorical variables"
-msgstr "'formula' sollte genau zwei Variablen spezifizieren"
+msgstr "Formel muss 1 oder 2 kategoriale Variablen spezifizieren"
 
 msgid "duplicated categorical values - try another formula or subset"
-msgstr ""
+msgstr "doppelte kategoriale Werte - versuchen Sie eine andere Formel oder Teilmenge"
 
-#, fuzzy
 msgid "formula with cbind() must specify 1 categorical variable"
-msgstr "'formula' sollte genau zwei Variablen spezifizieren"
+msgstr "Formel mit cbind() muss eine kategoriale Variable spezifizieren"
 
 msgid "invalid first argument"
 msgstr "ungültiges erstes Argument"
@@ -377,16 +375,14 @@ msgstr "kann nicht mehr als eine 'x' Koordinate behandeln"
 msgid "must have a response variable"
 msgstr "muss eine Antwortvariable besitzen"
 
-#, fuzzy
 msgid "invalid plot type"
-msgstr "unzulässige Boxplot-Breite"
+msgstr "unzulässiger Plottyp"
 
 msgid "plot type '%s' will be truncated to first character"
-msgstr ""
+msgstr "Plottyp '%s' wird nach dem ersten Zeichen abgeschnitten"
 
-#, fuzzy
 msgid "invalid plot type '%s'"
-msgstr "unzulässige Boxplot-Breite"
+msgstr "unzulässiger Plottyp '%s'"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' auf etwas anderes als einen Dataframe angewendet"
@@ -495,11 +491,10 @@ msgstr "y ist logarithmische Skala: yinch() ergibt keinen Sinn"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "logarithmische Skala: xyinch ergibt keinen Sinn"
 
-#, fuzzy
 msgid "Duplicated argument %s is disregarded"
 msgid_plural "Duplicated arguments %s are disregarded"
-msgstr[0] "zusätzliches Argument %s wird verworfen"
-msgstr[1] "zusätzliche Argumente %s werden verworfen"
+msgstr[0] "doppeltes Argument %s wird verworfen"
+msgstr[1] "doppelte Argumente %s werden verworfen"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

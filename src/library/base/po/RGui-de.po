@@ -1,11 +1,11 @@
 # Translation of po/RGui.pot to German.
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2005-2014.
-# Detlef Steuer <steuer@hsuhh.de>, 2005-2014.
+# Copyright (C) 2005-2022.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2023-01-28 21:04+0000\n"
@@ -859,7 +859,7 @@ msgstr "Ordne Icons an"
 
 #: src/extra/graphapp/metafile.c:55
 msgid "Unable to save metafile to the clipboard"
-msgstr "Kann Metafile nicht ins Clipboard speichern"
+msgstr "Kann Metafile nicht in Zwischenablage speichern"
 
 #: src/extra/graphapp/metafile.c:108
 msgid "Unable to create metafile"
@@ -875,7 +875,7 @@ msgstr "Kann keinen Drucker auswählen"
 
 #: src/extra/graphapp/printer.c:118
 msgid "Insufficient memory for new printer"
-msgstr "Ungenügend Speicher für einen neuen Drucker"
+msgstr "Ungenügend Speicher für neuen Drucker"
 
 #: src/extra/graphapp/printer.c:151
 msgid "Unable to start the print job"
