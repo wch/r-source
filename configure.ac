@@ -1228,7 +1228,6 @@ esac
 
 ## This was -ffloat-store on all gfortran/g77 platforms prior to R 3.5.0
 ## Suggestion adopted from https://gcc.gnu.org/wiki/FloatingPointMath
-## It was already the default on 32-bit macOS
 if test "${SAFE_FFLAGS+set}" != set; then
   if test "x${ac_cv_fc_compiler_gnu}" = xyes; then
     case "${host_cpu}" in
@@ -1243,28 +1242,6 @@ if test "${SAFE_FFLAGS+set}" != set; then
     SAFE_FFLAGS="${FFLAGS}"
   fi
 fi
-
-## If the Fortran compiler is gfortran >= 7, add
-## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
-## that break with LAPACK/BLAS-style passing of length-1 strings
-## (without hidden arguments giving their lengths).
-## No longer used once all packages are passing char lengths.
-dnl AC_MSG_CHECKING([if need -fno-optimize-sibling-calls for gfortran])
-dnl AC_CACHE_VAL([r_cv_have_gfortran7],
-dnl [r_cv_have_gfortran7=no
-dnl if test "x${GFC}" = xyes; then
-dnl   gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
-dnl   if test ${gfortran_version_maj} -ge 7; then
-dnl     r_cv_have_gfortran7=yes
-dnl   fi
-dnl fi])
-
-dnl if test "x${r_cv_have_gfortran7}" = xyes; then
-dnl   AC_MSG_RESULT([yes])
-dnl   R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
-dnl else
-dnl   AC_MSG_RESULT([no])
-dnl fi
 
 ### type for Fortran 'hidden' character lengths, if any
 ### Try setting FPIFLAGS if not already set.

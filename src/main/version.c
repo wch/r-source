@@ -157,10 +157,12 @@ attribute_hidden void PrintVersion_part_1(char *s, size_t len)
     }
     SPRINTF_2("\nCopyright (C) %s The R Foundation for Statistical Computing\n",
 	      R_YEAR);
-/*  strcat(s, "ISBN 3-900051-07-0\n");  */
     SPRINTF_2("Platform: %s", R_PLATFORM);
     if(strlen(R_ARCH)) { SPRINTF_2("/%s", R_ARCH); }
-    SPRINTF_2(" (%d-bit)\n", 8*(int)sizeof(void *));
+    if(sizeof(void *) != 8) {
+	SPRINTF_2(" (%d-bit)", 8*(int)sizeof(void *));
+    }
+    strcat(s, "\n");
 }
 
 attribute_hidden SEXP do_internalsID(SEXP call, SEXP op, SEXP args, SEXP env)

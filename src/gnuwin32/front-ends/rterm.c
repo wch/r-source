@@ -138,7 +138,7 @@ int AppMain(int argc, char **argv)
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
 	saveConsoleTitle();
 #ifdef _WIN64
-	SetConsoleTitle("Rterm (64-bit)");
+	SetConsoleTitle("Rterm");
 #else
 	SetConsoleTitle("Rterm (32-bit)");
 #endif
