@@ -33,10 +33,9 @@
 
       \item Serializations can now be interrupted (e.g., by \kbd{Ctrl-C} on
       a Unix-alike) if they take too long, as e.g., from \code{save.image()},
-      thanks to suggestions by Ivan Krylow and others on R-devel.
+      thanks to suggestions by Ivan Krylov and others on R-devel.
     }
   }
-
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
