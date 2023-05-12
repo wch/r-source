@@ -28990,7 +28990,6 @@ esac
 
 ## This was -ffloat-store on all gfortran/g77 platforms prior to R 3.5.0
 ## Suggestion adopted from https://gcc.gnu.org/wiki/FloatingPointMath
-## It was already the default on 32-bit macOS
 if test "${SAFE_FFLAGS+set}" != set; then
   if test "x${ac_cv_fc_compiler_gnu}" = xyes; then
     case "${host_cpu}" in
@@ -29005,13 +29004,6 @@ if test "${SAFE_FFLAGS+set}" != set; then
     SAFE_FFLAGS="${FFLAGS}"
   fi
 fi
-
-## If the Fortran compiler is gfortran >= 7, add
-## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
-## that break with LAPACK/BLAS-style passing of length-1 strings
-## (without hidden arguments giving their lengths).
-## No longer used once all packages are passing char lengths.
-
 
 ### type for Fortran 'hidden' character lengths, if any
 ### Try setting FPIFLAGS if not already set.
@@ -61796,6 +61788,10 @@ fi
 if test -n "${warn_pdfviewer}"; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_pdfviewer}" >&5
 printf "%s\n" "$as_me: WARNING: ${warn_pdfviewer}" >&2;}
+fi
+if test "${ac_cv_sizeof_size_t}" = 4; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: 32-bit build -- this is little tested" >&5
+printf "%s\n" "$as_me: WARNING: 32-bit build -- this is little tested" >&2;}
 fi
 
 ### Local variables: ***

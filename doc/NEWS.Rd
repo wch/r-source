@@ -43,6 +43,9 @@
       \item System valgrind headers are required to use
       \command{configure} option \option{--with-valgrind-instrumentation}
       with value \code{1} or \code{2}.
+
+      \item \command{configure} will warn if it encounters a 32-bit
+      build, as that is nowadays almost untested.
     }
   }
 

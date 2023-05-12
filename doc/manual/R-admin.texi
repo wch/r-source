@@ -226,9 +226,10 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 
 @R{} will configure and build under most common Unix and Unix-alike
 platforms including @samp{@var{cpu}-*-linux-gnu} for the
-@cputype{alpha}, @cputype{arm64}, @cputype{hppa}, @cputype{ix86},
-@cputype{m68k}, @cputype{mips}, @cputype{mipsel}#, @cputype{ppc64},
-@cputype{s390x}, @cputype{sparc64}, and @cputype{x86_64} @acronym{CPU}s,
+@cputype{alpha}, @cputype{arm64} (also known as @cputype{aarch64},
+@cputype{ix86}, @cputype{mips}, @cputype{mipsel}#, @cputype{ppc64},
+@cputype{riscv64}, @cputype{s390x}, @cputype{sparc64}, and
+@cputype{x86_64} @acronym{CPU}s,
 @c (see e.g.@:  @uref{https://buildd.debian.org/build.php?&pkg=r-base}),
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
@@ -236,10 +237,11 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @samp{x86_64-@/apple-@/darwin} and
 @samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon', known to
 some as @samp{arm64-@/apple-@/darwin}.}  as well as perhaps (it is
-tested less frequently on these platforms) @samp{i386-@/sun-@/solaris},
-@samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
-@samp{powerpc-@/ibm-@/aix6*}
+tested less frequently on these platforms) @samp{x86_64-@/*-@/freebsd},
+@samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
+
+Only 64-bit platforms are tested reqularly, and @command{configure}
+will warn if it encounters a 32-bit one.
 
 @cindex Linux
 @cindex macOS
