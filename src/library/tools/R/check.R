@@ -6901,8 +6901,12 @@ add_dummies <- function(dir, Log)
 
         messageLog(Log, "using log directory ", sQuote(pkgoutdir))
         messageLog(Log, "using ", R.version.string)
-        messageLog(Log, "using platform: ", R.version$platform,
-                   " (", 8*.Machine$sizeof.pointer, "-bit)")
+        sp <- 8*.Machine$sizeof.pointer
+        if (sp != 64)
+            messageLog(Log, "using platform: ", R.version$platform,
+                       " (", sp, "-bit)")
+        else
+            messageLog(Log, "using platform: ", R.version$platform)
         vers <- R_compiled_by()
         if (any(nzchar(vers))) {
             messageLog(Log, "R was compiled by")
