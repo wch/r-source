@@ -99,7 +99,8 @@ sessionInfo <- function(package = NULL)
     z$platform <- z$R.version$platform
     if(nzchar(.Platform$r_arch))
         z$platform <- paste(z$platform, .Platform$r_arch, sep = "/")
-    z$platform <- paste0(z$platform, " (", 8*.Machine$sizeof.pointer, "-bit)")
+    sp <- 8*.Machine$sizeof.pointer
+    if (sp != 64) z$platform <- paste0(z$platform, " (", sp, "-bit)")
     z$locale <- Sys.getlocale()
     z$tzone <-Sys.timezone()
     z$tzcode_type <- .Call(C_tzcode_type)

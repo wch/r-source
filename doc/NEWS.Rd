@@ -8,8 +8,9 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item Startup banners and \command{R --version} no longer report
-      \code{(64-bit)} as this is almost universal -- the increasingly rare
+      \item Startup banners, \command{R --version}, \code{sessionInfo()}
+      and \command{R CMD check} no longer report \code{(64-bit)} as part of
+      the platform as this is almost universal -- the increasingly rare
       32-bit platforms will still report \code{(32-bit)}.
 
       On Windows, ditto for window titles.

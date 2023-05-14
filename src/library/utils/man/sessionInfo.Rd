@@ -46,7 +46,7 @@ osVersion
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
   \item{platform}{a character string describing the platform \R was
     built under.  Where sub-architectures are in use this is of the form
-    \samp{platform/sub-arch (nn-bit)}.}
+    \samp{platform/sub-arch}: 32-bit builds have \code{(32-bit)} appended}
   \item{running}{a character string (or possibly \code{NULL}), the same
     as \code{osVersion}, see below.}
   \item{RNGkind}{a character vector, the result of calling \code{\link{RNGkind}()}.}
@@ -91,9 +91,9 @@ osVersion
   a human-readable form.
 
   Where \R was compiled under macOS 10.x (as the \acronym{CRAN} Intel
-  distributions have been) but running under \sQuote{Big Sur} or later,
-  macOS reports itself as \samp{10.16} (which \R recognizes as
-  \sQuote{Big Sur ...}) and not \samp{11}, \samp{12}, \samp{13} or later.
+  distributions were prior to \R 4.3.0) but running under \sQuote{Big
+  Sur} or later, macOS reports itself as \samp{10.16} (which \R
+  recognizes as \sQuote{Big Sur ...}) and not \samp{11}, \samp{12}, \ldots{}.
 }
 \note{
   The information on \sQuote{loaded} packages and namespaces is the
