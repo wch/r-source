@@ -5799,7 +5799,12 @@ so it is strongly recommended to check in a UTF-8 locale.
 
 Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++14 or where declared C++11/17/20) and testing that
-extensions (such as POSIX functions) are supported.
+extensions (such as POSIX functions) are supported.  Do make maximal use
+of your compiler diagnostics --- this typically means using flags
+@option{-Wall} and @option{-pedantic} for both C and C++ and additionally
+@option{-Werror=implicit-function-declaration} and
+@option{-Wstrict-prototypes} for C (on some platforms and compiler
+versions) these are part of @option{-Wall} or @option{-pedantic}).
 
 @strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
 defaulted to C++11 where available@footnote{which it is on all known
@@ -5815,10 +5820,6 @@ Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
 the compilers used for @R{}, including on macOS.  (Use the C++11
 versions instead.)
-
-As noted elsewhere, the C++17 standard was finalized in Dec 2017 and
-support for it is patchy or absent on several platforms used for @R{}.
-So portable code should not require C++17 (let alone C++20).
 
 @c Centos had 10 years of support, for Centos 7 expiring in June 2024.
 @c RHEL has 10 years, with more extended support, up to 4 years.
