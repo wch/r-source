@@ -4788,63 +4788,66 @@ code resulting in plausible but
 incorrect results.  (This was seen in package @CRANpkg{MASS} but has
 been worked around there as from version 3.1-57.)
 
-For platforms with both 64- and 32-bit support, it is likely that
+For comments on @cputype{ix86} builds (including 32-bit builds on
+@cputype{x86_64}) see the version of this manual for @R{} 4.3.x.
 
-@example
-LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
-@end example
+@c For platforms with both 64- and 32-bit support, it is likely that
 
-@noindent
-is appropriate since most (but not all) software installs its 64-bit
-libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 34 we used
+@c @example
+@c LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
+@c @end example
 
-@example
-CC="gcc -m32"
-CXX="g++ -m32"
-FC="gfortran -m32"
-OBJC=$@{CC@}
-LDFLAGS="-L/usr/local/lib"
-LIBnn=lib
-@end example
+@c @noindent
+@c is appropriate since most (but not all) software installs its 64-bit
+@c libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
+@c on @cputype{x86_64} with Fedora 34 we used
 
-@noindent
-Note the use of @samp{LIBnn}: @cputype{x86_64} Fedora installs its
-64-bit software in @file{/usr/lib64} and 32-bit software in
-@file{/usr/lib}.  Linking will skip over inappropriate binaries, but for
-example the 32-bit Tcl/Tk configure scripts are in @file{/usr/lib}.  It
-may also be necessary to set the @command{pkg-config} path, e.g.@: by
+@c @example
+@c CC="gcc -m32"
+@c CXX="g++ -m32"
+@c FC="gfortran -m32"
+@c OBJC=$@{CC@}
+@c LDFLAGS="-L/usr/local/lib"
+@c LIBnn=lib
+@c @end example
 
-@example
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-@noindent
-The 32-bit system @code{libcurl} did not work with the system CA
-certificates: this is worked around in @R{}'s test suite.
+@c @noindent
+@c Note the use of @samp{LIBnn}: @cputype{x86_64} Fedora installs its
+@c 64-bit software in @file{/usr/lib64} and 32-bit software in
+@c @file{/usr/lib}.  Linking will skip over inappropriate binaries, but for
+@c example the 32-bit Tcl/Tk configure scripts are in @file{/usr/lib}.  It
+@c may also be necessary to set the @command{pkg-config} path, e.g.@: by
 
-64-bit versions on Linux are built with support for files > 2Gb, and
-32-bit versions will be if possible unless @option{--disable-largefile}
-is specified.
+@c @example
+@c export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@c @end example
+@c @noindent
+@c The 32-bit system @code{libcurl} did not work with the system CA
+@c certificates: this is worked around in @R{}'s test suite.
 
-Note that some distributions of 32-bit @code{glibc} use a 32-bit
-@code{time_t} type, so to pass all the date-time checks needs @R{} built
-with flag @option{--with-internal-tzcode}.
-@c true even of glibc 2.35 in Fedora 36.
+@c 64-bit versions on Linux are built with support for files > 2Gb, and
+@c 32-bit versions will be if possible unless @option{--disable-largefile}
+@c is specified.
 
-Users of @cputype{ix86} CPUs with SSE2 support@footnote{Likely all since
-2005, including Pentium 4 and all @cputype{x86_64} CPUs with 32-bit
-compilers.} may prefer to use the C/C++/Fortran flags
+@c Note that some distributions of 32-bit @code{glibc} use a 32-bit
+@c @code{time_t} type, so to pass all the date-time checks needs @R{} built
+@c with flag @option{--with-internal-tzcode}.
+@c @c true even of glibc 2.35 in Fedora 36.
 
-@example
--mfpmath=sse -msse2
-@end example
+@c Users of @cputype{ix86} CPUs with SSE2 support@footnote{Likely all since
+@c 2005, including Pentium 4 and all @cputype{x86_64} CPUs with 32-bit
+@c compilers.} may prefer to use the C/C++/Fortran flags
 
-@noindent
-to force floating-point to use the same instructions as @cputype{x86_64}
-builds and hence not make use of 80-bit `extended precision'
-intermediate results.  (NB: this affects more than floating-point
-operations.  For some OSes and versions of @command{gcc} it might be
-necessary to add @option{-mstackrealign}.)
+@c @example
+@c -mfpmath=sse -msse2
+@c @end example
+
+@c @noindent
+@c to force floating-point to use the same instructions as @cputype{x86_64}
+@c builds and hence not make use of 80-bit `extended precision'
+@c intermediate results.  (NB: this affects more than floating-point
+@c operations.  For some OSes and versions of @command{gcc} it might be
+@c necessary to add @option{-mstackrealign}.)
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
