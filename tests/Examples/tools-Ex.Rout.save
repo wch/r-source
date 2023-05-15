@@ -1086,23 +1086,28 @@ List of 5
 +   "  # calls with domain=NA are skipped",
 +   "  if (x == 0) cat(gettext('x is 0!\n', domain=NA))",
 +   "  # gettext strings may be ignored due to 'outer' domain=NA",
-+   "  if (x > 10) stop('x is ', gettextf('%.2f', x), domain=NA)",
++   "  if (x > 10) warning('x is ', gettextf('%.2f', x), domain=NA)",
++   "  # using a custom condition class",
++   "  if (x == 42) stop(errorCondition('needs Deep Thought', class='myError'))",
 +   "  x",
 +   "}")
 > 
 > writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
 > 
 > ## [[1]] : suppressing (tmpfile) name to make example Rdiff-able
-> xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows  ' sqrt(as.complex(x)) '
+> xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows calls
 too small
 sqrt(x) is
 sqrt(as.complex(x))
 , which may be too small
+errorCondition("needs Deep Thought", class = "myError")
 > xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' %.2f '
 too small
 sqrt(x) is
 , which may be too small
 %.2f
+needs Deep Thought
+myError
 > 
 > unlink(tmpRDir, recursive=TRUE)
 > 

@@ -1,6 +1,6 @@
 % File src/library/tools/man/xgettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xgettext}
@@ -105,14 +105,16 @@ fnChar <- paste(sep = "\n",
   "  # calls with domain=NA are skipped",
   "  if (x == 0) cat(gettext('x is 0!\n', domain=NA))",
   "  # gettext strings may be ignored due to 'outer' domain=NA",
-  "  if (x > 10) stop('x is ', gettextf('\%.2f', x), domain=NA)",
+  "  if (x > 10) warning('x is ', gettextf('\%.2f', x), domain=NA)",
+  "  # using a custom condition class",
+  "  if (x == 42) stop(errorCondition('needs Deep Thought', class='myError'))",
   "  x",
   "}")
 
 writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
 
 ## [[1]] : suppressing (tmpfile) name to make example Rdiff-able
-xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows  ' sqrt(as.complex(x)) '
+xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows calls
 xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' \%.2f '
 
 unlink(tmpRDir, recursive=TRUE)
