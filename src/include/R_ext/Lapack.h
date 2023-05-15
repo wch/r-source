@@ -1484,8 +1484,12 @@ F77_NAME(dtptrs)(const char* uplo, const char* trans,
 		 const char* diag, const int* n,
 		 const int* nrhs, const double* ap,
 		 double* b, const int* ldb, int* info
-		 FCLEN FCLEN FCLEN);
-
+		 FCLEN FCLEN); /* FIXME: incorrect, but used by Matrix */
+		 
+/*
+  Correct version is:		 
+		 FCLEN FCLEN FCLEN);		 
+*/		 
 
 //* Double precision TRiangular matrices -> DTR
 
