@@ -107,7 +107,8 @@ fnChar <- paste(sep = "\n",
   "  # gettext strings may be ignored due to 'outer' domain=NA",
   "  if (x > 10) warning('x is ', gettextf('\%.2f', x), domain=NA)",
   "  # using a custom condition class",
-  "  if (x == 42) stop(errorCondition('needs Deep Thought', class='myError'))",
+  "  if (x == 42)",
+  "    stop(errorCondition(gettext('needs Deep Thought'), class='myError'))",
   "  x",
   "}")
 

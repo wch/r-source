@@ -1088,7 +1088,8 @@ List of 5
 +   "  # gettext strings may be ignored due to 'outer' domain=NA",
 +   "  if (x > 10) warning('x is ', gettextf('%.2f', x), domain=NA)",
 +   "  # using a custom condition class",
-+   "  if (x == 42) stop(errorCondition('needs Deep Thought', class='myError'))",
++   "  if (x == 42)",
++   "    stop(errorCondition(gettext('needs Deep Thought'), class='myError'))",
 +   "  x",
 +   "}")
 > 
@@ -1100,7 +1101,7 @@ too small
 sqrt(x) is
 sqrt(as.complex(x))
 , which may be too small
-errorCondition("needs Deep Thought", class = "myError")
+errorCondition(gettext("needs Deep Thought"), class = "myError")
 > xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' %.2f '
 too small
 sqrt(x) is
