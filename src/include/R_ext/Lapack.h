@@ -1084,7 +1084,7 @@ F77_NAME(dspgv)(const int* itype, const char* jobz,
 		const char* uplo, const int* n,
 		double* ap, double* bp, double* w,
 		double* z, const int* ldz,
-		double* work, int* info FCLEN FCLEN FCLEN);
+		double* work, int* info FCLEN FCLEN);
 
 /* DSPRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric indefinite */
@@ -1484,7 +1484,7 @@ F77_NAME(dtptrs)(const char* uplo, const char* trans,
 		 const char* diag, const int* n,
 		 const int* nrhs, const double* ap,
 		 double* b, const int* ldb, int* info
-		 FCLEN FCLEN);
+		 FCLEN FCLEN FCLEN);
 
 
 //* Double precision TRiangular matrices -> DTR
