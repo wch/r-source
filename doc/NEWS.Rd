@@ -101,6 +101,10 @@
       \item \code{palette.colors()} gains a \code{name} argument that
       defaults to \code{FALSE} controlling whether the vector of colours
       that is returned has names (where possible).  \PR{18529}.
+
+      \item \code{tools::xgettext()} no longer extracts the
+      (non-translatable) class names from \code{warningCondition} and
+      \code{errorCondition} calls.
     }
   }
 }

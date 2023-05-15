@@ -1108,7 +1108,6 @@ sqrt(x) is
 , which may be too small
 %.2f
 needs Deep Thought
-myError
 > 
 > unlink(tmpRDir, recursive=TRUE)
 > 
