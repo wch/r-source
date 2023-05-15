@@ -805,6 +805,10 @@ make prefix=/path/to/here uninstall-libR
 @node Sub-architectures, Other Options, Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
 
+Now 32-bit builds are unsupported, this section is only of historical
+interest, although in future the mechanisms could be used for different
+CPU types on the same OS (e.g. @cputype{x86_64} and @cputype{aarch64}).
+
 Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Linux for different @acronym{CPU}s or 32- and 64-bit
@@ -867,7 +871,7 @@ R --arch=@var{name} CMD make check[-devel|all]
 @noindent
 to select a sub-architecture to check.
 
-Sub-architectures are also used on Windows, but by selecting executables
+Sub-architectures were also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
 @file{@var{R_HOME}/bin/x64}.  For
 backwards compatibility there are executables
@@ -882,55 +886,6 @@ installation default (which is 32-bit for a combined 32/64 bit @R{}
 installation). @R{} 4.2.0 follows the scheme, but supports and includes
 only 64-bit builds.
 
-@menu
-* Multilib::
-@end menu
-
-@node Multilib,  , Sub-architectures, Sub-architectures
-@subsection Multilib
-
-For some Linux distributions@footnote{mainly on RedHat and Fedora, whose
-layout is described here.}, there is an alternative mechanism for mixing
-32-bit and 64-bit libraries known as @emph{multilib}. If the Linux
-distribution supports multilib, then parallel builds of @R{} may be
-installed in the sub-directories @file{lib} (32-bit) and @file{lib64}
-(64-bit).  The build to be run may then be selected using the
-@command{setarch} command. For example, a 32-bit build may be run by
-
-@example
-setarch i686 R
-@end example
-
-The @command{setarch} command is only operational if both 32-bit and
-64-bit builds are installed. If there is only one installation of @R{},
-then this will always be run regardless of the architecture specified
-by the @command{setarch} command.
-
-There can be problems with installing packages on the non-native
-architecture.  It is a good idea to run e.g.@: @code{setarch i686 R} for
-sessions in which packages are to be installed, even if that is the only
-version of @R{} installed (since this tells the package installation
-code the architecture needed).
-
-There is a potential problem with packages using Java, as the
-post-install for a @cputype{i686} RPM on @cputype{x86_64} Linux
-reconfigures Java and will find the @cputype{x86_64} Java.  If you know
-where a 32-bit Java is installed you may be able to run (as root)
-
-@example
-export JAVA_HOME=<path to jre directory of 32-bit Java>
-setarch i686 R CMD javareconf
-@end example
-
-@noindent
-to get a suitable setting.
-
-When this mechanism is used, the version of @command{Rscript} in
-e.g.@: @file{/usr/bin} will be the last installed, but an
-architecture-specific version will be available in
-e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
-will run on the platform so the architecture of @command{Rscript} does
-not matter.
 
 @node Other Options, Testing a Unix-alike Installation, Sub-architectures, Installing R under Unix-alikes
 @section Other Options
@@ -2944,76 +2899,7 @@ prepare and install translation catalogues.
 @node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
 @chapter Choosing between 32- and 64-bit builds
 
-Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
-instructions.  Some OSes running on such @acronym{CPU}s offer the choice
-of building a 32-bit or a 64-bit version of @R{} (and details are given
-below under specific OSes).  For most a 64-bit version is the default
-and increasingly only that is supported---for example macOS has been
-64-bit-only since Catalina (released in 2019) and @R{} supports only
-64-bit Windows since @R{} 4.2.0.
-
-All current versions of @R{} use 32-bit integers (this is enforced in
-the build) and @acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also
-known as @acronym{IEEE}@tie{}754} double-precision reals, and so compute
-to the same precision@footnote{at least when storing quantities: the
-on-FPU precision is allowed to vary} and with the same limits on the
-sizes of numerical quantities.  The principal difference is in the size
-of the pointers.
-
-64-bit builds have both advantages and disadvantages:
-@itemize
-@item
-The total virtual memory space made available to a 32-bit process is
-limited by the pointer size to 4GB, and on most OSes to 3GB (or even
-2GB).  The limits for 64-bit processes are much larger (e.g.@:
-8--128TB).
-
-@R{} allocates memory for large objects as needed, and removes any
-unused ones at garbage collection.  When the sizes of objects become an
-appreciable fraction of the address limit, fragmentation of the address
-space becomes an issue and there may be no hole available that is the
-size requested.  This can cause more frequent garbage collection or the
-inability to allocate large objects.  As a guide, this will become an
-issue for 32-bit builds with objects more than 10% of the size of the
-address space (around 300Mb) or when the total size of objects in use is
-around one third (around 1Gb).
-
-@item
-Only 64-bit builds support `long vectors', those with @math{2^{31}} or
-more elements (which needs at least 16GB of storage for each numeric
-vector).
-
-@item
-Most 32-bit OSes by default limit file sizes to 2GB (and this may also
-apply to 32-bit builds on 64-bit OSes).  This can often be worked
-around: @command{configure} selects suitable defines if this is
-possible.  64-bit builds have much larger limits.
-
-@item
-Because the pointers are larger, @R{}'s basic structures are larger.
-This means that @R{} objects take more space and (usually) more time to
-manipulate.  So 64-bit builds of @R{} will, all other things being
-equal, run slower than 32-bit builds.
-
-@item
-However, `other things' may not be equal.  In the specific case of
-@cputype{x86_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
-(such as SSE2 instructions) which are guaranteed to be present but are
-optional on the 32-bit CPU, and also has more general-purpose registers.
-This means that on chips like a desktop Intel i7 the vanilla 64-bit
-version of @R{} has been around 10% faster on both Linux and macOS.
-(Laptop CPUs are usually relatively slower in 64-bit mode.)
-@end itemize
-
-So, for speed you may want to use a 32-bit build (especially on a
-laptop), but to handle large datasets (and perhaps large files) a 64-bit
-build.  You can often build both and install them in the same place:
-@xref{Sub-architectures}.
-
-Even on 64-bit builds of @R{} there are limits on the size of @R{}
-objects (see @code{help("Memory-limits")}), some of which stem from the
-use of 32-bit integers (especially in Fortran code).  For example, each
-dimension of an array is limited to @math{2^{31} - 1}.
+As from @R{} 4.4.0 32-bit builds are unsupported.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -3031,7 +2917,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"4.0.0"}.
+string containing the current @R{} version, for example @code{"4.4.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
