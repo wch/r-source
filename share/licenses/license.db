@@ -97,7 +97,15 @@ Name: CeCILL
 Abbrev: CeCILL
 Version: 2
 FSF: free (https://www.gnu.org/licenses/license-list.html#CeCILL)
-URL: http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+URL: https://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+FOSS: yes
+
+Name: CeCILL
+Abbrev: CeCILL
+Version: 2.1
+SSS: CECILL-2.1
+OSI: open (https://opensource.org/license/cecill-2-1/)
+URL: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 FOSS: yes
 
 Name: FreeBSD License
