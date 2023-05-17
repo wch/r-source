@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2019 The R Core Team.
+ *  Copyright (C) 2003-2023 The R Core Team.
  *  Copyright (C) 2008-2019 The R Foundation
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -1484,12 +1484,10 @@ F77_NAME(dtptrs)(const char* uplo, const char* trans,
 		 const char* diag, const int* n,
 		 const int* nrhs, const double* ap,
 		 double* b, const int* ldb, int* info
-		 FCLEN FCLEN); /* FIXME: incorrect, but used by Matrix */
-		 
-/*
-  Correct version is:		 
-		 FCLEN FCLEN FCLEN);		 
-*/		 
+#ifdef usePR18534fix
+		 FCLEN		 
+#endif
+		 FCLEN FCLEN);
 
 //* Double precision TRiangular matrices -> DTR
 
