@@ -4884,7 +4884,7 @@ Additional compilation flags can be specified for added safety/security
 checks.  For example Fedora adds
 
 @example
--Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+-Werror=format-security -Wp,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS
 -Fexceptions -fstack-protector-strong -fasynchronous-unwind-tables
 -fstack-clash-protection -fcf-protection
 @end example
@@ -4895,8 +4895,7 @@ to all the C, C++ and Fortran compiler flags (even though
 @code{glibc} and none of these are documented for @code{gfortran}).
 Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 @code{printf} into almost all C++ code, and @command{R CMD check
---as-cran} will warn.  As from Fedora 38 it will use
-@code{-D_FORTIFY_SOURCE=3}.
+--as-cran} will warn.
 
 @menu
 * Clang::
