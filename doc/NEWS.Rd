@@ -55,12 +55,6 @@
   %%   }
   %% }
 
-  %% \subsection{C-LEVEL FACILITIES}{
-  %%   \itemize{
-  %%     \item .
-  %%   }
-  %% }
-
   \subsection{BUG FIXES}{
     \itemize{
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
@@ -116,6 +110,19 @@
       \code{Rdqags()} in \file{Applic.h}, now returns the correct number of
       integrand evaluations \code{neval}, fixing \PR{18515} reported and
       diagnosed by Stephen Wade.
+    
+      \item The C prototypes for LAPACK calls \code{dspgv} and \code{dtptrs}
+      in \file{R_exts/Lapack.h} had one too many and one too few
+      character length arguments --- but this has not caused any known
+      issues. To get the corrected prototypes, include
+      \preformatted{
+	#include <Rconfig.h> // for PR18534fixed
+	#ifdef PR18534fixed
+	# define usePR18534fix 1
+        #endif
+	#include <R_exts/Lapack.h>
+      }
+      in your C/C++ code (\PR{18534}).
     }
   }
 

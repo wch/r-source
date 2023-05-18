@@ -1084,7 +1084,11 @@ F77_NAME(dspgv)(const int* itype, const char* jobz,
 		const char* uplo, const int* n,
 		double* ap, double* bp, double* w,
 		double* z, const int* ldz,
-		double* work, int* info FCLEN FCLEN);
+		double* work, int* info
+#ifndef usePR18534fix
+		FCLEN
+#endif
+		FCLEN FCLEN);
 
 /* DSPRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric indefinite */
