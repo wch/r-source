@@ -1123,16 +1123,23 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errno = 0;
 	    // Interface to mktime or timegm00, PATH-specific
 	    double tmp = mktime0(&tm, !isUTC);
-#ifdef MKTIME_SETS_ERRNO
-	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
-#else
+/*
+    POSIX
+
+    POSIX requires that on error, mktime() returns (time_t)-1 and sets errno,
+    but previous versions of the specification made setting of errno optional.
+    errno on its own is not a reliable indication of error (PR#18532).
+*/
 	    REAL(ans)[i] = ((tmp == -1.)
+#ifdef MKTIME_SETS_ERRNO
+	                    && errno
+#else
 			    /* avoid silly gotcha at epoch minus one sec */
 			    && (tm.tm_sec != 59)
 			    && ((tm.tm_sec = 58), (mktime0(&tm, !isUTC) != -2.))
+#endif
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
-#endif
 	}
     }
 
