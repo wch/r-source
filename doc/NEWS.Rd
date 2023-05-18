@@ -6,6 +6,23 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.3.0 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The C prototypes for LAPACK calls \code{dspgv} and \code{dtptrs}
+      in \file{R_exts/Lapack.h} had one too many and one too few
+      character length arguments --- but this has not caused any known
+      issues. To get the corrected prototypes, include
+      \preformatted{
+	#include <Rconfig.h> // for PR18534fixed
+	#ifdef PR18534fixed
+	# define usePR18534fix 1
+        #endif
+	#include <R_exts/Lapack.h>
+      }
+      in your C/C++ code (\PR{18534}).
+    }
+  }
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Many of the checks of esoteric Internet operations and those
@@ -20,8 +37,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item .
-
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).

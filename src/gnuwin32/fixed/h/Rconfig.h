@@ -21,6 +21,8 @@
 #define FC_LEN_T size_t
 #endif
 
+#define PR18534fixed 1
+
 /* NB: the rest are for the C compiler used to build R:
    they do not necessarily apply to a C++ compiler */
 #define SIZEOF_SIZE_T 8

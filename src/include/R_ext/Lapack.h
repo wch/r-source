@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2019 The R Core Team.
+ *  Copyright (C) 2003-2023 The R Core Team.
  *  Copyright (C) 2008-2019 The R Foundation
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -1084,7 +1084,11 @@ F77_NAME(dspgv)(const int* itype, const char* jobz,
 		const char* uplo, const int* n,
 		double* ap, double* bp, double* w,
 		double* z, const int* ldz,
-		double* work, int* info FCLEN FCLEN FCLEN);
+		double* work, int* info
+#ifndef usePR18534fix
+		FCLEN
+#endif
+		FCLEN FCLEN);
 
 /* DSPRFS - improve the computed solution to a system of linear */
 /* equations when the coefficient matrix is symmetric indefinite */
@@ -1484,6 +1488,9 @@ F77_NAME(dtptrs)(const char* uplo, const char* trans,
 		 const char* diag, const int* n,
 		 const int* nrhs, const double* ap,
 		 double* b, const int* ldb, int* info
+#ifdef usePR18534fix
+		 FCLEN		 
+#endif
 		 FCLEN FCLEN);
 
 
