@@ -2313,19 +2313,20 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_PCRE2
 	   if (use_UTF8) eflag |= PCRE2_NO_UTF_CHECK;
 	   /* PCRE2 has also pcre2_substitute */
-	   while ((ncap = pcre2_match(re, (PCRE2_SPTR) s, (PCRE2_SIZE) ns,
-	                              (PCRE2_SIZE) offset, eflag, mdata,
-	                              mcontext)) >= 0 ) {
+	   while ((rc = pcre2_match(re, (PCRE2_SPTR) s, (PCRE2_SIZE) ns,
+				    (PCRE2_SIZE) offset, eflag, mdata,
+				    mcontext)) >= 0 ) {
 
 	       ovector = pcre2_get_ovector_pointer(mdata);
 #else
-	   while ((ncap = pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
-				   ovector, 30)) >= 0) {
+	   while ((rc = pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
+				  ovector, 30)) >= 0) {
 #endif
 	       /* printf("%s, %d, %d %d\n", s, offset,
 		  ovector[0], ovector[1]); */
 	       nmatch++;
 	       for (j = offset; j < ovector[0]; j++) *u++ = s[j];
+	       ncap = rc > 0 ? rc : 10;
 	       if (last_end == -1 /* for PCRE2 */ || ovector[1] > last_end) {
 		   u = R_pcre_string_adj(u, s, srep, ovector, use_UTF8, ncap);
 		   last_end = (int) ovector[1];
@@ -2357,7 +2358,7 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       eflag = PCRE_NOTBOL;  /* probably not needed */
 #endif
 	   }
-	   R_pcre_exec_error(ncap, i);
+	   R_pcre_exec_error(rc, i);
 	   if (nmatch == 0)
 	       SET_STRING_ELT(ans, i, markBytesOld(STRING_ELT(text, i),
 		                                   useBytes, haveBytesInput));
@@ -2378,7 +2379,7 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	   }
 	   R_Free(cbuf);
        } else if (!use_WC) {
-	    int maxrep, rc;
+	    int maxrep;
 	    /* extended regexp in bytes */
 
 	    ns = (int) strlen(s);
