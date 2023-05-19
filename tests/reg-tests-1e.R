@@ -591,6 +591,19 @@ if(englishMsgs)
 ## failed with "wrong" message after r84400
 
 
+## head(.,n) / tail(.,n) error reporting - PR#18362
+try(head(letters, 1:2)) # had "Error in checkHT(..)"); now ".. in head.default(..)"
+try(tail(letters, NA))
+try(head(letters, "1"))
+tryCcall1 <- function(expr) tryCid(expr)$call[[1L]]
+stopifnot(exprs = {
+    tryCcall1(head(letters, 1:2)) == quote(head.default)
+    tryCcall1(tail(letters, NA )) == quote(tail.default)
+    tryCcall1(head(letters, "1")) == quote(head.default)
+})
+## more helpful error msg
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -70,7 +70,7 @@
       also means it is now an error to specify \code{na.rm} more than once.)
 
       \item \code{as.complex(x)} now returns \code{NA_complex_} also for
-      \code{NA_real_}, as it does for all other \code{NA}s.
+      \code{NA_real_} arguments, as it does for all other \code{NA}s.
 
       \item Directories are now omitted by
       \code{file.copy(,recursive = FALSE)} and in \code{file.append()}
@@ -110,7 +110,7 @@
       \code{Rdqags()} in \file{Applic.h}, now returns the correct number of
       integrand evaluations \code{neval}, fixing \PR{18515} reported and
       diagnosed by Stephen Wade.
-    
+
       \item The C prototypes for LAPACK calls \code{dspgv} and \code{dtptrs}
       in \file{R_exts/Lapack.h} had one too many and one too few
       character length arguments --- but this has not caused any known
@@ -146,6 +146,9 @@
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
+
+      \item \code{head(., <illegal>)} and \code{tail(..)} now produce
+      more useful \code{"Error in ...."} error messages, fixing \PR{18362}.
     }
   }
 }
