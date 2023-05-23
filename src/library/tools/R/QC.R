@@ -5957,7 +5957,8 @@ function(package, dir, lib.loc = NULL)
                             dunno <- TRUE
                     } else {
                         if(!identical(class(pkg), "character") &&
-                           isTRUE(mc$character.only))
+                           !is.null(co <- mc$character.only) &&
+                           !isFALSE(co))
                             dunno <- TRUE
                     }
                     ## </NOTE>
@@ -6425,7 +6426,8 @@ function(db, files)
                             dunno <- TRUE
                     } else {
                         if(!identical(class(pkg), "character") &&
-                           isTRUE(mc$character.only))
+                           !is.null(co <- mc$character.only) &&
+                           !isFALSE(co))
                             dunno <- TRUE
                     }
                     if(!dunno) {
