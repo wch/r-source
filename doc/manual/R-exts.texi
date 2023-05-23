@@ -5449,10 +5449,7 @@ platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
 URLs.} that vary by build but are not documented.  Several recent
 versions of @command{pandoc} for macOS did not work on @R{}'s target of
-High Sierra (and this too was undocumented): at the time of writing
-@samp{2.14.0} to @samp{2.16.2} did, but not @samp{2.17.0.1}.  (Currently
-@command{pandoc} is only available from the official site for Intel
-macOS but that build works well enough on @cputype{arm64} machines.)
+High Sierra (and this too was undocumented).
 Another example is the Rust compilation system (@command{cargo} and
 @command{rustc}).
 
@@ -5610,7 +5607,7 @@ especially those near boundaries (problems have most often be seen in
 with offsets not in whole hours (Adelaide, Chatham Islands, @dots{}).
 More extreme examples are @samp{Africa/Conakry} (permanent UTC),
 @samp{Asia/Calcutta} (no DST, permanent half-hour offset)
-and @samp{Pacific/Kiritimati]}(no DST, more than 12 hours ahead of UTC).
+and @samp{Pacific/Kiritimati}(no DST, more than 12 hours ahead of UTC).
 
 @end itemize
 
@@ -5662,8 +5659,8 @@ See @uref{https://ghostscript.readthedocs.io/en/latest/VectorDevices.html} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
-at the upgrades from @code{9.50} to @code{9.52} and from @code{9.55} to
-@code{9.56}).
+at the upgrades from @code{9.50} to @code{9.52}, from @code{9.55} to
+@code{9.56} and then to @code{10.00.0}).
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
