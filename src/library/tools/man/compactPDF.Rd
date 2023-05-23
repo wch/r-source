@@ -1,6 +1,6 @@
 % File src/library/tools/man/compactPDF.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2022  R Core Team
+% Copyright 2011-2023  R Core Team
 % Distributed under GPL 2 or later
 
 \name{compactPDF}
@@ -99,16 +99,15 @@ compactPDF(paths,
 \note{
   The external tools used may change in future releases.
 
-  Versions of GhostScript 9.06 and later give several times better
-  compression than 9.05 on some vignettes in CRAN packages.
+  Frequently, updates to GhostScript have produced better compression (up
+  to several times better), so if possible use the latest version available.
 }
 
 \seealso{
   \code{\link{resaveRdaFiles}}.
 
-  Many other (and sometimes more effective) tools to compact PDF files
-  are available, including Adobe Acrobat (not Reader).
-  See the \sQuote{Writing R Extensions} manual.
+  For other tools to compact PDF files, see the \sQuote{Writing R
+    Extensions} manual.
 }
 
 \keyword{ utilities }
