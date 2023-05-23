@@ -4556,6 +4556,25 @@ If set to a true value, trap non-interactive debugger invocations.
 These are most likely caused by leftover @code{browser()} statements
 in package code.
 Default: unset (but true for CRAN submission checks).
+
+@item _R_CHECK_URLS_SHOW_301_STATUS_
+If set to a true value, checking URLs show check status 301 for HTTP
+response status code ``301 Moved Permanently''.
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_UNDOC_USE_ALL_NAMES_
+If set to a true value, checking for undocumented objects does not
+ignore objects with names starting with a dot (which prior to the advent
+of namespaces conventionally were considered as ``internal'').
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_
+Default: false (but true for CRAN submission checks).
+If set to a true value, checking S3 methods also notes ``possible
+issues'', including issues with apparent methods not registered and
+methods registered for non-generics.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 The following variables control checks for undeclared/unconditional use
@@ -4664,6 +4683,9 @@ _R_CHECK_RD_VALIDATE_RD2HTML_=true
 _R_CHECK_RD_MATH_RENDERING_=true
 _R_CHECK_NEWS_IN_PLAIN_TEXT_=true
 _R_CHECK_BROWSER_NONINTERACTIVE_=true
+_R_CHECK_URLS_SHOW_301_STATUS_=true
+_R_CHECK_UNDOC_USE_ALL_NAMES_=true
+_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 @end example
 
 @noindent
