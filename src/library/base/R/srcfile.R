@@ -240,7 +240,7 @@ as.character.srcref <- function(x, useSource = TRUE, to = x, ...)
                         x[3L], ":", x[6L], ">")
     else if (length(lines)) {
     	enc <- Encoding(lines)
-    	Encoding(lines) <- "latin1"  # so byte counting works
+    	Encoding(lines) <- "bytes"  # so substring() counts bytes
         if (length(lines) < x[3L] - x[1L] + 1L)
             x[4L] <- .Machine$integer.max
     	lines[length(lines)] <- substring(lines[length(lines)], 1L, x[4L])
