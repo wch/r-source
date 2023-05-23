@@ -4899,10 +4899,11 @@ Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 
 @menu
 * Clang::
+* flang::
 * Intel compilers::
 @end menu
 
-@node Clang, Intel compilers, Linux, Linux
+@node Clang, flang, Linux, Linux
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
@@ -4925,16 +4926,37 @@ Recent versions have (optional when built) OpenMP support.@footnote{This
 also needs the OpenMP runtime which has sometimes been distributed
 separately.}
 
-There are problems mixing @command{clang} 15.0.0 built as default on
-Linux to produce PIE code and @command{gfortran} 11 or 12, which do not.
-One symptom is that @command{configure} does not detect @code{FC_LEN_T},
-which can be overcome by setting
+There are problems mixing @command{clang} 15.0.0 and later built as
+default on Linux to produce PIE code and @command{gfortran} 11 or later,
+which does not.  One symptom is that @command{configure} does not detect
+@code{FC_LEN_T}, which can be overcome by setting
 @example
 FPIEFLAGS=-fPIE
 @end example
 @noindent
 in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
 that value if it is unset.)
+
+@node flang, Intel compilers, Clang, Linux
+@subsection flang
+
+The name @command{flang} has been used for two projects: this is about
+the sub-project of LLVM which builds a Fortran compiler and runtime
+libraries.  The compiler is currently named @command{flang-new} but has been
+announced to be renamed to @command{flang} when more nearly complete (and
+at some earlier point in its development was known as @command{f18}).
+
+The version in LLVM 16 was able to build @R{} on @cputype{x86_64} Linux
+with
+@example
+FC=/path/to/flang-new
+@end example
+@noindent
+with the matching @command{clang} used as the C compiler, and the build
+passed @command{make check-all}.  There is also support for
+@cputype{aarch64} and @cputype{ppc64le} Linux, but these have not been
+tested wirh @R{}.
+
 
 @c It is recommended to use C flag @option{-Wno-strict-prototypes}
 @c (disabling a C23 feature) if using @code{-pedantic} in @command{clang}
@@ -4971,7 +4993,7 @@ that value if it is unset.)
 @c @cputype{x86}) and @cputype{ppc64le}.
 
 
-@node Intel compilers,  , Clang, Linux
+@node Intel compilers,  , flang, Linux
 @subsection Intel compilers
 
 There have been no recent reports on the use of Intel compilers: this
