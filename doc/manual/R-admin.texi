@@ -240,7 +240,7 @@ some as @samp{arm64-@/apple-@/darwin}.}  as well as perhaps (it is
 tested less frequently on these platforms) @samp{x86_64-@/*-@/freebsd},
 @samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
 
-Only 64-bit platforms are tested reqularly, and @command{configure}
+Only 64-bit platforms are tested regularly, and @command{configure}
 will warn if it encounters a 32-bit one.
 
 @cindex Linux
