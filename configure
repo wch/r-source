@@ -44785,6 +44785,14 @@ _ACEOF
 fi
 done
 
+## stpcpy is POSIX 2008 (extension to C)
+ac_fn_c_check_func "$LINENO" "stpcpy" "ac_cv_func_stpcpy"
+if test "x$ac_cv_func_stpcpy" = xyes
+then :
+  printf "%s\n" "#define HAVE_STPCPY 1" >>confdefs.h
+
+fi
+
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and

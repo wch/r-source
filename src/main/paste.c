@@ -38,11 +38,13 @@
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 #ifndef HAVE_STPCPY
-static char *stpcpy(char *dest, const char *src)
+static char *R_stpcpy(char *dest, const char *src)
 {
     while ((*dest++ = *src++) != '\0');
     return dest - 1;
 }
+#else
+# define R_stpcpy stpcpy
 #endif
 
 /*
@@ -230,10 +232,10 @@ attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if (use_UTF8) {
 		    const char *s = translateCharUTF8(cs);
-		    buf = stpcpy(buf, s);
+		    buf = R_stpcpy(buf, s);
 		} else {
 		    const char *s = use_Bytes ? CHAR(cs) : translateChar(cs);
-		    buf = stpcpy(buf, s);
+		    buf = R_stpcpy(buf, s);
 		    allKnown = allKnown && (IS_ASCII(cs) || (ENC_KNOWN(cs)> 0));
 		    anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 		}
@@ -304,7 +306,7 @@ attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = translateCharUTF8(el);
 	    else /* already translated */
 		s = CHAR(el);
-	    buf = stpcpy(buf, s);
+	    buf = R_stpcpy(buf, s);
 	    allKnown = allKnown && (IS_ASCII(el) || (ENC_KNOWN(el) > 0));
 	    anyKnown = anyKnown || (ENC_KNOWN(el) > 0);
 	    if(use_UTF8) vmaxset(vmax);
@@ -418,7 +420,7 @@ attribute_hidden SEXP do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = trCharUTF8(cs);
 	    else
 		s = translateCharFP(cs);
-	    buf = stpcpy(buf, s);
+	    buf = R_stpcpy(buf, s);
 	    if (j != nx - 1 && sepw != 0) {
 		strcpy(buf, csep);
 		buf += sepw;

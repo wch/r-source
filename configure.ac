@@ -2137,6 +2137,8 @@ R_CHECK_FUNCS([thr_stksegment], [
 #include <thread.h>
 #include <signal.h>
 ])
+## stpcpy is POSIX 2008 (extension to C)
+AC_CHECK_FUNCS([stpcpy])
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and
