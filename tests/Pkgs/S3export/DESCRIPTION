@@ -1,0 +1,9 @@
+Package: S3export
+Title: S3 method exporting etc
+Version: 1.0
+Author: Martin Maechler
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: For example, 'S3method(gen, cl, FUN)' when 'FUN' is in base
+License: GPL (>= 2)
+NeedsCompilation: no
+

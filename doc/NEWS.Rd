@@ -99,6 +99,10 @@
       \item \code{tools::xgettext()} no longer extracts the
       (non-translatable) class names from \code{warningCondition} and
       \code{errorCondition} calls.
+
+      \item \code{S3method(<gen>, <class>, <func>)} in the \file{NAMESPACE}
+      file now works (again) when \code{<func>} is visible from the
+      namespace, e.g., imported, or in base.
     }
   }
 }

@@ -208,6 +208,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               sQuote(package), current, zop, zversion),
                      domain = NA)
         }
+        ## return
         ns
     } else {
         lev <- 0L
@@ -1532,7 +1533,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
          S3methods = unique(S3methods[seq_len(nS3), , drop = FALSE]) )
 } ## end{parseNamespaceFile}
 
-## Still used inside registerS3methods().
+## used inside registerS3methods(); workhorse of .S3method()
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
 	regs <- rbind(.getNamespaceInfo(ns, "S3methods"),
@@ -1560,12 +1561,12 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
             delayedAssign(x, get(method, envir = home), assign.env = envir)
         }
         if(!exists(method, envir = envir)) {
-            ## need to avoid conflict with message at l.1298
+            ## need to avoid conflict with any(notex) warning message
             warning(gettextf("S3 method %s was declared but not found",
                              sQuote(method)), call. = FALSE)
         } else {
 	    assignWrapped(paste(genname, class, sep = "."), method, home = envir,
-	    	    envir = table)
+			  envir = table)
         }
     }
     else if (is.function(method))
@@ -1631,15 +1632,20 @@ registerS3methods <- function(info, package, env)
     ## can remain unchanged.
     if(ncol(info) == 3L)
         info <- cbind(info, NA_character_)
-    Info <- cbind(info[, 1L : 3L, drop = FALSE], methname, info[, 4L])
+    Info <- cbind(info[, 1L:3L, drop = FALSE], methname, info[, 4L])
     loc <- names(env)
-    if(any(notex <- match(info[,3], loc, nomatch=0L) == 0L)) { # not %in%
+    if(any(notex <- match(info[,3L], loc, nomatch=0L) == 0L)) { # not %in%
+      ## Try harder, as in registerS3method(); parent since *not* in env:
+      found <- vapply(info[notex, 3L], exists, logical(1), envir = parent.env(env))
+      notex[notex] <- !found
+      if(any(notex)) {
         warning(sprintf(ngettext(sum(notex),
                                  "S3 method %s was declared in NAMESPACE but not found",
                                  "S3 methods %s were declared in NAMESPACE but not found"),
                         paste(sQuote(info[notex, 3]), collapse = ", ")),
                 call. = FALSE, domain = NA)
         Info <- Info[!notex, , drop = FALSE]
+      }
     }
     eager <- is.na(Info[, 5L])
     delayed <- Info[!eager, , drop = FALSE]

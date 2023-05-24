@@ -198,6 +198,7 @@ p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
                c("pkgA", "pkgB", if(okB2) "pkgB2", if(okB3) "pkgB3", "pkgC"),
            "PR17501",
            p.fails,
+           "S3export",
            "exNSS4", "exNSS4nil", "exSexpr")
 p.lis; (pBlis <- grep("^pkgB", p.lis, value=TRUE))
 pkgApath <- file.path(pkgPath, "pkgA")
@@ -313,6 +314,14 @@ stopifnot(exprs = {
     !is.na(ierr <- as.integer(substr(print(tlines[iN[1]]), 1, 2)))
     8 <= print(ierr - i) & ierr - i <= 14 # see 11
 }) ## failed in R <= 4.1.1
+
+str(ok <- tryCatch(warning=conditionMessage, require("S3export")))
+## gave "S3 method 'within.list' was declared in NAMESPACE but not found"
+ml <- myList(list(x = 1, y = 2:5, c = list(L = letters[1:4], "foo")))
+## Check that the S3 method for within() works {defined in NAMESPACE only!}
+stopifnot(ok, inherits(ml, "myList"),
+	  "within.myList" %in% as.character(methods(within)),
+	  is.list(r <- within(ml, sum <- x+y)), r$sum == 3:6)
 
 
 ## These used to fail because of the sym.link in pkgA
