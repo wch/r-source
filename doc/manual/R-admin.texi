@@ -4955,7 +4955,7 @@ FC=/path/to/flang-new
 with the matching @command{clang} used as the C compiler, and the build
 passed @command{make check-all}.  There is also support for
 @cputype{aarch64} and @cputype{ppc64le} Linux, but these have not been
-tested wirh @R{}.
+tested with @R{}.
 
 
 @c It is recommended to use C flag @option{-Wno-strict-prototypes}
