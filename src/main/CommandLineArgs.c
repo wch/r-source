@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2022   The R Core Team
+ *  Copyright (C) 1997-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ void
 R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
     int ac = *pac, newac = 1;	/* argv[0] is process name */
-    long lval; /* this is only used for ppval, so 32-bit long is fine */
+    long lval; /* this is used for ppval, so 32-bit long is fine */
     char *p, **av = argv, msg[1024];
     Rboolean processing = TRUE;
 
@@ -248,6 +248,23 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		else if (lval > 500000)
 		    R_ShowMessage(_("WARNING: '--max-ppsize' value is too large: ignored"));
 		else Rp->ppsize = (size_t) lval;
+	    }
+	    else if(strncmp(*av, "--max-connections", 17) == 0) {
+		if(strlen(*av) < 19) {
+		    if(ac > 1) {ac--; av++; p = *av;} else p = NULL;
+		} else p = &(*av)[18];
+		if (p == NULL) {
+		    R_ShowMessage(_("WARNING: no value given for '--max-connections'"));
+		    break;
+		}
+		lval = strtol(p, &p, 10);
+		if (lval < 0)
+		    R_ShowMessage(_("WARNING: '--max-connections' value is negative: ignored"));
+		else if (lval < 128)
+		    R_ShowMessage(_("WARNING: '--max-connections' value is too small: ignored"));
+		else if (lval > 4096)
+		    R_ShowMessage(_("WARNING: '--max-connections' value is too large: ignored"));
+		else Rp->nconnections = (int) lval;
 	    }
 	    else { /* unknown -option */
 		argv[newac++] = *av;

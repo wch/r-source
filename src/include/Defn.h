@@ -2162,6 +2162,7 @@ R_size_t R_GetMaxNSize(void);
 void R_SetMaxNSize(R_size_t);
 R_size_t R_Decode2Long(char *p, int *ierr);
 void R_SetPPSize(R_size_t);
+void R_SetNconn(int);
 
 void R_expand_binding_value(SEXP);
 

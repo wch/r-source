@@ -127,10 +127,12 @@ typedef long long int _lli_t;
 # include <Startup.h>
 #endif
 
-#define NCONNECTIONS 128 /* need one per cluster node */
+static int NCONNECTIONS = 128; /* need one per cluster node */
+//static Rconnection Connections[NCONNECTIONS];
 #define NSINKS 21
 
-static Rconnection Connections[NCONNECTIONS];
+#include <R_ext/RStartup.h>
+static Rconnection * Connections;
 static SEXP OutTextData;
 
 static int R_SinkNumber;
@@ -154,7 +156,7 @@ static int NextConnection(void)
 	for(i = 3; i < NCONNECTIONS; i++)
 	    if(!Connections[i]) break;
 	if(i >= NCONNECTIONS)
-	    error(_("all connections are in use"));
+	    error(_("all %d connections are in use"), NCONNECTIONS);
     }
     return i;
 }
@@ -5315,9 +5317,15 @@ void WinCheckUTF8(void)
 
 /* ------------------- admin functions  --------------------- */
 
+void R_SetNconn(int nconn)
+{
+    if (nconn > 128) NCONNECTIONS = nconn;
+}
+
+
 attribute_hidden void InitConnections(void)
 {
-    int i;
+    Connections = (Rconnection *) malloc(NCONNECTIONS * sizeof(Rconnection));
     Connections[0] = newterminal("stdin", "r");
     Connections[0]->fgetc = stdin_fgetc;
     Connections[1] = newterminal("stdout", "w");
@@ -5326,7 +5334,7 @@ attribute_hidden void InitConnections(void)
     Connections[2] = newterminal("stderr", "w");
     Connections[2]->vfprintf = stderr_vfprintf;
     Connections[2]->fflush = stderr_fflush;
-    for(i = 3; i < NCONNECTIONS; i++) Connections[i] = NULL;
+    for(int i = 3; i < NCONNECTIONS; i++) Connections[i] = NULL;
     R_OutputCon = 1;
     R_SinkNumber = 0;
     SinkCons[0] = 1; R_ErrorCon = 2;

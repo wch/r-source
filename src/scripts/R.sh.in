@@ -70,6 +70,7 @@ Options:
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
 			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
+  --max-connections=N   Set max number of connections to N
   --max-ppsize=N        Set max size of protect stack to N
   --min-nsize=N         Set min number of fixed size obj's (\"cons cells\") to N
   --min-vsize=N         Set vector heap minimum to N bytes; '4M' = 4 MegaB

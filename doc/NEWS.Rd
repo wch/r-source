@@ -35,6 +35,11 @@
       \item Serializations can now be interrupted (e.g., by \kbd{Ctrl-C} on
       a Unix-alike) if they take too long, as e.g., from \code{save.image()},
       thanks to suggestions by Ivan Krylov and others on R-devel.
+
+      \item New startup option \option{--max-connections} to set the
+      maximum number of connections for the session.  Defaults to 128 as
+      before: allowed values up to 4096 (but resource limits may in practice
+      restrict to smaller values).
     }
   }
 

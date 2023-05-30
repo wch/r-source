@@ -587,6 +587,25 @@ socketTimeout(socket, timeout = -1)
   being used supports can be seen by calling \code{\link{libcurlVersion}()}.
 }
 
+\section{Number of connections}{
+  There is a limit on the number of connections which can be created at
+  any onw time.  It is good practice to close connections when finished
+  with, but if necessary garbage-collection will be done to close
+  connections without any \R object referring to them.
+
+  The default limit is 128 (including the three terminal connections,
+  \code{stdin}, \code{stdout} and \code{stderr}).  This can be increased
+  when \R is started using the option \option{--max-connections+N}, where
+  the maximum allowed value is 4096.
+
+  However, many types of connections use other resources which are
+  themselves limited.  Notably \sQuote{file descriptors} which by
+  default are per-process limited to 256 on macOS, 1024 on Linux: this
+  limits the number of connections using files, fifos, \dots{}.  (That
+  limit can be raised in the shell used to launch \R, for example by
+  \command{ulimit -n}.)
+}
+
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the S model, for example in output
@@ -595,7 +614,7 @@ socketTimeout(socket, timeout = -1)
   This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
 
-  On (rare) platforms where \code{vsnprintf} does not return the needed
+  On (historic) platforms where \code{vsnprintf} does not return the needed
   length of output there is a 100,000 byte output limit on the length of
   a line for text output on \code{fifo}, \code{gzfile}, \code{bzfile} and
   \code{xzfile} connections: longer lines will be truncated with a

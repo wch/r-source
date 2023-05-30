@@ -83,6 +83,7 @@ typedef struct
 	   R 4.2.0.
 	*/
     int RstartVersion : 16;
+    int nconnections;
     
 #ifdef Win32
     char *rhome;               /* R_HOME */

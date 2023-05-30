@@ -984,6 +984,8 @@ char *PrintUsage(void)
 	"  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n",
 	msg2b[] =
 	"  --max-ppsize=N        Set max size of protect stack to N\n",
+	msg2c[] =
+	"-  -max-connections=N   Set max number of connections to N\n",
 	msg3[] =
 	"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --no-echo             Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
@@ -996,6 +998,7 @@ char *PrintUsage(void)
     strcat(msg, msg1);
     strcat(msg, msg2);
     strcat(msg, msg2b);
+    strcat(msg, msg2c);
     strcat(msg, msg3);
     if(CharacterMode == RTerm) strcat(msg, msg4);
     strcat(msg, msg5);

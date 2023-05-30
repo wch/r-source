@@ -194,6 +194,7 @@ int R_DefParamsEx(Rstart Rp, int RstartVersion)
     Rp->max_vsize = R_SIZE_T_MAX;
     Rp->max_nsize = R_SIZE_T_MAX;
     Rp->ppsize = R_PPSSIZE;
+    Rp->nconnections = 128;
     Rp->NoRenviron = FALSE;
     R_SizeFromEnv(Rp);
 
@@ -324,6 +325,7 @@ void R_SetParams(Rstart Rp)
     R_SetMaxNSize(Rp->max_nsize);
     R_SetMaxVSize(Rp->max_vsize);
     R_SetPPSize(Rp->ppsize);
+    R_SetNconn(Rp->nconnections);
 #ifdef Win32
     R_SetWin32(Rp);
 #endif
