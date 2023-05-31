@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -595,7 +595,7 @@ socketTimeout(socket, timeout = -1)
 
   The default limit is 128 (including the three terminal connections,
   \code{stdin}, \code{stdout} and \code{stderr}).  This can be increased
-  when \R is started using the option \option{--max-connections+N}, where
+  when \R is started using the option \option{--max-connections=N}, where
   the maximum allowed value is 4096.
 
   However, many types of connections use other resources which are
@@ -606,6 +606,9 @@ socketTimeout(socket, timeout = -1)
   \command{ulimit -n}.)  File descriptors are used for many other
   purposes including dynamically loading DSO/DLLs (see
   \code{\link{dyn.load}}) which may use up to 60\% of the limit.
+
+  Package \pkg{parallel}'s \code{\link{makeCluster}} uses socket
+  connections to communicate with the worker processes, one per worker.
 }
 
 \note{
