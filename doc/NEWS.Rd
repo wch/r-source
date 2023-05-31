@@ -35,6 +35,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item C API \file{Applic.h} version of \R's \code{integrate()},
+      \code{Rdqags()} now returns the correct number of integrand
+      evaluations \code{neval}, fixing \PR{18515} reported and diagnosed by
+      Stephen Wade.
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{tools::Rdiff()} is now more robust against invalid
