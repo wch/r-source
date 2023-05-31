@@ -156,6 +156,8 @@
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
 
+      \item Fix (new) bug in \code{hcl.colors(2, *)}, by Achim Zeileis (\PR{18523}).
+
       \item \code{head(., <illegal>)} and \code{tail(..)} now produce
       more useful \code{"Error in ...."} error messages, fixing \PR{18362}.
     }
