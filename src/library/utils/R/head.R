@@ -1,7 +1,7 @@
 #  File src/library/utils/R/head.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@ checkHT <- function(n, d) {
         gettextf("invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d",
                  len, length(d))
     else return(invisible())
-    stop(msg, domain = NA)
+    ## report the caller, not checkHT():
+    stop(simpleError(msg, call = sys.call(-1L)))
 }
 
 

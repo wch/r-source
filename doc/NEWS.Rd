@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.3.0 patched}{
+\section{\Rlogo CHANGES IN R 4.3.0 patched}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The C-level API version of \R's \code{integrate()},
@@ -50,6 +51,9 @@
       installed (\PR{18530}).
 
       \item Fix (new) bug in \code{hcl.colors(2, *)}, by Achim Zeileis (\PR{18523}).
+
+      \item \code{head(., <illegal>)} and \code{tail(..)} now produce
+      more useful \code{"Error in ...."} error messages, fixing \PR{18362}.
     }
   }
 }
