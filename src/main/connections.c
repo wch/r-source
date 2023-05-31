@@ -371,7 +371,7 @@ static double buff_seek(Rconnection con, double where, int origin, int rw)
     return con->seek(con, where, origin, rw);
 }
 
-void set_buffer(Rconnection con) {
+static void set_buffer(Rconnection con) {
     if (con->canread && con->text) {
 	buff_init(con);
     }

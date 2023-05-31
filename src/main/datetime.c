@@ -175,7 +175,7 @@ extern char *tzname[2];
 #include <Defn.h>
 #include <Internal.h>
 
-Rboolean warn1902 = FALSE;
+static Rboolean warn1902 = FALSE;
 
 /* Substitute based on glibc code. */
 #include "Rstrptime.h"
@@ -1634,7 +1634,7 @@ attribute_hidden SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP balancePOSIXlt(SEXP x, Rboolean fill_only, Rboolean do_class)
+static SEXP balancePOSIXlt(SEXP x, Rboolean fill_only, Rboolean do_class)
 {
     MAYBE_INIT_balanced
     const SEXP _filled_ = ScalarLogical(NA_LOGICAL);
