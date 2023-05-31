@@ -8,6 +8,11 @@
 \section{\Rlogo CHANGES IN R 4.3.0 patched}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
+      \item The C-level API version of \R's \code{integrate()},
+      \code{Rdqags()} in \file{Applic.h}, now returns the correct number of
+      integrand evaluations \code{neval}, fixing \PR{18515} reported and
+      diagnosed by Stephen Wade.
+
       \item The C prototypes for LAPACK calls \code{dspgv} and \code{dtptrs}
       in \file{R_exts/Lapack.h} had one too many and one too few
       character length arguments --- but this has not caused any known
@@ -35,18 +40,11 @@
     }
   }
 
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item C API \file{Applic.h} version of \R's \code{integrate()},
-      \code{Rdqags()} now returns the correct number of integrand
-      evaluations \code{neval}, fixing \PR{18515} reported and diagnosed by
-      Stephen Wade.
-    }
-  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{.S3methods()}, typically called from \code{methods()},
       again marks methods from package \pkg{base} as \code{visible}.
+
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
