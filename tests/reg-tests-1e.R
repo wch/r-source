@@ -551,6 +551,15 @@ if(no.splines) unloadNamespace("splines")
 ## ns() gave  Error in qr.default(t(const)) : NA/NaN/Inf in foreign function call
 
 
+## methods() in {base} pkg are visible
+mmeths <- methods(merge)
+imeth <- attr(mmeths, "info")
+stopifnot(exprs = {
+    sum(iB <- imeth[,"from"] == "base") >= 2 # 'default' and 'data.frame'
+    imeth[iB, "visible"] # {base} methods *are* visible
+})
+## was wrong in R 4.3.0 (and R-devel for a while)
+
 
 
 ## keep at end
