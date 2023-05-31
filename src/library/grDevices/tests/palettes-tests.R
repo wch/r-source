@@ -56,3 +56,16 @@ d3 <- expndGrid(colors = "hcl.colors",
   palette = print(hcl.pals()))
 table(L <- chkALLalpha(d3)) ## R-4.2.x: 1057 FALSE, 783 TRUE -- now 1840 TRUE
 if(!all(L)) stop("---> not all ok")
+
+## Regr.test for PR#18523:
+stopifnot(identical(c("#002E60", "#3E2000"),
+                    hcl.colors(2, "Vik")))
+
+div.pals <- hcl.pals(type="diverging")
+divXpals <- hcl.pals(type="divergingx")
+for(p in c(div.pals, divXpals)) {
+  c2 <- hcl.colors(2, p)
+  c3 <- hcl.colors(3, p)
+  stopifnot(length(setdiff(c3,c2)) == 1L)
+  ## cat(p,": "); print(c2)
+}

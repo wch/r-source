@@ -48,6 +48,8 @@
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
+
+      \item Fix (new) bug in \code{hcl.colors(2, *)}, by Achim Zeileis (\PR{18523}).
     }
   }
 }

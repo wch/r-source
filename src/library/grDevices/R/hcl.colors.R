@@ -185,7 +185,7 @@ hcl.colors <- function(n, palette = "viridis",
 	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
         ## h/c/l trajectories
         n2 <- ceiling(n/2)
-	i <- if(n2 == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
+	i <- if(n == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
 	col <- c(seqhcl(i, p[["h1"]], p[["h1"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[seq_len(n2)]),
 	     rev(seqhcl(i, p[["h2"]], p[["h2"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[rev(seq_len(n))[seq_len(n2)]])))
         if(n%/%2 < n2) col <- col[-n2]
@@ -194,7 +194,7 @@ hcl.colors <- function(n, palette = "viridis",
 	if(is.na(p[["p4"]])) p[["p4"]] <- p[["p2"]]
         ## h/c/l trajectories
         n2 <- ceiling(n/2)
-	i <- if(n2 == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
+	i <- if(n == 1L) 0 else seq.int(1, by = -2/(n - 1), length.out = n2)
 	col <- c(seqhcl(i, p[["h1"]], if(is.na(p[["h2"]])) p[["h1"]] else p[["h2"]], p[["c1"]], p[["c2"]],
 			   p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]], alpha[seq_len(n2)]),
 		 rev(seqhcl(i, p[["h3"]], if(is.na(p[["h2"]])) p[["h3"]] else p[["h2"]], p[["c3"]], p[["c2"]],
