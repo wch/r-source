@@ -5326,6 +5326,8 @@ void R_SetNconn(int nconn)
 attribute_hidden void InitConnections(void)
 {
     Connections = (Rconnection *) malloc(NCONNECTIONS * sizeof(Rconnection));
+    if (!Connections)
+	R_Suicide("could not allocate space for the connextions table");
     Connections[0] = newterminal("stdin", "r");
     Connections[0]->fgetc = stdin_fgetc;
     Connections[1] = newterminal("stdout", "w");
