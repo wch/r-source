@@ -5219,8 +5219,8 @@ function(dir)
     ## code.
     oLC_ct <- Sys.getlocale("LC_CTYPE"); on.exit(Sys.setlocale("LC_CTYPE", oLC_ct))
     if(!is.na(enc)) {  ## try to use the declared encoding
-        if(.Platform$OS.type == "windows") {
-            ## "C" is in fact "en", and there are no UTF-8 locales
+        if(.Platform$OS.type == "windows" && !l10n_info()[["UTF-8"]]) {
+            ## "C" is in fact "en"
             switch(enc,
                    "latin2" = Sys.setlocale("LC_CTYPE", 'polish'),
                    Sys.setlocale("LC_CTYPE", "C")

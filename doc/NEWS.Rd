@@ -53,6 +53,9 @@
 
       \item \code{head(., <illegal>)} and \code{tail(..)} now produce
       more useful \code{"Error in ...."} error messages, fixing \PR{18362}.
+
+      \item Package code syntax on Windows is checked in UTF-8 when UTF-8 is
+      the native encoding.
     }
   }
 }
