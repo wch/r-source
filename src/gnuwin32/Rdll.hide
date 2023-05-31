@@ -190,6 +190,7 @@
  R_SessionContext
  R_SetMaxNSize
  R_SetMaxVSize
+ R_SetNconn
  R_SetOptionWarn
  R_SetOptionWidth
  R_SetPPSize

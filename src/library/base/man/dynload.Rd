@@ -179,7 +179,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   modified using command \command{ulimit -n} (\command{sh},
   \command{bash}) or \command{limit descriptors} (\command{csh}) in the
   shell used to launch \R{}.  Increasing \env{R_MAX_NUM_DLLS} comes with
-  some memory overhead.
+  some memory overhead, and be aware that many types of
+  \link{connections} also use file descriptors.
 
   If the OS limit on the number of open files cannot be determined, the
   DLL limit is 100 and cannot be changed \emph{via} \env{R_MAX_NUM_DLLS}.

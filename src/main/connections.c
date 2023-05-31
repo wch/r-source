@@ -69,6 +69,25 @@
    is 64-bit on Windows.
 */
 
+/*
+  NCONNECTIONS.  Prior to R 4.4.0 this was set to 128 in this file.
+  There was concern that file-like connections use file descriptions
+  which have a quite low default limit (256 on macOS, 1024 on Linux),
+  and are needed for other uses including loading DLLs.  (Parallel
+  clusters use a file connection per cluster member.)  Windows is said
+  to have a default limit of 512 file handlws per process.
+
+  As from R 4.4.0 the defailt limit remains 128. but can be overriden
+  by the startup option --max-connections.  This does not allow it to
+  be set below 128 but has a limit of 4096 (see CommandLineArgs.c).
+  The upper limit is conservative, but as creating a new connection
+  uses a linear search in the connections table, some limit is
+  needed. (When checked the table used 488 bytes per connection.)
+
+  Using a dynamic upper limit would not be hard, but not very useful
+  because of the non-dynamic fd limit.
+*/
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -155,6 +174,8 @@ static int NextConnection(void)
 	R_gc(); /* Try to reclaim unused ones */
 	for(i = 3; i < NCONNECTIONS; i++)
 	    if(!Connections[i]) break;
+	/* To make this dynamic, realloc Connections and set the new
+	   members to NULL. */
 	if(i >= NCONNECTIONS)
 	    error(_("all %d connections are in use"), NCONNECTIONS);
     }
@@ -5317,7 +5338,7 @@ void WinCheckUTF8(void)
 
 /* ------------------- admin functions  --------------------- */
 
-void R_SetNconn(int nconn)
+attribute_hidden void R_SetNconn(int nconn)
 {
     if (nconn > 128) NCONNECTIONS = nconn;
 }

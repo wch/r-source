@@ -588,9 +588,9 @@ socketTimeout(socket, timeout = -1)
 }
 
 \section{Number of connections}{
-  There is a limit on the number of connections which can be created at
-  any onw time.  It is good practice to close connections when finished
-  with, but if necessary garbage-collection will be done to close
+  There is a limit on the number of connections which can be in use at
+  any one time.  It is good practice to close connections when finished
+  with, but if necessary garbage-collection will be invoked to close those
   connections without any \R object referring to them.
 
   The default limit is 128 (including the three terminal connections,
@@ -603,7 +603,9 @@ socketTimeout(socket, timeout = -1)
   default are per-process limited to 256 on macOS, 1024 on Linux: this
   limits the number of connections using files, fifos, \dots{}.  (That
   limit can be raised in the shell used to launch \R, for example by
-  \command{ulimit -n}.)
+  \command{ulimit -n}.)  File descriptors are used for many other
+  purposes including dynamically loading DSO/DLLs (see
+  \code{\link{dyn.load}}) which may use up to 60\% of the limit.
 }
 
 \note{
