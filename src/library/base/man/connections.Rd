@@ -208,11 +208,6 @@ socketTimeout(socket, timeout = -1)
   automatically in due course (with a warning) if there is no longer an
   \R object referring to the connection.
 
-  A maximum of 128 connections can be allocated (not necessarily open)
-  at any one time.  Three of these are pre-allocated (see
-  \code{\link{stdout}}).   The OS will impose limits on the numbers of
-  connections of various types, but these are usually larger than 125.
-
   \code{flush} flushes the output stream of a connection open for
   write/append (where implemented, currently for file and clipboard
   connections, \code{\link{stdout}} and \code{\link{stderr}}).
@@ -588,10 +583,11 @@ socketTimeout(socket, timeout = -1)
 }
 
 \section{Number of connections}{
-  There is a limit on the number of connections which can be in use at
-  any one time.  It is good practice to close connections when finished
-  with, but if necessary garbage-collection will be invoked to close those
-  connections without any \R object referring to them.
+  There is a limit on the number of connections which can be allocated
+  (not necessarily open) at any one time.  It is good practice to close
+  connections when finished with, but if necessary garbage-collection
+  will be invoked to close those connections without any \R object
+  referring to them.
 
   The default limit is 128 (including the three terminal connections,
   \code{stdin}, \code{stdout} and \code{stderr}).  This can be increased
@@ -606,6 +602,11 @@ socketTimeout(socket, timeout = -1)
   \command{ulimit -n}.)  File descriptors are used for many other
   purposes including dynamically loading DSO/DLLs (see
   \code{\link{dyn.load}}) which may use up to 60\% of the limit.
+
+  Windows appears to have a limit of 512 open C file streams: these are
+  used by at least \code{file}, \code{gzfile}, \code{bzfile},
+  \code{xzfile}, \code{url} and \code{unz} connections applied to files
+  (rather than URLs).
 
   Package \pkg{parallel}'s \code{\link{makeCluster}} uses socket
   connections to communicate with the worker processes, one per worker.
