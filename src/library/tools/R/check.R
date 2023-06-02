@@ -3773,7 +3773,7 @@ add_dummies <- function(dir, Log)
                         opWarn_string, pkgname)
             env2 <- Sys.getenv("_R_LOAD_CHECK_S4_EXPORTS_", "NA")
             env2 <- paste0("_R_LOAD_CHECK_S4_EXPORTS_=",
-                           if(env2 == "all") env else pkgname)
+                           if(env2 == "all") env2 else pkgname)
             t1 <- proc.time()
             out <- R_runR0(Rcmd, opts, c(env, env1, env2), arch = arch)
             t2 <- proc.time()
