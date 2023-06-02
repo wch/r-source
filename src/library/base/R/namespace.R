@@ -415,7 +415,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                      call. = FALSE, domain = NA)
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
-            dependsMethods <- "methods" %in% names(pkgInfo$Depends)
+            dependsMethods <- "methods" %in% c(names(pkgInfo$Depends), names(vI))
             if(dependsMethods) loadNamespace("methods")
             if(!is.null(zop <- versionCheck[["op"]]) &&
                !is.null(zversion <- versionCheck[["version"]]) &&
