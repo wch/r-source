@@ -6359,10 +6359,10 @@ This is not pertinent to C++ which does not permit tentative definitions.
 @subsubsection C++17 issues
 
 @R{} 4.3.0 and later default to C++17 when compiling C++, and that
-finally removed many of C++98 features which were deprecated as long ago
-as C++11.  Compiler/runtime authors have been slow to remove these, but
-LLVM @command{clang}/@command{libc++} finally started to do so in 2023
--- some others warn but some do not.
+finally removed many C++98 features which were deprecated as long ago as
+C++11.  Compiler/runtime authors have been slow to remove these, but
+LLVM @command{clang} with its @code{libc++} runtime library finally
+started to do so in 2023 -- some others warn but some do not.
 
 The principal offender is the `Boost' collection of C++ headers and
 libraries.  There are two little-documented ways to work around aspects
@@ -6400,18 +6400,22 @@ in @file{boost/mpl/aux_/integral_wrapper.hpp}.  Adding
 to @code{PKG_CXXFLAGS} will allow this, but that flag is only accepted
 by recent versions of LLVM @command{clang} so needs a @command{configure} test.
 
-Pre=built versions of current @command{clang}/@command{libc++} are
+Pre=built versions of current @command{clang}/@code{libc++} are
 usually available from
 @uref{https://github.com/llvm/llvm-project/releases} for a wide range of
 platforms (but the Windows builds there are not compatible with
 @code{Rtools} and the macOS ones are unsigned).  To select
-@command{libc++} add @option{-stdlib=libc++} to @code{CXX}, for example
+@code{libc++} add @option{-stdlib=libc++} to @code{CXX}, for example
 by having
 @example
 CXX="/path/to/clang/clang++ -std=gnu++17 -stdlib=libc++"
 @end example
 @noindent
 in @file{~/.R/Makevars}.
+
+Another build for Windows which may be sufficiently compatible with
+@code{Rtools} can be found at
+@uref{https://github.com/mstorsjo/llvm-mingw}: this uses @code{libc++}.
 
 @node Binary distribution,  , Portable C and C++ code, Writing portable packages
 @subsection Binary distribution
