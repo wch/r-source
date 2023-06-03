@@ -1,6 +1,6 @@
 % File src/library/methods/man/slot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2022 R Core Team
 % Copyright 2005-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -25,6 +25,7 @@ slot(object, name, check = TRUE) <- value
 .hasSlot(object, name)% not saying more; prefer is(), extends(), etc!
 
 slotNames(x)
+.slotNames(x)
 getSlots(x)
 }
 %% .slotNames(x)
@@ -140,6 +141,13 @@ getSlots("track") # or
 getSlots(getClass("track"))
 slotNames(class(myTrack)) # is the same as
 slotNames(myTrack)
+
+## Transform such an S4 object to a list, e.g. to "export" it:
+S4toList <- function(obj) {
+   sn <- slotNames(obj)
+   structure(lapply(sn, slot, object = obj), names = sn)
+}
+S4toList(myTrack)
 
 \dontshow{removeClass("track")##  should not be needed... see ./setClass.Rd}
 }
