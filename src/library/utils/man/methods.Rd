@@ -19,7 +19,7 @@
                                     all.names = FALSE, dropPath = FALSE)
 
 \S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
-\S3method{ print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
+\S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 }
 \arguments{
   \item{generic.function}{a generic function, or a character string naming a
