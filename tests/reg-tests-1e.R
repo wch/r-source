@@ -604,6 +604,22 @@ stopifnot(exprs = {
 ## more helpful error msg
 
 
+## na.contiguous() w/ result at beginning -- Georgi Boshnakov, R-dev, 2023-06-01
+## and does not set "tsp" for non-ts
+x <- c(1:3, NA, NA, 6:8, NA, 10:12)
+(naco <- na.contiguous(      x ))
+(nact <- na.contiguous(as.ts(x)))
+dput( setdiff(attributes(nact), attributes(naco)) ) # and check -- TODO
+n0 <- numeric(0)
+stopifnot(identical(`attributes<-`(naco, NULL), 1:3)
+        , identical(na.contiguous(n0), n0)
+        , is.null(attr(naco, "tsp"))
+        , nact == naco
+        , identical(c(na.contiguous(presidents)), presidents[32:110])
+          )
+## 'naco' gave *2nd*, not *first* run till R 4.3.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
