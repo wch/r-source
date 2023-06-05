@@ -190,8 +190,8 @@ interpSpline.default <-
 ##	job = 1L)
     des <- splineDesign(knots, x, ord, derivs, sparse=sparse)
     y <- c(0, frm$y, 0)
-    coeff <- if(sparse) Matrix::solve(des, Matrix::..2dge(y), sparse=TRUE)
-             else solve(des, y)
+    ## if(sparse) des is <sparseMatrix>, but in any case coeff[] is numeric vector:
+    coeff <- if(sparse) as.vector(Matrix::solve(des, y)) else solve(des, y)
     value <- structure(
         list(knots = knots, coefficients = coeff, order = ord),
              formula = do.call("~", list(substitute(obj2), substitute(obj1))),
