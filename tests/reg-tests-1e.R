@@ -626,6 +626,39 @@ if(i <- anyDuplicated(no <- names(ops <- options())))
 ## had one in R 4.3.0 (and R-devel)
 
 
+## .S3methods() and methods() in  R 4.3.0
+library(stats)# almost surely unneeded
+##
+methi <- function(...) attr(methods(...), "info")
+(mdensi <- methi(density)) # only density.default
+stopifnot(mdensi["density.default", "visible"]) # FALSE in R 4.3.0
+if(requireNamespace('cluster', lib.loc=.Library, quietly = TRUE)) withAutoprint({
+    try(detach("package:cluster"), silent=TRUE)# just in case
+    (mCf1 <- methi(coef))
+
+    require(cluster)
+    (mCf2 <- methi(coef))
+    stopifnot(mCf2["coef.hclust", "visible"],
+              mCf2["coef.hclust", "from"] == "cluster")
+    ## ... and
+    detach("package:cluster")
+    (mcf <- methods(coef)) # again gets marked as invisible:  coef.hclust*
+    stopifnot(!attr(mcf, "info")["coef.hclust", "visible"])
+}) # when  {cluster}
+## in any case {and "always" worked}:
+coef.foo <- function(object, ...) "the coef.foo() method"
+(m3 <- methi(coef))# -> coef.foo is visible in .GlobalEnv
+stopifnot(m3["coef.foo", "visible"],
+          m3["coef.foo", "from"] == ".GlobalEnv")
+## *and* this is still true, after registering it:
+.S3method("coef", "foo", coef.foo)
+stopifnot(identical(methi(coef), m3)) # did not change
+rm(coef.foo)
+m4 <- methi(coef)
+stopifnot(!m4["coef.foo", "visible"],
+           m4["coef.foo", "from"] == "registered S3method for coef")
+## coef.foo  part  always worked
+
 
 
 ## keep at end

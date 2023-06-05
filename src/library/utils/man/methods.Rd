@@ -13,12 +13,13 @@
   List all available methods for a S3 and S4 generic function, or all
   methods for an S3 or S4 class.
 }
-\usage{
-   methods(generic.function, class, all.names = FALSE)
-.S3methods(generic.function, class, envir=parent.frame(), all.names = FALSE)
+\usage{% --> ../R/objects.R :
+   methods(generic.function, class, all.names = FALSE, dropPath = FALSE)
+.S3methods(generic.function, class, envir = parent.frame(),
+                                    all.names = FALSE, dropPath = FALSE)
 
 \S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
-\S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
+\S3method{ print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 }
 \arguments{
   \item{generic.function}{a generic function, or a character string naming a
@@ -31,6 +32,13 @@
   \item{all.names}{a \code{\link{logical}} indicating if all
     object names are returned.  When \code{FALSE} as by default, names
     beginning with a \samp{.} are omitted.}
+  \item{dropPath}{a \code{\link{logical}} indicating if the
+    \code{\link{search}()} path, apart from \code{\link{.GlobalEnv}} and
+    \code{package:base} (i.e., \code{\link{baseenv}()}), should be skipped
+    when searching for method definitions.  The default \code{FALSE} is
+    back compatible and typically desired for \code{print()}ing, with or
+    without asterisk; \code{dropPath=TRUE} has been hard coded in \R 4.3.0
+    and is faster for non-small \code{\link{search}()} paths.}
   \item{x}{typically the result of \code{methods(..)}, an \R object of S3
     class \code{"MethodsFunction"}, see \sQuote{Value} below.}
   \item{byclass}{an optional \code{\link{logical}} allowing to override
@@ -88,8 +96,10 @@
   defined.  The \code{"info"} attribute is a data frame with columns:
   \describe{
     \item{generic}{\code{\link{character}} vector of the names of the generic.}
-    \item{visible}{logical(), is the method exported from the namespace
-      of the package in which it is defined?}
+    \item{visible}{logical(), is the method \dQuote{visible} to the user?
+      When true, it typically is exported from the namespace of the package
+      in which it is defined, and the package is \code{\link{attach}()}ed
+      to the \code{\link{search}()} path.}
     \item{isS4}{logical(), true when the method is an S4 method.}
     \item{from}{a \code{\link{factor}}, the location or package name
       where the method was found.}

@@ -152,6 +152,9 @@
       \item \code{.S3methods()}, typically called from \code{methods()},
       again marks methods from package \pkg{base} as \code{visible}.
 
+      Also, the visibility of non-\pkg{base} methods is again determined by
+      the method's presence in \code{\link{search}()}.
+
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
