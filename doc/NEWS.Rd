@@ -169,6 +169,10 @@
       reported to R-devel, including a fix, by Georgi Boshnakov.
       Further, by default, it modifies only an existing
       \code{attr(*,"tsp")} but otherwise no longer sets one.
+
+      \item \code{chol(<not pos.def>, pivot = <T|F>)} now gives a correct
+      error or warning message (depending on \code{pivot}), thanks to
+      Mikael Jagan's (\PR{18541}).
     }
   }
 }
