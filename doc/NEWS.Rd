@@ -112,7 +112,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.3.0 patched}{
+\section{\Rlogo CHANGES IN R 4.3.1}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The C-level API version of \R's \code{integrate()},
