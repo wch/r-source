@@ -620,6 +620,13 @@ stopifnot(identical(`attributes<-`(naco, NULL), 1:3)
 ## 'naco' gave *2nd*, not *first* run till R 4.3.0
 
 
+## accidental duplicated options() entry
+if(i <- anyDuplicated(no <- names(ops <- options())))
+    stop("duplicated options(): ", no[i])
+## had one in R 4.3.0 (and R-devel)
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
