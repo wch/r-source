@@ -35,7 +35,7 @@
  *
  * We have two kind of options:
  *   1) those used exclusively from R code,
- *	typically initialized in Rprofile.
+ *	typically initialized in Rprofile  aka  ../library/profile/Common.R
 
  *	Their names need not appear here, but may, when we want
  *	to make sure that they are assigned `valid' values only.
@@ -273,9 +273,9 @@ attribute_hidden void InitOptions(void)
 
     /* options set here should be included into mandatory[] in do_options */
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(31));
-#else
     PROTECT(v = val = allocList(30));
+#else
+    PROTECT(v = val = allocList(29));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -344,10 +344,6 @@ attribute_hidden void InitOptions(void)
 
     SET_TAG(v, install("OutDec"));
     SETCAR(v, mkString(OutDec));
-    v = CDR(v);
-
-    SET_TAG(v, install("browserNLdisabled"));
-    SETCAR(v, ScalarLogical(FALSE));
     v = CDR(v);
 
     p = getenv("R_C_BOUNDS_CHECK");

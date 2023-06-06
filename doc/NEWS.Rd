@@ -45,6 +45,9 @@
       \item \code{.S3methods()}, typically called from \code{methods()},
       again marks methods from package \pkg{base} as \code{visible}.
 
+      Also, the visibility of non-\pkg{base} methods is again determined by
+      the method's presence in \code{\link{search}()}.
+
       \item \code{tools::Rdiff()} is now more robust against invalid
       strings, fixing installation tests on Windows without Rtools
       installed (\PR{18530}).
@@ -56,6 +59,16 @@
 
       \item Package code syntax on Windows is checked in UTF-8 when UTF-8 is
       the native encoding.
+
+      \item \code{na.contiguous(x)} now also returns the first run, when it
+      is at the beginning and there is a later one of the same length;
+      reported to R-devel, including a fix, by Georgi Boshnakov.
+      Further, by default, it modifies only an existing
+      \code{attr(*,"tsp")} but otherwise no longer sets one.
+
+      \item \code{chol(<not pos.def>, pivot = <T|F>)} now gives a correct
+      error or warning message (depending on \code{pivot}), thanks to
+      Mikael Jagan's (\PR{18541}).
     }
   }
 }

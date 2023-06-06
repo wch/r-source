@@ -5,6 +5,7 @@
 ## especially when alternative BLAS are used.
 
 options(digits = 4L)
+tryCmsg <- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 
 ##    -------  examples from ?svd ---------
 
@@ -173,3 +174,15 @@ solve(a, bb)
 A <- a + 0i
 solve(A, b)
 
+
+## PR#18541 by Mikael Jagan -- chol()  error & warning message:
+x <- diag(-1, 5L)
+(chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf
+(chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
+                chol(x, pivot = TRUE ))) # dpstrf
+stopifnot(exprs = {
+    grepl(" minor .* not positive$", chF) # was "not positive *definite*
+    grepl("rank-deficient or not positive definite$", ..W) # was "indefinite*
+    chT == -diag(5)
+    attr(chT, "rank") == 0L
+})

@@ -979,7 +979,7 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 	F77_CALL(dpotrf)("U", &m, REAL(ans), &m, &info FCONE);
 	if (info != 0) {
 	    if (info > 0)
-		error(_("the leading minor of order %d is not positive definite"),
+		error(_("the leading minor of order %d is not positive"),
 		      info);
 	    error(_("argument %d of Lapack routine %s had invalid value"),
 		  -info, "dpotrf");
@@ -994,7 +994,7 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 			 FCONE);
 	if (info != 0) {
 	    if (info > 0)
-		warning(_("the matrix is either rank-deficient or indefinite"));
+		warning(_("the matrix is either rank-deficient or not positive definite"));
 	    else
 		error(_("argument %d of Lapack routine %s had invalid value"),
 		      -info, "dpstrf");

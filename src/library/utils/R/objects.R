@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ function()
     c(names(.knownS3Generics), tools:::.get_internal_S3_generics())
 
 .S3methods <-
-function(generic.function, class, envir=parent.frame())
+function(generic.function, class, envir=parent.frame(), dropPath = FALSE)
 {
     rbindSome <- function(df, nms, msg) {
         ## rbind.data.frame() -- dropping rows with duplicated names
@@ -89,7 +89,7 @@ function(generic.function, class, envir=parent.frame())
     S3MethodsStopList <- tools::nonS3methods(NULL)
     knownGenerics <- getKnownS3generics()
     sp <- search()
-    sp <- sp[c(1L, length(sp))]
+    if(dropPath) sp <- sp[c(1L, length(sp))]
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(sp, ls)
     lens <- lengths(an)
@@ -208,7 +208,7 @@ function(generic.function, class, envir=parent.frame())
 }
 
 methods <-
-function(generic.function, class)
+function(generic.function, class, dropPath = FALSE)
 {
     envir <- parent.frame()
     if(!missing(generic.function) && !is.character(generic.function)) {
@@ -227,7 +227,7 @@ function(generic.function, class)
     if (!missing(class) && !is.character(class))
         class <- deparse1(substitute(class))
 
-    s3 <- .S3methods(generic.function, class, envir)
+    s3 <- .S3methods(generic.function, class, envir, dropPath=dropPath)
     s4 <- if(.isMethodsDispatchOn()) methods::.S4methods(generic.function, class)
 
     .MethodsFunction(s3, s4, missing(generic.function))

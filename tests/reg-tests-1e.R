@@ -574,6 +574,62 @@ stopifnot(exprs = {
 ## more helpful error msg
 
 
+## na.contiguous() w/ result at beginning -- Georgi Boshnakov, R-dev, 2023-06-01
+## and does not set "tsp" for non-ts
+x <- c(1:3, NA, NA, 6:8, NA, 10:12)
+(naco <- na.contiguous(      x ))
+(nact <- na.contiguous(as.ts(x)))
+dput( setdiff(attributes(nact), attributes(naco)) ) # and check -- TODO
+n0 <- numeric(0)
+stopifnot(identical(`attributes<-`(naco, NULL), 1:3)
+        , identical(na.contiguous(n0), n0)
+        , is.null(attr(naco, "tsp"))
+        , nact == naco
+        , identical(c(na.contiguous(presidents)), presidents[32:110])
+          )
+## 'naco' gave *2nd*, not *first* run till R 4.3.0
+
+
+## accidental duplicated options() entry
+if(i <- anyDuplicated(no <- names(ops <- options())))
+    stop("duplicated options(): ", no[i])
+## had one in R 4.3.0 (and R-devel)
+
+
+## .S3methods() and methods() in  R 4.3.0
+library(stats)# almost surely unneeded
+##
+methi <- function(...) attr(methods(...), "info")
+(mdensi <- methi(density)) # only density.default
+stopifnot(mdensi["density.default", "visible"]) # FALSE in R 4.3.0
+if(requireNamespace('cluster', lib.loc=.Library, quietly = TRUE)) withAutoprint({
+    try(detach("package:cluster"), silent=TRUE)# just in case
+    (mCf1 <- methi(coef))
+
+    require(cluster)
+    (mCf2 <- methi(coef))
+    stopifnot(mCf2["coef.hclust", "visible"],
+              mCf2["coef.hclust", "from"] == "cluster")
+    ## ... and
+    detach("package:cluster")
+    (mcf <- methods(coef)) # again gets marked as invisible:  coef.hclust*
+    stopifnot(!attr(mcf, "info")["coef.hclust", "visible"])
+}) # when  {cluster}
+## in any case {and "always" worked}:
+coef.foo <- function(object, ...) "the coef.foo() method"
+(m3 <- methi(coef))# -> coef.foo is visible in .GlobalEnv
+stopifnot(m3["coef.foo", "visible"],
+          m3["coef.foo", "from"] == ".GlobalEnv")
+## *and* this is still true, after registering it:
+.S3method("coef", "foo", coef.foo)
+stopifnot(identical(methi(coef), m3)) # did not change
+rm(coef.foo)
+m4 <- methi(coef)
+stopifnot(!m4["coef.foo", "visible"],
+           m4["coef.foo", "from"] == "registered S3method for coef")
+## coef.foo  part  always worked
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
