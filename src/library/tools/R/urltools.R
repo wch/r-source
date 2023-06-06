@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2022 The R Core Team
+#  Copyright (C) 2015-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -599,6 +599,9 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         bad <- rbind(bad,
                      .gather(urls[ind], parents[ind], m = msg))
     }
+    
+    ## Could check urn URIs at least for appropriate namespaces using
+    ## <https://www.iana.org/assignments/urn-namespaces/urn-namespaces-1.csv>
 
     ## ftp.
     pos <- which(schemes == "ftp")
