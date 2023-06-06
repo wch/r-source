@@ -207,6 +207,11 @@ function(meta)
             "([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])"
         m <- gregexpr(pattern, v)
         urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
+        regmatches(v, m) <- ""
+        pattern <- "<([A-Za-z][A-Za-z0-9.+-]*:[^>]+)>"
+        ##   scheme      = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+        m <- gregexpr(pattern, v)
+        urls <- c(urls, .gregexec_at_pos(pattern, v, m, 2L))
     }
 
     url_db(urls, rep.int("DESCRIPTION", length(urls)))
@@ -569,9 +574,18 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
 
     ## Invalid URI schemes.
     schemes <- parts[, 1L]
-    ind <- is.na(match(schemes,
+    ind <- is.na(match(tolower(schemes),
                        c("",
                          IANA_URI_scheme_db$URI_Scheme,
+                         "arxiv",
+                         ## Also allow 'isbn' and 'issn', which in fact
+                         ## are registered URN namespaces but not
+                         ## registered URI schemes, see
+                         ## <https://www.iana.org/assignments/urn-formal/isbn>
+                         ## <https://www.iana.org/assignments/urn-formal/issn>
+                         ## <https://doi.org/10.17487/rfc3986>
+                         ## <https://doi.org/10.17487/rfc8141>.
+                         "isbn", "issn",
                          ## Also allow 'javascript' scheme, see
                          ## <https://tools.ietf.org/html/draft-hoehrmann-javascript-scheme-03>
                          ## (but apparently never registered with IANA).
@@ -607,7 +621,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
 
     ## http/https.
     pos <- which(schemes == "http" | schemes == "https")
-    if(length(pos)) {
+    if(length(pos) && remote) {
         urlspos <- urls[pos]
         ## Check DOI URLs via the DOI handle API, as we nowadays do for
         ## checking DOIs.
