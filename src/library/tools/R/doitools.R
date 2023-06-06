@@ -1,7 +1,7 @@
 ##  File src/library/tools/R/doitools.R
 ##  Part of the R package, https://www.R-project.org
 ##
-##  Copyright (C) 2015-2016 The R Core Team
+##  Copyright (C) 2015-2023 The R Core Team
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -174,20 +174,34 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
         dois <- names(parents)
     }
 
-    ## See <https://www.doi.org/doi_handbook/2_Numbering.html#2.2>:
+    ## <FIXME>
+    ## According to <https://www.iana.org/assignments/urn-formal/doi>,
+    ##   The 2022 edition of ISO 26324 has amended the syntax of the
+    ##   prefix by removing the requirement for the directory indicator
+    ##   to be "10" and allow also DOI names without a registrant code.
+    ## (ISO 26324 is the DOI standard).
+    ## As of 2023-06-06, this is not yet reflected in the DOI Handbook
+    ## (<https://doi.org/10.1000/182>) last updated on 2019-12-19, which
+    ## still says in
+    ## <https://www.doi.org/the-identifier/resources/handbook/2_numbering#2.2>
+    ## that
     ##   The DOI prefix shall be composed of a directory indicator
     ##   followed by a registrant code. These two components shall be
     ##   separated by a full stop (period).
     ##   The directory indicator shall be "10".
-    ind <- !startsWith(dois, "10")
-    if(any(ind)) {
-        len <- sum(ind)
-        bad <- rbind(bad,
-                     .gather(dois[ind], parents[ind],
-                             m = rep.int("Invalid DOI", len)))
-    }
+    ## Nevertheless, let us drop the check below:
+    ## <CODE>
+    ## ind <- !startsWith(dois, "10")
+    ## if(any(ind)) {
+    ##     len <- sum(ind)
+    ##     bad <- rbind(bad,
+    ##                  .gather(dois[ind], parents[ind],
+    ##                          m = rep.int("Invalid DOI", len)))
+    ## }
+    ## </CODE>
+    ## </FIXME>    
 
-    ## See <https://www.doi.org/doi_handbook/3_Resolution.html#3.8.3>:
+    ## See <https://www.doi.org/the-identifier/resources/handbook/3_resolution#3.8.3>:
     ##   Ideally we would perform GET requests and would look at the
     ##   responseCode in the JSON response.  However, we cannot do this
     ##   with base, and at least for now we can also check using HEAD

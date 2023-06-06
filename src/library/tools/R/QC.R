@@ -8816,7 +8816,7 @@ function(x, ...)
             if(length(y <- x$descr_bad_DOIs)) {
                 paste(c("The Description field contains",
                         paste0("  ", y),
-                        "Please write DOIs as <doi:10.prefix/suffix>."),
+                        "Please write DOIs as <doi:prefix/suffix>."),
                       collapse = "\n")
             },
             if(length(y <- x$descr_bad_arXiv_ids)) {
