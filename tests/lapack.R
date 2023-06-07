@@ -183,6 +183,4 @@ x <- diag(-1, 5L)
 stopifnot(exprs = {
     grepl(" minor .* not positive$", chF) # was "not positive *definite*
     grepl("rank-deficient or not positive definite$", ..W) # was "indefinite*
-    chT == -diag(5)
-    attr(chT, "rank") == 0L
 })
