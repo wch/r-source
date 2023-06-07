@@ -40,6 +40,10 @@
       maximum number of connections for the session.  Defaults to 128 as
       before: allowed values up to 4096 (but resource limits may in practice
       restrict to smaller values).
+
+      \item \R on Windows (since Windows 10 2004) now uses the new Segment
+      Heap allocator. This may improve performance of some memory intensive
+      applications.
     }
   }
 
