@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -68,6 +68,13 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   (non-empty) string, the first element of the output is \code{""}, but
   if there is a match at the end of the string, the output is the same
   as with the match removed.
+
+  Note also that if there is an empty match at the beginning of a non-empty
+  string, the first character is returned and the algorithm continues with
+  the rest of the string.  This needs to be kept in mind when desiging the
+  regular expressions.  For example, when looking for a word boundary
+  followed by a letter (\code{"[[:<:]]"} with \code{perl = TRUE}), one can
+  disallow a match at the beginning of a string (via \code{"(?!^)[[:<:]]"}).
 
   Invalid inputs in the current locale are warned about up to 5 times.
 }
