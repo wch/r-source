@@ -864,7 +864,10 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 					  0, 0, ovector, ovecsize)) >= 0) {
 #endif
 			/* Empty matches get the next char, so move by one. */
-			bufp += MAX(ovector[1], 1);
+			if (ovector[1] > 0)
+			    bufp += ovector[1];
+			else if (*bufp)
+			    bufp += utf8clen(*bufp);
 			ntok++;
 			if (*bufp == '\0')
 			    break;
@@ -895,9 +898,10 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			bufp += ovector[1];
 		    } else {
 			/* Match was empty. */
-			pt[0] = *bufp;
-			pt[1] = '\0';
-			bufp++;
+			int clen = utf8clen(*bufp);
+			strncpy(pt, bufp, clen);
+			pt[clen] = '\0';
+			bufp += clen;
 		    }
 		    if (useBytes)
 			SET_STRING_ELT(t, j, mkBytesNew(pt, haveBytesInput));
@@ -1002,7 +1006,8 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		vmaxset(vmax2);
 	    }
 	    tre_regfree(&reg);
-	} else { /* ERE in normal chars -- single byte or MBCS */
+	} else { /* ERE in normal chars -- single byte */
+	         /* previously used also with MBCS */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -1063,6 +1068,8 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else {
 			while(!(rc = tre_regexec(&reg, bufp, 1, regmatch, 0))) {
 			    /* Empty matches get the next char, so move by one. */
+                            /* Not necessarily correct with MBCS, but only used
+			       with single bytes */
 			    bufp += MAX(regmatch[0].rm_eo, 1);
 			    ntok++;
 			    if (*bufp == '\0') break;
@@ -1097,6 +1104,8 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* Match was empty. */
 			pt[0] = *bufp;
 			pt[1] = '\0';
+			/* Not necessarily correct with MBCS, but only used
+			   with single bytes */
 			bufp++;
 		    }
 		    if (useBytes)

@@ -659,7 +659,9 @@ stopifnot(!m4["coef.foo", "visible"],
            m4["coef.foo", "from"] == "registered S3method for coef")
 ## coef.foo  part  always worked
 
-
+## R <= 4.3.1 would split into two invalid characters (PR#18546)
+splitmbcs <- length(strsplit("\u00e4", "^", perl=TRUE)[[1]])
+stopifnot(identical(splitmbcs, 1L))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
