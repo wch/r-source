@@ -16,7 +16,7 @@
 \usage{% --> ../R/objects.R :
    methods(generic.function, class, dropPath = FALSE)
 .S3methods(generic.function, class, envir = parent.frame(),
-                                  , dropPath = FALSE)
+                                    dropPath = FALSE)
 
 \S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 \S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
