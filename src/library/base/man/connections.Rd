@@ -595,18 +595,20 @@ socketTimeout(socket, timeout = -1)
   the maximum allowed value is 4096.
 
   However, many types of connections use other resources which are
-  themselves limited.  Notably \sQuote{file descriptors} which by
-  default are per-process limited to 256 on macOS, 1024 on Linux: this
-  limits the number of connections using files, fifos, \dots{}.  (That
-  limit can be raised in the shell used to launch \R, for example by
-  \command{ulimit -n}.)  File descriptors are used for many other
-  purposes including dynamically loading DSO/DLLs (see
-  \code{\link{dyn.load}}) which may use up to 60\% of the limit.
+  themselves limited.  Notably on Unix, \sQuote{file descriptors} which
+  by default are per-process limited: this limits the number of
+  connections using files, pipes and fifos.  (The default limit is 256
+  on macOS (and Solaris) but 1024 on Linux.  The limit can be raised in the
+  shell used to launch \R, for example by \command{ulimit -n}.)  File
+  descriptors are used for many other purposes including dynamically
+  loading DSO/DLLs (see \code{\link{dyn.load}}) which may use up to 60\%
+  of the limit.
 
-  Windows appears to have a limit of 512 open C file streams: these are
-  used by at least \code{file}, \code{gzfile}, \code{bzfile},
-  \code{xzfile}, \code{url} and \code{unz} connections applied to files
+  Windows has a default limit of 512 open C file streams: these are used
+  by at least \code{file}, \code{gzfile}, \code{bzfile}, \code{xzfile},
+  \code{pipe}, \code{url} and \code{unz} connections applied to files
   (rather than URLs).
+  %% fifos on Windows use the Windows API for named pipes.
 
   Package \pkg{parallel}'s \code{\link{makeCluster}} uses socket
   connections to communicate with the worker processes, one per worker.
