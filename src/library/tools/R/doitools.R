@@ -198,6 +198,7 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
     ##                  .gather(dois[ind], parents[ind],
     ##                          m = rep.int("Invalid DOI", len)))
     ## }
+    ## pos <- which(!ind)
     ## </CODE>
     ## </FIXME>    
 
@@ -206,7 +207,7 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
     ##   responseCode in the JSON response.  However, we cannot do this
     ##   with base, and at least for now we can also check using HEAD
     ##   requests and looking at the status code (200 vs 404).
-    pos <- which(!ind)
+    pos <- seq_along(dois)
     if(length(pos)) {
         doispos <- dois[pos]
         urlspos <- paste0("https://doi.org/api/handles/",
