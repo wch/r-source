@@ -7411,10 +7411,16 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     uses <-  BUGS <- ACM <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
-        p2 <- grep("^(multicore|snow|igraph0|doSNOW)( |\\(|$)", p, value = TRUE)
+        ## multicore has been superseded by parallel.  Almost all of
+        ## snow has been too, so it should be optional.
+        p2 <- grep("^(multicore|snow|doSNOW)( |\\(|$)", p, value = TRUE)
         uses <- c(uses, p2)
-        p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS|mzR|xcms|MSnbase)( |\\(|$)",
-                   p, value = TRUE)
+        ## BRugs requires ix86 (not x86-64) and currently installs
+        ## only on Linux using a compiler supporting -m32.
+        ## mzR has a long record of not installing: in 2023 with neither
+        ## gcc 13 nor clang 16.  xcms and MSnbase require it.
+        p2 <- grep("^(BRugs|mzR|xcms|MSnbase)( |\\(|$)",
+                   P, value = TRUE)
         BUGS <- c(BUGS, p2)
         p2 <- grep("^(Akima|tripack)( |\\(|$)",
                    p, value = TRUE)
@@ -7422,7 +7428,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     }
     if (length(uses))
         out$uses <- sort(unique(gsub("[[:space:]]+", " ", uses)))
-    if (length(BUGS))
+    if (length(BUGS)) ## and other non-portable packages
         out$BUGS <- sort(unique(gsub("[[:space:]]+", " ", BUGS)))
     if (length(ACM))
         out$ACM <- sort(unique(gsub("[[:space:]]+", " ", ACM)))
