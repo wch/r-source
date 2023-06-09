@@ -1072,7 +1072,8 @@ stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
 
 
 ## ks.test gave p=1 rather than p=0.9524 because abs(1/2-4/5)>3/10 was TRUE
-stopifnot(all.equal(ks.test(1:5, c(2.5,4.5))$p.value, 20/21))
+ks5 <- ks.test(1:5, c(2.5,4.5))
+stopifnot(all.equal(20/21, ks5$p.value, tol=1e-15))
 
 
 ## NAs in utf8ToInt and v.v.

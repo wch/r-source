@@ -1140,8 +1140,12 @@ stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## Methods, 2nd ed., Wiley, 1999, pp. 180-181).
 x <- c(-0.15, 8.6, 5, 3.71, 4.29, 7.74, 2.48, 3.25, -1.15, 8.38)
 y <- c(2.55, 12.07, 0.46, 0.35, 2.69, -0.94, 1.73, 0.73, -0.35, -0.37)
-stopifnot(round(ks.test(x, y)$p.value, 4) == 0.0524)
-
+KSxy <- ks.test(x, y)
+stopifnot(exprs = {
+    round(KSxy$p.value, 4) == 0.0524
+    all.equal(c(D = 0.6), KSxy$statistic, tol = 1e-15) # see 1.85 e-16
+    all.equal( 15/286,    KSxy$p.value,   tol = 1e-15) #  "  2.646e-16
+})
 
 ## PR 1150.  Wilcoxon rank sum and signed rank tests did not return the
 ## Hodges-Lehmann estimators of the associated confidence interval
