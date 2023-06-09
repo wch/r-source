@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2022-01-14 11:27+0000\n"
-"PO-Revision-Date: 2022-04-14 14:00+0200\n"
+"PO-Revision-Date: 2023-06-09 09:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -847,7 +847,7 @@ msgid ""
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
 "Werte müssen die Länge %d haben,\n"
-"Ergebnis von FUN(X[[%d]]) hat aber Länge %d"
+" Ergebnis von FUN(X[[%d]]) hat aber Länge %d"
 
 #: src/main/apply.c:189
 #, c-format
@@ -856,7 +856,7 @@ msgid ""
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
 "Werte müssen vom Typ '%s' sein,\n"
-"Ergebnis von FUN(X[[%d]]) ist aber Typ '%s'"
+" Ergebnis von FUN(X[[%d]]) ist aber Typ '%s'"
 
 #: src/main/apply.c:266
 #, c-format
@@ -878,7 +878,7 @@ msgstr "Nicht-numerisches Argument für mathematische Funktion"
 
 #: src/main/arithmetic.c:210
 msgid "probable complete loss of accuracy in modulus"
-msgstr "evtl. totaler Verlust der Genauigkeit in modulus"
+msgstr "möglicher totaler Verlust der Genauigkeit im Modulus"
 
 #: src/main/arithmetic.c:328
 msgid "NAs produced by integer overflow"
@@ -895,18 +895,18 @@ msgstr "nicht-numerisches Argument für binären Operator"
 #: src/main/arithmetic.c:598
 msgid ""
 "Recycling array of length 1 in array-vector arithmetic is deprecated.\n"
-"  Use c() or as.vector() instead.\n"
+"  Use c() or as.vector() instead."
 msgstr ""
 "Recycling-Array mit Länge 1 in Array-Vektor-Rechnungen ist veraltet.\n"
-" Bitte stattdessen c() oder as.vector() nutzen.\n"
+" Bitte stattdessen c() oder as.vector() nutzen."
 
 #: src/main/arithmetic.c:606
 msgid ""
 "Recycling array of length 1 in vector-array arithmetic is deprecated.\n"
-"  Use c() or as.vector() instead.\n"
+"  Use c() or as.vector() instead."
 msgstr ""
 "Recycling-Array der Länge 1 in Vektor-Array-Rechnungen ist veraltet.\n"
-" Bitte stattdessen c() oder as.vector() nutzen.\n"
+" Bitte stattdessen c() oder as.vector() nutzen."
 
 #: src/main/arithmetic.c:620 src/main/logic.c:93 src/main/relop.c:180
 msgid "non-conformable arrays"
