@@ -7415,15 +7415,17 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## snow has been too, so it should be optional.
         p2 <- grep("^(multicore|snow|doSNOW)( |\\(|$)", p, value = TRUE)
         uses <- c(uses, p2)
-        ## BRugs requires ix86 (not x86-64) and currently installs
+        ## BRugs and R2OpenBUGS have a SystemRequirements of OpenBUGS.
+        ## which requires ix86 (not x86-64) and currently installs
         ## only on Linux using a compiler supporting -m32.
+        ## Some of R2WinBUGS requires a version of BUGS, but not all.
+        ##
         ## mzR has a long record of not installing: in 2023 with neither
         ## gcc 13 nor clang 16.  xcms and MSnbase require it.
-        p2 <- grep("^(BRugs|mzR|xcms|MSnbase)( |\\(|$)",
+        p2 <- grep("^(BRugs|R2OpenBUGS|mzR|xcms|MSnbase)( |\\(|$)",
                    p, value = TRUE)
         BUGS <- c(BUGS, p2)
-        p2 <- grep("^(Akima|tripack)( |\\(|$)",
-                   p, value = TRUE)
+        p2 <- grep("^(Akima|tripack)( |\\(|$)", p, value = TRUE)
         ACM <- c(ACM, p2)
     }
     if (length(uses))
