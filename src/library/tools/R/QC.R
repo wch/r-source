@@ -7420,7 +7420,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## mzR has a long record of not installing: in 2023 with neither
         ## gcc 13 nor clang 16.  xcms and MSnbase require it.
         p2 <- grep("^(BRugs|mzR|xcms|MSnbase)( |\\(|$)",
-                   P, value = TRUE)
+                   p, value = TRUE)
         BUGS <- c(BUGS, p2)
         p2 <- grep("^(Akima|tripack)( |\\(|$)",
                    p, value = TRUE)
