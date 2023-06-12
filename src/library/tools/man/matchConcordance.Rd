@@ -12,7 +12,7 @@
 \alias{activeConcordance}
 \alias{followConcordance}
 \title{
-Concordance between source and target lines.
+Concordance between source and target lines
 }
 \description{
 The Rd parser records locations in \file{.Rd} files from

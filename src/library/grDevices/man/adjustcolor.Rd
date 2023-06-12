@@ -6,7 +6,7 @@
 
 \name{adjustcolor}
 \alias{adjustcolor}
-\title{Adjust Colors in One or More Directions Conveniently.}
+\title{Adjust Colors in One or More Directions Conveniently}
 \description{
   Adjust or modify a vector of colors by \dQuote{turning knobs} on one or more
   coordinates in \eqn{(r,g,b,\alpha)} space, typically by up or down

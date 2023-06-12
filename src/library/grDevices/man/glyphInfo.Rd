@@ -17,7 +17,7 @@
 \alias{glyphJust.GlyphJust}
 \alias{glyphJust.character}
 \alias{glyphJust.numeric}
-\title{Describe a Set of Typeset Glyphs.}
+\title{Describe a Set of Typeset Glyphs}
 \description{
   Create an object that contains information about typeset glyphs.
   This includes glyph identifiers, glyph locations, font and colour

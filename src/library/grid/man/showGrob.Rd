@@ -6,7 +6,7 @@
 \name{showGrob}
 \alias{showGrob}
 \title{
-  Label grid grobs.
+  Label grid grobs
 }
 \description{
   Produces a graphical display of (by default) the current grid scene,

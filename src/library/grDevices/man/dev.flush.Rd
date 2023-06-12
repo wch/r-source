@@ -7,7 +7,7 @@
 \alias{dev.hold}
 \alias{dev.flush}
 \title{
-  Hold or Flush Output on an On-Screen Graphics Device.
+  Hold or Flush Output on an On-Screen Graphics Device
 }
 \description{
   This gives a way to hold/flush output on certain on-screen devices,

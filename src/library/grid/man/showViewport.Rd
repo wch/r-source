@@ -6,7 +6,7 @@
 \name{showViewport}
 \alias{showViewport}
 \title{
-  Display grid viewports.
+  Display grid viewports
 }
 \description{
   Produces a graphical display of (by default) the current
