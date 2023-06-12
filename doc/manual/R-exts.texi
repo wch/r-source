@@ -3122,7 +3122,7 @@ in use).  C++11 support became mandatory in @R{} 4.0.0.
 @subsection C standards
 
 C has had standards C89/C90, C99, C11, C17 (also known as C18) and C23
-is in final draft and expected to be published during 2023.  C11 was a
+is in final draft and expected to be publishedd in early 2024.  C11 was a
 minor change to C99 which introduced some new features and made others
 optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
 makes extensive changes, including making @code{bool}, @code{true} and
@@ -3166,9 +3166,9 @@ for example @code{__STDC_VERSION_LIMITS_H__}.
 
 However, note the `claimed' as no compiler had 100% conformance, and it
 is better to use @command{configure} to test for the feature you want to
-use that to condition on the value of @code{__STDC_VERSION__}.  In
-particular, alignment functionality such as @code{_Alignas} and
-@code{aligned_alloc} are not implemented on Windows.
+use than to condition on the value of @code{__STDC_VERSION__}.  In
+particular, C11 alignment functionality such as @code{_Alignas} and
+@code{aligned_alloc} is not implemented on Windows.
 
 End users can specify a standard by something like @command{R CMD
 INSTALL --use-C17}.  This overrides the @samp{SystemRequirements} field,
