@@ -44,6 +44,12 @@
       \item \R on Windows (since Windows 10 2004) now uses the new Segment
       Heap allocator. This may improve performance of some memory intensive
       applications.
+
+      \item When \R packages are built, typically by \command{R CMD build <pkg>},
+      the new \command{--user=<build_user>} option overrides the
+      (internally determined) user name, currently \code{Sys.info()["user"]} 
+      or \env{LOGNAME}.  This is a (modified) fulfillment of Will Landau's
+      suggestion in \PR{17530}.
     }
   }
 

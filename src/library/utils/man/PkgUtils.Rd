@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -34,14 +34,14 @@
   directories.
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on
-  utility \code{\var{foo}}.
+  utility \code{\var{foo}}, notably the possible \command{options}.
 
   The defaults for some of the options to \command{R CMD build} can be
   set by environment variables \env{_R_BUILD_RESAVE_DATA_} and
   \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing R Extensions}.
   Many of the checks in \command{R CMD check} can be turned off or on by
   environment variables: see Chapter \sQuote{Tools} of the
-  \sQuote{R Internals} manual. 
+  \sQuote{R Internals} manual.
 
   By default \command{R CMD build} uses the \code{"internal"} option to
   \code{\link{tar}} to prepare the tarball.  An external \command{tar}
