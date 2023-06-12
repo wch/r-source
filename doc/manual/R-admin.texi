@@ -1100,7 +1100,8 @@ suffice.
 @subsection C standards
 
 Compiling @R{} requires C99 or later: C11 and C17 are minor updates, but
-the substantial update planned for C23 will also be supported.
+the substantial update planned for `C23' (now expected in 2024) will
+also be supported.
 
 As from @R{} 4.3.0 there is support for packages to indicate their
 preferred C version.  Macros @code{CC17}, @code{C17FLAGS}, @code{CC23}
@@ -1113,7 +1114,7 @@ be used as identifiers.  Those for C23 should support new types such as
 Some compilers warn enthusiastically about prototypes.  For most,
 omitting @option{-Wstrict-prototypes} in @code{C17FLAGS} suffices.
 However, versions 15 and later of LLVM @command{clang} and 14.0.3 and
-later on Apple clang warn by default in all modes if @option{-Wall} or
+later of Apple clang warn by default in all modes if @option{-Wall} or
 @option{-pedantic} is used, and may need
 @option{-Wno-strict-prototypes}.
 
