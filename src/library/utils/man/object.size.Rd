@@ -35,7 +35,7 @@ object.size(x)
 	\code{"B"}, \code{"kB"}, \code{"MB"}, \code{"GB"}, \code{"TB"}, \code{"PB"},
 	\code{"EB"}, \code{"ZB"}, \code{"YB"}, \code{"RB"}, and \code{"QB"}.}
     }
-    For all standards, \code{unit = "auto"} is also allowed.
+    For all standards, \code{units = "auto"} is also allowed.
     If \code{standard = "auto"}, any of the "legacy" and \acronym{IEC}
     units are allowed.
     See \sQuote{Formatting and printing object sizes} for details.}

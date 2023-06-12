@@ -3121,8 +3121,8 @@ in use).  C++11 support became mandatory in @R{} 4.0.0.
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
 
-C has had standards C89/C90, C99, C11, C17 (also known as C18) and C23
-is in final draft and expected to be publishedd in early 2024.  C11 was a
+C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
+is in final draft and expected to be published in early 2024.  C11 was a
 minor change to C99 which introduced some new features and made others
 optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
 makes extensive changes, including making @code{bool}, @code{true} and
@@ -5388,7 +5388,7 @@ names, which are (confusingly)
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
 use.  Fortunately only the integer values are likely to be relevant.
-If at all possible, use one of the LTS versions (8, 11, 17, 21 @dots{})
+If at all possible, use one of the @acronym{LTS} versions (8, 11, 17, 21 @dots{})
 as the minimum version.  The preferred form of version specification is
 @example
 SystemRequirements: Java (>= 11)

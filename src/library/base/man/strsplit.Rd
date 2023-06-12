@@ -71,7 +71,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
 
   Note also that if there is an empty match at the beginning of a non-empty
   string, the first character is returned and the algorithm continues with
-  the rest of the string.  This needs to be kept in mind when desiging the
+  the rest of the string.  This needs to be kept in mind when designing the
   regular expressions.  For example, when looking for a word boundary
   followed by a letter (\code{"[[:<:]]"} with \code{perl = TRUE}), one can
   disallow a match at the beginning of a string (via \code{"(?!^)[[:<:]]"}).

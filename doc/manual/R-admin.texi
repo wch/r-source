@@ -5099,7 +5099,7 @@ and add @file{/opt/R/arm64/bin} to your path.
 
 Define an appropriate variable in your Terminal:
 @example
-set LOCAL=//opt/R/x86_64 # Intel
+set LOCAL=/opt/R/x86_64 # Intel
 set LOCAL=/opt/R/arm64 # Apple Silicon
 @end example
 @noindent
@@ -5445,7 +5445,7 @@ last tested@footnote{with @command{gcc} 10.2.} it was not possible to
 use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
-It usually possible to add some OpenMP support to the Apple
+It is usually possible to add some OpenMP support to the Apple
 @command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
 Note that that approach is somewhat fragile as it needs a
 @file{libomp.dylib} library matching the version of the compiler

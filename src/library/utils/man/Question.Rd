@@ -69,7 +69,7 @@
   below.  If the function is not a generic (no S4 methods are defined
   for it), the help reverts to documentation on the function name.
 
-  The \code{"?"} operator can also be called with \code{doc_type} supplied
+  The \code{"?"} operator can also be called with \code{type} supplied
   as \code{method}; in this case also, the \code{topic} argument is
   a function call, but the arguments are now interpreted as specifying
   the class of the argument, not the actual expression that will
