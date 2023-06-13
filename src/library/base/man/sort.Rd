@@ -113,17 +113,15 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 
   However, there are some caveats for the radix sort:
   \itemize{
-    \item{
+    \item
       If \code{x} is a \code{character} vector, all elements must share
       the same encoding.  Only UTF-8 (including ASCII) and Latin-1
       encodings are supported.  Collation follows that with
       \env{LC_COLLATE=C}, that is lexicographically byte-by-byte using
       numerical ordering of bytes.
-    }
-    \item{
+    \item
       \link{Long vectors} (with \eqn{2^{31}}{2^31} or more elements)
       and \code{complex} vectors are not supported.
-    }
   }
 }
 

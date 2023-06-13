@@ -118,16 +118,16 @@ is.hashtab(x)
   exceptions:
 
   \itemize{
-    \item{Closure environments are not ignored when comparing closures.
+    \item Closure environments are not ignored when comparing closures.
       This corresponds to calling \code{\link{identical}()} with
       \code{ignore.environment = FALSE}, which is the default for
-      \code{\link{identical}()}.}
+      \code{\link{identical}()}.
 
-    \item{External pointer objects are compared as reference objects,
+    \item External pointer objects are compared as reference objects,
       corresponding to calling \code{\link{identical}()} with
       \code{extptr.as.ref = TRUE}. This ensures that hash tables with
       keys containing external pointers behave reasonably when
-      serialized and unserialized.}
+      serialized and unserialized.
   }
 
   As an experimental feature, the element operator \code{[[} can also be

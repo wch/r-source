@@ -38,11 +38,11 @@ as.call(x)
     \item{\code{is.call} }{is used to determine whether \code{x} is a call (i.e.,
       of mode \code{"call"} or \code{"("}).  Note that
       \itemize{
-	\item{\code{is.call(x)} is strictly equivalent to
-	  \code{typeof(x) == "language"}.}
-	\item{\code{\link{is.language}()} is also true for calls (but also
+	\item \code{is.call(x)} is strictly equivalent to
+	  \code{typeof(x) == "language"}.
+	\item \code{\link{is.language}()} is also true for calls (but also
 	  for \code{\link{symbol}}s and \code{\link{expression}}s where
-	  \code{is.call()} is false).}
+	  \code{is.call()} is false).
       }
     }
     \item{\code{as.call(x)}: }{Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
