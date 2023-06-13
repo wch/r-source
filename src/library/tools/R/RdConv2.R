@@ -734,7 +734,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                "\\renewcommand" =,
                COMMENT = {},
                LIST = if (length(block)) {
-                   deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
+                   deparse <- sQuote(.Rd_deparse(block))
                    if(!listOK)
                        stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
                    else warnRd(block, Rdfile, level = -3,
