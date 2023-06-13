@@ -165,7 +165,7 @@ $allowed
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: adjustcolor
-> ### Title: Adjust Colors in One or More Directions Conveniently.
+> ### Title: Adjust Colors in One or More Directions Conveniently
 > ### Aliases: adjustcolor
 > 
 > ### ** Examples

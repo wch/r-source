@@ -57,7 +57,7 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: arrow
-> ### Title: Describe arrows to add to a line.
+> ### Title: Describe arrows to add to a line
 > ### Aliases: arrow
 > ### Keywords: dplot
 > 
@@ -232,7 +232,7 @@ viewport[C]->(viewport[D])
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: depth
-> ### Title: Determine the number of levels in an object.
+> ### Title: Determine the number of levels in an object
 > ### Aliases: depth depth.viewport depth.path
 > ### Keywords: dplot
 > 
@@ -321,7 +321,7 @@ $y
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: explode
-> ### Title: Explode a path into its components.
+> ### Title: Explode a path into its components
 > ### Aliases: explode explode.character explode.path
 > ### Keywords: dplot
 > 
@@ -1836,7 +1836,7 @@ List of 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showGrob
-> ### Title: Label grid grobs.
+> ### Title: Label grid grobs
 > ### Aliases: showGrob
 > ### Keywords: dplot
 > 
@@ -1899,7 +1899,7 @@ List of 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showViewport
-> ### Title: Display grid viewports.
+> ### Title: Display grid viewports
 > ### Aliases: showViewport
 > ### Keywords: dplot
 > 
@@ -2408,7 +2408,7 @@ vp1::vp2
 > 
 > ### Name: xsplinePoints
 > ### Title: Return the points that would be used to draw an Xspline (or a
-> ###   Bezier curve).
+> ###   Bezier curve)
 > ### Aliases: xsplinePoints bezierPoints
 > ### Keywords: dplot
 > 
