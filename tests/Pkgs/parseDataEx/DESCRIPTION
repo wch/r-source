@@ -5,7 +5,6 @@ Author: Martin Maechler, Kirill Mueller
 Maintainer: R Core <R-core@almost.r-project.org>
 Description: Dummy Package Showing PR_16756.
   See  <https://bugs.r-project.org/show_bug.cgi?id=16756>,
-  also <https://rpubs.com/krlmlr/getParseData>
+  also <https://rpubs.com/krlmlr/getParseData>.
 License: GPL-3
 KeepSource: true
-

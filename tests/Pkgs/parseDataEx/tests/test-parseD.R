@@ -9,7 +9,7 @@ library(pkg, character.only=TRUE)
 packageDescription(pkg)
 
 ## now, the same 123 for all: the same *concatenated* *.R files --> the *same* 1 file
-nrow(f.pd <- getParseData(f)) # gave 0  in R <= 4.3.1
+nrow(f.pd <- getParseData(f)) # gave NULL in R <= 4.3.1
 nrow(g.pd <- getParseData(g)) # was ok already
 nrow(h.pd <- getParseData(h)) # (ditto)
 
