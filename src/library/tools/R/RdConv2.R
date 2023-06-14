@@ -295,7 +295,19 @@ processRdChunk <- function(code, stage, options, env, macros)
 	    last <- res[[length(res)]]
 	    if (attr(last, "Rd_tag") == "TEXT" && (len <- length(last)))
 	        res[[length(res)]][len] <- gsub("\\n$", "", last[len])
+
 	    flag <- getDynamicFlags(res)
+            if (any(flag)) { # this should be for a later stage
+                bad <- flag[switch(stage, build = "build",
+                                   install = c("build", "#ifdef", "install"),
+                                   render = TRUE)]
+                if (any(bad))
+                    warnRd(tagged(code, "\\Sexpr", codesrcref), Rdfile,
+                           "unprocessed ",
+                           paste0(sQuote(names(bad)[bad]), collapse = "/"),
+                           " macro from ", stage, "-stage \\Sexpr")
+            }
+
 	    # We may have multiple chunks now.  If they are in
 	    # a section, we can wrap them in LIST, but at top
 	    # level we can't, so we disallow multiple sections.

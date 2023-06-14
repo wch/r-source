@@ -283,6 +283,7 @@ for(p in p.lis) {
     cat("installing package", p., "using built file", r, "...\n")
     ## "FIXME": want to catch warnings in the "console output" of this,
     ## e.g. exNSS4nil, "S4 exports specified in 'NAMESPACE' but not defined .."
+    ## and  exSexpr, "nestedSexpr.Rd:5: unprocessed 'build' macro from install-stage \Sexpr"
     install.packages(r, lib = "myLib", repos=NULL, type = "source",
                      INSTALL_opts = InstOpts[[p.]])
     stopifnot(require(p., lib = "myLib", character.only=TRUE))
@@ -391,18 +392,32 @@ if(okA) {
     })
   } else {
       message("non-interactive -- tools:::.install_packages(..) : ")
-      try( eval(instEXPR) ) # showing the error message in the *.Rout file
+      ## show the error message in the *.Rout file and assert failure
+      stopifnot(inherits(try( eval(instEXPR) ), "try-error"))
   }
 } else message("pkgA/DESCRIPTION  not available")
 showProc.time()
 
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
-msg <- capture.output(
-    tools:::.check_package_parseRd(dir=file.path(pkgPath, "exSexpr")))
-if(length(msg))
-    stop(".check_package_parseRd() gave message\n",msg)
+print(msg <- capture.output(
+    tools:::.check_package_parseRd(dir=file.path(pkgPath, "exSexpr"))
+))
+if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
+    stop(".check_package_parseRd() complained about foo.Rd in\n",
+         paste0(msg[ifoo], collapse = "\n"))
 ## in R <= 3.5.1, gave
 ##  "prepare_Rd: foo.Rd:14: Section \\Sexpr is unrecognized and will be dropped"
+## but R >= 4.4.0 *does warn* about badly nested Sexpr macros
+if(!any(grepl("nestedSexpr.Rd:5: unprocessed", msg, fixed = TRUE)))
+    stop("failed to get message from nestedSexpr.Rd")
+## the rendered help outputs such unprocessed macros verbatim
+helptxt <- capture.output(
+    tools::Rd2txt(tools::Rd_db("exSexpr", lib.loc = "myLib")[["nestedSexpr.Rd"]])
+)
+stopifnot(exprs = {
+    grepl("\\Sexpr[stage=build]{", helptxt[5], fixed = TRUE)    # unprocessed
+    grepl(as.character(getRversion()), helptxt[9], fixed = TRUE)  # processed
+})
 showProc.time()
 
 
