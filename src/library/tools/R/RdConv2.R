@@ -746,11 +746,13 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                "\\renewcommand" =,
                COMMENT = {},
                LIST = if (length(block)) {
-                   deparse <- sQuote(.Rd_deparse(block))
-                   if(!listOK)
-                       stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
-                   else warnRd(block, Rdfile, level = -3,
-                               "Unnecessary braces at ", deparse)
+                   if (!inherits(block, "Rd")) { # skip wrapped \Sexpr Rd result
+                       deparse <- sQuote(.Rd_deparse(block))
+                       if(!listOK)
+                           stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
+                       else warnRd(block, Rdfile, level = -3,
+                                   "Unnecessary braces at ", deparse)
+                   }
                    checkContent(block, tag)
                },
                "\\describe"=,

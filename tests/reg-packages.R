@@ -407,13 +407,19 @@ if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
          paste0(msg[ifoo], collapse = "\n"))
 ## in R <= 3.5.1, gave
 ##  "prepare_Rd: foo.Rd:14: Section \\Sexpr is unrecognized and will be dropped"
+
+## nor should it spuriously warn about LIST-wrapped \Sexpr Rd results
+## (when _R_CHECK_RD_CHECKRD_MINLEVEL_=-Inf)
+installedRdDB <- tools::Rd_db("exSexpr", lib.loc = "myLib")
+stopifnot(!length(print(tools::checkRd(installedRdDB[["a.Rd"]]))))
+## in R < 4.4.0, gave,
+##checkRd: (-3) file 'a.Rd': Unnecessary braces at '{a1....
+
 ## but R >= 4.4.0 *does warn* about badly nested Sexpr macros
 if(!any(grepl("nestedSexpr.Rd:5: unprocessed", msg, fixed = TRUE)))
     stop("failed to get message from nestedSexpr.Rd")
 ## the rendered help outputs such unprocessed macros verbatim
-helptxt <- capture.output(
-    tools::Rd2txt(tools::Rd_db("exSexpr", lib.loc = "myLib")[["nestedSexpr.Rd"]])
-)
+helptxt <- capture.output(tools::Rd2txt(installedRdDB[["nestedSexpr.Rd"]]))
 stopifnot(exprs = {
     grepl("\\Sexpr[stage=build]{", helptxt[5], fixed = TRUE)    # unprocessed
     grepl(as.character(getRversion()), helptxt[9], fixed = TRUE)  # processed
