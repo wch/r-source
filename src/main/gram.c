@@ -6516,7 +6516,7 @@ static void finalizeData(void){
     
     setAttrib(newdata, R_ClassSymbol, mkString("parseData"));
     
-    /* Put it into the srcfile environment */
+    /* Put it into the original or srcfile environment */
     if (isEnvironment(PS_ORIGINAL))
 	defineVar(install("parseData"), newdata, PS_ORIGINAL);    
     else
