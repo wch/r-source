@@ -47,7 +47,7 @@
 
       \item When \R packages are built, typically by \command{R CMD build <pkg>},
       the new \command{--user=<build_user>} option overrides the
-      (internally determined) user name, currently \code{Sys.info()["user"]} 
+      (internally determined) user name, currently \code{Sys.info()["user"]}
       or \env{LOGNAME}.  This is a (modified) fulfillment of Will Landau's
       suggestion in \PR{17530}.
     }
@@ -118,6 +118,10 @@
       \item \code{S3method(<gen>, <class>, <func>)} in the \file{NAMESPACE}
       file now works (again) when \code{<func>} is visible from the
       namespace, e.g., imported, or in base.
+
+      \item \code{getParseData(f)} now also works for a function defined
+      in the first of several \file{<pkg>/R/*.R} source files, thanks to
+      Kirill Müller's report and Duncan Murdoch's patch in \PR{16756}.
     }
   }
 }

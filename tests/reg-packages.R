@@ -20,6 +20,7 @@ showProc.time <- local({ ## function + 'pct' variable
 	    final)
     }
 })
+options(width=120)
 
 ## PR 1271  detach("package:base") crashes R.
 tools::assertError(detach("package:base"))
@@ -192,11 +193,14 @@ iBrace <- grep("closing brace", f2lns, fixed=TRUE)
 (writeLines(f3lns, f3nm))
 p.fails <- paste0("PR17859.", 1:3)
 io859 <- c("--no-help", "--no-test-load", "--no-byte-compile")
-InstOpts <- list("exSexpr" = "--html")
+InstOpts <- list("exSexpr" = "--html"
+               , "parseDataEx" = c("--with-keep.parse.data", "--with-keep.source", "--install-tests")
+                 )
 for(p in p.fails) InstOpts <- c(InstOpts, `names<-`(list(io859), p))
 p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
                c("pkgA", "pkgB", if(okB2) "pkgB2", if(okB3) "pkgB3", "pkgC"),
            "PR17501",
+           "parseDataEx", # PR16756
            p.fails,
            "S3export",
            "exNSS4", "exNSS4nil", "exSexpr")
@@ -434,6 +438,13 @@ if(dir.exists(file.path("myLib", "exNSS4"))) withAutoprint({
     stopifnot(isVirtualClass(getClass("atomicVector")))
   }
 })
+showProc.time()
+
+
+require("parseDataEx", lib="myLib") # installed with --install-tests :
+stopifnot(dir.exists(tdir <- system.file(package="parseDataEx", "tests")))
+## run the tests/*.R
+invisible( lapply(dir(tdir, pattern="[.]R$", full.names = TRUE), source) )
 showProc.time()
 
 
