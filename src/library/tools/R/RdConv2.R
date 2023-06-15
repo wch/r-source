@@ -297,10 +297,9 @@ processRdChunk <- function(code, stage, options, env, macros)
 	        res[[length(res)]][len] <- gsub("\\n$", "", last[len])
 
 	    flag <- getDynamicFlags(res)
-            if (any(flag)) { # this should be for a later stage
-                bad <- flag[switch(stage, build = "build",
-                                   install = c("build", "#ifdef", "install"),
-                                   render = TRUE)]
+            if (any(flag)) { # needs a later stage (#ifdef is processed below)
+                bad <- flag[c(stage, switch(stage, install = "build",
+                                            render = c("build", "install")))]
                 if (any(bad))
                     warnRd(tagged(code, "\\Sexpr", codesrcref), Rdfile,
                            "unprocessed ",
