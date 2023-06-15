@@ -30,31 +30,7 @@ isBlankLineRd <- function(x) {
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
 }
 
-stopRd <- function(block, Rdfile, ...)
-{
-    srcref <- attr(block, "srcref")
-    if (missing(Rdfile) && !is.null(srcref)) {
-    	srcfile <- attr(srcref, "srcfile")
-    	if (is.environment(srcfile))
-    	    Rdfile <- srcfile$filename
-    }
-    if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else {
-        Rdfile <- basename(Rdfile) # Rdfile could be an absolute path (Rbuild tempdir)
-        Rdfile <- paste0(Rdfile, ":")
-    }
-
-    msg <- if (is.null(srcref))
-        paste0(Rdfile, " ", ...)
-    else {
-    	loc <- paste0(Rdfile, srcref[1L])
-    	if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
-    	paste0(loc, ": ", ...)
-    }
-    stop(msg, call. = FALSE, domain = NA)
-}
-
-warnRd <- function(block, Rdfile, ...)
+.makeMessageRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
@@ -65,16 +41,26 @@ warnRd <- function(block, Rdfile, ...)
     Rdfile <-
         if(missing(Rdfile) || is.null(Rdfile))
             ""
-        else
-            paste0(basename(Rdfile), # Rdfile could be an absolute path (Rbuild tempdir)
-                   ":")
-    msg <- if (is.null(srcref))
+        else # Rdfile could be an absolute path (Rbuild tempdir)
+            paste0(basename(Rdfile), ":")  # or use stripPathTo(Rdfile, "man")
+    if (is.null(srcref))
         paste0(Rdfile, " ", ...)
     else {
     	loc <- paste0(Rdfile, srcref[1L])
     	if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
-        paste0(loc, ": ", ...)
+    	paste0(loc, ": ", ...)
     }
+}
+
+stopRd <- function(block, Rdfile, ...)
+{
+    msg <- .makeMessageRd(block, Rdfile, ...)
+    stop(msg, call. = FALSE, domain = NA)
+}
+
+warnRd <- function(block, Rdfile, ...)
+{
+    msg <- .makeMessageRd(block, Rdfile, ...)
     warning(msg, call. = FALSE, domain = NA, immediate. = TRUE)
 }
 
@@ -654,16 +640,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 {
     warnRd <- function(block, Rdfile, ..., level = 0L)
     {
-        Rdfile <- sub("^\\./man/", "", Rdfile)
-        srcref <- attr(block, "srcref")
-        msg <- if (is.null(srcref))
-            paste0("file '", Rdfile, "': ", ...)
-        else {
-            loc <- paste0(Rdfile, ":", srcref[1L])
-            if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
-            paste0(loc, ": ", ...)
-        }
-        msg <- sprintf("checkRd: (%d) %s", level, msg)
+        msg <- sprintf("checkRd: (%d) %s", level,
+                       .makeMessageRd(block, Rdfile, ...))
         .messages <<- c(.messages, msg)
     }
 
