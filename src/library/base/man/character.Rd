@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -89,10 +89,10 @@ deparse(form)       ## like the input
 
 a0 <- 11/999          # has a repeating decimal representation
 (a1 <- as.character(a0))
-format(a0, digits = 16) # shows one more digit
+format(a0, digits = 16) # shows 1 to 2 more digit(s)
 a2 <- as.numeric(a1)
 a2 - a0               # normally around -1e-17
-as.character(a2)      # normally different from a1
+as.character(a2)      # possibly different from a1
 print(c(a0, a2), digits = 16)
 }
 \keyword{character}
