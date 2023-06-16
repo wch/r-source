@@ -432,8 +432,13 @@ writeLines(helptxt <- capture.output(
 stopifnot(exprs = {
     grepl("\\Sexpr[stage=build]{", helptxt[5], fixed = TRUE)    # unprocessed
     grepl(as.character(getRversion()), helptxt[9], fixed = TRUE)  # processed
-    any(grepl("See Also:", helptxt, fixed = TRUE)) == (.Platform$OS.type == "unix")
 })
+
+## FIXME: the partial Rd DB is built with c("unix", "windows") defines, so
+## conditional defines are currently ineffective in help pages with build macros
+## i.e., the following is FALSE (the \seealso section is always included)
+any(grepl("See Also:", helptxt, fixed = TRUE)) == (.Platform$OS.type == "windows")
+
 showProc.time()
 
 

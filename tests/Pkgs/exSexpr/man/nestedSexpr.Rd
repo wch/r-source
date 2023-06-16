@@ -6,6 +6,6 @@
 % the following should work:
 \Sexpr[stage=build,results=rd]{"\\\\details{\\\\Sexpr[stage=install]{getRversion()}}"}
 
-#ifdef unix
+#ifdef windows
 \seealso{\link{nestedDefines}}
 #endif (to test processRdIfdefs in the presence of \Sexpr macros)
