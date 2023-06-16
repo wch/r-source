@@ -1390,6 +1390,11 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         z$doi <-
             sprintf("10.18129/B9.bioc.%s", package)
     }
+    
+    if(identical(meta$RemoteType, "github") && identical(meta$RemoteHost, "api.github.com")) {
+        z$url <- sprintf("https://github.com/%s/%s", meta$RemoteUsername, meta$RemoteRepo)
+        z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+    }
 
     if(!length(z$url) && !is.null(url <- meta$URL)) {
         ## Cannot have several URLs in BibTeX and bibentry object URL
