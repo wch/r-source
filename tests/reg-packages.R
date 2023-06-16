@@ -398,9 +398,11 @@ if(okA) {
 } else message("pkgA/DESCRIPTION  not available")
 showProc.time()
 
+
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
-print(msg <- capture.output(
-    tools:::.check_package_parseRd(dir=file.path(pkgPath, "exSexpr"))
+writeLines(msg <- capture.output(
+    tools:::.check_package_parseRd(dir = file.path(pkgPath, "exSexpr"),
+                                   minlevel = -Inf)
 ))
 if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
     stop(".check_package_parseRd() complained about foo.Rd in\n",
@@ -410,19 +412,27 @@ if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
 
 ## nor should it spuriously warn about LIST-wrapped \Sexpr Rd results
 ## (when _R_CHECK_RD_CHECKRD_MINLEVEL_=-Inf)
-installedRdDB <- tools::Rd_db("exSexpr", lib.loc = "myLib")
-stopifnot(!length(print(tools::checkRd(installedRdDB[["a.Rd"]]))))
+if(length(ibraces <- grep("a\\.Rd.*: Unnecessary braces", msg)))
+    stop(".check_package_parseRd() found unnecessary braces")
 ## in R < 4.4.0, gave,
-##checkRd: (-3) file 'a.Rd': Unnecessary braces at '{a1....
+##checkRd: (-3) file '..../man/a.Rd': Unnecessary braces at '{a1....
 
 ## but R >= 4.4.0 *does warn* about badly nested Sexpr macros
-if(!any(grepl("nestedSexpr.Rd:5: unprocessed", msg, fixed = TRUE)))
-    stop("failed to get message from nestedSexpr.Rd")
+## and about Rd macros in \Sexpr code (e.g., #ifdef inside build stage macro)
+stopifnot(exprs = {
+    any(grepl("nestedSexpr.Rd:5: unprocessed", msg, fixed = TRUE))
+    any(grepl("nestedDefines.Rd:9-16: \\Sexpr expects R", msg, fixed = TRUE))
+})
 ## the rendered help outputs such unprocessed macros verbatim
-helptxt <- capture.output(tools::Rd2txt(installedRdDB[["nestedSexpr.Rd"]]))
+installedRdDB <- tools::Rd_db("exSexpr", lib.loc = "myLib")
+writeLines(helptxt <- capture.output(
+    tools::Rd2txt(installedRdDB[["nestedSexpr.Rd"]],
+                  options = list(underline_titles = FALSE))
+))
 stopifnot(exprs = {
     grepl("\\Sexpr[stage=build]{", helptxt[5], fixed = TRUE)    # unprocessed
     grepl(as.character(getRversion()), helptxt[9], fixed = TRUE)  # processed
+    any(grepl("See Also:", helptxt, fixed = TRUE)) == (.Platform$OS.type == "unix")
 })
 showProc.time()
 

@@ -198,7 +198,13 @@ processRdChunk <- function(code, stage, options, env, macros)
 
         # Results as a character vector for now; convert to list later
         res <- character(0)
-        code <- code[RdTags(code) != "COMMENT"]  # list attributes are lost here
+
+        tags <- RdTags(code)
+        if (length(bad <- setdiff(tags, c("RCODE", "COMMENT"))))
+            ## also USERMACROs are currently not supported inside \Sexpr{}
+            warnRd(code, Rdfile, "\\Sexpr expects R code; found ",
+                   paste0(sQuote(bad), collapse = ", "))
+        code <- code[tags != "COMMENT"]  # list attributes are lost here
 	chunkexps <- tryCatch(parse(text = code), error = identity)
 	if (inherits(chunkexps, "error"))
             stopRd(code, Rdfile, conditionMessage(chunkexps))

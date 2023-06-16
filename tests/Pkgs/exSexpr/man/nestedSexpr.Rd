@@ -5,3 +5,7 @@
 \Sexpr[stage=install,results=rd]{"\\\\description{\\\\Sexpr[stage=build]{getRversion()}}"}
 % the following should work:
 \Sexpr[stage=build,results=rd]{"\\\\details{\\\\Sexpr[stage=install]{getRversion()}}"}
+
+#ifdef unix
+\seealso{\link{nestedDefines}}
+#endif (to test processRdIfdefs in the presence of \Sexpr macros)
