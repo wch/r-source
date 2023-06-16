@@ -50,7 +50,8 @@ is.character(x)
   like \code{\link{as.vector}} it strips attributes including names.
   For lists and pairlists (including \link{language objects} such as
   calls) it deparses the elements individually, except that it extracts
-  the first element of length-one character vectors.
+  the first element of length-one character vectors, see the \code{Abc}
+  example.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.
@@ -94,6 +95,9 @@ a2 <- as.numeric(a1)
 a2 - a0               # normally around -1e-17
 as.character(a2)      # possibly different from a1
 print(c(a0, a2), digits = 16)
+
+as.character(list(A = "Abc", xy = c("x", "y"))) # "Abc"  "c(\"x\", \"y\")"
+## i.e., "Abc" directly instead of deparsing to "\"Abc\""
 }
 \keyword{character}
 \keyword{classes}

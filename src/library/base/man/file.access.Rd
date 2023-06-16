@@ -1,6 +1,6 @@
 % File src/library/base/man/file.access.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.access}
@@ -19,7 +19,8 @@ file.access(names, mode = 0)
   \item{mode}{integer specifying access mode required: see \sQuote{Details}.}
 }
 \details{
-  The \code{mode} value can be the exclusive or of the following values
+  The \code{mode} value can be the exclusive or (\code{xor}), i.e., a
+  partial sum of the following values, and hence must be in \code{0:7},
   \describe{
     \item{0}{test for existence.}
     \item{1}{test for execute permission.}
@@ -69,6 +70,7 @@ file.access(names, mode = 0)
 
 \examples{
 fa <- file.access(dir("."))
+## IGNORE_RDIFF_BEGIN
 table(fa) # count successes & failures
 #ifdef windows
 d <- dir(file.path(R.home(), "bin"))
@@ -78,5 +80,6 @@ d[file.access(df, 1) == 0] # some are executable, some are not
 d[file.access(df, 4) == 0] # hopefully all are readable
 d[file.access(df, 2) == 0] # they may or may not be writable
 #endif
+## IGNORE_RDIFF_END
 }
 \keyword{file}

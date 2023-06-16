@@ -5,12 +5,13 @@
 
 \name{chooseOpsMethod}
 \title{Choose the Appropriate Method for Ops}
-\usage{chooseOpsMethod(x, y, mx, my, cl, reverse)}
 \alias{chooseOpsMethod}
 \alias{chooseOpsMethod.default}
-
+\usage{
+chooseOpsMethod(x, y, mx, my, cl, reverse)
+}
 \description{
-  \code{chooseOpsMethod} is a function called by the Ops Group Generic when two
+  \code{chooseOpsMethod} is a function called by the \code{Ops} Group Generic when two
   suitable methods are found for a given call. It determines which method to
   use for the operation based on the objects being dispatched.
 
@@ -23,11 +24,11 @@
 }
 
 \arguments{
-  \item{x,y}{The objects being dispatched on by the group generic.}
-  \item{mx,my}{The methods found for objects \code{x} and \code{y}.}
-  \item{cl}{The call to the group generic.}
-  \item{reverse}{A logical value indicating whether \code{x} and \code{y} are
-      reversed from the way they were supplied to the generic.}
+  \item{x, y}{the objects being dispatched on by the group generic.}
+  \item{mx, my}{the methods found for objects \code{x} and \code{y}.}
+  \item{cl}{the call to the group generic.}
+  \item{reverse}{logical value indicating whether \code{x} and \code{y} are
+    reversed from the way they were supplied to the generic.}
 }
 
 \seealso{

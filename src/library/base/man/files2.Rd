@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files2}
@@ -105,13 +105,13 @@ Sys.umask(mode = NA)
   (although their documentation is often written assuming a POSIX file
   system).  So treat documentation cautiously if you are using, say, a
   FAT/FAT32 or network-mounted file system.
-  
-  See \link{files} for how file paths with marked encodings are interpreted.  
+
+  See \link{files} for how file paths with marked encodings are interpreted.
 }
 \value{
   \code{dir.exists} returns a logical vector of \code{TRUE} or
   \code{FALSE} values (without names).
-  
+
   \code{dir.create} and \code{Sys.chmod} return invisibly a logical vector
   indicating if the operation succeeded for each of the files attempted.
   Using a missing value for a path name will always be regarded as a
@@ -152,6 +152,6 @@ Sys.umask(mode = NA)
 ## Fix up maximal allowed permissions in a file tree
 Sys.chmod(list.dirs("."), "777")
 f <- list.files(".", all.files = TRUE, full.names = TRUE, recursive = TRUE)
-Sys.chmod(f, (file.info(f)$mode | "664"))
+Sys.chmod(f, (file.mode(f) | "664"))
 }}
 \keyword{file}

@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -127,10 +127,10 @@ format(x, \dots)
   \code{format.default(x)} now provides a \dQuote{minimal} string when
   \code{\link{isS4}(x)} is true.
 
-  The internal code respects the option
-  \code{\link{getOption}("OutDec")} for the \sQuote{decimal mark}, so if
-  this is set to something other than \code{"."} then it takes precedence
-  over argument \code{decimal.mark}.
+  While the internal code respects the option
+  \code{\link{getOption}("OutDec")} for the \sQuote{decimal mark} in general,
+  \code{decimal.mark} takes precedence over that option.  Similarly,
+  \code{scientific} takes precedence over \code{\link{getOption}("scipen")}.
 }
 \value{
   An object of similar structure to \code{x} containing character
@@ -180,6 +180,11 @@ format(c(6.0, 13.1), digits = 2, nsmall = 1)
 ## use of scientific
 format(2^31-1)
 format(2^31-1, scientific = TRUE)
+## scientific = numeric scipen (= {sci}entific notation {pen}alty) :
+x <- c(1e5, 1000, 10, 0.1, .001, .123)
+t(sapply(setNames(,-4:1),
+         \(sci) sapply(x, format, scientific=sci)))
+
 
 ## a list
 z <- list(a = letters[1:3], b = (-pi+0i)^((-2:2)/2), c = c(1,10,100,1000),

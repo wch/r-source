@@ -48,7 +48,7 @@
   that calendar was not in use long ago (it was adopted in 1752 in
   Great Britain and its colonies).  When printing there is assumed to
   be a year zero.
-  % man cal on Linux refers to this as 'the Britixh empire'
+  % man cal on Linux refers to this as 'the British empire'
   
   It is intended that the date should be an integer value, but this is
   not enforced in the internal representation.  Fractional days will be
