@@ -7349,6 +7349,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         stop("Package has no 'Version' field", call. = FALSE)
     if(grepl("(^|[.-])0[0-9]+", ver))
         out$version_with_leading_zeroes <- ver
+    if((ver == "@VERSION@") &&
+       !is.na(meta["Priority"]) &&
+       (meta["Priority"] == "base"))
+        ver <- meta["Version"] <- format(getRversion())
     unlisted_version <- unlist(package_version(ver))
     if(any(unlisted_version >= 1234 &
            unlisted_version != as.integer(format(Sys.Date(), "%Y"))) &&

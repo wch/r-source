@@ -297,7 +297,7 @@ function(dir, installed = FALSE)
 
 url_db_from_package_sources <-
 function(dir, add = FALSE) {
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .get_package_metadata(dir, FALSE)
     db <- rbind(url_db_from_package_metadata(meta),
                 url_db_from_package_Rd_db(Rd_db(dir = dir)),
                 url_db_from_package_citation(dir, meta),

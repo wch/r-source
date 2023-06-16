@@ -569,7 +569,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 .ORCID_iD_db_from_package_sources <-
 function(dir)
 {
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .get_package_metadata(dir, FALSE)
     ids1 <- ids2 <- character()
     if(!is.na(aar <- meta["Authors@R"])) {
         aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
