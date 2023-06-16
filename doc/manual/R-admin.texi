@@ -5177,22 +5177,23 @@ but are untested there.)
 @node Prerequisites, Fortran compilers, macOS, macOS
 @subsection Prerequisites
 
-The Intel components install into @file{/opt/R/x86_64}, the
-@cputype{arm64} ones into @file{/opt/R/arm64} which may not exist so it
-it is simplest to first create that directory and adjust its ownership
-if desired:
+The Intel components install into @file{/opt/R/x86_64}, the Apple
+silicon ones into @file{/opt/R/arm64}.  This may not exist@footnote{it
+will if @R{} has been installed from @acronym{CRAN} since @R{} 4.3.0.}
+so it is simplest to first create the directory and adjust its ownership
+if desired: for example by
 
 @example
 sudo mkdir -p /opt/R/arm64
 sudo chown -R $USER /opt/R
 @end example
 @noindent
-and add @file{/opt/R/arm64/bin} to your path.
+Also, add @file{/opt/R/x86_64/bin} or @file{/opt/R/arm64/bin} to your path.
 
 Define an appropriate variable in your Terminal:
 @example
 set LOCAL=//opt/R/x86_64 # Intel
-set LOCAL=/opt/R/arm64 # Apple Silicon
+set LOCAL=/opt/R/arm64  # Apple Silicon
 @end example
 @noindent
 to use the code snippets here.
