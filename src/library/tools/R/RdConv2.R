@@ -367,7 +367,9 @@ processRdIfdefs <- function(blocks, defines)
 	}
 	if (is.list(block)) {
 	    i <- 1L
-	    flags <- getDynamicFlags(NULL)
+	    ## save possible outer \Sexpr flags and options
+	    flags <- getDynamicFlags(block); flags["#ifdef"] <- FALSE
+	    opts <- attr(block, "Rd_option")
 	    while (i <= length(block)) {
 	    	newval <- recurse(block[[i]])
 	    	newtag <- attr(newval, "Rd_tag")
@@ -383,6 +385,7 @@ processRdIfdefs <- function(blocks, defines)
 		    i <- i+1L
 		}
 	    }
+	    attr(block, "Rd_option") <- opts
 	    setDynamicFlags(block, flags)
 	} else
 	    block

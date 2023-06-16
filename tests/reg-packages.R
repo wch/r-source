@@ -439,6 +439,13 @@ stopifnot(exprs = {
 ## i.e., the following is FALSE (the \seealso section is always included)
 any(grepl("See Also:", helptxt, fixed = TRUE)) == (.Platform$OS.type == "windows")
 
+## post-build macros can contain conditional defines
+tools::Rd2txt(installedRdDB[["nestedDefinesOK.Rd"]])
+deparsedLines <- as.character(installedRdDB[["nestedDefinesOK.Rd"]])
+stopifnot(("unix" %in% deparsedLines) == (.Platform$OS.type == "unix"),
+          ("windows" %in% deparsedLines) == (.Platform$OS.type == "windows"))
+## R < 4.4.0 did not process \Sexpr macros containing #ifdef conditionals
+
 showProc.time()
 
 
