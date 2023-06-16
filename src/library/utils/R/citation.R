@@ -1394,9 +1394,12 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     if(!length(z$url) && !is.null(url <- meta$URL)) {
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
-        if(grepl("[, ]", url))
-            z$note <- url
-        else
+        if(grepl("[, ]", url)) {
+            ## Show the first URL as the BibTeX url, and add the others
+            ## to the note (PR#18547).
+            z$url <- sub(",.*", "", url)
+            z$note <- paste0(z$note, sub("^[^,]*, ?", ", ", url))
+        } else
             z$url <- url
     }
 
