@@ -1312,7 +1312,7 @@ add_dummies <- function(dir, Log)
                         "in the 'Writing R Extensions' manual.\n")
             } else {
                 for (f in c("configure", "cleanup")) {
-                    ## /bin/bash is not portable
+                    ## /bin/bash is not portable
                     if (file.exists(f) &&
                         any(grepl("^#! */bin/bash",
                                   readLines(f, 1L, warn = FALSE)))) {
