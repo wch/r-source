@@ -90,7 +90,7 @@ function(x)
 doi_db_from_package_sources <-
 function(dir, add = FALSE, Rd = FALSE)
 {
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    meta <- .get_package_metadata(dir, FALSE)
     db <- rbind(doi_db_from_package_metadata(meta),
                 doi_db_from_package_citation(dir, meta),
                 if(Rd) {
@@ -192,22 +192,24 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
     ## Nevertheless, let us drop the check below:
     ## <CODE>
     ## ind <- !startsWith(dois, "10")
-    ## if(any(ind)) {
-    ##     len <- sum(ind)
-    ##     bad <- rbind(bad,
-    ##                  .gather(dois[ind], parents[ind],
-    ##                          m = rep.int("Invalid DOI", len)))
-    ## }
-    ## pos <- which(!ind)
     ## </CODE>
-    ## </FIXME>    
+    ## But do at least minimal tests for formal validity (could do
+    ## more):
+    ind <- !grepl("/", dois, fixed = TRUE)
+    if(any(ind)) {
+        len <- sum(ind)
+        bad <- rbind(bad,
+                     .gather(dois[ind], parents[ind],
+                             m = rep.int("Invalid DOI", len)))
+    }
+    pos <- which(!ind)
+    ## </FIXME>
 
     ## See <https://www.doi.org/the-identifier/resources/handbook/3_resolution#3.8.3>:
     ##   Ideally we would perform GET requests and would look at the
     ##   responseCode in the JSON response.  However, we cannot do this
     ##   with base, and at least for now we can also check using HEAD
     ##   requests and looking at the status code (200 vs 404).
-    pos <- seq_along(dois)
     if(length(pos)) {
         doispos <- dois[pos]
         urlspos <- paste0("https://doi.org/api/handles/",
