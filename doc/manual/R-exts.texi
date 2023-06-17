@@ -2845,31 +2845,30 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
 Fortran 90 (which includes Fortran 77), and passes them to the compiler
-specified by macro @samp{FC}.  On known platforms the Fortran compiler
-will also accept free-form Fortran 90/95 code with extension @file{.f90}
-or @file{.f95}, but those are not used by @R{} itself so this is not
-required.
+specified by macro @samp{FC}.  The Fortran compiler will also accept
+free-form Fortran 90/95 code with extension @file{.f90} or @file{.f95}.
 
 @vindex PKG_FCFLAGS
-The same compiler is used@footnote{for versions of @R{} since 3.6.0.}
-for both fixed-form and free-form Fortran code (with different file
-extensions and possibly different flags).  Macro @code{PKG_FFLAGS} can
-be used for package-specific flags: for the un-encountered case that both
-are included in a single package and that different flags are needed for
-the two forms, macro @code{PKG_FCFLAGS} is also available for free-form
-Fortran.
+The same compiler is used for both fixed-form and free-form Fortran code
+(with different file extensions and possibly different flags).  Macro
+@code{PKG_FFLAGS} can be used for package-specific flags: for the
+un-encountered case that both are included in a single package and that
+different flags are needed for the two forms, macro @code{PKG_FCFLAGS}
+is also available for free-form Fortran.
 
 The code used to build @R{} allows a `Fortran 90' compiler to be
 selected as @samp{FC}, so platforms might be encountered which only
-support Fortran 90.  However, Fortran 95 is widely supported.
+support Fortran 90.  However, Fortran 95 is supported on all known
+platforms.
 
-Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
+Most compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
 2018 code: such code should still use file extension @file{.f90} or
 @file{.f95}.  Almost all current platforms use @command{gfortran} where
 you may need to include @option{-std=f2003}, @option{-std=f2008} or
 (from version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
-@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
-non-standard extensions.
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', currently Fortran 2018
+(but Fortran 95 prior to @command{gfortran}@tie{}8) with non-standard
+extensions.
 @c The Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
 @c (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
 @c look for §4.6).
