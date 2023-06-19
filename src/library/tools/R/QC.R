@@ -7060,8 +7060,6 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     pg <- dir(file.path(dir, "man"), pattern = "[.][Rr]d$", full.names = TRUE)
     bad <- character()
     for (f in pg) {
-        ## Kludge for now
-        if(basename(f) %in% c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
         ## FIXME: this may not work for no/fake install if the expressions
         ## involve the package under check.
         tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,

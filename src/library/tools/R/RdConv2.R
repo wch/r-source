@@ -698,19 +698,26 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                VERB = ,
                RCODE = ,
-               TEXT = {
-                   if(!def_enc) {
-                       ## check for encoding; this is UTF-8 if known
-                       ## (but then def_enc = TRUE?)
-                       msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
-                       txt <- unclass(block); attributes(txt) <- NULL
-                       msg3 <- paste0(msg2, ":\n  ", sQuote(txt))
+               TEXT = if(!grepl("^[[:space:]]*$", block)) {
+                   has_text <<- TRUE
+                   if(inEnc2 || !def_enc) {
+                       ## check for encoding; parse_Rd converts to UTF-8,
+                       ## unless encoding="ASCII", when non-ASCII content fails
+                       ## (thus used by .check_package_parseRd if !def_enc);
+                       ## so this check is only useful for the 'inEnc2' part or
+                       ## to checkRd() individual Rd files outside of packages.
+                       msg2 <- if(inEnc2) "in second part of \\enc"
+                               else "without declared encoding"
                        if(Encoding(block) == "UTF-8")
                            warnRd(block, Rdfile, level = -1,
-                                  "Non-ASCII contents ", msg3)
-                       if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                           warnRd(block, Rdfile, level = -3,
-                                  "Apparent non-ASCII contents ", msg3)
+                                  "Non-ASCII contents ", msg2,
+                                  ":\n  ", sQuote(trimws(block)))
+                       ## the following gives mostly false positives nowadays,
+                       ## from using such notation in the source file, as in
+                       ## iconv.Rd, showNonASCII.Rd, UTF8filepaths.Rd:
+                       ## if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                       ##     warnRd(block, Rdfile, level = -3,
+                       ##            "Apparent non-ASCII contents ", msg2)
                    }
                    if(tag == "TEXT") {
                        pat <- "([^\\]|^)\\\\[#$&_^~]"
@@ -724,8 +731,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                                   paste(txt, collapse = " "))
                        }
                    }
-                   ## check if this renders as non-whitespace
-                   if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                },
                USERMACRO =,
                "\\newcommand" =,
@@ -845,20 +850,16 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                    stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                    VERB = ,
                    RCODE = ,
-                   TEXT = {
-                       if(!def_enc) {
-                           ## check for encoding; this is UTF-8 if known
-                           ## (but then def_enc = TRUE?)
-                           msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
-                           if(Encoding(block) == "UTF-8")
-                               warnRd(block, Rdfile, level = -1,
-                                      "Non-ASCII contents ", msg2)
-                           if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                               warnRd(block, Rdfile, level = -3,
-                                      "Apparent non-ASCII contents ", msg2)
+                   TEXT = if(!grepl("^[[:space:]]*$", block)) {
+                       has_text <<- TRUE
+                       if((inEnc2 || !def_enc) && Encoding(block) == "UTF-8") {
+                           ## same as in checkBlock
+                           msg2 <- if(inEnc2) "in second part of \\enc"
+                                   else "without declared encoding"
+                           warnRd(block, Rdfile, level = -1,
+                                  "Non-ASCII contents ", msg2,
+                                  ":\n  ", sQuote(trimws(block)))
                        }
-                       ## check if this renders as non-whitespace
-                       if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                    },
 		   USERMACRO =,
 		   "\\newcommand" =,

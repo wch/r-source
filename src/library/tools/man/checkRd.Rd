@@ -78,8 +78,6 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
     -1 \tab Escaped LaTeX specials: \ldots\cr
     -3 \tab Tag \verb{\ldots} is invalid in a code block\cr
-    -3 \tab Apparent non-ASCII contents without declared encoding\cr
-    -3 \tab Apparent non-ASCII contents in second part of \verb{\enc}\cr
     -3 \tab Unnecessary braces at \ldots\cr
     -5 \tab \verb{\title} should not end in a period\cr
   }
