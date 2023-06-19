@@ -47,6 +47,8 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   Warnings are given a \sQuote{level}: those from \code{prepare_Rd} have
   level 0.  These include
   \tabular{l}{
+    \verb{\Sexpr} expects R code; found \ldots\cr
+    Unprocessed \sQuote{\var{stage}} macro from \var{stage}-stage \verb{\Sexpr}\cr
     All text must be in a section\cr
     Only one \var{tag name} section is allowed: the first will be used\cr
     Section \var{name} is unrecognized and will be dropped\cr
