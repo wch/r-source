@@ -51,3 +51,14 @@ stopifnot(grepl("10.1000/456#789", out[5], fixed = TRUE),
           grepl("10.1000/{}", out[7], fixed = TRUE),
           grepl("doi.org/10.1000/%7B%7D", out[7], fixed = TRUE))
 ## R < 4.2.0 failed to encode the hash and lost {}
+
+
+## \title and \section name should not end in a period
+rd <- parse_Rd(textConnection(r"(
+\name{test}
+\title{title.}
+\description{description}
+\section{section.}{nothing}
+)"))
+stopifnot(identical(endsWith(print(checkRd(rd)), "end in a period"),
+                    rep(TRUE, 2)))

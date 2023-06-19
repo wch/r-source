@@ -999,6 +999,16 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     	else checkContent(section, tag)
         if(!has_text) warnRd(section, Rdfile, level = 3,
                              "Empty section ", tagtitle)
+
+        if (tag %in% c("\\title", "\\section", "\\subsection")) {
+            rd <- .Rd_deparse(if (tag == "\\title") section else title,
+                              tag = FALSE)
+            if (grepl("[^.]\\.[[:space:]]*$", rd) &&
+                !grepl("(etc|et[[:space:]]+al)\\.[[:space:]]*$", rd))
+                warnRd(section, Rdfile, level = -5,
+                       tag, if (tag != "\\title") " name",
+                       " should not end in a period")
+        }
     }
 
     checkUnique <- function(tag) { # currently only used for \description

@@ -81,10 +81,12 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     -3 \tab Apparent non-ASCII contents without declared encoding\cr
     -3 \tab Apparent non-ASCII contents in second part of \verb{\enc}\cr
     -3 \tab Unnecessary braces at \ldots\cr
+    -5 \tab \verb{\title} should not end in a period\cr
   }
   and variations with \verb{\method} replaced by \verb{\S3method} or
-  \verb{\S4method}, and \verb{\dontrun} replaced by \verb{\donttest} or
-  \verb{\dontshow}.
+  \verb{\S4method}, \verb{\dontrun} replaced by \verb{\donttest} or
+  \verb{\dontshow}, and \verb{\title} replaced by \verb{\section} or
+  \verb{\subsection} name.
 
   Note that both \code{prepare_Rd} and \code{checkRd} have tests for an
   empty section: that in \code{checkRd} is stricter (essentially that

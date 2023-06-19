@@ -7529,7 +7529,8 @@ For example
 @noindent
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
-upper case).  Whitespace between the first and second braced expressions
+upper case) and not end in a period.
+Whitespace between the first and second braced expressions
 is not allowed.  Markup (e.g.@: @code{\code}) within the section title
 may cause problems with the latex conversion (depending on the version
 of macro packages such as @samp{hyperref}) and so should be avoided.
