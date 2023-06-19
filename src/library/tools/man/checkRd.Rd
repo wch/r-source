@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkRd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2022 R Core Team
+% Copyright 2008-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkRd}
@@ -55,6 +55,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   \code{checkRd} itself can show
   \tabular{rl}{
     7 \tab Tag \var{tag name} not recognized\cr
+    7 \tab Unrecognized format: \ldots\cr
     7 \tab \verb{\tabular} format must be simple text\cr
     7 \tab Unrecognized \verb{\tabular} format: \ldots\cr
     7 \tab Only \var{n} columns allowed in this table\cr
@@ -95,12 +96,20 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   that can be used to select only more serious messages.  (This is set
   to \code{-1} in \command{R CMD check}.)
 
-  Possible fatal errors are those from running the parser (e.g., a
+  Possible fatal errors are those
+  from \code{!unknownOK} or \code{!listOK},
+  from invalid \verb{\if} or \verb{\ifelse} conditions,
+  %or non-VERB (e.g., COMMENT) parsed input for \verb{\out} or
+  %\verb{\href} (first argument),
+  from running the parser (e.g., a
   non-existent file, unclosed quoted string, non-ASCII input without a
-  specified encoding) or from \code{prepare_Rd} (multiple
+  specified encoding, an invalid value for an \verb{\Sexpr} option),
+  or from \code{prepare_Rd} (multiple
   \verb{\Rdversion} declarations, invalid \verb{\encoding} or
   \verb{\docType} or \verb{\name} sections, and missing or duplicate
-  \verb{\name} or \verb{\title} sections).
+  \verb{\name} or \verb{\title} sections),
+  including errors from parsing/running code from \verb{\Sexpr} macros
+  (if covered by \code{stages}).
 }
 \author{
   Duncan Murdoch, Brian Ripley
