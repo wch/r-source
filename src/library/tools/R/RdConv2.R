@@ -984,6 +984,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 
     has_text <- FALSE
     checkSection <- function(section, tag) {
+    	s0 <- section
     	if (tag == "\\section" || tag == "\\subsection") {
     	    title <- section[[1L]]
     	    checkContent(title, tag)
@@ -997,7 +998,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         if (tag %in% c("\\usage", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
-        if(!has_text) warnRd(section, Rdfile, level = 3,
+        if(!has_text) warnRd(s0, Rdfile, level = 3,
                              "Empty section ", tagtitle)
 
         if (tag %in% c("\\title", "\\section", "\\subsection")) {
@@ -1005,7 +1006,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                               tag = FALSE)
             if (grepl("[^.]\\.[[:space:]]*$", rd) &&
                 !grepl("(etc|et[[:space:]]+al)\\.[[:space:]]*$", rd))
-                warnRd(section, Rdfile, level = -5,
+                warnRd(s0, Rdfile, level = -5,
                        tag, if (tag != "\\title") " name",
                        " should not end in a period")
         }
