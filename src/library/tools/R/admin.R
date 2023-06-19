@@ -1124,8 +1124,7 @@ compactPDF <-
                 file.copy(tf, p, overwrite = TRUE)
                 ans[p, ] <- c(old, new)
             } else if(verbose) cat(" .. not worth using\n")
-
-        }
+        } else if(verbose) cat("\n")
         unlink(tf)
     }
     structure(stats::na.omit(ans), class = c("compactPDF", "data.frame"))
