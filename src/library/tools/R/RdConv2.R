@@ -565,7 +565,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name"))
         || identical(sections[3L], "\\name"))
-    	stopRd(Rd, Rdfile,
+    	stopRd("", Rdfile,
                "Sections \\title, and \\name must exist and be unique in Rd files")
     if (length(RdTags(Rd[[2L]])) > 1L)
         stopRd(RdTags(Rd[[2L]]), Rdfile,"\\name must only contain simple text")
@@ -1034,7 +1034,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     inEnc2 <- FALSE
     if(!identical("package", .Rd_get_doc_type(Rd)) &&
        "\\description" %notin% sections)
-        warnRd(Rd, Rdfile, level = 5, "Must have a \\description")
+        warnRd("", Rdfile, level = 5, "Must have a \\description")
 
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])
