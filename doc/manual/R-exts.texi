@@ -5426,7 +5426,11 @@ Java code produced by others, so their requirements need to be checked
 (they are often not documented accurately) and accounted for.  It should
 be possible to check the class-file version @emph{via} command-line
 utility @command{javap}, if necessary after extracting the @file{.class}
-files from a @file{.jar} archive.
+files from a @file{.jar} archive.  For example,
+@example
+jar xvf some.jar
+javap -verbose path/to/some.class | grep major
+@end example
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java

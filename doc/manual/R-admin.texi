@@ -4043,7 +4043,7 @@ from Debian/Ubuntu package @code{r-base} would use it.  It is, however,
 still essential to set @code{MKL_INTERFACE_LAYER} and
 @code{MKL_THREADING_LAYER} before running @R{}, otherwise MKL computations
 will produce incorrect results. @R{} does not have to be rebuilt to use MKL,
-but @code{configure} include tests which may discover some errors such as a
+but @code{configure} includes tests which may discover some errors such as a
 failure to set the correct OpenMP and MKL interface layer.
 
 @noindent
