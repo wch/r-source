@@ -1367,6 +1367,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               note = paste("R package version", meta$Version)
               )
 
+    ## CRAN-style repositories: CRAN, R-Forge, Bioconductor
     if(identical(meta$Repository, "CRAN"))
         z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
@@ -1391,9 +1392,30 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             sprintf("10.18129/B9.bioc.%s", package)
     }
     
+    ## Git repositories: GitHub, GitLab, ...
     if(identical(meta$RemoteType, "github") && identical(meta$RemoteHost, "api.github.com")) {
-        z$url <- sprintf("https://github.com/%s/%s", meta$RemoteUsername, meta$RemoteRepo)
-        z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        if(!is.null(meta$RemoteUsername) && !is.null(meta$RemoteRepo)) {
+            z$url <- sprintf("https://github.com/%s/%s", meta$RemoteUsername, meta$RemoteRepo)
+        }
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
+    }
+
+    if(identical(meta$RemoteType, "gitlab")) {
+        if(!is.null(meta$RemoteHost) && !is.null(meta$RemoteUsername) && !is.null(meta$RemoteRepo)) {
+            z$url <- sprintf("https://%s/%s/%s", meta$RemoteHost, meta$RemoteUsername, meta$RemoteRepo)
+        }
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
+    }
+
+    if(identical(meta$RemoteType, "git") || identical(meta$RemoteType, "xgit")) {
+        z$url <- meta$RemoteUrl
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
     }
 
     if(!length(z$url) && !is.null(url <- meta$URL)) {
