@@ -742,9 +742,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                        if(!listOK)
                            stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
                        else warnRd(block, Rdfile, level = -3,
-                                   "Unnecessary braces at ",
-                                   ## 1-line output to not trigger check warning
-                                   sub("\n.*", " ....", deparse))
+                                   "Unnecessary braces at\n  ",
+                                   gsub("\n", "\n  ", deparse, fixed = TRUE))
                    }
                    checkContent(block, tag)
                },
