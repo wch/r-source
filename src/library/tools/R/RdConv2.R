@@ -809,7 +809,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                    if (length(block) > 1L) checkContent(block[[2L]])
                },
                "\\tabular" = checkTabular(block),
-               "\\subsection" = checkSection(block, tag),
+               "\\subsection" = {
+                   checkSection(block, tag)
+                   has_text <<- TRUE
+               },
                "\\if" =,
                "\\ifelse" = {
     		   condition <- block[[1L]]
