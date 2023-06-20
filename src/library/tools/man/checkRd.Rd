@@ -61,7 +61,6 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab \verb{\tabular} format must be simple text\cr
     7 \tab Unrecognized \verb{\tabular} format: \ldots\cr
     7 \tab Only \var{n} columns allowed in this table\cr
-    7 \tab \verb{\docType} must be plain text\cr
     7 \tab Tag \var{tag name} is invalid in a \var{block name} block\cr
     7 \tab \verb{\method} not valid outside a code block\cr
     7 \tab Tag \verb{\method} is only valid in \verb{\usage}\cr
@@ -69,9 +68,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab Invalid email address: \ldots\cr
     7 \tab Invalid URL: \ldots\cr
     5 \tab Must have a \var{tag name}\cr
-    5 \tab Only one \var{tag name} is allowed\cr
     5 \tab Tag \var{tag name} must not be empty\cr
-    5 \tab Multiple sections named \var{tag name} are not allowed\cr
     5 \tab \verb{\item} in \var{block name} must have non-empty label\cr
     3 \tab Empty section \var{tag name}\cr
     -1 \tab Non-ASCII contents without declared encoding\cr

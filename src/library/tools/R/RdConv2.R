@@ -500,10 +500,11 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
 
     drop <- rep.int(FALSE, length(sections))
 
-    ## Check other sections are unique
+    ## Check specific sections are unique (\title and \name are checked below,
+    ## others can be repeated: \alias, \concept, \keyword, \section, \note)
     unique_tags <-
         paste0("\\",
-               c("usage", "arguments",
+               c("description", "usage", "arguments",
                  "format", "details", "value", "references", "source",
                  "seealso", "examples", "author", "encoding"))
     for (tag in unique_tags) {
@@ -1013,27 +1014,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         }
     }
 
-    checkUnique <- function(tag) { # currently only used for \description
-    	which <- which(sections == tag)
-    	if (length(which) < 1L)
-    	    warnRd(Rd, Rdfile, level = 5, "Must have a ", tag)
-    	else {
-            if (length(which) > 1L)
-    	    	warnRd(Rd[[which[2L]]], Rdfile, level = 5,
-                   "Only one ", tag, " is allowed")
-            empty <- TRUE
-            for(block in Rd[which]) {
-                switch(attr(block, "Rd_tag"),
-                       TEXT = if(!grepl("^[[:space:]]*$", block))
-                       empty <- FALSE,
-                       empty <- FALSE)
-            }
-            if(empty)
-                warnRd(Rd[[which[1L]]], Rdfile, level = 5,
-                       "Tag ", tag, " must not be empty")
-        }
-    }
-
     .messages <- character()
     .whandler <-     function(e) {
         .messages <<- c(.messages, paste("prepare_Rd:", conditionMessage(e)))
@@ -1052,21 +1032,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     if (length(enc)) def_enc <- TRUE
 
     inEnc2 <- FALSE
-    if(!identical("package", .Rd_get_doc_type(Rd)))
-        checkUnique("\\description")
-
-    ## Check other standard sections are unique
-    ## \alias, \keyword and \note are allowed to be repeated
-    ## Normally prepare_Rd will have dropped duplicates already
-    unique_tags <-
-        paste0("\\",
-               c("name", "title", # "description" checked above
-                 "usage", "arguments",
-                 "format", "details", "value", "references", "source",
-                 "seealso", "examples", "author", "encoding"))
-    for(tag in intersect(sections[duplicated(sections)], unique_tags))
-        warnRd(Rd, Rdfile, level = 5,
-               sprintf("Multiple sections named '%s' are not allowed", tag))
+    if(!identical("package", .Rd_get_doc_type(Rd)) &&
+       "\\description" %notin% sections)
+        warnRd(Rd, Rdfile, level = 5, "Must have a \\description")
 
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])
