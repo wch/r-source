@@ -562,7 +562,8 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     sortorder <- order(sectionOrder[sections])
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
-    if (!identical(sections[1:2], c("\\title", "\\name")))
+    if (!identical(sections[1:2], c("\\title", "\\name"))
+        || identical(sections[3L], "\\name"))
     	stopRd(Rd, Rdfile,
                "Sections \\title, and \\name must exist and be unique in Rd files")
     if (length(RdTags(Rd[[2L]])) > 1L)

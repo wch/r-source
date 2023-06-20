@@ -62,3 +62,9 @@ rd <- parse_Rd(textConnection(r"(
 )"))
 stopifnot(identical(endsWith(print(checkRd(rd)), "end in a period"),
                     rep(TRUE, 2)))
+
+## checkRd() with duplicated \name (is documented to fail from prepare_Rd)
+assertError(checkRd(parse_Rd(textConnection(r"(
+\name{test}\title{test}\name{test2}
+)"))), verbose = TRUE)
+## no error in R < 4.4.0
