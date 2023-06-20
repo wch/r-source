@@ -527,7 +527,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     docTypes <- character(length(dt))
     if(length(dt)) {
         if(length(dt) > 1L)
-            warnRd(dt[[1L]], Rdfile,
+            warnRd("", Rdfile,
                    "Multiple \\docType sections are not supported")
         for(i in seq_along(dt)) {
             docType <- Rd[[dt[i]]]
@@ -537,7 +537,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
             docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
             if (docTypes[i] %notin%
                 c("data", "package", "methods", "class", "import"))
-                warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
+                warnRd(docType, Rdfile, "docType ", sQuote(docTypes[i]),
                        " is unrecognized")
          }
     }
@@ -574,7 +574,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     ## ggplot2 demonstrated it
     name_text <- as.character(Rd[[2L]])
     if(grepl("[!|@]", name_text))
-        warnRd(RdTags(Rd[[2L]]), Rdfile,"\\name should not contain !, | or @")
+        warnRd(Rd[[2L]], Rdfile, "\\name should not contain !, | or @")
     ## is this really what we want?  docTypes is a vector.
     structure(Rd, meta = list(docType = docTypes))
 }
