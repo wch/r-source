@@ -1034,21 +1034,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         }
     }
 
-        
-
-    dt <- which(RdTags(Rd) == "\\docType")
-    docTypes <- character(length(dt))
-    if (length(dt)) {
-        for (i in dt) {
-            docType <- Rd[[i]]
-            if(!identical(RdTags(docType), "TEXT"))
-        	warnRd(docType, Rdfile, level = 7,
-                       "'docType' must be plain text")
-            ## Some people have \docType{ package } and similar.
-            docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
-         }
-    }
-
     .messages <- character()
     .whandler <-     function(e) {
         .messages <<- c(.messages, paste("prepare_Rd:", conditionMessage(e)))
@@ -1067,7 +1052,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     if (length(enc)) def_enc <- TRUE
 
     inEnc2 <- FALSE
-    if(!identical("package", docTypes))
+    if(!identical("package", .Rd_get_doc_type(Rd)))
         checkUnique("\\description")
 
     ## Check other standard sections are unique

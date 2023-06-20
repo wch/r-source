@@ -68,3 +68,10 @@ assertError(checkRd(parse_Rd(textConnection(r"(
 \name{test}\title{test}\name{test2}
 )"))), verbose = TRUE)
 ## no error in R < 4.4.0
+
+## package overview may lack a \description (WRE-stated exemption)
+stopifnot(length(print(
+    checkRd(parse_Rd(textConnection(r"(
+\docType{package}\name{pkg}\title{pkg}\section{Overview}{...}
+)"))))) == 0)
+## "checkRd: (5)" output in 2.10.0 <= R < 4.4.0
