@@ -70,8 +70,13 @@ assertError(checkRd(parse_Rd(textConnection(r"(
 ## no error in R < 4.4.0
 
 ## package overview may lack a \description (WRE-stated exemption)
-stopifnot(length(print(
-    checkRd(parse_Rd(textConnection(r"(
-\docType{package}\name{pkg}\title{pkg}\section{Overview}{...}
-)"))))) == 0)
-## "checkRd: (5)" output in 2.10.0 <= R < 4.4.0
+cat(r"(\docType{package}\name{pkg}\title{pkg}\section{Overview}{...})",
+    file = tf <- tempfile())
+stopifnot(exprs = {
+    length(print(checkRd(tf))) == 0
+    ## but usual help pages need one:
+    endsWith(print(checkRd(parse_Rd(textConnection(
+        "\\name{test}\\title{test}"
+    )))), "Must have a \\description")
+})
+## *both* gave "checkRd: (5)" output in 2.10.0 <= R < 4.4.0
