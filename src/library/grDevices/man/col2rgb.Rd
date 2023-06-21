@@ -72,7 +72,7 @@ colnames(crgb) <- cc
 t(crgb)  # The whole table
 
 ## How many names are 'aliases' of each other?
-ccodes <- c(256^(2:0) \%*\% crgb)  #% = internal codes
+ccodes <- c(256^(2:0) \%*\% crgb)% = internal codes
 cl <- split(cc, ccodes)
 length(cl) # 502 distinct colors
 table(tcc <- lengths(cl))
@@ -83,20 +83,18 @@ utils::str(clmult)
 
 ## Look at the color cube:
 tc <- t(crgb[, !duplicated(ccodes)])
-table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
-if(requireNamespace("lattice", quietly = TRUE))
-    lattice::cloud(blue ~ red + green, data = as.data.frame(tc),
-                   col = rownames(tc))
-tc <- t(crgb[, !duplicated(ccodes)])
 cNms <- rownames(tc)
+if(requireNamespace("lattice", quietly = TRUE))
+    lattice::cloud(blue ~ red + green, data = as.data.frame(tc), col = cNms)
 ## The 8 corners of the color cube:
 isC <- rowSums(tc == 0 | tc == 255) == 3
 cNms[isC] # "white" "black" "blue" "cyan" "green" "magenta" "red" "yellow"
 \dontshow{stopifnot(setequal(cNms[isC],
      c("white","black","blue","cyan","green","magenta","red","yellow")))}
-table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
-\dontrun{% only interactively %
- if(require("rgl")) { ## Look at the color cube dynamically :
+table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
+
+\dontrun{## Look at the color cube dynamically:% only interactively %
+ if(require("rgl")) {
    open3d(windowRect = c(50,50, 950, 950)) # large, so we see details
    plot3d (tc, col = cNms, size = 11) # --> rotate w/ mouse; enlarged corners:
    points3d(tc[isC,], col = cNms[isC], size=22)
