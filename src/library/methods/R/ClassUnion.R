@@ -47,7 +47,7 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
     failed <- character()
     ## the prototype of the union will be from the first non-virtual
     ## subclass, except that we prefer NULL if "NULL" is a subclass
-    hasNull <- match("NULL", members, 0)
+    hasNull <- match("NULL", members, 0L)
     if(hasNull)
         members <- c("NULL", members[-hasNull])
     for(what in members) {

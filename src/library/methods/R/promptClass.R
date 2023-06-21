@@ -318,9 +318,9 @@ refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
     methodDefs <- as.list(clDef@refMethods)
     nmethods <- length(methodDefs)
     if(nmethods > 0) {
-        thisClassDefs <- match(vapply(methodDefs, function(x) x@refClassName, ""), clDef@className, 0) > 0
+        thisClassDefs <- vapply(methodDefs, function(x) x@refClassName, "") %in% clDef@className
         otherMethods <- methodDefs[!thisClassDefs]
-        methodDefs <- methodDefs[thisClassDefs]
+        methodDefs   <- methodDefs[ thisClassDefs]
         .methods <-
             c(.meths.head, .refMethodDescription(methodDefs, fieldnames, otherMethods), "}")
     }

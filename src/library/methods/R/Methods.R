@@ -1631,7 +1631,7 @@ findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
         sigs <- lapply(methods, function(x)
                        if(is.primitive(x)) anySig else as.character(x@defined))
     }
-    lens <- unique(vapply(sigs, length, 1, USE.NAMES=FALSE))
+    lens <- unique(lengths(sigs, use.names=FALSE))
     if(length(lens) == 0)
         return(matrix(character(), 0, length(methods@arguments)))
     if(length(lens) > 1L) {
