@@ -663,6 +663,12 @@ stopifnot(!m4["coef.foo", "visible"],
 splitmbcs <- length(strsplit("\u00e4", "^", perl=TRUE)[[1]])
 stopifnot(identical(splitmbcs, 1L))
 
+
+## contrib.url() should "recycle0"
+stopifnot(identical(contrib.url(character()), character()))
+## R < 4.4.0 returned "/src/contrib" or similar
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
