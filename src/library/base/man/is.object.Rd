@@ -1,6 +1,6 @@
 % File src/library/base/man/is.object.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.object}
@@ -10,12 +10,16 @@
 is.object(x)
 }
 \description{
-    A function rather for internal use.  It returns \code{TRUE} if the
+    A function mostly for internal use.  It returns \code{TRUE} if the
     object \code{x} has the \R internal \code{OBJECT} bit set, and
     \code{FALSE} otherwise.  The \code{OBJECT} bit is set when a
     \code{"class"} attribute is added and removed when that attribute is
     removed, so this is a very efficient way to check if an object has a
     class attribute.  (S4 objects always should.)
+
+    Note that typical basic (\sQuote{atomic}, see \code{\link{is.atomic}})
+    \R vectors and arrays \code{x} are \emph{not} objects in the above
+    sense as \code{\link{attributes}(x}} does \emph{not} contain \code{"class"}.
 }
 \arguments{
   \item{x}{object to be tested.}
