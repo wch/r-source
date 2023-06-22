@@ -19,7 +19,7 @@ is.object(x)
 
     Note that typical basic (\sQuote{atomic}, see \code{\link{is.atomic}})
     \R vectors and arrays \code{x} are \emph{not} objects in the above
-    sense as \code{\link{attributes}(x}} does \emph{not} contain \code{"class"}.
+    sense as \code{\link{attributes(x)}} does \emph{not} contain \code{"class"}.
 }
 \arguments{
   \item{x}{object to be tested.}
