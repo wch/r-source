@@ -70,6 +70,13 @@
   %%   }
   %% }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} notes when S4-style exports are used
+      without declaring a strong dependence on package \pkg{methods}.
+    }
+  }
+      
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics
