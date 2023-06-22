@@ -78,9 +78,14 @@
       \item \code{tools::checkRd()} (used by \command{R CMD check})
       detects more problems with \verb{\Sexpr}-based dynamic content,
       including bad nesting of \verb{\Sexpr}s and invalid arguments.
+
+      \item \code{tools::checkRd()} now reports Rd titles and section
+      names ending in a period; this is ignored by \command{R CMD check}
+      unless environment variable \env{_R_CHECK_RD_CHECKRD_MINLEVEL_} is
+      set to -5 or smaller.
     }
   }
-      
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics
