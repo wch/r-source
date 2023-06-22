@@ -74,6 +74,10 @@
     \itemize{
       \item \command{R CMD check} notes when S4-style exports are used
       without declaring a strong dependence on package \pkg{methods}.
+
+      \item \code{tools::checkRd()} (used by \command{R CMD check})
+      detects more problems with \verb{\Sexpr}-based dynamic content,
+      including bad nesting of \verb{\Sexpr}s and invalid arguments.
     }
   }
       
@@ -135,6 +139,13 @@
       \item \code{getParseData(f)} now also works for a function defined
       in the first of several \file{<pkg>/R/*.R} source files, thanks to
       Kirill Müller's report and Duncan Murdoch's patch in \PR{16756}.
+
+      \item \code{tools::checkRd()} no longer produces spurious notes
+      about \dQuote{unnecessary braces} from multi-line Rd results of
+      \verb{\Sexpr} macros.
+
+      \item Rd \verb{\Sexpr} macros with nested \verb{#ifdef}
+      conditionals were not processed.
     }
   }
 }
