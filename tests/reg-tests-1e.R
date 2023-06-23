@@ -669,6 +669,41 @@ stopifnot(identical(contrib.url(character()), character()))
 ## R < 4.4.0 returned "/src/contrib" or similar
 
 
+## `substr<-` overrun in case of UTF-8 --- private bug report by 'Architect 95'
+s0 <- "123456"; nchar(s0) #  6
+substr(s0, 6, 7) <- "cc"
+s0 ; nchar(s0) # {"12345c", 6}: all fine: no overrun, silent truncation
+(s1 <- intToUtf8(c(23383, 97, 97, 97, 97, 97))); nchar(s1)  # "字aaaaa" , 6
+substr(s1, 6, 7) <- "cc"
+# Now s1 should be "字aaaac", but  actually did overrunn nchar(s1);
+s1; nchar(s1) ## was "字aaaacc", nchar  = 7
+(s2 <- intToUtf8(c(23383, 98, 98))); nchar(s2)  # "字bb" 3
+substr(s2, 4, 5) <- "dd" # should silently truncate as with s0:
+## --> s2 should be "字bb", but was "字bbdddd\x97" (4.1.3) or "字bbdd字" (4.3.1)
+s2; nchar(s2) ## was either 6 or  "Error ... : invalid multibyte string, element 1"
+#-------------
+## Example where a partial UTF-8 character is included in the second string
+## 3) all fine
+(s3 <- intToUtf8(c(23383, 97, 97, 97, 97, 97))); nchar(s3)  # "字aaaaa" 6
+substr(s3, 6, 6) <- print(intToUtf8(23383))  # "字"
+s3 ; nchar(s3) # everything as expected:  ("字aaaa字", 6)
+## 4) not good
+(s4 <- intToUtf8(c(23383, 98, 98, 98, 98))); nchar(s4) # "字bbbb" 5
+substr(s4, 5, 7) <- "ddd"
+# Now s4 should be "字bbbd", but was "字bbbddd\x97", (\x97 = last byte of "字" in UTF-8)
+s4; nchar(s4)## gave "字bbbddd\x97" and "Error ...: invalid multibyte string, element 1"
+stopifnot(exprs = {
+    identical(s0, "12345c") # always ok
+    identical(utf8ToInt(s1), c(23383L, rep(97L, 4), 99L))           ; nchar(s1) == 6
+    identical(utf8ToInt(s2), c(23383L, 98L, 98L))                   ; nchar(s2) == 3
+    identical(utf8ToInt(s3), c(23383L, 97L, 97L, 97L, 97L, 23383L)) ; nchar(s3) == 6
+    identical(utf8ToInt(s4), c(23383L, 98L, 98L, 98L, 100L))        ; nchar(s4) == 5
+    Encoding(c(s1,s2,s3,s4)) == rep("UTF-8", 4)
+})
+## did partly overrun to invalid strings, nchar(.) giving error in R <= 4.3.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

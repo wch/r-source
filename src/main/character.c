@@ -598,10 +598,9 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
 	    error(_("invalid multibyte string, %s"), msg);
 	}
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
-	for (i = sa; i <= so && in < strlen(str); i++) {
+	for (i = sa; i <= so && buf[out] && str[in]; i++) {
 	    in +=  utf8clen(str[in]);
 	    out += utf8clen(buf[out]);
-	    if (!str[in]) break;
 	}
 	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
 	memcpy(buf, str, in);
@@ -619,10 +618,9 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
 	    /* now work out how many bytes to replace by how many */
 	    mbstate_t mb_st_out;
 	    mbs_init(&mb_st_out);
-	    for (i = sa; i <= so && in < strlen(str); i++) {
-		in += (int) Mbrtowc(NULL, str+in, R_MB_CUR_MAX, &mb_st_in);
+	    for (i = sa; i <= so && buf[out] && str[in]; i++) {
+		in  += (int) Mbrtowc(NULL, str+in,  R_MB_CUR_MAX, &mb_st_in);
 		out += (int) Mbrtowc(NULL, buf+out, R_MB_CUR_MAX, &mb_st_out);
-		if (!str[in]) break;
 	    }
 	    if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
 	    memcpy(buf, str, in);

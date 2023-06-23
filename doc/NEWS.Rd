@@ -155,6 +155,16 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 4.3.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{substr(x, n, L) <- cc} now works (more) correctly for
+      multibyte UTF-8 strings \code{x} when \code{L > nchar(x)}, thanks to
+      a report and patch by \sQuote{Architect 95}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.3.1}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
