@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -666,14 +666,17 @@ testInstalledPackage <-
     invisible(Rfile)
 }
 
-testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
+testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "all"),
+                               outDir = file.path(R.home(), "tests"),
+                               testSrcdir = getTestSrcdir(outDir))
 {
     scope <- match.arg(scope)
 
     ## We need to force C collation: might not work
     oLCcoll <- Sys.getlocale("LC_COLLATE") ; on.exit(Sys.setlocale("LC_COLLATE", oLCcoll))
     Sys.setlocale("LC_COLLATE", "C")
-    ## "strict specific":
+### ---- "basic" tests ("devel", etc -------> further down (!)
+    ## "strict specific" (test-src-strict-1):
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
                 "p-r-random-tests", "d-p-q-r-tst-2",
@@ -684,34 +687,21 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
     ## regression tests (strict specific, too)
     tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-1c", "reg-tests-2",
                 "reg-tests-1d",
+                "reg-tests-1e",
                 "reg-examples1", "reg-examples2", "reg-packages",
+                "reg-S4-examples", 
+                ## reg-translation, reg-ex*3 ... see "devel" below
+                "datetime3",
                 "p-qbeta-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
     useDiff <- nzchar(Sys.which("diff"))  # only check once
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
-        f <- paste0(f, ".R")
-        if (!file.exists(f)) {
-            if (!file.exists(fin <- paste0(f, "in")))
-                stop("file ", sQuote(f), " not found", domain = NA)
-            message("creating ", sQuote(f), domain = NA)
-            cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                         "--vanilla --no-echo -f", fin)
-            if (system(cmd))
-                stop("creation of ", sQuote(f), " failed", domain = NA)
-            ## This needs an extra trailing space to match the .Rin.R rule
-            cat("\n", file = f, append = TRUE)
-            on.exit(unlink(f))
-        }
-        message("  running code in ", sQuote(f), domain = NA)
-        outfile <- sub("rout$", "Rout", paste0(f, "out"))
-        cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                     "CMD BATCH --vanilla --no-timing",
-                     shQuote(f), shQuote(outfile))
-        extra <- paste("LANGUAGE=en", "LC_COLLATE=C",
-                       "R_DEFAULT_PACKAGES=", "SRCDIR=.")
-        if (inC) extra <- paste(extra,  "LC_ALL=C")
+        f <- fR <- paste0(f, ".R")
+        if(srcDiffers)
+            f <- file.path(testSrcdir, fR)
+        ## already needed for .Rin -> .R :
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
             Sys.setenv(R_DEFAULT_PACKAGES="")
@@ -725,14 +715,37 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 Sys.setenv(LC_CTYPE="C")
             }
             ## ignore all 'extra' (incl. 'inC')  and hope
-        } else cmd <- paste(extra, cmd)
-        res <- system(cmd)
+        }
+        extra <- if(inC) paste(extra0,  "LC_ALL=C") else extra0
+        mkCmd <- function(cmd)
+            if (.Platform$OS.type != "windows") paste(extra, cmd) else cmd
+        if (!file.exists(f)) { # try *.Rin, creating *.R
+            if (!file.exists(fin <- paste0(f, "in")))
+                stop("file ", sQuote(f), " not found", domain = NA)
+            f <- fR # in outDir (= our working dir) !
+            message("creating ", sQuote(f), domain = NA)
+            cmd <- mkCmd(paste(shQuote(file.path(R.home("bin"), "R")),
+			       "--vanilla --no-echo -f", fin))
+            if (system(cmd))
+                stop("creation of ", sQuote(f), " failed", domain = NA)
+            ## This needs an extra trailing space to match the .Rin.R rule
+            cat("\n", file = f, append = TRUE)
+            on.exit(unlink(f))
+        }
+        message("  running code in ", sQuote(f), domain = NA)
+        outfile <- sub("rout$", "Rout", paste0(fR, "out"))
+        cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
+                     "CMD BATCH --vanilla --no-timing",
+                     shQuote(f), shQuote(outfile))
+        res <- system(mkCmd(cmd))
         if (res) {
             file.rename(outfile, paste0(outfile, ".fail"))
             message("FAILED")
             return(1L)
         }
         savefile <- paste0(outfile, ".save")
+        if(srcDiffers)
+            savefile <- file.path(testSrcdir, savefile)
         if (file.exists(savefile)) {
             message(gettextf("  comparing %s to %s ...",
                              sQuote(outfile), sQuote(savefile)),
@@ -744,13 +757,40 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         0L
     } # end{runone}
 
-    owd <- setwd(file.path(R.home(), "tests"))
+    owd <- setwd(outDir)
     on.exit(setwd(owd), add=TRUE)
     if (!.is.writeable("."))
-        stop("directory ", sQuote(file.path(R.home(), "tests")),
-              " is not writeable ", domain = NA)
-
-    if (scope %in% c("basic", "both")) {
+        stop(gettextf("directory %s is not writeable ", sQuote(outDir)), domain = NA)
+    ## to get the *default* testSrcdir = getTestSrcdir(outDir) :
+    getTestSrcdir <- function(odir) {
+        ## Know here to be inside 'odir' or 'outDir'.
+        if(file.exists("eval-etc.R")) # all is fine
+            return(odir)
+        ## now, on unix-alike, if(build != src) the '<build>/tests/Makefile' has something like
+        ##  srcdir = ../../R/tests
+        if(file.exists("Makefile")) {
+            lns <- readLines("Makefile", 12L) # currently it's the 5-th lines
+            srcdir <- sub(" +$", "", # trailing blanks
+                          sub("^srcdir *= *", "", grep("^srcdir", lns, value=TRUE)))
+            if(dir.exists(srcdir))
+                return(srcdir)
+        }
+        ## give up
+        odir
+    }
+    comparePdf <- function(fnam) {
+        ff <- paste0(fnam, ".pdf")
+        fsv <- paste0(ff, ".save")
+        if(srcDiffers) fsv <- file.path(testSrcdir, fsv)
+        message("  comparing '",ff,"' to '",fsv,"' ...", appendLF = FALSE, domain = NA)
+        res <- Rdiff(ff, fsv, TRUE)
+        message(if(res != 0L) "DIFFERED" else "OK")
+    }
+    srcDiffers <- (normalizePath(testSrcdir) != normalizePath(outDir))
+    SRCDIR <- if(srcDiffers) testSrcdir else "."
+    extra0 <- paste("LANGUAGE=en", "LC_COLLATE=C",
+                    "R_DEFAULT_PACKAGES=", paste0("SRCDIR=",SRCDIR))
+    if (scope %in% c("basic", "both", "all")) {
         message("running strict specific tests", domain = NA)
         for (f in tests1) if (runone(f)) return(1L)
         message("running sloppy specific tests", domain = NA)
@@ -759,10 +799,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         for (f in tests3) {
             if (runone(f)) return(invisible(1L))
             if (f == "reg-plot") {
-                message("  comparing 'reg-plot.pdf' to 'reg-plot.pdf.save' ...",
-                        appendLF = FALSE, domain = NA)
-                res <- Rdiff("reg-plot.pdf", "reg-plot.pdf.save", TRUE)
-                if(res != 0L) message("DIFFERED") else message("OK")
+                comparePdf(f)
             }
         }
         runone("reg-translation", inC=FALSE)
@@ -772,16 +809,16 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
         if (runone("reg-plot-latin1", TRUE, inC=FALSE) == 0L) {
-            message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
-                    appendLF = FALSE, domain = NA)
-            res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save", TRUE)
-            if(res != 0L) message("DIFFERED") else message("OK")
+            comparePdf("reg-plot-latin1")
         }
     }
 
-    if (scope %in% c("devel", "both")) {
+    if (scope %in% c("devel", "both", "all")) {
         message("running tests of date-time printing\n expect platform-specific differences", domain = NA)
+        ## "datetime" and "datetime3" are in "basic" above
         runone("datetime2")
+        runone("datetime4")
+        runone("datetime5")
         message("running tests of consistency of as/is.*", domain = NA)
         runone("isas-tests")
         message("running tests of random deviate generation -- fails occasionally")
@@ -799,7 +836,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         message("running tests to possibly trigger segfaults", domain = NA)
         if (runone("no-segfault")) return(invisible(1L))
     }
-    if (scope %in% "internet") {
+    if (scope %in% c("internet", "all")) {
         message("running tests of Internet functions", domain = NA)
         runone("internet")
         message("running more Internet and socket tests", domain = NA)
