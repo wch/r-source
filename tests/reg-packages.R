@@ -20,7 +20,10 @@ showProc.time <- local({ ## function + 'pct' variable
 	    final)
     }
 })
-options(width=120)
+options(
+    width = 120
+  , repos = character()  # tests here should work without remote access
+)
 
 ## PR 1271  detach("package:base") crashes R.
 tools::assertError(detach("package:base"))

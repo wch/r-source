@@ -3115,10 +3115,9 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## and we cannot have cycles
     ## this check needs a package db from repository(s), so
     repos <- getOption("repos")
-    if(any(grepl("@CRAN@", repos)))
+    if(any(repos == "@CRAN@"))
         repos <- .get_standard_repository_URLs()
-    if(!any(grepl("@CRAN@", repos))) {
-        ## Not getting here should no longer be possble ...
+    if(length(repos)) {
         available <- utils::available.packages(repos = repos)
         ad <- .check_dependency_cycles(db, available)
         pkgname <- db[["Package"]]
@@ -8047,7 +8046,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
 
     ## If a package has a FOSS license, check whether any of its strong
     ## recursive dependencies restricts use.
-    if(!localOnly && foss) {
+    if(foss) {
         available <-
             utils::available.packages(utils::contrib.url(urls, "source"),
                                       filters = c("R_version", "duplicates"))
