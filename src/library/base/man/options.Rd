@@ -111,7 +111,7 @@ getOption(x, default = NULL)
 
     %%  default is set in ../../profile/Common.R :
     \item{\code{defaultPackages}:}{the packages that are attached by
-      default when \R starts up.  Initially set from value of the
+      default when \R starts up.  Initially set from the value of the
       environment variable \env{R_DEFAULT_PACKAGES}, or if that is unset
       to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
         "methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or

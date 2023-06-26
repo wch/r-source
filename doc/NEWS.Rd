@@ -1351,7 +1351,7 @@
     \itemize{
       \item Writing to a clipboard connection works again, fixing a
       regression in \R 4.2.0 (\PR{18332}).  Re-using a closed clipboard
-      connection longer issues a spurious warning about an ignored
+      connection no longer issues a spurious warning about an ignored
       encoding argument.
 
       \item C function \code{getlocale} no longer attempts to query an
