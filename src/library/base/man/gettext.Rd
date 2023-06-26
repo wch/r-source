@@ -36,7 +36,7 @@ Sys.setLanguage(lang, unset = "en")
     \code{gettext()} should happen.  \code{trim = FALSE} may be needed for
     compiled code (C / C++) messages which often end with \code{\\n}.}
   \item{domain}{the \sQuote{domain} for the translation, a \code{character}
-    string, or \code{\link{NULL}} to flush the cache; see \sQuote{Details}.}
+    string, or \code{\link{NULL}}; see \sQuote{Details}.}
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
   \item{msg2}{the message to be used in English for \code{n = 0, 2, 3, \dots}.}
