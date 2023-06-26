@@ -835,6 +835,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
         stop("invalid 'type'; must be a character string")
     type <- resolvePkgType(type)
     if(is.null(repos)) return(NULL)
+    if(!length(repos)) return(character())
     if("@CRAN@" %in% repos && interactive()) {
         cat(gettext("--- Please select a CRAN mirror for use in this session ---"),
             "\n", sep = "")
