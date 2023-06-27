@@ -7343,11 +7343,12 @@ Do strongly consider using @code{\concept} (@pxref{Indices}) instead of
 @code{\keyword} if you are about to use more than very few non-standard
 keywords.
 
-The special keyword @samp{internal} marks a page of internal objects
-that are not part of the package's API.  If the help page for object
+The special keyword @samp{internal} marks a page of internal topics
+(typically, objects that are not part of the package's API).
+If the help page for topic
 @code{foo} has keyword @samp{internal}, then @code{help(foo)} gives this
-help page, but @code{foo} is excluded from several object indices,
-including the alphabetical list of objects in the @HTML{} help system.
+help page, but @code{foo} is excluded from several topic indices,
+including the alphabetical list of topics in the @HTML{} help system.
 
 @code{help.search()} can search by keyword, including user-defined
 values: however the `Search Engine & Keywords' @HTML{} page accessed
