@@ -382,7 +382,7 @@ cls <- c("raw", "logical", "integer", "numeric", "complex",
 names(cls) <- cls
 be <- baseenv()
 asF  <- lapply(cls, \(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
-obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, 1:2)))
+obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, "numeric_version" = as.character(1:2), 1:2)))
 asDF <- lapply(cls, \(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
 r <- local({ g <- as.data.frame.logical; f <- function(L=TRUE) g(L)
     getVaW(f()) })
