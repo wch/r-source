@@ -8904,6 +8904,7 @@ function(package, dir, lib.loc = NULL)
             files <- meta$File
             names <- meta$Name
             aliases <- meta$Aliases
+            doctypes <- meta$Type
         } else {
             return(out)
         }
@@ -8913,6 +8914,7 @@ function(package, dir, lib.loc = NULL)
             files <- basename(names(db))
             names <- sapply(db, .Rd_get_metadata, "name")
             aliases <- lapply(db, .Rd_get_metadata, "alias")
+            doctypes <- lapply(db, .Rd_get_doc_type)
         } else {
             return(out)
         }
@@ -8931,14 +8933,23 @@ function(package, dir, lib.loc = NULL)
         out$files_with_duplicated_names <-
             files_with_duplicated_names
 
+    nAliases <- lengths(aliases)
     files_grouped_by_aliases <-
-        split(rep.int(files, lengths(aliases)),
+        split(rep.int(files, nAliases),
               unlist(aliases, use.names = FALSE))
     files_with_duplicated_aliases <-
         files_grouped_by_aliases[lengths(files_grouped_by_aliases) > 1L]
     if(length(files_with_duplicated_aliases))
         out$files_with_duplicated_aliases <-
             files_with_duplicated_aliases
+
+    ## <FIXME>
+    ## This currently ignores package overview files:
+    ## thousands of packages lack the required pkgname-package alias,
+    ## which we might thus want to handle separately, also that
+    ## some packages provide multiple files with docType "package" ...
+    ## </FIXME>
+    out$files_without_aliases <- files[nAliases == 0L & doctypes != "package"]
 
     out
 }
@@ -8962,6 +8973,10 @@ function(x, ...)
                                 nm),
                        .pretty_format(bad[[nm]]))
                  }))
+      },
+      if(length(bad <- x$files_without_aliases)) {
+          c(gettext("Rd files without \\alias:"),
+            .pretty_format(bad))
       })
 }
 

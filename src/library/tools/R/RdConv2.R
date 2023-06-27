@@ -1036,6 +1036,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 
     inEnc2 <- FALSE
     if(!identical("package", .Rd_get_doc_type(Rd)) &&
+       ## FIXME: should also be skipped for non-man Rd files like NEWS.Rd
        "\\description" %notin% sections)
         warnRd("", Rdfile, level = 5, "Must have a \\description")
 

@@ -83,6 +83,11 @@
       names ending in a period; this is ignored by \command{R CMD check}
       unless environment variable \env{_R_CHECK_RD_CHECKRD_MINLEVEL_} is
       set to -5 or smaller.
+
+      \item \command{R CMD check} now warns about Rd files without an
+      \verb{\alias}, as long documented in \sQuote{Writing R Extensions}
+      §1.3.1.
+      This currently ignores files with \verb{\docType{package}}.
     }
   }
 
