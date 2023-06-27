@@ -873,7 +873,8 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
             .find_calls_in_file(file, encoding, predicate, recursive)
 
     which <- match.arg(which,
-                       c("code", "vignettes", "NAMESPACE", "CITATION"),
+                       c("code", "vignettes", "tests",
+                         "NAMESPACE", "CITATION"),
                        several.ok = TRUE)
     code_files <-
         c(character(),
@@ -881,8 +882,17 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
               list_files_with_type(file.path(dir, "R"), "code",
                                    OS_subdirs = c("unix", "windows")),
           if(("vignettes" %in% which) &&
+             dir.exists(file.path(dir, "vignettes")) &&
              dir.exists(fp <- file.path(dir, "inst", "doc")))
               list_files_with_type(fp, "code"),
+          ## cf. .check_packages_used_in_tests() ...
+          if(("tests" %in% which) &&
+             dir.exists(fp <- file.path(dir, "tests")))
+              c(list.files(fp, pattern = "\\.[rR]$",
+                           full.names = TRUE),
+                if(dir.exists(fp <- file.path(fp, "testthat")))
+                    list.files(fp, pattern = "\\.[rR]$",
+                               full.names = TRUE)),
           if(("NAMESPACE" %in% which) &&
              file.exists(fp <- file.path(dir, "NAMESPACE")))
               fp,
