@@ -42,6 +42,20 @@ function(x, strict = TRUE, regexp, classes = NULL)
     ## Internal creator for numeric version objects.
 
     nms <- names(x)
+    if(!is.character(x)) {
+        msg <- gettextf("invalid non-character version specification 'x' (type: %s)",
+                        typeof(x))
+        if(nzchar(Sys.getenv("_R_CALLS_INVALID_NUMERIC_VERSION_"))) {
+            calls <- sys.calls()
+            msg <- paste0(msg, "\n",
+                          gettext("Calls"), ":\n",
+                          paste0(sprintf("%2i: ", seq_along(calls)),
+                                 vapply(calls, deparse1, "",
+                                        collapse = "\n    "),
+                                 collapse = "\n"))
+        }
+        warning(msg, domain = NA, immediate. = TRUE)
+    }
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
     valid_numeric_version_regexp <- sprintf("^%s$", regexp)
@@ -61,9 +75,13 @@ function(x, strict = TRUE, regexp, classes = NULL)
 ## Basic numeric versions.
 
 numeric_version <-
-function(x, strict = TRUE)
+function(x, strict = TRUE) {
+    ## Be nice.        
+    if(is.numeric_version(x))
+        return(x)
     .make_numeric_version(x, strict,
                           .standard_regexps()$valid_numeric_version)
+}
 
 is.numeric_version <-
 function(x)
@@ -97,6 +115,9 @@ function(x)
 package_version <-
 function(x, strict = TRUE)
 {
+    ## Be nice.
+    if(is.package_version(x))
+        return(x)
     ## Special-case R version lists.
     ## Currently, do this here for backward compatibility.
     ## Should this be changed eventually?
