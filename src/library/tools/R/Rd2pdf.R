@@ -406,6 +406,10 @@
     }
 
     topics <- topics[nzchar(topics)]
+    ## <FIXME>
+    ## these 'topics' come from Rd \name, not \alias entries, but we should
+    ## (and WRE says) put the page aliased to the pkgname-package *topic* first
+    ## </FIXME>
     summ <- grep("-package$", topics, perl = TRUE)
     topics <- if (length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
     for (f in names(topics)) writeLines(readLines(f), outcon)

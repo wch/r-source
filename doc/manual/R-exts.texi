@@ -7495,10 +7495,10 @@ another @file{Rd} file, it is helpful to use this as an additional
 @code{\alias}.
 
 Skeletons of documentation for a package can be generated using the
-function @code{promptPackage()}.  If the @code{final = LIBS} argument
+function @code{promptPackage()}.  If the @code{final = TRUE} argument
 is used, then the @file{Rd} file will be generated in final form, containing
-the information that would be produced up to
-@code{library(help = @var{pkgname})}.  Otherwise (the default) comments
+the information that would be produced by
+@code{library(help = @var{pkgname})}. Otherwise (the default) comments
 will be inserted giving suggestions for content.
 
 Apart from the mandatory @code{\name} and @code{\title} and the
