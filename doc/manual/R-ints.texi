@@ -2599,7 +2599,7 @@ The columns are @samp{File} (the file name with extension), @samp{Name}
 (the @samp{\name} section), @samp{Type} (from the optional
 @samp{\docType} section), @samp{Title}, @samp{Encoding}, @samp{Aliases},
 @samp{Concepts} and @samp{Keywords}.  All columns are character vectors
-apart from @samp{Aliases}, which is a list of character vectors.
+apart from the last three, which are lists of character vectors.
 
 File @file{hsearch.rds} records the information to be used by
 @samp{help.search}.  This is a list of four unnamed elements which are
