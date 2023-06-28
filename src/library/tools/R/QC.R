@@ -8894,37 +8894,25 @@ function(package, dir, lib.loc = NULL)
 
     out <- structure(list(), class = "check_Rd_metadata")
 
-    if(!missing(package)) {
+    meta <- if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
-        if(file_test("-f", rds)) {
-            meta <- readRDS(rds)
-            files <- meta$File
-            names <- meta$Name
-            aliases <- meta$Aliases
-            doctypes <- meta$Type
-        } else {
-            return(out)
-        }
+        if(file_test("-f", rds)) { # should always exist, potentially 0-row
+            readRDS(rds)
+        } # else NULL
     } else {
-        if(dir.exists(file.path(dir, "man"))) {
-            db <- Rd_db(dir = dir)
-            files <- basename(names(db))
-            names <- sapply(db, .Rd_get_metadata, "name")
-            aliases <- lapply(db, .Rd_get_metadata, "alias")
-            doctypes <- lapply(db, .Rd_get_doc_type)
-        } else {
-            return(out)
-        }
+        Rd_contents(Rd_db(dir = dir))
     }
 
-    ## <FIXME>
-    ## Remove eventually, as .Rd_get_metadata() and hence Rd_info() now
-    ## eliminate duplicated entries ...
-    aliases <- lapply(aliases, unique)
-    ## </FIXME>
+    if (NROW(meta) == 0L)
+        return(out)
+    
+    files <- meta$File
+    names <- meta$Name
+    aliases <- meta$Aliases
+    doctypes <- meta$Type
 
     files_grouped_by_names <- split(files, names)
     files_with_duplicated_names <-
@@ -8981,6 +8969,8 @@ function(x, ...)
 }
 
 ## * checkRdContents
+
+## NOTE: this checks displayed content, not Rd_contents() metadata
 
 checkRdContents <- # was  .check_Rd_contents <-
 function(package, dir, lib.loc = NULL, chkInternal = FALSE)
