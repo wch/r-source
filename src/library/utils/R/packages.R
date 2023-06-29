@@ -956,7 +956,7 @@ setRepositories <-
     function(graphics = getOption("menu.graphics"), ind = NULL,
              addURLs = character(), name = NULL)
 {
-    if(is.null(ind) && !interactive())
+    if(is.null(name) && is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
     a <- .get_repositories()
     pkgType <- getOption("pkgType")
