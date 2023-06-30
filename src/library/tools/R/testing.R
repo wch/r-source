@@ -689,7 +689,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
                 "reg-tests-1d",
                 "reg-tests-1e",
                 "reg-examples1", "reg-examples2", "reg-packages",
-                "reg-S4-examples", 
+                "reg-S4-examples",
                 ## reg-translation, reg-ex*3 ... see "devel" below
                 "datetime3",
                 "p-qbeta-strict-tst",
@@ -703,11 +703,21 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
             f <- file.path(testSrcdir, fR)
         ## already needed for .Rin -> .R :
         if (.Platform$OS.type == "windows") {
-            Sys.setenv(LANGUAGE="C")
-            Sys.setenv(R_DEFAULT_PACKAGES="")
-            Sys.setenv(LC_COLLATE="C")
-            Sys.setenv(SRCDIR=".")
-            ## FIXME: the above are currently not restored after testing
+            ## NB: Sys.setlocale("LC_ALL", "....") fails on (some) Windows
+            ## --  specific LC_* seems to work, even via *.setenv():
+            Sys.set2 <- function(...) { # version returning previous setting
+                stopifnot(...length() == 1L, nzchar(nm <- ...names()))
+                oVal <- Sys.getenv(nm)
+                Sys.setenv(...)
+                oVal
+            }
+            oRD <- Sys.set2(R_DEFAULT_PACKAGES="")
+            oLa <- Sys.set2(LANGUAGE = "C")
+            oLC <- Sys.set2(LC_COLLATE="C")
+            oLT <- Sys.set2(LC_TIME  = "C") # e.g for month names in reg-tests-1c.R
+            oSR <- Sys.set2(SRCDIR = SRCDIR)
+            on.exit(Sys.setenv(LANGUAGE = oLa, R_DEFAULT_PACKAGES = oRD,
+                               LC_COLLATE = oLC, LC_TIME = oLT, SRCDIR = oSR))
             if (inC) { # breaks reg-plot-latin1, so restore between tests
                 oenv <- Sys.getenv("LC_CTYPE", unset = NA)
                 on.exit(if (is.na(oenv)) Sys.unsetenv("LC_CTYPE")
@@ -788,7 +798,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
     }
     srcDiffers <- (normalizePath(testSrcdir) != normalizePath(outDir))
     SRCDIR <- if(srcDiffers) testSrcdir else "."
-    extra0 <- paste("LANGUAGE=en", "LC_COLLATE=C",
+    extra0 <- paste("LANGUAGE=en", "LC_COLLATE=C", "LC_TIME=C",
                     "R_DEFAULT_PACKAGES=", paste0("SRCDIR=",SRCDIR))
     if (scope %in% c("basic", "both", "all")) {
         message("running strict specific tests", domain = NA)

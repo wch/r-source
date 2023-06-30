@@ -846,9 +846,9 @@ stopifnot(identical("3.141593", fpi <- format(pi)))
 options(OutDec = ",")
 stopifnot(identical("3,141593", cpi <- format(pi)))
 ## warnings, but it "works" (for now):
-tools::assertWarning(options(OutDec = ".1."))
+tools::assertWarning(options(OutDec = ".1."), verbose=TRUE)
 stopifnot(identical("3.1.141593", format(pi)))
-tools::assertWarning(options(OutDec = ""))
+tools::assertWarning(options(OutDec = ""), verbose=TRUE)
 tools::assertWarning(stopifnot(identical("3141593", format(pi))))
 options(op)# back to sanity
 ## No warnings in R versions <= 3.2.1
@@ -1411,7 +1411,7 @@ stopifnot(
 proc.time() - .pt; .pt <- proc.time()
 
 
-## prettyDate() for subsecond ranges
+## prettyDate() for subsecond ranges (and more)
 ##' checking pretty():
 chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
     if(is.null(min.n)) {
@@ -1491,6 +1491,7 @@ nns <- c(1:9, 15:17); names(nns) <- paste0("n=",nns)
 prSeq <- function(x, n, st, ...) pretty(seq(x, by = st, length = 2), n = n, ...)
 pps <- lapply(nns, function(n)
 	      lapply(steps, function(st) prSeq(x=t02, n=n, st=st)))
+## (FIXME) relies on LC_TIME="C" (or "English",..):
 Ls.ok <- list(
     `10 secs`  = c("00", "02", "04", "06", "08", "10"),
     `1 min`    = sprintf("%02d", 10*((0:6) %% 6)),
