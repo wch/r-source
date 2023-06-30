@@ -11,10 +11,12 @@ assertWarning <- tools::assertWarning
 
 as.nan <- function(x) { x[is.na(x) & !is.nan(x)] <- NaN ; x }
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
-opt.conformance <- 0
+## opt.conformance <- 0
 onWindows <- .Platform$OS.type == "windows"
 b64 <- .Machine$sizeof.pointer >= 8 # 64 (or more) bits
 str(.Machine[grep("^sizeof", names(.Machine))]) ## also differentiate long-double..
+(usingMKL <- grepl("/(lib)?mkl", La_library(), ignore.case=TRUE))
+(Lnx <- Sys.info()[["sysname"]] == "Linux")
 options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 {
@@ -234,12 +236,13 @@ set.seed(7) # as M is large, now "basically" rbinom(n, *) := qbinom(runif(n), *)
 (t2 <- table(rbinom(100, 10*M, pr = 1e-10)) )
 stopifnot(0:6 %in% names(tt), sum(tt) == 100, sum(t2) == 100) ## no NaN there
 ## related qbinom() tests:
+(binomOk <- b64 && !(Lnx && usingMKL)) # not for MKL on RHEL {R-dev.: 2023-06-22}
 k <- 0:32
 for(n in c((M+1)/2, M, 2*M, 10*M)) {
     for(pr in c(1e-8, 1e-9, 1e-10)) {
         nDup <- !duplicated( pb <- pbinom(k, n, pr) )
         qb <- qbinom(pb[nDup], n, pr)
-        pn1 <- pb[nDup] < if(b64) 1 else 1 - 3*.Machine$double.eps
+        pn1 <- pb[nDup] < if(binomOk) 1 else 1 - 3*.Machine$double.eps
         stopifnot(k[nDup][pn1] == qb[pn1]) ##^^^^^ fudge needed (Linux 32-b)
     }
 }
