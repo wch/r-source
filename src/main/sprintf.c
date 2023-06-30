@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2022     The R Core Team
+ *  Copyright (C) 2002--2023     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -341,6 +341,8 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    PROTECT(tmp = lang2(R_AsCharacterSymbol, _this));
 
 				    COERCE_THIS_TO_A
+				    outputString = R_AllocStringBuffer(nc + 1,
+				                                       &outbuff);
 				    strcpy(outputString, z);
 				    R_Free(z);
 				}
