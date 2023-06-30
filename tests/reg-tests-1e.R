@@ -669,6 +669,14 @@ stopifnot(identical(contrib.url(character()), character()))
 ## R < 4.4.0 returned "/src/contrib" or similar
 
 
+## .local() S4 method when generic has '...'  *not* at end, PR#18538
+foo <- function(x, ..., z = 22) z
+setMethod("foo", "character", function(x, y = -5, z = 22) y)
+stopifnot(identical(foo("a"), -5))
+removeGeneric("foo")
+## foo("a") gave -22 in R <= 4.3.1
+
+
 ## `substr<-` overrun in case of UTF-8 --- private bug report by 'Architect 95'
 s0 <- "123456"; nchar(s0) #  6
 substr(s0, 6, 7) <- "cc"
