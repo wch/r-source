@@ -98,7 +98,7 @@
       broken for the case when a method introduced an argument but did
       not include \dots{} in its own formals. Thanks to Hervé Pagès for
       the report \PR{18538}.
-      
+
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} are now consistently preserving
       \code{attributes(x)} when \code{length(x) == 0}, e.g., for a
@@ -171,6 +171,9 @@
       \code{character()} as documented, which also avoids spurious
       warnings from \code{available.packages()} et al.\sspace{}in the
       edge case of an empty vector of repository URLs.
+
+      \item \code{readChar(., 4e8)} no longer fails, thanks to Kodi Arfer's
+      report (\PR{18557}).
     }
   }
 }

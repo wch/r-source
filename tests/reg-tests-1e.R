@@ -711,6 +711,13 @@ stopifnot(exprs = {
 ## did partly overrun to invalid strings, nchar(.) giving error in R <= 4.3.1
 
 
+## PR#18557 readChar() with large 'nchars'
+tf <- tempfile(); cat("hello\n", file=tf)
+c2 <- readChar(tf, 4e8)
+stopifnot(identical(c2, "hello\n"))
+## had failed w/   cannot allocate memory block of size 16777216 Tb
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

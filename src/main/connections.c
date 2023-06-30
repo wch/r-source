@@ -4053,7 +4053,7 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, nn));
     for(nread = 0; nread < nnn; nread++) {
 	if(nread >= nn) {
-	    double dnn = 2.* nn;
+	    double dnn = 2. * (double) nn;
 	    if (dnn > R_XLEN_T_MAX) error("too many items");
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++)
@@ -4775,18 +4775,16 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
     const void *vmax = vmaxget();
 
     if(utf8locale && !useBytes) {
-	int i, clen;
-	char *p, *q;
-
-	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
-	memset(buf, 0, R_MB_CUR_MAX*len+1);
+	R_SIZE_T count = R_MB_CUR_MAX * (R_SIZE_T)len +1;
+	char *p = buf = (char *) R_alloc(count, sizeof(char));
+	memset(buf, 0, count);
 	mbstate_t mb_st;
 	mbs_init(&mb_st);
-	for(i = 0; i < len; i++) {
-	    q = p;
+	for(int i = 0; i < len; i++) {
+	    char *q = p;
 	    m = (int) con->read(p, sizeof(char), 1, con);
 	    if(!m) { if(i == 0) return R_NilValue; else break;}
-	    clen = utf8clen(*p++);
+	    int clen = utf8clen(*p++);
 	    if(clen > 1) {
 		m = (int) con->read(p, sizeof(char), clen - 1, con);
 		if(m < clen - 1) error(_("invalid UTF-8 input in readChar()"));
@@ -4819,25 +4817,22 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 static SEXP
 rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 {
-    char *buf;
-    SEXP res;
-    const void *vmax = vmaxget();
-
     if(*np + len > nbytes) {
 	len = nbytes - *np;
 	if (!len) return(R_NilValue);
     }
 
+    SEXP res;
+    const void *vmax = vmaxget();
+    char *buf;
+
     /* Note: mkCharLenCE signals an error on embedded nuls. */
     if(utf8locale && !useBytes) {
 	int i, clen, iread = *np;
-	char *p;
-	Rbyte *q;
-
-	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
+	char *p = buf = (char *) R_alloc(R_MB_CUR_MAX*(R_SIZE_T)len +1, sizeof(char));
 	for(i = 0; i < len; i++, p += clen, iread += clen) {
 	    if (iread >= nbytes) break;
-	    q = bytes + iread;
+	    Rbyte *q = bytes + iread;
 	    clen = utf8clen(*q);
 	    if (iread + clen > nbytes)
 		error(_("invalid UTF-8 input in readChar()"));
@@ -6189,7 +6184,7 @@ SEXP R_compress2(SEXP in)
     if(TYPEOF(in) != RAWSXP)
 	error("R_compress2 requires a raw vector");
     inlen = LENGTH(in);
-    outlen = (unsigned int)(1.01*inlen + 600);
+    outlen = inlen + inlen/100 + 600; // 1.01 * ..  staying int
     buf = R_alloc(outlen + 5, sizeof(char));
     /* we want this to be system-independent */
     *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
@@ -6544,8 +6539,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	ret = lzma_stream_encoder(&strm, filters, LZMA_CHECK_CRC32);
 	if (ret != LZMA_OK) error("internal error %d in memCompress", ret);
 
-	outlen = (unsigned int)(1.01 * inlen + 600); /* FIXME, copied
-						        from bzip2 case */
+	outlen = inlen + inlen/100 + 600; /* FIXME, copied from bzip2 case */
 	buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
 	strm.next_in = RAW(from);
 	strm.avail_in = inlen;
