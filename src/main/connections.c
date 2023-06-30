@@ -529,10 +529,9 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 
 int dummy_fgetc(Rconnection con)
 {
-    int c;
-    Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
-
     if(con->inconv) {
+	Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
+	con->EOF_signalled = FALSE; /* e.g. for a non-blocking connection; PR#18555 */
 	while(con->navail <= 0) {
 	    /* Probably in all cases there will be at most one iteration
 	       of the loop. It could iterate multiple times only if the input
@@ -555,10 +554,9 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
-		if (con->buff)
-		    c = buff_fgetc(con);
-		else
-		    c = con->fgetc_internal(con);
+		int c = (con->buff)
+		    ? buff_fgetc(con)
+		    : con->fgetc_internal(con);
 		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
 		*p++ = (char) c;
 		con->inavail++;

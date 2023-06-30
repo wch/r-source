@@ -659,6 +659,7 @@ stopifnot(!m4["coef.foo", "visible"],
            m4["coef.foo", "from"] == "registered S3method for coef")
 ## coef.foo  part  always worked
 
+
 ## R <= 4.3.1 would split into two invalid characters (PR#18546)
 splitmbcs <- length(strsplit("\u00e4", "^", perl=TRUE)[[1]])
 stopifnot(identical(splitmbcs, 1L))
@@ -716,6 +717,44 @@ tf <- tempfile(); cat("hello\n", file=tf)
 c2 <- readChar(tf, 4e8)
 stopifnot(identical(c2, "hello\n"))
 ## had failed w/   cannot allocate memory block of size 16777216 Tb
+
+
+## PR#18555: dummy_fgetc() returning EOF if the connection has an encoding specified
+sockChk <- function(enc, port = 27182)
+{
+    stopifnot(is.character(enc), length(enc) == 1L)
+    sock <- serverSocket(port)
+    outgoing <- socketConnection("localhost", port, encoding=enc)
+    incoming <- socketAccept(sock, encoding=enc)
+    on.exit({close(incoming); close(outgoing); close(sock) })
+    writeLines("hello", outgoing) ; flush(outgoing)
+    r1 <- readLines(incoming, 1) # "hello"
+    r2 <- readLines(incoming, 1) # character(0) *and*  EOF_signalled gets set
+    writeLines("again1", outgoing); flush(outgoing)
+    stopifnot(identical(r2, character(0)), ## now *have* incoming again:
+              socketSelect(list(incoming)))
+    r3 <- readLines(incoming, 1) # got character(0) incorrectly
+    ## because of con->EOF_signalled, dummy_fgetc didn't attempt to read more data
+    if(socketSelect(list(incoming), timeout=0)) # *was* TRUE wrongly
+        stop("incoming is empty")
+    writeLines("again2", outgoing)
+    writeLines("again3", outgoing); flush(outgoing)
+    r4 <- readLines(incoming, 1) # was character(0)
+    cat("isIncomplete(incoming): ", isIncomplete(incoming),
+        " (should be TRUE - FIXME?)\n") # FALSE wrongly ?
+    r5 <- suppressWarnings(# Warning "text connection used with readChar(), .."
+        readChar(incoming, 100))
+    stopifnot(identical(cbind(r1,r3,r4,r5)[1,],
+                        c(r1 = "hello", r3 = "again1",
+                          r4 = "again2",r5 = "again3\n")))
+    invisible(TRUE)
+}
+sockChk("ASCII")
+sockChk("UTF-8")
+## The default is  getOption("encoding")  which defaults to "native.enc"
+sockChk("native.enc")
+## only the last already worked in R <= 4.3.1
+
 
 
 

@@ -162,6 +162,12 @@
 
       \item Rd \verb{\Sexpr} macros with nested \verb{#ifdef}
       conditionals were not processed.
+
+      \item A non-blocking connection with non-default encoding such as a
+      socket, now correctly returns from \code{readLines()} after new data
+      has arrived also when its EOF had been reached previously.  Thanks to
+      Peter Meilstrup's report on R-devel and Ivan Krylov's report and
+      patch proposal in \PR{18555}.
     }
   }
 }
