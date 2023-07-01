@@ -287,7 +287,7 @@
       \item Correct messaging in C++ pragma checks in \pkg{tools} code for
       \command{R CMD check}, fixing \PR{17566} thanks to Xavier Robin.
 
-      \item{print()}ing and auto-printing no longer differs for
+      \item \code{print()}ing and auto-printing no longer differs for
       \code{function}s with a user defined \code{print.function}, thanks to
       Bill Dunlap's report.
 
@@ -6412,7 +6412,7 @@
       used in parallel. (It is worth specifying at least 8 cores if
       available.)  Most of these require a \command{make} program (such
       as GNU \command{make} and \command{dmake}) which supports the
-      \command{${MAKE} -j nproc} syntax.
+      \command{$\{MAKE\} -j nproc} syntax.
 
       Except on Windows: the tests of standard package examples in
       \command{make check} are done in parallel.  This also applies to
