@@ -94,6 +94,8 @@
       \verb{\alias}, as long documented in \sQuote{Writing R Extensions}
       §1.3.1.
       This currently ignores files with \verb{\docType{package}}.
+      The check for a missing \verb{\description} has been moved from
+      \code{tools::checkRd()} to \code{tools::checkRdContents()}.
     }
   }
 

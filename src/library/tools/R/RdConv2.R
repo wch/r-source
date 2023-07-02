@@ -1035,10 +1035,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     if (length(enc)) def_enc <- TRUE
 
     inEnc2 <- FALSE
-    if(!identical("package", .Rd_get_doc_type(Rd)) &&
-       ## FIXME: should also be skipped for non-man Rd files like NEWS.Rd
-       "\\description" %notin% sections)
-        warnRd("", Rdfile, level = 5, "Must have a \\description")
 
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])

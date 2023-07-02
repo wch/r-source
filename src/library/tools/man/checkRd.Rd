@@ -68,7 +68,6 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab Tag \verb{\dontrun} is only valid in \verb{\examples}\cr
     7 \tab Invalid email address: \ldots\cr
     7 \tab Invalid URL: \ldots\cr
-    5 \tab Must have a \var{tag name}\cr
     5 \tab \verb{\item} in \var{block name} must have non-empty label\cr
     3 \tab Empty section \var{tag name}\cr
     -1 \tab Non-ASCII contents without declared encoding\cr
