@@ -14,6 +14,12 @@ try(url("http://foo.bar", "r"))
 if(onWindows)
     try(url("http://foo.bar", "r", method = "wininet"))
 
+## available.packages() (not) caching in case of errors
+tools::assertWarning(ap1 <- available.packages(repos = "http://foo.bar"))
+tools::assertWarning(ap2 <- available.packages(repos = "http://foo.bar"))
+stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
+## had failed for a while in R-devel (left empty *.rds file)
+
 ## download.file(.. , headers = character()) - PR#17710
 ## https://bugs.r-project.org/show_bug.cgi?id=17710
 ## character() should be the same as NULL, but was not for wininet
