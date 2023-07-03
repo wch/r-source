@@ -150,6 +150,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
   package management tools, including \code{\link{install.packages}}.
 }
 \seealso{
+  \code{\link{packageStatus}}, \code{\link{update.packages}},
   \code{\link{install.packages}}, \code{\link{download.packages}},
   \code{\link{contrib.url}}.
 
