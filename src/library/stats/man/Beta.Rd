@@ -37,7 +37,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   The Beta distribution with parameters \code{shape1} \eqn{= a} and
   \code{shape2} \eqn{= b} has density
   \deqn{f(x)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}{x}^{a-1} {(1-x)}^{b-1}%
-  }{\Gamma(a+b)/(\Gamma(a)\Gamma(b))x^(a-1)(1-x)^(b-1)}
+  }{\Gamma(a+b)/(\Gamma(a)\Gamma(b)) x^(a-1) (1-x)^(b-1)}
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 \le x \le 1}
   where the boundary values at \eqn{x=0} or \eqn{x=1} are defined as
   by continuity (as limits).
@@ -51,8 +51,8 @@ rbeta(n, shape1, shape2, ncp = 0)
 
   \code{pbeta} is closely related to the incomplete beta function.  As
   defined by Abramowitz and Stegun 6.6.1
-  \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{B_x(a,b) =
-    integral_0^x t^(a-1) (1-t)^(b-1) dt,}
+  \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{
+    B_x(a,b) = integral_0^x t^(a-1) (1-t)^(b-1) dt,}
   and 6.6.2 \eqn{I_x(a,b) = B_x(a,b) / B(a,b)} where
   \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
 
