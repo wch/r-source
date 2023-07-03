@@ -175,6 +175,15 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.3.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The default initialization of the \code{"repos"} option
+      from the \file{repositories} file at startup can be skipped by
+      setting environment variable \env{R_REPOSITORIES} to \code{NULL}
+      such that \code{getOption("repos")} is empty if not set elsewhere.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for

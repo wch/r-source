@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -34,7 +34,7 @@ setRepositories(graphics = getOption("menu.graphics"),
   \file{\var{\link{R_HOME}}/etc/repositories}.
   That file can be edited for a site, or a user can have a personal copy
   in the file pointed to by the environment variable
-  \env{R_REPOSITORIES}, or if this is unset or does not exist,
+  \env{R_REPOSITORIES}, or if this is unset, \code{NULL} or does not exist,
   in \file{\var{HOME}/.R/repositories}, which will take precedence.
 
   A Bioconductor mirror can be selected by setting

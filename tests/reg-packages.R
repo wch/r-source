@@ -316,7 +316,10 @@ tf <- tempfile("chk_donttest")
 ## why does this not work (not catch stderr)?  textConnection("checkTxt", open="w")
 system.time(status <-
         tools:::run_Rcmd(c("check", "PR17501_1.0.tar.gz", "--no-manual"),
-                         out=tf, timeout = 50))# see 5--7 sec; Solaris needed > 30
+                         out = tf,
+                         ## avoid delays/timeouts with a broken network route:
+                         env = c("R_REPOSITORIES=NULL"), # (no cyclic dep check)
+                         timeout = 50))# see 5--7 sec; Solaris needed > 30
 stopifnot(exprs = {
     status == 1 # an ERROR now
     is.character(exLines <-
