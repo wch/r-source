@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packageStatus.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,8 +57,8 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
         z <- z[-zrow[-znewest],]
     }
 
-    z <- cbind(z, Status = "not installed")
-    z[z[,"Package"] %in% y$Package, "Status"] <- "installed"
+    z <- cbind(z, Status = c("not installed", "installed")[
+                      1L + z[,"Package"] %in% y$Package])
 
     z <- char2df(z)
     attr(z, "row.names") <- z$Package
@@ -128,7 +128,9 @@ print.packageStatus <- function(x, ...)
     print(table(x$inst$LibPath, x$inst$Status), ...)
 
     cat("\nNumber of available packages (each package counted only once):\n")
-    print(table(x$avail$Repository, x$avail$Status), ...)
+    if (nlevels(x$avail$Repository))
+        print(table(x$avail$Repository, x$avail$Status), ...)
+    else cat("(no repositories)\n")
     invisible(x)
 }
 
