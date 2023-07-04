@@ -305,9 +305,11 @@ types.  Vectors with length zero are possible (and useful).
 
 A single element of a character vector is often referred to as a
 @emph{character string} or short @emph{string}.
-@footnote{Note that character vectors internally are @code{STRSXP} types and each
- element (we call @emph{string} above) is of C type @code{CHARSXP}
- (with @emph{internal only} @code{typeof(.) == "char"}, @pxref{typeof-char}).}
+@footnote{Note that, internally, character vectors are of type @code{STRSXP} and each
+element is of type @code{CHARSXP}
+(with @emph{internal only} @code{typeof(.) == "char"}, @pxref{typeof-char}).
+Thus, an @R{} @emph{string} is internally a @code{STRSXP} with one element, a
+@code{CHARSXP}.}
 
 
 @node List objects, Language objects, Vector objects, Basic types

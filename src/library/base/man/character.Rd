@@ -29,7 +29,8 @@ is.character(x)
   \code{as.character} and \code{is.character} are generic: you can
   write methods to handle specific classes of objects,
   see \link{InternalMethods}.  Further, for \code{as.character} the
-  default method calls \code{\link{as.vector}}, so dispatch is first on
+  default method calls \code{\link{as.vector}}, so, only
+  \code{if(is.object(x))} is true, dispatch is first on
   methods for \code{as.character} and then for methods for \code{as.vector}.
 
   \code{as.character} represents real and complex numbers to 15 significant
@@ -61,9 +62,9 @@ is.character(x)
   truncated.
 }
 \seealso{
-  \code{\link{options}}: option \code{scipen} affects the conversion of
-  numbers.
-  
+  \code{\link{options}}: options \code{scipen} and \code{OutDec} affect the
+  conversion of numbers.
+
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
   for character concatenation and splitting,
   \code{\link{chartr}} for character translation and casefolding (e.g.,
