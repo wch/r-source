@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -262,6 +262,15 @@ utils::globalVariables(".addBasicGeneric")
                    base::qr.R(qr, complete=complete),
 	       signature = "qr", where = where)
     setGenericImplicit("qr.R", where, FALSE)
+
+    setGeneric("qr.X", function(qr, complete = FALSE, ncol, ...) standardGeneric("qr.X"),
+	       useAsDefault = function(qr, complete = FALSE, ncol, ...) {
+		   if(missing(ncol))
+			base::qr.X(qr, complete = complete)
+		   else base::qr.X(qr, complete = complete, ncol = ncol)
+	       },
+	       signature = "qr", where = where)
+    setGenericImplicit("qr.X", where, FALSE)
 
     ## our toeplitz() only has 'x'; want the generic "here" rather than "out there"
     setGeneric("toeplitz", function(x, ...) standardGeneric("toeplitz"),

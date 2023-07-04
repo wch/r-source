@@ -5,6 +5,14 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.3.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{qr.X()} is now an implicit S4 generic in \pkg{methods}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.3.1}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
