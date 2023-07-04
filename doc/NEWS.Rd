@@ -11,9 +11,7 @@
       \item \code{qr.X()} is now an implicit S4 generic in \pkg{methods}.
     }
   }
-}
 
-\section{\Rlogo CHANGES IN R 4.3.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
