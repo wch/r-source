@@ -181,6 +181,8 @@
       from the \file{repositories} file at startup can be skipped by
       setting environment variable \env{R_REPOSITORIES} to \code{NULL}
       such that \code{getOption("repos")} is empty if not set elsewhere.
+
+      \item \code{qr.X()} is now an implicit S4 generic in \pkg{methods}.
     }
   }
 
