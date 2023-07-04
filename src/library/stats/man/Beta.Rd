@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -62,6 +62,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   is defined (Johnson \emph{et al}, 1995, pp.\sspace{}502) as the distribution of
   \eqn{X/(X+Y)} where \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(\lambda)}
   and \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
+  There, \eqn{\chi^2_n(\lambda)}{chi^2_n(\lambda)} is the noncentral
+  chi-squared distribution with \eqn{n} degrees of freedom and
+  non-centrality parameter \eqn{\lambda}, see \link{Chisquare}.
 }
 \value{
   \code{dbeta} gives the density, \code{pbeta} the distribution
@@ -98,12 +101,14 @@ rbeta(n, shape1, shape2, ncp = 0)
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
   function ratios,
-  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
+  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373,
+  \doi{10.1145/131766.131776}.
   (See also\cr
   Brown, B. and Lawrence Levy, L. (1994)
   Certification of algorithm 708: Significant digit computation of the
   incomplete beta,
-  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
+  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397,
+  \doi{10.1145/192115.192155}.)
   \cr %%
   We have slightly tweaked the original \dQuote{TOMS 708} algorithm, and
   enhanced for \code{log.p = TRUE}.  For that (log-scale) case,
