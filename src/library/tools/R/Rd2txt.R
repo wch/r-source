@@ -707,9 +707,8 @@ Rd2txt <-
                    writeContent(block[[length(block)]], tag)
                    alt <- endCapture(save)
                    if (length(alt)) {
-                       if(length(alt) <= 3L) # as for \deqn, to enable ASCII art
-                           alt <- frmt(alt, justify = "centre",
-                                       width = WIDTH - indent, collapsed = TRUE)
+                       alt <- frmt(alt, justify = "centre",
+                                   width = WIDTH - indent)
                        putf(paste(alt, collapse = "\n"))
                        blankLine()
                    }
