@@ -52,26 +52,29 @@ _V_a_l_u_e:
 \_t_a_b_u_l_a_r:
 
         1              linked text in \tabular  <https://example.org/a&b#c> 
-        2   2nd-column entry with _line break_  thirdcolumn                 
-            in Rd source                              
-       -3-                            thirdrow                              
+        2   2nd-column entry with _line break_  third                       
+                                  in Rd source  column                      
+       -3-                               third                              
+                                           row                              
       
 \_d_e_q_n:
 
      1-arg form, centered also in text conversion:
 
-                         theta = (mu^*, sigma^2, rho)                   
+                        theta = (mu^*, sigma^2, rho)                    
      
      2-arg form, where the text version is collapsed before centering
      (for the sake of existing Rd files):
 
-                                  E =    m c^2                          
+                                  E = m c^2                             
      
      With AMS extension (R >= 4.2.2), where the text version spans more
      than 3 source lines (5 in fact) and is thus output as-is in R >=
      4.4.0:
 
-                    0  if x < 0,    f(x) =             1  if x >= 0.    
+                  0  if x < 0,
+         f(x) =
+                  1  if x >= 0.
      
 _E_x_a_m_p_l_e_s:
 

@@ -747,7 +747,10 @@ Rd2HTML <-
                        inEqn <<- !doTexMath
                        leavePara(TRUE)
                        if (doTexMath) of1('<p style="text-align: center;"><code class="reqn">')
-                       else of1('<p style="text-align: center;"><i>')
+                       else of0('<p style="',
+                                if (length(block) <= 3) 'text-align: center'
+                                else 'white-space: pre', # as in Rd2txt()
+                                ';"><i>')
                        writeContent(block, tag)
                        if (doTexMath) of1('</code>\n')
                        else of1('</i>')

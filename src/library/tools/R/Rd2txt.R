@@ -354,11 +354,23 @@ Rd2txt <-
     }
 
     ## Use display widths as used by cat not print.
-    frmt <- function(x, justify="left", width = 0L) {
+    ## This may receive length(x) > 1 lines.
+    ## Optionally format only if the input can be collapsed into a single line.
+    frmt <- function(x, justify = "left", width = 0L, collapsed = FALSE) {
         justify <- match.arg(justify, c("left", "right", "centre", "none"))
-        w <- sum(nchar(x, "width")) # copes with 0-length x
-        if(w < width && justify != "none") {
-            excess <- width - w
+        if(justify == "none" || !length(x))
+            return(x)
+        if(collapsed) { # also trims single-line input
+            y <- paste0(trim(x), collapse = " ")
+            w <- nchar(y, "width")
+            if(w < width)
+                x <- y
+            else return(x)
+        } else {
+            w <- nchar(x, "width")
+        }
+        if(any(w < width)) {
+            excess <- pmax(0, width - w)
             left <- right <- 0L
             if(justify == "left") right <- excess
             else if(justify == "right")  left <- excess
@@ -366,7 +378,7 @@ Rd2txt <-
                 left <- excess %/% 2
                 right <- excess-left
             }
-            paste(c(rep_len(" ", left), x, rep_len(" ", right)), collapse = "")
+            paste0(strrep(" ", left), x, strrep(" ", right))
         } else x
     }
 
@@ -681,7 +693,11 @@ Rd2txt <-
                    inEqn <<- TRUE
                    writeContent(block, tag)
                    eqn <- endCapture(save)
-                   eqn <- frmt(eqn, justify="centre", width=WIDTH-indent)
+                   ## try collapsing into a single centred line (as in R < 4.4.0)
+                   ## but only if the source block spans at most 3 lines
+                   if(length(eqn) <= 3L)
+                       eqn <- frmt(eqn, justify = "centre",
+                                   width = WIDTH - indent, collapsed = TRUE)
                    putf(paste(eqn, collapse="\n"))
     		   blankLine()
                },
@@ -691,10 +707,11 @@ Rd2txt <-
                    writeContent(block[[length(block)]], tag)
                    alt <- endCapture(save)
                    if (length(alt)) {
-                   	alt <- frmt(alt, justify = "centre",
-                                    width = WIDTH - indent)
-                   	putf(paste(alt, collapse = "\n"))
-                   	blankLine()
+                       if(length(alt) <= 3L) # as for \deqn, to enable ASCII art
+                           alt <- frmt(alt, justify = "centre",
+                                       width = WIDTH - indent, collapsed = TRUE)
+                       putf(paste(alt, collapse = "\n"))
+                       blankLine()
                    }
                },
                "\\tabular" = writeTabular(block),
@@ -733,7 +750,7 @@ Rd2txt <-
             switch(tags[i],
                   "\\tab" = {
                   	newEntry()
-                   	col <- col + 1
+                   	col <- col + 1L
                    	if (col > length(formats))
                    	    stopRd(content[[i]], Rdfile,
                                    sprintf("too many columns for format '%s'",
@@ -758,7 +775,7 @@ Rd2txt <-
                     })
         if(!length(entries)) return()
         rows <- entries[[length(entries)]]$row
-        cols <- max(sapply(entries, function(e) e$col))
+        cols <- max(vapply(entries, function(e) e$col, 1L))
         widths <- rep_len(0L, cols)
         lines <- rep_len(1L, rows)
         for (i in seq_along(entries)) {
@@ -769,6 +786,11 @@ Rd2txt <-
             }
             if (any(nzchar(e$text)))
             	widths[e$col] <- max(widths[e$col], max(nchar(e$text, "w")))
+            ## NOTE: if an entry spanned multiple Rd lines, length(e$text) > 1.
+            ## Whereas Rd lines are collapsed in both HTML (which auto-wraps)
+            ## and PDF output, line breaks are preserved here (even though
+            ## this is unusual for a LaTeX-like context) and the width
+            ## is determined by the longest (trimmed) line of the column.
             lines[e$row] <- max(lines[e$row], length(e$text))
         }
         result <- matrix("", sum(lines), cols)
