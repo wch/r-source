@@ -541,8 +541,8 @@ add_dummies <- function(dir, Log)
                     any <- TRUE
                     noteLog(Log, "unable to verify current time")
                 } else {
-                    ## 5 mins leeway seems a reasonable compromise
-                    if (abs(unclass(now_local) - unclass(now)) > 300) {
+                    ## 5 mins leeway seems a reasonable compromise;
+                    if (abs(unclass(now_local) - unclass(now)[1]) > 300) { # "[1]": seen 'length > 1'
                         any <- TRUE
                         fmt <- "%Y-%m-%d %H:%M"
                         errorLog(Log, "This system is set to the wrong time: please correct")
@@ -1104,7 +1104,7 @@ add_dummies <- function(dir, Log)
                 ## should be submitted'
                 ## We will take that to mean a http[s]:// URL,
                 isURL <- grepl("^https?://[^ ]*$", BR)
-                ## As from 3.4.0 bug,report() is able to extract
+                ## As from 3.4.0 bug.report() is able to extract
                 ## an email addr.
                 if(!isURL) {
                     findEmail <- function(x) {
@@ -1643,7 +1643,7 @@ add_dummies <- function(dir, Log)
         }
 
 
-        if(!is_base_pkg && (istar || R_check_vc_dirs)) {
+        if(!is_base_pkg && (is_tar || R_check_vc_dirs)) {
             ## Packages also should not contain version control subdirs
             ## provided that we check a .tar.gz or know we unpacked one.
             ind <- basename(all_dirs) %in% .vc_dir_names
@@ -6385,6 +6385,7 @@ add_dummies <- function(dir, Log)
     opWarn_string <- sprintf("options(warn = %d)", warnOption)
     opW_shE_F_str <- sprintf("options(warn = %d, showErrorCalls=FALSE)\n", warnOption)
     on.exit(options(op), add=TRUE)
+    if(no.q) { ..check.wd.. <- getwd(); on.exit(setwd(..check.wd..), add=TRUE) }
 
     ## Read in check environment file.
     Renv <- Sys.getenv("R_CHECK_ENVIRON", unset = NA_character_)
@@ -6899,10 +6900,10 @@ add_dummies <- function(dir, Log)
         thispkg_subdirs <- check_subdirs
         ## is this a tar archive?
         if (dir.exists(pkg)) {
-            istar <- FALSE
+            is_tar <- FALSE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "no"
         } else if (file.exists(pkg)) {
-            istar <- TRUE
+            is_tar <- TRUE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
             pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2|tar\\.xz)$", "", pkgname0)
             pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
@@ -6948,7 +6949,7 @@ add_dummies <- function(dir, Log)
         if(config_val_to_logical(Sys.getenv("_R_CHECK_R_ON_PATH_", "FALSE")))
             add_dummies(file_path_as_absolute(pkgoutdir), Log)
 
-        if (istar) {
+        if (is_tar) {
             dir <- file.path(pkgoutdir, "00_pkg_src")
             dir.create(dir, mode = "0755")
             if (!dir.exists(dir)) {
