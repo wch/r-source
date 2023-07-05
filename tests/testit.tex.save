@@ -2,14 +2,6 @@
 \HeaderA{testit}{An Rd Regression Test}{testit}
 \aliasB{\{}{testit}{.Rlbrace.}
 %
-\begin{Description}
-
-\Tabular{rl}{
-\Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
-& \url{https://example.org/a\&b\#c}
-}
-\end{Description}
-%
 \begin{Usage}
 \begin{verbatim}
 \x \y %{}
@@ -29,7 +21,8 @@ Escaped backslash \code{\bsl{}x}.
 var in \var{text}.
 
 \code{foo(\var{x}, \var{y})}.
-\begin{alltt}
+
+Preformatted:\begin{alltt}
   Escaped backslash \bsl{}x.
 
   %\{\}
@@ -60,6 +53,39 @@ Yihui Xie's example:
 output
 }}
 --
+\end{Section}
+%
+\begin{Section}{\AsIs{\texttt{\bsl{}tabular}}}
+
+\Tabular{crl}{
+1 & \Rhref{https://example.org/a\&b\#c}{linked text in \AsIs{\texttt{\bsl{}tabular}}}
+& \url{https://example.org/a\&b\#c}\\{}
+2 & 2nd-column entry with \emph{line break}
+in Rd source& third
+column\\{}
+--3-- & third
+row& 
+}
+\end{Section}
+%
+\begin{Section}{\AsIs{\texttt{\bsl{}deqn}}}
+1-arg form, centered also in text conversion:
+\deqn{
+    \theta = (\mu^*, \sigma^2, \rho)
+  }{}
+2-arg form, where the text version is collapsed before centering
+(for the sake of existing Rd files):
+\deqn{E = mc^2}{}
+
+With AMS extension (R \eqn{\ge}{} 4.2.2),
+where the text version spans more than 3 source lines (5 in fact)
+and is thus output as-is in R \eqn{\ge}{} 4.4.0:
+\deqn{
+    f(x) = \begin{cases}
+      0 & \text{if } x < 0, \\
+      1 & \text{if } x \ge 0.
+    \end{cases}
+  }{}
 \end{Section}
 %
 \begin{Examples}

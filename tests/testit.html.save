@@ -18,21 +18,6 @@ function processMathHTML() {
 
 <h2 id='testit'>An Rd Regression Test</h2>
 
-<h3>Description</h3>
-
-
-<table>
-<tr>
- <td style="text-align: right;">
-    <a href="https://example.org/a&amp;b#c">linked text in <code style="white-space: pre;">&#8288;\tabular&#8288;</code></a>
-    </td><td style="text-align: left;"> <a href="https://example.org/a&amp;b#c">https://example.org/a&amp;b#c</a>
-  </td>
-</tr>
-
-</table>
-
-
-
 <h3>Usage</h3>
 
 <pre><code class='language-R'>\x \y %{}
@@ -54,6 +39,7 @@ weighted.mean, <code>{</code>
 </p>
 <p><code>foo(<var>x</var>, <var>y</var>)</code>.
 </p>
+<p>Preformatted:</p>
 <pre>
   Escaped backslash \x.
 
@@ -88,6 +74,61 @@ output
 &#8288;</code>
 &ndash;
 </p>
+
+
+<h3><code style="white-space: pre;">&#8288;\tabular&#8288;</code></h3>
+
+
+<table>
+<tr>
+ <td style="text-align: center;">
+    1 </td><td style="text-align: right;"> <a href="https://example.org/a&amp;b#c">linked text in <code style="white-space: pre;">&#8288;\tabular&#8288;</code></a>
+    </td><td style="text-align: left;"> <a href="https://example.org/a&amp;b#c">https://example.org/a&amp;b#c</a></td>
+</tr>
+<tr>
+ <td style="text-align: center;">
+    2 </td><td style="text-align: right;"> 2nd-column entry with <em>line break</em>
+    in Rd source</td><td style="text-align: left;"> third
+    column</td>
+</tr>
+<tr>
+ <td style="text-align: center;">
+    --3-- </td><td style="text-align: right;"> third
+    row</td><td style="text-align: left;"> 
+  </td>
+</tr>
+
+</table>
+
+
+
+<h3><code style="white-space: pre;">&#8288;\deqn&#8288;</code></h3>
+
+<p>1-arg form, centered also in text conversion:
+</p>
+<p style="text-align: center;"><code class="reqn">
+    \theta = (\mu^*, \sigma^2, \rho)
+  </code>
+</p>
+
+<p>2-arg form, where the text version is collapsed before centering
+(for the sake of existing Rd files):
+</p>
+<p style="text-align: center;"><code class="reqn">E = mc^2</code>
+</p>
+
+<p>With AMS extension (R <code class="reqn">\ge</code> 4.2.2),
+where the text version spans more than 3 source lines (5 in fact)
+and is thus output as-is in R <code class="reqn">\ge</code> 4.4.0:
+</p>
+<p style="text-align: center;"><code class="reqn">
+    f(x) = \begin{cases}
+      0 &amp; \text{if } x &lt; 0, \\
+      1 &amp; \text{if } x \ge 0.
+    \end{cases}
+  </code>
+</p>
+
 
 
 <h3>Examples</h3>
