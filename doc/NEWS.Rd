@@ -17,8 +17,25 @@
     }
   }
 
-  \subsection{NEW FEATURES}{
-    \itemize{
+  \subsection{NEW FEATURES}{ \itemize{
+
+      \item The \code{confint()} methods for \code{"glm"} and
+      \code{"nls"} objects are now in the \pkg{stats}
+      package. Previously, they were stubs that called versions in
+      \pkg{MASS}. The original versions are still in \pkg{MASS} and can
+      be called using an explicit namespace qualifier, but the \pkg{MASS}
+      namespace is no longer autoloaded if you invoke (say)
+      \code{confint(glmfit)}. Similarly, \code{profile.glm()},
+      \code{plot.profile()}, and \code{pairs.profile()} are now in
+      \pkg{stats}. (\code{profile.nls()} and \code{plot.profile.nls()}
+      were in \code{stats} already.)
+
+      \item The \code{confint()} and \code{profile} methods for
+      \code{"glm"} objects have gained a possibility to do profiling
+      based on the Rao Score statistic in addition to the default
+      Likelihood Ratio. This is controlled by a new \code{test=}
+      argument. 
+      
       \item The \code{"glm"} method for \code{anova()} computes test
       statistics and p-values by default, using a chi-squared test or
       an F test depending on whether the dispersion is fixed or
