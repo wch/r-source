@@ -756,6 +756,13 @@ sockChk("native.enc")
 ## only the last already worked in R <= 4.3.1
 
 
+## Deprecation of *direct* calls to as.data.frame.<someVector>
+dpi <- as.data.frame(pi)
+d1 <- data.frame(dtime = as.POSIXlt("2023-07-06 11:11")) # gave F.P. warning
+r <- lapply(list(1L, T=T, pi=pi), as.data.frame)
+stopifnot(is.list(r), is.data.frame(d1), inherits(d1[,1], "POSIXt"), is.data.frame(r$pi), r$pi == pi)
+## Gave 1 + 3  F.P. deprecation warnings in R <= 4.3.1
+
 
 
 ## keep at end

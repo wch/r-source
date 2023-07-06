@@ -216,6 +216,9 @@
 
       \item \code{readChar(., 4e8)} no longer fails, thanks to Kodi Arfer's
       report (\PR{18557}).
+
+      \item \code{lapply(<list>, as.data.frame)} no longer warns falsely for
+      some base vector components.
     }
   }
 }
