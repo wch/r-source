@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ if (.Platform$OS.type == "windows")
     .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
 
 isBasePkg <- function(pkg) {
-  priority <- tryCatch(packageDescription(pkg, fields = "Priority"),
+  priority <- tryCatch(packageDescription(pkg, fields = "Priority", encoding = NA),
                        error = function(e) e, warning = function(e) e)
   identical(priority, "base")
 }
