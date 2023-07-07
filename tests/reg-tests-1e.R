@@ -765,7 +765,11 @@ dpi <- as.data.frame(pi)
 d1 <- data.frame(dtime = as.POSIXlt("2023-07-06 11:11")) # gave F.P. warning
 r <- lapply(list(1L, T=T, pi=pi), as.data.frame)
 stopifnot(is.list(r), is.data.frame(d1), inherits(d1[,1], "POSIXt"), is.data.frame(r$pi), r$pi == pi)
-## Gave 1 + 3  F.P. deprecation warnings in R <= 4.3.1
+stopifnot(local({adf <- as.data.frame; identical(adf(1L),(as.data.frame)(1L))}))
+## Gave 1 + 3 + 2  F.P. deprecation warnings in 4.3.0 <= R <= 4.3.1
+str(d2 <- mapply(as.data.frame, x=1:3, row.names=letters[1:3]))
+stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
+## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
 
 
 
