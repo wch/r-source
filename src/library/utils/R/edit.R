@@ -1,7 +1,7 @@
 #  File src/library/utils/R/edit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,14 +16,21 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-dataentry <- function (data, modes)
+## the default message is used by grDevices' X11() and quartz()
+## (and in the "warn" case captured by R CMD check's run_examples)
+check_screen_device <- function (where = "screen devices")
 {
     check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
-    msg <- "dataentry() should not be used in examples etc"
+    msg <- sprintf("%s should not be used in examples etc", where)
     if (identical(check, "stop"))
         stop(msg, domain = NA)
     else if (identical(check, "warn"))
         warning(msg, immediate. = TRUE, noBreaks. = TRUE, domain = NA)
+}
+
+dataentry <- function (data, modes)
+{
+    check_screen_device("dataentry()")
 
     if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
         stop("invalid 'data' argument")
@@ -37,12 +44,7 @@ dataentry <- function (data, modes)
 
 View <- function (x, title)
 {
-    check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
-    msg <- "View() should not be used in examples etc"
-    if (identical(check, "stop"))
-        stop(msg, domain = NA)
-    else if (identical(check, "warn"))
-        warning(msg, immediate. = TRUE, noBreaks. = TRUE, domain = NA)
+    check_screen_device("View()")
 
     ## could multi-line deparse with maliciously-designed inputs
     if(missing(title)) title <- paste("Data:", deparse(substitute(x))[1])
@@ -64,6 +66,9 @@ edit.default <-
     function (name = NULL, file = "", title = NULL,
               editor = getOption("editor"), ...)
 {
+    ## editor could be set to "cat" or similar, or a function handling the
+    ## non-interactive case, so we don't check_screen_device("edit()") here
+
     if (is.null(title)) title <- deparse1(substitute(name))
     if (is.function(editor)) invisible(editor(name = name, file = file, title = title))
     else .External2(C_edit, name, file, title, editor)
@@ -76,6 +81,8 @@ edit.data.frame <-
     if (.Platform$OS.type == "unix"  && .Platform$GUI != "AQUA")
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY") == "" )
             return (edit.default(name, ...))
+
+    check_screen_device("edit()")
 
     is.vector.unclass <- function(x) is.vector(unclass(x))
     if (length(name) && !all(sapply(name, is.vector.unclass)
@@ -179,6 +186,9 @@ edit.matrix <-
     if (.Platform$OS.type == "unix" && .Platform$GUI != "AQUA")
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
+
+    check_screen_device("edit()")
+
     if(!is.matrix(name) ||
        ! mode(name) %in% c("numeric", "character", "logical") ||
        any(dim(name) < 1))
@@ -246,8 +256,11 @@ file.edit <-
             file[i] <- tfile
         }
     }
-    if (is.function(editor)) invisible(editor(file = file, title = title))
-    else invisible(.External2(C_fileedit, file, title, editor))
+    if (is.function(editor))
+        ## FIXME: the docs say this is called with name, file and title args
+        invisible(editor(file = file, title = title))
+    else
+        invisible(.External2(C_fileedit, file, title, editor))
 }
 
 vi <- function(name = NULL, file = "")
