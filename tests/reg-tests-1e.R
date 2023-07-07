@@ -744,6 +744,7 @@ sockChk <- function(enc, port = 27182)
         " (should be TRUE - FIXME?)\n") # FALSE wrongly ?
     r5 <- suppressWarnings(# Warning "text connection used with readChar(), .."
         readChar(incoming, 100))
+    print(cbind(r1,r3,r4,r5)[1,])
     stopifnot(identical(cbind(r1,r3,r4,r5)[1,],
                         c(r1 = "hello", r3 = "again1",
                           r4 = "again2",r5 = "again3\n")))
