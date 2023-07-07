@@ -34,10 +34,12 @@ y <- 1 + x1 + x2 + x3 + x4 + c(-.5,.5,.5,-.5, 0,
 cbind(x1,x2,x3,x4,y)
 ## Fit a model
 mod1234 <- lm(y ~ x1 + x2 + x3 + x4)
-(al <- alias(mod1234)) # x3: 3*x1 - 2*x2  \\  x4 :  4 -x1 +x2
-stopifnot(all.equal(rbind(x3 = c(0,  3,-2),
-                          x4 = c(4, -1, 1)),
-                    unclass(al$Complete), check.attributes=FALSE))
+if(requireNamespace("MASS")) {
+    (al <- alias(mod1234)) # x3: 3*x1 - 2*x2  \\  x4 :  4 -x1 +x2
+    stopifnot(all.equal(rbind(x3 = c(0,  3,-2),
+                              x4 = c(4, -1, 1)),
+                        unclass(al$Complete), check.attributes=FALSE))
+}
 ## new.x
 new.x <- data.frame(
     row.names = LETTERS[1:6],
