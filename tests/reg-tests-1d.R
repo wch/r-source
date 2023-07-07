@@ -5477,7 +5477,7 @@ stopifnot(eval(e3) == 2.5,
 m <- tryCmsg(remove.packages("stats"))
 if(englishMsgs)
     stopifnot(grepl("a base package\\b.*\\bcannot be removed", m))
-stopifnot(is.function(mad))# 'stats' still there ..
+stopifnot(dir.exists(file.path(.Library, "stats")))# 'stats' still there ..
 
 
 ## check that internal index in lapply is guarded against mutation
