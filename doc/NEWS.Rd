@@ -17,6 +17,11 @@
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
       multibyte UTF-8 strings \code{x} when \code{L > nchar(x)}, thanks to
       a report and patch by \sQuote{Architect 95}.
+
+      \item \code{contrib.url(character())} now returns 0-length
+      \code{character()} as documented, which also avoids spurious
+      warnings from \code{available.packages()} et al.\sspace{}in the
+      edge case of an empty vector of repository URLs.
     }
   }
 }
