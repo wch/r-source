@@ -713,8 +713,8 @@ stopifnot(exprs = {
 
 
 ## PR#18557 readChar() with large 'nchars'
-tf <- tempfile(); cat("hello\n", file=tf)
-c2 <- readChar(tf, 4e8)
+ch <- "hello\n"; tf <- tempfile(); writeChar(ch, tf)
+tools::assertWarning((c2 <- readChar(tf, 4e8)))
 stopifnot(identical(c2, "hello\n"))
 ## had failed w/   cannot allocate memory block of size 16777216 Tb
 
