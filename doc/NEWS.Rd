@@ -200,6 +200,11 @@
       such that \code{getOption("repos")} is empty if not set elsewhere.
 
       \item \code{qr.X()} is now an implicit S4 generic in \pkg{methods}.
+
+      \item \code{iconv(to = "ASCII//TRANSLIT")} is emulated using
+      substitution on platforms which do not support it (notably Alpine
+      Linux).  This should give a human-readable conversion in ASCII on
+      all platforms (rather than \code{NA_character_}).
     }
   }
 

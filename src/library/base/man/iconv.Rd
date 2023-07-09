@@ -138,7 +138,8 @@ iconvlist()
 \value{
   If \code{toRaw = FALSE} (the default), the value is a character vector
   of the same length and the same attributes as \code{x} (after
-  conversion to a character vector).
+  conversion to a character vector).  If conversion fails for an element
+  that element of the result is set to \code{NA_character_}.
 
   If \code{mark = TRUE} (the default) the elements of the result have a
   declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},
@@ -165,9 +166,9 @@ iconvlist()
   (\url{https://en.wikipedia.org/wiki/Mac_OS_Roman}).
 
   Using \code{sub} substiutes each non-onvertible \emph{byte} in the
-  input, so whwn converting from UTF-8 a non-convertaible character will
-  be replaced as two or more bytes. Using \code{sub = "c99"} will be
-  clearer.
+  input, so when converting from UTF-8 a non-convertible character may
+  be replaced by two or more bytes.  Using \code{sub = "c99"} or
+  \code{sub = "Unicode"} will be clearer.
 }
 
 \seealso{
