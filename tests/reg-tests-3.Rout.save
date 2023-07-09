@@ -1,7 +1,7 @@
 
-R version 4.3.0 beta (2023-04-12 r84234) -- "Already Tomorrow"
+R version 4.3.1 Patched (2023-07-07 r84662) -- "Beagle Scouts"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.4.0 (64-bit)
+Platform: aarch64-apple-darwin22.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -927,13 +927,12 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 +     detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
-<sparse>[ <logic> ]: .M.sub.i.logical() maybe inefficient
 standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x11e3f50e0>
-<environment: 0x11e3f0458>
+<bytecode: 0x10dc08960>
+<environment: 0x10dc01dc8>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
@@ -1071,5 +1070,5 @@ A BibTeX entry for LaTeX users is
 [1] 4
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  1.467 0.085 1.559 0.001 0.003 
+Time elapsed:  1.493 0.077 1.582 0.001 0.003 
 > 
