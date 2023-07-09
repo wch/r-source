@@ -186,18 +186,18 @@ iconv(x, "LATIN2", "UTF-8")
 
 ## Both x below are in latin1 and will only display correctly in a
 ## locale that can represent and display latin1.
-x <- "fa\xE7ile"
+x <- "fran\xE7ais"
 Encoding(x) <- "latin1"
 x
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
 xx
 
-iconv(x, "latin1", "ASCII")          #   NA
-iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
-iconv(x, "latin1", "ASCII", "")      # "faile"
-iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
-iconv(xx, "UTF-8", "ASCII", "Unicode") # "fa<U+00E7>ile"
-iconv(xx, "UTF-8", "ASCII", "c99")   # "fa\u00E7ile"
+iconv(x, "latin1", "ASCII")           #   NA
+iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
+iconv(x, "latin1", "ASCII", "")       # "franais"
+iconv(x, "latin1", "ASCII", "byte")   # "fran<e7>ais"
+iconv(xx, "UTF-8", "ASCII", "Unicode")# "fran<U+00E7>ais"
+iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\u00e7ais"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")

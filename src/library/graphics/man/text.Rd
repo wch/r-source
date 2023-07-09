@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -168,7 +168,7 @@ text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
 
 ## Two more latin1 examples
 text(5, 10.2,
-     "Le français, c'est façile: Règles, Liberté, Egalité, Fraternité...")
+     "Le français, c'est facile: Règles, Liberté, Egalité, Fraternité...")
 text(5, 9.8,
      "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
 }
