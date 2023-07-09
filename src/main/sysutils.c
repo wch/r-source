@@ -590,7 +590,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     void * utf8_obj = (iconv_t)-1;
     const char *inbuf;
     char *outbuf;
-    const char *sub;
+    const char *sub; // null for no substitution.
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     Rboolean isRawlist = FALSE;
@@ -689,8 +689,19 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
 			      "UTF-8", to, localeCP);
 		#else
-			error(_("unsupported conversion from '%s' to '%s'"),
-			      "UTF-8", to);
+		    {
+			// musl does not support ASCII//TRANSLIT but has
+			// similar ASCII subsituting with *
+			// In case there are others, we set sub here.
+			if(streql(to, "ASCII//TRANSLIT")) {
+			    to = "ASCII";
+			    utf8_obj = Riconv_open(to, "UTF-8");
+			    if(!sub) sub = "c99";
+			}
+			if(utf8_obj == (iconv_t)(-1))
+			    error(_("unsupported conversion from '%s' to '%s'"),
+				  "UTF-8", to);
+		    }
 		#endif
 		}
 		obj = utf8_obj;
@@ -703,8 +714,16 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
 			      "latin1", to, localeCP);
 		#else
-			error(_("unsupported conversion from '%s' to '%s'"),
-			      "latin1", to);
+		    {
+			if(streql(to, "ASCII//TRANSLIT")) {
+			    to = "ASCII";
+			    latin1_obj = Riconv_open(to, "latin1");
+			    if(!sub) sub = "?";
+			}
+			if(latin1_obj == (iconv_t)(-1))
+			    error(_("unsupported conversion from '%s' to '%s'"),
+				  "latin1", to);			   
+		    }
 		#endif
 		}
 		obj = latin1_obj;
@@ -716,8 +735,16 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			error(_("unsupported conversion from '%s' to '%s' in codepage %d"),
 			      from, to, localeCP);
 		#else
-			error(_("unsupported conversion from '%s' to '%s'"),
-			      from, to);
+		    {
+			if(streql(to, "ASCII//TRANSLIT")) {
+			    to = "ASCII";
+			    arg_obj = Riconv_open(to, from);
+			    if(!sub) sub = "?";
+			}
+			if(arg_obj == (iconv_t)(-1))
+			    error(_("unsupported conversion from '%s' to '%s'"),
+				  from, to);			   
+		    }
 		#endif
 		}
 		obj = arg_obj;

@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -57,7 +57,11 @@ iconvlist()
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
   Encoding \code{"ASCII"} is accepted, and on most systems \code{"C"}
-  and \code{"POSIX"} are synonyms for ASCII.
+  and \code{"POSIX"} are synonyms for ASCII.  Where
+  \code{"ASCII/TRANSLIT"} is unsupported by the OS, \code{"ASCII"} is
+  used with \code{sub = "c99"} if from UTF-8, else \code{sub =
+  "?"}. (However, musl's version of \code{"ASCII"} substitutes
+  \code{*}.)
 
   With \code{from = ""}, elements of \code{x} with a declared encoding
   (UTF-8 or latin1, see \code{\link{Encoding}}) are converted from that
@@ -159,6 +163,11 @@ iconvlist()
   for e.g.\sspace{}\code{fileEncoding} arguments.  \code{"macintosh"} is
   the official (and most widely supported) name for \sQuote{Mac Roman}
   (\url{https://en.wikipedia.org/wiki/Mac_OS_Roman}).
+
+  Using \code{sub} substiutes each non-onvertible \emph{byte} in the
+  input, so whwn converting from UTF-8 a non-convertaible character will
+  be replaced as two or more bytes. Using \code{sub = "c99"} will be
+  clearer.
 }
 
 \seealso{
