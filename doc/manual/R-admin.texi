@@ -2283,18 +2283,18 @@ differ from the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
 @code{iodbc}.
 
-Those using Command Line Tools / Xcode 12 or later (as released for
-macOS 11 `Big Sur') probably want to arrange that the flag
+@c Those using Command Line Tools / Xcode 12 or later (as released for
+@c macOS 11 `Big Sur') probably want to arrange that the flag
 
-@example
--Wno-implicit-function-declaration
-@end example
+@c @example
+@c -Wno-implicit-function-declaration
+@c @end example
 
-@noindent
-is part of @code{CFLAGS}.  Apple has changed the default to make
-implicit declarations a compilation error and authors of packages and
-external software have been unaware that this might be done --- most
-issues seen were in @command{configure} scripts.
+@c @noindent
+@c is part of @code{CFLAGS}.  Apple has changed the default to make
+@c implicit declarations a compilation error and authors of packages and
+@c external software have been unaware that this might be done --- most
+@c issues seen were in @command{configure} scripts.
 
 Some care may be needed with selecting compilers when installing external
 software for use with packages.  The `system' compilers as used when
@@ -2312,15 +2312,17 @@ consistency one can use
 @end example
 
 @noindent
-(avoiding @command{autoconf}'s default @option{-g}).  Be careful if you
-put the @file{/usr/local/gfortran/bin} directory on your path as that
-contains (real) @command{gcc} and @command{g++} which may be found
-rather the Apple-provided commands, and may not be able to find the
-headers and libraries@footnote{From Big Sur those libraries are not
-publicly visible: rather the system compilers link to `text-based
-definition' (@file{.tbd}) files.} of the SDK.  As from @R{} 4.3.0,
-@command{R CMD INSTALL} and @code{install.packages()} try to invoke
-@command{configure} with the same compilers and flags used to build @R{}.
+(avoiding @command{autoconf}'s default @option{-g}).
+@c Be careful if you
+@c put the @file{/usr/local/gfortran/bin} directory on your path as that
+@c contains (real) @command{gcc} and @command{g++} which may be found
+@c rather the Apple-provided commands, and may not be able to find the
+@c headers and libraries@footnote{From Big Sur those libraries are not
+@c publicly visible: rather the system compilers link to `text-based
+@c definition' (@file{.tbd}) files.} of the SDK.
+As from @R{} 4.3.0, @command{R CMD INSTALL} and
+@code{install.packages()} try to invoke @command{configure} with the
+same compilers and flags used to build @R{}.
 
 For @cputype{arm64}, not all configure scripts have been updated to
 recognize the platform and so might need the flag
