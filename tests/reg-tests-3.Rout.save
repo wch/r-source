@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-04-13 r84246) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-07-09 r84660) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin22.5.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -757,10 +757,10 @@ x1     a b <NA>
 > ## median should work by default for a suitable S4 class.
 > ## adapted from adaptsmoFMRI
 > if(suppressMessages(require("Matrix"))) {
-+ x <- matrix(c(1,2,3,4))
-+ print(m <- median(x))
-+ stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
-+ detach("package:Matrix")
++     x <- matrix(c(1,2,3,4))
++     print(m <- median(x))
++     stopifnot(all.equal(m, median(as(x, "denseMatrix"))))
++     detach("package:Matrix")
 + }
 [1] 2.5
 > 
@@ -923,13 +923,12 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 +     detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
-<sparse>[ <logic> ]: .M.sub.i.logical() maybe inefficient
 standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x11e3f50e0>
-<environment: 0x11e3f0458>
+<bytecode: 0x14205f2a8>
+<environment: 0x142056710>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
@@ -1067,5 +1066,5 @@ A BibTeX entry for LaTeX users is
 [1] 4
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  2.368 0.234 2.875 0.001 0.002 
+Time elapsed:  1.49 0.072 1.568 0.001 0.003 
 > 
