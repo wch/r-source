@@ -20,26 +20,25 @@
 ### internal function used by axis.Date() and axis.POSIXct(). Extends the current format 
 ### if not sufficiently precise for value in argument at.
 extendDateTimeFormat <- function(x, z){
+    ## vectorize when needed:
+    if(length(z) > 1L){
+        formats <- vapply(z, function(zz) extendDateTimeFormat(x, zz), "")
+        return(formats[which.max(nchar(formats))])
+    }
+
     # used format:
-    format <- formatx <- attr(grDevices:::prettyDate(x), "format")
-    formatparts <- gsub("%", "", strsplit(formatx, " |:|-")[[1]])
+    format <- attr(grDevices:::prettyDate(x), "format")
+    formatparts <- gsub("%", "", strsplit(format, " |:|-")[[1]])
 
     # appropriate format for z
     chz <- format(z, "%Y-%m-%d %H:%M:%OS6")  # max. detailed format
     chz <- as.numeric(strsplit(chz, "-| |:|\\.")[[1]])
     default <- c(1, 1, 1, 0, 0, 0, 0)
-    names(chz) <- names(chz)
-        
-    if(length(z) > 1L){
-        formats <- sapply(z, function(zz) extendDateTimeFormat(x, zz))
-        return(formats[which.max(nchar(formats))])
-    }
-    
-    names(chz) <- names(default) <-  c("Y", ifelse("m" %in% formatparts, "m", "b"), "d", "H", "M", "S", "OS6") 
-    
+    names(chz) <- names(default) <-  c("Y", if("m" %in% formatparts) "m" else "b",
+                                       "d", "H", "M", "S", "OS6")
     if(any(w <- names(chz) %in% formatparts)){
-        if(max(which(w))+1 <= length(chz)){
-            add <- chz[(max(which(w))+1):length(chz)]
+        if((L <- max(which(w))+1) <= length(chz)){
+            add <- chz[L:length(chz)]
             # add month
             if(chz[2] > default[2]){
                 if("b" %in% names(add)) format <- paste(format, "%b")
@@ -49,7 +48,7 @@ extendDateTimeFormat <- function(x, z){
             if(chz[3] > default[3] && "d" %in% names(add)){
                 if("Y" %in% formatparts & "b" %in% formatparts) format <- paste("%d", format)
                 if("Y" %in% formatparts & "m" %in% formatparts) format <- paste0(format, "-%d")
-                if(!"Y" %in% formatparts) format <- paste0(format, ifelse("m" %in% formatparts, "-%d",  " %d"))
+                if(!"Y" %in% formatparts) format <- paste0(format, if("m" %in% formatparts) "-%d" else " %d")
             }
             add <- add[add > 0L]
             if(length(add) && any(c("H", "M", "S", "OS6") %in% names(add))){
@@ -57,22 +56,18 @@ extendDateTimeFormat <- function(x, z){
                 if("S" %in% names(add) & !"OS6" %in% names(add)) format <- paste0(format, ":%S")
                 if("OS6" %in% names(add)) format <- gsub(":%S", "", paste0(format, ":%OS6"))
             }
-            
         }
     }
-    return(format)
+    format
 }
 
 
 axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
-
-    args <- as.list(match.call())[-1]
     has.at <- !missing(at) && !is.null(at)
     range <- sort(par("usr")[if(side %% 2) 1L:2L else 3L:4L])
-    tz <- ifelse(!missing(x) && ("tzone" %in% names(attributes(x))), attr(x, "tzone"), "")
+    tz <- if(!missing(x) && ("tzone" %in% names(attributes(x)))) attr(x, "tzone") else ""
     rangeTime <- .POSIXct(range, tz = tz)
-    
     
     if(has.at){
         # convert at to POSIXct:
@@ -93,7 +88,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)){
 #            format <- if(!missing(x)) attr(grDevices:::prettyDate(x), "format") else attr(grDevices:::prettyDate(rangeTime), "format")
 #        }else if(is.null(format)){ # exdend format if needed for proper representation of at
-            format <- if(!missing(x)) extendDateTimeFormat(x, z) else extendDateTimeFormat(rangeTime, z)
+            format <- extendDateTimeFormat(if(!missing(x)) x else rangeTime, z)
         }
     } else {
         z <- grDevices:::prettyDate(rangeTime)
@@ -155,7 +150,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
             if(valid == 5L) { # "weeks"
                 start$mday <- start$mday - start$wday
                 if(start.on.monday)
-                    start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+                    start$mday <- start$mday + if(start$wday > 0L) 1L else -6L
                 incr <- 7*86400
             }
             if(valid == 6L) { # "months"
@@ -315,7 +310,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
             if(valid == 2L) { ## "weeks"
                 start$mday <- start$mday - start$wday
                 if(start.on.monday)
-                    start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+                    start$mday <- start$mday + if(start$wday > 0L) 1L else -6L
                 incr <- 7
                 ## drops through to "days".
             }
