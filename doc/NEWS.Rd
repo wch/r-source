@@ -27,6 +27,9 @@
       \code{character()} as documented, which also avoids spurious
       warnings from \code{available.packages()} et al.\sspace{}in the
       edge case of an empty vector of repository URLs.
+
+      \item \code{readChar(., 4e8)} no longer fails, thanks to Kodi Arfer's
+      report (\PR{18557}).
     }
   }
 }
