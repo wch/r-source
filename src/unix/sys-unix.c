@@ -880,6 +880,7 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP tlist = R_NilValue;
     int intern = 0;
     int timeout = 0;
+    int consignals = 0;
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
@@ -890,6 +891,9 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     timeout = asInteger(CADDR(args));
     if (timeout == NA_INTEGER || timeout < 0)
 	error(_("invalid '%s' argument"), "timeout");
+    consignals = asLogical(CADDDR(args));
+    if (consignals == NA_INTEGER)
+	error(_("'receive.console.signals' must be logical and not NA"));
     const char *cmd = translateCharFP(STRING_ELT(CAR(args), 0));
 
     int last_is_amp = 0;
@@ -1032,7 +1036,7 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   the background processes (PR#17764). The C library system() runs
 	   background processes as (orphaned) processes in the same process
 	   group as R, so they receive SIGINT, and may terminate themselves
-	   consequently, such as R itself used to. Applications which leave
+	   consequently, such as R itself used to. Applications that leave
 	   the SIG_IGN disposition of SIGINT (set by system()) alone will not
 	   be terminated.
 
@@ -1042,8 +1046,14 @@ attribute_hidden SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   use R_system_timeout in this case, because it has undesirable
 	   consequences for job control (SIGTSTP, SIGCONT missed, so Ctrl+Z does
 	   not suspend) and termination (SIGHUP missed, so terminal close does
-	   not terminate). */
-	if (timeout == 0 && (!R_Interactive || !last_is_amp))
+	   not terminate).
+
+	   When running a background process (last_is_amp, normally via
+	   wait=FALSE), which serves as an implementation of a foreground
+	   operation (such as clusterApply()), one can use
+	   receive.console.signals=TRUE to force the non-timeout
+	   implementation. */
+	if (timeout == 0 && (!R_Interactive || !last_is_amp || consignals))
 	    res = R_system(cmd);
 	else 
 	    res = R_system_timeout(cmd, timeout);

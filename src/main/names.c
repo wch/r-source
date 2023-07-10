@@ -665,9 +665,9 @@ FUNTAB R_FunTab[] =
 {"internalsID",	do_internalsID,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 
 #ifdef Win32
-{"system",	do_system,	0,	211,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"system",	do_system,	0,	211,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #else
-{"system",	do_system,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"system",	do_system,	0,	211,	4,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 #ifdef Win32

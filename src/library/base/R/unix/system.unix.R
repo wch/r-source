@@ -1,7 +1,7 @@
 #  File src/library/base/R/unix/system.unix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ system <- function(command, intern = FALSE,
                    ignore.stdout = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
-                   invisible = TRUE, timeout = 0)
+                   invisible = TRUE, timeout = 0, receive.console.signals = wait)
 {
     if(!missing(show.output.on.console) || !missing(minimized)
        || !missing(invisible))
@@ -34,6 +34,8 @@ system <- function(command, intern = FALSE,
         stop("'ignore.stderr' must be TRUE or FALSE")
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
+    if(!is.logical(receive.console.signals) || is.na(receive.console.signals))
+        stop("'receive.console.signals' must be TRUE or FALSE")
 
     if(ignore.stdout) command <- paste(command, ">/dev/null")
     if(ignore.stderr) command <- paste(command, "2>/dev/null")
@@ -48,21 +50,22 @@ system <- function(command, intern = FALSE,
         command <- paste("<", shQuote(f), command)
     }
     if(!wait && !intern) command <- paste(command, "&")
-    .Internal(system(command, intern, timeout))
+    .Internal(system(command, intern, timeout, receive.console.signals))
 }
 
 system2 <- function(command, args = character(),
                     stdout = "", stderr = "", stdin = "", input = NULL,
                     env = character(),
                     wait = TRUE, minimized = FALSE, invisible = TRUE,
-                    timeout = 0
+                    timeout = 0, receive.console.signals = wait
 )
 {
     if(!missing(minimized) || !missing(invisible))
         message("arguments 'minimized' and 'invisible' are for Windows only")
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
-
+    if(!is.logical(receive.console.signals) || is.na(receive.console.signals))
+        stop("'receive.console.signals' must be TRUE or FALSE")
     intern <- FALSE
     command <- paste(c(env, shQuote(command), args), collapse = " ")
 
@@ -104,7 +107,7 @@ system2 <- function(command, args = character(),
         command <- paste(command, "<", shQuote(f))
     } else if (nzchar(stdin)) command <- paste(command, "<", shQuote(stdin))
     if(!wait && !intern) command <- paste(command, "&")
-    .Internal(system(command, intern, timeout))
+    .Internal(system(command, intern, timeout, receive.console.signals))
 }
 
 ## Some people try to use this with NA inputs (PR#15147)

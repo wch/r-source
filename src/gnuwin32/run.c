@@ -186,7 +186,7 @@ extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 static void pcreate(const char* cmd, cetype_t enc,
 		      int newconsole, int visible,
 		      HANDLE hIN, HANDLE hOUT, HANDLE hERR,
-		      pinfo *pi)
+		      pinfo *pi, int consignals)
 {
     DWORD ret;
     STARTUPINFO si;
@@ -369,7 +369,7 @@ static void pcreate(const char* cmd, cetype_t enc,
 	flags |= CREATE_SUSPENDED; /* assign to job before it runs */
     if (newconsole && (visible == 1))
 	flags |= CREATE_NEW_CONSOLE;
-    else if (newconsole)
+    else if (newconsole && !consignals)
 	/* prevent interruption of background processes by Ctrl-C, PR#17764 */
 	flags |= CREATE_NEW_PROCESS_GROUP;
     if (job && breakaway)
@@ -630,12 +630,12 @@ static int pwait2(pinfo *pi, DWORD timeoutMillis, int* timedout)
 int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 	   const char *fin, const char *fout, const char *ferr)
 {
-    return runcmd_timeout(cmd, enc, wait, visible, fin, fout, ferr, 0, NULL);
+    return runcmd_timeout(cmd, enc, wait, visible, fin, fout, ferr, 0, NULL, 1);
 }
 
 int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
                    const char *fin, const char *fout, const char *ferr,
-                   int timeout, int *timedout)
+                   int timeout, int *timedout, int consignals)
 {
     if (!wait && timeout)
 	error("Timeout with background running processes is not supported.");
@@ -659,7 +659,7 @@ int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible,
 
 
     memset(&(pi.pi), 0, sizeof(PROCESS_INFORMATION));
-    pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi);
+    pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi, consignals);
     if (pi.pi.hProcess) {
 	if (wait) {
 	    RCNTXT cntxt;
@@ -701,9 +701,9 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
     DWORD id;
     BOOL res;
     int close1 = 0, close2 = 0, close3 = 0;
-    /* newconsole (~"!wait") means gnore Ctrl handler attibute
+    /* newconsole (~"!wait") means ignore Ctrl handler attribute
        is set for child. When also visible==1, an actual text
-       console is created */
+       console is created. */
 
     if (!(r = (rpipe *) malloc(sizeof(struct structRPIPE)))) {
 	strcpy(RunError, _("Insufficient memory (rpipeOpen)"));
@@ -754,7 +754,7 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 	if (hERR && ferr && ferr[0]) close3 = 1;
     }
     
-    pcreate(cmd, enc, newconsole, visible, hIN, hOUT, hERR, &(r->pi));
+    pcreate(cmd, enc, newconsole, visible, hIN, hOUT, hERR, &(r->pi), 0);
 
     if (close1) CloseHandle(hIN);
     if (close2) CloseHandle(hOUT);

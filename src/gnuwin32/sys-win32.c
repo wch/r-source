@@ -254,7 +254,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     int   vis = 0, flag = 2, i = 0, j, ll = 0;
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
     PROTECT_INDEX ti;
-    int timeout = 0, timedout = 0;
+    int timeout = 0, timedout = 0, consignals = 0;
 
     checkArity(op, args);
     cmd = CAR(args);
@@ -281,6 +281,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' argument"), "timeout");
     if (timeout && !flag)
 	errorcall(call, "Timeout with background running processes is not supported.");
+    args = CDR(args);
+    consignals = asLogical(CAR(args));
+    if (consignals == NA_INTEGER)
+	errorcall(call, _("invalid '%s' argument"), "receive.console.signals");
 
     if (CharacterMode == RGui) {
 	/* This is a rather conservative approach: if
@@ -305,7 +309,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ll = runcmd_timeout(CHAR(STRING_ELT(cmd, 0)),
 		    getCharCE(STRING_ELT(cmd, 0)),
 		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr,
-		    timeout, &timedout);
+		    timeout, &timedout, consignals);
 	if (ll == NOLAUNCH) warning(runerror());
     } else {
 	/* read stdout +/- stderr from pipe */

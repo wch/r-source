@@ -48,7 +48,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 
 int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible, 
                    const char *fin, const char *fout, const char *ferr,
-                   int timeout, int *timedout);
+                   int timeout, int *timedout, int consignals);
 
 rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, 
 		 const char *finput, int io,
