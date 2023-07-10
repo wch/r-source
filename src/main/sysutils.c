@@ -814,7 +814,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			    ucs = (R_wchar_t) wc;
 			inbuf += clen; inb -= clen;
 			if(ucs < 65536) {
-			    // gcc 7 objects to this with unsigned int
+			    // gcc 7 objected to this with unsigned int
 			    snprintf(outbuf, 7, "\\u%04x", (unsigned short) ucs);
 			    outbuf += 6; outb -= 6;
 			} else {
