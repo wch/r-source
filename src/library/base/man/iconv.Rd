@@ -111,7 +111,8 @@ iconvlist()
 
   Some of the implementations have interesting extra encodings: for
   example GNU \samp{libiconv} allows \code{to = "C99"} to use
-  \samp{\\uxxxx} escapes for non-ASCII characters.
+  \samp{\\uxxxx} escapes (or if needed \samp{\Uuxxxxxxxx}) for
+  non-ASCII characters.
 }
 
 \section{Byte Order Marks}{
