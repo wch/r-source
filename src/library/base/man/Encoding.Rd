@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -109,7 +109,7 @@ enc2utf8(x)
 }
 \examples{
 ## x is intended to be in latin1
-x. <- x <- "fa\xE7ile"
+x. <- x <- "fran\xE7ais"
 Encoding(x.) # "unknown" (UTF-8 loc.) | "latin1" (8859-1/CP-1252 loc.) | ....
 Encoding(x) <- "latin1"
 x

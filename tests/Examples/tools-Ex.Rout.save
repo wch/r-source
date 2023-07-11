@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-05-29 r82419) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.5.0 (64-bit)
+R Under development (unstable) (2023-07-11 r84677) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.5.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -204,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x12a8be408>
+<environment: 0x126cbf4f8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -533,9 +533,9 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
-> x <- "fa\xE7ile"
+> x <- "fran\xE7ais"
 > encoded_text_to_latex(x, "latin1")
-[1] "fa{\\c c}ile"
+[1] "fran{\\c c}ais"
 > ## Not run: 
 > ##D ## create a tex file to show the upper half of 8-bit charsets
 > ##D x <- rawToChar(as.raw(160:255), multiple = TRUE)
@@ -830,7 +830,7 @@ function (x, ...)
 > ### ** Examples
 > 
 > out <- c(
-+ "fa\xE7ile test of showNonASCII():",
++ "fran\xE7ais: test of showNonASCII():",
 + "\\details{",
 + "   This is a good line",
 + "   This has an \xfcmlaut in it.",
@@ -840,7 +840,7 @@ function (x, ...)
 > cat(out, file = f, sep = "\n")
 > 
 > showNonASCIIfile(f)
-1: fa<e7>ile test of showNonASCII():
+1: fran<e7>ais: test of showNonASCII():
 4:    This has an <fc>mlaut in it.
 > unlink(f)
 > 
@@ -974,6 +974,17 @@ An illustration of lexical scoping.
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
 [1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
+> ## Create one, platform agnostically, must work if <normal> :
+> (Rdb <- R_user_dir("base"))
+[1] "/Users/ripley/Library/Application Support/org.R-project.R/R/base"
+> if(noD <- !dir.exists(Rdb)) # should work user specifically:
++     dir.create(Rdb, recursive=TRUE)
+> stopifnot(dir.exists(Rdb)) # "everywhere"
+> dir(Rdb) # typically empty
+character(0)
+> if(noD) unlink(Rdb) # cleaning up
+> list.files(R_user_dir("grid"), full.names = TRUE)
+character(0)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1118,7 +1129,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.135 0.011 0.147 0 0 
+Time elapsed:  0.132 0.012 0.145 0 0 
 > grDevices::dev.off()
 null device 
           1 
