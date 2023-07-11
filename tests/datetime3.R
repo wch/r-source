@@ -1,4 +1,4 @@
-## Date-time egression tests for R >= 4.3.0
+## Date-time regression tests for R >= 4.3.0
 ## originally added to reg-tests-1d.R
 
 .pt <- proc.time()
@@ -527,6 +527,43 @@ stopifnot(exprs = {
 (b1 <- balancePOSIXlt(lt., fill.only=TRUE))
 (b2 <- balancePOSIXlt(lt.))
 stopifnot(b1 == b2)
+
+
+## range(<Date>|<PoSIXt>, finite = TRUE) [R-devel mails, Davis Vaughan and MM, April 28, 2023ff]
+d <- .Date(c(0, Inf, 1, 2, Inf))
+(dN <- c(d, .Date(c(NA, NaN))))
+## Just the numbers :
+str(x  <- unclass(d))
+str(xN <- unclass(dN), vec.len=9)
+stopifnot(exprs = {
+    identical(print(range(d)), .Date(range(unclass(d))))# "1970-01-01" "Inf"
+    is.na(range(dN))
+    identical3(range(d, finite = TRUE), .Date(range(x, finite=TRUE)),
+               range(dN,finite = TRUE) -> rd)
+    identical(rd, structure(c(0, 2), class = "Date"))
+})
+## POSIXct/lt -----
+ct <- as.POSIXct(d)
+ctN<- as.POSIXct(dN)
+lt <- as.POSIXlt(ct)
+ltN<- as.POSIXlt(ctN)
+str(y  <- unclass(ct))
+str(yN <- unclass(ctN), vec.len=9)
+stopifnot(exprs = {
+    identical(print(range(ct)), .POSIXct(range(unclass(ct)), tz="UTC"))
+    identical3(range(ct, finite = TRUE), .POSIXct(range(y, finite=TRUE), tz="UTC"),
+               range(ctN,finite = TRUE) -> rct)
+    is.na(range(ctN))
+    identical(range(ctN, na.rm=TRUE), range(ct))
+    identical(rct, structure(c(0, 2 * 24*60*60),
+                             class = c("POSIXct", "POSIXt"), tzone = "UTC"))
+    ## POSIXlt
+    identical(print(range(lt)), as.POSIXlt(range(ct)))# "1970-01-01" "Inf"
+    identical3(range(lt, finite = TRUE), as.POSIXlt(rct),
+               range(ltN,finite = TRUE))
+    is.na(range(ltN))
+    identical(range(ltN, na.rm=TRUE), range(lt))
+})
 
 
 

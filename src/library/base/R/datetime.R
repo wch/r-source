@@ -530,7 +530,9 @@ Math.POSIXt <- function (x, ...)
     if(length(tzs)) tzs[1L] else NULL
 }
 
-Summary.POSIXct <- function (..., na.rm)
+## NB: 'na.rm' is part of the Summary generic,
+## --  but 'finite' is not: argument only of range.default() and these:
+Summary.POSIXct <- function (..., na.rm, finite = FALSE)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok)
@@ -541,7 +543,7 @@ Summary.POSIXct <- function (..., na.rm)
     .POSIXct(NextMethod(.Generic), tz = tz, cl = oldClass(args[[1L]]))
 }
 
-Summary.POSIXlt <- function (..., na.rm)
+Summary.POSIXlt <- function (..., na.rm, finite = FALSE)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok)
@@ -550,7 +552,7 @@ Summary.POSIXlt <- function (..., na.rm)
     args <- list(...)
     tz <- do.call(.check_tzones, args)
     args <- lapply(args, as.POSIXct)
-    val <- do.call(.Generic, c(args, na.rm = na.rm))
+    val <- do.call(.Generic, c(args, na.rm = na.rm, finite = finite))
     as.POSIXlt(.POSIXct(val, tz))
 }
 

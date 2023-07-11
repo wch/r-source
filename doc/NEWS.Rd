@@ -34,8 +34,8 @@
       \code{"glm"} objects have gained a possibility to do profiling
       based on the Rao Score statistic in addition to the default
       Likelihood Ratio. This is controlled by a new \code{test=}
-      argument. 
-      
+      argument.
+
       \item The \code{"glm"} method for \code{anova()} computes test
       statistics and p-values by default, using a chi-squared test or
       an F test depending on whether the dispersion is fixed or
@@ -73,6 +73,12 @@
       it in a \sQuote{<builddir> != <srcdir>} setup, and in standard
       \dQuote{binary} Windows installation \bold{if} a source \file{tests/}
       folder is present.
+
+      \item \code{range(<DT_with_Inf>, finite=TRUE)} now work for objects
+      of class \code{"Date"}, \code{"POSIXct"}, and \code{"POSIXlt"} with
+      infinite entries, analogously to \code{range.default()}, as proposed
+      by Davis Vaughan on R-devel.  Other \code{range()}-methods can make
+      use of new \code{.rangeNum()}.
     }
   }
 

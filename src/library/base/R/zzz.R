@@ -576,6 +576,8 @@ matrix(c("!", "hexmode",
          "qr", "default",
          "quarters", "Date",
          "quarters", "POSIXt",
+         "range", "Date",
+         "range", "POSIXct",
          "range", "default",
          "rbind", "data.frame",
          "rep", "Date",
@@ -666,8 +668,7 @@ local({
     bdy <- bdy[c(1:2, seq_along(bdy)[-1L])] # taking [(1,2,2:n)] to insert at [2]:
     ## deprecation warning only when not called by method dispatch from as.data.frame():
     bdy[[2L]] <- quote(if((sys.nframe() <= 1L ||
-                           (!identical(sys.function(-1L), as.data.frame) &&
-                           !(sys.call(-1L)[[1L]] == quote(FUN) && sys.call(-2L)[[1L]] == quote(lapply))) # lapply(list(pi, 1L), as.data.frame)
+                           (!identical(sys.function(-1L), as.data.frame))
                           ) && nzchar(Sys.getenv("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_")))
 	.Deprecated(
 	    msg = gettextf(
