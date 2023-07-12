@@ -1,30 +1,41 @@
 ### Tests of iconv, especially 'sub'
 
-x <- "fa\xE7ile"
+## Status:
+str(l10n_info()) # platform specific (-> help page)
+Sys.getlocale()
+
+xU <- "a\xE7\xFAcar" # "açúcar" (Portuguese)
+(x <- xU) # (..\xe7..)
 Encoding(x) <- "latin1"
 x
 xx <- iconv(x, "latin1", "UTF-8")
 xx
-stopifnot(charToRaw(xx) == as.raw(c(0x66, 0x61, 0xc3, 0xa7, 0x69, 0x6c, 0x65)))
+## encoding does *not* matter, even though they differ internally:
+stopifnot(identical(xx, x), xx == x)
 
+chkEQpr <- function(x, TR) stopifnot(print(x) == TR)
+chkEQpr(charToRaw(xx), as.raw(c(0x61, 0xc3, 0xa7, 0xc3, 0xba, 0x63, 0x61, 0x72)))
+## more iconv():
 stopifnot(is.na(iconv(x, "latin1", "ASCII")))
-stopifnot(iconv(x, "latin1", "ASCII", "?")  == "fa?ile")
-stopifnot(iconv(x, "latin1", "ASCII", "") == "faile")
-stopifnot(iconv(x, "latin1", "ASCII", "byte") == "fa<e7>ile")
-stopifnot(iconv(xx, "UTF-8", "ASCII", "Unicode") == "fa<U+00E7>ile")
-stopifnot(iconv(xx, "UTF-8", "ASCII", "c99") == "fa\\u00e7ile")
-stopifnot(charToRaw(iconv(xx, "UTF-8", "ASCII", "c99")) ==
-          sapply(c("f", "a", "\\", "u", "0", "0", "e", "7", "i", "l", "e"), charToRaw))
+chkEQpr(iconv(x, "latin1", "ASCII", "?"   ), "a??car")
+chkEQpr(iconv(x, "latin1", "ASCII", ""    ), "acar")
+chkEQpr(iconv(x, "latin1", "ASCII", "byte"), "a<e7><fa>car")
+chkEQpr(iconv(xx, "UTF-8", "ASCII", "Unicode"), "a<U+00E7><U+00FA>car")
+chkEQpr(iconv(xx, "UTF-8", "ASCII", "c99"    ), "a\\u00e7\\u00facar")
+chkEQpr(charToRaw(iconv(xx, "UTF-8", "ASCII", "c99")),
+        sapply(c("a", "\\","u", "0","0","e","7",
+                      "\\","u", "0","0","f","a",  "c","a","r"), charToRaw))
 
 z <- "\U1f600"
-charToRaw(z)
-stopifnot(iconv(z, "UTF-8", "ASCII", "byte") == "<f0><9f><98><80>")
-stopifnot(iconv(z, "UTF-8", "ASCII", "Unicode") == "<U+0001F600>")
-stopifnot(iconv(z, "UTF-8", "ASCII", "c99") == "\\U0001f600")
+chkEQpr(charToRaw(z), as.raw(c(0xf0, 0x9f, 0x98, 0x80)))
+chkEQpr(iconv(z, "UTF-8", "ASCII", "byte"), "<f0><9f><98><80>")
+chkEQpr(iconv(z, "UTF-8", "ASCII", "Unicode"), "<U+0001F600>")
+chkEQpr(iconv(z, "UTF-8", "ASCII", "c99"    ), "\\U0001f600")
+
 
 ## write out to compare with GNU libiconv's iconv on e.g. macOS
 ## The reading can only work in a UTF-8 locale
-if(startsWith(extSoftVersion()["iconv"], 'GNU libiconv') &&
+if(startsWith(print(extSoftVersion()[["iconv"]]), 'GNU libiconv') &&
    l10n_info()[["UTF-8"]]) {
     writeLines(c(xx, z), "test.txt")
     zz <- system2("iconv", c("-f", "UTF-8", "-t", "c99", "test.txt"),
@@ -33,3 +44,41 @@ if(startsWith(extSoftVersion()["iconv"], 'GNU libiconv') &&
     stopifnot(zz == iconv(c(xx, z), "UTF-8", "ASCII", "c99"))
     message('sub = "c99" agrees with GNU libiconv')
 } else message('sub = "c99" agrees with GNU libiconv -- SKIPPED')
+
+##------------- former  ./encodings.R  -----------------------------------
+
+## from iconv.Rd , things not above already:
+
+# Extracts from R help files
+(x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher"))
+iconv(x, "latin1", "ASCII//TRANSLIT")
+iconv(x, "latin1", "ASCII", sub="byte")
+
+## tests of re-encoding in .C
+require("tools")
+(x. <- "a\xE7\xFAcar")
+Renctest <- tools:::C_Renctest
+(x.en <- .C(Renctest, x.)[[1]])
+x <- x.; Encoding(x) <- "latin1"; x
+(xen <- .C(Renctest, x)[[1]])
+(xx <- iconv(x, "latin1", "UTF-8"))
+(xxen <- .C(Renctest, xx)[[1]])
+## TODO: check these {all TRUE in UTF-8  but only 1st in "C" locale}
+identical(x., x.en)
+identical(x ,  xen)
+identical(xx, xxen)
+##
+c(x.= Encoding(x.), x.en= Encoding(x.en),
+  x = Encoding(x),  xen = Encoding(xen),
+  xx= Encoding(xx), xxen= Encoding(xxen)) -> encs
+encs #  (unk unk  latin1 unk   UTF-8 unk)   in UTF-8  *and*  C locale
+## TODO: s/all/stopifnot/ :
+all(encs == local({ u <- "unknown"; c(u, u, "latin1", u, "UTF-8", u) }))
+
+## tests of match length in  delimMatch(x, delim = c("{", "}"))
+(x <- c("a{bc}d", "{a\xE7b}"))
+delimMatch(x) # works w/ LC_ALL=C ; other times Error: "invalid multibyte string"
+                                        # 2 1 .. match.length 4 5 in UTF-8
+(xx <- iconv(x, "latin1", "UTF-8"))
+str(dMx <- delimMatch(xx))              # was 5 6 in latin1, 5 5 in UTF-8
+                                        # now 4 5 in UTF-8

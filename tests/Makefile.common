@@ -2,7 +2,8 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
-## If you add test scripts here, review  ../src/library/tools/R/testing.R <<<<<<<<<<<<
+## If you add test scripts here, review
+## >>>> ../src/library/tools/R/testing.R -> testInstalledBasic() <<<<<<<<<<<<
 
 test-src-gct = \
 	eval-etc.R \
@@ -533,6 +534,6 @@ INSTFILES = README \
 	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
-	  encodings.R $(test-src-regexp) $(test-src-CRANtools) \
+	  $(test-src-regexp) $(test-src-CRANtools) \
 	  $(test-src-tz) $(test-src-cond) reg-translation.R iconv.R \
 	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv eval-fns.R

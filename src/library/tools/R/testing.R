@@ -841,6 +841,8 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         message("running regexp regression tests", domain = NA)
         if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
         if (runone("PCRE")) return(invisible(1L))
+        message("running tests on encodings & iconv()", domain = NA)
+        if (runone("iconv")) return(invisible(1L))
         message("running tests of CRAN tools", domain = NA)
         if (runone("CRANtools")) return(invisible(1L))
         message("running tests to possibly trigger segfaults", domain = NA)
