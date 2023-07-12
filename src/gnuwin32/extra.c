@@ -29,7 +29,7 @@
 
 #include "win-nls.h"
 
-
+#include <float.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -143,9 +143,11 @@ void Rwin_fpset(void)
     /* Under recent MinGW this is what fpreset does.  It sets the
        control word to 0x37f which corresponds to 0x8001F as used by
        _controlfp.  That is all errors are masked, 64-bit mantissa and
-       rounding are selected. */
+       rounding are selected:
 
-    __asm__ ( "fninit" ) ;
+       __asm__ ( "fninit" ) ;
+    */
+    _fpreset();
 }
 
 
@@ -231,6 +233,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
 	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 	    strcat(ver, " x64");
+	else if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_ARM64)
+	    strcat(ver, " arm64");
     }
     SET_STRING_ELT(ans, 1, mkChar(ver));
 
@@ -247,7 +251,9 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     GetComputerNameW(name, &namelen);
     wcstoutf8(buf, name, sizeof(buf));
     SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
-#ifdef _WIN64
+#ifdef __aarch64__
+    SET_STRING_ELT(ans, 4, mkChar("aarch64"));
+#elif defined(_WIN64)
     SET_STRING_ELT(ans, 4, mkChar("x86-64"));
 #else
     SET_STRING_ELT(ans, 4, mkChar("x86"));

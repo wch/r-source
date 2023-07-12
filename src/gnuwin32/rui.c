@@ -499,7 +499,11 @@ static Rboolean isdebuggerpresent(void)
 
 void breaktodebugger(void)
 {
+#if (defined(__i386) || defined(__x86_64))
     __asm__("int $3");
+#elif defined(__aarch64__)
+    __asm__("brk #0xf000");
+#endif
 }
 
 static void menudebug(control m)

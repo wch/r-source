@@ -1005,7 +1005,13 @@ SEXP eval(SEXP e, SEXP rho)
        and resets the precision, rounding and exception modes of a ix86
        fpu.
      */
+# if (defined(__i386) || defined(__x86_64))
     __asm__ ( "fninit" );
+# elif defined(__aarch64__)
+    __asm__ volatile("msr fpcr, %0" : : "r"(0LL));
+# else
+    _fpreset();
+# endif
 #endif
 
     switch (TYPEOF(e)) {
@@ -4890,7 +4896,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
    toolchain or in our expectations, but these defines attempt to work
    around this. */
 #if (defined(_WIN32) || defined(_WIN64)) && defined(__GNUC__) && \
-    __GNUC__ <= 4
+    __GNUC__ <= 4 && !defined(__clang__)
 # define R_sqrt(x) (ISNAN(x) ? x : sqrt(x))
 #else
 # define R_sqrt sqrt

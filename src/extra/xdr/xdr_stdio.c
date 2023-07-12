@@ -8,16 +8,16 @@
 #if defined(_WIN32) || defined(__CYGWIN__)
 static uint32_t ntohl(uint32_t x)
 { /* could write VC++ inline assembler, but not worth it for now */
-#ifdef _MSC_VER
-  return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
-#else
+#if (defined(__i386) || defined(__x86_64)) && !defined(_MSC_VER)
   __asm__("xchgb %b0,%h0\n\t"	/* swap lower bytes	*/
 	  "rorl $16,%0\n\t"	/* swap words		*/
 	  "xchgb %b0,%h0"       /* swap higher bytes	*/
 	  :"=q" (x)
 	  : "0" (x));
   return x;
-#endif 
+#else
+  return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
+#endif
 }
 #else /* net is big-endian: little-endian hosts need byte-swap code */
 #ifndef WORDS_BIGENDIAN
