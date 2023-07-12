@@ -29,10 +29,13 @@
 /*  Copyright (C) 2004	The R Foundation
 
     Changes for R:
+        Remove assumption of current->dest being non-NULL
 
-    Remove assumption of current->dest being non-NULL
+    Copyright (C) 2023  The R Core Team
 
- */
+    Changes for R:
+        Avoid naming conflict with LLVM     
+*/
 
 #include "internal.h"
 
@@ -256,7 +259,7 @@ void scrollrect(point dp, rect r)
 void copyrect(bitmap sb, point p, rect r)
 {
     enable_drawing();
-    if (current->dest) bitblt(current->dest, sb, p, r, S);
+    if (current->dest) bitblt(current->dest, sb, p, r, GA_S);
 }
 
 void texturerect(bitmap sb, rect dr)

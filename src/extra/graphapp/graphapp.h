@@ -804,9 +804,9 @@ void	setdrawmode(int mode);
 #define DnandS	 0x07
 #define DandS	 0x08
 #define DxnorS	 0x09
-#define D	 0x0A
+#define GA_D	 0x0A
 #define DornotS	 0x0B
-#define S	 0x0C
+#define GA_S	 0x0C
 #define notDorS	 0x0D
 #define DorS	 0x0E
 #define Ones	 0x0F

@@ -30,6 +30,10 @@
 
       Changes for R:  allow 32 contexts not 4
       Remove assumption that current->dest is non-NULL
+
+   Copyright (C) 2023   The R Core Team
+
+      Changes for R: avoid naming conflict with LLVM     
 */
 
 #include "internal.h"
@@ -42,7 +46,7 @@ PROTECTED drawstruct app_drawstate =
 {
     NULL,	/* drawing destination */
     Black,	/* colour */
-    S,	/* drawing mode */
+    GA_S,	/* drawing mode */
     {0,0},	/* point */
     1,	/* line width */
     NULL,	/* font */
@@ -503,7 +507,7 @@ void resetdrawstate(void)
     setcursor(ArrowCursor);
     moveto(pt(0,0));
     setfont(SystemFont);
-    setdrawmode(S);
+    setdrawmode(GA_S);
 }
 
 /*
