@@ -3,39 +3,56 @@
 ## Status:
 str(l10n_info()) # platform specific (-> help page)
 Sys.getlocale()
+(iconv_version <- extSoftVersion()[["iconv"]])
+known_iconv <- iconv_version != "unknown"  # musl's iconv is "unknown"
 
 xU <- "a\xE7\xFAcar" # "açúcar" (Portuguese)
 (x <- xU) # (..\xe7..)
 Encoding(x) <- "latin1"
+stopifnot(Encoding(x) == "latin1")
 x
 xx <- iconv(x, "latin1", "UTF-8")
 xx
+stopifnot(Encoding(xx) == "UTF-8") # iconv() uses mark = TRUE by default
 ## encoding does *not* matter, even though they differ internally:
 stopifnot(identical(xx, x), xx == x)
 
 chkEQpr <- function(x, TR) stopifnot(print(x) == TR)
 chkEQpr(charToRaw(xx), as.raw(c(0x61, 0xc3, 0xa7, 0xc3, 0xba, 0x63, 0x61, 0x72)))
-## more iconv():
-stopifnot(is.na(iconv(x, "latin1", "ASCII")))
-chkEQpr(iconv(x, "latin1", "ASCII", "?"   ), "a??car")
-chkEQpr(iconv(x, "latin1", "ASCII", ""    ), "acar")
-chkEQpr(iconv(x, "latin1", "ASCII", "byte"), "a<e7><fa>car")
-chkEQpr(iconv(xx, "UTF-8", "ASCII", "Unicode"), "a<U+00E7><U+00FA>car")
-chkEQpr(iconv(xx, "UTF-8", "ASCII", "c99"    ), "a\\u00e7\\u00facar")
-chkEQpr(charToRaw(iconv(xx, "UTF-8", "ASCII", "c99")),
-        sapply(c("a", "\\","u", "0","0","e","7",
-                      "\\","u", "0","0","f","a",  "c","a","r"), charToRaw))
+
+## iconv() with substitution:
+iconv(c(x, xx), to = "ASCII", sub = NA) # default
+## often both NA, but could still use substitution ("a**car" with musl's iconv)
+stopifnot(length(tools::showNonASCII(c(x, xx))) == 2L) # robust via string comparison
+## output for most iconvs (at least GNU libiconv, glibc, win_iconv):
+## 1: a<e7><fa>car
+## 2: a<c3><a7><c3><ba>car
+## musl:
+## 1: a**car
+## 2: a****car
+
+if (known_iconv) withAutoprint({
+    chkEQpr(iconv(x, "latin1", "ASCII", "?"   ), "a??car")
+    chkEQpr(iconv(x, "latin1", "ASCII", ""    ), "acar")
+    chkEQpr(iconv(x, "latin1", "ASCII", "byte"), "a<e7><fa>car")
+    chkEQpr(iconv(xx, "UTF-8", "ASCII", "Unicode"), "a<U+00E7><U+00FA>car")
+    chkEQpr(iconv(xx, "UTF-8", "ASCII", "c99"    ), "a\\u00e7\\u00facar")
+    chkEQpr(charToRaw(iconv(xx, "UTF-8", "ASCII", "c99")),
+            sapply(c("a", "\\","u", "0","0","e","7",
+                     "\\","u", "0","0","f","a",  "c","a","r"), charToRaw))
+})
 
 z <- "\U1f600"
 chkEQpr(charToRaw(z), as.raw(c(0xf0, 0x9f, 0x98, 0x80)))
-chkEQpr(iconv(z, "UTF-8", "ASCII", "byte"), "<f0><9f><98><80>")
-chkEQpr(iconv(z, "UTF-8", "ASCII", "Unicode"), "<U+0001F600>")
-chkEQpr(iconv(z, "UTF-8", "ASCII", "c99"    ), "\\U0001f600")
-
+if (known_iconv) withAutoprint({
+    chkEQpr(iconv(z, "UTF-8", "ASCII", "byte"), "<f0><9f><98><80>")
+    chkEQpr(iconv(z, "UTF-8", "ASCII", "Unicode"), "<U+0001F600>")
+    chkEQpr(iconv(z, "UTF-8", "ASCII", "c99"    ), "\\U0001f600")
+})
 
 ## write out to compare with GNU libiconv's iconv on e.g. macOS
 ## The reading can only work in a UTF-8 locale
-if(startsWith(print(extSoftVersion()[["iconv"]]), 'GNU libiconv') &&
+if(startsWith(iconv_version, 'GNU libiconv') &&
    l10n_info()[["UTF-8"]]) {
     writeLines(c(xx, z), "test.txt")
     zz <- system2("iconv", c("-f", "UTF-8", "-t", "c99", "test.txt"),
@@ -77,6 +94,7 @@ all(encs == local({ u <- "unknown"; c(u, u, "latin1", u, "UTF-8", u) }))
 
 ## tests of match length in  delimMatch(x, delim = c("{", "}"))
 (x <- c("a{bc}d", "{a\xE7b}"))
+if (FALSE)
 delimMatch(x) # works w/ LC_ALL=C ; other times Error: "invalid multibyte string"
                                         # 2 1 .. match.length 4 5 in UTF-8
 (xx <- iconv(x, "latin1", "UTF-8"))
