@@ -666,6 +666,7 @@ testInstalledPackage <-
     invisible(Rfile)
 }
 
+## NB: Test even when tests were *not* installed, via appropriate  testSrcdir = <dir>
 testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "all"),
                                outDir = file.path(R.home(), "tests"),
                                testSrcdir = getTestSrcdir(outDir))
@@ -725,10 +726,11 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
                 Sys.setenv(LC_CTYPE="C")
             }
             ## ignore all 'extra' (incl. 'inC')  and hope
+            mkCmd <- identity
+        } else { ## non-Windows 
+            extra <- if(inC) paste(extra0,  "LC_ALL=C") else extra0
+            mkCmd <- function(cmd) paste(extra, cmd)
         }
-        extra <- if(inC) paste(extra0,  "LC_ALL=C") else extra0
-        mkCmd <- function(cmd)
-            if (.Platform$OS.type != "windows") paste(extra, cmd) else cmd
         if (!file.exists(f)) { # try *.Rin, creating *.R
             if (!file.exists(fin <- paste0(f, "in")))
                 stop("file ", sQuote(f), " not found", domain = NA)
@@ -841,8 +843,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         message("running regexp regression tests", domain = NA)
         if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
         if (runone("PCRE")) return(invisible(1L))
-        message("running tests on encodings & iconv()", domain = NA)
-        if (runone("iconv")) return(invisible(1L))
+        message("running tests on encodings & iconv() - first with C, then current locale", domain = NA)
+        if (runone("iconv"             )) return(invisible(1L))
+        if (runone("iconv", inC = FALSE)) return(invisible(1L))
         message("running tests of CRAN tools", domain = NA)
         if (runone("CRANtools")) return(invisible(1L))
         message("running tests to possibly trigger segfaults", domain = NA)
