@@ -195,7 +195,7 @@ int main(int argc_, char *argv_[])
 	argv[0] = argv_[0];
 
 	size_t len = strlen(s);
-	char *buf = (char *)malloc((size_t) (len+1)*sizeof(char *));
+	char *buf = (char *)malloc((size_t) (len+1)*sizeof(char));
 	if (!buf) {
 	    fprintf(stderr, "malloc failure\n");
 	    exit(1);
