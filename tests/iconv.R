@@ -2,6 +2,7 @@
 
 ## Status:
 str(l10n_info()) # platform specific (-> help page)
+		 # also changes from Sys.setenv / Sys.setlocale
 Sys.getlocale()
 (iconv_version <- extSoftVersion()[["iconv"]])
 known_iconv <- iconv_version != "unknown"  # musl's iconv is "unknown"
@@ -88,15 +89,21 @@ identical(xx, xxen)
 c(x.= Encoding(x.), x.en= Encoding(x.en),
   x = Encoding(x),  xen = Encoding(xen),
   xx= Encoding(xx), xxen= Encoding(xxen)) -> encs
-encs #  (unk unk  latin1 unk   UTF-8 unk)   in UTF-8  *and*  C locale
-## TODO: s/all/stopifnot/ :
-all(encs == local({ u <- "unknown"; c(u, u, "latin1", u, "UTF-8", u) }))
+encs #  (unk unk  latin1 unk   UTF-8 unk)   in UTF-8  *and*  C locale (but not latin1)
+## TODO: s/all/stopifnot/  {here and below}
+all(encs == local({ u <- "unknown"; l <- "latin1"
+                    lu <- if(l10n_info()[["Latin-1"]]) l else u
+                    c(u, lu, l, u, "UTF-8", u) }))
 
 ## tests of match length in  delimMatch(x, delim = c("{", "}"))
 (x <- c("a{bc}d", "{a\xE7b}"))
-if (FALSE)
-delimMatch(x) # works w/ LC_ALL=C ; other times Error: "invalid multibyte string"
-                                        # 2 1 .. match.length 4 5 in UTF-8
+dM1 <- if(!l10n_info()[["MBCS"]]) { # not for multibyte locale
+            delimMatch(x) # fine w/ LC_ALL=C ; otherwise Error: "invalid multibyte string"
+ } else try(delimMatch(x))
+if(is.numeric(dM1)) all(print(dM1), structure(2:1, match.length = 4:5)) ## TODO stopifnot
 (xx <- iconv(x, "latin1", "UTF-8"))
-str(dMx <- delimMatch(xx))              # was 5 6 in latin1, 5 5 in UTF-8
-                                        # now 4 5 in UTF-8
+str(dMx <- delimMatch(xx))
+## 4 12 in "C" (4 5 in UTF-8, latin1, ?) -- was 5 6 in latin1, 5 5 in UTF-8
+(ok <- with(l10n_info(), `UTF-8` || `Latin-1`)) # when else?
+mlength <- if(ok) 4:5 else c(4L, 12L)
+all(identical(dMx, structure(2:1, match.length = mlength)))
