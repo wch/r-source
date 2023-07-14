@@ -22,18 +22,22 @@
 {
     ## In R < 4.3.0, options(repos = c(CRAN = "@CRAN@")) was hard-wired.
     ## We now respect custom repositories files, which by default gives
-    ## the old behavior.
-    reposdf <- tryCatch(.get_repositories(), error = identity)
-    if(inherits(reposdf, "error"))
+    ## the old behavior, or initialize no repositories as a special case.
+    if(identical(Sys.getenv("R_REPOSITORIES"), "NULL"))
         repos <- character()
     else {
-        reposdf <- reposdf[reposdf$default,]
-        repos <- reposdf$URL
-        names(repos) <- row.names(reposdf)
+        reposdf <- tryCatch(.get_repositories(), error = identity)
+        if(inherits(reposdf, "error"))
+            repos <- character()
+        else {
+            reposdf <- reposdf[reposdf$default,]
+            repos <- reposdf$URL
+            names(repos) <- row.names(reposdf)
+        }
+        ## Be extra careful (but see the comments in tools/R/utils.R).
+        if(is.na(match("CRAN", names(repos))))
+            repos <- c(CRAN = "@CRAN@", repos)
     }
-    ## Be extra careful (but see the comments in tools/R/utils.R).
-    if(is.na(match("CRAN", names(repos))))
-        repos <- c(CRAN = "@CRAN@", repos)
 
     ## Set default options() related to functionality in 'utils' pkg
     op.utils <-
