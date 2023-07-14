@@ -51,6 +51,7 @@ test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
 test-src-tz = timezone.R
 test-src-cond = conditions.R
+test-src-misc-dev = misc-devel.R
 
 test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R \
@@ -89,6 +90,7 @@ test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-tz = $(test-src-tz:.R=.Rout)
 test-out-cond = $(test-src-cond:.R=.Rout)
+test-out-misc-dev = $(test-src-misc-dev:.R=.Rout)
 
 ## This macro is used only for dependencies and for distclean
 test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct) \
@@ -97,7 +99,7 @@ test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct
 	$(test-out-segfault) $(test-out-isas) \
 	$(test-out-internet2) $(test-out-internet-dev) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
-	$(test-out-regexp) $(test-out-tz) $(test-out-cond) \
+	$(test-out-regexp) $(test-out-tz) $(test-out-cond) $(test-out-misc-dev) \
 	utf8.Rout reg-translation.Rout iconv.Rout
 
 .SUFFIXES:
@@ -192,10 +194,11 @@ test-all-basics:
 	  $(MK) test-$${name} || exit 1; \
 	done
 
-## if you change this, also edit Makefile.install
+## if you change this, also edit *both* Makefile.install{,.win}
 ## The definitions for Standalone are in Makefile.{in,win}.
+##  'Packages' slow ==> last
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp Translation \
-    Internet2 CRANtools Segfault Standalone Conditions Packages
+    Internet2 CRANtools Segfault Standalone Conditions Misc-dev Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -337,6 +340,11 @@ test-Segfault:
 test-Translation:
 	@$(ECHO) "running tests of translation"
 	@$(MK) reg-translation.Rout RVAL_IF_DIFF=0
+
+test-Misc-dev:
+	@$(ECHO) "running other miscellaneous devel tests"
+	@$(MK) $(test-out-misc-dev) RVAL_IF_DIFF=1
+
 
 ## Not run by any other target
 test-UTF-8:
@@ -536,4 +544,5 @@ INSTFILES = README \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  $(test-src-regexp) $(test-src-CRANtools) \
 	  $(test-src-tz) $(test-src-cond) reg-translation.R iconv.R \
+	  $(test-src-misc-dev) \
 	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv eval-fns.R
