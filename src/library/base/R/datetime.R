@@ -552,7 +552,9 @@ Summary.POSIXlt <- function (..., na.rm, finite = FALSE)
     args <- list(...)
     tz <- do.call(.check_tzones, args)
     args <- lapply(args, as.POSIXct)
-    val <- do.call(.Generic, c(args, na.rm = na.rm, finite = finite))
+    val <- switch(.Generic,
+                  max = , min = do.call(.Generic, c(args, na.rm = na.rm)), # not (yet?) finite
+                  range =       do.call(range,    c(args, na.rm = na.rm, finite = finite)))
     as.POSIXlt(.POSIXct(val, tz))
 }
 
