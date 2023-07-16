@@ -1580,7 +1580,7 @@ dnl     ;;
     esac
     case  "${FC}" in
       ## Intel compilers
-      *ifc|*ifort)
+      *ifc|*ifort|*ifx)
         fpicflags="-fpic"
         ;;
       ## Nvidia (formerly Portland Group)

@@ -29492,7 +29492,7 @@ printf "%s\n" "$as_me: WARNING: Use of flat namespace is requested by user." >&2
     esac
     case  "${FC}" in
       ## Intel compilers
-      *ifc|*ifort)
+      *ifc|*ifort|*ifx)
         fpicflags="-fpic"
         ;;
       ## Nvidia (formerly Portland Group)
