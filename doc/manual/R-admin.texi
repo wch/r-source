@@ -5003,6 +5003,14 @@ tested with @R{}.
 There have been no recent reports on the use of Intel compilers: this
 section is left in case it provides helpful hints.
 
+In 2021 the C/C++ compilers migrated to be based on LLVM (now named
+@command{icx}), with the Fortran compiler @command{ifx} following (but
+with a front-end based in earlier Intel compiler, not on
+@command{flang}).  There have been no reports on the LLVM-based
+compilers.
+@c https://www.intel.com/content/www/us/en/developer/articles/technical/adoption-of-llvm-complete-icx.html
+The earlier compilers remain available, now dubbed `Classic'.
+
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux.  Brian Ripley used version 9.0 of the compilers for
 @cputype{x86_64} on Fedora Core 5 with
