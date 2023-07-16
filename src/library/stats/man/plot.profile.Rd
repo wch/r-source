@@ -48,7 +48,9 @@
   elliptical.
 }
 \author{
-  Originally, D. M. Bates and W. N. Venables.  (For S in 1996.)
+  Originally, D. M. Bates and W. N. Venables for S (in 1996.)
+  Taken from \pkg{MASS} where these functions were re-written by
+  B. D. Ripley for \R (by 1998).
 }
 \seealso{
   \code{\link{profile.glm}}, \code{\link{profile.nls}}.
