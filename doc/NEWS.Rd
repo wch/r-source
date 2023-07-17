@@ -90,6 +90,10 @@
 
       \item \command{configure} will warn if it encounters a 32-bit
       build, as that is nowadays almost untested.
+
+      \item There is some support for building with Intel's LLVM-based
+      compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
+      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.1.0.
     }
   }
 

@@ -58,6 +58,12 @@
 
 #include <errno.h>
 
+/* Intel compilers for Linux do have matherr, but they do not have the
+   defines in math.h.  So we skip this for Intel */
+
+#if defined __INTEL_COMPILER || defined __INTEL_LLVM_COMPILER
+#undef HAVE_MATHERR
+#endif
 #ifdef HAVE_MATHERR
 
 /* Override the SVID matherr function:
