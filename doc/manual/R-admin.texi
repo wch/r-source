@@ -3877,22 +3877,24 @@ in the BLIS libraries.
 @node MKL, Shared BLAS, OpenBLAS and BLIS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
-Linux, there is Intel's Math Kernel Library@footnote{Sometimes known as
+Linux, there is Intel's Math Kernel Library@footnote{Nowadays known as
 `Intel oneAPI Math Kernel Library' or even `oneMKL'.}.  You are
-encouraged to read the documentation which is installed with the
-library before attempting to link to MKL.  This includes a `link line
-advisor' which will suggest appropriate incantations: its use is
-recommended.  Or see
-@uref{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.vpt6qp}.
+encouraged to read the documentation which is installed with the library
+before attempting to link to MKL.  This includes a `link line advisor'
+which will suggest appropriate incantations: its use is recommended.  Or
+see
+@uref{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.vpt6qp}
+(which at the time of writing selected the Intel library for linking with
+GCC).
 
 There are also versions of MKL for macOS@footnote{The issue for macOS
 has been the use of double-complex routines.} and Windows, but when
 these have been tried they did not work with the default compilers used
 for @R{} on those platforms.
 
-The MKL interface has changed several times but has been stable in
-recent years: the following examples have been used with versions 10.3
-to 2023.0.0, for GCC compilers on @cputype{x86_64} CPUs.
+The following examples have been used with MKL versions 10.3 to
+2023.1.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
+@ref{Intel compilers}.)
 
 To use a sequential version of MKL we used
 
@@ -3936,6 +3938,10 @@ will produce incorrect results. @R{} does not have to be rebuilt to use MKL,
 but @code{configure} includes tests which may discover some errors such as a
 failure to set the correct OpenMP and MKL interface layer.
 
+Note that the Debian/Ubuntu distribution can be quite old (for example
+@code{2020.4} in mid-2023 when @code{2023.1} was current): this can be
+important for the LAPACK version included.
+
 @noindent
 The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
@@ -3948,6 +3954,15 @@ applications that require some of the FFTW3 functionality unsupported in
 MKL.  Please see the MKL manuals for description of these limitations and
 for instructions on how to create a custom version of MKL which excludes the
 FFTW3 wrappers.
+
+There is Intel documentation for building @R{} with MKL at
+@uref{https://www.intel.com/content/www/us/en/developer/articles/technical/using-onemkl-with-r.html}:
+that includes
+@example
+-Wl,--no-as-needed
+@end example
+@noindent
+which we have not found necessary.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 @c It was reported in 2015 that
@@ -5000,20 +5015,71 @@ tested with @R{}.
 @node Intel compilers,  , flang, Linux
 @subsection Intel compilers
 
-There have been no recent reports on the use of Intel compilers: this
-section is left in case it provides helpful hints.
+In late 2020 Intel revamped their C/C++ compilers (and later their
+Fortran compiler) to use an LLVM back-end.  Those compilers are only for
+@cputype{x86_64}: the earlier compilers (now branded `Classic') also
+supported @cputype{ix86} and 32-bit builds on @cputype{x86_64}.
 
-In 2021 the C/C++ compilers migrated to be based on LLVM (now named
-@command{icx}), with the Fortran compiler @command{ifx} following (but
-with a front-end based in earlier Intel compiler, not on
-@command{flang}).  There have been no reports on the LLVM-based
-compilers.
-@c https://www.intel.com/content/www/us/en/developer/articles/technical/adoption-of-llvm-complete-icx.html
-The earlier compilers remain available, now dubbed `Classic'.
+The compilers are now all under Intel's `oneAPI' brand. The revamped
+ones are @command{icx}, @command{icpx} and @command{ifx}; the classic
+compilers were @command{icc}, @command{icpc} and @command{ifort}.  The
+former are identiifed by the C macro @code{__INTEL_LLVM_COMPILER}, the
+latter by @code{__INTEL_COMPILER}.
 
-Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
-Linux.  Brian Ripley used version 9.0 of the compilers for
-@cputype{x86_64} on Fedora Core 5 with
+Standalone installers (which are free-of-charge) are available from
+@uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
+they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
+
+We tried the LLVM-based compilers in openAPI 2023.1.0 using
+@example
+IP=/path/to/compilers/bin/intel64
+CC=$IP/icx
+CXX=$IP/icpx
+FC=$IP/ifx
+CFLAGS="-O3 -fp-model precise"
+FFLAGS="-O3 -fp-model precise"
+CXXFLAGS="-O3 -fp-model precise"
+LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
+@end example
+@noindent
+but the build segfaulted in the checks (in complex arithmetic in
+@file{lapack.R}).
+
+Intel document building @R with MKL: for the Intel compilers this needs
+something like
+@example
+MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
+export LD_LIBRARY_PATH=$MKL_LIB_PATH
+MKL="-L$@{MKL_LIB_PATH@} -lmkl_intel_lp64 -lmkl_core -lmkl_sequential"
+./configure --with-blas="$MKL" --with-lapack
+@end example
+@noindent
+and the build passed it checks.  It may also be possible to use
+a compiler option like @option{-qmkl=sequential}.
+
+The earlier compilers remained available until the second half of 2023.
+Version 2021.9.0 (shipped as part of oneAPI 2023.1.0) was tested in July
+2023 using
+
+@example
+IP=/path/to/compilers/bin/intel64
+CC=$IP/icc 
+CXX=$IP/icpc
+FC=$IP/ifort
+CFLAGS="-O3 -ip -fp-model precise"
+FFLAGS="-O3 -fp-model precise"
+CXXFLAGS="-O3  -fp-model precise"
+LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
+@end example
+@noindent
+but also segfaulted in the checks.
+
+There have been no other recent reports on the use of Intel compilers:
+this section is left in case it provides helpful hints for people using
+the 'classic' compilers.
+
+Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
+Fedora Core 5 with
 
 @example
 CC=icc
