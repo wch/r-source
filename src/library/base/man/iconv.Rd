@@ -166,7 +166,7 @@ iconvlist()
   the official (and most widely supported) name for \sQuote{Mac Roman}
   (\url{https://en.wikipedia.org/wiki/Mac_OS_Roman}).
 
-  Using \code{sub} substiutes each non-onvertible \emph{byte} in the
+  Using \code{sub} substitutes each non-convertible \emph{byte} in the
   input, so when converting from UTF-8 a non-convertible character may
   be replaced by two or more bytes.  Using \code{sub = "c99"} or
   \code{sub = "Unicode"} will be clearer.

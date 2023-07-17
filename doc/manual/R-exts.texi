@@ -2200,8 +2200,8 @@ routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
 resolves such dependencies to a static Fortran library when
 @file{Rblas.dll} is built.}  included following it, as most BLAS
-libraries are written at least partially in Fortran.  Howeever, it can
-be omitted if the package comtains Fortran source code as that will add
+libraries are written at least partially in Fortran.  However, it can
+be omitted if the package contains Fortran source code as that will add
 @code{FLIBS} to the link line.
 
 @item LAPACK_LIBS
