@@ -2200,8 +2200,8 @@ routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
 resolves such dependencies to a static Fortran library when
 @file{Rblas.dll} is built.}  included following it, as most BLAS
-libraries are written at least partially in Fortran.  Howeever, it can
-be omitted if the package comtains Fortran source code as that will add
+libraries are written at least partially in Fortran.  However, it can
+be omitted if the package contains Fortran source code as that will add
 @code{FLIBS} to the link line.
 
 @item LAPACK_LIBS
@@ -3122,8 +3122,8 @@ in use).  C++11 support became mandatory in @R{} 4.0.0.
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
 
-C has had standards C89/C90, C99, C11, C17 (also known as C18) and C23
-is in final draft and expected to be publishedd in early 2024.  C11 was a
+C has had standards C89/C90, C99, C11, C17 (also known as C18), and C23
+is in final draft and expected to be published in early 2024.  C11 was a
 minor change to C99 which introduced some new features and made others
 optional, and C17 is a `bug-fix' update to C11.  On the other hand, C23
 makes extensive changes, including making @code{bool}, @code{true} and
@@ -5389,7 +5389,7 @@ names, which are (confusingly)
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
 use.  Fortunately only the integer values are likely to be relevant.
-If at all possible, use one of the LTS versions (8, 11, 17, 21 @dots{})
+If at all possible, use one of the @acronym{LTS} versions (8, 11, 17, 21 @dots{})
 as the minimum version.  The preferred form of version specification is
 @example
 SystemRequirements: Java (>= 11)
@@ -7496,10 +7496,10 @@ another @file{Rd} file, it is helpful to use this as an additional
 @code{\alias}.
 
 Skeletons of documentation for a package can be generated using the
-function @code{promptPackage()}.  If the @code{final = LIBS} argument
+function @code{promptPackage()}.  If the @code{final = TRUE} argument
 is used, then the @file{Rd} file will be generated in final form, containing
-the information that would be produced up to
-@code{library(help = @var{pkgname})}.  Otherwise (the default) comments
+the information that would be produced by
+@code{library(help = @var{pkgname})}. Otherwise (the default) comments
 will be inserted giving suggestions for content.
 
 Apart from the mandatory @code{\name} and @code{\title} and the
@@ -7535,7 +7535,8 @@ For example
 @noindent
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
-upper case).  Whitespace between the first and second braced expressions
+upper case) and not end in a period.
+Whitespace between the first and second braced expressions
 is not allowed.  Markup (e.g.@: @code{\code}) within the section title
 may cause problems with the latex conversion (depending on the version
 of macro packages such as @samp{hyperref}) and so should be avoided.
