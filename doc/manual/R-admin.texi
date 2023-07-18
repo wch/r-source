@@ -1067,8 +1067,8 @@ Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
-Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 2021.1)
-         c++23 (from 2022.2)
+Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
+         c++20 gnu++20 (from 2021.1) c++2b gnu++2b (from 2022.2)
 @end example
 @noindent
 (Those for LLVM @command{clang++} are documented at
@@ -5023,8 +5023,8 @@ supported @cputype{ix86} and 32-bit builds on @cputype{x86_64}.
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; the classic
 compilers were @command{icc}, @command{icpc} and @command{ifort}.  The
-former are identiifed by the C macro @code{__INTEL_LLVM_COMPILER}, the
-latter by @code{__INTEL_COMPILER}.
+former are identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER},
+the latter by @code{__INTEL_COMPILER}.
 
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
@@ -5068,15 +5068,23 @@ CXX=$IP/icpc
 FC=$IP/ifort
 CFLAGS="-O3 -ip -fp-model precise"
 FFLAGS="-O3 -fp-model precise"
+FCFLAGS="-free -O3 -fp-model precise"
 CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
 but also segfaulted in the checks.
 
+One quirk is that the Intel Fortran comoilers do not accept @file{.f95}
+files, only @file{.f90} for free-format Fortran.  @command{configure}
+adds @option{-Tf} which tells the compiler this is indeed a Fortran
+file, but @option{-free} is needed to say it is free-format.  Hence
+setting the @code{FCFLAGS} macro.
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
+
 There have been no other recent reports on the use of Intel compilers:
 this section is left in case it provides helpful hints for people using
-the 'classic' compilers.
+the 'classic' compilers while they are still available.
 
 Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
 Fedora Core 5 with

@@ -1228,7 +1228,8 @@ C++@footnote{either or both of which may not be supported on particular
 platforms.  Their main use is on macOS, but unfortunately recent
 versions of the macOS SDK have removed much of the support for Objective
 C v1.0 and Objective C++.} with associated extensions @file{.c},
-@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
+@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or
+@file{.f95},@footnote{This is not accepted by the Intel Fortran compiler.}
 @file{.m}, and @file{.mm}, respectively.  We recommend using @file{.h}
 for headers, also for C++@footnote{Using @file{.hpp} is not guaranteed
 to be portable.} or Fortran 9x include files.  (Use of extension
