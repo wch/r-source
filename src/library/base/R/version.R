@@ -45,16 +45,18 @@ function(x, strict = TRUE, regexp, classes = NULL)
     if(!is.character(x)) {
         msg <- gettextf("invalid non-character version specification 'x' (type: %s)",
                         typeof(x))
+        warning(msg, domain = NA, immediate. = TRUE)        
         if(nzchar(Sys.getenv("_R_CALLS_INVALID_NUMERIC_VERSION_"))) {
+            ## Showing the call stack as part of warning() may truncate,
+            ## so do it via message() ...
             calls <- sys.calls()
-            msg <- paste0(msg, "\n",
-                          gettext("Calls"), ":\n",
+            msg <- paste0(gettext("Calls"), ":\n",
                           paste0(sprintf("%2i: ", seq_along(calls)),
                                  vapply(calls, deparse1, "",
                                         collapse = "\n    "),
                                  collapse = "\n"))
+            message(msg, domain = NA)
         }
-        warning(msg, domain = NA, immediate. = TRUE)
     }
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
