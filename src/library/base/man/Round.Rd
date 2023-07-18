@@ -15,7 +15,7 @@ ceiling(x)
 floor(x)
 trunc(x, \dots)
 
-round(x, digits = 0)
+round(x, digits = 0, \dots)
 signif(x, digits = 6)
 }
 \description{

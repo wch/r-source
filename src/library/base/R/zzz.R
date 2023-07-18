@@ -252,7 +252,7 @@ assign("log", function(x, base=exp(1)) UseMethod("log"),
 assign("names<-", function(x, value) UseMethod("names<-"),
        envir = .GenericArgsEnv)
 assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
-assign("round", function(x, digits=0) UseMethod("round"),
+assign("round", function(x, digits = 0, ...) UseMethod("round"),
        envir = .GenericArgsEnv)
 assign("seq.int", function(from, to, by, length.out, along.with, ...)
        UseMethod("seq.int"), envir = .GenericArgsEnv)
