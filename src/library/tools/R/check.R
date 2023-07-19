@@ -5310,6 +5310,7 @@ add_dummies <- function(dir, Log)
             INSTALL_opts <- paste(INSTALL_opts, collapse = " ")
             args <- c("INSTALL", "-l", shQuote(libdir), INSTALL_opts,
                       shQuote(if (WINDOWS) utils::shortPathName(pkgdir) else pkgdir))
+            tOK <- FALSE
             if (!use_install_log) {
                 ## Case A: No redirection of stdout/stderr from installation.
                 ## This is very rare: needs _R_CHECK_USE_INSTALL_LOG_ set
@@ -5367,6 +5368,7 @@ add_dummies <- function(dir, Log)
                         if(td[3L] >= td0) {
                             cpu <- sum(td[-3L])
                             if(cpu >= pmax(theta * td[3L], 1)) {
+                                tOK <- TRUE
                                 ratio <- round(cpu/td[3L], 1L)
                                 cat(sprintf("\n  Installation took CPU time %g times elapsed time\n",
                                             ratio))
@@ -5860,7 +5862,10 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, .format_lines_with_indent(notes), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
-                } else resultLog(Log, "OK")
+                } else {
+                    if(!tOK) resultLog(Log, "OK")
+                    else noteLog(Log)
+                }
                 if (length(lines00)) {
                     ll <- sub("using", "used", lines00)
                     for (l in ll)  messageLog(Log, l)
