@@ -4156,6 +4156,12 @@ aggregate) the ratio of CPU time to elapsed time exceeds this threshold
 Windows.
 Default: @code{NA}.
 
+@item _R_CHECK_INSTALL_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+Report if for installation the ratio of CPU time to elapsed time exceeds
+this threshold (and the CPU time is at least one second).  Not supported
+on Windows, only uses if @code{_R_CHECK_TIMINGS_} is set
+Default: @code{NA}.
+
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
 @var{value} a logical constant) giving additional arguments for the

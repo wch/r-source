@@ -5360,6 +5360,19 @@ add_dummies <- function(dir, Log)
                         run_Rcmd(args, outfile, timeout = tlim)
                     t2 <- proc.time()
                     print_time(t1, t2, Log)
+                    theta <- as.numeric(Sys.getenv("_R_CHECK_INSTALL_TIMING_CPU_TO_ELAPSED_THRESHOLD_",
+                                                   NA_character_))
+                    if(!WINDOWS && !is.na(theta)) {
+                        td <- t2 -t1
+                        if(td[3L] >= td0) {
+                            cpu <- sum(td[-3L])
+                            if(cpu >= pmax(theta * td[3L], 1)) {
+                                ratio <- round(cpu/td[3L], 1L)
+                                cat(sprintf("\n  Installation took CPU time %g times elapsed time\n",
+                                            ratio))
+                            }
+                        }
+                    }
                     lines <- readLines(outfile, warn = FALSE)
                 }
                 if (install_error) {
