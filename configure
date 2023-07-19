@@ -26593,7 +26593,7 @@ then :
   ac_cv_prog_c_openmp='none needed'
 else $as_nop
   ac_cv_prog_c_openmp='unsupported'
-	  	  	  	  	            	  	            	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  	  	  	  	            	  	            	  	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do
@@ -28090,7 +28090,7 @@ then :
   ac_cv_prog_fc_openmp='none needed'
 else $as_nop
   ac_cv_prog_fc_openmp='unsupported'
-	  	  	  	  	            	  	            	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  	  	  	  	            	  	            	  	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do
@@ -42704,7 +42704,7 @@ then :
   ac_cv_prog_cxx_openmp='none needed'
 else $as_nop
   ac_cv_prog_cxx_openmp='unsupported'
-	  	  	  	  	            	  	            	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  	  	  	  	            	  	            	  	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do
@@ -53754,7 +53754,7 @@ then :
   ac_cv_prog_fc_openmp='none needed'
 else $as_nop
   ac_cv_prog_fc_openmp='unsupported'
-	  	  	  	  	            	  	            	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  	  	  	  	            	  	            	  	  	  	  	                                	  	  	  	  	  	  	  	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do
