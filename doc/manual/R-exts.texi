@@ -3120,6 +3120,17 @@ C++17 as from @R{} 3.4.0, for C++20 from @R{} 4.0.0 and for C++23 from
 @R{} 4.3.0 (although they may not be supported by the compilers
 in use).  C++11 support became mandatory in @R{} 4.0.0.
 
+The @file{.so}/@file{.dll} in a package may need to be linked by the
+C++ compiler if it or any library it links to contains compiled C++
+code.  Dynamic linking usually brings in the C++ runtime library
+(commonly @code{libstdc++} but can be, for example, @code{libc++}) but
+static linking (as used for external libraries on Windows and macOS)
+will not.  @command{R CMD INSTALL} will link with the C++ compiler if
+there are any top-level C++ files in @file{src}, but not if these are
+all in subdirectories.  The simplest way to force linking by the C++
+compiler is to include an empty C++ file in @file{src}, as used by
+package @pkg{rgeos}.
+
 @node C standards, Using @command{cmake}, Using C++ code, Configure and cleanup
 @subsection C standards
 
