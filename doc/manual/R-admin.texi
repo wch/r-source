@@ -1222,7 +1222,7 @@ confused compiler messages.
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
-@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the only
+@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the
 LLVM compiler relevant to @R{} is @command{clang} for which this can be
 selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
 @example
@@ -1246,6 +1246,17 @@ code compiled with @command{gfortran}.
 
 It is said to be particularly beneficial to use @option{-O3} for
 @command{clang} in conjunction with LTO.
+
+It seems that @command{flang} may support LTO, but with no documentation
+as yet.
+
+The 2020s versions of Intel's C/C++ compilers are based on LLVM and as
+such support LLVM-style LTO, both `full' and `thin'.  This might use
+something like
+@example
+LTO=-flto=thin -flto-jobs=8
+@end example
+
 
 @node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
 @subsubsection LTO for package checking
@@ -3893,7 +3904,7 @@ these have been tried they did not work with the default compilers used
 for @R{} on those platforms.
 
 The following examples have been used with MKL versions 10.3 to
-2023.1.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
+2023.2.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
 @ref{Intel compilers}.)
 
 To use a sequential version of MKL we used
@@ -5015,30 +5026,34 @@ tested with @R{}.
 @node Intel compilers,  , flang, Linux
 @subsection Intel compilers
 
+@menu
+* `Classic compilers'::
+@end menu
+
 In late 2020 Intel revamped their C/C++ compilers (and later their
 Fortran compiler) to use an LLVM back-end.  Those compilers are only for
 @cputype{x86_64}: the earlier compilers (now branded `Classic') also
 supported @cputype{ix86} and 32-bit builds on @cputype{x86_64}.
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
-ones are @command{icx}, @command{icpx} and @command{ifx}; the classic
-compilers were @command{icc}, @command{icpc} and @command{ifort}.  The
-former are identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER},
-the latter by @code{__INTEL_COMPILER}.
+ones are @command{icx}, @command{icpx} and @command{ifx}; they
+are identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do
+not define @code{__INTEL_COMPILER}).
 
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the LLVM-based compilers in openAPI 2023.1.0 using
+We tried the LLVM-based compilers in oneAPI 2023.2.0 using
 @example
 IP=/path/to/compilers/bin/intel64
 CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
-CFLAGS="-O3 -fp-model precise"
-FFLAGS="-O3 -fp-model precise"
-CXXFLAGS="-O3 -fp-model precise"
+CFLAGS="-O3 -fp-model precise -Wall"
+FFLAGS="-O3 -fp-model precise -warn all,noexternals"
+FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
+CXXFLAGS="-O3 -fp-model precise -Wall"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
@@ -5049,15 +5064,37 @@ Intel document building @R with MKL: for the Intel compilers this needs
 something like
 @example
 MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
-export LD_LIBRARY_PATH=$MKL_LIB_PATH
+INTEL_LIB_PATH /path/to/compiler/linux/compiler/lib/intel64_lin
+export LD_LIBRARY_PATH $@{MKL_LIB_PATH@}:$@{INTEL_LIB_PATH@}
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_intel_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
 @end example
 @noindent
-and the build passed it checks.  It may also be possible to use
+and the build passed its checks.  It may also be possible to use
 a compiler option like @option{-qmkl=sequential}.
 
-The earlier compilers remained available until the second half of 2023.
+One quirk is that the Intel Fortran compilers do not accept @file{.f95}
+files, only @file{.f90} for free-format Fortran.  @command{configure}
+adds @option{-Tf} which tells the compiler this is indeed a Fortran file
+(and needs to immediately precede the file name), but @option{-free} is
+needed to say it is free-format.  Hence setting the @code{FCFLAGS}
+macro.
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
+
+The compilers have many options, some of which are still under
+development for the new compilers. As the C/C++ and Fortran compilers
+have different origins for their front-ends, there is little consistency
+in their options. The new compilers support clang-style LTO, at least
+for C/C++.
+
+@node `Classic compilers',  , Intel compilers, Intel compilers
+@subsubsection `Classic compilers'
+
+The classic compilers were @command{icc}, @command{icpc} and
+@command{ifort}.  They are identiifed by the C/C++ macro
+@code{__INTEL_COMPILER}.
+
+The classic compilers remained available until the second half of 2023.
 Version 2021.9.0 (shipped as part of oneAPI 2023.1.0) was tested in July
 2023 using
 
@@ -5068,23 +5105,15 @@ CXX=$IP/icpc
 FC=$IP/ifort
 CFLAGS="-O3 -ip -fp-model precise"
 FFLAGS="-O3 -fp-model precise"
-FCFLAGS="-free -O3 -fp-model precise"
 CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
 but also segfaulted in the checks.
 
-One quirk is that the Intel Fortran comoilers do not accept @file{.f95}
-files, only @file{.f90} for free-format Fortran.  @command{configure}
-adds @option{-Tf} which tells the compiler this is indeed a Fortran
-file, but @option{-free} is needed to say it is free-format.  Hence
-setting the @code{FCFLAGS} macro.
-@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
-
-There have been no other recent reports on the use of Intel compilers:
-this section is left in case it provides helpful hints for people using
-the 'classic' compilers while they are still available.
+There have been no other recent reports on the use of these compilers:
+the rest of this section is left in case it provides helpful hints for
+people using them while they are still available.
 
 Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
 Fedora Core 5 with
