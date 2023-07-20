@@ -1,7 +1,7 @@
 # This file is part of Autoconf.			-*- Autoconf -*-
 # Programming languages support.
 # Copyright (C) 2001-2012 Free Software Foundation, Inc.
-# Copyright (C) 2015-2018 R Core Team
+# Copyright (C) 2015-2023 R Core Team
 
 # This file is part of Autoconf.  This program is free
 # software; you can redistribute it and/or modify it under the
@@ -29,6 +29,7 @@
 # Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
 # [a small part, modified for clang and Intel in 2015,6, Solaris in 2017.]
+# [Change for Intel preferring -fiopenmp and deprecating -fopenmp in 2023.]
 
 # _AC_LANG_OPENMP is a language-dependent program defined in c.m4 in
 # the autoconf library.
@@ -65,6 +66,7 @@ AC_DEFUN([R_OPENMP],
 	  dnl   Intel                 -openmp (deprecated)
           dnl   (https://software.intel.com/en-us/node/581863,
 	  dnl    https://software.intel.com/en-us/node/525020)
+	  dnl   2023 Intel: prefers -fiopenmp
 	  dnl   SGI C, PGI C          -mp
 	  dnl   Tru64 Compaq C        -omp
 	  dnl   IBM C (AIX, Linux)    -qsmp=omp
@@ -78,7 +80,7 @@ AC_DEFUN([R_OPENMP],
 	  dnl therefore the loop will continue searching for an option, and
 	  dnl no output file called 'penmp' or 'mp' is created.
 	  dnl Sept 2017: Solaris needs -xopenmp before -fopenmp
-	  for ac_option in -xopenmp -fopenmp -qopenmp \
+	  for ac_option in -xopenmp -fiopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do

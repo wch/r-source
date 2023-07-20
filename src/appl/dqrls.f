@@ -86,7 +86,7 @@ c
 c
 c     internal variables.
 c
-      integer info,j,jj,kk
+      integer info,i,j,jj,kk
 c
 c     reduce x.
 c
