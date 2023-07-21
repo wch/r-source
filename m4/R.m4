@@ -202,6 +202,12 @@ if test "${r_cv_prog_texi2any_v5}" != yes; then
 else
   TEXI2ANY="${TEXI2ANY}"
 fi
+if test "${r_cv_prog_texi2any_v7}" != yes; then 
+  HAVE_TEXI2ANY_V7_TRUE='#'
+else
+  HAVE_TEXI2ANY_V7_TRUE=
+fi
+AC_SUBST(HAVE_TEXI2ANY_V7_TRUE)
 ])# R_PROG_TEXI2ANY
 
 ## _R_PROG_TEXI2ANY_VERSION
@@ -212,23 +218,37 @@ fi
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
 AC_DEFUN([_R_PROG_TEXI2ANY_VERSION],
-[AC_CACHE_CHECK([whether texi2any version is at least 5.1],
+[AC_CACHE_VAL([r_cv_prog_texi2any_version],
+[r_cv_prog_texi2any_version=`${TEXI2ANY} --version | \
+  grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`])
+AC_CACHE_VAL([r_cv_prog_texi2any_version_maj],
+[r_cv_prog_texi2any_version_maj=`echo ${r_cv_prog_texi2any_version} | \
+  cut -f1 -d.`])
+AC_CACHE_VAL([r_cv_prog_texi2any_version_min],
+[r_cv_prog_texi2any_version_min=`echo ${r_cv_prog_texi2any_version} | \
+  cut -f2 -d. | tr -dc '0123456789.'`])
+AC_CACHE_CHECK([whether texi2any version is at least 5.1],
                 [r_cv_prog_texi2any_v5],
-[texi2any_version=`${TEXI2ANY} --version | \
-  grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`
-texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
-texi2any_version_min=`echo ${texi2any_version} | \
-  cut -f2 -d. | tr -dc '0123456789.' `
-if test -z "${texi2any_version_maj}" \
-     || test -z "${texi2any_version_min}"; then
+[if test -z "${r_cv_prog_texi2any_version_maj}" \
+     || test -z "${r_cv_prog_texi2any_version_min}"; then
   r_cv_prog_texi2any_v5=no
-elif test ${texi2any_version_maj} -gt 5; then
+elif test ${r_cv_prog_texi2any_version_maj} -gt 5; then
   r_cv_prog_texi2any_v5=yes
-elif test ${texi2any_version_maj} -lt 5 \
-     || test ${texi2any_version_min} -lt 1; then
+elif test ${r_cv_prog_texi2any_version_maj} -lt 5 \
+     || test ${r_cv_prog_texi2any_version_min} -lt 1; then
   r_cv_prog_texi2any_v5=no
 else
   r_cv_prog_texi2any_v5=yes
+fi])
+## Also record whether texi2any is at least 7 to appropriately handle
+## HTML and EPUB output changes, see
+## <<https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
+AC_CACHE_VAL([r_cv_prog_texi2any_v7],
+[if test ${r_cv_prog_texi2any_v5} = yes \
+     && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
+  r_cv_prog_texi2any_v7=yes
+else
+  r_cv_prog_texi2any_v7=no
 fi])
 ])# _R_PROG_TEXI2ANY_VERSION
 
