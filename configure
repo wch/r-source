@@ -935,6 +935,7 @@ R_RD4PDF
 KPSEWHICH
 TEXI2DVICMD
 TEXI2DVI
+HAVE_TEXI2ANY_V7_TRUE
 INSTALL_INFO
 TEXI2ANY
 MAKEINDEX
@@ -5815,24 +5816,43 @@ fi
 done
 
 if test -n "${TEXI2ANY}"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 5.1" >&5
+  if test ${r_cv_prog_texi2any_version+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  r_cv_prog_texi2any_version=`${TEXI2ANY} --version | \
+  grep -E '^(makeinfo|texi2any)' | sed 's/[^)]*) \(.*\)/\1/'`
+fi
+
+if test ${r_cv_prog_texi2any_version_maj+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  r_cv_prog_texi2any_version_maj=`echo ${r_cv_prog_texi2any_version} | \
+  cut -f1 -d.`
+fi
+
+if test ${r_cv_prog_texi2any_version_min+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  r_cv_prog_texi2any_version_min=`echo ${r_cv_prog_texi2any_version} | \
+  cut -f2 -d. | tr -dc '0123456789.'`
+fi
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 5.1" >&5
 printf %s "checking whether texi2any version is at least 5.1... " >&6; }
 if test ${r_cv_prog_texi2any_v5+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-  texi2any_version=`${TEXI2ANY} --version | \
-  grep -E '^(makeinfo|texi2any)' | sed 's/[^)]*) \(.*\)/\1/'`
-texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
-texi2any_version_min=`echo ${texi2any_version} | \
-  cut -f2 -d. | tr -dc '0123456789.' `
-if test -z "${texi2any_version_maj}" \
-     || test -z "${texi2any_version_min}"; then
+  if test -z "${r_cv_prog_texi2any_version_maj}" \
+     || test -z "${r_cv_prog_texi2any_version_min}"; then
   r_cv_prog_texi2any_v5=no
-elif test ${texi2any_version_maj} -gt 5; then
+elif test ${r_cv_prog_texi2any_version_maj} -gt 5; then
   r_cv_prog_texi2any_v5=yes
-elif test ${texi2any_version_maj} -lt 5 \
-     || test ${texi2any_version_min} -lt 1; then
+elif test ${r_cv_prog_texi2any_version_maj} -lt 5 \
+     || test ${r_cv_prog_texi2any_version_min} -lt 1; then
   r_cv_prog_texi2any_v5=no
 else
   r_cv_prog_texi2any_v5=yes
@@ -5840,6 +5860,18 @@ fi
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_texi2any_v5" >&5
 printf "%s\n" "$r_cv_prog_texi2any_v5" >&6; }
+if test ${r_cv_prog_texi2any_v7+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test ${r_cv_prog_texi2any_v5} = yes \
+     && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
+  r_cv_prog_texi2any_v7=yes
+else
+  r_cv_prog_texi2any_v7=no
+fi
+fi
+
 
   for ac_prog in ${INSTALL_INFO} ginstall-info install-info
 do
@@ -5902,6 +5934,12 @@ printf "%s\n" "$as_me: WARNING: ${warn_info}" >&2;}
 else
   TEXI2ANY="${TEXI2ANY}"
 fi
+if test "${r_cv_prog_texi2any_v7}" != yes; then
+  HAVE_TEXI2ANY_V7_TRUE='#'
+else
+  HAVE_TEXI2ANY_V7_TRUE=
+fi
+
 
 for ac_prog in ${TEXI2DVI} texi2dvi
 do
@@ -8856,11 +8894,11 @@ if test x$ac_prog_cxx_stdcxx = xno
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $CXX option to enable C++11 features" >&5
 printf %s "checking for $CXX option to enable C++11 features... " >&6; }
-if test ${ac_cv_prog_cxx_11+y}
+if test ${ac_cv_prog_cxx_cxx11+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-  ac_cv_prog_cxx_11=no
+  ac_cv_prog_cxx_cxx11=no
 ac_save_CXX=$CXX
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -8902,11 +8940,11 @@ if test x$ac_prog_cxx_stdcxx = xno
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $CXX option to enable C++98 features" >&5
 printf %s "checking for $CXX option to enable C++98 features... " >&6; }
-if test ${ac_cv_prog_cxx_98+y}
+if test ${ac_cv_prog_cxx_cxx98+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-  ac_cv_prog_cxx_98=no
+  ac_cv_prog_cxx_cxx98=no
 ac_save_CXX=$CXX
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -27060,7 +27098,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27065: \"$ac_link\") >&5
+(eval echo $as_me:27103: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27136,7 +27174,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27141: \"$ac_link\") >&5
+(eval echo $as_me:27179: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
