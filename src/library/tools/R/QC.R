@@ -7383,8 +7383,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         startsWith(language, "en-")) &&
        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
                                         "FALSE"))) {
-        a <- .aspell_package_description_for_CRAN(dir)
-        if(NROW(a))
+        a <- tryCatch(.aspell_package_description_for_CRAN(dir),
+                      error = identity)
+        if(inherits(a, "error"))
+            out$aspell_package_description_error <- conditionMessage(a)
+        else if(NROW(a))
             out$spelling <- a
     }
 
@@ -8508,6 +8511,9 @@ function(x, ...)
                                       }))),
                       collapse = "\n")
             })),
+      if(length(y <- x$aspell_package_description_error)) {
+          paste(y, collapse = "\n")
+      },
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
           paste(c("Possibly misspelled words in DESCRIPTION:",
