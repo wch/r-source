@@ -506,7 +506,7 @@ tools/missing
 
 m4/openmp.m4
   Copyright (C) 2001-2012 Free Software Foundation, Inc.
-  Copyright (C) 2015-2016 R Core Team
+  Copyright (C) 2015-2023 R Core Team
 
   Under GPL-3 with the Autoconf Configure Script Exception, version 3.0.
 
