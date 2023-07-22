@@ -242,7 +242,7 @@ else
 fi])
 ## Also record whether texi2any is at least 7 to appropriately handle
 ## HTML and EPUB output changes, see
-## <<https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
+## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
 AC_CACHE_VAL([r_cv_prog_texi2any_v7],
 [if test ${r_cv_prog_texi2any_v5} = yes \
      && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
