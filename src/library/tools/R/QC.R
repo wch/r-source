@@ -2613,7 +2613,9 @@ function(package, dir, lib.loc = NULL)
         ## Drop the ones where gArgs is NULL (presumably the language
         ## elements) or mArgs is NULL (a primitive?).
         if(is.null(gArgs) || is.null(mArgs)) return()
-        if(gName == "round" && mName == "round.POSIXt") return() # exception
+        ## handle round.POSIXt and packages defining methods for round()
+        ## without a ... argument.
+        if(gName == "round" && length(mArgs) >= 1 && mArgs[[1]] == "x") return()
         if(gName == "plot") gArgs <- gArgs[-2L] # drop "y"
         ## FIXME: not quite right, could be another plot generic ...
         ogArgs <- gArgs
@@ -8914,7 +8916,7 @@ function(package, dir, lib.loc = NULL)
 
     if (NROW(meta) == 0L)
         return(out)
-    
+
     files <- meta$File
     names <- meta$Name
     aliases <- meta$Aliases
