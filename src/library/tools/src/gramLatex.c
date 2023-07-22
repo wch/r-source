@@ -2531,8 +2531,8 @@ static int mkVerb(int c)
     
     TEXT_PUSH('\\'); TEXT_PUSH('v'); TEXT_PUSH('e'); TEXT_PUSH('r'); TEXT_PUSH('b');
     TEXT_PUSH(c);
-    while ((c = xxgetc()) != delim) TEXT_PUSH(c);
-    TEXT_PUSH(c);
+    while (((c = xxgetc()) != delim) && c != R_EOF) TEXT_PUSH(c);
+    if (c != R_EOF) TEXT_PUSH(c);
     
     PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);

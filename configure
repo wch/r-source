@@ -5862,7 +5862,7 @@ fi
 printf "%s\n" "$r_cv_prog_texi2any_v5" >&6; }
 ## Also record whether texi2any is at least 7 to appropriately handle
 ## HTML and EPUB output changes, see
-## <<https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
+## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
 if test ${r_cv_prog_texi2any_v7+y}
 then :
   printf %s "(cached) " >&6
