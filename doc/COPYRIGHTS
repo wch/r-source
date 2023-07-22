@@ -200,6 +200,25 @@ src/library/stats/R/spline.R
 
 	In part, Copyright (C) 2002 Simon N. Wood
 
+src/library/stats/R/glm-profile.R
+
+	copyright (C) 1996 D. M. Bates and W. N. Venables.
+	port to R by B. D. Ripley copyright (C) 1998
+	corrections copyright (C) 2000,3,6,7 B. D. Ripley
+	Modifications Copyright (C) 2023 The R Core Team
+
+src/library/stats/man/profile.Rd
+
+	copyright (C) 1999-2008 W. N. Venables and B. D. Ripley
+	Changes Copyright R Core Team 2023
+
+
+src/library/stats/man/plot.profile.Rd
+
+	copyright (C) 1999-2023 W. N. Venables and B. D. Ripley
+	Edits by Peter Dalgaard 2023, (C) R Core Team
+
+
 src/library/tcltk/exec/{hierarchy,util*,widget}.tcl
 
 	Copyright (c) various dates Jeffrey Hobbs
@@ -506,7 +525,7 @@ tools/missing
 
 m4/openmp.m4
   Copyright (C) 2001-2012 Free Software Foundation, Inc.
-  Copyright (C) 2015-2016 R Core Team
+  Copyright (C) 2015-2023 R Core Team
 
   Under GPL-3 with the Autoconf Configure Script Exception, version 3.0.
 
