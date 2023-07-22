@@ -1222,9 +1222,10 @@ confused compiler messages.
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
-@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the
-LLVM compiler relevant to @R{} is @command{clang} for which this can be
-selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
+@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the LLVM
+compilera relevant to @R{} are @command{clang} and @command{flang} for
+which this can be selected by setting macro @samp{LTO=-flto=thin}.  LLVM
+has
 @example
 AR=llvm-ar
 RANLIB=llvm-ranlib
@@ -5031,9 +5032,11 @@ tested with @R{}.
 @end menu
 
 In late 2020 Intel revamped their C/C++ compilers (and later their
-Fortran compiler) to use an LLVM back-end.  Those compilers are only for
-@cputype{x86_64}: the earlier compilers (now branded `Classic') also
-supported @cputype{ix86} and 32-bit builds on @cputype{x86_64}.
+Fortran compiler) to use an LLVM back-end (and for the C/C++ compilers,
+a modified version of @command{clang} as the front-end).  Those
+compilers are only for @cputype{x86_64}: the earlier compilers (now
+branded `Classic') also supported @cputype{ix86} and 32-bit builds on
+@cputype{x86_64}.
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they
@@ -5060,12 +5063,11 @@ LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 but the build segfaulted in the checks (in complex arithmetic in
 @file{lapack.R}).
 
-Intel document building @R with MKL: for the Intel compilers this needs
+Intel document building @R with MKL: for the Intel compilers this needed
 something like
 @example
 MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
-INTEL_LIB_PATH /path/to/compiler/linux/compiler/lib/intel64_lin
-export LD_LIBRARY_PATH $@{MKL_LIB_PATH@}:$@{INTEL_LIB_PATH@}
+export LD_LIBRARY_PATH="$MKL_LIB_PATH"
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_intel_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
 @end example
@@ -5082,13 +5084,15 @@ macro.
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/file-extensions.html
 
 The compilers have many options, some of which are still under
-development for the new compilers. As the C/C++ and Fortran compilers
-have different origins for their front-ends, there is little consistency
-in their options. The new compilers support clang-style LTO, at least
-for C/C++.
+development. As the C/C++ and Fortran compilers have different origins
+for their front-ends, there is little consistency in their options. They
+support clang-style LTO, at least for C/C++.
+
+Unresolved issue: all CPU times in e.g.@: @code{proc.time()} are reported
+as zero.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
-@subsubsection `Classic compilers'
+@subsubsection `Classic' compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identiifed by the C/C++ macro
@@ -5349,8 +5353,8 @@ PKG_CONFIG_PATH=$LOCAL/lib/pkgconfig:/usr/lib/pkgconfig
 further flags are desirable in @file{config.site}:
 @example
 CFLAGS="-falign-functions=8 -g -O2"
-FFLAGS="-g -O2 -mmacosx-version-min=11.0"
-FCFLAGS="-g -O2 -mmacosx-version-min=11.0"
+FFLAGS="-g -O2 -mmacos-version-min=11.0"
+FCFLAGS="-g -O2 -mmacos-version-min=11.0"
 @end example
 @noindent
 (the first flag in @code{CFLAGS} is needed to inter-work with the
@@ -5392,7 +5396,7 @@ builds work.  This has been far rarer since macOS 13.
 
 If you are using the macOS 13 SDK@footnote{@command{ls -l `xcrun
 -show-sdk-path`} in a terminal will show you which SDK is selected.},
-you may need to add something like @code{-mmacosx-version-min=12.0} to
+you may need to add something like @code{-mmacos-version-min=12.0} to
 @samp{CFLAGS}.
 
 Linker warnings like
@@ -5415,8 +5419,7 @@ by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in
 Finder), then select @samp{Installer} and @samp{Open} if you get a
-further warning message.  This sometimes applies also to `nightly
-builds' from @uref{https://mac.R-project.org/}.
+further warning message.
 
 If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
@@ -5565,7 +5568,7 @@ It is usually possible to add some OpenMP support to the Apple
 Note that that approach is somewhat fragile as it needs a
 @file{libomp.dylib} library matching the version of the compiler
 used---and for example at the time of writing none was offered for the
-current compilers in Xcode/CLT 14.3.
+current compilers in Xcode/CLT 14.3 nor 15.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
