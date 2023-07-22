@@ -476,14 +476,6 @@ Based on gettextize from gettext 0.17
    Distributed under the GNU Library General Public License
    version 2 or later.
 
-src/include/vg/memcheck.h
-src/include/vg/valgrind.h
-
-From valgrind 3.10.1,
-
-   Copyright (C) 2000-2013 Julian Seward.  All rights reserved.
-
-
 src/main/mkdtemp.c
 
 From glibc via
