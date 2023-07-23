@@ -7205,7 +7205,9 @@ Description of the function's arguments, using an entry of the form
 @end example
 
 @noindent for each element of the argument list.  (Note that there is
-no whitespace between the three parts of the entry.) There may be
+no whitespace between the three parts of the entry.)  Arguments can also
+be described jointly by separating their names with commas (and optional
+whitespace) in the @code{\item} label.  There may be
 optional text outside the @code{\item} entries, for example to give
 general information about groups of parameters.
 
