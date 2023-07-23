@@ -692,7 +692,8 @@ function(x)
     ## Extract two-arg \item tags at top level ... non-recursive.
     x <- x[RdTags(x) == "\\item"]
     if(!length(x)) return(matrix(character(), 0L, 2L))
-    x <- lapply(x[lengths(x) == 2L], sapply, .Rd_deparse)
+    x <- lapply(x[lengths(x) == 2L], vapply, FUN.VALUE = "",
+                function(block) .Rd_deparse(block[RdTags(block) != "COMMENT"]))
     matrix(unlist(x), ncol = 2L, byrow = TRUE)
 }
 

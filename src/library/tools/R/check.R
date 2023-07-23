@@ -2521,7 +2521,7 @@ add_dummies <- function(dir, Log)
                                   R_check_Rd_internal_too))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                warningLog(Log)
+                noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
