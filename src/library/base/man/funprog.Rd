@@ -1,6 +1,6 @@
 % File src/library/base/man/funprog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 \name{funprog}
 \alias{Filter}
@@ -23,7 +23,7 @@
   }
 }
 \usage{
-Reduce(f, x, init, right = FALSE, accumulate = FALSE)
+Reduce(f, x, init, right = FALSE, accumulate = FALSE, simplify = TRUE)
 Filter(f, x)
 Find(f, x, right = FALSE, nomatch = NULL)
 Map(f, ...)
@@ -44,6 +44,9 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   \item{accumulate}{a logical indicating whether the successive reduce
     combinations should be accumulated.  By default, only the final
     combination is used.}
+  \item{simplify}{a logical indicating whether accumulated results
+    should be simplified (by unlisting) in case they all are length
+    one.}
   \item{nomatch}{the value to be returned in the case when
     \dQuote{no match} (no element satisfying the predicate) is found.}
   \item{\dots}{vectors to which the function is \code{Map()}ped, and other

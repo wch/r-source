@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 Reduce <-
-function(f, x, init, right = FALSE, accumulate = FALSE)
+function(f, x, init, right = FALSE, accumulate = FALSE, simplify = TRUE)
 {
     mis <- missing(init)
     len <- length(x)
@@ -95,7 +95,7 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
         ## If all results have length one, we can simplify.
         ## (Note that we do not simplify to arrays in case all results
         ## have a common length > 1.)
-	if(all(lengths(out) == 1L))
+	if(all(lengths(out) == 1L) && simplify)
             out <- unlist(out, recursive = FALSE)
         out
     }
