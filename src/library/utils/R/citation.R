@@ -81,20 +81,24 @@ function(given = NULL, family = NULL, middle = NULL,
             family <- last
         }
 
-        ## Set all empty arguments to NULL.
-        if(.is_not_nonempty_text(given)) given <- NULL
-        if(.is_not_nonempty_text(family)) family <- NULL
-        if(.is_not_nonempty_text(email)) email <- NULL
-        if(.is_not_nonempty_text(role)) {
-            if(!is.null(role))
-                warning(sprintf(ngettext(length(role),
-                                         "Invalid role specification: %s.",
-                                         "Invalid role specifications: %s."),
-                                paste(sQuote(role), collapse = ", ")),
-                        domain = NA)
-            role <- NULL
-        }
-        if(.is_not_nonempty_text(comment)) comment <- NULL
+        ## Canonicalize: set all empty arguments to NULL, and remove
+        ## leading/trailing whitespace otherwise (which in turn coerces
+        ## to character).
+        ## In principle, all non-NULL arguments whould be character:
+        ## maybe this should be checked for?
+        .canonicalize <- function(s)
+            if(.is_not_nonempty_text(s)) NULL else trimws(s)
+        given <- .canonicalize(given)
+        family <- .canonicalize(family)
+        email <- .canonicalize(email)
+        if(.is_not_nonempty_text(role) && !is.null(role))
+            warning(sprintf(ngettext(length(role),
+                                     "Invalid role specification: %s.",
+                                     "Invalid role specifications: %s."),
+                            paste(sQuote(role), collapse = ", ")),
+                    domain = NA)
+        role <- .canonicalize(role)
+        comment <- .canonicalize(comment)
 
         ## <FIXME>
         ## Use something along the lines of
