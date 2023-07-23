@@ -7950,9 +7950,10 @@ best choice in reference manuals.)  Specify the filename relative to
 @section Insertions
 
 @findex \R
-Use @code{\R} for the @R{} system itself.  Use @code{\dots}
+Use @code{\R} for the @R{} system itself.  The @code{\dots}
 @findex \dots
-for the dots in function argument lists @samp{@dots{}}, and
+macro is a historical alternative to using literal @samp{@dots{}}
+for the dots in function argument lists; use
 @code{\ldots}
 @findex \ldots
 for ellipsis dots in ordinary text.@footnote{There is only a fine
@@ -7960,7 +7961,7 @@ distinction between @code{\dots} and @code{\ldots}.  It is technically
 incorrect to use @code{\ldots} in code blocks and @code{tools::checkRd}
 will warn about this---on the other hand the current converters treat
 them the same way in code blocks, and elsewhere apart from the small
-distinction between the two in @LaTeX{}.}  These can be followed by
+distinction between the two in @LaTeX{}.}  These macros can be followed by
 @code{@{@}}, and should be unless followed by whitespace.
 
 After an unescaped @samp{%}, you can put your own comments regarding the
