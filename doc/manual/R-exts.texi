@@ -7848,8 +7848,9 @@ Packages referred to by these `other forms' should be declared in the
 @findex \deqn
 
 Mathematical formulae should be set beautifully for printed
-documentation yet we still want something useful for text and @HTML{}
-online help.  To this end, the two commands
+documentation and in KaTeX/MathJax-enhanced @HTML{} help (as from
+@R{} 4.2.0) yet we still want something useful for plain-text (and
+legacy @HTML{}) help.  To this end, the two commands
 @code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
 @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Whereas @code{\eqn}
 is used for ``inline'' formulae (corresponding to @TeX{}'s
@@ -7873,19 +7874,19 @@ The following example is from @file{Poisson.Rd}:
 @end example
 
 @iftex
-For the @LaTeX{} manual, this becomes
+For the @LaTeX{} manual and in enhanced @HTML{} help, this becomes
 @c: this is TeXinfo markup, not the result of the conversions.
 @quotation
 @cartouche
 @tex
-$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
+$$ p(x) = {\lambda^x e^{-\lambda} \over x!} $$
 for $x = 0, 1, 2, \ldots$.
 @end tex
 @end cartouche
 @end quotation
 @end iftex
 
-For text on-line help we get
+In plain-text help we get
 
 @quotation
 @cartouche
@@ -7897,12 +7898,13 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
-Greek letters (both cases) will be rendered in @HTML{} if preceded by a
+In legacy @HTML{} help, Greek letters (both cases) will be rendered if preceded by a
 backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
 and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 
 Note that only basic @LaTeX{} can be used, there being no provision to
-specify @LaTeX{} style files such as the AMS extensions.
+specify @LaTeX{} style files, but AMS extensions are supported
+as from @R{} 4.2.2.
 
 @node Figures, Insertions, Mathematics, Writing R documentation files
 @section Figures
