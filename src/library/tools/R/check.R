@@ -4386,10 +4386,17 @@ add_dummies <- function(dir, Log)
                 }
                 return(FALSE)
             } else {
-                resultLog(Log, "OK")
+                any <- FALSE
+                lines <- NULL
                 if (Log$con > 0L && file.exists(logf)) {
                     ## write results only to 00check.log
                     lines <- readLines(logf, warn = FALSE)
+                    if(any(grepl("Running R code.*times elapsed time",
+                                 lines)))
+                        any <- TRUE
+                }
+                if(any) noteLog(Log) else resultLog(Log, "OK")
+                if(!is.null(lines)) {                
                     cat(lines, sep="\n", file = Log$con)
                     unlink(logf)
                 }
@@ -4838,7 +4845,9 @@ add_dummies <- function(dir, Log)
                                      useBytes = TRUE))
                 iskip <- grep("^Note: skipping .* dependencies:", out,
                               useBytes = TRUE)
+                any <- FALSE
                 if (status) {
+                    any <- TRUE
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
                     if(skip_run_maybe || !ran) {
@@ -4854,6 +4863,7 @@ add_dummies <- function(dir, Log)
                                   paste(c("Error(s) in re-building vignettes:",
                                           out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
+                    any <- TRUE
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,
                                     "Warning in re-building vignettes:\n",
@@ -4868,25 +4878,31 @@ add_dummies <- function(dir, Log)
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
                     if (length(iskip)) {
+                        any <- TRUE
                         iempty <- which(out == "")
                         ## skipping notes from buildVignettes each close with empty line
                         iskip <- unlist(lapply(iskip, function(i)
                             i:(iempty[iempty > i][1L] - 1L)))
                         noteLog(Log)
                         printLog0(Log, paste(out[iskip], collapse = "\n"), "\n")
-                    } else
-                    resultLog(Log, "OK")
+                    }
                 }
                 if(!WINDOWS && !is.na(theta)) {
                     td <- t2 - t1
                     cpu <- sum(td[-3L])
                     if(cpu >= pmax(theta * td[3L], 1)) {
+                        if(!any) {
+                            noteLog(Log)
+                            any <- TRUE
+                        }
                         ratio <- round(cpu/td[3L], 1L)
                         printLog(Log,
                                  sprintf("Re-building vignettes had CPU time %g times elapsed time\n",
                                         ratio))
                     }
                 }
+                if(!any)
+                    resultLog(Log, "OK")
             } else {
                 checkingLog(Log, "re-building of vignette outputs")
                 resultLog(Log, "SKIPPED")
