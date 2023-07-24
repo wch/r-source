@@ -6918,30 +6918,31 @@ As an example, let us look at a simplified version of
 \alias@{load@}
 \title@{Reload Saved Datasets@}
 \description@{
-  Reload the datasets written to a file with the function
-  \code@{save@}.
+  Reload datasets written with the function \code@{save@}.
 @}
 \usage@{
-load(file, envir = parent.frame())
+load(file, envir = parent.frame(), verbose = FALSE)
 @}
 \arguments@{
-  \item@{file@}@{a connection or a character string giving the
-    name of the file to load.@}
-  \item@{envir@}@{the environment where the data should be
-    loaded.@}
+  \item@{file@}@{a (readable binary-mode) \link@{connection@}
+    or a character string giving the name of the file to load
+    (when \link@{tilde expansion@} is done).@}
+  \item@{envir@}@{the environment where the data should be loaded.@}
+  \item@{verbose@}@{should item names be printed during loading?@}
+@}
+\value@{
+  A character vector of the names of objects created, invisibly.
 @}
 \seealso@{
   \code@{\link@{save@}@}.
 @}
 \examples@{
+@c reproducing only a minimal and simplified subset of the examples here
 ## save all data
-save(list = ls(), file= "all.RData")
+save(list = ls(all.names = TRUE), file = "all.RData")
 
 ## restore the saved values to the current environment
 load("all.RData")
-
-## restore the saved values to the workspace
-load("all.RData", .GlobalEnv)
 @}
 \keyword@{file@}
 @end smallexample
@@ -7201,7 +7202,9 @@ Description of the function's arguments, using an entry of the form
 @end example
 
 @noindent for each element of the argument list.  (Note that there is
-no whitespace between the three parts of the entry.) There may be
+no whitespace between the three parts of the entry.)  Arguments can also
+be described jointly by separating their names with commas (and optional
+whitespace) in the @code{\item} label.  There may be
 optional text outside the @code{\item} entries, for example to give
 general information about groups of parameters.
 
@@ -7841,8 +7844,9 @@ Packages referred to by these `other forms' should be declared in the
 @findex \deqn
 
 Mathematical formulae should be set beautifully for printed
-documentation yet we still want something useful for text and @HTML{}
-online help.  To this end, the two commands
+documentation and in KaTeX/MathJax-enhanced @HTML{} help (as from
+@R{} 4.2.0) yet we still want something useful for plain-text (and
+legacy @HTML{}) help.  To this end, the two commands
 @code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
 @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Whereas @code{\eqn}
 is used for ``inline'' formulae (corresponding to @TeX{}'s
@@ -7866,19 +7870,19 @@ The following example is from @file{Poisson.Rd}:
 @end example
 
 @iftex
-For the @LaTeX{} manual, this becomes
+For the @LaTeX{} manual and in enhanced @HTML{} help, this becomes
 @c: this is TeXinfo markup, not the result of the conversions.
 @quotation
 @cartouche
 @tex
-$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
+$$ p(x) = {\lambda^x e^{-\lambda} \over x!} $$
 for $x = 0, 1, 2, \ldots$.
 @end tex
 @end cartouche
 @end quotation
 @end iftex
 
-For text on-line help we get
+In plain-text help we get
 
 @quotation
 @cartouche
@@ -7890,12 +7894,13 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
-Greek letters (both cases) will be rendered in @HTML{} if preceded by a
+In legacy @HTML{} help, Greek letters (both cases) will be rendered if preceded by a
 backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
 and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 
 Note that only basic @LaTeX{} can be used, there being no provision to
-specify @LaTeX{} style files such as the AMS extensions.
+specify @LaTeX{} style files, but AMS extensions are supported
+as from @R{} 4.2.2.
 
 @node Figures, Insertions, Mathematics, Writing R documentation files
 @section Figures
@@ -7943,9 +7948,10 @@ best choice in reference manuals.)  Specify the filename relative to
 @section Insertions
 
 @findex \R
-Use @code{\R} for the @R{} system itself.  Use @code{\dots}
+Use @code{\R} for the @R{} system itself.  The @code{\dots}
 @findex \dots
-for the dots in function argument lists @samp{@dots{}}, and
+macro is a historical alternative to using literal @samp{@dots{}}
+for the dots in function argument lists; use
 @code{\ldots}
 @findex \ldots
 for ellipsis dots in ordinary text.@footnote{There is only a fine
@@ -7953,7 +7959,7 @@ distinction between @code{\dots} and @code{\ldots}.  It is technically
 incorrect to use @code{\ldots} in code blocks and @code{tools::checkRd}
 will warn about this---on the other hand the current converters treat
 them the same way in code blocks, and elsewhere apart from the small
-distinction between the two in @LaTeX{}.}  These can be followed by
+distinction between the two in @LaTeX{}.}  These macros can be followed by
 @code{@{@}}, and should be unless followed by whitespace.
 
 After an unescaped @samp{%}, you can put your own comments regarding the
