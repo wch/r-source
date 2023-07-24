@@ -8939,13 +8939,7 @@ function(package, dir, lib.loc = NULL)
         out$files_with_duplicated_aliases <-
             files_with_duplicated_aliases
 
-    ## <FIXME>
-    ## This currently ignores package overview files:
-    ## thousands of packages lack the required pkgname-package alias,
-    ## which we might thus want to handle separately, also that
-    ## some packages provide multiple files with docType "package" ...
-    ## </FIXME>
-    out$files_without_aliases <- files[nAliases == 0L & doctypes != "package"]
+    out$files_without_aliases <- files[nAliases == 0L]
 
     out
 }

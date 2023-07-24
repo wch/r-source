@@ -2312,7 +2312,16 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_metadata(dir = \"%s\")\n", pkgdir))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                warningLog(Log)
+                ## <FIXME>
+                ## We should really use R() instead if R_runR0() to get
+                ## the computed check results object itself.
+                ## Change eventually ...
+                ## </FIXME>
+                tag <- out[!startsWith(out, "  ")]
+                if(any(grepl("duplicated", tag, fixed = TRUE)))
+                    warningLog(Log)
+                else
+                    noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
