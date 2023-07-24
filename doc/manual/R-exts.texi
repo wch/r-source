@@ -6922,30 +6922,31 @@ As an example, let us look at a simplified version of
 \alias@{load@}
 \title@{Reload Saved Datasets@}
 \description@{
-  Reload the datasets written to a file with the function
-  \code@{save@}.
+  Reload datasets written with the function \code@{save@}.
 @}
 \usage@{
-load(file, envir = parent.frame())
+load(file, envir = parent.frame(), verbose = FALSE)
 @}
 \arguments@{
-  \item@{file@}@{a connection or a character string giving the
-    name of the file to load.@}
-  \item@{envir@}@{the environment where the data should be
-    loaded.@}
+  \item@{file@}@{a (readable binary-mode) \link@{connection@}
+    or a character string giving the name of the file to load
+    (when \link@{tilde expansion@} is done).@}
+  \item@{envir@}@{the environment where the data should be loaded.@}
+  \item@{verbose@}@{should item names be printed during loading?@}
+@}
+\value@{
+  A character vector of the names of objects created, invisibly.
 @}
 \seealso@{
   \code@{\link@{save@}@}.
 @}
 \examples@{
+@c reproducing only a minimal and simplified subset of the examples here
 ## save all data
-save(list = ls(), file= "all.RData")
+save(list = ls(all.names = TRUE), file = "all.RData")
 
 ## restore the saved values to the current environment
 load("all.RData")
-
-## restore the saved values to the workspace
-load("all.RData", .GlobalEnv)
 @}
 \keyword@{file@}
 @end smallexample
