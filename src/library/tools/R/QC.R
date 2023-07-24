@@ -8911,6 +8911,7 @@ function(package, dir, lib.loc = NULL)
             readRDS(rds)
         } # else NULL
     } else {
+        package <- .get_package_metadata(dir)["Package"]
         Rd_contents(Rd_db(dir = dir))
     }
 
@@ -8939,8 +8940,25 @@ function(package, dir, lib.loc = NULL)
         out$files_with_duplicated_aliases <-
             files_with_duplicated_aliases
 
-    out$files_without_aliases <- files[nAliases == 0L]
+    files_without_aliases <- files[nAliases == 0L]
+    if(length(files_without_aliases))
+        out$files_without_aliases <- files_without_aliases
 
+    aliases <- unlist(aliases)
+    names(aliases) <- rep.int(files, nAliases) # again ...
+    all_package_aliases <- aliases[endsWith(aliases, "-package")]
+    the_package_alias <- sprintf("%s-package", package)
+    if(the_package_alias %in% all_package_aliases) {
+        ## Be nice: package names in standard repositories are unique
+        ## ignoring case.
+        all_package_aliases <-
+            all_package_aliases[tolower(all_package_aliases) !=
+                                tolower(the_package_alias)]
+    }
+    if(length(all_package_aliases))
+        out$files_with_bad_package_aliases <-
+            split(all_package_aliases, names(all_package_aliases))
+                                
     out
 }
 
@@ -8967,6 +8985,14 @@ function(x, ...)
       if(length(bad <- x$files_without_aliases)) {
           c(gettext("Rd files without \\alias:"),
             .pretty_format(bad))
+      },
+      if(length(bad <- x$files_with_bad_package_aliases)) {
+          unlist(lapply(names(bad),
+                        function(nm) {
+                            c(gettextf("Invalid package aliases in Rd file '%s':",
+                                       nm),
+                              .pretty_format(bad[[nm]]))
+                        }))
       })
 }
 
