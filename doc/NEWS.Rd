@@ -117,10 +117,9 @@
       unless environment variable \env{_R_CHECK_RD_CHECKRD_MINLEVEL_} is
       set to -5 or smaller.
 
-      \item \command{R CMD check} now warns about Rd files without an
+      \item \command{R CMD check} now notes Rd files without an
       \verb{\alias}, as long documented in \sQuote{Writing R Extensions}
       §1.3.1.
-      This currently ignores files with \verb{\docType{package}}.
       The check for a missing \verb{\description} has been moved from
       \code{tools::checkRd()} to \code{tools::checkRdContents()}.
     }
