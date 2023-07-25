@@ -48,7 +48,7 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
 }
 \details{
   Leading and trailing white space (space, tab and linefeed
-  (aka newline, i.e., \code{\\n})) is removed
+  (aka newline, i.e., \samp{\\n})) is removed
   for all the calls extracted by \code{xgettext()}, see
   \sQuote{Description} above,
   as it is by the internal code that passes strings for translation.

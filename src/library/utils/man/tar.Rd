@@ -175,7 +175,7 @@ tar(tarfile, files = NULL,
   specified by e.g.\sspace{}\code{extra_flags = "-I lz4"}.
   Some versions of \command{bsdtar} accept options such as
   \option{--lz4}, \option{--lzop} and \option{--lrzip} or an external
-  compressor \emph{via} \code{--use-compress-program lz4}: these could
+  compressor \emph{via} \option{--use-compress-program lz4}: these could
   be supplied in \code{extra_flags}.
   
   NetBSD prior to 8.0 used flag \option{--xz} rather than \option{-J},

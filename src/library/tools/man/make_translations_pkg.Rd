@@ -16,7 +16,7 @@ make_translations_pkg(srcdir, outDir = ".", append = "-1")
   \item{srcdir}{The \R source directory.}
   \item{outDir}{The directory into which to place the prepared package.}
   \item{append}{The suffix for the package version number,
-    e.g.\sspace{}\code{3.0.0-1} will be the default in \R 3.0.0.}
+    e.g.\sspace{}\samp{3.0.0-1} will be the default in \R 3.0.0.}
 }
 \details{
   This extracts the translations in a current \R source distribution and
@@ -27,7 +27,7 @@ make_translations_pkg(srcdir, outDir = ".", append = "-1")
   \samp{R-patched}, even by a user without administrative privileges.
 
   The package has a \samp{Depends} field which restricts it to versions
-  \code{3.x.*} for a single \code{x}.
+  \samp{3.x.*} for a single \code{x}.
 }
 
 \keyword{utilities}

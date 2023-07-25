@@ -54,7 +54,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   routines: they should be checked against the C/Fortran source code,
   not least as the number of arguments is taken from the \R code.  For
   \code{.Call} and \code{.External} calls they will often suffice, but
-  for \code{.C} and \code{.Fortran} calls the \code{void *} arguments
+  for \code{.C} and \code{.Fortran} calls the \samp{void *} arguments
   would ideally be replaced by the actual types.  Otherwise declarations
   need to be included (they may exist earlier in that file if appending
   to a file, or in a header file which can be included in

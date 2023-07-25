@@ -78,7 +78,7 @@ summarize_CRAN_check_status(packages,
   environment variable \env{R_CRAN_WEB}, defaulting to one specified in
   the \code{"repos"} option.  Otherwise the entry in the
   \file{repositories} file (see \code{\link{setRepositories}}) is used:
-  if that specifies \code{@CRAN@} (the default) or does not contain an
+  if that specifies \samp{@CRAN@} (the default) or does not contain an
   entry for CRAN then \url{https://CRAN.R-project.org} is used.
 
   The mirror to be used is reported by

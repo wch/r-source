@@ -79,9 +79,9 @@ browseURL(url, browser = getOption("browser"),
   \code{NULL}.
   To suppress showing URLs altogether, use the value \code{"false"}.
 
-  Some browsers have required \code{:} be replaced by \code{|} in file
-  paths: others do not accept that.  All seem to accept \code{\\} as a
-  path separator even though the RFC1738 standard requires \code{/}.
+  Some browsers have required \samp{:} be replaced by \samp{|} in file
+  paths: others do not accept that.  All seem to accept \samp{\\} as a
+  path separator even though the RFC1738 standard requires \samp{/}.
 
   To suppress showing URLs altogether, set \code{browser = "false"}.
     }

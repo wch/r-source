@@ -572,8 +572,8 @@ socketTimeout(socket, timeout = -1)
   use Unicode file names (such as NTFS but not FAT32).
 }
 
-\section{\code{ftp://} URLs}{
-  Most modern browsers do not support such URLs, and \code{https://}
+\section{\samp{ftp://} URLs}{
+  Most modern browsers do not support such URLs, and \samp{https://}
   ones are much preferred for use in \R.
 
   It is intended that \R will continue to allow such URLs for as long as

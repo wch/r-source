@@ -23,13 +23,13 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
 }
 \details{
   This takes a wildcard as used by most shells and returns an equivalent
-  regular expression.  \code{?} is mapped to \code{.} (match a single
-  character), \code{*} to \code{.*} (match any string, including an
+  regular expression.  \samp{?} is mapped to \samp{.} (match a single
+  character), \samp{*} to \samp{.*} (match any string, including an
   empty one), and the pattern is anchored (it must start at the
   beginning and end at the end).  Optionally, the resulting regexp is
   simplified.
 
-  Note that now even \code{(}, \code{[} and \code{\{} can be used
+  Note that now even \samp{(}, \samp{[} and \samp{\{} can be used
   in \code{pattern}, but \code{glob2rx()} may not work correctly with
   arbitrary characters in \code{pattern}.
 }

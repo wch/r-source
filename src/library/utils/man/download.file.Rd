@@ -154,13 +154,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The choice of binary transfer (\code{mode = "wb"} or \code{"ab"}) is
   important on Windows, since unlike Unix-alikes it does distinguish
-  between text and binary files and for text transfers changes \code{\\n}
-  line endings to \code{\\r\\n} (aka \file{CRLF}).
+  between text and binary files and for text transfers changes \samp{\\n}
+  line endings to \samp{\\r\\n} (aka \file{CRLF}).
 
   On Windows, if \code{mode} is not supplied (\code{\link{missing}()})
-  and \code{url} ends in one of \code{.gz}, \code{.bz2}, \code{.xz},
-  \code{.tgz}, \code{.zip}, \code{.jar}, \code{.rda}, \code{.rds},
-  \code{.RData} or \code{.pdf}, \code{mode = "wb"} is set so that a binary
+  and \code{url} ends in one of \samp{.gz}, \samp{.bz2}, \samp{.xz},
+  \samp{.tgz}, \samp{.zip}, \samp{.jar}, \samp{.rda}, \samp{.rds},
+  \samp{.RData} or \samp{.pdf}, \code{mode = "wb"} is set so that a binary
   transfer is done to help unwary users.
 
   Code written to download binary files must use \code{mode = "wb"} (or
@@ -252,7 +252,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   available.
 }
 
-\section{\code{ftp://} URLs}{
+\section{\samp{ftp://} URLs}{
   Most modern browsers do not support such URLs, and \samp{https://}
   ones are much preferred for use in \R. \samp{ftps://} URLs have always
   been rare, and are nowadays even less supported.

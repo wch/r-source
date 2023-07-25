@@ -127,7 +127,7 @@ srcref(srcfile, lloc)
   is made to read the file, and the original line numbers of the
   \code{srcref} record (i.e., elements 1 and 3) are used.  If an error
   occurs (e.g., the file no longer exists), text like
-  \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
+  \samp{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
   indicating the \code{line:column} ranges of the first and last
   character.  The \code{summary} method defaults to this type of
   display.
@@ -138,7 +138,7 @@ srcref(srcfile, lloc)
   \code{\link{print.default}} using the associated \code{srcref}.  To
   see deparsed code instead, call \code{\link{print}} with argument
   \code{useSource = FALSE}.  If a \code{srcref} object
-  is printed with \code{useSource = FALSE}, the \code{<srcref: \dots>}
+  is printed with \code{useSource = FALSE}, the \samp{<srcref: \dots>}
   record will be printed.
 
   \code{.isOpen} is intended for internal use:  it checks whether the

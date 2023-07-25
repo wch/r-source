@@ -81,11 +81,11 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   subset of \code{x} for which this gives true.  Note that possible
   \code{NA} values are currently always taken as false; control over
   \code{NA} handling may be added in the future.  \code{Filter}
-  corresponds to \code{filter} in Haskell or \code{remove-if-not} in
+  corresponds to \code{filter} in Haskell or \samp{remove-if-not} in
   Common Lisp.
 
   \code{Find} and \code{Position} are patterned after Common Lisp's
-  \code{find-if} and \code{position-if}, respectively.  If there is an
+  \samp{find-if} and \samp{position-if}, respectively.  If there is an
   element for which the predicate function gives true, then the first or
   last such element or its position is returned depending on whether
   \code{right} is false (default) or true, respectively.  If there is no

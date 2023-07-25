@@ -31,7 +31,7 @@ package.skeleton(name = "anRpackage", list,
   \item{code_files}{a character vector with the paths to R code files to
     build the package around.  See \sQuote{Details}.}
   \item{encoding}{optionally a \code{\link{character}} string with an
-    encoding for an optional \code{Encoding:} line in
+    encoding for an optional \samp{Encoding:} line in
     \file{DESCRIPTION} when non-ASCII characters will be used; typically
     one of \code{"latin1"}, \code{"latin2"}, or \code{"UTF-8"}; see the
     WRE manual.}
