@@ -1223,7 +1223,7 @@ confused compiler messages.
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
 @uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the LLVM
-compilera relevant to @R{} are @command{clang} and @command{flang} for
+compilers relevant to @R{} are @command{clang} and @command{flang} for
 which this can be selected by setting macro @samp{LTO=-flto=thin}.  LLVM
 has
 @example
