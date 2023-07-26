@@ -17,18 +17,17 @@
     }
   }
 
-  \subsection{NEW FEATURES}{ \itemize{
-
+  \subsection{NEW FEATURES}{
+    \itemize{
       \item The \code{confint()} methods for \code{"glm"} and
-      \code{"nls"} objects are now in the \pkg{stats}
-      package. Previously, they were stubs that called versions in
-      \pkg{MASS}. The original versions are still in \pkg{MASS} and can
-      be called using an explicit namespace qualifier, but the \pkg{MASS}
-      namespace is no longer autoloaded if you invoke (say)
-      \code{confint(glmfit)}. Similarly, \code{profile.glm()},
-      \code{plot.profile()}, and \code{pairs.profile()} are now in
-      \pkg{stats}. (\code{profile.nls()} and \code{plot.profile.nls()}
-      were in \code{stats} already.)
+      \code{"nls"} objects have been copied to the \pkg{stats}
+      package.  Previously, they were stubs which called versions in
+      package \pkg{MASS}. The \pkg{MASS} namespace is no longer loaded
+      if you invoke (say) \code{confint(glmfit)}.  Further, the
+      \code{"glm"} method for \code{profile()} and the \code{plot()}
+      and \code{pairs()} mesthods for class \code{"profile"} have been
+      copied from \pkg{MASS} to \pkg{stats}.  (\code{profile.nls()} and
+      \code{plot.profile.nls()} were already in \code{stats}.)
 
       \item The \code{confint()} and \code{profile} methods for
       \code{"glm"} objects have gained a possibility to do profiling
@@ -59,7 +58,7 @@
       restrict to smaller values).
 
       \item \R on Windows (since Windows 10 2004) now uses the new Segment
-      Heap allocator. This may improve performance of some memory intensive
+      Heap allocator. This may improve performance of some memory-intensive
       applications.
 
       \item When \R packages are built, typically by \command{R CMD build <pkg>},
@@ -93,7 +92,7 @@
 
       \item There is some support for building with Intel's LLVM-based
       compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
-      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.1.0.
+      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
     }
   }
 
@@ -163,7 +162,7 @@
       GraphApp has been fixed (\PR{13870}).
 
       \item \code{density()} more consistently computes grid values for the
-      FFT based convolution, following Robert Schlicht's analysis and
+      FFT-based convolution, following Robert Schlicht's analysis and
       proposal in \PR{18337}, correcting density values typically by a
       factor of about 0.999.  Optional \code{old.coords=TRUE} provides
       back compatibility.
