@@ -148,6 +148,7 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      ## These are for classic flang
       "linux, Fortran, flang, open, f90io_open03",
       "linux, Fortran, flang, open, f90io_open2003",
       "linux, Fortran, flang, close, f90io_close",
@@ -159,6 +160,9 @@ so_symbol_names_table <-
       "linux, Fortran, flang, stop, f90_stop",
       "linux, Fortran, flang, stop, f90_stop08",
       "linux, Fortran, flang, rand, rand",
+      ## Need entries here for flang-new and Intel compilers.
+      ## flang-new currently has static libs for its runtimes,
+      ## so having them would be problematic.
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort",
@@ -828,7 +832,7 @@ function(dir)
                        "base::.C", "base::.Call",
                        "base::.Fortran", "base::.External",
                        ## internal ones
-                       ".Call.graphics", ".External.graphics", 
+                       ".Call.graphics", ".External.graphics",
                        ".External2")
 
     predicate <- function(e) {

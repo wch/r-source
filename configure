@@ -5860,9 +5860,9 @@ fi
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_texi2any_v5" >&5
 printf "%s\n" "$r_cv_prog_texi2any_v5" >&6; }
-## Also record whether texi2any is at least 7 to appropriately handle
-## HTML and EPUB output changes, see
-## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
+  ## Also record whether texi2any is at least 7 to appropriately handle
+  ## HTML and EPUB output changes, see
+  ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
 if test ${r_cv_prog_texi2any_v7+y}
 then :
   printf %s "(cached) " >&6
@@ -29207,6 +29207,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
+  ## This means Classic flang
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;

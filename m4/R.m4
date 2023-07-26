@@ -240,9 +240,9 @@ elif test ${r_cv_prog_texi2any_version_maj} -lt 5 \
 else
   r_cv_prog_texi2any_v5=yes
 fi])
-## Also record whether texi2any is at least 7 to appropriately handle
-## HTML and EPUB output changes, see
-## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
+  ## Also record whether texi2any is at least 7 to appropriately handle
+  ## HTML and EPUB output changes, see
+  ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
 AC_CACHE_VAL([r_cv_prog_texi2any_v7],
 [if test ${r_cv_prog_texi2any_v5} = yes \
      && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
@@ -3946,6 +3946,7 @@ fi
 dnl Need to exclude Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
+dnl Seems to work for the revamped icx.
 case  "${CC}" in
   ## Intel compiler: note that -c99 may have been appended
   *icc*)
@@ -3971,6 +3972,7 @@ fi
 dnl Need to exclude Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
+dnl Seems to work for the revamped icpx.
 case  "${CXX}" in
   ## Intel compiler
   *icc*|*icpc*)
@@ -3993,7 +3995,8 @@ if test "${r_cv_prog_fc_vis}" = yes; then
     F_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-dnl need to exclude Intel compilers.
+dnl flang accepts this but ignores it.
+dnl Need to exclude Intel compilers, but ifx seems to work.
 case  "${FC}" in
   ## Intel compiler
   *ifc|*ifort)
@@ -4267,6 +4270,7 @@ dnl Compiler types
 dnl C: AC_PROG_CC does
 dnl   If using the GNU C compiler, set shell variable `GCC' to `yes'.
 dnl   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
+dnl clang and Intel compilers identify as GNU, which is OK here
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
@@ -4282,6 +4286,7 @@ fi
 dnl C++: AC_PROG_CXX does
 dnl   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
 dnl   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
+dnl clang and Intel compilers identify as GNU, which is OK here
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
@@ -4297,7 +4302,9 @@ dnl Fortran (fixed- then free-form):
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
+dnl Needs entries here for flang-new and Intel (ifort, ifx)
 case "${FC}" in
+  ## This means Classic flang
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
