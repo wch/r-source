@@ -326,6 +326,19 @@
                 files <- as.list(files)
                 files[pos] <- db[pos > 0L]
             }
+            ## Use a stage23 Rd db if there is one and we were asked to
+            ## use it.
+            built_file <- file.path(pkgdir, "build", "stage23.rdb")
+            if(file_test("-f", built_file)) {
+                use <- Sys.getenv("_RD2PDF_USE_BUILT_STAGE23_RD_DB_IF_AVAILABLE_",
+                                  "FALSE")
+                if(isTRUE(config_val_to_logical(use))) {
+                    db <- readRDS(built_file)
+                    pos <- match(names(db), basename(paths), nomatch = 0L)
+                    files <- as.list(files)
+                    files[pos] <- db[pos > 0L]
+                }
+            }
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
             if (!silent) message("Converting Rd files to LaTeX ",
