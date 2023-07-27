@@ -5028,7 +5028,8 @@ for accounts ported from Mojave or earlier it is usually
 
 @item
 Make use of the abilities of your compilers to check the
-standards-conformance of your code.  For example, @command{gcc} and
+standards-conformance of your code.  For example, @command{gcc},
+@command{clang} and
 @command{gfortran}@footnote{@uref{https://fortranwiki.org/fortran/show/Modernizing+Old+Fortran}
 may help explain some of the warnings from @command{gfortran -Wall
 -pedantic}.}  can be used with options @option{-Wall -pedantic} to alert
@@ -5042,14 +5043,17 @@ personal @file{Makevars} files.
 R-admin, R Installation and Administration},
 @end ifset
 
-Portable C++ code needs to follow both the 2011 and 2014 standards or to
-specify C+11/14/17/20 where available (which is not the case on all @R{}
-platforms).  Currently C++17/20 support is patchy across @R{} platforms.
+Portable C++ code needs to follow both the 2011, 2014 and 2017 standards
+or to specify C+11/14/17/20 where available (which is not the case on
+all @R{} platforms).  Currently C++20 support is patchy across @R{}
+platforms.
 
-If using Fortran with the GNU compiler, use the flags
-@option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
-features from later standards.  (Although @R{} only requires Fortran 90,
-@command{gfortran} does not have a way to specify that standard.)
+If using Fortran with the GNU compiler, use the flags @option{-std=f95
+-Wall -pedantic} which reject most GNU extensions and features from
+later standards.  (Although @R{} only requires Fortran 90,
+@command{gfortran} does not have a way to specify that standard.)  Also
+consider @option{-std=f2008} as some recent compilers have Fortran 2008
+or even 2018 as the minimum supported standard.
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
 @code{COMPLEX*16}.  (One can also use something like
@@ -5469,10 +5473,9 @@ portable, annoyingly so if this is not declared in the
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
 URLs.} that vary by build but are not documented.  Several recent
-versions of @command{pandoc} for macOS did not work on @R{}'s target of
-High Sierra (and this too was undocumented).
-Another example is the Rust compilation system (@command{cargo} and
-@command{rustc}).
+versions of @command{pandoc} for macOS did not work on @R{}'s then
+target of High Sierra (and this too was undocumented).  Another example
+is the Rust compilation system (@command{cargo} and @command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -5490,7 +5493,7 @@ example macOS 10.16 was announced not to have them (but released as
 macOS 11 with them); later it was announced that macOS 12.3 does not
 have Python 2 and only a minimal install of Python 3 is included.
 Python 2 has passed end-of-life and been removed from many major
-distributions.  Support for Rust cannot be assumed.
+distributions.  Support for Rust or Go cannot be assumed.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
@@ -5537,6 +5540,13 @@ UTC, the time represented is independent of the time zone: but how it is
 printed may not be.  Objects of class @code{"POSIXlt"} should have a
 @code{"tzone"} attribute.  Dates (e.g,@: birthdays) are conventionally
 considered independently of time zone.
+
+@item
+If at all possible avoid any Internet access during package
+installation.  Installation and use may well be on different
+machines/accounts and those allowed to install software may have no
+Internet access, and being self-contained helps ensure long-term
+reproducibility.
 @end itemize
 
 
