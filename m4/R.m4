@@ -19,7 +19,8 @@
 ### https://www.r-project.org/Licenses/
 
 ### Please use dnl for first-col comments within definitions, as
-### PD's autoconf leaves ## in but others (e.g. Fedora's) strip them
+### PD's autoconf leaves ## in but most others strip them.
+### Or indent them by spaces, which seems to be left in by all
 
 ### * General support macros
 
