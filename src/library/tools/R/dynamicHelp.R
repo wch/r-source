@@ -311,6 +311,14 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse = "\n"))
     }
 
+    .HTML_package_description <- function(descfile) {
+        pkg <- basename(dirname(descfile))
+        out <- c(HTMLheader(sprintf("Package &lsquo;%s&rsquo;", pkg)),
+                 .DESCRIPTION_to_HTML(descfile),
+                 "</div></body></html>")
+        list(payload = paste(out, collapse = "\n"))
+    }
+
     unfix <- function(file) {
         ## we need to re-fix links altered by fixup.package.URLs
         ## in R < 2.10.0
@@ -668,7 +676,7 @@ httpd <- function(path, query, ...)
         if(grepl(descRegexp, path)) {
             pkg <- sub(descRegexp, "\\1", path)
             file <- system.file("DESCRIPTION", package = pkg)
-            return(list(file = file, "content-type" = paste0("text/plain", charsetSetting(pkg))))
+            return(.HTML_package_description(file))
         } else
             return(error_page(gettextf("Only help files, %s, %s and files under %s and %s in a package can be viewed", mono("NEWS"),
                               mono("DESCRIPTION"), mono("doc/"), mono("demo/"))))

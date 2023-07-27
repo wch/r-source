@@ -1280,3 +1280,148 @@ function(dir)
                   .find_HTML_links_in_package))
 }
 
+.DESCRIPTION_to_HTML <- function(descfile) {
+
+    ## Similar to .DESCRIPTION_to_latex().
+
+    trfm <- .gsub_with_transformed_matches
+
+    ## A variant of htmlify() which optionally adds hyperlinks and does
+    ## not HTMLify dashes inside these.
+    htmlify_text <- function(x, a = FALSE, d = FALSE) {
+        ## Use 'd' to indicate HTMLifying Description texts,
+        ## transforming DOI and arXiv pseudo-URIs.
+        x <- fsub("&", "&amp;", x)
+        x <- fsub("``", "&ldquo;", x)
+        x <- fsub("''", "&rdquo;", x)
+        x <- psub("`([^']+)'", "&lsquo;\\1&rsquo;", x)
+        x <- fsub("`", "'", x)
+        x <- fsub("<", "&lt;", x)
+        x <- fsub(">", "&gt;", x)
+        if(a) {
+            ## CRAN also transforms
+            ##   "&lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;"
+            ## <FIXME>
+            ## Sync regexp with what we use in .DESCRIPTION_to_latex()?
+            x <- trfm("([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
+                      "\\1<a href=\"%s\">\\2</a>",
+                      x,
+                      urlify,
+                      2L)
+            ## </FIXME>
+        }
+        if(d) {
+            x <- trfm("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
+                      "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
+                      x,
+                      ## <FIXME>
+                      ## Why not urlify?
+                      function(u) utils::URLencode(u, TRUE),
+                      ## </FIXME>
+                      2L)
+            x <- trfm("&lt;(arXiv|arxiv):([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?&gt;",
+                      "&lt;<a href=\"https://arxiv.org/abs/%s\">arXiv:\\2</a>\\3&gt;",
+                      x,
+                      urlify,
+                      2L)
+        }
+        if(a || d) {
+            ## Avoid mdash/ndash htmlification in the anchored parts.
+            m <- gregexpr("<a href=\"[^>]*\">[^<>]*</a>", x)
+            regmatches(x, m, invert = TRUE) <-
+                lapply(regmatches(x, m, invert = TRUE),
+                       function(x) {
+                           x <- fsub("---", "&mdash;", x)
+                           x <- fsub("--", "&ndash;", x)
+                           x
+                       })
+        } else {
+            x <- fsub("---", "&mdash;", x)
+            x <- fsub("--", "&ndash;", x)
+        }
+        x
+    }
+
+    htmlify_compare_ops <- function(x) {
+        x <- fsub("<=", "&le;", x)
+        x <- fsub(">=", "&ge;", x)
+        x <- fsub("!=", "&ne;", x)
+        x
+    }
+
+    desc <- enc2utf8(.read_description(descfile))
+    aatr <- desc["Authors@R"]
+    ## <FIXME>
+    ## .DESCRIPTION_to_latex() drops the
+    ##    Package Packaged Built
+    ## fields: why?  Should we do the same?
+    ## Note that the package name will be used for the title in the HTML
+    ## refman, so perhaps really drop.
+    desc <- desc[names(desc) %w/o%
+                 c("Package", "Authors@R")]
+    ## </FIXME>
+
+    ## <FIXME>
+    ## What should we do with email addresses in the
+    ##   Author Maintainer Contact
+    ## fields?
+    ## CRAN obfuscates, .DESCRIPTION_to_latex() uses \email which only
+    ## adds markup but does not create mailto: URLs.
+    ## </FIXME>
+
+    ## Take only Title and Description as *text* fields.
+    desc["Title"] <- htmlify_text(desc["Title"])
+    desc["Description"] <-
+        htmlify_text(desc["Description"], a = TRUE, d = TRUE)
+    ## Now the other fields.
+    fields <- setdiff(names(desc),
+                      c("Title", "Description"))
+    theops <- intersect(fields,
+                        c("Depends", "Imports", "LinkingTo",
+                          "Suggests", "Enhances"))
+    desc[fields] <- fsub("&", "&amp;", desc[fields])
+    ## Do this before turning '<' and '>' to HTML entities.
+    desc[theops] <- htmlify_compare_ops(desc[theops])
+    ## Do this before adding HTML markup ...
+    desc[fields] <- fsub("<", "&lt;", desc[fields])
+    desc[fields] <- fsub(">", "&gt;", desc[fields])
+    ## HTMLify URLs and friends.
+    for(f in intersect(fields,
+                       c("URL", "BugReports",
+                         "Additional_repositories"))) {
+        ## The above already changed & to &amp; which urlify will
+        ## do once more ...
+        trafo <- function(s) urlify(gsub("&amp;", "&", s))
+        desc[f] <- trfm("(^|[^>\"])((https?|ftp)://[^[:space:],]*)",
+                        "\\1<a href=\"%s\">\\2</a>",
+                        desc[f],
+                        trafo,
+                        2L)
+    }
+
+    ## <NOTE>
+    ## The CRAN code re-creates suitably formatted Authors from
+    ## Authors@R if available, and replaces ORCID URLs by hyperlinked
+    ## ORCID logos.  We could so the same, but then we would also need
+    ## to ship the logo.
+    ## For now, do simply hyperlinks.
+    if(!is.na(aatr)) {
+        desc["Author"] <-
+            gsub(sprintf("&lt;(https://orcid.org/%s)&gt;",
+                         .ORCID_iD_regexp),
+                 "<a href=\"\\1\">\\1</a>",
+                 gsub("\n", "<br/>", desc["Author"]))
+    }
+    ## </NOTE>
+
+    ## <TODO>
+    ## For dynamic help we should be able to further enhance by
+    ## hyperlinking file pointers to
+    ##   LICENSE LICENCE AUTHORS COPYRIGHTS
+    ## </TODO>
+
+    c("<table>",
+      sprintf("<tr>\n<td>%s:</td>\n<td>%s</td>\n</tr>",
+              names(desc), desc),
+      "</table>")
+}
