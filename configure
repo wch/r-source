@@ -29207,9 +29207,16 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
+  *flang-new)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
+    ;;
   ## This means Classic flang
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    ;;
+  ## we do not consider ifort as it will be disconinued in 2023.
+  *ifx)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},ifx,ifx"
     ;;
   *)
     case "${host_os}" in
