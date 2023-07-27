@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## interfacing to ALTREP meta data about "sorted"ness and presence of NAs:
 .doSortWrap <- local({
     ## this matches the enum in Rinternals.h
     INCR_NA_1ST <-  2
@@ -52,7 +53,7 @@
     }
 })
 ## temporary, for sort.int and sort.list captured as S4 default methods
-## .doWrap introduced in r74405 | 2018-03-14   replaced by .doSoftWrap in r74504 | 2018-04-02
+## .doWrap introduced in r74405 | 2018-03-14   replaced by .doSortWrap in r74504 | 2018-04-02
 .doWrap <- .doSortWrap
 
 sort <- function(x, decreasing = FALSE, ...)
@@ -81,7 +82,7 @@ sort.int <-
              method = c("auto", "shell", "quick", "radix"),
              index.return = FALSE)
 {
-    ## fastpass
+    ## fastpass {for "known to be sorted" x (ALTREP meta data; see .doSortWrap()}
     decreasing <- as.logical(decreasing)
     if (is.null(partial) && !index.return && is.numeric(x)) {
         if (.Internal(sorted_fpass(x, decreasing, na.last))) {
@@ -180,10 +181,10 @@ sort.int <-
     if (isfact)
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
             labels = lev)
-    if (is.null(partial)) {
-        y <- .doSortWrap(y, decreasing, na.last)
-    }
-    y
+    if (is.null(partial))
+        .doSortWrap(y, decreasing, na.last)
+    else
+        y
 }
 
 order <- function(..., na.last = TRUE, decreasing = FALSE,
@@ -191,7 +192,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 {
     z <- list(...)
 
-    ## fastpass, take advantage of ALTREP metadata
+    ## fastpass, take advantage of ALTREP metadata, see .doSortWrap()
     decreasing <- as.logical(decreasing)
     if (length(z) == 1L && is.numeric(x <- z[[1L]]) && !is.object(x) && length(x) > 0) {
         if (.Internal(sorted_fpass(x, decreasing, na.last)))

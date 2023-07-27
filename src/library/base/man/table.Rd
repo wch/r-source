@@ -150,6 +150,7 @@ with(airquality, table(cut(Temp, quantile(Temp)), Month))
 
 a <- letters[1:3]
 table(a, sample(a))                    # dnn is c("a", "")
+table(a, sample(a), dnn = NULL)        # dimnames() have no names
 table(a, sample(a), deparse.level = 0) # dnn is c("", "")
 table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
 

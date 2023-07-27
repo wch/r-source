@@ -499,11 +499,9 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
     value = get_generic(name, env, package);
     if(value == R_UnboundValue) {
 	if(asLogical(mustFind)) {
-	    if(env == R_GlobalEnv)
-		error(_("no generic function definition found for '%s'"),
-		  CHAR(asChar(name)));
-	    else
-		error(_("no generic function definition found for '%s' in the supplied environment"),
+	    error((env == R_GlobalEnv)
+		  ? _("no generic function definition found for '%s'")
+		  : _("no generic function definition found for '%s' in the supplied environment"),
 		  CHAR(asChar(name)));
 	}
 	value = R_NilValue;

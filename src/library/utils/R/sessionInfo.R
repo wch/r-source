@@ -135,7 +135,7 @@ sessionInfo <- function(package = NULL)
     }
     z$matprod <- as.character(options("matprod"))
     es <- extSoftVersion()
-    z$BLAS <- as.character(es["BLAS"]) #drop name
+    z$BLAS <- es[["BLAS"]] #drop name
     z$LAPACK <- La_library()
     z$LA_version <- La_version()
     l10n <- l10n_info()

@@ -82,10 +82,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             }
     }
 
-    if (concordance)
-    	conc <- activeConcordance()
-    else
-    	conc <- NULL
+    conc <- if(concordance) activeConcordance() # else NULL
     
     last_char <- ""
     of0 <- function(...) of1(paste0(...))

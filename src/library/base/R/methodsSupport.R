@@ -34,6 +34,7 @@ trace <- function(what, tracer, exit, at, print, signature,
     ## the correct namespace (e.g., correct version of class())
     call <- sys.call()
     call[[1L]] <- quote(methods:::.TraceWithMethods)
+					# -> ../../methods/R/trace.R
     call$where <- where
     eval.parent(call)
 }

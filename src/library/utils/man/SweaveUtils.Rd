@@ -21,8 +21,8 @@
 \description{
   These functions are handy for writing Sweave drivers and are
   considered internal and hence not documented.  Look at the source code
-  of the Sweave Latex driver (in this
-  package) or the HTML driver (in the R2HTML package from CRAN) to see
+  of the Sweave \LaTeX driver (in this
+  package) or the HTML driver (in the \pkg{R2HTML} package from CRAN) to see
   how they can be used.
 }
 \usage{

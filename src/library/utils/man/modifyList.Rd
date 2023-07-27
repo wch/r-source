@@ -16,7 +16,7 @@ modifyList(x, val, keep.null = FALSE)
 \arguments{
   \item{x}{A named \code{\link{list}}, possibly empty.}
   \item{val}{A named list with components to replace corresponding
-    components in \code{x}.}
+    components in \code{x} or add new components.}
   \item{keep.null}{ If \code{TRUE}, \code{NULL} elements in \code{val}
     become \code{NULL} elements in \code{x}.  Otherwise, the
     corresponding element, if present, is deleted from \code{x}. }

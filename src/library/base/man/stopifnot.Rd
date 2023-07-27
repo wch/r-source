@@ -136,6 +136,18 @@ stopifnot("m must be symmetric"= m == t(m))
 #=> Error: m must be symmetric
 
 options(op)  # revert to previous error handler
+
+##' warnifnot(): a "only-warning" version of stopifnot()
+##'   {Yes, learn how to use do.call(substitute, ...) in a powerful manner !!}
+warnifnot <- stopifnot ; N <- length(bdy <- body(warnifnot))
+bdy        <- do.call(substitute, list(bdy,   list(stopifnot = quote(warnifnot))))
+bdy[[N-1]] <- do.call(substitute, list(bdy[[N-1]], list(stop = quote(warning))))
+body(warnifnot) <- bdy
+warnifnot(1 == 1, 1 < 2, 2 < 2) # => warns " 2 < 2 is not TRUE  "
+warnifnot(exprs = {
+    1 == 1
+    3 < 3  # => warns "3 < 3 is not TRUE"
+})
 }
 \keyword{environment}
 \keyword{programming}

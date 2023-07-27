@@ -90,7 +90,8 @@ save <- function(..., list = character(),
             }
         }
         if (is.character(file)) {
-	    if(!nzchar(file)) stop("'file' must be non-empty string")
+	    if(!nzchar(file)) 
+                stop(gettextf("'%s' must be a non-empty string", "file"), domain = NA)
 	    if(!is.character(compress)) {
 		if(!is.logical(compress))
 		    stop("'compress' must be logical or character")
@@ -128,9 +129,8 @@ save <- function(..., list = character(),
 save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
                         compress = !ascii, safe = TRUE)
 {
-    if (! is.character(file) || file == "")
-        stop("'file' must be non-empty string")
-
+    if (!is.character(file) || length(file) != 1 || file == "")
+        stop(gettextf("'%s' must be a non-empty string", "file"), domain = NA)
     opts <- getOption("save.image.defaults")
     if(is.null(opts)) opts <- getOption("save.defaults")
 

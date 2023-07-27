@@ -1,6 +1,6 @@
 % File src/library/stats/man/loess.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loess}
@@ -57,7 +57,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     (\emph{if} \code{control} is not specified).}
 }
 \description{
-  Fit a polynomial surface determined by one or more numerical
+  Fit a locally polynomial surface determined by one or more numerical
   predictors, using local fitting.
 }
 \details{
@@ -83,7 +83,9 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   speed.  See \code{\link{loess.control}} for details.
 }
 \value{
-  An object of class \code{"loess"}.% otherwise entirely unspecified (!)
+  An object of class \code{"loess"}, % otherwise entirely unspecified (!)
+  with \code{print()}, \code{\link{summary}()}, \code{\link{predict}} and
+  \code{\link{anova}} methods.
 }
 \references{
   W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression
@@ -124,8 +126,8 @@ cars.lo <- loess(dist ~ speed, cars)
 predict(cars.lo, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 # to allow extrapolation
 cars.lo2 <- loess(dist ~ speed, cars,
-  control = loess.control(surface = "direct"))
+                  control = loess.control(surface = "direct"))
 predict(cars.lo2, data.frame(speed = seq(5, 30, 1)), se = TRUE)
-}
+}%% Add a 2D example, e.g. like 'topo' of MASS ch04.R, but using volcano?
 \keyword{smooth}
 \keyword{loess}

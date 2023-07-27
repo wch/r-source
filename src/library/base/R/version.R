@@ -171,7 +171,7 @@ function(x)
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
-    lens <- vapply(x, length, 0L)
+    lens <- lengths(x)
     y <- lapply(x, function(e) sprintf("%o", e))
     ## Maximal number of octal digits needed.
     width <- max(nchar(unlist(y)), 0L)
@@ -382,7 +382,7 @@ function(x, recursive = FALSE)
 {
     ## <NOTE>
     ## Assuming *valid* numeric_version objects, we could simply do:
-    ##   any(vapply(unclass(x), length, 0L) == 0L)
+    ##   any(lengths(unclass(x)) == 0L)
     ## </NOTE>
     anyNA(.encode_numeric_version(x))
 }

@@ -168,8 +168,8 @@ install.packages <-
              keep_outputs = FALSE,
              ...)
 {
-    if (!is.character(type))
-        stop("invalid 'type'; must be a character string")
+    if(!(is.character(type) && length(type) == 1L))
+        stop(gettextf("'%s' must be a character string", "type"), domain = NA)
     type2 <- .Platform$pkgType
     if (type == "binary") {
         if (type2 == "source")
