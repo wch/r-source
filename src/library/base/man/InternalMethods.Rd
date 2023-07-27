@@ -128,7 +128,7 @@
 
   \code{.S3PrimitiveGenerics} is a character vector listing the
   primitives which are internal generic and not \link{group generic},
-  (not only for {S3} but also {S4}).
+  (not only for S3 but also S4).
   Similarly, the \code{.internalGenerics} character vector contains the names
   of the internal (via \code{\link{.Internal}(..)}) non-primitive functions
   which are internally generic.
