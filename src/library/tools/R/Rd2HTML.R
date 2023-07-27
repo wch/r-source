@@ -110,9 +110,9 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
 }
 
 shtmlify <- function(s) {
-    s <- gsub("&", "&amp;", s, fixed = TRUE)
-    s <- gsub("<", "&lt;" , s, fixed = TRUE)
-    s <- gsub(">", "&gt;" , s, fixed = TRUE)
+    s <- fsub("&", "&amp;", s)
+    s <- fsub("<", "&lt;" , s)
+    s <- fsub(">", "&gt;" , s)
     s
 }
 
@@ -1280,7 +1280,7 @@ function(dir)
                   .find_HTML_links_in_package))
 }
 
-.DESCRIPTION_to_HTML <- function(descfile) {
+.DESCRIPTION_to_HTML <- function(descfile, dynamic = FALSE) {
 
     ## Similar to .DESCRIPTION_to_latex().
 
@@ -1348,8 +1348,98 @@ function(dir)
         x <- fsub("!=", "&ne;", x)
         x
     }
+    
+    htmlify_license_spec <- function(x, p) {
+        do_one <- function(x) {
+            x <- gsub("[[:space:]]*([+|])[[:space:]]*", " \\1 ", x)
+            a <- analyze_license(x)
+            if(!a$is_standardizable) return(htmlify(x))
+
+            htmlify_component_texts <- function(x) {
+                x <- fsub("&", "&amp;", x)
+                x <- fsub("<=", "&le;", x)
+                x <- fsub(">=", "&ge;", x)
+                x <- fsub("!=", "&ne;", x)
+                x <- fsub("<", "&lt;", x)
+                x <- fsub(">", "&gt;", x)
+                x
+            }
+
+            components <- a$components
+            expansions <- unlist(a$expansions)
+            expanded <- length(expansions) > length(components)
+            y <- character(length(expansions))
+        
+            ## Unlimited.
+            y[expansions == "Unlimited"] <- "Unlimited"
+            
+            ## License file pointers.
+            ## <FIXME>
+            ## For now only hyperlink for dynamic help.
+            ## Once httpd() knows about packageLicenseFileRegexp
+            re <- "(.*[^[:space:]])?(([[:space:]]*\\+[[:space:]]*)?file )(LICEN[CS]E)"
+            ind <- grepl(re, expansions)
+            if(any(ind)) {
+                y[ind] <-
+                    sub(re,
+                        ## </FIXME>
+                        ## packageLicenseFileRegexp
+                        ##   sprintf("\\2<a href=\"/library/%s/\\4\">\\4</a>",
+                        ##           p),
+                        "\\2\\4",
+                        ## </FIXME>
+                        expansions[ind])
+                expansions[ind] <- sub(re, "\\1", expansions[ind])
+            }
+            ## </FIXME>
+
+            ## Components with labels in the R license db.
+            ## For dynamic help, use the common licenses shipped with R
+            ## instead of the R-project.org license URLs.
+            ## Once httpd() knows about commonLicenseFilesRegexp.
+            ldb <- R_license_db()
+            pos <- match(expansions, ldb$Labels)
+            ind <- !is.na(pos)
+            if(any(ind)) {
+                pos <- pos[ind]
+                ## <FIXME>
+                ## commonLicenseFilesRegexp
+                ##   paths <- ldb[pos, "File"]
+                ##   urls <- ifelse(nzchar(paths),
+                ##                  sprintf("../../licenses/%s", basename(paths)),
+                ##                  ldb[pos, "URL"])
+                urls <- ldb[pos, "URL"]
+                ## </FIXME>
+                texts <- if(expanded) {
+                             expansions[ind]
+                         } else {
+                             sub("[[:space:]]*\\+.*", "", components[ind])
+                         }
+                y[ind] <-
+                    sprintf("<a href=\"%s\">%s</a>%s",
+                            vapply(urls, urlify, ""),
+                            htmlify_component_texts(texts),
+                            y[ind])
+            }
+            
+            y <- paste(y, collapse = " | ")
+            if(expanded) {
+                y <- sprintf("%s [expanded from: %s]",
+                             y,
+                             paste(htmlify_component_texts(components),
+                                   collapse = " | "))
+            }
+        
+            y
+        }
+
+        v <- unique(x)
+        s <- vapply(v, do_one, "")
+        s[match(x, v)]
+    }
 
     desc <- enc2utf8(.read_description(descfile))
+    pack <- desc["Package"]
     aatr <- desc["Authors@R"]
     ## <FIXME>
     ## .DESCRIPTION_to_latex() drops the
@@ -1375,7 +1465,7 @@ function(dir)
         htmlify_text(desc["Description"], a = TRUE, d = TRUE)
     ## Now the other fields.
     fields <- setdiff(names(desc),
-                      c("Title", "Description"))
+                      c("Title", "Description", "License"))
     theops <- intersect(fields,
                         c("Depends", "Imports", "LinkingTo",
                           "Suggests", "Enhances"))
@@ -1388,7 +1478,10 @@ function(dir)
     ## HTMLify URLs and friends.
     for(f in intersect(fields,
                        c("URL", "BugReports",
-                         "Additional_repositories"))) {
+                         "Additional_repositories",
+                         ## BioC ...
+                         "git_url"
+                         ))) {
         ## The above already changed & to &amp; which urlify will
         ## do once more ...
         trafo <- function(s) urlify(gsub("&amp;", "&", s))
@@ -1413,11 +1506,12 @@ function(dir)
                  gsub("\n", "<br/>", desc["Author"]))
     }
     ## </NOTE>
+    desc["License"] <- htmlify_license_spec(desc["License"], pack)
 
     ## <TODO>
     ## For dynamic help we should be able to further enhance by
     ## hyperlinking file pointers to
-    ##   LICENSE LICENCE AUTHORS COPYRIGHTS
+    ##   AUTHORS COPYRIGHTS
     ## </TODO>
 
     c("<table>",
