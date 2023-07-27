@@ -20,7 +20,7 @@
 
 ### Please use dnl for first-col comments within definitions, as
 ### PD's autoconf leaves ## in but most others strip them.
-### Or indent them by spaces, which seems to be left in by all
+### Or indent them by spaces, which seems to be left in by all.
 
 ### * General support macros
 
@@ -4248,6 +4248,8 @@ fi
 ## ------------
 ## This gets recorded in etc/Renviron and used in tools/R/sotools.R
 ## It is a comma-separated string of 5 items, OS,C,CXX,F77,F95 .
+## These days f77 and f90 are the same compiler.
+## Hard-coded in sotools.R for Windows.
 AC_DEFUN([R_ABI],
 [## System type.
 case "${host_os}" in
@@ -4271,7 +4273,8 @@ dnl Compiler types
 dnl C: AC_PROG_CC does
 dnl   If using the GNU C compiler, set shell variable `GCC' to `yes'.
 dnl   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
-dnl clang and Intel compilers identify as GNU, which is OK here
+dnl clang and Intel compilers identify as GNU, which is OK here as
+dnl we list altrnatives in sotools.R
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
@@ -4287,7 +4290,8 @@ fi
 dnl C++: AC_PROG_CXX does
 dnl   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
 dnl   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
-dnl clang and Intel compilers identify as GNU, which is OK here
+dnl clang and Intel compilers identify as GNU, which is OK here as
+dnl we list altrnatives in sotools.R
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
@@ -4299,15 +4303,21 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-dnl Fortran (fixed- then free-form):
+dnl Fortran (fixed- then free-form).  These days always the same compiler.
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
-dnl Needs entries here for flang-new and Intel (ifort, ifx)
 case "${FC}" in
+  *flang-new)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
+    ;;
   ## This means Classic flang
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    ;;
+  ## we do not consider ifort as it will be disconinued in 2023.
+  *ifx)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},ifx,ifx"
     ;;
   *)
     case "${host_os}" in
