@@ -78,6 +78,9 @@
       infinite entries, analogously to \code{range.default()}, as proposed
       by Davis Vaughan on R-devel.  Other \code{range()}-methods can make
       use of new \code{.rangeNum()}.
+
+      \item New \code{.internalGenerics} complementing \code{.S3PrimitiveGenerics},
+      for documentation and low-level book keeping.
     }
   }
 

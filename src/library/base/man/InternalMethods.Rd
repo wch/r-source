@@ -1,14 +1,15 @@
 % File src/library/base/man/zMethods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{InternalMethods}
+\title{Internal Generic Functions}
 \alias{InternalMethods}
 \alias{InternalGenerics}
 \alias{internal generic}
 \alias{.S3PrimitiveGenerics}
-\title{Internal Generic Functions}
+\alias{.internalGenerics}
 \description{
   Many \R-internal functions are \emph{generic} and allow
   methods to be written for.
@@ -56,9 +57,9 @@
   % DispatchOrEval internal generic: @
   \code{\link{@}},%           % do_AT()              [attrib.c]
   % DispatchOrEval internal generic: @<-
-  \code{\link{@<-}},%         % do_attrgets()        [attrib.c]  
+  \code{\link{@<-}},%         % do_attrgets()        [attrib.c]
 
-  % DispatchOrEval internal generic: c  
+  % DispatchOrEval internal generic: c
   \code{\link{c}},%           % do_c()               [bind.c]
   % DispatchOrEval internal generic: unlist
   \code{\link{unlist}},%      % do_unlist()          [bind.c]
@@ -90,7 +91,7 @@
   % DispatchOrEval internal generic: is.na
   \code{\link{is.na}},%       % do_isna()            [coerce.c]
   % DispatchOrEval internal generic: anyNA
-  \code{\link{anyNA}},%       % do_anyNA()           [coerce.c]  
+  \code{\link{anyNA}},%       % do_anyNA()           [coerce.c]
   % DispatchOrEval internal generic: is.nan
   \code{\link{is.nan}},%      % do_isnan()           [coerce.c]
   % DispatchOrEval internal generic: is.finite
@@ -126,11 +127,13 @@
   internal/primitive and allow methods to be written for them.
 
   \code{.S3PrimitiveGenerics} is a character vector listing the
-  primitives which are internal generic and not \link{group generic}.
-  Currently \code{\link{as.vector}}, \code{\link{cbind}},
-  \code{\link{rbind}} and \code{\link{unlist}} are the internal
-  non-primitive functions which are internally generic.
-
+  primitives which are internal generic and not \link{group generic},
+  (not only for {S3} but also {S4}).
+  Similarly, the \code{.internalGenerics} character vector contains the names
+  of the internal (via \code{\link{.Internal}(..)}) non-primitive functions
+  which are internally generic.
+}
+\note{
   For efficiency, internal dispatch only occurs on \emph{objects}, that
   is those for which \code{\link{is.object}} returns true.
 }

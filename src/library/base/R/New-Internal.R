@@ -318,5 +318,10 @@ lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
 mem.maxVSize <- function(vsize = 0) .Internal(mem.maxVSize(vsize))
 mem.maxNSize <- function(nsize = 0) .Internal(mem.maxNSize(nsize))
 
+## The *non*-primitive internal generics; .Primitive ones = .S3PrimitiveGenerics ( ./zzz.R )
+.internalGenerics <-
+    c("as.vector", "cbind", "rbind", "unlist",
+      "is.unsorted", "lengths", "nchar", "rep.int", "rep_len")
+
 ## base has no S4 generics
 .noGenerics <- TRUE
