@@ -326,9 +326,9 @@ function(x, header = TRUE, ...)
         ## (octal \000 to \037 and \177 to \237).
         ## Replace these by hex bytes.
         s <- .replace_chars_by_hex_subs(s, invalid_HTML_chars_re)
-        s <- gsub("&", "&amp;", s, fixed = TRUE)
-        s <- gsub("<", "&lt;",  s, fixed = TRUE)
-        s <- gsub(">", "&gt;",  s, fixed = TRUE)
+        s <- fsub("&", "&amp;", s)
+        s <- fsub("<", "&lt;",  s)
+        s <- fsub(">", "&gt;",  s)
         if(a) {
             ## Some people have <http://something> as recommended for
             ## in-text URLs.
