@@ -4274,7 +4274,7 @@ dnl C: AC_PROG_CC does
 dnl   If using the GNU C compiler, set shell variable `GCC' to `yes'.
 dnl   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
 dnl clang and Intel compilers identify as GNU, which is OK here as
-dnl we list altrnatives in sotools.R
+dnl we list alternatives in sotools.R
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
@@ -4291,7 +4291,7 @@ dnl C++: AC_PROG_CXX does
 dnl   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
 dnl   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
 dnl clang and Intel compilers identify as GNU, which is OK here as
-dnl we list altrnatives in sotools.R
+dnl we list alternatives in sotools.R
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
