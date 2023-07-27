@@ -362,6 +362,7 @@ int R_system(const char *command)
 extern char ** environ;
 #endif
 
+// .Internal(Sys.getenv(x, unset))
 attribute_hidden SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
@@ -376,7 +377,7 @@ attribute_hidden SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("wrong type for argument"));
 
     i = LENGTH(CAR(args));
-    if (i == 0) {
+    if (i == 0) { // full list of environment variables
 #ifdef Win32
 	int n = 0, N;
 	wchar_t **w;
@@ -456,36 +457,37 @@ static int Rputenv(const char *nm, const char *val)
 #endif
 
 
+// .Internal(Sys.setenv(nm, val)) : (nm_1=val_1, nm_2=val_2, ..., nm_<n>=val_<n>)
 attribute_hidden SEXP do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_PUTENV) || defined(HAVE_SETENV)
-    int i, n;
-    SEXP ans, nm, vars;
 
     checkArity(op, args);
 
-    if (!isString(nm = CAR(args)))
+    SEXP nm = CAR(args);
+    if (!isString(nm))
 	error(_("wrong type for argument"));
-    if (!isString(vars = CADR(args)))
+    SEXP val = CADR(args);
+    if (!isString(val))
 	error(_("wrong type for argument"));
-    if(LENGTH(nm) != LENGTH(vars))
-	error(_("wrong length for argument"));
+    if(LENGTH(nm) != LENGTH(val))
+	error(_("'%s' and '%s' are of different lengths"), "names", "val");
 
-    n = LENGTH(vars);
-    PROTECT(ans = allocVector(LGLSXP, n));
+    int i, n = LENGTH(val);
+    SEXP ans = PROTECT(allocVector(LGLSXP, n));
 #ifdef HAVE_SETENV
     for (i = 0; i < n; i++)
 	LOGICAL(ans)[i] = setenv(translateChar(STRING_ELT(nm, i)),
-				 translateChar(STRING_ELT(vars, i)),
+				 translateChar(STRING_ELT(val, i)),
 				 1) == 0;
 #elif defined(Win32)
     for (i = 0; i < n; i++)
 	LOGICAL(ans)[i] = Rwputenv(wtransChar(STRING_ELT(nm, i)),
-				   wtransChar(STRING_ELT(vars, i))) == 0;
+				   wtransChar(STRING_ELT(val, i))) == 0;
 #else
     for (i = 0; i < n; i++)
 	LOGICAL(ans)[i] = Rputenv(translateChar(STRING_ELT(nm, i)),
-				  translateChar(STRING_ELT(vars, i))) == 0;
+				  translateChar(STRING_ELT(val, i))) == 0;
 #endif
     UNPROTECT(1);
     return ans;
@@ -495,30 +497,29 @@ attribute_hidden SEXP do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+// .Internal(Sys.unsetenv(nm))
 attribute_hidden SEXP do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, n;
-    SEXP ans, vars;
-
     checkArity(op, args);
 
-    if (!isString(vars = CAR(args)))
+    SEXP nm = CAR(args);
+    if (!isString(nm))
 	error(_("wrong type for argument"));
-    n = LENGTH(vars);
+    int i, n = LENGTH(nm);
 
 #if defined(HAVE_UNSETENV) || defined(HAVE_PUTENV_UNSET) || defined(HAVE_PUTENV_UNSET2)
 #ifdef HAVE_UNSETENV
-    for (i = 0; i < n; i++) unsetenv(translateChar(STRING_ELT(vars, i)));
+    for (i = 0; i < n; i++) unsetenv(translateChar(STRING_ELT(nm, i)));
 #elif defined(HAVE_PUTENV_UNSET)
     for (i = 0; i < n; i++) {
 	char buf[1000];
-	snprintf(buf, 1000, "%s",  translateChar(STRING_ELT(vars, i)));
+	snprintf(buf, 1000, "%s",  translateChar(STRING_ELT(nm, i)));
 	putenv(buf);
     }
 #elif defined(HAVE_PUTENV_UNSET2)
 # ifdef Win32
     for (i = 0; i < n; i++) {
-	const wchar_t *w = wtransChar(STRING_ELT(vars, i));
+	const wchar_t *w = wtransChar(STRING_ELT(nm, i));
 	wchar_t buf[2*wcslen(w)];
 	wcscpy(buf, w);
 	wcscat(buf, L"=");
@@ -527,7 +528,7 @@ attribute_hidden SEXP do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 # else
     for (i = 0; i < n; i++) {
 	char buf[1000];
-	snprintf(buf, 1000, "%s=", translateChar(STRING_ELT(vars, i)));
+	snprintf(buf, 1000, "%s=", translateChar(STRING_ELT(nm, i)));
 	putenv(buf);
     }
 # endif
@@ -535,12 +536,12 @@ attribute_hidden SEXP do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #elif defined(HAVE_PUTENV) || defined(HAVE_SETENV)
     warning(_("this system cannot unset environment variables: setting to \"\""));
-    n = LENGTH(vars);
+    n = LENGTH(nm);
     for (i = 0; i < n; i++) {
 #ifdef HAVE_SETENV
-	setenv(translateChar(STRING_ELT(vars, i)), "", 1);
+	setenv(translateChar(STRING_ELT(nm, i)), "", 1);
 #else
-	Rputenv(translateChar(STRING_ELT(vars, i)), "");
+	Rputenv(translateChar(STRING_ELT(nm, i)), "");
 #endif
     }
 
@@ -548,9 +549,9 @@ attribute_hidden SEXP do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     warning(_("'Sys.unsetenv' is not available on this system"));
 #endif
 
-    PROTECT(ans = allocVector(LGLSXP, n));
+    SEXP ans = PROTECT(allocVector(LGLSXP, n));
     for (i = 0; i < n; i++)
-	LOGICAL(ans)[i] = !getenv(translateChar(STRING_ELT(vars, i)));
+	LOGICAL(ans)[i] = !getenv(translateChar(STRING_ELT(nm, i)));
     UNPROTECT(1);
     return ans;
 }
