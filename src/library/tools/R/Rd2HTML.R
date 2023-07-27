@@ -1376,18 +1376,15 @@ function(dir)
             ## License file pointers.
             ## <FIXME>
             ## For now only hyperlink for dynamic help.
-            ## Once httpd() knows about packageLicenseFileRegexp
             re <- "(.*[^[:space:]])?(([[:space:]]*\\+[[:space:]]*)?file )(LICEN[CS]E)"
             ind <- grepl(re, expansions)
             if(any(ind)) {
                 y[ind] <-
                     sub(re,
-                        ## </FIXME>
-                        ## packageLicenseFileRegexp
-                        ##   sprintf("\\2<a href=\"/library/%s/\\4\">\\4</a>",
-                        ##           p),
-                        "\\2\\4",
-                        ## </FIXME>
+                        if(dynamic) {
+                            sprintf("\\2<a href=\"/library/%s/\\4\">\\4</a>",
+                                    p)
+                        } else "\\2\\4",
                         expansions[ind])
                 expansions[ind] <- sub(re, "\\1", expansions[ind])
             }
@@ -1396,20 +1393,19 @@ function(dir)
             ## Components with labels in the R license db.
             ## For dynamic help, use the common licenses shipped with R
             ## instead of the R-project.org license URLs.
-            ## Once httpd() knows about commonLicenseFilesRegexp.
             ldb <- R_license_db()
             pos <- match(expansions, ldb$Labels)
             ind <- !is.na(pos)
             if(any(ind)) {
                 pos <- pos[ind]
-                ## <FIXME>
-                ## commonLicenseFilesRegexp
-                ##   paths <- ldb[pos, "File"]
-                ##   urls <- ifelse(nzchar(paths),
-                ##                  sprintf("../../licenses/%s", basename(paths)),
-                ##                  ldb[pos, "URL"])
-                urls <- ldb[pos, "URL"]
-                ## </FIXME>
+                urls <- if(dynamic) {
+                            paths <- ldb[pos, "File"]
+                            ifelse(nzchar(paths),
+                                   sprintf("/licenses/%s",
+                                           basename(paths)),
+                                   ldb[pos, "URL"])
+                        } else
+                            urls <- ldb[pos, "URL"]
                 texts <- if(expanded) {
                              expansions[ind]
                          } else {

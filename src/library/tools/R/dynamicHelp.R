@@ -314,7 +314,7 @@ httpd <- function(path, query, ...)
     .HTML_package_description <- function(descfile) {
         pkg <- basename(dirname(descfile))
         out <- c(HTMLheader(sprintf("Package &lsquo;%s&rsquo;", pkg)),
-                 .DESCRIPTION_to_HTML(descfile),
+                 .DESCRIPTION_to_HTML(descfile, dynamic = TRUE),
                  "</div></body></html>")
         list(payload = paste(out, collapse = "\n"))
     }
@@ -376,6 +376,11 @@ httpd <- function(path, query, ...)
     	formatted <- toHTML(news, title = "R News")
         return( list(payload = paste(formatted, collapse="\n")) )
     }
+    else if(grepl("^/licenses/([^/.]*)$", path) &&
+            file.exists(file <- file.path(R.home("share"), "licenses",
+                                          basename(path))))
+        return(list(file = file,
+                    "content-type" = "text/plain; charset=utf-8"))
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
@@ -385,7 +390,6 @@ httpd <- function(path, query, ...)
         return(.HTML_hsearch_db_concepts())
     else if(path == "/doc/html/hsearch_db_keywords.html")
         return(.HTML_hsearch_db_keywords())
-
 
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
@@ -399,6 +403,8 @@ httpd <- function(path, query, ...)
     newsRegexp <- "^/library/([^/]*)/NEWS$"
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     sessionRegexp <- "^/session/"
+    packageIndexRegexp <- "^/library/([^/]*)$"
+    packageLicenseFileRegexp <- "^/library/([^/]*)/(LICEN[SC]E$)"
 
     file <- NULL
     if (grepl(topicRegexp, path)) {
@@ -671,6 +677,22 @@ httpd <- function(path, query, ...)
     	pkg <- sub(cssRegexp, "\\1", path)
         return( list(file = system.file("html", "R.css", package = pkg),
                      "content-type" = "text/css") )
+    } else if(grepl(packageIndexRegexp, path)) {
+        ## <FIXME>
+        ## Can we do this better?
+        url <- paste0(path, "/html/00Index.html")
+        return(list(payload = paste0('Redirect to <a href="', url, '">"',
+                                     url, '"</a>'),
+                    "content-type" = 'text/html',
+                    header = paste0('Location: ', url),
+                    "status code" = 302L)) # temporary redirect
+        ## </FIXME>
+    } else if(grepl(packageLicenseFileRegexp, path) &&
+              file.exists(file <- system.file(basename(path),
+                                              package =
+                                                  basename(dirname(path))))) {
+        return(list(file = file,
+                    "content-type" = "text/plain; charset=utf-8"))
     } else if (startsWith(path, "/library/")) {
         descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
         if(grepl(descRegexp, path)) {
