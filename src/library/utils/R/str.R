@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -474,7 +474,7 @@ str.default <-
 			       )
 	    }
 	} else if(typeof(object) %in%
-		  c("externalptr", "weakref", "environment", "bytecode")) {
+		  c("externalptr", "weakref", "environment", "bytecode", "object")) {
 	    ## Careful here, we don't want to change pointer objects
 	    if(has.class)
                 cat(pClass(cl))
