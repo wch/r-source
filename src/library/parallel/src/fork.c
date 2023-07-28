@@ -49,6 +49,12 @@
 #include <Rinterface.h> /* for R_Interactive */
 #include <R_ext/eventloop.h> /* for R_SelectEx */
 
+/* read()/write() on pipes may not support arbitrary lengths, so
+   this is the largest chunk we'll ever send with one call between
+   a child and the parent. On macOS empirically this has to be at
+   most a 32-bit number. Current default is 1Gb. */
+#define MC_MAX_CHUNK 0x40000000
+
 #ifdef MC_DEBUG
   /* NOTE: the logging is not safe to use in signal handler because printf is
      not async-signal-safe */
@@ -769,7 +775,10 @@ SEXP mc_send_master(SEXP what)
     }
     ssize_t n;
     for (R_xlen_t i = 0; i < len; i += n) {
-	n = writerep(master_fd, b + i, len - i);
+	size_t to_send = len - i;
+	if (to_send > MC_MAX_CHUNK)
+	    to_send = MC_MAX_CHUNK;
+	n = writerep(master_fd, b + i, to_send);
 	if (n < 1) {
 	    close(master_fd);
 	    master_fd = -1;
@@ -986,7 +995,10 @@ static SEXP read_child_ci(child_info_t *ci)
 	unsigned char *rvb = RAW(rv);
 	R_xlen_t i = 0;
 	while (i < len) {
-	    n = readrep(fd, rvb + i, len - i);
+	    size_t to_read = len - i;
+	    if (to_read > MC_MAX_CHUNK)
+		to_read = MC_MAX_CHUNK;
+	    n = readrep(fd, rvb + i, to_read);
 #ifdef MC_DEBUG
 	    Dprintf("read_child_ci(%d) - read %lld at %lld returned %lld\n",
 	            ci->pid, (long long)len-i, (long long)i, (long long)n);
