@@ -2339,7 +2339,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	REprintf(" --- R stacktrace ---\n");
 	printwhere();
 	REprintf(" --- value of length: %d type: %s ---\n",
-		 length(value), type2char(TYPEOF(value)));
+		 length(value), R_typeToChar(value));
 	PrintValue(value);
 	REprintf(" --- function from context --- \n");
 	if (R_GlobalContext->callfun != NULL &&
@@ -2792,7 +2792,7 @@ attribute_hidden
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
 {
     SEXP cond = R_makeErrorCondition(call, "notSubsettableError", NULL, 1,
-				     R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+				     R_MSG_ob_nonsub, R_typeToChar(x));
     PROTECT(cond);
     R_setConditionField(cond, 2, "object", x);
     UNPROTECT(1);

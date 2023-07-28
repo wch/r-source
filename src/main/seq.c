@@ -352,11 +352,11 @@ attribute_hidden SEXP do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!isVector(ncopy))
 	error(_("invalid type (%s) for '%s' (must be a vector)"),
-	      type2char(TYPEOF(ncopy)), "times");
+	      R_typeToChar(ncopy), "times");
 
     if (!isVector(s) && s != R_NilValue)
 	error(_("attempt to replicate an object of type '%s'"),
-	      type2char(TYPEOF(s)));
+	      R_typeToChar(s));
 
     nc = xlength(ncopy); // might be 0
     if (nc == xlength(s))
@@ -706,7 +706,7 @@ attribute_hidden SEXP do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (!isVector(x))
 	errorcall(call, "attempt to replicate an object of type '%s'",
-		  type2char(TYPEOF(x)));
+		  R_typeToChar(x));
 
     /* So now we know x is a vector of positive length.  We need to
        replicate it, and its names if it has them. */

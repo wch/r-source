@@ -219,6 +219,7 @@ TypeTable[] = {
     { "weakref",	WEAKREFSXP },
     { "raw",		RAWSXP },
     { "S4",		S4SXP },
+    { "object",		OBJSXP }, /* == S4SXP */
     /* aliases : */
     { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },
@@ -234,6 +235,9 @@ SEXPTYPE str2type(const char *s)
 	if (!strcmp(s, TypeTable[i].str))
 	    return (SEXPTYPE) TypeTable[i].type;
     }
+    if (!strcmp(s, "object"))
+	return (SEXPTYPE) OBJSXP;
+
     /* SEXPTYPE is an unsigned int, so the compiler warns us w/o the cast. */
     return (SEXPTYPE) -1;
 }
@@ -326,6 +330,21 @@ const char *type2char(SEXPTYPE t) /* returns a char* */
     static char buf[50];
     snprintf(buf, 50, "unknown type #%d", t);
     return buf;
+}
+
+#ifdef USE_TYPE2CHAR_2
+const char *R_typeToChar2(SEXP x, SEXPTYPE t) {
+    return (t != OBJSXP)
+	? type2char(t)
+	: (IS_S4_OBJECT(x) ? "S4" : "object");
+}
+#endif
+
+const char *R_typeToChar(SEXP x) { // = type2char() but distinguishing {S4, object}
+    if(TYPEOF(x) == OBJSXP)
+	return IS_S4_OBJECT(x) ? "S4" : "object";
+    // else
+    return type2char(TYPEOF(x));
 }
 
 #ifdef UNUSED

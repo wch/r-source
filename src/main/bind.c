@@ -293,7 +293,7 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
-		  type2char(TYPEOF(x)), "LogicalAnswer");
+		  R_typeToChar(x), "LogicalAnswer");
     }
 }
 
@@ -329,7 +329,7 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
-		  type2char(TYPEOF(x)), "IntegerAnswer");
+		  R_typeToChar(x), "IntegerAnswer");
     }
 }
 
@@ -378,7 +378,7 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
-		  type2char(TYPEOF(x)), "RealAnswer");
+		  R_typeToChar(x), "RealAnswer");
     }
 }
 
@@ -451,7 +451,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
-		  type2char(TYPEOF(x)), "ComplexAnswer");
+		  R_typeToChar(x), "ComplexAnswer");
     }
 }
 
@@ -479,7 +479,7 @@ RawAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
-		  type2char(TYPEOF(x)), "RawAnswer");
+		  R_typeToChar(x), "RawAnswer");
     }
 }
 

@@ -62,7 +62,7 @@ SEXP compcases(SEXP args)
 			goto bad;
 		}
 		else
-		    error(R_MSG_type, type2char(TYPEOF(CAR(t))));
+		    error(R_MSG_type, R_typeToChar(CAR(t)));
 	}
 	/* FIXME : Need to be careful with the use of isVector() */
 	/* since this includes lists and expressions. */
@@ -113,7 +113,7 @@ SEXP compcases(SEXP args)
 		goto bad;
 	}
 	else
-	    error(R_MSG_type, type2char(TYPEOF(CAR(s))));
+	    error(R_MSG_type, R_typeToChar(CAR(s)));
     }
 
     if (len < 0)
@@ -151,7 +151,7 @@ SEXP compcases(SEXP args)
 			break;
 		    default:
 			UNPROTECT(1);
-			error(R_MSG_type, type2char(TYPEOF(u)));
+			error(R_MSG_type, R_typeToChar(u));
 		    }
 		}
 	    }
@@ -183,7 +183,7 @@ SEXP compcases(SEXP args)
 			break;
 		    default:
 			UNPROTECT(1);
-			error(R_MSG_type, type2char(TYPEOF(u)));
+			error(R_MSG_type, R_typeToChar(u));
 		    }
 		}
 	    }
@@ -211,7 +211,7 @@ SEXP compcases(SEXP args)
 		    break;
 		default:
 		    UNPROTECT(1);
-		    error(R_MSG_type, type2char(TYPEOF(u)));
+		    error(R_MSG_type, R_typeToChar(u));
 		}
 	    }
 	}

@@ -67,6 +67,8 @@ static void pp(int pre) {
 }
 
 static const char *typename(SEXP v) {
+    if(TYPEOF(v) == OBJSXP && IS_S4_OBJECT(v))
+	return "S4SXP";
     return sexptype2char(TYPEOF(v)); // -> memory.c
 }
 

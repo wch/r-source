@@ -127,7 +127,7 @@ static SEXP R_conditionMessage(SEXP cond)
     /* Type check return value so callers can safely extract a C string */
     if (TYPEOF(out) != STRSXP)
 	error(_("unexpected type '%s' for condition message"),
-	      type2char(TYPEOF(out)));
+	      R_typeToChar(out));
     if (length(out) != 1)
 	error(_("condition message must be length 1"));
 

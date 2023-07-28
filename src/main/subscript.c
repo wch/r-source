@@ -198,7 +198,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t nx, int partial, SEXP *newname,
 	vmaxset(vmax);
 	break;
     default:
-	ECALL3(call, _("invalid subscript type '%s'"), type2char(TYPEOF(s)));
+	ECALL3(call, _("invalid subscript type '%s'"), R_typeToChar(s));
     }
     return indx;
 }
@@ -332,7 +332,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	    }
 	break;
     default:
-	ECALL3(call, _("invalid subscript type '%s'"), type2char(TYPEOF(s)));
+	ECALL3(call, _("invalid subscript type '%s'"), R_typeToChar(s));
     }
     return indx;
 }
@@ -1021,7 +1021,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
 	if (s == R_MissingArg)
 	    return nullSubscript(nd);
     default:
-	ECALL3(call, _("invalid subscript type '%s'"), type2char(TYPEOF(s)));
+	ECALL3(call, _("invalid subscript type '%s'"), R_typeToChar(s));
     }
     return R_NilValue;
 }
@@ -1105,7 +1105,7 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 	    break;
 	}
     default:
-	ECALL3(call, _("invalid subscript type '%s'"), type2char(TYPEOF(s)));
+	ECALL3(call, _("invalid subscript type '%s'"), R_typeToChar(s));
     }
     return ans;
 }

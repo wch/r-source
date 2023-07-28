@@ -1506,9 +1506,15 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	d->sourceable = FALSE;
 	print2buff("<weak reference>", d);
 	break;
-    case S4SXP: {
-	error("'S4SXP': should not happen - please report");
-      break;
+    case OBJSXP: {
+	/*
+	print2buff("object(", d);
+	if(attr >= STRUC_ATTR) attr2(s, d, (attr == STRUC_ATTR));
+	 print2buff(")", d);
+	*/
+	d->sourceable = FALSE;
+	print2buff("<object>", d);
+	break;
     }
     default:
 	d->sourceable = FALSE;

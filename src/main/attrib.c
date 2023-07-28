@@ -75,7 +75,7 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	}
     } else if(!isString(val))
 	error(_("row names must be 'character' or 'integer', not '%s'"),
-	      type2char(TYPEOF(val)));
+	      R_typeToChar(val));
     PROTECT(vec);
     PROTECT(val);
     ans =  installAttrib(vec, R_RowNamesSymbol, val);
@@ -135,7 +135,7 @@ attribute_hidden SEXP getAttrib0(SEXP vec, SEXP name)
 		}
 		else
 		    error(_("getAttrib: invalid type (%s) for TAG"),
-			  type2char(TYPEOF(TAG(vec))));
+			  R_typeToChar(TAG(vec)));
 	    }
 	    UNPROTECT(1);
 	    if (any) {
@@ -401,7 +401,7 @@ static void checkNames(SEXP x, SEXP s)
     if (isVector(x) || isList(x) || isLanguage(x)) {
 	if (!isVector(s) && !isList(s))
 	    error(_("invalid type (%s) for 'names': must be vector or NULL"),
-		  type2char(TYPEOF(s)));
+		  R_typeToChar(s));
 	if (xlength(x) != xlength(s))
 	    error(_("'names' attribute [%d] must be the same length as the vector [%d]"), length(s), length(x));
     }
@@ -1011,7 +1011,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 	installAttrib(vec, R_NamesSymbol, val);
     else
 	error(_("invalid type (%s) to set 'names' attribute"),
-	      type2char(TYPEOF(vec)));
+	      R_typeToChar(vec));
     UNPROTECT(2);
     return vec;
 }
@@ -1131,7 +1131,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	if (_this != R_NilValue) {
 	    if (!isVector(_this))
 		error(_("invalid type (%s) for 'dimnames' (must be a vector)"),
-		      type2char(TYPEOF(_this)));
+		      R_typeToChar(_this));
 	    if (INTEGER(dims)[i] != LENGTH(_this) && LENGTH(_this) != 0)
 		error(_("length of 'dimnames' [%d] not equal to array extent"),
 		      i+1);
@@ -1169,7 +1169,7 @@ attribute_hidden SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 SEXP R_dim(SEXP call, SEXP op, SEXP args, SEXP env)
-{ 
+{
     SEXP ans;
     /* DispatchOrEval internal generic: dim */
     if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, /* argsevald: */ 1))
@@ -1597,7 +1597,7 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else {
 	    error(_("invalid type '%s' for slot name"),
-		  type2char(TYPEOF(nlist)));
+		  R_typeToChar(nlist));
 	    return R_NilValue; /*-Wall*/
 	}
 

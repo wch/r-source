@@ -1125,7 +1125,7 @@ static Rboolean mmap_Inspect(SEXP x, int pre, int deep, int pvec,
     Rboolean ptrOK = MMAP_PTROK(x);
     Rboolean wrtOK = MMAP_WRTOK(x);
     Rboolean serOK = MMAP_SEROK(x);
-    Rprintf(" mmaped %s", type2char(TYPEOF(x)));
+    Rprintf(" mmaped %s", R_typeToChar(x));
     Rprintf(" [ptr=%d,wrt=%d,ser=%d]\n", ptrOK, wrtOK, serOK);
     return TRUE;
 }

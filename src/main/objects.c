@@ -1421,7 +1421,7 @@ SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
     else if(fundef && !isNull(fundef) && !prim_generics[offset]) {
 	if(TYPEOF(fundef) != CLOSXP)
 	    error(_("the formal definition of a primitive generic must be a function object (got type '%s')"),
-		  type2char(TYPEOF(fundef)));
+		  R_typeToChar(fundef));
 	R_PreserveObject(fundef);
 	prim_generics[offset] = fundef;
     }

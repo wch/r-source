@@ -354,7 +354,7 @@ static Rboolean GetRNGkind(SEXP seeds)
 	if (seeds == R_MissingArg) /* How can this happen? */
 	    error(_("'.Random.seed' is a missing argument with no default"));
 	warning(_("'.Random.seed' is not an integer vector but of type '%s', so ignored"),
-		type2char(TYPEOF(seeds)));
+		R_typeToChar(seeds));
 	goto invalid;
     }
     is = INTEGER(seeds);
