@@ -228,6 +228,7 @@ so_symbol_names_table <-
       "linux, Fortran, intel, write, for_write_seq_lis",
       "linux, Fortran, intel, write, for_write_seq_fmt",
       ## does not support rand() except in module ifport
+      "linux, Fortran, intel, rand, rand_",
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort",
