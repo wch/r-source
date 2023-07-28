@@ -1299,16 +1299,15 @@ function(dir)
         x <- fsub("<", "&lt;", x)
         x <- fsub(">", "&gt;", x)
         if(a) {
-            ## CRAN also transforms
-            ##   "&lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;"
-            ## <FIXME>
-            ## Sync regexp with what we use in .DESCRIPTION_to_latex()?
-            x <- trfm("([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
-                      "\\1<a href=\"%s\">\\2</a>",
+            ## URL regexp as in .DESCRIPTION_to_latex().  CRAN uses
+            ##   &lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;
+            ##   ([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])
+            ## (also used in toRd.citation().
+            x <- trfm("&lt;(http://|ftp://|https://)([^[:space:],>]+)&gt;",
+                      "<a href=\"\\1%s\">\\1\\2</a>",
                       x,
                       urlify,
                       2L)
-            ## </FIXME>
         }
         if(d) {
             x <- trfm("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
