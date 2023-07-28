@@ -56,7 +56,10 @@ function(files, verbose = interactive()) {
 
 tidy_validate_R_httpd_path <-
 function(path) {
-    y <- httpd(path, query = NULL)
+    ## <FIXME>
+    ## What should we do if httpd() throws an error?
+    y <- tryCatch(httpd(path, query = NULL), error = identity)
+    ## </FIXME>
     if(!is.null(f <- y$file)) {
         ## Should only do this for appropriate content types
         if(is.null(y$"content-type"))
