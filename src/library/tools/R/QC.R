@@ -8283,7 +8283,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(capabilities("libcurl") &&
        !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DOI_CHECKS_",
                                          "FALSE"))) {
-        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir),
+        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir,
+                                                                 Rd = TRUE),
                                      parallel = check_urls_in_parallel),
                         error = identity)
         if(inherits(bad, "error") || NROW(bad))
