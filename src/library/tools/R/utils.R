@@ -991,21 +991,16 @@ function(con, n = 4L)
 .get_internal_S3_generics <-
 function(primitive = TRUE) # primitive means 'include primitives'
 {
-    out <-
-        ## Get the names of R internal S3 generics (via DispatchOrEval(),
-        ## cf. ?InternalMethods).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-", "@", "@<-",
-          ## The above are actually primitive but not listed in
-          ## base::.S3PrimitiveGenerics et al: not sure why?
-          "as.vector", "cbind", "rbind", "unlist",
-          "is.unsorted", "lengths", "nchar", "rep.int", "rep_len",
-          .get_S3_primitive_generics()
-          ## ^^^^^^^ now contains the members of the group generics from
-          ## groupGeneric.Rd.
-          )
-    if(!primitive)
-        out <- out[!vapply(out, .is_primitive_in_base, NA)]
-    out
+    c(.internalGenerics,
+      if(primitive)
+          c("[", "[[", "$", "[<-", "[[<-", "$<-", "@", "@<-",
+            ## The above are actually primitive but not listed in
+            ## base::.S3PrimitiveGenerics et al: not sure why?
+            .get_S3_primitive_generics()
+            ## ^^^^^^^ now contains the members of the group generics
+            ## from groupGeneric.Rd.
+            )
+      )
 }
 
 ### ** .get_namespace_package_depends
