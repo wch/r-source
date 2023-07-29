@@ -35,6 +35,14 @@
 
       \item \code{readChar(., 4e8)} no longer fails, thanks to Kodi Arfer's
       report (\PR{18557}).
+
+      \item Communication between parent and child processes in the
+      \code{multicore} part of \code{parallel} could fail on platforms
+      that do not support an arbitrarily large payload in system
+      functions \code{read()}/\code{write()} on pipes (seen on macOS
+      where a restriction to \code{INT_MAX} bytes is documented, with a
+      similar restriction for Linux). The payload is now split into 1Gb
+      chunks to avoid that problem. \PR{18571}
     }
   }
 }
@@ -1225,7 +1233,7 @@
     \itemize{
       \item Writing to a clipboard connection works again, fixing a
       regression in \R 4.2.0 (\PR{18332}).  Re-using a closed clipboard
-      connection longer issues a spurious warning about an ignored
+      connection no longer issues a spurious warning about an ignored
       encoding argument.
 
       \item C function \code{getlocale} no longer attempts to query an
