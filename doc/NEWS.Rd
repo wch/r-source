@@ -36,6 +36,9 @@
       \item \code{readChar(., 4e8)} no longer fails, thanks to Kodi Arfer's
       report (\PR{18557}).
 
+      \item \code{lapply(<list>, as.data.frame)} no longer warns falsely for
+      some base vector components.
+
       \item Communication between parent and child processes in the
       \code{multicore} part of \code{parallel} could fail on platforms
       that do not support an arbitrarily large payload in system

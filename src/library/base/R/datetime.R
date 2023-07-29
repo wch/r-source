@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1318,7 +1318,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
 as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 {
-    value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional, ...)
+    value <- as.data.frame.vector(as.POSIXct(x), row.names, optional, ...)
     if (!optional)
         names(value) <- deparse1(substitute(x))
     value
