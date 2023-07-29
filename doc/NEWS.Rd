@@ -40,9 +40,9 @@
       \code{multicore} part of \code{parallel} could fail on platforms
       that do not support an arbitrarily large payload in system
       functions \code{read()}/\code{write()} on pipes (seen on macOS
-      where a restriction to \code{INT_MAX} bytes is documented, with a
-      similar restriction for Linux). The payload is now split into 1Gb
-      chunks to avoid that problem. \PR{18571}
+      where a restriction to \code{INT_MAX} bytes is documented, without
+      doing a partial read unlike Linux). The payload is now split into
+      1Gb chunks to avoid that problem. (\PR{18571})
     }
   }
 }
