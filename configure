@@ -29214,7 +29214,7 @@ case "${FC}" in
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
-  ## We need not consider ifort as it will be discontinued in 2023.
+  ## We need not consider ifort as it will be discontinued in 2023,
   ## but it seems to have the same runtime.
   *ifx|*ifort)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},intel,intel"
