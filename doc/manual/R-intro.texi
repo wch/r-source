@@ -2594,7 +2594,7 @@ frame in their own right.  At this point an assignment such as
 
 @noindent
 does not replace the component @code{u} of the data frame, but rather
-masks it with another variable @code{u} in the working directory at
+masks it with another variable @code{u} in the workspace at
 @w{position 1} on the search path.  To make a permanent change to the
 data frame itself, the simplest way is to resort once again to the
 @code{$} notation:
@@ -2631,7 +2631,7 @@ original list or data frame is unchanged.
 @subsection Working with data frames
 
 A useful convention that allows you to work with many different problems
-comfortably together in the same working directory is
+comfortably together in the same workspace is
 
 @itemize @bullet
 @item
@@ -2639,14 +2639,14 @@ gather together all variables for any well defined and separate problem
 in a data frame under a suitably informative name;
 @item
 when working with a problem attach the appropriate data frame at
-@w{position 2}, and use the working directory at @w{level 1} for
+@w{position 2}, and use the workspace at @w{level 1} for
 operational quantities and temporary variables;
 @item
 before leaving a problem, add any variables you wish to keep for future
 reference to the data frame using the @code{$} form of assignment, and
 then @code{detach()};
 @item
-finally remove all unwanted variables from the working directory and
+finally remove all unwanted variables from the workspace and
 keep it as clean of left-over temporary variables as possible.
 @end itemize
 
@@ -2718,7 +2718,7 @@ facilities are simple and their requirements are fairly strict and even
 rather inflexible.  There is a clear presumption by the designers of
 @R{} that you will be able to modify your input files using other tools,
 such as file editors or Perl@footnote{Under UNIX, the utilities
-@command{sed} or@command{awk} can be used.} to fit in with the
+@command{sed} or @command{awk} can be used.} to fit in with the
 requirements of @R{}.  Generally this is very simple.
 
 If variables are to be held mainly in data frames, as we strongly
@@ -3576,7 +3576,14 @@ tricky to use directly and it pays to have a simple function such as the
 following to use it safely.
 
 Thus given a @math{n} by @math{1} vector @math{y} and an @math{n} by
-@math{p} matrix @math{X} then @math{X \ y} is defined as
+@math{p} matrix @math{X} then
+@ifnottex
+@math{X \ y}
+@end ifnottex
+@tex
+@math{X \\ y}
+@end tex
+is defined as
 @ifnottex
 (X'X)^@{-@}X'y, where (X'X)^@{-@}
 @end ifnottex

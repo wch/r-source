@@ -59,7 +59,7 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
   support message translation, and is not supported on Windows, where you
   \emph{must} use the \env{LANGUAGE} environment variable for message
-  translation, see below.  Trying
+  translation, see below and the \code{\link{Sys.setLanguage}()} utility.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
 
   Note that setting category \code{"LC_ALL"} sets only categories
@@ -194,9 +194,14 @@ Sys.setenv("LANGUAGE" = "es") # set the language for error/warning messages
  sep <- switch(sys,
                "Darwin"=, "SunOS" = "/",
                "Linux" =, "Windows" = ";")
- sg <- matrix(unlist(strsplit(strsplit(Sys.getlocale(), sep)[[1]], "=")), nrow=2)
- str(sloc <- setNames(sg[2,], sg[1,]))
- print.Dlist(sloc) # nicely readable
+ ##' show a "full" Sys.getlocale() nicely:
+ showL <- function(loc) {
+     sl <- strsplit(strsplit(loc, sep)[[1L]], "=")
+     setNames(sapply(sl, `[[`, 2L), sapply(sl, `[[`, 1L))
+ }
+ print.Dlist(lloc <- showL(Sys.getlocale()))
+ ## R-supported ones (but LC_ALL):
+ lloc[.LC.categories[-1]]
 }
 }
 \keyword{utilities}
