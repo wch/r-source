@@ -19,7 +19,8 @@
 ### https://www.r-project.org/Licenses/
 
 ### Please use dnl for first-col comments within definitions, as
-### PD's autoconf leaves ## in but others (e.g. Fedora's) strip them
+### PD's autoconf leaves ## in but most others strip them.
+### Or indent them by spaces, which seems to be left in by all.
 
 ### * General support macros
 
@@ -3926,6 +3927,7 @@ fi
 dnl Need to exclude Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
+dnl Seems to work for the revamped icx.
 case  "${CC}" in
   ## Intel compiler: note that -c99 may have been appended
   *icc*)
@@ -3951,6 +3953,7 @@ fi
 dnl Need to exclude Intel compilers, where this does not work correctly.
 dnl The flag is documented and is effective, but also hides
 dnl unsatisfied references. We cannot test for GCC, as icc passes that test.
+dnl Seems to work for the revamped icpx.
 case  "${CXX}" in
   ## Intel compiler
   *icc*|*icpc*)
@@ -3973,7 +3976,8 @@ if test "${r_cv_prog_fc_vis}" = yes; then
     F_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-dnl need to exclude Intel compilers.
+dnl flang accepts this but ignores it.
+dnl Need to exclude Intel compilers, but ifx seems to work.
 case  "${FC}" in
   ## Intel compiler
   *ifc|*ifort)
@@ -4124,6 +4128,7 @@ int main ()
 AC_DEFUN([R_MKTIME_ERRNO],
 [AC_CACHE_CHECK([whether mktime sets errno], [r_cv_mktime_errno],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <limits.h>
 #include <stdlib.h>
 #include <time.h>
 #include <errno.h>
@@ -4131,13 +4136,45 @@ AC_DEFUN([R_MKTIME_ERRNO],
 int main(void)
 {
     struct tm tm;
+    time_t res;
     /* It's hard to know what is an error, since mktime is allowed to
-       fix up times. But this worked for now (yes on Solaris, no on glibc). */
+       fix up times.
+
+       POSIX requires that mktime() sets errno, but it was optional
+       in earlier versions. Test whether once (time_t)-1 is returned
+       as an indication error, errno is set (see also PR#18532).
+       At time of writing, Linux & Windows set errno, macOS does not.
+       
+       The tests below are POSIX only, because ISO C does not specify the
+       meaning of time_t values, and hence we cannot know for sure that the
+       result is an indication of error and not a valid representation of
+       the date.  On POSIX, it is the number of seconds since Epoch. */
+
+    /* test year 4900, which will fail with 32-bit time_t */
     tm.tm_year = 3000; tm.tm_mon = 0; tm.tm_mday = 0;
     tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
     errno = 0;
-    mktime(&tm);
-    exit(errno == 0);
+    res = mktime(&tm);
+    if (res == (time_t)-1)
+      exit(errno == 0);
+
+    /* try harder to produce invalid date */
+    tm.tm_year = INT_MAX; tm.tm_mon = INT_MAX; tm.tm_mday = INT_MAX;
+    tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
+    errno = 0;
+    res = mktime(&tm);
+    if (res == (time_t)-1)
+      exit(errno == 0);
+      
+    /* try year 1848 */
+    tm.tm_year = -52; tm.tm_mon = 0; tm.tm_mday = 0;
+    tm.tm_hour = 0; tm.tm_min = 0; tm.tm_sec = 0; tm.tm_isdst = -1;
+    errno = 0;
+    res = mktime(&tm);
+    if (res == (time_t)-1)
+      exit(errno == 0);    
+      
+    exit(1); /* fall back to errno not set */
 }
 ]])],
               [r_cv_mktime_errno=yes],
@@ -4191,6 +4228,8 @@ fi
 ## ------------
 ## This gets recorded in etc/Renviron and used in tools/R/sotools.R
 ## It is a comma-separated string of 5 items, OS,C,CXX,F77,F95 .
+## These days f77 and f90 are the same compiler.
+## Hard-coded in sotools.R for Windows.
 AC_DEFUN([R_ABI],
 [## System type.
 case "${host_os}" in
@@ -4214,6 +4253,8 @@ dnl Compiler types
 dnl C: AC_PROG_CC does
 dnl   If using the GNU C compiler, set shell variable `GCC' to `yes'.
 dnl   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
+dnl clang and Intel compilers identify as GNU, which is OK here as
+dnl we list alternatives in sotools.R
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
@@ -4229,6 +4270,8 @@ fi
 dnl C++: AC_PROG_CXX does
 dnl   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
 dnl   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
+dnl clang and Intel compilers identify as GNU, which is OK here as
+dnl we list alternatives in sotools.R
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
@@ -4240,13 +4283,22 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-dnl Fortran (fixed- then free-form):
+dnl Fortran (fixed- then free-form).  These days always the same compiler.
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
+  *flang-new)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
+    ;;
+  ## This means Classic flang
   *flang)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    ;;
+  ## We need not consider ifort as it will be discontinued in 2023,
+  ## but it seems to have the same runtime.
+  *ifx|*ifort)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},intel,intel"
     ;;
   *)
     case "${host_os}" in
@@ -4328,7 +4380,7 @@ int main(void) {
     putenv("TZ=Europe/London");
     tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
     tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 120; tm.tm_isdst = -1;
-    // test 2020-01-01, whoch is assumed to be in GMT
+    // test 2020-01-01, which is assumed to be in GMT
     res = mktime(&tm);
 #ifdef PRINT
     printf("res %ld\n", res);
