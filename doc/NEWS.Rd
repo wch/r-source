@@ -96,6 +96,10 @@
       \item There is some support for building with Intel's LLVM-based
       compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
       \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
+
+      \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
+      so no longer recorded in \file{etc/Renviron} (it is not on Windows
+      and was only ever used when preparing package \pkg{tools}).
     }
   }
 

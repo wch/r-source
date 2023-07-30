@@ -85,12 +85,14 @@ read_symbols_from_object_file <- function(f)
     tab
 }
 
+## only used during installation to create system_ABI
 get_system_ABI <- if(.Platform$OS.type == "windows") {
     function() c(system = "windows", CC = "gcc", CXX = "g++",
                  F77 = "gfortran", FC = "gfortran")
 } else {
     function()
     {
+        ## env variable formerly in etc/Renviron, now in ../Makefile
         s <- Sys.getenv("R_SYSTEM_ABI")
         if((s == "") || (substr(s, 1L, 1L) %in% c("@", "?")))
             return(character())
