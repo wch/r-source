@@ -123,7 +123,7 @@ so_symbol_names_table <-
       "linux, C, gcc, vprintf, vprintf",
       "linux, C, gcc, vprintf, __vprintf_chk",
       "linux, C, gcc, vsprintf, vsprintf",
-      "linux, C, gcc, vprintf, vfprintf",
+#      "linux, C, gcc, vprintf, vfprintf", # but also from REprintf
       "linux, C, gcc, vsprintf, __vsprintf_chk",
       "linux, C, gcc, rand, rand",
       "linux, C, gcc, random, random",
