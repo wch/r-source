@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-06-26 r84605) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-07-31 r84793) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin21.6.0
 
@@ -517,6 +517,8 @@ s12   0.92099
 [2,] 0.03455368 0.00185109     0
 > all(phyper(x, m, n, k) == cumsum(dhyper(x, m, n, k)))  # FALSE
 [1] FALSE
+> stopifnot(abs(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k))) < 5e-16)
+> 
 > 
 > 
 > cleanEx()
@@ -9524,7 +9526,7 @@ $df
 
 > # to allow extrapolation
 > cars.lo2 <- loess(dist ~ speed, cars,
-+   control = loess.control(surface = "direct"))
++                   control = loess.control(surface = "direct"))
 > predict(cars.lo2, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 $fit
          1          2          3          4          5          6          7 
