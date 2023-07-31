@@ -113,6 +113,11 @@ the command @code{R CMD INSTALL}.
 @xref{Add-on packages, , Add-on-packages,
 R-admin, R Installation and Administration}.
 @end ifset
+@ifclear UseExternalXrefs
+See section `Add-on-packages' in the `R Installation and Administration'
+manual for more information.
+@end ifclear
+
 
 Other types of extensions are supported (but rare): @xref{Package types}.
 
@@ -205,10 +210,14 @@ package are created at installation time and stored in a database in the
 @file{R} directory of the installed package, being loaded into the
 session at first use.  This makes the @R{} session start up faster and
 use less (virtual) memory.
-@ifset UseExternalXrefs
 (For technical details,
+@ifset UseExternalXrefs
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
 @end ifset
+@ifclear UseExternalXrefs
+see section `Lazy loading' in the `R Internals' manual.)
+@end ifclear
+
 
 @cindex CRAN
 @acronym{CRAN} is a network of WWW sites holding the @R{} distributions
@@ -2174,6 +2183,10 @@ these should be settable by users (sites) through appropriate personal
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
+@ifclear UseExternalXrefs
+See section `Customizing package compilation' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
 
 There are some macros@footnote{in POSIX parlance: GNU @command{make}
 calls these `make variables'.}  which are set whilst configuring the
@@ -3530,8 +3543,14 @@ Of course, released packages should be able to run at least their own
 examples.  Each example is run in a `clean' environment (so earlier
 examples cannot be assumed to have been run), and with the variables
 @code{T} and @code{F} redefined to generate an error unless they are set
-in the example: @xref{Logical vectors, , Logical vectors, R-intro, An
-Introduction to R}.
+in the example:
+@ifset UseExternalXrefs
+@xref{Logical vectors, , Logical vectors, R-intro, An Introduction to R}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `Logical vectors' in the `An Introduction to R' manual for
+more information.
+@end ifclear
 
 @item
 If the package sources contain a @file{tests} directory then the tests
@@ -3609,7 +3628,7 @@ setting environment variables @w{@env{_R_CHECK_*_}} as described in
 @ref{Tools, , Tools, R-ints, R Internals}:
 @end ifset
 @ifclear UseExternalXrefs
-`R Internals':
+section `Tools' in the `R Internals' manual:
 @end ifclear
 a set of these customizations similar to those used by @acronym{CRAN}
 can be selected by the option @option{--as-cran} (which works best if
@@ -5042,6 +5061,10 @@ personal @file{Makevars} files.
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
+@ifclear UseExternalXrefs
+See section `Customizing package compilation' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
 
 Portable C++ code needs to follow both the 2011, 2014 and 2017 standards
 or to specify C+11/14/17/20 where available (which is not the case on
@@ -6722,8 +6745,8 @@ messages respectively to language with code @samp{@var{ll}}.
 R Installation and Administration}, for details of language codes.
 @end ifset
 @ifclear UseExternalXrefs
-See `Localization of messages' in `R Installation and Administration',
-for details of language codes.
+See `Localization of messages' in the `R Installation and
+Administration' manual for details of language codes.
 @end ifclear
 
 There is an @R{} function, @code{update_pkg_po} in package @pkg{tools},
@@ -8503,9 +8526,15 @@ Although the deparsing cannot do so, we recommend the consistent use of
 the preferred assignment operator @samp{<-} (rather than @samp{=}) for
 assignment.  Many package authors use a version of Emacs (on a
 Unix-alike or Windows) to edit @R{} code, using the ESS[S] mode of the
-@acronym{ESS} Emacs package.  See @ref{R coding standards, , R coding
-standards, R-ints, R Internals} for style options within the ESS[S] mode
-recommended for the source code of @R{} itself.
+@acronym{ESS} Emacs package.  See 
+@ifset UseExternalXrefs
+@ref{R coding standards, , R coding standards, R-ints, R Internals}
+@end ifset
+@ifclear UseExternalXrefs
+section `R coding standards' in the `R Internals' manual
+@end ifclear
+for style options within the ESS[S] mode recommended for the source code
+of @R{} itself.
 
 
 
@@ -10401,11 +10430,15 @@ and Fortran.  Use this @emph{via} @command{R CMD INSTALL --use-LTO} (but
 that does not apply if there is a @file{src/Makefile} file or a Windows
 analogue).
 
-To set up support on a Unix-alike,
+To set up support on a Unix-alike, see
 @ifset UseExternalXrefs
-@xref{Link-Time Optimization, , Link-Time Optimization,
+@ref{Link-Time Optimization, , Link-Time Optimization,
 R-admin, R Installation and Administration}.
 @end ifset
+@ifclear UseExternalXrefs
+section `Link-Time Optimization' in the `R Installation and
+Administration' manual.
+@end ifclear
 On Linux using GCC without building @R{} with LTO support,
 @c This will not set LTO for linking, but GCC does not seem to need that.
 it should suffice to set
@@ -10420,6 +10453,10 @@ in a personal (or site) @file{Makevars} file:
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
+@ifclear UseExternalXrefs
+See `Customizing package compilation' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
 
 For Windows, first edit file @file{etc/$@{R_ARCH@}/Makeconf} to give
 @code{LTO_OPT} the value @code{-flto} or do so in a personal/site
@@ -11626,7 +11663,10 @@ makefiles or in a site-wide @file{Makevars.site} file.
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
-
+@ifclear UseExternalXrefs
+See `Customizing package compilation' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
 
 Note that as @command{R CMD SHLIB} uses Make, it will not remake a shared
 object just because the flags have changed, and if @file{test.c} and
@@ -12163,8 +12203,14 @@ pointer to a structure with typedef @code{SEXPREC}.  Think of this
 structure as a @emph{variant type} that can handle all the usual types
 of @R{} objects, that is vectors of various modes, functions,
 environments, language objects and so on.  The details are given later
-in this section and in @ref{R Internal Structures, , R Internal
-Structures, R-ints, R Internals}, but for most
+in this section and in 
+@ifset UseExternalXrefs
+@ref{R Internal Structures, , R Internal Structures, R-ints, R Internals},
+@end ifset
+@ifclear UseExternalXrefs
+section `R Internal Structures' in the `R Internals' manual,
+@end ifclear
+but for most
 purposes the programmer does not need to know them.  Think rather of a
 model such as that used by Visual Basic, in which @R{} objects are
 handed around in C code (as they are in interpreted @R{} code) as the
@@ -12413,8 +12459,13 @@ Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
 @code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{N.B.}: although it is
 possible to return objects of internal types, it is unsafe to do so as
 assumptions are made about how they are handled which may be violated at
-user-level evaluation.)  More details are given in @ref{R Internal
-Structures, , R Internal Structures, R-ints, R Internals}.
+user-level evaluation.)  More details are given in 
+@ifset UseExternalXrefs
+@ref{R Internal Structures, , R Internal Structures, R-ints, R Internals}.
+@end ifset
+@ifclear UseExternalXrefs
+section `R Internal Structures' in the `R Internals' manual.
+@end ifclear
 
 Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to

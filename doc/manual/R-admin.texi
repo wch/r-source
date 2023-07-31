@@ -1805,7 +1805,13 @@ installed version.
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
-in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+in 
+@ifset UseExternalXrefs
+@ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Invoking R' in the `An Introduction to R' manual.
+@end ifclear
 
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
