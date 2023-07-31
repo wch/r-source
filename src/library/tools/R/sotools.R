@@ -85,24 +85,20 @@ read_symbols_from_object_file <- function(f)
     tab
 }
 
-## only used during installation to create system_ABI
-get_system_ABI <- if(.Platform$OS.type == "windows") {
-    function() c(system = "windows", CC = "gcc", CXX = "g++",
-                 F77 = "gfortran", FC = "gfortran")
+if(.Platform$OS.type == "windows") {
+    system_ABI <- c(system = "windows",
+                    CC = "gcc", CXX = "g++",
+                    F77 = "gfortran", FC = "gfortran")
 } else {
-    function()
-    {
-        ## env variable formerly in etc/Renviron, now in ../Makefile
-        s <- Sys.getenv("R_SYSTEM_ABI")
-        if((s == "") || (substr(s, 1L, 1L) %in% c("@", "?")))
-            return(character())
-        s <- unlist(strsplit(s, ",", fixed = TRUE))
-        names(s) <- c("system", "CC", "CXX", "F77", "FC")
-        s
+    ## env variable formerly in etc/Renviron, now in ../Makefile
+    system_ABI <- Sys.getenv("R_SYSTEM_ABI")
+    if((system_ABI == "") || (substr(system_ABI, 1L, 1L) %in% c("@", "?"))) {
+        system_ABI <- character()
+    } else {
+        system_ABI <- unlist(strsplit(system_ABI, ",", fixed = TRUE))
+        names(system_ABI) <- c("system", "CC", "CXX", "F77", "FC")
     }
 }
-
-system_ABI <- get_system_ABI()
 
 ## entry points for std::terminate are commented out as almost all
 ## come from system headers.
@@ -129,9 +125,6 @@ so_symbol_names_table <-
       "linux, C, gcc, vsprintf, vsprintf",
       "linux, C, gcc, vprintf, vfprintf",
       "linux, C, gcc, vsprintf, __vsprintf_chk",
-      "linux, C++, gxx, std::cout, _ZSt4cout",
-      "linux, C++, gxx, std::cerr, _ZSt4cerr",
-      #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
       "linux, C, gcc, rand, rand",
       "linux, C, gcc, random, random",
       "linux, C, gcc, rand_r, rand_r",
@@ -139,8 +132,11 @@ so_symbol_names_table <-
       "linux, C, gcc, srandom, srandom",
       "linux, C, gcc, srandom_r, srandom_r",
       "linux, C, gcc, srand48, srand48",
+      "linux, C++, gxx, std::cout, _ZSt4cout",
+      "linux, C++, gxx, std::cerr, _ZSt4cerr",
+      #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
       ## libc++ variants
-      "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
+      "linux, C++, gxx, std::cout, _ZNSt3__14coutE", # std::__1::cout
       "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "linux, Fortran, gfortran, open, _gfortran_st_open",
       "linux, Fortran, gfortran, close, _gfortran_st_close",
@@ -233,8 +229,8 @@ so_symbol_names_table <-
       "linux, Fortran, intel, rand, rand_",
 
       ## Apple clang identifies itself as gcc, so configure has used that
-      "macos, C, gcc, abort, _abort",
-      "macos, C, gcc, assert, ___assert_rtn",
+      "macos, C, gcc, abort, _abort", # not currently seen
+      "macos, C, gcc, assert, ___assert_rtn", # not currently seen
       "macos, C, gcc, exit, _exit",
       "macos, C, gcc, _exit, __exit",
       "macos, C, gcc, _Exit, __Exit",
@@ -250,20 +246,17 @@ so_symbol_names_table <-
       "macos, C, gcc, vprintf, _vprintf",
       "macos, C, gcc, vsprintf, _vsprintf", # old
       "macos, C, gcc, vsprintf, ___vsprintf_chk",
-      "macos, C++, gxx, std::cout, __ZSt4cout",
-      "macos, C++, gxx, std::cerr, __ZSt4cerr",
-      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
-      "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
-      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, C, gcc, rand, _rand",
       "macos, C, gcc, random, _random",
       "macos, C, gcc, rand_r, _rand_r",
       "macos, C, gcc, srand, _srand",
       "macos, C, gcc, srandom, _srandom",
       "macos, C, gcc, srand48, _srand48",
-      ## libc++ variants
-      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
+      #"macos, C++, gxx, std::cout, __ZSt4cout", # not with clang
+      #"macos, C++, gxx, std::cerr, __ZSt4cerr",
+      "macos, C++, gxx, std::cout, __ZNSt3__14coutE", # std::__1::cout
       "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
+      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, Fortran, gfortran, open, __gfortran_st_open",
       "macos, Fortran, gfortran, close, __gfortran_st_close",
       "macos, Fortran, gfortran, rewind, _gfortran_st_rewind",
