@@ -309,7 +309,9 @@
   \samp{\p{xx}} and \samp{\P{xx}} which match characters with and
   without property \samp{xx} respectively.  For a list of supported
   properties see the PCRE documentation, but for example \samp{Lu} is
-  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}.
+  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}. Note
+  that for some properties to work, one may have to start the pattern with
+  \samp{(*UCP)} and accept a performance penalty.
   (This support depends on the PCRE library being compiled with
   \sQuote{Unicode property support} which can be checked \emph{via}
   \code{\link{pcre_config}}. PCRE2 when compiled with Unicode support always
