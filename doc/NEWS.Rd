@@ -225,6 +225,11 @@
       substitution on platforms which do not support it (notably Alpine
       Linux).  This should give a human-readable conversion in ASCII on
       all platforms (rather than \code{NA_character_}).
+
+      \item \code{trans3d()} gains options \code{continuous} and
+      \code{verbose} addressing the problem of possible \dQuote{wrap
+	around} when projecting too long curves, as reported by Achim Zeileis
+      in \PR{18537}.
     }
   }
 
