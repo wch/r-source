@@ -1,7 +1,7 @@
 #  File src/library/stats/R/qqplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,13 +23,15 @@ qqplot <- function(x, y, plot.it = TRUE,
                    conf.args = list(exact = NULL, simulate.p.value = FALSE,
                                     B = 2000, col = NA, border = NULL))
 {
-    sx <- sort(x)
-    sy <- sort(y)
+    force(xlab) ; force(ylab) # get defaults explicitly before touching x, y
+    ## Sort x, y in place without length adjustment
+    x <- sx <- sort(x)
+    y <- sy <- sort(y)
     lenx <- length(sx)
     leny <- length(sy)
     if( leny < lenx )
         sx <- approx(1L:lenx, sx, n = leny)$y
-    if( leny > lenx )
+    else if( leny > lenx )
         sy <- approx(1L:leny, sy, n = lenx)$y
 
     if (is.null(conf.level)) {
@@ -39,7 +41,7 @@ qqplot <- function(x, y, plot.it = TRUE,
     }
 
     if (conf.level < 0 || conf.level > 1)
-            stop("'conf.level' is not a probability")
+        stop("'conf.level' is not a probability")
 
     N <- lenx + leny
     if (is.null(conf.args$exact)) conf.args$exact <- NULL
@@ -58,17 +60,23 @@ qqplot <- function(x, y, plot.it = TRUE,
                    exact = exact && !simulate, 
                    simulate = simulate, B = conf.args$B)
 
-    ### Switzer (1976, Biometrika) 10.1093/biomet/63.1.13
+    ### Switzer (1976, Biometrika) 10.1093/biomet/63.1.13, eq. 4 + 5
+    ### NB, all indices are in terms of sorted x, y
     i <- as.double(seq_along(x))
-    Re <- ceiling(i * N / lenx) - i
     Rl <- ceiling(i * N / lenx - ca * as.double(leny)) - i
     Rl[Rl < 1] <- NA
     Rl[Rl > leny] <- NA
     Rr <- floor(i * N / lenx - leny / lenx + ca * as.double(leny)) - i + 1
     Rr[Rr < 1] <- NA
     Rr[Rr > leny] <- NA
-    lwr <- sy[Rl]
-    upr <- sy[Rr]
+    ## Indices refer to original sorted data
+    lwr <- y[Rl]
+    upr <- y[Rr]
+    ## Reduce length of confidence bands when needed
+    if (leny < lenx) {
+    	lwr <- approx(x, lwr, xout = sx)$y
+    	upr <- approx(x, upr, xout = sx)$y
+    }
     ret <- list(x = sx, y = sy, lwr = lwr, upr = upr)
 
     if (plot.it) {
@@ -90,5 +98,5 @@ qqplot <- function(x, y, plot.it = TRUE,
         points(sx, sy, ...)
     }	
 
-    return(invisible(ret))
+    invisible(ret)
 }

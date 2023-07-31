@@ -382,7 +382,9 @@ cls <- c("raw", "logical", "integer", "numeric", "complex",
 names(cls) <- cls
 be <- baseenv()
 asF  <- lapply(cls, \(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
-obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, "numeric_version" = as.character(1:2), 1:2)))
+## objects of the respective class:
+obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters,
+                                           "numeric_version" = as.character(1:2), 1:2)))
 asDF <- lapply(cls, \(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
 r <- local({ g <- as.data.frame.logical; f <- function(L=TRUE) g(L)
     getVaW(f()) })
@@ -732,6 +734,18 @@ stopifnot(local({adf <- as.data.frame; identical(adf(1L),(as.data.frame)(1L))}))
 str(d2 <- mapply(as.data.frame, x=1:3, row.names=letters[1:3]))
 stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
 ## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
+
+
+## qqplot(x,y, *) confidence bands for unequal sized x,y, PR#18570:
+x <- (7:1)/8; y <- (1:63)/64
+r <- qqplot(x,y, plot.it=FALSE, conf.level = 0.90)
+r2<- qqplot(y,x, plot.it=FALSE, conf.level = 0.90)
+(d <- 64 * as.data.frame(r)[,3:4])
+stopifnot(identical(d, data.frame(lwr = c(NA, NA, NA, 6, 15, 24, 33),
+                                  upr = c(31, 40, 49, 58, NA, NA, NA))),
+          identical(8 * as.data.frame(r2[3:4]),
+                    data.frame(lwr = c(NA,NA,NA, 1:4 +0), upr = c(4:7 +0, NA,NA,NA))))
+## lower and upper confidence bands were nonsensical in R <= 4.3.1
 
 
 

@@ -257,6 +257,10 @@
       where a restriction to \code{INT_MAX} bytes is documented, without
       doing a partial read unlike Linux). The payload is now split into
       1Gb chunks to avoid that problem. (\PR{18571})
+
+      \item \code{qqplot(x,y, conf.level=.)} gives better confidence bounds
+      when \code{length(x) != length(y)}, thanks to Alexander Ploner's
+      report and patch proposal (\PR{18557}).
     }
   }
 }
