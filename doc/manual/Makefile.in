@@ -23,7 +23,8 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css Rfaq.css quot.sed texi2html.sh
+	ISBN Rman.css Rfaq.css quot.sed \
+	texi2epub.sh texi2html.sh
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -48,6 +49,9 @@ PDFLATEX = @PDFLATEX@
 ## texi2dvi script, and as it uses pdftex if that was detected.
 TEXI2DVI0 = @TEXI2DVI@
 PDFTEX = @PDFTEX@
+
+R_ZIPCMD = @R_ZIPCMD@
+R_UNZIPCMD = @R_UNZIPCMD@
 
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
@@ -120,12 +124,20 @@ docs: html
 ## It seems ebook-convert converts the directory, 
 ## so we populate a temporary dir.
 .texi.epub:
-	@mkdir -p tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
-	@rm -R tmp
+	@$(ECHO) "creating doc/manual/$@"
+	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
+	  mkdir -p tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
+	  rm -f $@.tmp; \
+	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"; \
+	  rm -R tmp; \
+	else \
+	  SED=$(SED) TEXI2ANY=$(TEXI2ANY) \
+	  ZIPCMD=$(R_ZIPCMD) UNZIPCMD=$(R_UNZIPCMD) \
+	  $(SHELL) $(srcdir)/texi2epub.sh \
+	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
+	fi
 
 .texi.mobi:
 	@mkdir -p tmp
@@ -136,14 +148,22 @@ docs: html
 	@rm -R tmp
 
 R-intro.epub: R-intro.texi
-	@mkdir -p tmp
-	@cp -R images tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
-  "W.N. Venables, D.M. Smith, R Core Team"
-	@rm -R tmp
+	@$(ECHO) "creating doc/manual/$@"
+	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
+	  mkdir -p tmp; \
+	  cp -R images tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
+	  rm -f $@.tmp; \
+	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
+	    "W.N. Venables, D.M. Smith, R Core Team"; \
+	  rm -R tmp; \
+	else \
+	  SED=$(SED) TEXI2ANY=$(TEXI2ANY) \
+	  ZIPCMD=$(R_ZIPCMD) UNZIPCMD=$(R_UNZIPCMD) \
+	  $(SHELL) $(srcdir)/texi2epub.sh \
+	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
+	fi
 
 R-intro.mobi: R-intro.texi
 	@mkdir -p tmp
