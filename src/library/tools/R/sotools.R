@@ -148,21 +148,22 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
 
-      ## These are for classic flang
-      "linux, Fortran, flang, open, f90io_open03",
-      "linux, Fortran, flang, open, f90io_open2003",
-      "linux, Fortran, flang, close, f90io_close",
-      "linux, Fortran, flang, rewind, f90io_rewind",
-      "linux, Fortran, flang, write, f90io_print_init",
-      "linux, Fortran, flang, print, f90io_print_init",
-      "linux, Fortran, flang, read, f90io_fmt_read",
-      "linux, Fortran, flang, write, f90io_fmt_write",
-      "linux, Fortran, flang, stop, f90_stop",
-      "linux, Fortran, flang, stop, f90_stop08",
-      "linux, Fortran, flang, rand, rand",
+      ## Classic flang from Dec 2017 (and untested since)
+      "linux, Fortran, ClassicFlang, open, f90io_open03",
+      "linux, Fortran, ClassicFlang, open, f90io_open2003",
+      "linux, Fortran, ClassicFlang, close, f90io_close",
+      "linux, Fortran, ClassicFlang, rewind, f90io_rewind",
+      "linux, Fortran, ClassicFlang, write, f90io_print_init",
+      "linux, Fortran, ClassicFlang, print, f90io_print_init",
+      "linux, Fortran, ClassicFlang, read, f90io_fmt_read",
+      "linux, Fortran, ClassicFlang, write, f90io_fmt_write",
+      "linux, Fortran, ClassicFlang, stop, f90_stop",
+      "linux, Fortran, ClassicFlang, stop, f90_stop08",
+      "linux, Fortran, ClassicFlang, rand, rand",
 
-      ## and for flang-new
-      ## flang-new currently has static libs for its runtimes.
+      ## and for for the 'flang' in the LLVM tree, currently
+      ## with executable 'flang-new'.
+      ## This currently has static libs for its runtimes.
       "linux, Fortran, flang-new, stop, _FortranAStopStatement",
       "linux, Fortran, flang-new, stop, _FortranAStopStatementText",
       "linux, Fortran, flang-new, open, _FortranAioBeginOpenUnit",

@@ -4315,10 +4315,10 @@ case "${FC}" in
     ;;
   ## This means Classic flang
   *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},ClassicFlang,ClassicFlang"
     ;;
   ## We need not consider ifort as it will be discontinued in 2023,
-  ## but it seems to have the same runtime.
+  ## but it seems to have the same runtime as ifx.
   *ifx|*ifort)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},intel,intel"
     ;;
