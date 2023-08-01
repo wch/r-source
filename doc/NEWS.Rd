@@ -81,6 +81,9 @@
 
       \item New \code{.internalGenerics} complementing \code{.S3PrimitiveGenerics},
       for documentation and low-level book keeping.
+
+      \item \code{grid()} now invisibly returns the x- and y- coordinates
+      at which the grid-lines weredrawn.
     }
   }
 
