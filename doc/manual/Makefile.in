@@ -23,7 +23,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css Rfaq.css quot.sed
+	ISBN Rman.css Rfaq.css quot.sed texi2html.sh
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -93,7 +93,9 @@ docs: html
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
 
@@ -160,7 +162,9 @@ R-admin.html: $(srcdir)/R-admin.texi
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@;\
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
 
@@ -171,7 +175,9 @@ R-FAQ.html: $(srcdir)/R-FAQ.texi
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2ANY) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
 
@@ -218,13 +224,13 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
-R-admin.html: $(texiincludes) $(srcdir)/Rman.css
-R-data.html: $(texiincludes) $(srcdir)/Rman.css
-R-exts.html: $(texiincludes) $(srcdir)/Rman.css
-R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css
-R-ints.html: $(texiincludes) $(srcdir)/Rman.css
-R-lang.html: $(texiincludes) $(srcdir)/Rman.css
-R-FAQ.html: $(srcdir)/Rfaq.css
+R-admin.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-data.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-FAQ.html: $(srcdir)/Rfaq.css $(srcdir)/texi2html.sh
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
