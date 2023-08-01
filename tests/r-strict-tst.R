@@ -29,7 +29,9 @@ stopifnot(
 	      19, 23, 18, 24, 25))
     ,
     ## using  branch II  in ../src/nmath/rhyper.c :
+    { .RS <- .Random.seed
     print(ct3 <- system.time(N <- rhyper(100, 8000, 1e9-8000, 1e6))[1]) < 0.02
+    }
     ,
     all.eq0(N, c(11, 9, 7, 4, 8, 6, 10, 5, 9, 8, 10, 5, 8, 8, 4, 10, 9, 8, 7,
 		 9, 11, 5, 7, 9, 8, 8, 5, 5, 10, 7, 8, 5, 4, 11, 9, 7, 8, 6, 7,

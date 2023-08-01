@@ -139,7 +139,7 @@ if(availableGB > 60) withAutoprint({
     system.time(ii <- ii + 0) #  6.726  17.558  24.450 (slow!, seen faster)
     system.time(i2 <- ii[-n]) # 14.267  23.532  37.918 (slow!, seen slower: el.= 51)
     ##
-    ## NB: keep n, i, i2 for "below"
+    ## NB: keep n, ii, i2 for "below"
 })
 ## In R <= 3.4.1 :
 ## Program received signal SIGSEGV, Segmentation fault.
@@ -160,7 +160,7 @@ if(availableGB > 99) withAutoprint({
 	length(ap1$x) == 50
 	all.equal(ap1$y, sin(pi*ap1$x), tol= 1e-9)
     })
-    rm(ap1) # keep x,y,n,i2
+    rm(ap1) # keep x,y,n,ii,i2
     gc()     # --> max used: 92322 Mb
 })
 
@@ -368,8 +368,8 @@ ca.half <- 0.5+ (eps <- unique(sort(outer(2^-c(16, 21, 26, 30), -1:1))))
 print(eps, digits=3)
 LL[cbind(2, ca.half)]   # should be of length 0, too: ca.half ~= 0.5
 LL[cbind(1, 1+ca.half)] # should be constantly == raw(1L) '01'
-LL[cbind(2+ca.half, 1)] # all 02
-LL[cbind(-ca.half, 1)] # raw(0) --- correct
+LL[cbind(2+ca.half, 1)] # all 02 -- failed in R <= 4.1.x
+LL[cbind(-ca.half, 1)]  # raw(0) --  "      "    "
 stopifnot(exprs = {
     length(LL[cbind(2, ca.half)]) == 0
     LL[cbind(1, 1+ca.half)] == as.raw(1L)

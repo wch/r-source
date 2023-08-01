@@ -55,6 +55,8 @@ Type 'q()' to quit R.
 > x <- 0*(-1) # negative zero
 > sqrt(x)
 [1] 0
+> sprintf("%g, rt = %g, .^2 = %g", x, sqrt(x), x^2)
+[1] "-0, rt = -0, .^2 = 0"
 > identical(x, sqrt(x))
 [1] TRUE
 > 
