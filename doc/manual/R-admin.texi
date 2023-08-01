@@ -6322,6 +6322,11 @@ feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
 
+One thing you might want to add for a new platform is the mapping of
+C/C++/Fortran calls to entry point names used for @command{R CMD check}.
+See @uref{https://svn.r-project.org/R-dev-web/trunk/sotools.txt} for how
+to do so.
+
 @node Function and variable index, Concept index, Platform notes, Top
 @unnumbered Function and variable index
 
