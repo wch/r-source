@@ -97,8 +97,7 @@ docs: html
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
-	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
@@ -133,8 +132,8 @@ docs: html
 	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"; \
 	  rm -R tmp; \
 	else \
-	  SED=$(SED) TEXI2ANY=$(TEXI2ANY) \
-	  ZIPCMD=$(R_ZIPCMD) UNZIPCMD=$(R_UNZIPCMD) \
+	  SED="$(SED)" TEXI2ANY="$(TEXI2ANY)" \
+	  ZIPCMD="$(R_ZIPCMD)" UNZIPCMD="$(R_UNZIPCMD)" \
 	  $(SHELL) $(srcdir)/texi2epub.sh \
 	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
 	fi
@@ -159,8 +158,8 @@ R-intro.epub: R-intro.texi
 	    "W.N. Venables, D.M. Smith, R Core Team"; \
 	  rm -R tmp; \
 	else \
-	  SED=$(SED) TEXI2ANY=$(TEXI2ANY) \
-	  ZIPCMD=$(R_ZIPCMD) UNZIPCMD=$(R_UNZIPCMD) \
+	  SED="$(SED)" TEXI2ANY="$(TEXI2ANY)" \
+	  ZIPCMD="$(R_ZIPCMD)" UNZIPCMD="$(R_UNZIPCMD)" \
 	  $(SHELL) $(srcdir)/texi2epub.sh \
 	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
 	fi
@@ -182,8 +181,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@;\
-##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
-	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
@@ -195,8 +193,7 @@ R-FAQ.html: $(srcdir)/R-FAQ.texi
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2ANY) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-##	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
-	  SED=$(SED) $(SHELL) $(srcdir)/texi2html.sh \
+	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
 	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
