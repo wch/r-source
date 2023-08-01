@@ -34,6 +34,8 @@ OBJECTS_MOBI = $(SOURCES_TEXI:.texi=.mobi)
 
 MAKEINDEX = @MAKEINDEX@
 TEXI2ANY = @TEXI2ANY@
+TEXI2ANY_VERSION_MAJ = @TEXI2ANY_VERSION_MAJ@
+TEXI2ANY_VERSION_MIN = @TEXI2ANY_VERSION_MIN@
 TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css @HAVE_TEXI2ANY_V7_TRUE@ --set-customization-variable SHOW_TITLE=true
 TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
