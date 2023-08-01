@@ -43444,7 +43444,6 @@ fi
 done
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is SVID, redefined in arithmetic.c if present
 ac_fn_c_check_func "$LINENO" "fseeko" "ac_cv_func_fseeko"
 if test "x$ac_cv_func_fseeko" = xyes
 then :
@@ -43455,12 +43454,6 @@ ac_fn_c_check_func "$LINENO" "ftello" "ac_cv_func_ftello"
 if test "x$ac_cv_func_ftello" = xyes
 then :
   printf "%s\n" "#define HAVE_FTELLO 1" >>confdefs.h
-
-fi
-ac_fn_c_check_func "$LINENO" "matherr" "ac_cv_func_matherr"
-if test "x$ac_cv_func_matherr" = xyes
-then :
-  printf "%s\n" "#define HAVE_MATHERR 1" >>confdefs.h
 
 fi
 

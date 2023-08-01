@@ -537,9 +537,6 @@
 /* Define to 1 if you have the <lzma.h> header file. */
 #define HAVE_LZMA_H 1
 
-/* Define to 1 if you have the `matherr' function. */
-/* #undef HAVE_MATHERR */
-
 /* Define to 1 if you have the `mbrtowc' function. */
 #define HAVE_MBRTOWC 1
 

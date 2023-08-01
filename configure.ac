@@ -2052,8 +2052,7 @@ AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi __cospi __sinpi __ta
 #endif])
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is SVID, redefined in arithmetic.c if present
-AC_CHECK_FUNCS(fseeko ftello matherr)
+AC_CHECK_FUNCS(fseeko ftello)
 
 ## POSIX functions
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
