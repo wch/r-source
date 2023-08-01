@@ -103,7 +103,7 @@ if(.Platform$OS.type == "windows") {
 ## entry points for std::terminate are commented out as almost all
 ## come from system headers.
 so_symbol_names_table <-
-    ## 'linux' == glibc, principally
+    ## 'linux' == glibc, principally but checked with Alpine Linux's musl
     c("linux, C, gcc, abort, abort",
       ## https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
       "Linux, C, gcc, assert, __assert_fail",
@@ -123,7 +123,7 @@ so_symbol_names_table <-
       "linux, C, gcc, vprintf, vprintf",
       "linux, C, gcc, vprintf, __vprintf_chk",
       "linux, C, gcc, vsprintf, vsprintf",
-#      "linux, C, gcc, vprintf, vfprintf", # but also from REprintf
+#      "linux, C, gcc, vprintf, vfprintf", # but also from REvprintf
       "linux, C, gcc, vsprintf, __vsprintf_chk",
       "linux, C, gcc, rand, rand",
       "linux, C, gcc, random, random",
@@ -172,6 +172,7 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, read, _FortranAioInputCharacter",
       "linux, Fortran, flang-new, read, _FortranAioInputComplex32",
       "linux, Fortran, flang-new, read, _FortranAioInputComplex64",
+      "linux, Fortran, flang-new, read, _FortranAioOutputExternalListInput",
       "linux, Fortran, flang-new, read, _FortranAioInputInteger",
       "linux, Fortran, flang-new, read, _FortranAioInputLogical",
       "linux, Fortran, flang-new, read, _FortranAioInputReal32",
@@ -181,6 +182,7 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, print, _FortranAioOutputCharacter",
       "linux, Fortran, flang-new, print, _FortranAioOutputComplex32",
       "linux, Fortran, flang-new, print, _FortranAioOutputComplex64",
+      "linux, Fortran, flang-new, print, _FortranAioOutputExternalListOutput",
       "linux, Fortran, flang-new, print, _FortranAioOutputInteger128",
       "linux, Fortran, flang-new, print, _FortranAioOutputInteger16",
       "linux, Fortran, flang-new, print, _FortranAioOutputInteger32",
@@ -193,6 +195,7 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, write, _FortranAioOutputCharacter",
       "linux, Fortran, flang-new, write, _FortranAioOutputComplex32",
       "linux, Fortran, flang-new, write, _FortranAioOutputComplex64",
+      "linux, Fortran, flang-new, write, _FortranAioOutputExternalListOutput",
       "linux, Fortran, flang-new, write, _FortranAioOutputInteger128",
       "linux, Fortran, flang-new, write, _FortranAioOutputInteger16",
       "linux, Fortran, flang-new, write, _FortranAioOutputInteger32",
