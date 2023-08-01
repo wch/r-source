@@ -15853,12 +15853,11 @@ of @code{iconv}.
 These are declared in header file @file{R_ext/Riconv.h}.
 
 @deftypefun {void *} Riconv_open (const char *@var{to}, const char *@var{from})
-@end deftypefun
 Set up a pointer to an encoding object to be used to convert between two
 encodings: @code{""} indicates the current locale.
+@end deftypefun
 
 @deftypefun size_t Riconv (void *@var{cd}, const char **@var{inbuf}, size_t *@var{inbytesleft}, char  **@var{outbuf}, size_t *@var{outbytesleft})
-@end deftypefun
 Convert as much as possible of @code{inbuf} to @code{outbuf}.  Initially
 the @code{size_t} variables indicate the number of bytes available in the
 buffers, and they are updated (and the @code{char} pointers are updated
@@ -15869,10 +15868,11 @@ that an error condition sets @code{errno} to one of @code{E2BIG} (the
 output buffer is full), @code{EILSEQ} (the input cannot be converted,
 and might be invalid in the encoding specified) or @code{EINVAL} (the
 input does not end with a complete multi-byte character).
+@end deftypefun
 
 @deftypefun int Riconv_close (void * @var{cd})
-@end deftypefun
 Free the resources of an encoding object.
+@end deftypefun
 
 
 @node Condition handling and cleanup code, Allowing interrupts, Re-encoding, The R API
