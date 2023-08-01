@@ -6231,9 +6231,10 @@ with the @file{README} file in that directory.
 @cindex FreeBSD
 
 There have been few recent reports on FreeBSD: there is a `port' at
-@uref{https://svnweb.freebsd.org/ports/head/math/}.  Recent versions of
-FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
-`port' is configured to use GCC.
+@uref{https://svnweb.freebsd.org/ports/head/math/R}, currently last
+updated for @R{} 4.0.4.  Recent versions of FreeBSD use Clang and the
+@code{libc++} C++ headers and runtime, but the `port' has been
+configured to use GCC.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
@@ -6245,9 +6246,8 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
-the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
-developers.)
+@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/},
+currently updated for @R{} 4.2.1.
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin
