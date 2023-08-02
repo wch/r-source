@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2022 R Core Team
+### Copyright (C) 1998-2023 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1399,6 +1399,7 @@ if test -n "${XMKMF}"; then
 fi
 
 ## Step 2.  GNU compilers.
+## (And those C/C++ compilers claiming conformity.)
 if test "${GCC}" = yes; then
   case "${host_cpu}" in
 ## Sparc has only an 8k global object table, 1024 entries on 64-bit.
@@ -1428,8 +1429,9 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   esac
 fi
 ## Assume flang is the same as clang (it is a modified front end)
+## Also flang-new
 case "${FC}" in
-  *flang|flang-*)
+  *flang|*flang-new)
     fpicflags=${cpicflags}
     ;;
 esac
@@ -1601,7 +1603,7 @@ dnl     ;;
     esac
     case  "${FC}" in
       ## Intel compilers
-      *ifc|*ifort)
+      *ifc|*ifort|*ifx)
         fpicflags="-fpic"
         ;;
       ## Nvidia (formerly Portland Group)

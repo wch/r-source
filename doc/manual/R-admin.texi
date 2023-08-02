@@ -866,7 +866,7 @@ R --arch=@var{name} CMD make check[-devel|all]
 @noindent
 to select a sub-architecture to check.
 
-Sub-architectures are also used on Windows, but by selecting executables
+Sub-architectures were also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
 @file{@var{R_HOME}/bin/x64}.  For
 backwards compatibility there are executables
@@ -1267,7 +1267,7 @@ confused compiler messages.
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
 @uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the LLVM
-compilera relevant to @R{} are @command{clang} and @command{flang} for
+compilers relevant to @R{} are @command{clang} and @command{flang} for
 which this can be selected by setting macro @samp{LTO=-flto=thin}.  LLVM
 has
 @example
@@ -5079,6 +5079,27 @@ FPIEFLAGS=-fPIE
 in @file{config.site}. (As from @R{} 4.2.2 @command{configure} tries
 that value if it is unset.)
 
+@node flang, Intel compilers, Clang, Linux
+@subsection flang
+
+The name @command{flang} has been used for two projects: this is about
+the sub-project of LLVM which builds a Fortran compiler and runtime
+libraries.  The compiler is currently named @command{flang-new} but has been
+announced to be renamed to @command{flang} when more nearly complete (and
+at some earlier point in its development was known as @command{f18}).
+
+The version in LLVM 16 was able to build @R{} on @cputype{x86_64} Linux
+with
+@example
+FC=/path/to/flang-new
+@end example
+@noindent
+with the matching @command{clang} used as the C compiler, and the build
+passed @command{make check-all}.  There is also support for
+@cputype{aarch64} and @cputype{ppc64le} Linux, but these have not been
+tested with @R{}.
+
+
 @c It is recommended to use C flag @option{-Wno-strict-prototypes}
 @c (disabling a C23 feature) if using @code{-pedantic} in @command{clang}
 @c 15.0.0 and later, as @R{} is not yet optimized for C23.  For more detail
@@ -5114,7 +5135,7 @@ that value if it is unset.)
 @c @cputype{x86}) and @cputype{ppc64le}.
 
 
-@node Intel compilers,  , Clang, Linux
+@node Intel compilers,  , flang, Linux
 @subsection Intel compilers
 
 @menu
@@ -5199,6 +5220,7 @@ CXX=$IP/icpc
 FC=$IP/ifort
 CFLAGS="-O3 -ip -fp-model precise"
 FFLAGS="-O3 -fp-model precise"
+FCFLAGS="-free -O3 -fp-model precise"
 CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
@@ -5653,7 +5675,7 @@ last tested@footnote{with @command{gcc} 10.2.} it was not possible to
 use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
-It usually possible to add some OpenMP support to the Apple
+It is usually possible to add some OpenMP support to the Apple
 @command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
 Note that that approach is somewhat fragile as it needs a
 @file{libomp.dylib} library matching the version of the compiler
@@ -6308,9 +6330,10 @@ with the @file{README} file in that directory.
 @cindex FreeBSD
 
 There have been few recent reports on FreeBSD: there is a `port' at
-@uref{https://svnweb.freebsd.org/ports/head/math/}.  Recent versions of
-FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
-`port' is configured to use GCC.
+@uref{https://svnweb.freebsd.org/ports/head/math/R}, currently last
+updated for @R{} 4.0.4.  Recent versions of FreeBSD use Clang and the
+@code{libc++} C++ headers and runtime, but the `port' has been
+configured to use GCC.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
@@ -6322,9 +6345,8 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
-the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
-developers.)
+@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/},
+currently updated for @R{} 4.2.1.
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin

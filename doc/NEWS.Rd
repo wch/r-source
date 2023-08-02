@@ -22,6 +22,18 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item There is some support for building with Intel's LLVM-based
+      compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
+      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
+
+      \item There is support for using LLVM's \command{flang-new} as the
+      Fortran compiler from LLVM 16.0.x (preferably 17.0.0
+      or later).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
