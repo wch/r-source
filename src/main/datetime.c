@@ -175,9 +175,7 @@ extern char *tzname[2];
 #include <Defn.h>
 #include <Internal.h>
 
-#ifndef HAVE_WORKING_MKTIME_BEFORE_1902
 static Rboolean warn1902 = FALSE;
-#endif
 
 /* Substitute based on glibc code. */
 #include "Rstrptime.h"
