@@ -96,10 +96,6 @@
       \item \command{configure} will warn if it encounters a 32-bit
       build, as that is nowadays almost untested.
 
-      \item There is some support for building with Intel's LLVM-based
-      compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
-      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
-
       \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
       so no longer recorded in \file{etc/Renviron} (it is not on Windows
       and was only ever used when preparing package \pkg{tools}).
@@ -233,6 +229,18 @@
       \code{verbose} addressing the problem of possible \dQuote{wrap
 	around} when projecting too long curves, as reported by Achim Zeileis
       in \PR{18537}.
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item There is some support for building with Intel's LLVM-based
+      compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
+      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
+
+      \item There is support for using LLVM's \command{flang-new} as the
+      Fortran compiler from LLVM 16.0.x (preferably 17.0.0
+      or later).
     }
   }
 

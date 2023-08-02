@@ -5115,6 +5115,7 @@ CXX=$IP/icpc
 FC=$IP/ifort
 CFLAGS="-O3 -ip -fp-model precise"
 FFLAGS="-O3 -fp-model precise"
+FCFLAGS="-free -O3 -fp-model precise"
 CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
