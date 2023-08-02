@@ -85,20 +85,13 @@ read_symbols_from_object_file <- function(f)
     tab
 }
 
-if(.Platform$OS.type == "windows") {
-    ## TODO: use version in ../Makefile.win
-    system_ABI <- c(system = "windows",
-                    CC = "gcc", CXX = "g++",
-                    F77 = "gfortran", FC = "gfortran")
+## env variable formerly in etc/Renviron, now in ../Makefile
+system_ABI <- Sys.getenv("R_SYSTEM_ABI")
+if((system_ABI == "") || (substr(system_ABI, 1L, 1L) %in% c("@", "?"))) {
+    system_ABI <- character()
 } else {
-    ## env variable formerly in etc/Renviron, now in ../Makefile
-    system_ABI <- Sys.getenv("R_SYSTEM_ABI")
-    if((system_ABI == "") || (substr(system_ABI, 1L, 1L) %in% c("@", "?"))) {
-        system_ABI <- character()
-    } else {
-        system_ABI <- unlist(strsplit(system_ABI, ",", fixed = TRUE))
-        names(system_ABI) <- c("system", "CC", "CXX", "F77", "FC")
-    }
+    system_ABI <- unlist(strsplit(system_ABI, ",", fixed = TRUE))
+    names(system_ABI) <- c("system", "CC", "CXX", "F77", "FC")
 }
 
 ## entry points for std::terminate are commented out as almost all
