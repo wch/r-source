@@ -267,7 +267,7 @@ so_symbol_names_table <-
       #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, Fortran, gfortran, open, __gfortran_st_open",
       "macos, Fortran, gfortran, close, __gfortran_st_close",
-      "macos, Fortran, gfortran, rewind, _gfortran_st_rewind",
+      "macos, Fortran, gfortran, rewind, __gfortran_st_rewind",
       "macos, Fortran, gfortran, read, __gfortran_st_read",
       "macos, Fortran, gfortran, write, __gfortran_st_write",
       "macos, Fortran, gfortran, print, __gfortran_st_write",
