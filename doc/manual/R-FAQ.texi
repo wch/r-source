@@ -8,6 +8,7 @@
 @set FAQ_DATE @value{FAQ_YEAR}-04-05
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
+@documentencoding UTF-8
 @c %**end of header
 
 @dircategory Programming
@@ -17,16 +18,10 @@
 
 @finalout
 
-@macro SPLUS{}
-@sc{S-Plus}
-@end macro
+@include R-defs.texi
 
 @macro CRAN{}
 @acronym{CRAN}
-@end macro
-
-@macro HTML{}
-@acronym{HTML}
 @end macro
 
 @macro FORTRAN{}
@@ -41,20 +36,8 @@ FORTRAN
 @acronym{XSL}
 @end macro
 
-@macro pkg {p}
-@strong{\p\}
-@end macro
-
-@macro CRANpkg {p}
-@url{https://CRAN.R-project.org/package=\p\, @strong{\p\}}
-@end macro
-
 @macro doi {d}
 doi:@tie{}@url{https://doi.org/\d\, \d\}
-@end macro
-
-@macro Rcopyright{year}
-Copyright @copyright{} \year\--@value{FAQ_YEAR} R Core Team
 @end macro
 
 @titlepage
@@ -149,23 +132,12 @@ available at
 The latest version of this document is always available from
 
 @display
-@url{https://CRAN.R-project.org/doc/FAQ/}
+@url{https://CRAN.R-project.org/doc/manual/}
 @end display
 
 From there, you can obtain versions converted to
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
-@acronym{ASCII} text},
-@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
-info}, @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
-@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
-as well as the @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
-Texinfo source} used for creating all these formats using the
-@acronym{GNU} Texinfo system.
-
-You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
-subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
+@url{https://CRAN.R-project.org/doc/manual/R-FAQ.html,, @HTML{}} and
+@url{https://CRAN.R-project.org/doc/manual/R-FAQ.pdf,, PDF},
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
@@ -180,7 +152,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik and R Core Team
   author        = @{Kurt Hornik and the R Core Team@},
   title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{FAQ_YEAR}@},
-  url           = @{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
+  url           = @{https://CRAN.R-project.org/doc/manual/R-FAQ.html@}
 @}
 @end group
 @end example
