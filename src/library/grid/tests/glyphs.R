@@ -78,11 +78,33 @@ Montserrat <- do.call(glyphInfo, MontserratInfo)
 testGlyphInfo <- list()
 testGlyph <- function(info, ...) {
     testGlyphInfo[[length(testGlyphInfo) + 1]] <<- info
-    grid.glyph(testGlyphInfo[[length(testGlyphInfo)]], ...)
+    if (!inherits(info, "RGlyphInfo")) {
+        ## List of infos
+        n <- length(info)
+        for (i in 1:n) {
+            vp <- viewport(y=i/(n+1))
+            pushViewport(vp)
+            grid.glyph(info[[i]], ...)
+            popViewport()
+        }
+    } else {
+        grid.glyph(info, ...)
+    }
 }
 testGlyphGrob <- function(info, ...) {
     testGlyphInfo[[length(testGlyphInfo) + 1]] <<- info
-    glyphGrob(testGlyphInfo[[length(testGlyphInfo)]], ...)
+    if (!inherits(info, "RGlyphInfo")) {
+        ## List of infos
+        n <- length(info)
+        vps <- lapply(1:n, function(i) viewport(y=i/(n+1)))
+        do.call(grobTree,
+                mapply(function(x, vp) {
+                           glyphGrob(x, ..., vp=vp)
+                       },
+                       info, vps))
+    } else {
+        glyphGrob(info, ...)
+    }
 }
 
 ## glyphs
@@ -323,3 +345,10 @@ grid.segments(0,.5,1,.5, gp=gpar(col="grey"))
 grid.text("test", y=3/4)
 testGlyph(Montserrat)
 HersheyLabel("Montserrat glyphs plus normal text", y=.2)
+
+## Two glyphInfo's in same image
+## (particularly relevant for embedding fonts in pdf() output)
+grid.newpage()
+testGlyph(list(Montserrat, Roboto))
+HersheyLabel("Montserrat glyphs plus Roboto glyphs
+in separate glyph grobs")

@@ -31,7 +31,8 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
     Ghostscript will search for fonts.}
   \item{options}{a character vector containing further options to
     Ghostscript.}
-  \item{glyphInfo}{typeset glyph information produced by \code{glyphInfo()}.}
+  \item{glyphInfo}{typeset glyph information produced by
+    \code{glyphInfo()}, or a list of the same.}
 }
 \details{
   This function is not necessary if you just use the standard
@@ -67,6 +68,10 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
   Some other options which can be useful (see your Ghostscript
   documentation) are \option{-dMaxSubsetPct=100},
   \option{-dSubsetFonts=true} and  \option{-dEmbedAllFonts=true}.
+
+  \code{embedGlyphs()} is recommended for \code{pdf()} files
+  that contain typeset glyphs (see \code{\link{glyphInfo}}),
+  but it will only work for TrueType fonts.
 }
 \value{
   The shell command used to invoke Ghostscript is returned
