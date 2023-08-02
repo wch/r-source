@@ -66,12 +66,6 @@ ifneq "$(TEXI2ANY)" "missing"
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
-R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
-
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
 	@LC_ALL=C $(TEXI2ANY) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
@@ -82,9 +76,6 @@ R-FAQ.html: R-FAQ.texi
 	LC_ALL=C $(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 else
 .texi.html:
-	@$(ECHO) "texi2any is not available"
-
-R-admin.html: $(srcdir)/R-admin.texi
 	@$(ECHO) "texi2any is not available"
 
 R-FAQ.html: R-FAQ.texi
