@@ -174,19 +174,6 @@ R-intro.mobi: R-intro.texi
   "W.N. Venables, D.M. Smith, R Core Team"
 	@rm -R tmp
 
-R-FAQ.html: $(srcdir)/R-FAQ.texi
-	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
-	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
-	else \
-	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2ANY) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
-	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
-	  rm -f $@.tmp; \
-	fi
-
-
 version.tex: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
@@ -235,7 +222,7 @@ R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-FAQ.html: $(srcdir)/Rfaq.css $(srcdir)/texi2html.sh
+R-FAQ.html: $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
