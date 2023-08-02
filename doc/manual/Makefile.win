@@ -37,8 +37,7 @@ BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 MAKEINDEX = LC_ALL=C makeindex
 TEXINDEX = LC_ALL=C texindex
 
-TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css \
-  --set-customization-variable SHOW_TITLE=true
+TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
 TEXI2TEXT = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)

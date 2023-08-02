@@ -20,6 +20,11 @@ if test $1 -ge 7; then
 	s/<table summary=""/<table/
 	s/\(<ol class="enumerate"\) type="a"/\1 style="list-style-type: lower-alpha"/
 	EOF
+elif test "$1" -eq 6 -a "$2" -eq 8; then
+  ## drop title (appears duplicated) consistent with Texinfo >= 7.0
+  cat "${sedscriptini}" - >>"${sedscriptuse}" <<-EOF
+	/<h1 class="settitle"/d
+	EOF
 else
   cat ${sedscriptini} > ${sedscriptuse}
 fi

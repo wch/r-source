@@ -52,6 +52,7 @@ span.env {
     font-family: monospace;
 }
 
-#Top > .header, #Top > h1 {     /* for Texinfo 6.8 */
+/* hide top navigation bar in Texinfo >= 6.8 output */
+#Top > .header, #Top > .nav-panel {
     display: none
 }
