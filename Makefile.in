@@ -171,6 +171,8 @@ distclean: clean
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool stamp-java \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
+## left behind by the Intel compilers from configuring.
+	-@rm -f *.f90 *.mod
 maintainer-clean: distclean
 	@$(ECHO) "This command is intended for maintainers to use; it"
 	@$(ECHO) "deletes files that may need special rules to rebuild"
