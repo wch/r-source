@@ -86,6 +86,7 @@ read_symbols_from_object_file <- function(f)
 }
 
 if(.Platform$OS.type == "windows") {
+    ## TODO: use version in ../Makefile.win
     system_ABI <- c(system = "windows",
                     CC = "gcc", CXX = "g++",
                     F77 = "gfortran", FC = "gfortran")
