@@ -162,7 +162,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{quietly}{logical: should message(s) be printed.}
   \item{pkginfo}{A processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
-  \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
+  %% \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
   \item{type}{integer.  Currently \code{type = 0} returns the internal
     \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
@@ -172,7 +172,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{info}{character string such as \code{"package:MASS"}.}
   \item{key}{the object name in a lazyload database.}
   \item{compressed}{logical: are the values in the database compressed?}
-  \item{refhook}{a load hook: see \code{\link{unserialize}}.}
+  \item{hook}{a load hook: see \code{\link{unserialize}}.}
   \item{seed}{a length-one integer vector.}
   \item{i, j}{indices.}
   \item{strictly}{logical.}
@@ -290,7 +290,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
   return \code{invisible()}.
 
-  \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
+  %% \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
 
   \code{.formula2varlist} returns a list of variables found in
   \code{formula}, evaluated in \code{data}, following standard
