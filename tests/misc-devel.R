@@ -3,6 +3,27 @@
 ## PR#18555: dummy_fgetc() returning EOF if the connection has an encoding specified
 ## --------  Based on small change from https://bugs.r-project.org/show_bug.cgi?id=18555#c4
 ## FIXME: needs a more thorough analysis and fixes (see 'Comment #2' in PR)
+
+port <- 27182
+sock <- serverSocket(port)
+outgoing <- socketConnection("localhost", port)
+incoming <- socketAccept(sock, encoding="UTF-8")
+close(sock)
+r <- readLines(incoming, 1) # sets EOF_signalled
+stopifnot(identical(r, character(0)))
+writeLines("hello", outgoing)
+close(outgoing)
+r <- readLines(incoming, 1) # due to EOF_signalled, readLines() didn't realize
+                            # that more data became available
+while(isIncomplete(incoming)) {
+  socketSelect(list(incoming))
+  r <- readLines(incoming, 1)
+}
+close(incoming)
+stopifnot(identical(r, "hello")) # r was character(0) in error
+
+if (FALSE) { # disabled for further analysis/cleanup
+
 sockChk <- function(enc, timeout = 0.25, verbose = TRUE, port = 27182)
 {
     stopifnot(is.character(enc), length(enc) == 1L)
@@ -57,3 +78,4 @@ str(R, give.attr = FALSE)
 table(sapply(R, \(e) if(is.logical(e)) e else class(e)))
 
 proc.time()
+}
