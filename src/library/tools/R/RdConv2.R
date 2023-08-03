@@ -607,7 +607,7 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
         s0 <- section <- Rd[[i]]
         tag <- attr(section, "Rd_tag")
         if(tag == "\\section") {
-            tagtitle <- sQuote(as.character(section[[1L]]))
+            tagtitle <- sQuote(trimws(.Rd_deparse(section[[1L]])))
             section <- section[[2L]]
         } else tagtitle <- tag
         for(s in section) this <- checkEmpty(s, this)
@@ -995,7 +995,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     	    checkContent(title, tag)
     	    section <- section[[2L]]
             ## replace 'tag' in message below
-            tagtitle <- sQuote(as.character(title))
+            tagtitle <- sQuote(trimws(.Rd_deparse(title)))
     	} else tagtitle <- tag
         has_text <<- FALSE
         ## if (tag == "\\synopsis")  # already removed via prepare_Rd
