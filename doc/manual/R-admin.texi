@@ -5105,8 +5105,8 @@ The classic compilers were @command{icc}, @command{icpc} and
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
-Version 2021.9.0 (shipped as part of oneAPI 2023.1.0) was tested in July
-2023 using
+Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
+July 2023 using
 
 @example
 IP=/path/to/compilers/bin/intel64
@@ -5120,11 +5120,12 @@ CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
-but also segfaulted in the checks.
+but also segfaulted in the checks unless MKL was used.
 
-There have been no other recent reports on the use of these compilers:
-the rest of this section is left in case it provides helpful hints for
-people using them while they are still available.
+@c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
+There have been only one other other recent report on the use of these
+compilers: the rest of this section is left in case it provides helpful
+hints for people using them while they are still available.
 
 Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
 Fedora Core 5 with
