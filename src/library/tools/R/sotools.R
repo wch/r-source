@@ -228,11 +228,12 @@ so_symbol_names_table <-
       "linux, Fortran, intel, open, for_open_default",
       "linux, Fortran, intel, open, for_open_key",
       "linux, Fortran, intel, close, for_close",
-      "linux, Fortran, intel, rewind, for_rewind:",
+      "linux, Fortran, intel, rewind, for_rewind",
       "linux, Fortran, intel, read, for_read_seq_lis",
       "linux, Fortran, intel, read, for_read_seq_fmt",
       "linux, Fortran, intel, write, for_write_seq_lis",
       "linux, Fortran, intel, write, for_write_seq_fmt",
+      "linux, Fortran, intel, write, for_write_seq_nml",
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
 
