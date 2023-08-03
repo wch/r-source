@@ -591,6 +591,7 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
             for(xx in x) this <- checkEmpty(xx, this)
         else {
             tag <- attr(x, "Rd_tag")
+            if(!is.null(tag)) # guard against incompletely parsed Rd files
             switch(tag,
 		   USERMACRO =, "\\newcommand" =, "\\renewcommand" =, COMMENT =
                                                                           {},
