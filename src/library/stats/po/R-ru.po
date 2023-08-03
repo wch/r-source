@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-08-28 15:57+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -163,10 +163,15 @@ msgstr "'by' должен быть списком"
 msgid "arguments must have same length"
 msgstr "аргументы должны иметь одну длину"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula' пропущена или неправильная"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "аргумент 'x' должен быть числовым"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'формула' должна иметь и левую, и правую стороны"
 
 msgid "cannot change frequency from %g to %g"
@@ -216,6 +221,9 @@ msgstr "не могу подсчитать точное p-значение при наличии повторяющихся наблюдени
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "не могу подсчитать точные доверительные интервалы при наличии повторяющихся наблюдений"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' пропущена или неправильная"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "группирующий фактор должен иметь в точности 2 уровня"
@@ -493,8 +501,14 @@ msgstr "'k' должен быть из {1, 2, ..  n - 1}"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "только %d из первых %d собственных значений > 0"
 
-msgid "package 'MASS' must be installed"
-msgstr "нужно установить пакет 'MASS'"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "начальное значение не является внутренним в допустимом регионе"
@@ -706,6 +720,9 @@ msgstr "sum(weights) != 1 -- не истинной плотности не будет"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "нужны как минимум 2 точки, чтобы выбрать диапазон автоматически"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "неизвестное правило диапазона"
 
@@ -738,6 +755,9 @@ msgstr "неправильные измерения у 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' не является вектором или матрицей"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "неправильный метод подсчета расстояний"
@@ -941,6 +961,9 @@ msgstr "неправильное указание 'row.vars'"
 msgid "incorrect specification for 'col.vars'"
 msgstr "неправильное указание 'col.vars'"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'формула' должна иметь и левую, и правую стороны"
+
 msgid "interactions are not allowed"
 msgstr "взаимодействия не разрешены"
 
@@ -970,6 +993,18 @@ msgstr "'row.var.names' пропущены"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' пропущены или неправильные"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' не распознана"
@@ -1205,6 +1240,14 @@ msgstr "некоторые элементы 'x' нечисловые и будут преобразованы в числа"
 msgid "not enough 'x' data"
 msgstr "недостаточно данных 'x'"
 
+#, fuzzy
+msgid "Parameter(s)"
+msgstr "параметры для подгонки"
+
+#, fuzzy
+msgid "ignored"
+msgstr "' пропущен"
+
 msgid "not enough 'y' data"
 msgstr "недостаточно данных 'y'"
 
@@ -1214,8 +1257,28 @@ msgstr "p-value будет примерным в присутствии повторяющихся значений"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' должен быть числовым или функцией или строкой именующей правильную функцию"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "в тесте Колмогорова-Смирнова не должно быть повторяющихся значений"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "неправильный аргумент 'n'"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' должен быть вектором длины 2"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "аргумент 'x' должен быть числовым"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "аргумент 'x' должен быть числовым"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1279,8 +1342,21 @@ msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "вызываю predict.lm(<fake-lm-object>) ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "предсказание от вырожденной подгонки может быть неправильным"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "предсказания на основе текущих данных указывают на _будущие_ зависимости"
@@ -1505,14 +1581,12 @@ msgstr "нет ни компонента terms, ни атрибута"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep' должен быть текстовой строкой"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Неразбираемый 'response' \"%s\"; использование не разрешается.  Используйте as.name(.) или `..`!"
-
-msgid "reformulate"
-msgstr "reformulate"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' должен быть объектом класса %s"
@@ -1526,12 +1600,19 @@ msgstr "переменные %s указаны с другими типами, чем в подгонке"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' должна быть таблицей данных, а не матрицей"
 
-#, fuzzy
 msgid "'data' must be a data.frame, environment, or list"
-msgstr "'data' должны быть списком либо окружением"
+msgstr "'data' должно быть таблицей данных, списком либо окружением"
 
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "контрасты применяются лишь к факторам"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "контрасты могут применяться только к факторам с двумя и более уровнями"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' должен быть числом"
@@ -1730,6 +1811,9 @@ msgstr "'which' должен быть в пределах 1:6"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' должен быть в пределах {1,..,%d}"
 
+msgid "y is empty or has only NAs"
+msgstr "y пусто или включает лишь NAs"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1770,9 +1854,8 @@ msgstr "Не найдены p2 в [p1, 1], нужные для достижения желаемой мощности"
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Не найден уровень значимости [0, 1], чтобы достичь желаемой мощности"
 
-#, fuzzy
 msgid "'%s' must be numeric in [0, 1]"
-msgstr "'sig.level' должен быть числом в [0, 1]"
+msgstr "'%s' должен быть числом в [0, 1]"
 
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr "в точности один из 'groups', 'n', 'between.var', 'within.var', 'power', 'sig.level' должен быть NULL"
@@ -1852,8 +1935,8 @@ msgstr "'p' должен иметь ту же длину, что и 'x' и 'n'"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "элементы 'p' должны быть в (0,1)"
 
-msgid "y is empty or has only NAs"
-msgstr "y пусто или включает лишь NAs"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula' пропущена"
@@ -1861,9 +1944,8 @@ msgstr "'formula' пропущена"
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' должен быть 1 или 3 для упорядоченных факторов"
 
-#, fuzzy
 msgid "(unordered) factors are not allowed"
-msgstr "факторы не разрешены"
+msgstr "(неупорядоченные) факторы не разрешены"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "пропущенные значения и NaNs не разрешены если 'na.rm' = FALSE"
@@ -1897,9 +1979,6 @@ msgstr "'ref' должен быть существующим уровнем"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d должен быть в пределах 1L:%d"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' должен быть текстовой строкой"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "не получилось создать временнЫе переменные из их имен"
@@ -1945,6 +2024,10 @@ msgstr "диапазон 'k' должен быть >= 1 и нечетным!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "аргумент 'object' имеет невозможную длину"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "неправильная формула %s: не вызов"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "не найдено метода 'getInitial' для объектов \"%s\""
@@ -2522,6 +2605,15 @@ msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "нужно установить пакет 'MASS'"
+
+#~ msgid "reformulate"
+#~ msgstr "reformulate"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "функция связи \"%s\" недоступна для квази-пуассоновского семейства; доступны функции %s"
 
@@ -2679,21 +2771,14 @@ msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 #~ msgid "_NOT_ converged in"
 #~ msgstr "_НЕ_ сошлось в"
 
-#~ msgid "' ignored"
-#~ msgstr "' пропущен"
-
-#~ msgid "fitting parameters"
-#~ msgstr "параметры для подгонки"
-
 #~ msgid "use \"Brent\" or optimize() directly"
 #~ msgstr "используйте \"Brent\" или optimize() прямо"
 
 #~ msgid "hat values (leverages) are all ="
 #~ msgstr "hat-значения (трансляции) все ="
 
-#, fuzzy
 #~ msgid "invalid length(xout)"
-#~ msgstr "неправильная длина членов"
+#~ msgstr "неверная length(xout)"
 
 #~ msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
 #~ msgstr "contr*(.., sparse=TRUE) требует правильно установленного пакета \"Matrix\""
@@ -2719,9 +2804,8 @@ msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 #~ msgid "'vec' must be sorted non-decreasingly"
 #~ msgstr "'vec' должен быть сортирован не по уменьшению"
 
-#, fuzzy
 #~ msgid "invalid length(vec)"
-#~ msgstr "неправильная длина членов"
+#~ msgstr "неверная length(vec)"
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr "Для некоторых параметров не указаны стартовые значения."
@@ -2737,10 +2821,6 @@ msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 
 #~ msgid "wrong number of predictors"
 #~ msgstr "неправильное число предикторов"
-
-#, fuzzy
-#~ msgid "invalid value oflength(x)"
-#~ msgstr "неправильный метод кластеризации"
 
 #~ msgid "extra arguments"
 #~ msgstr "дополнительные аргументы"
