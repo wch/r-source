@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-01-14 11:27\n"
+"POT-Creation-Date: 2023-08-03 18:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,6 @@ msgstr ""
 msgid "See help(\"Defunct\")"
 msgstr ""
 
-msgid "defunctError"
-msgstr ""
-
 msgid "'%s' is deprecated."
 msgstr ""
 
@@ -34,9 +31,6 @@ msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr ""
 
 msgid "See help(\"Deprecated\")"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "argument to 'La.svd' must be numeric or complex"
@@ -231,7 +225,7 @@ msgstr ""
 msgid "'breaks' are not unique"
 msgstr ""
 
-msgid "lengths of 'breaks' and 'labels' differ"
+msgid "number of intervals and length of 'labels' differ"
 msgstr ""
 
 msgid "invalid 'row.names' length"
@@ -252,10 +246,7 @@ msgstr ""
 msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
-msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
-msgstr ""
-
-msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+msgid "'row.names' is not a character or integer vector of length %d"
 msgstr ""
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
@@ -342,6 +333,9 @@ msgstr ""
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
 
+msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
+msgstr ""
+
 msgid "<0 rows> (or 0-length row.names)"
 msgstr ""
 
@@ -370,9 +364,6 @@ msgid "all variables should have the same length"
 msgstr ""
 
 msgid "character string is not in a standard unambiguous format"
-msgstr ""
-
-msgid "'origin' must be supplied"
 msgstr ""
 
 msgid "do not know how to convert '%s' to class %s"
@@ -471,6 +462,12 @@ msgstr ""
 msgid "'tzone' attributes are inconsistent"
 msgstr ""
 
+msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
+msgstr ""
+
+msgid "'digits' must be numeric, integer valued"
+msgstr ""
+
 msgid "'tim' is not character or numeric"
 msgstr ""
 
@@ -561,10 +558,10 @@ msgstr ""
 msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
 
-msgid "0 x 0 matrix"
+msgid "non-square matrix in 'eigen'"
 msgstr ""
 
-msgid "non-square matrix in 'eigen'"
+msgid "0 x 0 matrix"
 msgstr ""
 
 msgid "invalid nrow(x)"
@@ -607,6 +604,9 @@ msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
 
 msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
+msgid "directories are omitted unless 'recursive = TRUE'"
 msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
@@ -765,9 +765,6 @@ msgstr ""
 msgid "Conflicts attaching package %s:\n%s"
 msgstr ""
 
-msgid "packageConflictError"
-msgstr ""
-
 msgid "Attaching package: %s"
 msgstr ""
 
@@ -793,9 +790,6 @@ msgid "Package %s version %s cannot be unloaded:\n %s"
 msgstr ""
 
 msgid "package or namespace load failed for %s%s:\n %s"
-msgstr ""
-
-msgid "package %s does not have a namespace and should be re-installed"
 msgstr ""
 
 msgid "package %s already present in search()"
@@ -897,7 +891,7 @@ msgstr ""
 msgid "nothing specified to be save()d"
 msgstr ""
 
-msgid "'file' must be non-empty string"
+msgid "'%s' must be a non-empty string"
 msgstr ""
 
 msgid "'compress' must be logical or character"
@@ -943,9 +937,6 @@ msgid "'arg' must be of length 1"
 msgstr ""
 
 msgid "'arg' must be of length >= 1"
-msgstr ""
-
-msgid "'arg' should be one of %s"
 msgstr ""
 
 msgid "there is more than one match in 'match.arg'"
@@ -1410,6 +1401,9 @@ msgstr ""
 msgid "non-finite 'partial'"
 msgstr ""
 
+msgid "'decreasing' of length > 1 is only for method = \"radix\""
+msgstr ""
+
 msgid "argument lengths differ"
 msgstr ""
 
@@ -1431,6 +1425,9 @@ msgstr ""
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr ""
 
+msgid "empty file/url name"
+msgstr ""
+
 msgid "unable to find a plausible encoding"
 msgstr ""
 
@@ -1450,6 +1447,15 @@ msgid "specify either 'file' or 'exprs' but not both"
 msgstr ""
 
 msgid "'%s' is not an existing file"
+msgstr ""
+
+msgid "'formula' must be a formula"
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been ignored."
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been combined with RHS."
 msgstr ""
 
 msgid "Timestamp of %s has changed"
@@ -1524,6 +1530,9 @@ msgstr ""
 msgid "invalid value of %s"
 msgstr ""
 
+msgid "'X' must be a data frame when 'INDEX' is a formula"
+msgstr ""
+
 msgid "'INDEX' is of length zero"
 msgstr ""
 
@@ -1572,6 +1581,12 @@ msgstr ""
 msgid "No traceback available"
 msgstr ""
 
+msgid "invalid non-character version specification 'x' (type: %s)"
+msgstr ""
+
+msgid "Calls"
+msgstr ""
+
 msgid "invalid version specification %s"
 msgstr ""
 
@@ -1599,6 +1614,9 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr ""
 
+msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
+msgstr ""
+
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr ""
 
@@ -1612,6 +1630,9 @@ msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'receive.console.signals' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'input' must be a character vector or 'NULL'"
@@ -1761,6 +1782,11 @@ msgstr[1]    ""
 
 msgid        "object %s not found"
 msgid_plural "objects %s not found"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "'arg' should be %s"
+msgid_plural "'arg' should be one of %s"
 msgstr[0]    ""
 msgstr[1]    ""
 

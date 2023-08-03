@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:56\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr ""
@@ -101,7 +102,7 @@ msgstr ""
 msgid "no generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s"
 msgstr ""
 
-msgid "function %s appears to be a generic function, but with generic name %s"
+msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
 msgstr ""
 
 msgid "generic function %s not found for removal"
@@ -527,9 +528,6 @@ msgstr ""
 msgid "making a generic for special function %s"
 msgstr ""
 
-msgid "invalid call in method dispatch to '%s' (no default method)"
-msgstr ""
-
 msgid "in method for %s with signature %s:"
 msgstr ""
 
@@ -747,6 +745,9 @@ msgid "All %s names must be distinct in:\n(%s)"
 msgstr ""
 
 msgid "argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+
+msgid "expected a non-empty character string for argument 'name'"
 msgstr ""
 
 msgid "no function %s found"
