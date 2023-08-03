@@ -110,7 +110,7 @@ package.skeleton <-
 	"Date: ", format(Sys.time(), format="%Y-%m-%d"), "\n",
 	"Author: Who wrote it\n",
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
-	"Description: More about what it does (maybe more than one line)\n",
+	"Description: More about what it does (maybe more than one line).\n",
 	"License: What license is it under?\n",
 	if(usingS4) "Imports: methods\n",
 	if(nzchar(encoding) && encoding != "unknown")
@@ -150,6 +150,7 @@ package.skeleton <-
     out <- file(file.path(dir, "Read-and-delete-me"), "wt")
     msg <-
         c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
+          "* Edit the package 'DESCRIPTION'.",
           "* Edit the exports in 'NAMESPACE', and add necessary imports.",
           "* Put any C/C++/Fortran code in 'src'.",
           "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'.",
