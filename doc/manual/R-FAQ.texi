@@ -152,7 +152,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik and R Core Team
   author        = @{Kurt Hornik and the R Core Team@},
   title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{FAQ_YEAR}@},
-  url           = @{https://CRAN.R-project.org/doc/manual/R-FAQ.html@}
+  url           = @{https://CRAN.R-project.org/doc/manuals/R-FAQ.html@}
 @}
 @end group
 @end example
