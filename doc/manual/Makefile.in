@@ -23,7 +23,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css Rfaq.css quot.sed \
+	ISBN Rman.css quot.sed \
 	texi2epub.sh texi2html.sh
 SUBDIRS_WITH_NO_BUILD = images
 
