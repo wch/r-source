@@ -127,6 +127,9 @@
       §1.3.1.
       The check for a missing \verb{\description} has been moved from
       \code{tools::checkRd()} to \code{tools::checkRdContents()}.
+
+      \item \command{R CMD check} now visits \file{inst/NEWS.Rd}
+      when checking Rd files.
     }
   }
 

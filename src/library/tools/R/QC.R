@@ -7059,15 +7059,21 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
 
     pg <- dir(file.path(dir, "man"), pattern = "[.][Rr]d$", full.names = TRUE)
+    if(file.exists(nfile <- file.path(dir, "inst", "NEWS.Rd")))
+        pg <- c(nfile, pg)
     bad <- character()
     for (f in pg) {
         ## FIXME: this may not work for no/fake install if the expressions
         ## involve the package under check.
-        tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
-                                                 def_enc = def_enc,
-                                                 macros = macros,
-                                                 stages = c("build", "install", "render"))),
-                        error = identity)
+        tmp <- tryCatch(suppressMessages(
+            if (f == nfile)
+                checkRd(f, encoding = "UTF-8", def_enc = TRUE,
+                        stages = "install")
+            else
+                checkRd(f, encoding = enc, def_enc = def_enc,
+                        macros = macros,
+                        stages = c("build", "install", "render"))
+        ), error = identity)
         if(inherits(tmp, "error")) {
             bad <- c(bad, f)
             if(!silent) message(geterrmessage())
