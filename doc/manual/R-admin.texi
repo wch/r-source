@@ -4765,16 +4765,19 @@ Windows: _WIN32, _WIN64
 
 Identifying compilers can be very tricky.  GCC defines @code{__GNUC__},
 but so do other compilers claiming conformance with it, notably (LLVM
-and Apple) @command{clang} and recent Intel compilers.  Further, they
-use the value of @code{__GNUC__} for their version, not the version of
-GCC they claim to be compatible with.  Both LLVM and Apple
-@command{clang} define @code{__clang__} as their major version, but for
-example Apple's 13.x.y is very different from LLVM's 13.x.y.  And
-compilers based on LLVM @command{clang}, for example from IBM, will
-define this.  Some of the included software uses @code{__APPLE_CC__} to
-identify an Apple compiler (which used to include Apple builds of GCC),
-but Apple @command{clang} is better identified by the
-@code{__apple_build_version__} macro.
+and Apple) @command{clang} and Intel compilers.  Further, some use the
+value of @code{__GNUC__} for their version, not the version of GCC they
+claim to be compatible with.@footnote{Most @command{clang}-based
+compilers give @code{4}, but not those distributed by FreeBSD.  Intel's
+@command{icc} reported @code{12} in 2023.}  @command{clang}-based
+compilers define @code{__clang__}.  Both LLVM and Apple @command{clang}
+define @code{__clang_major__} as a string giving their major version,
+but for example Apple's 13.x.y is very different from LLVM's 13.x.y.
+And compilers based on LLVM @command{clang}, for example from Intel and
+IBM, will define these.  Some of the included software uses
+@code{__APPLE_CC__} to identify an Apple compiler (which used to include
+Apple builds of GCC), but Apple @command{clang} is better identified by
+the @code{__apple_build_version__} macro.
 
 @menu
 * X11 issues::
@@ -5151,9 +5154,11 @@ branded `Classic') also supported @cputype{ix86} and 32-bit builds on
 @cputype{x86_64}.
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
-ones are @command{icx}, @command{icpx} and @command{ifx}; they
-are identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do
-not define @code{__INTEL_COMPILER}).
+ones are @command{icx}, @command{icpx} and @command{ifx}; they are
+identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
+define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
+@code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
+2023.2.0.20230622)}.}).
 
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
