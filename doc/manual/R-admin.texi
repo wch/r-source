@@ -2369,8 +2369,8 @@ consistency one can use
 
 @noindent
 (avoiding @command{autoconf}'s default @option{-g}).  Be careful if you
-put the @file{/usr/local/gfortran/bin} directory on your path as that
-contains (real) @command{gcc} and @command{g++} which may be found
+put the @file{/usr/local/gfortran/bin} directory on your path as that may
+contain (real) @command{gcc} and @command{g++} which may be found
 rather the Apple-provided commands, and may not be able to find the
 headers and libraries@footnote{From Big Sur those libraries are not
 publicly visible: rather the system compilers link to `text-based
@@ -3044,7 +3044,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"4.0.0"}.
+string containing the current @R{} version, for example @code{"4.3.2"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -5042,10 +5042,11 @@ Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 
 @menu
 * Clang::
+* flang::
 * Intel compilers::
 @end menu
 
-@node Clang, Intel compilers, Linux, Linux
+@node Clang, flang, Linux, Linux
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
@@ -5165,6 +5166,7 @@ CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
 CFLAGS="-O3 -fp-model precise -Wall"
+C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
 CXXFLAGS="-O3 -fp-model precise -Wall"
@@ -5196,22 +5198,28 @@ macro.
 
 The compilers have many options, some of which are still under
 development. As the C/C++ and Fortran compilers have different origins
-for their front-ends, there is little consistency in their options. They
-support clang-style LTO, at least for C/C++.
+for their front-ends, there is little consistency in their options.
+@c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
+(The C/C++ compilers support `all' @command{clang} options even if
+undocumented, such as @option{-Wno-strict-prototypes} above, However it
+is unclear for which version of @command{clang}: the Intel manual
+suggests checking @command{icx -help}.)  At least the C/C++ compilers
+support clang-style LTO.
 
-Unresolved issue: all CPU times in e.g.@: @code{proc.time()} are reported
-as zero.
+@c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
+All CPU times in e.g.@: @code{proc.time()} are reported as zero unless
+@file{src/unix/sys-unix.c} is compiled with @option{-O0}.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
-@subsubsection `Classic' compilers
+@subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identiifed by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
-Version 2021.9.0 (shipped as part of oneAPI 2023.1.0) was tested in July
-2023 using
+Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
+July 2023 using
 
 @example
 IP=/path/to/compilers/bin/intel64
@@ -5225,11 +5233,12 @@ CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
-but also segfaulted in the checks.
+but also segfaulted in the checks unless MKL was used.
 
-There have been no other recent reports on the use of these compilers:
-the rest of this section is left in case it provides helpful hints for
-people using them while they are still available.
+@c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
+There have been only one other other recent report on the use of these
+compilers: the rest of this section is left in case it provides helpful
+hints for people using them while they are still available.
 
 Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
 Fedora Core 5 with
