@@ -5060,6 +5060,7 @@ CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
 CFLAGS="-O3 -fp-model precise -Wall"
+C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
 CXXFLAGS="-O3 -fp-model precise -Wall"
@@ -5091,14 +5092,20 @@ macro.
 
 The compilers have many options, some of which are still under
 development. As the C/C++ and Fortran compilers have different origins
-for their front-ends, there is little consistency in their options. They
-support clang-style LTO, at least for C/C++.
+for their front-ends, there is little consistency in their options.
+@c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
+(The C/C++ compilers support `all' @command{clang} options even if
+undocumented, such as @option{-Wno-strict-prototypes} above, However it
+is unclear for which version of @command{clang}: the Intel manual
+suggests checking @command{icx -help}.)  At least the C/C++ compilers
+support clang-style LTO.
 
-Unresolved issue: all CPU times in e.g.@: @code{proc.time()} are reported
-as zero.
+@c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
+All CPU times in e.g.@: @code{proc.time()} are reported as zero unless
+@file{src/unix/sys-unix.c} is compiled with @option{-O0}.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
-@subsubsection `Classic' compilers
+@subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identiifed by the C/C++ macro
