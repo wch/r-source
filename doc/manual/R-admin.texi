@@ -5233,7 +5233,16 @@ CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
-but also segfaulted in the checks unless MKL was used.
+but also segfaulted in the checks unless MKL was used.  (CPU timings
+work with this compiler.)
+
+To suppress endless warnings about deprecation, use
+
+@example
+CC="$IP/icc -diag-disable=10441"
+@end example
+
+@command{icpc} does not support C++23.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
 There have been only one other other recent report on the use of these
