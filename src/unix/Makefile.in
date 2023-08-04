@@ -49,6 +49,13 @@ R: Makedeps
 	@$(MAKE) libunix.a
 	@$(MAKE) rhome="$(abs_top_builddir)" install-Rscript
 
+## Intel's icx, at least version 2023.2.0, needs -O0
+## or CPU times will all be zero.
+## https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
+INTEL_ICX_FIX = @INTEL_ICX_FIX@
+sys-unix.o: $(srcdir)/sys-unix.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(INTEL_ICX_FIX) -c $< -o $@
+
 ## is this portable?
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))

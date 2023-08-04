@@ -991,6 +991,7 @@ BYTE_COMPILE_PACKAGES_FALSE
 BYTE_COMPILE_PACKAGES_TRUE
 WANT_JAVA_FALSE
 WANT_JAVA_TRUE
+INTEL_ICX_FIX
 BUILD_LTO_CHECK_FALSE
 BUILD_LTO_CHECK_TRUE
 BUILD_LTO_ALL_FALSE
@@ -4675,6 +4676,9 @@ else
   BUILD_LTO_CHECK_TRUE='#'
   BUILD_LTO_CHECK_FALSE=
 fi
+
+
+## needed for some versions of icx, but we do not know which
 
 
 # Check whether --enable-java was given.
@@ -27107,7 +27111,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27112: \"$ac_link\") >&5
+(eval echo $as_me:27116: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27183,7 +27187,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27188: \"$ac_link\") >&5
+(eval echo $as_me:27192: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

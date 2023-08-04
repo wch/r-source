@@ -455,6 +455,9 @@
 ## -fuse-ld=lld (with gcc or clang).
 ## LTO_LD=
 
+## To allow reduced optimization for src/unix/sys-unix.c with Intel icx 
+## INTEL_ICX_FIX=-O0
+
 ## Programs which configure will look for on the path
 ## AR
 ## GETWD=pwd

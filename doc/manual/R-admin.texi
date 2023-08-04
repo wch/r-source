@@ -5101,8 +5101,9 @@ suggests checking @command{icx -help}.)  At least the C/C++ compilers
 support clang-style LTO.
 
 @c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
-All CPU times in e.g.@: @code{proc.time()} are reported as zero unless
-@file{src/unix/sys-unix.c} is compiled with @option{-O0}.
+For some versions, including 2023.2.0, all CPU times in e.g.@:
+@code{proc.time()} are reported as zero.  If you see this, uncomment the
+@samp{INTEL_ICX_FIX} setting in @file{config.site} and re-build.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
 @subsubsection `Classic' Intel compilers

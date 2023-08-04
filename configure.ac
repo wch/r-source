@@ -399,6 +399,9 @@ AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 AM_CONDITIONAL(BUILD_LTO_ALL, [test "x${ltoall}" = xyes])
 AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
+## needed for some versions of icx, but we do not know which
+AC_SUBST(INTEL_ICX_FIX)
+
 AC_ARG_ENABLE([java],
 [AS_HELP_STRING([--enable-java],[enable Java @<:@yes@:>@])],
 [want_java="${enableval}"],
