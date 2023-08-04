@@ -83,7 +83,7 @@
       for documentation and low-level book keeping.
 
       \item \code{grid()} now invisibly returns the x- and y- coordinates
-      at which the grid-lines weredrawn.
+      at which the grid-lines were drawn.
     }
   }
 
