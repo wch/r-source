@@ -1375,16 +1375,19 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
+    check_internal_specially <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
+                                         "FALSE"))
+
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
               Rd_db(dir = dir)
 
+    names(db) <- .Rd_get_names_from_Rd_db(db)
+
     db_aliases  <- lapply(db, .Rd_get_metadata, "alias")
     db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
-
-    db_names <- .Rd_get_names_from_Rd_db(db)
-    names(db) <- names(db_aliases) <- db_names
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
     ## We traditionally also use the usage "texts" for some sanity
@@ -1401,23 +1404,28 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
                   NA)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
-    if(!chkInternal &&
-       any(ind <- vapply(db_keywords, function(x) "internal" %in% x, NA))) {
-        ## exclude them
-        db         <- db        [!ind]
-        db_names   <- db_names  [!ind]
-        db_aliases <- db_aliases[!ind]
-    }
-
     db_argument_names <- lapply(db, .Rd_get_argument_names)
 
     bad_doc_objects <- list()
 
-    for(docObj in db_names) {
-
+    for(docObj in names(db)) {
+        ## <FIXME>
+        ## There really should be no \arguments or \value without a
+        ## \usage, so it should be "safe" to skip checking \arguments in
+        ## case of no \usage.
+        ## However, currently the above is not ensured.
+        ## Ideally, checkRd() should complain ...
         exprs <- db_usages[[docObj]]
         if(!length(exprs)) next
+        ## </FIXME>
 
+        ## If !chkInternal, exclude internal Rd objects from further
+        ## computations.  Otherwise, maybe treat them specially, and
+        ## ignore arguments in \usage but not in \arguments.
+        internal <- "internal" %in% db_keywords[[docObj]]
+        if(internal && !chkInternal) next
+        special <- (internal && check_internal_specially)
+        
         aliases <- db_aliases[[docObj]]
         arg_names_in_arg_list <- db_argument_names[[docObj]]
 
@@ -1475,7 +1483,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
         functions <- .transform_S4_method_markup(functions)
 
         ## Now analyze what we found.
-        arg_names_in_usage_missing_in_arg_list <-
+        arg_names_in_usage_missing_in_arg_list <- if(special) NULL else
             setdiff(arg_names_in_usage, arg_names_in_arg_list)
         arg_names_in_arg_list_missing_in_usage <-
             setdiff(arg_names_in_arg_list, arg_names_in_usage)
@@ -1513,6 +1521,11 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
+        ## <FIXME>
+        ## Why are we making the '-deprecated' exception?
+        ## Surely there should be aliases for such functions, and the
+        ## deprecated-Rd files in the base packages even say
+        ##   %------ PLEASE: put \alias{.} here for EACH !
         functions_not_in_aliases <-
             if(!any(endsWith(aliases, "-deprecated"))) {
                 ## Argh.  There are good reasons for keeping \S4method{}{}
@@ -1529,6 +1542,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
                 setdiff(functions, aliases)
             }
             else character()
+        ## </FIXME>
 
         if((length(arg_names_in_usage_missing_in_arg_list))
            || anyDuplicated(arg_names_in_arg_list)
@@ -9031,20 +9045,26 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
+    check_internal_specially <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
+                                         "FALSE"))
+
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
               Rd_db(dir = dir)
 
-    if(!chkInternal && ## Exclude internal objects from further computations.
-       any(ind <- vapply(lapply(db, .Rd_get_metadata, "keyword"),
-                         function(x) "internal" %in% x, NA))) {
-        db <- db[!ind]
-    }
-
     names(db) <- .Rd_get_names_from_Rd_db(db)
+
     for(nm in names(db)) {
         rd <- db[[nm]]
+
+        ## If !chkInternal, exclude internal Rd objects from further
+        ## computations.  Otherwise, maybe treat them specially, and
+        ## ignore arguments with no description.
+        internal <- "internal" %in% .Rd_get_metadata(rd, "keyword")
+        if(internal && !chkInternal) next
+        special <- (internal && check_internal_specially)
 
         ## \description is mandatory except for package overviews
         missing_description <-
@@ -9052,10 +9072,11 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             "\\description" %notin% RdTags(rd)
 
         ## Arguments with no description.
-        arg_table <- .Rd_get_argument_table(rd)
-        arguments_with_no_description <-
+        arguments_with_no_description <- if(special) NULL else {
+            arg_table <- .Rd_get_argument_table(rd)
             arg_table[grepl("^[[:space:]]*$", arg_table[, 2L]),
                       1L]
+        }
 
         ## Autogenerated Rd content which needs editing.
         offending_autogenerated_content <-
