@@ -84,6 +84,13 @@
 
       \item \code{grid()} now invisibly returns the x- and y- coordinates
       at which the grid-lines were drawn.
+
+      \item \code{norm(., type)} now also works for complex matrices.
+
+      \item \code{kappa(., exact=TRUE, norm=*)} now works for all norms and
+      also for complex matrices.  In symmetric / triangular cases, new argument
+      \code{uplo = "U" | "L"} allows to specify the upper or lower
+      triangular part.
     }
   }
 
@@ -212,6 +219,11 @@
 
       \item Plain-text help no longer outputs spurious colons in the
       arguments list (for multi-line \verb{\item} labels in the Rd source).
+
+      \item \code{kappa()} and \code{rcond()} work correctly in more cases;
+      \code{kappa(., norm="2")} now warns that it computes the 1-norm with
+      (default) \code{exact = FALSE}; prompted by Mikael Jagan's quite
+      comprehensive \PR{18543}.
     }
   }
 }

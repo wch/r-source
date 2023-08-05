@@ -93,6 +93,19 @@ static char La_rcond_type(const char *typstr)
     return typup; /* 'O' or 'I' */
 }
 
+/* Lapack valid 'uplo' (upper/lower) for triangular/symmetric matrices: */
+static char La_valid_uplo(const char *uplostr)
+{
+    if (strlen(uplostr) != 1)
+	error(_("argument type[1]='%s' must be a character string of string length 1"),
+	      uplostr);
+    char uplo = (char) toupper(*uplostr);
+    if (uplo != 'U' && uplo != 'L')
+	error(_("argument type[1]='%s' must be 'U' or 'L'"), uplostr);
+    return uplo; /* 'U' or 'L' */
+}
+
+
 /* La.svd, called from svd */
 static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
 {
@@ -407,7 +420,46 @@ static SEXP La_dgecon(SEXP A, SEXP norm)
     return val;
 }
 
+/* Real case of kappa.tri (and also rcond for a triangular matrix), both
+ * uplo = "U" or uplo = "L" */
+static SEXP La_dtrcon3(SEXP A, SEXP norm, SEXP uplo)
+{
+    int *xdims, n, nprot = 0, info;
+    char typNorm[] = {'\0', '\0'};
+    char uploC[]   = {'\0', '\0'};
+
+    if (!isMatrix(A)) error(_("'%s' must be a numeric matrix"), "A");
+    if (!isString(norm)) error(_("'%s' must be a character string"), "norm");
+    if (!isString(uplo)) error(_("'%s' must be a character string"), "uplo");
+    if (!isReal(A)) {
+	nprot++;
+	A = PROTECT(coerceVector(A, REALSXP));
+    }
+    xdims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    n = xdims[0];
+    if(n != xdims[1]) {
+	UNPROTECT(nprot);
+	error(_("'A' must be a *square* matrix"));
+    }
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+    uploC  [0] = La_valid_uplo(CHAR(asChar(uplo)));
+
+    nprot++;
+    SEXP val = PROTECT(allocVector(REALSXP, 1));
+
+    F77_CALL(dtrcon)(typNorm, uploC, "N", &n, REAL(A), &n,
+		     REAL(val),
+		     /* work : */ (double *) R_alloc(3*(size_t)n, sizeof(double)),
+		     /* iwork: */ (int *)    R_alloc(n, sizeof(int)),
+		     &info FCONE FCONE FCONE);
+    UNPROTECT(nprot);
+    if (info) error(_("error [%d] from Lapack 'dtrcon()'"), info);
+    return val;
+}
+
 /* Real case of kappa.tri (and also rcond for a triangular matrix) */
+/* hardcoded  uplo = "U" -- using only upper triangular entries */
 static SEXP La_dtrcon(SEXP A, SEXP norm)
 {
     int *xdims, n, nprot = 0, info;
@@ -441,6 +493,38 @@ static SEXP La_dtrcon(SEXP A, SEXP norm)
 
     return val;
 }
+
+/* norm(<Complex>) except for 2-norm */
+static SEXP La_zlange(SEXP A, SEXP type)
+{
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+    int *xdims, m, n;
+    double *work = NULL;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!(isMatrix(A) && isComplex(A)))
+	error(_("'%s' must be a complex matrix"), "A");
+    if (!isString(type)) error(_("'%s' must be a character string"), "type");
+
+    xdims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    m = xdims[0];
+    n = xdims[1]; /* m x n  matrix {using Lapack naming convention} */
+
+    typNorm[0] = La_norm_type(CHAR(asChar(type)));
+
+    SEXP val = PROTECT(allocVector(REALSXP, 1));
+    if(*typNorm == 'I') work = (double *) R_alloc((size_t)m, sizeof(Rcomplex));
+    REAL(val)[0] = F77_CALL(zlange)(typNorm, &m, &n, COMPLEX(A), &m, work FCONE);
+
+    UNPROTECT(1);
+    return val;
+
+#else
+    error(_("Fortran complex functions are not available on this platform"));
+    return R_NilValue; /* -Wall */
+#endif
+}
+
 
 /* Complex case of rcond, for general matrices */
 static SEXP La_zgecon(SEXP A, SEXP norm)
@@ -498,6 +582,7 @@ static SEXP La_zgecon(SEXP A, SEXP norm)
 }
 
 /* Complex case of kappa.tri (and also rcond for a triangular matrix) */
+/* hardcoded  uplo = "U" -- using only upper triangular entries */
 static SEXP La_ztrcon(SEXP A, SEXP norm)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
@@ -529,7 +614,45 @@ static SEXP La_ztrcon(SEXP A, SEXP norm)
     error(_("Fortran complex functions are not available on this platform"));
     return R_NilValue; /* -Wall */
 #endif
+} // La_ztrcon()
+
+/* Complex case of kappa.tri (and also rcond for a triangular matrix) */
+static SEXP La_ztrcon3(SEXP A, SEXP norm, SEXP uplo)
+{
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+    SEXP val;
+    int *dims, n, info;
+    char typNorm[] = {'\0', '\0'};
+    char uploC[]   = {'\0', '\0'};
+
+    if (!(isMatrix(A) && isComplex(A)))
+	error(_("'%s' must be a complex matrix"), "A");
+    if (!isString(norm)) error(_("'%s' must be a character string"), "norm");
+    if (!isString(uplo)) error(_("'%s' must be a character string"), "uplo");
+    dims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    n = dims[0];
+    if(n != dims[1])
+	error(_("'A' must be a *square* matrix"));
+
+    typNorm[0] = La_rcond_type(CHAR(asChar(norm)));
+    uploC  [0] = La_valid_uplo(CHAR(asChar(uplo)));
+
+    val = PROTECT(allocVector(REALSXP, 1));
+
+    F77_CALL(ztrcon)(typNorm, uploC, "N", &n, COMPLEX(A), &n,
+		     REAL(val),
+		     /* work : */ (Rcomplex *) R_alloc(2*(size_t)n, sizeof(Rcomplex)),
+		     /* rwork: */ (double *)   R_alloc(n, sizeof(double)),
+		     &info FCONE FCONE FCONE);
+    UNPROTECT(1);
+    if (info) error(_("error [%d] from Lapack 'ztrcon()'"), info);
+    return val;
+#else
+    error(_("Fortran complex functions are not available on this platform"));
+    return R_NilValue; /* -Wall */
+#endif
 }
+
 
 /* Complex case of solve.default: see the comments in La_solve */
 static SEXP La_solve_cmplx(SEXP A, SEXP Bin, SEXP tolin)
@@ -1348,10 +1471,13 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
     case 5: ans = La_rs(CAR(args), CADR(args)); break;
     case 51: ans = La_rs_cmplx(CAR(args), CADR(args)); break;
     case 6: ans = La_dlange(CAR(args), CADR(args)); break;
+    case 61: ans = La_zlange(CAR(args), CADR(args)); break;
     case 7: ans = La_dgecon(CAR(args), CADR(args)); break;
     case 8: ans = La_dtrcon(CAR(args), CADR(args)); break;
+    case 81: ans = La_dtrcon3(CAR(args), CADR(args), CADDR(args)); break;
     case 9: ans = La_zgecon(CAR(args), CADR(args)); break;
     case 10: ans = La_ztrcon(CAR(args), CADR(args)); break;
+    case 13: ans = La_ztrcon3(CAR(args), CADR(args), CADDR(args)); break;
     case 11: ans = La_solve_cmplx(CAR(args), CADR(args), CADDR(args)); break;
 
     case 100: ans = La_solve(CAR(args), CADR(args), CADDR(args)); break;
