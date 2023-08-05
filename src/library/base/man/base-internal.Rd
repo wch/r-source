@@ -160,7 +160,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
     if the package(s) are not found?}
   \item{useImports}{logical.  Should  the \code{Imports} field be processed?}
   \item{quietly}{logical: should message(s) be printed.}
-  \item{pkginfo}{A processed \file{DESCRIPTION} file of class
+  \item{pkgInfo}{A processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
   %% \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
