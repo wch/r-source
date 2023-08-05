@@ -873,15 +873,14 @@ Rd2txt <-
                                   save <- startCapture()
                                   dropBlank <<- TRUE
                                   writeContent(block[[1L]], tag)
-                                  DLlab <- endCapture(save)
+                                  DLlab <- trim(endCapture(save))
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
                                   indent <<- max(opts$minIndent,
                                                  indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
                                   putw(strrep(" ", indent0),
-                                       frmt(paste0(DLlab),
-                                            justify="left", width=indent),
+                                       DLlab,
                                        " ")
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
@@ -893,11 +892,12 @@ Rd2txt <-
                                   save <- startCapture()
                                   dropBlank <<- TRUE
                                   writeContent(block[[1L]], tag)
-                                  DLlab <- endCapture(save)
+                                  DLlab <- trim(endCapture(save))
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
                                   indent <<- max(opts$minIndent, indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
+                                  DLlab <- paste0(DLlab[nzchar(DLlab)], collapse = " ")
                                   putw(frmt(paste0(DLlab, ": "),
                                               justify="right", width=indent))
                                   writeContent(block[[2L]], tag)

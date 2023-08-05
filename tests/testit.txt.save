@@ -8,7 +8,7 @@ _U_s_a_g_e:
      
 _A_r_g_u_m_e_n_t_s:
 
-      x,: y: : combined arguments, in multiple Rd lines
+    x, y: combined arguments, in multiple Rd lines
 
           paragraph
 
