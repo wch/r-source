@@ -122,6 +122,8 @@
 \newcommand{\ldescriptionlabel}[1]{%
   \settowidth{\ldescriptionwidth}{{#1}}%
   \ifdim\ldescriptionwidth>\labelwidth
+    % FIXME: labels can become very long for combined arguments
+    % (e.g., in format.Rd) and need line wrapping
     {\parbox[b]{\labelwidth}%
       {\makebox[0pt][l]{#1}\\[1pt]\makebox{}}}%
   \else
