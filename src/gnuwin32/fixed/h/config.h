@@ -467,6 +467,12 @@
 /* Define if __libc_stack_end is visible. */
 /* #undef HAVE_LIBC_STACK_END */
 
+/* Define to 1 if you have libdeflate headers and library. */
+/* #undef HAVE_LIBDEFLATE */
+
+/* Define to 1 if you have the <libdeflate.h> header file. */
+/* #undef HAVE_LIBDEFLATE_H */
+
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
 
@@ -1217,6 +1223,9 @@
 
 /* Define to use internal time-zone code */
 #define USE_INTERNAL_MKTIME 1
+
+/* Define to use libdefault rather than libz */
+/* #undef USE_LIBDEFLATE */
 
 /* Define if the POSIX multithreading library can be used. (For intl) */
 /* #undef USE_POSIX_THREADS */

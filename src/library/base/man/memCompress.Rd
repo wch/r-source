@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2022 R Core Team
+% Copyright 2009-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -14,16 +14,16 @@
   In-memory compression or decompression for raw vectors.
 }
 \usage{
-memCompress(from, type = c("gzip", "bzip2", "xz", "none"))
+memCompress(from, type = c("gzip", "bzip2", "xz", "libdeflate", "none"))
 
 memDecompress(from,
-              type = c("unknown", "gzip", "bzip2", "xz", "none"),
+              type = c("unknown", "gzip", "bzip2", "xz", "libdeflate", "none"),
               asChar = FALSE)
 }
 \arguments{
   \item{from}{A raw vector.  For \code{memCompress} a character vector
     will be converted to a raw vector with character strings separated
-    by \code{"\n"}.  Types \code{"gzip"} and \code{"xz"} support long
+    by \code{"\n"}.  Types except \code{"bzip2"} support long
     raw vectors.
   }
   \item{type}{character string, the type of compression.  May be
@@ -41,15 +41,15 @@ memDecompress(from,
   \code{type = "unknown"} attempts to detect the type of compression
   applied (if any): this will always succeed for \command{bzip2}
   compression, and will succeed for other forms if there is a suitable
-  header.  It will auto-detect the \sQuote{magic} header
-  (\code{"\x1f\x8b"}) added to files by the \command{gzip} program (and
-  to files written by \code{\link{gzfile}}), but \code{memCompress} does
-  not add such a header. (It supports RFC 1950 format, sometimes known
-  as \sQuote{zlib} format, for compression and decompression and RFC
-  1952 for decompression only.)
+  header.  If no type of compression is detected this is the same as
+  \code{type = "none"} but a warning is given.
 
   \command{gzip} compression uses whatever is the default compression
-  level of the underlying library (usually \code{6}).
+  level of the underlying library (usually \code{6}). This supports the
+  RFC 1950 format, sometimes known as \sQuote{zlib} format, for
+  compression and decompression and for decompression only RFC 1952, the
+  \sQuote{gzip} format (which wraps the \sQuote{zlib} format with a
+  header and footer).
 
   \command{bzip2} compression always adds a header (\code{"BZh"}).  The
   underlying library only supports in-memory (de)compression of up to
@@ -70,6 +70,24 @@ memDecompress(from,
   will fail if the output would have been too large.
 }
 
+\section{\code{libdeflate}}{
+  \command{libdeflate} compression uses
+  different algorithms for the RFC 1950 \sQuote{zlib} format (and RFC
+  1952 for decompression), expected to be substantially faster than
+  \code{type = "gzip"} using the reference \code{zlib} library.
+
+  The headers and sources can be downloaded from
+  \url{https://github.com/ebiggers/libdeflate} and pre-built versions
+  are available for most Linux distributions.
+
+  If \command{libdeflate} is not available, the code silently falls back
+  to \code{type = "gzip"} when \code{type = "libdeflate"} is specified.
+
+  Support for \code{type = libdeflate} was added prior to \R 4.4.0.  It is
+  experimental in the sense that it may replace the implementation of
+  \code{type = "gzip"} when \command{libdeflate} is available.
+}
+
 \value{
   A raw vector or a character string (if \code{asChar = TRUE}).
 }
@@ -84,7 +102,7 @@ memDecompress(from,
   data compression, \url{https://zlib.net/},
   \url{https://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
   \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://tukaani.org/xz/}
-  and \url{https://en.wikipedia.org/wiki/Xz} for references about the
+  and \url{https://en.wikipedia.org/wiki/XZ_Utils} for references about the
   particular schemes used.
 }
 
@@ -95,6 +113,10 @@ txt.gz <- memCompress(txt, "g")
 length(txt.gz)
 txt2 <- strsplit(memDecompress(txt.gz, "g", asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt2))
+## as from R 4.4.0 this is detected if not specified.
+txt2b <- strsplit(memDecompress(txt.gz, asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt2b, txt2))
+
 txt.bz2 <- memCompress(txt, "b")
 length(txt.bz2)
 ## can auto-detect bzip2:
@@ -106,6 +128,38 @@ txt.xz <- memCompress(txt, "x")
 length(txt.xz)
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
+
+\dontrun{
+## checks that type = "libdeflate" works and interworks with "gzip"
+txt.gz <- memCompress(txt, "l")
+length(txt.gz)
+txt2 <- strsplit(memDecompress(txt.gz, "g", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt2))
+txt2 <- strsplit(memDecompress(txt.gz, "l", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt2))
+txt.gz <- memCompress(txt, "g")
+txt2 <- strsplit(memDecompress(txt.gz, "l", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt2))
+
+system.time(for(i in 1:1e4) memCompress(txt, "g"))
+system.time(for(i in 1:1e4) memCompress(txt, "l"))
+
+system.time(for(i in 1:1e4) memDecompress(txt.gz, "g"))
+system.time(for(i in 1:1e4) memDecompress(txt.gz, "l"))
+
+## test decompressing a gzip-ed file -- needs working gzip command.
+tf <- tempfile()
+file.copy(file.path(R.home("doc"), "COPYING"), tf)
+system2(Sys.getenv("R_GZIPCMD"), tf)
+tf2 <- paste0(tf, ".gz")
+(nf <- file.size(tf2))
+foo <- readBin(tf2, "raw", n = nf)
+txt3 <- strsplit(memDecompress(foo, "g", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt3))
+txt3 <- strsplit(memDecompress(foo, "l", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt3))
+unlink(tf2)
+}
 }
 
 \keyword{file}

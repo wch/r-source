@@ -3458,6 +3458,9 @@ uses @file{rpc/xdr.h} but that includes @file{netconfig.h} from the top
 @file{tirpc} directory.} need to be on the C include path or under
 @file{/usr/include/tirpc}.
 
+Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
+is used by @code{memCompress()} and @code{memDecompress()} if available.
+
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
 Debian meta-package @samp{xorg-dev}), but some distributions have split
@@ -3487,12 +3490,12 @@ following packages and their development versions, and this may provide
 a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
-glibc harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng
-libtiff libtirpc libxcrypt ncurses pango pkgconf-pkg-config pcre2
-readline tcl tk xz zlib
+glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
+libjpeg libpng libtiff libtirpc libxcrypt ncurses pango
+pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 @noindent
-plus, preferably a TeX installation, Java and LAPACK >= 3.10.0.
+plus, preferably a TeX installation and Java.
 
 @menu
 * Tcl/Tk::

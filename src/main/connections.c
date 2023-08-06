@@ -6103,9 +6103,8 @@ attribute_hidden SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* code for in-memory (de)compression
-   of data stored in a scalar string. Uses a 4-byte header of length,
-   in XDR order. */
+/* code for in-memory (de)compression of data stored in a raw vector. 
+   Uses a 4-byte header of length, in XDR order. */
 
 #ifndef WORDS_BIGENDIAN
 static unsigned int uiSwap (unsigned int x)
@@ -6118,26 +6117,93 @@ static unsigned int uiSwap (unsigned int x)
 
 /* These are all hidden and used only in serialize.c,
    so managing R_alloc stack is prudence. */
+
+#if defined(HAVE_LIBDEFLATE) && defined(USE_LIBDEFLATE)
+# include <libdeflate.h>
+
 attribute_hidden
 SEXP R_compress1(SEXP in)
 {
-    const void *vmax = vmaxget();
-    unsigned int inlen;
-    uLong outlen;
-    int res;
-    Bytef *buf;
-    SEXP ans;
-
     if(TYPEOF(in) != RAWSXP)
 	error("R_compress1 requires a raw vector");
-    inlen = LENGTH(in);
-    outlen = (uLong)(1.001*inlen + 20);
-    buf = (Bytef *) R_alloc(outlen + 4, sizeof(Bytef));
+
+    static struct libdeflate_compressor *c = NULL;
+    if(c == NULL) {
+       c = libdeflate_alloc_compressor(6);
+       if(c == NULL)
+           error("allocation error in R_compress1 with libdeflate");
+    }
+
+    const void *vmax = vmaxget();
+
+    unsigned int inlen = LENGTH(in);
+    size_t outlen = libdeflate_zlib_compress_bound(c, inlen);
+    Bytef *buf = (Bytef *) R_alloc(outlen + 4, sizeof(Bytef));
     /* we want this to be system-independent */
     *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
-    res = compress(buf + 4, &outlen, (Bytef *)RAW(in), inlen);
+    size_t res =
+	libdeflate_zlib_compress(c, RAW(in), inlen, buf + 4, outlen);
+    if(res == 0)
+	error("internal libdeflate error in R_compress1 with libdeflate");
+    SEXP ans = allocVector(RAWSXP, res + 4);
+    memcpy(RAW(ans), buf, res + 4);
+    vmaxset(vmax);
+    return ans;
+}
+
+attribute_hidden
+SEXP R_decompress1(SEXP in, Rboolean *err)
+{
+    if(TYPEOF(in) != RAWSXP)
+	error("R_decompress1 requires a raw vector");
+
+    const void *vmax = vmaxget();
+
+    static struct libdeflate_decompressor *d = NULL;
+    if(d == NULL) {
+	d = libdeflate_alloc_decompressor();
+	if(d == NULL)
+	    error("allocation error in R_decompress1 with libdeflate");
+    }
+
+    unsigned char *p = RAW(in);
+    size_t inlen = LENGTH(in);
+    size_t outlen = uiSwap(*((unsigned int *) p));
+    Bytef *buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+    size_t actual_out;
+    enum libdeflate_result res =
+	libdeflate_zlib_decompress(d, p + 4, inlen - 4, buf,
+				   outlen, &actual_out);
+
+    if(res != LIBDEFLATE_SUCCESS) {
+	warning("internal error %d in R_decompress1 with libdeflate", res);
+	*err = TRUE;
+	return R_NilValue;
+    }
+    SEXP ans = allocVector(RAWSXP, actual_out);
+    memcpy(RAW(ans), buf, actual_out);
+    vmaxset(vmax);
+    return ans;
+}
+
+#else
+
+attribute_hidden
+SEXP R_compress1(SEXP in)
+{
+    if(TYPEOF(in) != RAWSXP)
+	error("R_compress1 requires a raw vector");
+
+    const void *vmax = vmaxget();
+
+    unsigned int inlen = LENGTH(in);
+    uLong outlen = (uLong)(1.001*inlen + 20);
+    Bytef *buf = (Bytef *) R_alloc(outlen + 4, sizeof(Bytef));
+    /* we want this to be system-independent */
+    *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
+    int res = compress(buf + 4, &outlen, (Bytef *)RAW(in), inlen);
     if(res != Z_OK) error("internal error %d in R_compress1", res);
-    ans = allocVector(RAWSXP, outlen + 4);
+    SEXP ans = allocVector(RAWSXP, outlen + 4);
     memcpy(RAW(ans), buf, outlen + 4);
     vmaxset(vmax);
     return ans;
@@ -6146,29 +6212,27 @@ SEXP R_compress1(SEXP in)
 attribute_hidden
 SEXP R_decompress1(SEXP in, Rboolean *err)
 {
-    const void *vmax = vmaxget();
-    uLong inlen, outlen;
-    int res;
-    Bytef *buf;
-    unsigned char *p = RAW(in);
-    SEXP ans;
-
     if(TYPEOF(in) != RAWSXP)
 	error("R_decompress1 requires a raw vector");
-    inlen = LENGTH(in);
-    outlen = (uLong) uiSwap(*((unsigned int *) p));
-    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-    res = uncompress(buf, &outlen, (Bytef *)(p + 4), inlen - 4);
+
+    const void *vmax = vmaxget();
+
+    unsigned char *p = RAW(in);
+    uLong inlen = LENGTH(in);
+    uLong outlen = (uLong) uiSwap(*((unsigned int *) p));
+    Bytef *buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+    int res = uncompress(buf, &outlen, (Bytef *)(p + 4), inlen - 4);
     if(res != Z_OK) {
 	warning("internal error %d in R_decompress1", res);
 	*err = TRUE;
 	return R_NilValue;
     }
-    ans = allocVector(RAWSXP, outlen);
+    SEXP ans = allocVector(RAWSXP, outlen);
     memcpy(RAW(ans), buf, outlen);
     vmaxset(vmax);
     return ans;
 }
+#endif
 
 attribute_hidden
 SEXP R_compress2(SEXP in)
@@ -6479,6 +6543,9 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
     return ans;
 }
 
+#ifdef HAVE_LIBDEFLATE
+# include <libdeflate.h>
+#endif
 attribute_hidden SEXP
 do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -6492,6 +6559,9 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     switch(type) {
     case 1: break; /* none */
     case 2: /*gzip */
+#ifndef HAVE_LIBDEFLATE
+    case 5: /* libdeflate */
+#endif
     {
 	Bytef *buf;
 	/* could use outlen = compressBound(inlen) */
@@ -6553,12 +6623,44 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	memcpy(RAW(ans), buf, outlen);
 	break;
     }
+#ifdef HAVE_LIBDEFLATE
+    case 5: /* libdeflate */
+    {
+	static struct libdeflate_compressor *c = NULL;
+	if(c == NULL) {
+	    c = libdeflate_alloc_compressor(6);
+	    if(c == NULL)
+		error("allocation error in memCompress with libdeflate");
+	}
+	size_t inlen = XLENGTH(from);
+	size_t outlen = libdeflate_zlib_compress_bound(c, inlen);
+	Bytef *buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+        size_t res =
+	    libdeflate_zlib_compress(c, RAW(from), inlen, buf, outlen);
+	if(res == 0)
+	    error("internal libdeflate error in memCompress");
+	ans = allocVector(RAWSXP, res);
+	memcpy(RAW(ans), buf, res);
+	break;
+    }
+#endif
     default:
 	break;
     }
 
     return ans;
 }
+
+// from libdeflate/programs/gzip.c
+typedef uint8_t u8;
+typedef uint32_t u32;
+static inline u32
+get_unaligned_le32(const u8 *p)
+{
+    return ((u32)p[3] << 24) | ((u32)p[2] << 16) |
+	((u32)p[1] << 8) | p[0];
+}
+
 
 attribute_hidden SEXP
 do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -6572,8 +6674,11 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     type = asInteger(CADR(args));
     if (type == 5) {/* type = 5 is "unknown" */
 	char *p = (char *) RAW(from);
+	/* zlib commression starts with 2 bytes, which for default settings are
+	   \x78\x9c.  We could use that */
 	if (strncmp(p, "BZh", 3) == 0) type = 3; /* bzip2 always uses a header */
 	else if(p[0] == '\x1f' && p[1] == '\x8b') type = 2; /* gzip files */
+	else if(p[0] == '\x78' && p[1] == '\x9c') type = 2; /* gzip files */
 	else if((p[0] == '\xFD') && !strncmp(p+1, "7zXZ", 4)) type = 4;
 	else if((p[0] == '\xFF') && !strncmp(p+1, "LZMA", 4)) {
 	    type = 4; subtype = 1;
@@ -6588,6 +6693,9 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     switch(type) {
     case 1: break; /* none */
     case 2: /* gzip */
+#ifndef HAVE_LIBDEFLATE
+    case 6: /* libdeflate */
+#endif
     {
 	uLong inlen = XLENGTH(from), outlen = 3*inlen;
 	Bytef *buf, *p = (Bytef *)RAW(from);
@@ -6599,6 +6707,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	while(1) {
 	    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+	    // R_uncompress is in gzio.h
 	    int res = R_uncompress(buf, &outlen, p, inlen, opt);
 	    if(res == Z_BUF_ERROR) {
 		if(outlen < ULONG_MAX/2) {
@@ -6610,36 +6719,6 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 		  "type = \"gzip\"");
 	}
 
-	/*
-	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
-	    // in this case we could read outlen from the trailer
-	    while(1) {
-		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-		int res = R_gzuncompress(buf, &outlen, p, inlen, 16); // force gzip format
-		if(res == Z_BUF_ERROR) {
-		    if(outlen < ULONG_MAX/2) {
-			outlen *= 2; continue;
-		    } else break;
-		}
-		if(res >= 0) break;
-		error("internal error %d in memDecompress(%s)", res,
-		      "type = \"gzip\"");
-	    }
-	} else {
-	    while(1) {
-		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-		int res = uncompress(buf, &outlen, p, inlen);
-		if(res == Z_BUF_ERROR) {
-		    if(outlen < ULONG_MAX/2) {
-			outlen *= 2; continue;
-		    } else break;
-		}
-		if(res == Z_OK) break;
-		error("internal error %d in memDecompress(%s)", res,
-		      "type = \"gzip\"");
-	    }
-	}
-	*/
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
 	break;
@@ -6721,6 +6800,59 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	memcpy(RAW(ans), buf, outlen);
 	break;
     }
+    // case 5 is "unknown', covered above
+#ifdef HAVE_LIBDEFLATE
+    case 6: /* libdeflate */
+    {
+	static struct libdeflate_decompressor *d = NULL;
+	if(d == NULL) {
+	    d = libdeflate_alloc_decompressor();
+	    if(d == NULL)
+		error("allocation error in memDecompress with libdeflate");
+	}
+
+	size_t inlen = XLENGTH(from), outlen = 3*inlen, actual_out;
+        enum libdeflate_result res;
+	Bytef *buf, *p = (Bytef *)RAW(from);
+
+	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	    while(1) {
+		outlen = get_unaligned_le32(&p[inlen - 4]);
+		if (outlen == 0) outlen = 1;
+
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		res = libdeflate_gzip_decompress(d, RAW(from), inlen,
+						 buf, outlen, &actual_out);
+		if(res == LIBDEFLATE_INSUFFICIENT_SPACE) {
+		    // should not happen but recorded length might be wrong.
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res == LIBDEFLATE_SUCCESS) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"libdeflate\"");
+	    }
+	} else {
+	    while(1) {
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		res = libdeflate_zlib_decompress(d, RAW(from), inlen,
+						 buf, outlen, &actual_out);
+		if(res == LIBDEFLATE_INSUFFICIENT_SPACE) {
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res == LIBDEFLATE_SUCCESS) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"libdeflate\"");
+	    }
+	}
+	ans = allocVector(RAWSXP, actual_out);
+	memcpy(RAW(ans), buf, actual_out);
+	break;
+    }
+#endif
     default:
 	break;
     }

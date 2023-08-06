@@ -3469,6 +3469,27 @@ else
 fi
 ])# R_BZLIB
 
+## R_LIBDEFLATE
+## ------------
+## Try finding libdeflate library and headers.
+## We check that both are installed,
+AC_DEFUN([R_LIBDEFLATE],
+[
+  AC_CHECK_HEADERS(libdeflate.h, [have_libdeflate=yes], [have_libdeflate=no])
+if test "${have_libdeflate}" = yes; then
+  AC_CHECK_LIB(deflate, libdeflate_alloc_compressor, [have_libdeflate=yes], [have_libdeflate=no])
+fi
+if test "x${r_cv_have_libdeflate}" = xno; then
+  have_libdeflate=no
+fi
+if test "x${have_libdeflate}" = xyes; then
+  AC_MSG_RESULT([yes])
+  LIBS="-ldeflate ${LIBS}"
+  AC_DEFINE(HAVE_LIBDEFLATE, 1,
+            [Define to 1 if you have libdeflate headers and library.])
+fi
+])# R_LIBDEFLATE
+
 ## R_TRE
 ## -------
 ## Try finding tre library and headers.

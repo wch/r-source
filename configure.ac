@@ -580,6 +580,14 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
+AC_ARG_WITH([libdeflate-compression],
+[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
+[use_libdeflate=${withval}],
+[use_libdeflate=no])
+if test "x$use_libdeflate" = xyes; then
+  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz])
+fi
+
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
@@ -2568,6 +2576,9 @@ R_BZLIB
 
 ## LZMA headers and libraries from xz-utils
 R_LZMA
+
+## libdeflate headers and libraries.
+R_LIBDEFLATE
 
 ## PCRE[12] headers and libraries.
 R_PCRE
