@@ -132,12 +132,12 @@ available at
 The latest version of this document is always available from
 
 @display
-@url{https://CRAN.R-project.org/doc/manual/}
+@url{https://CRAN.R-project.org/doc/manuals/}
 @end display
 
 From there, you can obtain versions converted to
-@url{https://CRAN.R-project.org/doc/manual/R-FAQ.html,, @HTML{}} and
-@url{https://CRAN.R-project.org/doc/manual/R-FAQ.pdf,, PDF},
+@url{https://CRAN.R-project.org/doc/manuals/R-FAQ.html,, @HTML{}} and
+@url{https://CRAN.R-project.org/doc/manuals/R-FAQ.pdf,, PDF},
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
