@@ -104,7 +104,7 @@
       build, as that is nowadays almost untested.
 
       \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
-      so no longer recorded in \file{etc/Renviron} (it is not on Windows
+      so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
     }
   }
