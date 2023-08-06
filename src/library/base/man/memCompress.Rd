@@ -107,19 +107,18 @@ length(txt.xz)
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
 
-\dontrun{
-## test decompressing a gzip-ed file -- needs working gzip command.
-tf <- tempfile()
-file.copy(file.path(R.home("doc"), "COPYING"), tf)
-system2(Sys.getenv("R_GZIPCMD"), tf)
-tf2 <- paste0(tf, ".gz")
-(nf <- file.size(tf2))
-foo <- readBin(tf2, "raw", n = nf)
-## will be auto-detected from its header
+## test decompressing a gzip-ed file
+tf <- tempfile(fileext = ".gz")
+con <- gzfile(tf, "w")
+writeLines(txt, con)
+close(con)
+(nf <- file.size(tf))
+# if (nzchar(Sys.which("file"))) system2("file", tf)
+foo <- readBin(tf, "raw", n = nf)
+unlink(tf)
+## will detect the gzip header and choose type = "gzip"
 txt3 <- strsplit(memDecompress(foo, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
-unlink(tf2)
-}
 }
 
 \keyword{file}
