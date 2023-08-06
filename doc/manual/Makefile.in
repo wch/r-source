@@ -207,6 +207,8 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
+	  v=`sed -e 1d -e 's/.*: *\([^-]*\)-.*/\1/' $(SVN_REV)`; \
+	  $(ECHO) "@set FAQ_YEAR $${v}" >> $@; \
 	  rwv=`$(R_EXE) -f $(top_srcdir)/src/gnuwin32/fixed/rwver.R`; \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
@@ -222,7 +224,7 @@ R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-FAQ.html: $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-FAQ.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
