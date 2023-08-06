@@ -5054,6 +5054,9 @@ define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
 @code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
 2023.2.0.20230622)}.}).
 
+The C++ compiler uses the system's @code{lidstdc++} as its runtime
+library rather than LLVM's @code{libc++}.
+
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
@@ -5073,7 +5076,7 @@ LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
 but the build segfaulted in the checks (in complex arithmetic in
-@file{lapack.R}).
+@file{tests/lapack.R}).
 
 Intel document building @R with MKL: for the Intel compilers this needed
 something like
@@ -5099,16 +5102,25 @@ The compilers have many options, some of which are still under
 development. As the C/C++ and Fortran compilers have different origins
 for their front-ends, there is little consistency in their options.
 @c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/compiler-options-001.html
 (The C/C++ compilers support `all' @command{clang} options even if
-undocumented, such as @option{-Wno-strict-prototypes} above, However it
-is unclear for which version of @command{clang}: the Intel manual
-suggests checking @command{icx -help}.)  At least the C/C++ compilers
-support clang-style LTO.
+undocumented for @command{icx}/@command{icpc}, such as
+@option{-Wno-strict-prototypes} above, However it is unclear for which
+version of @command{clang}: the Intel manual suggests checking
+@command{icx -help}.)  The C/C++ compilers support clang-style
+LTO: it is not clear if the Fortran one does.
 
 @c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
 For some versions, including 2023.2.0, all CPU times in e.g.@:
 @code{proc.time()} are reported as zero.  If you see this, uncomment the
 @samp{INTEL_ICX_FIX} setting in @file{config.site} and re-build.
+
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/stand.html
+The preferred Fortran standard for @command{ifx} can be set by one of
+@option{-std90}, @option{-std95}, @option{-std03}, @option{-std08} or
+@option{-std18} (and variants).  However, this is documented to only
+affect warnings on non-standard features: the default is no such
+warnings.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
 @subsubsection `Classic' Intel compilers
