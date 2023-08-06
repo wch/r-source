@@ -71,10 +71,10 @@ memDecompress(from,
 }
 
 \section{\code{libdeflate}}{
-  \command{libdeflate} compression uses
-  different algorithms for the RFC 1950 \sQuote{zlib} format (and RFC
-  1952 for decompression), expected to be substantially faster than
-  \code{type = "gzip"} using the reference \code{zlib} library.
+  \command{libdeflate} compression uses different code for the RFC
+  1950 \sQuote{zlib} format (and RFC 1952 for decompression), expected
+  to be substantially faster than \code{type = "gzip"} using the
+  reference \code{zlib} library.
 
   The headers and sources can be downloaded from
   \url{https://github.com/ebiggers/libdeflate} and pre-built versions
@@ -96,7 +96,8 @@ memDecompress(from,
   \link{connections}.
 
   \code{\link{extSoftVersion}} for the versions of the \code{zlib},
-  \code{bzip2} and \code{xz} libraries in use.
+  \code{bzip2} and \code{xz} libraries in use, and \code{libdeflate} (if
+  available).
 
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{https://zlib.net/},
@@ -129,6 +130,21 @@ length(txt.xz)
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
 
+## test decompressing a gzip-ed file
+tf <- tempfile(fileext = ".gz")
+con <- gzfile(tf, "w")
+writeLines(txt, con)
+close(con)
+(nf <- file.size(tf))
+# if (nzchar(Sys.which("file"))) system2("file", tf)
+foo <- readBin(tf, "raw", n = nf)
+unlink(tf)
+## will detect the gzip header and choose type = "gzip"
+txt3 <- strsplit(memDecompress(foo, asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt3))
+txt3 <- strsplit(memDecompress(foo, "libdeflate", asChar = TRUE), "\n")[[1]]
+stopifnot(identical(txt, txt3))
+
 \dontrun{
 ## checks that type = "libdeflate" works and interworks with "gzip"
 txt.gz <- memCompress(txt, "l")
@@ -146,19 +162,6 @@ system.time(for(i in 1:1e4) memCompress(txt, "l"))
 
 system.time(for(i in 1:1e4) memDecompress(txt.gz, "g"))
 system.time(for(i in 1:1e4) memDecompress(txt.gz, "l"))
-
-## test decompressing a gzip-ed file -- needs working gzip command.
-tf <- tempfile()
-file.copy(file.path(R.home("doc"), "COPYING"), tf)
-system2(Sys.getenv("R_GZIPCMD"), tf)
-tf2 <- paste0(tf, ".gz")
-(nf <- file.size(tf2))
-foo <- readBin(tf2, "raw", n = nf)
-txt3 <- strsplit(memDecompress(foo, "g", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt3))
-txt3 <- strsplit(memDecompress(foo, "l", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt3))
-unlink(tf2)
 }
 }
 
