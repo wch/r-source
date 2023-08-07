@@ -734,6 +734,31 @@ stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
 ## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
 
 
+## New <object> type {{partly experimental}}
+mkObj <- function(...) {
+    ob <- asS3(getClass("S4")@prototype, complete=FALSE) # "hack"
+    if(...length()) attributes(ob) <- list(...)
+    ob
+}
+(oo <- mkObj())
+str(oo) # the same: '<object>'
+(x4 <- asS4(oo))
+dput(x4) # same as print(.)
+dput(oo) # <object> again {possibly to be changed}
+(o2 <- mkObj(name = "Obi", age = 67))
+str(o2) # good!
+dput(o2) # <object>  .. to be changed -- once something like mkObj() becomes API
+stopifnot(exprs = {
+    identical(x4, getClass("S4")@prototype)
+    identical(oo, get("oo", mode="object"))
+    identical(x4, get("x4", mode="S4"))
+    identical(attr(o2, "name"), "Obi")
+})
+assertErrV(o2[ 1 ])
+assertErrV(o2[[1]])
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
