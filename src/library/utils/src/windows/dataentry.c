@@ -58,7 +58,7 @@ static Rboolean R_de_up;
 #define BOXW(x) (min(((x<100 && DE->nboxchars == 0) ? DE->boxw[x] : DE->box_w), DE->p->w - DE->boxw[0] - 2*DE->bwidth - 2))
 
 #define FIELDWIDTH 10
-#define BUFSIZE 200
+#define BUFSIZE  1024
 
 typedef struct {
     dataeditor de;
