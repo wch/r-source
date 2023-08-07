@@ -1913,14 +1913,13 @@ Optional Packages:
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
   --with-system-valgrind-headers
-                          use system valgrind headers (if available) [yes]
+                          defunct
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
                           use internal code for towlower/upper [no, yes on
-                          macOS and Solaris]
+                          macOS]
   --with-internal-iswxxxxx
-                          use internal iswprint etc. [no, yes on macOS,
-                          Solaris and AIX]
+                          use internal iswprint etc. [no, yes on macOS]
   --with-internal-wcwidth use internal wcwidth [yes]
   --with-recommended-packages
                           use/install recommended R packages [yes]
@@ -5059,6 +5058,7 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
+## Maybe this should come after R_LIBDEFLATE so we can check if we have libdeflate.
 
 # Check whether --with-libdeflate-compression was given.
 if test ${with_libdeflate_compression+y}
@@ -61669,6 +61669,15 @@ if test -z "${r_external_libs}"; then
   r_external_libs="curl"
 else
   r_external_libs="${r_external_libs}${separator}curl"
+fi
+fi
+if test "x$have_libdeflate" = xyes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="libdeflate"
+else
+  r_external_libs="${r_external_libs}${separator}libdeflate"
 fi
 fi
 

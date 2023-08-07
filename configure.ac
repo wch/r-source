@@ -506,7 +506,7 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=0])
 
 AC_ARG_WITH([system-valgrind-headers],
-[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-system-valgrind-headers],[defunct])],
 [AC_MSG_WARN([--with-system-valgrind-headers is defunct])])
 
 AC_ARG_WITH([internal-tzcode],
@@ -515,12 +515,12 @@ AC_ARG_WITH([internal-tzcode],
 [use_internal_tzcode=default])
 
 AC_ARG_WITH([internal-towlower],
-[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS and Solaris@:>@])],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS@:>@])],
 [use_internal_towlower=${withval}],
 [use_internal_towlower=default])
 
 AC_ARG_WITH([internal-iswxxxxx],
-[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS, Solaris and AIX@:>@])],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS@:>@])],
 [use_internal_iswxxxxx=${withval}],
 [use_internal_iswxxxxx=default])
 
@@ -580,12 +580,13 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
+## Maybe this should come after R_LIBDEFLATE so we can check if we have libdeflate.
 AC_ARG_WITH([libdeflate-compression],
 [AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
 [use_libdeflate=${withval}],
 [use_libdeflate=no])
 if test "x$use_libdeflate" = xyes; then
-  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz])
+  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
 fi
 
 ### ** Precious variables.
@@ -3097,6 +3098,9 @@ if test "${have_tre}" = yes; then
 fi
 if test "x$ac_cv_header_curl_curl_h" = xyes; then
   R_SH_VAR_ADD(r_external_libs, [curl], [, ])
+fi
+if test "x$have_libdeflate" = xyes; then
+  R_SH_VAR_ADD(r_external_libs, [libdeflate], [, ])
 fi
 
 r_capabilities=
