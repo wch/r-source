@@ -1036,13 +1036,13 @@ embedGlyphs <- function(file, glyphInfo, outfile = file,
               ## Make sure ghostscript can see the cidfmap
               paste0("-I", shQuote(tempdir())),
               options, shQuote(file))
+    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     ret <- system2(gsexe, args)
     if (ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)
     if (outfile != file)
         args[2] <- paste0(" -sOutputFile=", shQuote(outfile))
-    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }
