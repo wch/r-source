@@ -437,7 +437,7 @@ ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 	  $(TEXI2TEXT) $(srcdir)/resources.texi -o $@; \
 	fi
 
-${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi
+${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi $(texiincludes)
 	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/FAQ will be missing"; \
