@@ -93,19 +93,18 @@
       cases, new argument \code{uplo = "U" | "L"} allows to specify the
       upper or lower triangular part.
 
-      \item \code{memDecompress(type = "unknown")} recognizes compresion
+      \item \code{memDecompress(type = "unknown")} recognizes compression
       in the defailt \sQuote{zlib} format as used by
       \code{memCompress(type = "gzip")}.
       
-      \item (\strong{Experimental:}) \code{memCompress()} and
-      \code{memDecompress()} have a new type \code{"libdeflate"} which
-      use the \code{libdeflate} library
+      \item \code{memCompress()} and \code{memDecompress()} will use the
+      \code{libdeflate} library
       (\url{https://github.com/ebiggers/libdeflate}) if installed.  This
-      uses the same type of compression as their default \code{type =
-      "gzip"} but is substantially faster on some common plaftorms: the
-      speed-up may depend on the library version.
-
-      This option may replace \code{type = "gzip"} before release.
+      uses the same type of compression for \code{type = "gzip"} but is
+      1.5-2x faster than the system \code{libz} library on some
+      common platforms: the speed-up may depend on the library version.
+      %% libdeflate 1.13 claims significant improvements in
+      %% decompression speed.
     }
   }
 

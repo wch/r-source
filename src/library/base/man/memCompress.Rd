@@ -14,10 +14,10 @@
   In-memory compression or decompression for raw vectors.
 }
 \usage{
-memCompress(from, type = c("gzip", "bzip2", "xz", "libdeflate", "none"))
+memCompress(from, type = c("gzip", "bzip2", "xz", "none"))
 
 memDecompress(from,
-              type = c("unknown", "gzip", "bzip2", "xz", "libdeflate", "none"),
+              type = c("unknown", "gzip", "bzip2", "xz", "none"),
               asChar = FALSE)
 }
 \arguments{
@@ -71,21 +71,15 @@ memDecompress(from,
 }
 
 \section{\code{libdeflate}}{
-  \command{libdeflate} compression uses different code for the RFC
-  1950 \sQuote{zlib} format (and RFC 1952 for decompression), expected
-  to be substantially faster than \code{type = "gzip"} using the
-  reference \code{zlib} library.
+  Support for the \code{libdeflate} library was added for \R 4.4.0.  It
+  uses different code for the RFC 1950 \sQuote{zlib} format (and RFC
+  1952 for decompression), expected to be substantially faster than
+  using the reference (or system) \code{zlib} library.  It is used for
+  \code{type = "gzip"} if available.
 
   The headers and sources can be downloaded from
   \url{https://github.com/ebiggers/libdeflate} and pre-built versions
   are available for most Linux distributions.
-
-  If \command{libdeflate} is not available, the code silently falls back
-  to \code{type = "gzip"} when \code{type = "libdeflate"} is specified.
-
-  Support for \code{type = libdeflate} was added prior to \R 4.4.0.  It is
-  experimental in the sense that it may replace the implementation of
-  \code{type = "gzip"} when \command{libdeflate} is available.
 }
 
 \value{
@@ -95,9 +89,8 @@ memDecompress(from,
 \seealso{
   \link{connections}.
 
-  \code{\link{extSoftVersion}} for the versions of the \code{zlib},
-  \code{bzip2} and \code{xz} libraries in use, and \code{libdeflate} (if
-  available).
+  \code{\link{extSoftVersion}} for the versions of the \code{zlib} or
+  \code{libdeflate}, \code{bzip2} and \code{xz} libraries in use.
 
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{https://zlib.net/},
@@ -110,7 +103,7 @@ memDecompress(from,
 \examples{
 txt <- readLines(file.path(R.home("doc"), "COPYING"))
 sum(nchar(txt))
-txt.gz <- memCompress(txt, "g")
+txt.gz <- memCompress(txt, "g") # "gzip", the default
 length(txt.gz)
 txt2 <- strsplit(memDecompress(txt.gz, "g", asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt2))
@@ -142,27 +135,6 @@ unlink(tf)
 ## will detect the gzip header and choose type = "gzip"
 txt3 <- strsplit(memDecompress(foo, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
-txt3 <- strsplit(memDecompress(foo, "libdeflate", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt3))
-
-\dontrun{
-## checks that type = "libdeflate" works and interworks with "gzip"
-txt.gz <- memCompress(txt, "l")
-length(txt.gz)
-txt2 <- strsplit(memDecompress(txt.gz, "g", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt2))
-txt2 <- strsplit(memDecompress(txt.gz, "l", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt2))
-txt.gz <- memCompress(txt, "g")
-txt2 <- strsplit(memDecompress(txt.gz, "l", asChar = TRUE), "\n")[[1]]
-stopifnot(identical(txt, txt2))
-
-system.time(for(i in 1:1e4) memCompress(txt, "g"))
-system.time(for(i in 1:1e4) memCompress(txt, "l"))
-
-system.time(for(i in 1:1e4) memDecompress(txt.gz, "g"))
-system.time(for(i in 1:1e4) memDecompress(txt.gz, "l"))
-}
 }
 
 \keyword{file}
