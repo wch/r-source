@@ -102,9 +102,8 @@
       use the \code{libdeflate} library
       (\url{https://github.com/ebiggers/libdeflate}) if installed.  This
       uses the same type of compression as their default \code{type =
-	"gzip"} but is substantially faster on commpn plaftorms (it has
-      optimized code for \code{x86} and ARM CPUs, including their 64-bit
-      variants.)
+      "gzip"} but is substantially faster on some common plaftorms: the
+      speed-up may depend on the library version.
 
       This option may replace \code{type = "gzip"} before release.
     }
