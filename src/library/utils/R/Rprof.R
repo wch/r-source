@@ -1,7 +1,7 @@
 #  File src/library/utils/R/Rprof.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,12 +19,14 @@
 Rprof <- function(filename = "Rprof.out", append = FALSE, interval =  0.02,
                   memory.profiling = FALSE, gc.profiling = FALSE,
                   line.profiling = FALSE, filter.callframes = FALSE,
-                  numfiles = 100L, bufsize = 10000L)
+                  numfiles = 100L, bufsize = 10000L,
+                  event = c("default", "cpu", "wall"))
 {
+    event <- match.arg(event)
     if(is.null(filename)) filename <- ""
     invisible(.External(C_Rprof, filename, append, interval, memory.profiling,
                         gc.profiling, line.profiling, filter.callframes,
-                        numfiles, bufsize))
+                        numfiles, bufsize, event))
 }
 
 Rprofmem <- function(filename = "Rprofmem.out", append = FALSE, threshold = 0)
