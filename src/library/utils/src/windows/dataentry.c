@@ -149,6 +149,32 @@ int mb_char_len(const char *buf, int clength)
     return mb_len;
 }
 
+static char *strip_invalid_suffix(char *s)
+{
+    /* see mbcsTruncateToValid() in util.c */
+    if (!s || *s == '\0')
+	return s;
+
+    mbstate_t mb_st;
+    size_t slen = strlen(s); /* at least 1 */
+    size_t goodlen = 0;
+
+    mbs_init(&mb_st);
+
+    while(goodlen < slen) {
+	size_t res;
+	res = mbrtowc(NULL, s + goodlen, slen - goodlen, &mb_st);
+	if (res == (size_t) -1 || res == (size_t) -2) {
+	    /* strip off all remaining characters */
+	    for(;goodlen < slen; goodlen++)
+		s[goodlen] = '\0';
+	    return s;
+	}
+	goodlen += res;
+    }
+    return s;
+}
+
 static void moveback(DEstruct DE)
 {
     int mb_len;
@@ -842,6 +868,7 @@ static void closerect(DEstruct DE)
     if (DE->CellModified || DE->CellEditable) {
 	if (DE->CellEditable) {
 	    strncpy(DE->buf, GA_gettext(DE->celledit), BUFSIZE-1);
+	    strip_invalid_suffix(DE->buf);
 	    DE->clength = strlen(DE->buf);
 	    hide(DE->celledit);
 	    del(DE->celledit);
@@ -915,6 +942,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen,
     fw = min(BUFSIZE, (bw - 8)/(DE->p->fw));
     bufw = min(fw, buflen);
     strncpy(buf, ibuf, bufw);
+    strip_invalid_suffix(buf);
     buf[bufw] = '\0';
     if (buflen > fw) {
 	if(left) {
@@ -1462,6 +1490,7 @@ static Rboolean initwin(DEstruct DE, const char *title)
     show(DE->de); /* a precaution, as PD reports transparent windows */
     BringToTop(DE->de, 0);
     DE->buf[BUFSIZE-1] = '\0';
+    strip_invalid_suffix(DE->buf);
     return FALSE;
 }
 
@@ -1482,6 +1511,7 @@ static void popupclose(control c)
 
     buf[BUFSIZE-1] = '\0';
     strncpy(buf, GA_gettext(varname), BUFSIZE-1);
+    strip_invalid_suffix(buf);
     if(!strlen(buf)) {
 	askok(G_("column names cannot be blank"));
 	return;
@@ -1560,6 +1590,7 @@ static void de_paste(control c)
     closerect(DE);
     if ( clipboardhastext() &&
 	 !getstringfromclipboard(DE->buf, BUFSIZE-1) ) {
+	strip_invalid_suffix(DE->buf);
 	/* set current cell to first line of clipboard */
 	DE->CellModified = TRUE;
 	if ((p = strchr(DE->buf, '\n'))) *p = '\0';
@@ -1854,7 +1885,8 @@ SEXP Win_dataviewer(SEXP args)
     int i, nprotect;
     RCNTXT cntxt;
     DEstruct DE = (DEstruct) malloc(sizeof(destruct));
-
+    if (!DE)
+	error(G_("dataentry: internal memory problem"));
     DE->isEditor = FALSE;
     nprotect = 0;/* count the PROTECT()s */
     DE->work = CAR(args);
