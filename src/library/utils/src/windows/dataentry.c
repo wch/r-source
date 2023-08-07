@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2021  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -798,11 +798,22 @@ static SEXP processEscapes(SEXP x)
     PROTECT( expr = lang5(s_gsub, ScalarLogical(1), pattern, replacement, x) );
     SET_TAG( CDR(expr), install("perl") );
 
-    PROTECT( newval = eval(expr, R_BaseEnv) );
+    newval = R_tryEval(expr, R_BaseEnv, NULL);
+    if (!newval) {
+	/* gsub will throw error for invalid string */
+	UNPROTECT(3);
+	return R_NilValue;
+    }
+    PROTECT( newval );
     PROTECT( pattern = mkString("(^.*$)") );
     PROTECT( replacement = mkString("\"\\1\"") );
     PROTECT( expr = lang4(install("sub"), pattern, replacement, newval) );
-    PROTECT( newval = eval(expr, R_BaseEnv) );
+    newval = R_tryEval(expr, R_BaseEnv, NULL);
+    if (!newval) {
+	UNPROTECT(7);
+	return R_NilValue;
+    }
+    PROTECT( newval );
     PROTECT( expr = R_ParseVector( newval, 1, &status, R_NilValue) );
     
     /* We only handle the first entry. If this were available more generally,
