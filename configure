@@ -5058,7 +5058,6 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
-## Maybe this should come after R_LIBDEFLATE so we can check if we have libdeflate.
 
 # Check whether --with-libdeflate-compression was given.
 if test ${with_libdeflate_compression+y}
@@ -27130,7 +27129,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27135: \"$ac_link\") >&5
+(eval echo $as_me:27134: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27206,7 +27205,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27211: \"$ac_link\") >&5
+(eval echo $as_me:27210: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -51396,6 +51395,21 @@ printf "%s\n" "#define HAVE_LIBDEFLATE 1" >>confdefs.h
 fi
 
 
+
+# Check whether --with-libdeflate-compression was given.
+if test ${with_libdeflate_compression+y}
+then :
+  withval=$with_libdeflate_compression; use_libdeflate=${withval}
+else $as_nop
+  use_libdeflate=no
+fi
+
+if test "x$use_libdeflate" = xyes; then
+
+printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h
+
+fi
+
 ## PCRE[12] headers and libraries.
 have_pcre2=no
 if test "x${use_pcre2}" = xyes; then
@@ -61890,6 +61904,11 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}static HTML"
 fi
+fi
+
+if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: --with-libdeflate-compression requires libdeflate" >&5
+printf "%s\n" "$as_me: WARNING: --with-libdeflate-compression requires libdeflate" >&2;}
 fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:

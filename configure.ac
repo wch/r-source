@@ -580,7 +580,6 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
-## Maybe this should come after R_LIBDEFLATE so we can check if we have libdeflate.
 AC_ARG_WITH([libdeflate-compression],
 [AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
 [use_libdeflate=${withval}],
@@ -2581,6 +2580,14 @@ R_LZMA
 ## libdeflate headers and libraries.
 R_LIBDEFLATE
 
+AC_ARG_WITH([libdeflate-compression],
+[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
+[use_libdeflate=${withval}],
+[use_libdeflate=no])
+if test "x$use_libdeflate" = xyes; then
+  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
+fi
+
 ## PCRE[12] headers and libraries.
 R_PCRE
 
@@ -3168,6 +3175,10 @@ if test "${use_strict_barrier}" = yes; then
 fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
+fi
+
+if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
+  AC_MSG_WARN([--with-libdeflate-compression requires libdeflate])
 fi
 
 AC_MSG_RESULT(
