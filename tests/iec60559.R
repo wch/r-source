@@ -15,4 +15,5 @@ exp(c(-745:-740, -730, -720, -710:-705))
 # Mingw-w64 did not do so in v 2.0.1
 x <- 0*(-1) # negative zero
 sqrt(x)
+sprintf("%g, rt = %g, .^2 = %g", x, sqrt(x), x^2)
 identical(x, sqrt(x))

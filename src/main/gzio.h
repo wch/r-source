@@ -558,6 +558,7 @@ static void
 R_zlib_free(voidpf ptr, voidpf addr) {}
 */
 
+#ifndef HAVE_LIBDEFLATE
 /* added in 4.0.0, modified from uncompress[2] */
 static int
 R_uncompress(Bytef *dest, uLong *destLen, Bytef *source, uLong sourceLen,
@@ -601,3 +602,4 @@ R_uncompress(Bytef *dest, uLong *destLen, Bytef *source, uLong sourceLen,
     inflateEnd(&stream);
     return err;
 }
+#endif

@@ -1805,7 +1805,13 @@ installed version.
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
-in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+in 
+@ifset UseExternalXrefs
+@ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Invoking R' in the `An Introduction to R' manual.
+@end ifclear
 
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
@@ -3452,6 +3458,9 @@ uses @file{rpc/xdr.h} but that includes @file{netconfig.h} from the top
 @file{tirpc} directory.} need to be on the C include path or under
 @file{/usr/include/tirpc}.
 
+Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
+is used by @code{memCompress()} and @code{memDecompress()} if available.
+
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
 Debian meta-package @samp{xorg-dev}), but some distributions have split
@@ -3481,12 +3490,12 @@ following packages and their development versions, and this may provide
 a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
-glibc harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng
-libtiff libtirpc libxcrypt ncurses pango pkgconf-pkg-config pcre2
-readline tcl tk xz zlib
+glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
+libjpeg libpng libtiff libtirpc libxcrypt ncurses pango
+pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 @noindent
-plus, preferably a TeX installation, Java and LAPACK >= 3.10.0.
+plus, preferably a TeX installation and Java.
 
 @menu
 * Tcl/Tk::
@@ -4650,16 +4659,19 @@ Windows: _WIN32, _WIN64
 
 Identifying compilers can be very tricky.  GCC defines @code{__GNUC__},
 but so do other compilers claiming conformance with it, notably (LLVM
-and Apple) @command{clang} and recent Intel compilers.  Further, they
-use the value of @code{__GNUC__} for their version, not the version of
-GCC they claim to be compatible with.  Both LLVM and Apple
-@command{clang} define @code{__clang__} as their major version, but for
-example Apple's 13.x.y is very different from LLVM's 13.x.y.  And
-compilers based on LLVM @command{clang}, for example from IBM, will
-define this.  Some of the included software uses @code{__APPLE_CC__} to
-identify an Apple compiler (which used to include Apple builds of GCC),
-but Apple @command{clang} is better identified by the
-@code{__apple_build_version__} macro.
+and Apple) @command{clang} and Intel compilers.  Further, some use the
+value of @code{__GNUC__} for their version, not the version of GCC they
+claim to be compatible with.@footnote{Most @command{clang}-based
+compilers give @code{4}, but not those distributed by FreeBSD.  Intel's
+@command{icc} reported @code{12} in 2023.}  @command{clang}-based
+compilers define @code{__clang__}.  Both LLVM and Apple @command{clang}
+define @code{__clang_major__} as a string giving their major version,
+but for example Apple's 13.x.y is very different from LLVM's 13.x.y.
+And compilers based on LLVM @command{clang}, for example from Intel and
+IBM, will define these.  Some of the included software uses
+@code{__APPLE_CC__} to identify an Apple compiler (which used to include
+Apple builds of GCC), but Apple @command{clang} is better identified by
+the @code{__apple_build_version__} macro.
 
 @menu
 * X11 issues::
@@ -5039,9 +5051,14 @@ branded `Classic') also supported @cputype{ix86} and 32-bit builds on
 @cputype{x86_64}.
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
-ones are @command{icx}, @command{icpx} and @command{ifx}; they
-are identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do
-not define @code{__INTEL_COMPILER}).
+ones are @command{icx}, @command{icpx} and @command{ifx}; they are
+identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
+define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
+@code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
+2023.2.0.20230622)}.}).
+
+The C++ compiler uses the system's @code{lidstdc++} as its runtime
+library rather than LLVM's @code{libc++}.
 
 Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
@@ -5054,6 +5071,7 @@ CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
 CFLAGS="-O3 -fp-model precise -Wall"
+C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
 CXXFLAGS="-O3 -fp-model precise -Wall"
@@ -5061,7 +5079,7 @@ LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
 but the build segfaulted in the checks (in complex arithmetic in
-@file{lapack.R}).
+@file{tests/lapack.R}).
 
 Intel document building @R with MKL: for the Intel compilers this needed
 something like
@@ -5085,22 +5103,38 @@ macro.
 
 The compilers have many options, some of which are still under
 development. As the C/C++ and Fortran compilers have different origins
-for their front-ends, there is little consistency in their options. They
-support clang-style LTO, at least for C/C++.
+for their front-ends, there is little consistency in their options.
+@c https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/compiler-options.html
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/compiler-options-001.html
+(The C/C++ compilers support `all' @command{clang} options even if
+undocumented for @command{icx}/@command{icpc}, such as
+@option{-Wno-strict-prototypes} above, However it is unclear for which
+version of @command{clang}: the Intel manual suggests checking
+@command{icx -help}.)  The C/C++ compilers support clang-style
+LTO: it is not clear if the Fortran one does.
 
-Unresolved issue: all CPU times in e.g.@: @code{proc.time()} are reported
-as zero.
+@c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
+For some versions, including 2023.2.0, all CPU times in e.g.@:
+@code{proc.time()} are reported as zero.  If you see this, uncomment the
+@samp{INTEL_ICX_FIX} setting in @file{config.site} and re-build.
+
+@c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/stand.html
+The preferred Fortran standard for @command{ifx} can be set by one of
+@option{-std90}, @option{-std95}, @option{-std03}, @option{-std08} or
+@option{-std18} (and variants).  However, this is documented to only
+affect warnings on non-standard features: the default is no such
+warnings.
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
-@subsubsection `Classic' compilers
+@subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
 @command{ifort}.  They are identiifed by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
-Version 2021.9.0 (shipped as part of oneAPI 2023.1.0) was tested in July
-2023 using
+Version 2021.10.0 (shipped as part of oneAPI 2023.2.0) was tested in
+July 2023 using
 
 @example
 IP=/path/to/compilers/bin/intel64
@@ -5109,15 +5143,26 @@ CXX=$IP/icpc
 FC=$IP/ifort
 CFLAGS="-O3 -ip -fp-model precise"
 FFLAGS="-O3 -fp-model precise"
+FCFLAGS="-free -O3 -fp-model precise"
 CXXFLAGS="-O3  -fp-model precise"
 LDFLAGS="-L/path/to/compilers/compiler/lib/intel64_lin -L/usr/local/lib64"
 @end example
 @noindent
-but also segfaulted in the checks.
+but also segfaulted in the checks unless MKL was used.  (CPU timings
+work with this compiler.)
 
-There have been no other recent reports on the use of these compilers:
-the rest of this section is left in case it provides helpful hints for
-people using them while they are still available.
+To suppress endless warnings about deprecation, use
+
+@example
+CC="$IP/icc -diag-disable=10441"
+@end example
+
+@command{icpc} does not support C++23.
+
+@c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
+There have been only one other other recent report on the use of these
+compilers: the rest of this section is left in case it provides helpful
+hints for people using them while they are still available.
 
 Brian Ripley used version 9.0 of the compilers for @cputype{x86_64} on
 Fedora Core 5 with
@@ -6225,9 +6270,10 @@ with the @file{README} file in that directory.
 @cindex FreeBSD
 
 There have been few recent reports on FreeBSD: there is a `port' at
-@uref{https://svnweb.freebsd.org/ports/head/math/}.  Recent versions of
-FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
-`port' is configured to use GCC.
+@uref{https://svnweb.freebsd.org/ports/head/math/R}, currently last
+updated for @R{} 4.0.4.  Recent versions of FreeBSD use Clang and the
+@code{libc++} C++ headers and runtime, but the `port' has been
+configured to use GCC.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
@@ -6239,9 +6285,8 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
-the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
-developers.)
+@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/},
+currently updated for @R{} 4.2.1.
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin
@@ -6315,6 +6360,11 @@ If you are having trouble getting @R{} to work on your platform please
 feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
+
+One thing you might want to add for a new platform is the mapping of
+C/C++/Fortran calls to entry point names used for @command{R CMD check}.
+See @uref{https://svn.r-project.org/R-dev-web/trunk/sotools.txt} for how
+to do so.
 
 @node Function and variable index, Concept index, Platform notes, Top
 @unnumbered Function and variable index

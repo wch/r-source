@@ -35,8 +35,6 @@ dnchisq(.)
 pnchisq(.)
 qnchisq(.)
 rnchisq(.)
-print.anova.glm(.)
-print.anova.lm(.)
 reshapeWide(x, i, j, val, jnames = levels(j))
 reshapeLong(x, jvars,  ilev = row.names(x),
             jlev = names(x)[jvars], iname = "reshape.i",

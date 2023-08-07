@@ -382,7 +382,9 @@ cls <- c("raw", "logical", "integer", "numeric", "complex",
 names(cls) <- cls
 be <- baseenv()
 asF  <- lapply(cls, \(cl) be[[paste0("as.",cl)]] %||% be[[cl]])
-obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters, "numeric_version" = as.character(1:2), 1:2)))
+## objects of the respective class:
+obs  <- lapply(cls, \(cl) asF[[cl]](switch(cl, "difftime" = "2:1:0", "noquote" = letters,
+                                           "numeric_version" = as.character(1:2), 1:2)))
 asDF <- lapply(cls, \(cl) getVaW(be[[paste0("as.data.frame.", cl)]](obs[[cl]])))
 r <- local({ g <- as.data.frame.logical; f <- function(L=TRUE) g(L)
     getVaW(f()) })
@@ -734,6 +736,18 @@ stopifnot(is.list(d2), identical(unlist(unname(d2)), 1:3))
 ## gave Error .. sys.call(-1L)[[1L]] .. comparison (!=) is possible only ..
 
 
+## qqplot(x,y, *) confidence bands for unequal sized x,y, PR#18570:
+x <- (7:1)/8; y <- (1:63)/64
+r <- qqplot(x,y, plot.it=FALSE, conf.level = 0.90)
+r2<- qqplot(y,x, plot.it=FALSE, conf.level = 0.90)
+(d <- 64 * as.data.frame(r)[,3:4])
+stopifnot(identical(d, data.frame(lwr = c(NA, NA, NA, 6, 15, 24, 33),
+                                  upr = c(31, 40, 49, 58, NA, NA, NA))),
+          identical(8 * as.data.frame(r2[3:4]),
+                    data.frame(lwr = c(NA,NA,NA, 1:4 +0), upr = c(4:7 +0, NA,NA,NA))))
+## lower and upper confidence bands were nonsensical in R <= 4.3.1
+
+
 ## New <object> type {{partly experimental}}
 mkObj <- function(...) {
     ob <- asS3(getClass("S4")@prototype, complete=FALSE) # "hack"
@@ -757,6 +771,89 @@ stopifnot(exprs = {
 assertErrV(o2[ 1 ])
 assertErrV(o2[[1]])
 
+
+## kappa(), rcond() [& norm()] -- new features and several bug fixes, PR#18543:
+(m <- rbind(c(2, 8, 1),
+            c(6, 4, 3),
+            c(5, 7, 9)))
+## 1) kappa(z=<n-by-n>, norm="1", method="direct")` ignores lower triangle of z
+km1d <- kappa(m, norm = "1", method = "direct")
+all.equal(km1d, 7.6, tol=0) # 1.17e-16  {was wrongly 11.907 in R <= 4.3.1}
+## 2) kappa(z, norm="2", LINPACK=TRUE) silently returns estimate of the *1*-norm cond.nr.
+(km1 <- kappa(m, norm = "1")) # 4.651847 {unchanged}
+tools::assertWarning(verbose=TRUE, # now *warns*
+                     km2L <- kappa(m, norm="2", LINPACK=TRUE))
+## 3) kappa(z, norm="2", LINPACK=FALSE) throws an error
+tools::assertWarning(verbose=TRUE, # *same* warning (1-norm instead of 2-)
+                     km2La <- kappa(m, norm="2", LINPACK=FALSE))
+km2La
+## 4) kappa.qr(z) implicitly assumes nrow(z$qr) >= ncol(z$qr), not true in general
+(kqrm2 <- kappa(qr(cbind(m, m + 1))))
+## Error in .kappa_tri(R, ...) : triangular matrix should be square
+## 5) rcond(x=<n-by-n>, triangular=TRUE) silently ignores the lower (rather than upper)
+##                                      triangle of `x`, contradicting `help("rcond")`.
+## ==> Fixing help page; but *also* adding  uplo = "U"  argument
+all.equal(4/65, (rcTm <- rcond(m, triangular=TRUE)),         tol = 0) # {always}
+all.equal(9/182,(rcTL <- rcond(m, triangular=TRUE, uplo="L")), tol=0) # 1.4e-16
+##
+## New features, can use norm "M" or "F" for exact=TRUE via  norm(*, type=<norm>)
+(kM <- kappa(m, norm="M", exact = TRUE)) # 2.25     "M" is allowed type for norm()
+(kF <- kappa(m, norm="F", exact = TRUE)) # 6.261675 "F" is allowed type for norm()
+all.equal(6.261675485, kF, tol=0) # 2.81e-11
+stopifnot(exprs = {
+    all.equal(4.6518474224, km1)
+    km1 == kappa(m) # same computation
+    km1 == kappa(qr.R(qr(m))) # "
+    all.equal(km1d, 7.6, tol = 1e-15)
+    km1d == kappa(m, method = "direct") # identical computation {always ok}
+    identical(km2L, km1)
+    all.equal(km2La, 5.228678219)
+    all.equal(kqrm2, km1) # even identical
+    rcTm == rcond(m, triangular=TRUE, uplo = "U") # uplo="U" was default always
+    all.equal(4/65,  rcTm, tol = 1e-14)
+    all.equal(9/182, rcTL, tol = 1e-13)
+    1/rcond(m) == km1d # same underlying Lapack code
+    ## 6) kappa(z=<m-by-0>) throws bad errors due to 1:0 in kappa.qr():
+    kappa(m00 <- matrix(0, 0L, 0L)) == 0
+    kappa(m20 <- matrix(0, 2L, 0L)) == 0
+    ## 7) kappa(z=<0-by-0>, norm="1", method="direct", LINPACK=)
+    ##                     is an error for LINPACK=FALSE & returns Inf for L..=TRUE)
+    kappa(m00, norm = "1", method = "direct", LINPACK= TRUE) == 0
+    kappa(m00, norm = "1", method = "direct", LINPACK=FALSE) == 0
+    ## Fixed more problems (by MM):
+    rcond(  m00 ) == Inf # gave error
+    rcond(  m20 ) == Inf # gave error from infinite recursion
+    rcond(t(m20)) == Inf #  (ditto)
+    ## norm "M" or "F" for exact=TRUE:
+    2.25 == kM  # exactly
+    all.equal(6.261675485, kF, tol=1e-9)
+})
+## -- Complex matrices --------------------------------------------------
+(zm <- m + 1i*c(1,-(1:2))*(m/4))
+(kz1d <- kappa(zm, norm = "1", method = "direct"))
+(kz1  <- kappa(zm, norm = "1"))# meth = "qr"
+tools::assertWarning(verbose=TRUE, # now *warns* {gave *error* previously}
+                     kz2L <- kappa(zm, norm="2", LINPACK=TRUE))
+tools::assertWarning(verbose=TRUE, # *same* warning (1-norm instead of 2-)
+                     kz2La <- kappa(zm, norm="2", LINPACK=FALSE))
+kz2La
+## 4) kappa.qr(z) implicitly assumes nrow(z$qr) >= ncol(z$qr) ..
+(kzqr2 <- kappa(qr(cbind(zm, zm + 1)))) # gave Error .. matrix should be square
+all.equal(0.058131632, (rcTm <- rcond(zm, triangular=TRUE          )), tol=0) # 3.178e-9
+all.equal(0.047891278, (rcTL <- rcond(zm, triangular=TRUE, uplo="L")), tol=0) # 4.191e-9
+## New: can use norm "M" or "F" for exact=TRUE:
+(kz <- kappa(zm, norm="M", exact = TRUE)) # 2.440468
+(kF <- kappa(zm, norm="F", exact = TRUE)) # 6.448678
+stopifnot(exprs = {
+    all.equal(7.8370264, kz1d) # was wrong {wrongly using .kappa_tri()}
+    all.equal(6.6194289, kz1)  # {always ok}
+    all.equal(0.058131632, rcTm) #  "
+    all.equal(0.047891278, rcTL)
+    all.equal(6.82135883, kzqr2)
+    all.equal(2.44046765, kz, tol = 1e-9) # 1.8844e-10
+    all.equal(6.44867822, kF, tol = 4e-9) # 4.4193e-10
+})
+## norm() and  kappa(., exact=TRUE, ..)  now work ok in many more cases
 
 
 

@@ -399,6 +399,9 @@ AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 AM_CONDITIONAL(BUILD_LTO_ALL, [test "x${ltoall}" = xyes])
 AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
+## needed for some versions of icx, but we do not know which
+AC_SUBST(INTEL_ICX_FIX)
+
 AC_ARG_ENABLE([java],
 [AS_HELP_STRING([--enable-java],[enable Java @<:@yes@:>@])],
 [want_java="${enableval}"],
@@ -503,7 +506,7 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=0])
 
 AC_ARG_WITH([system-valgrind-headers],
-[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-system-valgrind-headers],[defunct])],
 [AC_MSG_WARN([--with-system-valgrind-headers is defunct])])
 
 AC_ARG_WITH([internal-tzcode],
@@ -512,12 +515,12 @@ AC_ARG_WITH([internal-tzcode],
 [use_internal_tzcode=default])
 
 AC_ARG_WITH([internal-towlower],
-[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS and Solaris@:>@])],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS@:>@])],
 [use_internal_towlower=${withval}],
 [use_internal_towlower=default])
 
 AC_ARG_WITH([internal-iswxxxxx],
-[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS, Solaris and AIX@:>@])],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS@:>@])],
 [use_internal_iswxxxxx=${withval}],
 [use_internal_iswxxxxx=default])
 
@@ -575,6 +578,14 @@ if test "x$use_static_cairo" = xdefault; then
       use_static_cairo=no
       ;;
   esac
+fi
+
+AC_ARG_WITH([libdeflate-compression],
+[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
+[use_libdeflate=${withval}],
+[use_libdeflate=no])
+if test "x$use_libdeflate" = xyes; then
+  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
 fi
 
 ### ** Precious variables.
@@ -2052,8 +2063,7 @@ AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi __cospi __sinpi __ta
 #endif])
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is SVID, redefined in arithmetic.c if present
-AC_CHECK_FUNCS(fseeko ftello matherr)
+AC_CHECK_FUNCS(fseeko ftello)
 
 ## POSIX functions
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
@@ -2566,6 +2576,17 @@ R_BZLIB
 
 ## LZMA headers and libraries from xz-utils
 R_LZMA
+
+## libdeflate headers and libraries.
+R_LIBDEFLATE
+
+AC_ARG_WITH([libdeflate-compression],
+[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
+[use_libdeflate=${withval}],
+[use_libdeflate=no])
+if test "x$use_libdeflate" = xyes; then
+  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
+fi
 
 ## PCRE[12] headers and libraries.
 R_PCRE
@@ -3085,6 +3106,9 @@ fi
 if test "x$ac_cv_header_curl_curl_h" = xyes; then
   R_SH_VAR_ADD(r_external_libs, [curl], [, ])
 fi
+if test "x$have_libdeflate" = xyes; then
+  R_SH_VAR_ADD(r_external_libs, [libdeflate], [, ])
+fi
 
 r_capabilities=
 r_no_capabilities=
@@ -3151,6 +3175,10 @@ if test "${use_strict_barrier}" = yes; then
 fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
+fi
+
+if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
+  AC_MSG_WARN([--with-libdeflate-compression requires libdeflate])
 fi
 
 AC_MSG_RESULT(

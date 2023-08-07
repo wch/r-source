@@ -1614,7 +1614,7 @@ recommended in
 @ref{Memory allocation, , Memory allocation, R-exts, Writing R Extensions}
 @end ifset
 @ifclear UseExternalXrefs
-`Writing R Extensions'
+section `Memory allocation' in the `Writing R Extensions' manual
 @end ifclear
 @findex R_alloc
 @findex R_Calloc
@@ -1845,7 +1845,7 @@ We make use of the visibility mechanisms discussed in
 @ref{Controlling visibility, , Controlling visibility, R-exts, Writing R Extensions},
 @end ifset
 @ifclear UseExternalXrefs
-section `Controlling Visibility' in `Writing R Extensions',
+section `Controlling Visibility' in the `Writing R Extensions' manual,
 @end ifclear
 C entry points not needed outside the main @R{} executable/dynamic
 library (and in particular in no package nor module) should be prefixed
@@ -2384,7 +2384,7 @@ in an @R{} package is described in
 @ref{Internationalization, , Internationalization, R-exts, Writing R Extensions},
 @end ifset
 @ifclear UseExternalXrefs
-`Writing R Extensions',
+section `Internationalization' in the `Writing R Extensions' manual,
 @end ifclear
 and the standard packages included with @R{} have (with an exception in
 @pkg{grDevices} for the menus of the @code{windows()} device) been
@@ -2512,9 +2512,15 @@ See file @file{po/README} for how to update the message templates and catalogs.
 * Help::                        
 @end menu
 
-The structure of a @emph{source} packages is described in @ref{Creating
-R packages, , Creating R packages, R-exts, Writing R Extensions}: this
-chapter is concerned with the structure of @emph{installed} packages.
+The structure of a @emph{source} packages is described in 
+@ifset UseExternalXrefs
+@ref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions}: 
+@end ifset
+@ifclear UseExternalXrefs
+section `Creating R packages' in the `Writing R Extensions' manual:
+@end ifclear
+this chapter is concerned with the structure of @emph{installed}
+packages. 
 
 An installed package has a top-level file @file{DESCRIPTION}, a copy of
 the file of that name in the package sources with a @samp{Built} field
@@ -4305,7 +4311,7 @@ See
 @ref{Writing portable packages, , Writing portable packages, R-exts, Writing R Extensions}
 @end ifset
 @ifclear UseExternalXrefs
-`Writing R Extensions'
+section `Writing portable packages' in the `Writing R Extensions' manual
 @end ifclear
 for the rationale of this check (and why even @option{-Werror} is
 unsafe).

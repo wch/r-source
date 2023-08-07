@@ -213,8 +213,15 @@ references.
 There are now a number of books which describe how to use @R{} for data
 analysis and statistics, and documentation for @Sl{}/@SPLUS{} can
 typically be used with @R{}, keeping the differences between the @Sl{}
-implementations in mind.  @xref{What documentation exists for R?, , ,
-R-FAQ, The R statistical system FAQ}.
+implementations in mind.  
+@ifset UseExternalXrefs
+@xref{What documentation exists for R?, , , R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `What documentation exists for R?' in the `R FAQ' manual for
+more information.
+@end ifclear
+
 
 @node R and statistics, R and the window system, Related software and documentation, Introduction and preliminaries
 @section R and statistics
@@ -488,8 +495,14 @@ You can find out how to do this by reading the manual entry for the
 
 Alternatively, the Emacs text editor provides more general support
 mechanisms (via @acronym{ESS}, @emph{Emacs Speaks Statistics}) for
-working interactively with @R{}.  @xref{R and Emacs, , , R-FAQ, The R
-statistical system FAQ}.
+working interactively with @R{}.  
+@ifset UseExternalXrefs
+@xref{R and Emacs, , , R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `R and Emacs' in the `R FAQ' manual for more information.
+@end ifclear
+
 
 @node Executing commands from or diverting output to a file, Data permanency and removing objects, Recall and correction of previous commands, Introduction and preliminaries
 @section Executing commands from or diverting output to a file
@@ -6426,9 +6439,14 @@ when a package is loaded are its contents available.  This is done both
 for efficiency (the full list would take more memory and would take
 longer to search than a subset), and to aid package developers, who are
 protected from name clashes with other code.  The process of developing
-packages is described in @ref{Creating R packages, , Creating R
-packages, R-exts, Writing R Extensions}.  Here, we will describe them
-from a user's point of view.
+packages is described in
+@ifset UseExternalXrefs
+@ref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Creating R packages' in the `Writing R Extensions' manual.
+@end ifclear
+Here, we will describe them from a user's point of view.
 
 To see which packages are installed at your site, issue the command
 
@@ -6491,8 +6509,15 @@ The standard (or @emph{base}) packages are considered part of the @R{}
 source code.  They contain the basic functions that allow @R{} to work,
 and the datasets and standard statistical and graphical functions that
 are described in this manual.  They should be automatically available in
-any @R{} installation.  @xref{Which add-on packages exist for R?, , R
-packages, R-FAQ, R FAQ}, for a complete list.
+any @R{} installation.  
+For a complete list, see
+@ifset UseExternalXrefs
+@ref{Which add-on packages exist for R?, , R packages, R-FAQ, R FAQ}.
+@end ifset
+@ifclear UseExternalXrefs
+section `Which add-on packages exist for R?' in the `R FAQ' manual.
+@end ifclear
+
 
 @node Contributed packages and CRAN, Namespaces, Standard packages, Packages
 @section Contributed packages and @acronym{CRAN}

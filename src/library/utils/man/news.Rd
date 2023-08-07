@@ -1,6 +1,6 @@
 % File src/library/utils/man/news.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{news}
@@ -18,7 +18,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
       browser = getOption("browser"), \dots)
 }
 \arguments{
-  \item{query}{an expression for selecting news entries}
+  \item{query}{an optional expression for selecting news entries.}
   \item{package}{a character string giving the name of an installed
     add-on package, or \code{"R"} or \code{"R-3"} or \code{"R-2"}.}
   \item{lib.loc}{a character vector of directory names of R libraries,
@@ -36,39 +36,72 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 }
 \value{
   A data frame inheriting from class \code{"news_db"}, with
+  character variables \code{Version}, \code{Category}, \code{Date},
+  \code{Text} and \code{HTML}, where the last two each contain the
+  entry texts read (in plain-text and HTML format, respectively), and
+  the other variables may be \code{NA} if they were missing or could not
+  be determined. The data frame has
   \code{\link{attributes}} \code{"package"} (and \code{"subset"} if the
   \code{query} lead to proper subsetting).
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
-  news since the 4.0.0 release of \R (corresponding to \R's top-level
-  \file{NEWS} file). For \code{"R-3"} or \code{"R-2"}. news for \R 3.x.y
+  news since the 4.0.0 release of \R, corresponding to the
+  \file{NEWS} file in the \code{R.home("doc")} directory.
+  \code{"R-3"} or \code{"R-2"} give the news for \R 3.x.y
   or \R 2.x.y respectively.  Otherwise, if the given add-on package can
   be found in the given libraries, it is attempted to read its news in
   structured form from files \file{inst/NEWS.Rd}, \file{NEWS.md} (since
   \R version 3.6.0, needs packages \CRANpkg{commonmark} and
   \CRANpkg{xml2} to be available), \file{NEWS} or \file{inst/NEWS} (in
-  that order).
+  that order). See section \sQuote{NEWS Formats} for the file
+  specifications.
 
+  Using \code{query}, one can select news entries from the db.  If
+  missing or \code{NULL}, the complete db is returned.  Otherwise,
+  \code{query} should be an expression involving (a subset of) the
+  variables \code{Version}, \code{Category}, \code{Date} and
+  \code{Text}, and when evaluated within the db returning a logical
+  vector with length the number of entries in the db.  The entries for
+  which evaluation gave \code{TRUE} are selected.  When evaluating,
+  \code{Version} and \code{Date} are coerced to
+  \code{\link{numeric_version}} and \code{\link{Date}} objects,
+  respectively, so that the comparison operators for these classes can
+  be employed.
+}
+
+\section{NEWS Formats}{
+\subsection{\file{inst/NEWS.Rd}}{
   File \file{inst/NEWS.Rd} should be an Rd file given the entries as Rd
   \verb{\itemize} lists, grouped according to version using
-  \verb{section} elements with names starting with a suitable prefix
-  (e.g.\sspace{}\dQuote{Changes in version}) followed by a space and the version
-  number, and optionally followed by a space and a parenthesized ISO
-  8601 (\%Y-\%m-\%d, see \code{\link{strptime}}) format date, and
-  possibly further grouped according to categories using
+  \verb{\section} elements. Section titles start with a suitable prefix
+  followed by a space and the version
+  number, and optionally end with a (parenthesized) ISO
+  8601 (\%Y-\%m-\%d, see \code{\link{strptime}}) format date
+  (optionally including a note), for example:\preformatted{
+    \section{Changes in version 2.0 (2020-02-02, <note>)}{
+      \itemize{
+        \item ....
+      }
+    }
+  }
+  The entries can be further grouped according to categories using
   \verb{\subsection} elements named as the categories.
-  At the very end of \verb{\section{..}}, the date may also be specified
-  as \verb{(\%Y-\%m-\%d, <note>)}, i.e., including parentheses.
+  The \file{NEWS.Rd} file is assumed to be UTF-8-encoded (but an
+  included \verb{\encoding} specification takes precedence).
+}
 
+\subsection{\file{NEWS.md}}{
   File \file{NEWS.md} should contain the news in Markdown (following the
   CommonMark (\url{https://commonmark.org/}) specification), with the
   primary heading level giving the version number after a prefix
   followed by a space, and optionally followed by a space and a
   parenthesized ISO 8601 format date.  Where available, secondary
-  heading are taken to indicate categories.  To accommodate for common
+  headings are taken to indicate categories.  To accommodate for common
   practice, news entries are only split down to the category level.
+}
 
+\subsection{\file{NEWS}}{
   The plain text \file{NEWS} files in add-on packages use a variety of
   different formats; the default news reader should be capable to
   extract individual news entries from a majority of packages from the
@@ -89,8 +122,6 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
     texts.
   }
 
-  Additional formats and readers may be supported in the future.
-
   Package \pkg{tools} provides an (internal) utility function
   \code{news2Rd} to convert plain text \file{NEWS} files to Rd.  For
   \file{NEWS} files in a format which can successfully be handled by the
@@ -101,24 +132,9 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   root directory.  Upon success, the \file{NEWS.Rd} file can further be
   improved and then be moved to the \file{inst} subdirectory of the
   package source directory.
+}
 
-  The news db built is a character data frame inheriting from
-  \code{"news_db"} with variables \code{Version}, \code{Category},
-  \code{Date} and \code{Text}, where the last contains the entry texts
-  read, and the other variables may be \code{NA} if they were missing or
-  could not be determined.
-
-  Using \code{query}, one can select news entries from the db.  If
-  missing or \code{NULL}, the complete db is returned.  Otherwise,
-  \code{query} should be an expression involving (a subset of) the
-  variables \code{Version}, \code{Category}, \code{Date} and
-  \code{Text}, and when evaluated within the db returning a logical
-  vector with length the number of entries in the db.  The entries for
-  which evaluation gave \code{TRUE} are selected.  When evaluating,
-  \code{Version} and \code{Date} are coerced to
-  \code{\link{numeric_version}} and \code{\link{Date}} objects,
-  respectively, so that the comparison operators for these classes can
-  be employed.
+  Additional formats and readers may be supported in the future.
 }
 
 \examples{
@@ -132,9 +148,7 @@ db <- news()
 db4 <- news(Version == "4.0.0" & grepl("^BUG", Category) & grepl("PR#", Text),
             db = db)
 nrow(db4)
-%% Maybe reinstate after release when number is stable
-%% \dontrun{stopifnot( !any(attr(db4,"bad")) && nrow(db4) == 19 )}
-
+\dontshow{stopifnot(is.null(attr(db4, "bad")) && nrow(db4) == 25 )}
 ## print db4 to show in an HTML browser.
 
 ## News from a date range ('Matrix' is there in a regular R installation):

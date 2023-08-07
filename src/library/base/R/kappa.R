@@ -1,7 +1,7 @@
 #  File src/library/base/R/kappa.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2020 The R Core Team
+#  Copyright (C) 1998-2023 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -19,79 +19,124 @@
 
 norm <- function(x, type = c("O", "I", "F", "M", "2")) {
     if(identical("2", type)) {
-	if(anyNA(x))
+        if(!length(x))
+            0
+        else if(anyNA(x))
 	    NA_real_
 	else
 	    svd(x, nu = 0L, nv = 0L)$d[1L]
 	## *faster* at least on some platforms {but possibly less accurate}:
 	##sqrt(eigen(crossprod(x), symmetric=TRUE, only.values=TRUE)$values[1L])
-    } else
+    }
+    else if(is.numeric(x) || is.logical(x))
 	.Internal(La_dlange(x, type))
+    else if(is.complex(x))
+	.Internal(La_zlange(x, type))
+    else stop(gettextf("invalid '%s': type \"%s\"", "x", typeof(x)), domain=NA)
 } ## and define it as implicitGeneric, so S4 methods are consistent
 
 kappa <- function(z, ...) UseMethod("kappa")
 
 ## Note that  all 4 Lapack version now work in the following
-rcond <- function(x, norm = c("O","I","1"), triangular = FALSE, ...) {
+rcond <- function(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", ...) {
     norm <- match.arg(norm)
-    stopifnot(is.matrix(x))
-    if({d <- dim(x); d[1L] != d[2L]})## non-square matrix -- use QR
-        return(rcond(qr.R(qr(if(d[1L] < d[2L]) t(x) else x)), norm=norm, ...))
-
-    ## x = square matrix :
+    stopifnot(length(d <- dim(x)) == 2L)
+    if(!all(d)) # 0-extent
+        return(1 / 0)
+    if(d[1L] != d[2L])## non-square matrix -- use QR
+        return(rcond(qr.R(qr(if(d[1L] < d[2L]) t(x) else x)), triangular=TRUE, uplo="U",
+                     norm=norm, ...))
+    ## else,  x = square n x n matrix, n >= 1 :
     if(is.complex(x)) {
-        if(triangular) .Internal(La_ztrcon(x, norm))
+	if(triangular) switch(uplo,
+			      "U" = .Internal(La_ztrcon (x, norm)),
+			      "L" = .Internal(La_ztrcon3(x, norm, "L")),
+			      stop("'uplo' must be \"U\" or \"L\""))
         else .Internal(La_zgecon(x, norm))
     } else {
-        if(triangular) .Internal(La_dtrcon(x, norm))
+	if(triangular) switch(uplo,
+			      "U" = .Internal(La_dtrcon (x, norm)),
+			      "L" = .Internal(La_dtrcon3(x, norm, "L")),
+			      stop("'uplo' must be \"U\" or \"L\""))
         else .Internal(La_dgecon(x, norm))
     }
 }
 
 kappa.default <- function(z, exact = FALSE,
-                          norm = NULL, method = c("qr", "direct"), ...)
+                          norm = NULL, method = c("qr", "direct"),
+                          inv_z = solve(z),
+                          triangular = FALSE, uplo = "U", ...)
 {
-    method <- match.arg(method)
     z <- as.matrix(z)
-    norm <- if(!is.null(norm)) match.arg(norm, c("2", "1","O", "I")) else "2"
-    if(exact && norm == "2") {
-        s <- svd(z, nu = 0, nv = 0)$d
-        max(s)/min(s[s > 0])
+    if(!all(d <- dim(z))) # 0-extent matrix
+        return(0)
+    nNorm <- is.null(norm)
+    if(exact) {
+	if(nNorm || norm == "2") {
+	    s <- svd(z, nu = 0L, nv = 0L)$d
+	    max(s)/min(s[s > 0])
+	}
+	else {
+	    if(nNorm) norm <- "1"
+	    norm(z, type=norm) * norm(inv_z, type=norm)
+	    ## was warning(.. "norm '%s' currently always uses exact = FALSE" ..)
+	}
     }
-    else { ## exact = FALSE or norm in "1", "O", "I"
-	if(exact)
-	    warning(gettextf("norm '%s' currently always uses exact = FALSE",
-			     norm))
-        d <- dim(z)
-        if(method == "qr" || d[1L] != d[2L])
-	    kappa.qr(qr(if(d[1L] < d[2L]) t(z) else z),
-		     exact = FALSE, norm = norm, ...)
-        else .kappa_tri(z, exact = FALSE, norm = norm, ...)
-    }
+    else if(match.arg(method) == "qr" || d[1L] != d[2L])
+        kappa.qr(qr(if(d[1L] < d[2L]) t(z) else z),
+                 exact = FALSE, norm = norm, ...)
+    ## else {exact=FALSE, method = "direct", square matrix} :
+    else if(triangular)
+        .kappa_tri(z, exact = FALSE, norm = norm, uplo = uplo, ...)
+    else if(is.complex(z))
+        1/.Internal(La_zgecon(z, if(nNorm) "1" else norm))
+    else
+        1/.Internal(La_dgecon(z, if(nNorm) "1" else norm))
 }
 
 kappa.lm <- function(z, ...) kappa.qr(z$qr, ...)
 
 kappa.qr <- function(z, ...)
 {
-    qr <- z$qr
-    R <- qr[1L:min(dim(qr)), , drop = FALSE]
-    R[lower.tri(R)] <- 0
+    stopifnot(length(d <- dim(qr <- z$qr)) == 2L)
+    R <- if(d[1L] > d[2L])
+	     qr[seq_len(d[2L]), , drop = FALSE]
+	 else if(d[1L] < d[2L])
+	     qr[, seq_len(d[1L]), drop = FALSE]
+	 else # square: n x n
+	     qr
+    R[lower.tri(R)] <- 0 # (for exact case)
     .kappa_tri(R, ...)
 }
 
-.kappa_tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
-{
+.kappa_tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, uplo = "U", ...)
+{  ##  ^^^ [tri]angular ==> use only triangular part, also for symmetric
+    if(!all(dim(z))) # 0-extent matrix: norm(<empty>) = 0  ==> norm(z) * norm(z^{-1}) = 0 * 0 = 0 :
+        return(0)
     if(exact) {
-        stopifnot(is.null(norm) || identical("2", norm))
-        kappa.default(z, exact = TRUE) ## using "2 - norm" !
+        if(is.null(norm) || identical("2", norm)) { # 2-norm : *not* assuming 'triangular'
+            s <- svd(z, nu = 0L, nv = 0L)$d
+            max(s)/min(s[s > 0]) ## <==> kappa.default(z, exact=TRUE)
+        }
+        else norm(z, type=norm) * norm(solve(z), type=norm) # == kappa.default(z, exact=TRUE, norm=norm,..)
     }
-    else { ## norm is "1" ("O") or "I(nf)" :
+    else {
         p <- as.integer(nrow(z))
-        if(is.na(p)) stop("invalid nrow(x)")
+        if(is.na(p)) stop("invalid nrow(z)")
 	if(p != ncol(z)) stop("triangular matrix should be square")
 	if(is.null(norm)) norm <- "1"
-	if(is.complex(z)) 1/.Internal(La_ztrcon(z, norm))
+	else if(norm == "2") {
+	    warning("using 1-norm approximation for approximate 2-norm")
+	    norm <- "1"
+	}
+	else if(!match(toupper(norm), c("1", "O", "I"), 0L)) {
+	    warning(gettextf("norm=\"%s\" not available here; using norm=\"1\"",
+			     norm), domain = NA)
+	    norm <- "1"
+	}
+	## norm is "1" ("O") or "I(nf)" :
+	if(is.complex(z))
+            1/.Internal(La_ztrcon3(z, norm, uplo))
 	else if(LINPACK) {
 	    if(norm == "I") # instead of "1" / "O"
 		z <- t(z)
@@ -99,8 +144,9 @@ kappa.qr <- function(z, ...)
 	    ## even though dtrco's doc also say to compute the
 	    ## 1-norm reciprocal condition
             storage.mode(z) <- "double"
-	    1 / .Fortran(.F_dtrco, z, p, p, k = double(1), double(p), 1L)$k
+	    1 / .Fortran(.F_dtrco, z, p, p, k = double(1), double(p),
+			 if(uplo == "U") 1L else 0L)$k
 	}
-	else 1/.Internal(La_dtrcon(z, norm))
+	else 1/.Internal(La_dtrcon3(z, norm, uplo))
     }
 }

@@ -66,28 +66,10 @@ ifneq "$(TEXI2ANY)" "missing"
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
-R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
-
-R-FAQ.html: R-FAQ.texi
-	@$(ECHO) "creating doc/manual/$@"
-	@LC_ALL=C $(TEXI2ANY) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
-
 .texi.info:
 	LC_ALL=C $(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 else
 .texi.html:
-	@$(ECHO) "texi2any is not available"
-
-R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "texi2any is not available"
-
-R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "texi2any is not available"
 
 .texi.info:
@@ -187,6 +169,8 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
+	  v=`sed -e 1d -e 's/.*: *\([^-]*\)-.*/\1/' $(SVN_REV)`; \
+	  $(ECHO) "@set FAQ_YEAR $${v}" >> $@; \
 	  rwv=$(shell ../../bin$(R_ARCH)/Rscript ../../src/gnuwin32/fixed/rwver.R); \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \

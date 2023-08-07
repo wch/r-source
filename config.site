@@ -455,6 +455,10 @@
 ## -fuse-ld=lld (with gcc or clang).
 ## LTO_LD=
 
+## To allow reduced optimization for src/unix/sys-unix.c with Intel icx
+##   -O0 and -O1 seem to work with 2023.2.0
+## INTEL_ICX_FIX=-O0
+
 ## Programs which configure will look for on the path
 ## AR
 ## GETWD=pwd

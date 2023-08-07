@@ -5,7 +5,18 @@
 \usage{
 \\x \\y \%\{\}
 
-foo(\var{x}, \var{y})
+foo(\var{x}, \var{y}, ...)
+}
+\arguments{
+  \item{
+    x,
+    y
+  }{
+    combined arguments, in multiple Rd lines
+
+    paragraph
+  }
+  \item{...}{description of \dots: \ldots}
 }
 \details{
   Escaped backslash \code{\\x}.

@@ -537,7 +537,8 @@ function(file = NULL, Rfile = "NEWS.rds")
 function(file)
 {
     macros <- initialRdMacros()
-    x <- prepare_Rd(parse_Rd(file, macros = macros), stages = "install")
+    x <- prepare_Rd(parse_Rd(file, macros = macros, encoding = "UTF-8"),
+                    stages = "install")
 
     db <- .extract_news_from_Rd(x)
 

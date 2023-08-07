@@ -992,15 +992,23 @@ embedFonts <- function(file, # The ps or pdf file to convert
 }
 
 ## 'file' is the pdf file to convert
-## 'glyphInfo' is RGlyphInfo 
+## 'glyphInfo' is RGlyphInfo (or list thereof)
 ## 'outfile' is the new pdf file
 ## 'options' are additional options to ghostscript
 embedGlyphs <- function(file, glyphInfo, outfile = file,
                         options = character()) {
     if (!is.character(file) || length(file) != 1L || !nzchar(file))
         stop("'file' must be a non-empty character string")
-    if (!inherits(glyphInfo, "RGlyphInfo"))
-        stop("Invalid 'glyphInfo'")
+    infoList <- FALSE
+    if (!inherits(glyphInfo, "RGlyphInfo")) {
+        if (is.list(glyphInfo)) {
+            if (!all(sapply(glyphInfo, inherits, "RGlyphInfo"))) {
+                stop("Invalid 'glyphInfo'")
+            } else {
+                infoList <- TRUE
+            }
+        }
+    }
     gsexe <- tools::find_gs_cmd()
     if(!nzchar(gsexe)) stop("GhostScript was not found")
     if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
@@ -1009,8 +1017,15 @@ embedGlyphs <- function(file, glyphInfo, outfile = file,
     tmpfile <- tempfile("Rembed")
     ## Generate cidfmap to relate font names to font files
     cidfmap <- file.path(tempdir(), "cidfmap")
-    fontfile <- unique(sapply(glyphInfo$fonts, function(x) x$file))
-    fontname <- unique(sapply(glyphInfo$fonts, function(x) x$PSname))
+    infoFiles <- function(info) unique(sapply(info$fonts, function(x) x$file))
+    infoNames <- function(info) unique(sapply(info$fonts, function(x) x$PSname))
+    if (infoList) {
+        fontfile <- unique(unlist(lapply(glyphInfo, infoFiles)))
+        fontname <- unique(unlist(lapply(glyphInfo, infoNames)))
+    } else {
+        fontfile <- infoFiles(glyphInfo)
+        fontname <- infoNames(glyphInfo)
+    }
     writeLines(paste0("/", fontname,
                       " << /FileType /TrueType /Path (", fontfile,
                       ") /SubfontID 0 /CSI [(Identity) 0] >>;"),
@@ -1021,13 +1036,13 @@ embedGlyphs <- function(file, glyphInfo, outfile = file,
               ## Make sure ghostscript can see the cidfmap
               paste0("-I", shQuote(tempdir())),
               options, shQuote(file))
+    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     ret <- system2(gsexe, args)
     if (ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)
     if (outfile != file)
         args[2] <- paste0(" -sOutputFile=", shQuote(outfile))
-    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }

@@ -1375,16 +1375,19 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
+    check_internal_specially <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
+                                         "FALSE"))
+
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
               Rd_db(dir = dir)
 
+    names(db) <- .Rd_get_names_from_Rd_db(db)
+
     db_aliases  <- lapply(db, .Rd_get_metadata, "alias")
     db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
-
-    db_names <- .Rd_get_names_from_Rd_db(db)
-    names(db) <- names(db_aliases) <- db_names
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
     ## We traditionally also use the usage "texts" for some sanity
@@ -1401,23 +1404,28 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
                   NA)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
-    if(!chkInternal &&
-       any(ind <- vapply(db_keywords, function(x) "internal" %in% x, NA))) {
-        ## exclude them
-        db         <- db        [!ind]
-        db_names   <- db_names  [!ind]
-        db_aliases <- db_aliases[!ind]
-    }
-
     db_argument_names <- lapply(db, .Rd_get_argument_names)
 
     bad_doc_objects <- list()
 
-    for(docObj in db_names) {
-
+    for(docObj in names(db)) {
+        ## <FIXME>
+        ## There really should be no \arguments or \value without a
+        ## \usage, so it should be "safe" to skip checking \arguments in
+        ## case of no \usage.
+        ## However, currently the above is not ensured.
+        ## Ideally, checkRd() should complain ...
         exprs <- db_usages[[docObj]]
         if(!length(exprs)) next
+        ## </FIXME>
 
+        ## If !chkInternal, exclude internal Rd objects from further
+        ## computations.  Otherwise, maybe treat them specially, and
+        ## ignore arguments in \usage but not in \arguments.
+        internal <- "internal" %in% db_keywords[[docObj]]
+        if(internal && !chkInternal) next
+        special <- (internal && check_internal_specially)
+        
         aliases <- db_aliases[[docObj]]
         arg_names_in_arg_list <- db_argument_names[[docObj]]
 
@@ -1475,7 +1483,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
         functions <- .transform_S4_method_markup(functions)
 
         ## Now analyze what we found.
-        arg_names_in_usage_missing_in_arg_list <-
+        arg_names_in_usage_missing_in_arg_list <- if(special) NULL else
             setdiff(arg_names_in_usage, arg_names_in_arg_list)
         arg_names_in_arg_list_missing_in_usage <-
             setdiff(arg_names_in_arg_list, arg_names_in_usage)
@@ -1513,6 +1521,11 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
+        ## <FIXME>
+        ## Why are we making the '-deprecated' exception?
+        ## Surely there should be aliases for such functions, and the
+        ## deprecated-Rd files in the base packages even say
+        ##   %------ PLEASE: put \alias{.} here for EACH !
         functions_not_in_aliases <-
             if(!any(endsWith(aliases, "-deprecated"))) {
                 ## Argh.  There are good reasons for keeping \S4method{}{}
@@ -1529,6 +1542,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
                 setdiff(functions, aliases)
             }
             else character()
+        ## </FIXME>
 
         if((length(arg_names_in_usage_missing_in_arg_list))
            || anyDuplicated(arg_names_in_arg_list)
@@ -7059,15 +7073,21 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
 
     pg <- dir(file.path(dir, "man"), pattern = "[.][Rr]d$", full.names = TRUE)
+    if(file.exists(nfile <- file.path(dir, "inst", "NEWS.Rd")))
+        pg <- c(nfile, pg)
     bad <- character()
     for (f in pg) {
         ## FIXME: this may not work for no/fake install if the expressions
         ## involve the package under check.
-        tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
-                                                 def_enc = def_enc,
-                                                 macros = macros,
-                                                 stages = c("build", "install", "render"))),
-                        error = identity)
+        tmp <- tryCatch(suppressMessages(
+            if (f == nfile)
+                checkRd(f, encoding = "UTF-8", def_enc = TRUE,
+                        stages = "install")
+            else
+                checkRd(f, encoding = enc, def_enc = def_enc,
+                        macros = macros,
+                        stages = c("build", "install", "render"))
+        ), error = identity)
         if(inherits(tmp, "error")) {
             bad <- c(bad, f)
             if(!silent) message(geterrmessage())
@@ -8283,7 +8303,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(capabilities("libcurl") &&
        !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DOI_CHECKS_",
                                          "FALSE"))) {
-        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir),
+        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir,
+                                                                 Rd = TRUE),
                                      parallel = check_urls_in_parallel),
                         error = identity)
         if(inherits(bad, "error") || NROW(bad))
@@ -9024,20 +9045,26 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
+    check_internal_specially <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
+                                         "FALSE"))
+
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
               Rd_db(dir = dir)
 
-    if(!chkInternal && ## Exclude internal objects from further computations.
-       any(ind <- vapply(lapply(db, .Rd_get_metadata, "keyword"),
-                         function(x) "internal" %in% x, NA))) {
-        db <- db[!ind]
-    }
-
     names(db) <- .Rd_get_names_from_Rd_db(db)
+
     for(nm in names(db)) {
         rd <- db[[nm]]
+
+        ## If !chkInternal, exclude internal Rd objects from further
+        ## computations.  Otherwise, maybe treat them specially, and
+        ## ignore arguments with no description.
+        internal <- "internal" %in% .Rd_get_metadata(rd, "keyword")
+        if(internal && !chkInternal) next
+        special <- (internal && check_internal_specially)
 
         ## \description is mandatory except for package overviews
         missing_description <-
@@ -9045,10 +9072,11 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             "\\description" %notin% RdTags(rd)
 
         ## Arguments with no description.
-        arg_table <- .Rd_get_argument_table(rd)
-        arguments_with_no_description <-
+        arguments_with_no_description <- if(special) NULL else {
+            arg_table <- .Rd_get_argument_table(rd)
             arg_table[grepl("^[[:space:]]*$", arg_table[, 2L]),
                       1L]
+        }
 
         ## Autogenerated Rd content which needs editing.
         offending_autogenerated_content <-
@@ -9756,60 +9784,45 @@ function(x)
 {
     out <- NULL
 
-    ## /data/rsync/PKGS/geoR/man/globalvar.Rd
+    ## prompt[Data]():
     s <- .Rd_get_section(x, "title")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(trimws(s) == "~~function to do ... ~~")
+        ## FIXME: some start with "~~ ", see FIXME in methods::promptMethods
+        if(startsWith(trimws(s), "A Capitalized Title"))
             out <- rbind(out, c("\\title", s))
     }
-    s <- .Rd_get_section(x, "description")
-    if(length(s)) {
-        s <- .Rd_deparse(s, tag = FALSE)
-        if(trimws(s) ==
-           "~~ A concise (1-5 lines) description of what the function does. ~~")
-            out <- rbind(out, c("\\description", s))
-    }
+
+    ## promptPackage(): (catch some dummy texts generated by R < 4.4.0)
     s <- .Rd_get_section(x, "details")
+    if(length(s) &&
+       any(grepl("~~ An overview of how to use the package",
+                 unlist(s[RdTags(s) == "TEXT"]), fixed = TRUE)))
+        out <- rbind(out, c("\\details", .Rd_deparse(s, tag = FALSE)))
+    s <- .Rd_get_section(x, "references")
+    if(length(s) &&
+       any(trimws(unlist(s[RdTags(s) == "TEXT"])) ==
+           "~~ Literature or other references for background information ~~"))
+        out <- rbind(out, c("\\references", .Rd_deparse(s, tag = FALSE)))
+    ## the following two also match Rcpp's manual-page-stub.Rd skeleton
+    s <- .Rd_get_section(x, "seealso")
     if(length(s)) {
-        s <- .Rd_deparse(s, tag = FALSE)
-        if(trimws(s) ==
-           "~~ If necessary, more details than the description above ~~")
-            out <- rbind(out, c("\\details", s))
+        s <- .Rd_deparse(.Rd_drop_comments(s), tag = FALSE)
+        if(grepl("Optional links to other man pages",
+                 s, fixed = TRUE))
+            out <- rbind(out, c("\\seealso", s))
+    }
+    s <- .Rd_get_section(x, "examples")
+    if(length(s)) {
+        s <- .Rd_deparse(.Rd_drop_comments(s), tag = FALSE)
+        if(grepl("Optional simple examples of the most important functions",
+                 s, fixed = TRUE))
+            out <- rbind(out, c("\\examples", s))
     }
 
-    ## /data/rsync/PKGS/mimR/man/plot.Rd:\author{ ~~who you are~~ }
-    s <- .Rd_get_section(x, "author")
-    if(length(s)) {
-        s <- .Rd_deparse(s, tag = FALSE)
-        if(trimws(s) == "~~who you are~~")
-            out <- rbind(out, c("\\author", s))
-    }
-    ## /data/rsync/PKGS/mimR/man/mim-class.Rd:\note{ ~~further notes~~ }
-    s <- .Rd_get_section(x, "note")
-    if(length(s)) {
-        s <- .Rd_deparse(s, tag = FALSE)
-        if(trimws(s) == "~~further notes~~")
-            out <- rbind(out, c("\\note", s))
-    }
-
-    tab <- .Rd_get_argument_table(x)
-    if(length(tab)) {
-        ## /data/rsync/PKGS/Rmpfr/man/mpfrArray.Rd:
-        ##   \item{precBits}{ ~~Describe \code{precBits} here~~ }
-        descriptions <- trimws(tab[, 2L])
-        ind <- (descriptions ==
-                sprintf("~~Describe \\code{%s} here~~", tab[, 1L]))
-        if(any(ind))
-            out <- rbind(out,
-                         cbind(sprintf("\\arguments, description of item '%s'",
-                                       tab[ind, 1L]),
-                               tab[ind, 2L]))
-    }
-
-    ## <NOTE>
-    ## Obviously, auto-generation does too much here, so maybe do not
-    ## include these in production check code ...
+    ## promptMethods():
+    ## <FIXME>
+    ## r50996 changed to produce commented descriptions, so this is obsolete
     tab <- .Rd_get_methods_description_table(x)
     if(length(tab)) {
         descriptions <- trimws(tab[, 2L])
@@ -9821,7 +9834,7 @@ function(x)
                                        tab[ind, 1L]),
                                tab[ind, 2L]))
     }
-    ## </NOTE>
+    ## </FIXME>
 
     if(config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_KEYWORDS_",
                                         "FALSE"))) {

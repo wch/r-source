@@ -2297,6 +2297,7 @@ add_dummies <- function(dir, Log)
                 if(length(grep(paste("^prepare.*Dropping empty section",
                                      "^checkRd: \\(-",
                                      "^  ", # continuation lines
+                                     "NEWS.Rd",
                                      sep = "|"),
                                out, invert = TRUE)))
                     warningLog(Log)

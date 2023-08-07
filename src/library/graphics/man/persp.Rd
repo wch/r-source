@@ -164,8 +164,8 @@ round(res, 3)
 # (2) Add to existing persp plot - using trans3d() :
 
 xE <- c(-10,10); xy <- expand.grid(xE, xE)
-points(trans3d(xy[,1], xy[,2], 6, pmat = res), col = 2, pch = 16)
-lines (trans3d(x, y = 10, z = 6 + sin(x), pmat = res), col = 3)
+points(trans3d(xy[,1], xy[,2], z = 6,          pmat = res), col = 2, pch = 16)
+lines (trans3d(x,      y = 10, z = 6 + sin(x), pmat = res), col = 3)
 
 phi <- seq(0, 2*pi, length.out = 201)
 r1 <- 7.725 # radius of 2nd maximum

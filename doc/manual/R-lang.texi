@@ -127,10 +127,22 @@ preferred usage.
 
 Some familiarity with @R{} is assumed.  This is not an introduction to
 @R{} but rather a programmers' reference manual.  Other manuals provide
-complementary information: in particular @ref{Preface, , , R-intro, An
-Introduction to R} provides an introduction to @R{} and @ref{System and
-foreign language interfaces, , , R-exts, Writing R Extensions} details
-how to extend @R{} using compiled code.
+complementary information: in particular 
+@ifset UseExternalXrefs
+@ref{Preface, , , R-intro, An Introduction to R} 
+@end ifset
+@ifclear UseExternalXrefs
+manual `An Introduction to R'
+@end ifclear
+provides an introduction to @R{} and 
+@ifset UseExternalXrefs
+@ref{System and foreign language interfaces, , , R-exts, Writing R Extensions}
+@end ifset
+@ifclear UseExternalXrefs
+section `System and foreign language interfaces' in the `Writing R
+Extensions' manual 
+@end ifclear
+details how to extend @R{} using compiled code.
 
 
 
@@ -2222,8 +2234,14 @@ if they want to, change the system level functions to functions that
 they find more appropriate.
 
 @R{} also provides facilities that make it easy to document any
-functions that you have created.  @xref{Writing R documentation, , ,
-R-exts, Writing R Extensions}.
+functions that you have created.  
+@ifset UseExternalXrefs
+@xref{Writing R documentation, , , R-exts, Writing R Extensions}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `Writing R documentation' in the `Writing R Extensions'
+manual.
+@end ifclear
 
 @menu
 * Syntax and examples::         
@@ -3867,9 +3885,15 @@ platform-independent way.
 @findex .Call
 @findex .External
 
-See @ref{System and foreign language interfaces, , , R-exts, Writing R
-Extensions} for the details of adding functionality to @R{} via compiled
-code.
+See
+@ifset UseExternalXrefs
+@ref{System and foreign language interfaces, , , R-exts, Writing R Extensions} 
+@end ifset
+@ifclear UseExternalXrefs
+section `System and foreign language interfaces' in the `Writing R
+Extensions' manual
+@end ifclear
+for the details of adding functionality to @R{} via compiled code.
 
 Functions @code{.C} and @code{.Fortran} provide a standard interface to
 compiled code that has been linked into @R{}, either at build time or
@@ -3887,7 +3911,13 @@ compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
 
 The @code{.Internal} and @code{.Primitive} interfaces are used to call
 @C{} code compiled into @R{} at build time.
+@ifset UseExternalXrefs
 @xref{.Internal vs .Primitive, , , R-ints, R Internals}.
+@end ifset
+@ifclear UseExternalXrefs
+See section `.Internal vs .Primitive' in the `R Internals' manual.
+@end ifclear
+
 
 
 @node Exception handling, Debugging, System and foreign language interfaces, Top

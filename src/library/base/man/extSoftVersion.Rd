@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2022 R Core Team
+% Copyright 2014-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -27,6 +27,8 @@ extSoftVersion()
   \item{zlib}{The version of \code{zlib} in use.}
   \item{bzlib}{The version of \code{bzlib} (from \command{bzip2}) in use.}
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
+  \item{libdeflate}{The version of \code{libdeflate} (if any otherwise
+    \code{""}) used when \R was built.}
   \item{PCRE}{The version of \code{PCRE} in use. PCRE1 has versions < 10.00,
   PCRE2 has versions >= 10.00.}
   \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}

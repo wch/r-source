@@ -3544,6 +3544,10 @@ extern int dladdr(void *addr, Dl_info *info);
 extern void *dlsym(void *handle, const char *symbol);
 #endif
 
+#ifdef HAVE_LIBDEFLATE
+# include <libdeflate.h>
+#endif
+
 /* extSoftVersion only detects versions of libraries that are available
    without loading any modules; libraries available via modules are
    treated individually (libcurlVersion(), La_version(), etc)
@@ -3552,8 +3556,8 @@ attribute_hidden SEXP
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 9));
-    SEXP nms = PROTECT(allocVector(STRSXP, 9));
+    SEXP ans = PROTECT(allocVector(STRSXP, 10));
+    SEXP nms = PROTECT(allocVector(STRSXP, 10));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
     char p[256];
@@ -3566,6 +3570,13 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     snprintf(p, 256, "%s", lzma_version_string());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("xz"));
+#ifdef HAVE_LIBDEFLATE
+    snprintf(p, 256, "%s", LIBDEFLATE_VERSION_STRING);
+    SET_STRING_ELT(ans, i, mkChar(p));
+#else
+    SET_STRING_ELT(ans, i, mkChar(""));
+#endif
+    SET_STRING_ELT(nms, i++, mkChar("libdeflate"));
 #ifdef HAVE_PCRE2
     pcre2_config(PCRE2_CONFIG_VERSION, p);
 #else

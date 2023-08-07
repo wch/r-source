@@ -58,46 +58,9 @@
 
 #include <errno.h>
 
+/* Override for matherr removed for R 4.4.0 */
 /* Intel compilers for Linux do have matherr, but they do not have the
    defines in math.h.  So we skip this for Intel */
-
-#if defined __INTEL_COMPILER || defined __INTEL_LLVM_COMPILER
-#undef HAVE_MATHERR
-#endif
-#ifdef HAVE_MATHERR
-
-/* Override the SVID matherr function:
-   the main difference here is not to print warnings.
-
-   This used to be common but was removed in glibc 2.27 having
-   previously been marked as obsolete.
-
-   macOS had it for x86_64 even in 11.0, but not for arm64.
- */
-#ifndef __cplusplus
-int matherr(struct exception *exc)
-{
-    switch (exc->type) {
-    case DOMAIN:
-    case SING:
-	errno = EDOM;
-	break;
-    case OVERFLOW:
-	errno = ERANGE;
-	break;
-    case UNDERFLOW:
-	exc->retval = 0.0;
-	break;
-	/*
-	   There are cases TLOSS and PLOSS which are ignored here.
-	   According to the Solaris man page, there are for
-	   trigonometric algorithms and not needed for good ones.
-	 */
-    }
-    return 1;
-}
-#endif
-#endif
 
 typedef union
 {

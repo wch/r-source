@@ -13,6 +13,8 @@ pkg = tools
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
+R_SYSTEM_ABI = "windows,gcc,g++,gfortran,gfortran"
+
 ## We first use mkdesc2 (with date) to install the DESCRIPTION, then re-install
 all:
 	@$(ECHO) "building package '$(pkg)'"
@@ -34,6 +36,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R $(top_srcdir)/share/licenses/
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
 	  _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  R_SYSTEM_ABI=$(R_SYSTEM_ABI) \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Rsimple: mkR mkRsimple
@@ -42,6 +45,7 @@ Rlazy: mkR mkRsimple
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
+	  R_SYSTEM_ABI=$(R_SYSTEM_ABI) \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Rlazycomp: mkR mkRsimple mklazycomp

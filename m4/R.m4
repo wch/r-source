@@ -209,6 +209,8 @@ else
   HAVE_TEXI2ANY_V7_TRUE=
 fi
 AC_SUBST(HAVE_TEXI2ANY_V7_TRUE)
+AC_SUBST([TEXI2ANY_VERSION_MAJ], [${r_cv_prog_texi2any_version_maj}])
+AC_SUBST([TEXI2ANY_VERSION_MIN], [${r_cv_prog_texi2any_version_min}])
 ])# R_PROG_TEXI2ANY
 
 ## _R_PROG_TEXI2ANY_VERSION
@@ -3467,6 +3469,27 @@ else
 fi
 ])# R_BZLIB
 
+## R_LIBDEFLATE
+## ------------
+## Try finding libdeflate library and headers.
+## We check that both are installed,
+AC_DEFUN([R_LIBDEFLATE],
+[
+  AC_CHECK_HEADERS(libdeflate.h, [have_libdeflate=yes], [have_libdeflate=no])
+if test "${have_libdeflate}" = yes; then
+  AC_CHECK_LIB(deflate, libdeflate_alloc_compressor, [have_libdeflate=yes], [have_libdeflate=no])
+fi
+if test "x${r_cv_have_libdeflate}" = xno; then
+  have_libdeflate=no
+fi
+if test "x${have_libdeflate}" = xyes; then
+  AC_MSG_RESULT([yes])
+  LIBS="-ldeflate ${LIBS}"
+  AC_DEFINE(HAVE_LIBDEFLATE, 1,
+            [Define to 1 if you have libdeflate headers and library.])
+fi
+])# R_LIBDEFLATE
+
 ## R_TRE
 ## -------
 ## Try finding tre library and headers.
@@ -4313,11 +4336,12 @@ case "${FC}" in
     ;;
   ## This means Classic flang
   *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},ClassicFlang,ClassicFlang"
     ;;
-  ## we do not consider ifort as it will be disconinued in 2023.
-  *ifx)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},ifx,ifx"
+  ## We need not consider ifort as it will be discontinued in 2023,
+  ## but it seems to have the same runtime as ifx.
+  *ifx|*ifort)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},intel,intel"
     ;;
   *)
     case "${host_os}" in

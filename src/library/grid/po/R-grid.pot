@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.2.0\n"
+"Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr ""
@@ -21,6 +22,18 @@ msgid "'labels' and 'at' locations must have same length"
 msgstr ""
 
 msgid "logical 'label' supplied of length 0"
+msgstr ""
+
+msgid "Invalid coordinates"
+msgstr ""
+
+msgid "Invalid grob coordinates"
+msgstr ""
+
+msgid "Invalid gTree coordinates"
+msgstr ""
+
+msgid "Closed must not be a missing value"
 msgstr ""
 
 msgid "end points must not be identical"
@@ -90,6 +103,9 @@ msgid "mixture of missing and non-missing values for %s"
 msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
+msgstr ""
+
+msgid "'fill' gpar list components must all be patterns"
 msgstr ""
 
 msgid "invalid 'linemitre' value"
@@ -269,9 +285,6 @@ msgstr ""
 msgid "Invalid destination"
 msgstr ""
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -326,6 +339,9 @@ msgstr ""
 msgid "invalid 'listing'"
 msgstr ""
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr ""
 
@@ -350,7 +366,10 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid "grob drawing produces more shapes than grob coords\n(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -431,10 +450,40 @@ msgstr ""
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr ""
 
+msgid "Invalid glyph info"
+msgstr ""
+
+msgid "'x' and 'y' must have length > 0"
+msgstr ""
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr ""
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+msgid "Unknown anchor; using left justification"
+msgstr ""
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr ""
 
 msgid "invalid 'axis' or 'type'"
+msgstr ""
+
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr ""
+
+msgid "'w' and 'h' must be units and 'device' must be logical"
 msgstr ""
 
 msgid "Not a unit object"

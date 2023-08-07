@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2021  The R Core Team
+ *  Copyright (C) 1998--2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ static Rboolean R_de_up;
 #define BOXW(x) (min(((x<100 && DE->nboxchars == 0) ? DE->boxw[x] : DE->box_w), DE->p->w - DE->boxw[0] - 2*DE->bwidth - 2))
 
 #define FIELDWIDTH 10
-#define BUFSIZE 200
+#define BUFSIZE  1024
 
 typedef struct {
     dataeditor de;
@@ -147,6 +147,32 @@ int mb_char_len(const char *buf, int clength)
     for(i = 0; i <= clength; i += mb_len)
 	mb_len = Mbrtowc(NULL, buf+i, R_MB_CUR_MAX, &mb_st);
     return mb_len;
+}
+
+static char *strip_invalid_suffix(char *s)
+{
+    /* see mbcsTruncateToValid() in util.c */
+    if (!s || *s == '\0')
+	return s;
+
+    mbstate_t mb_st;
+    size_t slen = strlen(s); /* at least 1 */
+    size_t goodlen = 0;
+
+    mbs_init(&mb_st);
+
+    while(goodlen < slen) {
+	size_t res;
+	res = mbrtowc(NULL, s + goodlen, slen - goodlen, &mb_st);
+	if (res == (size_t) -1 || res == (size_t) -2) {
+	    /* strip off all remaining characters */
+	    for(;goodlen < slen; goodlen++)
+		s[goodlen] = '\0';
+	    return s;
+	}
+	goodlen += res;
+    }
+    return s;
 }
 
 static void moveback(DEstruct DE)
@@ -798,11 +824,22 @@ static SEXP processEscapes(SEXP x)
     PROTECT( expr = lang5(s_gsub, ScalarLogical(1), pattern, replacement, x) );
     SET_TAG( CDR(expr), install("perl") );
 
-    PROTECT( newval = eval(expr, R_BaseEnv) );
+    newval = R_tryEval(expr, R_BaseEnv, NULL);
+    if (!newval) {
+	/* gsub will throw error for invalid string */
+	UNPROTECT(3);
+	return R_NilValue;
+    }
+    PROTECT( newval );
     PROTECT( pattern = mkString("(^.*$)") );
     PROTECT( replacement = mkString("\"\\1\"") );
     PROTECT( expr = lang4(install("sub"), pattern, replacement, newval) );
-    PROTECT( newval = eval(expr, R_BaseEnv) );
+    newval = R_tryEval(expr, R_BaseEnv, NULL);
+    if (!newval) {
+	UNPROTECT(7);
+	return R_NilValue;
+    }
+    PROTECT( newval );
     PROTECT( expr = R_ParseVector( newval, 1, &status, R_NilValue) );
     
     /* We only handle the first entry. If this were available more generally,
@@ -831,6 +868,7 @@ static void closerect(DEstruct DE)
     if (DE->CellModified || DE->CellEditable) {
 	if (DE->CellEditable) {
 	    strncpy(DE->buf, GA_gettext(DE->celledit), BUFSIZE-1);
+	    strip_invalid_suffix(DE->buf);
 	    DE->clength = strlen(DE->buf);
 	    hide(DE->celledit);
 	    del(DE->celledit);
@@ -904,6 +942,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen,
     fw = min(BUFSIZE, (bw - 8)/(DE->p->fw));
     bufw = min(fw, buflen);
     strncpy(buf, ibuf, bufw);
+    strip_invalid_suffix(buf);
     buf[bufw] = '\0';
     if (buflen > fw) {
 	if(left) {
@@ -1451,6 +1490,7 @@ static Rboolean initwin(DEstruct DE, const char *title)
     show(DE->de); /* a precaution, as PD reports transparent windows */
     BringToTop(DE->de, 0);
     DE->buf[BUFSIZE-1] = '\0';
+    strip_invalid_suffix(DE->buf);
     return FALSE;
 }
 
@@ -1471,6 +1511,7 @@ static void popupclose(control c)
 
     buf[BUFSIZE-1] = '\0';
     strncpy(buf, GA_gettext(varname), BUFSIZE-1);
+    strip_invalid_suffix(buf);
     if(!strlen(buf)) {
 	askok(G_("column names cannot be blank"));
 	return;
@@ -1549,6 +1590,7 @@ static void de_paste(control c)
     closerect(DE);
     if ( clipboardhastext() &&
 	 !getstringfromclipboard(DE->buf, BUFSIZE-1) ) {
+	strip_invalid_suffix(DE->buf);
 	/* set current cell to first line of clipboard */
 	DE->CellModified = TRUE;
 	if ((p = strchr(DE->buf, '\n'))) *p = '\0';
@@ -1843,7 +1885,8 @@ SEXP Win_dataviewer(SEXP args)
     int i, nprotect;
     RCNTXT cntxt;
     DEstruct DE = (DEstruct) malloc(sizeof(destruct));
-
+    if (!DE)
+	error(G_("dataentry: internal memory problem"));
     DE->isEditor = FALSE;
     nprotect = 0;/* count the PROTECT()s */
     DE->work = CAR(args);

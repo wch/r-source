@@ -41,9 +41,6 @@ SED=${SED-'@SED@'}
 ## Prefer a tar that can automagically read compressed archives
 TAR=${TAR-'@TAR@'}
 
-## System and compiler types.
-R_SYSTEM_ABI='@R_SYSTEM_ABI@'
-
 ## Strip shared objects and static libraries.
 R_STRIP_SHARED_LIB=${R_STRIP_SHARED_LIB-'@STRIP_SHARED_LIB@'}
 R_STRIP_STATIC_LIB=${R_STRIP_STATIC_LIB-'@STRIP_STATIC_LIB@'}

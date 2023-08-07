@@ -23,7 +23,8 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css Rfaq.css quot.sed
+	ISBN Rman.css quot.sed \
+	texi2epub.sh texi2html.sh
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -34,7 +35,9 @@ OBJECTS_MOBI = $(SOURCES_TEXI:.texi=.mobi)
 
 MAKEINDEX = @MAKEINDEX@
 TEXI2ANY = @TEXI2ANY@
-TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css @HAVE_TEXI2ANY_V7_TRUE@ --set-customization-variable SHOW_TITLE=true
+TEXI2ANY_VERSION_MAJ = @TEXI2ANY_VERSION_MAJ@
+TEXI2ANY_VERSION_MIN = @TEXI2ANY_VERSION_MIN@
+TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
 TEXI2TEXT = $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)
@@ -46,6 +49,9 @@ PDFLATEX = @PDFLATEX@
 ## texi2dvi script, and as it uses pdftex if that was detected.
 TEXI2DVI0 = @TEXI2DVI@
 PDFTEX = @PDFTEX@
+
+R_ZIPCMD = @R_ZIPCMD@
+R_UNZIPCMD = @R_UNZIPCMD@
 
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
@@ -91,7 +97,8 @@ docs: html
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  SED="$(SED)" $(SHELL) $(srcdir)/texi2html.sh \
+	    $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $@; \
 	  rm -f $@.tmp; \
 	fi
 
@@ -116,12 +123,20 @@ docs: html
 ## It seems ebook-convert converts the directory, 
 ## so we populate a temporary dir.
 .texi.epub:
-	@mkdir -p tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
-	@rm -R tmp
+	@$(ECHO) "creating doc/manual/$@"
+	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
+	  mkdir -p tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
+	  rm -f $@.tmp; \
+	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"; \
+	  rm -R tmp; \
+	else \
+	  SED="$(SED)" TEXI2ANY="$(TEXI2ANY)" \
+	  ZIPCMD="$(R_ZIPCMD)" UNZIPCMD="$(R_UNZIPCMD)" \
+	  $(SHELL) $(srcdir)/texi2epub.sh \
+	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
+	fi
 
 .texi.mobi:
 	@mkdir -p tmp
@@ -132,14 +147,22 @@ docs: html
 	@rm -R tmp
 
 R-intro.epub: R-intro.texi
-	@mkdir -p tmp
-	@cp -R images tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
-  "W.N. Venables, D.M. Smith, R Core Team"
-	@rm -R tmp
+	@$(ECHO) "creating doc/manual/$@"
+	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
+	  mkdir -p tmp; \
+	  cp -R images tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
+	  rm -f $@.tmp; \
+	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
+	    "W.N. Venables, D.M. Smith, R Core Team"; \
+	  rm -R tmp; \
+	else \
+	  SED="$(SED)" TEXI2ANY="$(TEXI2ANY)" \
+	  ZIPCMD="$(R_ZIPCMD)" UNZIPCMD="$(R_UNZIPCMD)" \
+	  $(SHELL) $(srcdir)/texi2epub.sh \
+	  $(TEXI2ANY_VERSION_MAJ) $(TEXI2ANY_VERSION_MIN) $< $@; \
+	fi
 
 R-intro.mobi: R-intro.texi
 	@mkdir -p tmp
@@ -150,29 +173,6 @@ R-intro.mobi: R-intro.texi
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
   "W.N. Venables, D.M. Smith, R Core Team"
 	@rm -R tmp
-
-R-admin.html: $(srcdir)/R-admin.texi
-	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
-	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
-	else \
-	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@;\
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
-	  rm -f $@.tmp; \
-	fi
-
-R-FAQ.html: $(srcdir)/R-FAQ.texi
-	@if test -z "$(TEXI2ANY)"; then \
-	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
-	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
-	else \
-	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2ANY) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
-	  rm -f $@.tmp; \
-	fi
-
 
 version.tex: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	@$(ECHO) "creating $(subdir)/$@"
@@ -207,6 +207,8 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
+	  v=`sed -e 1d -e 's/.*: *\([^-]*\)-.*/\1/' $(SVN_REV)`; \
+	  $(ECHO) "@set FAQ_YEAR $${v}" >> $@; \
 	  rwv=`$(R_EXE) -f $(top_srcdir)/src/gnuwin32/fixed/rwver.R`; \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
@@ -216,13 +218,13 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
-R-admin.html: $(texiincludes) $(srcdir)/Rman.css
-R-data.html: $(texiincludes) $(srcdir)/Rman.css
-R-exts.html: $(texiincludes) $(srcdir)/Rman.css
-R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css
-R-ints.html: $(texiincludes) $(srcdir)/Rman.css
-R-lang.html: $(texiincludes) $(srcdir)/Rman.css
-R-FAQ.html: $(srcdir)/Rfaq.css
+R-admin.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-data.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-FAQ.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
@@ -435,7 +437,7 @@ ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 	  $(TEXI2TEXT) $(srcdir)/resources.texi -o $@; \
 	fi
 
-${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi
+${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi $(texiincludes)
 	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/FAQ will be missing"; \

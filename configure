@@ -935,6 +935,8 @@ R_RD4PDF
 KPSEWHICH
 TEXI2DVICMD
 TEXI2DVI
+TEXI2ANY_VERSION_MIN
+TEXI2ANY_VERSION_MAJ
 HAVE_TEXI2ANY_V7_TRUE
 INSTALL_INFO
 TEXI2ANY
@@ -989,6 +991,7 @@ BYTE_COMPILE_PACKAGES_FALSE
 BYTE_COMPILE_PACKAGES_TRUE
 WANT_JAVA_FALSE
 WANT_JAVA_TRUE
+INTEL_ICX_FIX
 BUILD_LTO_CHECK_FALSE
 BUILD_LTO_CHECK_TRUE
 BUILD_LTO_ALL_FALSE
@@ -1111,6 +1114,7 @@ with_recommended_packages
 with_ICU
 enable_byte_compiled_packages
 with_static_cairo
+with_libdeflate_compression
 enable_static
 enable_shared
 with_pic
@@ -1909,20 +1913,22 @@ Optional Packages:
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
   --with-system-valgrind-headers
-                          use system valgrind headers (if available) [yes]
+                          defunct
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
                           use internal code for towlower/upper [no, yes on
-                          macOS and Solaris]
+                          macOS]
   --with-internal-iswxxxxx
-                          use internal iswprint etc. [no, yes on macOS,
-                          Solaris and AIX]
+                          use internal iswprint etc. [no, yes on macOS]
   --with-internal-wcwidth use internal wcwidth [yes]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]
   --with-static-cairo     allow for the use of static cairo libraries [no, yes
                           on macOS]
+  --with-libdeflate-compression
+                          use libdeflate (if available) to (de)compress
+                          lazy-loaded R objects [no]
   --with-pic[=PKGS]       (libtool) try to use only PIC/non-PIC objects
                           [default=use both]
   --with-aix-soname=aix|svr4|both
@@ -4675,6 +4681,9 @@ else
 fi
 
 
+## needed for some versions of icx, but we do not know which
+
+
 # Check whether --enable-java was given.
 if test ${enable_java+y}
 then :
@@ -5047,6 +5056,21 @@ if test "x$use_static_cairo" = xdefault; then
       use_static_cairo=no
       ;;
   esac
+fi
+
+
+# Check whether --with-libdeflate-compression was given.
+if test ${with_libdeflate_compression+y}
+then :
+  withval=$with_libdeflate_compression; use_libdeflate=${withval}
+else $as_nop
+  use_libdeflate=no
+fi
+
+if test "x$use_libdeflate" = xyes; then
+
+printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h
+
 fi
 
 ### ** Precious variables.
@@ -5942,6 +5966,10 @@ if test "${r_cv_prog_texi2any_v7}" != yes; then
 else
   HAVE_TEXI2ANY_V7_TRUE=
 fi
+
+TEXI2ANY_VERSION_MAJ=${r_cv_prog_texi2any_version_maj}
+
+TEXI2ANY_VERSION_MIN=${r_cv_prog_texi2any_version_min}
 
 
 for ac_prog in ${TEXI2DVI} texi2dvi
@@ -27101,7 +27129,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27106: \"$ac_link\") >&5
+(eval echo $as_me:27134: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27177,7 +27205,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27182: \"$ac_link\") >&5
+(eval echo $as_me:27210: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29212,11 +29240,12 @@ case "${FC}" in
     ;;
   ## This means Classic flang
   *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},ClassicFlang,ClassicFlang"
     ;;
-  ## we do not consider ifort as it will be disconinued in 2023.
-  *ifx)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},ifx,ifx"
+  ## We need not consider ifort as it will be discontinued in 2023,
+  ## but it seems to have the same runtime as ifx.
+  *ifx|*ifort)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},intel,intel"
     ;;
   *)
     case "${host_os}" in
@@ -43437,7 +43466,6 @@ fi
 done
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is SVID, redefined in arithmetic.c if present
 ac_fn_c_check_func "$LINENO" "fseeko" "ac_cv_func_fseeko"
 if test "x$ac_cv_func_fseeko" = xyes
 then :
@@ -43448,12 +43476,6 @@ ac_fn_c_check_func "$LINENO" "ftello" "ac_cv_func_ftello"
 if test "x$ac_cv_func_ftello" = xyes
 then :
   printf "%s\n" "#define HAVE_FTELLO 1" >>confdefs.h
-
-fi
-ac_fn_c_check_func "$LINENO" "matherr" "ac_cv_func_matherr"
-if test "x$ac_cv_func_matherr" = xyes
-then :
-  printf "%s\n" "#define HAVE_MATHERR 1" >>confdefs.h
 
 fi
 
@@ -51293,6 +51315,100 @@ else
   as_fn_error $? "\"liblzma library and headers are required\"" "$LINENO" 5
 fi
 
+
+## libdeflate headers and libraries.
+
+         for ac_header in libdeflate.h
+do :
+  ac_fn_c_check_header_compile "$LINENO" "libdeflate.h" "ac_cv_header_libdeflate_h" "$ac_includes_default"
+if test "x$ac_cv_header_libdeflate_h" = xyes
+then :
+  printf "%s\n" "#define HAVE_LIBDEFLATE_H 1" >>confdefs.h
+ have_libdeflate=yes
+else $as_nop
+  have_libdeflate=no
+fi
+
+done
+if test "${have_libdeflate}" = yes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libdeflate_alloc_compressor in -ldeflate" >&5
+printf %s "checking for libdeflate_alloc_compressor in -ldeflate... " >&6; }
+if test ${ac_cv_lib_deflate_libdeflate_alloc_compressor+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ldeflate  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char libdeflate_alloc_compressor ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main (void)
+{
+return libdeflate_alloc_compressor ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_deflate_libdeflate_alloc_compressor=yes
+else $as_nop
+  ac_cv_lib_deflate_libdeflate_alloc_compressor=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_deflate_libdeflate_alloc_compressor" >&5
+printf "%s\n" "$ac_cv_lib_deflate_libdeflate_alloc_compressor" >&6; }
+if test "x$ac_cv_lib_deflate_libdeflate_alloc_compressor" = xyes
+then :
+  have_libdeflate=yes
+else $as_nop
+  have_libdeflate=no
+fi
+
+fi
+if test "x${r_cv_have_libdeflate}" = xno; then
+  have_libdeflate=no
+fi
+if test "x${have_libdeflate}" = xyes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+  LIBS="-ldeflate ${LIBS}"
+
+printf "%s\n" "#define HAVE_LIBDEFLATE 1" >>confdefs.h
+
+fi
+
+
+
+# Check whether --with-libdeflate-compression was given.
+if test ${with_libdeflate_compression+y}
+then :
+  withval=$with_libdeflate_compression; use_libdeflate=${withval}
+else $as_nop
+  use_libdeflate=no
+fi
+
+if test "x$use_libdeflate" = xyes; then
+
+printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h
+
+fi
 
 ## PCRE[12] headers and libraries.
 have_pcre2=no
@@ -61569,6 +61685,15 @@ else
   r_external_libs="${r_external_libs}${separator}curl"
 fi
 fi
+if test "x$have_libdeflate" = xyes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="libdeflate"
+else
+  r_external_libs="${r_external_libs}${separator}libdeflate"
+fi
+fi
 
 r_capabilities=
 r_no_capabilities=
@@ -61779,6 +61904,11 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}static HTML"
 fi
+fi
+
+if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: --with-libdeflate-compression requires libdeflate" >&5
+printf "%s\n" "$as_me: WARNING: --with-libdeflate-compression requires libdeflate" >&2;}
 fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:

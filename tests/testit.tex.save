@@ -6,9 +6,23 @@
 \begin{verbatim}
 \x \y %{}
 
-foo(x, y)
+foo(x, y, ...)
 \end{verbatim}
 \end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{
+x,
+y
+}] 
+combined arguments, in multiple Rd lines
+
+paragraph
+
+\item[\code{...}] description of \dots: \ldots
+\end{ldescription}
+\end{Arguments}
 %
 \begin{Details}
 Escaped backslash \code{\bsl{}x}.

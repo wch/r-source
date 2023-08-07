@@ -22,8 +22,26 @@ function processMathHTML() {
 
 <pre><code class='language-R'>\x \y %{}
 
-foo(<var>x</var>, <var>y</var>)
+foo(<var>x</var>, <var>y</var>, ...)
 </code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="testit_:_x">x</code>, <code id="testit_:_y">y</code></td>
+<td>
+
+<p>combined arguments, in multiple Rd lines
+</p>
+<p>paragraph
+</p>
+</td></tr>
+<tr><td><code id="testit_:_...">...</code></td>
+<td>
+<p>description of ...: ...</p>
+</td></tr>
+</table>
 
 
 <h3>Details</h3>

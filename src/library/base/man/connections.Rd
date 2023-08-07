@@ -302,9 +302,11 @@ socketTimeout(socket, timeout = -1)
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
 
-  \code{isIncomplete} returns a logical value, whether the last read
-  attempt was blocked, or for an output text connection whether there is
-  unflushed output.
+  \code{isIncomplete} returns a logical value, whether the last read attempt
+  from a non-blocking connection provided no data (currently no data from a
+  socket or an unterminated line in \code{\link{readLines}}), or for an
+  output text connection whether there is unflushed output. See example
+  below.
 
   \code{socketTimeout} returns the old timeout value of a socket connection. 
 }

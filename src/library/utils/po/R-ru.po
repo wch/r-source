@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2020-08-28 17:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -33,6 +33,12 @@ msgstr "для функции %s из пакета %s нет документации"
 
 msgid "document not found"
 msgstr "документ не найден"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "Поисковый запрос должен быть послан в %s"
@@ -197,8 +203,8 @@ msgstr "индекс за границами"
 msgid "%s should be one of %s"
 msgstr "%s должен быть одним из %s"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "аргумент '%s' устарел; вместо него используйте %s."
+msgid "To cite package %s in publications use:"
+msgstr "Чтобы процитировать пакет %s в публикации, используйте:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "BibTeX запись для пользователей LaTeX"
@@ -210,14 +216,8 @@ msgstr ""
 "Выбрасываю неправильную запись %d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "в файле DESCRIPTION пакета %s нет поля date"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "не могу определить год для %s из файла DESCRIPTION пакета"
-
-msgid "To cite package %s in publications use:"
-msgstr "Чтобы процитировать пакет %s в публикации, используйте:"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr "ВНИМАНИЕ: Эта информация для цитирования создана из файла DESCRIPTION пакета и, возможно, требует редактирования, см. %s."
@@ -228,14 +228,9 @@ msgstr "'FUN' должен быть функцией или NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "пока не могу работать с методами S4"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package' должен быть текстовой строкой или NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "файлы данных перемещены из пакета 'base' в пакет 'datasets'"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "файлы данных перемещены из пакета 'stats' в пакет 'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "индекс данных пакета %s неправильный и будет пропущен"
@@ -379,8 +374,16 @@ msgstr "'form' должен быть двусторонней формулой"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' должен быть двусторонней формулой с одним термином на каждой стороне"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "неправильный аргумент 'socket'"
+
+#, fuzzy
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
 msgstr "неправильный 'n' - должен иметь хотя бы один не-пропущенный элемент, но таких нет."
+
+msgid "invalid 'n' - must be numeric, possibly NA."
+msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr "неправильный 'n' - должен быть длиной 1 в случае если dim(x) является NULL, но он %d"
@@ -465,7 +468,8 @@ msgstr "Отменено пользователем"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Не могу соединиться с CRAN, чтобы проверить версию R."
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "аргумент %s должен быть одной текстовой строкой"
 
 msgid "incorrect field specification"
@@ -511,11 +515,9 @@ msgstr "Если браузер, запущенный '%s', уже работает, он *не* перезагрузился, и В
 msgid "Otherwise, be patient ..."
 msgstr "Если нет, ждите..."
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'url' должен быть непустой текстовой строкой"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' должен быть непустой текстовой строкой"
 
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
@@ -540,6 +542,10 @@ msgstr "не могу обновить HTML-индекс пакетов"
 
 msgid "done"
 msgstr "готово"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file' должен быть текстовой строкой строка или соединением"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() нельзя использовать неинтерактивно"
@@ -694,6 +700,12 @@ msgstr "не могу установить хранилища неинтерактивно"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "неправильныая options(\"pkgType\"); должна быть текстовой строкой"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ","
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
 
@@ -712,6 +724,10 @@ msgid ""
 msgstr ""
 "Не знаю, в какой элемент 'lib' устанавливать зависимости\n"
 "пропускаю зависимости"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip' должен быть одной текстовой строкой"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "тип 'binary' на этой платформе не поддерживается"
@@ -783,12 +799,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "files: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "таймауты для параллельной инсталляции требуют команду 'timeout'"
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "скачивание пакета %s не удалось"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"установка одного или более пакетов завершилась с ошибкой,\n"
+"  возможно %s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "установка одного или более пакетов завершилась с ошибкой,\n"
 "  возможно %s"
@@ -828,7 +858,7 @@ msgid "Created file named %s."
 msgstr "Создан файл с именем %s."
 
 msgid "Edit the file and move it to the appropriate directory."
-msgstr "Редактируется файл и перемещается в положенную папку."
+msgstr "Отредактируйте файл и поместите его в подходящую папку."
 
 msgid "cannot determine import name"
 msgstr "не могу определить имя, которое можно включить"
@@ -1143,16 +1173,8 @@ msgstr "добавление имен колонок к файлу"
 msgid "attempt to set '%s' ignored"
 msgstr "попытка установить '%s' пропущена"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip' должен быть одной текстовой строкой"
-
-#, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files' должен быть текстовым вектором, определяющим один или несколько путей к файлам"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "'url' должен быть непустой текстовой строкой"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "не могу найти программу для открытия 'mailto:' URI: возвращаюсь к 'method=\"none\"'"
@@ -1183,6 +1205,10 @@ msgstr "'wget' с ненулевым статусом выхода"
 
 msgid "'curl' call had nonzero exit status"
 msgstr "'curl' с ненулевым статусом выхода"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "неправильный формат"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
@@ -1249,13 +1275,11 @@ msgstr "не могу скопировать временную установку из %s в %s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Можно устанавливать только файлы '*.zip' и '*.tar.gz'."
 
-#, fuzzy
 msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' -- Windows-специфичный"
+msgstr "'memory.size()' больше не поддерживается"
 
-#, fuzzy
 msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' -- Windows-специфичный"
+msgstr "'memory.limit()' больше не поддерживается"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() нельзя использовать неинтерактивно"
@@ -1268,6 +1292,13 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d Sweave-файл с базовым именем %s найден"
 msgstr[1] "%d Sweave-файла с базовым именем %s найдены"
 msgstr[2] "%d Sweave-файлов с базовым именем %s найдены"
+
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "Файл вывода:"
+msgstr[1] "Файл вывода:"
+msgstr[2] "Файл вывода:"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1311,6 +1342,13 @@ msgstr[0] "объект '%s' не найден"
 msgstr[1] "объекты '%s' не найдены"
 msgstr[2] "объекты '%s' не найдены"
 
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "пакет '%s' -- это базовый пакет, он не будет установлен"
+msgstr[1] "пакет '%s' -- это базовый пакеты, они не будут установлены"
+msgstr[2] "пакет '%s' -- это базовый пакеты, они не будут установлены"
+
 msgid ""
 "Removing package from %s\n"
 "(as %s is unspecified)"
@@ -1343,12 +1381,11 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#, fuzzy
 msgid "package %s is not available %s"
 msgid_plural "packages %s are not available %s"
 msgstr[0] "пакет '%s' недоступен (%s)"
-msgstr[1] "пакета %s недоступны (%s)"
-msgstr[2] "пакетов %s недоступно (%s)"
+msgstr[1] "пакеты %s недоступны (%s)"
+msgstr[2] "пакеты %s недоступны (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1438,6 +1475,24 @@ msgstr[0] "Неправильные римский номер: %s"
 msgstr[1] "Неправильные римские номера: %s"
 msgstr[2] "Неправильные римские номера: %s"
 
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "аргумент '%s' устарел; вместо него используйте %s."
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "в файле DESCRIPTION пакета %s нет поля date"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "файлы данных перемещены из пакета 'base' в пакет 'datasets'"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "файлы данных перемещены из пакета 'stats' в пакет 'datasets'"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser' должен быть непустой текстовой строкой"
+
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "аргумент 'zip' должен быть непустой текстовой строкой"
+
 #~ msgid "bad argument"
 #~ msgstr "неправильный аргумент"
 
@@ -1455,9 +1510,6 @@ msgstr[2] "Неправильные римские номера: %s"
 
 #~ msgid "no download method found"
 #~ msgstr "не найдено метода скачивания"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 #~ msgstr "type == \"both\" нельзя использовать если задан 'available' или 'contriburl'"
@@ -1487,7 +1539,6 @@ msgstr[2] "Неправильные римские номера: %s"
 #~ msgid "at least one field has to be specified"
 #~ msgstr "по крайней мере одно поле надо определить"
 
-#, fuzzy
 #~ msgid "classes of 'name' will be discarded"
 #~ msgstr "класс(ы) у \"name' будут пропущены"
 
@@ -1636,7 +1687,6 @@ msgstr[2] "Неправильные римские номера: %s"
 #~ msgid "method is just applicable to 'bibentry' objects"
 #~ msgstr "метод подходит только для объектов 'bibentry'"
 
-#, fuzzy
 #~ msgid "Enhanced authors specification provides no authors."
 #~ msgstr "Улучшенный перечень авторов не содержит ни одного автора."
 

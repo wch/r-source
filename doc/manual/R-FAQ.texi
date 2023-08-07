@@ -4,10 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2023
-@set FAQ_DATE @value{FAQ_YEAR}-04-05
-@set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
+@documentencoding UTF-8
 @c %**end of header
 
 @dircategory Programming
@@ -17,16 +15,11 @@
 
 @finalout
 
-@macro SPLUS{}
-@sc{S-Plus}
-@end macro
+@include R-defs.texi
+@include version.texi
 
 @macro CRAN{}
 @acronym{CRAN}
-@end macro
-
-@macro HTML{}
-@acronym{HTML}
 @end macro
 
 @macro FORTRAN{}
@@ -41,26 +34,13 @@ FORTRAN
 @acronym{XSL}
 @end macro
 
-@macro pkg {p}
-@strong{\p\}
-@end macro
-
-@macro CRANpkg {p}
-@url{https://CRAN.R-project.org/package=\p\, @strong{\p\}}
-@end macro
-
 @macro doi {d}
 doi:@tie{}@url{https://doi.org/\d\, \d\}
-@end macro
-
-@macro Rcopyright{year}
-Copyright @copyright{} \year\--@value{FAQ_YEAR} R Core Team
 @end macro
 
 @titlepage
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
-@subtitle Version @value{FAQ_VERSION}
 @author Kurt Hornik
 @author and the R Core Team
 @end titlepage
@@ -69,20 +49,10 @@ Copyright @copyright{} \year\--@value{FAQ_YEAR} R Core Team
 @c We do not really see this in info, but in plain text output.
 R FAQ                            @*
 Frequently Asked Questions on R  @*
-Version @value{FAQ_VERSION}      @*
 Kurt Hornik and the R Core Team  @*
 
 @sp 2
 @end ifinfo
-
-@ifhtml
-@html
-<h2>Frequently Asked Questions on R</h2>
-<h3 style="text-align: center;">Version @value{FAQ_VERSION}</h3>
-<h3 style="text-align: center;">Kurt Hornik and the R Core Team</h3>
-<hr>
-@end html
-@end ifhtml
 
 @c @ifnothtml
 @contents
@@ -91,6 +61,16 @@ Kurt Hornik and the R Core Team  @*
 @ifnottex
 @node Top, Introduction, (dir), (dir)
 @top R FAQ
+@c @ifhtml
+@c @html
+@c <h2>Frequently Asked Questions on R</h2>
+@c <h3 style="text-align: center;">Kurt Hornik and the R Core Team</h3>
+@c <hr/>
+@c @end html
+@c @end ifhtml
+
+This document contains answers to some of the most frequently asked
+questions about R.
 @end ifnottex
 
 @menu
@@ -108,9 +88,6 @@ Kurt Hornik and the R Core Team  @*
 
 @node Introduction, R Basics, Top, Top
 @chapter Introduction
-
-This document contains answers to some of the most frequently asked
-questions about R.
 
 @menu
 * Legalese::
@@ -150,23 +127,12 @@ available at
 The latest version of this document is always available from
 
 @display
-@url{https://CRAN.R-project.org/doc/FAQ/}
+@url{https://CRAN.R-project.org/doc/manuals/}
 @end display
 
 From there, you can obtain versions converted to
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
-@acronym{ASCII} text},
-@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
-info}, @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
-@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
-@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
-as well as the @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
-Texinfo source} used for creating all these formats using the
-@acronym{GNU} Texinfo system.
-
-You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
-subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
+@url{https://CRAN.R-project.org/doc/manuals/R-FAQ.html,, @HTML{}} and
+@url{https://CRAN.R-project.org/doc/manuals/R-FAQ.pdf,, PDF}.
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
@@ -181,7 +147,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik and R Core Team
   author        = @{Kurt Hornik and the R Core Team@},
   title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{FAQ_YEAR}@},
-  url           = @{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
+  url           = @{https://CRAN.R-project.org/doc/manuals/R-FAQ.html@}
 @}
 @end group
 @end example
@@ -494,43 +460,12 @@ Apple installer packages at @uref{https://mac.R-project.org}.
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
 
-@c Linux binaries as of 2014-07-27:
-@c Providers:
-@c   Debian: Johannes Ranke <jranke@uni-bremen.de>
-@c   Ubuntu: Michael Rutter <mar36@psu.edu>
-@c
-@c debian
-@c   current:
-@c     wheezy-cran3     i386/amd64/armel        3.1.1
-@c     squeeze-cran3    i386/amd64              3.1.1
-@c   archive:
-@c     squeeze-cran     i386/amd64              2.15.3
-@c     lenny-cran       i386/amd64              2.14.1
-@c     etch-cran        i386/amd64              2.11.0
-@c   
-@c ubuntu
-@c   Trusty Tahr (14.04)
-@c   Saucy Salamander (13.10)
-@c   Quantal Quetzal (12.10)
-@c   Precise Pangolin (12.04; LTS)
-@c   Lucid Lynx (10.04; LTS)
-
 Binary distributions of R are available on many Unix-like OSes: only
 some can be mentioned here so check your OS's search facilities to see
 if one is available for yours.
 
-The @file{bin/linux} directory of a @CRAN{} site contains the following
-packages.
-
-@need 1000
-@quotation
-@multitable {Red Hat} {i386/x86_64} {lucid/precise/trusty} {Martyn Plummer}
-@headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64  @tab squeeze/wheezy       @tab Johannes Ranke
-@item          @tab armel       @tab wheezy               @tab Johannes Ranke
-@item Ubuntu   @tab i386/amd64  @tab lucid/precise/trusty @tab Michael Rutter
-@end multitable
-@end quotation
+The @file{bin/linux} directory of a @CRAN{} site contains R packages for
+Debian and Ubuntu.
 
 Debian packages, maintained by Dirk Eddelbuettel, have long been part of
 the Debian distribution, and can be accessed through APT, the Debian
@@ -544,7 +479,9 @@ available from @CRAN{}.  See
 @url{https://CRAN.R-project.org/bin/linux/debian/index.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
-provided by Michael Rutter.
+provided by Michael Rutter, see
+@url{https://CRAN.R-project.org/bin/linux/ubuntu/index.html} for
+instructions.
 
 R binaries for Fedora, maintained by Tom ``Spot'' Callaway, are provided
 as part of the Fedora distribution and can be accessed through
@@ -1919,8 +1856,8 @@ structure, the configure and cleanup mechanisms, and on automated
 package checking and building.
 @end ifclear
 @ifset UseExternalXrefs
-@xref{Creating R packages, , Creating R packages, R-exts, Writing R
-Extensions}, for details.
+@xref{Creating R packages, , Creating R packages, R-exts, Writing R Extensions},
+for details.
 @end ifset
 
 R version 1.3.0 has added the function @code{package.skeleton()} which

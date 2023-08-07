@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,17 @@ extendrange <- function(x, r = range(x, na.rm = TRUE), f = 0.05)
     r + f * diff(r)
 }
 
-trans3d <- function(x,y,z, pmat) {
+trans3d <- function(x,y,z, pmat, continuous = FALSE, verbose = TRUE) {
     tr <- cbind(x,y,z,1, deparse.level=0L) %*% pmat
+    if(continuous && (n <- nrow(tr)) >= 2) {
+        st4 <- sign(tr[,4])
+        if((s1 <- st4[1]) != st4[n]) { # have a sign change ==> cut off at sign switch
+            if((last <- (which.min(st4 == s1) - 1L)) >= 1L) { # needed? -- safe programming!
+                if(verbose) message(sprintf("points cut off after point[%d]", last))
+                tr <- tr[seq_len(last), , drop=FALSE]
+            }
+        }
+    }
     list(x = tr[,1]/tr[,4],
 	 y = tr[,2]/tr[,4])
 }

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-01-13 r83608) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-08-01 r84816) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1057,6 +1057,20 @@ Female Yes                89  17 202 131  94  24
 +     )
 > par(op)
 > 
+> plot(1:64)
+> gr <- grid() # now *invisibly* returns the grid "at" locations
+> str(gr)
+List of 2
+ $ atx: num [1:7] 0 10 20 30 40 50 60
+ $ aty: num [1:7] 0 10 20 30 40 50 60
+> stopifnot(length(gr) == 2, identical(gr[[1]], gr[[2]]),
++           gr[["atx"]] == 10*(0:6))
+> 
+> ## In log-scale plots :
+> plot(8:270, log="xy") ; grid() # at (1, 10, 100); if preferring "all" grid lines:
+> plot(8:270, log="xy") ; grid(equilogs = FALSE) -> grll
+> stopifnot(identical(grll, list(atx = c(1, 2, 5, 10, 20, 50, 100, 200),
++                                aty = c(         10, 20, 50, 100, 200))))
 > 
 > 
 > 
@@ -1913,8 +1927,8 @@ armed.forces
 > # (2) Add to existing persp plot - using trans3d() :
 > 
 > xE <- c(-10,10); xy <- expand.grid(xE, xE)
-> points(trans3d(xy[,1], xy[,2], 6, pmat = res), col = 2, pch = 16)
-> lines (trans3d(x, y = 10, z = 6 + sin(x), pmat = res), col = 3)
+> points(trans3d(xy[,1], xy[,2], z = 6,          pmat = res), col = 2, pch = 16)
+> lines (trans3d(x,      y = 10, z = 6 + sin(x), pmat = res), col = 3)
 > 
 > phi <- seq(0, 2*pi, length.out = 201)
 > r1 <- 7.725 # radius of 2nd maximum
