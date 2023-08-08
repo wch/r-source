@@ -189,7 +189,7 @@ distclean: clean
 maintainer-clean: distclean
 
 ifneq "$(TEXI2ANY)" "missing"
-../FAQ: R-FAQ.texi
+../FAQ: R-FAQ.texi $(texiincludes)
 	@$(TEXI2TEXT) -o $@ $<
 ../RESOURCES: resources.texi
 	@$(TEXI2TEXT) -o $@ $<
