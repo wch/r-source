@@ -467,18 +467,18 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/Rman.css
 	@echo "making rw-FAQ.html"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_html.texi
+	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ tmp_html.texi
+	@rm -f tmp_html.texi
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_plain.texi
+	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp_plain.texi
+	@rm -f tmp_plain.texi
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2PDF) tmp.texi
-	@mv tmp.pdf $@
-	@rm tmp.*
+	@$(SED) $(SEDVER) $< > tmp_pdf.texi
+	@$(TEXI2PDF) tmp_pdf.texi
+	@mv tmp_pdf.pdf $@
+	@rm tmp_pdf.*

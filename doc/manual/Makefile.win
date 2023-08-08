@@ -217,15 +217,15 @@ FAQ: rw-FAQ ../html/rw-FAQ.html
 ifneq "$(TEXI2ANY)" "missing"
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@echo "making rw-FAQ.html"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_html.texi
+	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ tmp_html.texi
+	@rm -f tmp_html.texi
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_plain.texi
+	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp_plain.texi
+	@rm -f tmp_plain.texi
 else
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@$(ECHO) "texi2any is not available"
@@ -235,8 +235,8 @@ rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 endif
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2DVI) --pdf tmp.texi
-	@$(TEXI2DVI) --pdf tmp.texi
-	@mv tmp.pdf $@
-	@rm tmp.*
+	@$(SED) $(SEDVER) $< > tmp_pdf.texi
+	@$(TEXI2DVI) --pdf tmp_pdf.texi
+	@$(TEXI2DVI) --pdf tmp_pdf.texi
+	@mv tmp_pdf.pdf $@
+	@rm tmp_pdf.*
