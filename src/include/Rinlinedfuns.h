@@ -471,9 +471,9 @@ SEXP STRING_ELT(SEXP x, R_xlen_t i);
 #endif
 
 #ifdef INLINE_PROTECT
-extern int R_PPStackSize;
-extern int R_PPStackTop;
-extern SEXP* R_PPStack;
+LibExtern int R_PPStackSize;
+LibExtern int R_PPStackTop;
+LibExtern SEXP* R_PPStack;
 
 INLINE_FUN SEXP protect(SEXP s)
 {
@@ -991,7 +991,7 @@ INLINE_FUN Rboolean isNumber(SEXP s)
 /* As from R 2.4.0 we check that the value is allowed. */
 INLINE_FUN SEXP ScalarLogical(int x)
 {
-    extern SEXP R_LogicalNAValue, R_TrueValue, R_FalseValue;
+    LibExtern SEXP R_LogicalNAValue, R_TrueValue, R_FalseValue;
     if (x == NA_LOGICAL) return R_LogicalNAValue;
     else if (x != 0) return R_TrueValue;
     else return R_FalseValue;
