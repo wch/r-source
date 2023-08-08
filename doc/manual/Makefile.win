@@ -63,31 +63,14 @@ ifneq "$(TEXI2ANY)" "missing"
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
 	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
-
-R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
-
-R-FAQ.html: R-FAQ.texi
-	@$(ECHO) "creating doc/manual/$@"
-	@LC_ALL=C $(TEXI2ANY) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
+	@droptitle68=`"$(TEXI2ANY)" --version | grep -q -F "6.8" && $(ECHO) '/<h1 class="settitle"/d'`; \
+	$(SED) -f $(srcdir)/quot.sed -e "$${droptitle68}" $@.tmp > $@
 	@rm -f $@.tmp
 
 .texi.info:
 	LC_ALL=C $(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 else
 .texi.html:
-	@$(ECHO) "texi2any is not available"
-
-R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "texi2any is not available"
-
-R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "texi2any is not available"
 
 .texi.info:
