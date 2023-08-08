@@ -169,8 +169,6 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
-	  v=`sed -e 1d -e 's/.*: *\([^-]*\)-.*/\1/' $(SVN_REV)`; \
-	  $(ECHO) "@set FAQ_YEAR $${v}" >> $@; \
 	  rwv=$(shell ../../bin$(R_ARCH)/Rscript ../../src/gnuwin32/fixed/rwver.R); \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
@@ -189,7 +187,7 @@ distclean: clean
 maintainer-clean: distclean
 
 ifneq "$(TEXI2ANY)" "missing"
-../FAQ: R-FAQ.texi $(texiincludes)
+../FAQ: R-FAQ.texi $(srcdir)/R-defs.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../RESOURCES: resources.texi
 	@$(TEXI2TEXT) -o $@ $<
