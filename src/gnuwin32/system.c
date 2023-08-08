@@ -877,7 +877,11 @@ void R_SetWin32(Rstart Rp)
     char *gccversion = (char *)malloc(30);
     if (!gccversion)
 	R_Suicide("Allocation error");
+#ifdef __clang__
+    snprintf(gccversion, 30, "R_COMPILED_BY=clang %d.%d.%d", __clang_major__, __clang_minor__, __clang_patchlevel__);
+#else
     snprintf(gccversion, 30, "R_COMPILED_BY=gcc %d.%d.%d", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+#endif
     putenv(gccversion);
     /* no free here: storage remains in use */
 
