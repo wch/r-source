@@ -976,10 +976,10 @@ files, so there is negligible difference.
 @subsection OpenMP Support
 
 By default @command{configure} searches for suitable flags@footnote{for
-example, @option{-fopenmp}, @option{-xopenmp} or @option{-qopenmp}.
-This includes for @command{clang} and the Intel and Oracle compilers.}
-for OpenMP support for the C, C++ (default standard) and Fortran
-compilers.
+example, @option{-fopenmp}, @option{-fiopenmp}, @option{-xopenmp} or
+@option{-qopenmp}.  This includes for @command{clang} and the Intel and
+Oracle compilers.}  for OpenMP support for the C, C++ (default standard)
+and Fortran compilers.
 
 Only the C result is currently used for @R{} itself, and only if
 @code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
@@ -5124,6 +5124,19 @@ The preferred Fortran standard for @command{ifx} can be set by one of
 @option{-std18} (and variants).  However, this is documented to only
 affect warnings on non-standard features: the default is no such
 warnings.
+
+Warning to package maintainers: the Intel Fortran compilers interpret
+comments intended for Visual Fortran@footnote{as the compiler has been
+known on Windows.} like
+@c from package tseriesentropy 0.6-0
+@example
+!DEC$ ATTRIBUTES DLLEXPORT,C,REFERENCE,ALIAS:'kdenestmlcvb' :: kdenestmlcvb
+@end example
+@noindent
+The @code{DLLEXPORT} gives a warning but the remainder silently
+generates incorrectly named entry points.  Such comment lines need to be
+removed from code for use with @R{} (even if using Intel Fortran on
+Windows).
 
 @node `Classic compilers',  , Intel compilers, Intel compilers
 @subsubsection `Classic' Intel compilers
