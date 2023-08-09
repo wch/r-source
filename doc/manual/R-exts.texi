@@ -3609,7 +3609,7 @@ setting environment variables @w{@env{_R_CHECK_*_}} as described in
 @ref{Tools, , Tools, R-ints, R Internals}:
 @end ifset
 @ifclear UseExternalXrefs
-`R Internals':
+section `Tools' in the `R Internals' manual:
 @end ifclear
 a set of these customizations similar to those used by @acronym{CRAN}
 can be selected by the option @option{--as-cran} (which works best if
@@ -5038,6 +5038,10 @@ personal @file{Makevars} files.
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
+@ifclear UseExternalXrefs
+See section `Customizing package compilation' in the `R Installation and
+Administration' manual for more information.
+@end ifclear
 
 Portable C++ code needs to follow both the 2011, 2014 and 2017 standards
 or to specify C+11/14/17/20 where available (which is not the case on
@@ -5348,9 +5352,9 @@ does not mention any options, and what calling it without options does
 is platform-dependent.  Stripping a @file{.so} file could even prevent
 it being dynamically loaded into @R{} on an untested platform.
 
-@command{ld -S} invokes @command{strip --strip-debug} on GNU
-@command{ld} but is not portable: in particular on Solaris it did
-something completely different and took an argument.
+@command{ld -S} invokes @command{strip --strip-debug} for GNU
+@command{ld} (and similarly on macOS) but is not portable: in particular
+on Solaris it did something completely different and took an argument.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
@@ -8797,8 +8801,7 @@ copying.
 Profiling compiled code is highly system-specific, but this section
 contains some hints gleaned from various @R{} users.  Some methods need
 to be different for a compiled executable and for dynamic/shared
-libraries/objects as used by @R{} packages.  We know of no good way to
-profile DLLs on Windows.
+libraries/objects as used by @R{} packages.
 
 This chapter is based on reports from users and the information may not
 be current.
@@ -8806,6 +8809,7 @@ be current.
 @menu
 * Linux::
 * macOS::
+* Profiling on Windows::
 @end menu
 
 @node Linux, macOS, Profiling compiled code, Profiling compiled code
@@ -8816,16 +8820,17 @@ Options include using @command{sprof} for a shared object, and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
 executable or shared object.  These seem less widely supplied than they
-used to be (for example Fedora 36 only has @command{perf}).
+used to be (for example Fedora 36 only has @command{perf}). There is also `Google Performance Tools', also known as
+@pkg{gperftools} or @pkg{google-perftools}.
+
+All of these work best when @R{} and any packages have been built with
+debugging symbols.
 
 @subsubsection oprofile and operf
 
-The @command{oprofile} project has two modes of operation.  In what is
-now called `legacy' mode, it is uses a daemon to collect information on
-a process (see below).  Since version 0.9.8 (August 2012), the preferred
-mode is to use @command{operf}, so we discuss that first.  The modes
-differ in how the profiling data is collected: it is analysed by tools
-such as @command{opreport} and @command{oppannote} in both.
+The @command{oprofile} project has two modes of operation.  Since
+version 0.9.8 (August 2012), the preferred mode is to use
+@command{operf}, so we discuss only that.
 
 Here is an example on @code{x86_64} Linux using @R{} 3.0.2.  File
 @file{pvec.R} contains the part of the examples from @code{pvec} in
@@ -8918,85 +8923,6 @@ The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
 
-Another way to use this is to run @command{operf -s} as root, run the
-@R{} session in another terminal then shut down @command{operf} and
-analyse as above.
-
-Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
-@code{sm.variogram} took a long time:
-@example
-system.time(example(sm.variogram))
-...
-   user  system elapsed
-  5.543   3.202   8.785
-@end example
-
-@noindent
-including a lot of system time.  Profiling just the slow part, the
-second plot, showed
-
-@example
-  samples|      %|
-------------------
-   381845 99.9885 R
-        CPU_CLK_UNHALT...|
-          samples|      %|
-        ------------------
-           187484 49.0995 sm.so
-           169627 44.4230 no-vmlinux
-            12636  3.3092 libgfortran.so.3.0.0
-             6455  1.6905 R
-@end example
-
-@noindent
-so the system time was almost all in the Linux kernel.  It is possible
-to dig deeper if you have a matching uncompressed kernel with debug
-symbols to specify @emph{via} @option{--vmlinux}: we did not.
-
-In `legacy' mode @code{oprofile} works by running a daemon which
-collects information.  The daemon must be started as root, e.g.
-
-@example
-% su
-% opcontrol --no-vmlinux
-% (optional, some platforms) opcontrol --callgraph=5
-% opcontrol --start
-% exit
-@end example
-
-Then as a user
-
-@example
-% R
-... run the boot example
-% opcontrol --dump
-% opreport -l /path/to/R_HOME/library/stats/libs/stats.so
-...
-samples  %        symbol name
-1623     75.5939  anonymous symbol from section .plt
-349      16.2552  numeric_deriv
-113       5.2632  nls_iter
-62        2.8878  getListElement
-% opreport -l /path/to/R_HOME/bin/exec/R
-...
-samples  %        symbol name
-76052    11.9912  Rf_eval
-54670     8.6198  Rf_findVarInFrame3
-37814     5.9622  Rf_allocVector
-31489     4.9649  Rf_duplicate
-28221     4.4496  Rf_protect
-26485     4.1759  Rf_cons
-23650     3.7289  Rf_matchArgs
-21088     3.3250  Rf_findFun
-19995     3.1526  findVarLocInFrame
-14871     2.3447  Rf_evalList
-13794     2.1749  R_Newhashpjw
-13522     2.1320  R_gc_internal
-...
-@end example
-
-Shutting down the profiler and clearing the records needs to be done as
-root.
 
 @subsubsection sprof
 
@@ -9006,7 +8932,7 @@ setting the environment variable @env{LD_PROFILE}.  For example
 @example
 % setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
 R
-... run the boot example
+... run the boot example from §3.2
 % sprof /path/to/R_HOME/library/stats/libs/stats.so \
   /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 
@@ -9023,18 +8949,21 @@ rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 ... to clean up ...
 @end example
 
-It is possible that root access is needed to create the directories used
-for the profile data.
+It is possible that root access will be needed to create the directories
+used for the profile data.
 
-@node macOS,  , Linux, Profiling compiled code
+@node macOS, Profiling on Windows, Linux, Profiling compiled code
 @subsection macOS
 
-Developers have recommended @command{sample} (or @command{Sampler.app},
-which is a GUI version), @command{Shark} (in version of @code{Xcode}
-up to those for Snow Leopard), and @command{Instruments} (part of
-@code{Xcode}, see
-@uref{https://help.apple.com/instruments/mac/current/}).
+Developers have recommended @command{Instruments} (part of @code{Xcode},
+see @uref{https://help.apple.com/instruments/mac/current/}), This had a
+command-line version prior to macOS 12.
 
+@node Profiling on Windows,  , macOS, Profiling compiled code
+@subsection Windows
+
+@command{Very Sleepy}
+(@uref{https://github.com/VerySleepy/verysleepy}) has been used.
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
