@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2022 The R Core Team
+#  Copyright (C) 2019-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Author"])
 }
 
@@ -72,6 +73,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Maintainer"])
 }
 
