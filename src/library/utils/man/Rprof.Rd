@@ -25,7 +25,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
     logical: should the file be over-written or appended to?
   }
   \item{interval}{
-    real: distance (time interval) between samples.
+    real: distance (time interval) between samples in seconds.
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
   \item{gc.profiling}{logical:  record whether GC is running?}
@@ -55,7 +55,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   With \code{"wall"} (the default and only supported event on Windows): it
   is time that the \R process is running and executing an \R command.  It is
   not however just CPU time, for if \code{readline()} is waiting for input,
-  that counts as well.
+  that counts as well.  It is also known as `elapsed' time.
 
   With \code{"cpu"} (the default on Unix and typically the preferred event
   for identifying performance bottlenecks), it is CPU time of the \R process,
@@ -184,9 +184,10 @@ calling <- function() evaluator(quote(called()), new.env())
   support for profiling is compiled in if possible -- configure \R with
   \option{--disable-R-profiling} to change this.
 
-  As \R profiling uses the same mechanisms as C profiling, the two
-  cannot be used together, so do not use \code{Rprof} in an executable
-  built for C-level profiling.
+  As \R CPU profiling uses the same mechanisms as C profiling, the two
+  cannot be used together, so do not use \code{Rprof(event = "cpu")}
+  (the default) in an executable built for C-level profiling (such as
+  using the GCC option \option{-p} or \option{-pg}).
     }
     \item{On Windows:}{
   \code{filename} can be a UTF-8-encoded filepath that cannot be translated to
