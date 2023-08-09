@@ -1163,7 +1163,10 @@ Rd2HTML <-
 	inPara <- NA
 	title <- Rd[[1L]]
         info$name <- name
-        info$title <- trimws(paste(as.character(title), collapse = "\n"))
+        info$title <- trimws(paste(utils::capture.output(Rd2txt(title, fragment = TRUE)),
+                                   collapse = "\n"))
+        info$htmltitle <- trimws(paste(utils::capture.output(Rd2HTML(title, fragment = TRUE)),
+                                       collapse = ""))
 	if (concordance)
 	    conc$saveSrcref(title)
 	writeContent(title, sections[1])
