@@ -63,7 +63,9 @@ FFLAGS = -O3 $(EOPTS) $(LTO)
 
 ifdef DEBUG
  CFLAGS += $(G_FLAG)
- FFLAGS += $(G_FLAG)
+ ifndef USE_LLVM
+  FFLAGS += $(G_FLAG)
+ endif
 else
  DLLFLAGS += -s
 endif

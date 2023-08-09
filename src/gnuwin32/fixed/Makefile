@@ -29,6 +29,7 @@ ifeq "$(WIN)" "64"
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
+	  -e "s|USE_LLVM =|USE_LLVM ?= $(USE_LLVM)|" \
 	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT ?=|LOCAL_SOFT ?= $(LOCAL_SOFT)|" \
@@ -48,6 +49,7 @@ else
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
+	  -e "s|USE_LLVM =|USE_LLVM ?= $(USE_LLVM)|" \
 	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
 	  -e "s|LOCAL_SOFT ?=|LOCAL_SOFT ?= $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \

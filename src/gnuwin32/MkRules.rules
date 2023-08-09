@@ -4,14 +4,15 @@
 ## assumes that the compiler toolchain (e.g. gcc, as, ...) is on PATH
 LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
-G_FLAG ?= -gdwarf-2
+G_FLAG ?= $(if (USE_LLVM),-g3,-gdwarf-2)
 USE_ATLAS ?= NO
 ATLAS_PATH ?= 
 MULTI ?=
 TOOL_PATH ?=
 BINPREF ?= 
 BINPREF64 ?= 
-COMPILED_BY ?= gcc-$(shell $(CC) --version | grep -E -o "([0-9]{1,}\.){2,}[0-9]{1,}")
+CCBASE = $(if $(USE_LLVM),clang,gcc)
+COMPILED_BY ?= $(CCBASE)-$(shell $(CC) --version | grep -E -o "([0-9]{1,}\.){2,}[0-9]{1,}")
 M_ARCH ?=
 AS_ARCH ?=
 RC_ARCH ?=
@@ -21,6 +22,7 @@ WIN = 64
 USE_ICU ?= YES
 ICU_PATH ?= 
 ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
+# (dynamic linking) ICU_LIBS ?= -licuin -licuuc -licudt -lstdc++
 USE_CAIRO ?= YES
 CAIRO_CPPFLAGS ?= "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2"
 CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
@@ -33,7 +35,7 @@ MIKTEX ?= TRUE
 TEXI2ANY ?= texi2any
 TEXI2DVI = env COMSPEC= texi2dvi
 MAKEINFO = texi2any
-EOPTS ?= -mfpmath=sse -msse2 -mstackrealign
+EOPTS ?= $(if $(USE_LLVM),,-mfpmath=sse -msse2 -mstackrealign)
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/Program Files (x86)/Inno Setup 6
@@ -89,27 +91,33 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-AR = $(BINPREF)ar
+LLVMPREF=$(if $(USE_LLVM),llvm-,)
+AR = $(BINPREF)$(LLVMPREF)ar
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(M_ARCH)
+CC=$(BINPREF)$(CCBASE)$(GCC4_SUFF) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
 DLL=$(CC)
-DLLTOOL=$(BINPREF)dlltool
+DLLTOOL=$(BINPREF)$(LLVMPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
-DLLTOOLFLAGS=--as $(BINPREF)as $(DT_ARCH) -k
+DLLTOOLFLAGS=--as $(BINPREF)$(LLVMPREF)as $(DT_ARCH) -k
 ECHO=echo
-FC=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
-FLIBS=-lgfortran -lquadmath
+ifndef USE_LLVM
+  FC=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
+  FLIBS=-lgfortran -lquadmath
+else
+  FC=$(BINPREF)flang$(GCC4_SUFF) $(M_ARCH)
+  FLIBS=-lFortranRuntime -lFortranDecimal
+endif
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 ## MAKEINFO = $(TEXI2ANY)
 MKDIR=mkdir
-NM=$(BINPREF)nm
-RANLIB = $(BINPREF)ranlib
-RESCOMP=$(BINPREF)windres $(RC_ARCH)
+NM=$(BINPREF)$(LLVMPREF)nm
+RANLIB = $(BINPREF)$(LLVMPREF)ranlib
+RESCOMP=$(BINPREF)$(LLVMPREF)windres $(RC_ARCH)
 SHLIB_LD=$(CC)
 SHLIB_LDFLAGS=-shared
 
@@ -133,10 +141,12 @@ SHLIB_LDFLAGS=-shared
 ## endif
 
 ifneq "$(LTO)" ""
-AR = $(BINPREF)gcc-ar
-NM = $(BINPREF)gcc-nm
-RANLIB = $(BINPREF)gcc-ranlib
-DLLFLAGS += $(CFLAGS)
+  ifndef USE_LLVM
+    AR = $(BINPREF)gcc-ar
+    NM = $(BINPREF)gcc-nm
+    RANLIB = $(BINPREF)gcc-ranlib
+  endif
+  DLLFLAGS += $(CFLAGS)
 endif
 
 # as set by make
