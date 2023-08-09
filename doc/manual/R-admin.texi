@@ -3592,12 +3592,12 @@ following packages and their development versions, and this may provide
 a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
-glibc harfbuzz libX11 libXext libXt libcurl libicu libjpeg libpng
+glibc harfbuzz lapack libX11 libXext libXt libcurl libicu libjpeg libpng
 libtiff libtirpc libxcrypt ncurses pango pkgconf-pkg-config pcre2
 readline tcl tk xz zlib
 @end example
 @noindent
-plus, preferably a TeX installation, Java and LAPACK >= 3.10.0.
+plus, preferably a TeX installation and Java.
 
 @menu
 * Tcl/Tk::
@@ -5217,7 +5217,8 @@ version of @command{clang}: the Intel manual suggests checking
 LTO: it is not clear if the Fortran one does.
 
 @c https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
-All CPU times in e.g.@: @code{proc.time()} are reported as zero unless
+For some versions, including 2023.2.0, all CPU times in e.g.@:
+@code{proc.time()} are reported as zero unless
 @file{src/unix/sys-unix.c} is compiled with @option{-O0}.
 
 @c https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-2/stand.html
