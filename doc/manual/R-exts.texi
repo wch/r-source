@@ -5932,12 +5932,13 @@ functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
-compilability of C/C++ code.  Compilers from the GCC, @command{clang},
-Intel and Oracle Developer Studio suites have been used with @R{}, and
-both LLVM @command{clang} and Oracle have more than one implementation of C++
-headers and library.  The range of possibilities makes comprehensive
-empirical checking impossible, and regrettably compilers are patchy at
-best on warning about non-standard code.
+compilability of C/C++ code.  Compilers from the GCC, LLVM
+(@command{clang} and @command{flang}) Intel and Oracle Developer Studio
+suites have been used with @R{}, and both LLVM @command{clang} and
+Oracle have more than one implementation of C++ headers and library.
+The range of possibilities makes comprehensive empirical checking
+impossible, and regrettably compilers are patchy at best on warning
+about non-standard code.
 
 @itemize
 @item
@@ -6017,7 +6018,8 @@ such as dimensions.
 GNU Fortran 10 and later give a compilation error for the previously
 widespread practice of passing a Fortran array element where an array is
 expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.  As do the Intel
+Fortran compilers, and they can be stricter.
 
 @item
 Including C-style headers in C++ code is not portable.  Including the
@@ -6252,9 +6254,9 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
-removed in C++17, and LLVM @command{clang} 9 and later warn about
-them. Examples include @code{bind1st}/@code{bind2nd} (use
-@code{std::bind} or
+removed in C++17, and LLVM @command{clang} 9 and later warn about them
+(and as from version 16 they have been removed). Examples include
+@code{bind1st}/@code{bind2nd} (use @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
 @code{std::mem_fun_ref} and @code{std::ptr_fun}.
@@ -6265,7 +6267,7 @@ Later versions of standards may add reserved words: for example
 no longer available as variable names.  As noted above, C++17 uses
 @code{byte}, @code{data}, @code{sample} and @code{size}.
 
-So avoid common words and keywords in other programming languages.
+So avoid common words and keywords from other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
@@ -6361,6 +6363,20 @@ safer alternatives (on any platform) but the warning can be avoided by
 defining @samp{_POSIX_C_SOURCE} to for example @samp{200809L} before
 including the (C or C++) header which defines them.  (However, this may
 hide other extensions.)
+
+@item
+Compilers may interpret comments in source code, so it is necessary to
+remove any intended for a compiler to interpret.  The main example has
+been comments for Visual Fortran (as the Intel Fortan compiler has been
+known on Windows@footnote{and at one time as DEC Fortran, hence the
+@code{DEC}.}) like
+@example
+!DEC$ ATTRIBUTES DLLEXPORT,C,REFERENCE,ALIAS:'kdenestmlcvb' :: kdenestmlcvb
+@end example
+@noindent
+which are interpreted by Intel Fortran on all platforms (and are
+inappropriate for use with @R{} on Windows).  @command{gfortran} has
+similar forms starting with @code{!GCC$}.
 
 @end itemize
 
