@@ -8565,13 +8565,14 @@ has to be built to enable this, but the option
 @R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
-page can be consulted for full details.  Profiling works by recording
-at fixed intervals@footnote{For Unix-alikes these are intervals of CPU
-time, and for Windows of elapsed time.} (by default every 20 msecs)
-which line in which @R{} function is being used, and recording the
-results in a file (default @file{Rprof.out} in the working directory).
-Then the function @code{summaryRprof} or the command-line utility
-@code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
+page can be consulted for full details.  Profiling works by recording at
+fixed intervals@footnote{For Unix-alikes by default these are intervals
+of CPU time, and for Windows of elapsed (`wall-clock') time.  As from
+@R{} 4.4.0, elapsed timw is optional on Unix-alikes} (by default every
+20 msecs) which line in which @R{} function is being used, and recording
+the results in a file (default @file{Rprof.out} in the working
+directory).  Then the function @code{summaryRprof} or the command-line
+utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
 activity.
 
 As an example, consider the following code (from Venables & Ripley,
@@ -8831,8 +8832,7 @@ copying.
 Profiling compiled code is highly system-specific, but this section
 contains some hints gleaned from various @R{} users.  Some methods need
 to be different for a compiled executable and for dynamic/shared
-libraries/objects as used by @R{} packages.  We know of no good way to
-profile DLLs on Windows.
+libraries/objects as used by @R{} packages.
 
 This chapter is based on reports from users and the information may not
 be current.
@@ -8840,197 +8840,143 @@ be current.
 @menu
 * Linux::
 * macOS::
+* Windows::
 @end menu
 
 @node Linux, macOS, Profiling compiled code, Profiling compiled code
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
-@command{perf} (see
+@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/})
+and @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
 executable or shared object.  These seem less widely supplied than they
-used to be (for example Fedora 36 only has @command{perf}).
+used to be.  There is also `Google Performance Tools', also known as
+@pkg{gperftools} or @pkg{google-perftools}.
+
+All of these work best when @R{} and any packages have been built with
+debugging symbols.
+
+@subsubsection perf
+
+This seems the most widely distributed tool.
+Here is an example on @code{x86_64} Linux using @R{} 4.3.1 built with LTO.
+
+At its simplest
+@example
+perf record R -f tests/Examples/stats-Ex.R
+perf report --sort=dso
+perf report --sort=srcfile
+rm perf.data*
+@end example
+
+The first report is
+@example
+  75.67%  R
+   9.25%  libc.so.6
+   4.87%  [unknown]
+   3.75%  libz.so.1.2.11
+   3.37%  stats.so
+   1.17%  libm.so.6
+   0.63%  libtirpc.so.3.0.0
+   0.41%  graphics.so
+   0.30%  grDevices.so
+   0.20%  libRblas.so
+   0.09%  libpcre2-8.so.0.11.0
+   0.07%  methods.so
+   ...
+@end example
+@noindent
+which shows which shared libraries (DSOs) the time was spent in.
+
+@command{perf annotate} can be used on an application built with GCC and
+@option{-ggdb}: it interleaves disassmbled and source code.
 
 @subsubsection oprofile and operf
 
-The @command{oprofile} project has two modes of operation.  In what is
-now called `legacy' mode, it is uses a daemon to collect information on
-a process (see below).  Since version 0.9.8 (August 2012), the preferred
-mode is to use @command{operf}, so we discuss that first.  The modes
-differ in how the profiling data is collected: it is analysed by tools
-such as @command{opreport} and @command{oppannote} in both.
+The @command{oprofile} project has two modes of operation.  Since
+version 0.9.8 (August 2012), the preferred mode is to use
+@command{operf}, so we discuss only that.
 
-Here is an example on @code{x86_64} Linux using @R{} 3.0.2.  File
-@file{pvec.R} contains the part of the examples from @code{pvec} in
-package @pkg{parallel}:
-@example
-library(parallel)
-N <- 1e6
-dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
-                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
-system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
-@end example
-@noindent
-with timings from the final step
-@example
-   user  system elapsed
-  0.371   0.237   0.612
-@end example
+Let us look at the @pkg{boot} example from §3.2 on @code{x86_64} Linux
+using @R{} 4.3.1.
 
-@R{}-level profiling by @code{Rprof} shows
+This can be run under @command{operf} and analysed by commands like
 @example
-                     self.time self.pct total.time total.pct
-"strptime"                1.70    41.06       1.70     41.06
-"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
-"sprintf"                 0.74    17.87       0.98     23.67
-...
-@end example
-@noindent
-so the conversion from character to @code{POSIXlt} takes most of the
-time.
-
-This can be run under @command{operf} and analysed by
-@example
-operf R -f pvec.R
+operf R -f boot.R
 opreport
 opreport -l /path/to/R_HOME/bin/exec/R
+opreport -l /path/to/R_HOME/library/stats/src/stats.so
 opannotate --source /path/to/R_HOME/bin/exec/R
-## And for the system time
-opreport -l /lib64/libc.so.6
 @end example
 @noindent
-The first report shows where (which library etc) the time was spent:
-@example
-CPU_CLK_UNHALT...|
-  samples|      %|
-------------------
-   166761 99.9161 Rdev
-        CPU_CLK_UNHALT...|
-          samples|      %|
-        ------------------
-            70586 42.3276 no-vmlinux
-            56963 34.1585 libc-2.16.so
-            36922 22.1407 R
-             1584  0.9499 stats.so
-              624  0.3742 libm-2.16.so
-...
-@end example
+The first line had to be done as root.
 
+The first report shows in which library (etc) the time was spent:
+@example
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	   278341 91.9947 R
+	    18290  6.0450 libc.so.6
+	     2277  0.7526 kallsyms
+	     1426  0.4713 stats.so
+	      739  0.2442 libRblas.so
+	      554  0.1831 libz.so.1.2.11
+	      373  0.1233 libm.so.6
+	      352  0.1163 libtirpc.so.3.0.0
+	      153  0.0506 ld-linux-x86-64.so.2
+	       12  0.0040 methods.so
+@end example
 @noindent
-The rest of the output is voluminous, and only extracts are shown below.
+(@code{kallsyms} is the kernel.)
+
+The rest of the output is voluminous, and only extracts are shown.
 
 Most of the time within @R{} is spent in
 @example
 samples  %        image name symbol name
-10397    28.5123  R           R_gc_internal
-5683     15.5848  R           do_sprintf
-3036      8.3258  R           do_asPOSIXct
-2427      6.6557  R           do_strptime
-2421      6.6392  R           Rf_mkCharLenCE
-1480      4.0587  R           w_strptime_internal
-1202      3.2963  R           Rf_qnorm5
-1165      3.1948  R           unif_rand
-675       1.8511  R           mktime0
-617       1.6920  R           makelt
-617       1.6920  R           validate_tm
-584       1.6015  R           day_of_the_week
-...
+52955    19.0574  R                        bcEval.lto_priv.0
+16484     5.9322  R                        Rf_allocVector3
+14224     5.1189  R                        Rf_findVarInFrame3
+12581     4.5276  R                        CONS_NR
+8289      2.9830  R                        Rf_matchArgs_NR
+8034      2.8913  R                        Rf_cons
+7114      2.5602  R                        R_gc_internal.lto_priv.0
+6552      2.3579  R                        Rf_eval
+5969      2.1481  R                        VECTOR_ELT
+5684      2.0456  R                        Rf_applyClosure
+5497      1.9783  R                        findVarLocInFrame.part.0.lto_priv.0
+4827      1.7371  R                        Rf_mkPROMISE
+4609      1.6587  R                        Rf_install
+4317      1.5536  R                        Rf_findFun3
+4035      1.4521  R                        getvar.lto_priv.0
+3491      1.2563  R                        SETCAR
+3179      1.1441  R                        Rf_defineVar
+2892      1.0408  R                        duplicate1.lto_priv.0
 @end example
-@noindent
-@command{opannotate} shows that 31% of the time in @R{} is spent in
-@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
-The analysis for @file{libc} showed that calls to @code{wcsftime}
-dominated, so those calls were cached for @R{} 3.0.3: the time spent in
-@code{no-vmlinux} (the kernel) was reduced dramatically.
 
-On platforms which support it, call graphs can be produced by
-@command{opcontrol --callgraph} if collected @emph{via} @command{operf
---callgraph}.
+and in @code{stats.so}
+@example
+samples  %        image name               symbol name
+285      24.4845  stats.so                 termsform
+284      24.3986  stats.so                 numeric_deriv
+213      18.2990  stats.so                 modelframe
+114       9.7938  stats.so                 nls_iter
+55        4.7251  stats.so                 ExtractVars
+47        4.0378  stats.so                 EncodeVars
+37        3.1787  stats.so                 getListElement
+32        2.7491  stats.so                 TrimRepeats
+25        2.1478  stats.so                 InstallVar
+20        1.7182  stats.so                 MatchVar
+20        1.7182  stats.so                 isZeroOne
+15        1.2887  stats.so                 ConvInfoMsg.isra.0
+@end example
 
 The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
 
-Another way to use this is to run @command{operf -s} as root, run the
-@R{} session in another terminal then shut down @command{operf} and
-analyse as above.
-
-Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
-@code{sm.variogram} took a long time:
-@example
-system.time(example(sm.variogram))
-...
-   user  system elapsed
-  5.543   3.202   8.785
-@end example
-
-@noindent
-including a lot of system time.  Profiling just the slow part, the
-second plot, showed
-
-@example
-  samples|      %|
-------------------
-   381845 99.9885 R
-        CPU_CLK_UNHALT...|
-          samples|      %|
-        ------------------
-           187484 49.0995 sm.so
-           169627 44.4230 no-vmlinux
-            12636  3.3092 libgfortran.so.3.0.0
-             6455  1.6905 R
-@end example
-
-@noindent
-so the system time was almost all in the Linux kernel.  It is possible
-to dig deeper if you have a matching uncompressed kernel with debug
-symbols to specify @emph{via} @option{--vmlinux}: we did not.
-
-In `legacy' mode @code{oprofile} works by running a daemon which
-collects information.  The daemon must be started as root, e.g.
-
-@example
-% su
-% opcontrol --no-vmlinux
-% (optional, some platforms) opcontrol --callgraph=5
-% opcontrol --start
-% exit
-@end example
-
-Then as a user
-
-@example
-% R
-... run the boot example
-% opcontrol --dump
-% opreport -l /path/to/R_HOME/library/stats/libs/stats.so
-...
-samples  %        symbol name
-1623     75.5939  anonymous symbol from section .plt
-349      16.2552  numeric_deriv
-113       5.2632  nls_iter
-62        2.8878  getListElement
-% opreport -l /path/to/R_HOME/bin/exec/R
-...
-samples  %        symbol name
-76052    11.9912  Rf_eval
-54670     8.6198  Rf_findVarInFrame3
-37814     5.9622  Rf_allocVector
-31489     4.9649  Rf_duplicate
-28221     4.4496  Rf_protect
-26485     4.1759  Rf_cons
-23650     3.7289  Rf_matchArgs
-21088     3.3250  Rf_findFun
-19995     3.1526  findVarLocInFrame
-14871     2.3447  Rf_evalList
-13794     2.1749  R_Newhashpjw
-13522     2.1320  R_gc_internal
-...
-@end example
-
-Shutting down the profiler and clearing the records needs to be done as
-root.
 
 @subsubsection sprof
 
@@ -9039,8 +8985,7 @@ setting the environment variable @env{LD_PROFILE}.  For example
 
 @example
 % setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
-R
-... run the boot example
+% R -f boot.R
 % sprof /path/to/R_HOME/library/stats/libs/stats.so \
   /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 
@@ -9053,22 +8998,25 @@ Each sample counts as 0.01 seconds.
  16.67      0.39     0.07        0     0.00           nls_iter
   7.14      0.42     0.03        0     0.00           getListElement
 
-rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 ... to clean up ...
+rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 @end example
 
-It is possible that root access is needed to create the directories used
-for the profile data.
+It is possible that root access will be needed to create the directories
+used for the profile data.
 
-@node macOS,  , Linux, Profiling compiled code
+@node macOS, Windows, Linux, Profiling compiled code
 @subsection macOS
 
-Developers have recommended @command{sample} (or @command{Sampler.app},
-which is a GUI version), @command{Shark} (in version of @code{Xcode}
-up to those for Snow Leopard), and @command{Instruments} (part of
-@code{Xcode}, see
-@uref{https://help.apple.com/instruments/mac/current/}).
+Developers have recommended @command{Instruments} (part of @code{Xcode},
+see @uref{https://help.apple.com/instruments/mac/current/}), This had a
+command-line version prior to macOS 12.
 
+@node Profiling on Windows,  , macOS, Profiling compiled code
+@subsection Windows
+
+@command{Very Sleepy}
+(@uref{https://github.com/VerySleepy/verysleepy}) has been used.
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
@@ -10029,8 +9977,8 @@ See
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
-`Dr. Memory' from @uref{https://drmemory.org/} is a memory checker
-for (currently) 32-bit Windows, Linux and macOS with similar aims to
+`Dr. Memory' from @uref{https://drmemory.org/} is a memory checker for
+(currently) Windows, Linux and macOS with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
