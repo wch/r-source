@@ -94,7 +94,7 @@
       upper or lower triangular part.
 
       \item \code{memDecompress(type = "unknown")} recognizes compression
-      in the defailt \sQuote{zlib} format as used by
+      in the default \sQuote{zlib} format as used by
       \code{memCompress(type = "gzip")}.
       
       \item \code{memCompress()} and \code{memDecompress()} will use the
