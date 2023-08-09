@@ -4609,7 +4609,7 @@ Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset.
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
-packages unavailable unless declared (even if installed in @code{.library}).
+packages unavailable unless declared (even if installed in @code{.Library}).
 Default: false (but true for CRAN submission checks).
 
 This may give false positives on code which uses

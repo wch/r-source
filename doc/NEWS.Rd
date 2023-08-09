@@ -19,6 +19,11 @@
       substitution on platforms which do not support it (notably Alpine
       Linux).  This should give a human-readable conversion in ASCII on
       all platforms (rather than \code{NA_character_}).
+
+      \item \code{trans3d()} gains options \code{continuous} and
+      \code{verbose} addressing the problem of possible \dQuote{wrap
+	around} when projecting too long curves, as reported by Achim Zeileis
+      in \PR{18537}.
     }
   }
 
@@ -58,6 +63,10 @@
       where a restriction to \code{INT_MAX} bytes is documented, without
       doing a partial read unlike Linux). The payload is now split into
       1Gb chunks to avoid that problem. (\PR{18571})
+
+      \item \code{qqplot(x,y, conf.level=.)} gives better confidence bounds
+      when \code{length(x) != length(y)}, thanks to Alexander Ploner's
+      report and patch proposal (\PR{18557}).
     }
   }
 }
