@@ -107,9 +107,11 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	result <- NULL
 	# FIXME:  these indices should contain links...
 	if (!is.null(info$info[[2L]]))
+	    ## this is readLines(system.file("INDEX", package = pkg, lib.loc = lib.loc))
 	    result <- c("", "Index of help topics:", "\\preformatted{",
 				  info$info[[2L]], "}")
 	if (!is.null(info$info[[3L]]))
+	    ## FIXME: unreachable in build stage as vignettes get only built after partial.rdb
 	    result <- c(result, "",
 			"Further information is available in the following vignettes:\\cr\\cr",
 			tabular(paste0("\\code{", info$info[[3L]][,1], "}"),
