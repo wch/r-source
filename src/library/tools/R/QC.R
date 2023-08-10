@@ -9597,19 +9597,45 @@ function(x)
 {
     if(!length(x)) return(expression())
     ## Drop specials and comments.
-    ## <FIXME>
-    ## Remove calling .Rd_drop_comments() eventually.
-    x <- .Rd_drop_comments(x)
-    ## </FIXME>
-    txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x, "\\special"),
-                       tag = FALSE)
-    txt <- gsub("\\\\l?dots", "...", txt)
+    ## Note that when used from the QC functions, building the Rd db
+    ## already dropped all parts that are not rendered, including
+    ## comments.
+    x <- .Rd_drop_nodes_with_tags(x, c("COMMENT", "\\special"))
+    ## Transform \dots and \ldots to '...'.
+    ## For many years we did
+    ##   txt <- .Rd_deparse(x, tag = FALSE)
+    ##   txt <- gsub("\\\\l?dots", "...", txt)
+    ## but as <https://bugs.r-project.org/show_bug.cgi?id=18574>
+    ## reports, this also incorrectly transforms dots markup in value
+    ## strings.  So we really need to transform while we have the Rd
+    ## structure available.  This could use something like
+    ##   f <- function(e) {
+    ##     switch(attr(e, "Rd_tag"),
+    ##            "\\special" =,
+    ##            "COMMENT" = NULL,
+    ##            "\\ldots" =,
+    ##            "\\dots" = structure("...", Rd_tag = "TEXT"),
+    ##            e)
+    ## }
+    ## (including dropping specials and comments, and actually things
+    ## inside \usage are RCODE and not TEXT).
+    ## For now, we use as.character.Rd() on the Rd which should allow to
+    ## identify the macros as literals.
+    attr(x, "Rd_tag") <- "Rd"
+    txt <- as.character.Rd(x)
+    txt[txt %in% c("\\dots", "\\ldots")] <- "..."
+    txt <- paste(txt, collapse = "")
+    ## Ideally we would also make the subsequent S3/S4 method markup
+    ## transformations before collapsing ...
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
+    ## <FIXME>
+    ## Stop doing this.
     ## Transform <<see below>> style markup so that we can catch and
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
+    ## </FIXME>
     ## \usage is only 'verbatim-like'
     ## ## <FIXME>
     ## ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
