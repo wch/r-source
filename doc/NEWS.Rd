@@ -105,6 +105,10 @@
       common platforms: the speed-up may depend on the library version.
       %% libdeflate 1.13 claims significant improvements in
       %% decompression speed.
+
+      \item \code{diff()} for objects of class \code{"Date"}, 
+      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{"units"} 
+      argument passed via \code{...}.
     }
   }
 

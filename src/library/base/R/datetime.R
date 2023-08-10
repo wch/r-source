@@ -342,7 +342,7 @@ as.POSIXct.default <- function(x, tz = "", ...)
         return(if(missing(tz)) x else .POSIXct(x, tz))
     if(is.null(x)) return(.POSIXct(numeric(), tz))
     if(is.character(x) || is.factor(x))
-	return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
+    return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
     if(is.logical(x) && all(is.na(x)))
         return(.POSIXct(as.numeric(x), tz))
     stop(gettextf("do not know how to convert '%s' to class %s",
@@ -384,8 +384,8 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
     if(!inherits(x, "POSIXlt")) stop("wrong class")
     if(any(f0 <- format == "")) {
         ## need list [ method here.
-	times <- unlist(unclass(x)[1L:3L])[f0]
-	secs <- x$sec[f0]; secs <- secs[is.finite(secs)]
+    times <- unlist(unclass(x)[1L:3L])[f0]
+    secs <- x$sec[f0]; secs <- secs[is.finite(secs)]
         np <- if(is.null(digits)) 0L else min(6L, digits)
         if(np >= 1L) # no unnecessary trailing '0' :
             for (i in seq_len(np)- 1L)
@@ -393,10 +393,10 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
                     np <- i
                     break
                 }
-	format[f0] <-
-	    if(all(times[is.finite(times)] == 0)) "%Y-%m-%d"
-	    else if(np == 0L) "%Y-%m-%d %H:%M:%S"
-	    else paste0("%Y-%m-%d %H:%M:%OS", np)
+    format[f0] <-
+        if(all(times[is.finite(times)] == 0)) "%Y-%m-%d"
+        else if(np == 0L) "%Y-%m-%d %H:%M:%S"
+        else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
     .Internal(format.POSIXlt(x, format, usetz))
 }
@@ -428,16 +428,16 @@ print.POSIXlt <- function(x, tz = "", usetz = TRUE, max = NULL, ...)
 {
     if(is.null(max)) max <- getOption("max.print", 9999L)
     FORM <- if(missing(tz))
-		 function(z) format(z,          usetz = usetz)
-	    else function(z) format(z, tz = tz, usetz = usetz)
+         function(z) format(z,          usetz = usetz)
+        else function(z) format(z, tz = tz, usetz = usetz)
     if(max < length(x)) {
-	print(FORM(x[seq_len(max)]), max=max+1, ...)
-	cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
-	    length(x) - max, 'entries ]\n')
+    print(FORM(x[seq_len(max)]), max=max+1, ...)
+    cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
+        length(x) - max, 'entries ]\n')
     } else if(length(x))
-	print(FORM(x), max = max, ...)
+    print(FORM(x), max = max, ...)
     else
-	cat(class(x)[1L], "of length 0\n")
+    cat(class(x)[1L], "of length 0\n")
     invisible(x)
 }
 
@@ -691,15 +691,15 @@ difftime <-
     attr(z, "tzone") <- NULL # it may get copied from args of `-`
     units <- match.arg(units)
     if(units == "auto")
-	units <-
-	    if(all(is.na(z))) "secs"
-	    else {
-		zz <- min(abs(z), na.rm = TRUE)
-		if(!is.finite(zz) || zz < 60) "secs"
-		else if(zz < 3600) "mins"
-		else if(zz < 86400) "hours"
-		else "days"
-	    }
+    units <-
+        if(all(is.na(z))) "secs"
+        else {
+        zz <- min(abs(z), na.rm = TRUE)
+        if(!is.finite(zz) || zz < 60) "secs"
+        else if(zz < 3600) "mins"
+        else if(zz < 86400) "hours"
+        else "days"
+        }
     switch(units,
            "secs" = .difftime(z, units = "secs"),
            "mins" = .difftime(z/60, units = "mins"),
@@ -723,9 +723,9 @@ as.difftime <- function(tim, format = "%X", units = "auto", tz = "UTC")
         nms <- names(tim)
         tim <- as.double(tim)
         names(tim) <- nms
-	if (units == "auto") stop("need explicit units for numeric conversion")
+    if (units == "auto") stop("need explicit units for numeric conversion")
         if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
-	    stop("invalid units specified")
+        stop("invalid units specified")
         .difftime(tim, units = units)
     }
 }
@@ -771,7 +771,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     else if(is.array(x) || length(x) > 1L) {
         cat("Time differences in ", attr(x, "units"), "\n", sep = "")
         y <- unclass(x); attr(y, "units") <- NULL
-	print(y, digits=digits, ...)
+    print(y, digits=digits, ...)
     }
     else
         cat("Time difference of ", format(unclass(x), digits = digits), " ",
@@ -1014,18 +1014,18 @@ function(from, to, by, length.out = NULL, along.with = NULL, ...)
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
                 length.out <- 2L + floor((unclass(as.POSIXct(to)) -
-					  unclass(as.POSIXct(from)))/(by * 86400))
+                      unclass(as.POSIXct(from)))/(by * 86400))
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
         }
-	r1$isdst <- -1L
-	res <- as.POSIXct(r1)
-	## now shorten if necessary.
-	if(!missing(to)) {
-	    to <- as.POSIXct(to)
-	    res <- if(by > 0) res[res <= to] else res[res >= to]
-	}
-	res
+    r1$isdst <- -1L
+    res <- as.POSIXct(r1)
+    ## now shorten if necessary.
+    if(!missing(to)) {
+        to <- as.POSIXct(to)
+        res <- if(by > 0) res[res <= to] else res[res >= to]
+    }
+    res
     }
 }
 
@@ -1038,30 +1038,30 @@ cut.POSIXt <-
     x <- as.POSIXct(x)
 
     if (inherits(breaks, "POSIXt")) {
-	breaks <- sort(as.POSIXct(breaks))
+    breaks <- sort(as.POSIXct(breaks))
     } else if(is.numeric(breaks) && length(breaks) == 1L) {
-	## specified number of breaks
+    ## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1L) {
         by2 <- strsplit(breaks, " ", fixed = TRUE)[[1L]]
         if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid specification of 'breaks'")
-	valid <-
-	    pmatch(by2[length(by2)],
-		   c("secs", "mins", "hours", "days", "weeks",
-		     "months", "years", "DSTdays", "quarters"))
-	if(is.na(valid)) stop("invalid specification of 'breaks'")
-	start <- as.POSIXlt(min(x, na.rm = TRUE))
-	incr <- 1
-	if(valid > 1L) { start$sec <- 0L; incr <- 60 }
-	if(valid > 2L) { start$min <- 0L; incr <- 3600 }
+    valid <-
+        pmatch(by2[length(by2)],
+           c("secs", "mins", "hours", "days", "weeks",
+             "months", "years", "DSTdays", "quarters"))
+    if(is.na(valid)) stop("invalid specification of 'breaks'")
+    start <- as.POSIXlt(min(x, na.rm = TRUE))
+    incr <- 1
+    if(valid > 1L) { start$sec <- 0L; incr <- 60 }
+    if(valid > 2L) { start$min <- 0L; incr <- 3600 }
         ## start of day need not be on the same DST, PR#14208
-	if(valid > 3L) { start$hour <- 0L; start$isdst <- -1L; incr <- 86400 }
-	if(valid == 5L) {               # weeks
-	    start$mday <- start$mday - start$wday
-	    if(start.on.monday)
-		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
-	    incr <- 7*86400
-	}
+    if(valid > 3L) { start$hour <- 0L; start$isdst <- -1L; incr <- 86400 }
+    if(valid == 5L) {               # weeks
+        start$mday <- start$mday - start$wday
+        if(start.on.monday)
+        start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+        incr <- 7*86400
+    }
         if(valid == 8L) incr <- 25*3600 # DSTdays
         if(valid == 6L) {               # months
             start$mday <- 1L
@@ -1073,8 +1073,8 @@ cut.POSIXt <-
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
             ## 31 days ahead could give an empty level, so
-	    lb <- length(breaks)
-	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 7L) {        # years
             start$mon <- 0L
             start$mday <- 1L
@@ -1087,8 +1087,8 @@ cut.POSIXt <-
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
             ## 366 days ahead could give an empty level, so
-	    lb <- length(breaks)
-	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 9L) {        # quarters
             qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
             start$mon <- qtr[start$mon + 1L]
@@ -1114,9 +1114,9 @@ cut.POSIXt <-
     res <- cut(unclass(x), unclass(breaks), labels = labels,
                right = right, ...)
     if(is.null(labels)) {
-	levels(res) <-
-	    as.character(if (is.numeric(breaks)) x[!duplicated(res)]
-			 else breaks[-length(breaks)])
+    levels(res) <-
+        as.character(if (is.numeric(breaks)) x[!duplicated(res)]
+             else breaks[-length(breaks)])
     }
     res
 }
@@ -1158,12 +1158,12 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
     units <- match.arg(units)
     x <- as.POSIXlt(x)
     if(length(x$sec))
-	switch(units,
-	       "secs" = {x$sec <- trunc(x$sec)},
-	       "mins" = {x$sec[] <- 0},
-	       "hours" = {x$sec[] <- 0; x$min[] <- 0L},
+    switch(units,
+           "secs" = {x$sec <- trunc(x$sec)},
+           "mins" = {x$sec[] <- 0},
+           "hours" = {x$sec[] <- 0; x$min[] <- 0L},
                ## start of day need not be on the same DST.
-	       "days" = {
+           "days" = {
                    x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L;
                    x$isdst[] <- -1L
                },
@@ -1181,7 +1181,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
                    ## To get wday and yday correctly:
                    x <- as.POSIXlt(as.POSIXct(x))
                }
-	       )
+           )
     x
 }
 
@@ -1353,12 +1353,18 @@ diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen) return(.difftime(numeric(), "secs"))
     i1 <- -seq_len(lag)
-    if (ismat) for (i in seq_len(differences)) r <- r[i1, , drop = FALSE] -
-            r[-nrow(r):-(nrow(r) - lag + 1), , drop = FALSE]
-    else for (i in seq_len(differences))
-        r <- r[i1] - r[-length(r):-(length(r) - lag + 1L)]
+    if (ismat)
+        for (i in seq_len(differences))
+            r <- r[i1, , drop = FALSE] - r[-nrow(r):-(nrow(r) - lag + 1), , drop = FALSE]
+    else
+        for (i in seq_len(differences))
+             r <- r[i1] -  r[-length(r):-(length(r) - lag + 1L)]
+    dots <- list(...)
+    if("units" %in% names(dots) && dots$units != "auto")
+        units(r) <- match.arg(dots$units,  choices = setdiff(eval(formals(difftime)$units), "auto"))
     r
 }
+
 
 ## ---- additions in 2.2.0 -----
 
