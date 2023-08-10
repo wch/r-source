@@ -105,10 +105,6 @@
       common platforms: the speed-up may depend on the library version.
       %% libdeflate 1.13 claims significant improvements in
       %% decompression speed.
-
-      \item \code{diff()} for objects of class \code{"Date"}, 
-      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{"units"} 
-      argument passed via \code{...}.
     }
   }
 
@@ -124,6 +120,14 @@
       \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
+
+      \item THere is an experimental new \command{configure} option
+      \option{--with-libdeflate-compression} that uses
+      \code{libdeflate} rather than \code{libz} to (de)compress \R
+      objects in lazy-load databases, if the \code{libdeflate} library
+      and headers are available.  Typically tasks spend up to
+      5\% of their time on such operations, although creating
+      lazy-data databases is one of the exceptions.
     }
   }
 
@@ -317,11 +321,6 @@
 
       \item \code{norm(<0-length>, "2")} now gives zero instead of an
       error, as all the other norm types, thanks to Mikael Jagan's \PR{18542}.
-
-      \item Build-stage Rd macros \verb{\packageAuthor} and
-      \verb{\packageMaintainer} now process \samp{Authors@R},
-      fixing \samp{NA} results when the package \file{DESCRIPTION} omits
-      \samp{Author} and \samp{Maintainer} fields.
     }
   }
 }
