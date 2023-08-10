@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -620,6 +620,37 @@ function(x, predicate)
     }
     lapply(x, recurse)
     nodes
+}
+
+### * .Rd_apply
+
+## A first shot at recursively transforming nodes in Rd objects: nodes
+## transformed to NULL will get dropped.
+## E.g., to drop comments and specials, one could also do
+##   .Rd_apply(x,
+##             function(e) {
+##                 switch(attr(e, "Rd_tag"),
+##                        "\\special" =,
+##                        "COMMENT" = NULL,
+##                        e)
+##             })
+
+.Rd_apply <- function(x, f) {
+    recurse <- function(e) {
+        if(is.list(e)) {
+            a <- attributes(e)
+            ## Apply f to all nodes:
+            e <- lapply(e, f)
+            ## Drop the NULLs and recurse:
+            e <- lapply(e[!vapply(e, is.null, NA)], recurse)
+            attributes(e) <- a
+        }
+        ## <FIXME>
+        ## Should we do f(e) if not is.list(e)?
+        e
+        ## <FIXME>
+    }
+    recurse(x)
 }
 
 ### * .Rd_get_Sexpr_build_time_info
