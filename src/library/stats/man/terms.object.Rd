@@ -12,12 +12,13 @@
   \code{\link{formula}} and that formula was used to determine the terms
   object.
 }
-\value{
+\details{
   The object itself is simply the result of \code{\link{terms.formula}(<formula>)}.
   It has a number of attributes
   and they are used to construct the model frame:
 
-  \item{factors}{An integer matrix of variables by terms showing which variables
+  \describe{
+  \item{\code{factors}}{An integer matrix of variables by terms showing which variables
     appear in which terms.  The entries are \describe{
       \item{0 }{if the variable does not occur in the term,}
       \item{1 }{if it does occur and should be coded by contrasts, and}
@@ -29,33 +30,34 @@
     If there are no terms other than an intercept and offsets,
     this is \code{\link{integer}(0)}.
   }
-  \item{term.labels}{A character vector containing the labels for each
+  \item{\code{term.labels}}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Note that these are
     after possible re-ordering of terms.
 
     Non-syntactic names will be quoted by backticks: this makes it
     easier to re-construct the formula from the term labels.
   }
-  \item{variables}{A call to \code{list} of the variables in the model.}
-  \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
+  \item{\code{variables}}{A call to \code{list} of the variables in the model.}
+  \item{\code{intercept}}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}
-  \item{order}{A vector of the same length as \code{term.labels}
+  \item{\code{order}}{A vector of the same length as \code{term.labels}
     indicating the order of interaction for each term.}
-  \item{response}{The index of the variable (in variables) of the
+  \item{\code{response}}{The index of the variable (in variables) of the
     response (the left hand side of the formula).  Zero, if there is no
     response.}
-  \item{offset}{If the model contains \code{\link{offset}} terms there
+  \item{\code{offset}}{If the model contains \code{\link{offset}} terms there
     is an \code{offset} attribute indicating which variable(s) are offsets}
-  \item{specials}{If a \code{specials} argument was given to
+  \item{\code{specials}}{If a \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
     pairlist of vectors (one for each specified special function) giving
     numeric indices of the arguments of the list returned as the
     \code{variables} attribute which contain these special functions.}
-  \item{dataClasses}{optional.  A named character vector giving the classes
+  \item{\code{dataClasses}}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
-  \item{predvars}{optional.  An expression to help in computing
+  \item{\code{predvars}}{optional.  An expression to help in computing
     predictions at new covariate values; see \code{\link{makepredictcall}}.}
-
+  }
+  
   The object has class \code{c("terms", "formula")}.
 }
 \note{

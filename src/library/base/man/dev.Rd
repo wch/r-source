@@ -1,6 +1,6 @@
 % File src/library/base/man/dev.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Device}
@@ -15,7 +15,11 @@
   \code{\link{dev.cur}}) is stored in \code{.Device}.  Both are symbols
   and so appear in the base namespace.
 }
-\value{
+\usage{
+.Device
+.Devices
+}
+\details{
   \code{.Device} is a length-one character vector.
 
   \code{.Devices} is a \link{pairlist} of length-one character vectors.
