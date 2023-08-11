@@ -1964,7 +1964,7 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ...,
+function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
          Ncpus = getOption("Ncpus", 1L))
 {
     ## Apply FUN and extra '...' args to all given packages.
@@ -1974,12 +1974,20 @@ function(packages = NULL, FUN, ...,
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1L])
 
-    one <- function(p)
-        tryCatch(FUN(p, ...),
-                 error = function(e)
-                     noquote(paste("Error:",
-                                   conditionMessage(e))))
-    ## (Just don't throw the error ...)
+    ## For consistency with .unpacked_source_repository_apply(), take
+    ## 'pattern' as a wildcard pattern.
+    if(pattern != "*")
+        packages <- packages[grepl(utils::glob2rx(pattern), packages)]
+    
+    ## Keep in sync with .unpacked_source_repository_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
+    one <- function(p) {
+        if(verbose)
+            message(sprintf("processing %s", p))
+        tryCatch(FUN(p, ...), error = identity)
+    }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {
@@ -2425,11 +2433,15 @@ function(dir, FUN, ..., pattern = "*", verbose = FALSE,
     dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
     paths <- dirname(dfiles)
 
+    ## Keep in sync with .package_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
     one <- function(p) {
         if(verbose)
             message(sprintf("processing %s", basename(p)))
-        FUN(p, ...)
+        tryCatch(FUN(p, ...), error = identity)
     }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {
