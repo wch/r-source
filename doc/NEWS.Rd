@@ -121,7 +121,7 @@
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
 
-      \item THere is an experimental new \command{configure} option
+      \item There is an experimental new \command{configure} option
       \option{--with-libdeflate-compression} that uses
       \code{libdeflate} rather than \code{libz} to (de)compress \R
       objects in lazy-load databases, if the \code{libdeflate} library

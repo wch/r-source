@@ -6367,7 +6367,7 @@ hide other extensions.)
 @item
 Compilers may interpret comments in source code, so it is necessary to
 remove any intended for a compiler to interpret.  The main example has
-been comments for Visual Fortran (as the Intel Fortan compiler has been
+been comments for Visual Fortran (as the Intel Fortran compiler has been
 known on Windows@footnote{and at one time as DEC Fortran, hence the
 @code{DEC}.}) like
 @example
@@ -8568,7 +8568,7 @@ The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at
 fixed intervals@footnote{For Unix-alikes by default these are intervals
 of CPU time, and for Windows of elapsed (`wall-clock') time.  As from
-@R{} 4.4.0, elapsed timw is optional on Unix-alikes} (by default every
+@R{} 4.4.0, elapsed time is optional on Unix-alikes} (by default every
 20 msecs) which line in which @R{} function is being used, and recording
 the results in a file (default @file{Rprof.out} in the working
 directory).  Then the function @code{summaryRprof} or the command-line
@@ -8890,7 +8890,7 @@ The first report is
 which shows which shared libraries (DSOs) the time was spent in.
 
 @command{perf annotate} can be used on an application built with GCC and
-@option{-ggdb}: it interleaves disassmbled and source code.
+@option{-ggdb}: it interleaves disassembled and source code.
 
 @subsubsection oprofile and operf
 
