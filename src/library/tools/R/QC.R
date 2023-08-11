@@ -9630,11 +9630,12 @@ function(x)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
     ## <FIXME>
-    ## Stop doing this.
-    ## Transform <<see below>> style markup so that we can catch and
-    ## throw it, rather than "basically ignore" it by putting it in the
-    ## bad_lines attribute.
-    txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
+    ## Commented 2023-08-11: remove eventually.
+    ## ## Stop doing this.
+    ## ## Transform <<see below>> style markup so that we can catch and
+    ## ## throw it, rather than "basically ignore" it by putting it in the
+    ## ## bad_lines attribute.
+    ## txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## </FIXME>
     ## \usage is only 'verbatim-like'
     ## ## <FIXME>
