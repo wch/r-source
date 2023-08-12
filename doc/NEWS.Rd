@@ -105,6 +105,10 @@
       common platforms: the speed-up may depend on the library version.
       %% libdeflate 1.13 claims significant improvements in
       %% decompression speed.
+
+      \item \code{diff()} for objects of class \code{"Date"}, 
+      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{"units"} 
+      argument passed via \code{...}.
     }
   }
 
@@ -321,6 +325,11 @@
 
       \item \code{norm(<0-length>, "2")} now gives zero instead of an
       error, as all the other norm types, thanks to Mikael Jagan's \PR{18542}.
+
+      \item Build-stage Rd macros \verb{\packageAuthor} and
+      \verb{\packageMaintainer} now process \samp{Authors@R},
+      fixing \samp{NA} results when the package \file{DESCRIPTION} omits
+      \samp{Author} and \samp{Maintainer} fields.
     }
   }
 }
