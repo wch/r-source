@@ -23,11 +23,11 @@
   and documentation, notably on R packages.
 }
 \usage{
-checkDocFiles   (package, dir, lib.loc = NULL, chkInternal = FALSE)
+checkDocFiles   (package, dir, lib.loc = NULL, chkInternal = NULL)
 checkDocStyle   (package, dir, lib.loc = NULL)
 checkReplaceFuns(package, dir, lib.loc = NULL)
 checkS3methods  (package, dir, lib.loc = NULL)
-checkRdContents (package, dir, lib.loc = NULL, chkInternal = FALSE)
+checkRdContents (package, dir, lib.loc = NULL, chkInternal = NULL)
 
 langElts
 nonS3methods(package)
@@ -43,7 +43,9 @@ nonS3methods(package)
     libraries currently known.  The specified library trees are used to
     search for \code{package}.}
   \item{chkInternal}{logical indicating if Rd files marked with keyword
-    \code{internal} should be checked as well.}
+    \code{internal} should be checked as well.  If \code{NULL}
+    (default), these are checked \dQuote{specially}, ignoring missing
+    documentation of arguments.}
 }
 \details{
   \code{checkDocFiles} checks, for all Rd files in a package, whether all

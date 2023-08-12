@@ -2275,7 +2275,7 @@ add_dummies <- function(dir, Log)
         } else resultLog(Log, "OK")
     }
 
-    check_Rd_files <- function(haveR, chkInternal = FALSE)
+    check_Rd_files <- function(haveR, chkInternal = NA)
     {
         msg_writing_Rd <-
             c("See chapter 'Writing R documentation files' in the 'Writing R Extensions' manual.\n")
@@ -2483,6 +2483,13 @@ add_dummies <- function(dir, Log)
                   "The \\usage entries must correspond to syntactically",
                   "valid R code.\n")
             any <- FALSE
+            ## <FIXME>
+            ## Hack to see whether all issues are from internal Rd files
+            ## checked specially and only give a NOTE in this case.
+            ## Ideally, we would use R() to get the check object and be
+            ## able to compute on it, but that is not so simple ...
+            Sys.setenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__" =
+                           "TRUE")
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools::checkDocFiles(%s, chkInternal=%s)\n",
                                   if(do_install)
@@ -2491,11 +2498,18 @@ add_dummies <- function(dir, Log)
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 any <- TRUE
-                warningLog(Log)
+                pos <- which(out ==
+                             "All issues in internal Rd objects checked specially.")
+                if(length(pos)) {
+                    noteLog(Log)
+                    out <- out[-pos]
+                } else
+                    warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog(msg_doc_files)
                 wrapLog(msg_writing_Rd)
             }
+            ## </FIXME>            
 
             if (R_check_Rd_style && haveR) {
                 msg_doc_style <-
@@ -6668,8 +6682,11 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE"))
     R_check_Rd_xrefs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
+    ## Currently, config_val_to_logical() (nowadays,
+    ## utils:::str2logical()) does not allow getting NA quietly  ...
     R_check_Rd_internal_too <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_", "FALSE"))
+        suppressWarnings(config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_",
+                                                          "NA")))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
     ## However, we cannot use this if we did not install the recommended

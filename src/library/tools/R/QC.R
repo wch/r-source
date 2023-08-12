@@ -1355,7 +1355,7 @@ function(x, ...)
 ### * checkDocFiles
 
 checkDocFiles <-
-function(package, dir, lib.loc = NULL, chkInternal = FALSE)
+function(package, dir, lib.loc = NULL, chkInternal = NULL)
 {
     ## Argument handling.
     if(!missing(package)) {
@@ -1375,10 +1375,16 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
-    check_internal_specially <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
-                                         "FALSE"))
-
+    check_internal_specially <- FALSE    
+    ## Do
+    ##   if(!isTRUE(chkInternal) && !isFALSE(chkInternal))
+    ## more efficiently.
+    if(is.null(chkInternal) ||
+       !is.logical(chkInternal) ||
+       (length(chkInternal) != 1L) ||
+       is.na(chkInternal))
+        chkInternal <- check_internal_specially <- TRUE
+    
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
           else
@@ -1407,6 +1413,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
     db_argument_names <- lapply(db, .Rd_get_argument_names)
 
     bad_doc_objects <- list()
+    all_special <- (length(bad_lines) == 0L)
 
     for(docObj in names(db)) {
         ## <FIXME>
@@ -1548,7 +1555,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
            || anyDuplicated(arg_names_in_arg_list)
            || (length(arg_names_in_arg_list_missing_in_usage))
            || (length(functions_not_in_aliases))
-           || (length(assignments)))
+           || (length(assignments))) {
             bad_doc_objects[[docObj]] <-
                 list(missing = arg_names_in_usage_missing_in_arg_list,
                      duplicated =
@@ -1556,10 +1563,14 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
                      overdoc = arg_names_in_arg_list_missing_in_usage,
                      unaliased = functions_not_in_aliases,
                      assignments = assignments)
+            if(!special)
+                all_special <- FALSE
+        }
     } # for(..)
 
     structure(bad_doc_objects, class = "checkDocFiles",
-              "bad_lines" = bad_lines)
+              "bad_lines" = bad_lines,
+              "all_special" = all_special)
 }
 
 format.checkDocFiles <-
@@ -1612,6 +1623,17 @@ function(x, ...)
                              })),
                "")
 
+    ## <FIXME>
+    ## Terrible hack, see comments on
+    ##    __R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__
+    ## in check.R
+    if(length(y) &&
+       !length(bad_lines) &&
+       (Sys.getenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__",
+                   "FALSE") == "TRUE") &&
+       isTRUE(attr(x, "all_special")))
+        y <- c(y, "All issues in internal Rd objects checked specially.")
+    
     y
 }
 
@@ -9022,7 +9044,7 @@ function(x, ...)
 ## NOTE: this checks displayed content, not Rd_contents() metadata
 
 checkRdContents <- # was  .check_Rd_contents <-
-function(package, dir, lib.loc = NULL, chkInternal = FALSE)
+function(package, dir, lib.loc = NULL, chkInternal = NULL)
 {
     out <- list()
     class(out) <- "checkRdContents" # was "check_Rd_contents"
@@ -9045,9 +9067,15 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             dir <- file_path_as_absolute(dir)
     }
 
-    check_internal_specially <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_SPECIALLY_",
-                                         "FALSE"))
+    check_internal_specially <- FALSE
+    ## Do
+    ##   if(!isTRUE(chkInternal) && !isFALSE(chkInternal))
+    ## more efficiently.
+    if(is.null(chkInternal) ||
+       !is.logical(chkInternal) ||
+       (length(chkInternal) != 1L) ||
+       is.na(chkInternal))
+        chkInternal <- check_internal_specially <- TRUE
 
     db <- if(!missing(package))
               Rd_db(package, lib.loc = dirname(dir))
