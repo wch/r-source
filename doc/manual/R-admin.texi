@@ -4769,7 +4769,7 @@ and Apple) @command{clang} and Intel compilers.  Further, some use the
 value of @code{__GNUC__} for their version, not the version of GCC they
 claim to be compatible with.@footnote{Most @command{clang}-based
 compilers give @code{4}, but not those distributed by FreeBSD.  Intel's
-@command{icc} reported @code{12} in 2023.}  @command{clang}-based
+@command{icx} reported @code{12} in 2023.}  @command{clang}-based
 compilers define @code{__clang__}.  Both LLVM and Apple @command{clang}
 define @code{__clang_major__} as a string giving their major version,
 but for example Apple's 13.x.y is very different from LLVM's 13.x.y.
