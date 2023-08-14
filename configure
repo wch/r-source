@@ -1114,7 +1114,6 @@ with_recommended_packages
 with_ICU
 enable_byte_compiled_packages
 with_static_cairo
-with_libdeflate_compression
 enable_static
 enable_shared
 with_pic
@@ -1126,6 +1125,7 @@ enable_libtool_lock
 enable_long_double
 enable_openmp
 with_x
+with_libdeflate_compression
 enable_largefile
 enable_nls
 enable_threads
@@ -1926,9 +1926,6 @@ Optional Packages:
   --with-ICU              use ICU library (if available) [yes]
   --with-static-cairo     allow for the use of static cairo libraries [no, yes
                           on macOS]
-  --with-libdeflate-compression
-                          use libdeflate (if available) to (de)compress
-                          lazy-loaded R objects [no]
   --with-pic[=PKGS]       (libtool) try to use only PIC/non-PIC objects
                           [default=use both]
   --with-aix-soname=aix|svr4|both
@@ -1938,6 +1935,9 @@ Optional Packages:
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
                           compiler's sysroot if not specified).
   --with-x                use the X Window System
+  --with-libdeflate-compression
+                          use libdeflate (if available) to (de)compress
+                          lazy-loaded R objects [no]
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-libpth-prefix[=DIR]  search for libpth in DIR/include and DIR/lib
   --without-libpth-prefix     don't search for libpth in includedir and libdir
@@ -5056,21 +5056,6 @@ if test "x$use_static_cairo" = xdefault; then
       use_static_cairo=no
       ;;
   esac
-fi
-
-
-# Check whether --with-libdeflate-compression was given.
-if test ${with_libdeflate_compression+y}
-then :
-  withval=$with_libdeflate_compression; use_libdeflate=${withval}
-else $as_nop
-  use_libdeflate=no
-fi
-
-if test "x$use_libdeflate" = xyes; then
-
-printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h
-
 fi
 
 ### ** Precious variables.
@@ -27129,7 +27114,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27134: \"$ac_link\") >&5
+(eval echo $as_me:27119: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27205,7 +27190,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27210: \"$ac_link\") >&5
+(eval echo $as_me:27195: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -51401,9 +51386,18 @@ if test ${with_libdeflate_compression+y}
 then :
   withval=$with_libdeflate_compression; use_libdeflate=${withval}
 else $as_nop
-  use_libdeflate=no
+  use_libdeflate=unset
 fi
 
+if test "x$use_libdeflate" = xunset; then
+  if test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xyes; then
+    use_libdeflate=yes
+  elif test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xno; then
+    use_libdeflate=no
+  else
+    use_libdeflate=no
+  fi
+fi
 if test "x$use_libdeflate" = xyes; then
 
 printf "%s\n" "#define USE_LIBDEFLATE 1" >>confdefs.h
@@ -61903,6 +61897,15 @@ if test -z "${r_options}"; then
   r_options="static HTML"
 else
   r_options="${r_options}${separator}static HTML"
+fi
+fi
+if test "x$have_libdeflate" = xyes && test "x$use_libdeflate" = xyes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_options}"; then
+  r_options="libdeflate for lazyload"
+else
+  r_options="${r_options}${separator}libdeflate for lazyload"
 fi
 fi
 

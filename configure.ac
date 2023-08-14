@@ -580,14 +580,6 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
-AC_ARG_WITH([libdeflate-compression],
-[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
-[use_libdeflate=${withval}],
-[use_libdeflate=no])
-if test "x$use_libdeflate" = xyes; then
-  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
-fi
-
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
@@ -2583,7 +2575,16 @@ R_LIBDEFLATE
 AC_ARG_WITH([libdeflate-compression],
 [AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
 [use_libdeflate=${withval}],
-[use_libdeflate=no])
+[use_libdeflate=unset])
+if test "x$use_libdeflate" = xunset; then
+  if test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xyes; then
+    use_libdeflate=yes
+  elif test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xno; then
+    use_libdeflate=no
+  else
+    use_libdeflate=no
+  fi
+fi
 if test "x$use_libdeflate" = xyes; then
   AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
 fi
@@ -3175,6 +3176,9 @@ if test "${use_strict_barrier}" = yes; then
 fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
+fi
+if test "x$have_libdeflate" = xyes && test "x$use_libdeflate" = xyes; then
+  R_SH_VAR_ADD(r_options, [libdeflate for lazyload], [, ])
 fi
 
 if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then

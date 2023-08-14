@@ -125,13 +125,16 @@
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
 
-      \item There is an experimental new \command{configure} option
-      \option{--with-libdeflate-compression} that uses
+      \item There is an experimental \command{configure} option
+      \option{--with-libdeflate-compression} which uses
       \code{libdeflate} rather than \code{libz} to (de)compress \R
       objects in lazy-load databases, if the \code{libdeflate} library
-      and headers are available.  Typically tasks spend up to
-      5\% of their time on such operations, although creating
-      lazy-data databases is one of the exceptions.
+      and headers are available.  Typically tasks spend up to 5\% of
+      their time on such operations, although creating lazy-data
+      databases is one of the exceptions.
+
+      \emph{pro tem} this can also be selected by setting enviroment
+      variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
     }
   }
 
