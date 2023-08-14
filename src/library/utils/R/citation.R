@@ -734,7 +734,7 @@ function(x, style = "text", .bibstyle = NULL,
         permissive <-
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
-        permissive <- tools:::config_val_to_logical(permissive)
+        permissive <- str2logical(permissive)
         if(is.null(macros))
             macros <- tools:::initialRdMacros()
         else if(is.character(macros))
