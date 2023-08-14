@@ -131,7 +131,7 @@ static SEXP R_Srcfiles_buffer = NULL;              /* a big RAWSXP to use as a b
 static int R_Profiling_Error;		           /* record errors here */
 static int R_Filter_Callframes = 0;	      	   /* whether to record only the trailing branch of call trees */
 
-typedef enum { RPE_CPU, RPE_WALL } rpe_type;       /* profiling event, CPU time or wall-clock time */
+typedef enum { RPE_CPU, RPE_ELAPSED } rpe_type;    /* profiling event, CPU time or elapsed time */
 static rpe_type R_Profiling_Event;
 
 #ifdef Win32
@@ -655,7 +655,7 @@ static void R_EndProfiling(void)
 	itv.it_value.tv_usec = 0;
 	setitimer(ITIMER_PROF, &itv, NULL);
     }
-    if (R_Profiling_Event == RPE_WALL) {
+    if (R_Profiling_Event == RPE_ELAPSED) {
 	R_profile_thread_info_t *nfo = &R_Profile_Thread_Info;
 	pthread_mutex_lock(&nfo->terminate_mu);
 	nfo->should_terminate = 1;
@@ -780,7 +780,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 
     signal(SIGPROF, doprof);
 
-    if (R_Profiling_Event == RPE_WALL) {
+    if (R_Profiling_Event == RPE_ELAPSED) {
 # ifdef HAVE_PTHREAD
 	R_profile_thread_info_t *nfo = &R_Profile_Thread_Info;
 
@@ -878,8 +878,8 @@ SEXP do_Rprof(SEXP args)
 	error(_("invalid '%s' argument"), "event");
     event_arg = translateChar(STRING_ELT(CAR(args), 0));
 #ifdef Win32
-    if (streql(event_arg, "wall") || streql(event_arg, "default"))
-	event = RPE_WALL;
+    if (streql(event_arg, "elapsed") || streql(event_arg, "default"))
+	event = RPE_ELAPSED;
     else if (streql(event_arg, "cpu"))
 	error("event type '%s' not supported on this platform", event_arg);
     else
@@ -887,8 +887,8 @@ SEXP do_Rprof(SEXP args)
 #else
     if (streql(event_arg, "cpu") || streql(event_arg, "default"))
 	event = RPE_CPU;
-    else if (streql(event_arg, "wall"))
-	event = RPE_WALL;
+    else if (streql(event_arg, "elapsed"))
+	event = RPE_ELAPSED;
     else
 	error(_("invalid '%s' argument"), "event");
 #endif

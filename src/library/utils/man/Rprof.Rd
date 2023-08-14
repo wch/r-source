@@ -14,7 +14,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
        memory.profiling = FALSE, gc.profiling = FALSE,
        line.profiling = FALSE, filter.callframes = FALSE,
        numfiles = 100L, bufsize = 10000L,
-       event = c("default", "cpu", "wall"))
+       event = c("default", "cpu", "elapsed"))
 }
 \arguments{
   \item{filename}{
@@ -35,8 +35,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   \item{numfiles, bufsize}{integers: line profiling memory allocation}
   \item{event}{
     character: profiling event, character vector of length one,
-    \code{"wall"} for wall-clock time and \code{"cpu"} for CPU
-    time, both measured in seconds. \code{"default"} is the default
+    \code{"elapsed"} for elapsed (real, wall-clock) time and \code{"cpu"}
+    for CPU time, both measured in seconds. \code{"default"} is the default
     event on the platform, one of the two. See the \sQuote{Details}.
   }
 }
@@ -52,7 +52,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
 
   Exactly what is measured is subtle and depends on the profiling event.
 
-  With \code{"wall"} (the default and only supported event on Windows): it
+  With \code{"elapsed"} (the default and only supported event on Windows): it
   is time that the \R process is running and executing an \R command.  It is
   not however just CPU time, for if \code{readline()} is waiting for input,
   that counts as well.  It is also known as `elapsed' time.
@@ -61,7 +61,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   for identifying performance bottlenecks), it is CPU time of the \R process,
   so for example excludes time when \R is waiting for input or for processes
   run by \code{\link{system}} to return.  It may go slower than
-  \code{"wall"} when the process is often waiting for I/O to finish, but it
+  \code{"elapsed"} when the process is often waiting for I/O to finish, but it
   may go faster with actively computing concurrent threads (say via OpenMP)
   on a multi-core system.
 
@@ -73,10 +73,10 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   least 10ms, on all other platforms at least 1ms.  Shorter intervals will
   be rounded up with a warning.
 
-  The \code{"default"} profiling event is \code{"wall"} on Windows and
+  The \code{"default"} profiling event is \code{"elapsed"} on Windows and
   \code{"cpu"} on Unix. 
 
-  Support for \code{"wall"} event on Unix is new and considered
+  Support for \code{"elapsed"} event on Unix is new and considered
   experimental.  To reduce the risk of missing a sample, R tries to use the
   (real-time) FIFO scheduling policy with the maximum scheduling priority
   for an internal thread which initiates collection of each sample.  If
