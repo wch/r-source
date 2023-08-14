@@ -1,6 +1,6 @@
 % File src/library/base/man/Rhome.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rhome}
@@ -28,6 +28,10 @@ R.home(component = "home")
   and is the value of an environment variable of that name in an \R
   session.
   It can be found outside an \R session by \code{R \link[utils]{RHOME}}.
+
+  The paths to components often are subdirectories of \var{R_HOME} but
+  need not be:  \code{"doc"}, \code{"include"} and \code{"share"} are
+  not for a binary Debian/Ubuntu installation of \R.
 }
 \value{
   A character string giving the \R home directory or path to a
@@ -57,8 +61,9 @@ R.home(component = "home")
   \code{\link{commandArgs}()[1]} may provide related information.
 }
 \examples{
-## These result quite platform dependently :
+## These result quite platform-dependently :
 rbind(home = R.home(),
-      bin  = R.home("bin")) # often a sub directory of 'home'
+      bin  = R.home("bin")) # often the 'bin' sub directory of 'home'
+                            # but not always ...
 list.files(R.home("bin"))
 }
