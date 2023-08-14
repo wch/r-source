@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -123,9 +123,11 @@
   \code{"warnIncomplete"}.)
 
   Using \code{control = "exact"} (short for \code{control = c("all", "hexNumeric")})
-  comes closest to making \code{deparse()} an inverse of \code{parse()}. However,
-  not all objects are deparse-able even with these options, and a warning will
-  be issued if the function recognizes that it is being asked to do the
+  comes closest to making \code{deparse()} an inverse of \code{parse()}
+  (but we have not yet seen an example where \code{"all"}, now including
+   \code{"digits17"}, would not have been as good).  However, not all
+  objects are deparse-able even with these options, and a warning will be
+  issued if the function recognizes that it is being asked to do the
   impossible.
 
   Only one of \code{"hexNumeric"} and \code{"digits17"} can be specified.
