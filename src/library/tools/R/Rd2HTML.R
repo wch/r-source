@@ -1497,11 +1497,13 @@ function(dir)
     ## to ship the logo.
     ## For now, do simply hyperlinks.
     if(!is.na(aatr)) {
+        if(is.na(aut <- desc["Author"]))
+            aut <- utils:::.format_authors_at_R_field_for_author(aatr)
         desc["Author"] <-
             gsub(sprintf("&lt;(https://orcid.org/%s)&gt;",
                          .ORCID_iD_regexp),
                  "<a href=\"\\1\">\\1</a>",
-                 gsub("\n", "<br/>", desc["Author"]))
+                 gsub("\n", "<br/>", aut))
     }
     ## </NOTE>
     desc["License"] <- htmlify_license_spec(desc["License"], pack)
