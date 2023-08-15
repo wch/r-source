@@ -832,6 +832,15 @@ stopifnot(exprs = {
 ## norm() and  kappa(., exact=TRUE, ..)  now work ok in many more cases
 
 
+## argument matching for round/signif (not handled properly in R <= 4.3.x)
+round("days", x = Sys.time())
+round(, x = 1)
+signif(, x = 1)
+(function(...) round(..., 1, ))()
+(function(...) signif(..., 1, ))()
+tools::assertError(round(digits = 1, x =))
+tools::assertError(signif(digits = 1, x =))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
