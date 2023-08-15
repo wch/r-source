@@ -74,3 +74,30 @@ NEWS_Rd <- readRDS(file.path(R.home("doc"), "NEWS.rds"))
 stopifnot(inherits(NEWS_Rd, "Rd"),
           length(print(checkRd(NEWS_Rd))) == 0L)
 ## "Must have a \description" in R < 4.4.0, now moved to checkRdContents()
+
+## An unmatched un-escaped '{' in a comment in \examples{} ... should *NOT* trip up, but does
+
+txt <- r"(\title{Commented left-brace in Example}
+\name{ex-comm-brace}
+\examples{
+  if(1 <= 11) { # if(require("MASS")) \{  << only works when escaped with '\\'
+    fractions(355, 112)
+  }% if(.)
+}
+\keyword{misc})"
+## these all work fine:
+
+(rd1 <- parse_Rd(con <- textConnection(txt))); close(con)
+Rd2ex(rd1)
+Rd2txt(rd1)
+## etc
+
+## however: When I try the bare "{" instead of  "\{"
+txt0 <- sub("\\{", "{", txt, fixed=TRUE)
+stopifnot(nchar(txt0) == nchar(txt) - 1)
+## This currently gives a warning .. and later problems {-> package checking etc}
+rd0 <- parse_Rd(con0 <- textConnection(txt0)); close(con0)
+## Warning message:
+## In parse_Rd(con0) : <connection>:8: unexpected section header '\keyword'
+checkRd(rd0)
+Rd2ex(rd0) # shows extra "}" and "{misc}"
