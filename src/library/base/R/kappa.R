@@ -1,7 +1,7 @@
 #  File src/library/base/R/kappa.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2020 The R Core Team
+#  Copyright (C) 1998-2023 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,9 @@
 
 norm <- function(x, type = c("O", "I", "F", "M", "2")) {
     if(identical("2", type)) {
-	if(anyNA(x))
+        if(!length(x))
+            0
+        else if(anyNA(x))
 	    NA_real_
 	else
 	    svd(x, nu = 0L, nv = 0L)$d[1L]

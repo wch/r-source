@@ -67,6 +67,9 @@
       \item \code{qqplot(x,y, conf.level=.)} gives better confidence bounds
       when \code{length(x) != length(y)}, thanks to Alexander Ploner's
       report and patch proposal (\PR{18557}).
+
+      \item \code{norm(<0-length>, "2")} now gives zero instead of an
+      error, as all the other norm types, thanks to Mikael Jagan's \PR{18542}.
     }
   }
 }
