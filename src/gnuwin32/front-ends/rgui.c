@@ -31,7 +31,7 @@
 extern void cmdlineoptions(int, char **);
 extern int setupui(void);
 extern void Rf_mainloop(void);
-__declspec(dllimport) extern UImode CharacterMode;
+extern UImode CharacterMode;
 extern void GA_exitapp(void);
 
 extern char *getDLLVersion(void);

@@ -35,7 +35,7 @@ static char MDIStatusText[256] = "" ;
 
 static HWND intMDIStatus=0;
 
-int addstatusbar()
+int addstatusbar(void)
 {
     int a[1] = {-1};
     if (!MDIFrame) return 0;
@@ -54,7 +54,7 @@ int addstatusbar()
     return 1;
 }
 
-int delstatusbar()
+int delstatusbar(void)
 {
     if (!MDIFrame) return 0;
     MDIStatus = 0; /* handle_mdiframeresize notices this */

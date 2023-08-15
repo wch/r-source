@@ -707,7 +707,7 @@ void hide_window(object obj)
     }
 }
 
-int ismdi()
+int ismdi(void)
 {
     return (hwndClient!=NULL);
 }

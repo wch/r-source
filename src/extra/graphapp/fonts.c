@@ -35,11 +35,13 @@
 /*
  *  Pre-defined library fonts.
  */
-__declspec(dllexport)	font SystemFont = NULL;
-__declspec(dllexport)	font FixedFont  = NULL;
-__declspec(dllexport)	font Times      = NULL;
-__declspec(dllexport)	font Helvetica  = NULL;
-__declspec(dllexport)	font Courier    = NULL;
+
+/* exporting is now done via .def file in R */
+/* __declspec(dllexport) */	font SystemFont = NULL;
+/* __declspec(dllexport) */	font FixedFont  = NULL;
+/* __declspec(dllexport) */	font Times      = NULL;
+/* __declspec(dllexport) */	font Helvetica  = NULL;
+/* __declspec(dllexport) */	font Courier    = NULL;
 
 /*
  *  Dots per inch for the screen.
@@ -99,7 +101,7 @@ PROTECTED font new_font_object(HFONT hf)
     return (font) obj;
 }
 
-rect getSysFontSize()
+rect getSysFontSize(void)
 {
     return  SystemFont->rect;
 }
@@ -153,7 +155,7 @@ void init_fonts(void)
    https://tedwvc.wordpress.com/2019/09/09/new-utf-8-features-in-windows-10-1903/
    R PR#18382
 */
-UINT default_font_charset()
+UINT default_font_charset(void)
 {
     if (GetACP() == 65001) {
 	CHARSETINFO csinfo;

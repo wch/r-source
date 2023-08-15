@@ -401,7 +401,7 @@ static void menutools(control m)
     }
 }
 
-void showstatusbar()
+void showstatusbar(void)
 {
     if(ismdi() && !ischecked(mstatus)) {
 	addstatusbar();
@@ -858,7 +858,7 @@ static Rboolean tryLoadRconsole(char *format, char *varname, struct structGUI* g
     return FALSE;
 }
 
-void readconsolecfg()
+void readconsolecfg(void)
 {
     char  fn[128];
     int   sty = Plain;
@@ -1077,7 +1077,7 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
     return 0;
 }
 
-static int RguiWindowMenu()
+static int RguiWindowMenu(void)
 {
     if (ismdi())
 	newmdimenu();

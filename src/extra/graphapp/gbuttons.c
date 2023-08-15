@@ -107,7 +107,7 @@ void scrolltext(textbox c, int lines)
 }
 
 
-int ggetkeystate()
+int ggetkeystate(void)
 {
     int k = 0;
     if (GetKeyState(VK_CONTROL)&0x8000)
@@ -204,7 +204,7 @@ void checklimittext(textbox t, long n)
 
 /* Length of text in the clipboard */
 
-long getpastelength()
+long getpastelength(void)
 {
     HGLOBAL hglb;
     char *text;

@@ -80,8 +80,8 @@ Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 static FILE *ifp = NULL;
 static char *ifile = NULL;
 
-__declspec(dllexport) UImode  CharacterMode = RGui; /* some compilers want initialized for export */
-__declspec(dllexport) Rboolean EmitEmbeddedUTF8 = FALSE;
+UImode  CharacterMode = RGui; /* some compilers want initialized for export */
+Rboolean EmitEmbeddedUTF8 = FALSE;
 int ConsoleAcceptCmd;
 Rboolean set_workspace_name(const char *fn); /* ../main/startup.c */
 
@@ -90,7 +90,7 @@ Rboolean AllDevicesKilled = FALSE;
 
 static char oldtitle[512];
 
-__declspec(dllexport) Rboolean UserBreak = FALSE;
+Rboolean UserBreak = FALSE;
 
 /* callbacks */
 static void R_DoNothing(void) {}
@@ -99,7 +99,7 @@ static void R_DoNothing(void) {}
  *   Called at I/O, during eval etc to process GUI events.
  */
 
-typedef void (*DO_FUNC)();
+typedef void (*DO_FUNC)(void);
 static void (* R_Tcl_do)(void) = NULL; /* Initialized to be sure */
 
 void set_R_Tcldo(DO_FUNC ptr)
@@ -1375,7 +1375,7 @@ void saveConsoleTitle(void)
  * This function returns 16,777,216 based on
  * https://blogs.technet.microsoft.com/markrussinovich/2009/09/29/pushing-the-limits-of-windows-handles
  */
-int R_GetFDLimit()
+int R_GetFDLimit(void)
 {
     long limit = 16L*1024L*1024L;
     return (limit > INT_MAX) ? INT_MAX : limit;

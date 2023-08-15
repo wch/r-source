@@ -1411,7 +1411,7 @@ rgb myGetSysColor(int x)
     return rgb( (col)&0xFFUL, (col>>8)&0xFFUL, (col>>16)&0x00FFUL );
 }
 
-rgb dialog_bg()
+rgb dialog_bg(void)
 {
     return myGetSysColor(COLOR_BTNFACE);
 }

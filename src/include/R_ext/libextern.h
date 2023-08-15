@@ -34,7 +34,8 @@
 
 #ifdef _WIN32 /* _WIN32 as does not depend on config.h */
 #define LibImport __declspec(dllimport)
-#define LibExport __declspec(dllexport)
+/* exporting is now done via .def file in R */
+#define LibExport /* __declspec(dllexport) */
 #else
 #define LibImport
 #define LibExport

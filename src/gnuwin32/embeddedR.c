@@ -35,11 +35,11 @@
 extern int UserBreak;
 
 /* calls into the R DLL */
-extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
+extern char *getDLLVersion(void), *getRUser(void), *get_R_HOME(void);
 extern void freeRUser(char *), free_R_HOME(char *);
-extern void R_SetParams(Rstart), R_setStartTime();
+extern void R_SetParams(Rstart), R_setStartTime(void);
 extern void ProcessEvents(void);
-extern int R_DefParamsEx(Rstart, int), R_ReplDLLdo1();
+extern int R_DefParamsEx(Rstart, int), R_ReplDLLdo1(void);
 
 
 /* simple input, simple output */
@@ -62,7 +62,7 @@ static void myWriteConsole(const char *buf, int len)
     printf("%s", buf);
 }
 
-static void myCallBack()
+static void myCallBack(void)
 {
     /* called during i/o, eval, graphics in ProcessEvents */
 }

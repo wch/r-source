@@ -31,13 +31,14 @@
 
 #include "internal.h"
 
-__declspec(dllexport) cursor	ArrowCursor = NULL;
-__declspec(dllexport) cursor	BlankCursor = NULL;
-__declspec(dllexport) cursor	WatchCursor = NULL;
-__declspec(dllexport) cursor	CaretCursor = NULL;
-__declspec(dllexport) cursor	TextCursor  = NULL;
-__declspec(dllexport) cursor	HandCursor  = NULL;
-__declspec(dllexport) cursor	CrossCursor  = NULL;
+/* exporting is now done via .def file in R */
+/* __declspec(dllexport) */ cursor	ArrowCursor = NULL;
+/* __declspec(dllexport) */ cursor	BlankCursor = NULL;
+/* __declspec(dllexport) */ cursor	WatchCursor = NULL;
+/* __declspec(dllexport) */ cursor	CaretCursor = NULL;
+/* __declspec(dllexport) */ cursor	TextCursor  = NULL;
+/* __declspec(dllexport) */ cursor	HandCursor  = NULL;
+/* __declspec(dllexport) */ cursor	CrossCursor  = NULL;
 
 /*
  *  Define the 'Hand' image shape:

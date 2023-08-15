@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2022   The R Core Team
+ *  Copyright (C) 2004-2023   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2294,7 +2294,7 @@ console newconsole(char *name, int flags)
     return(c);
 }
 
-void  consolehelp()
+void  consolehelp(void)
 {
     char s[4096];
 

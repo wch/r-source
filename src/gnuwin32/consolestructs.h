@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file consolestructs.h
  *  Copyright (C) 2004-8      The R Foundation
+ *  Copyright (C) 2023        The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,7 +66,7 @@ struct structConsoleData {
 	prompt_len, prompt_wid; /* editing */
 
     char  chbrk, modbrk;	/* hook for user's break */
-    void  (*fbrk) ();
+    actionfn fbrk;
     
     int cursor_blink;
 

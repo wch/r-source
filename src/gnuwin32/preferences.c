@@ -924,7 +924,7 @@ static void showDialog(Gui gui)
     show(wconfig);
 }
 
-void Rgui_configure()
+void Rgui_configure(void)
 {
     struct structGUI curGUI;
 
