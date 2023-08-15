@@ -109,6 +109,9 @@
       \item \code{diff()} for objects of class \code{"Date"}, 
       \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{"units"} 
       argument passed via \code{...}.
+
+      \item Dynamic help now does a much better job rendering package
+      \file{DESCRIPTION} metadata.
     }
   }
 
@@ -166,6 +169,11 @@
 
       \item \command{R CMD check} now visits \file{inst/NEWS.Rd}
       when checking Rd files.
+
+      \item \code{tools::checkDocFiles()} and
+      \code{tools::checkRdContents()} now also check internal Rd files
+      by default, but \dQuote{specially} (ignoring missing documentation
+      of arguments).
     }
   }
 
