@@ -136,7 +136,7 @@
       their time on such operations, although creating lazy-data
       databases is one of the exceptions.
 
-      \emph{pro tem} this can also be selected by setting enviroment
+      \emph{pro tem} this can also be selected by setting environment
       variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
     }
   }
