@@ -112,6 +112,9 @@
 
       \item Dynamic help now does a much better job rendering package
       \file{DESCRIPTION} metadata.
+
+      \item \code{Rprof()} gains an \code{event} argument and support
+      for elapsed (real) time profiling on Unix (\PR{18076}).
     }
   }
 
