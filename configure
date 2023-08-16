@@ -5390,7 +5390,6 @@ fi
 done
 test -n "$SED" || SED="/bin/sed"
 
-${SED} --version | grep "GNU sed" && set SED="$SED --posix"
 
 ## 'which' is not POSIX, and might be a shell builtin or alias
 ##  (but should not be in 'sh')
@@ -27116,7 +27115,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27121: \"$ac_link\") >&5
+(eval echo $as_me:27120: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27192,7 +27191,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27197: \"$ac_link\") >&5
+(eval echo $as_me:27196: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
