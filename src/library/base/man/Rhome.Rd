@@ -31,7 +31,7 @@ R.home(component = "home")
 
   The paths to components often are subdirectories of \var{R_HOME} but
   need not be:  \code{"doc"}, \code{"include"} and \code{"share"} are
-  not for a binary Debian/Ubuntu installation of \R.
+  not for some Linux binary installations of \R.
 }
 \value{
   A character string giving the \R home directory or path to a
