@@ -270,6 +270,10 @@
       build} works).  \code{tools::checkRdContents()} has been updated
       to detect such template leftovers, including from
       \code{promptPackage()}.
+
+      \item When S4 method dispatch fails because no method was found, the
+      error message now includes the signature argument names; thanks to
+      Michael Chirico's proposal on R-devel.
     }
   }
 }

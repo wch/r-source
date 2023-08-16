@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -752,11 +752,13 @@
   if(length(methods) == 1L)
     return(methods[[1L]]) # the method
   else if(length(methods) == 0L) {
-    cnames <- paste0("\"", vapply(classes, as.character, ""), "\"",
+    cnames <- paste0(fdef@signature[seq_along(classes)], ' = "',
+                     vapply(classes, as.character, ""), "\"",
 		     collapse = ", ")
     stop(gettextf("unable to find an inherited method for function %s for signature %s",
                   sQuote(fdef@generic),
                   sQuote(cnames)),
+         call. = FALSE,
          domain = NA)
   }
   else
@@ -784,7 +786,7 @@
         if(is.environment(value)) {
             pkgs <- names(value)
             if(length(pkgs) == 1)
-                value <- value[[pkgs]]
+                value[[pkgs]]
             else if(length(pkgs) == 0)
                 value <- NULL
             ## else, return the environment indicating multiple possibilities

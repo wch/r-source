@@ -142,3 +142,19 @@ setAs("foo", "A", function(from) new("A", foo=from))
 o3 <- structure(1:7, class = c("foo", "bar"))
 stopifnot( canCoerce(o3, "A") )
 ## failed in R <= 3.6.1
+
+
+## Error message of  "unable to find .. method" now lists signature argument names:
+setGeneric("BaseGeneric", \(x, y, ...) standardGeneric("BaseGeneric"))
+setMethod("BaseGeneric", signature(x = "numeric", y = "numeric"), \(x,y, ...) x + y)
+errXY <- try(BaseGeneric(X = 1, Y = 2))
+err1  <- try(BaseGeneric(1))
+err1Y <- try(BaseGeneric(1, Y = 2))
+stopifnot(exprs = {
+    identical(3, BaseGeneric(1, 2))
+    inherits(errXY, "try-error")
+    grepl('x = "missing", y = "missing"', attr(errXY,"condition")$message)
+    inherits(err1,  "try-error")
+    grepl('x = "numeric", y = "missing"', attr(err1, "condition")$message)
+    identical(err1, err1Y) # (as $call is empty)
+})
