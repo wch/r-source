@@ -1210,9 +1210,13 @@ struct R_dirent *R_readdir(R_DIR *rdir)
 	    return NULL;
     } else if (rdir->hfind != INVALID_HANDLE_VALUE) {
 	/* continuing the search */
-	if (!FindNextFileW(rdir->hfind, &rdir->fdata))
+	if (!FindNextFileW(rdir->hfind, &rdir->fdata)) {
+	    if (GetLastError() != ERROR_NO_MORE_FILES)
+		warning(_("error while listing a directory: '%s'"),
+		    formatError(GetLastError()));
 	    /* keep errno, no more files */
 	    return NULL;
+	}
     } else {
 	errno = EFAULT;
 	return NULL;
