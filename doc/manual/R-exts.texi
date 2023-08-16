@@ -9016,7 +9016,11 @@ command-line version prior to macOS 12.
 @subsection Windows
 
 @command{Very Sleepy}
-(@uref{https://github.com/VerySleepy/verysleepy}) has been used.
+(@uref{https://github.com/VerySleepy/verysleepy}) has been used.  There were
+problems with accessing the debug information, but the best results which
+included function names were obtained by attaching the profiler to an
+existing @command{Rterm} process, either via GUI or using @option{/a:}
+(pid obtained via @command{Sys.getpid()}).
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
