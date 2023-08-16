@@ -475,7 +475,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(*x), R_typeToChar(*y));
     }
 
     if (stretch) {
@@ -1122,7 +1122,7 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in matrix subset assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
     }
     UNPROTECT(2);
     return x;
@@ -1356,7 +1356,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in array subset assignment"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(x), R_typeToChar(y));
     }
 
     UNPROTECT(3);
@@ -2019,7 +2019,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	default:
 	    error(_("incompatible types (from %s to %s) in [[ assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
