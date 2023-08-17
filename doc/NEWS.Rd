@@ -117,6 +117,10 @@
       for elapsed (real) time profiling on Unix (\PR{18076}).
 
       \item \code{filled.contour()} gains \code{key.border} argument.
+
+      \item \code{tools::update_pkg_po()} gets \code{pot_make} and
+      \code{mo_make} options for \emph{not} re-making the corresponding
+      files, and additionally option \code{verbose}.
     }
   }
 
