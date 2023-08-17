@@ -686,7 +686,7 @@ function() {
 ### ** config_val_to_logical
 
 config_val_to_logical <-
-function(val) utils:::str2logical(val)
+function(val, na.ok=TRUE) utils:::str2logical(val, na.ok=na.ok)
 
 ### ** .canonicalize_doi
 
@@ -1582,7 +1582,7 @@ function(fname)
 {
     ## Determine whether object named 'fname' found in the base
     ## environment is a primitive function.
-    is.primitive(get(fname, envir = baseenv(), inherits = FALSE))
+    is.primitive(baseenv()[[fname]])
 }
 
 ### ** .is_S3_generic
@@ -1978,7 +1978,7 @@ function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
     ## 'pattern' as a wildcard pattern.
     if(pattern != "*")
         packages <- packages[grepl(utils::glob2rx(pattern), packages)]
-    
+
     ## Keep in sync with .unpacked_source_repository_apply().
     ## <FIXME>
     ## Should we really catch errors?
