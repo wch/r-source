@@ -173,7 +173,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if(nl > 3L && startsWith(txt[nl-2L], "> proc.time()"))
             txt <- txt[1:(nl-3L)]
         ## remove text between IGNORE_RDIFF markers.
-        ## maybe this should only be done for forEx = TRUE?
+        ## documented in ?Rdiff, i.e., not only  if(forEx)
         txt <- txt[(cumsum(txt == "> ## IGNORE_RDIFF_BEGIN") <=
                     cumsum(txt == "> ## IGNORE_RDIFF_END"))]
         ## (Keeps the end markers, but that's ok.)
@@ -691,6 +691,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
                 "reg-tests-1e",
                 "reg-examples1", "reg-examples2", "reg-packages",
                 "reg-S4-examples",
+                "classes-methods",
                 ## reg-translation, reg-ex*3 ... see "devel" below
                 "datetime3",
                 "p-qbeta-strict-tst",
@@ -727,7 +728,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
             }
             ## ignore all 'extra' (incl. 'inC')  and hope
             mkCmd <- identity
-        } else { ## non-Windows 
+        } else { ## non-Windows
             extra <- if(inC) paste(extra0,  "LC_ALL=C") else extra0
             mkCmd <- function(cmd) paste(extra, cmd)
         }
@@ -915,12 +916,13 @@ detachPackages <- function(pkgs, verbose = TRUE)
     options(showErrorCalls=FALSE)
 
     Usage <- function() {
-        cat("Usage: R CMD Rdiff FROM-FILE TO-FILE EXITSTATUS",
+        cat("Usage: R CMD Rdiff [options] FROM-file TO-file EXITSTATUS",
             "",
             "Diff R output files FROM-FILE and TO-FILE discarding the R startup message,",
             "where FROM-FILE equal to '-' means stdin.",
             "",
             "Options:",
+            "  -e, --forEx    uses 'forEx = TRUE' in Rdiff()",
             "  -h, --help     print this help message and exit",
             "  -v, --version  print version info and exit",
             "",
@@ -958,17 +960,19 @@ detachPackages <- function(pkgs, verbose = TRUE)
         Usage()
         do_exit(1L)
     }
-
     if (length(args) == 0L) {
         Usage()
         do_exit(1L)
     }
+    ## options before file args {potentially allow multiple}:
+    forEx <- any(is.ex <- args %in% c("-e", "--forEx"))
+    if(forEx) args <- args[!is.ex]
     exitstatus <- as.integer(args[3L])
     if(is.na(exitstatus)) # default, also if length(args) == 2
         exitstatus <- 0L
     left <- args[1L]
     if(left == "-") left <- "stdin"
-    status <- Rdiff(left, args[2L], useDiff = TRUE)
+    status <- Rdiff(left, args[2L], useDiff = TRUE, forEx = forEx)
     if(status) status <- exitstatus
     do_exit(status)
 } ## .Rdiff()

@@ -183,6 +183,8 @@
       \code{tools::checkRdContents()} now also check internal Rd files
       by default, but \dQuote{specially} (ignoring missing documentation
       of arguments).
+
+      \item \command{R CMD Rdiff} gets option \option{--useEx}.
     }
   }
 
