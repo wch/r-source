@@ -47,7 +47,8 @@ rpackages-cross:
 cairodevices:
 ifneq "$(USE_CAIRO)" ""
 	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all \
-	  WIN=$(WIN) CAIRO_LIBS=$(CAIRO_LIBS) CAIRO_CPPFLAGS=$(CAIRO_CPPFLAGS)
+	  CAIRO_LIBS=$(CAIRO_LIBS) CAIRO_CPPFLAGS=$(CAIRO_CPPFLAGS) \
+	  R_ARCH=$(R_ARCH)
 endif
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
@@ -331,7 +332,8 @@ cleanwin0: MkRules fixfiles
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C ../library/grDevices/src/cairo -f Makefile.win clean WIN=$(WIN)
+	$(MAKE) -C ../library/grDevices/src/cairo -f Makefile.win clean \
+	        R_ARCH=$(R_ARCH)
 
 cleanwin: cleaninstaller cleanwin0
 
