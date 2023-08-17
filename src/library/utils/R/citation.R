@@ -593,10 +593,13 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
         ## canonicalize
         pos <- fields %in% c("author", "editor")
 	if(any(pos)) {
-            for(i in which(pos)) rval[[i]] <- as.person(rval[[i]])
+            for(i in which(pos))
+                rval[[i]] <- as.person(rval[[i]])
 	}
 	if(any(!pos)) {
-            for(i in which(!pos)) rval[[i]] <- as.character(rval[[i]])
+            for(i in which(!pos))
+                rval[[i]] <- trimws(paste(as.character(rval[[i]]),
+                                          collapse = " "))
 	}
 
         ## set attributes
