@@ -40,7 +40,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max(args_length)))
+    args <- lapply(args, rep_len, max(args_length))
 
     ## <COMMENT Z>
     ## We could do this more elegantly, but let's just go through the
@@ -556,7 +556,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max_length))
+    args <- lapply(args, rep_len, max_length)
 
     other_length <- lengths(other)
     if(!all(other_length_ok <- other_length %in% c(1L, max_length)))
@@ -564,7 +564,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(other)[!other_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    other <- lapply(other, function(x) rep_len(x, max_length))
+    other <- lapply(other, rep_len, max_length)
 
     bibentry1 <-
     function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL, ..., other = list())
