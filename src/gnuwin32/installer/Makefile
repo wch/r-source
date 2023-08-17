@@ -104,7 +104,7 @@ imagedir:
 	$(CP) -pR ../windlgs $(RPREFIX)/src/library
 ifeq "$(WIN)" "64" 
 # Edit Makeconf
-	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc/x64/Makeconf
+	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc$(R_ARCH)/Makeconf
 # Edit Rcmd_environ
 	$(SED) -i -e 's!# INSTALLER-BUILD:!!' $(RPREFIX)/etc/Rcmd_environ
 # Edit base package profile

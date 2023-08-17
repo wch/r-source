@@ -161,7 +161,8 @@ fixed/fixdesc:
 dllversion.o: ../include/Rversion.h
 
 ## Rdll.hide has decoration which 64-bit builds lack
-ifeq "$(WIN)" "64"
+ifneq "$(WIN)" "32"
+  ## 64-bit
 R.dll: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
 	@$(ECHO) EXPORTS > R.def
 	@$(NM) $^ | $(SED) -n  $(SYMPAT) | LC_COLLATE=C $(SORT) | \

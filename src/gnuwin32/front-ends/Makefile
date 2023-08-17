@@ -92,7 +92,7 @@ Rscript-LINKFLAGS = $(LARGE_ADDR) $(LARGE_STACK)
 Rgui.exe: graphappmain.o rgui.o rgico.o
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-ifneq "$(WIN)" "64"
+ifeq "$(WIN)" "32"
 rcico.o: Rcmd.exe.manifest
 rgico.o: RGui32.manifest
 rsico.o: Rscript.exe.manifest

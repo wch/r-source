@@ -1188,7 +1188,11 @@
 #define SIZEOF_LONG_LONG 8
 
 /* The size of `size_t', as computed by sizeof. */
-#define SIZEOF_SIZE_T @ST@
+#ifdef _WIN64
+# define SIZEOF_SIZE_T 8
+#else
+# define SIZEOF_SIZE_T 4
+#endif
 
 /* Workaround for win64 pow() precision issue in Mingw-w64 V3 and higher
    See http://sourceforge.net/p/mingw-w64/bugs/466 for discussion. */

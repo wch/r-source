@@ -24,8 +24,7 @@ fixetc: $(ETC) ../MkRules Makefile
 	$(CP) -p $(ETC) $(R_HOME)/etc
 	$(RM) $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
-ifeq "$(WIN)" "64"
-	$(SED) -e 's/WIN = 32/WIN = 64/' \
+	$(SED) -e 's/WIN = 32/WIN = $(WIN)/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
@@ -44,26 +43,6 @@ ifeq "$(WIN)" "64"
 	  -e "s|LTO =|LTO = $(LTO)|" \
 	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
-else
-	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
-	  -e "s/-O3/-O2/" \
-	  -e "s/@EOPTS@/$(EOPTS)/" \
-	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
-	  -e "s|USE_LLVM =|USE_LLVM ?= $(USE_LLVM)|" \
-	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
-	  -e "s|LOCAL_SOFT ?=|LOCAL_SOFT ?= $(LOCAL_SOFT)|" \
-	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
-	  -e "s|DT_ARCH =|DT_ARCH = $(DT_ARCH)|" \
-	  -e "s|RC_ARCH =|RC_ARCH = $(RC_ARCH)|" \
-	  -e "s|M_ARCH =|M_ARCH = $(M_ARCH)|" \
-	  -e "s|@SYMPAT@|$(SYMPAT)|" \
-	  -e "s|@OPENMP@|$(OPENMP)|" \
-	  -e "s|@PTHREAD@|$(PTHREAD)|" \
-	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
-	  -e "s|LTO =|LTO = $(LTO)|" \
-	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
-	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
-endif
 	$(SED) -e "s+@BINDIR@+$(BINDIR)+" \
 	   -e "s+@USE_LLVM@+$(USE_LLVM)+" \
 	   Makeconf > $(R_HOME)/Makeconf
