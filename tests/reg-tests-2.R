@@ -3368,3 +3368,12 @@ f <- function() {
 try(f())
 f <- compiler::cmpfun(f)
 try(f())
+
+
+## withAutoprint({ ... }}  -- losing srcrefs - PR#18572
+show.srcref <- function() str(sys.call())
+{
+#line 1 "file1.R"
+    withAutoprint({ show.srcref() })
+}
+## no   attr(*, "src..")   in R <= 4.3.1

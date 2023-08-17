@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -294,7 +294,7 @@ withAutoprint <- function(exprs, evaluated = FALSE, local = parent.frame(),
 	exprs <- substitute(exprs)
 	if(is.call(exprs)) {
 	    if(exprs[[1]] == quote(`{`))
-		exprs <- as.list(exprs[-1])
+		exprs <- as.list(exprs)[-1]
 	    ## else: use that call
 	} ## else can be 'symbol' or e.g. numeric constant
     }

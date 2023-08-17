@@ -282,6 +282,10 @@
       \item When S4 method dispatch fails because no method was found, the
       error message now includes the signature argument names; thanks to
       Michael Chirico's proposal on R-devel.
+
+      \item \code{withAutoprint({ .. })} now preserves \code{srcref}s
+      previously lost, thanks to Andrew Simmons' report plus fix in
+      \PR{18572}.
     }
   }
 }

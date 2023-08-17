@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-09 r84921) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -879,7 +879,7 @@ r1: list(value = quote({
         exprs <- substitute(exprs)
         if (is.call(exprs)) {
             if (exprs[[1]] == quote(`{`)) 
-                exprs <- as.list(exprs[-1])
+                exprs <- as.list(exprs)[-1]
         }
     }
     source(exprs = exprs, local = local, print.eval = print., 
@@ -898,7 +898,7 @@ r2: list(value = quote({
         exprs <- substitute(exprs)
         if (is.call(exprs)) {
             if (exprs[[1]] == quote(`{`)) 
-                exprs <- as.list(exprs[-1])
+                exprs <- as.list(exprs)[-1]
         }
     }
     source(exprs = exprs, local = local, print.eval = print., 
