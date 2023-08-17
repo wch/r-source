@@ -597,9 +597,19 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                 rval[[i]] <- as.person(rval[[i]])
 	}
 	if(any(!pos)) {
-            for(i in which(!pos))
-                rval[[i]] <- trimws(paste(as.character(rval[[i]]),
-                                          collapse = " "))
+            for(i in which(!pos)) {
+                s <- trimws(as.character(rval[[i]]))
+                ## <NOTE>
+                ## Further above we did
+                ##   rval <- rval[!vapply(rval, .is_not_nonempty_text, NA)]
+                ## which filters out args with *any* NA.
+                ## We could perhaps change this to test with not all NA
+                ## instead, in which case the NA test below would come
+                ## into action.
+                rval[[i]] <- paste(s[!is.na(s) & nzchar(s)],
+                                   collapse = " ")
+                ## </NOTE>
+            }
 	}
 
         ## set attributes
