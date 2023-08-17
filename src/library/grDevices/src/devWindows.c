@@ -3951,7 +3951,7 @@ static int Load_Rcairo_Dll()
 {
     if (!RcairoAlreadyLoaded) {
 	size_t needed = strlen(R_HomeDir())
-	                + strlen("/library/grDevices/libs")
+	                + strlen("/library/grDevices/libs/")
 			+ strlen(R_ARCH)
 			+ strlen("/winCairo.dll") + 1;
 	char *szFullPath = malloc(needed);
@@ -3960,7 +3960,7 @@ static int Load_Rcairo_Dll()
 	    return -1;
 	}
 	strcpy(szFullPath, R_HomeDir());
-	strcat(szFullPath, "/library/grDevices/libs");
+	strcat(szFullPath, "/library/grDevices/libs/");
 	strcat(szFullPath, R_ARCH);
 	strcat(szFullPath, "/winCairo.dll");
 	if (((hRcairoDll = LoadLibrary(szFullPath)) != NULL) &&
