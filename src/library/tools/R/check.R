@@ -6685,8 +6685,7 @@ add_dummies <- function(dir, Log)
     ## Currently, config_val_to_logical() (nowadays,
     ## utils:::str2logical()) does not allow getting NA quietly  ...
     R_check_Rd_internal_too <-
-        suppressWarnings(config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_",
-                                                          "NA")))
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_", "NA"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
     ## However, we cannot use this if we did not install the recommended
