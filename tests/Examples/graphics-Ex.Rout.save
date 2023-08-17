@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-01 r84816) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -976,8 +976,9 @@ temperature no yes
 > ## Persian Rug Art:
 > x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 > r <- sqrt(outer(x^2, y^2, `+`))
-> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
-> ## rather, the key *should* be labeled:
+> ## "minimal"
+> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE, key.border=NA)
+> ## rather, the key *should* be labeled (but axes still not):
 > filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,
 +                plot.axes = {})
 > 
