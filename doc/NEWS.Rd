@@ -96,7 +96,7 @@
       \item \code{memDecompress(type = "unknown")} recognizes compression
       in the default \sQuote{zlib} format as used by
       \code{memCompress(type = "gzip")}.
-      
+
       \item \code{memCompress()} and \code{memDecompress()} will use the
       \code{libdeflate} library
       (\url{https://github.com/ebiggers/libdeflate}) if installed.  This
@@ -106,8 +106,8 @@
       %% libdeflate 1.13 claims significant improvements in
       %% decompression speed.
 
-      \item \code{diff()} for objects of class \code{"Date"}, 
-      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{"units"} 
+      \item \code{diff()} for objects of class \code{"Date"},
+      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{units}
       argument passed via \code{...}.
 
       \item Dynamic help now does a much better job rendering package
@@ -115,6 +115,8 @@
 
       \item \code{Rprof()} gains an \code{event} argument and support
       for elapsed (real) time profiling on Unix (\PR{18076}).
+
+      \item \code{filled.contour()} gains \code{key.border} argument.
     }
   }
 
