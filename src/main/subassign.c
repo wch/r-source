@@ -273,12 +273,16 @@ static SEXP EnlargeNames(SEXP names, R_xlen_t len, R_xlen_t newlen)
 }
 
 /* used instead of coerceVector to embed a non-vector in a list for
-   purposes of SubassignTypeFix, for cases in wich coerceVector should
-   fail; namely, S4SXP */
+   purposes of SubassignTypeFix, for cases in which coerceVector should fail;
+   currently used only for OBJSXP = S4SXP */
 static SEXP embedInVector(SEXP v, SEXP call)
 {
     SEXP ans;
+
+  if(IS_S4_OBJECT(v))
     warningcall(call, "implicit list embedding of S4 objects is deprecated");
+  else
+      errorcall(call, "implicit list embedding of \"object\" is not possible"); // currently
     PROTECT(ans = allocVector(VECSXP, 1));
     SET_VECTOR_ELT(ans, 0, v);
     UNPROTECT(1);
@@ -298,6 +302,10 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
     return ans;
 }
 
+static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch,
+			    int level,
+			    SEXP call, SEXP rho)
+{
 /* Level 1 is used in VectorAssign, MatrixAssign, ArrayAssign.
    That coerces RHS to a list or expression.
 
@@ -305,9 +313,6 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
    This does not coerce when assigning into a list.
 */
 
-static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
-			    SEXP call, SEXP rho)
-{
     /* A rather pointless optimization, but level 2 used to be handled
        differently */
     Rboolean redo_which = TRUE;
