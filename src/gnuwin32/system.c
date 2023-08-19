@@ -1067,7 +1067,12 @@ int cmdlineoptions(int ac, char **av)
     Rboolean usedRdata = FALSE, processing = TRUE;
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
-    RHome = getRHOME(3);
+    int dirstrip = 2;
+#ifdef R_ARCH
+    if (strlen(R_ARCH) > 0)
+	dirstrip++;
+#endif 
+    RHome = getRHOME(dirstrip);
     if(!RHome)
 	R_Suicide("Invalid R_HOME");
     R_Home = RHome;

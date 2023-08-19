@@ -28,11 +28,10 @@ rcmdfn-CFLAGS = -DBINDIR='"$(BINDIR)"'
 
 all: makeMakedeps \
      $(R_HOME)/$(BINDIR)/Rgui.exe $(R_HOME)/$(BINDIR)/Rterm.exe \
-     $(R_HOME)/$(BINDIR)/Rcmd.exe  $(R_HOME)/$(BINDIR)/RSetReg.exe  \
-     $(R_HOME)/$(BINDIR)/R.exe\
-     $(R_HOME)/$(BINDIR)/Rscript.exe $(R_HOME)/$(BINDIR)/open.exe \
-     $(R_HOME)/$(BINDIR)/Rfe.exe \
-     $(R_HOME)/bin/R.exe $(R_HOME)/bin/Rscript.exe 
+     $(R_HOME)/$(BINDIR)/Rcmd.exe $(R_HOME)/$(BINDIR)/RSetReg.exe \
+     $(R_HOME)/$(BINDIR)/open.exe \
+     $(R_HOME)/bin/R.exe \
+     $(R_HOME)/bin/Rscript.exe
 
 $(R_HOME)/$(BINDIR)/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
@@ -54,6 +53,12 @@ $(R_HOME)/$(BINDIR)/R.exe: R.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
+ifneq "$(R_ARCH)" ""
+
+all: $(R_HOME)/$(BINDIR)/Rfe.exe \
+     $(R_HOME)/$(BINDIR)/Rscript.exe \
+     $(R_HOME)/$(BINDIR)/R.exe
+
 $(R_HOME)/$(BINDIR)/Rfe.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
@@ -65,6 +70,7 @@ $(R_HOME)/bin/R.exe: Rfe.exe
 $(R_HOME)/bin/Rscript.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
+endif
 
 $(R_HOME)/$(BINDIR)/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)

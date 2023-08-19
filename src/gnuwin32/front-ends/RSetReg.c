@@ -121,7 +121,12 @@ int main (int argc, char **argv)
 	}
     } else {
 	printf("registering R %s ... ", version);
-    	RHome = getRHOMElong(3);
+	int dirstrip = 2;
+#ifdef R_ARCH
+	if (strlen(R_ARCH) > 0)
+	    dirstrip++;
+#endif 
+    	RHome = getRHOMElong(dirstrip);
 
 	snprintf(keyname, 60, "Software\\%s\\R", PRODUCER);
 	if ((rc = RegOpenKeyEx(hk, keyname, 0, KEY_ALL_ACCESS, &hkey))

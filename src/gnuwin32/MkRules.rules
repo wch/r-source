@@ -18,7 +18,7 @@ AS_ARCH ?=
 RC_ARCH ?=
 DT_ARCH ?=
 ## only WIN=64 is supported from R 4.2.0
-WIN = 64
+WIN ?= 64
 USE_ICU ?= YES
 ICU_PATH ?= 
 ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
@@ -69,15 +69,21 @@ endif
 
 
 ifeq "$(WIN)" "64"
-R_ARCH = /x64
-arch_DEFS = -DR_ARCH='"x64"'
-BINPREF = $(BINPREF64)
-SYMPAT = 's/^.* [BCDRT] / /p'
-NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
+  R_ARCH = /x64
+  arch_DEFS = -DR_ARCH='"x64"'
+  BINPREF = $(BINPREF64)
+  SYMPAT = 's/^.* [BCDRT] / /p'
+  NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
+else ifeq "$(WIN)" "32"
+  R_ARCH = /i386
+  arch_DEFS = -DR_ARCH='"i386"'
+  SYMPAT = 's/^.* [BCDRT] _/ /p'
 else
-R_ARCH = /i386
-arch_DEFS = -DR_ARCH='"i386"'
-SYMPAT = 's/^.* [BCDRT] _/ /p'
+  R_ARCH = 
+  arch_DEFS = -DR_ARCH='""'
+  BINPREF = $(BINPREF64)
+  SYMPAT = 's/^.* [BCDRT] / /p'
+  NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
 endif
 
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.

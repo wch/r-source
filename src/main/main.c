@@ -911,8 +911,13 @@ void setup_Rmainloop(void)
 
 	/* We set R_ARCH here: Unix does it in the shell front-end */
 	char Rarch[30];
-	strcpy(Rarch, "R_ARCH=/");
-	strcat(Rarch, R_ARCH);
+	strcpy(Rarch, "R_ARCH=");
+# ifdef R_ARCH
+	if (strlen(R_ARCH) > 0) {
+	    strcat(Rarch, "/");
+	    strcat(Rarch, R_ARCH);
+	}
+# endif
 	putenv(Rarch);
     }
 #else /* not Win32 */

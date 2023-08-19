@@ -2539,8 +2539,13 @@ attribute_hidden SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This is true iff winCairo.dll is available */
     struct stat sb;
     char path[1000]; // R_HomeDir() should be at most 260 chars
+# ifdef R_ARCH
     snprintf(path, 1000, "%s/library/grDevices/libs/%s/winCairo.dll",
 	     R_HomeDir(), R_ARCH);
+# else
+    snprintf(path, 1000, "%s/library/grDevices/libs/winCairo.dll",
+	     R_HomeDir());
+# endif
     LOGICAL(ans)[i++] = stat(path, &sb) == 0;
 }
 #else

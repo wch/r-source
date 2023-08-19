@@ -101,6 +101,7 @@ R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp \
 
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
 extra-CPPFLAGS = -I../library/grDevices/src
+system-CPPFLAGS = $(arch_DEFS)
 
 Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
@@ -309,7 +310,8 @@ distclean: cleaninstaller distcleaninstaller clean0
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../tests/*.Rout ../../tests/*.Rout.fail
-	$(RM) -R ../../etc/i386 ../../etc/x64 # do both sub-archs
+	# do both sub-archs
+	$(RM) -R ../../etc$(R_ARCH)/Makeconf ../../etc/i386 ../../etc/x64
 	$(RM) -R ../../share/zoneinfo
 	$(MAKE) -C fixed distclean
 	$(MAKE) -C ../include -f Makefile.win distclean
