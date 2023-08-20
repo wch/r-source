@@ -8838,13 +8838,13 @@ This chapter is based on reports from users and the information may not
 be current.
 
 @menu
-* Linux::
-* macOS::
-* Windows::
+* Profilong on Linux::
+* Profiling on macOS::
+* Profiling on Windows::
 @end menu
 
-@node Linux, macOS, Profiling compiled code, Profiling compiled code
-@subsection Linux
+@node Profilong on Linux, Profiling on macOS, Profiling compiled code, Profiling compiled code
+@subsection Profiling on Linux
 
 Options include using @command{sprof} for a shared object, and
 @command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/})
@@ -9005,15 +9005,15 @@ rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 It is possible that root access will be needed to create the directories
 used for the profile data.
 
-@node macOS, Windows, Linux, Profiling compiled code
-@subsection macOS
+@node Profiling on macOS, Profiling on Windows, Profilong on Linux, Profiling compiled code
+@subsection Profiling on macOS
 
 Developers have recommended @command{Instruments} (part of @code{Xcode},
 see @uref{https://help.apple.com/instruments/mac/current/}), This had a
 command-line version prior to macOS 12.
 
-@node Profiling on Windows,  , macOS, Profiling compiled code
-@subsection Windows
+@node Profiling on Windows,  , Profiling on macOS, Profiling compiled code
+@subsection Profiling on Windows
 
 @command{Very Sleepy}
 (@uref{https://github.com/VerySleepy/verysleepy}) has been used.  There were
