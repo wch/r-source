@@ -1460,7 +1460,40 @@ function(dir)
                      rep.int(seq_along(chunks), lengths(chunks))),
                paste, "", collapse = ", ")
     }
-             
+
+    ## See <https://orcid.org/trademark-and-id-display-guidelines> for
+    ## ORCID identifier display guidelines.
+    ## We want the ORCID id transformed into a hyperlinked ORCID icon
+    ## right after the family name (but before the roles).  We can
+    ## achieve this by adding the canonicalized ORCID id (URL) to the
+    ## 'family' element and simultaneously dropping the ORCID id from
+    ## the 'comment' element, and then re-format.
+    .format_authors_at_R_field_with_expanded_ORCID_identifier <- function(a) {
+        x <- utils:::.read_authors_at_R_field(a)
+        format_person1 <- function(e) {
+            comment <- e$comment
+            pos <- which((names(comment) == "ORCID") &
+                         grepl(.ORCID_iD_variants_regexp, comment))
+            if((len <- length(pos)) > 0L) {
+                e$family <-
+                    c(e$family,
+                      paste0("<",
+                             paste0("https://replace.me.by.orcid.org/",
+                                    sub(.ORCID_iD_variants_regexp,
+                                        "\\3",
+                                        comment[pos])),
+                             ">"))
+                e$comment <- if(len < length(comment))
+                                 comment[-pos]
+                             else
+                                 NULL
+            }
+            e
+        }
+        x[] <- lapply(unclass(x), format_person1)
+        utils:::.format_authors_at_R_field_for_author(x)
+    }
+    
     desc <- enc2utf8(.read_description(descfile))
     pack <- desc["Package"]
     aatr <- desc["Authors@R"]
@@ -1481,6 +1514,10 @@ function(dir)
     ## CRAN obfuscates, .DESCRIPTION_to_latex() uses \email which only
     ## adds markup but does not create mailto: URLs.
     ## </FIXME>
+
+    if(!is.na(aatr))
+        desc["Author"] <-
+            .format_authors_at_R_field_with_expanded_ORCID_identifier(aatr)
 
     ## Take only Title and Description as *text* fields.
     desc["Title"] <- htmlify_text(desc["Title"])
@@ -1515,22 +1552,21 @@ function(dir)
                         2L)
     }
 
-    ## <NOTE>
-    ## The CRAN code re-creates suitably formatted Authors from
-    ## Authors@R if available, and replaces ORCID URLs by hyperlinked
-    ## ORCID logos.  We could so the same, but then we would also need
-    ## to ship the logo.
-    ## For now, do simply hyperlinks.
     if(!is.na(aatr)) {
-        if(is.na(aut <- desc["Author"]))
-            aut <- utils:::.format_authors_at_R_field_for_author(aatr)
         desc["Author"] <-
-            gsub(sprintf("&lt;(https://orcid.org/%s)&gt;",
+            gsub(sprintf("&lt;https://replace.me.by.orcid.org/(%s)&gt;",
                          .ORCID_iD_regexp),
-                 "<a href=\"\\1\">\\1</a>",
-                 gsub("\n", "<br/>", aut))
+                 paste0("<a href=\"https://orcid.org/\\1\">",
+                        "<img alt=\"ORCID iD\"",
+                        if(dynamic)
+                            "src=\"/doc/html/orcid.svg\" "
+                        else
+                            "src=\"https://cloud.R-project.org/web/orcid.svg\" ",
+                        "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
+                        " /></a>"),
+                 desc["Author"])
     }
-    ## </NOTE>
+
     desc["License"] <- htmlify_license_spec(desc["License"], pack)
 
     if(dynamic)
