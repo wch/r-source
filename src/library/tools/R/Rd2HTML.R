@@ -928,10 +928,9 @@ Rd2HTML <-
                     ## Argh.  Quite a few packages put the items in
                     ## their value section inside \code.
                     if(identical(RdTags(block[[1L]])[1L], "\\code")) {
-                        writeContent(block[[1L]], tag)
-                    } else {
-                        writeItemAsCode(blocktag, block[[1L]])
+                        attr(block[[1L]][[1L]], "Rd_tag") <- "Rd"
                     }
+                    writeItemAsCode(blocktag, block[[1L]])
     		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
     		    writeContent(block[[2L]], tag)
