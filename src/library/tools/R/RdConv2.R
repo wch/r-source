@@ -435,14 +435,12 @@ prepare_Rd <-
     concordance <- NULL
     if (is.character(Rd)) {
         Rdfile <- Rd
-        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
         ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, srcfile = src, ...),
-                              list(f = Rd, enc = encoding, frag = fragment, src = srcfile)))
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, ...),
+                              list(f = Rd, enc = encoding, frag = fragment)))
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)$description
-        srcfile <- srcfile(stripPathTo(Rdfile, "man"))
-        Rd <- parse_Rd(Rd, srcfile = srcfile, encoding = encoding, fragment=fragment, ...)
+        Rd <- parse_Rd(Rd, srcfile = srcfile, encoding = encoding, ...)
     } else {
     	Rdfile <- attr(Rd, "Rdfile")
     	concordance <- attr(Rd, "concordance")
