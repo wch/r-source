@@ -1436,6 +1436,31 @@ function(dir)
         s[match(x, v)]
     }
 
+    htmlify_depends_spec <- function(x) {
+        chunks <- strsplit(x, ",")
+        ## Canonicalize.
+        entries <- sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1",
+                       unlist(chunks, use.names = FALSE))
+        entries <- sub("[[:space:]]*\\(", " (", entries)
+        ## Try splitting at the first white space.
+        pos <- regexpr("[[:space:]]", entries)
+        names <- ifelse(pos == -1L, entries,
+                        substring(entries, 1L, pos - 1L))
+        rests <- ifelse(pos == -1L, "", substring(entries, pos))
+        found <- logical(length(names))
+        for(lib.loc in .libPaths()) {
+            ## Very basic test for installed package ...
+            found <- found | file.exists(file.path(lib.loc, names,
+                                                   "DESCRIPTION"))
+        }
+        names[found] <- sprintf("<a href=\"/library/%s\">%s</a>",
+                                names[found],
+                                names[found])
+        vapply(split(paste(names, rests, sep = ""),
+                     rep.int(seq_along(chunks), lengths(chunks))),
+               paste, "", collapse = ", ")
+    }
+             
     desc <- enc2utf8(.read_description(descfile))
     pack <- desc["Package"]
     aatr <- desc["Authors@R"]
@@ -1507,6 +1532,9 @@ function(dir)
     }
     ## </NOTE>
     desc["License"] <- htmlify_license_spec(desc["License"], pack)
+
+    if(dynamic)
+        desc[theops] <- htmlify_depends_spec(desc[theops])
 
     ## <TODO>
     ## For dynamic help we should be able to further enhance by
