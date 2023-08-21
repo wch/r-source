@@ -50,7 +50,7 @@ endif
 platform-CPPFLAGS = -I../gnuwin32 -I../extra
 
 ifneq "$(R_ARCH)" ""
-  platorm-CPPFLAGS += -DPLATFORM_PKGTYPE='"win.binary"'
+  platform-CPPFLAGS += -DPLATFORM_PKGTYPE='"win.binary"'
 endif
 
 RNG-CPPFLAGS = -I../nmath
