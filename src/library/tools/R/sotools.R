@@ -232,7 +232,7 @@ so_symbol_names_table <-
       "linux, Fortran, intel, write, for_write_seq_nml",
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
-      "linux, Fortran, intel, random_number, for_randoom_number",
+      "linux, Fortran, intel, random_number, for_random_number",
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort", # not currently seen
@@ -412,6 +412,7 @@ so_symbol_names_table <-
       "windows, Fortran, gfortran, stop, exit",
       ## next will not show up with static libgfortran
       "windows, Fortran, gfortran, rand, _gfortran_rand",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
 
       ## currently copy from Linux
       ## flang-new but executable already named 'flang'
@@ -460,7 +461,9 @@ so_symbol_names_table <-
       "windows, Fortran, flang, write, _FortranAioOutputReal32",
       "windows, Fortran, flang, write, _FortranAioOutputReal64",
       "windows, Fortran, flang, write, _FortranAioOutputUnformatedBlock",
+      ## Next is a guess.
       "windows, Fortran, flang, rand, rand_",
+      "windows, Fortran, flang, random_number, _FortranARandomNumber",
 
       "windows, C++, clang++, std::cout, _ZNSt3__14coutE",
       "windows, C++, clang++, std::cerr, _ZNSt3__14cerrE",
