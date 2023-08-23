@@ -141,6 +141,8 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8@GFORTRAN_8",
 
       ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, ClassicFlang, open, f90io_open03",
@@ -205,6 +207,7 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, write, _FortranAioOutputUnformatedBlock",
       ## does not support rand()
       ## https://discourse.llvm.org/t/support-for-gnu-fortran-extensions/69630
+      "linux, Fortran, flang-new, random_number, _FortranARandomNumber",
 
       ## Intel 'Clasic' and 202x
       "linux, Fortran, intel, stop, for_stop",
@@ -229,6 +232,7 @@ so_symbol_names_table <-
       "linux, Fortran, intel, write, for_write_seq_nml",
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
+      "linux, Fortran, intel, random_number, for_randoom_number",
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort", # not currently seen
@@ -268,6 +272,7 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, stop, __gfortran_stop_numeric",
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
