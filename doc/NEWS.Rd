@@ -286,6 +286,10 @@
       \item \code{withAutoprint({ .. })} now preserves \code{srcref}s
       previously lost, thanks to Andrew Simmons' report plus fix in
       \PR{18572}.
+
+      \item \code{transform.data.frame()} no longer adjusts names;
+      in particular, untransformed variables are kept as-is,
+      including those with syntactically invalid names (\PR{17890}).
     }
   }
 }
