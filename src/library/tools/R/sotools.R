@@ -141,8 +141,10 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r8",
       "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
-      "linux, Fortran, gfortran, random_number, _gfortran_random_r8@GFORTRAN_8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed@i4",
 
       ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, ClassicFlang, open, f90io_open03",
@@ -208,6 +210,7 @@ so_symbol_names_table <-
       ## does not support rand()
       ## https://discourse.llvm.org/t/support-for-gnu-fortran-extensions/69630
       "linux, Fortran, flang-new, random_number, _FortranARandomNumber",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeed",
 
       ## Intel 'Clasic' and 202x
       "linux, Fortran, intel, stop, for_stop",
@@ -233,6 +236,9 @@ so_symbol_names_table <-
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
       "linux, Fortran, intel, random_number, for_random_number",
+      "linux, Fortran, intel, random_number, for_random_number_single",
+      "linux, Fortran, intel, random_seed, for_random_seed_bit_size",
+      "linux, Fortran, intel, random_seed, for_random_seed_put",
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort", # not currently seen
@@ -273,6 +279,9 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
       "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r4",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
@@ -413,6 +422,8 @@ so_symbol_names_table <-
       ## next will not show up with static libgfortran
       "windows, Fortran, gfortran, rand, _gfortran_rand",
       "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed@i4",
 
       ## currently copy from Linux
       ## flang-new but executable already named 'flang'
@@ -464,6 +475,7 @@ so_symbol_names_table <-
       ## Next is a guess.
       "windows, Fortran, flang, rand, rand_",
       "windows, Fortran, flang, random_number, _FortranARandomNumber",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeed",
 
       "windows, C++, clang++, std::cout, _ZNSt3__14coutE",
       "windows, C++, clang++, std::cerr, _ZNSt3__14cerrE",
