@@ -5192,9 +5192,11 @@ as @code{rand}, @code{drand48} and @code{random}@footnote{This and
 in the C99 standard, and not available on Windows.}, but rather use the
 interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes a system RNG (e.g.@:
-@emph{via} @code{srand}), they will interfere with each other.
+@emph{via} @code{srand}), they will interfere with each other.  This
+applies also to Fortran 90's @code{random_number} and
+@code{random_seed}, and Fortran 2018's @code{random_init}.
 
-Nor should the C++11 random number library be used, nor any other
+Nor should the C++11 random number library be used nor any other
 third-party random number generators such as those in GSL.
 
 @item
