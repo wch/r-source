@@ -142,11 +142,15 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
       "linux, Fortran, gfortran, random_init, _gfortran_random_init",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r4",
       "linux, Fortran, gfortran, random_number, _gfortran_arandom_r8",
-      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r16",
       "linux, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r16",
       "linux, Fortran, gfortran, random_number, _gfortran_rand",
       "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
 
       ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, ClassicFlang, open, f90io_open03",
@@ -284,11 +288,15 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
       "macos, Fortran, gfortran, random_init, __gfortran_random_init",
-      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r4",
       "macos, Fortran, gfortran, random_number, __gfortran_arandom_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r16",
       "macos, Fortran, gfortran, random_number, __gfortran_random_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r16",
       "macos, Fortran, gfortran, random_number, __gfortran_rand",
       "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i8",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
@@ -429,9 +437,14 @@ so_symbol_names_table <-
       ## next will not show up with static libgfortran
       "windows, Fortran, gfortran, rand, _gfortran_rand",
       "windows, Fortran, gfortran, random_init, _gfortran_random_init",
-      "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r16",
       "windows, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r16",
       "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
 
       ## currently copy from Linux
       ## flang-new but executable already named 'flang'
