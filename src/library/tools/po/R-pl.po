@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -140,9 +140,6 @@ msgid ""
 msgstr ""
 "błąd przetwarzania w pliku '%s':\n"
 "%s"
-
-msgid "declared S3 method '%s' not found"
-msgstr "zadeklarowana metoda S3 '%s' nie została znaleziona"
 
 msgid "cannot check R code installed as image"
 msgstr "nie można sprawdzić kodu R zainstalowanego jako obraz"
@@ -291,6 +288,9 @@ msgstr "Komponenty licencji z ograniczeniami nie są dozwolone:"
 
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Komponenty licencji, które są szablonami oraz potrzebują dodatkowo pliku 'LICENSE':"
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nieprzenośne flagi w zmiennej '%s':"
@@ -456,11 +456,22 @@ msgstr "Pliki Rd z powtórzoną nazwą '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Pliki Rd z powtórzonym aliasem '%s':"
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "Pliki Rd z powtórzonym aliasem '%s':"
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "Nieprzenośne flagi w zmiennej '%s':"
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "Pozycje argumentu bez opisu w obiekcie Rd '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Automatycznie wygenerowana treść wymagająca wykonania edycji w obiekcie Rd '%s':"
+
+msgid "Rd objects without \\description:"
+msgstr ""
 
 msgid "no Rd sections specified"
 msgstr "nie określono sekcji Rd"
@@ -477,6 +488,9 @@ msgstr ""
 "\n"
 "%s\n"
 "w pliku 'NAMESPACE'."
+
+msgid "concordance is not valid"
+msgstr ""
 
 msgid "Rd object required"
 msgstr "Wymagany jest obiekt Rd"
@@ -520,8 +534,17 @@ msgstr "Pakiet '%s' dla makr Rd nie jest zainstalowany."
 msgid "No Rd macros in package '%s'."
 msgstr "Nie znaleziono makr Rd w pakiecie '%s'."
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "więcej niż jedna sekcja \\examples, używanie pierwszej"
+
+msgid "alias:"
+msgstr ""
+
+msgid "is not one line"
+msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konwertowanie plików Rd do LaTeX'a ..."
@@ -591,6 +614,10 @@ msgstr "Ilustracja %s nadpisuje następujące wyjścia %s przez ilustrację %s: 
 #, fuzzy
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "Wykryto pliki źródłowe ilustracji (%s) ze współdzielonymi nazwami (%s) w efekcie czego istnieje ryzyko nadpisania każdego z ich plików wyjściowych"
+
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr "przetwarzanie %s"
 
 #, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -731,9 +758,6 @@ msgstr "BŁĄD: wersja tego programu to R %s, wymagana jest R %s %s"
 msgid "loading failed"
 msgstr "ładowanie nie powiodło się"
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr "assertConditon: Pomyślnie przechwycono warunek"
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Otrzymano %s podczas wyznaczania %s; oczekiwano %s"
 
@@ -743,14 +767,8 @@ msgstr "Nie udało się uzyskać %s podczas wyznaczania %s"
 msgid "Failed to get error in evaluating %s"
 msgstr "Nie udało się uzyskać błędu podczas wyznaczania %s"
 
-msgid "Asserted error: %s"
-msgstr "Założony błąd: %s"
-
 msgid "Got warning in evaluating %s, but also an error"
 msgstr "Otrzymano ostrzeżenie podczas wyznaczania %s, ale również błąd"
-
-msgid "Asserted warning: %s"
-msgstr "Założone ostrzeżenie: %s"
 
 msgid "Changes require specified 'style'"
 msgstr "Zmiany wymagają określonego 'style'"
@@ -824,6 +842,21 @@ msgstr "błędna klasa"
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "wejście nie-ASCII w pliku 'CITATION' bez zadeklarowanego kodowania"
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr ""
+
 msgid "No files in this directory"
 msgstr "Brak plików w tym katalogu"
 
@@ -838,6 +871,9 @@ msgstr "Przykładowe użycia kodu:"
 
 msgid "Help pages:"
 msgstr "Strony pomocy:"
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr "Nie znaleziono pakietu o nazwie '%s'"
@@ -859,6 +895,16 @@ msgstr "Nie znaleziono dokumentów dla pakietu '%s'"
 
 msgid "URL %s was not found"
 msgstr "adres URL %s nie został znaleziony"
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr "Nie znaleziono pomocy na temat pakietu '%s'"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "Tylko pliki pomocy, %s, %s oraz pliki w %s oraz %s w pakiecie mogą być przegladane"
@@ -886,6 +932,9 @@ msgstr "wykonano"
 
 msgid "failed to start the httpd server"
 msgstr "nie udało się uruchomić serwera httpd"
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr "nie można odczytać indeksu informacji w pliku '%s'"
@@ -943,6 +992,32 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr "plik 'DESCRIPTION' wygląda to na paczkę -- a one zostały zlikwidowane"
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+msgid "Applied installation-time patch"
+msgstr ""
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr "niepoprawna struktura pakietu"
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Katalog 'include' w R jest pusty -- być może trzeba zainstalować R-devel.rpm lub coś podobnego"
 
@@ -981,6 +1056,27 @@ msgstr "BŁĄD: brak uprawnień aby zainstalować w katalogu"
 
 msgid "building a fake installation is disallowed"
 msgstr "budowałe fałszywej instalacji jest zabronione"
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
+msgstr ""
 
 msgid ""
 "See\n"
@@ -1041,7 +1137,10 @@ msgstr ""
 "Fragment %s:\n"
 "%s"
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr "Nie można wyodrębnić informacji o wersji z następujących tytułów sekcji:"
 
 msgid ""
@@ -1112,6 +1211,12 @@ msgstr "Znaleziono %s, prawdopodobnie z %s"
 msgid "no native symbols were extracted"
 msgstr "żadne natywne symbole nie zostały wydobyte"
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr "testowanie '%s' nie powiodło się"
 
@@ -1154,10 +1259,15 @@ msgstr "nie znaleziono plików przeanalizowanych składniowo"
 msgid "FAILED"
 msgstr "NIE POWIODŁO SIĘ"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "katalog '%s' nie istnieje"
+
 msgid "DIFFERED"
 msgstr "RÓŻNICE"
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr "wykonywanie testów generowania losowych odchyleń -- okazjonalnie zawodzi"
 
 msgid "unknown header specification"
@@ -1267,6 +1377,9 @@ msgstr "Brakuje plików 'DESCRIPTION' oraz 'DESCRIPTION.in'."
 msgid "invalid package layout"
 msgstr "niepoprawna struktura pakietu"
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr "plik '%s' nie jest poprawnym formatem DCF"
 
@@ -1278,6 +1391,9 @@ msgstr "Nieznane kodowanie z danymi nie-ASCII: konwertowanie do ASCII"
 
 msgid "cannot source package code:"
 msgstr "nie można wykonać kodu pakietu:"
+
+msgid "inferior call failed"
+msgstr ""
 
 msgid "'text' must be a character vector"
 msgstr "argument 'text' musi być wektorem tekstowym"
@@ -1423,12 +1539,6 @@ msgstr[2] ""
 "brakujące/puste pole \\name w plikach\n"
 "%s"
 
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
 msgstr[0] ""
@@ -1477,6 +1587,18 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr "zadeklarowana metoda S3 '%s' nie została znaleziona"
+
+#~ msgid "assertConditon: Successfully caught a condition"
+#~ msgstr "assertConditon: Pomyślnie przechwycono warunek"
+
+#~ msgid "Asserted error: %s"
+#~ msgstr "Założony błąd: %s"
+
+#~ msgid "Asserted warning: %s"
+#~ msgstr "Założone ostrzeżenie: %s"
 
 #~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr "pakiet %s istnieje, ale nie został zainstalowany pod R >= 2.10.0, tak więc 'xrefs' nie może zostać sprawdzony"

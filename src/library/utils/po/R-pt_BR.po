@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-04-22 16:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2023-04-22 22:18+0200\n"
 "Last-Translator: Beatriz Milz <milz.bea@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -461,7 +461,8 @@ msgstr "Cancelado pelo(a) usuário(a)"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Não é possível conectar ao CRAN para verificar a versão do R."
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "argumento %s deve ser uma única string de caracteres"
 
 msgid "incorrect field specification"
@@ -507,11 +508,9 @@ msgstr "Se o navegador aberto por '%s' já está rodando, ele *não* é reinicia
 msgid "Otherwise, be patient ..."
 msgstr "Caso contrário, seja paciente ..."
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'url' deve ser uma string de caracteres não vazia"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' deve ser uma string de caracteres não vazia"
 
 msgid "no package '%s' was found"
 msgstr "nenhum pacote '%s' foi encontrado"
@@ -694,6 +693,12 @@ msgstr "não é possível definir repositórios de forma não interativa"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "options(\"pkgType\") inválida; deve ser uma string de caracteres"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Por favor selecione repositórios para esta sessão ---"
 
@@ -712,6 +717,10 @@ msgid ""
 msgstr ""
 "Não é sabido em qual elemento de 'lib' instalar as dependências\n"
 "pulando dependências"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip' deve ser uma única string de caracteres"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "tipo 'binary' não é suportado nesta plataforma"
@@ -1158,14 +1167,8 @@ msgstr ""
 msgid "attempt to set '%s' ignored"
 msgstr "tentativa de definir '%s' ignorada"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip' deve ser uma única string de caracteres"
-
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
-
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "argumento 'zip' deve ser uma string de caracteres não vazia"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
@@ -1423,6 +1426,12 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser' deve ser uma string de caracteres não vazia"
+
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "argumento 'zip' deve ser uma string de caracteres não vazia"
 
 #~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
 #~ msgstr "O argumento '%s' está obsoleto; use '%s' em seu lugar."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-01-14 11:27\n"
+"POT-Creation-Date: 2023-08-03 18:20\n"
 "PO-Revision-Date: 2023-02-27 14:05+0000\n"
 "Last-Translator: Richard Detomasi <richard.detomasi@gmail.com>\n"
 "Language-Team: none\n"
@@ -25,9 +25,6 @@ msgstr "Ver help(\"Defunct\") y help(\"%s-defunct\")."
 msgid "See help(\"Defunct\")"
 msgstr "Ver help(\"Defunct\")"
 
-msgid "defunctError"
-msgstr "defunctError"
-
 msgid "'%s' is deprecated."
 msgstr "'%s' está en desuso."
 
@@ -36,9 +33,6 @@ msgstr "Ver help(\"Deprecated\") y help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Ver help(\"Deprecated\")"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "el argumento para 'La.svd' debe ser numérico o complejo"
@@ -62,8 +56,7 @@ msgid "'iconvlist' is not available on this system"
 msgstr "'iconvlist' no está disponible en este sistema"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr ""
-"'kind' debe ser una cadena de caracteres de longitud 1 (RNG a utilizar)."
+msgstr "'kind' debe ser una cadena de caracteres de longitud 1 (RNG a utilizar)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' no es una abreviatura válida de un RNG"
@@ -134,7 +127,10 @@ msgstr "%s requiere el paquete %s, que puede ya no funcionar correctamente"
 msgid "package %s is required by %s so will not be detached"
 msgstr "paquete %s es requerido por %s por lo que no será desactivado"
 
-msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
 msgstr ""
 "%s falló en %s() para '%s', detalles:\n"
 "  llamada: %s\n"
@@ -236,7 +232,8 @@ msgstr "número inválido de intervalos"
 msgid "'breaks' are not unique"
 msgstr "los 'breaks' no son únicos"
 
-msgid "lengths of 'breaks' and 'labels' differ"
+#, fuzzy
+msgid "number of intervals and length of 'labels' differ"
 msgstr "las longitudes de 'breaks' y 'labels' difieren"
 
 msgid "invalid 'row.names' length"
@@ -257,17 +254,12 @@ msgstr "'dimnames' inválidos dados para data frame"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "no se puede forzar la clase %s a un data.frame"
 
-msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
-msgstr ""
-"'row.names' no es un vector de caracteres de longitud %d -- omitiéndolo. ¡"
-"Será un error!"
-
-msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
-msgstr "options(\"stringsAsFactors\") no definido como TRUE o FALSE"
+#, fuzzy
+msgid "'row.names' is not a character or integer vector of length %d"
+msgstr "'row.names' no es un vector de caracteres de longitud %d -- omitiéndolo. ¡Será un error!"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
-msgstr ""
-"no coinciden los nombres de fila en los argumentos de 'data.frame', item %d"
+msgstr "no coinciden los nombres de fila en los argumentos de 'data.frame', item %d"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "algunos row.names duplicados: %s --> row.names NO utilizados"
@@ -288,9 +280,7 @@ msgid "row names supplied are of the wrong length"
 msgstr "los nombres de fila suministrados tienen una longitud incorrecta"
 
 msgid "row names were found from a short variable and have been discarded"
-msgstr ""
-"los nombres de fila se encontraron a partir de una variable corta y se "
-"descartaron"
+msgstr "los nombres de fila se encontraron a partir de una variable corta y se descartaron"
 
 msgid "named arguments other than 'drop' are discouraged"
 msgstr "se desaconsejan los argumentos con nombre que no sean 'drop'"
@@ -308,9 +298,7 @@ msgid "named arguments are discouraged"
 msgstr "se desaconsejan los argumentos con nombre"
 
 msgid "number of items to replace is not a multiple of replacement length"
-msgstr ""
-"el número de elementos a sustituir no es un múltiplo de la longitud del "
-"reemplazo"
+msgstr "el número de elementos a sustituir no es un múltiplo de la longitud del reemplazo"
 
 msgid "'value' is the wrong length"
 msgstr "'value' es de la longitud incorrecta"
@@ -322,9 +310,7 @@ msgid "need 0, 1, or 2 subscripts"
 msgstr "necesita 0, 1 o 2 subíndices"
 
 msgid "missing values are not allowed in subscripted assignments of data frames"
-msgstr ""
-"No se permiten valores faltantes en asignaciones con subíndices de data "
-"frames"
+msgstr "No se permiten valores faltantes en asignaciones con subíndices de data frames"
 
 msgid "non-existent rows not allowed"
 msgstr "filas inexistentes no permitidas"
@@ -333,15 +319,13 @@ msgid "column name \"\" cannot match any column"
 msgstr "nombre de columna \"\" no corresponde a ninguna columna"
 
 msgid "new columns would leave holes after existing columns"
-msgstr ""
-"las nuevas columnas dejarían agujeros después de las columnas existentes"
+msgstr "las nuevas columnas dejarían agujeros después de las columnas existentes"
 
 msgid "duplicate subscripts for columns"
 msgstr "subíndices duplicados para columnas"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr ""
-"las únicas instrucciones válidas son x[[j]] <- valor o x[[i,j]] <- valor"
+msgstr "las únicas instrucciones válidas son x[[j]] <- valor o x[[i,j]] <- valor"
 
 msgid "replacing element in non-existent column: %s"
 msgstr "reemplazando elemento en columna inexistente: %s"
@@ -356,9 +340,11 @@ msgid "numbers of columns of arguments do not match"
 msgstr "el número de columnas de los argumentos no coincide"
 
 msgid "invalid list argument: all variables should have the same length"
-msgstr ""
-"argumento de lista inválido: todas las variables deben tener la misma "
-"longitud"
+msgstr "argumento de lista inválido: todas las variables deben tener la misma longitud"
+
+#, fuzzy
+msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
+msgstr "el número de elementos a sustituir no es un múltiplo de la longitud del reemplazo"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rows> (o 0- extensión row.names)"
@@ -389,9 +375,6 @@ msgstr "todas las variables deben tener la misma longitud"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "la cadena de caracteres no está en un formato estándar inequívoco"
-
-msgid "'origin' must be supplied"
-msgstr "'origin' debe ser especificado"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "incapaz de convertir '%s' a clase %s"
@@ -433,9 +416,7 @@ msgid "'length.out' must be of length 1"
 msgstr "'length.out' debe ser de longitud 1"
 
 msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr ""
-"exactamente dos  'to', 'by' y 'length.out' / 'along.width' deben ser "
-"especificados"
+msgstr "exactamente dos  'to', 'by' y 'length.out' / 'along.width' deben ser especificados"
 
 msgid "'by' must be of length 1"
 msgstr "«by» debe ser de longitud 1"
@@ -491,6 +472,13 @@ msgstr ""
 msgid "'tzone' attributes are inconsistent"
 msgstr ""
 
+msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
+msgstr ""
+
+#, fuzzy
+msgid "'digits' must be numeric, integer valued"
+msgstr "'x' debe ser numérico"
+
 msgid "'tim' is not character or numeric"
 msgstr ""
 
@@ -527,10 +515,18 @@ msgstr ""
 msgid "'file' must be a character string or connection"
 msgstr ""
 
-msgid "Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
-msgid "Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
 msgid "failed to load the methods package for debugging by signature"
@@ -581,10 +577,10 @@ msgstr ""
 msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
 
-msgid "0 x 0 matrix"
+msgid "non-square matrix in 'eigen'"
 msgstr ""
 
-msgid "non-square matrix in 'eigen'"
+msgid "0 x 0 matrix"
 msgstr ""
 
 msgid "invalid nrow(x)"
@@ -627,6 +623,9 @@ msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
 
 msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
+msgid "directories are omitted unless 'recursive = TRUE'"
 msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
@@ -782,10 +781,9 @@ msgstr ""
 msgid "package %s is not installed for 'arch = %s'"
 msgstr ""
 
-msgid "Conflicts attaching package %s:\n%s"
-msgstr ""
-
-msgid "packageConflictError"
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
 msgstr ""
 
 msgid "Attaching package: %s"
@@ -809,13 +807,14 @@ msgstr ""
 msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "Package %s version %s cannot be unloaded:\n %s"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr ""
 
-msgid "package or namespace load failed for %s%s:\n %s"
-msgstr ""
-
-msgid "package %s does not have a namespace and should be re-installed"
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr ""
 
 msgid "package %s already present in search()"
@@ -875,7 +874,9 @@ msgstr ""
 msgid "none of the packages are loaded"
 msgstr ""
 
-msgid "package %s found more than once, using the first from\n  %s"
+msgid ""
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 
 msgid "Further information is available in the following vignettes in directory %s:"
@@ -917,8 +918,9 @@ msgstr ""
 msgid "nothing specified to be save()d"
 msgstr ""
 
-msgid "'file' must be non-empty string"
-msgstr ""
+#, fuzzy
+msgid "'%s' must be a non-empty string"
+msgstr "'name' debe ser un string de un solo caracter"
 
 msgid "'compress' must be logical or character"
 msgstr ""
@@ -963,9 +965,6 @@ msgid "'arg' must be of length 1"
 msgstr ""
 
 msgid "'arg' must be of length >= 1"
-msgstr ""
-
-msgid "'arg' should be one of %s"
 msgstr ""
 
 msgid "there is more than one match in 'match.arg'"
@@ -1031,13 +1030,18 @@ msgstr ""
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
-msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
 msgstr ""
 
 msgid "namespace is already attached"
 msgstr ""
 
-msgid "not found in namespace %s: \n\n%s"
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
 msgstr ""
 
 msgid "%s not found"
@@ -1409,7 +1413,9 @@ msgstr ""
 msgid "singular matrix 'a' in solve"
 msgstr ""
 
-msgid "'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?"
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
 msgstr ""
 
 msgid "'partial' sorting not supported by radix method"
@@ -1430,13 +1436,18 @@ msgstr ""
 msgid "non-finite 'partial'"
 msgstr ""
 
+msgid "'decreasing' of length > 1 is only for method = \"radix\""
+msgstr ""
+
 msgid "argument lengths differ"
 msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
-msgid "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\nHave you called 'sort' on a list?"
+msgid ""
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
+"Have you called 'sort' on a list?"
 msgstr ""
 
 msgid "cannot xtfrm 'x'"
@@ -1449,6 +1460,9 @@ msgid "'echo' must be logical"
 msgstr ""
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr ""
+
+msgid "empty file/url name"
 msgstr ""
 
 msgid "unable to find a plausible encoding"
@@ -1472,6 +1486,16 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
+#, fuzzy
+msgid "'formula' must be a formula"
+msgstr "'from' debe ser de tipo raw o character"
+
+msgid "Unexpected LHS in 'formula' has been ignored."
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been combined with RHS."
+msgstr ""
+
 msgid "Timestamp of %s has changed"
 msgstr ""
 
@@ -1484,7 +1508,9 @@ msgstr ""
 msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
 msgstr ""
 
-msgid "%s and %s are not equal:\n  %s"
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
 msgstr ""
 
 msgid "additional arguments ignored in warning()"
@@ -1493,7 +1519,9 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead."
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1544,6 +1572,9 @@ msgstr ""
 msgid "invalid value of %s"
 msgstr ""
 
+msgid "'X' must be a data frame when 'INDEX' is a formula"
+msgstr ""
+
 msgid "'INDEX' is of length zero"
 msgstr ""
 
@@ -1592,6 +1623,12 @@ msgstr ""
 msgid "No traceback available"
 msgstr ""
 
+msgid "invalid non-character version specification 'x' (type: %s)"
+msgstr ""
+
+msgid "Calls"
+msgstr ""
+
 msgid "invalid version specification %s"
 msgstr ""
 
@@ -1619,6 +1656,9 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr ""
 
+msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
+msgstr ""
+
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr ""
 
@@ -1632,6 +1672,9 @@ msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'receive.console.signals' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'input' must be a character vector or 'NULL'"
@@ -1784,6 +1827,11 @@ msgid_plural "objects %s not found"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "'arg' should be %s"
+msgid_plural "'arg' should be one of %s"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] ""
@@ -1834,7 +1882,23 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "In %s :\n extra argument %s will be disregarded"
-msgid_plural "In %s :\n extra arguments %s will be disregarded"
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "defunctError"
+#~ msgstr "defunctError"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
+#~ msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+#~ msgstr "options(\"stringsAsFactors\") no definido como TRUE o FALSE"
+
+#~ msgid "'origin' must be supplied"
+#~ msgstr "'origin' debe ser especificado"

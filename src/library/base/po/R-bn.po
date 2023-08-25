@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-01-14 11:27\n"
+"POT-Creation-Date: 2023-08-03 18:20\n"
 "PO-Revision-Date: 2023-04-05 09:17+0000\n"
 "Last-Translator: Sovan Karmakar <sovankarmakar01@gmail.com>\n"
 "Language-Team: none\n"
@@ -25,9 +25,6 @@ msgstr "help(\"Defunct\") আর help(\"%s-defunct\") দেখুন।"
 msgid "See help(\"Defunct\")"
 msgstr "help(\"Defunct\") দেখুন"
 
-msgid "defunctError"
-msgstr "বিলুপ্ত ত্রুটি"
-
 msgid "'%s' is deprecated."
 msgstr "'%s' এখানে অপ্রচলিত।"
 
@@ -36,9 +33,6 @@ msgstr "help(\"Deprecated\") আর help(\"%s-deprecated\") দেখুন।"
 
 msgid "See help(\"Deprecated\")"
 msgstr "help(\"Deprecated\") দেখুন"
-
-msgid "deprecatedWarning"
-msgstr "অপ্রচলিত সতর্কতা"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' এর আর্গুমেন্ট সংখ্যাসূচক অথবা জটিল সংখ্যা হওয়া উচিত"
@@ -134,7 +128,10 @@ msgstr ""
 msgid "package %s is required by %s so will not be detached"
 msgstr ""
 
-msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
 msgstr ""
 
 msgid "%s namespace cannot be unloaded:"
@@ -233,7 +230,7 @@ msgstr ""
 msgid "'breaks' are not unique"
 msgstr ""
 
-msgid "lengths of 'breaks' and 'labels' differ"
+msgid "number of intervals and length of 'labels' differ"
 msgstr ""
 
 msgid "invalid 'row.names' length"
@@ -254,11 +251,9 @@ msgstr ""
 msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
-msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
-msgstr ""
-
-msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
-msgstr ""
+#, fuzzy
+msgid "'row.names' is not a character or integer vector of length %d"
+msgstr "'normal.kind' একটি একক অক্ষর হওয়া বাধ্যতামূলক"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
@@ -344,6 +339,9 @@ msgstr ""
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
 
+msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
+msgstr ""
+
 msgid "<0 rows> (or 0-length row.names)"
 msgstr ""
 
@@ -372,9 +370,6 @@ msgid "all variables should have the same length"
 msgstr ""
 
 msgid "character string is not in a standard unambiguous format"
-msgstr ""
-
-msgid "'origin' must be supplied"
 msgstr ""
 
 msgid "do not know how to convert '%s' to class %s"
@@ -473,6 +468,12 @@ msgstr ""
 msgid "'tzone' attributes are inconsistent"
 msgstr ""
 
+msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
+msgstr ""
+
+msgid "'digits' must be numeric, integer valued"
+msgstr ""
+
 msgid "'tim' is not character or numeric"
 msgstr ""
 
@@ -509,10 +510,18 @@ msgstr ""
 msgid "'file' must be a character string or connection"
 msgstr ""
 
-msgid "Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
-msgid "Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
 msgid "failed to load the methods package for debugging by signature"
@@ -563,10 +572,10 @@ msgstr ""
 msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
 
-msgid "0 x 0 matrix"
+msgid "non-square matrix in 'eigen'"
 msgstr ""
 
-msgid "non-square matrix in 'eigen'"
+msgid "0 x 0 matrix"
 msgstr ""
 
 msgid "invalid nrow(x)"
@@ -609,6 +618,9 @@ msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
 
 msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
+msgid "directories are omitted unless 'recursive = TRUE'"
 msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
@@ -764,10 +776,9 @@ msgstr ""
 msgid "package %s is not installed for 'arch = %s'"
 msgstr ""
 
-msgid "Conflicts attaching package %s:\n%s"
-msgstr ""
-
-msgid "packageConflictError"
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
 msgstr ""
 
 msgid "Attaching package: %s"
@@ -791,13 +802,14 @@ msgstr ""
 msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "Package %s version %s cannot be unloaded:\n %s"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr ""
 
-msgid "package or namespace load failed for %s%s:\n %s"
-msgstr ""
-
-msgid "package %s does not have a namespace and should be re-installed"
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr ""
 
 msgid "package %s already present in search()"
@@ -857,7 +869,9 @@ msgstr ""
 msgid "none of the packages are loaded"
 msgstr ""
 
-msgid "package %s found more than once, using the first from\n  %s"
+msgid ""
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 
 msgid "Further information is available in the following vignettes in directory %s:"
@@ -899,7 +913,7 @@ msgstr ""
 msgid "nothing specified to be save()d"
 msgstr ""
 
-msgid "'file' must be non-empty string"
+msgid "'%s' must be a non-empty string"
 msgstr ""
 
 msgid "'compress' must be logical or character"
@@ -945,9 +959,6 @@ msgid "'arg' must be of length 1"
 msgstr ""
 
 msgid "'arg' must be of length >= 1"
-msgstr ""
-
-msgid "'arg' should be one of %s"
 msgstr ""
 
 msgid "there is more than one match in 'match.arg'"
@@ -1013,13 +1024,18 @@ msgstr ""
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
-msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
 msgstr ""
 
 msgid "namespace is already attached"
 msgstr ""
 
-msgid "not found in namespace %s: \n\n%s"
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
 msgstr ""
 
 msgid "%s not found"
@@ -1391,7 +1407,9 @@ msgstr ""
 msgid "singular matrix 'a' in solve"
 msgstr ""
 
-msgid "'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?"
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
 msgstr ""
 
 msgid "'partial' sorting not supported by radix method"
@@ -1412,13 +1430,18 @@ msgstr ""
 msgid "non-finite 'partial'"
 msgstr ""
 
+msgid "'decreasing' of length > 1 is only for method = \"radix\""
+msgstr ""
+
 msgid "argument lengths differ"
 msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
-msgid "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\nHave you called 'sort' on a list?"
+msgid ""
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
+"Have you called 'sort' on a list?"
 msgstr ""
 
 msgid "cannot xtfrm 'x'"
@@ -1431,6 +1454,9 @@ msgid "'echo' must be logical"
 msgstr ""
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr ""
+
+msgid "empty file/url name"
 msgstr ""
 
 msgid "unable to find a plausible encoding"
@@ -1454,6 +1480,15 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
+msgid "'formula' must be a formula"
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been ignored."
+msgstr ""
+
+msgid "Unexpected LHS in 'formula' has been combined with RHS."
+msgstr ""
+
 msgid "Timestamp of %s has changed"
 msgstr ""
 
@@ -1466,7 +1501,9 @@ msgstr ""
 msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
 msgstr ""
 
-msgid "%s and %s are not equal:\n  %s"
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
 msgstr ""
 
 msgid "additional arguments ignored in warning()"
@@ -1475,7 +1512,9 @@ msgstr ""
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
-msgid "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead."
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
 msgstr ""
 
 msgid "incorrect value for 'x'"
@@ -1526,6 +1565,9 @@ msgstr ""
 msgid "invalid value of %s"
 msgstr ""
 
+msgid "'X' must be a data frame when 'INDEX' is a formula"
+msgstr ""
+
 msgid "'INDEX' is of length zero"
 msgstr ""
 
@@ -1574,6 +1616,12 @@ msgstr ""
 msgid "No traceback available"
 msgstr ""
 
+msgid "invalid non-character version specification 'x' (type: %s)"
+msgstr ""
+
+msgid "Calls"
+msgstr ""
+
 msgid "invalid version specification %s"
 msgstr ""
 
@@ -1601,6 +1649,9 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr ""
 
+msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
+msgstr ""
+
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr ""
 
@@ -1614,6 +1665,9 @@ msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'receive.console.signals' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'input' must be a character vector or 'NULL'"
@@ -1766,6 +1820,11 @@ msgid_plural "objects %s not found"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "'arg' should be %s"
+msgid_plural "'arg' should be one of %s"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] ""
@@ -1816,7 +1875,17 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "In %s :\n extra argument %s will be disregarded"
-msgid_plural "In %s :\n extra arguments %s will be disregarded"
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "defunctError"
+#~ msgstr "বিলুপ্ত ত্রুটি"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "অপ্রচলিত সতর্কতা"

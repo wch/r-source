@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -18,22 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
-#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:573 io.c:777 io.c:830 io.c:844 io.c:848
+#: io.c:854 io.c:855 io.c:1096 io.c:1097 io.c:1099 io.c:1100 io.c:1101
+#: io.c:1102 io.c:1103 io.c:1104 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
-#: windows/widgets.c:78 windows/widgets.c:83
+#: windows/dialogs.c:321 windows/util.c:127 windows/widgets.c:80
+#: windows/widgets.c:83 windows/widgets.c:88
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "인자 '%s'의 값이 올바르지 않습니다."
 
-#: io.c:350 io.c:835
+#: io.c:350 io.c:841
 msgid "invalid quote symbol set"
 msgstr "올바르지 않은 인용부호셋 입니다."
 
-#: io.c:362 io.c:858 io.c:1078
+#: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
 msgstr "커넥션을 열 수 없습니다"
 
@@ -46,72 +46,69 @@ msgstr "이 커넥션으로부터 읽을 수 없습니다"
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
 
-#: io.c:567
+#: io.c:569
 msgid "the first argument must be of mode character"
 msgstr "첫번째 인자는 반드시 문자형이어야 합니다."
 
-#: io.c:597
+#: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr ""
 
-#: io.c:773
+#: io.c:779
 #, c-format
 msgid "Selection: "
 msgstr "선택: "
 
-#: io.c:868 io.c:883
+#: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "'readTableHead' 내에서 버퍼를 할당할 수 없습니다"
 
-#: io.c:896
+#: io.c:902
 msgid "\\ followed by EOF"
 msgstr "\\ 가 EOF 뒤에 놓였습니다"
 
-#: io.c:948 io.c:952
+#: io.c:954 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
-msgstr ""
-"'%s'에서 readTableHeader에 의하여 발견된 완성되지 않은 마지막 라인입니다"
+msgstr "'%s'에서 readTableHeader에 의하여 발견된 완성되지 않은 마지막 라인입니다"
 
-#: io.c:1009
+#: io.c:1015
 msgid "index out of range"
 msgstr "범위밖의 인덱스입니다"
 
-#: io.c:1046
+#: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr ""
 
-#: io.c:1048
+#: io.c:1054
 msgid "Problem closing connection"
 msgstr "커넥션을 닫는 도중 문제가 발생했습니다."
 
-#: io.c:1071
+#: io.c:1077
 msgid "'file' is not a connection"
 msgstr "'file'은 커넥션이 아닙니다."
 
-#: io.c:1074
+#: io.c:1080
 msgid "cannot write to this connection"
 msgstr "이 커넥션에 쓰기를 할 수 없습니다."
 
-#: io.c:1104
+#: io.c:1110
 msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
-#: io.c:1130
+#: io.c:1137
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
-msgstr ""
-"데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
-"다"
+msgstr "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니다"
 
-#: io.c:1161
+#: io.c:1171
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1179
+#: io.c:1189
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "올바른 행렬이 아닙니다 -- dims 가 길이가 일치하지 않습니다"
@@ -210,13 +207,13 @@ msgstr "메뉴가 존재하지 않습니다"
 msgid "unable to delete menu item (%s)"
 msgstr "메뉴항목 %s를 삭제할 수 없습니다"
 
-#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
-#: windows/registry.c:254
+#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
+#: windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 잘못되었습니다"
 
-#: windows/registry.c:266
+#: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "레지스트리 키 '%ls'를 찾을 수 없습니다"
@@ -225,65 +222,65 @@ msgstr "레지스트리 키 '%ls'를 찾을 수 없습니다"
 msgid "unsupported version of Windows"
 msgstr "지원되지 않는 버전의 윈도우즈입니다"
 
-#: windows/util.c:285
+#: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
 msgstr "인자는 반드시 문자형 벡터 또는  raw 벡터이어야 합니다"
 
-#: windows/util.c:324
+#: windows/util.c:330
 msgid "unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다."
 
-#: windows/util.c:329
+#: windows/util.c:335
 msgid "unable to write to the clipboard"
 msgstr "클립보드에 쓸 수 없습니다."
 
-#: windows/util.c:408
+#: windows/util.c:414
 msgid "'title' must be a character string"
 msgstr "'title'은 반드시 문자열이어야 합니다"
 
-#: windows/util.c:417
+#: windows/util.c:423
 msgid "'text' must be a character string"
 msgstr "'text'는 반드시 문자열이어야 합니다"
 
-#: windows/util.c:456
+#: windows/util.c:462
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s'는 반드시 길이가 1이어야 합니다"
 
-#: windows/util.c:569
+#: windows/util.c:575
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s'은 반드시 리스트 형이어야 합니다"
 
-#: windows/util.c:573
+#: windows/util.c:579
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one or more"
 msgstr "하나 이상을 선택해 주세요"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one"
 msgstr "하나를 선택해주세요"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
 msgstr "'default'는 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:190 windows/widgets.c:258
+#: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "'default'가 너무 깁니다"
 
-#: windows/widgets.c:194 windows/widgets.c:262
+#: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
 msgstr "'caption'은 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:196
+#: windows/widgets.c:204
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 반드시 논리값이어야 합니다"
 
-#: windows/widgets.c:198
+#: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'의 값은 반드시 정수이어야 합니다."

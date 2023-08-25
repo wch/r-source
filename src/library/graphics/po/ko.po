@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -155,21 +155,26 @@ msgstr "그래픽 파라미터 \"%s\"는 필요하지 않습니다"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"는 그래픽 매개변수가 아닙니다"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\"는 그래픽 매개변수가 아닙니다"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "par()에 전달된 인자는 유효하지 않습니다"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 행이 있습니다 (최대 %d입니다)"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 열들이 있습니다 (최대 %d입니다)"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 셀들이 있습니다 (최대 %d개입니다)"

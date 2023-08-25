@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-12-08 09:04+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -29,6 +29,21 @@ msgstr "'labels'和'at'的位置量必需有相同的长度"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "提供的逻辑'label'的长度为零"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "'order'的值无效"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "'grob'名字无效"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "\"gTree\"的类别无效"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "端点两头的值是不能相等的"
@@ -79,12 +94,10 @@ msgid "invalid 'row' specification"
 msgstr "'row'设定得无效"
 
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr "只能指定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col."
-"after'中的一个"
+msgstr "只能指定'side=[\"left\", \"right\"]', 'col', 'col.before'或'col.after'中的一个"
 
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr "只能指定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row."
-"after'中的一个"
+msgstr "只能指定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一个"
 
 msgid "invalid 'n'"
 msgstr "'n'的值无效"
@@ -100,6 +113,9 @@ msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' gpar已经不再有用"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "'linemitre'的值无效"
@@ -287,9 +303,6 @@ msgstr "'order'的值无效"
 msgid "Invalid destination"
 msgstr "定位无效"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -347,6 +360,9 @@ msgstr "表无效"
 msgid "invalid 'listing'"
 msgstr "'listing'无效"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "'origin'的值无效"
 
@@ -375,7 +391,12 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+msgid "Pattern fill applied to object with no inside"
 msgstr ""
 
 msgid "'length' must be a 'unit' object"
@@ -457,11 +478,47 @@ msgstr "''的值必需是'unit'对象"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width'和'height'的长度都应该是为一"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "'order'的值无效"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x'和'y'的长度必需为一"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x'和'y'的长度必需为一"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "水平定位无效"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis'或'type'的值无效"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x'和'y'必需为'unit'对象，而且它们的长度必需相同"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x'和'y'必需为'unit'对象，而且它们的长度必需相同"
 
 #, fuzzy
 msgid "Not a unit object"

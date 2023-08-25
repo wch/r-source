@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-04-22 16:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2023-04-22 22:04+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -326,7 +326,8 @@ msgstr "ukendt skrifttype"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "forskellige skriftkodninger »%s'/'%s«"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "»file« skal være en udfyldt tegnstreng"
 
 msgid "GhostScript was not found"
@@ -338,6 +339,9 @@ msgstr "Ugyldigt uddataformat"
 
 msgid "status %d in running command '%s'"
 msgstr "status %d i kørende kommando »%s«"
+
+msgid "'file' must be a non-empty character string"
+msgstr "»file« skal være en udfyldt tegnstreng"
 
 #, fuzzy
 msgid "Invalid 'glyphInfo'"
@@ -411,10 +415,7 @@ msgstr ""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "»r« skal være et »range«, derfor af længde 2"
 
-msgid "log_le_0"
-msgstr ""
-
-msgid "plot_coords"
+msgid "points cut off after point[%d]"
 msgstr ""
 
 msgid "invalid first argument"

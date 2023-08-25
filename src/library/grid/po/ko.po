@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-10-02 02:04+0000\n"
 "Last-Translator: Kwangchun Lee <kwangchun.lee.7@gmail.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext는 initGContext 를 호출한 다음에만 호출해야 합니다"
 
@@ -31,55 +31,69 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
-#: grid.c:455
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:474
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나요?)"
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1702
+#: grid.c:1719
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1922
+#: grid.c:1941
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1931
+#: grid.c:1950
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:2085
+#: grid.c:2104
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:2408
+#: grid.c:2475
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr "비어있는 래스터입니다"
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr ""
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr ""
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr ""
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3963
+#: grid.c:5205
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
@@ -95,7 +109,7 @@ msgstr "유효하지 않은 'layout.pos.col'입니다"
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:192
+#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 열려있나요?"
 
@@ -161,6 +175,10 @@ msgstr ""
 
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
+msgstr ""
+
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
 #: viewport.c:56

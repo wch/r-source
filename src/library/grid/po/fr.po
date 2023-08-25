@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,70 +18,81 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#: gpar.c:523
+#: gpar.c:621
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext doit être appelé après initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr ""
-"L'activation ou la désactivation de l'écrêtage dans un chemin (d'écrêtage) "
-"n'est pas respectée"
+msgstr "L'activation ou la désactivation de l'écrêtage dans un chemin (d'écrêtage) n'est pas respectée"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "impossible de couper une vue pivotée"
 
-#: grid.c:455
+#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr ""
-"Les chemins de détourage dans un chemin (de détourage) ne sont pas respectés"
+msgstr "Les chemins de détourage dans un chemin (de détourage) ne sont pas respectés"
 
-#: grid.c:474
+#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr "Les masques dans un chemin (de détourage) ne sont pas respectés"
 
-#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
+#: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "impossible de rendre la vue de plus haut niveau active (sorties 'grid' et 'graphics' mixées ?)"
 
-#: grid.c:1246
+#: grid.c:1249
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1702
+#: grid.c:1719
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1922
+#: grid.c:1941
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1931
+#: grid.c:1950
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:2085
+#: grid.c:2104
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:2408
+#: grid.c:2475
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
-#: grid.c:3333
+#: grid.c:3444
 msgid "non-finite x or y in graphics path"
 msgstr "x ou y infinis dans le chemin graphique"
 
-#: grid.c:3383
+#: grid.c:3495
 msgid "Empty raster"
 msgstr "Graphique raster vide"
 
-#: grid.c:3869
+#: grid.c:4046 grid.c:4102
+msgid "Coordinates for text pch not yet supported"
+msgstr ""
+
+#: grid.c:4107
+#, c-format
+msgid "pch value '%d' is invalid in this locale"
+msgstr ""
+
+#: grid.c:4928
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr ""
+
+#: grid.c:5087
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:3963
+#: grid.c:5205
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 
@@ -97,7 +108,7 @@ msgstr "'layout.pos.col' incorrect"
 msgid "singular transformation matrix"
 msgstr "matrice de transformation singulière"
 
-#: state.c:192
+#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 
@@ -164,6 +175,10 @@ msgstr "l’object n’est pas une unité"
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr "les unités ne peuvent être multipliées que par des nombres décimaux ou entiers"
+
+#: util.c:216
+msgid "Unable to calculate text width/height (using zero)"
+msgstr ""
 
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"

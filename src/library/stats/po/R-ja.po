@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -156,10 +156,15 @@ msgstr " 'by' はリストでなければなりません "
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "
 
-msgid "'formula' missing or incorrect"
-msgstr " モデル式 ('formula') が無いか、不正確です "
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr " 引数 'x' は数値でなければなりません "
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr " モデル式 ('formula') は左辺と右辺の双方を持たなければなりません "
 
 msgid "cannot change frequency from %g to %g"
@@ -209,6 +214,9 @@ msgstr " タイがあるため、正確な p 値を計算することができ�
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr " タイがあるため、正確な信頼区間を計算することができません "
+
+msgid "'formula' missing or incorrect"
+msgstr " モデル式 ('formula') が無いか、不正確です "
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr " グループ化因子は丁度 2 つの水準を持たなければなりません "
@@ -489,7 +497,13 @@ msgstr " 'k' は {1, 2, .. n - 1} 内にある必要があります "
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr " %d 個の固有値 (最初の %d 個のうち) だけが正です "
 
-msgid "package 'MASS' must be installed"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -703,6 +717,9 @@ msgstr " sum(weights) != 1 -- 真の密度にはならないでしょう "
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr " バンド幅を自動的に選ぶためには少なくとも 2 つの点が必要です "
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr " 未知のバンド幅規則です "
 
@@ -735,6 +752,9 @@ msgstr " 'xi' の次元が不正確です "
 
 msgid "'x' is not a vector or matrix"
 msgstr " 'x' はベクトルでも行列でもありません "
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr " 無効な距離法です "
@@ -944,6 +964,9 @@ msgstr " 'row.vars' の指定が不正確です "
 msgid "incorrect specification for 'col.vars'"
 msgstr " 'col.vars' の指定が不正確です "
 
+msgid "'formula' must have both left and right hand sides"
+msgstr " モデル式 ('formula') は左辺と右辺の双方を持たなければなりません "
+
 msgid "interactions are not allowed"
 msgstr " 交互作用は許されません "
 
@@ -973,6 +996,18 @@ msgstr " 'row.var.names' がありません "
 
 msgid "'col.vars' missing or incorrect"
 msgstr " 'col.vars' が無いか不正確です "
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr " 'family' が確認できません "
@@ -1208,6 +1243,14 @@ msgstr " 'x'のうちいくつかの要素は数値ではないので，数値�
 msgid "not enough 'x' data"
 msgstr " 'x' データの数が十分ではありません "
 
+#, fuzzy
+msgid "Parameter(s)"
+msgstr " パラメータを当てはめ "
+
+#, fuzzy
+msgid "ignored"
+msgstr " 、は無視されました "
+
 msgid "not enough 'y' data"
 msgstr " 'y' データの数が十分ではありません "
 
@@ -1217,8 +1260,28 @@ msgstr " タイがあるため、p 値は近似値になります "
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr " 'y' は数値、関数、または有効な関数名の文字列でなければなりません "
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr " コルモゴロフ・スミノフ検定において、タイは現れるべきではありません "
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr " 無効な引数 'n' です "
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr " 'intervals' は長さ 2 の数値ベクトルでなければなりません "
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr " 引数 'x' は数値でなければなりません "
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr " 引数 'x' は数値でなければなりません "
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1283,8 +1346,21 @@ msgstr " 完全なフィットに対する ANOVA F 検定には信頼性があ�
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr " predict.lm(<fake-lm-object>) を呼び出し中... "
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr " ランク落ちした状態で当てはめを行っているため、誤った予測をしている可能性があります "
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr " 現在のデータによる予測は未来の応答値を参照しています "
@@ -1516,13 +1592,11 @@ msgstr " terms 要素も terms 属性もありません "
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr " 'termlabels' は少なくとも長さ 1 の文字ベクトルでなければなりません "
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr " 'sep' は文字列でなければなりません "
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1543,6 +1617,14 @@ msgstr " 'data' はリストか環境でなければなりません "
 
 msgid "variable '%s' is not a factor"
 msgstr " 変数 '%s' は因子ではありません "
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr " 対比は因子にしか適用できません "
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr " 対比は 2 つ以上の水準を持つ因子にしか適用できません "
 
 msgid "'offset' must be numeric"
 msgstr " 'offset' は数値でなければなりません "
@@ -1743,6 +1825,9 @@ msgstr " 'which' は 1:6 中になければなりません "
 msgid "'id.n' must be in {1,..,%d}"
 msgstr " 'id.n' は {1, .., %d} 中になければなりません "
 
+msgid "y is empty or has only NAs"
+msgstr " y は空か、または NA 値しか持っていません "
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1865,8 +1950,8 @@ msgstr " 'p' は 'x' および 'n' と同じ長さでなければなりません
 msgid "elements of 'p' must be in (0,1)"
 msgstr " 'p' の要素は (0, 1) 中になければなりません "
 
-msgid "y is empty or has only NAs"
-msgstr " y は空か、または NA 値しか持っていません "
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr " モデル式 ('formula') がありません "
@@ -1913,9 +1998,6 @@ msgstr " 'ref' は既存の水準でなければなりません "
 msgid "ref = %d must be in 1L:%d"
 msgstr " ref = %d は 1L:%d 中になければなりません: "
 
-msgid "'sep' must be a character string"
-msgstr " 'sep' は文字列でなければなりません "
-
 msgid "failed to guess time-varying variables from their names"
 msgstr " 時間変動変数を名前から推測できませんでした "
 
@@ -1960,6 +2042,10 @@ msgstr " バンド幅 'k' は 1 以上で奇数でなければなりません! "
 
 msgid "argument 'object' has an impossible length"
 msgstr " 引数 'object' はあり得ない長さを持ちます "
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr " deriv に不正な式があります "
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr " \"%s\" オブジェクトにメソッド 'getInitial' が見付かりませんでした "
@@ -2639,12 +2725,6 @@ msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
 
 #~ msgid "_NOT_ converged in"
 #~ msgstr " 収束しませんでした "
-
-#~ msgid "' ignored"
-#~ msgstr " 、は無視されました "
-
-#~ msgid "fitting parameters"
-#~ msgstr " パラメータを当てはめ "
 
 #~ msgid "use \"Brent\" or optimize() directly"
 #~ msgstr "Brent法を用いるか、optimize()を直接使ってください。 "

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-10-14 10:16+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -58,8 +58,7 @@ msgstr "regione di plot troppo grande"
 #: graphics.c:1946
 #, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr ""
-"limiti asse non finiti=%d limiti [GScale(%g,%g,..); log=%s] -- corretti ora"
+msgstr "limiti asse non finiti=%d limiti [GScale(%g,%g,..); log=%s] -- corretti ora"
 
 #: graphics.c:2023
 #, c-format
@@ -88,9 +87,7 @@ msgstr "Nessun dispositivo grafico attivo"
 
 #: graphics.c:3127
 msgid "zero-length arrow is of indeterminate angle and so skipped"
-msgstr ""
-"frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno "
-"ignorate"
+msgstr "frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno ignorate"
 
 #: graphics.c:3208
 #, c-format
@@ -331,9 +328,7 @@ msgstr "quarto argomento non valido"
 
 #: plot.c:1690
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr ""
-"non è possibile mischiare coordinate di lunghezza-zero con quelle di "
-"lunghezza-non-zero"
+msgstr "non è possibile mischiare coordinate di lunghezza-zero con quelle di lunghezza-non-zero"
 
 #: plot.c:1915
 msgid "Empty raster"

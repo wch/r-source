@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57+0200\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2023-04-05 09:17+0000\n"
 "Last-Translator: Sovan Karmakar <sovankarmakar01@gmail.com>\n"
 "Language-Team: none\n"
@@ -51,10 +51,10 @@ msgstr ""
 msgid "no DISPLAY variable so Tk is not available"
 msgstr ""
 
-#: tcltk_unix.c:94
+#: tcltk_unix.c:111
 msgid "Tcl is not loaded"
 msgstr ""
 
-#: tcltk_unix.c:98
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr ""

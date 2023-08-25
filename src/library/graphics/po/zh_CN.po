@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-12-08 09:04+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -155,21 +155,26 @@ msgstr "图形参数\"%s\"已过期不用了"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"不是图形参数"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\"不是图形参数"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "传给par()的参数错误"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout里的行数太多, 极限为%d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout里的列数太多, 极限为%d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout里的元素太多, 极限为%d"

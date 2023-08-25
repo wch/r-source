@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -25,9 +25,7 @@ msgstr "'a' e 'b' sobrescritos por 'coef'"
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "somente 'x1' ou 'y1' devem ser fornecidos"
 
-msgid ""
-"'length', 'angle', or 'code' greater than length 1; values after the first "
-"are ignored"
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
@@ -64,9 +62,7 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' deve ser um vetor ou uma matriz"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
-"Não é possível usar linhas de sombra em barras quando uma escala logarítmica "
-"é utilizada"
+msgstr "Não é possível usar linhas de sombra em barras quando uma escala logarítmica é utilizada"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
 msgstr "erro na escala logarítmica: pelo menos um 'height + offset' <= 0"
@@ -105,9 +101,7 @@ msgid "invalid boxplot widths"
 msgstr "larguras de boxplots inválidas"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
-"alguns entalhes saíram fora das dobradiças ('caixa'): talvez definir "
-"notch=FALSE"
+msgstr "alguns entalhes saíram fora das dobradiças ('caixa'): talvez definir notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' deve especificar exatamente duas variáveis"
@@ -116,9 +110,7 @@ msgid "dependent variable should be a factor"
 msgstr "variável dependente deve ser um fator"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-"eixo y está em uma escala de probabilidade cumulativa, 'ylim' deve ser em "
-"[0,1]"
+msgstr "eixo y está em uma escala de probabilidade cumulativa, 'ylim' deve ser em [0,1]"
 
 msgid "no 'z' matrix specified"
 msgstr "nenhuma matriz 'z' especificada"
@@ -244,9 +236,7 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' é um sinônimo para '!freq', porém, eles diferem."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"alguns valores de 'x' não computados; talvez 'breaks' não abranja todo o "
-"intervalo de 'x'"
+msgstr "alguns valores de 'x' não computados; talvez 'breaks' não abranja todo o intervalo de 'x'"
 
 #, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
@@ -311,16 +301,16 @@ msgstr "'legend' tem comprimento 0"
 msgid "invalid coordinate lengths"
 msgstr "comprimentos das coordenadas inválido"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width' deve ser numérico, >= 0"
-
 #, fuzzy
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "especificação horizontal sobrescreve: Número de colunas :="
 
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width' deve ser numérico, >= 0"
+
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
-"'merge = TRUE' não tem efeito quando nenhum segmento de linha é desenhado"
+msgstr "'merge = TRUE' não tem efeito quando nenhum segmento de linha é desenhado"
 
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "não usando pch[2..] já que pch[1L] tem múltiplos caracteres"
@@ -335,8 +325,7 @@ msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x' e 'y' devem ter somente uma ou o mesmo número de colunas"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
-"'pch' por padrão é inferior ao número de colunas e, portanto, reciclado"
+msgstr "'pch' por padrão é inferior ao número de colunas e, portanto, reciclado"
 
 msgid "missing values in contingency table"
 msgstr "valores ausentes na tabela de contingência"
@@ -447,10 +436,11 @@ msgstr "'nrpoints' deve ser um escalar numérico com valor >= 0."
 msgid "a 2-way table has to be specified"
 msgstr "uma tabela de contingência 2x2 deve ser especificada"
 
-msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgid "weights are not supported for 2-way table specification"
 msgstr ""
-"eixo x está em uma escala de probabilidade cumulativa, 'xlim' deve estar em "
-"[0,1]"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr "eixo x está em uma escala de probabilidade cumulativa, 'xlim' deve estar em [0,1]"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' deve ser uma matriz ou um data frame"

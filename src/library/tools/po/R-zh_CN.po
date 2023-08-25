@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -145,9 +145,6 @@ msgstr ""
 "文件'%s'里句法分析有错误：\n"
 "%s"
 
-msgid "declared S3 method '%s' not found"
-msgstr "找不到公布了的S3方法'%s'"
-
 msgid "cannot check R code installed as image"
 msgstr "因为影像安装无法检查R编码"
 
@@ -204,8 +201,7 @@ msgid "Offending entries:"
 msgstr "有问题的条目为:"
 
 msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
-msgstr "每条目都必需是程序包的名字，名字后面可以跟'<='或'>=', 空格, "
-"或在括号内的适当版本数目."
+msgstr "每条目都必需是程序包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的适当版本数目."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "带不可行比较运算符号的条目:"
@@ -306,6 +302,9 @@ msgstr "不允许有限制的组件"
 #, fuzzy
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "不允许有限制的组件"
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -481,11 +480,23 @@ msgstr "有重复名字'%s'的Rd文件:"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "Rd文件内没有'%s':"
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "变量'%s'里有不可便携的标志:"
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "Rd对象'%s'里存在没有描述的参数："
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "在Rd对象'%s'里自动产生的内容需要修改："
+
+#, fuzzy
+msgid "Rd objects without \\description:"
+msgstr "Rd文件内有空的段:"
 
 #, fuzzy
 msgid "no Rd sections specified"
@@ -503,6 +514,9 @@ msgstr ""
 "\n"
 "%s\n"
 "在名字空间。"
+
+msgid "concordance is not valid"
+msgstr ""
 
 msgid "Rd object required"
 msgstr ""
@@ -548,8 +562,18 @@ msgstr "程序包%s里没有任何文件"
 msgid "No Rd macros in package '%s'."
 msgstr "程序包%s里没有任何文件"
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "多个\\example段，取用第一段"
+
+msgid "alias:"
+msgstr ""
+
+#, fuzzy
+msgid "is not one line"
+msgstr "没有注册"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "把Rd文件转化成LaTeX…"
@@ -620,6 +644,10 @@ msgstr ""
 #, fuzzy
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "）因此可以冒险各个输出文件"
+
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr "处理%s "
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr ""
@@ -767,9 +795,6 @@ msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 msgid "loading failed"
 msgstr "载入失败"
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -779,13 +804,7 @@ msgstr ""
 msgid "Failed to get error in evaluating %s"
 msgstr ""
 
-msgid "Asserted error: %s"
-msgstr ""
-
 msgid "Got warning in evaluating %s, but also an error"
-msgstr ""
-
-msgid "Asserted warning: %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -860,6 +879,21 @@ msgstr "类别有误"
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "CITATION文件没有声明编码，但文件里出现了非ASCII的输入"
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr "="
+
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
 
@@ -874,6 +908,9 @@ msgstr "代码演示"
 
 msgid "Help pages:"
 msgstr "说明页面："
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr "找不到叫%s的程序包"
@@ -895,6 +932,16 @@ msgstr "程序包%s里没有任何文件"
 
 msgid "URL %s was not found"
 msgstr "找不到%s这个URL"
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr "%s的程序包没有帮助文件"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能够查看的文件限制于帮助文件，%s, %s 和%s下的文件和程序包%s里的文件"
@@ -922,6 +969,9 @@ msgstr "好了"
 
 msgid "failed to start the httpd server"
 msgstr "打不开httpd服务器"
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
@@ -980,6 +1030,33 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr "这看起来好象是捆绑软件--已经不存在了"
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+#, fuzzy
+msgid "Applied installation-time patch"
+msgstr "程辑包安装"
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr "程辑包安装"
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
 
@@ -1019,6 +1096,27 @@ msgstr "错误：没有在这个目录里安装的许可"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
+msgstr ""
 
 msgid ""
 "See\n"
@@ -1078,7 +1176,10 @@ msgstr ""
 "文本块%s:\n"
 "%s"
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr "无法从下面的段标题找到关于版本的信息"
 
 msgid ""
@@ -1149,6 +1250,12 @@ msgstr "找到了%s,可能是从%s来的"
 msgid "no native symbols were extracted"
 msgstr ""
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
@@ -1192,10 +1299,15 @@ msgstr "没有找到句法分析过的文件"
 msgid "FAILED"
 msgstr "失败"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "不存在'%s'这个文件目录"
+
 msgid "DIFFERED"
 msgstr ""
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr "执行随机偏离检验--偶尔会失败"
 
 #, fuzzy
@@ -1307,6 +1419,9 @@ msgstr "缺少'DESCRIPTION'和'DESCRIPTION.in'这两个文件"
 msgid "invalid package layout"
 msgstr "程序包布局无效"
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
 
@@ -1319,6 +1434,9 @@ msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
 #, fuzzy
 msgid "cannot source package code:"
 msgstr "无法读取程序包源编码"
+
+msgid "inferior call failed"
+msgstr ""
 
 #, fuzzy
 msgid "'text' must be a character vector"
@@ -1422,10 +1540,6 @@ msgstr[0] ""
 "Rd文件里缺少或有空白的\\name域\n"
 "%s"
 
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-
 #, fuzzy
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
@@ -1460,6 +1574,9 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr "找不到公布了的S3方法'%s'"
 
 #~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
@@ -1642,9 +1759,6 @@ msgstr[0] ""
 #~ msgid "Vignette engine"
 #~ msgstr "小简介引擎"
 
-#~ msgid "is not registered"
-#~ msgstr "没有注册"
-
 #~ msgid "Engine name"
 #~ msgstr "引擎名字"
 
@@ -1778,9 +1892,6 @@ msgstr[0] ""
 #~ msgid "running 'zip' failed"
 #~ msgstr "调用'zip'失败"
 
-#~ msgid "packaged installation of"
-#~ msgstr "程辑包安装"
-
 #~ msgid "as"
 #~ msgstr "如"
 
@@ -1827,9 +1938,6 @@ msgstr[0] ""
 
 #~ msgid "Entry for"
 #~ msgstr "项目为"
-
-#~ msgid "="
-#~ msgstr "="
 
 #~ msgid "already defined to be"
 #~ msgstr "已经定义为"
@@ -2086,9 +2194,6 @@ msgstr[0] ""
 #~ msgid "Rd files with missing or empty '\\title':"
 #~ msgstr "Rd文件内缺少或含空白的'\\title'条目:"
 
-#~ msgid "Rd files without '%s':"
-#~ msgstr "Rd文件内没有'%s':"
-
 #~ msgid "These entries are required in an Rd file."
 #~ msgstr "所有的Rd文件必需要包含以下这些条目."
 
@@ -2103,9 +2208,6 @@ msgstr[0] ""
 
 #~ msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
 #~ msgstr "每'\\keyword'条目必需从标准关键字表中取一个(在R使用文件目录中'KEYWORDS'文件内)."
-
-#~ msgid "Rd files with empty sections:"
-#~ msgstr "Rd文件内有空的段:"
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "文件目录'%s'不含Rd源编码"

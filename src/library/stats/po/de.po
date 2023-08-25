@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-04-13 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -139,11 +139,16 @@ msgstr "nur das erste Element wird als Variablenname genutzt"
 msgid "invalid expression in '%s'"
 msgstr "ungültiger Ausdruck in '%s'"
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+#, fuzzy
+msgid "too many variables"
+msgstr "zu viele Faktoren"
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr "ungültige Variablennamen"
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr "ungültiger tag"
 
@@ -159,11 +164,11 @@ msgstr "distance(): unzulässiges p"
 msgid "distance(): invalid distance"
 msgstr "distance(): unzulässige distance"
 
-#: distn.c:44
+#: distn.c:47
 msgid "NaNs produced"
 msgstr "NaNs wurden erzeugt"
 
-#: distn.c:45
+#: distn.c:48
 msgid "Non-numeric argument to mathematical function"
 msgstr "Nicht-numerisches Argument für mathematische Funktion"
 
@@ -182,12 +187,12 @@ msgstr "Argument %s muss ein nichtleerer numerischer Vektor sein"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
 
-#: fexact.c:273
+#: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr "Ganzzahlüberlauf würde passieren in 'mult * ldkey' = %g"
 
-#: fexact.c:653
+#: fexact.c:656
 #, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
@@ -198,12 +203,14 @@ msgstr ""
 " (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 " Versuchen Sie größeren Workspace und evtl. 'mult'"
 
-#: fexact.c:1037
+#: fexact.c:1040
 #, c-format
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr "Fehler in fexact3, it[i=%d]=%d: negativer Schlüssel %d (kyy=%d)\n"
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
+msgstr ""
 
-#: fexact.c:1069
+#: fexact.c:1073
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -214,7 +221,7 @@ msgstr ""
 " (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Workspace vergrößern oder evtl. 'simulate.p.value=TRUE' nutzen."
 
-#: fexact.c:1404
+#: fexact.c:1407
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
@@ -223,7 +230,7 @@ msgstr ""
 "FEXACT Fehler 6 (f5xact). LDKEY=%d ist für dieses Problem zu klein: kval=%d\n"
 "Versuchen Sie größeren Workspace."
 
-#: fexact.c:1417
+#: fexact.c:1420
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -234,7 +241,7 @@ msgstr ""
 " (kval=%d, itop-ldstp=%d).\n"
 "Workspace vergrößern oder evtl. 'simulate.p.value=TRUE' nutzen."
 
-#: fexact.c:1454
+#: fexact.c:1458
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -962,6 +969,10 @@ msgstr "unzulässige Endregel für laufenden Median von 3: %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "Fehlende Werte in den letzten %d Beobachtungen"
+
+#, c-format
+#~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+#~ msgstr "Fehler in fexact3, it[i=%d]=%d: negativer Schlüssel %d (kyy=%d)\n"
 
 #~ msgid "'x' is a factor"
 #~ msgstr "'x' ist ein Faktor"

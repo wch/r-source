@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2023-05-12 14:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -29,6 +29,12 @@ msgstr "keine Dokumentation für %s in Paket %s gefunden"
 
 msgid "document not found"
 msgstr "Dokument nicht gefunden"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "Eine Suchanfrage wurde gesendet an %s"
@@ -195,8 +201,8 @@ msgstr "Index außerhalb der Grenzen"
 msgid "%s should be one of %s"
 msgstr "%s sollte einer von %s sein"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "Argument '%s ist veraltet; besser '%s' setzen."
+msgid "To cite package %s in publications use:"
+msgstr "Um Paket %s in Publikationen zu zitieren, nutzen Sie bitte:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "Ein BibTeX-Eintrag für LaTeX-Benutzer ist"
@@ -208,14 +214,8 @@ msgstr ""
 "Ignoriere ungültigen Eintrag %d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "kein Datumsfeld in der Datei DESCRIPTION des Paketes %s"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "konnte das Jahr für %s aus der DESCRIPTION des Paketes nicht bestimmen"
-
-msgid "To cite package %s in publications use:"
-msgstr "Um Paket %s in Publikationen zu zitieren, nutzen Sie bitte:"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
@@ -228,14 +228,9 @@ msgstr "'FUN' muss eine Funktion oder NULL sein"
 msgid "cannot handle S4 methods yet"
 msgstr "kann noch nicht mit S4-Methoden umgehen"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package' muss eine Zeichenkette oder NULL sein"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "Datensätze wurden vom Paket 'base' in das Paket 'datasets' verschoben"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "Datensätze wurden vom Paket 'stats' in das Paket 'datasets' verschoben"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "Datenindex für Paket %s ist ungültig und wird ignoriert"
@@ -379,8 +374,16 @@ msgstr "'form' muss eine zweiseitige Formel sein"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' muss eine zweiseitige Formel mit einem Term auf jeder Seite sein"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "ungültiges 'socket' Argument"
+
+#, fuzzy
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
 msgstr "ungültiges 'n' - muss mindestens ein nicht-fehlendes Element enthalten, hat keines"
+
+msgid "invalid 'n' - must be numeric, possibly NA."
+msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr "ungültiges 'n' - muss Länge 1 haben, wenn dim(x) NULL ist, hat %d"
@@ -465,7 +468,8 @@ msgstr "Von Benutzer abgebrochen"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "Kann nicht mit CRAN verbinden, um R Version zu checken."
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "Argument %s muss einzelne Zeichkette sein"
 
 msgid "incorrect field specification"
@@ -509,11 +513,9 @@ msgstr "Wenn der Browser '%s' bereits ausgeführt wird, wird er nicht neu gestar
 msgid "Otherwise, be patient ..."
 msgstr "Ansonsten: Geduld ..."
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'url' muss eine nicht-leere Zeichenkette sein"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' muss eine nicht-leere Zeichenkette sein"
 
 msgid "no package '%s' was found"
 msgstr "kein Paket '%s' gefunden"
@@ -538,6 +540,10 @@ msgstr "kann HTML-Paketindex nicht aktualisieren"
 
 msgid "done"
 msgstr "fertig"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
@@ -696,6 +702,12 @@ msgstr "kann keine Repositories nicht-interaktiv setzen"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "ungültige options(\"pkgType\"); muss eine Zeichenkette sein"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ","
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Bitte Repositories für diese Sitzung auswählen ---"
 
@@ -712,6 +724,10 @@ msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
 msgstr "Weiß nicht in welches Element von 'lib' die Abhängigkeiten installiert werden sollen; überspringe Abhängigkeiten"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip' muss eine einzelne Zeichenkette sein"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "Type 'binary' ist auf dieser Plattform nicht unterstützt"
@@ -783,12 +799,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "files: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "Download von Paket %s fehlgeschlagen"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"Installation eines oder mehrerer Pakete schlug fehl,\n"
+" vermutlich %s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "Installation eines oder mehrerer Pakete schlug fehl,\n"
 " vermutlich %s"
@@ -1145,14 +1175,8 @@ msgstr "hänge Spaltennamen an Datei an"
 msgid "attempt to set '%s' ignored"
 msgstr "Versuch ignoriert '%s' zu setzen"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip' muss eine einzelne Zeichenkette sein"
-
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files' muss ein Zeichenkettenvektor sein, der einen oder mehrere Dateipfade spezifiziert"
-
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "Argument 'zip' muss eine nicht-leere Zeichenkette sein"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "kein Programm um 'mailto' URIs zu öffnen: Rückfall auf 'method=\"none\"'"
@@ -1183,6 +1207,10 @@ msgstr "Aufruf von 'wget' hatte Exit-Status ungleich 0"
 
 msgid "'curl' call had nonzero exit status"
 msgstr "Aufruf von 'curl' hatte Exit-Status ungleich 0"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "unzulässiges Format"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1266,6 +1294,12 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d Sweave-Datei für Basisnamen %s gefunden"
 msgstr[1] "%d Sweave-Dateien für Basisnamen %s gefunden"
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "Ausgabedateien:"
+msgstr[1] "Ausgabedateien:"
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%d Vorkommen in %s"
@@ -1300,6 +1334,12 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "Objekt '%s' nicht gefunden"
 msgstr[1] "Objekte '%s' nicht gefunden"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "Paket %s ist ein Basispaket und sollte nicht aktualisiert werden"
+msgstr[1] "Pakete %s sind Basispakete und sollten nicht aktualisiert werden"
 
 msgid ""
 "Removing package from %s\n"
@@ -1414,6 +1454,24 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ungültige römische Zahl: %s"
 msgstr[1] "ungültige römische Zahlen: %s"
 
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "Argument '%s ist veraltet; besser '%s' setzen."
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "kein Datumsfeld in der Datei DESCRIPTION des Paketes %s"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "Datensätze wurden vom Paket 'base' in das Paket 'datasets' verschoben"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "Datensätze wurden vom Paket 'stats' in das Paket 'datasets' verschoben"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser' muss eine nicht-leere Zeichenkette sein"
+
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "Argument 'zip' muss eine nicht-leere Zeichenkette sein"
+
 #~ msgid "bad argument"
 #~ msgstr "unbrauchbares Argument"
 
@@ -1431,9 +1489,6 @@ msgstr[1] "ungültige römische Zahlen: %s"
 
 #~ msgid "no download method found"
 #~ msgstr "keine Downloadmethode gefunden"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 #~ msgstr ""

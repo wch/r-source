@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2023-04-22 16:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2023-04-22 22:11+0200\n"
 "Last-Translator: Gabriel Tormin <gta1998@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -449,11 +449,22 @@ msgstr "Arquivos Rd com nome '%s' duplicado:"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Arquivos Rd com alias '%s' duplicado:"
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr "Arquivos Rd com alias '%s' duplicado:"
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr "Flags não portáveis no arquivo '%s':"
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr "Itens de argumento sem descrição no objeto Rd '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Conteúdo autogerado que requer edição no objeto Rd '%s':"
+
+msgid "Rd objects without \\description:"
+msgstr ""
 
 msgid "no Rd sections specified"
 msgstr "nenhuma seção Rd especificada"
@@ -1233,10 +1244,15 @@ msgstr "nenhum arquivo analisado foi encontrado"
 msgid "FAILED"
 msgstr "FALHOU"
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr "diretório '%s' não existe"
+
 msgid "DIFFERED"
 msgstr "DIFERIU"
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr "executando testes de geração de desvio aleatório -- falha ocasionalmente"
 
 msgid "unknown header specification"
@@ -1363,9 +1379,6 @@ msgstr "Codificação desconhecida com dados não ASCII: convertendo para ASCII"
 
 msgid "cannot source package code:"
 msgstr "não é possível carregar código do pacote:"
-
-msgid "inferiorCallError"
-msgstr ""
 
 msgid "inferior call failed"
 msgstr ""

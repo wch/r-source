@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-10-16 14:04+0000\n"
 "Last-Translator: Macarena Quiroga <macarenasolquiroga@gmail.com>\n"
 "Language-Team: none\n"
@@ -33,7 +33,7 @@ msgid "runmed(): invalid 'na.action'"
 msgstr "runmed(): 'na.action' inválida"
 
 #: Srunmed.c:315
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "na_action logic error (%d), please report!"
 msgstr "na_action error lógico (%d), ¡por favor informe!"
 
@@ -143,11 +143,16 @@ msgstr "solo el primer elemento es usado como nombre de variable"
 msgid "invalid expression in '%s'"
 msgstr "expresión inválida en '%s'"
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+#, fuzzy
+msgid "too many variables"
+msgstr "demasiados factores"
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr "Nombres de variables inválidos"
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr "etiqueta inválida"
 
@@ -163,16 +168,16 @@ msgstr "distance(): p inválido"
 msgid "distance(): invalid distance"
 msgstr "distance(): distancia inválida"
 
-#: distn.c:44
+#: distn.c:47
 msgid "NaNs produced"
 msgstr "Se han producido NaNs"
 
-#: distn.c:45
+#: distn.c:48
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argumento no numérico para una función matemática"
 
 #: family.c:45
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Valor %g fuera del intervalo (0, 1)"
 
@@ -186,13 +191,13 @@ msgstr "El argumento %s debe ser un vector numérico no vacío"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argumento %s debe ser un vector numérico de longitud 1 o longitud %d"
 
-#: fexact.c:273
-#, c-format, fuzzy
+#: fexact.c:276
+#, fuzzy, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr "El desbordamiento de enteros ocurriría en 'mult * ldkey' = %g"
 
-#: fexact.c:653
-#, c-format, fuzzy
+#: fexact.c:656
+#, fuzzy, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
@@ -202,13 +207,15 @@ msgstr ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Intente aumentar el tamaño del espacio de trabajo y posiblemente 'mult'"
 
-#: fexact.c:1037
-#, c-format, fuzzy
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr "Error en fexact3, it[i=%d]=%d: clave negativa %d (kyy=%d)\n"
+#: fexact.c:1040
+#, c-format
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
+msgstr ""
 
-#: fexact.c:1069
-#, c-format, fuzzy
+#: fexact.c:1073
+#, fuzzy, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
@@ -216,21 +223,19 @@ msgid ""
 msgstr ""
 "Error FEXACT 30.  Longitud de pila superada en f3xact,\n"
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
-"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p."
-"value=TRUE'"
+"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p.value=TRUE'"
 
-#: fexact.c:1404
-#, c-format, fuzzy
+#: fexact.c:1407
+#, fuzzy, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
-"Error FEXACT 6 (f5xact).  LDKEY=%d es demasiado pequeño para este problema: "
-"kval=%d.\n"
+"Error FEXACT 6 (f5xact).  LDKEY=%d es demasiado pequeño para este problema: kval=%d.\n"
 "Intente aumentar el tamaño del espacio de trabajo."
 
-#: fexact.c:1417
-#, c-format, fuzzy
+#: fexact.c:1420
+#, fuzzy, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
 "  (kval=%d, itop-ldstp=%d).\n"
@@ -238,11 +243,10 @@ msgid ""
 msgstr ""
 "Error FEXACT 7(%s). LDSTP=%d es demasiado pequeño para este problema,\n"
 "  (kval=%d, itop-ldstp=%d).\n"
-"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p."
-"value=TRUE'."
+"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p.value=TRUE'."
 
-#: fexact.c:1454
-#, c-format, fuzzy
+#: fexact.c:1458
+#, fuzzy, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
@@ -250,8 +254,7 @@ msgid ""
 msgstr ""
 "Error FEXACT 7(%s). LDSTP=%d es demasiado pequeño para este problema,\n"
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
-"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p."
-"value=TRUE'"
+"Aumente el espacio de trabajo o considere la posibilidad de usar 'simulate.p.value=TRUE'"
 
 #: fourier.c:70 fourier.c:165
 msgid "non-numeric argument"
@@ -267,15 +270,11 @@ msgstr "Se requieren series con valores vectoriales (multivariantes)"
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
-msgstr ""
-"nextn() no encontró solución < %d = INT_MAX (el entero máximo); pase '0+ n' "
-"en lugar de 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
+msgstr "nextn() no encontró solución < %d = INT_MAX (el entero máximo); pase '0+ n' en lugar de 'n'"
 
 #: fourier.c:233
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
 msgstr "nextn<64>() no encontró solución < %ld = UINT64_MAX (el entero máximo)"
 
@@ -297,13 +296,9 @@ msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr "'n' debe tener typeof(.) \"entero\" o \"doble\""
 
 #: fourier.c:298
-#, c-format, fuzzy
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
-msgstr ""
-"nextn() = %<PRIu64> > 2^53 puede no ser exactamente representable en R (como "
-"\"doble\")"
+#, fuzzy, c-format
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
+msgstr "nextn() = %<PRIu64> > 2^53 puede no ser exactamente representable en R (como \"doble\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -472,15 +467,12 @@ msgstr "los nombres de los términos se truncarán"
 #: model.c:645
 #, fuzzy
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
-"las variables complejas no están actualmente permitidas en las matrices de "
-"modelos"
+msgstr "las variables complejas no están actualmente permitidas en las matrices de modelos"
 
 #: model.c:669
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr ""
-"las variables del tipo %s no están permitidas en las matrices del modelo"
+msgstr "las variables del tipo %s no están permitidas en las matrices del modelo"
 
 #: model.c:894
 #, fuzzy
@@ -509,7 +501,7 @@ msgid "invalid model formula in ExtractVars"
 msgstr "fórmula de modelo inválida en ExtractVars"
 
 #: model.c:1636
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nombre duplicado '%s' en el data frame usando '.'"
 
@@ -532,13 +524,9 @@ msgid "'data' argument is of the wrong type"
 msgstr "el argumento \"data\" es del tipo incorrecto"
 
 #: model.c:1873
-#, c-format, fuzzy
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
-msgstr ""
-"'varlist' ha cambiado (de nvar=%d) a nuevo %d después de EncodeVars() -- ¡ya "
-"no debería suceder!"
+#, fuzzy, c-format
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
+msgstr "'varlist' ha cambiado (de nvar=%d) a nuevo %d después de EncodeVars() -- ¡ya no debería suceder!"
 
 #: model.c:2157
 #, fuzzy
@@ -580,7 +568,7 @@ msgid "singular gradient"
 msgstr "gradiente singular"
 
 #: nls.c:255
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "factor de paso %g reducido por debajo de 'minFactor' de %g"
 
@@ -619,7 +607,7 @@ msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valor faltante o un infinito producido al evaluar el modelo"
 
 #: nls.c:328
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "la variable '%s' es un número entero, no numérico"
 
@@ -633,7 +621,7 @@ msgid "non-finite value supplied by optim"
 msgstr "valor no finito provisto por 'optim'"
 
 #: optim.c:89
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "objective function in optim evaluates to length %d not 1"
 msgstr "la función objetivo en optim evalúa a longitud %d no 1"
 
@@ -643,7 +631,7 @@ msgid "gradient in optim evaluated to length %d not %d"
 msgstr "gradiente en 'optim' de tamaño %d, no %d"
 
 #: optim.c:152 optim.c:191
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "non-finite finite-difference value [%d]"
 msgstr "valor de diferencia finita no finita [%d]"
 
@@ -987,3 +975,7 @@ msgstr ""
 #, c-format
 msgid "missing value in last %d observations"
 msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+#~ msgstr "Error en fexact3, it[i=%d]=%d: clave negativa %d (kyy=%d)\n"

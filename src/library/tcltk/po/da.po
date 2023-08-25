@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2011-11-28 23:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,11 +50,11 @@ msgstr "argument er ikke af korrekt type"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "ingen DISPLAY-variabel så Tk er ikke tilgængelig"
 
-#: tcltk_unix.c:94
+#: tcltk_unix.c:111
 msgid "Tcl is not loaded"
 msgstr "Tcl er ikke indlæst"
 
-#: tcltk_unix.c:98
+#: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl er ikke sidst indlæst håndtering"
 

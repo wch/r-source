@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -59,86 +59,86 @@ msgstr "不明的格式設定 '%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "每一個轉換設定最多只支援一個星 '*'"
 
-#: gramLatex.c:2390 gramRd.c:3976
+#: gramLatex.c:2392 gramRd.c:3995
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "無法為 %d 列的長字串指派緩衝區"
 
-#: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
+#: gramLatex.c:2629 gramRd.c:4541 gramRd.c:4547
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' 值無效"
 
-#: gramRd.c:2547 gramRd.c:2550
+#: gramRd.c:2549 gramRd.c:2552
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "壞標記(額外的空間？)在 %s：%d：%d"
 
-#: gramRd.c:3125
+#: gramRd.c:3144
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "'%s' 巨集之前已經定義了"
 
-#: gramRd.c:3135
+#: gramRd.c:3154
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "使用者定義的巨集最多只允許四個引數"
 
-#: gramRd.c:3177
+#: gramRd.c:3196
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "'%s' 巨集的定義沒有。"
 
-#: gramRd.c:3239
+#: gramRd.c:3258
 #, fuzzy, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "使用者定義的巨集最多只允許四個引數"
 
-#: gramRd.c:3379 gramRd.c:3383
+#: gramRd.c:3398 gramRd.c:3402
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "出現了換列內引號的字串在 %s:%d"
 
-#: gramRd.c:3402
+#: gramRd.c:3421
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "無法為在第 %d 列的長巨集指派緩衝區"
 
-#: gramRd.c:3432
+#: gramRd.c:3451
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "巨集巢狀過深：無限遞迴？"
 
-#: gramRd.c:3838
+#: gramRd.c:3857
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "找不到巨集 %s "
 
-#: gramRd.c:4036
+#: gramRd.c:4055
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "意外結束輸入(在 %c 引號的字串於 %s:%d:%d)"
 
-#: gramRd.c:4535
+#: gramRd.c:4554
 msgid "cannot open the connection"
 msgstr "打不開鏈結"
 
-#: gramRd.c:4542
+#: gramRd.c:4561
 msgid "cannot read from this connection"
 msgstr "無法從這個鏈結讀取"
 
-#: gramRd.c:4550
+#: gramRd.c:4569
 msgid "invalid Rd file"
 msgstr "Rd 檔案無效"
 
-#: gramRd.c:4569
+#: gramRd.c:4588
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' 只支援反解析字元元素"
 
-#: gramRd.c:4572
+#: gramRd.c:4591
 msgid "bad state"
 msgstr "狀態不好"
 
-#: gramRd.c:4585
+#: gramRd.c:4604
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd' 裡的文字模式 %d 無效"
@@ -147,16 +147,16 @@ msgstr "'deparseRd' 裡的文字模式 %d 無效"
 msgid "invalid bind address specification"
 msgstr "繫結位址規範無效"
 
-#: install.c:98
+#: install.c:95
 msgid "path too long"
 msgstr ""
 
-#: install.c:115 install.c:134 install.c:136
+#: install.c:120 install.c:139 install.c:141
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數無效"
 
-#: install.c:165
+#: install.c:170
 msgid "write error during file append"
 msgstr "檔案附加寫入時發生錯誤"
 

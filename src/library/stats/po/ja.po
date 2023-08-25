@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -142,11 +142,16 @@ msgstr " 最初の要素だけが変数名として使われました "
 msgid "invalid expression in '%s'"
 msgstr " '%s' 中の式が不正です "
 
-#: deriv.c:1085 model.c:99
+#: deriv.c:872
+#, fuzzy
+msgid "too many variables"
+msgstr " 因子がありません "
+
+#: deriv.c:1087 model.c:99
 msgid "invalid variable names"
 msgstr " 変数名が不正です "
 
-#: deriv.c:1094
+#: deriv.c:1095 deriv.c:1097
 msgid "invalid tag"
 msgstr " タグが不正です "
 
@@ -162,11 +167,11 @@ msgstr " distance(): 不正な p "
 msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 
-#: distn.c:44
+#: distn.c:47
 msgid "NaNs produced"
 msgstr " 計算結果が NaN になりました "
 
-#: distn.c:45
+#: distn.c:48
 msgid "Non-numeric argument to mathematical function"
 msgstr " 数学関数に非数値引数が渡されました "
 
@@ -185,12 +190,12 @@ msgstr " 引数 %s は空でない数値ベクトルでなければなりませ�
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
 
-#: fexact.c:273
+#: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
 msgstr ""
 
-#: fexact.c:653
+#: fexact.c:656
 #, c-format
 msgid ""
 "FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
@@ -198,12 +203,14 @@ msgid ""
 "Try increasing the size of the workspace and possibly 'mult'"
 msgstr ""
 
-#: fexact.c:1037
+#: fexact.c:1040
 #, c-format
-msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+msgid ""
+"FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Rather set 'simulate.p.value=TRUE'\n"
 msgstr ""
 
-#: fexact.c:1069
+#: fexact.c:1073
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -211,14 +218,14 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
 
-#: fexact.c:1404
+#: fexact.c:1407
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
 
-#: fexact.c:1417
+#: fexact.c:1420
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -226,7 +233,7 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'."
 msgstr ""
 
-#: fexact.c:1454
+#: fexact.c:1458
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-11-29 17:27+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -156,8 +156,80 @@ msgstr "nėra tinkamo nenaudojamo failo vardo postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): naudojant postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Netinkamas šablono tipas"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Neteisingas šrifto tipas"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Neteisingas šrifto tipas"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "nežinomas šriftas"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "netinkamas išvesties formatas"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "neteisingas 'type'; niekada neturėtų taip atsitikti, prašome pranešti!"
+
+#, fuzzy
+msgid "Invalid mask type"
+msgstr "Neteisingas šrifto tipas"
 
 #, fuzzy
 msgid "Invalid fill rule"
@@ -241,7 +313,8 @@ msgstr "nežinomas šriftas"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "šriftų kuoduotė nesutampa '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' turi būti netuščia simbolių eilutė"
 
 msgid "GhostScript was not found"
@@ -252,6 +325,13 @@ msgstr "netinkamas išvesties formatas"
 
 msgid "status %d in running command '%s'"
 msgstr "%d būsena vykdant komandą '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' turi būti netuščia simbolių eilutė"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "neteisingas 'file'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "nepavyko pridėti daugiau padalų; 'min.n' per didelis?"
@@ -313,6 +393,9 @@ msgstr "Turi būti įdiegtas ('Recommended') paketas \"KernSmooth\""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' turi būti \"range\", vadinasi 2 ilgio"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "neteisingas pirmas argumentas"
 
@@ -350,8 +433,20 @@ msgstr ""
 "Galimi įrenginiai:\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "neteisingas 'title'"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "neteisingas 'title'"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' turi nurodytas nebent 'units = \"px\"'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' turi būti netuščia simbolių eilutė"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr ""
@@ -440,23 +535,24 @@ msgstr[0] "skiriasi tarp naujo ir ankstesnio"
 msgstr[1] "skiriasi tarp naujų ir ankstesnių"
 msgstr[2] "skiriasi tarp naujų ir ankstesnių"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d x reikšmė <= 0 praleista iš logaritminės diagramos"
 msgstr[1] "%d x reikšmės <= 0 praleista iš logaritminės diagramos"
 msgstr[2] "%d x reikšmių <= 0 praleista iš logaritminės diagramos"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d y reikšmė <= 0 praleista iš logaritminės diagramos"
-msgstr[1] "%d y reikšmės <= 0 praleista iš logaritminės diagramos"
-msgstr[2] "%d y reikšmių <= 0 praleista iš logaritminės diagramos"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d y reikšmė <= 0 praleista iš logaritminės diagramos"
+#~ msgstr[1] "%d y reikšmės <= 0 praleista iš logaritminės diagramos"
+#~ msgstr[2] "%d y reikšmių <= 0 praleista iš logaritminės diagramos"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d z reikšmė <= 0 praleista iš logaritminės diagramos"
-msgstr[1] "%d z reikšmės <= 0 praleista iš logaritminės diagramos"
-msgstr[2] "%d z reikšmių <= 0 praleista iš logaritminės diagramos"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d z reikšmė <= 0 praleista iš logaritminės diagramos"
+#~ msgstr[1] "%d z reikšmės <= 0 praleista iš logaritminės diagramos"
+#~ msgstr[2] "%d z reikšmių <= 0 praleista iš logaritminės diagramos"
 
 #~ msgid "2. %d x values <= 0 omitted from logarithmic plot"
 #~ msgstr "2. %d x reikšmės <= 0 praleistos logaritminėje diagramoje"

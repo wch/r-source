@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-12-15 08:04+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -160,10 +160,15 @@ msgstr "'by'必需是列表"
 msgid "arguments must have same length"
 msgstr "参数的长度必需一样"
 
-msgid "'formula' missing or incorrect"
-msgstr "缺失'formula'或有错误"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "参数'x'必需是数值"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula'的公式左右两边都必需存在"
 
 msgid "cannot change frequency from %g to %g"
@@ -213,6 +218,9 @@ msgstr "无法精确计算带连结的p值"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "无法精确计算带连结的置信区间"
+
+msgid "'formula' missing or incorrect"
+msgstr "缺失'formula'或有错误"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "分组因子只能有两层"
@@ -496,7 +504,13 @@ msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "前%2$d个特征值里只有%1$d个大于零"
 
-msgid "package 'MASS' must be installed"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -710,6 +724,9 @@ msgstr " sum(weights) != 1，因此无法取得真密度函数"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自动选择頻寬至少需要两个数据点"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "没有这样的頻寬规则"
 
@@ -742,6 +759,9 @@ msgstr "'xi'的尺寸不正确"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是向量或矩阵"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "距离方法无效"
@@ -869,9 +889,7 @@ msgid "using weights as inverse variances"
 msgstr "用重量作逆方差"
 
 msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
-msgstr ""
-"'variance' \"%s\"无效：只能用\"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\"和"
-"\"constant\"其中之一"
+msgstr "'variance' \"%s\"无效：只能用\"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\"和\"constant\"其中之一"
 
 msgid "length mismatch in convolution"
 msgstr "卷积中的长度不相符"
@@ -955,6 +973,9 @@ msgstr "'row.vars'设定不正确"
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars'设定不正确"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula'的公式左右两边都必需存在"
+
 msgid "interactions are not allowed"
 msgstr "不允许有交互作用项"
 
@@ -984,6 +1005,18 @@ msgstr "缺失'row.var.names'值"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "缺失'col.vars'值或它设定得不正确"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family'设定得不对"
@@ -1219,6 +1252,14 @@ msgstr ""
 msgid "not enough 'x' data"
 msgstr "'x'数据不足"
 
+#, fuzzy
+msgid "Parameter(s)"
+msgstr "拟合参数"
+
+#, fuzzy
+msgid "ignored"
+msgstr "' 略过不用"
+
 msgid "not enough 'y' data"
 msgstr "'y'数据不足"
 
@@ -1228,8 +1269,28 @@ msgstr "并列的时候P-值将近似"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y'必需是数值，或是个函数，或是指定适当函数的字符串"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "Kolmogorov - Smirnov检验里不应该有连结"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "参数'n'无效"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval'必需是长度为二的数值向量"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "参数'x'必需是数值"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "参数'x'必需是数值"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1295,8 +1356,21 @@ msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "调用predict.lm(<fake-lm-object>) ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "用当前数据得到的预测结果对_未来_响应有用"
@@ -1528,13 +1602,11 @@ msgstr "没有项组件也没有属性"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels'必需是长度至少为一的字节向量"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep'必需是字符串"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1555,6 +1627,14 @@ msgstr "'data'必需是列表或是环境"
 
 msgid "variable '%s' is not a factor"
 msgstr "变量'%s'不是因子"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "对比只适用于因子"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "对比只适用于有两个或多于两个水平的因子"
 
 msgid "'offset' must be numeric"
 msgstr "'offset'必需为数值"
@@ -1758,6 +1838,9 @@ msgstr "'which'必需在1:6之间"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
 
+msgid "y is empty or has only NAs"
+msgstr "y是空的或只含NA"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1880,8 +1963,8 @@ msgstr "'p'的长度必需同'x'和'n'的相等"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "'p'的单元必需在(0,1)里"
 
-msgid "y is empty or has only NAs"
-msgstr "y是空的或只含NA"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "缺失'formula'"
@@ -1928,9 +2011,6 @@ msgstr "'ref'必需是存在的水平"
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d必需在1L:%d里"
 
-msgid "'sep' must be a character string"
-msgstr "'sep'必需是字符串"
-
 msgid "failed to guess time-varying variables from their names"
 msgstr "没有能够从它们的名字中来猜测时变参数"
 
@@ -1975,6 +2055,10 @@ msgstr "頻寬'k'必需大于等于一而且还必需是奇数!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "参数'object'的长度不可能取这个值"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "deriv里的公式无效"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "找不到\"%s\" 对象的'getInitial'方法"
@@ -2660,12 +2744,6 @@ msgstr[0] "'start.innov'太短了，需要%d个点"
 
 #~ msgid "_NOT_ converged in"
 #~ msgstr "_没有_聚合于"
-
-#~ msgid "' ignored"
-#~ msgstr "' 略过不用"
-
-#~ msgid "fitting parameters"
-#~ msgstr "拟合参数"
 
 #~ msgid "use \"Brent\" or optimize() directly"
 #~ msgstr "请直接用\"Brent\"或optimize()"

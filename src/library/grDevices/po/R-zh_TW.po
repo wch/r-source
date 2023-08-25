@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -162,8 +162,80 @@ msgstr "沒有合適的檔案名稱給 postscript()來用"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new():用 postscript(file=\"%s\")"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "字型種類無效"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "字型種類無效"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "字型種類無效"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "不明的字型"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "輸出的格式無效"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid mask type"
+msgstr "字型種類無效"
 
 #, fuzzy
 msgid "Invalid fill rule"
@@ -249,7 +321,8 @@ msgstr "不明的字型"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "字型編碼衝突 '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' 必須是非空字串"
 
 msgid "GhostScript was not found"
@@ -260,6 +333,13 @@ msgstr "輸出的格式無效"
 
 msgid "status %d in running command '%s'"
 msgstr "呼叫命令 '%2$s' 的執行狀況為 %1$d"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' 必須是非空字串"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "'file' 無效"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "無法加入更多刻度；'min.n' 太大？"
@@ -321,6 +401,9 @@ msgstr ""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' 的值應該為\"range\"，因此它的長度必須為二"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "第一個引數無效"
 
@@ -358,8 +441,20 @@ msgstr ""
 "可用的裝置是：\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "'title' 無效"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "'title' 無效"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "除非 'units = \"px\"'，否則必須設定 'res'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' 必須是非空字串"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr ""
@@ -444,14 +539,15 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "新的值和舊的值不一樣"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "對數圖裡忽略 %d 個小於等於零的 x 值"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "對數圖裡忽略 %d 個小於等於零的 y 值"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "對數圖裡忽略 %d 個小於等於零的 y 值"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "對數圖裡忽略 %d 個小於等於零的 z 值"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "對數圖裡忽略 %d 個小於等於零的 z 值"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -28,8 +28,7 @@ msgid "empty 'derivs'"
 msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr ""
-"'ord' deve ser um inteiro positivo, sendo no máximo igual ao número de nós"
+msgstr "'ord' deve ser um inteiro positivo, sendo no máximo igual ao número de nós"
 
 #, fuzzy
 msgid "need at least %s (=%d) knots"
@@ -37,9 +36,7 @@ msgstr "são necessários pelo menos 2*ord -1 (=%d) nós"
 
 #, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr ""
-"os dados 'x' devem estar na faixa de %g a %g, a não ser que você especifique "
-"'outer.ok = TRUE'"
+msgstr "os dados 'x' devem estar na faixa de %g a %g, a não ser que você especifique 'outer.ok = TRUE'"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
@@ -91,7 +88,17 @@ msgstr "'degree' deve ser inteiro >= 1"
 msgid "'df' was too small; have used %d"
 msgstr "'df' muito pequeno; foi usado"
 
-msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgid "non-finite knots"
 msgstr ""
-"alguns valores de 'x' depois dos nós de fronteira podem causar bases má "
-"condicionadas"
+
+msgid "all interior knots match left boundary knot"
+msgstr ""
+
+msgid "all interior knots match right boundary knot"
+msgstr ""
+
+msgid "shoving 'interior' knots matching boundary knots to inside"
+msgstr ""
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "alguns valores de 'x' depois dos nós de fronteira podem causar bases má condicionadas"

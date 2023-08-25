@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2023-01-30 10:05+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -28,6 +28,12 @@ msgstr "程序包%2$s里没有%1$s这样一本文档"
 
 msgid "document not found"
 msgstr "找不到这个文档"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "搜索查询已提交到 %s"
@@ -194,9 +200,8 @@ msgstr "标出界"
 msgid "%s should be one of %s"
 msgstr "%s必需是%s这些中的一个"
 
-#, fuzzy
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "参数'namespace'已经不再用了"
+msgid "To cite package %s in publications use:"
+msgstr "在出版物中使用程序包时引用%s:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "LaTeX的用户的BibTeX条目是"
@@ -208,14 +213,8 @@ msgstr ""
 "删除无效的条目%d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
-
-msgid "To cite package %s in publications use:"
-msgstr "在出版物中使用程序包时引用%s:"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr "注意：此引文信息是从软件包描述文件自动生成的，可能需要手工编辑，请参见%s。"
@@ -226,14 +225,9 @@ msgstr "'FUN'的值必需是函数或NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "还不能处理S4方法"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package'的值必需是字符串或NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "數據機从程序包'base'移到了程序包'datasets'"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "數據機从程序包'stats'移到了程序包'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "程序包%s的数据索引无效，忽略不用"
@@ -377,7 +371,14 @@ msgstr "'form'必需是双边公式"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form'必需是双边公式，每一边至少带一项"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "'socket'参数无效"
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -460,7 +461,8 @@ msgstr ""
 msgid "Unable to connect to CRAN to check R version."
 msgstr ""
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "参数%s必需是单字符串"
 
 msgid "incorrect field specification"
@@ -504,11 +506,9 @@ msgstr "如果由'%s'打开的浏览器已经在运行的话，它*不会*被重
 msgid "Otherwise, be patient ..."
 msgstr "否则的话请耐心等待…"
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "url必需的非空字符串"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser'必需为非空字符串"
 
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
@@ -533,6 +533,10 @@ msgstr "无法更新HTML程序包索引"
 
 msgid "done"
 msgstr "做完了。"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file'的值必需是字符串或联结"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()不能在非互交形式下使用"
@@ -693,6 +697,12 @@ msgstr "无法在非互交情况下设定貯藏處"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "'package'的值必需是字符串或NULL"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ","
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
 
@@ -711,6 +721,10 @@ msgid ""
 msgstr ""
 "不知道'lib'元素里如何安装依赖程序\n"
 "因此忽略不装"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip'必需是单字符串"
 
 #, fuzzy
 msgid "type 'binary' is not supported on this platform"
@@ -791,13 +805,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "文件: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
 #, fuzzy
+msgid "installation of package %s failed"
+msgstr "下载程序包%s时出了问题"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"安装程序包时出了错，\n"
+"  可能原因%s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "安装程序包时出了错，\n"
 "  可能原因%s"
@@ -1160,16 +1187,9 @@ msgstr "给文件加列名"
 msgid "attempt to set '%s' ignored"
 msgstr "不能修改'%s'"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip'必需是单字符串"
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files'必须指定一个或多个文件路径的字符向量"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "url必需的非空字符串"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "没有可以打开'mailto:'URIs的程序: 回复到'method=\"none\"'"
@@ -1204,6 +1224,10 @@ msgstr "下载退出状态不是零"
 #, fuzzy
 msgid "'curl' call had nonzero exit status"
 msgstr "下载退出状态不是零"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "格式无效"
 
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
@@ -1292,6 +1316,10 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "找到了%d个不含路径文件字符串为%s的Sweave文件:"
 
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] ""
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%2$s里%1$d出现"
@@ -1319,6 +1347,11 @@ msgstr[0] ""
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个对象"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 msgid ""
 "Removing package from %s\n"
@@ -1408,6 +1441,26 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字无效：%s"
 
+#, fuzzy
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "参数'namespace'已经不再用了"
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "數據機从程序包'base'移到了程序包'datasets'"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "數據機从程序包'stats'移到了程序包'datasets'"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser'必需为非空字符串"
+
+#, fuzzy
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "url必需的非空字符串"
+
 #~ msgid "bad argument"
 #~ msgstr "参数不对"
 
@@ -1425,9 +1478,6 @@ msgstr[0] "罗马数字无效：%s"
 
 #~ msgid "no download method found"
 #~ msgstr "没有下载方法"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 #~ msgstr "如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""

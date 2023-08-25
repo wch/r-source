@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -138,9 +138,6 @@ msgstr ""
 msgid ""
 "parse error in file '%s':\n"
 "%s"
-msgstr ""
-
-msgid "declared S3 method '%s' not found"
 msgstr ""
 
 msgid "cannot check R code installed as image"
@@ -288,6 +285,9 @@ msgid "License components with restrictions not permitted:"
 msgstr ""
 
 msgid "License components which are templates and need '+ file LICENSE':"
+msgstr ""
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -452,10 +452,19 @@ msgstr ""
 msgid "Rd files with duplicated alias '%s':"
 msgstr ""
 
+msgid "Rd files without \\alias:"
+msgstr ""
+
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr ""
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr ""
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
+msgid "Rd objects without \\description:"
 msgstr ""
 
 msgid "no Rd sections specified"
@@ -467,6 +476,9 @@ msgid ""
 "\n"
 "%s\n"
 "in NAMESPACE."
+msgstr ""
+
+msgid "concordance is not valid"
 msgstr ""
 
 msgid "Rd object required"
@@ -511,7 +523,16 @@ msgstr ""
 msgid "No Rd macros in package '%s'."
 msgstr ""
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
+msgstr ""
+
+msgid "alias:"
+msgstr ""
+
+msgid "is not one line"
 msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
@@ -578,6 +599,9 @@ msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
 
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
+msgstr ""
+
+msgid "Note: skipping %s"
 msgstr ""
 
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -708,9 +732,6 @@ msgstr ""
 msgid "loading failed"
 msgstr ""
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -720,13 +741,7 @@ msgstr ""
 msgid "Failed to get error in evaluating %s"
 msgstr ""
 
-msgid "Asserted error: %s"
-msgstr ""
-
 msgid "Got warning in evaluating %s, but also an error"
-msgstr ""
-
-msgid "Asserted warning: %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -801,6 +816,21 @@ msgstr ""
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr ""
+
 msgid "No files in this directory"
 msgstr ""
 
@@ -814,6 +844,9 @@ msgid "Code demonstrations:"
 msgstr ""
 
 msgid "Help pages:"
+msgstr ""
+
+msgid "HTTPD-ERROR %s %s"
 msgstr ""
 
 msgid "No package named %s could be found"
@@ -835,6 +868,15 @@ msgid "No docs found for package %s"
 msgstr ""
 
 msgid "URL %s was not found"
+msgstr ""
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+msgid "No NEWS found for package %s"
 msgstr ""
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
@@ -862,6 +904,9 @@ msgid "done"
 msgstr "tamamlandı"
 
 msgid "failed to start the httpd server"
+msgstr ""
+
+msgid "* Package: %s"
 msgstr ""
 
 msgid "cannot read index information in file '%s'"
@@ -918,6 +963,30 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+msgid "which seems to be already applied."
+msgstr ""
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+msgid "Applied installation-time patch"
+msgstr ""
+
+msgid "and saved it as"
+msgstr ""
+
+msgid "in package installation"
+msgstr ""
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr ""
 
@@ -955,6 +1024,27 @@ msgid "ERROR: no permission to install to directory"
 msgstr ""
 
 msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
 msgstr ""
 
 msgid ""
@@ -1009,7 +1099,9 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "Cannot extract version info from the following section titles:"
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr ""
 
 msgid ""
@@ -1063,6 +1155,12 @@ msgstr ""
 msgid "no native symbols were extracted"
 msgstr ""
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr ""
 
@@ -1105,10 +1203,13 @@ msgstr ""
 msgid "FAILED"
 msgstr ""
 
+msgid "directory %s is not writeable"
+msgstr ""
+
 msgid "DIFFERED"
 msgstr ""
 
-msgid "running tests of random deviate generation -- fails occasionally"
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr ""
 
 msgid "unknown header specification"
@@ -1218,6 +1319,9 @@ msgstr ""
 msgid "invalid package layout"
 msgstr ""
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr ""
 
@@ -1228,6 +1332,9 @@ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr ""
 
 msgid "cannot source package code:"
+msgstr ""
+
+msgid "inferior call failed"
 msgstr ""
 
 msgid "'text' must be a character vector"
@@ -1342,11 +1449,6 @@ msgid ""
 msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
 msgstr[0] ""
 msgstr[1] ""
 

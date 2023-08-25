@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,12 @@ msgstr "ingen dokumentation for %s fundet i pakke %s"
 
 msgid "document not found"
 msgstr "dokument blev ikke fundet"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 #, fuzzy
 msgid "A search query has been submitted to %s"
@@ -199,7 +205,7 @@ msgstr ""
 msgid "%s should be one of %s"
 msgstr "%s skal være en af %s"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgid "To cite package %s in publications use:"
 msgstr ""
 
 msgid "A BibTeX entry for LaTeX users is"
@@ -210,14 +216,8 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "intet datofelt i DESCRIPTION-fil for pakke %s"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "kunne ikke bestemme år for %s fra pakke DESCRIPTION-fil"
-
-msgid "To cite package %s in publications use:"
-msgstr ""
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
@@ -229,14 +229,9 @@ msgstr "»FUN« skal være en funktion eller NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "Kan ikke håndtere S4-metoder endnu"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "»package« skal være en tegnstreng eller NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "datasæt er blevet flyttet fra pakke »base« til pakke »datasets«"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "datasæt er blevet flyttet fra pakke »stats« til pakke »datasets«"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "dataindeks for pakke %s er ugyldig og vil blive ignoreret"
@@ -379,7 +374,13 @@ msgstr ""
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgid "invalid object for 'as.environment'"
+msgstr ""
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -461,8 +462,9 @@ msgstr ""
 msgid "Unable to connect to CRAN to check R version."
 msgstr ""
 
-msgid "argument %s must be a single character string"
-msgstr ""
+#, fuzzy
+msgid "argument %s must be a character string"
+msgstr "»package« skal være en tegnstreng eller NULL"
 
 msgid "incorrect field specification"
 msgstr ""
@@ -505,11 +507,9 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr ""
 
-msgid "'url' must be a non-empty character string"
-msgstr ""
-
-msgid "'browser' must be a non-empty character string"
-msgstr ""
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
+msgstr "»package« skal være en tegnstreng eller NULL"
 
 msgid "no package '%s' was found"
 msgstr ""
@@ -533,6 +533,9 @@ msgid "cannot update HTML package index"
 msgstr ""
 
 msgid "done"
+msgstr ""
+
+msgid "Source must be a seekable connection"
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -692,6 +695,13 @@ msgstr ""
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "»package« skal være en tegnstreng eller NULL"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+#, fuzzy
+msgid ","
+msgstr ","
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr ""
 
@@ -708,6 +718,10 @@ msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
 msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "»package« skal være en tegnstreng eller NULL"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr ""
@@ -774,12 +788,21 @@ msgstr ""
 msgid "files: %s"
 msgstr ""
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
+msgid "installation of package %s failed"
+msgstr ""
+
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 
 msgid ""
@@ -1131,16 +1154,9 @@ msgstr ""
 msgid "attempt to set '%s' ignored"
 msgstr ""
 
-msgid "'unzip' must be a single character string"
-msgstr ""
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "»file« skal være NULL, en tegnstreng eller en forbindelse"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "»package« skal være en tegnstreng eller NULL"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
@@ -1173,6 +1189,10 @@ msgstr ""
 
 msgid "'curl' call had nonzero exit status"
 msgstr ""
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "Ugyldigt argument for »filter«."
 
 msgid "download had nonzero exit status"
 msgstr ""
@@ -1254,6 +1274,11 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d Sweavefiler for basisnavn %s blev fundet:"
 msgstr[1] "%d Sweavefiler for basisnavn %s blev fundet:"
 
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] ""
+msgstr[1] ""
+
 #, fuzzy
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1288,6 +1313,11 @@ msgstr[1] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1390,15 +1420,20 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ugyldig værdi for %s: %s"
 msgstr[1] "ugyldig værdi for %s: %s"
 
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "intet datofelt i DESCRIPTION-fil for pakke %s"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "datasæt er blevet flyttet fra pakke »base« til pakke »datasets«"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "datasæt er blevet flyttet fra pakke »stats« til pakke »datasets«"
+
 #~ msgid "bad argument"
 #~ msgstr "ugyldigt argument"
 
 #~ msgid "package %s not found"
 #~ msgstr "pakke %s blev ikke fundet"
-
-#, fuzzy
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "ødelagt installation, ingen CITATION-fil i basispakken."

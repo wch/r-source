@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -30,6 +30,12 @@ msgstr "%s에 관한 문서를 패키지 %s 내에서 찾을 수 없습니다."
 
 msgid "document not found"
 msgstr "문서를 찾을 수 없습니다."
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "서치쿼리가 %s에 전달되었습니다."
@@ -194,8 +200,8 @@ msgstr "첨자가 범위를 벗어났습니다."
 msgid "%s should be one of %s"
 msgstr "%1$s는 %2$s 중 하나이어야 합니다"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr ""
+msgid "To cite package %s in publications use:"
+msgstr "패키지 %s를 출판의 목적으로 인용하고자 한다면 다음과 같이 사용하세요:"
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "LaTeX 사용자들을 위한 BibTeX 항목은 다음과 같습니다"
@@ -207,14 +213,8 @@ msgstr ""
 "잘못된 항목 %d를 뺍니다:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜 항목이 없습니다"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "패키지 내 DESCRIPTION 파일로부터 %s에 대한 년도를 알 수 없습니다"
-
-msgid "To cite package %s in publications use:"
-msgstr "패키지 %s를 출판의 목적으로 인용하고자 한다면 다음과 같이 사용하세요:"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr "주의: 이 인용에 대한 정보는 패키지 DESCRIPTION 파일로부터 자동생성되었으며 일부 수정이 필요할 수도 있습니다. %s를 참고하세요."
@@ -225,14 +225,9 @@ msgstr "'FUN'은 반드시 함수 또는 NULL이어야 합니다"
 msgid "cannot handle S4 methods yet"
 msgstr "S4 메소드를 아직 처리할 수 없습니다"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package'는 반드시 문자열 또는 NULL이어야 합니다"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "데이터셋들이 'base' 패키지에서 'datasets' 패키지로 이동되었습니다"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "데이터셋들이 'stats' 패키지에서 'datasets' 패키지로 이동되었습니다"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "패키지 %s에 있는 데이터 인덱스가 잘못되었기 때문에 무시될 것입니다"
@@ -376,7 +371,14 @@ msgstr "'form'은 반드시 양변을 가지고 있는 formula이어야 합니�
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form'은 반드시 각 변에 하나의 항을 가진 양변이 있는 formula입니다"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "'socket' 인자가 잘못되었습니다"
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -459,7 +461,8 @@ msgstr ""
 msgid "Unable to connect to CRAN to check R version."
 msgstr ""
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "인자 %s는 반드시 한개의 문자열이어야 합니다"
 
 msgid "incorrect field specification"
@@ -505,11 +508,9 @@ msgstr "만약 '%s'에 의하여 시작된 브라우저가 이미 실행중이�
 msgid "Otherwise, be patient ..."
 msgstr "만약 그렇지 않다면, 조금만 더 기다려보세요 ..."
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'url'은 반드시 비어있지 않은 문자열이어야 합니다"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser'는 반드시 비어있지 않은 문자열이어야 합니다"
 
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'를 찾을 수 없습니다"
@@ -534,6 +535,10 @@ msgstr "HTML 패키지 인덱스를 업데이트 할 수 없습니다"
 
 msgid "done"
 msgstr "완료"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()는 인터랙티브하게 사용할 수 없습니다"
@@ -691,6 +696,12 @@ msgstr "비대화식으로 저장소드을 설정할 수 없습니다"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "'package'는 반드시 문자열 또는 NULL이어야 합니다"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 현재 세션에서 사용할 저장소를 선택해주세요 ---"
 
@@ -707,6 +718,10 @@ msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
 msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip'은 반드시 단일 문자열이어야 합니다"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "이 플랫폼에서는 유형(type) 'binary'은 지원되지 않습니다."
@@ -775,12 +790,26 @@ msgstr "발견된 패키지들: %s"
 msgid "files: %s"
 msgstr "파일들: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "패키지 %s를 다운로드 하는데 실패했습니다"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"하나 이상의 패키지 설치에 실패했습니다,\n"
+"  아마도 %s입니다"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "하나 이상의 패키지 설치에 실패했습니다,\n"
 "  아마도 %s입니다"
@@ -1140,16 +1169,9 @@ msgstr "열의 이름들을 파일에 추가합니다"
 msgid "attempt to set '%s' ignored"
 msgstr "'%s'로 설정하고자 하는 시도가 무시되었습니다"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip'은 반드시 단일 문자열이어야 합니다"
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files'은 반드시 한개 이상의 파일패스들을 지정하는 문자형 벡터이어야 합니다"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "'url'은 반드시 비어있지 않은 문자열이어야 합니다"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
@@ -1180,6 +1202,10 @@ msgstr ""
 
 msgid "'curl' call had nonzero exit status"
 msgstr ""
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "잘못된 형식입니다"
 
 msgid "download had nonzero exit status"
 msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
@@ -1264,6 +1290,11 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] ""
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "출력파일:"
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%d는 %s내에서 발생하였습니다"
@@ -1291,6 +1322,11 @@ msgstr[0] ""
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "객체 '%s'를 찾을 수 없습니다"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
 
 msgid ""
 "Removing package from %s\n"
@@ -1376,6 +1412,22 @@ msgstr[0] "마지막 레코드가 완성되지 않아 %d 번째 라인은 삭제
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜 항목이 없습니다"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "데이터셋들이 'base' 패키지에서 'datasets' 패키지로 이동되었습니다"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "데이터셋들이 'stats' 패키지에서 'datasets' 패키지로 이동되었습니다"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser'는 반드시 비어있지 않은 문자열이어야 합니다"
+
+#, fuzzy
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "'url'은 반드시 비어있지 않은 문자열이어야 합니다"
 
 #~ msgid "bad argument"
 #~ msgstr "잘못된 인자입니다."

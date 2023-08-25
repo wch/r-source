@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-04-15 19:36+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -18,99 +18,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: fork.c:215
+#: fork.c:223
 #, c-format
 msgid "unable to terminate child process: %s"
 msgstr "無法終止子行程：%s"
 
-#: fork.c:242
+#: fork.c:250
 #, c-format
 msgid "unable to terminate child: %s"
 msgstr "無法終止子行程：%s"
 
-#: fork.c:321 fork.c:608 ncpus.c:90 ncpus.c:126 ncpus.c:191
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:179
 msgid "memory allocation error"
 msgstr "記憶體指派錯誤"
 
-#: fork.c:377 fork.c:381 fork.c:385
+#: fork.c:385 fork.c:389 fork.c:393
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "無效的 '%s' 引數"
 
-#: fork.c:443
-msgid ""
-"Error while shutting down parallel: unable to terminate some child "
-"processes\n"
+#: fork.c:451
+msgid "Error while shutting down parallel: unable to terminate some child processes\n"
 msgstr "當停止平行時發生錯誤：無法決定某些子行程\n"
 
-#: fork.c:532 fork.c:535
+#: fork.c:544 fork.c:547
 msgid "unable to create a pipe"
 msgstr "無法建立管道"
 
-#: fork.c:557
+#: fork.c:569
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "無法分叉，可能的原因是：%s"
 
-#: fork.c:749
+#: fork.c:761
 msgid "only children can send data to the master process"
 msgstr "只有子行程才能給主行程傳送資料"
 
-#: fork.c:751
+#: fork.c:763
 msgid "there is no pipe to the master process"
 msgstr "有沒可以接到主行程的管道"
 
-#: fork.c:753
+#: fork.c:765
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "傳送的內容必須是原始的，如果需要的話請用 serialize()"
 
-#: fork.c:762 fork.c:770 fork.c:1180
+#: fork.c:774 fork.c:785 fork.c:1198
 msgid "write error, closing pipe to the master"
 msgstr "寫入錯誤，請關閉通往主行程的管道"
 
-#: fork.c:780
+#: fork.c:795
 msgid "only the master process can send data to a child process"
 msgstr "只有主行程才能給子行程傳送資料"
 
-#: fork.c:788
+#: fork.c:803
 #, c-format
 msgid "child %d does not exist"
 msgstr "不存在 %d 這個子行程"
 
-#: fork.c:794
+#: fork.c:809
 msgid "write error"
 msgstr "寫入錯誤"
 
-#: fork.c:880
+#: fork.c:895
 #, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "無法等待子行程 %d 因為它不存在"
 
-#: fork.c:939 fork.c:1059
+#: fork.c:954 fork.c:1077
 #, c-format
 msgid "error '%s' in select"
 msgstr "選擇時産生了 '%s'"
 
-#: fork.c:1149
+#: fork.c:1167
 msgid "'mckill' failed"
 msgstr "'mckill' 失敗"
 
-#: fork.c:1162
+#: fork.c:1180
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' 只能用於子行程"
 
-#: fork.c:1194
+#: fork.c:1212
 msgid "'mcexit' failed"
 msgstr "'mcexit' 失敗"
 
-#: fork.c:1223 fork.c:1232
+#: fork.c:1241 fork.c:1250
 msgid "invalid CPU affinity specification"
 msgstr "中央處理器親和度規格無效"
 
-#: fork.c:1243
+#: fork.c:1261
 msgid "requested CPU set is too large for this system"
 msgstr "所需要的中央處理器設定對於這個系統來說太大了"
 
-#: fork.c:1266
+#: fork.c:1284
 msgid "retrieving CPU affinity set failed"
 msgstr "無法取得中央處理器親和度"

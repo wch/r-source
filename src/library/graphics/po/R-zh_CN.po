@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-12-08 09:04+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -30,9 +30,7 @@ msgstr "'a'和'b'被' coef'覆盖"
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "至少需要设定'x1'和'y1'中的一个"
 
-msgid ""
-"'length', 'angle', or 'code' greater than length 1; values after the first "
-"are ignored"
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
@@ -295,11 +293,12 @@ msgstr "'legend'长度为零"
 msgid "invalid coordinate lengths"
 msgstr "座标长度无效"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width'必需为大于等于零的数值"
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "水平定义超越其它的定义： 列的数目为 := %d"
+
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width'必需为大于等于零的数值"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "不画线断时'merge = TRUE'就沿用"
@@ -426,6 +425,9 @@ msgstr "'nrpoints'必需为大于0的数字标量。"
 
 msgid "a 2-way table has to be specified"
 msgstr "没有设定双向表"
+
+msgid "weights are not supported for 2-way table specification"
+msgstr ""
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "因为x轴的尺度为累计概率, 'xlim'的值必需在[0,1]"

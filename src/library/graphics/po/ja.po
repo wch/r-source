@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -155,21 +155,26 @@ msgstr " グラフィックスパラメータ \"%s\" はもはやサポートさ
 msgid "\"%s\" is not a graphical parameter"
 msgstr " \"%s\" はグラフィックスパラメータではありません "
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr " \"%s\" はグラフィックスパラメータではありません "
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr " par() に不正なパラメータが渡されました "
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr " layout の列数が多すぎます（限界値は %d） "
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr " layout の列が多すぎます（限界は %d） "
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr " layout のセルが多すぎます（限界は %d） "
