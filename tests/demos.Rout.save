@@ -1213,9 +1213,10 @@ flld.c> x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 
 flld.c> r <- sqrt(outer(x^2, y^2, `+`))
 
-flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
+flld.c> ## "minimal"
+flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE, key.border=NA)
 
-flld.c> ## rather, the key *should* be labeled:
+flld.c> ## rather, the key *should* be labeled (but axes still not):
 flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,
 flld.c+                plot.axes = {})
 
