@@ -4851,6 +4851,7 @@ repository such as @acronym{CRAN}).
 * Check timing::
 * Encoding issues::
 * Portable C and C++ code::
+* Portable Fortran code::
 * Binary distribution::
 @end menu
 
@@ -5077,22 +5078,6 @@ later standards.  (Although @R{} only requires Fortran 90,
 @command{gfortran} does not have a way to specify that standard.)  Also
 consider @option{-std=f2008} as some recent compilers have Fortran 2008
 or even 2018 as the minimum supported standard.
-
-@R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
-@code{COMPLEX*16}.  (One can also use something like
-@code{COMPLEX(KIND=KIND(0.0D0))}.)
-
-
-@c https://gcc.gnu.org/onlinedocs/gfortran/KIND-Type-Parameters.html
-@c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
-The use of Fortran types such as @code{REAL(KIND=8)} is very far from
-portable.  According of the standards this merely enumerates different
-supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
-(and is on an actual compiler).  Even if for a particular compiler the
-value indicates the size in bytes, which values are supported is
-platform-specific --- for example @command{gfortran} supports values of 4
-and 8 on all current platforms and 10 and 16 on a few (but not for
-example on @cputype{arm} CPUs).
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
@@ -5843,7 +5828,7 @@ is equivalent to the value
 UTF-8 then the package code is translated to UTF-8 for syntax checking,
 so it is strongly recommended to check in a UTF-8 locale.
 
-@node Portable C and C++ code, Binary distribution, Encoding issues, Writing portable packages
+@node Portable C and C++ code, Portable Fortran code, Encoding issues, Writing portable packages
 @subsection Portable C and C++ code
 
 @menu
@@ -6004,26 +5989,7 @@ Other GNU extensions which have bitten package writers are the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
 headers under @file{ext}.
 
-The GNU Fortran compiler also supports a large number of non-portable
-extensions, the most commonly encountered one being
-@code{ISNAN}@footnote{There is a portable way to do this in Fortran 2003
-(@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but ironically
-that is not supported in the versions 4.x of GNU Fortran.  A pretty
-robust alternative is to test @code{if(my_var /= my_var)}.}.  Some are
-listed at
-@uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
-One that frequently catches package writers is that it allows
-out-of-order declarations: in standard-conformant Fortran variables must
-be declared (explicitly or implicitly) before use in other declarations
-such as dimensions.
-
-GNU Fortran 10 and later give a compilation error for the previously
-widespread practice of passing a Fortran array element where an array is
-expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.  As do the Intel
-Fortran compilers, and they can be stricter.
-
-@item
+item
 Including C-style headers in C++ code is not portable.  Including the
 legacy header@footnote{which often is the same as the header included by
 the C compiler, but some compilers have wrappers for some of the C
@@ -6489,7 +6455,86 @@ Another build for Windows which may be sufficiently compatible with
 @code{Rtools} can be found at
 @uref{https://github.com/mstorsjo/llvm-mingw}: this uses @code{libc++}.
 
-@node Binary distribution,  , Portable C and C++ code, Writing portable packages
+@node Portable Fortran code, Binary distribution, Portable C and C++ code, Writing portable packages
+@subsection Portable Fortran code
+
+Until recently almost all known @R{} platforms used @command{gfortran}
+as their Fortran compiler, but now rhere are LLVM and `classic'
+@command{flang} and the Intel compilers
+@command{ifort}@footnote{announced to be discontinued in 2023.} and
+@command{ifx} are free-of-change.
+
+There is still a lot of Fortran code in @acronym{CRAN} packages which
+predates Fortran 77.  Modern Fortran compilers are being written to
+target a minimum standard of Fortran 2018. and it is desirable that
+Fortran code in packages complies with that standard.  For
+@command{gfortran} this can be checked by adding @option{-std=f2018} to
+@code{FFLAGS}.  The most commonly seen issues are
+
+@itemize
+@item
+The use of @code{DFLOAT}, which was superseded by @code{DBLE} in Fortran
+77.  Also, use of @code{DCMPLX}, @code{DCONJG}, @code{DIMAG} and
+similar.
+
+@item
+The use of GNU Fortran extensions.  Some are listed at
+@uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
+Others which have caused problems include @code{etime}, @code{getpid},
+@code{isnan}@footnote{There is a portable way to do this in Fortran 2003
+(@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but that was
+not supported in the versions 4.x of GNU Fortran.  A pretty robust
+alternative is to test @code{if(my_var /= my_var)}.} and @code{sizeof}.
+
+One that frequently catches package writers is that it allows
+out-of-order declarations: in standard-conformant Fortran variables must
+be declared (explicitly or implicitly) before use in other declarations
+such as dimensions.
+
+@end itemize
+@noindent
+Unfortunately this flags extensions such as @code{DOUBLE COMPLEX} and
+@code{COMPLEX*16}.  @R{} has tested that @code{DOUBLE COMPLEX} works and
+so is preferred to -@code{COMPLEX*16}.  (One can also use something like
+-@code{COMPLEX(KIND=KIND(0.0D0))}.)
+
+GNU Fortran 10 and later give a compilation error for the previously
+widespread practice of passing a Fortran array element where an array is
+expected, or a scalar instead of a length-one array.  See
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.  As do the Intel
+Fortran compilers, and they can be stricter.
+
+
+Common non-portable constructions include
+@itemize
+
+@c https://gcc.gnu.org/onlinedocs/gfortran/KIND-Type-Parameters.html
+@c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
+@item
+The use of Fortran types such as @code{REAL(KIND=8)} is very far from
+portable.  According of the standards this merely enumerates different
+supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
+(and is on an actual compiler).  Even if for a particular compiler the
+value indicates the size in bytes, which values are supported is
+platform-specific --- for example @command{gfortran} supports values of 4
+and 8 on all current platforms and 10 and 16 on a few (but not for
+example on all @cputype{arm} CPUs).
+
+@item
+The Intel compilers only recognize the extnesions @file{.f} (fixed-form)
+and @file{.f90} (free-form) and not @file{.f95}. @command{R CMD INSTALL}
+works around this for packages without a @file{src/Makefile}.
+
+@item
+@c Intel has fpp.
+Use of extensions @file{.F} and @code{.F90} to indicate source code to
+be preprocessed: the preprocessor used is compiler-specific and may or
+may not be @command{cpp}.
+
+@end itemize
+
+
+@node Binary distribution,  , Portable Fortran code, Writing portable packages
 @subsection Binary distribution
 
 If you want to distribute a binary version of a package on Windows or
@@ -6530,8 +6575,13 @@ security risk.  If you want to distribute a source package which needs
 external software on Windows or macOS, options include
 @itemize
 @item
-To arrange for installation of the package to download the
-additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
+To arrange for installation of the package to download the additional
+software from a URL, as e.g.@: package @CRANpkg{Cairo} used to.
+
+@item
+To negotiate with Tomas Kalibera to include Windowa software in
+@code{Rtools} or with Simon Urbanek to include macOS software in his
+`recipes' system.
 
 @item
 (For @acronym{CRAN}.)
@@ -14596,6 +14646,44 @@ including the header file @file{Rmath.h}; @xref{Distribution functions}.
 Those calls should also be preceded and followed by calls to
 @code{GetRNGstate} and @code{PutRNGstate}.
 
+@menu
+* Random-number generation from Fortran::
+@end menu
+
+@node Random-number generation from Fortran,  , Random numbers, Random numbers
+@subsection Random-number generation from Fortran
+
+It was explained earlier that Fortran raondom-number generators should
+not be used in @R{} packages, not least as packages cannot safely
+initialize them.  Rather a package should call @R{}'s built in
+generators: one way to do so is to use C wrpppers like
+@example
+#include <R_ext/RS.h>
+#include <R_ext/Random.h>
+
+void F77_SUB(getRNGseed)(void) @{
+    GetRNGstate();
+@}
+void F77_SUB(putRNGseed)(void) @{
+    PutRNGstate();
+@}
+double F77_SUB(unif1)(void) @{
+    return(unif_rand());
+@}
+@end example
+@noindent
+called from Fortran code like
+@example
+      ...
+      call getRNGseed()
+      x = unif1()
+      ...
+      call putRNGseed()
+@end example
+
+Alternatively one could use Fortran 2003's @code{iso_c_binding} module.
+
+
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
 @cindex Missing values
@@ -15043,6 +15131,14 @@ using @command{f2c}.
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
+@menu
+* Distribution functions::
+* Mathematical functions::
+* Numerical Utilities::
+* Mathematical constants::
+@end menu
+
+
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
 
@@ -15481,7 +15577,6 @@ constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 This can conflict with other software: for example it conflicts with the
 headers in IJG's @code{jpeg-9} (but not earlier versions).
-
 
 @node Optimization, Integration, Numerical analysis subroutines, The R API
 @section Optimization
