@@ -849,6 +849,7 @@ functionArgs <-
 ## completions are found.  We could return "" as the only completion,
 ## but that produces an irritating blank line on
 ## list-possible-completions (or whatever the correct name is).
+
 ## Instead (since we don't want to reinvent the wheel), we use the
 ## following scheme: If the character just preceding our token is " or
 ## ', we immediately go to file name completion.  If not, we do our
@@ -980,11 +981,11 @@ fileCompletions <- function(token)
 ## completion when called from C code.
 
 
-.completeToken <- function()
+.completeToken <- function(custom = TRUE)
 {
     ## Allow override by user-specified function
     custom.completer <- rc.getOption("custom.completer")
-    if (is.function(custom.completer))
+    if (custom && is.function(custom.completer))
         return (custom.completer(.CompletionEnv))
     text <- .CompletionEnv[["token"]]
     if (isInsideQuotes())

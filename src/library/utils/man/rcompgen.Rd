@@ -321,7 +321,7 @@ findMatches(pattern, values, fuzzy)
     .assignStart(start)
     .assignEnd(end)
 
-    .completeToken()
+    .completeToken(custom = TRUE)
     .retrieveCompletions()
     .getFileComp()
 
@@ -345,7 +345,9 @@ findMatches(pattern, values, fuzzy)
   \code{rc.options("custom.completer")}; if not \code{NULL}, this
   function is called to compute potential completions.  This facility is
   meant to help in situations where completing as R code is not
-  appropriate. See source code for more details.
+  appropriate. See source code for more details. Custom completion can
+  be disabled by setting \code{custom = FALSE} when calling
+  \code{.completeToken}.
 
   If the cursor is inside quotes, completion may be suppressed.  The
   function \code{.getFileComp} can be used after a call to
