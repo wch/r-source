@@ -95,7 +95,6 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
                      prism = TRUE,
                      out = "",
                      ...,
-                     ## call this 'Rhtml' rather than 'knit'?
                      Rhtml = tolower(file_ext(out)) == "rhtml",
                      include_description = TRUE)
 {
@@ -105,10 +104,12 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     
     ## Sort by name, as in PDF manual (check exact code)
-    hcontent <- hcontent[order(sapply(hcontent, function(h) h$info$name))]
-    rdnames <- sapply(hcontent, function(h) h$info$name)
-    ## rdtitles <- sapply(hcontent, function(h) h$info$title[[1L]])
-    rdtitles <- sapply(hcontent, function(h) h$info$htmltitle[[1L]])
+    hcontent <- hcontent[order(vapply(hcontent,
+                                      function(h) h$info$name,
+                                      ""))]
+    rdnames <- vapply(hcontent, function(h) h$info$name, "")
+    ## rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
+    rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "")
 
     ## toclines <- sprintf("<li><a href='#%s'><em>%s</em></a></li>", rdnames, rdtitles)
 
