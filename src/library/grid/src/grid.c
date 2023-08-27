@@ -435,7 +435,7 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
              * (until grid.newpage()) 
              * NOTE that resolveGPar() stores the resolved fill in 'vpgp'
              */
-            resolveGPar(vpgp);
+            resolveGPar(vpgp, TRUE);
             /* Record the resolved fill for subsequent up/down/pop */
             SET_VECTOR_ELT(VECTOR_ELT(pushedvp, PVP_GPAR),
                            GP_FILL,
@@ -2780,7 +2780,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     maxn = getArrowN(x1, x2, xnm1, xn,
 		     y1, y2, ynm1, yn);
     ne = LENGTH(ends);
-    resolveGPar(currentgp);
+    resolveGPar(currentgp, FALSE);
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     /* Convert the x and y values to INCHES locations */
     /* FIXME:  Need to check for NaN's and NA's

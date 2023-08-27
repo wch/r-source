@@ -1,4 +1,22 @@
 
+Changes from grid_4.3.* to grid_4.4.0:
+-------------------------------------
+
+1.  Bug fix:  pattern/gradient fills are now correctly resolved relative to a 
+    viewport EVEN IF 'fill' is NOT the first value specified in gpar().
+    For example, this is now resolved relative the viewport ...
+
+    pushViewport(viewport(gp=gpar(col=NA, fill=linearGradient())))
+    grid.rect(x=.75, width=.5, y=.75, height=.5)
+              
+    ... whereas, prior to the fix, only this worked ...
+
+    pushViewport(viewport(gp=gpar(fill=linearGradient())))
+    grid.rect(x=.75, width=.5, y=.75, height=.5)
+    
+
+
+
 Changes from grid_4.2.* to grid_4.3.0:
 -------------------------------------
 
