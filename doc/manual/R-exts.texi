@@ -5179,7 +5179,10 @@ interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes a system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.  This
 applies also to Fortran 90's @code{random_number} and
-@code{random_seed}, and Fortran 2018's @code{random_init}.
+@code{random_seed}, and Fortran 2018's @code{random_init}.  And to GNU
+Fortran's @code{rand}, @code{irand} and @code{srand}.  Except for
+@code{drand48}, what PRNG these functions use is
+implementation-dependent.
 
 Nor should the C++11 random number library be used nor any other
 third-party random number generators such as those in GSL.
