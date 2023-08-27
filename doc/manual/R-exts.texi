@@ -6462,7 +6462,7 @@ Another build for Windows which may be sufficiently compatible with
 @subsection Portable Fortran code
 
 Until recently almost all known @R{} platforms used @command{gfortran}
-as their Fortran compiler, but now rhere are LLVM and `classic'
+as their Fortran compiler, but now there are LLVM and `classic'
 @command{flang} and the Intel compilers
 @command{ifort}@footnote{announced to be discontinued in 2023.} and
 @command{ifx} are free-of-change.
@@ -6524,7 +6524,7 @@ and 8 on all current platforms and 10 and 16 on a few (but not for
 example on all @cputype{arm} CPUs).
 
 @item
-The Intel compilers only recognize the extnesions @file{.f} (fixed-form)
+The Intel compilers only recognize the extensions @file{.f} (fixed-form)
 and @file{.f90} (free-form) and not @file{.f95}. @command{R CMD INSTALL}
 works around this for packages without a @file{src/Makefile}.
 
@@ -6582,7 +6582,7 @@ To arrange for installation of the package to download the additional
 software from a URL, as e.g.@: package @CRANpkg{Cairo} used to.
 
 @item
-To negotiate with Tomas Kalibera to include Windowa software in
+To negotiate with Tomas Kalibera to include Windows software in
 @code{Rtools} or with Simon Urbanek to include macOS software in his
 `recipes' system.
 
@@ -14656,10 +14656,10 @@ Those calls should also be preceded and followed by calls to
 @node Random-number generation from Fortran,  , Random numbers, Random numbers
 @subsection Random-number generation from Fortran
 
-It was explained earlier that Fortran raondom-number generators should
+It was explained earlier that Fortran random-number generators should
 not be used in @R{} packages, not least as packages cannot safely
 initialize them.  Rather a package should call @R{}'s built in
-generators: one way to do so is to use C wrpppers like
+generators: one way to do so is to use C wrappers like
 @example
 #include <R_ext/RS.h>
 #include <R_ext/Random.h>
