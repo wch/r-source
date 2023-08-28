@@ -149,8 +149,18 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      "linux, Fortran, gfortran, random_init, _gfortran_random_init",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_rand",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
 
-      ## These are for classic flang
+      ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, flang, open, f90io_open03",
       "linux, Fortran, flang, open, f90io_open2003",
       "linux, Fortran, flang, close, f90io_close",
@@ -163,8 +173,9 @@ so_symbol_names_table <-
       "linux, Fortran, flang, stop, f90_stop08",
       "linux, Fortran, flang, rand, rand",
 
-      ## and for flang-new
-      ## flang-new currently has static libs for its runtimes.
+      ## and for for the 'flang' in the LLVM tree, currently
+      ## with executable 'flang-new'.
+      ## This currently has static libs for its runtimes.
       "linux, Fortran, flang-new, stop, _FortranAStopStatement",
       "linux, Fortran, flang-new, stop, _FortranAStopStatementText",
       "linux, Fortran, flang-new, open, _FortranAioBeginOpenUnit",
@@ -212,6 +223,11 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, write, _FortranAioOutputUnformatedBlock",
       ## does not support rand()
       ## https://discourse.llvm.org/t/support-for-gnu-fortran-extensions/69630
+      "linux, Fortran, flang-new, random_init, _FortranARandomInit",
+      "linux, Fortran, flang-new, random_number, _FortranARandomNumber",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeed",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedGet",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedSize",
 
       ## Intel 'Clasic' and 202x
       "linux, Fortran, intel, stop, for_stop",
@@ -236,10 +252,14 @@ so_symbol_names_table <-
       "linux, Fortran, intel, write, for_write_seq_nml",
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
+      "linux, Fortran, intel, random_number, for_random_number",
+      "linux, Fortran, intel, random_number, for_random_number_single",
+      "linux, Fortran, intel, random_seed, for_random_seed_bit_size",
+      "linux, Fortran, intel, random_seed, for_random_seed_get",
 
       ## Apple clang identifies itself as gcc, so configure has used that
-      "macos, C, gcc, abort, _abort",
-      "macos, C, gcc, assert, ___assert_rtn",
+      "macos, C, gcc, abort, _abort", # not currently seen
+      "macos, C, gcc, assert, ___assert_rtn", # not currently seen
       "macos, C, gcc, exit, _exit",
       "macos, C, gcc, _exit, __exit",
       "macos, C, gcc, _Exit, __Exit",
@@ -255,20 +275,17 @@ so_symbol_names_table <-
       "macos, C, gcc, vprintf, _vprintf",
       "macos, C, gcc, vsprintf, _vsprintf", # old
       "macos, C, gcc, vsprintf, ___vsprintf_chk",
-      "macos, C++, gxx, std::cout, __ZSt4cout",
-      "macos, C++, gxx, std::cerr, __ZSt4cerr",
-      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
-      "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
-      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, C, gcc, rand, _rand",
       "macos, C, gcc, random, _random",
       "macos, C, gcc, rand_r, _rand_r",
       "macos, C, gcc, srand, _srand",
       "macos, C, gcc, srandom, _srandom",
       "macos, C, gcc, srand48, _srand48",
-      ## libc++ variants
-      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
+      #"macos, C++, gxx, std::cout, __ZSt4cout", # not with clang
+      #"macos, C++, gxx, std::cerr, __ZSt4cerr",
+      "macos, C++, gxx, std::cout, __ZNSt3__14coutE", # std::__1::cout
       "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
+      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
       "macos, Fortran, gfortran, open, __gfortran_st_open",
       "macos, Fortran, gfortran, close, __gfortran_st_close",
       "macos, Fortran, gfortran, rewind, __gfortran_st_rewind",
@@ -278,6 +295,16 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, stop, __gfortran_stop_numeric",
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
+      "macos, Fortran, gfortran, random_init, __gfortran_random_init",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_rand",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i8",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
