@@ -14670,7 +14670,7 @@ void F77_SUB(getRNGseed)(void) @{
 void F77_SUB(putRNGseed)(void) @{
     PutRNGstate();
 @}
-double F77_SUB(unif1)(void) @{
+double F77_SUB(unifRand)(void) @{
     return(unif_rand());
 @}
 @end example
@@ -14678,13 +14678,40 @@ double F77_SUB(unif1)(void) @{
 called from Fortran code like
 @example
       ...
+      double precision X
       call getRNGseed()
-      x = unif1()
+      X = unifRand()
       ...
       call putRNGseed()
 @end example
 
-Alternatively one could use Fortran 2003's @code{iso_c_binding} module.
+Alternatively one could use Fortran 2003's @code{iso_c_binding} module
+by something like (fixed-form Fortran 90 code):
+@example
+      module rngfuncs
+        use iso_c_binding
+        interface
+          double precision
+     *      function unifRand() bind(C, name = "unif_rand")
+          end function unifRand
+
+          subroutine getRNGseed() bind(C, name = "GetRNGstate")
+          end subroutine getRNGseed
+
+          subroutine putRNGseed() bind(C, name = "PutRNGstate")
+          end subroutine putRNGseed
+        end interface
+      end module
+      
+      subroutine testit
+      use rngfuncs
+      double precision X
+      call getRNGseed()
+      X = unifRand()
+      print *, X
+      call putRNGSeed()
+      end
+@end example
 
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
