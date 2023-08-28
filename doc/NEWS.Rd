@@ -39,6 +39,17 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} reports the use of Fortran 90 random
+      number generator \code{RANDOM_NUMBER()} and the subroutines to
+      initialize it.
+
+      \sQuote{Writing R Extensions} has example code to use \R{}'s RNGs
+      from Fortran.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
