@@ -6484,6 +6484,8 @@ expected, or a scalar instead of a length-one array.  See
 @uref{https://gcc.gnu.org/gcc-10/porting_to.html}.  As do the Intel
 Fortran compilers, and they can be stricter.
 
+The use of @code{IMPLICIT NONE} is highly recommended -- Intel compilers
+with @option{-warn} will warn on variables without an explicit type.
 
 Common non-portable constructions include
 @itemize
