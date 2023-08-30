@@ -6517,13 +6517,23 @@ Common non-portable constructions include
 @c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
 @item
 The use of Fortran types such as @code{REAL(KIND=8)} is very far from
-portable.  According of the standards this merely enumerates different
+portable.  According to the standards this merely enumerates different
 supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
 (and is on an actual compiler).  Even if for a particular compiler the
 value indicates the size in bytes, which values are supported is
 platform-specific --- for example @command{gfortran} supports values of 4
 and 8 on all current platforms and 10 and 16 on a few (but not for
 example on all @cputype{arm} CPUs).
+
+The same applies to @code{INTEGER(KIND=4)} and @code{COMPLEX(KIND=16)}.
+
+Many uses of integer and real variable in Fortran code in packages will
+interwork with C (for example @code{.Fortran} is written in C), and @R{}
+has checked that @code{INTEGER} and @code{DOUBLE PRECISION} correspond to
+the C types @code{int} and @code{double}.  To make this explicit, from
+Fortran 2003 one can use the named constants @code{c_int},
+@code{c_double} and @code{c_double_complex} from module
+@code{iso_c_binding}.
 
 @item
 The Intel compilers only recognize the extensions @file{.f} (fixed-form)
@@ -15124,8 +15134,8 @@ However, recent versions of @command{gfortran} @emph{via} the option
 @option{-fc-prototypes-external} say the C equivalent is
 @code{int_least32_t *}: `Link-Time Optimization' will report @code{int
 *} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
-to map LOGICAL variables to the C99 type @code{_Bool}, but it is usually
-simpler to pass integers to and fro.
+2003 to map LOGICAL variables to the C99 type @code{_Bool}, but it is
+usually simpler to pass integers to and fro.
 
 @node Passing functions,  , Fortran LOGICAL, Calling C from Fortran and vice versa
 @subsection Passing functions
