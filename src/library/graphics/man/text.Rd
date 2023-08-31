@@ -68,8 +68,17 @@ text(x, \dots)
   \code{(x, y)}.
   Values of 0, 0.5, and 1 specify that \code{(x, y)} should align with
   the left/bottom, middle and
-  right/top of the text, respectively.  The default is for centered text, i.e.,
-  \code{adj = c(0.5, NA)}.  Accurate vertical centering needs
+  right/top of the text, respectively.
+  A value of \code{NA} means \dQuote{centre}, which is the same as 0.5
+  for horizontal justification, but includes descenders for vertical
+  justification (where 0.5 does not).
+  The default is for centered text, although the default horizontal
+  justification is taken from \code{par(adj)}, i.e., the default is
+  \code{adj = c(par("adj"), NA)}.
+  If only one value is provided, it is applied
+  to adjust \code{x} \emph{only}, i.e., when \code{length(adj) == 1L},
+  \code{adj} is applied as \code{adj = c(adj, NA)}.
+  Accurate vertical centering needs
   character metric information on individual characters which is
   only available on some devices.  Vertical alignment is done slightly
   differently for character strings and for expressions:
@@ -77,7 +86,6 @@ text(x, \dots)
   for strings but on the bottom of the bounding box for expressions.
   This also affects vertical centering: for strings the centering
   excludes any descenders whereas for expressions it includes them.
-  Using \code{NA} for strings centers them, including descenders.
 
   The \code{pos} and \code{offset} arguments can be used in conjunction
   with values returned by \code{identify} to recreate an interactively
