@@ -933,7 +933,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                 if (col > length(format))
                     warnRd(table, Rdfile, level = 7,
                            "Only ", length(format),
-                           " columns allowed in this table")
+                           if (length(format) == 1) " column " else " columns ",
+                           "allowed in this table")
             	newcol <- FALSE
             }
             switch(tags[i],
