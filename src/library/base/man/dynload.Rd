@@ -35,7 +35,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #endif
   }
   \item{now}{a logical controlling whether all symbols are resolved (and
-    relocated) immediately the library is loaded or deferred until they
+    relocated) immediately when the library is loaded or deferred until they
     are used.  This control is useful for developers testing whether a
     library is complete and has all the necessary symbols, and for users
     to ignore missing symbols.  Whether this has any effect is system-dependent.
@@ -54,7 +54,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols.  This is
-    used in the same way as in \code{\link{.C}}, \code{\link{.Call}},
+    used in the same way as in the \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions.}
   \item{type}{The type of symbol to look for: can be any (\code{""}, the
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
@@ -72,7 +72,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \sQuote{R Installation and Administration} manuals for how to create
   and install a suitable DLL.
 
-  Unfortunately a very few platforms (e.g., Compaq Tru64) do not handle
+  Unfortunately some rare platforms (e.g., Compaq Tru64) do not handle
   the \code{PACKAGE} argument correctly, and may incorrectly find
   symbols linked into \R.
 
@@ -92,17 +92,17 @@ is.loaded(symbol, PACKAGE = "", type = "")
   operating system, certain libraries must have their symbols loaded
   globally to successfully resolve all symbols.
 
-  One should be careful of the potential side-effect of using lazy
-  loading via the \code{now} argument as \code{FALSE}.  If a routine is
+  One should be careful of one potential side-effect of using lazy
+  loading via \code{now = FALSE}: if a routine is
   called that has a missing symbol, the process will terminate
-  immediately.  The intended use is for library developers to call with
+  immediately.  The intended use is for library developers to call this with
   value \code{TRUE} to check that all symbols are actually resolved and
-  for regular users to call with \code{FALSE} so that missing symbols
+  for regular users to call it with \code{FALSE} so that missing symbols
   can be ignored and the available ones can be called.
 
   The initial motivation for adding these was to avoid such termination
   in the \code{_init()} routines of the Java virtual machine library.
-  However, symbols loaded locally may not be (read probably) available
+  However, symbols loaded locally may not be (read: probably) available
   to other DLLs.  Those added to the global table are available to all
   other elements of the application and so can be shared across two
   different DLLs.
@@ -151,8 +151,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   \code{is.loaded} checks if the symbol name is loaded \emph{and
   searchable} and hence available for use as a character string value
-  for argument \code{.NAME} in \code{.C} or \code{.Fortran} or
-  \code{.Call} or \code{.External}.  It will succeed if any one of the
+  for argument \code{.NAME} in \code{.C}, \code{.Fortran},
+  \code{.Call}, or \code{.External}.  It will succeed if any one of the
   four calling functions would succeed in using the entry point unless
   \code{type} is specified.  (See \code{\link{.Fortran}} for how Fortran
   symbols are mapped.)  Note that symbols in base packages are not
