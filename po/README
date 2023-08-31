@@ -1,5 +1,3 @@
-NB: These instructions are only for R >= 3.x.y
-
 There is only support for preparing translations on a Unix-alike as a
 UTF-8 locale has to be used. (Apart from the RGui translations: see
 below.)
