@@ -55,15 +55,6 @@
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# With the previously recommended gcc 4.6.3 toolchain, set this to 32 or 64
-# MULTI =
-# If the toolchain's bin directory is not in your path, set this to the path
-# (including the trailing /, and use / not \).
-# TOOL_PATH =
-# for other toolchains leave these empty and set the more detailed options below
-
-
-### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
 # including a trailing / .  
@@ -82,15 +73,12 @@
 
 # The gcc 4.9.3 64 bit toolchain is set up for the 'medium code' model and needs
 # to remove the .refptr and .weak entries from the exports list; this is the default
-# when WIN = 64, with blank for WIN = 32:
 # NM_FILTER = | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
-
-### END more detailed options
 
 
 # set to use ICU
@@ -177,7 +165,6 @@
 
 # Full paths of extra DLLs that need to be shipped
 # e.g
-# DLLs32 =
 # DLLs64 =
 
 

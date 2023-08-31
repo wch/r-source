@@ -7,7 +7,6 @@ EXT_LIBS ?= $(LOCAL_SOFT)
 G_FLAG ?= $(if (USE_LLVM),-g3,-gdwarf-2)
 USE_ATLAS ?= NO
 ATLAS_PATH ?= 
-MULTI ?=
 TOOL_PATH ?=
 BINPREF ?= 
 BINPREF64 ?= 
@@ -40,54 +39,25 @@ OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/Program Files (x86)/Inno Setup 6
 QPDF ?=
-HOME32 ?=
-DLLs32 ?=
 DLLs64 ?=
 WIX3DIR ?=
 WIX_PERSONAL ?= 0
 
 ## =============== end of user setting defaults  ===================
 
-
-ifeq "$(MULTI)" "64"
-WIN = 64
-M_ARCH = -m64
-AS_ARCH = --64
-RC_ARCH = -F pe-x86-64
-DT_ARCH = -m i386:x86-64 --as-flags --64
-BINPREF64 = $(TOOL_PATH)
-endif
-ifeq "$(MULTI)" "32"
-WIN = 32
-# these are normally the defaults
-M_ARCH = -m32
-AS_ARCH = --32
-RC_ARCH = -F pe-i386
-DT_ARCH = -m i386 --as-flags --32
-BINPREF = $(TOOL_PATH)
-endif
-
+NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
 
 ifeq "$(WIN)" "64"
   R_ARCH = /x64
   arch_DEFS = -DR_ARCH='"x64"'
   BINPREF = $(BINPREF64)
   SYMPAT = 's/^.* [BCDRT] / /p'
-  NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
-else ifeq "$(WIN)" "32"
-  R_ARCH = /i386
-  arch_DEFS = -DR_ARCH='"i386"'
-  SYMPAT = 's/^.* [BCDRT] _/ /p'
 else
   R_ARCH = 
   arch_DEFS = -DR_ARCH='""'
   BINPREF = $(BINPREF64)
   SYMPAT = 's/^.* [BCDRT] / /p'
-  NM_FILTER ?= | $(SED) -e '/[.]refptr[.]/d' -e '/[.]weak[.]/d'
 endif
-
-## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
-GCC4_SUFF=
 
 BINDIR=bin$(R_ARCH)
 
@@ -100,7 +70,7 @@ endif
 LLVMPREF=$(if $(USE_LLVM),llvm-,)
 AR = $(BINPREF)$(LLVMPREF)ar
 CAT=cat
-CC=$(BINPREF)$(CCBASE)$(GCC4_SUFF) $(M_ARCH)
+CC=$(BINPREF)$(CCBASE) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
@@ -111,10 +81,10 @@ DLLTOOL=$(BINPREF)$(LLVMPREF)dlltool
 DLLTOOLFLAGS=--as $(BINPREF)$(LLVMPREF)as $(DT_ARCH) -k
 ECHO=echo
 ifndef USE_LLVM
-  FC=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
+  FC=$(BINPREF)gfortran $(M_ARCH)
   FLIBS=-lgfortran -lquadmath
 else
-  FC=$(BINPREF)flang$(GCC4_SUFF) $(M_ARCH)
+  FC=$(BINPREF)flang $(M_ARCH)
   FLIBS=-lFortranRuntime -lFortranDecimal
 endif
 LINKER=$(MAIN_LD)

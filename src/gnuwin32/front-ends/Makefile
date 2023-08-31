@@ -12,15 +12,8 @@ else
 endif
 CPPFLAGS = -I../../include $(arch_DEFS)
 
-ifeq "$(WIN)" "32"
-## Increase stack size to 16Mb
-LARGE_STACK = -Wl,--stack=0x1000000
-## allow 32-bit builds to address over 2Gb
-LARGE_ADDR = -Wl,--large-address-aware
-else
 ## Increase stack size to 64Mb
 LARGE_STACK = -Wl,--stack=0x4000000
-endif
 
 rcmdfn-CFLAGS = -DBINDIR='"$(BINDIR)"'
 

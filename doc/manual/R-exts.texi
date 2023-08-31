@@ -2378,14 +2378,14 @@ way to do this is @emph{via}
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example (GNU @command{make} syntax, allowed on
-Windows)
+Intel 64-bit code or code for other architectures, for example
+(GNU @command{make} syntax, allowed on Windows)
 
 @example
 ifeq "$(WIN)" "64"
 PKG_LIBS = @var{value for 64-bit Windows}
 else
-PKG_LIBS = @var{value for 32-bit Windows}
+PKG_LIBS = @var{value for other Windows architectures}
 endif
 @end example
 

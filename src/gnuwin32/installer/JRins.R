@@ -20,7 +20,6 @@
 .make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1,
                        Producer = "R-core", ISDIR)
 {
-    have32bit <- file_test("-d", file.path(srcdir, "bin", "i386"))
     have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
 
     ## need DOS-style paths
@@ -37,15 +36,12 @@
     con <- file("R.iss", "w")
     cat("[Setup]\n", file = con)
 
-    if (have64bit && have32bit) {
-        regfile <- "reg3264.iss"
-        types <- "types3264.iss"
-        cat("ArchitecturesInstallIn64BitMode=x64\n", file = con)
-    } else if (have64bit) { # 64-bit only
+    if (have64bit) { # 64-bit only
         regfile <- "reg64.iss"
         types <- "types64.iss"
         cat("ArchitecturesInstallIn64BitMode=x64\n", file = con)
     } else { # 32-bit only
+        # not reachable since R 4.2
         regfile <- "reg.iss"
         types <- "types32.iss"
     }
@@ -98,47 +94,32 @@
 	dir <- sub("\\\\$", "", dir)
 
 	component <- if (grepl("^Tcl/(bin|lib)64", f)) "x64"
-	else if (have64bit && have32bit &&
-                 (grepl("^Tcl/bin", f) ||
-                  grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f))) "i386"
-	else if (grepl("/i386/", f)) "i386"
 	else if (grepl("/x64/", f)) "x64"
 	else if (grepl("(/po$|/po/|/msgs$|/msgs/|^library/translations)", f))
             "translations"
 	else "main"
 
         if (component == "x64" && !have64bit) next
-        if (component == "i386" && !have32bit) next
         
         # Skip the /bin front ends, they are installed below
         if (grepl("bin/R.exe$", f)) next
         if (grepl("bin/Rscript.exe$", f)) next
         
-        f <- gsub("/", "\\", f, fixed = TRUE)   
-        
-        # The /bin front ends are installed according to this rule:
-        #  - If x64 is installed, use that version of Rfe
-        #  - Otherwise, use the i386 version
+        f <- gsub("/", "\\", f, fixed = TRUE)
         if (grepl("Rfe\\.exe$", f)) {
-            if (component == "i386" && have64bit) 
-                comp <- "i386 and not x64"
-            else if (component == "i386")
-                comp <- "i386"
-            else
-            	comp <- component
             bindir <- gsub("/", "\\", dirname(dir), fixed = TRUE)
             cat('Source: "', srcdir, '\\', f, '"; ',
                 'DestDir: "{app}', bindir, '"; ',
                 'DestName: "R.exe"; ',
                 'Flags: ignoreversion; ',
-                'Components: ', comp,
+                'Components: ', component,
                 '\n',
                 file = con, sep = "")   
             cat('Source: "', srcdir, '\\', f, '"; ',
                 'DestDir: "{app}', bindir, '"; ',
                 'DestName: "Rscript.exe"; ',
                 'Flags: ignoreversion; ',
-                'Components: ', comp,
+                'Components: ', component,
                 '\n',
                 file = con, sep = "")            
         }
@@ -152,8 +133,6 @@
             cat("; AfterInstall: EditOptions()", file = con)
         cat("\n", file = con)
         
-
-        
     }
 
     close(con)
@@ -162,4 +141,3 @@
 
 args <- commandArgs(TRUE)
 do.call(".make_R.iss", as.list(args))
-

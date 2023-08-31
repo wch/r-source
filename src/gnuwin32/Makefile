@@ -84,9 +84,6 @@ CSOURCES = \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
 OBJS = $(CSOURCES:.c=.o) dllversion.o
-ifeq "$(WIN)" "32"
- OBJS += e_pow.o
-endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a \
@@ -162,8 +159,6 @@ fixed/fixdesc:
 dllversion.o: ../include/Rversion.h
 
 ## Rdll.hide has decoration which 64-bit builds lack
-ifneq "$(WIN)" "32"
-  ## 64-bit
 R.dll: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
 	@$(ECHO) EXPORTS > R.def
 	@$(NM) $^ | $(SED) -n  $(SYMPAT) | LC_COLLATE=C $(SORT) | \
@@ -172,15 +167,6 @@ R.dll: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
 	@LC_COLLATE=C comm -23 R0.def R1.def >> R.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) R.def R0.def R1.def
-else
-R.dll: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
-	@$(ECHO) EXPORTS > R.def
-	@$(NM) $^ | $(SED) -n  $(SYMPAT) | LC_COLLATE=C $(SORT) | uniq > R0.def
-	@LC_COLLATE=C $(SORT) Rdll.hide > R1.def
-	@LC_COLLATE=C comm -23 R0.def R1.def >> R.def
-	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
-	@$(RM) R.def R0.def R1.def
-endif
 
 R.exp: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
 	@$(ECHO) LIBRARY R.dll > R.exp

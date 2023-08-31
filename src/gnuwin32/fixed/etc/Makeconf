@@ -21,11 +21,10 @@ LINKFLAGS += -static-libgcc
 
 
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
-WIN = 32
+WIN = 64
 MINGW_PREFIX = /mingw$(WIN)
 BINPREF =
 COMPILED_BY =
-# SYMPAT = 's/^.* [BCDRT] _/ /p' for 32-bit
 # SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit
 SYMPAT = @SYMPAT@
 IMPDIR = bin

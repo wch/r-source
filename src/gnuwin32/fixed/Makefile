@@ -24,7 +24,7 @@ fixetc: $(ETC) ../MkRules Makefile
 	$(CP) -p $(ETC) $(R_HOME)/etc
 	$(RM) $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
-	$(SED) -e 's/WIN = 32/WIN = $(WIN)/' \
+	$(SED) -e 's/WIN = 64/WIN = $(WIN)/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
