@@ -2383,9 +2383,9 @@ Intel 64-bit code or code for other architectures, for example
 
 @example
 ifeq "$(WIN)" "64"
-PKG_LIBS = @var{value for 64-bit Windows}
+PKG_LIBS = @var{value for 64-bit Intel Windows}
 else
-PKG_LIBS = @var{value for other Windows architectures}
+PKG_LIBS = @var{value for unknown Windows architectures}
 endif
 @end example
 
@@ -6971,7 +6971,7 @@ writing @R{} packages, particularly those intended for public
 distribution.
 
 @uref{https://win-builder.r-project.org, win-builder.r-project.org}
-offers the automated preparation of (32/64-bit) Windows binaries from
+offers the automated preparation of (64-bit) Windows binaries from
 well-tested source packages.
 
 R-Forge (@uref{https://R-Forge.r-project.org, R-Forge.r-project.org}) and
@@ -17469,7 +17469,8 @@ of @code{R_HOME} to be recorded in the Windows Registry: this is
 optional but selected by default.  @emph{Where} it is recorded has
 changed over the years to allow for multiple versions of @R{} to be
 installed at once, and to allow 32- and 64-bit versions of @R{} to be
-installed on the same machine.
+installed on the same machine. Only 64-bit versions are supported since @R{}
+4.2.
 
 The basic Registry location is @code{Software\R-core\R}.  For an
 administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
@@ -17479,9 +17480,9 @@ the information for the last 32-bit install, and a 64-bit application
 that for the last 64-bit install.  For a personal install, the
 information is under @code{HKEY_CURRENT_USER\Software\R-core\R} which is
 seen by both 32-bit and 64-bit applications and so records the last
-install of either architecture.  To circumvent this, there are locations
-@code{Software\R-core\R32} and @code{Software\R-core\R64} which always
-refer to one architecture.
+install of either architecture.  To circumvent this, with Intel builds there
+are locations @code{Software\R-core\R32} and @code{Software\R-core\R64}
+which always refer to one architecture.
 
 When @R{} is installed and recording is not disabled then two string
 values are written at that location for keys @code{InstallPath} and

@@ -562,7 +562,7 @@ If you do not have administrative privileges on the machine while
 running the installer, then the entries are created under
 @code{HKEY_CURRENT_USER}.  The same entries are also created under
 @code{Software\R-core\R32} or @code{Software\R-core\R64}, for 32- and
-64-bit R respectively (only 64-bit since R 4.2).
+64-bit Intel R builds respectively (only 64-bit since R 4.2).
 
 If you tick the second option (shown with administrative privileges
 only) (@samp{Associate R with .RData files}) then entries are created

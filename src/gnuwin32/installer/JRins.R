@@ -20,7 +20,11 @@
 .make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1,
                        Producer = "R-core", ISDIR)
 {
-    have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
+    ## The layout of 64-bit Intel builds is different so that it matches
+    ## previous versions of R which supported sub-architectures (32-bit and
+    ## 64-bit Intel) and installing files for both at the same time.
+
+    havex64 <- file_test("-d", file.path(srcdir, "bin", "x64"))
 
     ## need DOS-style paths
     srcdir = gsub("/", "\\", srcdir, fixed = TRUE)
@@ -36,14 +40,13 @@
     con <- file("R.iss", "w")
     cat("[Setup]\n", file = con)
 
-    if (have64bit) { # 64-bit only
+    if (havex64) { # 64-bit Intel only
         regfile <- "reg64.iss"
         types <- "types64.iss"
         cat("ArchitecturesInstallIn64BitMode=x64\n", file = con)
-    } else { # 32-bit only
-        # not reachable since R 4.2
+    } else {
         regfile <- "reg.iss"
-        types <- "types32.iss"
+        types <- "types.iss"
     }
     suffix <- "win"
 
@@ -93,20 +96,21 @@
 	dir <- paste("\\", gsub("/", "\\", dir, fixed = TRUE), sep = "")
 	dir <- sub("\\\\$", "", dir)
 
-	component <- if (grepl("^Tcl/(bin|lib)64", f)) "x64"
-	else if (grepl("/x64/", f)) "x64"
+	component <- if (havex64 && grepl("/x64/", f)) "x64"
 	else if (grepl("(/po$|/po/|/msgs$|/msgs/|^library/translations)", f))
             "translations"
 	else "main"
 
-        if (component == "x64" && !have64bit) next
+        if (component == "x64" && !havex64) next # should not happen anymore
         
-        # Skip the /bin front ends, they are installed below
-        if (grepl("bin/R.exe$", f)) next
-        if (grepl("bin/Rscript.exe$", f)) next
+        if (havex64) {
+            # Skip the /bin front ends, they are installed below
+            if (grepl("bin/R.exe$", f)) next
+            if (grepl("bin/Rscript.exe$", f)) next
+        }
         
         f <- gsub("/", "\\", f, fixed = TRUE)
-        if (grepl("Rfe\\.exe$", f)) {
+        if (havex64 && grepl("Rfe\\.exe$", f)) {
             bindir <- gsub("/", "\\", dirname(dir), fixed = TRUE)
             cat('Source: "', srcdir, '\\', f, '"; ',
                 'DestDir: "{app}', bindir, '"; ',
