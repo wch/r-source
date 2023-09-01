@@ -165,7 +165,8 @@ as.formula(object, env = parent.frame())
 \seealso{
   \code{\link{~}}, \code{\link{I}}, \code{\link{offset}}.
 
-  For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}}.
+  For formula manipulation: \code{\link{update.formula}},
+  \code{\link{terms.formula}}, and \code{\link{all.vars}}.
   For typical use: \code{\link{lm}}, \code{\link{glm}}, and
   \code{\link{coplot}}.
   For formula construction: \code{\link{reformulate}}.

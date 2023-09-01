@@ -6,7 +6,7 @@
 \name{residuals}
 \alias{residuals}
 \alias{resid}
-%\alias{residuals.default}
+\alias{residuals.default}
 \title{Extract Model Residuals}
 \usage{
 residuals(object, \dots)
@@ -24,8 +24,8 @@ resid(object, \dots)
   \code{residuals} is a generic function which extracts model residuals
   from objects returned by modeling functions.
 
-  The abbreviated form \code{resid} is an alias for \code{residuals}.
-  It is intended to encourage users to access object components through
+  \code{resid} is an alias for \code{residuals},
+  abbreviated to encourage users to access object components through
   an accessor function rather than by directly referencing an object
   slot.
 

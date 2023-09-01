@@ -114,7 +114,8 @@ addNA(x, ifany = FALSE)
   \code{\link{order}}).
 
   Ordered factors differ from factors only in their class, but methods
-  and the model-fitting functions treat the two classes quite differently.
+  and model-fitting functions may treat the two classes quite differently,
+  see \code{\link{options}("contrasts")}.
 
   The encoding of the vector happens as follows.  First all the values
   in \code{exclude} are removed from \code{levels}. If \code{x[i]}
