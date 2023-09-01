@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdiff.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2022 R Core Team
+% Copyright 2010-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rdiff}
@@ -19,7 +19,8 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   \item{useDiff}{should \command{diff} be used to compare results?
     Overridden to false if the command is not available.}
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
-    exclude the header.}
+    exclude headers and footers of examples, code and results for
+    \option{"--timings"}, etc.}
   \item{nullPointers}{logical: should the displayed addresses of
     pointers be set to \code{0x00000000} before comparison?}
   \item{Log}{logical: should the returned value include a log of
