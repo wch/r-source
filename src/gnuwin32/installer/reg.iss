@@ -1,7 +1,7 @@
 [Icons]
 Name: "{group}\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"
-Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: RIsAdmin
-Name: "{userdesktop}\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: NonAdmin
+Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; MinVersion: 0,6.1; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: RIsAdmin
+Name: "{userdesktop}\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; MinVersion: 0,6.1; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: NonAdmin
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R @RVER@"; Filename: "{app}\bin\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"
 
 [Registry] 
