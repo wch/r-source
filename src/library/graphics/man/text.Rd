@@ -39,7 +39,8 @@ text(x, \dots)
     distance (\sQuote{offset}) of the text label from the specified
     coordinate in fractions of a character width.}
   \item{vfont}{\code{NULL} for the current font family, or a character
-    vector of length 2 for Hershey vector fonts.  The first element of
+    vector of length 2 for \code{\link[grDevices]{Hershey}} vector
+    fonts.  The first element of
     the vector selects a typeface and the second element selects a
     style.  Ignored if \code{labels} is an expression.}
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
