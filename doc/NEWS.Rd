@@ -121,6 +121,14 @@
       \item \code{tools::update_pkg_po()} gets \code{pot_make} and
       \code{mo_make} options for \emph{not} re-making the corresponding
       files, and additionally option \code{verbose}.
+
+      \item Hexadecimal string colour specifications are now accepted
+      in short form, so, for example, we can use \code{"#123"}, which is
+      equivalent to \code{"#112233"}.
+
+      Thanks to MikeFC for the original idea and Ella Kaye, Malcolm
+      Barrett, George Stagg, Hanne Oberman, and Michael Chirico for the
+      patch.
     }
   }
 

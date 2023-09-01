@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-07-31 r84791) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-08-28 r85029) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -715,6 +715,20 @@ blue    0 239
 red          0      223       97
 green        0       83      208
 blue         0      107       79
+> 
+> # long and short form of hexadecimal notation
+> col2rgb(c(long = "#559955", short = "#595"))
+      long short
+red     85    85
+green  153   153
+blue    85    85
+> # with alpha
+> col2rgb(c(long = "#559955BB", short = "#595B"), alpha = TRUE)
+      long short
+red     85    85
+green  153   153
+blue    85    85
+alpha  187   187
 > 
 > ##-- NON-INTRODUCTORY examples --
 > 
