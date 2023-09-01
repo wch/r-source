@@ -7838,6 +7838,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                               collapse = "|"),
                         descr, ignore.case = TRUE)))
         out$descr_bad_DOIs <- descr[ind]
+    else if(any(ind <- grepl(
+           # almost all others are publisher URLs that should be replaced by DOI markup
+           "/10.\\d{4,}", 
+           descr, ignore.case = TRUE)))
+       out$descr_replace_by_DOI <- descr[ind]
     if(any(ind <- grepl(paste(c("https?://arxiv.org",
                                 "(^|[^<])arxiv:",
                                 "<arxiv[^:]"),
@@ -8779,6 +8784,10 @@ function(x, ...)
                         }),
                       collapse = "\n")
             },
+            if(length(y) && any(nzchar(y$New)) && 
+               config_val_to_logical(Sys.getenv("_R_CHECK_URLS_SHOW_301_STATUS_", "FALSE"))) {
+                paste(strwrap("  For content that is 'Moved Permanently', please change http to https, add trailing slashes, or replace the old by the new URL."), collapse = "\n")
+            },            
             if(length(y) && any(nzchar(y$Spaces))) {
                 "  Spaces in an http[s] URL should probably be replaced by %20"
             },
@@ -8790,7 +8799,7 @@ function(x, ...)
                       collapse = "\n")
             },
             if(length(y <- x$no_url_checks) && y) {
-                "Checking URLs requires 'libcurl' support in the R build"
+                "Checking URLs requires 'libcurl' support in the R build."
             })),
       if(length(y <- x$bad_file_URIs)) {
           paste(c(if(NROW(y) > 1L)
@@ -8884,7 +8893,13 @@ function(x, ...)
                         paste0("  ", y),
                         "Please write arXiv ids as <arXiv:YYMM.NNNNN>."),
                       collapse = "\n")
-            }
+            },
+           if(length(y <- x$descr_replace_by_DOI)) {
+               paste(c("The Description field contains", 
+                       paste0("  ", y), 
+                       "Please use permanent DOI markup for linking to publications as in <doi:prefix/suffix>."), 
+                       collapse = "\n")
+            }       
             )),
       fmt(c(if(length(x$GNUmake)) {
                 "GNU make is a SystemRequirements."
@@ -9366,7 +9381,7 @@ function(env, verbose = getOption("verbose"))
 {
     env <- as.environment(env)
     ##  Filter(function(g) methods::isGeneric(g, where = env),
-    ##	       methods::getGenerics(env))
+    ##         methods::getGenerics(env))
     r <- methods::getGenerics(env)
     if(length(r) && {
         hasM <- lapply(r, function(g)
