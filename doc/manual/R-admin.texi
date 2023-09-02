@@ -5070,7 +5070,7 @@ IP=/path/to/compilers/bin/intel64
 CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
-CFLAGS="-O3 -fp-model precise -Wall"
+CFLAGS="-O3 -fp-model precise -Wall -Wstrict-prototypes"
 C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
@@ -5666,7 +5666,9 @@ framework are `now inline with reference version
 naming new entry points and so only accessible @emph{via} their C headers.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central Dispatch' and is
+Threading in Accelerate is controlled by `Grand Central
+Dispatch'@footnote{E.g.,
+@url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
 
