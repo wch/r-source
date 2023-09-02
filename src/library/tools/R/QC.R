@@ -7840,7 +7840,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         out$descr_bad_DOIs <- descr[ind]
     else if(any(ind <- grepl(
            # almost all others are publisher URLs that should be replaced by DOI markup
-           "/10.\\d{4,}", 
+           "/10\\.\\d{4,}", 
            descr, ignore.case = TRUE)))
        out$descr_replace_by_DOI <- descr[ind]
     if(any(ind <- grepl(paste(c("https?://arxiv.org",
