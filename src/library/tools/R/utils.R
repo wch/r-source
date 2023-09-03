@@ -1746,7 +1746,7 @@ function(parent = parent.frame())
            envir = env)
     assign("Ops", function(e1, e2) UseMethod("Ops"),
            envir = env)
-    assign("matrixOps", function(e1, e2) UseMethod("matrixOps"),
+    assign("matrixOps", function(x, y) UseMethod("matrixOps"),
            envir = env)
     assign("Summary", function(..., na.rm = FALSE) UseMethod("Summary"),
            envir = env)
