@@ -664,6 +664,8 @@ ac_func_c_list=
 ac_subst_vars='LTLIBOBJS
 FC_VER
 CC_VER
+BUILD_NEW_ACCELERATE_FALSE
+BUILD_NEW_ACCELERATE_TRUE
 BUILD_LIBINTL_FALSE
 BUILD_LIBINTL_TRUE
 USE_NLS_FALSE
@@ -1133,6 +1135,7 @@ enable_rpath
 with_libpth_prefix
 with_included_gettext
 with_libintl_prefix
+with_newAccelerate
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1944,6 +1947,8 @@ Optional Packages:
   --with-included-gettext use the GNU gettext library included here [no]
   --with-libintl-prefix[=DIR]  search for libintl in DIR/include and DIR/lib
   --without-libintl-prefix     don't search for libintl in includedir and libdir
+  --with-newAccelerate    use macOS Accelerate in macOS >= 13.3 for BLAS and
+                          LAPACK. [no]
 
 Some influential environment variables:
   R_PRINTCMD  command used to spool PostScript files to the printer
@@ -27115,7 +27120,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27120: \"$ac_link\") >&5
+(eval echo $as_me:27125: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27191,7 +27196,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27196: \"$ac_link\") >&5
+(eval echo $as_me:27201: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -58678,6 +58683,73 @@ printf "%s\n" "#define R_MEMORY_PROFILING 1" >>confdefs.h
     ;;
 esac
 
+
+# Check whether --with-newAccelerate was given.
+if test ${with_newAccelerate+y}
+then :
+  withval=$with_newAccelerate; use_accelerate=${withval}
+else $as_nop
+  use_accelerate=no
+fi
+
+if test "x$use_accelerate" = xyes; then
+  case "${host_os}" in
+      darwin*)
+      ;;
+      *)
+       as_fn_error $? "--with-newAccelerate requires macOS." "$LINENO" 5
+      ;;
+  esac
+  r_save_LIBS="${LIBS}"
+  LIBS="${LIBS} -framework Accelerate"
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+// avoid interpretation of $
+#define ndgemm dgemm ## $ ## NEWLAPACK
+// Accelerate.h declares dgemm_ but remaps to entry point dgemm$NEWLAPACK
+void
+ndgemm(const char *transa, const char *transb, const int *m,
+       const int *n, const int *k, const double *alpha,
+       const double *a, const int *lda,
+       const double *b, const int *ldb,
+       const double *beta, double *c, const int *ldc);
+
+    int main(void)
+    {
+        int nrx, ncx, nry, ncy;
+        double *x,  *y,  *z;
+        double one = 1.0, zero = 0.0;
+        ndgemm("N", "N", &nrx, &ncy, &ncx, &one, x,
+               &nrx, y, &nry, &zero, z, &nrx);
+    }
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  sdk_OK=yes
+else $as_nop
+  sdk_OK=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+  LIBS="${r_save_LIBS}"
+  if test "x$sdk_OK" != xyes; then
+    as_fn_error $? "--with-newAccelerate requires macOS SDK >= 14.3." "$LINENO" 5
+  fi
+
+printf "%s\n" "#define USE_NEW_ACCELERATE 1" >>confdefs.h
+
+fi
+ if test "x${use_accelerate}" == xyes; then
+  BUILD_NEW_ACCELERATE_TRUE=
+  BUILD_NEW_ACCELERATE_FALSE='#'
+else
+  BUILD_NEW_ACCELERATE_TRUE='#'
+  BUILD_NEW_ACCELERATE_FALSE=
+fi
+
+
 CC_VER=`${CC} --version | ${SED} -n 1p`
 FC_VER=`${FC} --version | ${SED} -n 1p`
 
@@ -58916,6 +58988,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_LIBINTL_TRUE}" && test -z "${BUILD_LIBINTL_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_LIBINTL\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${BUILD_NEW_ACCELERATE_TRUE}" && test -z "${BUILD_NEW_ACCELERATE_FALSE}"; then
+  as_fn_error $? "conditional \"BUILD_NEW_ACCELERATE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -61913,6 +61989,15 @@ fi
 if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: --with-libdeflate-compression requires libdeflate" >&5
 printf "%s\n" "$as_me: WARNING: --with-libdeflate-compression requires libdeflate" >&2;}
+fi
+if test "${use_accelerate}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_options}"; then
+  r_options="new Accelerate"
+else
+  r_options="${r_options}${separator}new Accelerate"
+fi
 fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:

@@ -2930,6 +2930,55 @@ case "${host_os}" in
     ;;
 esac
 
+AC_ARG_WITH([newAccelerate],
+[AS_HELP_STRING([--with-newAccelerate],[use macOS Accelerate in macOS >= 13.3 for BLAS and LAPACK. @<:@no@:>@])],
+[use_accelerate=${withval}],
+[use_accelerate=no])
+dnl macOS 13.3 had kernel 22.4.0 but we test for macOS then for
+dnl entry point in -framework Accelerate
+dnl Alternatively we could #include <Accelerate/Acclereate.h> and
+dnl use nm on the object.
+if test "x$use_accelerate" = xyes; then
+  case "${host_os}" in
+      darwin*)
+      ;;
+      *)
+       AC_MSG_ERROR([--with-newAccelerate requires macOS.])
+      ;;    
+  esac
+  r_save_LIBS="${LIBS}"
+  LIBS="${LIBS} -framework Accelerate"
+    AC_LINK_IFELSE([AC_LANG_SOURCE(
+[[
+// avoid interpretation of $
+#define ndgemm dgemm ## $ ## NEWLAPACK
+// Accelerate.h declares dgemm_ but remaps to entry point dgemm$NEWLAPACK
+void
+ndgemm(const char *transa, const char *transb, const int *m,
+       const int *n, const int *k, const double *alpha,
+       const double *a, const int *lda,
+       const double *b, const int *ldb,
+       const double *beta, double *c, const int *ldc);
+
+    int main(void)
+    {
+        int nrx, ncx, nry, ncy;
+        double *x,  *y,  *z;
+        double one = 1.0, zero = 0.0;
+        ndgemm("N", "N", &nrx, &ncy, &ncx, &one, x,
+               &nrx, y, &nry, &zero, z, &nrx);
+    }
+]])],
+sdk_OK=yes,
+sdk_OK=no)
+  LIBS="${r_save_LIBS}"
+  if test "x$sdk_OK" != xyes; then
+    AC_MSG_ERROR([--with-newAccelerate requires macOS SDK >= 14.3.])
+  fi
+  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
+fi
+AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
+
 dnl record compiler versions
 CC_VER=`${CC} --version | ${SED} -n 1p`
 FC_VER=`${FC} --version | ${SED} -n 1p`
@@ -3184,6 +3233,9 @@ fi
 
 if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
   AC_MSG_WARN([--with-libdeflate-compression requires libdeflate])
+fi
+if test "${use_accelerate}" = yes; then
+  R_SH_VAR_ADD(r_options, [new Accelerate], [, ])
 fi
 
 AC_MSG_RESULT(

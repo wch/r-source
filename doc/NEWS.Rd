@@ -158,6 +158,24 @@
     }
   }
 
+  \subsection{INSTALLATION on macOS}{
+    \itemize{
+      \item (In progress)\cr
+      A new \command{configure} option \option{--with-newAccelerate}
+      makes use of Apple's \sQuote{new} BLAS / LAPACK interface in their
+      Accelerate framework.  That interface is only available in macOS
+      13.3 or later, and building requires SDK 14.3 or later (from the
+      Command Line Tools or Xcode).
+
+      To avoid many compilation warnings you may need to use
+\preformatted{
+	CC="clang -mmacos-version-min=13.3"
+}
+
+      That version of Accelerate provides LAPACK 3.9.1 rather than 3.2.1.
+     }
+   }
+
   %% \subsection{PACKAGE INSTALLATION}{
   %%   \itemize{
   %%     \item .
