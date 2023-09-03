@@ -440,7 +440,7 @@ prepare_Rd <-
                               list(f = Rd, enc = encoding, frag = fragment)))
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)$description
-        Rd <- parse_Rd(Rd, srcfile = srcfile, encoding = encoding, ...)
+        Rd <- parse_Rd(Rd, encoding = encoding, fragment = fragment, ...)
     } else {
     	Rdfile <- attr(Rd, "Rdfile")
     	concordance <- attr(Rd, "concordance")
