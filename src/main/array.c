@@ -27,7 +27,17 @@
 #include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>     /* for R_Calloc/R_Free, F77_CALL */
+
+// calls BLAS routines dgemm dgemv zgemm
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+// avoid conflicts over COMPLEX
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+# define FCONE
+#else
 #include <R_ext/BLAS.h>
+#endif
 #include <R_ext/Itermacros.h>
 
 #include "duplicate.h"

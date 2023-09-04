@@ -173,7 +173,10 @@
 }
 
       That version of Accelerate provides LAPACK 3.9.1 rather than 3.2.1.
-     }
+
+      Currently Accelerate is used for BLAS calls from C in R and package
+      stats and for LAPACK calls from the \code{lapack} module.
+    }
    }
 
   %% \subsection{PACKAGE INSTALLATION}{
@@ -316,6 +319,10 @@
       \item \code{transform.data.frame()} no longer adjusts names;
       in particular, untransformed variables are kept as-is,
       including those with syntactically invalid names (\PR{17890}).
+
+      \item Formatting and printing complex numbers could give things
+      like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
+      replaced by \samp{+0i}.
     }
   }
 }

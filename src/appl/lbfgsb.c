@@ -31,12 +31,23 @@
 
 /* <UTF8> all char uses here are ASCII */
 
+// This has BLAS calls daxpy dcopy ddot dscal
+
 #include <math.h>
 #include <float.h> /* for DBL_EPSILON */
 #include <string.h>
 #include <R_ext/RS.h> /* for F77_CALL */
-#include <R_ext/Linpack.h>
-#include <R_ext/Applic.h>
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+#else
+# include <R_ext/BLAS.h>
+#endif
+
+#include <R_ext/Linpack.h> /* dpofa, dtrsl  */
+#include <R_ext/Applic.h> // includes BLAS.h
+
 #include <R_ext/Print.h> /* Rprintf */
 
 #define FALSE_ 0

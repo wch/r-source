@@ -38,7 +38,7 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/RS.h>		/* F77_... */
-#include <R_ext/BLAS.h>
+//#include <R_ext/BLAS.h> // now included by users
 
 #ifdef  __cplusplus
 extern "C" {

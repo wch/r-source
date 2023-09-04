@@ -48,6 +48,9 @@ lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
 ## Formerly used for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
+@BUILD_NEW_ACCELERATE_TRUE@EXTRA_LIBS = -framework Accelerate
+@BUILD_NEW_ACCELERATE_FALSE@EXTRA_LIBS = @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS_IN_SO)
+
 lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 @BUILD_LTO_CHECK_FALSE@Rlapack_la = libRlapack$(R_DYLIB_EXT)
@@ -95,7 +98,7 @@ R: Makedeps
 	@$(MAKE) $(lapack_la)
 
 $(lapack_la): $(lapack_la_OBJECTS)
-	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS_IN_SO)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) $(EXTRA_LIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1997        Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2015   The R Core Team.
+ *  Copyright (C) 1999-2023   The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,13 +27,21 @@
    included in R, and some others.
    
    Those which are listed as part of R are in the API
+
+   Called from R by lbfgsb.c (dpofa, dtrsl) and uncmin.c (dtrsl)
+   and by Fortran routines in src/library/stats/src (sslvrg.f)
+
+   Used by about 40 CRAN packages.
  */
 
 #ifndef R_LINPACK_H_
 #define R_LINPACK_H_
 
 #include <R_ext/RS.h>		/* for F77_... */
-#include <R_ext/BLAS.h>
+#ifndef USE_NEW_ACCELERATE
+// already included by R users src/appl/{lbfgs,uncmin}.c
+# include <R_ext/BLAS.h>
+#endif
 
 #ifdef  __cplusplus
 extern "C" {

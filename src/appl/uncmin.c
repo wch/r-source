@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017   The R Core Team
+ *  Copyright (C) 1999-2023   The R Core Team
  *  Copyright (C) 2003-2017   The R Foundation
  *  Copyright (C) 1997-1999   Saikat DebRoy
  *
@@ -27,13 +27,26 @@
 
 /*--- The Dennis + Schnabel Minimizer -- used by R's  nlm() ---*/
 
+// for USE_NEW_ACCELERATE
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <math.h>
 #include <float.h> /* DBL_MAX */
 #include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/Print.h>   /* Rprintf */
 #include <R_ext/PrtUtil.h> /* printRealVector */
-#include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
+// uses BLAS routines ddot dnrm2 dscal
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+#else
+# include <R_ext/BLAS.h>
+#endif
+# include <R_ext/Linpack.h> /* dtrsl */
 #include <Rmath.h>
 // as in <Defn.h> :
 #define Rexp10(x) pow(10.0, x)
