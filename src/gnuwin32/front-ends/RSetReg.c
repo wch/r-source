@@ -53,12 +53,7 @@ int main (int argc, char **argv)
     char *RHome, version[40], keyname[60];
     LONG rc;
     HKEY hkey, hkey2;
-    int delete = 0, personal = 0, use_RK = 0;
-
-#if defined(RK) && defined(R_ARCH)
-    if (strlen(R_ARCH) > 0)
-	use_RK = 1;
-#endif
+    int delete = 0, personal = 0;
 
     for(int i = 1; i < argc; i++) if(!strcmp(argv[i], "/U")) delete = 1;
     for(int i = 1; i < argc; i++) if(!strcmp(argv[i], "/Personal")) personal = 1;
@@ -73,8 +68,9 @@ int main (int argc, char **argv)
 
     if(delete) {
 	printf("unregistering R %s ... ", version);
-#ifdef RK
-	if (use_RK) {
+
+#if defined(RK) && defined(R_ARCH)
+	if (strlen(R_ARCH) > 0) {
 	    snprintf(keyname, 60, "Software\\%s\\%s\\%s", PRODUCER, RK, version);
 	    if (RegOpenKeyEx(hk, keyname, 0, KEY_SET_VALUE, &hkey) == ERROR_SUCCESS) {
 		RegDeleteValue(hkey, "InstallPath");
@@ -170,8 +166,8 @@ int main (int argc, char **argv)
 	}
 	RegCloseKey(hkey);	
 
-#ifdef RK
-	if (use_RK) {
+#if defined(RK) && defined(R_ARCH)
+	if (strlen(R_ARCH) > 0) {
 	    snprintf(keyname, 60, "Software\\%s\\%s", PRODUCER, RK);
 	    if ((rc = RegOpenKeyEx(hk, keyname, 0, 
 				   KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
