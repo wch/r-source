@@ -31,7 +31,7 @@
    Called from R by lbfgsb.c (dpofa, dtrsl) and uncmin.c (dtrsl)
    and by Fortran routines in src/library/stats/src (sslvrg.f)
 
-   Used by about 40 CRAN packages.
+   Used by about 40 CRAN packages: 6 relying on the inclusion of BLAS.h
  */
 
 #ifndef R_LINPACK_H_

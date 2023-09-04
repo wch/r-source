@@ -217,6 +217,16 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Headers \file{R_ext/Applic.h} and \file{R-ext/Linpack.h}
+      included \file{R_ext/BLAS.h} although this was undocumented and
+      unneeded by their documented entry points.  They no longer do so.
+
+      [Deferred to 2023-09-18 to allows some packages to adjust.]
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics

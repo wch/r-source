@@ -46,7 +46,7 @@
 #endif
 
 #include <R_ext/Linpack.h> /* dpofa, dtrsl  */
-#include <R_ext/Applic.h> // includes BLAS.h
+#include <R_ext/Applic.h> // includes BLAS.h pro tem
 
 #include <R_ext/Print.h> /* Rprintf */
 
