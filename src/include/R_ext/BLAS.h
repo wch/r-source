@@ -46,10 +46,13 @@
 # define FCONE
 #endif
 
-// allow future 64-bit nrow, ncol and increments. by using int64_t
-// configure checked that Fortran INTEGER is 32-bit and the same as C int.
-// Only LSAME (not included here) has LOGICAL in its declaration.
-// It is unclear what i[dz]amaz should return: the reference code has INTEGER, but CBLAS has size_t.
+/* Allow for future 64-bit nrow, ncol and increments. by using int64_t .
+   configure checked that Fortran INTEGER is 32-bit and the same as C int.
+   Only LSAME (not included here) has LOGICAL in its declaration.
+   It is unclear what i[dz]amaz should return: the reference code has INTEGER,
+   but CBLAS has size_t. Apple Accelerate has __LAPACK_int, so int or long 
+   for ILP64.
+*/
 #ifndef ILP64
 # define BLAS_INT int
 #endif
