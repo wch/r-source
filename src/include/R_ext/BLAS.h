@@ -36,7 +36,6 @@
 #define R_BLAS_H
 
 #include <R_ext/RS.h>		/* for F77_... */
-#include <R_ext/Complex.h>	/* for Rcomplex */
 
 #ifdef FC_LEN_T
 # include <stddef.h> // for size_t if needed
@@ -53,6 +52,11 @@
 // It is unclear what i[dz]amaz should return: the reference code has INTEGER, but CBLAS has size_t.
 #ifndef ILP64
 # define BLAS_INT int
+#endif
+
+#ifndef BLAS_complex
+# include <R_ext/Complex.h>
+# define BLAS_complex Rcomplex
 #endif
 
 #ifdef  __cplusplus
@@ -269,178 +273,178 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 /* Double complex BLAS routines added for 2.3.0 */
 /* #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX */
     BLAS_extern double
-    F77_NAME(dcabs1)(const Rcomplex *z);
+    F77_NAME(dcabs1)(const BLAS_complex *z);
     BLAS_extern double
-    F77_NAME(dzasum)(const BLAS_INT *n, const Rcomplex *zx, const BLAS_INT *incx);
+    F77_NAME(dzasum)(const BLAS_INT *n, const BLAS_complex *zx, const BLAS_INT *incx);
     BLAS_extern double
-    F77_NAME(dznrm2)(const BLAS_INT *n, const Rcomplex *x, const BLAS_INT *incx);
+    F77_NAME(dznrm2)(const BLAS_INT *n, const BLAS_complex *x, const BLAS_INT *incx);
     BLAS_extern BLAS_INT
-    F77_NAME(izamax)(const BLAS_INT *n, const Rcomplex *zx, const BLAS_INT *incx);
+    F77_NAME(izamax)(const BLAS_INT *n, const BLAS_complex *zx, const BLAS_INT *incx);
     BLAS_extern void
-    F77_NAME(zaxpy)(const BLAS_INT *n, const Rcomplex *za, const Rcomplex *zx,
-		    const BLAS_INT *incx, const Rcomplex *zy, const BLAS_INT *incy);
+    F77_NAME(zaxpy)(const BLAS_INT *n, const BLAS_complex *za, const BLAS_complex *zx,
+		    const BLAS_INT *incx, const BLAS_complex *zy, const BLAS_INT *incy);
     BLAS_extern void
-    F77_NAME(zcopy)(const BLAS_INT *n, const Rcomplex *zx, const BLAS_INT *incx,
-		    const Rcomplex *zy, const BLAS_INT *incy);
+    F77_NAME(zcopy)(const BLAS_INT *n, const BLAS_complex *zx, const BLAS_INT *incx,
+		    const BLAS_complex *zy, const BLAS_INT *incy);
 
     /* WARNING!  The next two return a value that may not be
        compatible between C and Fortran, and even if it is, this might
        not be the right translation to C.  Only use after
        configure-testing with your compilers.
      */
-    BLAS_extern Rcomplex
+    BLAS_extern BLAS_complex
     F77_NAME(zdotc)(const BLAS_INT *n,
-		    const Rcomplex *zx, const BLAS_INT *incx, 
-		    const Rcomplex *zy, const BLAS_INT *incy);
-    BLAS_extern Rcomplex
+		    const BLAS_complex *zx, const BLAS_INT *incx, 
+		    const BLAS_complex *zy, const BLAS_INT *incy);
+    BLAS_extern BLAS_complex
     F77_NAME(zdotu)(const BLAS_INT *n,
-		    const Rcomplex *zx, const BLAS_INT *incx,
-		    const Rcomplex *zy, const BLAS_INT *incy);
+		    const BLAS_complex *zx, const BLAS_INT *incx,
+		    const BLAS_complex *zy, const BLAS_INT *incy);
 
     BLAS_extern void
     F77_NAME(zdrot)(const BLAS_INT *n, 
-		    const Rcomplex *zx, const BLAS_INT *incx, 
-		    Rcomplex *zy, const BLAS_INT *incy, 
+		    const BLAS_complex *zx, const BLAS_INT *incx, 
+		    BLAS_complex *zy, const BLAS_INT *incy, 
 		    const double *c, const double *s);
     BLAS_extern void
     F77_NAME(zdscal)(const BLAS_INT *n, const double *da, 
-		     Rcomplex *zx, const BLAS_INT *incx);
+		     BLAS_complex *zx, const BLAS_INT *incx);
     BLAS_extern void
     F77_NAME(zgbmv)(const char *trans, BLAS_INT *m, BLAS_INT *n, BLAS_INT *kl,
-		    BLAS_INT *ku, Rcomplex *alpha, Rcomplex *a, BLAS_INT *lda,
-		    Rcomplex *x, BLAS_INT *incx, Rcomplex *beta, Rcomplex *y,
+		    BLAS_INT *ku, BLAS_complex *alpha, BLAS_complex *a, BLAS_INT *lda,
+		    BLAS_complex *x, BLAS_INT *incx, BLAS_complex *beta, BLAS_complex *y,
 		    BLAS_INT *incy FCLEN);
     BLAS_extern void
     F77_NAME(zgemm)(const char *transa, const char *transb, const BLAS_INT *m,
-		    const BLAS_INT *n, const BLAS_INT *k, const Rcomplex *alpha,
-		    const Rcomplex *a, const BLAS_INT *lda,
-		    const Rcomplex *b, const BLAS_INT *ldb,
-		    const Rcomplex *beta, Rcomplex *c, const BLAS_INT *ldc
+		    const BLAS_INT *n, const BLAS_INT *k, const BLAS_complex *alpha,
+		    const BLAS_complex *a, const BLAS_INT *lda,
+		    const BLAS_complex *b, const BLAS_INT *ldb,
+		    const BLAS_complex *beta, BLAS_complex *c, const BLAS_INT *ldc
 		    FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(zgemv)(const char *trans, const BLAS_INT *m, const BLAS_INT *n,
-		    const Rcomplex *alpha, const Rcomplex *a, const BLAS_INT *lda,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *beta,
-		    Rcomplex *y, const BLAS_INT *incy FCLEN);
+		    const BLAS_complex *alpha, const BLAS_complex *a, const BLAS_INT *lda,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *beta,
+		    BLAS_complex *y, const BLAS_INT *incy FCLEN);
     BLAS_extern void
-    F77_NAME(zgerc)(const BLAS_INT *m, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *y,
-		    const BLAS_INT *incy, Rcomplex *a, const BLAS_INT *lda);
+    F77_NAME(zgerc)(const BLAS_INT *m, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *y,
+		    const BLAS_INT *incy, BLAS_complex *a, const BLAS_INT *lda);
     BLAS_extern void
-    F77_NAME(zgeru)(const BLAS_INT *m, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *y,
-		    const BLAS_INT *incy, Rcomplex *a, const BLAS_INT *lda);
+    F77_NAME(zgeru)(const BLAS_INT *m, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *y,
+		    const BLAS_INT *incy, BLAS_complex *a, const BLAS_INT *lda);
     BLAS_extern void
     F77_NAME(zhbmv)(const char *uplo, const BLAS_INT *n, const BLAS_INT *k,
-		    const Rcomplex *alpha, const Rcomplex *a, const BLAS_INT *lda,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *beta,
-		    Rcomplex *y, const BLAS_INT *incy FCLEN);
+		    const BLAS_complex *alpha, const BLAS_complex *a, const BLAS_INT *lda,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *beta,
+		    BLAS_complex *y, const BLAS_INT *incy FCLEN);
     BLAS_extern void
     F77_NAME(zhemm)(const char *side, const char *uplo, const BLAS_INT *m,
-		    const BLAS_INT *n, const Rcomplex *alpha, const Rcomplex *a,
-		    const BLAS_INT *lda, const Rcomplex *b, const BLAS_INT *ldb,
-		    const Rcomplex *beta, Rcomplex *c, const BLAS_INT *ldc
+		    const BLAS_INT *n, const BLAS_complex *alpha, const BLAS_complex *a,
+		    const BLAS_INT *lda, const BLAS_complex *b, const BLAS_INT *ldb,
+		    const BLAS_complex *beta, BLAS_complex *c, const BLAS_INT *ldc
 		    FCLEN FCLEN);
     BLAS_extern void
-    F77_NAME(zhemv)(const char *uplo, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *a, const BLAS_INT *lda, const Rcomplex *x,
-		    const BLAS_INT *incx, const Rcomplex *beta,
-		    Rcomplex *y, const BLAS_INT *incy FCLEN);
+    F77_NAME(zhemv)(const char *uplo, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *a, const BLAS_INT *lda, const BLAS_complex *x,
+		    const BLAS_INT *incx, const BLAS_complex *beta,
+		    BLAS_complex *y, const BLAS_INT *incy FCLEN);
     BLAS_extern void
     F77_NAME(zher)(const char *uplo, const BLAS_INT *n, const double *alpha,
-		   const Rcomplex *x, const BLAS_INT *incx, Rcomplex *a,
+		   const BLAS_complex *x, const BLAS_INT *incx, BLAS_complex *a,
 		   const BLAS_INT *lda FCLEN);
     BLAS_extern void
-    F77_NAME(zher2)(const char *uplo, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *y,
-		    const BLAS_INT *incy, Rcomplex *a, const BLAS_INT *lda FCLEN);
+    F77_NAME(zher2)(const char *uplo, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *y,
+		    const BLAS_INT *incy, BLAS_complex *a, const BLAS_INT *lda FCLEN);
     BLAS_extern void
     F77_NAME(zher2k)(const char *uplo, const char *trans, const BLAS_INT *n,
-		     const BLAS_INT *k, const Rcomplex *alpha, const Rcomplex *a,
-		     const BLAS_INT *lda, const Rcomplex *b, const  BLAS_INT *ldb,
-		     const double *beta, Rcomplex *c, const BLAS_INT *ldc
+		     const BLAS_INT *k, const BLAS_complex *alpha, const BLAS_complex *a,
+		     const BLAS_INT *lda, const BLAS_complex *b, const  BLAS_INT *ldb,
+		     const double *beta, BLAS_complex *c, const BLAS_INT *ldc
 		     FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(zherk)(const char *uplo, const char *trans, const BLAS_INT *n,
-		    const BLAS_INT *k, const double *alpha, const Rcomplex *a,
-		    const BLAS_INT *lda, const double *beta, Rcomplex *c,
+		    const BLAS_INT *k, const double *alpha, const BLAS_complex *a,
+		    const BLAS_INT *lda, const double *beta, BLAS_complex *c,
 		    const BLAS_INT *ldc FCLEN FCLEN);
     BLAS_extern void
-    F77_NAME(zhpmv)(const char *uplo, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *ap, const Rcomplex *x, const BLAS_INT *incx,
-		    const Rcomplex * beta, Rcomplex *y, const BLAS_INT *incy
+    F77_NAME(zhpmv)(const char *uplo, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *ap, const BLAS_complex *x, const BLAS_INT *incx,
+		    const BLAS_complex * beta, BLAS_complex *y, const BLAS_INT *incy
 		    FCLEN);
     BLAS_extern void
     F77_NAME(zhpr)(const char *uplo, const BLAS_INT *n, const double *alpha,
-		   const Rcomplex *x, const BLAS_INT *incx, Rcomplex *ap
+		   const BLAS_complex *x, const BLAS_INT *incx, BLAS_complex *ap
 		   FCLEN);
     BLAS_extern void
-    F77_NAME(zhpr2)(const char *uplo, const BLAS_INT *n, const Rcomplex *alpha,
-		    const Rcomplex *x, const BLAS_INT *incx, const Rcomplex *y,
-		    const BLAS_INT *incy, Rcomplex *ap FCLEN);
+    F77_NAME(zhpr2)(const char *uplo, const BLAS_INT *n, const BLAS_complex *alpha,
+		    const BLAS_complex *x, const BLAS_INT *incx, const BLAS_complex *y,
+		    const BLAS_INT *incy, BLAS_complex *ap FCLEN);
     BLAS_extern void
-    F77_NAME(zrotg)(const Rcomplex *ca, const Rcomplex *cb, 
-		    double *c, Rcomplex *s);
+    F77_NAME(zrotg)(const BLAS_complex *ca, const BLAS_complex *cb, 
+		    double *c, BLAS_complex *s);
     BLAS_extern void
-    F77_NAME(zscal)(const BLAS_INT *n, const Rcomplex *za, Rcomplex *zx,
+    F77_NAME(zscal)(const BLAS_INT *n, const BLAS_complex *za, BLAS_complex *zx,
 		    const BLAS_INT *incx);
     BLAS_extern void
-    F77_NAME(zswap)(const BLAS_INT *n, Rcomplex *zx, const BLAS_INT *incx,
-		    Rcomplex *zy, const BLAS_INT *incy);
+    F77_NAME(zswap)(const BLAS_INT *n, BLAS_complex *zx, const BLAS_INT *incx,
+		    BLAS_complex *zy, const BLAS_INT *incy);
     BLAS_extern void
     F77_NAME(zsymm)(const char *side, const char *uplo, const BLAS_INT *m,
-		    const BLAS_INT *n, const Rcomplex *alpha, const Rcomplex *a,
-		    const BLAS_INT *lda, const Rcomplex *b, const BLAS_INT *ldb,
-		    const Rcomplex *beta, Rcomplex *c, const BLAS_INT *ldc
+		    const BLAS_INT *n, const BLAS_complex *alpha, const BLAS_complex *a,
+		    const BLAS_INT *lda, const BLAS_complex *b, const BLAS_INT *ldb,
+		    const BLAS_complex *beta, BLAS_complex *c, const BLAS_INT *ldc
 		    FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(zsyr2k)(const char *uplo, const char *trans, BLAS_INT *n, BLAS_INT *k,
-		     Rcomplex *alpha, Rcomplex *a, BLAS_INT *lda, Rcomplex *b,
-		     BLAS_INT *ldb, Rcomplex *beta, Rcomplex *c, BLAS_INT *ldc
+		     BLAS_complex *alpha, BLAS_complex *a, BLAS_INT *lda, BLAS_complex *b,
+		     BLAS_INT *ldb, BLAS_complex *beta, BLAS_complex *c, BLAS_INT *ldc
 		     FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(zsyrk)(const char *uplo, const char *trans, const  BLAS_INT *n,
-		    const BLAS_INT *k, const Rcomplex *alpha, const Rcomplex *a,
-		    const BLAS_INT *lda, const Rcomplex *beta, Rcomplex *c,
+		    const BLAS_INT *k, const BLAS_complex *alpha, const BLAS_complex *a,
+		    const BLAS_INT *lda, const BLAS_complex *beta, BLAS_complex *c,
 		    const BLAS_INT *ldc FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztbmv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const BLAS_INT *k, const Rcomplex *a,
-		    const BLAS_INT *lda, Rcomplex *x, const BLAS_INT *incx
+		    const BLAS_INT *n, const BLAS_INT *k, const BLAS_complex *a,
+		    const BLAS_INT *lda, BLAS_complex *x, const BLAS_INT *incx
 		    FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztbsv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const BLAS_INT *k, const Rcomplex *a,
-		    const BLAS_INT *lda, Rcomplex *x, const BLAS_INT *incx
+		    const BLAS_INT *n, const BLAS_INT *k, const BLAS_complex *a,
+		    const BLAS_INT *lda, BLAS_complex *x, const BLAS_INT *incx
 		    FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztpmv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const Rcomplex *ap, Rcomplex *x,
+		    const BLAS_INT *n, const BLAS_complex *ap, BLAS_complex *x,
 		    const BLAS_INT *incx FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztpsv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const Rcomplex *ap, Rcomplex *x,
+		    const BLAS_INT *n, const BLAS_complex *ap, BLAS_complex *x,
 		    const BLAS_INT *incx FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztrmm)(const char *side, const char *uplo, const char *transa,
 		    const char *diag, const BLAS_INT *m, const BLAS_INT *n,
-		    const Rcomplex *alpha, const Rcomplex *a,
-		    const BLAS_INT *lda, Rcomplex *b, const BLAS_INT *ldb
+		    const BLAS_complex *alpha, const BLAS_complex *a,
+		    const BLAS_INT *lda, BLAS_complex *b, const BLAS_INT *ldb
 		    FCLEN FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztrmv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const Rcomplex *a, const BLAS_INT *lda,
-		    Rcomplex *x, const BLAS_INT *incx
+		    const BLAS_INT *n, const BLAS_complex *a, const BLAS_INT *lda,
+		    BLAS_complex *x, const BLAS_INT *incx
 		    FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztrsm)(const char *side, const char *uplo, const char *transa,
-		    const char *diag, BLAS_INT *m, BLAS_INT *n, Rcomplex *alpha,
-		    Rcomplex *a, BLAS_INT *lda, Rcomplex *b, BLAS_INT *ldb
+		    const char *diag, BLAS_INT *m, BLAS_INT *n, BLAS_complex *alpha,
+		    BLAS_complex *a, BLAS_INT *lda, BLAS_complex *b, BLAS_INT *ldb
 		    FCLEN FCLEN FCLEN FCLEN);
     BLAS_extern void
     F77_NAME(ztrsv)(const char *uplo, const char *trans, const char *diag,
-		    const BLAS_INT *n, const Rcomplex *a, const BLAS_INT *lda,
-		    Rcomplex *x, const BLAS_INT *incx
+		    const BLAS_INT *n, const BLAS_complex *a, const BLAS_INT *lda,
+		    BLAS_complex *x, const BLAS_INT *incx
 		    FCLEN FCLEN FCLEN);
 /* #endif */
 
