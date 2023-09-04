@@ -67,17 +67,17 @@ x$name <- value
     An index value of \code{NULL} is treated as if it were \code{integer(0)}.
   }
   \item{name}{
-    A literal character string or a \link{name} (possibly \link{backtick}
+    a literal character string or a \link{name} (possibly \link{backtick}
     quoted).  For extraction, this is normally (see under
     \sQuote{Environments}) partially matched to the \code{\link{names}}
     of the object.
   }
-  \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
+  \item{drop}{relevant for matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
     only works for extracting elements, not for the replacement.  See
     \code{\link{drop}} for further details.
   }
-  \item{exact}{Controls possible partial matching of \code{[[} when
+  \item{exact}{controls possible partial matching of \code{[[} when
     extracting by a character vector (for most objects, but see under
     \sQuote{Environments}).  The default is no partial matching.  Value
     \code{NA} allows partial matching but issues a warning when it

@@ -12,16 +12,16 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
 }
 \arguments{
   \item{name}{
-    The object to detach.  Defaults to \code{search()[pos]}.
+    the object to detach.  Defaults to \code{search()[pos]}.
     This can be an unquoted name or a character string but \emph{not} a
     character vector.  If a number is supplied this is taken as \code{pos}.
   }
   \item{pos}{
-    Index position in \code{\link{search}()} of the database to
+    index position in \code{\link{search}()} of the database to
     detach.  When \code{name} is a number, \code{pos = name}
     is used.
   }
-  \item{unload}{A logical value indicating whether or not to attempt to
+  \item{unload}{a logical value indicating whether or not to attempt to
     unload the namespace when a package is being detached.  If the
     package has a namespace and \code{unload} is \code{TRUE}, then
     \code{detach} will attempt to unload the namespace \emph{via}

@@ -19,9 +19,10 @@ icuSetCollate(...)
 icuGetCollate(type = c("actual", "valid"))
 }
 \arguments{
-  \item{\dots}{Named arguments, see \sQuote{Details}.}
-  \item{type}{character string: can be abbreviated.  Either the actual locale
-    in use for collation or the most specific locale which would be valid.}
+  \item{\dots}{named arguments, see \sQuote{Details}.}
+  \item{type}{a character string: either the \code{"actual"} locale
+    in use for collation, or the most specific locale which would be
+    \code{"valid"}.  Can be abbreviated.}
 }
 \details{
   Optionally, \R can be built to collate character strings by ICU

@@ -55,8 +55,8 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
     \item{\code{c}}{exit the browser
     and continue execution at the next statement.}
     \item{\code{cont}}{synonym for \code{c}.}
-    \item{\code{f}}{finish execution of the current loop or function} 
-    \item{\code{help}}{print this list of commands}
+    \item{\code{f}}{finish execution of the current loop or function.} 
+    \item{\code{help}}{print this list of commands.}
     \item{\code{n}}{evaluate the next statement, stepping over 
       function calls.  For byte compiled functions interrupted by
       \code{browser} calls, \code{n} is equivalent to \code{c}.}

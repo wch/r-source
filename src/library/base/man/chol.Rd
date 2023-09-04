@@ -19,10 +19,10 @@ chol(x, \dots)
 \arguments{
   \item{x}{an object for which a method exists.  The default method
     applies to numeric (or logical) symmetric, positive-definite matrices.}
-  \item{\dots}{arguments to be based to or from methods.}
-  \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical.  Should LINPACK be used (now an error)?}
-  \item{tol}{A numeric tolerance for use with \code{pivot = TRUE}.}
+  \item{\dots}{arguments to be passed to or from methods.}
+  \item{pivot}{logical: should pivoting be used?}
+  \item{LINPACK}{logical.  Defunct and gives an error.}
+  \item{tol}{a numeric tolerance for use with \code{pivot = TRUE}.}
 }
 \value{
   The upper triangular factor of the Cholesky decomposition, i.e., the

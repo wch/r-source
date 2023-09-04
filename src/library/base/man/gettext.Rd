@@ -30,7 +30,7 @@ bindtextdomain(domain, dirname = NULL)
 Sys.setLanguage(lang, unset = "en")
 }
 \arguments{
-  \item{\dots}{One or more character vectors.}
+  \item{\dots}{one or more character vectors.}
   \item{trim}{logical indicating if the white space trimming in
     \code{gettext()} should happen.  \code{trim = FALSE} may be needed for
     compiled code (C / C++) messages which often end with \code{\\n}.}
@@ -39,7 +39,7 @@ Sys.setLanguage(lang, unset = "en")
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
   \item{msg2}{the message to be used in English for \code{n = 0, 2, 3, \dots}.}
-  \item{dirname}{The directory in which to find translated message
+  \item{dirname}{the directory in which to find translated message
     catalogs for the domain.}
   \item{lang}{a \code{\link{character}} string specifying a language for
     which translations should be sought.}

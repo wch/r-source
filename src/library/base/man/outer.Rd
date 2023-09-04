@@ -19,7 +19,7 @@ X \%o\% Y
 }
 
 \arguments{
-  \item{X, Y}{First and second arguments for function \code{FUN}.
+  \item{X, Y}{first and second arguments for function \code{FUN}.
     Typically a vector or array.}
   \item{FUN}{a function to use on the outer products, found \emph{via}
     \code{\link{match.fun}} (except for the special case \code{"*"}).}

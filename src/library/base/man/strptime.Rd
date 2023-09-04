@@ -27,21 +27,21 @@ strftime(x, format = "", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
 }
 \arguments{
-  \item{x}{An object to be converted: a character vector for
+  \item{x}{an object to be converted: a character vector for
     \code{strptime}, an object which can be converted to
     \code{"\link{POSIXlt}"} for \code{strftime}.}
-  \item{tz}{A character string specifying the time zone to be used for
+  \item{tz}{a character string specifying the time zone to be used for
     the conversion.  System-specific (see \code{\link{as.POSIXlt}}), but
     \code{""} is the current time zone, and \code{"GMT"} is UTC.
     Invalid values are most commonly treated as UTC, on some platforms with
     a warning.}
-  \item{format}{A character string.  The default for the \code{format}
+  \item{format}{a character string.  The default for the \code{format}
     methods is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any element has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
-  \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{\dots}{further arguments to be passed from or to other methods.}
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}

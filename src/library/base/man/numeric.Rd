@@ -21,7 +21,7 @@ as.numeric(x, \dots)
 is.numeric(x)
 }
 \arguments{
-  \item{length}{A non-negative integer specifying the desired length.
+  \item{length}{a non-negative integer specifying the desired length.
     Double values will be coerced to integer:
     supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}

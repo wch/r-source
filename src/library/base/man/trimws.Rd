@@ -8,7 +8,7 @@
 trimws(x, which = c("both", "left", "right"), whitespace = "[ \\t\\r\\n]")
 }
 \arguments{
-  \item{x}{a character vector}
+  \item{x}{a character vector.}
   \item{which}{a character string specifying whether to remove both
     leading and trailing whitespace (default), or only leading
     (\code{"left"}) or trailing (\code{"right"}).  Can be abbreviated.}

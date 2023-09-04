@@ -17,8 +17,8 @@ regmatches(x, m, invert = FALSE)
 regmatches(x, m, invert = FALSE) <- value
 }
 \arguments{
-  \item{x}{a character vector}
-  \item{m}{an object with match data}
+  \item{x}{a character vector.}
+  \item{m}{an object with match data.}
   \item{invert}{a logical: if \code{TRUE}, extract or replace the
     non-matched substrings.}
   \item{value}{an object with suitable replacement values for the

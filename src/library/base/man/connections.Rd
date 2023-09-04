@@ -101,7 +101,7 @@ socketTimeout(socket, timeout = -1)
     (if it should be opened initially).  See section \sQuote{Modes} for
     possible values.}
   \item{blocking}{logical.  See the \sQuote{Blocking} section.}
-  \item{encoding}{The name of the encoding to be assumed.  See the
+  \item{encoding}{the name of the encoding to be assumed.  See the
     \sQuote{Encoding} section.}
   \item{raw}{logical.  If true, a \sQuote{raw} interface is used which
     will be more suitable for arguments which are not regular files,

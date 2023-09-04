@@ -13,7 +13,7 @@ mean(x, \dots)
 \alias{mean}
 \alias{mean.default}
 \arguments{
-  \item{x}{An \R object.  Currently there are methods for
+  \item{x}{an \R object.  Currently there are methods for
     numeric/logical vectors and \link[=Dates]{date},
     \link{date-time} and \link{time interval} objects.  Complex vectors
     are allowed for \code{trim = 0}, only.}

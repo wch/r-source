@@ -56,7 +56,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     that no other package can override their external symbols.  This is
     used in the same way as in the \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions.}
-  \item{type}{The type of symbol to look for: can be any (\code{""}, the
+  \item{type}{the type of symbol to look for: can be any (\code{""}, the
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{

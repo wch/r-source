@@ -22,7 +22,7 @@ forwardsolve(l, x, k = ncol(l), upper.tri = FALSE,
     the diagonal are ignored.}
   \item{x}{a matrix whose columns give the right-hand sides for
     the equations.}
-  \item{k}{The number of columns of \code{r} and rows of \code{x} to use.}
+  \item{k}{the number of columns of \code{r} and rows of \code{x} to use.}
   \item{upper.tri}{logical; if \code{TRUE} (default), the \emph{upper}
     \emph{tri}angular part of \code{r} is used.  Otherwise, the lower one.}
   \item{transpose}{logical; if \code{TRUE}, solve \eqn{r' * y = x} for

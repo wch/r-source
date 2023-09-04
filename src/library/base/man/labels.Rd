@@ -11,7 +11,7 @@ labels(object, \dots)
 \alias{labels}
 \alias{labels.default}
 \arguments{
-  \item{object}{Any \R object: the function is generic.}
+  \item{object}{any \R object: the function is generic.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

@@ -33,7 +33,7 @@ oldClass(x) <- value
 .class2(x)
 }
 \arguments{
-  \item{x}{a \R object}
+  \item{x}{an \R object.}
   \item{what, value}{a character vector naming classes. \code{value}
     can also be \code{NULL}. \code{what} can also be a
     non-character R object with a \code{nameOfClass()} method.}

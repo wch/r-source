@@ -24,7 +24,7 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
     are not supported.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{offset}{An integer specifying the offset from
+  \item{offset}{an integer specifying the offset from
     which the search should start.  Must be positive.  The beginning of
     line is defined to be at that offset so \code{"^"} will match there.}
   \item{value}{logical.  Determines the return value: see \sQuote{Value}.}

@@ -27,9 +27,9 @@ OlsonNames(tzdir = NULL)
 }
 
 \arguments{
-  \item{location}{logical: defunct: ignored, with a warning for false values.}
+  \item{location}{logical.  Defunct, with a warning if \code{FALSE}.}
 
-  \item{tzdir}{The time-zone database to be used: the default is to try
+  \item{tzdir}{the time-zone database to be used: the default is to try
     known locations until one is found.}
 }
 

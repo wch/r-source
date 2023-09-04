@@ -22,11 +22,11 @@ packageEvent(pkgname,
              event = c("onLoad", "attach", "detach", "onUnload"))
 }
 \arguments{
-  \item{hookName}{character string: the hook name}
-  \item{pkgname}{character string: the package/namespace name}
+  \item{hookName}{character string: the hook name.}
+  \item{pkgname}{character string: the package/namespace name.}
   \item{event}{character string: an event for the package.  Can be abbreviated.}
-  \item{value}{A function or a list of functions, or for \code{action = "replace"}, \code{NULL} }
-  \item{action}{The action to be taken.  Can be abbreviated.}
+  \item{value}{a function or a list of functions, or for \code{action = "replace"}, \code{NULL}.}
+  \item{action}{the action to be taken.  Can be abbreviated.}
 }
 
 \details{

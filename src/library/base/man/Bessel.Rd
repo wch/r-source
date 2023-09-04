@@ -26,7 +26,7 @@ besselY(x, nu)
 \arguments{
   \item{x}{numeric, \eqn{\ge 0}.}
 
-  \item{nu}{numeric; The \emph{order} (maybe fractional and negative) of
+  \item{nu}{numeric; the \emph{order} (maybe fractional and negative) of
     the corresponding Bessel function.}
 
   \item{expon.scaled}{logical; if \code{TRUE}, the results are

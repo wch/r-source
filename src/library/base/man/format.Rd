@@ -66,7 +66,7 @@ format(x, \dots)
     complex nor logical \code{NA}s, which are always encoded as \code{"NA"}.}
   % see PR#12318
 
-  \item{scientific}{Either a logical specifying whether
+  \item{scientific}{either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
     format, or an integer penalty (see \code{\link{options}("scipen")}).
     Missing values correspond to the current default penalty.}

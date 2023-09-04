@@ -65,7 +65,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \item{pkg}{character string naming a package.}
   \item{mask.ok}{character vector of names of objects that can mask
     objects on the search path without signaling an error when strict
-    conflict checking is enabled}
+    conflict checking is enabled.}
   \item{exclude,include.only}{character vector of names of objects to
     exclude or include in the attached frame. Only one of these arguments
     may be used in a call to \code{library} or \code{require}.}

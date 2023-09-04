@@ -23,7 +23,7 @@ file.size(\dots)
 \arguments{
   \item{\dots}{character vectors containing file paths.  Tilde-expansion
     is done: see \code{\link{path.expand}}.}
-  \item{extra_cols}{Logical: return all cols rather than just the
+  \item{extra_cols}{logical: return all cols rather than just the
     first six.}
 }
 \details{
