@@ -662,12 +662,32 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            bad <- rbind(bad,
-                         .gather(urls[pos], parents[pos], s, m,
+            bad_https <- .gather(urls[pos], parents[pos], s, m,
                                  results[ind, 3L],
                                  results[ind, 4L],
                                  results[ind, 5L],
-                                 results[ind, 6L]))
+                                 results[ind, 6L])
+                                 
+            ## omit some typically false positives
+            ## for efficiency reasons two separate false positives tables for 403 and 404:
+            false_pos_db_403 <- c(
+                "^https?://twitter.com/", 
+                "^https?://www.jstor.org/",
+                "^https?://.+\\.wiley.com/", 
+                "^https?://www.science.org/",
+                "^https?://www.researchgate.net/",
+                "^https?://www.tandfonline.com/",
+                "^https?://pubs.acs.org/",
+                "^https?://journals.aom.org/",
+                "^https?://journals.sagepub.com/",
+                "^https?://www.pnas.org/")
+            false_pos_db_404 <- c(                
+                "^https?://finance.yahoo.com/")
+            bad_https <- bad_https[!((grepl(paste(false_pos_db_403, collapse="|"), bad_https$URL) & 
+                                        bad_https$Status == "403") |
+                                     (grepl(paste(false_pos_db_404, collapse="|"), bad_https$URL) & 
+                                        bad_https$Status == "404")), , drop=FALSE]
+            bad <- rbind(bad, bad_https)
         }
     }
     bad
