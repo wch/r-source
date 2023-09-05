@@ -786,7 +786,7 @@
         if(is.environment(value)) {
             pkgs <- names(value)
             if(length(pkgs) == 1)
-                value[[pkgs]]
+                value <- value[[pkgs]]
             else if(length(pkgs) == 0)
                 value <- NULL
             ## else, return the environment indicating multiple possibilities
