@@ -38,6 +38,7 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/RS.h>		/* F77_... */
+// Remove on 2023-09-18
 #ifndef USE_NEW_ACCELERATE
 #include <R_ext/BLAS.h> // now included by R users but not yet some packages.
 #endif

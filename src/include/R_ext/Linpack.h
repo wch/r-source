@@ -31,16 +31,16 @@
    Called from R by lbfgsb.c (dpofa, dtrsl) and uncmin.c (dtrsl)
    and by Fortran routines in src/library/stats/src (sslvrg.f)
 
-   Used by about 40 CRAN packages: 6 relying on the inclusion of BLAS.h
+   Used by about 40 CRAN packages: ca 6 relying on the inclusion of BLAS.h
  */
 
 #ifndef R_LINPACK_H_
 #define R_LINPACK_H_
 
 #include <R_ext/RS.h>		/* for F77_... */
+// Remove on 2023-09-18
 #ifndef USE_NEW_ACCELERATE
-// already included by R users src/appl/{lbfgs,uncmin}.c
-# include <R_ext/BLAS.h>
+# include <R_ext/BLAS.h> // now included by R users but not yet some packages.
 #endif
 
 #ifdef  __cplusplus
