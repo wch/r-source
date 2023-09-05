@@ -362,8 +362,11 @@ const char
 	/* EncodeReal has static buffer, so copy */
 	tmp = EncodeReal0(y.r == 0. ? y.r : x.r, wr, dr, er, dec);
 	strcpy(Re, tmp);
+	/* If x.i is very slightly negative, we printed -Oi, and that
+	   will often be platform dependent */
 	if ( (flagNegIm = (x.i < 0)) ) x.i = -x.i;
 	Im = EncodeReal0(y.i == 0. ? y.i : x.i, wi, di, ei, dec);
+	if (streql(Im, "0")) flagNegIm = FALSE;
 	snprintf(buff, NB3, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
     }
     buff[NB3-1] = '\0';

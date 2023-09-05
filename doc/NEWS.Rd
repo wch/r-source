@@ -86,7 +86,11 @@
       \verb{\packageMaintainer} now process \samp{Authors@R},
       fixing \samp{NA} results when the package \file{DESCRIPTION} omits
       \samp{Author} and \samp{Maintainer} fields.
-    }
+
+      \item Formatting and printing complex numbers could give things
+      like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
+      replaced by \samp{+0i}.
+     }
   }
 }
 
