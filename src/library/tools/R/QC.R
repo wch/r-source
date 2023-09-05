@@ -8786,7 +8786,8 @@ function(x, ...)
             },
             if(length(y) && any(nzchar(y$New)) && 
                config_val_to_logical(Sys.getenv("_R_CHECK_URLS_SHOW_301_STATUS_", "FALSE"))) {
-                paste(strwrap("  For content that is 'Moved Permanently', please change http to https, add trailing slashes, or replace the old by the new URL."), collapse = "\n")
+                paste(strwrap("For content that is 'Moved Permanently', please change http to https, add trailing slashes, or replace the old by the new URL.",
+                                indent = 2L, exdent = 2L), collapse = "\n")
             },            
             if(length(y) && any(nzchar(y$Spaces))) {
                 "  Spaces in an http[s] URL should probably be replaced by %20"
