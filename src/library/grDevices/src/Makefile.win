@@ -40,7 +40,11 @@ LIBSHARPYUV = $(or $(and $(wildcard $(EXT_LIBS)/lib/libsharpyuv.a),-lsharpyuv),)
 ## support tiff built with lerc and without
 LIBLERC = $(or $(and $(wildcard $(EXT_LIBS)/lib/libLerc.a),-lLerc -lstdc++),)
 
-PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff $(LIBLERC) \
+## support tiff built with deflate and without
+LIBDEFLATE = $(or $(and $(wildcard $(EXT_LIBS)/lib/libdeflate.a),-ldeflate),)
+
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng \
+           -ltiff $(LIBLERC) $(LIBDEFLATE) \
            -ljpeg -lzstd -lz -lwebp $(LIBSHARPYUV) -llzma
 
 all: makeMakedeps shlib
