@@ -270,7 +270,13 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 		 const double *beta, double *c, const BLAS_INT *ldc
 		 FCLEN FCLEN);
 /*
-  LSAME is a LAPACK support routine, not part of BLAS
+  LSAME is declared in Lapack.h.
+  (https://netlib.org/lapack/explore-html/dc/d9c/_i_n_s_t_a_l_l_2lsame_8f_ada799b40a93f1fd2c6d1a86a95f21631.html
+  calls it a 'LAPACK auxiliary routine'.)
+
+  It is used in the code of other BLAS routines and hence included in
+  src/extra/blas/blas.f.  However, it is not included by
+   Apple's Accelerate (nor cblas: it is in lapacke).
 */
 
 /* Double complex BLAS routines added for 2.3.0 */

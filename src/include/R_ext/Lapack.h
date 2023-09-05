@@ -48,7 +48,7 @@
      #define lapack_logical lapack_int
    hence int32_t/int64_t
    But that is not what Fortran comoilers do (int_least32_t for gfortran) 
-   OTOH the Accelerate headers use int.
+   OTOH the Accelerate headers use int/iong.
 */
 
 #ifndef ILP64
@@ -64,7 +64,7 @@
 /*
   LAPACK function names are [dz]<name>(), where d denotes the real
   version of the function, z the complex version.  (Only
-  double-precision versions are used in R.)
+  double-precision/double-complex versions are used in R.)
 */
 
 #ifdef	__cplusplus
@@ -72,7 +72,9 @@ extern "C" {
 #endif
 
 /* The LAPACK version: might change after installation with
-   external LAPACK
+   external LAPACK.
+
+   In the LAPACK sources in the INSTALL directory.
 */
 extern void F77_NAME(ilaver)(La_INT *major, La_INT *minor, La_INT *patch);
 
@@ -2798,9 +2800,14 @@ F77_NAME(dpstrf)(const char* uplo, const La_INT* n,
 		 double* a, const La_INT* lda, La_INT* piv, La_INT* rank,
 		 double* tol, double *work, La_INT* info FCLEN);
 
-/* This returns Fortran LOGICAL.  Compiler-specific, but
-   La_INT *_least32_t in gfortran */
-La_extern La_INT *
+/* This returns Fortran LOGICAL.  See comments at the top of the file.
+   clapack and Accelerate headers declare lsamen but not lsame.
+
+   Some people regard this as part of BLAS, and it is used on some
+   BLAS routines.  However, it is not included by
+   Apple's Accelerate (nor cblas: it is in lapacke).
+ */
+La_extern La_LGL *
 F77_NAME(lsame)(const char* ca, const char* cb FCLEN FCLEN);
 
 La_extern void
