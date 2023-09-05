@@ -2509,7 +2509,7 @@ add_dummies <- function(dir, Log)
                 wrapLog(msg_doc_files)
                 wrapLog(msg_writing_Rd)
             }
-            ## </FIXME>            
+            ## </FIXME>
 
             if (R_check_Rd_style && haveR) {
                 msg_doc_style <-
@@ -3641,8 +3641,9 @@ add_dummies <- function(dir, Log)
                                              )))
                 machs <- machs[!startsWith(machs, "-mtune=")]
                 ## This should only appear on macOS!
+                ## -mmacosx- has been replaced by -mmacos-
                 if(grepl('darwin', R.version$platform))
-                    machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
+                    machs <- machs[!startsWith(machs, "-mmacos")]  # macOS target flags
                 warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
@@ -4420,7 +4421,7 @@ add_dummies <- function(dir, Log)
                         any <- TRUE
                 }
                 if(any) noteLog(Log) else resultLog(Log, "OK")
-                if(!is.null(lines)) {                
+                if(!is.null(lines)) {
                     cat(lines, sep="\n", file = Log$con)
                     unlink(logf)
                 }
