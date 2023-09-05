@@ -101,14 +101,17 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   \code{stopifnot()} for testing warnings and errors.
 }
 \examples{
+## NB: These examples should rather be run one by one;
+##     example(stopifnot) is not a good idea: will run to the first error
+
 stopifnot(1 == 1, all.equal(pi, 3.14159265), 1 < 2) # all TRUE
 
 m <- matrix(c(1,3,3,1), 2, 2)
 stopifnot(m == t(m), diag(m) == rep(1, 2)) # all(.) |=>  TRUE
 
-op <- options(error = expression(NULL))
-# "disabling stop(.)"  << Use with CARE! >>
-
+\dontshow{if(!interactive()) op <- options(error = expression(NULL))
+  # only in batch mode: after error / stop(.), evaluation will continue
+}
 stopifnot(length(10)) # gives an error: '1' is *not* TRUE
 ## even when   if(1) "ok"   works
 
@@ -135,8 +138,8 @@ m[1,2] <- 12
 stopifnot("m must be symmetric"= m == t(m))
 #=> Error: m must be symmetric
 
-options(op)  # revert to previous error handler
-
+\dontshow{if(!interactive()) options(op)  # revert to previous error handler
+}
 ##' warnifnot(): a "only-warning" version of stopifnot()
 ##'   {Yes, learn how to use do.call(substitute, ...) in a powerful manner !!}
 warnifnot <- stopifnot ; N <- length(bdy <- body(warnifnot))
