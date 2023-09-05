@@ -223,7 +223,7 @@
       included \file{R_ext/BLAS.h} although this was undocumented and
       unneeded by their documented entry points.  They no longer do so.
 
-      [Deferred to 2023-09-18 to allows some packages to adjust.]
+      [Deferred to 2023-09-18 to allow some packages to adjust.]
     }
   }
 
@@ -329,11 +329,7 @@
       \item \code{transform.data.frame()} no longer adjusts names;
       in particular, untransformed variables are kept as-is,
       including those with syntactically invalid names (\PR{17890}).
-
-      \item Formatting and printing complex numbers could give things
-      like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
-      replaced by \samp{+0i}.
-    }
+   }
   }
 }
 
@@ -418,7 +414,11 @@
       \verb{\packageMaintainer} now process \samp{Authors@R},
       fixing \samp{NA} results when the package \file{DESCRIPTION} omits
       \samp{Author} and \samp{Maintainer} fields.
-    }
+
+      \item Formatting and printing complex numbers could give things
+      like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
+      replaced by \samp{+0i}.
+     }
   }
 }
 
