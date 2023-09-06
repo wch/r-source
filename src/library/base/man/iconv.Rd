@@ -198,7 +198,7 @@ iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
 iconv(x, "latin1", "ASCII", "byte")   # "fran<e7>ais"
 iconv(xx, "UTF-8", "ASCII", "Unicode")# "fran<U+00E7>ais"
-iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\u00e7ais"
+iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\\\u00e7ais"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")

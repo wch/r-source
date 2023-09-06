@@ -23,7 +23,7 @@ licence()
 
   A small number of files (some of the API header files) are distributed
   under the LESSER GNU GENERAL PUBLIC LICENSE, version 2.1 or later.  A
-  copy of this license is in file \file{$R_SHARE_DIR/licenses/LGPL-2.1}
+  copy of this license is in file \file{\var{\link{R_SHARE_DIR}}/licenses/LGPL-2.1}
   and can be viewed by \code{RShowDoc("LGPL-2.1")}.  Version 3 of the
   license can be displayed by \code{RShowDoc("LGPL-3")}.
 }

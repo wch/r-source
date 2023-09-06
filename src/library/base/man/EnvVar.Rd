@@ -119,7 +119,7 @@
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
-      \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
+      \code{"\var{cpu}-\var{vendor}-\var{os}"}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of

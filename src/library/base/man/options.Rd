@@ -742,7 +742,8 @@ getOption(x, default = NULL)
 
     \item{\code{repos}:}{character vector of repository URLs for use by
       \code{\link{available.packages}} and related functions.  Initially
-      set from entries marked as default in the \file{repositories} file,
+      set from entries marked as default in the
+      \file{\link[=R_REPOSITORIES]{repositories}} file,
       whose path is configurable via environment variable \env{R_REPOSITORIES}
       (set this to \code{NULL} to skip initialization at startup).
       The \sQuote{factory-fresh} setting from the file in \code{R.home("etc")} is

@@ -88,7 +88,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   setting \code{\link{options}(deparse.max.lines)}.
   
   The browser prompt is of the form \code{Browse[\var{n}]>}: here
-  \code{var{n}} indicates the \sQuote{browser level}.  The browser can
+  \code{\var{n}} indicates the \sQuote{browser level}.  The browser can
   be called when browsing (and often is when \code{\link{debug}} is in
   use), and each recursive call increases the number.  (The actual
   number is the number of \sQuote{contexts} on the context stack: this

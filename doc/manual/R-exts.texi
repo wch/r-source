@@ -8071,7 +8071,7 @@ best choice in reference manuals.)  Specify the filename relative to
 @findex \R
 Use @code{\R} for the @R{} system itself.  The @code{\dots}
 @findex \dots
-macro is a historical alternative to using literal @samp{@dots{}}
+macro is a historical alternative to using literal @samp{...}
 for the dots in function argument lists; use
 @code{\ldots}
 @findex \ldots
