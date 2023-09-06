@@ -7719,7 +7719,6 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 conditionMessage(cfmt)
 
         ## Also capture calls to outdated personList() and citEntry()
-        ## and friends.
         if(!installed) {
             ccalls <- .find_calls(.parse_code_file(cfile,
                                                    meta["Encoding"]),
@@ -7728,16 +7727,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         cnames <- .call_names(ccalls)
         if(any(cnames %in% c("personList", "as.personList")))
             out$citation_has_calls_to_personList_et_al <- TRUE
-        ## Prior to c83706, there was no convenient way to get citation
-        ## headers/footers for bibentries with length > 1, so one really
-        ## needed to use citHeader() and citFooter().
-        ## For now one could complain when citHeader()/citFooter() is
-        ## used with a single bibentry ...
-        ## <FIXME>
-        ## Change eventually ...
         if(any(cnames == "citEntry"))
-            out$citation_has_calls_to_citEntry_et_al <- TRUE
-        ## </FIXME>
+            out$citation_has_calls_to_citEntry <- TRUE
 
         out
     }
@@ -8745,7 +8736,7 @@ function(x, ...)
                 paste(strwrap("Package CITATION file contains call(s) to old-style personList() or as.personList().  Please use c() on person objects instead."),
                       collapse = "\n")
             },
-            if(isTRUE(x$citation_has_calls_to_citEntry_et_al)) {
+            if(isTRUE(x$citation_has_calls_to_citEntry)) {
                 paste(strwrap("Package CITATION file contains call(s) to old-style citEntry().  Please use bibentry() instead."),
                       collapse = "\n")
             }

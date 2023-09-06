@@ -6683,8 +6683,6 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE"))
     R_check_Rd_xrefs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
-    ## Currently, config_val_to_logical() (nowadays,
-    ## utils:::str2logical()) does not allow getting NA quietly  ...
     R_check_Rd_internal_too <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_", "NA"))
     R_check_use_codetools <-
