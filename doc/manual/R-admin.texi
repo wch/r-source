@@ -5052,7 +5052,7 @@ branded `Classic') also supported @cputype{ix86} and 32-bit builds on
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
-identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
+identified by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
 define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
 @code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
 2023.2.0.20230622)}.}).
@@ -5142,7 +5142,7 @@ Windows).
 @subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
-@command{ifort}.  They are identiifed by the C/C++ macro
+@command{ifort}.  They are identified by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
@@ -5173,7 +5173,7 @@ CC="$IP/icc -diag-disable=10441"
 @command{icpc} does not support C++23.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
-There have been only one other other recent report on the use of these
+There has been only one other recent report on the use of these
 compilers: the rest of this section is left in case it provides helpful
 hints for people using them while they are still available.
 

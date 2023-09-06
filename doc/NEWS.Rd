@@ -141,7 +141,7 @@
       \item \command{configure} will warn if it encounters a 32-bit
       build, as that is nowadays almost untested.
 
-      \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
+      \item Environment variable \env{R_SYSTEM_ABI} is no longer used and
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
 
