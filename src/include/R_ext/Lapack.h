@@ -239,7 +239,7 @@ F77_NAME(dgeequ)(const La_INT* m, const La_INT* n, double* a, const La_INT* lda,
 /* of Schur vectors Z */
 La_extern void
 F77_NAME(dgees)(const char* jobvs, const char* sort,
-		La_LGL *select(const double*, const double*),
+		La_LGL (*select)(const double*, const double*),
 		const La_INT* n, double* a, const La_INT* lda,
 		La_INT* sdim, double* wr, double* wi,
 		double* vs, const La_INT* ldvs,
@@ -250,7 +250,7 @@ F77_NAME(dgees)(const char* jobvs, const char* sort,
 /* of Schur vectors Z */
 La_extern void
 F77_NAME(dgeesx)(const char* jobvs, const char* sort,
-		 La_LGL *select(const double*, const double*),
+		 La_LGL (*select)(const double*, const double*),
 		 const char* sense, const La_INT* n, double* a,
 		 const La_INT* lda, La_INT* sdim, double* wr, double* wi,
 		 double* vs, const La_INT* ldvs, double* rconde,
@@ -430,7 +430,7 @@ F77_NAME(dggbal)(const char* job, const La_INT* n, double* a, const La_INT* lda,
 /* of Schur vectors (VSL and VSR)*/
 La_extern void
 F77_NAME(dgges)(const char* jobvsl, const char* jobvsr, const char* sort,
-		La_INT *(*delztg)(double*, double*, double*),
+		La_LGL (*delztg)(double*, double*, double*),
 		const La_INT* n, double* a, const La_INT* lda,
 		double* b, const La_INT* ldb, double* alphar,
 		double* alphai, const double* beta,
@@ -2755,14 +2755,15 @@ F77_NAME(dtgex2)(La_LGL const *wantq, La_LGL const *wantz, La_INT *n,
 	n1, La_INT *n2, double *work, La_INT *lwork, La_INT *info);
 
 La_extern void
-F77_NAME(dtgexc)(La_INT *wantq, La_INT *wantz, La_INT *n,
+F77_NAME(dtgexc)(La_LGL *wantq, La_LGL *wantz, La_INT *n,
 	double *a, La_INT *lda, double *b, La_INT *ldb, double *
 	q, La_INT *ldq, double *z, La_INT *ldz, La_INT *ifst,
 	La_INT *ilst, double *work, La_INT *lwork, La_INT *info);
 
 La_extern void
 F77_NAME(dtgsen)(La_INT *ijob, La_LGL const *wantq, La_LGL const *wantz,
-	La_LGL *select, La_INT *n, double *a, La_INT *lda, double *
+	const La_LGL *select,
+	La_INT *n, double *a, La_INT *lda, double *
 	b, La_INT *ldb, double *alphar, double *alphai, double *
 	beta, double *q, La_INT *ldq, double *z, La_INT *ldz,
 	La_INT *m, double *pl, double *pr, double *dif,
