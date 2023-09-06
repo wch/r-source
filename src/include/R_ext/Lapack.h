@@ -48,9 +48,10 @@
      #define lapack_logical lapack_int
    hence int32_t/int64_t
    But that is not what Fortran comoilers do (int_least32_t for gfortran) 
-   OTOH the Accelerate headers use int/iong.
+   OTOH the Accelerate headers use int/long.
 */
 
+// Keep these in step with BLAS.h
 #ifndef ILP64
 # define La_INT int
 # define La_LGL int
@@ -238,7 +239,7 @@ F77_NAME(dgeequ)(const La_INT* m, const La_INT* n, double* a, const La_INT* lda,
 /* of Schur vectors Z */
 La_extern void
 F77_NAME(dgees)(const char* jobvs, const char* sort,
-		La_LGL *(*select)(const double*, const double*),
+		La_LGL *select(const double*, const double*),
 		const La_INT* n, double* a, const La_INT* lda,
 		La_INT* sdim, double* wr, double* wi,
 		double* vs, const La_INT* ldvs,
@@ -249,7 +250,7 @@ F77_NAME(dgees)(const char* jobvs, const char* sort,
 /* of Schur vectors Z */
 La_extern void
 F77_NAME(dgeesx)(const char* jobvs, const char* sort,
-		 La_LGL *(*select)(const double*, const double*),
+		 La_LGL *select(const double*, const double*),
 		 const char* sense, const La_INT* n, double* a,
 		 const La_INT* lda, La_INT* sdim, double* wr, double* wi,
 		 double* vs, const La_INT* ldvs, double* rconde,
