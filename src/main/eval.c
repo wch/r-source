@@ -4149,7 +4149,7 @@ static Rboolean R_chooseOpsMethod(SEXP x, SEXP y, SEXP mx, SEXP my,
     defineVar(ySym, y, newrho); INCREMENT_NAMED(y);
     defineVar(mxSym, mx, newrho); INCREMENT_NAMED(mx);
     defineVar(mySym, my, newrho); INCREMENT_NAMED(my);
-    defineVar(clSym, call, newrho); INCREMENT_NAMED(cl);
+    defineVar(clSym, call, newrho); INCREMENT_NAMED(call);
     defineVar(revSym, ScalarLogical(rev), newrho);
 
     SEXP ans = eval(expr, newrho);
