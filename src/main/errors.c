@@ -2055,9 +2055,11 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
     checkRestartStacks(cptr);
 
     /**** need more here to keep recursive errors in browser? */
+    SEXP h = GetOption1(install("browser.error.handler"));
+    if (! isFunction(h)) h = R_RestartToken;
     rho = cptr->cloenv;
     PROTECT(klass = mkChar("error"));
-    entry = mkHandlerEntry(klass, rho, R_RestartToken, rho, R_NilValue, TRUE);
+    entry = mkHandlerEntry(klass, rho, h, rho, R_NilValue, TRUE);
     R_HandlerStack = CONS(entry, R_HandlerStack);
     UNPROTECT(1);
 
