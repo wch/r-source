@@ -176,6 +176,11 @@
 
       Currently Accelerate is used for BLAS calls from C in R and package
       stats and for LAPACK calls from the \code{lapack} module.
+
+      The BLAS entry points in libRblas.dylib are diverted to
+      Accelerate: this means that calls to LAPACK routines from packages
+      will go to the reference implementation and BLAS calls in that
+      will use Accelerate.
     }
    }
 

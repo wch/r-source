@@ -19,10 +19,10 @@ ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
 ALL_FCFLAGS = $(ALL_FFLAGS_LO)
 
-SOURCES = blas00.c blas.f cmplxblas.f blas2.f90 cmplxblas2.f90
+SOURCES = blas00.c blas.f cmplxblas.f blas2.f90 cmplxblas2.f90\
+lsame.f newAccelerate.c
 
-@BUILD_LTO_CHECK_FALSE@Rblas_la = libRblas$(R_DYLIB_EXT)
-@BUILD_LTO_CHECK_TRUE@Rblas_la = libRblas.a
+Rblas_la = libRblas$(R_DYLIB_EXT)
 ## @RBLAS_LDFLAGS@ is used on macOS
 ## first for internal BLAS
 Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO)
@@ -43,10 +43,15 @@ blas2.o: blas2.f90
 cmplxblas2.o: cmplxblas2.f90
 	$(FC) $(ALL_FCFLAGS) -c @FCFLAGS_f90@ $< -o $@
 
-blas_OBJS=blas.o blas2.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o cmplxblas2.o
+## Section for macOS Accelerate
+lsame.o: lsame.f
+newAccelerate.o: newAccelerate.c
+@BUILD_NEW_ACCELERATE_TRUE@ blas_OBJS = lsame.o newAccelerate.o
+@BUILD_NEW_ACCELERATE_TRUE@ Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO) -framework Accelerate
+
+@BUILD_NEW_ACCELERATE_FALSE@ blas_OBJS=blas.o blas2.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o cmplxblas2.o
 @USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
-	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
-	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_TRUE@$(AR) -cr $(Rblas_la) $(blas_OBJS)
+	@USE_EXTERNAL_BLAS_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
