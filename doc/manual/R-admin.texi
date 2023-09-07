@@ -3828,10 +3828,13 @@ is an instruction to link against @samp{-lfoo} to find an external
 @acronym{BLAS} (which needs to be found both at link time and run time).
 
 The configure code checks that the external @acronym{BLAS} is complete
-(it must include all double precision and double complex routines, as
-well as @code{LSAME}), and appears to be usable.  However, an external
-@acronym{BLAS} has to be usable from a shared object (so must contain
-position-independent code), and that is not checked.
+(as of LAPACK 3.9.1: it must include all double precision and double
+complex routines, as well as @code{LSAME}), and appears to be usable.
+However, an external @acronym{BLAS} has to be usable from a shared
+object (so must contain position-independent code), and that is not
+checked.  Also, the BLAS can be switched after configure is run, either
+as a symbolic link or by the mechanisms mentioned below, and this can
+defeat the completeness check.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{Accelerate} on macOS, @code{sunperf} on Solaris@footnote{Using
