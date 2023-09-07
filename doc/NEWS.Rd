@@ -176,20 +176,20 @@
       13.3 or later, and building requires SDK 14.3 or later (from the
       Command Line Tools or Xcode).
 
-      To avoid many compilation warnings you may need to use
+      To avoid many compilation warnings you may want to use
 \preformatted{
 	CC="clang -mmacos-version-min=13.3"
 }
 
+      Entry points in \file{libRblas.dylib} and \file{libRlapack.dylib}
+      are diverted to Accelerate: some from \R itself call Accelerate
+      directly (notably the functions in the \file{lapack} module such
+      as \code{svd()}).
+
       That version of Accelerate provides LAPACK 3.9.1 rather than 3.2.1.
 
-      Currently Accelerate is used for BLAS calls from C in R and package
-      stats and for LAPACK calls from the \code{lapack} module.
-
-      The BLAS entry points in libRblas.dylib are diverted to
-      Accelerate: this means that calls to LAPACK routines from packages
-      will go to the reference implementation and BLAS calls in that
-      will use Accelerate.
+      This cannot be used in conjunction with \option{--with-blas} or
+      \option{--with-lapack}.
     }
    }
 

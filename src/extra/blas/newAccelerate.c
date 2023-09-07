@@ -33,9 +33,11 @@
 #include <R_ext/RS.h> // for F77_NAME
 // clang -Wall -pedantic would warn on this
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+// For ILP64 this would be x ## $NEWLAPACK ## $ILP64
 #define ACC_NAME(x) x ## $NEWLAPACK
 
 // Fortran functions
+// will need changes for ILP64: __LAPACK_int is int or long.
 #define Mint(fun) \
 int ACC_NAME(fun)(void); \
 int F77_NAME(fun)(void) { \

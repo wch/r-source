@@ -37,7 +37,7 @@ DISTFILES = \
 	LICENSE README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) Lapack.c init_win.c \
-	vecLibg95c.c vecLibg95f.f \
+	vecLibg95c.c vecLibg95f.f accelerateLapack.c \
 	cmplx.f dlapack.f dlamch.f \
 	dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
 	zlartg.f90 zlassq.f90 \
@@ -47,18 +47,22 @@ lapack_la = lapack$(SHLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
 ## Formerly used for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
-@BUILD_NEW_ACCELERATE_TRUE@EXTRA_LIBS = -framework Accelerate
+@BUILD_NEW_ACCELERATE_TRUE@EXTRA_LIBS =
 @BUILD_NEW_ACCELERATE_FALSE@EXTRA_LIBS = @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS_IN_SO)
 
-lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+@BUILD_NEW_ACCELERATE_FALSE@lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+@BUILD_NEW_ACCELERATE_TRUE@lapack_la_LIBADD = -framework Accelerate
 
 Rlapack_la = libRlapack$(R_DYLIB_EXT)
-Rlapack_la_OBJECTS = $(LIBOBJECTS)
+
+@BUILD_NEW_ACCELERATE_TRUE@Rlapack_la_OBJECTS = accelerateLapack.o
+@BUILD_NEW_ACCELERATE_FALSE@Rlapack_la_OBJECTS = $(LIBOBJECTS)
 ## This used to skip FLIBS, but that relied on all the functions
 ## needed being loaded into R.bin/libR.so, and that need not be the
 ## case for a static libfortran or if a package is compiled under a
 ## different compiler.
-Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
+@BUILD_NEW_ACCELERATE_FALSE@Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
+@BUILD_NEW_ACCELERATE_TRUE@Rlapack_la_LIBADD = -framework Accelerate
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
@@ -104,8 +108,9 @@ $(lapack_la): $(lapack_la_OBJECTS)
 
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
-$(Rlapack_la): $(LIBOBJECTS)
-	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
+## FIXME:  @BLAS_LIBS@ is probably  not needed for newAccelerate.
+$(Rlapack_la): $(Rlapack_la_OBJECTS)
+	$(DYLIB_LINK) -o $@ $(Rlapack_la_OBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
