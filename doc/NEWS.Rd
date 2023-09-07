@@ -183,13 +183,10 @@
 
       Entry points in \file{libRblas.dylib} and \file{libRlapack.dylib}
       are diverted to Accelerate: some from \R itself call Accelerate
-      directly (notably the functions in the \file{lapack} module such
-      as \code{svd()}).
+      directly, notably the functions using the \file{lapack} module
+      such as \code{svd()}.
 
       That version of Accelerate provides LAPACK 3.9.1 rather than 3.2.1.
-
-      This cannot be used in conjunction with \option{--with-blas} or
-      \option{--with-lapack}.
     }
    }
 

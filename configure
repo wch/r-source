@@ -58678,6 +58678,15 @@ else $as_nop
   use_accelerate=no
 fi
 
+
+if test "x$use_accelerate" = xyes; then
+  if test "x$use_blas" = xyes; then
+    as_fn_error $? "--with-newAccelerate cannot be used with --with-blas" "$LINENO" 5
+  fi
+  if test "x$use_lapack" = xyes; then
+    as_fn_error $? "--with-newAccelerate cannot be used with --with-lapack" "$LINENO" 5
+  fi
+fi
 if test "x$use_accelerate" = xyes; then
   case "${host_os}" in
       darwin*)
@@ -58688,7 +58697,7 @@ if test "x$use_accelerate" = xyes; then
   esac
   r_save_LIBS="${LIBS}"
   LIBS="${LIBS} -framework Accelerate"
-    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
 // avoid interpretation of $
@@ -58734,6 +58743,7 @@ else
   BUILD_NEW_ACCELERATE_TRUE='#'
   BUILD_NEW_ACCELERATE_FALSE=
 fi
+
 
 
 CC_VER=`${CC} --version | ${SED} -n 1p`

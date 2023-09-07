@@ -2928,6 +2928,15 @@ AC_ARG_WITH([newAccelerate],
 [AS_HELP_STRING([--with-newAccelerate],[use macOS Accelerate in macOS >= 13.3 for BLAS and LAPACK. @<:@no@:>@])],
 [use_accelerate=${withval}],
 [use_accelerate=no])
+
+if test "x$use_accelerate" = xyes; then
+  if test "x$use_blas" = xyes; then
+    AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-blas])
+  fi
+  if test "x$use_lapack" = xyes; then
+    AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-lapack])
+  fi
+fi
 dnl macOS 13.3 had kernel 22.4.0 but we test for macOS then for
 dnl entry point in -framework Accelerate
 dnl Alternatively we could #include <Accelerate/Acclereate.h> and
@@ -2942,7 +2951,7 @@ if test "x$use_accelerate" = xyes; then
   esac
   r_save_LIBS="${LIBS}"
   LIBS="${LIBS} -framework Accelerate"
-    AC_LINK_IFELSE([AC_LANG_SOURCE(
+  AC_LINK_IFELSE([AC_LANG_SOURCE(
 [[
 // avoid interpretation of $
 #define ndgemm dgemm ## $ ## NEWLAPACK
@@ -2972,6 +2981,7 @@ sdk_OK=no)
   AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
 fi
 AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
+
 
 dnl record compiler versions
 CC_VER=`${CC} --version | ${SED} -n 1p`
