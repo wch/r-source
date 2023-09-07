@@ -97,13 +97,13 @@ is.data.frame(x)
   as the method.
 
   Since \R 4.3.0, the \emph{default} method will call
-  \code{as.data.frame.vector()} for atomic (as by \code{\link{is.atomic}})
+  \code{as.data.frame.vector} for atomic (as by \code{\link{is.atomic}})
   non-\code{NULL} \code{x}.
 
-  Direct calls to  \code{as.data.frame.<class>()} are still possible (base package!),
-  for 12 atomic base classes, but will deprecated (already visibly by setting
+  Direct calls of \code{as.data.frame.\var{class}} are still possible (base package!),
+  for 12 atomic base classes, but will be deprecated (already visibly by setting
   environment variable \env{_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_} to non-empty)
-  where calling \code{as.data.frame.vector()} instead is recommended.
+  where calling \code{as.data.frame.vector} instead is recommended.
 
   If a list is supplied, each element is converted to a column in the
   data frame.  Similarly, each column of a matrix is converted separately.

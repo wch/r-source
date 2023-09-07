@@ -143,14 +143,14 @@ addNA(x, ifany = FALSE)
 
   The codes of a factor may contain \code{\link{NA}}.  For a numeric
   \code{x}, set \code{exclude = NULL} to make \code{\link{NA}} an extra
-  level (prints as \code{<NA>}); by default, this is the last level.
+  level (prints as \samp{<NA>}); by default, this is the last level.
 
   If \code{NA} is a level, the way to set a code to be missing (as
   opposed to the code of the missing level) is to
   use \code{\link{is.na}} on the left-hand-side of an assignment (as in
   \code{is.na(f)[i] <- TRUE}; indexing inside \code{is.na} does not work).
   Under those circumstances missing values are currently printed as
-  \code{<NA>}, i.e., identical to entries of level \code{NA}.
+  \samp{<NA>}, i.e., identical to entries of level \code{NA}.
 
   \code{is.factor} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.

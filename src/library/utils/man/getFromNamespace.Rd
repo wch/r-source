@@ -42,7 +42,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   The namespace can be specified in several ways.  Using, for example,
   \code{ns = "stats"} is the most direct, but a loaded package can be
   specified via any of the methods used for \code{\link{get}}: \code{ns}
-  can also be the environment printed as \code{<namespace:foo>}.
+  can also be the environment printed as \samp{<namespace:foo>}.
 
   \code{getFromNamespace} is similar to (but predates) the
   \code{\link{:::}} operator: it is more flexible in how the namespace

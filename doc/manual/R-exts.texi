@@ -8924,7 +8924,7 @@ used to be.  There is also `Google Performance Tools', also known as
 All of these work best when @R{} and any packages have been built with
 debugging symbols.
 
-@subsubsection perf
+@subsubsection @command{perf}
 
 This seems the most widely distributed tool.
 Here is an example on @code{x86_64} Linux using @R{} 4.3.1 built with LTO.
@@ -8959,7 +8959,7 @@ which shows which shared libraries (DSOs) the time was spent in.
 @command{perf annotate} can be used on an application built with GCC and
 @option{-ggdb}: it interleaves disassembled and source code.
 
-@subsubsection oprofile and operf
+@subsubsection @command{oprofile} and @command{operf}
 
 The @command{oprofile} project has two modes of operation.  Since
 version 0.9.8 (August 2012), the preferred mode is to use
@@ -9045,7 +9045,7 @@ The profiling data is by default stored in sub-directory
 the end of the session.
 
 
-@subsubsection sprof
+@subsubsection @command{sprof}
 
 You can select shared objects to be profiled with @command{sprof} by
 setting the environment variable @env{LD_PROFILE}.  For example

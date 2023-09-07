@@ -54,7 +54,7 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   Since \R version 3.6.0, \code{stopifnot()} no longer handles potential
   errors or warnings (by \code{\link{tryCatch}()} etc) for each single
   expression
-  and may use \code{\link{sys.call}(<n>)} to get a meaningful and short
+  and may use \code{\link{sys.call}(\var{n})} to get a meaningful and short
   error message in case an expression did not evaluate to all TRUE.  This
   provides considerably less overhead.
 

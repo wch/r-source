@@ -95,7 +95,7 @@ nonS3methods(package)
   \code{langElts} is a character vector of names of \dQuote{language
     elements} of \R.  These are implemented as \dQuote{very primitive}
   functions (no argument list; \code{\link{print}()}ing as
-  \code{.Primitive("<name>")}).
+  \code{.Primitive("\var{name}")}).
 
   If using an installed package, the checks needing access to all \R
   objects of the package will load the package (unless it is the

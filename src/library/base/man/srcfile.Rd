@@ -138,7 +138,7 @@ srcref(srcfile, lloc)
   \code{\link{print.default}} using the associated \code{srcref}.  To
   see deparsed code instead, call \code{\link{print}} with argument
   \code{useSource = FALSE}.  If a \code{srcref} object
-  is printed with \code{useSource = FALSE}, the \samp{<srcref: \dots>}
+  is printed with \code{useSource = FALSE}, the \samp{<srcref: ....>}
   record will be printed.
 
   \code{.isOpen} is intended for internal use:  it checks whether the

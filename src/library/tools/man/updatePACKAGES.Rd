@@ -8,30 +8,29 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source",
   strict = TRUE, dryrun = FALSE)
 }
 \arguments{
-\item{dir}{See \code{\link{write_PACKAGES}}}
+\item{dir}{see \code{\link{write_PACKAGES}}.}
 
-\item{fields}{See \code{\link{write_PACKAGES}}}
+\item{fields}{see \code{\link{write_PACKAGES}}.}
 
-\item{type}{See \code{\link{write_PACKAGES}}}
+\item{type}{see \code{\link{write_PACKAGES}}.}
 
-\item{verbose.level}{(0, 1,  2) What level of informative messages
-which should be displayed throughout the process. Defaults to 0 if
-\code{dryrun}   is   \code{FALSE}    (the   default)   and   1
-otherwise. See details for more information.}
+\item{verbose.level}{one of \{0, 1, 2\}, the level of informative messages
+displayed throughout the process. Defaults to 0 if
+\code{dryrun} is \code{FALSE} (the default) and 1
+otherwise. See Details for more information.}
 
-\item{latestOnly}{See \code{\link{write_PACKAGES}}}
+\item{latestOnly}{see \code{\link{write_PACKAGES}}.}
 
-\item{addFiles}{See \code{\link{write_PACKAGES}}}
+\item{addFiles}{see \code{\link{write_PACKAGES}}.}
 
-\item{rds_compress}{See \code{\link{write_PACKAGES}}}
+\item{rds_compress}{see \code{\link{write_PACKAGES}}.}
 
-\item{strict}{logical. Should 'strict mode' be used when checking
-existing \code{PACKAGES} entries. See details. Defaults to
+\item{strict}{logical. Should \dQuote{strict mode} be used when checking
+existing \code{PACKAGES} entries. See Details. Defaults to
 \code{TRUE}.}
 
 \item{dryrun}{logical. Should the updates to existing \code{PACKAGES}
   files be computed but NOT applied. Defaults to \code{FALSE}.}
-
 }
 \description{
 Update an existing repository by reading the \code{PACKAGES}
@@ -46,8 +45,8 @@ repository indexes, particularly in non-strict mode (see Details).
 \details{
 Throughout this section, \emph{package tarball} is defined to mean any
 archive file in \code{dir} whose name can be interpreted as
-\code{<package>_<version>.<ext>} - with \code{<ext>} the appropriate
-extension for built packages of type \code{type} - (or that is pointed
+\file{\var{package}_\var{version}.\var{ext}} -- with \var{ext} the appropriate
+extension for built packages of type \code{type} -- (or that is pointed
 to by the \code{File} field of an existing \code{PACKAGES} entry).
 \emph{Novel package tarballs} are those which do not match an existing
 \code{PACKAGES} file entry.
@@ -56,7 +55,7 @@ to by the \code{File} field of an existing \code{PACKAGES} entry).
 \code{\link{write_PACKAGES}} with a warning (and thus all package tarballs
 will be processed), if any of the following conditions hold:
 \itemize{
-  \item \code{type} is \code{win.binary} and \code{strict} is
+  \item \code{type} is \code{"win.binary"} and \code{strict} is
   \code{TRUE} (no MD5 checksums are included in win.binary \code{PACKAGES} files)
   \item No \code{PACKAGES} file exists under \code{dir}
   \item A \code{PACKAGES} file exists under \code{dir} but is empty 
@@ -115,7 +114,7 @@ happening is conveyed via messages, but underlying machinery from
 \code{\link{write_PACKAGES}} is invoked with \code{verbose = FALSE}.
 Behavior when \code{verbose.level} is \code{2} is identical to
 \code{verbose.level} \code{1} with the exception that underlying
-machinery from \code{write_PACKAGE} is invoked with
+machinery from \code{write_PACKAGES} is invoked with
 \code{verbose = TRUE}, which will individually list every processed
 tarball.
 }
@@ -134,7 +133,7 @@ being slower.
   \link{write_PACKAGES}
 } 
 \author{
-  Gabriel Becker (adapted from previous, related work by him in the \code{switchr}
+  Gabriel Becker (adapted from previous, related work by him in the \pkg{switchr}
   package which is copyright Genentech, Inc.)
 }
 \examples{
