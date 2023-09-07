@@ -625,9 +625,12 @@ Rd2txt <-
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,
-               "\\special" = ,
-               "\\var" = writeContent(block, tag),
-
+               "\\special" = writeContent(block, tag),
+               "\\var" = {
+                   put("<")
+                   writeContent(block, tag)
+                   put(">")
+               },
                "\\bold"=,
                "\\strong"= {
                    put("*")

@@ -22,9 +22,9 @@ _D_e_t_a_i_l_s:
 
      a link and some to known destinations: weighted.mean, '{'
 
-     var in text.
+     var in <text>.
 
-     'foo(x, y)'.
+     'foo(<x>, <y>)'.
 
      Preformatted:
 

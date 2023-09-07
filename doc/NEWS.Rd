@@ -129,6 +129,8 @@
       Thanks to MikeFC for the original idea and Ella Kaye, Malcolm
       Barrett, George Stagg, Hanne Oberman, and Michael Chirico for the
       patch.
+
+      \item Plain-text help shows \verb{\var} markup with angle brackets.
     }
   }
 
