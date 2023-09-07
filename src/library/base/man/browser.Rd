@@ -98,6 +98,36 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   This is a primitive function but does argument matching in the
   standard way.
 }
+\section{Interaction with condition handling}{
+  Because the browser prompt is implemented using the
+  \link[base:conditions]{restart and condition handling mechanism},
+  it prevents error handlers set up before the breakpoint from being
+  called or invoked. The implementation follows this model:
+
+  \preformatted{
+repeat withRestarts(
+    withCallingHandlers(
+        readEvalPrint(),
+        error = function(cnd) {
+            cat("Error:", conditionMessage(cnd), "\n")
+            invokeRestart("browser")
+        }
+    ),
+    browser = function(...) NULL
+)
+
+readEvalPrint <- function(env = parent.frame()) {
+    print(eval(parse(prompt = "Browse[n]> "), env))
+}
+}
+
+  The restart invocation interrupts the lookup for condition handlers
+  and transfers control to the next iteration of the depbugger REPL.
+
+  Note that condition handlers for other classes (such as \code{"warning"})
+  are still called and may cause a non-local transfer of control out of the
+  debugger.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
