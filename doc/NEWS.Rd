@@ -155,6 +155,9 @@
 
       \emph{pro tem} this can also be selected by setting environment
       variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
+
+      \item \command{configure} \option{--enable-lto=check} has not
+      worked reliably since 2019 and has been removed.
     }
   }
 

@@ -1277,17 +1277,17 @@ of writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}
 in C.
 
 @c This worked in 2019 but with Fedora 32 did not export dpotrf from dlapack.o
-On some systems it is possible to build the BLAS, LINPACK and LAPACK
-support as static libraries containing intermediate-level code that LTO
-will compile for all objects linked against these libraries, by
-configuring @R{} with @option{--enable-lto=check}.  This checks the
-consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
-using the build. @strong{NB:} as its name suggests, this option is
-intended only for checking installation of @R{} and packages: it
-includes these library routines (those called directly and all they
-depend on) in each package.  This is unlikely to work in conjunction
-with non-default options for BLAS and LAPACK, and `linking' against
-these libraries may be very slow.
+@c On some systems it is possible to build the BLAS, LINPACK and LAPACK
+@c support as static libraries containing intermediate-level code that LTO
+@c will compile for all objects linked against these libraries, by
+@c configuring @R{} with @option{--enable-lto=check}.  This checks the
+@c consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
+@c using the build. @strong{NB:} as its name suggests, this option is
+@c intended only for checking installation of @R{} and packages: it
+@c includes these library routines (those called directly and all they
+@c depend on) in each package.  This is unlikely to work in conjunction
+@c with non-default options for BLAS and LAPACK, and `linking' against
+@c these libraries may be very slow.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation

@@ -370,13 +370,8 @@ elif  test "x${want_lto}" = xR; then
   LTO="${uLTO}"
   LTO_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xcheck; then
-  ltoall=yes
-  LTO="${uLTO}"
-  LTOALL="${uLTO}"
-  LTO_FC="${uLTO_FC}"
-  LTOALL_FC="${uLTO_FC}"
-  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
-  LIBR1="${LIBR1} -lLinpack"
+  AC_MSG_WARN([--enable-lto=check has been withdrawn and will be ignored])
+  want_lto=no
 elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
   want_lto=no
@@ -397,7 +392,6 @@ AC_SUBST(LTO_LD)
 ## used in src/main/Makefile
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 AM_CONDITIONAL(BUILD_LTO_ALL, [test "x${ltoall}" = xyes])
-AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
 ## needed for some versions of icx, but we do not know which
 AC_SUBST(INTEL_ICX_FIX)
