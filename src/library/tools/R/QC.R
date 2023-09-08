@@ -4976,7 +4976,7 @@ function(pkgDir, thorough = FALSE)
         OK <- FALSE
         Rdeps <- .split_description(.read_description(file.path(pkgDir, "DESCRIPTION")))$Rdepends2
         for(dep in Rdeps) {
-            if(dep$op != '>=') next
+            if(!(dep$op %in% c(">=", ">")) next
             if(dep$version >= package_version("2.10")) {OK <- TRUE; break;}
         }
         if(!OK) msg <- "Warning: package needs dependence on R (>= 2.10)"
@@ -5064,7 +5064,7 @@ function(pkgDir, thorough = FALSE)
         OK <- FALSE
         Rdeps <- .split_description(.read_description(file.path(pkgDir, "DESCRIPTION")))$Rdepends2
         for(dep in Rdeps) {
-            if(dep$op != '>=') next
+            if(!(dep$op %in% c(">=", ">")) next
             if(dep$version >= package_version("2.10")) {OK <- TRUE; break;}
         }
         if(!OK) msg <- "Warning: package needs dependence on R (>= 2.10)"
