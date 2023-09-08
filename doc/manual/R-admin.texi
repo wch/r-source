@@ -1321,17 +1321,17 @@ of writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}
 in C.
 
 @c This worked in 2019 but with Fedora 32 did not export dpotrf from dlapack.o
-On some systems it is possible to build the BLAS, LINPACK and LAPACK
-support as static libraries containing intermediate-level code that LTO
-will compile for all objects linked against these libraries, by
-configuring @R{} with @option{--enable-lto=check}.  This checks the
-consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
-using the build. @strong{NB:} as its name suggests, this option is
-intended only for checking installation of @R{} and packages: it
-includes these library routines (those called directly and all they
-depend on) in each package.  This is unlikely to work in conjunction
-with non-default options for BLAS and LAPACK, and `linking' against
-these libraries may be very slow.
+@c On some systems it is possible to build the BLAS, LINPACK and LAPACK
+@c support as static libraries containing intermediate-level code that LTO
+@c will compile for all objects linked against these libraries, by
+@c configuring @R{} with @option{--enable-lto=check}.  This checks the
+@c consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
+@c using the build. @strong{NB:} as its name suggests, this option is
+@c intended only for checking installation of @R{} and packages: it
+@c includes these library routines (those called directly and all they
+@c depend on) in each package.  This is unlikely to work in conjunction
+@c with non-default options for BLAS and LAPACK, and `linking' against
+@c these libraries may be very slow.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -5158,10 +5158,10 @@ branded `Classic') also supported @cputype{ix86} and 32-bit builds on
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
-identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
+identified by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
 define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
-@code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
-2023.2.0.20230622)}.}).
+@code{__clang_major__}@footnote{for @code{2023.2.1} as
+@samp{17.0.0 (2023.2.0 (2023.2.0.20230721)}.}).
 
 The C++ compiler uses the system's @code{lidstdc++} as its runtime
 library rather than LLVM's @code{libc++}.
@@ -5170,13 +5170,13 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the LLVM-based compilers in oneAPI 2023.2.0 using
+We tried the LLVM-based compilers in oneAPI 2023.2.1 using
 @example
 IP=/path/to/compilers/bin/intel64
 CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
-CFLAGS="-O3 -fp-model precise -Wall"
+CFLAGS="-O3 -fp-model precise -Wall -Wstrict-prototypes"
 C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
@@ -5248,7 +5248,7 @@ Windows).
 @subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
-@command{ifort}.  They are identiifed by the C/C++ macro
+@command{ifort}.  They are identified by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
@@ -5279,7 +5279,7 @@ CC="$IP/icc -diag-disable=10441"
 @command{icpc} does not support C++23.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
-There have been only one other other recent report on the use of these
+There has been only one other recent report on the use of these
 compilers: the rest of this section is left in case it provides helpful
 hints for people using them while they are still available.
 
@@ -5764,8 +5764,13 @@ is specified).  Some @acronym{CRAN} builds of @R{} can be
 switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
 to use Accelerate's BLAS.
 
+Support for the version of Accelerate in macOS 13.3 and later has been
+added to @R{} 4.4.0.
+
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central Dispatch' and is
+Threading in Accelerate is controlled by `Grand Central
+Dispatch'@footnote{E.g.,
+@url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
 
@@ -6472,6 +6477,11 @@ If you are having trouble getting @R{} to work on your platform please
 feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
+
+One thing you might want to add for a new platform is the mapping of
+C/C++/Fortran calls to entry point names used for @command{R CMD check}.
+See @uref{https://svn.r-project.org/R-dev-web/trunk/sotools.txt} for how
+to do so.
 
 @node Function and variable index, Concept index, Platform notes, Top
 @unnumbered Function and variable index
