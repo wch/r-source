@@ -5858,8 +5858,7 @@ function(dir) {
             else if(s %in% c("==", "!=") &&
                     is.call(e2 <- e[[2L]]) &&
                     (as.character(e2[[1L]])[1L] == "class") &&
-                    is.character(e[[3L]]) &&
-                    (length(e[[3L]] == 1L)))
+                    is.character(e[[3L]]))
                 return(TRUE)
         }
         FALSE
