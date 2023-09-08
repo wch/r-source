@@ -7807,9 +7807,10 @@ them.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
-Indicate a metasyntactic variable.  In some cases this will be rendered
-distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
-rendered differently only in @HTML{} conversions, and @LaTeX{} conversion
+Indicate a metasyntactic variable.  In most cases this will be rendered
+distinctly, e.g.@: in italic (PDF/@HTML{}) or wrapped in @samp{<@dots{}>} (text),
+but not in all@footnote{Currently it is
+rendered differently in @HTML{} conversions, and in @LaTeX{} and text conversion
 outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
@@ -15172,14 +15173,6 @@ using @command{f2c}.
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
-
-@menu
-* Distribution functions::
-* Mathematical functions::
-* Numerical Utilities::
-* Mathematical constants::
-@end menu
-
 
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
