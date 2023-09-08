@@ -43,8 +43,6 @@ list(
 , "[[<-" = function(x, i, j, ..., value) standardGeneric("[[<-")
 ### S4 generic via R_possible_dispatch in do_matprod
 , "%*%" = function(x, y) standardGeneric("%*%")
-, "crossprod" = function(x, y=NULL, ...) standardGeneric("crossprod")
-, "tcrossprod"= function(x, y=NULL, ...) standardGeneric("tcrossprod")
 , "xtfrm" = function(x) standardGeneric("xtfrm")
 ### these have a different arglist from the primitives
 , "c" = structure(function(x, ...) standardGeneric("c"), signature="x")

@@ -3,17 +3,16 @@
 x <- structure(pi, class="testit")
 xx <- structure("OK", class="testOK")
 
-internalGenerics <- ls(.GenericArgsEnv, all.names=TRUE)
-for(f in internalGenerics)
+for(f in ls(.GenericArgsEnv, all.names=TRUE))
 {
     cat("testing S3 generic '", f, "'\n", sep="")
     method <- paste(f, "testit", sep=".")
-    if(f == "seq.int") {
+    if(f %in% "seq.int") {
         ## note that this dispatches on 'seq'.
         assign("seq.testit", function(...) xx, .GlobalEnv)
         res <- seq.int(x, x)
     } else {
-        if(grepl("<-$", f)) {
+        if(length(grep("<-$", f)) > 0) {
             assign(method, function(x, value) xx, .GlobalEnv)
             y <- x
             res <- eval(substitute(ff(y, value=pi), list(ff=as.name(f))))
@@ -21,9 +20,7 @@ for(f in internalGenerics)
             ff <- get(f, .GenericArgsEnv)
             body(ff) <- xx
             assign(method, ff, .GlobalEnv)
-            res <- if(f %in% "%*%") # 2 args
-                        eval(substitute(ff(x,x), list(ff=as.name(f))))
-                   else eval(substitute(ff(x),   list(ff=as.name(f))))
+            res <- eval(substitute(ff(x), list(ff=as.name(f))))
         }
     }
     stopifnot(res == xx)
@@ -56,10 +53,10 @@ ff <- as.list(baseenv(), all.names=TRUE)
 ff <- names(ff)[vapply(ff, is.primitive, logical(1L))]
 
 known <- c(names(.GenericArgsEnv), names(.ArgsEnv), tools::langElts)
-stopifnot(ff %in% known, known %in% ff) ## identical(ff, known) "modulo sort()"
+stopifnot(ff %in% known, known %in% ff)
 
 
-## check which are not considered as possibles for S4 generic (*all* should)
+## check which are not considered as possibles for S4 generic
 ff4 <- names(meth.FList <- methods:::.BasicFunsList)
 # as.double is the same as as.numeric
 S4generic <- ff %in% c(ff4, "as.double")
@@ -70,19 +67,16 @@ if(length(notS4))
 stopifnot(S4generic)
 
 # functions which are listed but not primitive
-extraS4 <- c('unlist', 'as.vector', 'lengths') # == setdiff(ff4, ff)
+extraS4 <- c('unlist', 'as.vector', 'lengths')
 ff4[!ff4 %in% c(ff, extraS4)]
 stopifnot(ff4 %in% c(ff, extraS4))
 
 
 ## primitives which are not internally generic cannot have S4 methods
 ## unless specifically arranged (e.g. %*%)
-nongen_prims <- ff[!ff %in% internalGenerics]
+nongen_prims <- ff[!ff %in% ls(.GenericArgsEnv, all.names=TRUE)]
 ff3 <- ff4[vapply(meth.FList, function(x) is.logical(x) && !x, NA, USE.NAMES=FALSE)]
-ex <- nongen_prims[!nongen_prims %in%
-                   c("$", "$<-", "[", "[[" ,"[[<-", "[<-"
-                   , "%*%", "crossprod", "tcrossprod"
-                   , ff3)]
+ex <- nongen_prims[!nongen_prims %in% c("$", "$<-", "[", "[[" ,"[[<-", "[<-", "%*%", ff3)]
 if(length(ex))
     cat("non-generic primitives not excluded in methods:::.BasicFunsList:",
         paste(sQuote(ex), collapse=", "), "\n")
@@ -114,15 +108,12 @@ for(f in S4gen) {
 except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
             ".External2", ".Call.graphics", ".External.graphics",
             ".subset", ".subset2", ".primTrace", ".primUntrace",
-            "lazyLoadDBfetch", ".Internal", ".Primitive",
-            unlist(lapply(c("Arith", "Compare", "Logic"), getGroupMembers)),
-            "%*%", "crossprod", "tcrossprod", # "matrixOps"
-            "!", "::", ":::",
-            "rep", "seq.int", "forceAndCall",
+            "lazyLoadDBfetch", ".Internal", ".Primitive", "^", "|",
+            "::", ":::", "%*%", "rep", "seq.int", "forceAndCall",
             ## these may not be enabled
             "tracemem", "retracemem", "untracemem")
 
-for(f in internalGenerics)
+for(f in ls(.GenericArgsEnv, all.names=TRUE)[-(1:15)])
 {
     if (f %in% except) next
     g <- get(f, envir = .GenericArgsEnv)
@@ -134,10 +125,8 @@ for(f in internalGenerics)
     res <- try(do.call(f, a), silent = TRUE)
     m <- geterrmessage()
     if(!grepl('does not match|unused argument', m))
-        ## message("failure on ", f,":\n\t\t", m)
-        stop("failure on ", f,":\n\t", m)
+        stop("failure on ", f)
 }
-
 
 for(f in ls(.ArgsEnv, all.names=TRUE))
 {

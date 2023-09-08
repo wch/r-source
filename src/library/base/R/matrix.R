@@ -134,9 +134,9 @@ upper.tri <- function(x, diag = FALSE) {
     if(diag) .row(d) <= .col(d) else .row(d) < .col(d)
 }
 
-## R >= 4.4.0: are primitive
-## crossprod  <- function(x, y=NULL) .Internal( crossprod(x,y))
-## tcrossprod <- function(x, y=NULL) .Internal(tcrossprod(x,y))
+
+crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))
+tcrossprod <- function(x, y=NULL) .Internal(tcrossprod(x,y))
 
 t <- function(x) UseMethod("t")
 ## t.default is <primitive>

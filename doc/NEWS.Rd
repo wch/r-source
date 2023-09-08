@@ -131,10 +131,6 @@
       patch.
 
       \item Plain-text help shows \verb{\var} markup with angle brackets.
-
-      \item The matrix multiplication functions \code{crossprod()} and
-      \code{tcrossprod()} are now also primitive and S3 generic, as
-      \code{\%*\%} had become in \R 4.3.0.
     }
   }
 

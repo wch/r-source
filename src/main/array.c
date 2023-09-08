@@ -1245,18 +1245,10 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
     SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
+    Rboolean sym;
 
-    // .Primitive() ; may have 1 or 2 args, but some methods have more
-    Rboolean cross = PRIMVAL(op) != 0;
-    int nargs = length(args), min_nargs = cross ? 1 : 2;
-    if (nargs < min_nargs)
-	errorcall(call,
-		  ngettext("%d argument passed to '%s' which requires at least %d",
-			   "%d arguments passed to '%s' which requires at least %d",
-			   (unsigned long) nargs),
-		  nargs, PRIMNAME(op), min_nargs);
-
-    if (OBJECT(x) || OBJECT(y)) {
+    if (PRIMVAL(op) == 0 && /* %*% is primitive, the others are .Internal() */
+	(OBJECT(x) || OBJECT(y))) {
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
 	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
@@ -1269,7 +1261,8 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return ans;
     }
 
-    Rboolean sym = isNull(y);
+    checkArity(op, args);
+    sym = isNull(y);
     if (sym && (PRIMVAL(op) > 0)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
 	errorcall(call, _("requires numeric/complex matrix/vector arguments"));
@@ -1397,21 +1390,21 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	mode = CPLXSXP;
     else
 	mode = REALSXP;
-    x = PROTECT(coerceVector(x, mode));
-    y = PROTECT(coerceVector(y, mode));
+    SETCAR(args, coerceVector(CAR(args), mode));
+    SETCADR(args, coerceVector(CADR(args), mode));
 
     if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() =~= %*% */
 
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
 	if (mode == CPLXSXP)
-	    cmatprod(COMPLEX(x), nrx, ncx,
-		     COMPLEX(y), nry, ncy, COMPLEX(ans));
+	    cmatprod(COMPLEX(CAR(args)), nrx, ncx,
+		     COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else
-	    matprod(REAL(x), nrx, ncx,
-		    REAL(y), nry, ncy, REAL(ans));
+	    matprod(REAL(CAR(args)), nrx, ncx,
+		    REAL(CADR(args)), nry, ncy, REAL(ans));
 
-	PROTECT(xdims = getAttrib(x, R_DimNamesSymbol));
-	PROTECT(ydims = getAttrib(y, R_DimNamesSymbol));
+	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
+	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
 #define ALLOC_DIMNAMES_NAMES						\
@@ -1467,24 +1460,24 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = allocMatrix(mode, ncx, ncy));
 	if (mode == CPLXSXP)
 	    if(sym)
-		ccrossprod(COMPLEX(x), nrx, ncx,
-			   COMPLEX(x), nry, ncy, COMPLEX(ans));
+		ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			   COMPLEX(CAR(args)), nry, ncy, COMPLEX(ans));
 	    else
-		ccrossprod(COMPLEX(x), nrx, ncx,
-			   COMPLEX(y), nry, ncy, COMPLEX(ans));
+		ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			   COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else {
 	    if(sym)
-		symcrossprod(REAL(x), nrx, ncx, REAL(ans));
+		symcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
 	    else
-		crossprod(REAL(x), nrx, ncx,
-			  REAL(y), nry, ncy, REAL(ans));
+		crossprod(REAL(CAR(args)), nrx, ncx,
+			  REAL(CADR(args)), nry, ncy, REAL(ans));
 	}
 
-	PROTECT(xdims = getAttrib(x, R_DimNamesSymbol));
+	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	if (sym)
 	    PROTECT(ydims = xdims);
 	else
-	    PROTECT(ydims = getAttrib(y, R_DimNamesSymbol));
+	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
 
@@ -1507,24 +1500,24 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = allocMatrix(mode, nrx, nry));
 	if (mode == CPLXSXP)
 	    if(sym)
-		tccrossprod(COMPLEX(x), nrx, ncx,
-			    COMPLEX(x), nry, ncy, COMPLEX(ans));
+		tccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			    COMPLEX(CAR(args)), nry, ncy, COMPLEX(ans));
 	    else
-		tccrossprod(COMPLEX(x), nrx, ncx,
-			    COMPLEX(y), nry, ncy, COMPLEX(ans));
+		tccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			    COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else {
 	    if(sym)
-		symtcrossprod(REAL(x), nrx, ncx, REAL(ans));
+		symtcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
 	    else
-		tcrossprod(REAL(x), nrx, ncx,
-			   REAL(y), nry, ncy, REAL(ans));
+		tcrossprod(REAL(CAR(args)), nrx, ncx,
+			   REAL(CADR(args)), nry, ncy, REAL(ans));
 	}
 
-	PROTECT(xdims = getAttrib(x, R_DimNamesSymbol));
+	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	if (sym)
 	    PROTECT(ydims = xdims);
 	else
-	    PROTECT(ydims = getAttrib(y, R_DimNamesSymbol));
+	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
 
@@ -1548,7 +1541,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
             SET_DIMNAMES_NAMES;
 	}
     }
-    UNPROTECT(5);
+    UNPROTECT(3);
     return ans;
 }
 #undef YDIMS_ET_CETERA

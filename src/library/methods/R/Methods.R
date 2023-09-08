@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1331,8 +1331,8 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
     else {
         sealed <- !is.na(match(signature[[1L]], .BasicClasses))
         if(sealed &&
-           (!is.na(match("Ops", c(f, getGroup(f, TRUE)))) ||
-            !is.na(match(f, c("%*%", "crossprod", "tcrossprod")))))
+           (!is.na(match("Ops", c(f, getGroup(f, TRUE))))
+            || !is.na(match(f, c("%*%", "crossprod")))))
             ## Ops methods are only sealed if both args are basic classes
             sealed <- sealed && (length(signature) > 1L) &&
                       !is.na(match(signature[[2L]], .BasicClasses))

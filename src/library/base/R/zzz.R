@@ -153,8 +153,6 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 ## 2) .GenericArgsEnv : The generic .Primitives :
 
 .S3PrimitiveGenerics <-
-    ## not group generics, *nor* assign/extract ops
-    ##			"[", "[[", "$", "@", "[<-", "[[<-", "$<-", "@<-"
   c("anyNA", "as.character", "as.complex", "as.double",
     "as.environment", "as.integer", "as.logical", "as.call",
     "as.numeric", "as.raw",
@@ -199,14 +197,8 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
         assign(f, fx, envir = env)
     }
 
-    ## "matrixOps"
-    fx <- function(x, y) {}
-    f <- "%*%"
-        body(fx) <- substitute(UseMethod(ff), list(ff=f))
-        environment(fx) <- .BaseNamespaceEnv
-        assign(f, fx, envir = env)
-    fx <- function(x, y = NULL) {}
-    for(f in c("crossprod", "tcrossprod")) {
+    fx <- function(x, y) {} ## "matrixOps"
+    for(f in c("%*%")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
