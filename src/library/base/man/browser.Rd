@@ -122,7 +122,7 @@ readEvalPrint <- function(env = parent.frame()) {
 }
 
   The restart invocation interrupts the lookup for condition handlers
-  and transfers control to the next iteration of the depbugger REPL.
+  and transfers control to the next iteration of the debugger REPL.
 
   Note that condition handlers for other classes (such as \code{"warning"})
   are still called and may cause a non-local transfer of control out of the

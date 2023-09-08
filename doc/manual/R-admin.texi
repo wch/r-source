@@ -5668,7 +5668,7 @@ framework are `now inline with reference version
 3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
 naming new entry points and so only accessible @emph{via} their C
 headers.  That version can be used @emph{via} @command{configure} option
-@option{--with-newAccelerate}: it reauires at least macOS 13.3 and SDK 14.3.
+@option{--with-newAccelerate}: it requires at least macOS 13.3 and SDK 14.3.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central
