@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-08 r85109) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin22.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -196,10 +196,14 @@ Hair    Brown Blue Hazel Green
 > ### ** Examples
 > 
 > with(beaver1, {
-+     opar <- par(mfrow = c(2,1))
++     opar <- par(mfrow = c(3,1))
 +     time <- strptime(paste(1990, day, time %/% 100, time %% 100),
 +                      "%Y %j %H %M")
-+     plot(time, temp, type = "l") # axis at 5-hour intervals.
++     plot(time, temp, type = "l") # axis at 6-hour intervals
++     # request more ticks
++     olab <- par(lab = c(10, 10, 7))
++     plot(time, temp, type = "l")
++     par(olab)
 +     # now label every hour on the time axis
 +     plot(time, temp, type = "l", xaxt = "n")
 +     r <- as.POSIXct(round(range(time), "hours"))
@@ -2289,7 +2293,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x0000019cccf29bf8>
+<bytecode: 0x148a28c60>
 <environment: namespace:graphics>
 > 
 > 
@@ -3159,7 +3163,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x0000019ccc7ed9a0>
+<bytecode: 0x1484fa978>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3240,7 +3244,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.054 0.221 3.303 0 0 
+Time elapsed:  1.594 0.099 1.697 0 0 
 > grDevices::dev.off()
 null device 
           1 
