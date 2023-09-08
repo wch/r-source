@@ -3917,7 +3917,7 @@ these have been tried they did not work with the default compilers used
 for @R{} on those platforms.
 
 The following examples have been used with MKL versions 10.3 to
-2023.2.1, for GCC compilers on @cputype{x86_64} CPUs.  (See also
+2023.2.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
 @ref{Intel compilers}.)
 
 To use a sequential version of MKL we used
@@ -5057,8 +5057,8 @@ The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
 identified by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
 define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
-@code{__clang_major__}@footnote{for @code{2023.2.1} as @samp{
-17.0.0 (2023.2.0 (2023.2.0.20230721)}.}).
+@code{__clang_major__}@footnote{for @code{2023.2.1} as
+@samp{17.0.0 (2023.2.0 (2023.2.0.20230721)}.}).
 
 The C++ compiler uses the system's @code{lidstdc++} as its runtime
 library rather than LLVM's @code{libc++}.
