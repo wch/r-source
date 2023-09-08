@@ -237,6 +237,11 @@ static SEXP SetOption(SEXP tag, SEXP value)
     return old;
 }
 
+attribute_hidden SEXP R_SetOption(SEXP tag, SEXP value)
+{
+    return SetOption(tag, value);
+}
+
 /* Set the width of lines for printing i.e. like options(width=...) */
 /* Returns the previous value for the options. */
 

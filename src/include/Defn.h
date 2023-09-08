@@ -2084,6 +2084,7 @@ void R_SaveToFileV(SEXP, FILE*, int, int);
 Rboolean R_seemsOldStyleS4Object(SEXP object);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
+SEXP R_SetOption(SEXP, SEXP);
 void R_Suicide(const char *);
 SEXP R_flexiblas_info(void);
 void R_getProcTime(double *data);
