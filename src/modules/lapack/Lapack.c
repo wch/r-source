@@ -57,6 +57,7 @@ extern int dladdr(void *addr, Dl_info *info);
 # define USE_NON_APPLE_STANDARD_DATATYPES 0
 # include <Accelerate/Accelerate.h>
 # define FCONE
+# pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 #else
 # include "Lapack.h"
 #endif

@@ -35,6 +35,7 @@
 # define USE_NON_APPLE_STANDARD_DATATYPES 0
 # include <Accelerate/Accelerate.h>
 # define FCONE
+# pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 #else
 #include <R_ext/BLAS.h>
 #endif
