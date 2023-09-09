@@ -47,12 +47,16 @@ attribute_hidden SEXP R_flexiblas_info(void)
 	size_t size = 64;
 	char *name = NULL;
 
+#ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpedantic"
+#endif
 	/* ISO C forbids assignment between function pointer and 'void *',
 	   but this is how dlsym() returns a function pointer. */
 	fcb = fcb_addr;
+#ifdef __clang__
 #pragma clang diagnostic pop
+#endif
 	for(;;) {
 	    if (name)
 		free(name);
