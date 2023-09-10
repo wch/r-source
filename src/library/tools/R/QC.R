@@ -3040,14 +3040,14 @@ function(package, dir, file, lib.loc = NULL)
         exprs <- if(missing(txt))
             tryCatch(parse(file = file, n = -1L),
                      error = function(e)
-                     stop(gettextf("parse error in file '%s':\n",
+                     stop(gettextf("parse error in file '%s':\n%s",
                                    file,
                                    .massage_file_parse_error_message(conditionMessage(e))),
                           domain = NA, call. = FALSE))
         else
             tryCatch(str2expression(txt),
                      error = function(e)
-                     stop(gettextf("parse error in examples from file '%s':\n",
+                     stop(gettextf("parse error in examples from file '%s':\n%s",
                                    file, conditionMessage(e)),
                           domain = NA, call. = FALSE))
         for(i in seq_along(exprs))
@@ -4434,7 +4434,8 @@ compatibilityEnv <- function() {
            "windows" = .unix_only_proto_objects,
            "unix" = .windows_only_proto_objects,
            ## in such a future case, possibly the "union" of these environments:
-           stop(gettextf("invalid 'OS.type' \"%s\".  Should not happen")))
+           stop(gettextf("invalid 'OS.type' \"%s\".  Should not happen",
+                         .Platform$OS.type), domain = NA))
 }
 
 .check_code_usage_in_package <-
