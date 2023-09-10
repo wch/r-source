@@ -126,10 +126,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 }
 
 t.test.formula <-
-function (formula, data, subset, na.action, ...) 
+function (formula, data, subset, na.action = na.pass, ...) 
 {
     if (missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
+    if ("paired" %in% ...names())
+        stop("cannot use 'paired' in formula method")    
     oneSampleOrPaired <- FALSE
     if (length(attr(terms(formula[-2L]), "term.labels")) != 1L) 
         if (formula[[3L]] == 1L)

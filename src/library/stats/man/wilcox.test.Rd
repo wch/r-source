@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -22,7 +22,7 @@ wilcox.test(x, \dots)
             conf.int = FALSE, conf.level = 0.95,
             tol.root = 1e-4, digits.rank = Inf, \dots)
 
-\method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
+\method{wilcox.test}{formula}(formula, data, subset, na.action = "na.pass", \dots)
 }
 \arguments{
   \item{x}{numeric vector of data values.  Non-finite (e.g., infinite or
@@ -61,8 +61,7 @@ wilcox.test(x, \dots)
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA}s.  Defaults to
-    \code{getOption("na.action")}.}
+    the data contain \code{NA}s.}
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
