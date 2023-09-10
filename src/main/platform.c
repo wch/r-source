@@ -3682,8 +3682,20 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* these calls to dladdr() convert a function pointer to an object
        pointer, which is not allowed by ISO C, but there is no compliant
        alternative to using dladdr() */
+#ifdef __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wpedantic"
+#elif defined __GNUC__
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wpedantic"	
+#endif
     if (!dladdr((void *)do_eSoftVersion, &dl_info1)) ok = FALSE;
     if (!dladdr((void *)dladdr, &dl_info2)) ok = FALSE;
+#ifdef __clang__
+# pragma clang diagnostic pop
+#elif defined __GNUC__
+# pragma GCC diagnostic pop
+#endif
 
     if (ok && !strcmp(dl_info1.dli_fname, dl_info2.dli_fname)) {
 
