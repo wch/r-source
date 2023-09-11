@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2023-07-31 r84793) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-10 r85120) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin21.6.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -1269,15 +1267,15 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 +             trace=TRUE, control = list(maxiter = 10)) )
 0.01722077  (5.34e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
 3.308943e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
-2.571050e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-1.672513e-23 (5.07e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.398240e-29 (2.39e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.346295e-29 (1.19e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224935e-29 (9.62e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224935e-29 (9.62e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224935e-29 (9.62e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224935e-29 (9.62e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224935e-29 (9.62e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+2.571069e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.669346e-23 (5.53e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
+2.285755e-29 (1.59e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.345909e-29 (1.20e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
 Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
   number of iterations exceeded maximum of 10
 > ## End(Don't show)
@@ -1290,10 +1288,10 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
   It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
 2.571081e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
   It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66926e-23
-1.669255e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.670549e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
+1.669257e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.670550e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
 > all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
-[1] "Mean relative difference: 1.574113e-06"
+[1] "Mean relative difference: 1.574118e-06"
 > all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
 [1] "Mean relative difference: 1.032123e-12"
 > ## IGNORE_RDIFF_END
@@ -5076,7 +5074,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7fa76c205b90>
+<bytecode: 0x561676fcdd38>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7724,7 +7722,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7fa76d5bb548>
+<environment: 0x5616794fa910>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10530,6 +10528,16 @@ NA        0    3    0
 > data.class(model.frame(dist ~ speed, data = cars))
 [1] "data.frame"
 > 
+> ## using a subset and an extra variable
+> model.frame(dist ~ speed, data = cars, subset = speed < 10, z = log(dist))
+  dist speed       (z)
+1    2     4 0.6931472
+2   10     4 2.3025851
+3    4     7 1.3862944
+4   22     7 3.0910425
+5   16     8 2.7725887
+6   10     9 2.3025851
+> 
 > ## get_all_vars(): new var.s are recycled (iff length matches: 50 = 2*25)
 > ncars <- get_all_vars(sqrt(dist) ~ I(speed/2), data = cars, newVar = 2:3)
 > stopifnot(is.data.frame(ncars),
@@ -11268,17 +11276,17 @@ Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017460.306    (4.15e+02): par = (1 1 1)
-758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543746)
+758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543745)
 269506.3539    (3.23e+02): par = (51.75719815 -13.09155956 0.8428607704)
-68969.21897    (1.03e+02): par = (76.00069849 -1.935226737 1.019085799)
-633.3672232    (1.29e+00): par = (100.3761515 8.624648408 5.104490268)
-151.4400219    (9.39e+00): par = (100.6344391 4.913490983 0.2849209569)
-53.08739856    (7.24e+00): par = (100.6830407 6.899303315 0.4637755075)
-1.344478639    (5.97e-01): par = (100.0368306 9.897714142 0.5169294938)
+68969.21896    (1.03e+02): par = (76.0006985 -1.93522674 1.019085799)
+633.3672231    (1.29e+00): par = (100.3761515 8.624648403 5.104490265)
+151.4400225    (9.39e+00): par = (100.6344391 4.913490981 0.2849209558)
+53.08739902    (7.24e+00): par = (100.6830407 6.899303306 0.4637755073)
+1.344478646    (5.97e-01): par = (100.0368306 9.897714142 0.516929494)
 0.9908415909   (1.55e-02): par = (100.0300625 9.9144191 0.5023516843)
-0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207336)
-0.9906046054   (9.96e-08): par = (100.028875 9.916228366 0.50252165)
-0.9906046054   (5.05e-10): par = (100.028875 9.916228388 0.5025216549)
+0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207337)
+0.9906046054   (9.94e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054   (5.87e-10): par = (100.028875 9.916228388 0.5025216549)
 Nonlinear regression model
   model: y ~ Const + A * exp(B * x)
    data: parent.frame()
@@ -12618,14 +12626,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7fa76744cb40>
-<environment: 0x7fa767453608>
+<bytecode: 0x561678e87ca8>
+<environment: 0x561678eb1468>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7fa76744c9f0>
-<environment: 0x7fa767453608>
+<bytecode: 0x561678e87b20>
+<environment: 0x561678eb1468>
 
 > 
 > 
@@ -16083,7 +16091,7 @@ Contrast 1 Contrast 2 Contrast 3
 > getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
 +            data = subset(ChickWeight, Chick == 1))
      Asym      xmid      scal 
-937.03003  35.22296  11.40521 
+937.03011  35.22296  11.40521 
 > ## Don't show: 
 > ## IGNORE_RDIFF_END
 > ## End(Don't show)
@@ -16988,8 +16996,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x7fa769fc5aa0>
-<environment: 0x7fa76d7d28e0>
+<bytecode: 0x561676b816f0>
+<environment: 0x561678f33130>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17654,8 +17662,7 @@ attr(,"legend")
 > 
 > ### ** Examples
 > 
-> require(graphics)
-> 
+> ## Two-sample t-test
 > t.test(1:10, y = c(7:20))      # P = .00001855
 
 	Welch Two Sample t-test
@@ -17683,39 +17690,53 @@ mean of x mean of y
   5.50000  25.93333 
 
 > 
-> ## Classical example: Student's sleep data
-> plot(extra ~ group, data = sleep)
 > ## Traditional interface
-> with(sleep, t.test(extra[group == 1], extra[group == 2]))
+> with(mtcars, t.test(mpg[am == 0], mpg[am == 1]))
 
 	Welch Two Sample t-test
 
-data:  extra[group == 1] and extra[group == 2]
-t = -1.8608, df = 17.776, p-value = 0.07939
+data:  mpg[am == 0] and mpg[am == 1]
+t = -3.7671, df = 18.332, p-value = 0.001374
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -3.3654832  0.2054832
+ -11.280194  -3.209684
 sample estimates:
 mean of x mean of y 
-     0.75      2.33 
+ 17.14737  24.39231 
 
 > 
 > ## Formula interface
-> t.test(extra ~ group, data = sleep)
+> t.test(mpg ~ am, data = mtcars)
 
 	Welch Two Sample t-test
 
-data:  extra by group
-t = -1.8608, df = 17.776, p-value = 0.07939
-alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+data:  mpg by am
+t = -3.7671, df = 18.332, p-value = 0.001374
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -3.3654832  0.2054832
+ -11.280194  -3.209684
 sample estimates:
-mean in group 1 mean in group 2 
-           0.75            2.33 
+mean in group 0 mean in group 1 
+       17.14737        24.39231 
 
 > 
-> ## Formula interface to one-sample test
+> ## One-sample t-test
+> ## Traditional interface
+> t.test(sleep$extra)
+
+	One Sample t-test
+
+data:  sleep$extra
+t = 3.413, df = 19, p-value = 0.002918
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.5955845 2.4844155
+sample estimates:
+mean of x 
+     1.54 
+
+> 
+> ## Formula interface
 > t.test(extra ~ 1, data = sleep)
 
 	One Sample t-test
@@ -17730,10 +17751,27 @@ mean of x
      1.54 
 
 > 
-> ## Formula interface to paired test
-> ## The sleep data are actually paired, so could have been in wide format:
-> sleep2 <- reshape(sleep, direction = "wide", 
+> ## Paired t-test
+> ## The sleep data is actually paired, so could have been in wide format:
+> sleep2 <- reshape(sleep, direction = "wide",
 +                   idvar = "ID", timevar = "group")
+> 
+> ## Traditional interface
+> t.test(sleep2$extra.1, sleep2$extra.2, paired = TRUE)
+
+	Paired t-test
+
+data:  sleep2$extra.1 and sleep2$extra.2
+t = -4.0621, df = 9, p-value = 0.002833
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -2.4598858 -0.7001142
+sample estimates:
+mean difference 
+          -1.58 
+
+> 
+> ## Formula interface
 > t.test(Pair(extra.1, extra.2) ~ 1, data = sleep2)
 
 	Paired t-test
@@ -19499,7 +19537,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.593 0.645 7.828 0 0 
+Time elapsed:  4.897 0.113 5.009 0 0 
 > grDevices::dev.off()
 null device 
           1 
