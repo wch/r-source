@@ -709,7 +709,7 @@ getOption(x, default = NULL)
       \code{\link{help.request}}.}
 
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
-      if available?.  Defaults to \code{TRUE}.  Currently applies to
+      if available?  Defaults to \code{TRUE}.  Currently applies to
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
@@ -763,6 +763,12 @@ local({
       R-Forge, RForge.net, \dots) for the current session
       using \code{\link{setRepositories}}.
     }
+
+    \item{\code{str}:}{a list of options controlling the default
+      \code{\link{str}} display. Defaults to \code{\link{strOptions}()}.}
+
+    \item{\code{str.dendrogram.last}:}{see \code{\link{str.dendrogram}}.}
+
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
       see \code{\link{Sweave}}.
     }
