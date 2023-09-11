@@ -5850,13 +5850,13 @@ versions) these are part of @option{-Wall} or @option{-pedantic}).
 
 @strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
 defaulted to C++11 where available@footnote{which it is on all known
-platforms, and is required as from @R{} 4.0.0}; @R{} 4.1.0 and later
-default to C++14 (where available).  However, in earlier versions the
-default standard was that of the compiler used, often C++98 or C++14,
-and the default is likely to change in future.  For maximal portability
-a package should either specify a standard (@pxref{Using C++ code}) or
-be tested under all of C++11, C++98 and C++14.  (Specifying C++14 will
-limit portability.)
+platforms, and is required as from @R{} 4.0.0}; from @R{} 4.1.0 to C++14
+and from @R{} 4.3.0 to C++17 (where available).  However, in earlier
+versions the default standard was that of the compiler used, often C++98
+or C++14, and the default is likely to change in future.  For maximal
+portability a package should either specify a standard (@pxref{Using C++
+code}) or be tested under all of C++11, C++98, C++14 and C++17.
+(Specifying C++14 or later will limit portability.)
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -6349,6 +6349,17 @@ which are interpreted by Intel Fortran on all platforms (and are
 inappropriate for use with @R{} on Windows).  @command{gfortran} has
 similar forms starting with @code{!GCC$}.
 
+@item
+The C++ @code{new} operator takes argument @code{std::size_t size},
+which is unsigned.  Using a signed integer type such as @code{int} may
+lead to compiler warnings such as
+@example
+warning: argument 1 value '18446744073709551615' exceeds maximum object
+  size 9223372036854775807  [-Walloc-size-larger-than=]
+@end example
+@noindent
+(especially if LTO is used).  So don't do that!
+
 @end itemize
 
 Some additional information for C++ is available at
@@ -6439,7 +6450,8 @@ in @file{boost/mpl/aux_/integral_wrapper.hpp}.  Adding
 @end example
 @noindent
 to @code{PKG_CXXFLAGS} will allow this, but that flag is only accepted
-by recent versions of LLVM @command{clang} so needs a @command{configure} test.
+by recent versions of LLVM @command{clang} (and will not be in future)
+so needs a @command{configure} test.
 
 Pre=built versions of current @command{clang}/@code{libc++} are
 usually available from
