@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -454,7 +454,7 @@ deparse2 <- function(x)
 
 model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
-    function(formula, data = NULL, subset = NULL, na.action = na.fail,
+    function(formula, data = NULL, subset = NULL, na.action,
 	     drop.unused.levels = FALSE, xlev = NULL,...)
 {
     ## first off, establish if we were passed a data frame 'newdata'
@@ -497,6 +497,8 @@ model.frame.default <-
 	    na.action <- naa
 	else if(!is.null(naa <- getOption("na.action")))
 	    na.action <- naa
+	else # rarely happens (option historically unset in S, see FAQ 3.3.2)
+	    na.action <- na.fail
     }
 
     ## The following logic is quite ancient and should possibly be revised
