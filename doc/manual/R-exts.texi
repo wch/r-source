@@ -15113,14 +15113,6 @@ using @command{f2c}.
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
-@menu
-* Distribution functions::
-* Mathematical functions::
-* Numerical Utilities::
-* Mathematical constants::
-@end menu
-
-
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
 
