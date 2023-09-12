@@ -47,8 +47,9 @@ aggregate(x, \dots)
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA} values. The default is to ignore missing
-    values in the given variables.}
+    the data contain \code{NA} values. The default is to only consider
+    \emph{complete cases} % != complete.cases (c2991 in R-0-63-patches)
+    with respect to the given variables.}
   \item{nfrequency}{new number of observations per unit of time; must
     be a divisor of the frequency of \code{x}.}
   \item{ndeltat}{new fraction of the sampling period between
@@ -167,6 +168,14 @@ aggregate(weight ~ feed, data = chickwts, mean)
 aggregate(breaks ~ wool + tension, data = warpbreaks, mean)
 aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, mean)
 aggregate(cbind(ncases, ncontrols) ~ alcgp + tobgp, data = esoph, sum)
+
+## "complete cases" vs. "available cases"
+colSums(is.na(airquality))  # NAs in Ozone but not Temp
+## the default is to summarize *complete cases*:
+aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean)
+## to handle missing values *per variable*:
+aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean,
+          na.action = na.pass, na.rm = TRUE)
 
 ## Dot notation:
 aggregate(. ~ Species, data = iris, mean)

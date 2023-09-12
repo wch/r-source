@@ -2549,6 +2549,28 @@ x      1  2  3  4  5  6  7 Sum
 15    80-119      30+      7         5
 16      120+      30+     10         3
 > 
+> ## "complete cases" vs. "available cases"
+> colSums(is.na(airquality))  # NAs in Ozone but not Temp
+  Ozone Solar.R    Wind    Temp   Month     Day 
+     37       7       0       0       0       0 
+> ## the default is to summarize *complete cases*:
+> aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean)
+  Month    Ozone     Temp
+1     5 23.61538 66.73077
+2     6 29.44444 78.22222
+3     7 59.11538 83.88462
+4     8 59.96154 83.96154
+5     9 31.44828 76.89655
+> ## to handle missing values *per variable*:
+> aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, FUN = mean,
++           na.action = na.pass, na.rm = TRUE)
+  Month    Ozone     Temp
+1     5 23.61538 65.54839
+2     6 29.44444 79.10000
+3     7 59.11538 83.90323
+4     8 59.96154 83.96774
+5     9 31.44828 76.90000
+> 
 > ## Dot notation:
 > aggregate(. ~ Species, data = iris, mean)
      Species Sepal.Length Sepal.Width Petal.Length Petal.Width
