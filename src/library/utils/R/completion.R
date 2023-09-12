@@ -1356,12 +1356,29 @@ fileCompletions <- function(token)
           "xaxp", "xaxs", "xaxt", "xpd", "yaxp", "yaxs", "yaxt",
           "page", "ylbias")
 
-    options <-
-        c(names(options()), ## + some that are NULL by default
-          "mc.cores", "dvipscmd", "warn.FPU", "aspell_program",
-          "deparse.max.lines", "digits.secs", "error", "help.ports",
-          "help_type", "save.defaults", "save.image.defaults",
-          "SweaveHooks", "SweaveSyntax", "topLevelEnvironment")
+    options <- unique(c(
+        names(.Options),
+        ## + options not yet initialized when preparing utils
+        "bitmapType", "citation.bibtex.max", "contrasts", "demo.ask",
+        "device", "device.ask.default", "editor", "example.ask",
+        "help.search.types", "help.try.all.packages", "HTTPUserAgent",
+        "internet.info", "locatorBell", "mailer", "menu.graphics",
+        "na.action", "pkgType", "repos", "show.coef.Pvalues",
+        "show.signif.stars", "str", "str.dendrogram.last",
+        "ts.eps", "ts.S.compat", "unzip", "windowsTimeout",
+        ## + options unset by default (or OS-specific)
+        "mc.cores", "dvipscmd", "warn.FPU",
+        "askYesNo", "BioC_mirror", "ccaddress", "checkPackageLicense",
+        "conflicts.policy", "de.cellwidth", "deparse.max.lines", "digits.secs",
+        "download.file.extra", "download.file.method", "error",
+        "help.htmlmath", "help.ports", "help_type", "install.lock",
+        "install.packages.check.source",
+        "install.packages.compile.from.source",
+        "interrupt", "Ncpus", "save.defaults", "save.image.defaults",
+        "setWidthOnResize", "show.error.locations", "show.nls.convergence",
+        "SweaveHooks", "SweaveSyntax", "topLevelEnvironment",
+        "traceback.max.lines", "url.method", "warning.expression"
+    ))
 
     .addFunctionInfo(par = par, options = options)
 
