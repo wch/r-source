@@ -1,6 +1,6 @@
 % File src/library/datasets/man/iris.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iris}
@@ -35,6 +35,7 @@ iris3
   The use of multiple measurements in taxonomic problems.
   \emph{Annals of Eugenics},
   \bold{7}, Part II, 179--188.
+  \doi{10.1111/j.1469-1809.1936.tb02137.x}.
 
   The data were collected by
   Anderson, Edgar (1935).
@@ -52,11 +53,20 @@ iris3
   \code{iris}.
 }
 \examples{
+summary(iris)
+
+## Fisher's (1936) research question: whether (compound measurements of)
+## Iris versicolor "differs twice as much from I. setosa as from I. virginica"
+pairs(iris[1:4], col = iris$Species)
+legend(0.5, 1, levels(iris$Species), fill = 1:3, bty = "n",
+       horiz = TRUE, xjust = 0.5, yjust = 0, xpd = TRUE)
+
+## equivalence of legacy array (iris3) and data.frame (iris) representation
 dni3 <- dimnames(iris3)
 ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol = 4,
                         dimnames = list(NULL, sub(" L.",".Length",
                                         sub(" W.",".Width", dni3[[2]])))),
     Species = gl(3, 50, labels = sub("S", "s", sub("V", "v", dni3[[3]]))))
-all.equal(ii, iris) # TRUE
+stopifnot(all.equal(ii, iris))
 }
 \keyword{datasets}
