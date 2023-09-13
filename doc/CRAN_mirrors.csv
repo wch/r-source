@@ -84,7 +84,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th,"maintainer_address_bounces"
 "Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr,"secure_mirror_from_master"
 "Turkey (Istanbul) [https]",Turkey,Istanbul,https://cran.gedik.edu.tr/,"Istanbul Gedik University","gedikedu # gedik.edu.tr",1,tr,"secure_mirror_from_master"
-"Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","Ahmed A. Zaim <zaim # metu.edu.tr>, ncc-cc # metu.edu.tr",1,tr,"secure_mirror_from_master"
+"Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","Ahmed A. Zaim <zaim # metu.edu.tr>, ncc-cc # metu.edu.tr",0,tr,"secure_mirror_from_master"
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Oliver Johnson <O.Johnson # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
