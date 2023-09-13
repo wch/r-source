@@ -52,7 +52,6 @@ ks.test.default <-
             METHOD <- "Monte-Carlo two-sample Kolmogorov-Smirnov test"
         }
         TIES <- FALSE
-        n <- n.x * n.y / (n.x + n.y)
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) { # have ties
