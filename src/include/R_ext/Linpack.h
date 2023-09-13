@@ -39,9 +39,7 @@
 
 #include <R_ext/RS.h>		/* for F77_... */
 // Remove on 2023-09-18
-#ifndef USE_NEW_ACCELERATE
-# include <R_ext/BLAS.h> // now included by R users but not yet some packages.
-#endif
+#include <R_ext/BLAS.h> // now included by R users but not yet some packages.
 
 #ifdef  __cplusplus
 extern "C" {
