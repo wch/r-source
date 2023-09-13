@@ -7169,7 +7169,7 @@ contain @samp{!}  @samp{|} nor @samp{@@}, and to avoid possible problems
 with the @HTML{} help system it should not contain @samp{/} nor a space.
 (@LaTeX{} special characters are allowed, but may not be collated
 correctly in the index.)  There can only be one @code{\name} entry in a
-file, and it must not contain any markup.  Entries in the package manual
+file, and it must not contain any markup and should only contain @acronym{ASCII} characters.  Entries in the package manual
 will be in alphabetic@footnote{in the current locale, and with special
 treatment for @LaTeX{} special characters and with any
 @samp{@var{pkgname}-package} topic moved to the top of the list.} order
