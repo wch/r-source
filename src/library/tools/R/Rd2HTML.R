@@ -454,6 +454,11 @@ Rd2HTML <-
     }
 
     writeItemAsCode <- function(blocktag, block, addID = blocktag == "\\arguments") {
+        ## Argh.  Quite a few packages put the items in their value
+        ## section inside \code.
+        for(i in which(RdTags(block) == "\\code"))
+            attr(block[[i]], "Rd_tag") <- "Rd"
+
         ## Usually RdTags(block)[1L] == "TEXT", except when it is
         ## \\dots, \\ldots, etc. Potentially more complicated in cases
         ## like \item{foo, \dots, bar}, where block will have length >
@@ -925,11 +930,6 @@ Rd2HTML <-
      		"\\arguments"= {
     		    of1('<tr><td>')
     		    inPara <<- NA
-                    ## Argh.  Quite a few packages put the items in
-                    ## their value section inside \code.
-                    if(identical(RdTags(block[[1L]])[1L], "\\code")) {
-                        attr(block[[1L]][[1L]], "Rd_tag") <- "Rd"
-                    }
                     writeItemAsCode(blocktag, block[[1L]])
     		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
