@@ -636,7 +636,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
     *grcount = gradcount;
 }
 
-/* provides setulb() */
+/* include setulb() */
 #include "lbfgsb.c"
 
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,

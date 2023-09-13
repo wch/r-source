@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2023 The R Core Team
+ *  Copyright (C) 2000-2020 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
  *  https://www.R-project.org/Licenses/
  */
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
-
-   This file is included by optim.c.
 
   From ?optim:
   The code for method ‘"L-BFGS-B"’ is based on Fortran code by Zhu,
@@ -39,9 +37,16 @@
 #include <float.h> /* for DBL_EPSILON */
 #include <string.h>
 #include <R_ext/RS.h> /* for F77_CALL */
-#include <R_ext/BLAS.h>
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+#else
+# include <R_ext/BLAS.h>
+#endif
+
 #include <R_ext/Linpack.h> /* dpofa, dtrsl  */
-//#include <R_ext/Applic.h> // included by optim.c
+#include <R_ext/Applic.h> // includes BLAS.h pro tem
 
 #include <R_ext/Print.h> /* Rprintf */
 

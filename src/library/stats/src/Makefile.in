@@ -44,7 +44,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 ## We should really add FLIBS to SHLIB_LIBADD, but we need to include
 ## the shlib Makeconf at a later stage, and its default value would
 ## override our setting.
-PKG_LIBS = @R_OPENMP_CFLAGS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+PKG_LIBS = @R_OPENMP_CFLAGS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) @BUILD_NEW_ACCELERATE_TRUE@ -framework Accelerate
 ## </FIXME>
 
 
