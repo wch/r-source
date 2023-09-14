@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020  The R Core Team
+ *  Copyright (C) 2000-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ attribute_hidden SEXP do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	commonType != INTSXP  && commonType != LGLSXP &&
 	commonType != RAWSXP  && commonType != STRSXP &&
 	commonType != VECSXP)
-	error(_("type '%s' is not supported"), type2char(commonType));
+	error(_("type '%s' is not supported"), R_typeToChar(value));
     dim_v = getAttrib(value, R_DimSymbol);
     array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1);
     PROTECT(ans = allocVector(commonType, n*commonLen));
@@ -187,7 +187,7 @@ attribute_hidden SEXP do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		if (!okay)
 		    error(_("values must be type '%s',\n but FUN(X[[%d]]) result is type '%s'"),
-			  type2char(commonType), i+1, type2char(valType));
+			  R_typeToChar(value), i+1, R_typeToChar(val));
 		REPROTECT(val = coerceVector(val, commonType), indx);
 	    }
 	    /* Take row names from the first result only */

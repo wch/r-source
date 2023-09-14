@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2022  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -273,7 +273,7 @@ static SEXP EnlargeNames(SEXP names, R_xlen_t len, R_xlen_t newlen)
 }
 
 /* used instead of coerceVector to embed a non-vector in a list for
-   purposes of SubassignTypeFix, for cases in wich coerceVector should
+   purposes of SubassignTypeFix, for cases in which coerceVector should
    fail; namely, S4SXP */
 static SEXP embedInVector(SEXP v, SEXP call)
 {
@@ -475,7 +475,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(*x), R_typeToChar(*y));
     }
 
     if (stretch) {
@@ -1122,7 +1122,7 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in matrix subset assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
     }
     UNPROTECT(2);
     return x;
@@ -1356,7 +1356,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     default:
 	error(_("incompatible types (from %s to %s) in array subset assignment"),
-	      type2char(which%100), type2char(which/100));
+	      R_typeToChar(x), R_typeToChar(y));
     }
 
     UNPROTECT(3);
@@ -2019,7 +2019,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	default:
 	    error(_("incompatible types (from %s to %s) in [[ assignment"),
-		  type2char(which%100), type2char(which/100));
+		  R_typeToChar(x), R_typeToChar(y));
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */

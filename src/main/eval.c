@@ -3700,7 +3700,6 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     expr = CAR(args);
     env = CADR(args);
     encl = CADDR(args);
-    SEXPTYPE tEncl = TYPEOF(encl);
     if (isNull(encl)) {
 	/* This is supposed to be defunct, but has been kept here
 	   (and documented as such) */
@@ -3708,7 +3707,7 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else if ( !isEnvironment(encl) &&
 		!isEnvironment((encl = simple_as_environment(encl))) ) {
 	error(_("invalid '%s' argument of type '%s'"),
-	      "enclos", type2char(tEncl));
+	      "enclos", R_typeToChar(encl));
     }
     if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
 	env = R_getS4DataSlot(env, ANYSXP); /* usually an ENVSXP */

@@ -734,7 +734,6 @@ attribute_hidden SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (cdrArgs != R_NilValue && cddrArgs == R_NilValue &&
 	TAG(cdrArgs) == R_NilValue) {
 	/* one index, not named */
-	SEXP x = CAR(args);
 	if (ATTRIB(x) == R_NilValue) {
 	    SEXP s = CAR(cdrArgs);
 	    R_xlen_t i = scalarIndex(s);
@@ -767,7 +766,6 @@ attribute_hidden SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (cddrArgs != R_NilValue && CDR(cddrArgs) == R_NilValue &&
 	     TAG(cdrArgs) == R_NilValue && TAG(cddrArgs) == R_NilValue) {
 	/* two indices, not named */
-	SEXP x = CAR(args);
 	SEXP attr = ATTRIB(x);
 	if (TAG(attr) == R_DimSymbol && CDR(attr) == R_NilValue) {
 	    /* only attribute of x is 'dim' */
