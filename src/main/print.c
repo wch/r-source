@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2022	The R Core Team.
+ *  Copyright (C) 2000-2023	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -852,7 +852,7 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 		Rprintf("<S4 object without a class>\n");
 	    else
 		Rprintf("<Object of type '%s' with S4 bit but without a class>\n",
-			type2char(TYPEOF(s)));
+			R_typeToChar(s));
 	} else {
 	    SEXP pkg = getAttrib(s, R_PackageSymbol);
 	    if(isNull(pkg)) {

@@ -328,6 +328,10 @@ const char *type2char(SEXPTYPE t) /* returns a char* */
     return buf;
 }
 
+const char *R_typeToChar(SEXP x) {
+    return type2char(TYPEOF(x));
+}
+
 #ifdef UNUSED
 NORET SEXP type2symbol(SEXPTYPE t)
 {

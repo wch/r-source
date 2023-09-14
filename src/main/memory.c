@@ -1039,7 +1039,7 @@ static void TryToReleasePages(void)
 
 	    maxrel = R_GenHeap[i].AllocCount;
 	    for (gen = 0; gen < NUM_OLD_GENERATIONS; gen++)
-		maxrel -= (int)((1.0 + R_MaxKeepFrac) * 
+		maxrel -= (int)((1.0 + R_MaxKeepFrac) *
 				R_GenHeap[i].OldCount[gen]);
 	    maxrel_pages = maxrel > 0 ? maxrel / page_count : 0;
 
@@ -3101,7 +3101,7 @@ attribute_hidden void R_check_thread(const char *s)
     }
 }
 # else
-/* This could be implemented for Windows using their threading API */ 
+/* This could be implemented for Windows using their threading API */
 attribute_hidden void R_check_thread(const char *s) {}
 # endif
 #endif
@@ -3817,7 +3817,7 @@ void (MARK_ASSIGNMENT_CALL)(SEXP x) { MARK_ASSIGNMENT_CALL(CHK(x)); }
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
 	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'",
-	      type2char(TYPEOF(v)));
+	      R_typeToChar(v));
     FIX_REFCNT(x, ATTRIB(x), v);
     CHECK_OLD_TO_NEW(x, v);
     ATTRIB(x) = v;
@@ -3875,7 +3875,7 @@ static R_INLINE SEXP CHK2(SEXP x)
 {
     x = CHK(x);
     if(nvec[TYPEOF(x)])
-	error("LENGTH or similar applied to %s object", type2char(TYPEOF(x)));
+	error("LENGTH or similar applied to %s object", R_typeToChar(x));
     return x;
 }
 
@@ -3890,7 +3890,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t v)
 	error("SETLENGTH() cannot be applied to an ALTVEC object.");
     if (! isVector(x))
 	error(_("SETLENGTH() can only be applied to a standard vector, "
-		"not a '%s'"), type2char(TYPEOF(x)));
+		"not a '%s'"), R_typeToChar(x));
     SET_STDVEC_LENGTH(CHK2(x), v);
 }
 
@@ -3908,14 +3908,14 @@ R_xlen_t Rf_XLENGTH(SEXP x) { return XLENGTH(x); }
 const char *(R_CHAR)(SEXP x) {
     if(TYPEOF(x) != CHARSXP) // Han-Tak proposes to prepend  'x && '
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "CHAR", "CHARSXP", type2char(TYPEOF(x)));
+	      "CHAR", "CHARSXP", R_typeToChar(x));
     return (const char *) CHAR(CHK(x));
 }
 
 SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
+	      "STRING_ELT", "character vector", R_typeToChar(x));
     if (ALTREP(x))
 	return CHK(ALTSTRING_ELT(CHK(x), i));
     else {
@@ -3930,7 +3930,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
        TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
+	      "VECTOR_ELT", "list", R_typeToChar(x));
     if (ALTREP(x)) {
 	SEXP ans = CHK(ALTLIST_ELT(CHK(x), i));
 	/* the element is marked as not mutable since complex
@@ -3965,7 +3965,7 @@ void *(STDVEC_DATAPTR)(SEXP x)
 	error("cannot get STDVEC_DATAPTR from ALTREP object");
     if (! isVector(x) && TYPEOF(x) != WEAKREFSXP)
 	error("STDVEC_DATAPTR can only be applied to a vector, not a '%s'",
-	      type2char(TYPEOF(x)));
+	      R_typeToChar(x));
     CHKZLN(x);
     return STDVEC_DATAPTR(x);
 }
@@ -3973,7 +3973,7 @@ void *(STDVEC_DATAPTR)(SEXP x)
 int *(LOGICAL)(SEXP x) {
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
+	      "LOGICAL",  "logical", R_typeToChar(x));
     CHKZLN(x);
     return LOGICAL(x);
 }
@@ -3981,7 +3981,7 @@ int *(LOGICAL)(SEXP x) {
 const int *(LOGICAL_RO)(SEXP x) {
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
+	      "LOGICAL",  "logical", R_typeToChar(x));
     CHKZLN(x);
     return LOGICAL_RO(x);
 }
@@ -3990,7 +3990,7 @@ const int *(LOGICAL_RO)(SEXP x) {
 int *(INTEGER)(SEXP x) {
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "INTEGER", "integer", type2char(TYPEOF(x)));
+	      "INTEGER", "integer", R_typeToChar(x));
     CHKZLN(x);
     return INTEGER(x);
 }
@@ -3998,7 +3998,7 @@ int *(INTEGER)(SEXP x) {
 const int *(INTEGER_RO)(SEXP x) {
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "INTEGER", "integer", type2char(TYPEOF(x)));
+	      "INTEGER", "integer", R_typeToChar(x));
     CHKZLN(x);
     return INTEGER_RO(x);
 }
@@ -4006,7 +4006,7 @@ const int *(INTEGER_RO)(SEXP x) {
 Rbyte *(RAW)(SEXP x) {
     if(TYPEOF(x) != RAWSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "RAW", "raw", type2char(TYPEOF(x)));
+	      "RAW", "raw", R_typeToChar(x));
     CHKZLN(x);
     return RAW(x);
 }
@@ -4014,7 +4014,7 @@ Rbyte *(RAW)(SEXP x) {
 const Rbyte *(RAW_RO)(SEXP x) {
     if(TYPEOF(x) != RAWSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "RAW", "raw", type2char(TYPEOF(x)));
+	      "RAW", "raw", R_typeToChar(x));
     CHKZLN(x);
     return RAW(x);
 }
@@ -4022,7 +4022,7 @@ const Rbyte *(RAW_RO)(SEXP x) {
 double *(REAL)(SEXP x) {
     if(TYPEOF(x) != REALSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "REAL", "numeric", type2char(TYPEOF(x)));
+	      "REAL", "numeric", R_typeToChar(x));
     CHKZLN(x);
     return REAL(x);
 }
@@ -4030,7 +4030,7 @@ double *(REAL)(SEXP x) {
 const double *(REAL_RO)(SEXP x) {
     if(TYPEOF(x) != REALSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "REAL", "numeric", type2char(TYPEOF(x)));
+	      "REAL", "numeric", R_typeToChar(x));
     CHKZLN(x);
     return REAL_RO(x);
 }
@@ -4038,7 +4038,7 @@ const double *(REAL_RO)(SEXP x) {
 Rcomplex *(COMPLEX)(SEXP x) {
     if(TYPEOF(x) != CPLXSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "COMPLEX", "complex", type2char(TYPEOF(x)));
+	      "COMPLEX", "complex", R_typeToChar(x));
     CHKZLN(x);
     return COMPLEX(x);
 }
@@ -4046,7 +4046,7 @@ Rcomplex *(COMPLEX)(SEXP x) {
 const Rcomplex *(COMPLEX_RO)(SEXP x) {
     if(TYPEOF(x) != CPLXSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "COMPLEX", "complex", type2char(TYPEOF(x)));
+	      "COMPLEX", "complex", R_typeToChar(x));
     CHKZLN(x);
     return COMPLEX_RO(x);
 }
@@ -4054,7 +4054,7 @@ const Rcomplex *(COMPLEX_RO)(SEXP x) {
 SEXP *(STRING_PTR)(SEXP x) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "STRING_PTR", "character", type2char(TYPEOF(x)));
+	      "STRING_PTR", "character", R_typeToChar(x));
     CHKZLN(x);
     return STRING_PTR(x);
 }
@@ -4062,7 +4062,7 @@ SEXP *(STRING_PTR)(SEXP x) {
 const SEXP *(STRING_PTR_RO)(SEXP x) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "STRING_PTR_RO", "character", type2char(TYPEOF(x)));
+	      "STRING_PTR_RO", "character", R_typeToChar(x));
     CHKZLN(x);
     return STRING_PTR_RO(x);
 }
@@ -4075,10 +4075,10 @@ NORET SEXP * (VECTOR_PTR)(SEXP x)
 void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if(TYPEOF(CHK(x)) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
+	      "SET_STRING_ELT", "character vector", R_typeToChar(x));
     if(TYPEOF(CHK(v)) != CHARSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
-	     type2char(TYPEOF(v)));
+	     R_typeToChar(v));
     if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lld/%lld in SET_STRING_ELT"),
 	      (long long)i, (long long)XLENGTH(x));
@@ -4098,7 +4098,7 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
        TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP) {
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
+	      "SET_VECTOR_ELT", "list", R_typeToChar(x));
     }
     if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lld/%lld in SET_VECTOR_ELT"),
@@ -4132,7 +4132,7 @@ static R_INLINE SEXP CHKCONS(SEXP e)
 	return CHK(e);
     default:
 	error("CAR/CDR/TAG or similar applied to %s object",
-	      type2char(TYPEOF(e)));
+	      R_typeToChar(e));
     }
 }
 #else
@@ -4438,7 +4438,7 @@ void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
 void (SET_PRVALUE)(SEXP x, SEXP v)
 {
     if (TYPEOF(x) != PROMSXP)
-	error("expecting a 'PROMSXP', not a '%s'", type2char(TYPEOF(x)));
+	error("expecting a 'PROMSXP', not a '%s'", R_typeToChar(x));
     FIX_REFCNT(x, PRVALUE(x), v);
     CHECK_OLD_TO_NEW(x, v);
     PRVALUE(x) = v;
@@ -4471,7 +4471,7 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
 	error("value of 'SET_CXTAIL' must be a char or NULL, not a '%s'",
-	      type2char(TYPEOF(v)));
+	      R_typeToChar(v));
 #endif
     /*CHECK_OLD_TO_NEW(x, v); *//* not needed since not properly traced */
     ATTRIB(x) = v;

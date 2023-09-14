@@ -883,7 +883,7 @@ attribute_hidden SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP __x__ = (x);            \
     if(TYPEOF(__x__) != CHARSXP) \
 	error(_("'%s' must be called on a CHARSXP, but got '%s'"), \
-	      __func__, type2char(TYPEOF(__x__)));                 \
+	      __func__, R_typeToChar(__x__));			   \
 } while(0);
 
 cetype_t getCharCE(SEXP x)

@@ -395,7 +395,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, DllReference *dll)
 		    dll->dll = (HINSTANCE) R_ExternalPtrAddr(VECTOR_ELT(s, 4));
 		} else
 		    error("incorrect type (%s) of PACKAGE argument\n",
-			  type2char(TYPEOF(CAR(s))));
+			  R_typeToChar(CAR(s)));
 	    }
 	} else {
 	    nargs++;
@@ -542,7 +542,7 @@ static SEXP check_retval(SEXP call, SEXP val)
 
     return val;
 }
-    
+
 attribute_hidden SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC ofun = NULL;

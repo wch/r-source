@@ -552,7 +552,7 @@ attribute_hidden SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	case REALSXP: return real_mean(x);
 	case CPLXSXP: return complex_mean(x);
 	default:
-	    error(R_MSG_type, type2char(TYPEOF(x)));
+	    error(R_MSG_type, R_typeToChar(x));
 	    return R_NilValue; // -Wall on clang 4.2
 	}
     }
@@ -990,7 +990,7 @@ na_answer: /* only sum(INTSXP, ...) case currently used */
     return ans;
 
 invalid_type:
-    errorcall(call, R_MSG_type, type2char(TYPEOF(a)));
+    errorcall(call, R_MSG_type, R_typeToChar(a));
     return R_NilValue;
 }/* do_summary */
 

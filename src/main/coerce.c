@@ -413,7 +413,7 @@ static SEXP coerceToSymbol(SEXP v)
     int warn = 0;
     if (length(v) <= 0)
 	error(_("invalid data of mode '%s' (too short)"),
-	      type2char(TYPEOF(v)));
+	      R_typeToChar(v));
     PROTECT(v);
     switch(TYPEOF(v)) {
     case LGLSXP:
@@ -1014,7 +1014,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
     }
     else
 	error(_("'%s' object cannot be coerced to type '%s'"),
-	      type2char(TYPEOF(v)), type2char(type));
+	      R_typeToChar(v), type2char(type));
 
     /* If any tags are non-null then we */
     /* need to add a names attribute. */
@@ -1269,7 +1269,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 #define COERCE_ERROR_STRING "cannot coerce type '%s' to vector of type '%s'"
 
 #define COERCE_ERROR							\
-	error(_(COERCE_ERROR_STRING), type2char(TYPEOF(v)), type2char(type))
+	error(_(COERCE_ERROR_STRING), R_typeToChar(v), type2char(type))
 
 	switch (type) {
 	case SYMSXP:
@@ -1397,7 +1397,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	return v;
     }
     else errorcall(call, _(COERCE_ERROR_STRING),
-		   type2char(TYPEOF(u)), type2char(type));
+		   R_typeToChar(u), type2char(type));
     return u;/* -Wall */
 }
 
@@ -2156,7 +2156,7 @@ attribute_hidden SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     /* So this allows any type, including undocumented ones such as
        "closure", but not aliases such as "name" and "function". */
-    else if (streql(stype, type2char(TYPEOF(x)))) {
+    else if (streql(stype, R_typeToChar(x))) {
 	LOGICAL0(ans)[0] = 1;
     }
     else
@@ -2310,7 +2310,7 @@ attribute_hidden SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     case NILSXP: break;
     default:
 	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
-		    "is.na", type2char(TYPEOF(x)));
+		    "is.na", R_typeToChar(x));
 	for (i = 0; i < n; i++)
 	    pa[i] = 0;
     }
@@ -2428,7 +2428,7 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 
     default:
 	error("anyNA() applied to non-(list or vector) of type '%s'",
-	      type2char(TYPEOF(x)));
+	      R_typeToChar(x));
     }
     return FALSE;
 } // anyNA()
@@ -2506,7 +2506,7 @@ attribute_hidden SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default:
 	errorcall(call, _("default method not implemented for type '%s'"),
-		  type2char(TYPEOF(x)));
+		  R_typeToChar(x));
     }
     copyDimAndNames(x, ans);
     UNPROTECT(2); /* args, ans*/
@@ -2567,7 +2567,7 @@ attribute_hidden SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default:
 	errorcall(call, _("default method not implemented for type '%s'"),
-		  type2char(TYPEOF(x)));
+		  R_typeToChar(x));
     }
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2643,7 +2643,7 @@ attribute_hidden SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default:
 	errorcall(call, _("default method not implemented for type '%s'"),
-		  type2char(TYPEOF(x)));
+		  R_typeToChar(x));
     }
     if (!isNull(dims))
 	setAttrib(ans, R_DimSymbol, dims);
@@ -3011,7 +3011,7 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	    }
 	    else if(valueType != TYPEOF(obj))
 		error(_("\"%s\" can only be set as the class if the object has this type; found \"%s\""),
-		      valueString, type2char(TYPEOF(obj)));
+		      valueString, R_typeToChar(obj));
 	    /* else, leave alone */
 	}
 	else if(!strcmp("numeric", valueString)) {

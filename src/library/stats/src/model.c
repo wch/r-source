@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -154,7 +154,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    default:
 		error(_("invalid type (%s) for variable '%s'"),
-		      type2char(TYPEOF(ans)),
+		      R_typeToChar(ans),
 		      translateChar(STRING_ELT(names, i)));
 	    }
 	    if (nrows(ans) != nr)
@@ -667,7 +667,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			}
 		    } else
 			error(_("variables of type '%s' are not allowed in model matrices"),
-			      type2char(TYPEOF(var_i)));
+			      R_typeToChar(var_i));
 		    indx /= ll;
 		}
 	    }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2023  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -354,7 +354,7 @@ static Rboolean GetRNGkind(SEXP seeds)
 	if (seeds == R_MissingArg) /* How can this happen? */
 	    error(_("'.Random.seed' is a missing argument with no default"));
 	warning(_("'.Random.seed' is not an integer vector but of type '%s', so ignored"),
-		type2char(TYPEOF(seeds)));
+		R_typeToChar(seeds));
 	goto invalid;
     }
     is = INTEGER(seeds);

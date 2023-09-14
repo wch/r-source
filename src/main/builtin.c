@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2022  The R Core Team
+ *  Copyright (C) 1999-2023  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -667,7 +667,7 @@ attribute_hidden SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	    else
 		error(_("argument %d (type '%s') cannot be handled by 'cat'"),
-		      1+iobj, type2char(TYPEOF(s)));
+		      1+iobj, R_typeToChar(s));
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    size_t w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016-2022 The R Core Team
+ *  Copyright (C) 2016-2023 The R Core Team
  *
  *  Based on code donated from the data.table package
  *  (C) 2006-2015 Matt Dowle and Arun Srinivasan.
@@ -1648,7 +1648,7 @@ attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default :
         Error("First arg is type '%s', not yet supported",
-              type2char(TYPEOF(x)));
+              R_typeToChar(x));
     }
     if (tmp) {
 	// -1 or 1. NEW: or -2 in case of nalast == 0 and all NAs
@@ -1755,7 +1755,7 @@ attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	default:
 	    Error("Arg %d is type '%s', not yet supported",
-		  col, type2char(TYPEOF(x)));
+		  col, R_typeToChar(x));
 	}
 	int i = 0;
 	for (int grp = 0; grp < ngrp; grp++) {

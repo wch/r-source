@@ -1097,7 +1097,7 @@ SEXP eval(SEXP e, SEXP rho)
 	error("'rho' cannot be C NULL: detected in C-level eval");
     if (!isEnvironment(rho))
 	error("'rho' must be an environment not %s: detected in C-level eval",
-	      type2char(TYPEOF(rho)));
+	      R_typeToChar(rho));
 
     /* Save the current srcref context. */
 
@@ -2189,7 +2189,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 		  "'rho' cannot be C NULL: detected in C-level applyClosure");
     if (!isEnvironment(rho))
 	errorcall(call, "'rho' must be an environment not %s: detected in C-level applyClosure",
-		  type2char(TYPEOF(rho)));
+		  R_typeToChar(rho));
 
     formals = FORMALS(op);
     savedrho = CLOENV(op);
@@ -3739,12 +3739,12 @@ attribute_hidden SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
 	    error(_("invalid '%s' argument of type '%s'"),
-		  "envir", type2char(TYPEOF(env)));
+		  "envir", R_typeToChar(env));
 	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
 	error(_("invalid '%s' argument of type '%s'"),
-	      "envir", type2char(TYPEOF(env)));
+	      "envir", R_typeToChar(env));
     }
 
     /* isLanguage include NILSXP, and that does not need to be

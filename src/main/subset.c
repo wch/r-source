@@ -1231,7 +1231,7 @@ fixSubset3Args(SEXP call, SEXP args, SEXP env, SEXP* syminp)
     }
     else {
 	errorcall(call,_("invalid subscript type '%s'"),
-		  type2char(TYPEOF(nlist)));
+		  R_typeToChar(nlist));
 	return R_NilValue; /*-Wall*/
     }
 

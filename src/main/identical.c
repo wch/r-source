@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2021  The R Core Team
+ *  Copyright (C) 2001-2023  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -364,7 +364,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     default:
 	/* these are all supposed to be types that represent constant
 	   entities, so no further testing required ?? */
-	printf("Unknown Type in identical(): %s (%x)\n", type2char(TYPEOF(x)), TYPEOF(x));
+	printf("Unknown Type in identical(): %s (%x)\n", R_typeToChar(x), TYPEOF(x));
 	return TRUE;
     }
 }

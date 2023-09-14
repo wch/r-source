@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022   The R Core Team.
+ *  Copyright (C) 1998-2023   The R Core Team.
  *  Copyright (C) 2004-2017   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -786,7 +786,7 @@ SEXP doD(SEXP args)
     if (isExpression(CAR(args))) expr = VECTOR_ELT(CAR(args), 0);
     else expr = CAR(args);
     if (!(isLanguage(expr) || isSymbol(expr) || isNumeric(expr) || isComplex(expr)))
-        error(_("expression must not be type '%s'"), type2char(TYPEOF(expr)));
+        error(_("expression must not be type '%s'"), R_typeToChar(expr));
     SEXP var = CADR(args);
     if (!isString(var) || length(var) < 1)
 	error(_("variable must be a character string"));

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2022   The R Core Team.
+ *  Copyright (C) 2001-2023   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ static SEXP R_conditionMessage(SEXP cond)
     /* Type check return value so callers can safely extract a C string */
     if (TYPEOF(out) != STRSXP)
 	error(_("unexpected type '%s' for condition message"),
-	      type2char(TYPEOF(out)));
+	      R_typeToChar(out));
     if (length(out) != 1)
 	error(_("condition message must be length 1"));
 
