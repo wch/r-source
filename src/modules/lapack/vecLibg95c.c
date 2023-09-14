@@ -10,6 +10,17 @@
 #include <vecLib/vecLib.h>
 #endif
 
+/* These calls were deprcated in 'new' Accelerate and are warned about, so
+   suppress the warnings 
+
+   FIXME: define ACCELERATE_NEW_LAPACK where appropriate
+   *and* use new entry points.
+*/
+
+#ifdef __clang__
+# pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 void FC_FUNC_(rcblas_cdotu_sub,)(const int *N, const void *X, const int *incX,
                        const void *Y, const int *incY, void *dotu) 
 { cblas_cdotu_sub(*N, X, *incX, Y, *incY, dotu); }
