@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-09-13 r82850) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.6.0 (64-bit)
+R Under development (unstable) (2023-08-12 r84939) -- "Unsuffered Consequences"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -31,7 +31,8 @@ Type 'q()' to quit R.
 > id_epd <- function(expr, control = "all", ...) eval(pd0(expr, 
 +     control = control, ...))
 
-> dPut <- function(x, control = "all") dput(x, control = control)
+> dPut <- function(x, control = c("quoteExpression", 
++     "showAttributes", "niceNames", "keepInteger")) dput(x, control = control)
 
 > hasReal <- function(x) {
 +     if (is.double(x) || is.complex(x)) 
@@ -363,14 +364,16 @@ as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(deparse(subs
     "t2", "ydata")), eq.tol = quote(if (noLdbl) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-dPut: function (x, control = "all") 
+dPut: function (x, control = c("quoteExpression", "showAttributes", 
+    "niceNames", "keepInteger")) 
 dput(x, control = control)
  --> checking list(*): Ok
 checking body(.):
 quote(dput(x, control = control))
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(x = , control = "all"))
+as.pairlist(alist(x = , control = quote(c("quoteExpression", 
+    "showAttributes", "niceNames", "keepInteger"))))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 dn: list(c("A", "B", "C"), c("a", "b", "c", "d", "e"))
@@ -576,5 +579,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  0.529 0.028 0.559 0.001 0.001 
+Time elapsed:  0.514 0.03 0.547 0.001 0.002 
 > 

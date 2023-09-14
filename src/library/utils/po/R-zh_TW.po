@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -28,6 +28,12 @@ msgstr "程式套件 %2$s 裡沒有 %1$s 這樣一本說明書"
 
 msgid "document not found"
 msgstr "找不到這個說明書"
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr "檢索查詢疑問已被提交給 %s"
@@ -192,8 +198,8 @@ msgstr "標出界"
 msgid "%s should be one of %s"
 msgstr "%s 必須是 %s 這些中的一個"
 
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "引數 '%s' 已經不再用了；請設定 '%s' 做為替代。"
+msgid "To cite package %s in publications use:"
+msgstr "在出版品中使用程式套件時參照 %s："
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "LaTeX 的使用者的 BibTeX 條目是"
@@ -205,14 +211,8 @@ msgstr ""
 "刪除無效的條目 %d:\n"
 "%s"
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr "程式套件 %s 裡的 DESCRIPTION 檔案中沒有日期此一欄位"
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "無法從程式套件的 DESCRIPTION 檔案中為 %s 確定年分"
-
-msgid "To cite package %s in publications use:"
-msgstr "在出版品中使用程式套件時參照 %s："
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr "注意：此引文資訊是從套件描述檔案自動產生的，可能需要手動編輯，請參見 %s。"
@@ -223,14 +223,9 @@ msgstr "'FUN' 的值必須是函式或 NULL"
 msgid "cannot handle S4 methods yet"
 msgstr "還不能處理 S4 方法"
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr "'package' 的值必須是字串或 NULL"
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "數據機從程式套件 'base' 移到了程式套件 'datasets'"
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "數據機從程式套件 'stats' 移到了程式套件 'datasets'"
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr "程式套件 %s 的資料索引不對，忽略不用"
@@ -374,7 +369,14 @@ msgstr "'form' 必須是雙邊公式"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form' 必須是雙邊公式，每一邊至少帶一項"
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr "'socket' 引數無效"
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -457,7 +459,8 @@ msgstr "使用者已取消"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "無法連接到 CRAN 以檢查 R 版本。"
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr "引數 %s 必須是單字串"
 
 msgid "incorrect field specification"
@@ -501,11 +504,9 @@ msgstr "如果由 '%s' 開啟的瀏覽器已經在執行的話，它 * 不會 * 
 msgid "Otherwise, be patient ..."
 msgstr "否則的話請耐心等待…"
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "url 必須的非空字串"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' 必須為非空字串"
 
 msgid "no package '%s' was found"
 msgstr "找不到 '%s' 這樣一個程式套件"
@@ -530,6 +531,10 @@ msgstr "無法更新 HTML 程式套件索引"
 
 msgid "done"
 msgstr "做完了。"
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr "'file' 的值必須是字串或聯結"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() 不能在非交互形式下使用"
@@ -687,6 +692,12 @@ msgstr "無法在非交互情況下設定貯藏處"
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr "'package' 的值必須是字串或 NULL"
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr ""
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 請選用一個貯藏處 ---"
 
@@ -705,6 +716,10 @@ msgid ""
 msgstr ""
 "不知道 'lib' 元素裡如何安裝依賴程式\n"
 "因此忽略不裝"
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'unzip' 必須是單字串"
 
 msgid "type 'binary' is not supported on this platform"
 msgstr "此平臺不支援 'binary' 類型"
@@ -776,12 +791,26 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "檔案: %s"
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr "平行安裝的逾時限制需要 'timeout' 命令"
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr "下載程式套件 %s 時出了問題"
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+"安裝程式套件時發生錯誤，\n"
+"  可能原因 %s"
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 "安裝程式套件時發生錯誤，\n"
 "  可能原因 %s"
@@ -1142,16 +1171,9 @@ msgstr "給檔案加行名稱"
 msgid "attempt to set '%s' ignored"
 msgstr "不能修改 '%s'"
 
-msgid "'unzip' must be a single character string"
-msgstr "'unzip' 必須是單字串"
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files' 必須指定一個或多個檔案路徑的字元向量"
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr "url 必須的非空字串"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr "沒有可以開啟 'mailto:'URIs 的程式: 回復到 'method=\"none\"'"
@@ -1182,6 +1204,10 @@ msgstr "'wget' 呼叫産生非零的退離狀態"
 
 msgid "'curl' call had nonzero exit status"
 msgstr "'curl' 呼叫産生非零的退離狀態"
+
+#, fuzzy
+msgid "invalid method:"
+msgstr "格式無效"
 
 msgid "download had nonzero exit status"
 msgstr "下載退離狀態不是零"
@@ -1268,6 +1294,11 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "找到了 %d 個含有路徑檔案字串 %s 的 Sweave 檔案"
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] "輸出檔案："
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%2$s 裡 %1$d 出現"
@@ -1295,6 +1326,11 @@ msgstr[0] "%d 次在 %s 中抓取到相同的錯誤：%s"
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到 '%s' 這個物件"
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] "%s 是基本程式套件，因此不應被更新"
 
 msgid ""
 "Removing package from %s\n"
@@ -1380,6 +1416,25 @@ msgstr[0] "最後一個記錄不完全，%d 列忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "羅馬數字不對：%s"
+
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr "引數 '%s' 已經不再用了；請設定 '%s' 做為替代。"
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr "程式套件 %s 裡的 DESCRIPTION 檔案中沒有日期此一欄位"
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr "數據機從程式套件 'base' 移到了程式套件 'datasets'"
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr "數據機從程式套件 'stats' 移到了程式套件 'datasets'"
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr "'browser' 必須為非空字串"
+
+#, fuzzy
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr "url 必須的非空字串"
 
 #~ msgid "bad argument"
 #~ msgstr "引數無效"

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/smspline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@
         else  200 + (n-3200)^0.2
     })
 }
-n.knots <- function(n) {
-    message(".nknots.smspl() is now exported; use it instead of n.knots()")
-    .nknots.smspl(n)
-}
+## n.knots <- function(n) {
+##     message(".nknots.smspl() is now exported; use it instead of n.knots()")
+##     .nknots.smspl(n)
+## }
 
 smooth.spline <-
     function(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,

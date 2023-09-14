@@ -976,10 +976,10 @@ files, so there is negligible difference.
 @subsection OpenMP Support
 
 By default @command{configure} searches for suitable flags@footnote{for
-example, @option{-fopenmp}, @option{-xopenmp} or @option{-qopenmp}.
-This includes for @command{clang} and the Intel and Oracle compilers.}
-for OpenMP support for the C, C++ (default standard) and Fortran
-compilers.
+example, @option{-fopenmp}, @option{-fiopenmp}, @option{-xopenmp} or
+@option{-qopenmp}.  This includes for @command{clang} and the Intel and
+Oracle compilers.}  for OpenMP support for the C, C++ (default standard)
+and Fortran compilers.
 
 Only the C result is currently used for @R{} itself, and only if
 @code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
@@ -1277,17 +1277,17 @@ of writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}
 in C.
 
 @c This worked in 2019 but with Fedora 32 did not export dpotrf from dlapack.o
-On some systems it is possible to build the BLAS, LINPACK and LAPACK
-support as static libraries containing intermediate-level code that LTO
-will compile for all objects linked against these libraries, by
-configuring @R{} with @option{--enable-lto=check}.  This checks the
-consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
-using the build. @strong{NB:} as its name suggests, this option is
-intended only for checking installation of @R{} and packages: it
-includes these library routines (those called directly and all they
-depend on) in each package.  This is unlikely to work in conjunction
-with non-default options for BLAS and LAPACK, and `linking' against
-these libraries may be very slow.
+@c On some systems it is possible to build the BLAS, LINPACK and LAPACK
+@c support as static libraries containing intermediate-level code that LTO
+@c will compile for all objects linked against these libraries, by
+@c configuring @R{} with @option{--enable-lto=check}.  This checks the
+@c consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
+@c using the build. @strong{NB:} as its name suggests, this option is
+@c intended only for checking installation of @R{} and packages: it
+@c includes these library routines (those called directly and all they
+@c depend on) in each package.  This is unlikely to work in conjunction
+@c with non-default options for BLAS and LAPACK, and `linking' against
+@c these libraries may be very slow.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -3726,10 +3726,13 @@ is an instruction to link against @samp{-lfoo} to find an external
 @acronym{BLAS} (which needs to be found both at link time and run time).
 
 The configure code checks that the external @acronym{BLAS} is complete
-(it must include all double precision and double complex routines, as
-well as @code{LSAME}), and appears to be usable.  However, an external
-@acronym{BLAS} has to be usable from a shared object (so must contain
-position-independent code), and that is not checked.
+(as of LAPACK 3.9.1: it must include all double precision and double
+complex routines, as well as @code{LSAME}), and appears to be usable.
+However, an external @acronym{BLAS} has to be usable from a shared
+object (so must contain position-independent code), and that is not
+checked.  Also, the BLAS can be switched after configure is run, either
+as a symbolic link or by the mechanisms mentioned below, and this can
+defeat the completeness check.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{Accelerate} on macOS, @code{sunperf} on Solaris@footnote{Using
@@ -4663,7 +4666,7 @@ and Apple) @command{clang} and Intel compilers.  Further, some use the
 value of @code{__GNUC__} for their version, not the version of GCC they
 claim to be compatible with.@footnote{Most @command{clang}-based
 compilers give @code{4}, but not those distributed by FreeBSD.  Intel's
-@command{icc} reported @code{12} in 2023.}  @command{clang}-based
+@command{icx} reported @code{12} in 2023.}  @command{clang}-based
 compilers define @code{__clang__}.  Both LLVM and Apple @command{clang}
 define @code{__clang_major__} as a string giving their major version,
 but for example Apple's 13.x.y is very different from LLVM's 13.x.y.
@@ -5052,10 +5055,10 @@ branded `Classic') also supported @cputype{ix86} and 32-bit builds on
 
 The compilers are now all under Intel's `oneAPI' brand. The revamped
 ones are @command{icx}, @command{icpx} and @command{ifx}; they are
-identiifed by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
+identified by the C/C++ macro @code{__INTEL_LLVM_COMPILER} (and do not
 define @code{__INTEL_COMPILER}: they also define @code{__clang__} and
-@code{__clang_major__}@footnote{for @code{2023.2.0} as @samp{17.0.0 (icx
-2023.2.0.20230622)}.}).
+@code{__clang_major__}@footnote{for @code{2023.2.1} as
+@samp{17.0.0 (2023.2.0 (2023.2.0.20230721)}.}).
 
 The C++ compiler uses the system's @code{lidstdc++} as its runtime
 library rather than LLVM's @code{libc++}.
@@ -5064,13 +5067,13 @@ Standalone installers (which are free-of-charge) are available from
 @uref{https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html}:
 they are also part of the oneAPI Base and HPC (for Fortran) ToolKits.
 
-We tried the LLVM-based compilers in oneAPI 2023.2.0 using
+We tried the LLVM-based compilers in oneAPI 2023.2.1 using
 @example
 IP=/path/to/compilers/bin/intel64
 CC=$IP/icx
 CXX=$IP/icpx
 FC=$IP/ifx
-CFLAGS="-O3 -fp-model precise -Wall"
+CFLAGS="-O3 -fp-model precise -Wall -Wstrict-prototypes"
 C17FLAGS="-O3 -fp-model precise -Wall -Wno-strict-prototypes"
 FFLAGS="-O3 -fp-model precise -warn all,noexternals"
 FCFLAGS="-free -O3 -fp-model precise -warn all,noexternals"
@@ -5125,11 +5128,24 @@ The preferred Fortran standard for @command{ifx} can be set by one of
 affect warnings on non-standard features: the default is no such
 warnings.
 
+Warning to package maintainers: the Intel Fortran compilers interpret
+comments intended for Visual Fortran@footnote{as the compiler has been
+known on Windows.} like
+@c from package tseriesentropy 0.6-0
+@example
+!DEC$ ATTRIBUTES DLLEXPORT,C,REFERENCE,ALIAS:'kdenestmlcvb' :: kdenestmlcvb
+@end example
+@noindent
+The @code{DLLEXPORT} gives a warning but the remainder silently
+generates incorrectly named entry points.  Such comment lines need to be
+removed from code for use with @R{} (even if using Intel Fortran on
+Windows).
+
 @node `Classic compilers',  , Intel compilers, Intel compilers
 @subsubsection `Classic' Intel compilers
 
 The classic compilers were @command{icc}, @command{icpc} and
-@command{ifort}.  They are identiifed by the C/C++ macro
+@command{ifort}.  They are identified by the C/C++ macro
 @code{__INTEL_COMPILER}.
 
 The classic compilers remained available until the second half of 2023.
@@ -5160,7 +5176,7 @@ CC="$IP/icc -diag-disable=10441"
 @command{icpc} does not support C++23.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2023-June/082679.html
-There have been only one other other recent report on the use of these
+There has been only one other recent report on the use of these
 compilers: the rest of this section is left in case it provides helpful
 hints for people using them while they are still available.
 
@@ -5650,10 +5666,14 @@ to use Accelerate's BLAS.
 As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
 framework are `now inline with reference version
 3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
-naming new entry points and so only accessible @emph{via} their C headers.
+naming new entry points and so only accessible @emph{via} their C
+headers.  That version can be used @emph{via} @command{configure} option
+@option{--with-newAccelerate}: it requires at least macOS 13.3 and SDK 14.3.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central Dispatch' and is
+Threading in Accelerate is controlled by `Grand Central
+Dispatch'@footnote{E.g.,
+@url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 has often failed with the Accelerate BLAS on Intel macOS.
 

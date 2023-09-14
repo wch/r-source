@@ -45,7 +45,7 @@ static void mdimenu(menuitem m)
     }
 }
 
-menu newmdimenu()
+menu newmdimenu(void)
 {
     menu m ;
     if (!ismdi()) return NULL;

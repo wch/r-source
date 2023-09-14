@@ -190,7 +190,7 @@ int askyesnocancel(const char *question)
 /* This should always have a native encoded name, so don't need Unicode here */
 static char *cod = NULL; /*current open directory*/
 
-static char *getCurrentDirectory()
+static char *getCurrentDirectory(void)
 {
     DWORD rc;
     char *cwd = NULL;
@@ -209,7 +209,7 @@ static char *getCurrentDirectory()
     return cwd;
 }
 
-static wchar_t *getCurrentDirectoryW()
+static wchar_t *getCurrentDirectoryW(void)
 {
     DWORD rc;
     wchar_t *cwd = NULL;
@@ -240,7 +240,7 @@ static int savecod(void)
     return cwd ? 1 : 0;
 }
 
-void askchangedir()
+void askchangedir(void)
 {
     char *s, *msg;
 
@@ -884,7 +884,7 @@ char *askUserPass(const char *title)
     return ""; /* -Wall */
 }
 
-int modeless_active()
+int modeless_active(void)
 {
     if (hModelessDlg)
 	return 1;
@@ -892,7 +892,7 @@ int modeless_active()
 }
 
 PROTECTED
-HWND get_modeless()
+HWND get_modeless(void)
 {
     return hModelessDlg;
 }

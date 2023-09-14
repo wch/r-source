@@ -11,4 +11,5 @@ foo(x, ...)
   \item{x}{something}
   \item{\dots}{another thing}
 }
+\author{\packageAuthor{exSexpr}}
 \Sexpr[stage=install,results=rd]{"\\\\examples{foo()}"}

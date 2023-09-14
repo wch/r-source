@@ -8,6 +8,10 @@
 \alias{makePSOCKcluster}
 \alias{makeForkCluster}
 \alias{stopCluster}
+\alias{closeNode}
+\alias{recvData}
+\alias{recvOneData}
+\alias{sendData}
 \alias{setDefaultCluster}
 \alias{getDefaultCluster}
 \alias{R_PARALLEL_PORT}

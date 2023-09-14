@@ -31,7 +31,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   \item{x}{character vector where matches are sought.
     Coerced by \code{\link{as.character}} to a character vector if
     possible.}
-  \item{max.distance}{Maximum distance allowed for a match.  Expressed
+  \item{max.distance}{maximum distance allowed for a match.  Expressed
     either as integer, or as a fraction of the \emph{pattern} length
     times the maximal transformation cost (will be replaced by the
     smallest integer not less than the corresponding fraction), or a
@@ -64,8 +64,9 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   \item{fixed}{logical.  If \code{TRUE} (default), the pattern is
     matched literally (as is).  Otherwise, it is matched as a regular
     expression.}
-  \item{useBytes}{logical. in a multibyte locale, should the comparison
-    be character-by-character (the default) or byte-by-byte.}
+  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+    byte-by-byte rather than character-by-character.  See
+    \sQuote{Details}.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
@@ -77,8 +78,8 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   (\url{https://github.com/laurikari/tre}), which supports MBCS
   character matching.
 
-  The main effect of \code{useBytes} is to avoid errors/warnings about
-  invalid inputs and spurious matches in multibyte locales.
+  The main effect of \code{useBytes = TRUE} is to avoid errors/warnings
+  about invalid inputs and spurious matches in multibyte locales.
   It inhibits the conversion of inputs with marked encodings, and is
   forced if any input is found which is marked as \code{"bytes"} (see
   \code{\link{Encoding}}).

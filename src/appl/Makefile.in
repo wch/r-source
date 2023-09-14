@@ -46,7 +46,6 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makedeps
 	@$(MAKE) libappl.a
-	@BUILD_LTO_CHECK_TRUE@@$(MAKE) install-Linpack
 
 libappl.a: $(OBJECTS)
 	@rm -f $@
@@ -57,11 +56,6 @@ libLinpack.a: $(OBJECTS_LIN)
 	@rm -f $@
 	$(AR) -cr $@ $(OBJECTS_LIN)
 	$(RANLIB) $@
-
-## only for checking, so only installed locally
-install-Linpack: libLinpack.a
-	@$(MKINSTALLDIRS) ../../lib
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change libLinpack.a ../../lib/libLinpack.a
 
 ## Used with --disable-BLAS-shlib
 blas.o: $(top_srcdir)/src/extra/blas/blas.f

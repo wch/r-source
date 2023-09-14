@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2018-09-16 23:21+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -17,22 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
-#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:573 io.c:777 io.c:830 io.c:844 io.c:848
+#: io.c:854 io.c:855 io.c:1096 io.c:1097 io.c:1099 io.c:1100 io.c:1101
+#: io.c:1102 io.c:1103 io.c:1104 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
-#: windows/widgets.c:78 windows/widgets.c:83
+#: windows/dialogs.c:321 windows/util.c:127 windows/widgets.c:80
+#: windows/widgets.c:83 windows/widgets.c:88
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "無效的 %s 引數"
 
-#: io.c:350 io.c:835
+#: io.c:350 io.c:841
 msgid "invalid quote symbol set"
 msgstr "無效的引言符號集"
 
-#: io.c:362 io.c:858 io.c:1078
+#: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
 msgstr "無法開啟連接"
 
@@ -45,69 +45,69 @@ msgstr "無法從這個連接讀取"
 msgid "quoted string on line %d terminated by EOF"
 msgstr "引言的字串於第 %d 列被 EOF 終止"
 
-#: io.c:567
+#: io.c:569
 msgid "the first argument must be of mode character"
 msgstr "第一個引數必須是模式的字元"
 
-#: io.c:597
+#: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "無效的 'numerals' 字串：\"%s\""
 
-#: io.c:773
+#: io.c:779
 #, c-format
 msgid "Selection: "
 msgstr "選擇："
 
-#: io.c:868 io.c:883
+#: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "無法在 'readTableHead' 中配置緩衝區"
 
-#: io.c:896
+#: io.c:902
 msgid "\\ followed by EOF"
 msgstr "\\ EOF 跟隨在後"
 
-#: io.c:948 io.c:952
+#: io.c:954 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "由 '%s' 上的 readTableHeader 找到不完整的最終列"
 
-#: io.c:1009
+#: io.c:1015
 msgid "index out of range"
 msgstr "索引超出範圍"
 
-#: io.c:1046
+#: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr "關閉連接時有問題： %s"
 
-#: io.c:1048
+#: io.c:1054
 msgid "Problem closing connection"
 msgstr "關閉連接時有問題"
 
-#: io.c:1071
+#: io.c:1077
 msgid "'file' is not a connection"
 msgstr "'file' 並非連接"
 
-#: io.c:1074
+#: io.c:1080
 msgid "cannot write to this connection"
 msgstr "無法寫入這個連接"
 
-#: io.c:1104
+#: io.c:1110
 msgid "'dec' must be a single character"
 msgstr "'dec' 必須是單一字元"
 
-#: io.c:1130
+#: io.c:1137
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "損壞的資料框 -- 第 %d 行的長度不符合 nrows"
 
-#: io.c:1161
+#: io.c:1171
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "第 %s 行宣稱是因子但是沒有數值碼"
 
-#: io.c:1179
+#: io.c:1189
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "損壞的矩陣 -- 維度不符合長度"
@@ -206,13 +206,13 @@ msgstr "選單不存在"
 msgid "unable to delete menu item (%s)"
 msgstr "無法刪除功能表項目 (%s)"
 
-#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
-#: windows/registry.c:254
+#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
+#: windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
 msgstr "無效的 '%s' 值"
 
-#: windows/registry.c:266
+#: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "註冊表索引鍵 '%ls' 找不到"
@@ -221,65 +221,65 @@ msgstr "註冊表索引鍵 '%ls' 找不到"
 msgid "unsupported version of Windows"
 msgstr "不支援的 Windows 版本"
 
-#: windows/util.c:285
+#: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
 msgstr "引數必須是字元向量或純量向量"
 
-#: windows/util.c:324
+#: windows/util.c:330
 msgid "unable to open the clipboard"
 msgstr "無法開啟剪貼簿"
 
-#: windows/util.c:329
+#: windows/util.c:335
 msgid "unable to write to the clipboard"
 msgstr "無法寫入剪貼簿"
 
-#: windows/util.c:408
+#: windows/util.c:414
 msgid "'title' must be a character string"
 msgstr "'title' 必須是字串"
 
-#: windows/util.c:417
+#: windows/util.c:423
 msgid "'text' must be a character string"
 msgstr "'text' 必須是字串"
 
-#: windows/util.c:456
+#: windows/util.c:462
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' 必須是長度 1"
 
-#: windows/util.c:569
+#: windows/util.c:575
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' 必須是串列"
 
-#: windows/util.c:573
+#: windows/util.c:579
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' 元件 %d 並非視窗控柄"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one or more"
 msgstr "選取一或多個"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one"
 msgstr "選取一個"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
 msgstr "'default' 必須是字串"
 
-#: windows/widgets.c:190 windows/widgets.c:258
+#: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "'default' 過長"
 
-#: windows/widgets.c:194 windows/widgets.c:262
+#: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
 msgstr "'caption' 必須是字串"
 
-#: windows/widgets.c:196
+#: windows/widgets.c:204
 msgid "'multi' must be a logical value"
 msgstr "'multi' 必須是邏輯值"
 
-#: windows/widgets.c:198
+#: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' 必須是整數值"

@@ -1,6 +1,6 @@
 % File src/library/base/man/diff.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{diff}
@@ -65,5 +65,8 @@ diff(x, lag = 2)
 diff(x, differences = 2)
 
 diff(.leap.seconds)
+## allows to pass units via ... to difftime()
+diff(.leap.seconds, units = "weeks") 
+diff(as.Date(.leap.seconds), units = "weeks")
 }
 \keyword{arith}

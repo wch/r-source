@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2022 The R Core Team
+#  Copyright (C) 2019-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Author"])
 }
 
@@ -72,6 +73,7 @@ function(pkg, dir = Rd_macros_package_dir())
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
     	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+    desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Maintainer"])
 }
 
@@ -107,9 +109,11 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	result <- NULL
 	# FIXME:  these indices should contain links...
 	if (!is.null(info$info[[2L]]))
+	    ## this is readLines(system.file("INDEX", package = pkg, lib.loc = lib.loc))
 	    result <- c("", "Index of help topics:", "\\preformatted{",
 				  info$info[[2L]], "}")
 	if (!is.null(info$info[[3L]]))
+	    ## FIXME: unreachable in build stage as vignettes get only built after partial.rdb
 	    result <- c(result, "",
 			"Further information is available in the following vignettes:\\cr\\cr",
 			tabular(paste0("\\code{", info$info[[3L]][,1], "}"),

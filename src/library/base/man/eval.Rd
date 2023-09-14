@@ -25,11 +25,11 @@ local(expr, envir = new.env())
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
     be evaluated.  May also be \code{NULL}, a list, a data frame,
     a pairlist or an integer as specified to \code{\link{sys.call}}.}
-  \item{enclos}{Relevant when \code{envir} is a (pair)list or a data frame.
+  \item{enclos}{relevant when \code{envir} is a (pair)list or a data frame.
     Specifies the enclosure, i.e., where \R looks for objects not found
     in \code{envir}.  This can be \code{NULL} (interpreted as the base
     package environment, \code{\link{baseenv}()}) or an environment.}
-  \item{n}{number of parent generations to go back}
+  \item{n}{number of parent generations to go back.}
 }
 \details{
   \code{eval} evaluates the \code{expr} argument in the

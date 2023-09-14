@@ -48,10 +48,10 @@ returnValue(default = NULL)
     will be called just before the corresponding step in the body of the
     function.
     See the details section. }
-  \item{print}{If \code{TRUE} (as per default), a descriptive line is
+  \item{print}{if \code{TRUE} (as per default), a descriptive line is
     printed before any trace expression is evaluated.}
-  \item{signature}{ If this argument is supplied, it should be a
-    signature for a method for function \code{what}.  In this case, the
+  \item{signature}{an optional
+    signature for a method for function \code{what}.  If supplied, the
     method, and \emph{not} the function itself, is traced.}
   \item{edit}{ For complicated tracing, such as tracing within a loop
     inside the function, you will need to insert the desired calls by
@@ -91,7 +91,7 @@ returnValue(default = NULL)
     \code{browser()}), and \code{msg} is a string identifying the
     place where the trace action occurs.
   }
-  \item{default}{If \code{returnValue} finds no return value (e.g.
+  \item{default}{if \code{returnValue} finds no return value (e.g., when
     a function exited because of an error, restart or as a result
     of evaluating a return from a caller function), it will return
     \code{default} instead.

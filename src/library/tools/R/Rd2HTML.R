@@ -260,7 +260,7 @@ createRedirects <- function(file, Rdobj)
         message(msg, appendLF = FALSE)
     }
     ## remove duplicate aliases, if any
-    aliasesToProcess <- sapply(toProcess, aliasName)
+    aliasesToProcess <- vapply(toProcess, aliasName, "")
     toProcess <- toProcess[!duplicated(aliasesToProcess)]
     for (i in toProcess) {
         aname <- aliasName(i)
@@ -454,6 +454,11 @@ Rd2HTML <-
     }
 
     writeItemAsCode <- function(blocktag, block, addID = blocktag == "\\arguments") {
+        ## Argh.  Quite a few packages put the items in their value
+        ## section inside \code.
+        for(i in which(RdTags(block) == "\\code"))
+            attr(block[[i]], "Rd_tag") <- "Rd"
+
         ## Usually RdTags(block)[1L] == "TEXT", except when it is
         ## \\dots, \\ldots, etc. Potentially more complicated in cases
         ## like \item{foo, \dots, bar}, where block will have length >
@@ -925,13 +930,7 @@ Rd2HTML <-
      		"\\arguments"= {
     		    of1('<tr><td>')
     		    inPara <<- NA
-                    ## Argh.  Quite a few packages put the items in
-                    ## their value section inside \code.
-                    if(identical(RdTags(block[[1L]])[1L], "\\code")) {
-                        writeContent(block[[1L]], tag)
-                    } else {
-                        writeItemAsCode(blocktag, block[[1L]])
-                    }
+                    writeItemAsCode(blocktag, block[[1L]])
     		    of1('</td>\n<td>\n')
     		    inPara <<- FALSE
     		    writeContent(block[[2L]], tag)
@@ -1163,7 +1162,10 @@ Rd2HTML <-
 	inPara <- NA
 	title <- Rd[[1L]]
         info$name <- name
-        info$title <- trimws(paste(as.character(title), collapse = "\n"))
+        info$title <- trimws(paste(utils::capture.output(Rd2txt(title, fragment = TRUE)),
+                                   collapse = "\n"))
+        info$htmltitle <- trimws(paste(utils::capture.output(Rd2HTML(title, fragment = TRUE)),
+                                       collapse = ""))
 	if (concordance)
 	    conc$saveSrcref(title)
 	writeContent(title, sections[1])
@@ -1433,6 +1435,64 @@ function(dir)
         s[match(x, v)]
     }
 
+    htmlify_depends_spec <- function(x) {
+        chunks <- strsplit(x, ",")
+        ## Canonicalize.
+        entries <- sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1",
+                       unlist(chunks, use.names = FALSE))
+        entries <- sub("[[:space:]]*\\(", " (", entries)
+        ## Try splitting at the first white space.
+        pos <- regexpr("[[:space:]]", entries)
+        names <- ifelse(pos == -1L, entries,
+                        substring(entries, 1L, pos - 1L))
+        rests <- ifelse(pos == -1L, "", substring(entries, pos))
+        found <- logical(length(names))
+        for(lib.loc in .libPaths()) {
+            ## Very basic test for installed package ...
+            found <- found | file.exists(file.path(lib.loc, names,
+                                                   "DESCRIPTION"))
+        }
+        names[found] <- sprintf("<a href=\"/library/%s\">%s</a>",
+                                names[found],
+                                names[found])
+        vapply(split(paste(names, rests, sep = ""),
+                     rep.int(seq_along(chunks), lengths(chunks))),
+               paste, "", collapse = ", ")
+    }
+
+    ## See <https://orcid.org/trademark-and-id-display-guidelines> for
+    ## ORCID identifier display guidelines.
+    ## We want the ORCID id transformed into a hyperlinked ORCID icon
+    ## right after the family name (but before the roles).  We can
+    ## achieve this by adding the canonicalized ORCID id (URL) to the
+    ## 'family' element and simultaneously dropping the ORCID id from
+    ## the 'comment' element, and then re-format.
+    .format_authors_at_R_field_with_expanded_ORCID_identifier <- function(a) {
+        x <- utils:::.read_authors_at_R_field(a)
+        format_person1 <- function(e) {
+            comment <- e$comment
+            pos <- which((names(comment) == "ORCID") &
+                         grepl(.ORCID_iD_variants_regexp, comment))
+            if((len <- length(pos)) > 0L) {
+                e$family <-
+                    c(e$family,
+                      paste0("<",
+                             paste0("https://replace.me.by.orcid.org/",
+                                    sub(.ORCID_iD_variants_regexp,
+                                        "\\3",
+                                        comment[pos])),
+                             ">"))
+                e$comment <- if(len < length(comment))
+                                 comment[-pos]
+                             else
+                                 NULL
+            }
+            e
+        }
+        x[] <- lapply(unclass(x), format_person1)
+        utils:::.format_authors_at_R_field_for_author(x)
+    }
+    
     desc <- enc2utf8(.read_description(descfile))
     pack <- desc["Package"]
     aatr <- desc["Authors@R"]
@@ -1453,6 +1513,10 @@ function(dir)
     ## CRAN obfuscates, .DESCRIPTION_to_latex() uses \email which only
     ## adds markup but does not create mailto: URLs.
     ## </FIXME>
+
+    if(!is.na(aatr))
+        desc["Author"] <-
+            .format_authors_at_R_field_with_expanded_ORCID_identifier(aatr)
 
     ## Take only Title and Description as *text* fields.
     desc["Title"] <- htmlify_text(desc["Title"])
@@ -1487,21 +1551,25 @@ function(dir)
                         2L)
     }
 
-    ## <NOTE>
-    ## The CRAN code re-creates suitably formatted Authors from
-    ## Authors@R if available, and replaces ORCID URLs by hyperlinked
-    ## ORCID logos.  We could so the same, but then we would also need
-    ## to ship the logo.
-    ## For now, do simply hyperlinks.
     if(!is.na(aatr)) {
         desc["Author"] <-
-            gsub(sprintf("&lt;(https://orcid.org/%s)&gt;",
+            gsub(sprintf("&lt;https://replace.me.by.orcid.org/(%s)&gt;",
                          .ORCID_iD_regexp),
-                 "<a href=\"\\1\">\\1</a>",
-                 gsub("\n", "<br/>", desc["Author"]))
+                 paste0("<a href=\"https://orcid.org/\\1\">",
+                        "<img alt=\"ORCID iD\"",
+                        if(dynamic)
+                            "src=\"/doc/html/orcid.svg\" "
+                        else
+                            "src=\"https://cloud.R-project.org/web/orcid.svg\" ",
+                        "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
+                        " /></a>"),
+                 desc["Author"])
     }
-    ## </NOTE>
+
     desc["License"] <- htmlify_license_spec(desc["License"], pack)
+
+    if(dynamic)
+        desc[theops] <- htmlify_depends_spec(desc[theops])
 
     ## <TODO>
     ## For dynamic help we should be able to further enhance by

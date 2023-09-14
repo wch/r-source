@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-10-16 14:04+0000\n"
 "Last-Translator: Gabriel Tormin <gta1998@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -163,10 +163,15 @@ msgstr "'by' deve ser uma lista"
 msgid "arguments must have same length"
 msgstr "argumentos devem ter o mesmo comprimento"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula' com termos faltando ou incorreta"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "argumento 'x ' deve ser numérico"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' deve ter os lados tanto esquerdo quanto direito"
 
 msgid "cannot change frequency from %g to %g"
@@ -216,6 +221,9 @@ msgstr "não é possível computar o valor de p exato com o de desempate"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "impossível computar os intervalos de confiança exatos com empate"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' com termos faltando ou incorreta"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "fator de agrupamento deve ter exatamente 2 níveis"
@@ -500,7 +508,13 @@ msgstr "'k' deve estar em {1, 2, ..  n - 1}"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "somente %d do primeiro %d autovalor são > 0"
 
-msgid "package 'MASS' must be installed"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -721,6 +735,9 @@ msgstr "sum(weights) != 1 não terá densidade real"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "são precisos ao menos 2 pontos para selecionar uma largura de banda automaticamente"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "norma de largura de banda desconhecida"
 
@@ -754,6 +771,9 @@ msgstr "dimensões incorretas para 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' não é um vetor ou matriz"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "método de distância inválido"
@@ -970,6 +990,9 @@ msgstr "especificação incorreta para 'row.vars'"
 msgid "incorrect specification for 'col.vars'"
 msgstr "especificação incorreta para 'col.vars'"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' deve ter os lados tanto esquerdo quanto direito"
+
 msgid "interactions are not allowed"
 msgstr "interações não são permitidas"
 
@@ -1001,6 +1024,18 @@ msgstr "faltando 'row.var.names'"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' faltando ou incorreto"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' não reconhecida"
@@ -1239,6 +1274,14 @@ msgstr ""
 msgid "not enough 'x' data"
 msgstr "insuficientes dados 'x'"
 
+#, fuzzy
+msgid "Parameter(s)"
+msgstr "ajustando parâmetros"
+
+#, fuzzy
+msgid "ignored"
+msgstr "' ignorado"
+
 msgid "not enough 'y' data"
 msgstr "insuficientes dados 'y'"
 
@@ -1249,8 +1292,27 @@ msgstr ""
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' deve ser numérico ou uma cadeia nomeando uma função válida"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr ""
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "argumento 'omit' inválido"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' deve ser um vetor de comprimento 2"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "argumento 'x ' deve ser numérico"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "argumento 'x ' deve ser numérico"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1317,8 +1379,21 @@ msgstr "testes-F ANOVA sobre um ajuste essencialmente perfeito, são incertos"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "chamando predict.lm(<fake-lm-object>) ..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "uma predição a partir de um ajuste rank-deficient pode ser enganoso"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 #, fuzzy
 msgid "predictions on current data refer to _future_ responses"
@@ -1560,14 +1635,12 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' deve ser um vetor de caracteres com um comprimento de pelo menos um"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'file' deve ser uma string de caracteres ou conexão"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 #, fuzzy
 msgid "'termobj' must be a object of class %s"
@@ -1588,6 +1661,14 @@ msgstr "'data' deve ser uma lista ou um ambiente"
 
 msgid "variable '%s' is not a factor"
 msgstr "variável '%s' não é um fator"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "contrastes aplicam-se apenas a fatores"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "contrastes podem ser aplicados apenas a fatores com 2 ou mais níveis"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' deve ser numérico"
@@ -1795,6 +1876,9 @@ msgstr ""
 msgid "'id.n' must be in {1,..,%d}"
 msgstr ""
 
+msgid "y is empty or has only NAs"
+msgstr ""
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1920,7 +2004,7 @@ msgstr ""
 msgid "elements of 'p' must be in (0,1)"
 msgstr ""
 
-msgid "y is empty or has only NAs"
+msgid "'conf.level' is not a probability"
 msgstr ""
 
 #, fuzzy
@@ -1970,9 +2054,6 @@ msgstr ""
 msgid "ref = %d must be in 1L:%d"
 msgstr ""
 
-msgid "'sep' must be a character string"
-msgstr ""
-
 msgid "failed to guess time-varying variables from their names"
 msgstr ""
 
@@ -2018,6 +2099,10 @@ msgstr ""
 
 msgid "argument 'object' has an impossible length"
 msgstr ""
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "fórmula inválida em deriv"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr ""
@@ -2610,6 +2695,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
 
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "link \"%s\" não está disponível para a família quasipoisson; links disponíveis são %s"
 
@@ -2753,12 +2841,6 @@ msgstr[1] ""
 
 #~ msgid "_NOT_ converged in"
 #~ msgstr "_NÃO_ convergido em"
-
-#~ msgid "' ignored"
-#~ msgstr "' ignorado"
-
-#~ msgid "fitting parameters"
-#~ msgstr "ajustando parâmetros"
 
 #, fuzzy
 #~ msgid "invalid length(xout)"

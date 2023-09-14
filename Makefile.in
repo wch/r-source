@@ -180,6 +180,7 @@ maintainer-clean: distclean
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@(cd $(srcdir) && rm -Rf autom4te.cache)
 
+## make dist should be preceded by make all
 dist: dist-unix
 ## GNU gzip 1.8 warns that env var GZIP is obsolescent for gzip, so use as arg
 dist-unix: distdir

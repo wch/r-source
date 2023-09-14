@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017   The R Core Team
+ *  Copyright (C) 1999-2023   The R Core Team
  *  Copyright (C) 2003-2017   The R Foundation
  *  Copyright (C) 1997-1999   Saikat DebRoy
  *
@@ -29,11 +29,12 @@
 
 #include <math.h>
 #include <float.h> /* DBL_MAX */
-#include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/Print.h>   /* Rprintf */
 #include <R_ext/PrtUtil.h> /* printRealVector */
-#include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
+#include <R_ext/BLAS.h>    /* ddot dnrm2 dscal */
+#include <R_ext/Linpack.h> /* dtrsl */
+#include <R_ext/Applic.h>  /* fdhess */
 #include <Rmath.h>
 // as in <Defn.h> :
 #define Rexp10(x) pow(10.0, x)

@@ -31,7 +31,7 @@ rowsum(x, group, reorder = TRUE, \dots)
     that groups were encountered.}
   \item{na.rm}{logical (\code{TRUE} or \code{FALSE}).  Should \code{NA}
     (including \code{NaN}) values be discarded?}
-  \item{\dots}{other arguments to be passed to or from methods}
+  \item{\dots}{other arguments to be passed to or from methods.}
 }
 \value{
   A matrix or data frame containing the sums.  There will be one row per

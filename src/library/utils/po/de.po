@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2023-02-22 13:05+0000\n"
 "Last-Translator: Martin Mächler <maechler@stat.math.ethz.ch>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -17,269 +17,427 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
-#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
-#: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
-#: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
-#: windows/widgets.c:78 windows/widgets.c:83
-#, c-format
+#, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
 
-#: io.c:350 io.c:835
+#, fuzzy
 msgid "invalid quote symbol set"
 msgstr "ungültiges quote Symbol gesetzt"
 
-#: io.c:362 io.c:858 io.c:1078
 msgid "cannot open the connection"
 msgstr "kann die Verbindung nicht öffnen"
 
-#: io.c:365 io.c:369
+#, fuzzy
 msgid "cannot read from this connection"
-msgstr "kann aus dieser Verbindung nicht lesen"
+msgstr "kann in diese Verbindung nicht schreiben"
 
-#: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr "Zeichenkette in Anführungszeichen in Zeile %d mit EOF beendet"
 
-#: io.c:567
 msgid "the first argument must be of mode character"
 msgstr "das erste Argument muss vom Modus character sein"
 
-#: io.c:597
-#, c-format
+#, fuzzy, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "unzulässige 'numerals' Zeichenkette \"%s\""
 
-#: io.c:773
 #, c-format
 msgid "Selection: "
 msgstr "Auswahl: "
 
-#: io.c:868 io.c:883
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "kann Buffer in 'readTableHead' nicht allokieren"
 
-#: io.c:896
 msgid "\\ followed by EOF"
 msgstr "\\\\ gefolgt von EOF"
 
-#: io.c:948 io.c:952
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "unvollständige letzte Zeile von readTableHeader in '%s' gefunden"
 
-#: io.c:1009
 msgid "index out of range"
 msgstr "Index außerhalb der Grenzen"
 
-#: io.c:1046
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr "Problem beim Schließen der Verbindung: %s"
 
-#: io.c:1048
 msgid "Problem closing connection"
 msgstr "Problem beim Schließen der Verbindung"
 
-#: io.c:1071
+#, fuzzy
 msgid "'file' is not a connection"
 msgstr "'file' ist keine Verbindung"
 
-#: io.c:1074
 msgid "cannot write to this connection"
 msgstr "kann in diese Verbindung nicht schreiben"
 
-#: io.c:1104
+#, fuzzy
 msgid "'dec' must be a single character"
-msgstr "'dec' muss ein einzelnes Zeichen sein"
+msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
 
-#: io.c:1130
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
-msgstr ""
-"beschädigter Dataframe -- Länge der Spalte %d entspricht nicht der Anzahl "
-"Zeilen"
+msgstr "beschädigter Dataframe -- Länge der Spalte %d entspricht nicht der Anzahl Zeilen"
 
-#: io.c:1161
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "Spalte %s behauptet Faktor zu sein, hat aber keine numerischen Kodes"
 
-#: io.c:1179
 msgid "corrupt matrix -- dims do not match length"
 msgstr "beschädigte Matrix -- Dimensionen entsprechen nicht der Länge"
 
-#: stubs.c:56
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' kann nur in Rgui und Rterm genutzt werden"
 
-#: stubs.c:73
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' kann nur in Rgui und Rterm genutzt werden"
 
-#: stubs.c:85
+#, fuzzy
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
-#: stubs.c:151 stubs.c:159
 msgid "X11 dataentry cannot be loaded"
 msgstr "X11 Dateneintrag kann nicht geladen werden"
 
-#: stubs.c:155 stubs.c:184 stubs.c:190
+#, fuzzy
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
 
-#: stubs.c:248 stubs.c:251
-#, c-format
+#, fuzzy, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
 
-#: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
 msgstr "'%s' enthält fehlende Werte"
 
-#: utils.c:68
+#, fuzzy
 msgid "argument 'class' must be a character string"
 msgstr "Argument 'class' muss eine Zeichenkette sein"
 
-#: utils.c:78
+#, fuzzy
 msgid "argument 'x' must be a length-1 character vector"
 msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
 
-#: utils.c:81
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
 msgstr "Argument 'x' muss UTF-8 kodiert sein (inkl. ASCII)"
 
-#: utils.c:147
+#, fuzzy
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
 
-#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() konnte Hostnamen '%s' nicht auflösen"
 
-#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "unbekanntes Format von 'gethostbyname' zurückgegeben"
 
-#: utils.c:169
+#, fuzzy
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() ist auf dieser Plattform nicht unterstützt"
 
-#: windows/dialogs.c:181
 msgid "unknown type"
 msgstr "unbekannter Typ"
 
-#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
-#: windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
 msgstr "Menüfunktionen können nur im GUI genutzt werden"
 
-#: windows/dialogs.c:245
-#, c-format
+#, fuzzy, c-format
 msgid "unable to retrieve items for %s (%s)"
-msgstr "kann keine Elemente für %s abrufen (%s)"
+msgstr "kann Menüeintrag nicht entfernen (%s)"
 
-#: windows/dialogs.c:283
-#, c-format
+#, fuzzy, c-format
 msgid "unable to add menu (%s)"
-msgstr "kann Menü nicht hinzufügen (%s)"
+msgstr "kann Menüeintrag nicht hinzufügen (%s)"
 
-#: windows/dialogs.c:295
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "kann Menüeintrag nicht hinzufügen (%s)"
 
-#: windows/dialogs.c:318
 msgid "menu does not exist"
 msgstr "Menü existiert nicht"
 
-#: windows/dialogs.c:325
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "kann Menüeintrag nicht entfernen (%s)"
 
-#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
-#: windows/registry.c:254
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
 
-#: windows/registry.c:266
-#, c-format
+#, fuzzy, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Registryeintrag '%ls' nicht gefunden"
 
-#: windows/util.c:46
 msgid "unsupported version of Windows"
 msgstr "nicht unterstützte Version von Windows"
 
-#: windows/util.c:285
+#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "Argument muss Zeichenkettenvektor oder Rawvektor sein"
+msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
 
-#: windows/util.c:324
 msgid "unable to open the clipboard"
 msgstr "kann Zwischenablage nicht öffnen"
 
-#: windows/util.c:329
 msgid "unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
-#: windows/util.c:408
+#, fuzzy
 msgid "'title' must be a character string"
-msgstr "'title' muss eine Zeichenkette sein"
+msgstr "'text' muss eine Zeichenkette sein"
 
-#: windows/util.c:417
+#, fuzzy
 msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
-#: windows/util.c:456
-#, c-format
+#, fuzzy, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' muss Länge 1 haben"
 
-#: windows/util.c:569
-#, c-format
+#, fuzzy, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' muss eine Liste sein"
 
 # +
-#: windows/util.c:573
-#, c-format
+#, fuzzy, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' Element %d ist keine Fenster-Handle"
 
-#: windows/widgets.c:105
 msgid "Select one or more"
 msgstr "Wähle ein oder mehrere"
 
-#: windows/widgets.c:105
 msgid "Select one"
 msgstr "Wähle eins"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#, fuzzy
 msgid "'default' must be a character string"
-msgstr "'default' muss eine Zeichenkette sein"
+msgstr "'text' muss eine Zeichenkette sein"
 
-#: windows/widgets.c:190 windows/widgets.c:258
 msgid "'default' is overlong"
 msgstr "'default' ist überlang"
 
-#: windows/widgets.c:194 windows/widgets.c:262
+#, fuzzy
 msgid "'caption' must be a character string"
-msgstr "'caption' muss eine Zeichenkette sein"
+msgstr "'text' muss eine Zeichenkette sein"
 
-#: windows/widgets.c:196
 msgid "'multi' must be a logical value"
 msgstr "'multi' muss ein boolescher Wert sein"
 
-#: windows/widgets.c:198
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' muss ganzzahlig sein"
+
+#, fuzzy
+#~ msgid "invalid value for %s : %s"
+#~ msgstr "unzulässige 'numerals' Zeichenkette \"%s\""
+
+#, fuzzy
+#~ msgid "Invalid 'filter' argument."
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "'file' must be NULL, a character string or a connection"
+#~ msgstr "'title' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "all arguments must be of class %s"
+#~ msgstr "Argument 'class' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "data set %s not found"
+#~ msgstr "Registryeintrag '%ls' nicht gefunden"
+
+#, fuzzy
+#~ msgid "only 'html = TRUE' is supported on this platform"
+#~ msgstr "nsl() ist auf dieser Plattform nicht unterstützt"
+
+#, fuzzy
+#~ msgid "invalid 'data' argument"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "invalid 'modes' argument"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "invalid 'x' argument"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "HTML help is unavailable"
+#~ msgstr "X11 nicht verfügbar"
+
+#, fuzzy
+#~ msgid "incorrect field specification"
+#~ msgstr "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "incorrect type specification"
+#~ msgstr "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "incorrect 'agrep' specification"
+#~ msgstr "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "'%s' must be a non-empty character string"
+#~ msgstr "'text' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "S3 method '%s' not found"
+#~ msgstr "Registryeintrag '%ls' nicht gefunden"
+
+#, fuzzy
+#~ msgid "'code_files' must be a character vector"
+#~ msgstr "'default' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "'list' must be a character vector naming R objects"
+#~ msgstr "'title' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "invalid 'type'; must be a character string"
+#~ msgstr "'text' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "unable to access index for repository %s"
+#~ msgstr "kann keine Elemente für %s abrufen (%s)"
+
+#, fuzzy
+#~ msgid "invalid 'filters' argument."
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
+#~ msgstr "Argument muss Zeichenkettenvektor oder Rawvektor sein"
+
+#, fuzzy
+#~ msgid "'priority' must be character or NULL"
+#~ msgstr "'caption' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "'destdir' is not a directory"
+#~ msgstr "'file' ist keine Verbindung"
+
+#, fuzzy
+#~ msgid "invalid 'type'"
+#~ msgstr "ungültiger Zeitstempel"
+
+#, fuzzy
+#~ msgid "cannot set repositories non-interactively"
+#~ msgstr "kann aus dieser Verbindung nicht lesen"
+
+#, fuzzy
+#~ msgid "invalid options(\"pkgType\"); must be a character string"
+#~ msgstr "'caption' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "unable to create %s"
+#~ msgstr "kann Menü nicht hinzufügen (%s)"
+
+#, fuzzy
+#~ msgid "unable to create temporary directory %s"
+#~ msgstr "kann keine Elemente für %s abrufen (%s)"
+
+#, fuzzy
+#~ msgid "'env' must be an environment"
+#~ msgstr "'%s' muss eine Liste sein"
+
+#, fuzzy
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "unzulässige 'numerals' Zeichenkette \"%s\""
+
+#, fuzzy
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "invalid 'row.names' length"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "invalid format"
+#~ msgstr "ungültiger Zeitstempel"
+
+#, fuzzy
+#~ msgid "%s option must be a length one character vector or NULL"
+#~ msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
+
+#, fuzzy
+#~ msgid "'file' must be a character string or connection"
+#~ msgstr "'title' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "invalid 'socket' argument"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "'port' must be integer of length 1"
+#~ msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
+
+#, fuzzy
+#~ msgid "invalid 'tarfile' argument"
+#~ msgstr "ungültiges '%s' Argument"
+
+#, fuzzy
+#~ msgid "'compressed' must be logical or character"
+#~ msgstr "'dec' muss ein einzelnes Zeichen sein"
+
+#, fuzzy
+#~ msgid "invalid octal digit"
+#~ msgstr "ungültiger Zeitstempel"
+
+#, fuzzy
+#~ msgid "'tarfile' must be a character string or a connection"
+#~ msgstr "'title' muss eine Zeichenkette sein"
+
+#, fuzzy
+#~ msgid "vignette %s not found"
+#~ msgstr "Registryeintrag '%ls' nicht gefunden"
+
+#, fuzzy
+#~ msgid "'title' must be NULL or a length-1 character vector"
+#~ msgstr "Argument 'x'  muss Zeichenkettenvektor der Länge 1 sein"
+
+#, fuzzy
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "unzulässige 'numerals' Zeichenkette \"%s\""
+
+#, fuzzy
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "'files' must be a character vector specifying one or more filepaths"
+#~ msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
+
+#, fuzzy
+#~ msgid "zip file %s not found"
+#~ msgstr "Registryeintrag '%ls' nicht gefunden"
+
+#, fuzzy
+#~ msgid "Invalid role specification: %s."
+#~ msgid_plural "Invalid role specifications: %s."
+#~ msgstr[0] "ungültige '%s' Spezifikation"
+#~ msgstr[1] "ungültige '%s' Spezifikation"
+
+#, fuzzy
+#~ msgid "object '%s' not found"
+#~ msgid_plural "objects '%s' not found"
+#~ msgstr[0] "Registryeintrag '%ls' nicht gefunden"
+#~ msgstr[1] "Registryeintrag '%ls' nicht gefunden"
+
+#, fuzzy
+#~ msgid "package %s is not available %s"
+#~ msgid_plural "packages %s are not available %s"
+#~ msgstr[0] "X11 nicht verfügbar"
+#~ msgstr[1] "X11 nicht verfügbar"
+
+#, fuzzy
+#~ msgid "dependency %s is not available"
+#~ msgid_plural "dependencies %s are not available"
+#~ msgstr[0] "X11 nicht verfügbar"
+#~ msgstr[1] "X11 nicht verfügbar"

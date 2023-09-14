@@ -300,16 +300,27 @@ static SEXP unresolveFill(SEXP pattern)
     return result;
 }
 
-SEXP resolveGPar(SEXP gp) 
+SEXP resolveGPar(SEXP gp, Rboolean byName) 
 {
     SEXP result = R_NilValue;
-    if (Rf_inherits(gpFillSXP(gp), "GridPattern") ||
-        Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
-        SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
-        SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+    SEXP fill;
+    if (byName) {
+        PROTECT(fill = getListElement(gp, "fill"));
+    } else {
+        PROTECT(fill = gpFillSXP(gp));
+    }
+    if (Rf_inherits(fill, "GridPattern") ||
+        Rf_inherits(fill, "GridPatternList")) {
+        SEXP resolvedFill = PROTECT(resolveFill(fill, 0));
+        if (byName) {
+            setListElement(gp, "fill", resolvedFill);
+        } else {
+            SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
+        }
         result = resolvedFill;
         UNPROTECT(1);
     }
+    UNPROTECT(1);
     return result;
 }
 

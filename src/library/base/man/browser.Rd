@@ -55,8 +55,8 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
     \item{\code{c}}{exit the browser
     and continue execution at the next statement.}
     \item{\code{cont}}{synonym for \code{c}.}
-    \item{\code{f}}{finish execution of the current loop or function} 
-    \item{\code{help}}{print this list of commands}
+    \item{\code{f}}{finish execution of the current loop or function.} 
+    \item{\code{help}}{print this list of commands.}
     \item{\code{n}}{evaluate the next statement, stepping over 
       function calls.  For byte compiled functions interrupted by
       \code{browser} calls, \code{n} is equivalent to \code{c}.}
@@ -88,7 +88,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   setting \code{\link{options}(deparse.max.lines)}.
   
   The browser prompt is of the form \code{Browse[\var{n}]>}: here
-  \code{var{n}} indicates the \sQuote{browser level}.  The browser can
+  \code{\var{n}} indicates the \sQuote{browser level}.  The browser can
   be called when browsing (and often is when \code{\link{debug}} is in
   use), and each recursive call increases the number.  (The actual
   number is the number of \sQuote{contexts} on the context stack: this
@@ -97,6 +97,36 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   
   This is a primitive function but does argument matching in the
   standard way.
+}
+\section{Interaction with condition handling}{
+  Because the browser prompt is implemented using the
+  \link[base:conditions]{restart and condition handling mechanism},
+  it prevents error handlers set up before the breakpoint from being
+  called or invoked. The implementation follows this model:
+
+  \preformatted{
+repeat withRestarts(
+    withCallingHandlers(
+        readEvalPrint(),
+        error = function(cnd) {
+            cat("Error:", conditionMessage(cnd), "\n")
+            invokeRestart("browser")
+        }
+    ),
+    browser = function(...) NULL
+)
+
+readEvalPrint <- function(env = parent.frame()) {
+    print(eval(parse(prompt = "Browse[n]> "), env))
+}
+}
+
+  The restart invocation interrupts the lookup for condition handlers
+  and transfers control to the next iteration of the debugger REPL.
+
+  Note that condition handlers for other classes (such as \code{"warning"})
+  are still called and may cause a non-local transfer of control out of the
+  debugger.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

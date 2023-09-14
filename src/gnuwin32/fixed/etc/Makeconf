@@ -1,14 +1,19 @@
 #-*- Makefile -*-
 # $(R_HOME}/etc$(R_ARCH)/Makeconf
 
+# Substituted by fixed/Makefile 
+USE_LLVM =
+
 # Hand-edited version for gnuwin32.
 
 ifdef DEBUG
   DLLFLAGS=
-  DEBUGFLAG=-gdwarf-2
+  DEBUGFLAG=$(if $(USE_LLVM),-g3,-gdwarf-2)
+  FDEBUGFLAG=$(if $(USE_LLVM),,-gdwarf-2)
 else
   DLLFLAGS=-s
   DEBUGFLAG=
+  FDEBUGFLAG=
 endif
 
 DLLFLAGS += -static-libgcc
@@ -16,11 +21,10 @@ LINKFLAGS += -static-libgcc
 
 
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
-WIN = 32
+WIN = 64
 MINGW_PREFIX = /mingw$(WIN)
 BINPREF =
 COMPILED_BY =
-# SYMPAT = 's/^.* [BCDRT] _/ /p' for 32-bit
 # SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit
 SYMPAT = @SYMPAT@
 IMPDIR = bin
@@ -54,10 +58,12 @@ LOCAL_CPPFLAGS = -I"$(LOCAL_SOFT)/include"
 LOCAL_LIBS = -L"$(LOCAL_SOFT)/lib$(R_ARCH)" -L"$(LOCAL_SOFT)/lib"
 endif
 
-DLLTOOL = $(BINPREF)dlltool --as $(BINPREF)as $(DT_ARCH)
+LLVMPREF = $(if $(USE_LLVM),llvm-,)
+CCBASE = $(if $(USE_LLVM),clang,gcc)
+DLLTOOL = $(BINPREF)$(LLVMPREF)dlltool --as $(BINPREF)$(LLVMPREF)as $(DT_ARCH)
 DLLTOOLFLAGS = -k
-NM = $(BINPREF)nm
-RESCOMP = $(BINPREF)windres $(RC_ARCH)
+NM = $(BINPREF)$(LLVMPREF)nm
+RESCOMP = $(BINPREF)$(LLVMPREF)windres $(RC_ARCH)
 ## MAIN_LD needs to be set by the package
 LINKER = $(MAIN_LD)
 ## as a default
@@ -81,26 +87,26 @@ TCL_VERSION = 86
 # was a reference to Rzlib.dll in R < 3.2.0
 ZLIB_LIBS = -lz
 
-AR = $(BINPREF)ar
+AR = $(BINPREF)$(LLVMPREF)ar
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
-CC = $(BINPREF)gcc $(M_ARCH)
+CC = $(BINPREF)$(CCBASE) $(M_ARCH)
 CFLAGS = -O3 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CPICFLAGS = 
 CPPFLAGS =
-CC17 = $(BINPREF)gcc $(M_ARCH)
+CC17 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C17FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu17 @EOPTS@ $(LTO)
-CC23 = $(BINPREF)gcc $(M_ARCH)
+CC23 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C23FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu2x @EOPTS@ $(LTO)
-CC90 = $(BINPREF)gcc $(M_ARCH)
+CC90 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ $(LTO)
-CC99 = $(BINPREF)gcc $(M_ARCH)
+CC99 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
-CXX = $(BINPREF)g++ -std=gnu++17 $(M_ARCH)
+CXX = $(BINPREF)$(if $(USE_LLVM),clang++,g++) -std=gnu++17 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXXPICFLAGS =
-CXX11 = $(BINPREF)g++ $(M_ARCH)
+CXX11 = $(BINPREF)$(if $(USE_LLVM),clang++,g++) $(M_ARCH)
 CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXX11PICFLAGS =
 CXX11STD = -std=gnu++11
@@ -134,14 +140,19 @@ ECHO_T =
 ## unsupported on Windows
 F_VISIBILITY = 
 ## FC is the compiler used for all Fortran as from R 3.6.0
-FC = $(BINPREF)gfortran $(M_ARCH)
-FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@ $(LTO)
+ifdef USE_LLVM
+  FC = $(BINPREF)flang $(M_ARCH)
+  FLIBS = -lFortranRuntime -lFortranDecimal -lm 
+else
+  FC = $(BINPREF)gfortran $(M_ARCH)
+  FLIBS = -lgfortran -lm -lquadmath
+endif
+FCFLAGS = -O3 $(FDEBUGFLAG) @EOPTS@ $(LTO)
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS_XTRA =
 #F77 = $(BINPREF)gfortran $(M_ARCH)
 #F77_VISIBILITY = 
-FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@ $(LTO)
-FLIBS = -lgfortran -lm -lquadmath
+FFLAGS = -O3 $(FDEBUGFLAG) @EOPTS@ $(LTO)
 #FCPICFLAGS =
 FPICFLAGS = 
 FOUNDATION_CPPFLAGS =
@@ -185,7 +196,7 @@ OBJCXX =
 OBJDUMP = $(BINPREF)objdump
 R_ARCH =
 RANLIB = $(BINPREF)ranlib
-SAFE_FFLAGS = -O2 -msse2 -mfpmath=sse
+SAFE_FFLAGS = -O2 $(if $(USE_LLVM),,-msse2 -mfpmath=sse)
 SED = sed
 ## it seems some makes (but not ours) get upset if SHELL is set.
 # SHELL = /bin/sh
@@ -235,9 +246,11 @@ R_XTRA_FFLAGS =
 
 ifneq "$(LTO_OPT)" ""
 LTO = $(LTO_OPT)
-AR = $(BINPREF)gcc-ar
-NM = $(BINPREF)gcc-nm
-RANLIB = $(BINPREF)gcc-ranlib
+ifndef USE_LLVM
+  AR = $(BINPREF)gcc-ar
+  NM = $(BINPREF)gcc-nm
+  RANLIB = $(BINPREF)gcc-ranlib
+endif
 SHLIB_LDFLAGS += $(CFLAGS)
 SHLIB_FCLDFLAGS += $(FFLAGS)
 SHLIB_CXXLDFLAGS += $(CXXFLAGS)

@@ -43,8 +43,8 @@ c(\dots)
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an \code{\link{array}} into a vector.
   \code{as.vector} is a more intuitive way to do this, but also drops
-  names.  Note that methods other than the default are not required
-  to do this (and they will almost certainly preserve a class attribute).
+  names.  Note that \code{c} methods other than the default are not required
+  to remove attributes (and they will almost certainly preserve a class attribute).
 
   This is a \link{primitive} function.
 }
@@ -66,7 +66,7 @@ c(\dots)
   attribute-free vectors.
 }
 \examples{
-c(1,7:9)
+c(1, 7:9)
 c(1:5, 10.5, "next")
 
 ## uses with a single argument to drop attributes
@@ -87,9 +87,8 @@ c(ll, d = 1:3) # which is == c(ll, as.list(c(d = 1:3)))
 ## but rather
 c(ll, d = list(1:3))  # c() combining two lists
 
+## descend through lists:
 c(list(A = c(B = 1)), recursive = TRUE)
-
-c(options(), recursive = TRUE)
 c(list(A = c(B = 1, C = 2), B = c(E = 7)), recursive = TRUE)
 }
 \keyword{manip}

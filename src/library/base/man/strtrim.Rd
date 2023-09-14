@@ -15,7 +15,7 @@ strtrim(x, width)
 \arguments{
   \item{x}{a character vector, or an object which can be coerced to a
     character vector by \code{\link{as.character}}.}
-  \item{width}{Positive integer values: recycled to the length of \code{x}.}
+  \item{width}{positive integer values: recycled to the length of \code{x}.}
 }
 \details{
   \sQuote{Width} is interpreted as the display width in a monospaced

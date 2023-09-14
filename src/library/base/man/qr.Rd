@@ -43,7 +43,7 @@ as.qr(x)
   \item{k}{effective rank.}
   \item{LAPACK}{logical.  For real \code{x}, if true use LAPACK
     otherwise use LINPACK (the default).}
-  \item{\dots}{further arguments passed to or from other methods}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.

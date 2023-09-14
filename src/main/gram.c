@@ -4684,7 +4684,7 @@ static int SkipSpace(void)
 #ifdef Win32
     if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
 	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f' ||
-	       (unsigned int) c == 0xa0) ;
+	       (unsigned int) c == 0xa0) {};
 	return c;
     } else {
 	int i, clen;
@@ -4721,7 +4721,7 @@ static int SkipSpace(void)
     } else
 #endif
 	// does not support non-ASCII spaces, unlike Windows
-	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') ;
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') {};
     return c;
 }
 

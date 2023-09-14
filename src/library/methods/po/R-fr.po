@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2021-11-06 17:51+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -120,7 +120,8 @@ msgstr ""
 "pas de version du générique de %s permise dans le package %s ;\n"
 "    un nouveau générique sera attribué pour %s"
 
-msgid "function %s appears to be a generic function, but with generic name %s"
+#, fuzzy
+msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
 msgstr "la fonction %s semble être une fonction générique, mais avec le nom générique %s"
 
 msgid "generic function %s not found for removal"
@@ -550,9 +551,6 @@ msgstr "pas d'arguments corrects pour dispatcher les méthodes de cette fonction
 msgid "making a generic for special function %s"
 msgstr "création d'un fonction générique pour la fonction spéciale %s"
 
-msgid "invalid call in method dispatch to '%s' (no default method)"
-msgstr "appel incorrect dans le dispatcheur de méthodes vers '%s' (pas de méthode par défaut)"
-
 msgid "in method for %s with signature %s:"
 msgstr "dans la méthode pour %s avec la signature %s :"
 
@@ -779,6 +777,10 @@ msgstr ""
 
 msgid "argument %s must be a list or a character vector; got an object of class %s"
 msgstr "l'argument %s doit être une liste ou un vecteur de chaîne de caractères ; un objet de classe %s est obtenu"
+
+#, fuzzy
+msgid "expected a non-empty character string for argument 'name'"
+msgstr "une chaîne de caractères non vide est attendue pour l'argument name"
 
 msgid "no function %s found"
 msgstr "fonction %s introuvable"
@@ -1333,6 +1335,9 @@ msgid "no definition of class %s in the specified position, %s, definition on : 
 msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définition dans : %s"
 msgstr[1] "aucune définition de la classe %s n'existe à la position spécifiée, %s, définitions dans : %s"
+
+#~ msgid "invalid call in method dispatch to '%s' (no default method)"
+#~ msgstr "appel incorrect dans le dispatcheur de méthodes vers '%s' (pas de méthode par défaut)"
 
 #~ msgid "subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()"
 #~ msgstr "La sous-classe %s de la classe %s n'est pas locale et ne peut être mise à jour pour une nouvelle information d'héritage ; considérez setClassUnion()"

@@ -155,6 +155,7 @@ void R_CheckUserInterrupt(void)
 }
 
 static SEXP getInterruptCondition(void);
+static void addInternalRestart(RCNTXT *, const char *);
 
 static void onintrEx(Rboolean resumeOK)
 {
@@ -177,7 +178,7 @@ static void onintrEx(Rboolean resumeOK)
 	    endcontext(&restartcontext);
 	    return;
 	}
-	R_InsertRestartHandlers(&restartcontext, "resume");
+	addInternalRestart(&restartcontext, "resume");
 	signalInterrupt();
 	endcontext(&restartcontext);
     }
@@ -2020,11 +2021,9 @@ static void signalInterrupt(void)
     }
 }
 
-attribute_hidden void
-R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
-{
-    SEXP klass, rho, entry, name;
 
+static void checkRestartStacks(RCNTXT *cptr)
+{
     if ((cptr->handlerstack != R_HandlerStack ||
 	 cptr->restartstack != R_RestartStack)) {
 	if (IS_RESTART_BIT_SET(cptr->callflag))
@@ -2032,13 +2031,13 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
 	else
 	    error(_("handler or restart stack mismatch in old restart"));
     }
+}
 
-    /**** need more here to keep recursive errors in browser? */
-    rho = cptr->cloenv;
-    PROTECT(klass = mkChar("error"));
-    entry = mkHandlerEntry(klass, rho, R_RestartToken, rho, R_NilValue, TRUE);
-    R_HandlerStack = CONS(entry, R_HandlerStack);
-    UNPROTECT(1);
+static void addInternalRestart(RCNTXT *cptr, const char *cname)
+{
+    checkRestartStacks(cptr);
+    SEXP entry, name;
+
     PROTECT(name = mkString(cname));
     PROTECT(entry = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(entry, 0, name);
@@ -2046,6 +2045,25 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
     setAttrib(entry, R_ClassSymbol, mkString("restart"));
     R_RestartStack = CONS(entry, R_RestartStack);
     UNPROTECT(2);
+}
+
+attribute_hidden void
+R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
+{
+    SEXP klass, rho, entry;
+
+    checkRestartStacks(cptr);
+
+    /**** need more here to keep recursive errors in browser? */
+    SEXP h = GetOption1(install("browser.error.handler"));
+    if (! isFunction(h)) h = R_RestartToken;
+    rho = cptr->cloenv;
+    PROTECT(klass = mkChar("error"));
+    entry = mkHandlerEntry(klass, rho, h, rho, R_NilValue, TRUE);
+    R_HandlerStack = CONS(entry, R_HandlerStack);
+    UNPROTECT(1);
+
+    addInternalRestart(cptr, cname);
 }
 
 attribute_hidden SEXP do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)

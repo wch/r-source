@@ -625,9 +625,12 @@ Rd2txt <-
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,
-               "\\special" = ,
-               "\\var" = writeContent(block, tag),
-
+               "\\special" = writeContent(block, tag),
+               "\\var" = {
+                   put("<")
+                   writeContent(block, tag)
+                   put(">")
+               },
                "\\bold"=,
                "\\strong"= {
                    put("*")
@@ -891,7 +894,7 @@ Rd2txt <-
                                   blankLine()
                                   save <- startCapture()
                                   dropBlank <<- TRUE
-                                  writeContent(block[[1L]], tag)
+                                  writeItemAsCode(tag, block[[1L]])
                                   DLlab <- trim(endCapture(save))
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
@@ -991,6 +994,26 @@ Rd2txt <-
     	out <- summary(con)$description
     }
 
+    writeItemAsCode <- function(blocktag, block) {
+        ## Keep this in rsync with writeItemAsCode() in Rd2HTML.R!
+        
+        ## Argh.  Quite a few packages put the items in their value
+        ## section inside \code.
+        for(i in which(RdTags(block) == "\\code"))
+            attr(block[[i]], "Rd_tag") <- "Rd"
+
+        s <- as.character.Rd(block)
+        s[s %in% c("\\dots", "\\ldots")] <- "..."
+        s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
+        s <- s[nzchar(s)]
+        ## See writeSection(tag = "\\code")
+        opts <- Rd2txt_options()
+        if(opts$code_quote)
+            s <- paste0(LSQM, s, RSQM)
+        s <- paste0(s, collapse = ", ")
+        putf(s)
+    }
+        
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, fragment=fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)

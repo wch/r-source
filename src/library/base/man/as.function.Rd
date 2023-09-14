@@ -14,9 +14,8 @@ as.function(x, \dots)
 \alias{as.function.default}
 \arguments{
   \item{x}{object to convert, a list for the default method.}
-  \item{\dots}{additional arguments, depending on object}
-
-  \item{envir}{environment in which the function should be defined}
+  \item{\dots}{additional arguments to be passed to or from methods.}
+  \item{envir}{environment in which the function should be defined.}
 }
 \description{
   \code{as.function} is a generic function which is used to convert

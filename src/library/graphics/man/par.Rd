@@ -607,12 +607,17 @@ par(\dots, no.readonly = FALSE)
   in terms of their RGB components with a string of the form
   \code{"#RRGGBB"} where each of the pairs \code{RR}, \code{GG},
   \code{BB} consist of two hexadecimal digits giving a value in the
-  range \code{00} to \code{FF}.  Colors can also be specified by giving
-  an index into a small table of colors, the \code{\link{palette}}:
-  indices wrap round so with the default palette of size 8, \code{10} is
-  the same as \code{2}.  This provides compatibility with S.  Index
-  \code{0} corresponds to the background color.  Note that the palette
-  (apart from \code{0} which is per-device) is a per-session setting.
+  range \code{00} to \code{FF}.  Hexadecimal colors can be in the long
+  hexadecimal form (e.g., \code{"#rrggbb"} or \code{"#rrggbbaa"}) or the
+  short form (e.g, \code{"#rgb"} or \code{"#rgba"}). The short form is
+  expanded to the long form by replicating digits (not by adding zeroes),
+  e.g., \code{"#rgb"} becomes \code{"#rrggbb"}. Colors can
+  also be specified by giving an index into a small table of colors, the 
+  \code{\link{palette}}: indices wrap round so with the default palette 
+  of size 8, \code{10} is the same as \code{2}.  This provides 
+  compatibility with S.  Index \code{0} corresponds to the background 
+  color.  Note that the palette (apart from \code{0} which is per-device)
+  is a per-session setting.
 
   Negative integer colours are errors.
 

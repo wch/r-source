@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 19:19+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2023-01-19 18:36+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -23,8 +23,8 @@ msgstr ""
 #: io.c:1102 io.c:1103 io.c:1104 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
-#: windows/widgets.c:78 windows/widgets.c:83
+#: windows/dialogs.c:321 windows/util.c:127 windows/widgets.c:80
+#: windows/widgets.c:83 windows/widgets.c:88
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -101,9 +101,7 @@ msgstr "'dec' dev'essere un singolo carattere"
 #: io.c:1137
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
-msgstr ""
-"data frame corrotto -- la lunghezza della colonna %d non corrisponde con "
-"nrows"
+msgstr "data frame corrotto -- la lunghezza della colonna %d non corrisponde con nrows"
 
 #: io.c:1171
 #, c-format
@@ -206,13 +204,13 @@ msgstr "il menu non esiste"
 msgid "unable to delete menu item (%s)"
 msgstr "non è possibile eliminare la voce di menu (%s)"
 
-#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
-#: windows/registry.c:254
+#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
+#: windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valore '%s' non valido"
 
-#: windows/registry.c:266
+#: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Chiave registro '%ls' non trovata"
@@ -221,65 +219,65 @@ msgstr "Chiave registro '%ls' non trovata"
 msgid "unsupported version of Windows"
 msgstr "versione non supportata di Windows"
 
-#: windows/util.c:285
+#: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
 msgstr "l'argomento dev'essere un vettore di caratteri o un vettore raw"
 
-#: windows/util.c:324
+#: windows/util.c:330
 msgid "unable to open the clipboard"
 msgstr "non è possibile aprire gli appunti"
 
-#: windows/util.c:329
+#: windows/util.c:335
 msgid "unable to write to the clipboard"
 msgstr "non è possibile scrivere negli appunti"
 
-#: windows/util.c:408
+#: windows/util.c:414
 msgid "'title' must be a character string"
 msgstr "'title' dev'essere una stringa di caratteri"
 
-#: windows/util.c:417
+#: windows/util.c:423
 msgid "'text' must be a character string"
 msgstr "'text' dev'essere una stringa di caratteri"
 
-#: windows/util.c:456
+#: windows/util.c:462
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' dev'essere di lunghezza 1"
 
-#: windows/util.c:569
+#: windows/util.c:575
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' dev'essere una lista"
 
-#: windows/util.c:573
+#: windows/util.c:579
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' elemento %d non è un gestore di finestra"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one or more"
 msgstr "Selezionane uno o più"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one"
 msgstr "Selezionane uno"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
 msgstr "'default' dev'essere una stringa di caratteri"
 
-#: windows/widgets.c:190 windows/widgets.c:258
+#: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "'default' è troppo lungo"
 
-#: windows/widgets.c:194 windows/widgets.c:262
+#: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
 msgstr "'caption' dev'essere una stringa di caratteri"
 
-#: windows/widgets.c:196
+#: windows/widgets.c:204
 msgid "'multi' must be a logical value"
 msgstr "'multi' dev'essere una valore logico"
 
-#: windows/widgets.c:198
+#: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' dev'essere un valore integer"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2023-02-17 10:05+0000\n"
 "Last-Translator: Ella Kaye <ella.kaye@gmail.com>\n"
 "Language-Team: English\n"
@@ -158,7 +158,73 @@ msgstr ""
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr ""
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+msgid "Invalid span weight"
+msgstr ""
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+msgid "Invalid glyph font"
+msgstr ""
+
+msgid "Invalid font list"
+msgstr ""
+
+msgid "Unknown font"
+msgstr ""
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+msgid "Invalid compositing operator"
+msgstr ""
+
 msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
+msgid "Invalid mask type"
 msgstr ""
 
 msgid "Invalid fill rule"
@@ -242,7 +308,7 @@ msgstr ""
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr ""
 
-msgid "'file' must be a non-empty character string"
+msgid "'%s' must be a non-empty character string"
 msgstr ""
 
 msgid "GhostScript was not found"
@@ -252,6 +318,12 @@ msgid "invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
+msgstr ""
+
+msgid "'file' must be a non-empty character string"
+msgstr ""
+
+msgid "Invalid 'glyphInfo'"
 msgstr ""
 
 msgid "failed to add more ticks; 'min.n' too large?"
@@ -314,6 +386,9 @@ msgstr ""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr ""
 
@@ -349,7 +424,16 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "invalid width"
+msgstr ""
+
+msgid "invalid height"
+msgstr ""
+
 msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
+
+msgid "'filename' must be a non-empty character string"
 msgstr ""
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
@@ -437,17 +521,7 @@ msgid_plural "differ between new and previous"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] ""
 msgstr[1] ""

@@ -106,6 +106,16 @@ static int R_Profiling = 0;
 # endif
 #endif /* not Win32 */
 
+#if !defined(Win32) && defined(HAVE_PTHREAD)
+// <signal.h> is needed for pthread_kill on most platforms (and by POSIX
+//  but apparently not FreeBSD): it is included above.
+# include <pthread.h>
+# ifdef HAVE_SCHED_H
+#   include <sched.h>
+# endif
+static pthread_t R_profiled_thread;
+#endif
+
 #ifdef Win32
 static FILE *R_ProfileOutfile = NULL;
 #else
@@ -118,13 +128,27 @@ static int R_Line_Profiling = 0;                   /* indicates line profiling, 
 static char **R_Srcfiles;			   /* an array of pointers into the filename buffer */
 static size_t R_Srcfile_bufcount;                  /* how big is the array above? */
 static SEXP R_Srcfiles_buffer = NULL;              /* a big RAWSXP to use as a buffer for filenames and pointers to them */
-static int R_Profiling_Error;		   /* record errors here */
+static int R_Profiling_Error;		           /* record errors here */
 static int R_Filter_Callframes = 0;	      	   /* whether to record only the trailing branch of call trees */
+
+typedef enum { RPE_CPU, RPE_ELAPSED } rpe_type;    /* profiling event, CPU time or elapsed time */
+static rpe_type R_Profiling_Event;
 
 #ifdef Win32
 HANDLE MainThread;
 HANDLE ProfileEvent;
-#endif /* Win32 */
+#else
+# ifdef HAVE_PTHREAD
+typedef struct {
+    pthread_t thread;
+    pthread_mutex_t terminate_mu;
+    pthread_cond_t terminate_cv;
+    int should_terminate;
+    int interval_us;
+} R_profile_thread_info_t;
+static R_profile_thread_info_t R_Profile_Thread_Info;
+# endif
+#endif
 
 /* Careful here!  These functions are called asynchronously, maybe in the
    middle of GC, so don't do any allocations. They get called in a signal
@@ -331,12 +355,6 @@ static void lineprof(profbuf* pb, SEXP srcref)
     }
 }
 
-#if !defined(Win32) && defined(HAVE_PTHREAD)
-// <signal.h> is needed for pthread_kill on most platforms (and by POSIX
-//  but apparently not FreeBSD): it is included above.
-# include <pthread.h>
-static pthread_t R_profiled_thread;
-#endif
 
 #if defined(__APPLE__)
 #include <mach/mach_init.h>
@@ -429,22 +447,26 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 #ifdef Win32
     SuspendThread(MainThread);
 #elif defined(__APPLE__)
-    /* Using Mach thread API to detect whether we are on the main thread,
-       because pthread_self() sometimes crashes R due to a page fault when
-       the signal handler runs just after the new thread is created, but
-       before pthread initialization has been finished. */
-    mach_port_t id = mach_thread_self();
-    mach_port_deallocate(mach_task_self(), id);
-    if (id != R_profiled_thread_id) {
-	pthread_kill(R_profiled_thread, sig);
-	errno = old_errno;
-	return;
+    if (R_Profiling_Event == RPE_CPU) {
+	/* Using Mach thread API to detect whether we are on the main thread,
+	   because pthread_self() sometimes crashes R due to a page fault when
+	   the signal handler runs just after the new thread is created, but
+	   before pthread initialization has been finished. */
+	mach_port_t id = mach_thread_self();
+	mach_port_deallocate(mach_task_self(), id);
+	if (id != R_profiled_thread_id) {
+	    pthread_kill(R_profiled_thread, sig);
+	    errno = old_errno;
+	    return;
+	}
     }
 #elif defined(HAVE_PTHREAD)
-    if (! pthread_equal(pthread_self(), R_profiled_thread)) {
-	pthread_kill(R_profiled_thread, sig);
-	errno = old_errno;
-	return;
+    if (R_Profiling_Event == RPE_CPU) {
+	if (! pthread_equal(pthread_self(), R_profiled_thread)) {
+	    pthread_kill(R_profiled_thread, sig);
+	    errno = old_errno;
+	    return;
+	}
     }
 #endif /* Win32 */
 
@@ -572,7 +594,7 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 /* Profiling thread main function */
 static void __cdecl ProfileThread(void *pwait)
 {
-    int wait = *((int *)pwait);
+    int wait = *((int *)pwait); /* milliseconds */
 
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
@@ -580,6 +602,35 @@ static void __cdecl ProfileThread(void *pwait)
     }
 }
 #else /* not Win32 */
+/* Profiling thread main function */
+static void *ProfileThread(void *pinfo)
+{
+#ifdef HAVE_PTHREAD
+    R_profile_thread_info_t *nfo = pinfo;
+
+    pthread_mutex_lock(&nfo->terminate_mu);
+    while(!nfo->should_terminate) {
+	struct timespec until;
+	double duntil_s = currentTime() + nfo->interval_us / 1e6;
+
+	until.tv_sec = (time_t) duntil_s;
+	until.tv_nsec = (long) (1e9 * (duntil_s - until.tv_sec));
+
+	for(;;) {
+	    int res = pthread_cond_timedwait(&nfo->terminate_cv,
+					     &nfo->terminate_mu, &until);
+	    if (nfo->should_terminate)
+		break;
+	    if (res == ETIMEDOUT) {
+		pthread_kill(R_profiled_thread, SIGPROF);
+		break;
+	    }
+	}
+    }
+    pthread_mutex_unlock(&nfo->terminate_mu);
+#endif
+    return NULL;
+}
 static void doprof_null(int sig)
 {
     signal(SIGPROF, doprof_null);
@@ -595,13 +646,25 @@ static void R_EndProfiling(void)
     if(R_ProfileOutfile) fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
 #else /* not Win32 */
-    struct itimerval itv;
+    if (R_Profiling_Event == RPE_CPU) {
+	struct itimerval itv;
 
-    itv.it_interval.tv_sec = 0;
-    itv.it_interval.tv_usec = 0;
-    itv.it_value.tv_sec = 0;
-    itv.it_value.tv_usec = 0;
-    setitimer(ITIMER_PROF, &itv, NULL);
+	itv.it_interval.tv_sec = 0;
+	itv.it_interval.tv_usec = 0;
+	itv.it_value.tv_sec = 0;
+	itv.it_value.tv_usec = 0;
+	setitimer(ITIMER_PROF, &itv, NULL);
+    }
+    if (R_Profiling_Event == RPE_ELAPSED) {
+	R_profile_thread_info_t *nfo = &R_Profile_Thread_Info;
+	pthread_mutex_lock(&nfo->terminate_mu);
+	nfo->should_terminate = 1;
+	pthread_cond_signal(&nfo->terminate_cv);
+	pthread_mutex_unlock(&nfo->terminate_mu);
+	pthread_join(nfo->thread, NULL);
+	pthread_cond_destroy(&nfo->terminate_cv);
+	pthread_mutex_destroy(&nfo->terminate_mu);
+    }
     signal(SIGPROF, doprof_null);
     if(R_ProfileOutfile >= 0) close(R_ProfileOutfile);
     R_ProfileOutfile = -1;
@@ -625,10 +688,9 @@ static void R_EndProfiling(void)
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
 			    int mem_profiling, int gc_profiling,
 			    int line_profiling, int filter_callframes,
-			    int numfiles, int bufsize)
+			    int numfiles, int bufsize, rpe_type event)
 {
 #ifndef Win32
-    struct itimerval itv;
     const void *vmax = vmaxget();
 
     if(R_ProfileOutfile >= 0) R_EndProfiling();
@@ -689,6 +751,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 	*(R_Srcfiles[0]) = '\0';
     }
 
+    R_Profiling_Event = event;
+
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
@@ -699,39 +763,81 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 	R_Suicide("unable to create profiling thread");
     Sleep(wait/2); /* suspend this thread to ensure that the other one starts */
 #else /* not Win32 */
-#ifdef HAVE_PTHREAD
-    R_profiled_thread = pthread_self();
-#else
-    error("profiling requires 'pthread' support");
-#endif
 
-#if defined(__APPLE__)
-    /* see comment in doprof for why R_profiled_thread is not enough */
-    R_profiled_thread_id = mach_thread_self();
-    mach_port_deallocate(mach_task_self(), R_profiled_thread_id);
-#endif
+# ifdef HAVE_PTHREAD
+    R_profiled_thread = pthread_self();
+# else
+    error("profiling requires 'pthread' support");
+# endif
+
+# if defined(__APPLE__)
+    if (R_Profiling_Event == RPE_CPU) {
+	/* see comment in doprof for why R_profiled_thread is not enough */
+	R_profiled_thread_id = mach_thread_self();
+	mach_port_deallocate(mach_task_self(), R_profiled_thread_id);
+    }
+# endif
 
     signal(SIGPROF, doprof);
 
-    /* The macOS implementation requires normalization here:
+    if (R_Profiling_Event == RPE_ELAPSED) {
+# ifdef HAVE_PTHREAD
+	R_profile_thread_info_t *nfo = &R_Profile_Thread_Info;
 
-       setitimer is obsolescent (POSIX >= 2008), replaced by
-       timer_create / timer_settime, but the supported clocks are
-       implementation-dependent.
+	pthread_mutex_init(&nfo->terminate_mu, NULL);
+	pthread_cond_init(&nfo->terminate_cv, NULL);
+	nfo->should_terminate = 0;
+	nfo->interval_us = interval;
+	sigset_t all, old_set;
+	sigfillset(&all);
+	pthread_sigmask(SIG_BLOCK, &all, &old_set);
+	if (pthread_create(&nfo->thread, NULL, ProfileThread,
+	    nfo))
+	    R_Suicide("unable to create profiling thread");
+	pthread_sigmask(SIG_SETMASK, &old_set, NULL);
 
-       Recent Linux has CLOCK_PROCESS_CPUTIME_ID
-       Solaris has CLOCK_PROF, in -lrt.
-       FreeBSD only supports CLOCK_{REALTIME,MONOTONIC}
-       Seems not to be supported at all on macOS.
-    */ 
-    itv.it_interval.tv_sec = interval / 1000000;
-    itv.it_interval.tv_usec =
-	(suseconds_t)(interval - itv.it_interval.tv_sec * 1000000);
-    itv.it_value.tv_sec = interval / 1000000;
-    itv.it_value.tv_usec =
-	(suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
-    if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
-	R_Suicide("setting profile timer failed");
+#  ifdef HAVE_SCHED_H
+	/* attempt to set FIFO scheduling with maximum priority
+	   at least on Linux it requires special permissions */
+	struct sched_param p;
+	p.sched_priority = sched_get_priority_max(SCHED_FIFO);
+	int res = -1;
+	if (p.sched_priority >= 0)
+	    res = pthread_setschedparam(nfo->thread, SCHED_FIFO, &p);
+	if (res) {
+	    /* attempt to set maximum priority at least with
+	       the current scheduling policy */
+	    int policy;
+	    if (!pthread_getschedparam(nfo->thread, &policy, &p)) {
+		p.sched_priority = sched_get_priority_max(policy);
+		if (p.sched_priority >= 0)
+		    pthread_setschedparam(nfo->thread, policy, &p);
+	    }
+	}
+#  endif
+# endif
+    } else if (R_Profiling_Event == RPE_CPU) {
+	/* The macOS implementation requires normalization here:
+
+	   setitimer is obsolescent (POSIX >= 2008), replaced by
+	   timer_create / timer_settime, but the supported clocks are
+	   implementation-dependent.
+
+	   Recent Linux has CLOCK_PROCESS_CPUTIME_ID
+	   Solaris has CLOCK_PROF, in -lrt.
+	   FreeBSD only supports CLOCK_{REALTIME,MONOTONIC}
+	   Seems not to be supported at all on macOS.
+	*/ 
+	struct itimerval itv;
+	itv.it_interval.tv_sec = interval / 1000000;
+	itv.it_interval.tv_usec =
+	    (suseconds_t)(interval - itv.it_interval.tv_sec * 1000000);
+	itv.it_value.tv_sec = interval / 1000000;
+	itv.it_value.tv_usec =
+	    (suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
+	if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
+	    R_Suicide("setting profile timer failed");
+    }
 #endif /* not Win32 */
     R_Profiling = 1;
 }
@@ -743,6 +849,8 @@ SEXP do_Rprof(SEXP args)
 	filter_callframes;
     double dinterval;
     int numfiles, bufsize;
+    const char *event_arg;
+    rpe_type event;
 
 #ifdef BC_PROFILING
     if (bc_profiling) {
@@ -762,9 +870,28 @@ SEXP do_Rprof(SEXP args)
     numfiles = asInteger(CAR(args));	      args = CDR(args);
     if (numfiles < 0)
 	error(_("invalid '%s' argument"), "numfiles");
-    bufsize = asInteger(CAR(args));
+    bufsize = asInteger(CAR(args));           args = CDR(args);
     if (bufsize < 0)
 	error(_("invalid '%s' argument"), "bufsize");
+    if (!isString(CAR(args)) || length(CAR(args)) != 1
+        || STRING_ELT(CAR(args), 0) == NA_STRING)
+	error(_("invalid '%s' argument"), "event");
+    event_arg = translateChar(STRING_ELT(CAR(args), 0));
+#ifdef Win32
+    if (streql(event_arg, "elapsed") || streql(event_arg, "default"))
+	event = RPE_ELAPSED;
+    else if (streql(event_arg, "cpu"))
+	error("event type '%s' not supported on this platform", event_arg);
+    else
+	error(_("invalid '%s' argument"), "event");
+#else
+    if (streql(event_arg, "cpu") || streql(event_arg, "default"))
+	event = RPE_CPU;
+    else if (streql(event_arg, "elapsed"))
+	event = RPE_ELAPSED;
+    else
+	error(_("invalid '%s' argument"), "event");
+#endif
 
 #if defined(linux) || defined(__linux__)
     if (dinterval < 0.01) {
@@ -782,7 +909,7 @@ SEXP do_Rprof(SEXP args)
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
 			gc_profiling, line_profiling, filter_callframes,
-			numfiles, bufsize);
+			numfiles, bufsize, event);
     else
 	R_EndProfiling();
     return R_NilValue;
@@ -4022,7 +4149,7 @@ static Rboolean R_chooseOpsMethod(SEXP x, SEXP y, SEXP mx, SEXP my,
     defineVar(ySym, y, newrho); INCREMENT_NAMED(y);
     defineVar(mxSym, mx, newrho); INCREMENT_NAMED(mx);
     defineVar(mySym, my, newrho); INCREMENT_NAMED(my);
-    defineVar(clSym, call, newrho); INCREMENT_NAMED(cl);
+    defineVar(clSym, call, newrho); INCREMENT_NAMED(call);
     defineVar(revSym, ScalarLogical(rev), newrho);
 
     SEXP ans = eval(expr, newrho);

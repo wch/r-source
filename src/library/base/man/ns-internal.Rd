@@ -78,7 +78,7 @@ loadingNamespaceInfo()
   \item{val}{any object.}
   \item{\dots}{character arguments.}
   \item{metaname}{the methods table name.}
-  \item{name}{symbol: name of namespace}
+  \item{name}{symbol: name of namespace.}
   \item{except}{character vector naming symbols to exclude from the
     import, particularly useful when \code{vars} is missing.
   }

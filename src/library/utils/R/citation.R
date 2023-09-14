@@ -40,7 +40,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max(args_length)))
+    args <- lapply(args, rep_len, max(args_length))
 
     ## <COMMENT Z>
     ## We could do this more elegantly, but let's just go through the
@@ -556,7 +556,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep_len(x, max_length))
+    args <- lapply(args, rep_len, max_length)
 
     other_length <- lengths(other)
     if(!all(other_length_ok <- other_length %in% c(1L, max_length)))
@@ -564,7 +564,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(other)[!other_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    other <- lapply(other, function(x) rep_len(x, max_length))
+    other <- lapply(other, rep_len, max_length)
 
     bibentry1 <-
     function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL, ..., other = list())
@@ -593,10 +593,23 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
         ## canonicalize
         pos <- fields %in% c("author", "editor")
 	if(any(pos)) {
-            for(i in which(pos)) rval[[i]] <- as.person(rval[[i]])
+            for(i in which(pos))
+                rval[[i]] <- as.person(rval[[i]])
 	}
 	if(any(!pos)) {
-            for(i in which(!pos)) rval[[i]] <- as.character(rval[[i]])
+            for(i in which(!pos)) {
+                s <- trimws(as.character(rval[[i]]))
+                ## <NOTE>
+                ## Further above we did
+                ##   rval <- rval[!vapply(rval, .is_not_nonempty_text, NA)]
+                ## which filters out args with *any* NA.
+                ## We could perhaps change this to test with not all NA
+                ## instead, in which case the NA test below would come
+                ## into action.
+                rval[[i]] <- paste(s[!is.na(s) & nzchar(s)],
+                                   collapse = " ")
+                ## </NOTE>
+            }
 	}
 
         ## set attributes
@@ -734,7 +747,7 @@ function(x, style = "text", .bibstyle = NULL,
         permissive <-
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
-        permissive <- tools:::config_val_to_logical(permissive)
+        permissive <- str2logical(permissive)
         if(is.null(macros))
             macros <- tools:::initialRdMacros()
         else if(is.character(macros))

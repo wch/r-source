@@ -19,7 +19,7 @@
 \method{[[}{factor}(x, \dots) <- value
 }
 \arguments{
-  \item{x}{a factor}
+  \item{x}{a factor.}
   \item{\dots}{a specification of indices -- see \code{\link{Extract}}.}
   \item{drop}{logical.  If true, unused levels are dropped.}
   \item{value}{character: a set of levels.  Factor values are coerced to

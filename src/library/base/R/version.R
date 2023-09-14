@@ -49,7 +49,10 @@ function(x, strict = TRUE, regexp, classes = NULL)
         if(!is.character(x)) {
             msg <- gettextf("invalid non-character version specification 'x' (type: %s)",
                             typeof(x))
-            warning(msg, domain = NA, immediate. = TRUE)        
+            if(nzchar(Sys.getenv("_R_CHECK_STOP_ON_INVALID_NUMERIC_VERSION_INPUTS_")))
+                stop(msg, domain = NA)
+            else
+                warning(msg, domain = NA, immediate. = TRUE)        
             if(nzchar(Sys.getenv("_R_CALLS_INVALID_NUMERIC_VERSION_"))) {
                 ## Showing the call stack as part of warning() may
                 ## truncate, so do it via message() ...

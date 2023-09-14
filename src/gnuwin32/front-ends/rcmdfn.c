@@ -192,7 +192,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     int len = strlen(argv[0]);
     char *env_path;
     int timing = 1;
-    char *RHome = getRHOME(3);
+    int dirstrip = 2;
+#ifdef R_ARCH
+    if (strlen(R_ARCH) > 0)
+	dirstrip++;
+#endif 
+    char *RHome = getRHOME(dirstrip);
 
     if(!RHome)
         R_Suicide("Invalid R_HOME");
@@ -422,8 +427,13 @@ R_MAJOR, R_MINOR, R_SVN_REVISION,
     char *Rarch = malloc(30);
     if (!Rarch)
 	R_Suicide("Allocation error");
-    strcpy(Rarch, "R_ARCH=/");
-    strcat(Rarch, R_ARCH);
+    strcpy(Rarch, "R_ARCH=");
+#ifdef R_ARCH
+    if (strlen(R_ARCH) > 0) {
+	strcat(Rarch, "/");
+	strcat(Rarch, R_ARCH);
+    }
+#endif
     putenv(Rarch);
     /* no free here: storage remains in use */
 

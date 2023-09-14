@@ -13,7 +13,7 @@
 max.col(m, ties.method = c("random", "first", "last"))
 }
 \arguments{
-  \item{m}{numerical matrix}
+  \item{m}{a numerical matrix.}
   \item{ties.method}{a character string specifying how ties are
     handled, \code{"random"} by default; can be abbreviated; see
     \sQuote{Details}.}

@@ -21,7 +21,7 @@ memDecompress(from,
               asChar = FALSE)
 }
 \arguments{
-  \item{from}{A raw vector.  For \code{memCompress} a character vector
+  \item{from}{raw vector.  For \code{memCompress}, a character vector
     will be converted to a raw vector with character strings separated
     by \code{"\n"}.  Types except \code{"bzip2"} support long
     raw vectors.

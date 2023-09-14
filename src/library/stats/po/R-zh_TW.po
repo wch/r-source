@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -160,10 +160,15 @@ msgstr "'by' 必須是串列"
 msgid "arguments must have same length"
 msgstr "引數的長度必須一樣"
 
-msgid "'formula' missing or incorrect"
-msgstr "沒有 'formula' 或不正確"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "引數 'x' 必須是數值"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' 的公式左右兩邊都必須存在"
 
 msgid "cannot change frequency from %g to %g"
@@ -213,6 +218,9 @@ msgstr "無法精確計算帶連結的 p 值"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "無法精確計算帶連結的置信區間"
+
+msgid "'formula' missing or incorrect"
+msgstr "沒有 'formula' 或不正確"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "分組因子只能有兩層"
@@ -490,8 +498,14 @@ msgstr "'k' 必須是{1，2，.。 n - 1}中的一個"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "前 %2$d 個特徵值裡只有 %1$d 個大於零"
 
-msgid "package 'MASS' must be installed"
-msgstr "套件 'MASS' 必須已安裝"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "初始值不是在可行區域內"
@@ -703,6 +717,9 @@ msgstr " sum(weights) ！= 1，因此無法取得真密度函式"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自動選擇頻寬至少需要兩個資料點"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "不明的頻寬規則"
 
@@ -735,6 +752,9 @@ msgstr "'xi' 的尺寸無效"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' 不是向量或矩陣"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "距離方法無效"
@@ -943,6 +963,9 @@ msgstr "'row.vars' 設定無效"
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars' 設定無效"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' 的公式左右兩邊都必須存在"
+
 msgid "interactions are not allowed"
 msgstr "不允許有交互作用項"
 
@@ -972,6 +995,18 @@ msgstr "沒有 'row.var.names' 值"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "沒有 'col.vars' 值或它設定得無效"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' 設定得無效"
@@ -1207,6 +1242,12 @@ msgstr "一些 'x' 的元素不是數值，且將強制變更為數值"
 msgid "not enough 'x' data"
 msgstr "'x' 資料不夠"
 
+msgid "Parameter(s)"
+msgstr ""
+
+msgid "ignored"
+msgstr ""
+
 msgid "not enough 'y' data"
 msgstr "'y' 資料不夠"
 
@@ -1216,8 +1257,28 @@ msgstr "並列的時候 P- 值將近似"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' 必須是數值，或是個函式，或是指定適當函式的字串"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "Kolmogorov - Smirnov 檢驗裡不應該有連結"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "引數 'n' 無效"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' 必須是長度為二的數值向量"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "引數 'x' 必須是數值"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "引數 'x' 必須是數值"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1281,8 +1342,21 @@ msgstr "對幾乎是完全擬合進行 ANOVA F- 檢驗的結果不會可靠"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "呼叫 predict.lm(<fake-lm-object>) …"
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "用秩缺乏擬合來進行預測的結果很可能不可靠"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "用目前資料得到的預測結果對 _ 未來 _ 回應有用"
@@ -1513,13 +1587,11 @@ msgstr "沒有項元件也沒有屬性"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' 必須是長度至少為一的位元組向量"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep' 必須是字串"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
-
-msgid "reformulate"
-msgstr ""
-
-msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1540,6 +1612,14 @@ msgstr "'data' 必須是串列或是環境"
 
 msgid "variable '%s' is not a factor"
 msgstr "變數 '%s' 不是因子"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "對比只適用於因子"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "對比只適用於有兩個或多於兩個層次的因子"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' 必須為數值"
@@ -1740,6 +1820,9 @@ msgstr "'which' 必須在 1:6 之間"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' 必須在{1,..,%d}中"
 
+msgid "y is empty or has only NAs"
+msgstr "y 是空的或只含 NA"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1864,8 +1947,8 @@ msgstr "'p' 的長度必須同 'x' 和 'n' 的相等"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "'p' 的單元必須在(0,1)裡"
 
-msgid "y is empty or has only NAs"
-msgstr "y 是空的或只含 NA"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "沒有 'formula'"
@@ -1909,9 +1992,6 @@ msgstr "'ref' 必須是存在的層次"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d 必須在 1L:%d 裡"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' 必須是字串"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "沒有能夠從它們的名稱中來猜測時變參數"
@@ -1957,6 +2037,10 @@ msgstr "頻寬 'k' 必須大於等於一而且還必須是奇數！"
 
 msgid "argument 'object' has an impossible length"
 msgstr "引數 'object' 的長度不可能取這個值"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "deriv 裡的公式無效"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "找不到\"%s\" 物件的 'getInitial' 方法"
@@ -2481,6 +2565,9 @@ msgstr[0] "刪除了含 NA，NaN 或 Inf 的 %d 個觀察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' 太短了，需要 %d 個點"
+
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "套件 'MASS' 必須已安裝"
 
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "quasipoisson 分布家族裡沒有\"%s\"此一鏈結函式；可以用的鏈結是 %s"

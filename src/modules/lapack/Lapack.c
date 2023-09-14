@@ -1529,6 +1529,13 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	   pointer, which is not allowed by ISO C, but there is no compliant
 	   alternative to using dladdr() */
 	// dladdr has first arg void * on Solaris.  This is not POSIX.
+#ifdef __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wpedantic"
+#elif defined __GNUC__
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wpedantic"	
+#endif
 	if (dladdr((void *) F77_NAME(ilaver), &dl_info)) {
 	    char buf[PATH_MAX+1];
 	    char *res = realpath(dl_info.dli_fname, buf);
@@ -1542,6 +1549,11 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	    }
 	}
+#ifdef __clang__
+# pragma clang diagnostic pop
+#elif defined __GNUC__
+# pragma GCC diagnostic pop
+#endif
 #endif
 	ans = mkString(""); /* LAPACK library not known */
 	break;

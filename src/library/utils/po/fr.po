@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2023-07-31 15:00+0200\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,22 +18,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
-#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:573 io.c:777 io.c:830 io.c:844 io.c:848
+#: io.c:854 io.c:855 io.c:1096 io.c:1097 io.c:1099 io.c:1100 io.c:1101
+#: io.c:1102 io.c:1103 io.c:1104 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
-#: windows/widgets.c:78 windows/widgets.c:83
+#: windows/dialogs.c:321 windows/util.c:127 windows/widgets.c:80
+#: windows/widgets.c:83 windows/widgets.c:88
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
-#: io.c:350 io.c:835
+#: io.c:350 io.c:841
 msgid "invalid quote symbol set"
 msgstr "set de symboles pour mettre du texte entre guillemets incorrect"
 
-#: io.c:362 io.c:858 io.c:1078
+#: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
 msgstr "impossible d’ouvrir la connection"
 
@@ -46,71 +46,69 @@ msgstr "impossible de lire depuis la connection"
 msgid "quoted string on line %d terminated by EOF"
 msgstr "chaîne de caractères entre guillemets à la ligne %d terminée par EOF"
 
-#: io.c:567
+#: io.c:569
 msgid "the first argument must be of mode character"
 msgstr "le premier argument doit être de mode character"
 
-#: io.c:597
+#: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "chaîne de caractères 'numerals' incorrecte : \"%s\""
 
-#: io.c:773
+#: io.c:779
 #, c-format
 msgid "Selection: "
 msgstr "Sélection : "
 
-#: io.c:868 io.c:883
+#: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "impossible d’allouer un tampon pour 'readTableHead'"
 
-#: io.c:896
+#: io.c:902
 msgid "\\ followed by EOF"
 msgstr "\\ suivi de EOF"
 
-#: io.c:948 io.c:952
+#: io.c:954 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "ligne finale incomplète trouvée par readTableHeader dans '%s'"
 
-#: io.c:1009
+#: io.c:1015
 msgid "index out of range"
 msgstr "index hors plage"
 
-#: io.c:1046
+#: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr "Problème lors de la fermeture de la connexion : %s"
 
-#: io.c:1048
+#: io.c:1054
 msgid "Problem closing connection"
 msgstr "Problème lors de la fermeture de la connexion"
 
-#: io.c:1071
+#: io.c:1077
 msgid "'file' is not a connection"
 msgstr "'file' n’est pas une connexion"
 
-#: io.c:1074
+#: io.c:1080
 msgid "cannot write to this connection"
 msgstr "impossible d’écrire dans cette connexion"
 
-#: io.c:1104
+#: io.c:1110
 msgid "'dec' must be a single character"
 msgstr "'dec' doit être un caractère unique"
 
-#: io.c:1130
+#: io.c:1137
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
-msgstr ""
-"tableau de données (data frame) corrompu -- la longueur de la colonne %d ne "
-"correspond pas au nombre de lignes"
+msgstr "tableau de données (data frame) corrompu -- la longueur de la colonne %d ne correspond pas au nombre de lignes"
 
-#: io.c:1161
+#: io.c:1171
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "la colonne %s prétend être un facteur mais n’a pas de codes numériques"
 
-#: io.c:1179
+#: io.c:1189
 msgid "corrupt matrix -- dims do not match length"
 msgstr "matrice corrompue -- dims n’est pas compatible avec length"
 
@@ -182,9 +180,7 @@ msgstr "type inconnu"
 #: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
 #: windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
-msgstr ""
-"les fonctions de menu ne peuvent être utilisées que sous l’interface "
-"graphique (GUI)"
+msgstr "les fonctions de menu ne peuvent être utilisées que sous l’interface graphique (GUI)"
 
 #: windows/dialogs.c:245
 #, c-format
@@ -210,13 +206,13 @@ msgstr "le menu n’existe pas"
 msgid "unable to delete menu item (%s)"
 msgstr "impossible d’éliminer un élément de menu (%s)"
 
-#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
-#: windows/registry.c:254
+#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
+#: windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
 
-#: windows/registry.c:266
+#: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "La clé de registre '%ls' est introuvable"
@@ -225,65 +221,65 @@ msgstr "La clé de registre '%ls' est introuvable"
 msgid "unsupported version of Windows"
 msgstr "version de Windows non supportée"
 
-#: windows/util.c:285
+#: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
 msgstr "l’argument doit être une chaîne de caractères ou un vecteur raw"
 
-#: windows/util.c:324
+#: windows/util.c:330
 msgid "unable to open the clipboard"
 msgstr "impossible d’ouvrir le presse-papier"
 
-#: windows/util.c:329
+#: windows/util.c:335
 msgid "unable to write to the clipboard"
 msgstr "impossible d’écrire dans le presse-papier"
 
-#: windows/util.c:408
+#: windows/util.c:414
 msgid "'title' must be a character string"
 msgstr "'title' doit être une chaîne de caractères"
 
-#: windows/util.c:417
+#: windows/util.c:423
 msgid "'text' must be a character string"
 msgstr "'text' doit être une chaîne de caractères"
 
-#: windows/util.c:456
+#: windows/util.c:462
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' doit être de longueur 1"
 
-#: windows/util.c:569
+#: windows/util.c:575
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' doit être une liste"
 
-#: windows/util.c:573
+#: windows/util.c:579
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' élément %d n’est pas un identifiant de fenêtre (handle)"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one or more"
 msgstr "Sélectionnez un ou plusieurs items"
 
-#: windows/widgets.c:105
+#: windows/widgets.c:110
 msgid "Select one"
 msgstr "Sélectionnes un item"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
 msgstr "'default' doit être une chaîne de caractères"
 
-#: windows/widgets.c:190 windows/widgets.c:258
+#: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "'default' est trop long"
 
-#: windows/widgets.c:194 windows/widgets.c:262
+#: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
 msgstr "'caption' doit être une chaîne de caractères"
 
-#: windows/widgets.c:196
+#: windows/widgets.c:204
 msgid "'multi' must be a logical value"
 msgstr "'multi' doit être une valeur booléenne"
 
-#: windows/widgets.c:198
+#: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' doit être un entier"

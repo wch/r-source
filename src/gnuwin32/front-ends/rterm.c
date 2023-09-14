@@ -31,12 +31,12 @@ extern void cmdlineoptions(int, char **);
 extern void readconsolecfg(void);
 extern int GA_initapp(int, char **);
 extern void Rf_mainloop(void);
-__declspec(dllimport) extern UImode CharacterMode;
-__declspec(dllimport) extern int UserBreak;
-__declspec(dllimport) extern int R_Interactive;
-__declspec(dllimport) extern int R_HistorySize;
-__declspec(dllimport) extern int R_RestoreHistory;
-__declspec(dllimport) extern char *R_HistoryFile;
+extern UImode CharacterMode;
+extern int UserBreak;
+extern int R_Interactive;
+extern int R_HistorySize;
+extern int R_RestoreHistory;
+extern char *R_HistoryFile;
 
 extern char *getDLLVersion(void);
 extern void saveConsoleTitle(void);

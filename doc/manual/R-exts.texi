@@ -2378,14 +2378,14 @@ way to do this is @emph{via}
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example (GNU @command{make} syntax, allowed on
-Windows)
+Intel 64-bit code or code for other architectures, for example
+(GNU @command{make} syntax, allowed on Windows)
 
 @example
 ifeq "$(WIN)" "64"
-PKG_LIBS = @var{value for 64-bit Windows}
+PKG_LIBS = @var{value for 64-bit Intel Windows}
 else
-PKG_LIBS = @var{value for 32-bit Windows}
+PKG_LIBS = @var{value for unknown Windows architectures}
 endif
 @end example
 
@@ -4851,6 +4851,7 @@ repository such as @acronym{CRAN}).
 * Check timing::
 * Encoding issues::
 * Portable C and C++ code::
+* Portable Fortran code::
 * Binary distribution::
 @end menu
 
@@ -5078,22 +5079,6 @@ later standards.  (Although @R{} only requires Fortran 90,
 consider @option{-std=f2008} as some recent compilers have Fortran 2008
 or even 2018 as the minimum supported standard.
 
-@R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
-@code{COMPLEX*16}.  (One can also use something like
-@code{COMPLEX(KIND=KIND(0.0D0))}.)
-
-
-@c https://gcc.gnu.org/onlinedocs/gfortran/KIND-Type-Parameters.html
-@c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
-The use of Fortran types such as @code{REAL(KIND=8)} is very far from
-portable.  According of the standards this merely enumerates different
-supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
-(and is on an actual compiler).  Even if for a particular compiler the
-value indicates the size in bytes, which values are supported is
-platform-specific --- for example @command{gfortran} supports values of 4
-and 8 on all current platforms and 10 and 16 on a few (but not for
-example on @cputype{arm} CPUs).
-
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
 functions where Windows did not support @code{%lld}, @code{%Lf} and
@@ -5215,9 +5200,14 @@ as @code{rand}, @code{drand48} and @code{random}@footnote{This and
 in the C99 standard, and not available on Windows.}, but rather use the
 interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes a system RNG (e.g.@:
-@emph{via} @code{srand}), they will interfere with each other.
+@emph{via} @code{srand}), they will interfere with each other.  This
+applies also to Fortran 90's @code{random_number} and
+@code{random_seed}, and Fortran 2018's @code{random_init}.  And to GNU
+Fortran's @code{rand}, @code{irand} and @code{srand}.  Except for
+@code{drand48}, what PRNG these functions use is
+implementation-dependent.
 
-Nor should the C++11 random number library be used, nor any other
+Nor should the C++11 random number library be used nor any other
 third-party random number generators such as those in GSL.
 
 @item
@@ -5841,7 +5831,7 @@ is equivalent to the value
 UTF-8 then the package code is translated to UTF-8 for syntax checking,
 so it is strongly recommended to check in a UTF-8 locale.
 
-@node Portable C and C++ code, Binary distribution, Encoding issues, Writing portable packages
+@node Portable C and C++ code, Portable Fortran code, Encoding issues, Writing portable packages
 @subsection Portable C and C++ code
 
 @menu
@@ -5860,13 +5850,13 @@ versions) these are part of @option{-Wall} or @option{-pedantic}).
 
 @strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
 defaulted to C++11 where available@footnote{which it is on all known
-platforms, and is required as from @R{} 4.0.0}; @R{} 4.1.0 and later
-default to C++14 (where available).  However, in earlier versions the
-default standard was that of the compiler used, often C++98 or C++14,
-and the default is likely to change in future.  For maximal portability
-a package should either specify a standard (@pxref{Using C++ code}) or
-be tested under all of C++11, C++98 and C++14.  (Specifying C++14 will
-limit portability.)
+platforms, and is required as from @R{} 4.0.0}; from @R{} 4.1.0 to C++14
+and from @R{} 4.3.0 to C++17 (where available).  However, in earlier
+versions the default standard was that of the compiler used, often C++98
+or C++14, and the default is likely to change in future.  For maximal
+portability a package should either specify a standard (@pxref{Using C++
+code}) or be tested under all of C++11, C++98, C++14 and C++17.
+(Specifying C++14 or later will limit portability.)
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5932,12 +5922,13 @@ functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
-compilability of C/C++ code.  Compilers from the GCC, @command{clang},
-Intel and Oracle Developer Studio suites have been used with @R{}, and
-both LLVM @command{clang} and Oracle have more than one implementation of C++
-headers and library.  The range of possibilities makes comprehensive
-empirical checking impossible, and regrettably compilers are patchy at
-best on warning about non-standard code.
+compilability of C/C++ code.  Compilers from the GCC, LLVM
+(@command{clang} and @command{flang}) Intel and Oracle Developer Studio
+suites have been used with @R{}, and both LLVM @command{clang} and
+Oracle have more than one implementation of C++ headers and library.
+The range of possibilities makes comprehensive empirical checking
+impossible, and regrettably compilers are patchy at best on warning
+about non-standard code.
 
 @itemize
 @item
@@ -6001,25 +5992,7 @@ Other GNU extensions which have bitten package writers are the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
 headers under @file{ext}.
 
-The GNU Fortran compiler also supports a large number of non-portable
-extensions, the most commonly encountered one being
-@code{ISNAN}@footnote{There is a portable way to do this in Fortran 2003
-(@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but ironically
-that is not supported in the versions 4.x of GNU Fortran.  A pretty
-robust alternative is to test @code{if(my_var /= my_var)}.}.  Some are
-listed at
-@uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
-One that frequently catches package writers is that it allows
-out-of-order declarations: in standard-conformant Fortran variables must
-be declared (explicitly or implicitly) before use in other declarations
-such as dimensions.
-
-GNU Fortran 10 and later give a compilation error for the previously
-widespread practice of passing a Fortran array element where an array is
-expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.
-
-@item
+item
 Including C-style headers in C++ code is not portable.  Including the
 legacy header@footnote{which often is the same as the header included by
 the C compiler, but some compilers have wrappers for some of the C
@@ -6252,9 +6225,9 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
-removed in C++17, and LLVM @command{clang} 9 and later warn about
-them. Examples include @code{bind1st}/@code{bind2nd} (use
-@code{std::bind} or
+removed in C++17, and LLVM @command{clang} 9 and later warn about them
+(and as from version 16 they have been removed). Examples include
+@code{bind1st}/@code{bind2nd} (use @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
 @code{std::mem_fun_ref} and @code{std::ptr_fun}.
@@ -6265,7 +6238,7 @@ Later versions of standards may add reserved words: for example
 no longer available as variable names.  As noted above, C++17 uses
 @code{byte}, @code{data}, @code{sample} and @code{size}.
 
-So avoid common words and keywords in other programming languages.
+So avoid common words and keywords from other programming languages.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
@@ -6362,6 +6335,31 @@ defining @samp{_POSIX_C_SOURCE} to for example @samp{200809L} before
 including the (C or C++) header which defines them.  (However, this may
 hide other extensions.)
 
+@item
+Compilers may interpret comments in source code, so it is necessary to
+remove any intended for a compiler to interpret.  The main example has
+been comments for Visual Fortran (as the Intel Fortran compiler has been
+known on Windows@footnote{and at one time as DEC Fortran, hence the
+@code{DEC}.}) like
+@example
+!DEC$ ATTRIBUTES DLLEXPORT,C,REFERENCE,ALIAS:'kdenestmlcvb' :: kdenestmlcvb
+@end example
+@noindent
+which are interpreted by Intel Fortran on all platforms (and are
+inappropriate for use with @R{} on Windows).  @command{gfortran} has
+similar forms starting with @code{!GCC$}.
+
+@item
+The C++ @code{new} operator takes argument @code{std::size_t size},
+which is unsigned.  Using a signed integer type such as @code{int} may
+lead to compiler warnings such as
+@example
+warning: argument 1 value '18446744073709551615' exceeds maximum object
+  size 9223372036854775807  [-Walloc-size-larger-than=]
+@end example
+@noindent
+(especially if LTO is used).  So don't do that!
+
 @end itemize
 
 Some additional information for C++ is available at
@@ -6452,7 +6450,8 @@ in @file{boost/mpl/aux_/integral_wrapper.hpp}.  Adding
 @end example
 @noindent
 to @code{PKG_CXXFLAGS} will allow this, but that flag is only accepted
-by recent versions of LLVM @command{clang} so needs a @command{configure} test.
+by recent versions of LLVM @command{clang} (and will not be in future)
+so needs a @command{configure} test.
 
 Pre=built versions of current @command{clang}/@code{libc++} are
 usually available from
@@ -6471,7 +6470,98 @@ Another build for Windows which may be sufficiently compatible with
 @code{Rtools} can be found at
 @uref{https://github.com/mstorsjo/llvm-mingw}: this uses @code{libc++}.
 
-@node Binary distribution,  , Portable C and C++ code, Writing portable packages
+@node Portable Fortran code, Binary distribution, Portable C and C++ code, Writing portable packages
+@subsection Portable Fortran code
+
+Until recently almost all known @R{} platforms used @command{gfortran}
+as their Fortran compiler, but now there are LLVM and `classic'
+@command{flang} and the Intel compilers
+@command{ifort}@footnote{announced to be discontinued in 2023.} and
+@command{ifx} are free-of-change.
+
+There is still a lot of Fortran code in @acronym{CRAN} packages which
+predates Fortran 77.  Modern Fortran compilers are being written to
+target a minimum standard of Fortran 2018. and it is desirable that
+Fortran code in packages complies with that standard.  For
+@command{gfortran} this can be checked by adding @option{-std=f2018} to
+@code{FFLAGS}.  The most commonly seen issues are
+
+@itemize
+@item
+The use of @code{DFLOAT}, which was superseded by @code{DBLE} in Fortran
+77.  Also, use of @code{DCMPLX}, @code{DCONJG}, @code{DIMAG} and
+similar.
+
+@item
+The use of GNU Fortran extensions.  Some are listed at
+@uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
+Others which have caused problems include @code{etime}, @code{getpid},
+@code{isnan}@footnote{There is a portable way to do this in Fortran 2003
+(@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but that was
+not supported in the versions 4.x of GNU Fortran.  A pretty robust
+alternative is to test @code{if(my_var /= my_var)}.} and @code{sizeof}.
+
+One that frequently catches package writers is that it allows
+out-of-order declarations: in standard-conformant Fortran variables must
+be declared (explicitly or implicitly) before use in other declarations
+such as dimensions.
+
+@end itemize
+@noindent
+Unfortunately this flags extensions such as @code{DOUBLE COMPLEX} and
+@code{COMPLEX*16}.  @R{} has tested that @code{DOUBLE COMPLEX} works and
+so is preferred to -@code{COMPLEX*16}.  (One can also use something like
+-@code{COMPLEX(KIND=KIND(0.0D0))}.)
+
+GNU Fortran 10 and later give a compilation error for the previously
+widespread practice of passing a Fortran array element where an array is
+expected, or a scalar instead of a length-one array.  See
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.  As do the Intel
+Fortran compilers, and they can be stricter.
+
+The use of @code{IMPLICIT NONE} is highly recommended -- Intel compilers
+with @option{-warn} will warn on variables without an explicit type.
+
+Common non-portable constructions include
+@itemize
+
+@c https://gcc.gnu.org/onlinedocs/gfortran/KIND-Type-Parameters.html
+@c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
+@item
+The use of Fortran types such as @code{REAL(KIND=8)} is very far from
+portable.  According to the standards this merely enumerates different
+supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
+(and is on an actual compiler).  Even if for a particular compiler the
+value indicates the size in bytes, which values are supported is
+platform-specific --- for example @command{gfortran} supports values of 4
+and 8 on all current platforms and 10 and 16 on a few (but not for
+example on all @cputype{arm} CPUs).
+
+The same applies to @code{INTEGER(KIND=4)} and @code{COMPLEX(KIND=16)}.
+
+Many uses of integer and real variable in Fortran code in packages will
+interwork with C (for example @code{.Fortran} is written in C), and @R{}
+has checked that @code{INTEGER} and @code{DOUBLE PRECISION} correspond to
+the C types @code{int} and @code{double}.  To make this explicit, from
+Fortran 2003 one can use the named constants @code{c_int},
+@code{c_double} and @code{c_double_complex} from module
+@code{iso_c_binding}.
+
+@item
+The Intel compilers only recognize the extensions @file{.f} (fixed-form)
+and @file{.f90} (free-form) and not @file{.f95}. @command{R CMD INSTALL}
+works around this for packages without a @file{src/Makefile}.
+
+@item
+@c Intel has fpp.
+Use of extensions @file{.F} and @code{.F90} to indicate source code to
+be preprocessed: the preprocessor used is compiler-specific and may or
+may not be @command{cpp}.
+
+@end itemize
+
+
+@node Binary distribution,  , Portable Fortran code, Writing portable packages
 @subsection Binary distribution
 
 If you want to distribute a binary version of a package on Windows or
@@ -6512,8 +6602,13 @@ security risk.  If you want to distribute a source package which needs
 external software on Windows or macOS, options include
 @itemize
 @item
-To arrange for installation of the package to download the
-additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
+To arrange for installation of the package to download the additional
+software from a URL, as e.g.@: package @CRANpkg{Cairo} used to.
+
+@item
+To negotiate with Tomas Kalibera to include Windows software in
+@code{Rtools} or with Simon Urbanek to include macOS software in his
+`recipes' system.
 
 @item
 (For @acronym{CRAN}.)
@@ -6888,7 +6983,7 @@ writing @R{} packages, particularly those intended for public
 distribution.
 
 @uref{https://win-builder.r-project.org, win-builder.r-project.org}
-offers the automated preparation of (32/64-bit) Windows binaries from
+offers the automated preparation of (64-bit) Windows binaries from
 well-tested source packages.
 
 R-Forge (@uref{https://R-Forge.r-project.org, R-Forge.r-project.org}) and
@@ -7074,7 +7169,7 @@ contain @samp{!}  @samp{|} nor @samp{@@}, and to avoid possible problems
 with the @HTML{} help system it should not contain @samp{/} nor a space.
 (@LaTeX{} special characters are allowed, but may not be collated
 correctly in the index.)  There can only be one @code{\name} entry in a
-file, and it must not contain any markup.  Entries in the package manual
+file, and it must not contain any markup and should only contain @acronym{ASCII} characters.  Entries in the package manual
 will be in alphabetic@footnote{in the current locale, and with special
 treatment for @LaTeX{} special characters and with any
 @samp{@var{pkgname}-package} topic moved to the top of the list.} order
@@ -7724,9 +7819,10 @@ them.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
-Indicate a metasyntactic variable.  In some cases this will be rendered
-distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
-rendered differently only in @HTML{} conversions, and @LaTeX{} conversion
+Indicate a metasyntactic variable.  In most cases this will be rendered
+distinctly, e.g.@: in italic (PDF/@HTML{}) or wrapped in @samp{<@dots{}>} (text),
+but not in all@footnote{Currently it is
+rendered differently in @HTML{} conversions, and in @LaTeX{} and text conversion
 outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
@@ -7988,7 +8084,7 @@ best choice in reference manuals.)  Specify the filename relative to
 @findex \R
 Use @code{\R} for the @R{} system itself.  The @code{\dots}
 @findex \dots
-macro is a historical alternative to using literal @samp{@dots{}}
+macro is a historical alternative to using literal @samp{...}
 for the dots in function argument lists; use
 @code{\ldots}
 @findex \ldots
@@ -8549,13 +8645,14 @@ has to be built to enable this, but the option
 @R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
-page can be consulted for full details.  Profiling works by recording
-at fixed intervals@footnote{For Unix-alikes these are intervals of CPU
-time, and for Windows of elapsed time.} (by default every 20 msecs)
-which line in which @R{} function is being used, and recording the
-results in a file (default @file{Rprof.out} in the working directory).
-Then the function @code{summaryRprof} or the command-line utility
-@code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
+page can be consulted for full details.  Profiling works by recording at
+fixed intervals@footnote{For Unix-alikes by default these are intervals
+of CPU time, and for Windows of elapsed (`wall-clock') time.  As from
+@R{} 4.4.0, elapsed time is optional on Unix-alikes} (by default every
+20 msecs) which line in which @R{} function is being used, and recording
+the results in a file (default @file{Rprof.out} in the working
+directory).  Then the function @code{summaryRprof} or the command-line
+utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
 activity.
 
 As an example, consider the following code (from Venables & Ripley,
@@ -8815,216 +8912,160 @@ copying.
 Profiling compiled code is highly system-specific, but this section
 contains some hints gleaned from various @R{} users.  Some methods need
 to be different for a compiled executable and for dynamic/shared
-libraries/objects as used by @R{} packages.  We know of no good way to
-profile DLLs on Windows.
+libraries/objects as used by @R{} packages.
 
 This chapter is based on reports from users and the information may not
 be current.
 
 @menu
-* Linux::
-* macOS::
+* Profilong on Linux::
+* Profiling on macOS::
+* Profiling on Windows::
 @end menu
 
-@node Linux, macOS, Profiling compiled code, Profiling compiled code
-@subsection Linux
+@node Profilong on Linux, Profiling on macOS, Profiling compiled code, Profiling compiled code
+@subsection Profiling on Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
-@command{perf} (see
+@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/})
+and @command{perf} (see
 @uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
 executable or shared object.  These seem less widely supplied than they
-used to be (for example Fedora 36 only has @command{perf}).
+used to be.  There is also `Google Performance Tools', also known as
+@pkg{gperftools} or @pkg{google-perftools}.
 
-@subsubsection oprofile and operf
+All of these work best when @R{} and any packages have been built with
+debugging symbols.
 
-The @command{oprofile} project has two modes of operation.  In what is
-now called `legacy' mode, it is uses a daemon to collect information on
-a process (see below).  Since version 0.9.8 (August 2012), the preferred
-mode is to use @command{operf}, so we discuss that first.  The modes
-differ in how the profiling data is collected: it is analysed by tools
-such as @command{opreport} and @command{oppannote} in both.
+@subsubsection @command{perf}
 
-Here is an example on @code{x86_64} Linux using @R{} 3.0.2.  File
-@file{pvec.R} contains the part of the examples from @code{pvec} in
-package @pkg{parallel}:
+This seems the most widely distributed tool.
+Here is an example on @code{x86_64} Linux using @R{} 4.3.1 built with LTO.
+
+At its simplest
 @example
-library(parallel)
-N <- 1e6
-dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
-                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
-system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
+perf record R -f tests/Examples/stats-Ex.R
+perf report --sort=dso
+perf report --sort=srcfile
+rm perf.data*
+@end example
+
+The first report is
+@example
+  75.67%  R
+   9.25%  libc.so.6
+   4.87%  [unknown]
+   3.75%  libz.so.1.2.11
+   3.37%  stats.so
+   1.17%  libm.so.6
+   0.63%  libtirpc.so.3.0.0
+   0.41%  graphics.so
+   0.30%  grDevices.so
+   0.20%  libRblas.so
+   0.09%  libpcre2-8.so.0.11.0
+   0.07%  methods.so
+   ...
 @end example
 @noindent
-with timings from the final step
-@example
-   user  system elapsed
-  0.371   0.237   0.612
-@end example
+which shows which shared libraries (DSOs) the time was spent in.
 
-@R{}-level profiling by @code{Rprof} shows
-@example
-                     self.time self.pct total.time total.pct
-"strptime"                1.70    41.06       1.70     41.06
-"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
-"sprintf"                 0.74    17.87       0.98     23.67
-...
-@end example
-@noindent
-so the conversion from character to @code{POSIXlt} takes most of the
-time.
+@command{perf annotate} can be used on an application built with GCC and
+@option{-ggdb}: it interleaves disassembled and source code.
 
-This can be run under @command{operf} and analysed by
+@subsubsection @command{oprofile} and @command{operf}
+
+The @command{oprofile} project has two modes of operation.  Since
+version 0.9.8 (August 2012), the preferred mode is to use
+@command{operf}, so we discuss only that.
+
+Let us look at the @pkg{boot} example from §3.2 on @code{x86_64} Linux
+using @R{} 4.3.1.
+
+This can be run under @command{operf} and analysed by commands like
 @example
-operf R -f pvec.R
+operf R -f boot.R
 opreport
 opreport -l /path/to/R_HOME/bin/exec/R
+opreport -l /path/to/R_HOME/library/stats/src/stats.so
 opannotate --source /path/to/R_HOME/bin/exec/R
-## And for the system time
-opreport -l /lib64/libc.so.6
 @end example
 @noindent
-The first report shows where (which library etc) the time was spent:
-@example
-CPU_CLK_UNHALT...|
-  samples|      %|
-------------------
-   166761 99.9161 Rdev
-        CPU_CLK_UNHALT...|
-          samples|      %|
-        ------------------
-            70586 42.3276 no-vmlinux
-            56963 34.1585 libc-2.16.so
-            36922 22.1407 R
-             1584  0.9499 stats.so
-              624  0.3742 libm-2.16.so
-...
-@end example
+The first line had to be done as root.
 
+The first report shows in which library (etc) the time was spent:
+@example
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	   278341 91.9947 R
+	    18290  6.0450 libc.so.6
+	     2277  0.7526 kallsyms
+	     1426  0.4713 stats.so
+	      739  0.2442 libRblas.so
+	      554  0.1831 libz.so.1.2.11
+	      373  0.1233 libm.so.6
+	      352  0.1163 libtirpc.so.3.0.0
+	      153  0.0506 ld-linux-x86-64.so.2
+	       12  0.0040 methods.so
+@end example
 @noindent
-The rest of the output is voluminous, and only extracts are shown below.
+(@code{kallsyms} is the kernel.)
+
+The rest of the output is voluminous, and only extracts are shown.
 
 Most of the time within @R{} is spent in
 @example
 samples  %        image name symbol name
-10397    28.5123  R           R_gc_internal
-5683     15.5848  R           do_sprintf
-3036      8.3258  R           do_asPOSIXct
-2427      6.6557  R           do_strptime
-2421      6.6392  R           Rf_mkCharLenCE
-1480      4.0587  R           w_strptime_internal
-1202      3.2963  R           Rf_qnorm5
-1165      3.1948  R           unif_rand
-675       1.8511  R           mktime0
-617       1.6920  R           makelt
-617       1.6920  R           validate_tm
-584       1.6015  R           day_of_the_week
-...
+52955    19.0574  R                        bcEval.lto_priv.0
+16484     5.9322  R                        Rf_allocVector3
+14224     5.1189  R                        Rf_findVarInFrame3
+12581     4.5276  R                        CONS_NR
+8289      2.9830  R                        Rf_matchArgs_NR
+8034      2.8913  R                        Rf_cons
+7114      2.5602  R                        R_gc_internal.lto_priv.0
+6552      2.3579  R                        Rf_eval
+5969      2.1481  R                        VECTOR_ELT
+5684      2.0456  R                        Rf_applyClosure
+5497      1.9783  R                        findVarLocInFrame.part.0.lto_priv.0
+4827      1.7371  R                        Rf_mkPROMISE
+4609      1.6587  R                        Rf_install
+4317      1.5536  R                        Rf_findFun3
+4035      1.4521  R                        getvar.lto_priv.0
+3491      1.2563  R                        SETCAR
+3179      1.1441  R                        Rf_defineVar
+2892      1.0408  R                        duplicate1.lto_priv.0
 @end example
-@noindent
-@command{opannotate} shows that 31% of the time in @R{} is spent in
-@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
-The analysis for @file{libc} showed that calls to @code{wcsftime}
-dominated, so those calls were cached for @R{} 3.0.3: the time spent in
-@code{no-vmlinux} (the kernel) was reduced dramatically.
 
-On platforms which support it, call graphs can be produced by
-@command{opcontrol --callgraph} if collected @emph{via} @command{operf
---callgraph}.
+and in @code{stats.so}
+@example
+samples  %        image name               symbol name
+285      24.4845  stats.so                 termsform
+284      24.3986  stats.so                 numeric_deriv
+213      18.2990  stats.so                 modelframe
+114       9.7938  stats.so                 nls_iter
+55        4.7251  stats.so                 ExtractVars
+47        4.0378  stats.so                 EncodeVars
+37        3.1787  stats.so                 getListElement
+32        2.7491  stats.so                 TrimRepeats
+25        2.1478  stats.so                 InstallVar
+20        1.7182  stats.so                 MatchVar
+20        1.7182  stats.so                 isZeroOne
+15        1.2887  stats.so                 ConvInfoMsg.isra.0
+@end example
 
 The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
 
-Another way to use this is to run @command{operf -s} as root, run the
-@R{} session in another terminal then shut down @command{operf} and
-analyse as above.
 
-Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
-@code{sm.variogram} took a long time:
-@example
-system.time(example(sm.variogram))
-...
-   user  system elapsed
-  5.543   3.202   8.785
-@end example
-
-@noindent
-including a lot of system time.  Profiling just the slow part, the
-second plot, showed
-
-@example
-  samples|      %|
-------------------
-   381845 99.9885 R
-        CPU_CLK_UNHALT...|
-          samples|      %|
-        ------------------
-           187484 49.0995 sm.so
-           169627 44.4230 no-vmlinux
-            12636  3.3092 libgfortran.so.3.0.0
-             6455  1.6905 R
-@end example
-
-@noindent
-so the system time was almost all in the Linux kernel.  It is possible
-to dig deeper if you have a matching uncompressed kernel with debug
-symbols to specify @emph{via} @option{--vmlinux}: we did not.
-
-In `legacy' mode @code{oprofile} works by running a daemon which
-collects information.  The daemon must be started as root, e.g.
-
-@example
-% su
-% opcontrol --no-vmlinux
-% (optional, some platforms) opcontrol --callgraph=5
-% opcontrol --start
-% exit
-@end example
-
-Then as a user
-
-@example
-% R
-... run the boot example
-% opcontrol --dump
-% opreport -l /path/to/R_HOME/library/stats/libs/stats.so
-...
-samples  %        symbol name
-1623     75.5939  anonymous symbol from section .plt
-349      16.2552  numeric_deriv
-113       5.2632  nls_iter
-62        2.8878  getListElement
-% opreport -l /path/to/R_HOME/bin/exec/R
-...
-samples  %        symbol name
-76052    11.9912  Rf_eval
-54670     8.6198  Rf_findVarInFrame3
-37814     5.9622  Rf_allocVector
-31489     4.9649  Rf_duplicate
-28221     4.4496  Rf_protect
-26485     4.1759  Rf_cons
-23650     3.7289  Rf_matchArgs
-21088     3.3250  Rf_findFun
-19995     3.1526  findVarLocInFrame
-14871     2.3447  Rf_evalList
-13794     2.1749  R_Newhashpjw
-13522     2.1320  R_gc_internal
-...
-@end example
-
-Shutting down the profiler and clearing the records needs to be done as
-root.
-
-@subsubsection sprof
+@subsubsection @command{sprof}
 
 You can select shared objects to be profiled with @command{sprof} by
 setting the environment variable @env{LD_PROFILE}.  For example
 
 @example
 % setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
-R
-... run the boot example
+% R -f boot.R
 % sprof /path/to/R_HOME/library/stats/libs/stats.so \
   /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 
@@ -9037,22 +9078,29 @@ Each sample counts as 0.01 seconds.
  16.67      0.39     0.07        0     0.00           nls_iter
   7.14      0.42     0.03        0     0.00           getListElement
 
-rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 ... to clean up ...
+rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 @end example
 
-It is possible that root access is needed to create the directories used
-for the profile data.
+It is possible that root access will be needed to create the directories
+used for the profile data.
 
-@node macOS,  , Linux, Profiling compiled code
-@subsection macOS
+@node Profiling on macOS, Profiling on Windows, Profilong on Linux, Profiling compiled code
+@subsection Profiling on macOS
 
-Developers have recommended @command{sample} (or @command{Sampler.app},
-which is a GUI version), @command{Shark} (in version of @code{Xcode}
-up to those for Snow Leopard), and @command{Instruments} (part of
-@code{Xcode}, see
-@uref{https://help.apple.com/instruments/mac/current/}).
+Developers have recommended @command{Instruments} (part of @code{Xcode},
+see @uref{https://help.apple.com/instruments/mac/current/}), This had a
+command-line version prior to macOS 12.
 
+@node Profiling on Windows,  , Profiling on macOS, Profiling compiled code
+@subsection Profiling on Windows
+
+@command{Very Sleepy}
+(@uref{https://github.com/VerySleepy/verysleepy}) has been used.  There were
+problems with accessing the debug information, but the best results which
+included function names were obtained by attaching the profiler to an
+existing @command{Rterm} process, either via GUI or using @option{/a:}
+(pid obtained via @command{Sys.getpid()}).
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
@@ -10013,8 +10061,8 @@ See
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
-`Dr. Memory' from @uref{https://drmemory.org/} is a memory checker
-for (currently) 32-bit Windows, Linux and macOS with similar aims to
+`Dr. Memory' from @uref{https://drmemory.org/} is a memory checker for
+(currently) Windows, Linux and macOS with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
@@ -14626,6 +14674,71 @@ including the header file @file{Rmath.h}; @xref{Distribution functions}.
 Those calls should also be preceded and followed by calls to
 @code{GetRNGstate} and @code{PutRNGstate}.
 
+@menu
+* Random-number generation from Fortran::
+@end menu
+
+@node Random-number generation from Fortran,  , Random numbers, Random numbers
+@subsection Random-number generation from Fortran
+
+It was explained earlier that Fortran random-number generators should
+not be used in @R{} packages, not least as packages cannot safely
+initialize them.  Rather a package should call @R{}'s built in
+generators: one way to do so is to use C wrappers like
+@example
+#include <R_ext/RS.h>
+#include <R_ext/Random.h>
+
+void F77_SUB(getRNGseed)(void) @{
+    GetRNGstate();
+@}
+void F77_SUB(putRNGseed)(void) @{
+    PutRNGstate();
+@}
+double F77_SUB(unifRand)(void) @{
+    return(unif_rand());
+@}
+@end example
+@noindent
+called from Fortran code like
+@example
+      ...
+      double precision X
+      call getRNGseed()
+      X = unifRand()
+      ...
+      call putRNGseed()
+@end example
+
+Alternatively one could use Fortran 2003's @code{iso_c_binding} module
+by something like (fixed-form Fortran 90 code):
+@example
+      module rngfuncs
+        use iso_c_binding
+        interface
+          double precision
+     *      function unifRand() bind(C, name = "unif_rand")
+          end function unifRand
+
+          subroutine getRNGseed() bind(C, name = "GetRNGstate")
+          end subroutine getRNGseed
+
+          subroutine putRNGseed() bind(C, name = "PutRNGstate")
+          end subroutine putRNGseed
+        end interface
+      end module
+      
+      subroutine testit
+      use rngfuncs
+      double precision X
+      call getRNGseed()
+      X = unifRand()
+      print *, X
+      call putRNGSeed()
+      end
+@end example
+
+
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
 @cindex Missing values
@@ -15034,8 +15147,8 @@ However, recent versions of @command{gfortran} @emph{via} the option
 @option{-fc-prototypes-external} say the C equivalent is
 @code{int_least32_t *}: `Link-Time Optimization' will report @code{int
 *} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
-to map LOGICAL variables to the C99 type @code{_Bool}, but it is usually
-simpler to pass integers to and fro.
+2003 to map LOGICAL variables to the C99 type @code{_Bool}, but it is
+usually simpler to pass integers to and fro.
 
 @node Passing functions,  , Fortran LOGICAL, Calling C from Fortran and vice versa
 @subsection Passing functions
@@ -15511,7 +15624,6 @@ constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 This can conflict with other software: for example it conflicts with the
 headers in IJG's @code{jpeg-9} (but not earlier versions).
-
 
 @node Optimization, Integration, Numerical analysis subroutines, The R API
 @section Optimization
@@ -17362,7 +17474,8 @@ of @code{R_HOME} to be recorded in the Windows Registry: this is
 optional but selected by default.  @emph{Where} it is recorded has
 changed over the years to allow for multiple versions of @R{} to be
 installed at once, and to allow 32- and 64-bit versions of @R{} to be
-installed on the same machine.
+installed on the same machine. Only 64-bit versions are supported since @R{}
+4.2.
 
 The basic Registry location is @code{Software\R-core\R}.  For an
 administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
@@ -17372,9 +17485,9 @@ the information for the last 32-bit install, and a 64-bit application
 that for the last 64-bit install.  For a personal install, the
 information is under @code{HKEY_CURRENT_USER\Software\R-core\R} which is
 seen by both 32-bit and 64-bit applications and so records the last
-install of either architecture.  To circumvent this, there are locations
-@code{Software\R-core\R32} and @code{Software\R-core\R64} which always
-refer to one architecture.
+install of either architecture.  To circumvent this, with Intel builds there
+are locations @code{Software\R-core\R32} and @code{Software\R-core\R64}
+which always refer to one architecture.
 
 When @R{} is installed and recording is not disabled then two string
 values are written at that location for keys @code{InstallPath} and

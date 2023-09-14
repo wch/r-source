@@ -58,7 +58,7 @@ is.table(x)
     non-table \code{x} for \dQuote{reshaping} \code{\link{array}}s.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
-  \item{responseName}{The name to be used for the column of table
+  \item{responseName}{the name to be used for the column of table
     entries, usually counts.}
   \item{stringsAsFactors}{logical: should the classifying factors be
     returned as factors (the default) or character vectors?}

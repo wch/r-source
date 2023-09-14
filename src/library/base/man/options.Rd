@@ -667,9 +667,9 @@ getOption(x, default = NULL)
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}
       and \code{\link{curlGetHeaders}}, or \code{NULL} when requests will
       be made without a user agent header.  The default is
-      \code{R (<version> <platform> <arch> <os>)}
+      \code{"R (\var{version} \var{platform} \var{arch} \var{os})"}
       except when \samp{libcurl} is used when it is
-      \code{libcurl/7.<xx>.<y>} for the \samp{libcurl} version in use.}
+      \code{"libcurl/\var{version}"} for the \samp{libcurl} version in use.}
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
@@ -709,7 +709,7 @@ getOption(x, default = NULL)
       \code{\link{help.request}}.}
 
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
-      if available?.  Defaults to \code{TRUE}.  Currently applies to
+      if available?  Defaults to \code{TRUE}.  Currently applies to
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
@@ -742,7 +742,8 @@ getOption(x, default = NULL)
 
     \item{\code{repos}:}{character vector of repository URLs for use by
       \code{\link{available.packages}} and related functions.  Initially
-      set from entries marked as default in the \file{repositories} file,
+      set from entries marked as default in the
+      \file{\link[=R_REPOSITORIES]{repositories}} file,
       whose path is configurable via environment variable \env{R_REPOSITORIES}
       (set this to \code{NULL} to skip initialization at startup).
       The \sQuote{factory-fresh} setting from the file in \code{R.home("etc")} is
@@ -762,6 +763,12 @@ local({
       R-Forge, RForge.net, \dots) for the current session
       using \code{\link{setRepositories}}.
     }
+
+    \item{\code{str}:}{a list of options controlling the default
+      \code{\link{str}} display. Defaults to \code{\link{strOptions}()}.}
+
+    \item{\code{str.dendrogram.last}:}{see \code{\link{str.dendrogram}}.}
+
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
       see \code{\link{Sweave}}.
     }

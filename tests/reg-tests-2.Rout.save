@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-03-28 r84086) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8314,4 +8314,19 @@ Error in f() : argument is missing, with no default
 > f <- compiler::cmpfun(f)
 > try(f())
 Error in f() : argument is missing, with no default
+> 
+> 
+> ## withAutoprint({ ... }}  -- losing srcrefs - PR#18572
+> show.srcref <- function() str(sys.call())
+> {
++ #line 1 "file1.R"
++     withAutoprint({ show.srcref() })
++ }
+> {
+> #line 1 "file1.R"
+>     withAutoprint({ show.srcref() })
+ language show.srcref()
+ - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0xfeef070> 
+> ## no   attr(*, "src..")   in R <= 4.3.1
 > 

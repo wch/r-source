@@ -669,7 +669,7 @@ stopifnot(identical(splitmbcs, 1L))
 
 ## contrib.url() should "recycle0"
 stopifnot(identical(contrib.url(character()), character()))
-## R < 4.4.0 returned "/src/contrib" or similar
+## R <= 4.3.1 returned "/src/contrib" or similar
 
 
 ## .local() S4 method when generic has '...'  *not* at end, PR#18538
@@ -855,6 +855,26 @@ stopifnot(exprs = {
 })
 ## norm() and  kappa(., exact=TRUE, ..)  now work ok in many more cases
 
+
+## argument matching for round/signif (not handled properly in R <= 4.3.x)
+round("days", x = Sys.time())
+round(, x = 1)
+signif(, x = 1)
+(function(...) round(..., 1, ))()
+(function(...) signif(..., 1, ))()
+tools::assertError(round(digits = 1, x =))
+tools::assertError(signif(digits = 1, x =))
+
+
+## transform() should not check.names -- PR#17890
+df <- data.frame(`A-1` = 11:12, B = 21:22, check.names = FALSE)
+stopifnot(identical(transform(df), df))  # no-op
+stopifnot(exprs = {
+    identical(names(transform(df, `A-1` = `A-1` + 1)), names(df))
+    identical(names(transform(df, C = 3)), c(names(df), "C"))
+    identical(transform(as.matrix(df), B = B), df)
+})
+## in all three cases, "A-1" inadvertently became "A.1" in R < 4.4.0
 
 
 ## keep at end

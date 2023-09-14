@@ -24,7 +24,7 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
 
  \item{ind}{integer-valued index vector, as resulting from
    \code{which(x)}.}
- \item{.dim}{\code{\link{dim}(.)} integer vector}
+ \item{.dim}{\code{\link{dim}(.)} integer vector.}
  \item{.dimnames}{optional list of character \code{\link{dimnames}(.)}.
    If \code{useNames} is true, to be used for constructing dimnames for
    \code{arrayInd()} (and hence, \code{which(*, arr.ind=TRUE)}).

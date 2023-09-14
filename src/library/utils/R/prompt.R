@@ -350,12 +350,11 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     Rdtxt <-
     	    list(name = paste0("\\name{", name, "}"),
 #                version = "\\Rdversion{1.1}",
-    	         aliases = c(paste0("\\alias{", name, "}"),
-                             c(paste0("\\alias{", package, "}"))),
+    	         aliases = paste0("\\alias{", c(name, package), "}"),
     	         docType = "\\docType{package}",
     	         title = c("\\title{", "}"),
     	         description = c("\\description{","}"),
-    	         details = c("\\details{","}"),
+    	         details = character(0L),
     	         author = c("\\author{","}"),
     	         references = character(0L),
 
@@ -366,13 +365,19 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     insert1("description", paste0("\\packageDescription{", package,"}"))
     insert1("author", c(paste0("\\packageAuthor{", package,"}"), "",
 			paste("Maintainer:",paste0("\\packageMaintainer{", package,"}"))))
-    insert1("details", c("", "The DESCRIPTION file:"))
-    insert1("details", paste0("\\packageDESCRIPTION{", package, "}"))
-    insert1("details", paste0("\\packageIndices{", package, "}"))
 
     if (!final) {
+        Rdtxt$details <- c("\\details{", "}")
         insert2("details", c("An overview of how to use the package,",
                              "including the most important functions"))
+        Rdtxt$meta <-
+            c("",
+              paste0("%% Uncomment below to imitate parts of library(help = ", package, ")"),
+              paste0("%\\section{The \\file{DESCRIPTION} File}{",
+                     "\\packageDESCRIPTION{", package, "}}"),
+              paste0("%\\section{Documentation Index}{",
+                     "\\packageIndices{", package, "}}"),
+              "")
         Rdtxt$references <-
             c("\\references{",
               paste("%%  ~~",
@@ -389,7 +394,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
               "}")
     }
 
-    if(is.na(filename)) return(Rdtxt)
+    if(is.na(filename)) return(Rdtxt[lengths(Rdtxt) > 0L])
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
 

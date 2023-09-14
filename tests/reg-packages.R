@@ -466,6 +466,11 @@ stopifnot(("unix" %in% deparsedLines) == (.Platform$OS.type == "unix"),
           ("windows" %in% deparsedLines) == (.Platform$OS.type == "windows"))
 ## R < 4.4.0 did not process \Sexpr macros containing #ifdef conditionals
 
+## \packageAuthor knows about Authors@R
+stopifnot(print(tools:::.Rd_get_section(installedRdDB[["foo.Rd"]], "author")) |>
+          grepl(pattern = "R Core Team", fixed = TRUE) |> any())
+## gave \author{NA} in R <= 4.3.1
+
 showProc.time()
 
 

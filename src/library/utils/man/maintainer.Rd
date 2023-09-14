@@ -10,17 +10,17 @@
    Show Package Maintainer
 }
 \description{
-  Show the name and email address of the maintainer of a package.
+  Show the name and email address of the maintainer of an installed package.
 }
 \usage{
 maintainer(pkg)
 }
 \arguments{
-   \item{pkg}{Character string.  The name of a single package.}
+   \item{pkg}{a character string, the name of an installed package.}
 }
 \details{
-   Accesses the package description to return the name and email address of
-   the maintainer.
+   Accesses the \link[=packageDescription]{package description}
+   to return the name and email address of the maintainer.
 
    Questions about contributed packages should often be addressed to
    the package maintainer; questions about base packages should
@@ -30,21 +30,17 @@ maintainer(pkg)
 }
 \value{
    A character string giving the name and email address of the maintainer
-   of the package, or \code{NA} if no such package is installed.
+   of the package, or \code{NA_character_} if no such package is installed.
 }
 
 \author{
- David Scott <d.scott@auckland.ac.nz> from code on R-help originally
- due to Charlie Sharpsteen <source@sharpsteen.net>; multiple corrections
+ David Scott \email{d.scott@auckland.ac.nz} from code on R-help originally
+ due to Charlie Sharpsteen \email{source@sharpsteen.net}; multiple corrections
  by R-core.
 }
 \references{
   \url{https://stat.ethz.ch/pipermail/r-help/2010-February/230027.html}
 }
-% failed 2011-07-07
-% \references{
-% \url{http://n4.nabble.com/R-help-question-How-can-we-enable-useRs-to-contribute-corrections-to-help-files-faster-tp1572568p1572868.html}
-% }
 \seealso{
 \code{\link{packageDescription}}, \code{\link{bug.report}}
 }

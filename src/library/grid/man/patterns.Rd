@@ -96,6 +96,9 @@ pattern(grob,
   devices.  Where they are not supported, closed shapes will be
   rendered with a transparent fill.  Where they are supported,
   not all values of \code{extend} are supported.
+
+  On Cairo devices, use of clipping in the pattern definition should be
+  avoided because it is very likely to result in distortion of the pattern tile.
 }
 \value{
   A linear gradient or radial gradient or pattern object.

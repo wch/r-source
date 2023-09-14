@@ -94,9 +94,9 @@
       upper or lower triangular part.
 
       \item \code{memDecompress(type = "unknown")} recognizes compression
-      in the defailt \sQuote{zlib} format as used by
+      in the default \sQuote{zlib} format as used by
       \code{memCompress(type = "gzip")}.
-      
+
       \item \code{memCompress()} and \code{memDecompress()} will use the
       \code{libdeflate} library
       (\url{https://github.com/ebiggers/libdeflate}) if installed.  This
@@ -105,6 +105,32 @@
       common platforms: the speed-up may depend on the library version.
       %% libdeflate 1.13 claims significant improvements in
       %% decompression speed.
+
+      \item \code{diff()} for objects of class \code{"Date"},
+      \code{"POSIXct"}, and \code{"POSIXlt"} accepts a \code{units}
+      argument passed via \code{...}.
+
+      \item Dynamic help now does a much better job rendering package
+      \file{DESCRIPTION} metadata.
+
+      \item \code{Rprof()} gains an \code{event} argument and support
+      for elapsed (real) time profiling on Unix (\PR{18076}).
+
+      \item \code{filled.contour()} gains \code{key.border} argument.
+
+      \item \code{tools::update_pkg_po()} gets \code{pot_make} and
+      \code{mo_make} options for \emph{not} re-making the corresponding
+      files, and additionally option \code{verbose}.
+
+      \item Hexadecimal string colour specifications are now accepted
+      in short form, so, for example, we can use \code{"#123"}, which is
+      equivalent to \code{"#112233"}.
+
+      Thanks to MikeFC for the original idea and Ella Kaye, Malcolm
+      Barrett, George Stagg, Hanne Oberman, and Michael Chirico for the
+      patch.
+
+      \item Plain-text help shows \verb{\var} markup with angle brackets.
     }
   }
 
@@ -117,9 +143,23 @@
       \item \command{configure} will warn if it encounters a 32-bit
       build, as that is nowadays almost untested.
 
-      \item Enviroment variable \env{R_SYSTEM_ABI} is no longer used and
+      \item Environment variable \env{R_SYSTEM_ABI} is no longer used and
       so no longer recorded in \file{etc/Renviron} (it was not on Windows
       and was only ever used when preparing package \pkg{tools}).
+
+      \item There is an experimental \command{configure} option
+      \option{--with-libdeflate-compression} which uses
+      \code{libdeflate} rather than \code{libz} to (de)compress \R
+      objects in lazy-load databases, if the \code{libdeflate} library
+      and headers are available.  Typically tasks spend up to 5\% of
+      their time on such operations, although creating lazy-data
+      databases is one of the exceptions.
+
+      \emph{pro tem} this can also be selected by setting environment
+      variable \env{R_USE_LIBDEFLATE_FOR_LAZYLOAD} to \code{yes}.
+
+      \item \command{configure} \option{--enable-lto=check} has not
+      worked reliably since 2019 and has been removed.
     }
   }
 
@@ -151,6 +191,23 @@
 
       \item \command{R CMD check} now visits \file{inst/NEWS.Rd}
       when checking Rd files.
+
+      \item \code{tools::checkDocFiles()} and
+      \code{tools::checkRdContents()} now also check internal Rd files
+      by default, but \dQuote{specially} (ignoring missing documentation
+      of arguments).
+
+      \item \command{R CMD Rdiff} gets option \option{--useEx}.
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Headers \file{R_ext/Applic.h} and \file{R-ext/Linpack.h}
+      included \file{R_ext/BLAS.h} although this was undocumented and
+      unneeded by their documented entry points.  They no longer do so.
+
+      [Deferred to 2023-09-18 to allow some packages to adjust.]
     }
   }
 
@@ -244,7 +301,19 @@
       build} works).  \code{tools::checkRdContents()} has been updated
       to detect such template leftovers, including from
       \code{promptPackage()}.
-    }
+
+      \item When S4 method dispatch fails because no method was found, the
+      error message now includes the signature argument names; thanks to
+      Michael Chirico's proposal on R-devel.
+
+      \item \code{withAutoprint({ .. })} now preserves \code{srcref}s
+      previously lost, thanks to Andrew Simmons' report plus fix in
+      \PR{18572}.
+
+      \item \code{transform.data.frame()} no longer adjusts names;
+      in particular, untransformed variables are kept as-is,
+      including those with syntactically invalid names (\PR{17890}).
+   }
   }
 }
 
@@ -274,7 +343,7 @@
     \itemize{
       \item There is some support for building with Intel's LLVM-based
       compilers on \samp{x86_64} Linux, such as (C) \command{icx}, (C++)
-      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.0.
+      \command{ipcx} and (Fortran) \command{ifx} from oneAPI 2023.x.y.
 
       \item There is support for using LLVM's \command{flang-new} as the
       Fortran compiler from LLVM 16.0.x (preferably 17.0.0
@@ -282,6 +351,17 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} reports the use of Fortran 90 random
+      number generator \code{RANDOM_NUMBER()} and the subroutines to
+      initialize it.
+
+      \sQuote{Writing R Extensions} has example code to use \R{}'s RNGs
+      from Fortran.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{substr(x, n, L) <- cc} now works (more) correctly for
@@ -313,7 +393,16 @@
 
       \item \code{norm(<0-length>, "2")} now gives zero instead of an
       error, as all the other norm types, thanks to Mikael Jagan's \PR{18542}.
-    }
+
+      \item Build-stage Rd macros \verb{\packageAuthor} and
+      \verb{\packageMaintainer} now process \samp{Authors@R},
+      fixing \samp{NA} results when the package \file{DESCRIPTION} omits
+      \samp{Author} and \samp{Maintainer} fields.
+
+      \item Formatting and printing complex numbers could give things
+      like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
+      replaced by \samp{+0i}.
+     }
   }
 }
 

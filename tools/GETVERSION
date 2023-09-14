@@ -16,12 +16,14 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
     d=`echo ${dat} | cut -d- -f3`
     y1=`expr ${y} - 2000`
     svn_rev=`sed -n -e 's/^Revision: //' -e '1p' < ../../SVN-REVISION`
+    svn_rev16=`expr ${svn_rev} % 65536`
   else
     y=2006
     m=01
     d=01
     y1=6
     svn_rev=unknown
+    svn_rev16=unknown
   fi
   echo "/* Rversion.h.  Generated automatically. */"
   echo "#ifndef R_VERSION_H"
@@ -43,7 +45,12 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_SVN_REVISION ${svn_rev}"
 ## Using 1-digit year stops problems with leading zeros
 #  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${y1}${m}${d},0"
-  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${svn_rev},0"
+  echo "#ifdef __llvm__"
+  echo "# define R_FILEVERSION    ${maj},${pl}${sl},${svn_rev16},0"
+  echo "#else"
+## LLVM requires fields to fit into 16 bits
+  echo "# define R_FILEVERSION    ${maj},${pl}${sl},${svn_rev},0"
+  echo "#endif"
   echo
   echo '#ifdef __cplusplus'
   echo '}'

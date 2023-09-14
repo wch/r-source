@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -15,7 +15,7 @@
 model.frame(formula, \dots)
 
 \method{model.frame}{default}(formula, data = NULL,
-            subset = NULL, na.action = na.fail,
+            subset = NULL, na.action,
             drop.unused.levels = FALSE, xlev = NULL, \dots)
 
 \method{model.frame}{aovlist}(formula, data = NULL, \dots)
@@ -30,19 +30,21 @@ get_all_vars(formula, data, \dots)
   \item{formula}{a model \code{\link{formula}} or \code{\link{terms}}
     object or an \R object.}
 
-  \item{data}{a data.frame, list or environment (or object
-    coercible by \code{\link{as.data.frame}} to a data.frame),
+  \item{data}{a data frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data frame),
     containing the variables in \code{formula}.  Neither a matrix nor an
     array will be accepted.}
 
-  \item{subset}{a specification of the rows to be used: defaults to all
-    rows. This can be any valid indexing vector (see
-    \code{\link{[.data.frame}}) for the rows of \code{data} or if that is not
-    supplied, a data frame made up of the variables used in
+  \item{subset}{a specification of the rows/observations to be used:
+    defaults to all. This can be any valid indexing vector (see
+    \code{\link{[.data.frame}}) for the rows of \code{data}, or
+    a (logical) expression using variables in \code{data} or
+    if that is not supplied, in
     \code{formula}.  (See additional details about how this argument
     interacts with data-dependent bases under \sQuote{Details} below.)}
 
-  \item{na.action}{how \code{NA}s are treated.  The default is first,
+  \item{na.action}{an optional (name of a) function for treating missing
+    values (\code{NA}s). The default is first,
     any \code{na.action} attribute of \code{data}, second
     a \code{na.action} setting of \code{\link{options}}, and third
     \code{\link{na.fail}} if that is unset.  The \sQuote{factory-fresh}
@@ -139,7 +141,8 @@ get_all_vars(formula, data, \dots)
   e.g.\sspace{}by \code{\link{na.pass}}).
 }
 \seealso{\code{\link{model.matrix}} for the \sQuote{design matrix},
-  \code{\link{formula}} for formulas  and
+  \code{\link{formula}} for formulas,
+  \code{\link{model.extract}} to extract components, and
   \code{\link{expand.model.frame}} for model.frame manipulation.
 }
 \references{
@@ -150,6 +153,9 @@ get_all_vars(formula, data, \dots)
 }
 \examples{
 data.class(model.frame(dist ~ speed, data = cars))
+
+## using a subset and an extra variable
+model.frame(dist ~ speed, data = cars, subset = speed < 10, z = log(dist))
 
 ## get_all_vars(): new var.s are recycled (iff length matches: 50 = 2*25)
 ncars <- get_all_vars(sqrt(dist) ~ I(speed/2), data = cars, newVar = 2:3)

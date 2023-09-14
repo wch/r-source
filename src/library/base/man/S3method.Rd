@@ -14,7 +14,7 @@
   \item{class}{a character string naming an S3 class.}
   \item{method}{a character string or function giving the S3 method to
     be registered.  If not given, the function named
-    \samp{\var{generic}.\var{class}} is used.}
+    \code{\var{generic}.\var{class}} is used.}
 }
 \details{
   This function should only be used in R scripts: for package code, one

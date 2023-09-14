@@ -1,6 +1,6 @@
 % File src/library/graphics/man/filled.contour.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{filled.contour}
@@ -18,7 +18,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
                levels = pretty(zlim, nlevels), nlevels = 20,
                color.palette = function(n) hcl.colors(n, "YlOrRd", rev = TRUE),
                col = color.palette(length(levels) - 1),
-               plot.title, plot.axes, key.title, key.axes,
+               plot.title, plot.axes, key.title, key.axes, key.border = NULL,
                asp = NA, xaxs = "i", yaxs = "i", las = 1,
                axes = TRUE, frame.plot = axes, \dots)
 
@@ -54,6 +54,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
  \item{key.title}{statements which add titles for the plot key.}
  \item{key.axes}{statements which draw axes on the plot key.
     This overrides the default axis.}
+ \item{key.border}{color for the border of the key \code{\link{rect}()}angles.}
  \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
  \item{xaxs}{the x axis style.  The default is to use internal
     labeling.}
@@ -136,8 +137,9 @@ filled.contour(x = 1:20, y = 1:20, z = b,
 ## Persian Rug Art:
 x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 r <- sqrt(outer(x^2, y^2, `+`))
-filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
-## rather, the key *should* be labeled:
+## "minimal"
+filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE, key.border=NA)
+## rather, the key *should* be labeled (but axes still not):
 filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,
                plot.axes = {})
 }

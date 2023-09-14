@@ -725,7 +725,7 @@ predict.lm <-
         if (ncol(tR) < pp) { # Add extra zero cols if needed
             tR <- cbind(tR, matrix(0, nrow = pp, ncol = pp - ncol(tR)))
             if(verbose)
-                cat(sprintf("    new tR: ncol(tR)=%d =!?= $d = pp = nrow(tR)\n", ncol(tR),pp))
+                cat(sprintf("    new tR: ncol(tR)=%d =!?= %d = pp = nrow(tR)\n", ncol(tR),pp))
         }
         ## Pad diagonal with ones
         d <- c(pp,pp) ; tR[.row(d) > p  &  .row(d) == .col(d)] <- 1

@@ -9,37 +9,38 @@
 \alias{axis.Date}
 \title{Date and Date-time Plotting Functions}
 \description{
-  Functions to plot objects of classes \code{"POSIXlt"},
-  \code{"POSIXct"} and \code{"Date"} representing calendar dates and times.
+  Add a date/time axis to the current plot of an object of class
+  \code{"POSIXt"} or \code{"Date"}, respectively.
 }
 \usage{
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 axis.Date(side, x, at, format, labels = TRUE, \dots)
 }
 \arguments{
-  \item{x, at}{A date-time or date object, or other types of objects 
-    that can be converted appropriately.}
-  \item{side}{See \code{\link{axis}}.}
-  \item{format}{See \code{\link{strptime}}. If missing, a good guess for 
-    an appropriate format is made by looking at the argument \code{at} 
-    and its granularity.}
-  \item{labels}{Either a logical value specifying whether
-    annotations are to be made at the tickmarks, or a vector of character
-    strings to be placed at the tickpoints.}
-  \item{\dots}{Further arguments to be passed from or to other methods,
+  \item{side}{see \code{\link{axis}}.}
+  \item{x, at}{optional \link{date-time} or \link{Date} objects,
+    or other types of objects that can be converted appropriately.}
+  \item{format}{an optional character string specifying the label format,
+    see \code{\link{strftime}}.}
+  \item{labels}{either a logical value specifying whether
+    annotations are to be made at the tickmarks, or a character vector of
+    labels to be placed at the tickpoints specified by \code{at}.}
+  \item{\dots}{further arguments to be passed from or to other methods,
     typically \link{graphical parameters}.}
 }
 \details{
+  If \code{at} is unspecified,
   \code{axis.POSIXct} and \code{axis.Date} work quite hard 
-  (from R-4.3.0 by using \code{\link[grDevices:pretty.Date]{pretty}} for 
-  \link{DateTimeClasses}) to choose
+  (from \R 4.3.0 via \code{\link[grDevices:pretty.Date]{pretty}} for
+  \link{date-time} classes) to choose
   suitable time units (years, months, days, hours, minutes, or seconds)
-  and a sensible output format, but this can be overridden by supplying
-  a \code{format} specification.
+  and a sensible label \code{format} based on the axis range.
+  \code{\link{par}("lab")} controls the approximate number of intervals.
 
   If \code{at} is supplied it specifies the locations of the ticks
-  and labels whereas if \code{x} is specified a suitable grid of labels
-  is chosen. Printing of tick labels can be suppressed by using
+  and labels. If the label \code{format} is unspecified, a good guess
+  is made by looking at the granularity of \code{at}.
+  Printing of tick labels can be suppressed with
   \code{labels = FALSE}.
 
   The date-times for a \code{"POSIXct"} input are interpreted in the
@@ -60,10 +61,14 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
 }
 \examples{
 with(beaver1, {
-    opar <- par(mfrow = c(2,1))
+    opar <- par(mfrow = c(3,1))
     time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),
                      "\%Y \%j \%H \%M")
-    plot(time, temp, type = "l") # axis at 5-hour intervals.
+    plot(time, temp, type = "l") # axis at 6-hour intervals
+    # request more ticks
+    olab <- par(lab = c(10, 10, 7))
+    plot(time, temp, type = "l")
+    par(olab)
     # now label every hour on the time axis
     plot(time, temp, type = "l", xaxt = "n")
     r <- as.POSIXct(round(range(time), "hours"))

@@ -63,7 +63,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 }
 \seealso{
   \code{\link{browseVignettes}} for an HTML-based vignette browser;
-  \code{\link{RShowDoc}(<basename>, package = "<pkg>")} displays a
+  \code{\link{RShowDoc}("\var{basename}", package = "\var{pkgname}")} displays a
   \dQuote{rendered} vignette (pdf or html).
 }
 \examples{

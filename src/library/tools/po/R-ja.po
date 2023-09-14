@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -139,9 +139,6 @@ msgid ""
 msgstr ""
 " ファイル '%s' 中に構文解析エラー : \n"
 " %s "
-
-msgid "declared S3 method '%s' not found"
-msgstr " 宣言された S3 メソッド '%s' が見付かりません "
 
 msgid "cannot check R code installed as image"
 msgstr " イメージとしてインストールされた R コードはチェックできません "
@@ -295,6 +292,9 @@ msgstr " 制約付きのライセンスコンポネントは許されていま�
 
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr " テンプレートであり、'+ file LICENSE' が必要であるライセンスコンポーネントです: "
+
+msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
@@ -460,11 +460,23 @@ msgstr " 名前 '%s' が重複する Rd ファイル: "
 msgid "Rd files with duplicated alias '%s':"
 msgstr " 重複するエイリアス '%s' を持った Rd ファイル: "
 
+#, fuzzy
+msgid "Rd files without \\alias:"
+msgstr " '%s' を持たない Rd ファイル: "
+
+#, fuzzy
+msgid "Invalid package aliases in Rd file '%s':"
+msgstr " 変数 '%s' 中に non-portable フラグ: "
+
 msgid "Argument items with no description in Rd object '%s':"
 msgstr " Rd オブジェクト '%s' に説明のない引数: "
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr " Rd オブジェクト '%s' に編集する必要のある自動生成された項目: "
+
+#, fuzzy
+msgid "Rd objects without \\description:"
+msgstr " 空のセクションを含む Rd ファイル： "
 
 msgid "no Rd sections specified"
 msgstr "Rd セクションが指定されていません "
@@ -481,6 +493,9 @@ msgstr ""
 " \n"
 " %s \n"
 " (NAMESPACE 中に)。 "
+
+msgid "concordance is not valid"
+msgstr ""
 
 msgid "Rd object required"
 msgstr "Rd オブジェクトが必要です "
@@ -525,8 +540,18 @@ msgstr " パッケージ '%s' にRdマクロは見つけられませんでした
 msgid "No Rd macros in package '%s'."
 msgstr " パッケージ '%s' にRdマクロは見つけられませんでした "
 
+msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr " 2 つ以上の \\examples 節があります、1 番目を用います "
+
+msgid "alias:"
+msgstr ""
+
+#, fuzzy
+msgid "is not one line"
+msgstr " は登録されていません "
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr " Rd ファイルを LaTeX に変換しています "
@@ -596,6 +621,10 @@ msgstr " ビニエット %1$s は、ビニエット %3$s による以下の %2$s
 #, fuzzy
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr " ビニエットのソースファイル( %s )が共有の名前 ( %s ) を持っており、したがってお互いが出力ファイルを上書きしあうリスクがあることを検出しました "
+
+#, fuzzy
+msgid "Note: skipping %s"
+msgstr " %s を処理中 "
 
 #, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
@@ -736,9 +765,6 @@ msgstr " エラー: この R はバージョン %s です。 R %s %s を必要�
 msgid "loading failed"
 msgstr " ロードに失敗しました "
 
-msgid "assertConditon: Successfully caught a condition"
-msgstr " assertConditon: 条件をキャッチすることに成功しました "
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr " %2$s を評価しているときに、%1$s を得ました; しかし欲しかったのは %3$s です "
 
@@ -748,14 +774,8 @@ msgstr " %2$s を評価しているときに、%1$s を得ることができま�
 msgid "Failed to get error in evaluating %s"
 msgstr " %s を評価しているときに、エラーをとらえることができませんでした "
 
-msgid "Asserted error: %s"
-msgstr "Asserted エラー: %s "
-
 msgid "Got warning in evaluating %s, but also an error"
 msgstr " %s を評価しているときに警告が出ましたが、エラーも出ました "
-
-msgid "Asserted warning: %s"
-msgstr "Asserted 警告: %s "
 
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
@@ -829,6 +849,21 @@ msgstr " クラスが間違っています "
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr " CITATION ファイルにエンコーディングの宣言なしの非アスキー入力 "
 
+msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
+msgstr ""
+
+msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
+msgstr ""
+
+msgid "HTTPD-REQUEST %s%s"
+msgstr ""
+
+msgid "="
+msgstr " = "
+
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
 
@@ -843,6 +878,9 @@ msgstr " コード実例: "
 
 msgid "Help pages:"
 msgstr " ヘルプページ: "
+
+msgid "HTTPD-ERROR %s %s"
+msgstr ""
 
 msgid "No package named %s could be found"
 msgstr " %s という名前のパッケージは見つかりません "
@@ -864,6 +902,16 @@ msgstr " package %s にドキュメントは見つけられませんでした "
 
 msgid "URL %s was not found"
 msgstr " URL %s は見つかりませんでした "
+
+msgid "HTTPD-DEMO %s::%s"
+msgstr ""
+
+msgid "HTTPD-EXAMPLE %s::%s"
+msgstr ""
+
+#, fuzzy
+msgid "No NEWS found for package %s"
+msgstr " パッケージ %s に対するヘルプが見つかりません "
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr " パッケージのヘルプファイル, %s, %s, %s 以下のファイル, %s だけが閲覧できます "
@@ -891,6 +939,9 @@ msgstr " 完了 "
 
 msgid "failed to start the httpd server"
 msgstr " httpd サーバーを起動することができませんでした "
+
+msgid "* Package: %s"
+msgstr ""
 
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
@@ -949,6 +1000,33 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
+msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
+msgstr ""
+
+msgid "patch utility is needed for installation-time patching"
+msgstr ""
+
+msgid "NOTE: Skipping installation-time patch"
+msgstr ""
+
+#, fuzzy
+msgid "which seems to be already applied."
+msgstr " バンドルされているようですが、現在は用いられていません "
+
+msgid "WARNING: failed to apply patch"
+msgstr ""
+
+#, fuzzy
+msgid "Applied installation-time patch"
+msgstr " 以下のパッケージ化されたインストール "
+
+msgid "and saved it as"
+msgstr ""
+
+#, fuzzy
+msgid "in package installation"
+msgstr " 以下のパッケージ化されたインストール "
+
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr " R の include ディレクトリが空です。恐らく R-devel.rpm か類似物をインストールする必要があります "
 
@@ -988,6 +1066,27 @@ msgstr " エラー: ディレクトリへのインストール許可がありま
 
 msgid "building a fake installation is disallowed"
 msgstr " まがい物 (fake) インストールの構築は許されていません "
+
+msgid "using C compiler:"
+msgstr ""
+
+msgid "using Fortran compiler:"
+msgstr ""
+
+msgid "using C++ compiler:"
+msgstr ""
+
+msgid "using C++"
+msgstr ""
+
+msgid "using SDK:"
+msgstr ""
+
+msgid "WARNING: failed to revert patch"
+msgstr ""
+
+msgid "Reverted installation-time patch"
+msgstr ""
 
 msgid ""
 "See\n"
@@ -1047,7 +1146,10 @@ msgstr ""
 " 集まり %s: \n"
 " %s "
 
-msgid "Cannot extract version info from the following section titles:"
+#, fuzzy
+msgid ""
+"Cannot extract version info from the following section titles:\n"
+"%s"
 msgstr " 以下のセクションタイトルからバージョン情報を取り出せません "
 
 msgid ""
@@ -1117,6 +1219,12 @@ msgstr " %s が見つかりました（おそらく %s から） "
 msgid "no native symbols were extracted"
 msgstr ""
 
+msgid "not a PDF file"
+msgstr ""
+
+msgid "'diff' is not available so useDiff = FALSE will be used"
+msgstr ""
+
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
@@ -1160,10 +1268,15 @@ msgstr " パースファイルが見つかりません "
 msgid "FAILED"
 msgstr " 失敗 "
 
+#, fuzzy
+msgid "directory %s is not writeable"
+msgstr " ディレクトリ '%s' が存在しません "
+
 msgid "DIFFERED"
 msgstr " 相違 "
 
-msgid "running tests of random deviate generation -- fails occasionally"
+#, fuzzy
+msgid "running tests of random deviate generation (should no longer ever fail)"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "
 
 #, fuzzy
@@ -1275,6 +1388,9 @@ msgstr " ファイル 'DESCRIPTION' と 'DESCRIPTION.in' が見当たりませ�
 msgid "invalid package layout"
 msgstr " 不正なパッケージ構成です "
 
+msgid "*not* using 'C' for LC_COLLATE locale"
+msgstr ""
+
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
 
@@ -1287,6 +1403,9 @@ msgstr " 非 ASCII データをもつ未知のエンコーディングです: AS
 #, fuzzy
 msgid "cannot source package code:"
 msgstr " パッケージコードを読み込めません "
+
+msgid "inferior call failed"
+msgstr ""
 
 msgid "'text' must be a character vector"
 msgstr " 'text' は文字型ベクトルでなければなりません "
@@ -1387,10 +1506,6 @@ msgstr[0] ""
 " ame 欄 \n"
 " %s "
 
-msgid "duplicated vignette title:"
-msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-
 #, fuzzy
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
@@ -1424,6 +1539,18 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "declared S3 method '%s' not found"
+#~ msgstr " 宣言された S3 メソッド '%s' が見付かりません "
+
+#~ msgid "assertConditon: Successfully caught a condition"
+#~ msgstr " assertConditon: 条件をキャッチすることに成功しました "
+
+#~ msgid "Asserted error: %s"
+#~ msgstr "Asserted エラー: %s "
+
+#~ msgid "Asserted warning: %s"
+#~ msgstr "Asserted 警告: %s "
 
 #~ msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 #~ msgstr " パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので xrefs をチェックできません "
@@ -1611,9 +1738,6 @@ msgstr[0] ""
 #~ msgid "Vignette engine"
 #~ msgstr " ビニエットエンジン "
 
-#~ msgid "is not registered"
-#~ msgstr " は登録されていません "
-
 #~ msgid "Engine name"
 #~ msgstr " エンジン名 "
 
@@ -1750,9 +1874,6 @@ msgstr[0] ""
 #~ msgid "running 'zip' failed"
 #~ msgstr " 'zip' の実行に失敗しました "
 
-#~ msgid "packaged installation of"
-#~ msgstr " 以下のパッケージ化されたインストール "
-
 #~ msgid "as"
 #~ msgstr " として "
 
@@ -1799,9 +1920,6 @@ msgstr[0] ""
 
 #~ msgid "Entry for"
 #~ msgstr " 以下に対する項目　 "
-
-#~ msgid "="
-#~ msgstr " = "
 
 #~ msgid "already defined to be"
 #~ msgstr " は既に以下のように定義されています "
@@ -2073,9 +2191,6 @@ msgstr[0] ""
 #~ msgid "Rd files with missing or empty '\\title':"
 #~ msgstr " '\\title' を持たないか空である Rd ファイル: "
 
-#~ msgid "Rd files without '%s':"
-#~ msgstr " '%s' を持たない Rd ファイル: "
-
 #~ msgid "These entries are required in an Rd file."
 #~ msgstr " Rd ファイルにはこれらの項目が必要です。 "
 
@@ -2090,9 +2205,6 @@ msgstr[0] ""
 
 #~ msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
 #~ msgstr " 各 'keyword' エントリーは、標準のキーワード（R ホームディレクトリの 'doc' サブディレクトリのファイル 'KEYWORDS' にリストされているように）のうちの1つを指定しなければなりません "
-
-#~ msgid "Rd files with empty sections:"
-#~ msgstr " 空のセクションを含む Rd ファイル： "
 
 #, fuzzy
 #~ msgid "checkRd is designed for Rd version 2 or higher"

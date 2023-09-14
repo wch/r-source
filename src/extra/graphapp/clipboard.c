@@ -101,7 +101,7 @@ int getstringfromclipboard(char * str, int n)
     } else return 1;
 }
 
-int clipboardhastext()
+int clipboardhastext(void)
 {
     return (int) IsClipboardFormatAvailable(CF_TEXT);
 }

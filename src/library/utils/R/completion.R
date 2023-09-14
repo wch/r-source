@@ -849,6 +849,7 @@ functionArgs <-
 ## completions are found.  We could return "" as the only completion,
 ## but that produces an irritating blank line on
 ## list-possible-completions (or whatever the correct name is).
+
 ## Instead (since we don't want to reinvent the wheel), we use the
 ## following scheme: If the character just preceding our token is " or
 ## ', we immediately go to file name completion.  If not, we do our
@@ -980,11 +981,11 @@ fileCompletions <- function(token)
 ## completion when called from C code.
 
 
-.completeToken <- function()
+.completeToken <- function(custom = TRUE)
 {
     ## Allow override by user-specified function
     custom.completer <- rc.getOption("custom.completer")
-    if (is.function(custom.completer))
+    if (custom && is.function(custom.completer))
         return (custom.completer(.CompletionEnv))
     text <- .CompletionEnv[["token"]]
     if (isInsideQuotes())
@@ -1355,12 +1356,29 @@ fileCompletions <- function(token)
           "xaxp", "xaxs", "xaxt", "xpd", "yaxp", "yaxs", "yaxt",
           "page", "ylbias")
 
-    options <-
-        c(names(options()), ## + some that are NULL by default
-          "mc.cores", "dvipscmd", "warn.FPU", "aspell_program",
-          "deparse.max.lines", "digits.secs", "error", "help.ports",
-          "help_type", "save.defaults", "save.image.defaults",
-          "SweaveHooks", "SweaveSyntax", "topLevelEnvironment")
+    options <- unique(c(
+        names(.Options),
+        ## + options not yet initialized when preparing utils
+        "bitmapType", "citation.bibtex.max", "contrasts", "demo.ask",
+        "device", "device.ask.default", "editor", "example.ask",
+        "help.search.types", "help.try.all.packages", "HTTPUserAgent",
+        "internet.info", "locatorBell", "mailer", "menu.graphics",
+        "na.action", "pkgType", "repos", "show.coef.Pvalues",
+        "show.signif.stars", "str", "str.dendrogram.last",
+        "ts.eps", "ts.S.compat", "unzip", "windowsTimeout",
+        ## + options unset by default (or OS-specific)
+        "mc.cores", "dvipscmd", "warn.FPU",
+        "askYesNo", "BioC_mirror", "ccaddress", "checkPackageLicense",
+        "conflicts.policy", "de.cellwidth", "deparse.max.lines", "digits.secs",
+        "download.file.extra", "download.file.method", "error",
+        "help.htmlmath", "help.ports", "help_type", "install.lock",
+        "install.packages.check.source",
+        "install.packages.compile.from.source",
+        "interrupt", "Ncpus", "save.defaults", "save.image.defaults",
+        "setWidthOnResize", "show.error.locations", "show.nls.convergence",
+        "SweaveHooks", "SweaveSyntax", "topLevelEnvironment",
+        "traceback.max.lines", "url.method", "warning.expression"
+    ))
 
     .addFunctionInfo(par = par, options = options)
 

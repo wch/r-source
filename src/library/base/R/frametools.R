@@ -73,11 +73,13 @@ transform.data.frame <- function (`_data`, ...)
     matched <- !is.na(inx)
     if (any(matched)) {
 	`_data`[inx[matched]] <- e[matched]
-	`_data` <- data.frame(`_data`)
+	`_data` <- data.frame(`_data`, check.names = FALSE)
     }
-    if (!all(matched))  # add as separate arguments to get replication
-	do.call("data.frame", c(list(`_data`), e[!matched]))
-    else `_data`
+    if (!all(matched)) { # add as separate arguments to get replication
+	args <- e[!matched]
+	args[["check.names"]] <- FALSE # PR#17890
+	do.call("data.frame", c(list(`_data`), args))
+    } else `_data`
 }
 
 transform <- function(`_data`,...) UseMethod("transform")
@@ -86,4 +88,4 @@ transform <- function(`_data`,...) UseMethod("transform")
 ## The default converts its argument to a dataframe and transforms
 ## that. This is probably marginally useful at best. --pd
 transform.default <- function(`_data`,...)
-    transform.data.frame(data.frame(`_data`),...)
+    transform.data.frame(as.data.frame(`_data`),...)

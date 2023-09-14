@@ -35,12 +35,12 @@ R_compiled_by()
   \item{os}{the underlying operating system.}
   \item{crt}{the C runtime on Windows.}
   \item{system}{CPU and OS, separated by a comma.}
-  \item{status}{the status of the version (e.g., \code{"alpha"})}
-  \item{major}{the major version number}
-  \item{minor}{the minor version number, including the patchlevel}
-  \item{year}{the year the version was released}
-  \item{month}{the month the version was released}
-  \item{day}{the day the version was released}
+  \item{status}{the status of the version (e.g., \code{"alpha"}).}
+  \item{major}{the major version number.}
+  \item{minor}{the minor version number, including the patchlevel.}
+  \item{year}{the year the version was released.}
+  \item{month}{the month the version was released.}
+  \item{day}{the day the version was released.}
   \item{svn rev}{the Subversion revision number, which should be either
     \code{"unknown"} or a single number. (A range of numbers or a number
     with \samp{M} or \samp{S} appended indicates inconsistencies in the

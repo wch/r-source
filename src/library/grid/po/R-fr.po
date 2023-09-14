@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -29,6 +29,21 @@ msgstr "'labels' et 'at' doivent être de même longueur"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "la valeur logique 'label' est de longueur nulle"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "'order' incorrect"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "nom de 'grob' incorrect"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "classe \"gTree\" incorrecte"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "les points extrêmes ne peuvent être identiques"
@@ -98,6 +113,9 @@ msgstr "mélange de valeurs et de valeurs manquantes pour %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' n'existe plus"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "valeur 'linemitre' incorrecte"
@@ -277,9 +295,6 @@ msgstr "Source invalide"
 msgid "Invalid destination"
 msgstr "Destination invalide"
 
-msgid "Invalid compositing operator"
-msgstr "Opérateur de composition invalide"
-
 msgid "Unknown group:"
 msgstr "Groupe inconnu :"
 
@@ -334,6 +349,10 @@ msgstr "listing incorrect"
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
 
+#, fuzzy
+msgid "Only a grob can be converted to a mask"
+msgstr "Seul un grob peut être converti en chemin"
+
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
@@ -362,7 +381,13 @@ msgstr "Le modèle doit être basé sur le grob"
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Le pattern de remplissage manquant est remplacé par un remplissage transparent"
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+#, fuzzy
+msgid "Pattern fill applied to object with no inside"
 msgstr "Remplissage en gradient appliqué à un objet qui n’a pas de contenu"
 
 msgid "'length' must be a 'unit' object"
@@ -443,11 +468,47 @@ msgstr "'r' doit être un objet 'unit'"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "Transformation invalide"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' et 'y' doivent être de longueur unitaire"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' et 'y' doivent être de longueur unitaire"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "justification horizontale incorrecte"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' et 'units' doivent avoir une longueur positive"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' et 'y' doivent être des objets 'unit' et doivent avoir la même longueur"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' et 'y' doivent être des objets 'unit' et doivent avoir la même longueur"
 
 msgid "Not a unit object"
 msgstr "Ce n’est pas un objet 'unit'"
@@ -548,6 +609,9 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
+
+#~ msgid "Invalid compositing operator"
+#~ msgstr "Opérateur de composition invalide"
 
 #~ msgid "'x' argument must be a unit object"
 #~ msgstr "l'argument 'x' doit être un objet unité"

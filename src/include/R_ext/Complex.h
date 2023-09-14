@@ -62,7 +62,7 @@ are typically issued (-pedantic) by a C++ compiler.
 */
 
 #ifdef __cplusplus
-// Look for clang first as it defines __GNUC__ and reacts to #praema GCC
+// Look for clang first as it defines __GNUC__ and reacts to #pragma GCC
 # if defined(__clang__)
 #  pragma clang diagnostic push
 #  pragma clang diagnostic ignored "-Wgnu-anonymous-struct"

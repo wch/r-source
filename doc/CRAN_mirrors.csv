@@ -29,7 +29,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Nanjing) [https]",China,Nanjing,https://mirrors.nju.edu.cn/CRAN/,"eScience Center, Nanjing University","my # yaoge123.com",1,cn,"secure_mirror_from_master"
 "China (Shanghai 2) [https]",China,Shanghai,https://mirrors.sjtug.sjtu.edu.cn/cran/,"Shanghai Jiao Tong University","Alex Chi <iskyzh # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Shenzhen) [https]",China,Shenzhen,https://mirrors.sustech.edu.cn/CRAN/,"Southern University of Science and Technology (SUSTech)","cra # sustech.edu.cn",1,cn,"secure_mirror_from_master"
-"China (Xianyang) [https]",China,Xianyang,https://mirrors.nwafu.edu.cn/cran/,"Northwest A&F University (NWAFU)","dingyuxiao99 # nwafu.edu.cn",0,cn
+"China (Xianyang) [https]",China,Xianyang,https://mirrors.nwafu.edu.cn/cran/,"Northwest A&F University (NWAFU)","dingyuxiao99 # nwafu.edu.cn",1,cn
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",1,cr,"secure_mirror_from_master"
 "Cyprus [https]",Cyprus,Nicosia,https://mirror.library.ucy.ac.cy/cran/,"University of Cyprus","mirror # ucy.ac.cy",1,cy,"secure_mirror_from_master"
@@ -42,6 +42,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 1) [https]",France,Paris,https://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr,"secure_mirror_from_master"
+"Germany (Dortmund) [https]",Germany,Dortmund,https://mirror.howtolearnalanguage.info/,"dogado GmbH","info # howtolearnalanguage.info",1,de,
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
 "Germany (Leipzig) [https]",Germany,Leipzig,https://mirror.dogado.de/cran/,"dogado GmbH","mirror # dogado.de",1,de,"secure_mirror_from_master"
 "Germany (Göttingen) [https]",Germany,Göttingen,https://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,"secure_mirror_from_master"
@@ -49,7 +50,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Germany (Nürnberg) [https]",Germany,Nürnberg,https://mirror.clientvps.com/CRAN/,ClientVPS,"info # clientvps.com",1,de
 "Germany (Regensburg) [https]",Germany,Regensburg,https://packages.othr.de/cran/,"OTH Regensburg","admin-storage # oth-regensburg.de",1,de,"secure_mirror_from_master"
 "Greece [https]",Greece,Crete,https://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
-"Hungary [https]",Hungary,Budapest,https://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu,"secure_mirror_from_master"
 "Iceland [https]",Iceland,Reykjavik,https://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 "India (Bengaluru) [https]",India,Bengaluru,https://cran.icts.res.in/,"International Centre for Theoretical Sciences","cran # icts.res.in",1,in,"secure_mirror_from_master"
 "India (Bhubaneswar) [https]",India,Bhubaneswar,https://mirror.niser.ac.in/cran/,"National Institute of Science Education and Research (NISER)","Subhankar Mishra <smishra # niser.ac.in>",1,in,"secure_mirror_from_master"
@@ -69,7 +69,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Netherlands (Dronten) [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","s.urbanek # auckland.ac.nz",1,nz,"secure_mirror_from_master"
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
-"Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","COARE Team <gridops # asti.dost.gov.ph>, ops # pregi.net",1,ph,
+"Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","COARE Team <gridops # asti.dost.gov.ph>, ops # pregi.net",0,ph,
 "Poland [https]",Poland,Warsaw,https://cran.mi2.ai/,"MI2.ai, Warsaw University of Technology","przemyslaw.biecek # gmail.com",1,pl
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Russia (Novosibirsk) [https]",Russia,Novosibirsk,https://mirror.truenetwork.ru/CRAN/,"Truenetwork","mirror # truenetwork.ru",1,ru
@@ -84,7 +84,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th,"maintainer_address_bounces"
 "Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr,"secure_mirror_from_master"
 "Turkey (Istanbul) [https]",Turkey,Istanbul,https://cran.gedik.edu.tr/,"Istanbul Gedik University","gedikedu # gedik.edu.tr",1,tr,"secure_mirror_from_master"
-"Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","Ahmed A. Zaim <zaim # metu.edu.tr>, ncc-cc # metu.edu.tr",1,tr,"secure_mirror_from_master"
+"Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","Ahmed A. Zaim <zaim # metu.edu.tr>, ncc-cc # metu.edu.tr",0,tr,"secure_mirror_from_master"
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Oliver Johnson <O.Johnson # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"

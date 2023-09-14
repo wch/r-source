@@ -116,7 +116,7 @@ callNextMethod <- function(...) {
             ## don't use match.call, because missing args will screw up for "[", etc.
             call <- as.list(mcall)
             ## don't test with identical(), there may  be a package attr.
-            if((f ==  "[") && length(names(call)>0))
+            if((f ==  "[") && length(names(call))>0)
                 call <- .doSubNextCall(call, method) # [ with a drop= arg.
             else {
                fnames <- c("", formalArgs(method))

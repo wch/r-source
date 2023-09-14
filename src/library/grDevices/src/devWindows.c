@@ -3935,7 +3935,7 @@ static void GA_eventHelper(pDevDesc dd, int code)
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
+typedef int (*R_SaveAsBitmap)(SEXP);
 static R_SaveAsBitmap R_devCairo;
 static int RcairoAlreadyLoaded = 0;
 static HINSTANCE hRcairoDll;
@@ -3952,7 +3952,9 @@ static int Load_Rcairo_Dll()
     if (!RcairoAlreadyLoaded) {
 	size_t needed = strlen(R_HomeDir())
 	                + strlen("/library/grDevices/libs/")
+#ifdef R_ARCH
 			+ strlen(R_ARCH)
+#endif
 			+ strlen("/winCairo.dll") + 1;
 	char *szFullPath = malloc(needed);
 	if (!szFullPath) {
@@ -3961,8 +3963,13 @@ static int Load_Rcairo_Dll()
 	}
 	strcpy(szFullPath, R_HomeDir());
 	strcat(szFullPath, "/library/grDevices/libs/");
-	strcat(szFullPath, R_ARCH);
-	strcat(szFullPath, "/winCairo.dll");
+#ifdef R_ARCH
+	if (strlen(R_ARCH) > 0) {
+	    strcat(szFullPath, R_ARCH);
+	    strcat(szFullPath, "/");
+	}
+#endif
+	strcat(szFullPath, "winCairo.dll");
 	if (((hRcairoDll = LoadLibrary(szFullPath)) != NULL) &&
 	    ((R_devCairo =
 	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "in_Cairo"))

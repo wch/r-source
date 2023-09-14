@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022   The R Core Team
+ *  Copyright (C) 1998-2023   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -27,7 +27,18 @@
 #include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>     /* for R_Calloc/R_Free, F77_CALL */
+
+// calls BLAS routines dgemm dgemv zgemm
+#ifdef USE_NEW_ACCELERATE
+# define ACCELERATE_NEW_LAPACK
+// avoid conflicts over COMPLEX
+# define USE_NON_APPLE_STANDARD_DATATYPES 0
+# include <Accelerate/Accelerate.h>
+# define FCONE
+# pragma clang diagnostic ignored "-Wincompatible-pointer-types"
+#else
 #include <R_ext/BLAS.h>
+#endif
 #include <R_ext/Itermacros.h>
 
 #include "duplicate.h"
@@ -797,7 +808,7 @@ static void matprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_matprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -944,7 +955,7 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_cmatprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1025,7 +1036,7 @@ static void crossprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_crossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1080,7 +1091,7 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_ccrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1159,7 +1170,7 @@ static void tcrossprod(double *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (mayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    mayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		mayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_tcrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1213,7 +1224,7 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 	    break;
 	case MATPROD_DEFAULT_SIMD:
 	    if (cmayHaveNaNOrInf_simd(x, NRX*ncx) ||
-		    cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
+		cmayHaveNaNOrInf_simd(y, NRY*ncy)) {
 		simple_tccrossprod(x, nrx, ncx, y, nry, ncy, z);
 		return;
 	    }
@@ -1383,7 +1394,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCAR(args, coerceVector(CAR(args), mode));
     SETCADR(args, coerceVector(CADR(args), mode));
 
-    if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() */
+    if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() =~= %*% */
 
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
 	if (mode == CPLXSXP)
@@ -1397,12 +1408,14 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
+#define ALLOC_DIMNAMES_NAMES						\
+	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue; \
+									\
+	    /* allocate dimnames and dimnamesnames */			\
+	    PROTECT(dimnames = allocVector(VECSXP, 2));			\
+	    PROTECT(dimnamesnames = allocVector(STRSXP, 2))
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2 || ncx == 1) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
@@ -1411,6 +1424,16 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
 		}
 	    }
+
+/* Since R 2.1.0, no longer attach a dimnames attribute whose elements are all NULL: */
+#define SET_DIMNAMES_NAMES						\
+	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
+		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
+		if (dnx != R_NilValue || dny != R_NilValue)		\
+		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
+		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
+	    }								\
+	    UNPROTECT(2)
 
 #define YDIMS_ET_CETERA							\
 	    if (ydims != R_NilValue) {					\
@@ -1426,18 +1449,8 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0)); \
 		}							\
 	    }								\
-									\
-	    /* We sometimes attach a dimnames attribute			\
-	     * whose elements are all NULL ...				\
-	     * This is ugly but causes no real damage.			\
-	     * Now (2.1.0 ff), we don't anymore: */			\
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
-		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
-		if (dnx != R_NilValue || dny != R_NilValue)		\
-		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
-		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
-	    }								\
-	    UNPROTECT(2)
+	    SET_DIMNAMES_NAMES;
+
 
 	    YDIMS_ET_CETERA;
 	}
@@ -1468,13 +1481,8 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
-
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2) {/* not nrx==1 : .. fixed, ihaka 2003-09-30 */
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
@@ -1513,13 +1521,8 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
-	    /* allocate dimnames and dimnamesnames */
-
-	    PROTECT(dimnames = allocVector(VECSXP, 2));
-	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
-
+	    ALLOC_DIMNAMES_NAMES;
 	    if (xdims != R_NilValue) {
 		if (ldx == 2) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
@@ -1536,14 +1539,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));
 		}
 	    }
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||
-		VECTOR_ELT(dimnames,1) != R_NilValue) {
-		if (dnx != R_NilValue || dny != R_NilValue)
-		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
-		setAttrib(ans, R_DimNamesSymbol, dimnames);
-	    }
-
-	    UNPROTECT(2);
+            SET_DIMNAMES_NAMES;
 	}
     }
     UNPROTECT(3);
@@ -1903,7 +1899,7 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	error(_("'x' must be numeric"));
     }
-    if (n * (double)p > XLENGTH(x))
+    if ((double)n * (double)p > XLENGTH(x))
 	error(_("'x' is too short")); /* PR#16367 */
 
     int OP = PRIMVAL(op);

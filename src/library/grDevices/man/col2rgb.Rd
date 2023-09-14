@@ -15,9 +15,8 @@ col2rgb(col, alpha = FALSE)
 \arguments{
   \item{col}{vector of any of the three kinds of \R color specifications,
     i.e., either a color name (as listed by \code{\link{colors}()}), a
-    hexadecimal string of the form \code{"#rrggbb"} or
-    \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
-    \code{i} meaning \code{\link{palette}()[i]}.}
+    hexadecimal string (see Details),
+    or a positive integer \code{i} meaning \code{\link{palette}()[i]}.}
   \item{alpha}{logical value indicating whether the alpha channel (opacity)
     values should be returned.}
 }
@@ -29,6 +28,12 @@ col2rgb(col, alpha = FALSE)
   vectors are coerced to integer and other types to character.  (factors
   are coerced to character: in all other cases the class is
   ignored when doing the coercion.)
+
+  Hexadecimal string colors can be in the long hexadecimal form (e.g., 
+  \code{"#rrggbb"} or \code{"#rrggbbaa"}) or the short form (e.g, \code{"#rgb"}
+  or \code{"#rgba"}). The short form is expanded to the long form by 
+  replicating digits (not by adding zeroes), e.g., \code{"#rgb"} becomes
+  \code{"#rrggbb"}. 
 
   Zero and negative values of \code{col} are an error.
 }
@@ -57,6 +62,11 @@ col2rgb("#08a0ff")
 ## all three kinds of color specifications:
 col2rgb(c(red = "red", hex = "#abcdef"))
 col2rgb(c(palette = 1:3))
+
+# long and short form of hexadecimal notation
+col2rgb(c(long = "#559955", short = "#595"))
+# with alpha
+col2rgb(c(long = "#559955BB", short = "#595B"), alpha = TRUE)
 
 ##-- NON-INTRODUCTORY examples --
 

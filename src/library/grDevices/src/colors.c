@@ -1345,7 +1345,7 @@ static unsigned int hexdigit(int digit)
 }
 
 
-/* #RRGGBB[AA] String to Internal Color Code */
+/* #RRGGBB[AA] or #RGB[A] String to Internal Color Code */
 static rcolor rgb2col(const char *rgb)
 {
     unsigned int r = 0, g = 0, b = 0, a = 0; /* -Wall */
@@ -1359,13 +1359,25 @@ static rcolor rgb2col(const char *rgb)
 	g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
 	b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
 	break;
+    case 5: 
+	// Equivalent to 16 * hexdigit(rgb[4]) + hexdigit(rgb[4]);
+	a = (16 + 1) * hexdigit(rgb[4]);
+    case 4:
+	r = (16 + 1) * hexdigit(rgb[1]);
+	g = (16 + 1) * hexdigit(rgb[2]);
+	b = (16 + 1) * hexdigit(rgb[3]);
+	break;
     default:
 	error(_("invalid RGB specification"));
     }
-    if (strlen(rgb) == 7)
-	return R_RGB(r, g, b);
-    else
-	return R_RGBA(r, g, b, a);
+
+    switch(strlen(rgb)) {
+    case 7: 
+    case 4:
+        return R_RGB(r, g, b);
+    default:
+        return R_RGBA(r, g, b, a);
+    }
 }
 
 /* External Color Name to Internal Color Code */

@@ -61,8 +61,10 @@ extSoftVersion()
   an external BLAS implementation that had been copied, hard-linked or
   renamed by the system administrator.  For an external BLAS, a shared
   object file will be given and its path/name may indicate the
-  vendor/version. The detection does not work on Windows nor for the
-  Accelerate framework on macOS.
+  vendor/version. The detection does not work on Windows nor for some
+  uses of the Accelerate framework on macOS.
+  %% it works for --with-blas="-framework Accelerate'
+  %% but not for --with-newAccelerate
 }
 \seealso{
   \code{\link{libcurlVersion}} for the version of \code{libCurl}.

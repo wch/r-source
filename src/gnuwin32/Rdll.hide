@@ -136,7 +136,6 @@
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
- R_Interactive
  R_IoBufferFree
  R_IoBufferGetc
  R_IoBufferInit
@@ -168,7 +167,6 @@
  R_PCRE_limit_recursion
  R_PCRE_study
  R_PCRE_use_JIT
- R_PPStackSize
  R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
@@ -246,7 +244,6 @@
  R_do_set_class
  R_dotCallFn
  R_dot_Class
- R_dot_Generic
  R_dot_GenericCallEnv
  R_dot_GenericDefEnv
  R_dot_Group

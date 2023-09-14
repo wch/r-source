@@ -17,14 +17,14 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
- /* Copyright (C) 2018-2022 The R Core Team */
+ /* Copyright (C) 2018-2023 The R Core Team */
 
 #include       "getline.h"
 
-static int      gl_tab();  /* forward reference needed for gl_tab_hook */
-int 		(*gl_in_hook)() = 0;
-int 		(*gl_out_hook)() = 0;
-int 		(*gl_tab_hook)() = gl_tab;
+static int      gl_tab(char *, int, int *);  /* forward reference needed for gl_tab_hook */
+int 		(*gl_in_hook)(char *) = 0;
+int 		(*gl_out_hook)(char *) = 0;
+int 		(*gl_tab_hook)(char *, int, int *) = gl_tab;
 
 #include <Rconfig.h>
 #include <R_ext/Riconv.h>
@@ -80,7 +80,7 @@ static void     gl_char_init(void);	/* get ready for no echo input */
 static void     gl_char_cleanup(void);	/* undo gl_char_init */
 static size_t   gl_w_strlen(const char *); /* width of a string */
 static size_t   gl_e_strlen(const char *); /* edit units in a string */
-static size_t 	(*gl_w_promptlen)() = (size_t(*)())gl_w_strlen; 
+static size_t 	(*gl_w_promptlen)(const char *) = gl_w_strlen; 
 					/* returns printable prompt width */
 
 static void     gl_addchar(int);	/* install specified char */
@@ -99,9 +99,9 @@ static void     gl_word(int);		/* move a word */
 static void     gl_killword(int);
 
 void     gl_hist_init(int, int);	/* initializes hist pointers */
-char    *gl_hist_next();		/* return ptr to next item */
-char    *gl_hist_prev();		/* return ptr to prev item */
-static char    *hist_save();		/* makes copy of a string, without NL */
+char    *gl_hist_next(void);		/* return ptr to next item */
+char    *gl_hist_prev(void);		/* return ptr to prev item */
+static char    *hist_save(const char *);/* makes copy of a string, without NL */
 
 static void     search_addchar(int);	/* increment search string */
 static void     search_term(void);	/* reset with current contents */
@@ -130,7 +130,7 @@ static HANDLE Win32OutputStream, Win32InputStream = NULL;
 static DWORD OldWin32Mode, AltIsDown;
 
 static void
-gl_char_init()			/* turn off input echo */
+gl_char_init(void)		/* turn off input echo */
 {
    if (!Win32InputStream) {
        Win32InputStream = GetStdHandle(STD_INPUT_HANDLE);
@@ -519,13 +519,13 @@ gl_edit_unit_size(int loc, int cursor)
 }
 
 static int
-gl_edit_unit_size_left()
+gl_edit_unit_size_left(void)
 {
     return gl_edit_unit_size(-1 /* left */, gl_pos);
 }
 
 static int
-gl_edit_unit_size_right()
+gl_edit_unit_size_right(void)
 {
     return gl_edit_unit_size(0 /* right */, gl_pos);
 }
@@ -1299,8 +1299,7 @@ gl_tab(char *buf, int offset, int *loc)
 /******************* strlen stuff **************************************/
 
 /* hook to install a custom gl_w_promptlen, used _only_ for the prompt  */
-void gl_strwidth(func)
-size_t (*func)();
+void gl_strwidth(size_t (*func)(const char *))
 {
     if (func != 0) {
 	gl_w_promptlen = func;
@@ -1489,7 +1488,6 @@ void gl_savehistory(const char *file, int size)
 void gl_loadhistory(const char *file)
 {
     FILE *fp;
-    int i;
     char buf[1000];
 
     if (!file) return;
@@ -1497,7 +1495,7 @@ void gl_loadhistory(const char *file)
     if (!fp) {
        return;
     }
-    for(i = 0;; i++) {
+    for(;;) {
 	if(!fgets(buf, 1000, fp)) break;
 	gl_histadd(buf);
     }

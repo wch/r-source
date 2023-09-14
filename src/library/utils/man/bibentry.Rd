@@ -107,8 +107,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   combine bibentry objects, and hence in particular build a multiple
   reference object from single reference ones.  Alternatively, one can
   use \code{bibentry} to directly create a multiple reference object by
-  \dQuote{vectorizing} the given arguments, i.e., use character vectors
-  instead of character strings.
+  specifying the arguments as lists of character strings.
 
   The \code{\link{print}} method for bibentry objects is based on a
   corresponding \code{\link{format}} method and provides a choice

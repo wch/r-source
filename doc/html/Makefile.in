@@ -19,7 +19,8 @@ INSTFILES = \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
 	about.html packages-head-utf8.html  \
 	mathjax-config.js katex-config.js katex-check.js \
-	prism.css prism.js
+	prism.css prism.js \
+	orcid.svg
 INSTDIRS = katex
 NON_SVN_INSTFILES = resources.html NEWS.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes

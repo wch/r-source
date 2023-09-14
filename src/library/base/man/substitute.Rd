@@ -26,7 +26,7 @@ enquote(cl)
   is typically used to protect a \code{\link{call}} from early evaluation.
 }
 \arguments{
-  \item{expr}{any syntactically valid \R expression}
+  \item{expr}{any syntactically valid \R expression.}
   \item{cl}{a \code{\link{call}}, i.e., an \R object of
     \code{\link{class}} (and \code{\link{mode}}) \code{"call"}.}
   \item{env}{an environment or a list object.  Defaults to the

@@ -8,5 +8,6 @@ MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 SHELL = sh
 USE_NLS = yes
+USE_LLVM = @USE_LLVM@
 
 R_EXE = R_ENABLE_JIT=0 $(top_builddir)/@BINDIR@/Rterm.exe --vanilla --no-echo

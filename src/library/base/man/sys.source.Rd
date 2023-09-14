@@ -17,7 +17,7 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
            toplevel.env = as.environment(envir))
 }
 \arguments{
-  \item{file}{a character string naming the file to be read from}
+  \item{file}{a character string naming the file to be read from.}
   \item{envir}{an \R object specifying the environment in which the
     expressions are to be evaluated.  May also be a list or an integer.
     The default \code{\link{baseenv}()} corresponds to evaluation in the base
@@ -34,7 +34,7 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
     \code{\link{options}(keep.parse.data = *)} for more details.}
   \item{toplevel.env}{an \R environment to be used as top level while
     evaluating the expressions.  This argument is useful for frameworks
-    running package tests; the default should be used in other cases}
+    running package tests; the default should be used in other cases.}
 }
 \details{
   For large files, \code{keep.source = FALSE} may save quite a bit of

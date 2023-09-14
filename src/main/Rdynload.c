@@ -476,7 +476,19 @@ attribute_hidden SEXP Rf_registerRoutines(SEXP sSymbolList) {
 	SEXP sArgNum = getSymbolComponent(sSym, "numParameters", INTSXP, 1);
 	SEXP sDll = getSymbolComponent(sSym, "dll", VECSXP, 0);
 	SEXP sDllInfo = getSymbolComponent(sDll, "info", EXTPTRSXP, 0);
+#ifdef __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wpedantic"
+#elif defined __GNUC__
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wpedantic"	
+#endif
 	DL_FUNC addr = (DL_FUNC) EXTPTR_PTR(sAddr);
+#ifdef __clang__
+# pragma clang diagnostic pop
+#elif defined __GNUC__
+# pragma GCC diagnostic pop
+#endif
 	R_NativePrimitiveArgType* types = NULL;
 	int numArgs = -1;
 	if (LENGTH(sName) != 1)

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-13 09:29+0200\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-10-14 10:25+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -24,9 +24,7 @@ msgstr "updateGContext dev'essere unicamente chiamato dopo initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr ""
-"L'attivazione o meno del ritaglio dentro un tracciato (di ritaglio) non "
-"viene onorato"
+msgstr "L'attivazione o meno del ritaglio dentro un tracciato (di ritaglio) non viene onorato"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
@@ -34,9 +32,7 @@ msgstr "non è possibile tagliare su una viewport ruotata"
 
 #: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr ""
-"I tracciati di ritaglio dentro un altro tracciato (di ritaglio) non sono "
-"onorati"
+msgstr "I tracciati di ritaglio dentro un altro tracciato (di ritaglio) non sono onorati"
 
 #: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
@@ -44,9 +40,7 @@ msgstr "Le maschere interne a un tracciato (di ritaglio) non sono onorate"
 
 #: grid.c:917 grid.c:922 grid.c:1043 grid.c:1048
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"non è possibile mostrare la view-port di livello più alto (output di 'grid' "
-"e 'graphics' mischiato?)"
+msgstr "non è possibile mostrare la view-port di livello più alto (output di 'grid' e 'graphics' mischiato?)"
 
 #: grid.c:1249
 msgid "attempt to plot on null device"
@@ -114,15 +108,13 @@ msgstr "'layout.pos.col' non valido"
 msgid "singular transformation matrix"
 msgstr "matrice di trasformazione singolare"
 
-#: state.c:192
+#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr ""
-"non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
+msgstr "non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
-msgstr ""
-"Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
+msgstr "Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
 
 #: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
@@ -149,12 +141,8 @@ msgid "'units' must be of length > 0"
 msgstr "'units' dev'essere di lunghezza > 0"
 
 #: unit.c:1584
-msgid ""
-"data must be either NULL, have length 1, or match the length of the final "
-"unit vector"
-msgstr ""
-"i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza "
-"del vettore dell'unità finale"
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
+msgstr "i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza del vettore dell'unità finale"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"

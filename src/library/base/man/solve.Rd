@@ -25,7 +25,7 @@ solve(a, b, \dots)
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{a}.  The default is \code{.Machine$double.eps}.}
   \item{LINPACK}{logical.  Defunct and an error.}
-  \item{\dots}{further arguments passed to or from other methods}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   \code{a} or \code{b} can be complex, but this uses double complex

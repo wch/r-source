@@ -3256,8 +3256,8 @@ disassemble <- function(code) {
 
 bcprof <- function(expr) {
     .Internal(bcprofstart())
-    expr
-    .Internal(bcprofstop())
+    tryCatch(expr,
+             finally = .Internal(bcprofstop()))
     val <- structure(.Internal(bcprofcounts()),
                      names = Opcodes.names)
     hits <- sort(val[val > 0], decreasing = TRUE)

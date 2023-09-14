@@ -21,8 +21,10 @@
 ## single-page manual
 
 ## FIXME: Rd2HTML(standalone=FALSE) needs to include mathjaxr
-## detection results in the info attribute
+## detection results in the info attribute.
 
+## This cannot be done per Rd file, but we can switch to mathjaxr if
+## any Rd file in a package uses mathjaxr
 
 .convert_package_rdfiles <- function(package, dir = NULL, lib.loc = NULL, ...)
 {
@@ -69,7 +71,8 @@
         ## here, but also attributes that are.
         outlines <-
             utils::capture.output(
-                       h <- Rd2HTML(Rd, out = "", package = package,
+                       h <- Rd2HTML(Rd, out = "",
+                                    package = pkgdir, # to extract pkgname/version info
                                     Links = Links, Links2 = Links2,
                                     ...)
                    )
@@ -87,12 +90,11 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
                      ##                      full.names = TRUE,
                      ##                      pattern = "\\.Rd$"),
                      outputEncoding = "UTF-8",
-                     stylesheet = "R.css", # will usually not work. Can try "https://cran.r-project.org/doc/manuals/r-devel/R.css"
+                     stylesheet = "R-refman.css", # will usually not work. Can try "https://cran.r-project.org/doc/manuals/r-devel/R.css"
                      texmath = getOption("help.htmlmath"),
                      prism = TRUE,
                      out = "",
                      ...,
-                     ## call this 'Rhtml' rather than 'knit'?
                      Rhtml = tolower(file_ext(out)) == "rhtml",
                      include_description = TRUE)
 {
@@ -102,10 +104,17 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
     pkgname <- read.dcf(descfile, fields = "Package")[1, 1]
     
     ## Sort by name, as in PDF manual (check exact code)
-    hcontent <- hcontent[order(sapply(hcontent, function(h) h$info$name))]
-    rdnames <- sapply(hcontent, function(h) h$info$name)
-    rdtitles <- sapply(hcontent, function(h) h$info$title[[1L]])
-    toclines <- sprintf("<li><a href='#%s'><em>%s</em></a></li>", rdnames, rdtitles)
+    hcontent <- hcontent[order(vapply(hcontent,
+                                      function(h) h$info$name,
+                                      ""))]
+    rdnames <- vapply(hcontent, function(h) h$info$name, "")
+    ## rdtitles <- vapply(hcontent, function(h) h$info$title[[1L]], "")
+    rdtitles <- vapply(hcontent, function(h) h$info$htmltitle[[1L]], "")
+
+    ## toclines <- sprintf("<li><a href='#%s'><em>%s</em></a></li>", rdnames, rdtitles)
+
+    toclines <- sprintf("<li><a href='#%s'>%s</a></li>", rdnames, rdtitles)
+
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
     hfcomps <- # should we be able to specify static URLs here?
@@ -122,11 +131,25 @@ pkg2HTML <- function(package, pkgdir = NULL, descfile,
 
     ## cat(hfcomps$header, fill = TRUE) # debug
     writeHTML(hfcomps$header, sep = "", append = FALSE)
-    writeHTML(sprintf("<h1>Package %s</h1><hr>", sQuote(pkgname)))
+    writeHTML(sprintf("<header class='top'><h1>Package %s</h1><hr></header>",
+                      sQuote(pkgname)))
+    writeHTML('<nav aria-label="Topic Navigation">',
+              '<div class="dropdown-menu">',
+              '<h1>Topics</h1>',
+              '<ul class="menu">',
+              toclines,
+              '</ul>',
+              '</div>',
+              '<hr>',
+              '</nav>',
+              '<main>')
+
+    writeHTML(sprintf("<header class='right'><h1>Package %s</h1><hr></header>",
+                      sQuote(pkgname)))
+
     if (include_description) writeHTML(.DESCRIPTION_to_HTML(descfile))
-    writeHTML("<hr>")
-    writeHTML("<h1>R topics documented</h1>", "<ul>", toclines, "</ul>")
     lapply(hcontent, function(h) writeHTML("<hr>", h$outlines))
+    writeHTML('</main>')
     writeHTML(hfcomps$footer, sep = "")
     invisible(out)
 }

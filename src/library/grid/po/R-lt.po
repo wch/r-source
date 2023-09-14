@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2020-12-09 13:08+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -24,6 +24,21 @@ msgstr "'labels' ir 'at' vietos turi būti tokio paties ilgio"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "loginis 'label', kurio ilgis 0"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "Netinkamas 'order'"
+
+#, fuzzy
+msgid "Invalid grob coordinates"
+msgstr "neleistinas grob pavadinimas"
+
+#, fuzzy
+msgid "Invalid gTree coordinates"
+msgstr "netinkama \"gTree\" klasė"
+
+msgid "Closed must not be a missing value"
+msgstr ""
 
 msgid "end points must not be identical"
 msgstr "galiniai taškai neturi būti vienodi"
@@ -93,6 +108,9 @@ msgstr "trūkstamų ir netrūkstamų reikšmių sumaišymas %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' elementas yra nebenaudojamas"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr ""
 
 msgid "invalid 'linemitre' value"
 msgstr "neleistina 'linemitre' reikšmė"
@@ -274,9 +292,6 @@ msgstr "Netinkamas 'order'"
 msgid "Invalid destination"
 msgstr "neteisinga lygiuotė"
 
-msgid "Invalid compositing operator"
-msgstr ""
-
 msgid "Unknown group:"
 msgstr ""
 
@@ -332,6 +347,9 @@ msgstr "netinkamas sąrašas"
 msgid "invalid 'listing'"
 msgstr "netinkamas 'listing'"
 
+msgid "Only a grob can be converted to a mask"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr "netinkamas 'origin'"
 
@@ -360,7 +378,13 @@ msgstr ""
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Trūkstamas šablono užpildas nustatytas kaip skaidrus"
 
-msgid "Gradient fill applied to object with no inside"
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+
+#, fuzzy
+msgid "Pattern fill applied to object with no inside"
 msgstr "Gradiento užpildymas taikomas objektui be vidaus"
 
 msgid "'length' must be a 'unit' object"
@@ -441,11 +465,47 @@ msgstr "'r' turi būti 'unit' objektas"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' ir 'height' turi būti 1 ilgio"
 
+#, fuzzy
+msgid "Invalid glyph info"
+msgstr "Netinkamas 'order'"
+
+#, fuzzy
+msgid "'x' and 'y' must have length > 0"
+msgstr "'x' ir 'y' turi būti 1 ilgio"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr ""
+
+#, fuzzy
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "'x' ir 'y' turi būti 1 ilgio"
+
+msgid "Unknown width; using first width"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown anchor; using left justification"
+msgstr "neleistina horizontali lygiuotė"
+
+msgid "Unknown height; using first height"
+msgstr ""
+
+msgid "Unknown anchor; using bottom justification"
+msgstr ""
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' ir 'units' ilgis turi būti > 0"
 
 msgid "invalid 'axis' or 'type'"
 msgstr "neleistini 'axis' arba 'type'"
+
+#, fuzzy
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "'x' ir 'y' turi būti 'unit' objektai ir tokio paties ilgio"
+
+#, fuzzy
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "'x' ir 'y' turi būti 'unit' objektai ir tokio paties ilgio"
 
 msgid "Not a unit object"
 msgstr "Ne vieneto objektas"

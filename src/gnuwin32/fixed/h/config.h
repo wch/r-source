@@ -1131,10 +1131,14 @@
 #define R_OS "mingw32"
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
-#ifdef _WIN64
-#define R_PLATFORM "x86_64-w64-mingw32"
+#ifdef __aarch64__
+# define R_PLATFORM "aarch64-w64-mingw32"
 #else
-#define R_PLATFORM "i386-w64-mingw32"
+# ifdef _WIN64
+#  define R_PLATFORM "x86_64-w64-mingw32"
+# else
+#  define R_PLATFORM "i386-w64-mingw32"
+# endif
 #endif
 
 /* Define this to be the C runtime R has been built for. */
@@ -1170,17 +1174,25 @@
 #define SIZEOF_LONG 4
 
 /* The size of `long double', as computed by sizeof. */
-#ifdef _WIN64
-#define SIZEOF_LONG_DOUBLE 16
+#ifdef __aarch64__
+# define SIZEOF_LONG_DOUBLE 8
 #else
-#define SIZEOF_LONG_DOUBLE 12
+# ifdef _WIN64
+#  define SIZEOF_LONG_DOUBLE 16
+# else
+#  define SIZEOF_LONG_DOUBLE 12
+# endif
 #endif
 
 /* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8
 
 /* The size of `size_t', as computed by sizeof. */
-#define SIZEOF_SIZE_T @ST@
+#ifdef _WIN64
+# define SIZEOF_SIZE_T 8
+#else
+# define SIZEOF_SIZE_T 4
+#endif
 
 /* Workaround for win64 pow() precision issue in Mingw-w64 V3 and higher
    See http://sourceforge.net/p/mingw-w64/bugs/466 for discussion. */
@@ -1224,7 +1236,7 @@
 /* Define to use internal time-zone code */
 #define USE_INTERNAL_MKTIME 1
 
-/* Define to use libdefault rather than libz */
+/* Define to use libdefault rather than libz for lazy-loaded R objects */
 /* #undef USE_LIBDEFLATE */
 
 /* Define if the POSIX multithreading library can be used. (For intl) */

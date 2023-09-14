@@ -28,7 +28,7 @@ kappa(z, \dots)
 rcond(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", \dots)
 }
 \arguments{
-  \item{z, x}{A numeric or complex matrix or a the result of
+  \item{z, x}{a numeric or complex matrix or a result of
     \code{\link{qr}} or a fit from a class inheriting from \code{"lm"}.}
   \item{exact}{logical.  Should the result be exact (up to small rounding
     error) as opposed to fast (but quite inaccurate)?}

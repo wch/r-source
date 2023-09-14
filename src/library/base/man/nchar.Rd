@@ -96,7 +96,7 @@ nzchar(x, keepNA = FALSE)
   sequences have been used to enter Unicode characters not representable
   in the current encoding.  Thus \code{nchar("\\u2642")} is \code{1},
   and it is printed in \code{Rgui} as one character, but it will be
-  printed in \code{Rterm} as \code{<U+2642>}, which is what
+  printed in \code{Rterm} as \samp{<U+2642>}, which is what
   \code{encodeString} gives.
 #endif
 #ifdef unix

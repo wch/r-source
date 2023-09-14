@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2022-10-13 09:29\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2022-10-14 10:22+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -22,19 +22,13 @@ msgid "invalid 'filename'"
 msgstr "'filename' non valido"
 
 msgid "svg: Cairo-based devices are not available for this platform"
-msgstr ""
-"svg: i dispositivi basati su Cairo non sono disponibili per questa "
-"piattaforma"
+msgstr "svg: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
-msgstr ""
-"cairo_pdf: i dispositivi basati su Cairo non sono disponibili per questa "
-"piattaforma"
+msgstr "cairo_pdf: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr ""
-"cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa "
-"piattaforma"
+msgstr "cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa piattaforma"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' non dev'essere negativo"
@@ -171,6 +165,67 @@ msgstr "dev.new(): si utilizza postscript(file=\"%s\")"
 msgid "Invalid capabilities - alert the device maintainer"
 msgstr "Capacità non valide - si avvisi il responsabile del dispositivo"
 
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Tipo di pattern non valido"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Tipo di carattere non valido"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Tipo di carattere non valido"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "carattere sconosciuto"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
 msgid "Invalid compositing operator"
 msgstr "Operatore di composizione non valido"
 
@@ -193,8 +248,7 @@ msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti nominati)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr ""
-"'name.opt' dev'essere di tipo character, il nome di una lista esistente"
+msgstr "'name.opt' dev'essere di tipo character, il nome di una lista esistente"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "non posso re-inizializzare '%s' perché non esistente"
@@ -262,7 +316,8 @@ msgstr "carattere sconosciuto"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "codifica dei caratteri non corrispondente '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "'file' dev'essere una stringa di caratteri non vuota"
 
 msgid "GhostScript was not found"
@@ -273,6 +328,13 @@ msgstr "formato di uscita non valido"
 
 msgid "status %d in running command '%s'"
 msgstr "status %d durante l'esecuzione del comando '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' dev'essere una stringa di caratteri non vuota"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "'file' non valido"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "aggiunta di segni fallita; 'min.n' troppo grande?"
@@ -329,17 +391,13 @@ msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' dev'essere positivo"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr ""
-"Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended')"
+msgstr "Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended')"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' dev'essere un \"intervallo\", quindi di lunghezza 2"
 
-msgid "log_le_0"
-msgstr "log_le_0"
-
-msgid "plot_coords"
-msgstr "plot_coords"
+msgid "points cut off after point[%d]"
+msgstr ""
 
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
@@ -378,8 +436,20 @@ msgstr ""
 "Dispositivi disponibili:\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "'title' non valido"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "'title' non valido"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' dev'essere specificato finché 'units = \"px\"'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "'file' dev'essere una stringa di caratteri non vuota"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr "type = \"quartz\" non disponibile. Si usa \"Xlib\""
@@ -400,12 +470,10 @@ msgid "invalid Quartz font:  must be 4 strings"
 msgstr "carattere Quartz non valido: devono essere 4 stringhe"
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr ""
-"argomenti non validi in 'quartzFonts' (devono essere nomi di caratteri)"
+msgstr "argomenti non validi in 'quartzFonts' (devono essere nomi di caratteri)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr ""
-"argomenti non validi in 'quartzFonts' (devono essere argomenti nominati)"
+msgstr "argomenti non validi in 'quartzFonts' (devono essere argomenti nominati)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr "tipo cairo-based non supportati su questa build - si utilizza \"Xlib\""
@@ -432,8 +500,7 @@ msgid "invalid value for 'rescale'"
 msgstr "valore non valido per 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
-"Le chiamate tipo '%s' sono poco sicure e dovrebbero essere sostituite da '%s'"
+msgstr "Le chiamate tipo '%s' sono poco sicure e dovrebbero essere sostituite da '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"
@@ -451,17 +518,13 @@ msgid "subscript out of range"
 msgstr "indice fuori range"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
-"carattere Windows non valido: dev'essere il singolo nome di una famiglia di "
-"caratteri"
+msgstr "carattere Windows non valido: dev'essere il singolo nome di una famiglia di caratteri"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr ""
-"argomenti non validi in 'windowsFonts' (devono essere nomi di caratteri)"
+msgstr "argomenti non validi in 'windowsFonts' (devono essere nomi di caratteri)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"argomenti non validi in 'windowsFonts' (necessita di argomenti nominati)"
+msgstr "argomenti non validi in 'windowsFonts' (necessita di argomenti nominati)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -477,6 +540,12 @@ msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso valore %d %s <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi valori %d %s <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "log_le_0"
+#~ msgstr "log_le_0"
+
+#~ msgid "plot_coords"
+#~ msgstr "plot_coords"
 
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"

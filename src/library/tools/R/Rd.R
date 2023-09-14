@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -326,9 +326,11 @@ function(package, dir, lib.loc = NULL, stages = "build")
         else
             dir <- file_path_as_absolute(dir)
         built_file <- file.path(dir, "build", "partial.rdb")
+        later_file <- file.path(dir, "build", "stage23.rdb")
         db <- .build_Rd_db(dir,
                            stages = stages,
-                           built_file = built_file)
+                           built_file = built_file,
+                           later_file = later_file)
         if(length(db)) {
             first <- nchar(file.path(dir, "man")) + 2L
             names(db) <- substring(names(db), first)
@@ -351,7 +353,7 @@ function(x, ...)
 function(dir = NULL, files = NULL,
          encoding = "unknown", db_file = NULL,
          stages = c("build", "install"), os = .OStype(), step = 3L,
-         built_file = NULL, macros = character())
+         built_file = NULL, later_file = NULL, macros = character())
 {
     if(!is.null(dir)) {
         dir <- file_path_as_absolute(dir)
@@ -376,7 +378,7 @@ function(dir = NULL, files = NULL,
         macros <- macros0
     }
 
-    .fetch_Rd_object <- function(f) {
+    .fetch_Rd_object <- function(f, stages) {
         ## This calls parse_Rd if f is a filename
         Rd <- prepare_Rd(f, encoding = encoding,
                          defines = os,
@@ -413,6 +415,7 @@ function(dir = NULL, files = NULL,
         basenames <- basename(files)
  	built <- readRDS(built_file)
  	names_built <- names(built)
+        ## Hmm ... why are we doing this?
  	if ("install" %in% stages) {
  	    this_os <- grepl(paste0("^", os, "/"), names_built)
  	    name_only <- basename(names_built[this_os])
@@ -430,10 +433,26 @@ function(dir = NULL, files = NULL,
 	    }
 	}
     }
+    if("later" %in% stages) {
+        if(!is.null(later_file) && file_test("-f", later_file)) {
+            basenames <- basename(names(files))
+            later <- readRDS(later_file)
+            names_later <- names(later)
+            later[names_later %notin% basenames] <- NULL
+            if (length(later)) {
+                which <- match(names(later), basenames)
+                if (all(file_test("-nt", later_file, files[which]))) {
+                    files <- as.list(files)
+                    files[which] <- later
+                }
+            }
+        }
+        stages <- stages[stages != "later"]
+    }
 
     if(length(files)) {
         ## message("building database of parsed Rd files")
-        db1 <- lapply(files, .fetch_Rd_object)
+        db1 <- lapply(files, .fetch_Rd_object, stages)
         names(db1) <- names(files)
         db <- c(db, db1)
     }
@@ -620,6 +639,37 @@ function(x, predicate)
     }
     lapply(x, recurse)
     nodes
+}
+
+### * .Rd_apply
+
+## A first shot at recursively transforming nodes in Rd objects: nodes
+## transformed to NULL will get dropped.
+## E.g., to drop comments and specials, one could also do
+##   .Rd_apply(x,
+##             function(e) {
+##                 switch(attr(e, "Rd_tag"),
+##                        "\\special" =,
+##                        "COMMENT" = NULL,
+##                        e)
+##             })
+
+.Rd_apply <- function(x, f) {
+    recurse <- function(e) {
+        if(is.list(e)) {
+            a <- attributes(e)
+            ## Apply f to all nodes:
+            e <- lapply(e, f)
+            ## Drop the NULLs and recurse:
+            e <- lapply(e[!vapply(e, is.null, NA)], recurse)
+            attributes(e) <- a
+        }
+        ## <FIXME>
+        ## Should we do f(e) if not is.list(e)?
+        e
+        ## <FIXME>
+    }
+    recurse(x)
 }
 
 ### * .Rd_get_Sexpr_build_time_info

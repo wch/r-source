@@ -18,8 +18,8 @@ tempdir(check = FALSE)
 \arguments{
   \item{pattern}{a non-empty character vector giving the initial part
     of the name.}
-  \item{tmpdir}{a non-empty character vector giving the directory name}
-  \item{fileext}{a non-empty character vector giving the file extension}
+  \item{tmpdir}{a non-empty character vector giving the directory name.}
+  \item{fileext}{a non-empty character vector giving the file extension.}
   \item{check}{\code{\link{logical}} indicating if \code{tmpdir()}
     should be checked and recreated if no longer valid.}
 }

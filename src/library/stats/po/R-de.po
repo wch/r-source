@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2023-01-28 21:05+0000\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -159,10 +159,15 @@ msgstr "'by' muss eine Liste sein"
 msgid "arguments must have same length"
 msgstr "Argumente müssen dieselbe Länge haben"
 
-msgid "'formula' missing or incorrect"
-msgstr "'formula' fehlt oder ist falsch"
+msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
+msgstr ""
 
-msgid "'formula' must have both left and right hand sides"
+#, fuzzy
+msgid "argument 'x' must be a formula"
+msgstr "Argument 'x' muss numerisch sein"
+
+#, fuzzy
+msgid "formula 'x' must have both left and right hand sides"
 msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
 
 msgid "cannot change frequency from %g to %g"
@@ -212,6 +217,9 @@ msgstr "kann bei Bindungen keinen exakten p-Wert Berechnen"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "Kann kein exaktes Konfidenzinterval bei Bindungen berechnen"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' fehlt oder ist falsch"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "Gruppierender Faktor muss genau zwei Stufen haben"
@@ -489,8 +497,14 @@ msgstr "'k' muss in {1, 2, .. n-1} liegen"
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "nur %d der ersten %d Eigenwerte sind > 0"
 
-msgid "package 'MASS' must be installed"
-msgstr "Paket 'MASS' muss installiert sein"
+msgid "Waiting for profiling to be done..."
+msgstr ""
+
+msgid "Reprofiling for"
+msgstr ""
+
+msgid "statistic. Waiting..."
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "Startwert nicht im Inneren der zulässigen Region"
@@ -702,6 +716,9 @@ msgstr "sum(weights) != 1 -- werde nicht die wahre Dichte erhalten"
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "benötige zumindest 2 Punkte, um die Bandbreite automatisch zu wählen"
 
+msgid "Selecting bandwidth *not* using 'weights'"
+msgstr ""
+
 msgid "unknown bandwidth rule"
 msgstr "unbekannte Bandbreitenregel"
 
@@ -734,6 +751,9 @@ msgstr "falsche Dimensionen für 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' ist weder Vektor noch Matrix"
+
+msgid "x[1] != r[1]; using x[1] for diagonal"
+msgstr ""
 
 msgid "invalid distance method"
 msgstr "unzulässige Distanzmethode"
@@ -939,6 +959,9 @@ msgstr "falsche Spezifikation für 'row.vars'"
 msgid "incorrect specification for 'col.vars'"
 msgstr "falsche Spezifikation für 'col.vars'"
 
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
+
 msgid "interactions are not allowed"
 msgstr "Wechselwirkungen sind nicht erlaubt"
 
@@ -968,6 +991,18 @@ msgstr "'row.var.names' fehlt"
 
 msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' fehlt oder falsch"
+
+msgid "Parameter:"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr ""
 
 msgid "'family' not recognized"
 msgstr "'family' nicht erkannt"
@@ -1203,6 +1238,14 @@ msgstr "einige Elemente von 'x' sind nicht numerisch und werden nach numerisch g
 msgid "not enough 'x' data"
 msgstr "zu wenig 'x' Daten"
 
+#, fuzzy
+msgid "Parameter(s)"
+msgstr "passe Parameter an"
+
+#, fuzzy
+msgid "ignored"
+msgstr "' ignoriert"
+
 msgid "not enough 'y' data"
 msgstr "zu wenig 'y' Daten"
 
@@ -1212,8 +1255,28 @@ msgstr "im Falle von Bindungen sind die p-Werte approximativ"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' muss entweder numerisch oder eine Funktion oder Name einer zulässigen Funktion sein"
 
-msgid "ties should not be present for the Kolmogorov-Smirnov test"
+#, fuzzy
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
 msgstr "für den Komogorov-Smirnov-Test sollten keine Bindungen vorhanden sein"
+
+#, fuzzy
+msgid "invalid arguments"
+msgstr "unzulässiges Argument 'n'"
+
+#, fuzzy
+msgid "argument 'sizes' must be a vector of length 2"
+msgstr "'interval' muss ein Vektor der Länge 2 sein"
+
+#, fuzzy
+msgid "argument 'q' must be numeric"
+msgstr "Argument 'x' muss numerisch sein"
+
+msgid "computation of exact probability failed, returning Monte Carlo approximation"
+msgstr ""
+
+#, fuzzy
+msgid "argument 'p' must be numeric"
+msgstr "Argument 'x' muss numerisch sein"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1277,8 +1340,21 @@ msgstr "ANOVA F-Tests auf einem im Wesentlichen perfekten Fit sind unzuverlässi
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "Aufruf von predict.lm(<fake-lm-object>)..."
 
-msgid "prediction from a rank-deficient fit may be misleading"
+#, fuzzy
+msgid "prediction from rank-deficient fit"
 msgstr "Vorhersage durch Fit ohne vollen Rang mag täuschen"
+
+msgid "%s; consider predict(., rankdeficient=\"NA\")"
+msgstr ""
+
+msgid "lower-rank qr: determining non-estimable cases"
+msgstr ""
+
+msgid "%s; attr(*, \"non-estim\") has doubtful cases"
+msgstr ""
+
+msgid "%s: NAs produced for non-estimable cases"
+msgstr ""
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "Vorhersagen auf aktuellen Daten beziehen sich auf zukünftige Daten"
@@ -1503,14 +1579,12 @@ msgstr "weder terms Komponente noch Attribut"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' muss ein Zeichenkettenvektor mit Länge >= 1 sein"
 
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'sep' muss eine Zeichenkette sein"
+
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Nicht zu parsende 'response' \"%s\"; Nutzung ist veraltet.  Nutze as.name(.) oder `..`!"
-
-msgid "reformulate"
-msgstr "reformulate"
-
-msgid "deprecatedWarning"
-msgstr "deprecatedWarning"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' muss ein Objekt aus der Klasse %s sein"
@@ -1529,6 +1603,14 @@ msgstr "'data' muss data.frame, Umgebung oder Liste sein"
 
 msgid "variable '%s' is not a factor"
 msgstr "Variable '%s' is kein Faktor"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s"
+msgstr "Kontraste arbeiten nur auf Faktoren"
+
+#, fuzzy
+msgid "contrasts dropped from factor %s due to missing levels"
+msgstr "Kontraste können nur auf Faktoren mit 2 oder mehr Stufen angewendet werden"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' muss numerisch sein"
@@ -1727,6 +1809,9 @@ msgstr "'which' muss in 1:6 liegen"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' muss in {1,...,%d} liegen"
 
+msgid "y is empty or has only NAs"
+msgstr "y ist leer oder enthält nur NAs"
+
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
@@ -1848,8 +1933,8 @@ msgstr "'p' muss die selbe Länge haben wie 'x' und 'n'"
 msgid "elements of 'p' must be in (0,1)"
 msgstr "Elemente von 'p' müssen in (0, 1) liegen"
 
-msgid "y is empty or has only NAs"
-msgstr "y ist leer oder enthält nur NAs"
+msgid "'conf.level' is not a probability"
+msgstr ""
 
 msgid "'formula' missing"
 msgstr "'formula' fehlt"
@@ -1892,9 +1977,6 @@ msgstr "'ref' muss eine existierende Faktorstufe sein"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d muss in 1L:%d liegen"
-
-msgid "'sep' must be a character string"
-msgstr "'sep' muss eine Zeichenkette sein"
 
 msgid "failed to guess time-varying variables from their names"
 msgstr "konnte die zeit-veränderlichen Variablen nicht aus den Namen erraten"
@@ -1940,6 +2022,10 @@ msgstr "Bandbreite 'k' muss >= 1 und ungerade sein"
 
 msgid "argument 'object' has an impossible length"
 msgstr "Argument 'object' hat unmögliche Länge"
+
+#, fuzzy
+msgid "right-hand side of formula is not a call"
+msgstr "unzulässige Formel %s: ist kein Aufruf"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "keine 'getInitial' Methode für \"%s\" Objekte gefunden"
@@ -2489,6 +2575,15 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' ist zu kurz: benötige %d Punkt"
 msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
 
+#~ msgid "package 'MASS' must be installed"
+#~ msgstr "Paket 'MASS' muss installiert sein"
+
+#~ msgid "reformulate"
+#~ msgstr "reformulate"
+
+#~ msgid "deprecatedWarning"
+#~ msgstr "deprecatedWarning"
+
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "Link \"%s\" ist für die Quasipoisson-Familie nicht verfügbar; verfügbar sind %s"
 
@@ -2643,12 +2738,6 @@ msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
 
 #~ msgid "_NOT_ converged in"
 #~ msgstr "_nicht_ konvergiert in"
-
-#~ msgid "' ignored"
-#~ msgstr "' ignoriert"
-
-#~ msgid "fitting parameters"
-#~ msgstr "passe Parameter an"
 
 #~ msgid "use \"Brent\" or optimize() directly"
 #~ msgstr "nutze \"Brent\" oder optimize() direkt"

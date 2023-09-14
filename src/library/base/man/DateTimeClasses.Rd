@@ -81,10 +81,10 @@
     should be high enough to represent the least important time unit
     exactly.}
   \item{\dots}{further arguments to be passed from or to other methods.}
-  \item{time}{date-time objects}
+  \item{time}{date-time objects.}
   \item{time1, time2}{date-time objects or character vectors.  (Character
     vectors are converted by \code{\link{as.POSIXct}}.)}
-  \item{z}{a numeric vector (in seconds)}
+  \item{z}{a numeric vector (in seconds).}
   \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
@@ -183,7 +183,7 @@
     \item{\code{sec}}{0--61: seconds, allowing for leap seconds.}
     \item{\code{min}}{0--59: minutes.}
     \item{\code{hour}}{0--23: hours.}
-    \item{\code{mday}}{1--31: day of the month}
+    \item{\code{mday}}{1--31: day of the month.}
     \item{\code{mon}}{0--11: months after the first of the year.}
     \item{\code{year}}{years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}

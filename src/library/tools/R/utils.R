@@ -686,7 +686,7 @@ function() {
 ### ** config_val_to_logical
 
 config_val_to_logical <-
-function(val) utils:::str2logical(val)
+function(val, na.ok=TRUE) utils:::str2logical(val, na.ok=na.ok)
 
 ### ** .canonicalize_doi
 
@@ -1582,7 +1582,7 @@ function(fname)
 {
     ## Determine whether object named 'fname' found in the base
     ## environment is a primitive function.
-    is.primitive(get(fname, envir = baseenv(), inherits = FALSE))
+    is.primitive(baseenv()[[fname]])
 }
 
 ### ** .is_S3_generic
@@ -1746,7 +1746,7 @@ function(parent = parent.frame())
            envir = env)
     assign("Ops", function(e1, e2) UseMethod("Ops"),
            envir = env)
-    assign("matrixOps", function(e1, e2) UseMethod("matrixOps"),
+    assign("matrixOps", function(x, y) UseMethod("matrixOps"),
            envir = env)
     assign("Summary", function(..., na.rm = FALSE) UseMethod("Summary"),
            envir = env)
@@ -1964,7 +1964,7 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ...,
+function(packages = NULL, FUN, ..., pattern = "*", verbose = TRUE,
          Ncpus = getOption("Ncpus", 1L))
 {
     ## Apply FUN and extra '...' args to all given packages.
@@ -1974,12 +1974,20 @@ function(packages = NULL, FUN, ...,
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1L])
 
-    one <- function(p)
-        tryCatch(FUN(p, ...),
-                 error = function(e)
-                     noquote(paste("Error:",
-                                   conditionMessage(e))))
-    ## (Just don't throw the error ...)
+    ## For consistency with .unpacked_source_repository_apply(), take
+    ## 'pattern' as a wildcard pattern.
+    if(pattern != "*")
+        packages <- packages[grepl(utils::glob2rx(pattern), packages)]
+
+    ## Keep in sync with .unpacked_source_repository_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
+    one <- function(p) {
+        if(verbose)
+            message(sprintf("processing %s", p))
+        tryCatch(FUN(p, ...), error = identity)
+    }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {
@@ -2425,11 +2433,15 @@ function(dir, FUN, ..., pattern = "*", verbose = FALSE,
     dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
     paths <- dirname(dfiles)
 
+    ## Keep in sync with .package_apply().
+    ## <FIXME>
+    ## Should we really catch errors?
     one <- function(p) {
         if(verbose)
             message(sprintf("processing %s", basename(p)))
-        FUN(p, ...)
+        tryCatch(FUN(p, ...), error = identity)
     }
+    ## </FIXME>
 
     ## Would be good to have a common wrapper ...
     if(Ncpus > 1L) {

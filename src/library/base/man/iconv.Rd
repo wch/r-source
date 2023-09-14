@@ -19,11 +19,11 @@ iconvlist()
 }
 
 \arguments{
-  \item{x}{A character vector, or an object to be converted to a character
+  \item{x}{a character vector, or an object to be converted to a character
     vector by \code{\link{as.character}}, or a list with \code{NULL} and
     \code{raw} elements as returned by \code{iconv(toRaw = TRUE)}.}
-  \item{from}{A character string describing the current encoding.}
-  \item{to}{A character string describing the target encoding.}
+  \item{from}{a character string describing the current encoding.}
+  \item{to}{a character string describing the target encoding.}
   \item{sub}{character string.  If not \code{NA} it is used to replace
     any non-convertible bytes in the input.  (This would normally be a
     single character, but can be more.)  If \code{"byte"}, the indication is
@@ -198,7 +198,7 @@ iconv(x, "latin1", "ASCII", "?")      # "fran?ais"
 iconv(x, "latin1", "ASCII", "")       # "franais"
 iconv(x, "latin1", "ASCII", "byte")   # "fran<e7>ais"
 iconv(xx, "UTF-8", "ASCII", "Unicode")# "fran<U+00E7>ais"
-iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\u00e7ais"
+iconv(xx, "UTF-8", "ASCII", "c99")    # "fran\\\\u00e7ais"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")

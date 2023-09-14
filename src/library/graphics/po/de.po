@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-04-13 12:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -153,21 +153,26 @@ msgstr "Grafikparameter \"%s\" ist veraltet"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" ist kein Grafikparameter"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\" ist kein Grafikparameter"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "ungültiges Argument an par() übergeben"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "zu viele Zeilen in layout, höchstens %d zulässig"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "zu viele Spalten in layout, höchstens %d zulässig"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "zu viele Zellen in layout, höchstens %d zulässig"

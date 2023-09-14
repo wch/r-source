@@ -23,13 +23,13 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
   \item{file}{either a character string naming a file or a \link{connection}.
     \code{""} indicates output to the console.  For \code{read.dcf} this
     can name a compressed file (see \code{\link{gzfile}}).}
-  \item{fields}{Fields to read from the DCF file.  Default is to read all
-    fields.}
+  \item{fields}{a character vector with the names of the fields
+    to read from the DCF file.  Default is to read all fields.}
   \item{all}{a logical indicating whether in case of multiple
     occurrences of a field in a record, all these should be gathered.
     If \code{all} is false (default), only the last such occurrence is
     used.}
-  \item{keep.white}{a character string with the names of the fields for
+  \item{keep.white}{a character vector with the names of the fields for
     which whitespace should be kept as is, or \code{NULL} (default)
     indicating that there are no such fields.  Coerced to character if
     possible.  For fields where whitespace is not to be kept as is,

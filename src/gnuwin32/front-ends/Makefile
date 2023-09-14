@@ -12,15 +12,8 @@ else
 endif
 CPPFLAGS = -I../../include $(arch_DEFS)
 
-ifeq "$(WIN)" "32"
-## Increase stack size to 16Mb
-LARGE_STACK = -Wl,--stack=0x1000000
-## allow 32-bit builds to address over 2Gb
-LARGE_ADDR = -Wl,--large-address-aware
-else
 ## Increase stack size to 64Mb
 LARGE_STACK = -Wl,--stack=0x4000000
-endif
 
 rcmdfn-CFLAGS = -DBINDIR='"$(BINDIR)"'
 
@@ -28,11 +21,10 @@ rcmdfn-CFLAGS = -DBINDIR='"$(BINDIR)"'
 
 all: makeMakedeps \
      $(R_HOME)/$(BINDIR)/Rgui.exe $(R_HOME)/$(BINDIR)/Rterm.exe \
-     $(R_HOME)/$(BINDIR)/Rcmd.exe  $(R_HOME)/$(BINDIR)/RSetReg.exe  \
-     $(R_HOME)/$(BINDIR)/R.exe\
-     $(R_HOME)/$(BINDIR)/Rscript.exe $(R_HOME)/$(BINDIR)/open.exe \
-     $(R_HOME)/$(BINDIR)/Rfe.exe \
-     $(R_HOME)/bin/R.exe $(R_HOME)/bin/Rscript.exe 
+     $(R_HOME)/$(BINDIR)/Rcmd.exe $(R_HOME)/$(BINDIR)/RSetReg.exe \
+     $(R_HOME)/$(BINDIR)/open.exe \
+     $(R_HOME)/bin/R.exe \
+     $(R_HOME)/bin/Rscript.exe
 
 $(R_HOME)/$(BINDIR)/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
@@ -54,6 +46,12 @@ $(R_HOME)/$(BINDIR)/R.exe: R.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
+ifneq "$(R_ARCH)" ""
+
+all: $(R_HOME)/$(BINDIR)/Rfe.exe \
+     $(R_HOME)/$(BINDIR)/Rscript.exe \
+     $(R_HOME)/$(BINDIR)/R.exe
+
 $(R_HOME)/$(BINDIR)/Rfe.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
@@ -65,6 +63,7 @@ $(R_HOME)/bin/R.exe: Rfe.exe
 $(R_HOME)/bin/Rscript.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
+endif
 
 $(R_HOME)/$(BINDIR)/Rscript.exe: Rscript.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
@@ -92,7 +91,7 @@ Rscript-LINKFLAGS = $(LARGE_ADDR) $(LARGE_STACK)
 Rgui.exe: graphappmain.o rgui.o rgico.o
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-ifneq "$(WIN)" "64"
+ifeq "$(WIN)" "32"
 rcico.o: Rcmd.exe.manifest
 rgico.o: RGui32.manifest
 rsico.o: Rscript.exe.manifest

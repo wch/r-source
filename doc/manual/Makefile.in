@@ -207,8 +207,6 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
-	  v=`sed -e 1d -e 's/.*: *\([^-]*\)-.*/\1/' $(SVN_REV)`; \
-	  $(ECHO) "@set FAQ_YEAR $${v}" >> $@; \
 	  rwv=`$(R_EXE) -f $(top_srcdir)/src/gnuwin32/fixed/rwver.R`; \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
@@ -224,7 +222,7 @@ R-exts.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
-R-FAQ.html: $(texiincludes) $(srcdir)/Rman.css $(srcdir)/texi2html.sh
+R-FAQ.html: $(srcdir)/R-defs.texi $(srcdir)/Rman.css $(srcdir)/texi2html.sh
 
 ebooks: epub mobi
 epub: $(OBJECTS_EPUB)
@@ -237,6 +235,7 @@ R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
 R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
+R-FAQ.info: $(srcdir)/R-defs.texi
 
 pdf: fullrefman.pdf $(OBJECTS_PDF)
 refman.pdf: $(refman_DEPENDENCIES) $(texinputs_BASE)
@@ -314,7 +313,7 @@ stamp-images-pdf:
 	fi
 	@touch $@
 R-lang.pdf: $(texiincludes)
-## R-FAQ.pdf does not depend on anything
+R-FAQ.pdf: $(srcdir)/R-defs.texi
 
 ## compact whatever manuals have been built -- needs qpdf and ghostscript
 compact-pdf:
@@ -437,7 +436,7 @@ ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 	  $(TEXI2TEXT) $(srcdir)/resources.texi -o $@; \
 	fi
 
-${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi $(texiincludes)
+${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi $(srcdir)/R-defs.texi
 	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/FAQ will be missing"; \
@@ -467,18 +466,18 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/Rman.css
 	@echo "making rw-FAQ.html"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_html.texi
+	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ tmp_html.texi
+	@rm -f tmp_html.texi
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp.texi
-	@rm -f tmp.texi
+	@$(SED) $(SEDVER) $< > tmp_plain.texi
+	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp_plain.texi
+	@rm -f tmp_plain.texi
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
-	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2PDF) tmp.texi
-	@mv tmp.pdf $@
-	@rm tmp.*
+	@$(SED) $(SEDVER) $< > tmp_pdf.texi
+	@$(TEXI2PDF) tmp_pdf.texi
+	@mv tmp_pdf.pdf $@
+	@rm tmp_pdf.*

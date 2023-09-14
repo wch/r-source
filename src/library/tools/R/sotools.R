@@ -141,6 +141,16 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      "linux, Fortran, gfortran, random_init, _gfortran_random_init",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_arandom_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "linux, Fortran, gfortran, random_number, _gfortran_random_r16",
+      "linux, Fortran, gfortran, random_number, _gfortran_rand",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "linux, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
 
       ## Classic flang from Dec 2017 (and untested since)
       "linux, Fortran, ClassicFlang, open, f90io_open03",
@@ -205,6 +215,11 @@ so_symbol_names_table <-
       "linux, Fortran, flang-new, write, _FortranAioOutputUnformatedBlock",
       ## does not support rand()
       ## https://discourse.llvm.org/t/support-for-gnu-fortran-extensions/69630
+      "linux, Fortran, flang-new, random_init, _FortranARandomInit",
+      "linux, Fortran, flang-new, random_number, _FortranARandomNumber",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeed",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedGet",
+      "linux, Fortran, flang-new, random_seed, _FortranARandomSeedSize",
 
       ## Intel 'Clasic' and 202x
       "linux, Fortran, intel, stop, for_stop",
@@ -229,6 +244,10 @@ so_symbol_names_table <-
       "linux, Fortran, intel, write, for_write_seq_nml",
       ## does not support rand() except in module ifport
       "linux, Fortran, intel, rand, rand_",
+      "linux, Fortran, intel, random_number, for_random_number",
+      "linux, Fortran, intel, random_number, for_random_number_single",
+      "linux, Fortran, intel, random_seed, for_random_seed_bit_size",
+      "linux, Fortran, intel, random_seed, for_random_seed_get",
 
       ## Apple clang identifies itself as gcc, so configure has used that
       "macos, C, gcc, abort, _abort", # not currently seen
@@ -268,6 +287,16 @@ so_symbol_names_table <-
       "macos, Fortran, gfortran, stop, __gfortran_stop_numeric",
       "macos, Fortran, gfortran, stop, __gfortran_stop_string",
       "macos, Fortran, gfortran, rand, __gfortran_rand",
+      "macos, Fortran, gfortran, random_init, __gfortran_random_init",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_arandom_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r4",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r8",
+      "macos, Fortran, gfortran, random_number, __gfortran_random_r16",
+      "macos, Fortran, gfortran, random_number, __gfortran_rand",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i4",
+      "macos, Fortran, gfortran, random_seed, __gfortran_random_seed_i8",
 
       ## This is old: freebsd defaults to clang these days, and
       ## gfortran and (classic) flang are available (and 'f18' will be)
@@ -406,7 +435,85 @@ so_symbol_names_table <-
       "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit",
       ## next will not show up with static libgfortran
-      "windows, Fortran, gfortran, rand, _gfortran_rand"
+      "windows, Fortran, gfortran, rand, _gfortran_rand",
+      "windows, Fortran, gfortran, random_init, _gfortran_random_init",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_arandom_r16",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r4",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r8",
+      "windows, Fortran, gfortran, random_number, _gfortran_random_r16",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i4",
+      "windows, Fortran, gfortran, random_seed, _gfortran_random_seed_i8",
+
+      ## currently copy from Linux
+      ## flang-new but executable already named 'flang'
+      "windows, Fortran, flang, stop, _FortranAStopStatement",
+      "windows, Fortran, flang, stop, _FortranAStopStatementText",
+      "windows, Fortran, flang, open, _FortranAioBeginOpenUnit",
+      "windows, Fortran, flang, close, _FortranAioBeginClose",
+      "windows, Fortran, flang, rewind, _FortranAioBeginRewind",
+      "windows, Fortran, flang, read, _FortranAioInputAscii",
+      "windows, Fortran, flang, read, _FortranAioInputCharacter",
+      "windows, Fortran, flang, read, _FortranAioInputComplex32",
+      "windows, Fortran, flang, read, _FortranAioInputComplex64",
+      "windows, Fortran, flang, read, _FortranAioOutputExternalListInput",
+      "windows, Fortran, flang, read, _FortranAioInputInteger",
+      "windows, Fortran, flang, read, _FortranAioInputLogical",
+      "windows, Fortran, flang, read, _FortranAioInputNamelist",
+      "windows, Fortran, flang, read, _FortranAioInputReal32",
+      "windows, Fortran, flang, read, _FortranAioInputReal64",
+      "windows, Fortran, flang, read, _FortranAioInputUnformattedBlock",
+      "windows, Fortran, flang, print, _FortranAioOutputAscii",
+      "windows, Fortran, flang, print, _FortranAioOutputCharacter",
+      "windows, Fortran, flang, print, _FortranAioOutputComplex32",
+      "windows, Fortran, flang, print, _FortranAioOutputComplex64",
+      "windows, Fortran, flang, print, _FortranAioOutputExternalListOutput",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger128",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger16",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger32",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger64",
+      "windows, Fortran, flang, print, _FortranAioOutputInteger8",
+      "windows, Fortran, flang, print, _FortranAioOutputLogical",
+      "windows, Fortran, flang, print, _FortranAioOutputNamelist",
+      "windows, Fortran, flang, print, _FortranAioOutputReal32",
+      "windows, Fortran, flang, print, _FortranAioOutputReal64",
+      "windows, Fortran, flang, write, _FortranAioOutputAscii",
+      "windows, Fortran, flang, write, _FortranAioOutputCharacter",
+      "windows, Fortran, flang, write, _FortranAioOutputComplex32",
+      "windows, Fortran, flang, write, _FortranAioOutputComplex64",
+      "windows, Fortran, flang, write, _FortranAioOutputExternalListOutput",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger128",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger16",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger32",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger64",
+      "windows, Fortran, flang, write, _FortranAioOutputInteger8",
+      "windows, Fortran, flang, write, _FortranAioOutputLogical",
+      "windows, Fortran, flang, write, _FortranAioOutputNamelist",
+      "windows, Fortran, flang, write, _FortranAioOutputReal32",
+      "windows, Fortran, flang, write, _FortranAioOutputReal64",
+      "windows, Fortran, flang, write, _FortranAioOutputUnformatedBlock",
+      ## Next is a guess.
+      "windows, Fortran, flang, rand, rand_",
+      "windows, Fortran, flang, random_init, _FortranARandomInit",
+      "windows, Fortran, flang, random_number, _FortranARandomNumber",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeed",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeedGet",
+      "windows, Fortran, flang, random_seed, _FortranARandomSeedSize",
+
+      "windows, C++, clang++, std::cout, _ZNSt3__14coutE",
+      "windows, C++, clang++, std::cerr, _ZNSt3__14cerrE",
+      "windows, C++, clang++, std::terminate, _ZSt9terminatev",
+      "windows, C, clang, exit, exit",
+      "windows, C, clang, printf, printf",
+      "windows, C, clang, printf, puts",
+      "windows, C, clang, puts, puts",
+      "windows, C, clang, putchar, putchar",
+      "windows, C, clang, sprintf, sprintf",
+      "windows, C, clang, vprintf, vprintf",
+      "windows, C, clang, vsprintf, vsprintf",
+      "windows, C, clang, rand, rand",
+      "windows, C, clang, srand, srand"
       )
 so_symbol_names_table <-
     do.call(rbind,

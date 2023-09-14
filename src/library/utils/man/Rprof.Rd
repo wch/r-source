@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rprof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rprof}
@@ -13,7 +13,8 @@
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
        memory.profiling = FALSE, gc.profiling = FALSE,
        line.profiling = FALSE, filter.callframes = FALSE,
-       numfiles = 100L, bufsize = 10000L)
+       numfiles = 100L, bufsize = 10000L,
+       event = c("default", "cpu", "elapsed"))
 }
 \arguments{
   \item{filename}{
@@ -24,7 +25,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
     logical: should the file be over-written or appended to?
   }
   \item{interval}{
-    real: time interval between samples.
+    real: distance (time interval) between samples in seconds.
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
   \item{gc.profiling}{logical:  record whether GC is running?}
@@ -32,41 +33,60 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   \item{filter.callframes}{logical: filter out intervening call frames
     of the call tree. See the filtering out call frames section.}
   \item{numfiles, bufsize}{integers: line profiling memory allocation}
+  \item{event}{
+    character: profiling event, character vector of length one,
+    \code{"elapsed"} for elapsed (real, wall-clock) time and \code{"cpu"}
+    for CPU time, both measured in seconds. \code{"default"} is the default
+    event on the platform, one of the two. See the \sQuote{Details}.
+  }
 }
 \details{
   Enabling profiling automatically disables any existing profiling to
   another or the same file.
 
   Profiling works by writing out the call stack every \code{interval}
-  seconds, to the file specified.  Either the \code{\link{summaryRprof}}
-  function or the wrapper script \command{R CMD Rprof} can be used to
-  process the output file to produce a summary of the usage; use
-  \command{R CMD Rprof --help} for usage information.
+  seconds (units of the profiling event), to the file specified.  Either the
+  \code{\link{summaryRprof}} function or the wrapper script \command{R CMD
+  Rprof} can be used to process the output file to produce a summary of the
+  usage; use \command{R CMD Rprof --help} for usage information.
 
-  How time is measured varies by platform:
-   \describe{
-     \item{On Windows:}{
-  Exactly what the time interval measures is subtle: it is time that the
-  \R process is running and executing an \R command.  It is not however just
-  CPU time, for if \code{readline()} is waiting for input, that counts
-  (on Windows, but not on a Unix-alike).
+  Exactly what is measured is subtle and depends on the profiling event.
 
-  Note that the timing interval cannot be too small, for the time spent
-  in each profiling step is added to the interval.  What is feasible is
-  machine-dependent, but 10ms seemed as small as advisable on a 1GHz machine.
-    }
-    \item{On Unix-alikes}{it is the CPU
-  time of the \R process, so for example excludes time when \R is waiting
-  for input or for processes run by \code{\link{system}} to return.
+  With \code{"elapsed"} (the default and only supported event on Windows): it
+  is time that the \R process is running and executing an \R command.  It is
+  not however just CPU time, for if \code{readline()} is waiting for input,
+  that counts as well.  It is also known as `elapsed' time.
 
-  Note that the timing interval cannot usefully be too small: once the
-  timer goes off, the information is not recorded until the next timing
-  click (probably in the range 1--10 ms).
-    }
-  }
+  With \code{"cpu"} (the default on Unix and typically the preferred event
+  for identifying performance bottlenecks), it is CPU time of the \R process,
+  so for example excludes time when \R is waiting for input or for processes
+  run by \code{\link{system}} to return.  It may go slower than
+  \code{"elapsed"} when the process is often waiting for I/O to finish, but it
+  may go faster with actively computing concurrent threads (say via OpenMP)
+  on a multi-core system.
 
-  On Linux, the interval needs to be at least 10ms, on all other platforms
-  at least 1ms.  Shorter intervals will be rounded up with a warning.
+  Note that the (timing) interval cannot be too small.  With \code{"cpu"},
+  the time spent in each profiling step is currently added to the interval. 
+  With all profiling events, the computation in each profiling step causes
+  perturbation to the observed system and biases the results.  What is
+  feasible is machine-dependent.  On Linux, R requires the interval to be at
+  least 10ms, on all other platforms at least 1ms.  Shorter intervals will
+  be rounded up with a warning.
+
+  The \code{"default"} profiling event is \code{"elapsed"} on Windows and
+  \code{"cpu"} on Unix. 
+
+  Support for \code{"elapsed"} event on Unix is new and considered
+  experimental.  To reduce the risk of missing a sample, R tries to use the
+  (real-time) FIFO scheduling policy with the maximum scheduling priority
+  for an internal thread which initiates collection of each sample.  If
+  setting that priority fails, it tries to use the maximum scheduling
+  priority of the current scheduling policy, falling back to the current
+  scheduling parameters.  On Linux, regular users are typically not allowed
+  to use the real-time scheduling priorities.  This can be usually allowed
+  via PAM (e.g.  \file{/etc/security/limits.conf}), see the OS documentation
+  for details.  The priorities only matter when profiling a system under
+  high load.
 
   Functions will only be recorded in the profile log if they put a
   context on the call stack (see \code{\link{sys.calls}}).  Some
@@ -164,9 +184,10 @@ calling <- function() evaluator(quote(called()), new.env())
   support for profiling is compiled in if possible -- configure \R with
   \option{--disable-R-profiling} to change this.
 
-  As \R profiling uses the same mechanisms as C profiling, the two
-  cannot be used together, so do not use \code{Rprof} in an executable
-  built for C-level profiling.
+  As \R CPU profiling uses the same mechanisms as C profiling, the two
+  cannot be used together, so do not use \code{Rprof(event = "cpu")}
+  (the default) in an executable built for C-level profiling (such as
+  using the GCC option \option{-p} or \option{-pg}).
     }
     \item{On Windows:}{
   \code{filename} can be a UTF-8-encoded filepath that cannot be translated to

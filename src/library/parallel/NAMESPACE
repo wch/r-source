@@ -7,13 +7,14 @@ if(tools:::.OStype() == "unix") {
     export(mccollect, mcparallel, mc.reset.stream, mcaffinity)
 }
 
-export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-       clusterExport, clusterMap, clusterSplit, detectCores,
-       getDefaultCluster,
-       makeCluster, makeForkCluster, makePSOCKcluster, mcMap,
-       mclapply, mcmapply, parApply, parCapply, parLapply,
-       parLapplyLB, parRapply, parSapply, parSapplyLB, pvec,
-       setDefaultCluster, splitIndices, stopCluster)
+export(closeNode, clusterApply, clusterApplyLB, clusterCall,
+       clusterEvalQ, clusterExport, clusterMap, clusterSplit,
+       detectCores, getDefaultCluster, makeCluster,
+       makeForkCluster, makePSOCKcluster, mcMap, mclapply,
+       mcmapply, parApply, parCapply, parLapply, parLapplyLB,
+       parRapply, parSapply, parSapplyLB, pvec, recvData,
+       recvOneData, sendData, setDefaultCluster, splitIndices,
+       stopCluster)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)

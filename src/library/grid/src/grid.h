@@ -520,7 +520,7 @@ SEXP gpFontSizeSXP(SEXP gp);
 
 SEXP gpLineHeightSXP(SEXP gp);
 
-SEXP resolveGPar(SEXP gp);
+SEXP resolveGPar(SEXP gp, Rboolean byName);
 
 void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd);
 void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar, 

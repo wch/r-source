@@ -25,7 +25,8 @@ rm    (\dots, list = character(), pos = -1,
     inspected?}
 }
 \description{
-  \code{remove} and \code{rm} can be used to remove objects.  These can
+  \code{remove} and \code{rm} are identical \R functions that
+  can be used to remove objects.  These can
   be specified successively as character strings, or in the character
   vector \code{list}, or through a combination of both.  All objects
   thus specified will be removed.

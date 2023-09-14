@@ -2275,7 +2275,7 @@ add_dummies <- function(dir, Log)
         } else resultLog(Log, "OK")
     }
 
-    check_Rd_files <- function(haveR, chkInternal = FALSE)
+    check_Rd_files <- function(haveR, chkInternal = NA)
     {
         msg_writing_Rd <-
             c("See chapter 'Writing R documentation files' in the 'Writing R Extensions' manual.\n")
@@ -2483,6 +2483,13 @@ add_dummies <- function(dir, Log)
                   "The \\usage entries must correspond to syntactically",
                   "valid R code.\n")
             any <- FALSE
+            ## <FIXME>
+            ## Hack to see whether all issues are from internal Rd files
+            ## checked specially and only give a NOTE in this case.
+            ## Ideally, we would use R() to get the check object and be
+            ## able to compute on it, but that is not so simple ...
+            Sys.setenv("__R_CHECK_DOC_FILES_NOTE_IF_ALL_SPECIAL__" =
+                           "TRUE")
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools::checkDocFiles(%s, chkInternal=%s)\n",
                                   if(do_install)
@@ -2491,11 +2498,18 @@ add_dummies <- function(dir, Log)
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 any <- TRUE
-                warningLog(Log)
+                pos <- which(out ==
+                             "All issues in internal Rd objects checked specially.")
+                if(length(pos)) {
+                    noteLog(Log)
+                    out <- out[-pos]
+                } else
+                    warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog(msg_doc_files)
                 wrapLog(msg_writing_Rd)
             }
+            ## </FIXME>
 
             if (R_check_Rd_style && haveR) {
                 msg_doc_style <-
@@ -3627,8 +3641,9 @@ add_dummies <- function(dir, Log)
                                              )))
                 machs <- machs[!startsWith(machs, "-mtune=")]
                 ## This should only appear on macOS!
+                ## -mmacosx- has been replaced by -mmacos-
                 if(grepl('darwin', R.version$platform))
-                    machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
+                    machs <- machs[!startsWith(machs, "-mmacos")]  # macOS target flags
                 warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
@@ -3879,7 +3894,7 @@ add_dummies <- function(dir, Log)
             Rcmd <- sprintf("ls(asNamespace('%s'), all = TRUE)", pkgname)
             out <- R_runR0(Rcmd, opts, arch = arch)
             if (any(grepl("[.]on(Load|Attach)", out))) {
-                checkingLog(Log, "startup messages can be suppressed")
+                checkingLog(Log, "whether startup messages can be suppressed")
                 Rcmd <- sprintf("suppressWarnings(suppressPackageStartupMessages(library(%s, lib.loc = '%s',  warn.conflicts=FALSE)))", pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
                 env <- character()
@@ -4406,7 +4421,7 @@ add_dummies <- function(dir, Log)
                         any <- TRUE
                 }
                 if(any) noteLog(Log) else resultLog(Log, "OK")
-                if(!is.null(lines)) {                
+                if(!is.null(lines)) {
                     cat(lines, sep="\n", file = Log$con)
                     unlink(logf)
                 }
@@ -6669,7 +6684,7 @@ add_dummies <- function(dir, Log)
     R_check_Rd_xrefs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_Rd_internal_too <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_INTERNAL_TOO_", "NA"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
     ## However, we cannot use this if we did not install the recommended

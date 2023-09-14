@@ -249,7 +249,7 @@ system is active; if \code{FALSE}, only the Tcl interpreter is available.
   \code{tclObj(x)} which also allows an assignment form, in which the
   right hand side of the assignment is automatically converted using
   \code{as.tclObj}.  There is a print method for \code{tclObj} objects;
-  it prints \code{<Tcl>} followed by the string representation of the
+  it prints \samp{<Tcl>} followed by the string representation of the
   object.  Notice that \code{as.character} on a \code{tclVar} object is
   the \emph{name} of the corresponding Tcl variable and not the value.
 

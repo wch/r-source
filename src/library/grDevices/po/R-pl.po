@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -159,8 +159,80 @@ msgstr "brak odpowiedniej nieużywanej nazwy pliku dla 'postscript()'"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): używanie 'postscript(file=\"%s\")'"
 
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid span weight"
+msgstr "Niepoprawny typ czcionki"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr ""
+
+msgid "Invalid glyph width(s)"
+msgstr ""
+
+msgid "Invalid glyph width"
+msgstr ""
+
+msgid "Unknown width; using left anchor"
+msgstr ""
+
+msgid "Invalid glyph height(s)"
+msgstr ""
+
+msgid "Invalid glyph height"
+msgstr ""
+
+msgid "Unknown height; using bottom anchor"
+msgstr ""
+
+msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Font file longer than 500 will be truncated"
+msgstr ""
+
+msgid "Font family longer than 200 will be truncated"
+msgstr ""
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr ""
+
+msgid "Font information is inconsistent"
+msgstr ""
+
+msgid "List must include at least one font"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid glyph font"
+msgstr "Niepoprawny typ czcionki"
+
+#, fuzzy
+msgid "Invalid font list"
+msgstr "Niepoprawny typ czcionki"
+
+#, fuzzy
+msgid "Unknown font"
+msgstr "nieznana czcionka"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr ""
+
+msgid "Invalid glyph info"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid compositing operator"
+msgstr "niepoprawny format wyjściowy"
+
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid mask type"
+msgstr "Niepoprawny typ czcionki"
 
 #, fuzzy
 msgid "Invalid fill rule"
@@ -246,7 +318,8 @@ msgstr "nieznana czcionka"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "niezgodność strony kodowej czcionki '%s'/'%s'"
 
-msgid "'file' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
 
 msgid "GhostScript was not found"
@@ -257,6 +330,13 @@ msgstr "niepoprawny format wyjściowy"
 
 msgid "status %d in running command '%s'"
 msgstr "status '%d' w działającym poleceniu '%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+
+#, fuzzy
+msgid "Invalid 'glyphInfo'"
+msgstr "niepoprawny argument 'file'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "nie udało się dodać więcej znaczników na osi; 'min.n' jest zbyt duże?"
@@ -318,6 +398,9 @@ msgstr ""
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' musi być wynikiem funkcji 'range()', a więc o długości 2"
 
+msgid "points cut off after point[%d]"
+msgstr ""
+
 msgid "invalid first argument"
 msgstr "niepoprawny pierwszy argument"
 
@@ -355,8 +438,20 @@ msgstr ""
 "Dostępne urządzenia to:\n"
 "%s"
 
+#, fuzzy
+msgid "invalid width"
+msgstr "niepoprawny argument 'title'"
+
+#, fuzzy
+msgid "invalid height"
+msgstr "niepoprawny argument 'title'"
+
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
+
+#, fuzzy
+msgid "'filename' must be a non-empty character string"
+msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr ""
@@ -445,23 +540,24 @@ msgstr[0] "różni się pomiędzy nowym a poprzednim"
 msgstr[1] "różnią się pomiędzy nowym a poprzednim"
 msgstr[2] "różnią się pomiędzy nowym a poprzednim"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#, fuzzy
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość x <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d wartość y <= 0 pominięto na wykresie logarytmicznym"
-msgstr[1] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
-msgstr[2] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d wartość y <= 0 pominięto na wykresie logarytmicznym"
+#~ msgstr[1] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
+#~ msgstr[2] "%d wartości y <= 0 pominięto na wykresie logarytmicznym"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
-msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
-msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
+#~ msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+#~ msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 
 #~ msgid "range too small for 'min.n'"
 #~ msgstr "zakres jest zbyt mały dla 'min.m'"

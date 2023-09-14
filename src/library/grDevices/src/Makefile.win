@@ -27,11 +27,8 @@ PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H
 devPS-CPPFLAGS = -I"$(EXT_LIBS)/include" -I$(R_HOME)/src/gnuwin32
 
 ## devWindows needs opt.h, console.h, rui.h and graphapp headers
-ifeq "$(WIN)" "64"
-arch_DEFS = -DR_ARCH='"x64"'
-else
-arch_DEFS = -DR_ARCH='"i386"'
-endif
+## remove slash to avoid Msys2 path conversion
+arch_DEFS = -DR_ARCH='"$(subst /,,$(R_ARCH))"'
 devWindows-CPPFLAGS = -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
 
 winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)/include"
@@ -40,7 +37,15 @@ winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)/include"
 ## versions which included the code in libwebp.a
 LIBSHARPYUV = $(or $(and $(wildcard $(EXT_LIBS)/lib/libsharpyuv.a),-lsharpyuv),)
 
-PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lzstd -lz -lwebp $(LIBSHARPYUV) -llzma
+## support tiff built with lerc and without
+LIBLERC = $(or $(and $(wildcard $(EXT_LIBS)/lib/libLerc.a),-lLerc -lstdc++),)
+
+## support tiff built with deflate and without
+LIBDEFLATE = $(or $(and $(wildcard $(EXT_LIBS)/lib/libdeflate.a),-ldeflate),)
+
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng \
+           -ltiff $(LIBLERC) $(LIBDEFLATE) \
+           -ljpeg -lzstd -lz -lwebp $(LIBSHARPYUV) -llzma
 
 all: makeMakedeps shlib
 

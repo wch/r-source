@@ -775,7 +775,7 @@ static void initialize_rlcompletion(void)
 	    SEXP cmdSexp, cmdexpr;
 	    ParseStatus status;
 	    int i;
-	    char *p = "try(loadNamespace('rcompgen'), silent=TRUE)";
+	    char *p = "try(loadNamespace('utils'), silent=TRUE)";
 
 	    PROTECT(cmdSexp = mkString(p));
 	    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));

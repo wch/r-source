@@ -370,13 +370,8 @@ elif  test "x${want_lto}" = xR; then
   LTO="${uLTO}"
   LTO_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xcheck; then
-  ltoall=yes
-  LTO="${uLTO}"
-  LTOALL="${uLTO}"
-  LTO_FC="${uLTO_FC}"
-  LTOALL_FC="${uLTO_FC}"
-  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
-  LIBR1="${LIBR1} -lLinpack"
+  AC_MSG_WARN([--enable-lto=check has been withdrawn and will be ignored])
+  want_lto=no
 elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
   want_lto=no
@@ -397,7 +392,6 @@ AC_SUBST(LTO_LD)
 ## used in src/main/Makefile
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 AM_CONDITIONAL(BUILD_LTO_ALL, [test "x${ltoall}" = xyes])
-AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
 ## needed for some versions of icx, but we do not know which
 AC_SUBST(INTEL_ICX_FIX)
@@ -580,14 +574,6 @@ if test "x$use_static_cairo" = xdefault; then
   esac
 fi
 
-AC_ARG_WITH([libdeflate-compression],
-[AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
-[use_libdeflate=${withval}],
-[use_libdeflate=no])
-if test "x$use_libdeflate" = xyes; then
-  AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
-fi
-
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
@@ -688,6 +674,7 @@ R_PROG_INSTALL
 
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
+
 ## 'which' is not POSIX, and might be a shell builtin or alias
 ##  (but should not be in 'sh')
 AC_PATH_PROGS(WHICH, which, which)
@@ -2583,7 +2570,16 @@ R_LIBDEFLATE
 AC_ARG_WITH([libdeflate-compression],
 [AS_HELP_STRING([--with-libdeflate-compression],[use libdeflate (if available) to (de)compress lazy-loaded R objects @<:@no@:>@])],
 [use_libdeflate=${withval}],
-[use_libdeflate=no])
+[use_libdeflate=unset])
+if test "x$use_libdeflate" = xunset; then
+  if test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xyes; then
+    use_libdeflate=yes
+  elif test "x$R_USE_LIBDEFLATE_FOR_LAZYLOAD" = xno; then
+    use_libdeflate=no
+  else
+    use_libdeflate=no
+  fi
+fi
 if test "x$use_libdeflate" = xyes; then
   AC_DEFINE(USE_LIBDEFLATE, 1, [Define to use libdefault rather than libz for lazy-loaded R objects])
 fi
@@ -2928,6 +2924,65 @@ case "${host_os}" in
     ;;
 esac
 
+AC_ARG_WITH([newAccelerate],
+[AS_HELP_STRING([--with-newAccelerate],[use macOS Accelerate in macOS >= 13.3 for BLAS and LAPACK. @<:@no@:>@])],
+[use_accelerate=${withval}],
+[use_accelerate=no])
+
+if test "x$use_accelerate" = xyes; then
+  if test "x$use_blas" = xyes; then
+    AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-blas])
+  fi
+  if test "x$use_lapack" = xyes; then
+    AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-lapack])
+  fi
+fi
+dnl We test for macOS then for an entry point in -framework Accelerate
+dnl Alternatively we could #include <Accelerate/Acclereate.h> and
+dnl use nm on the object.
+if test "x$use_accelerate" = xyes; then
+  case "${host_os}" in
+      darwin*)
+      ;;
+      *)
+       AC_MSG_ERROR([--with-newAccelerate requires macOS.])
+      ;;    
+  esac
+  r_save_LIBS="${LIBS}"
+  LIBS="${LIBS} -framework Accelerate"
+  AC_LINK_IFELSE([AC_LANG_SOURCE(
+[[
+// avoid interpretation of $
+#define ndgemm dgemm ## $ ## NEWLAPACK
+// Accelerate.h declares dgemm_ but remaps to entry point dgemm$NEWLAPACK
+void
+ndgemm(const char *transa, const char *transb, const int *m,
+       const int *n, const int *k, const double *alpha,
+       const double *a, const int *lda,
+       const double *b, const int *ldb,
+       const double *beta, double *c, const int *ldc);
+
+    int main(void)
+    {
+        int nrx, ncx, nry, ncy;
+        double *x,  *y,  *z;
+        double one = 1.0, zero = 0.0;
+        ndgemm("N", "N", &nrx, &ncy, &ncx, &one, x,
+               &nrx, y, &nry, &zero, z, &nrx);
+    }
+]])],
+sdk_OK=yes,
+sdk_OK=no)
+  LIBS="${r_save_LIBS}"
+  if test "x$sdk_OK" != xyes; then
+    AC_MSG_ERROR([--with-newAccelerate requires macOS SDK >= 14.3.])
+  fi
+dnl No longer used as we only build (or not) BLAS and LAPACK shims
+dnl  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
+fi
+AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
+
+
 dnl record compiler versions
 CC_VER=`${CC} --version | ${SED} -n 1p`
 FC_VER=`${FC} --version | ${SED} -n 1p`
@@ -3176,9 +3231,15 @@ fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
 fi
+if test "x$have_libdeflate" = xyes && test "x$use_libdeflate" = xyes; then
+  R_SH_VAR_ADD(r_options, [libdeflate for lazyload], [, ])
+fi
 
 if test "x$have_libdeflate" != xyes && test "x$use_libdeflate" = xyes; then
   AC_MSG_WARN([--with-libdeflate-compression requires libdeflate])
+fi
+if test "${use_accelerate}" = yes; then
+  R_SH_VAR_ADD(r_options, [new Accelerate], [, ])
 fi
 
 AC_MSG_RESULT(

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17+0100\n"
+"POT-Creation-Date: 2023-07-31 14:59+0200\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -58,8 +58,7 @@ msgstr "zone de graphe trop large"
 #: graphics.c:1946
 #, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr ""
-"axe non fini=%d limites [GScale(%g,%g,..); log=%s] -- corrigé maintenant"
+msgstr "axe non fini=%d limites [GScale(%g,%g,..); log=%s] -- corrigé maintenant"
 
 #: graphics.c:2023
 #, c-format
@@ -156,21 +155,26 @@ msgstr "paramètre graphique \"%s\" incorrect"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" n'est pas un paramètre graphique"
 
-#: par.c:1116
+#: par.c:1109
+#, fuzzy, c-format
+msgid "argument %d does not name a graphical parameter"
+msgstr "\"%s\" n'est pas un paramètre graphique"
+
+#: par.c:1117
 msgid "invalid argument passed to par()"
 msgstr "paramètre passé à par() invalide"
 
-#: par.c:1160
+#: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "trop de lignes dans la mise en page, limité à %d"
 
-#: par.c:1166
+#: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "trop de colonnes dans la mise en page, limité à %d"
 
-#: par.c:1168
+#: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "trop de cellules dans la mise en page, limité à %d"

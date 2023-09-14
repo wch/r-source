@@ -49,9 +49,9 @@ as.call(x)
       The first element of the list becomes the function part of the call,
       so should be a function or the name of one (as a symbol; a character string will not do).
 
-      If you think of using \code{as.call(<string>)}, consider using
-      \code{\link{str2lang}(*)} which is an efficient version of
-      \code{\link{parse}(text=*)}.
+      If you think of using \code{as.call(\var{string})}, consider using
+      \code{\link{str2lang}(\var{string})} which is an efficient version of
+      \code{\link{parse}(text=\var{string})}.
       Note that \code{\link{call}()} and \code{\link{as.call}()}, when
       applicable, are much preferable to these \code{\link{parse}()} based
       approaches.

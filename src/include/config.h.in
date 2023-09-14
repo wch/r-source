@@ -1153,7 +1153,7 @@
 /* Define to use internal time-zone code */
 #undef USE_INTERNAL_MKTIME
 
-/* Define to use libdefault rather than libz */
+/* Define to use libdefault rather than libz for lazy-loaded R objects */
 #undef USE_LIBDEFLATE
 
 /* Define if the POSIX multithreading library can be used. (For intl) */

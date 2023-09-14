@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2023-07-31 14:59\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -30,17 +30,14 @@ msgstr "'a'와 'b'가 'coef'에 의하여 덮어씌어졌습니다"
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "'x1'와 'y1' 중 반드시 하나가 주어져야 합니다"
 
-msgid ""
-"'length', 'angle', or 'code' greater than length 1; values after the first "
-"are ignored"
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'는 반드시 2차원 분할표이어야 합니다"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
-"'x'의 모든 항목들은 반드시 음수가 아니어야 하며, 유한한 값이어야 합니다"
+msgstr "'x'의 모든 항목들은 반드시 음수가 아니어야 하며, 유한한 값이어야 합니다"
 
 msgid "at least one entry of 'x' must be positive"
 msgstr "'x'의 항목들 중 적어도 하나는 양수이어야 합니다"
@@ -73,9 +70,7 @@ msgid "Cannot use shading lines in bars when log scale is used"
 msgstr "로그 스케일이 사용될때에 bars에 shading lines을 사용할 수 없습니다"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
-"로그스케일 에러: 'height + offset' 값들중 적어도 하나가 0 보다 작거나 같습니"
-"다"
+msgstr "로그스케일 에러: 'height + offset' 값들중 적어도 하나가 0 보다 작거나 같습니다"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "로그스케일 에러: 'xlim'의 값이 0 보다 작거나 같습니다"
@@ -119,8 +114,7 @@ msgid "dependent variable should be a factor"
 msgstr "종속변수는 요인이어야 합니다"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-"y 축은 누적확률스케일이므로 'ylim'의 값은 반드시 [0,1]내에 있어야 합니다"
+msgstr "y 축은 누적확률스케일이므로 'ylim'의 값은 반드시 [0,1]내에 있어야 합니다"
 
 msgid "no 'z' matrix specified"
 msgstr "지정된 'z'가 없습니다"
@@ -144,8 +138,7 @@ msgid "'number' must be integer >= 1"
 msgstr "'number'는 반드시 1 보다 크거나 같아야 합니다"
 
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr ""
-"'overlap'은 반드시 1 보다 작아야 합니다 (일반적으로 0 보다 크거나 같습니다)."
+msgstr "'overlap'은 반드시 1 보다 작아야 합니다 (일반적으로 0 보다 크거나 같습니다)."
 
 msgid "invalid 'given.values'"
 msgstr "유효하지 않은 'given.values'입니다"
@@ -157,8 +150,7 @@ msgid "Missing rows: %s"
 msgstr "누락된 행들: %s"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr ""
-"'expr'은 반드시 함수, 또는 호출, 또는 '%s'를 포함하는 표현식이어야 합니다"
+msgstr "'expr'은 반드시 함수, 또는 호출, 또는 '%s'를 포함하는 표현식이어야 합니다"
 
 msgid "'add' will be ignored as there is no existing plot"
 msgstr "존재하는 플롯이 없기 때문에 'add'는 무시되어질 것입니다"
@@ -242,9 +234,7 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability'은 '!freq'의 alias이지만, 이 둘은 다릅니다"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 "
-"않은 것 같습니다"
+msgstr "일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 않은 것 같습니다"
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "플랏내의 AREAS가 잘못되었으므로 'freq = FALSE'를 사용합니다"
@@ -286,8 +276,7 @@ msgid "integer colors must be non-negative"
 msgstr ""
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-"'respect'는 반드시 논리적이거나 'mat'과 같은 크기를 가지는 행렬이어야 합니다"
+msgstr "'respect'는 반드시 논리적이거나 'mat'과 같은 크기를 가지는 행렬이어야 합니다"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -303,16 +292,15 @@ msgstr "'legend'의 길이가 0입니다"
 msgid "invalid coordinate lengths"
 msgstr "축의 길이들이 올바르지 않습니다"
 
-msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width'는 반드시 숫자이어야 하며 0 보다 크거나 같아야 합니다"
-
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr ""
 
+#, fuzzy
+msgid "'text.width' must be numeric, >= 0, or a scalar NA"
+msgstr "'text.width'는 반드시 숫자이어야 하며 0 보다 크거나 같아야 합니다"
+
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
-"'merge = TRUE'은 line segments가 그려지지 않았을 경우에는 아무런 영향을 가지"
-"지 않습니다"
+msgstr "'merge = TRUE'은 line segments가 그려지지 않았을 경우에는 아무런 영향을 가지지 않습니다"
 
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr ""
@@ -431,15 +419,16 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs'는 최소 1개의 스크린을 반드시 지정해야 합니다"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr ""
-"'nrpoints'는 반드시 0 보다 크거나 같은 숫자를 가지는 스칼라이어야 합니다"
+msgstr "'nrpoints'는 반드시 0 보다 크거나 같은 숫자를 가지는 스칼라이어야 합니다"
 
 msgid "a 2-way table has to be specified"
 msgstr "2원 분할표가 반드시 지정되어져야 합니다"
 
-msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgid "weights are not supported for 2-way table specification"
 msgstr ""
-"x 축이 누적확률스케일이므로 'xlim'의 값은 반드시 [0,1]사이에 있어야 합니다"
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
+msgstr "x 축이 누적확률스케일이므로 'xlim'의 값은 반드시 [0,1]사이에 있어야 합니다"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x'는 반드시 행렬 또는 데이터 프레임입니다"

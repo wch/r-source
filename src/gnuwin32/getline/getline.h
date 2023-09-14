@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-typedef size_t (*gl_strwidth_proc)(char *);
+typedef size_t (*gl_strwidth_proc)(const char *);
 
 /* read a line of input */
 int             getline(const char *prompt, char *buf, int maxlen);  

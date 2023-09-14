@@ -504,7 +504,7 @@ if(FALSE) {
     ## to be run from package source directory
     run_clean <- function()
     {
-        if (dir.exists("src") && length(dir("src", all.files = TRUE) > 2L)) {
+        if (dir.exists("src") && length(dir("src", all.files = TRUE)) > 2L) {
             if (WINDOWS) archs <- c("i386", "x64")
             else {
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))

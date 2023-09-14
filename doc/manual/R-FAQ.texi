@@ -16,7 +16,18 @@
 @finalout
 
 @include R-defs.texi
-@include version.texi
+
+@c <FIXME>
+@c Getting FAQ_YEAR from version.texi causes too much trouble for now,
+@c as making ${top_builddir}/doc/FAQ in front-matter is done ahead of
+@c building version.texi (which in turn currently needs having built R)
+@c as it uses R_EXE to compute RWVERSION.
+@c Need to revisit more generally whether we still want the front-matter
+@c things.
+@c For now, simply hard-wire the year again.
+@c @include version.texi
+@set FAQ_YEAR 2023
+@c </FIXME>
 
 @macro CRAN{}
 @acronym{CRAN}

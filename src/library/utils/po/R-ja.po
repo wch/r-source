@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:18\n"
+"POT-Creation-Date: 2023-07-31 15:00\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -24,6 +24,12 @@ msgstr " %s に対するドキュメントがパッケージ %s 中に見当た�
 
 msgid "document not found"
 msgstr " ドキュメントが見付かりません "
+
+msgid "some options in argument 'restrict' were not recognized and hence ignored"
+msgstr ""
+
+msgid "argument 'format' is deprecated and has no affect on search results"
+msgstr ""
 
 msgid "A search query has been submitted to %s"
 msgstr " 検索問い合わせが %s に発行されました "
@@ -189,9 +195,8 @@ msgstr " 添え字が範囲を超えています "
 msgid "%s should be one of %s"
 msgstr " %s は %s のどれかである必要があります "
 
-#, fuzzy
-msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr " 引数 'namespace' は廃止される予定です。 "
+msgid "To cite package %s in publications use:"
+msgstr " %s パッケージの引用には以下を用いてください: "
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr " LaTeX ユーザのための BibTeX エントリーは "
@@ -203,14 +208,8 @@ msgstr ""
 " 無効なエントリ %d を取り除いています: \n"
 " %s "
 
-msgid "no date field in DESCRIPTION file of package %s"
-msgstr " パッケージ %s の DESCRIPTION ファイル中に date 欄がありません "
-
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr " パッケージの DESCRIPTION ファイルから %s に対する年度を決定できませんでした "
-
-msgid "To cite package %s in publications use:"
-msgstr " %s パッケージの引用には以下を用いてください: "
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr " 注意: この引用情報は、パッケージの DESCRIPTION から自動的に生成されました。必要に応じて編集してください。%s も参照してください。 "
@@ -221,14 +220,9 @@ msgstr " 'FUN' は関数か NULL でなければなりません "
 msgid "cannot handle S4 methods yet"
 msgstr " S4 メソッドはまだ扱うことができません "
 
-msgid "'package' must be a character string or NULL"
+#, fuzzy
+msgid "'package' must be a character vector or NULL"
 msgstr " 'package' は文字列か NULL でなければなりません "
-
-msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr " データセットはパッケージ 'base' からパッケージ 'datasets' に移されました "
-
-msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr " データセットはパッケージ 'stats' からパッケージ 'datasets' に移されました "
 
 msgid "data index for package %s is invalid and will be ignored"
 msgstr " パッケージ %s に対するデータ索引は不正で、無視されます "
@@ -372,7 +366,14 @@ msgstr " 'form' は両辺に項を持つ公式でなければなりません "
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr " 'form' は両辺にそれぞれ一つの項を持つ両辺項公式でなければなりません "
 
-msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+#, fuzzy
+msgid "invalid object for 'as.environment'"
+msgstr " 不正な 'socket' 引数 "
+
+msgid "invalid 'n' - must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must be numeric, possibly NA."
 msgstr ""
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
@@ -455,7 +456,8 @@ msgstr ""
 msgid "Unable to connect to CRAN to check R version."
 msgstr ""
 
-msgid "argument %s must be a single character string"
+#, fuzzy
+msgid "argument %s must be a character string"
 msgstr " 引数 %s は単一の文字列でなければなりません "
 
 msgid "incorrect field specification"
@@ -501,11 +503,9 @@ msgstr " もし '%s' で起動したブラウザが既に実行中なら、そ�
 msgid "Otherwise, be patient ..."
 msgstr " さもなければ、じっと待って ... "
 
-msgid "'url' must be a non-empty character string"
+#, fuzzy
+msgid "'%s' must be a non-empty character string"
 msgstr " 'url' は空でない文字列でなければなりません "
-
-msgid "'browser' must be a non-empty character string"
-msgstr " 'browser' は空でない文字列でなければなりません "
 
 msgid "no package '%s' was found"
 msgstr " パッケージ '%s' は見付かりません "
@@ -530,6 +530,10 @@ msgstr " HTML パッケージ索引を更新出来ません "
 
 msgid "done"
 msgstr " 完了 "
+
+#, fuzzy
+msgid "Source must be a seekable connection"
+msgstr " 'file' は文字列か NULL でなければなりません "
 
 msgid "menu() cannot be used non-interactively"
 msgstr " menu() は対話的にしか使用できません "
@@ -689,6 +693,12 @@ msgstr " リポジトリーの設定は対話的にしかできません "
 msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr " 'package' は文字列か NULL でなければなりません "
 
+msgid "No matching repositories found for"
+msgstr ""
+
+msgid ","
+msgstr " , "
+
 msgid "--- Please select repositories for use in this session ---"
 msgstr " --- このセッションで使うリポジトリーを選んでください --- "
 
@@ -707,6 +717,10 @@ msgid ""
 msgstr ""
 " 'lib' のどの要素を依存関係のインストールに使うかわかりません \n"
 " 依存関係のインストールをスキップします "
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr " 'unzip' は単一の文字列でなければなりません "
 
 msgid "type 'binary' is not supported on this platform"
 msgstr " このプラットフォームでは type 'binary' はサポートされていません "
@@ -785,12 +799,26 @@ msgstr " foundpkgs: %s "
 msgid "files: %s"
 msgstr " ファイル：%s "
 
+msgid "Windows default 'timeout' command is not usable for parallel installs"
+msgstr ""
+
 msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
+#, fuzzy
+msgid "installation of package %s failed"
+msgstr " パッケージ %s のダウンロードに失敗しました "
+
+#, fuzzy
+msgid "installation of %d packages failed:  %s"
+msgstr ""
+" 一つもしくは複数のパッケージのインストールが失敗しました \n"
+"       恐らく %s "
+
+#, fuzzy
 msgid ""
-"installation of one or more packages failed,\n"
-"  probably %s"
+"installation of %d packages failed:\n"
+"  %s"
 msgstr ""
 " 一つもしくは複数のパッケージのインストールが失敗しました \n"
 "       恐らく %s "
@@ -1150,16 +1178,9 @@ msgstr " ファイルに列名を加えます "
 msgid "attempt to set '%s' ignored"
 msgstr " '%s' への変更の試みは無視されました "
 
-msgid "'unzip' must be a single character string"
-msgstr " 'unzip' は単一の文字列でなければなりません "
-
 #, fuzzy
 msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr " 'files' は 1 つ以上のファイルパスを指定する文字ベクトルでなければなりません "
-
-#, fuzzy
-msgid "argument 'zip' must be a non-empty character string"
-msgstr " 'url' は空でない文字列でなければなりません "
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr " 'mailto:' の URI を開くためのプログラムが見つかりません。'method=\"none\"' として再実行します "
@@ -1192,6 +1213,10 @@ msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 #, fuzzy
 msgid "'curl' call had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
+
+#, fuzzy
+msgid "invalid method:"
+msgstr " 不正な書式 "
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
@@ -1279,6 +1304,11 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] " %d 個の Sweve ファイルが基本名 %s に対して見つかりました "
 
+#, fuzzy
+msgid "Output/used file:  "
+msgid_plural "Output/used files:  "
+msgstr[0] " 出力ファイル： "
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] " %d 回の生起（%s 中） "
@@ -1306,6 +1336,11 @@ msgstr[0] ""
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] " オブジェクト '%s' が見付かりません "
+
+#, fuzzy
+msgid "package %s is a base package, and cannot be removed"
+msgid_plural "packages %s are base packages, and cannot be removed"
+msgstr[0] " パッケージ %s は使用中のため、インストールされません "
 
 msgid ""
 "Removing package from %s\n"
@@ -1393,6 +1428,26 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] " 不正なローマ数字です: %s "
 
+#, fuzzy
+#~ msgid "Argument '%s' is deprecated; rather set '%s' instead."
+#~ msgstr " 引数 'namespace' は廃止される予定です。 "
+
+#~ msgid "no date field in DESCRIPTION file of package %s"
+#~ msgstr " パッケージ %s の DESCRIPTION ファイル中に date 欄がありません "
+
+#~ msgid "datasets have been moved from package 'base' to package 'datasets'"
+#~ msgstr " データセットはパッケージ 'base' からパッケージ 'datasets' に移されました "
+
+#~ msgid "datasets have been moved from package 'stats' to package 'datasets'"
+#~ msgstr " データセットはパッケージ 'stats' からパッケージ 'datasets' に移されました "
+
+#~ msgid "'browser' must be a non-empty character string"
+#~ msgstr " 'browser' は空でない文字列でなければなりません "
+
+#, fuzzy
+#~ msgid "argument 'zip' must be a non-empty character string"
+#~ msgstr " 'url' は空でない文字列でなければなりません "
+
 #~ msgid "bad argument"
 #~ msgstr " 誤った引数 "
 
@@ -1410,9 +1465,6 @@ msgstr[0] " 不正なローマ数字です: %s "
 
 #~ msgid "no download method found"
 #~ msgstr " ダウンロードの方法が見付かりません "
-
-#~ msgid ","
-#~ msgstr " , "
 
 #~ msgid "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 #~ msgstr " type == \"both\" は 'available' か 'contriburl' が指定された時は使用出来ません "

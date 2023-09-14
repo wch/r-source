@@ -34,7 +34,7 @@ is.matrix(x)
   \item{ncol}{the desired number of columns.}
   \item{byrow}{logical. If \code{FALSE} (the default) the matrix is
     filled by columns, otherwise the matrix is filled by rows.}
-  \item{dimnames}{A \code{\link{dimnames}} attribute for the matrix:
+  \item{dimnames}{a \code{\link{dimnames}} attribute for the matrix:
     \code{NULL} or a \code{list} of length 2 giving the row and column
     names respectively.  An empty list is treated as \code{NULL}, and a
     list of length one as row names.  The list can be named, and the

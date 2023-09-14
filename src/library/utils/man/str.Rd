@@ -66,14 +66,14 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
   \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
   \item{drop.deparse.attr}{logical; if \code{TRUE} (default),
-    \code{\link{deparse}(control = <S>)} will not have
-    \code{"showAttributes"} in \code{<S>}.  Used to be hard coded to
+    \code{\link{deparse}(control = \var{control})} will not have
+    \code{"showAttributes"} in \var{control}.  Used to be hard coded to
     \code{FALSE} and hence can be set via \code{strOptions()} for back
     compatibility.}
   \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
   \item{give.head}{logical; if \code{TRUE} (default), give (possibly
-    abbreviated) mode/class and length (as \code{<type>[1:\dots]}).}
+    abbreviated) mode/class and length (as \code{\var{type}[1:\dots]}).}
   \item{width}{the page width to be used.  The default is the currently
     active \code{\link{options}("width")}; note that this has only a
     weak effect, unless \code{strict.width} is not \code{"no"}.}
