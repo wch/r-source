@@ -2937,8 +2937,7 @@ if test "x$use_accelerate" = xyes; then
     AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-lapack])
   fi
 fi
-dnl macOS 13.3 had kernel 22.4.0 but we test for macOS then for
-dnl entry point in -framework Accelerate
+dnl We test for macOS then for an entry point in -framework Accelerate
 dnl Alternatively we could #include <Accelerate/Acclereate.h> and
 dnl use nm on the object.
 if test "x$use_accelerate" = xyes; then
@@ -2978,7 +2977,8 @@ sdk_OK=no)
   if test "x$sdk_OK" != xyes; then
     AC_MSG_ERROR([--with-newAccelerate requires macOS SDK >= 14.3.])
   fi
-  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
+dnl No longer used as we only build (or not) BLAS and LAPACK shims
+dnl  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
 fi
 AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
 

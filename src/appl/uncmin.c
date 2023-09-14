@@ -27,26 +27,14 @@
 
 /*--- The Dennis + Schnabel Minimizer -- used by R's  nlm() ---*/
 
-// for USE_NEW_ACCELERATE
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <math.h>
 #include <float.h> /* DBL_MAX */
 #include <R_ext/Boolean.h>
 #include <R_ext/Print.h>   /* Rprintf */
 #include <R_ext/PrtUtil.h> /* printRealVector */
-// uses BLAS routines ddot dnrm2 dscal
-#ifdef USE_NEW_ACCELERATE
-# define ACCELERATE_NEW_LAPACK
-# define USE_NON_APPLE_STANDARD_DATATYPES 0
-# include <Accelerate/Accelerate.h>
-#else
-# include <R_ext/BLAS.h>
-#endif
-#include <R_ext/Linpack.h> /* dtrsl, includes BLAS.h pro tem */
-#include <R_ext/Applic.h> /* fdhess, includes BLAS.h pro tem */
+#include <R_ext/BLAS.h>    /* ddot dnrm2 dscal */
+#include <R_ext/Linpack.h> /* dtrsl */
+#include <R_ext/Applic.h>  /* fdhess */
 #include <Rmath.h>
 // as in <Defn.h> :
 #define Rexp10(x) pow(10.0, x)

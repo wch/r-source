@@ -46,21 +46,7 @@ extern char *realpath(const char *path, char *resolved_path);
 extern int dladdr(void *addr, Dl_info *info);
 #endif
 
-
-#ifdef USE_NEW_ACCELERATE
-//Next two included by Lapack.h
-#include <R_ext/Complex.h>
-#include <R_ext/RS.h>
-
-#define ACCELERATE_NEW_LAPACK
-// avoid conflicts over COMPLEX in Rinternals.h, included by Defn.h
-# define USE_NON_APPLE_STANDARD_DATATYPES 0
-# include <Accelerate/Accelerate.h>
-# define FCONE
-# pragma clang diagnostic ignored "-Wincompatible-pointer-types"
-#else
-# include "Lapack.h"
-#endif
+#include "Lapack.h"
 
 /* NB: the handling of dims is odd here.  Most are coerced to be
  * integers (which dimgets currently guarantees), but a couple were

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2023  The R Core Team
+ *  Copyright (C) 2012-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,17 +24,10 @@
 #include <math.h>
 #include <string.h>  // memset, memcpy
 #include <R.h>
-#include <Rmath.h>
-/* for Lapack (dpotrf dsyrk dtrmm) */
-#ifdef USE_NEW_ACCELERATE
-# define ACCELERATE_NEW_LAPACK
-# define USE_NON_APPLE_STANDARD_DATATYPES 0
-# include <Accelerate/Accelerate.h>
-# define FCONE
-#else
-# include <R_ext/Lapack.h> 
-#endif
 #include <Rinternals.h>
+#include <Rmath.h>
+#include <R_ext/Lapack.h>        /* for Lapack (dpotrf, etc.) and BLAS */
+
 #include "stats.h" // for _()
 #include "statsR.h"
 
