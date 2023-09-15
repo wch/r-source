@@ -340,11 +340,12 @@ const char *R_typeToChar2(SEXP x, SEXPTYPE t) {
 }
 #endif
 
-const char *R_typeToChar(SEXP x) { // = type2char() but distinguishing {S4, object}
+const char *R_typeToChar(SEXP x) {
+    // = type2char() but distinguishing {S4, object}
     if(TYPEOF(x) == OBJSXP)
 	return IS_S4_OBJECT(x) ? "S4" : "object";
-    // else
-    return type2char(TYPEOF(x));
+    else
+	return type2char(TYPEOF(x));
 }
 
 #ifdef UNUSED

@@ -95,7 +95,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 
 NORET static void errorcallNotSubsettable(SEXP x, SEXP call)
 {
-    SEXP cond = R_makeNotSubsettableError(x, call);  // object of type '..' is not subsettable
+    SEXP cond = R_makeNotSubsettableError(x, call);
     PROTECT(cond);
     R_signalErrorCondition(cond, call);
     UNPROTECT(1); /* cond; not reached */
@@ -965,8 +965,8 @@ attribute_hidden SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Is partial matching ok?  When the exact arg is NA, a warning is
        issued if partial matching occurs.
      */
-    int exact = ExtractExactArg(args),
-	pok = (exact == -1) ? exact : !exact;
+    int exact = ExtractExactArg(args);
+    int pok = (exact == -1) ? exact : ! exact;
 
     x = CAR(args);
 

@@ -968,15 +968,15 @@ attribute_hidden void PrintValueRec(SEXP s, R_PrintData *data)
 	Rprintf("<weak reference>\n");
 	break;
     case OBJSXP:
-      if(IS_S4_OBJECT(s)) {
-	/*  we got here because no show method, usually no class.
-	    Print the "slots" as attributes, since we don't know the class.
-	*/
-	Rprintf("<S4 Type Object>\n");
-      } else {
-	  /* OBJSXP type, S4 obj bit not set*/
-	  Rprintf("<object>\n");
-      }
+	if(IS_S4_OBJECT(s)) {
+	    /*  we got here because no show method, usually no class.
+		Print the "slots" as attributes, since we don't know the class.
+	    */
+	    Rprintf("<S4 Type Object>\n");
+	} else {
+	    /* OBJSXP type, S4 obj bit not set*/
+	    Rprintf("<object>\n");
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);
