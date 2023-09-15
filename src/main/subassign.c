@@ -1590,7 +1590,7 @@ NORET static void errorMissingSubscript(SEXP x)
 attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
-    int nsubs, oldtype; Rboolean S4;
+    int nsubs, oldtype;
 
     PROTECT(args);
 
@@ -1618,8 +1618,7 @@ attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
-    S4 = IS_S4_OBJECT(x);
-
+    Rboolean S4 = IS_S4_OBJECT(x);
     oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
@@ -1754,13 +1753,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue, xOrig = R_NilValue;
     int i, ndims, nsubs, which, len = 0 /* -Wall */;
     R_xlen_t  stretch, offset, off = -1; /* -Wall */
-    Rboolean S4, recursed=FALSE;
 
     PROTECT(args);
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
     PROTECT(y); /* gets cut loose in SubAssignArgs */
-    S4 = IS_S4_OBJECT(x);
 
     /* Handle NULL left-hand sides.  If the right-hand side */
     /* is NULL, just return the left-hand size otherwise, */
@@ -1787,6 +1784,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETCAR(args, x = shallow_duplicate(x));
 
     /* code to allow classes to extend ENVSXP */
+    Rboolean S4 = IS_S4_OBJECT(x);
     if(TYPEOF(x) == S4SXP) {
 	xOrig = x; /* will be an S4 object */
 	x = R_getS4DataSlot(x, ANYSXP);
@@ -1819,6 +1817,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* new case in 1.7.0, one vector index for a list,
        more general as of 2.10.0 */
+    Rboolean recursed = FALSE;
     if (nsubs == 1) {
 	thesub = CAR(subs);
 	len = length(thesub); /* depth of recursion, small */
