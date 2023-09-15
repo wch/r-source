@@ -4182,7 +4182,7 @@ which is used.
 @cindex LAPACK library
 
 If when configuring @R{} a system LAPACK library is found of version
-3.10.0 or later (and not does contain BLAS routines) it will be used
+3.10.0 or later (and does not contain BLAS routines) it will be used
 instead of compiling the LAPACK code in the package sources.  This can
 be prevented by configuring @R{} with @option{--without-lapack}.
 Using a static @file{liblapack.a} is not supported.
@@ -4190,7 +4190,7 @@ Using a static @file{liblapack.a} is not supported.
 It is assumed that @code{-llapack} is the reference LAPACK library but
 on Debian/Ubuntu it can be switched, including after @R{} is installed.
 On such a platform it is better to use @option{--without-lapack} or
-@option{---with-blas--with-lapack} (see below) explicitly.  The known
+@option{---with-blas --with-lapack} (see below) explicitly.  The known
 examples@footnote{ATLAS, OpenBLAS and Accelerate.} of a
 non-reference LAPACK library found at installation all contain BLAS
 routines so are not used by a default @command{configure} run.
