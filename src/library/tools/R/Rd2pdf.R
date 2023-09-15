@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -171,8 +171,6 @@
                  silent = silent, pkglist = pkglist)
     } else {
         files <- strsplit(files, "[[:space:]]+")[[1L]]
-        latexdir <- tempfile("ltx")
-        dir.create(latexdir)
         if (!silent) message("Converting Rd files to LaTeX ...")
         if (is.character(outfile)) {
             outfile <- file(outfile, if (append) "at" else "wt")
@@ -183,20 +181,18 @@
         macros <- initialRdMacros(pkglist = pkglist)
         for(f in files) {
             if (!silent) cat("  ", basename(f), "\n", sep="")
-            if (!internals) {
-                lines <- readLines(f)
-                if (any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
-                         lines, perl = TRUE))) next
-            }
-            out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
-            ## people have file names with quotes in them.
-            res <- Rd2latex(f, out, encoding = encoding,
+            rd <- parse_Rd(f, encoding = encoding, macros = macros)
+            if (!internals &&
+                any(.Rd_get_metadata(rd, "keyword") == "internal"))
+                next
+            lines <- character()
+            con <- textConnection("lines", "w", local = TRUE)
+            res <- Rd2latex(rd, con,
                             outputEncoding = outputEncoding,
-                            stages = c("build", "install", "render"),
-                            macros = macros)
+                            stages = c("build", "install", "render"))
+            close(con) # ensure final line is output
             latexEncodings <- c(latexEncodings,
                                 attr(res,"latexEncoding"))
-            lines <- readLines(out)
             if (attr(res, "hasFigures")) {
                 graphicspath <-
                     paste0("\\graphicspath{{\"",
