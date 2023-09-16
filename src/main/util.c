@@ -235,8 +235,6 @@ SEXPTYPE str2type(const char *s)
 	if (!strcmp(s, TypeTable[i].str))
 	    return (SEXPTYPE) TypeTable[i].type;
     }
-    if (!strcmp(s, "object"))
-	return (SEXPTYPE) OBJSXP;
 
     /* SEXPTYPE is an unsigned int, so the compiler warns us w/o the cast. */
     return (SEXPTYPE) -1;
