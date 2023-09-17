@@ -206,8 +206,6 @@
       \item Headers \file{R_ext/Applic.h} and \file{R-ext/Linpack.h}
       used to include \file{R_ext/BLAS.h} although this was undocumented and
       unneeded by their documented entry points.  They no longer do so.
-
-      [Linpack.h deferred to 2023-09-18 to allow some packages to adjust.]
     }
   }
 

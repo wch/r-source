@@ -38,8 +38,6 @@
 #define R_LINPACK_H_
 
 #include <R_ext/RS.h>		/* for F77_... */
-// Remove on 2023-09-18
-#include <R_ext/BLAS.h> // now included by R users but not yet some packages.
 
 #ifdef  __cplusplus
 extern "C" {
