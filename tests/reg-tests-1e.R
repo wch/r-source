@@ -853,6 +853,11 @@ stopifnot(exprs = {
 ## in all three cases, "A-1" inadvertently became "A.1" in R < 4.4.0
 
 
+## byte compiled sqrt() was not warling about creating NaNs for
+## negative integer scalars
+tools::assertWarning(compiler::cmpfun(function(x) sqrt(x))(-1L))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

@@ -4933,8 +4933,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	    NEXT();							\
 	}								\
 	else if (vx->tag == INTSXP && vx->u.ival != NA_INTEGER) {	\
-	    SKIP_OP();							\
-	    SETSTACK_REAL(-1, fun((double) vx->u.ival));		\
+	    double dval = fun((double) vx->u.ival);			\
+	    if (CMP_ISNAN(dval)) {					\
+		SEXP call = VECTOR_ELT(constants, GETOP());		\
+		warningcall(call, R_MSG_NA);				\
+	    }								\
+	    else SKIP_OP();						\
+	    SETSTACK_REAL(-1, dval);					\
 	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
