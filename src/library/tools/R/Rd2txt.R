@@ -1006,10 +1006,6 @@ Rd2txt <-
         s[s %in% c("\\dots", "\\ldots")] <- "..."
         s <- trimws(strsplit(paste(s, collapse = ""), ",", fixed = TRUE)[[1]])
         s <- s[nzchar(s)]
-        ## See writeSection(tag = "\\code")
-        opts <- Rd2txt_options()
-        if(opts$code_quote)
-            s <- paste0(LSQM, s, RSQM)
         s <- paste0(s, collapse = ", ")
         putf(s)
     }
