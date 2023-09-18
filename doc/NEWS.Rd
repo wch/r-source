@@ -131,6 +131,11 @@
       patch.
 
       \item Plain-text help shows \verb{\var} markup with angle brackets.
+
+      \item The new experimental primitive function \code{declare()} is
+      intended to eventually allow information about R code to be
+      communicated to the interpreter, compiler, and code analysis
+      tools. The syntax for declarations is still being developed.
     }
   }
 

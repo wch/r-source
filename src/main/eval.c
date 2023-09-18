@@ -8867,3 +8867,9 @@ SEXP R_ParseString(const char *str)
 {
     return R_ParseEvalString(str, NULL);
 }
+
+/* declare() SPECIALSXP */
+attribute_hidden SEXP do_declare(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return R_NilValue;
+}
