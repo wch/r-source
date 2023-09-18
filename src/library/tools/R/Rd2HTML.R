@@ -1494,6 +1494,8 @@ function(dir)
     }
     
     desc <- enc2utf8(.read_description(descfile))
+    ## Drop empty fields: these are usually taken as missing.    
+    desc <- desc[nzchar(desc)]
     pack <- desc["Package"]
     aatr <- desc["Authors@R"]
     ## <FIXME>

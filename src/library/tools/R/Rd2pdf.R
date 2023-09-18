@@ -71,6 +71,8 @@
     }
 
     desc <- enc2utf8(.read_description(descfile))
+    ## Drop empty fields: these are usually taken as missing.    
+    desc <- desc[nzchar(desc)]
     if (is.character(outfile)) {
         out <- file(outfile, "a")
         on.exit(close(out))
