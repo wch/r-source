@@ -24,11 +24,13 @@ ICU_LIBS ?= -lsicuin -lsicuuc $(EXT_LIBS)/lib/sicudt.a -lstdc++
 # (dynamic linking) ICU_LIBS ?= -licuin -licuuc -licudt -lstdc++
 USE_CAIRO ?= YES
 CAIRO_CPPFLAGS ?= "-I$(EXT_LIBS)/include/cairo -I$(EXT_LIBS)/include/freetype2"
-CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
+## support freetype, curl built with libbrotli and without
+LIBBROTLI = $(or $(and $(wildcard $(EXT_LIBS)/lib/libbrotlidec-static.a),-lbrotlidec-static -lbrotlicommon-static),)
+CAIRO_LIBS ?= "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz \
+              -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32 \
+              $(LIBBROTLI)"
 CURL_CA_BUNDLE ?=
 USE_LIBCURL = yes
-## support curl built with libbrotli and without
-LIBBROTLI = $(or $(and $(wildcard $(EXT_LIBS)/lib/libbrotlidec-static.a),-lbrotlidec-static -lbrotlicommon-static),)
 CURL_LIBS ?= -lcurl -lbcrypt -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz \
              -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 \
              -lwinmm $(LIBBROTLI)
