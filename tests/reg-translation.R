@@ -16,7 +16,14 @@ str(l10n_info())
 
 #### Skip locales that do not support French (especially C)
 OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
-if (!OK) {
+if(OK) {
+    locale <- Sys.getlocale("LC_MESSAGES")
+    if(!is.character(locale) || !nzchar(locale))
+        locale <- Sys.getenv("LANG")
+    if(nzchar(locale) && 
+       (startsWith(locale, "C.") || (locale == "C")))
+        OK <- FALSE
+} else {
     if(.Platform$OS.type == "windows") {
         OK <- l10n_info()[["codepage"]] == 28605 ## Latin-9
     } else {
