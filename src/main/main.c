@@ -1448,7 +1448,8 @@ attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* so that it can be restored on exit. */
 
 #ifdef USE_BROWSER_HOOK
-    /* this seems to make more sense in any case, but for now on; use with hooks */
+    /* this seems to make more sense in any case, but for now only use
+       with hooks */
     browselevel = countBrowserContexts();
 #else
     browselevel = countContexts(CTXT_BROWSER, 1);
