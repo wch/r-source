@@ -5634,55 +5634,14 @@ current compilers in Xcode/CLT 14.3 nor 15.
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
 
+@menu
+* Accelereate::
+* OpenBLAS (macOS)::
+@end menu
+
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://mac.r-project.org/bin//}.
 
-@cindex BLAS library
-@cindex LAPACK library
-The @code{Accelerate}
-library@footnote{@uref{https://developer.apple.com/documentation/accelerate}.}
-can be used @emph{via} the configuration option
-
-@example
---with-blas="-framework Accelerate"
-@end example
-
-@noindent
-@c LAPACK in Accelerate was still 3.2.1 in macOS 13.3 / CLT 14.3
-to provide potentially higher-performance versions of the @acronym{BLAS}
-and LAPACK routines.@footnote{It has been reported that for some
-non-Apple toolchains @code{CPPFLAGS} needed to contain
-@code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}
-This includes a full LAPACK which can be used @emph{via}
-@option{--with-lapack}: however, the version of LAPACK it contains has
-@c 3.2.1 even in Ventura 13.3.
-often been seriously old (and is not used unless @option{--with-lapack}
-is specified).  Some @acronym{CRAN} builds of @R{} can be
-switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
-to use Accelerate's BLAS.
-
-@c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
-@c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
-As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
-framework are `now inline with reference version
-3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
-naming new entry points and so only accessible @emph{via} their C
-headers.  That version can be used for BLAS calls @emph{via}
-@command{configure} option @option{--with-newAccelerate}: it requires at
-least macOS 13.3 and SDK 14.3.  To use it for both BLAS and LAPACK
-calls, configure with @option{--with-newAccelerate=lapack}.  These
-options cannot be used with others such as @option{--with-blas} and
-@option{--with-lapack}.
-
-@c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central
-Dispatch'@footnote{E.g.,
-@url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
-said not to need user control.  Test @file{nls.R} in package @pkg{stats}
-has often failed with the Accelerate BLAS on Intel macOS.  All versions
-of Accelerate show differences from the reference BLAS (and most others)
-in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
-@R{} packages fail their checks.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5735,6 +5694,71 @@ Parallel installation of packages will make use of the utility
 downloaded from @uref{https://www.stats.ox.ac.uk/pub/bdr/timeout}: make
 it executable (@code{chmod 755 timeout}) and put it somewhere on your
 path.
+
+@node Accelereate, OpenBLAS (macOS), Other libraries, Other libraries
+@subsubsection Accelerate
+
+@cindex BLAS library
+@cindex LAPACK library
+The @code{Accelerate}
+library@footnote{@uref{https://developer.apple.com/documentation/accelerate}.}
+can be used @emph{via} the configuration option
+
+@example
+--with-blas="-framework Accelerate"
+@end example
+
+@noindent
+@c LAPACK in Accelerate was still 3.2.1 in macOS 13.3 / CLT 14.3
+to provide potentially higher-performance versions of the @acronym{BLAS}
+and LAPACK routines.@footnote{It has been reported that for some
+non-Apple toolchains @code{CPPFLAGS} needed to contain
+@code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}
+This includes a full LAPACK which can be used @emph{via}
+@option{--with-lapack}: however, the version of LAPACK it contains has
+@c 3.2.1 even in Ventura 13.3.
+often been seriously old (and is not used unless @option{--with-lapack}
+is specified).  Some @acronym{CRAN} builds of @R{} can be
+switched@footnote{@url{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f}}
+to use Accelerate's BLAS.
+
+@c https://developer.apple.com/documentation/macos-release-notes/macos-13_3-release-notes
+@c https://developer.apple.com/documentation/xcode-release-notes/xcode-14_3-release-notes
+As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
+framework are `now inline with reference version
+3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
+naming new entry points and so only accessible @emph{via} their C
+headers.  That version can be used for BLAS calls @emph{via}
+@command{configure} option @option{--with-newAccelerate}: it requires at
+least macOS 13.3 and SDK 14.3.  To use it for both BLAS and LAPACK
+calls, configure with @option{--with-newAccelerate=lapack}.  These
+options cannot be used with others such as @option{--with-blas} and
+@option{--with-lapack}.
+
+@c https://developer.apple.com/documentation/accelerate/veclib
+Threading in Accelerate is controlled by `Grand Central
+Dispatch'@footnote{E.g.,
+@url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
+said not to need user control.  Test @file{nls.R} in package @pkg{stats}
+has often failed with the Accelerate BLAS on Intel macOS.  All versions
+of Accelerate show differences from the reference BLAS (and most others)
+in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
+@R{} packages fail their checks.
+
+@node OpenBLAS (macOS),  , Accelereate, Other libraries
+@subsubsection OpenBLAS
+
+@R{} has been built on @cputype{arm64} using OpenBLAS 0.3.24 (sources
+from @uref{https://github.com/OpenMathLib/OpenBLAS/releases}) by
+symlinking @file{/opt/OpenBLAS/lib/libopenblas.dylib} to
+@file{lib/libRblas.dylib} (see @ref{Shared BLAS}).
+
+On macOS, a default build of OpenBLAS uses @code{pthreads} (as macOS
+does not have OpenMP) with the number of threads controlled by
+environment variable @env{OPENBLAS_NUM_THREADS}.  On an M1 Pro this
+defaulted to 10 threads (there are 8 `performance' cores and 2
+`efficiency cores`) and we saw a 9x speedup over the reference BLAS on a
+large SVD (which was slightly faster than Accelerate).
 
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
