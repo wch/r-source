@@ -80,3 +80,19 @@ obs <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
 q <- qsmirnov(1:9/10, sizes = c(5, 7), z = obs, alternative = "greater")
 p <- psmirnov(q, sizes = c(5, 7), z = obs, alternative = "greater")
 all.equal(qsmirnov(p, sizes = c(5, 7), z = obs, alternative = "greater"), q)
+
+## PR#18582
+## <https://bugs.r-project.org/show_bug.cgi?id=18582>
+## KS.Test with specific data contradicts itself
+## See explanations in the PR: the permutation distributions of the
+## one-sided statistics can be different in the case of ties.
+## The C code for the exact and MC simulations only implements one-sided
+## D_{xy}^+ ("greater"); the R code now knows that D_{xy}^- = D_{yx}^+
+## ("less").
+
+x <- scan(text="4.7 5.5 6.7 7.1")
+y <- scan(text="2.3 3.4 4.0 4.3 4.3 4.3 4.5 5.0")
+all.equal(ks.test(x, y, alternative = "less")$p.value,
+          ks.test(y, x, alternative = "greater")$p.value)
+all.equal(ks.test(y, x, alternative = "less")$p.value,
+          ks.test(x, y, alternative = "greater")$p.value)

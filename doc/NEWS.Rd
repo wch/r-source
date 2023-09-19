@@ -136,6 +136,13 @@
       intended to eventually allow information about R code to be
       communicated to the interpreter, compiler, and code analysis
       tools. The syntax for declarations is still being developed.
+
+      \item Functions \code{psmirnov()}, \code{qsmirnov()} and
+      \code{rsmirnov()} in package \pkg{stats} have argument
+      \code{two.sided} changed to \code{alternative}, to take into
+      account that the permutation distributions of the one-sided
+      statistics can be different in the case of ties.  Consequence of 
+      \PR{18582}.      
     }
   }
 

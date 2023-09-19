@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-09-19 r85167) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-19 r85175) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -134,6 +134,26 @@ Type 'q()' to quit R.
 > all.equal(qsmirnov(p, sizes = c(5, 7), z = obs, alternative = "greater"), q)
 [1] TRUE
 > 
+> ## PR#18582
+> ## <https://bugs.r-project.org/show_bug.cgi?id=18582>
+> ## KS.Test with specific data contradicts itself
+> ## See explanations in the PR: the permutation distributions of the
+> ## one-sided statistics can be different in the case of ties.
+> ## The C code for the exact and MC simulations only implements one-sided
+> ## D_{xy}^+ ("greater"); the R code now knows that D_{xy}^- = D_{yx}^+
+> ## ("less").
+> 
+> x <- scan(text="4.7 5.5 6.7 7.1")
+Read 4 items
+> y <- scan(text="2.3 3.4 4.0 4.3 4.3 4.3 4.5 5.0")
+Read 8 items
+> all.equal(ks.test(x, y, alternative = "less")$p.value,
++           ks.test(y, x, alternative = "greater")$p.value)
+[1] TRUE
+> all.equal(ks.test(y, x, alternative = "less")$p.value,
++           ks.test(x, y, alternative = "greater")$p.value)
+[1] TRUE
+> 
 > proc.time()
    user  system elapsed 
-  0.778   0.021   0.791 
+  0.762   0.021   0.774 
