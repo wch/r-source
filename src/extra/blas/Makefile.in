@@ -20,7 +20,7 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 ALL_FCFLAGS = $(ALL_FFLAGS_LO)
 
 SOURCES = blas00.c blas.f cmplxblas.f blas2.f90 cmplxblas2.f90\
-lsame.f newAccelerate.c
+lsame.f newAccelerate.c zdotc.f zdotu.f
 
 Rblas_la = libRblas$(R_DYLIB_EXT)
 ## @RBLAS_LDFLAGS@ is used on macOS
@@ -46,7 +46,13 @@ cmplxblas2.o: cmplxblas2.f90
 ## Section for macOS Accelerate
 lsame.o: lsame.f
 newAccelerate.o: newAccelerate.c
-@BUILD_NEW_ACCELERATE_TRUE@ blas_OBJS = lsame.o newAccelerate.o
+## FIXME: there are versions of zdot[cu] in Accelerate, but the
+## ABI for double complex return values does not match gfortran.
+## We could use wrappers (as src/modules/lapack does) but the gains
+## are likely to be small and these functions are rarely used.
+zdotc.o: zdotc.f
+zdotu.o: zdotu.f
+@BUILD_NEW_ACCELERATE_TRUE@ blas_OBJS = lsame.o newAccelerate.o zdotc.o zdotu.o
 @BUILD_NEW_ACCELERATE_TRUE@ Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO) -framework Accelerate
 
 @BUILD_NEW_ACCELERATE_FALSE@ blas_OBJS=blas.o blas2.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o cmplxblas2.o

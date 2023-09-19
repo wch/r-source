@@ -3854,7 +3854,7 @@ This can be used by configuring @R{} with something like
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
-Some platforms provide multiple builds of OpenBLAS: for example Fedora 34
+Some platforms provide multiple builds of OpenBLAS: for example Fedora
 has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
@@ -4080,7 +4080,7 @@ which is used.
 @cindex LAPACK library
 
 If when configuring @R{} a system LAPACK library is found of version
-3.10.0 or later (and not does contain BLAS routines) it will be used
+3.10.0 or later (and does not contain BLAS routines) it will be used
 instead of compiling the LAPACK code in the package sources.  This can
 be prevented by configuring @R{} with @option{--without-lapack}.
 Using a static @file{liblapack.a} is not supported.
@@ -4088,7 +4088,7 @@ Using a static @file{liblapack.a} is not supported.
 It is assumed that @code{-llapack} is the reference LAPACK library but
 on Debian/Ubuntu it can be switched, including after @R{} is installed.
 On such a platform it is better to use @option{--without-lapack} or
-@option{---with-blas--with-lapack} (see below) explicitly.  The known
+@option{---with-blas --with-lapack} (see below) explicitly.  The known
 examples@footnote{ATLAS, OpenBLAS and Accelerate.} of a
 non-reference LAPACK library found at installation all contain BLAS
 routines so are not used by a default @command{configure} run.
@@ -5652,8 +5652,8 @@ can be used @emph{via} the configuration option
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It has been reported that for some
 non-Apple toolchains @code{CPPFLAGS} needed to contain
-@code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}  his
-also includes a full LAPACK which can be used @emph{via}
+@code{-D__ACCELERATE__}: not needed for @command{clang} from LLVM.}
+This includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains has
 @c 3.2.1 even in Ventura 13.3.
 often been seriously old (and is not used unless @option{--with-lapack}
@@ -5667,15 +5667,22 @@ As from macOS 13.3, the BLAS and LAPACK libraries under the Accelerate
 framework are `now inline with reference version
 3.9.1'.@footnote{Released 2021-04-01.} However, this has been done by
 naming new entry points and so only accessible @emph{via} their C
-headers.  That version can be used @emph{via} @command{configure} option
-@option{--with-newAccelerate}: it requires at least macOS 13.3 and SDK 14.3.
+headers.  That version can be used for BLAS calls @emph{via}
+@command{configure} option @option{--with-newAccelerate}: it requires at
+least macOS 13.3 and SDK 14.3.  To use it for both BLAS and LAPACK
+calls, configure with @option{--with-newAccelerate=lapack}.  These
+options cannot be used with others such as @option{--with-blas} and
+@option{--with-lapack}.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central
 Dispatch'@footnote{E.g.,
 @url{https://en.wikipedia.org/wiki/Grand_Central_Dispatch} .} and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
-has often failed with the Accelerate BLAS on Intel macOS.
+has often failed with the Accelerate BLAS on Intel macOS.  All versions
+of Accelerate show differences from the reference BLAS (and most others)
+in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
+@R{} packages fail their checks.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}

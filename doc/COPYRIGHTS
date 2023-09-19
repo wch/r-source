@@ -348,7 +348,7 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f, *.f90
 
 src/extra/blas/*.{f,f90}
 
-These are now derived from the LAPACK 3.11.0 sources, so the previous
+These are derived from the LAPACK 3.11.0 sources, so the previous
 item applies.
 
 src/extra/xdr/*

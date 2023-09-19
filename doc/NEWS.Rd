@@ -168,6 +168,22 @@
     }
   }
 
+  \subsection{INSTALLATION on macOS}{
+    \itemize{
+      \item A new \command{configure} option \option{--with-newAccelerate}
+      makes use of Apple's \sQuote{new} BLAS / LAPACK interfaces in their
+      Accelerate framework.  Those interfaces are only available in macOS
+      13.3 or later, and building requires SDK 14.3 or later (from the
+      Command Line Tools or Xcode).
+
+      By default the option uses new Accelerate for BLAS calls: to also
+      use it for LAPACK use \option{--with-newAccelerate=lapack}.  The
+      later interfaces provide LAPACK 3.9.1 rather than 3.2.1: 3.9.1 is
+      from 2021-04 and does not includw the improved algorithms
+      intruduced in LAPACK 3.10.0.
+    }
+  }
+
   %% \subsection{PACKAGE INSTALLATION}{
   %%   \itemize{
   %%     \item .
@@ -356,7 +372,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item \command{R CMD check} reports the use of Fortran 90 random
+      \item \command{R CMD check} reports the use of the Fortran 90 random
       number generator \code{RANDOM_NUMBER()} and the subroutines to
       initialize it.
 

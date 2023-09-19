@@ -2929,6 +2929,13 @@ AC_ARG_WITH([newAccelerate],
 [use_accelerate=${withval}],
 [use_accelerate=no])
 
+if test "x$use_accelerate" = xlapack; then
+  use_accelerate=yes
+  use_accelerate_lapack=yes
+else
+  use_accelerate_lapack=no
+fi
+
 if test "x$use_accelerate" = xyes; then
   if test "x$use_blas" = xyes; then
     AC_MSG_ERROR([--with-newAccelerate cannot be used with --with-blas])
@@ -2981,7 +2988,8 @@ dnl No longer used as we only build (or not) BLAS and LAPACK shims
 dnl  AC_DEFINE(USE_NEW_ACCELERATE, 1, [Define to use Apple's (new) Accelerate])
 fi
 AM_CONDITIONAL(BUILD_NEW_ACCELERATE, [test "x${use_accelerate}" == xyes])
-
+AM_CONDITIONAL(BUILD_NEW_ACCELERATE_LAPACK,
+              [test "x${use_accelerate_lapack}" == xyes])
 
 dnl record compiler versions
 CC_VER=`${CC} --version | ${SED} -n 1p`
