@@ -230,6 +230,13 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{data()} no longer handles zipped data from
+      long-defunct (since \R 2.13.0) \option{--use-zip-data} installations.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Arguments are now properly forwarded to methods on S4 generics

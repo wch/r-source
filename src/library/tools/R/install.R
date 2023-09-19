@@ -2042,14 +2042,6 @@ if(FALSE) {
             build_latex <- TRUE
         } else if (a == "--example") {
             build_example <- TRUE
-        } else if (a == "--use-zip-data") {
-            warning("use of '--use-zip-data' is defunct",
-                    call. = FALSE, domain = NA)
-            warning("use of '--use-zip-data' is deprecated",
-                    call. = FALSE, domain = NA)
-        } else if (a == "--auto-zip") {
-            warning("'--auto-zip' is defunct",
-                           call. = FALSE, domain = NA)
         } else if (a == "-l") {
             if (length(args) >= 2L) {lib <- args[2L]; args <- args[-1L]}
             else stop("-l option without value", call. = FALSE)
