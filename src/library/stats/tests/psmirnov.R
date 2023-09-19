@@ -12,8 +12,8 @@ all.equal(psmirnov(3 / 7, sizes = c(7, 5), z = 1:12),
 
 all.equal(psmirnov(sizes = c(m = 3, n = 4), q = 1/2, z = 1:7, lower.tail = FALSE),
           psmirnov(sizes = c(m = 3, n = 4), q = 1/2, lower.tail = FALSE))
-psmirnov(sizes = c(m = 3, n = 4), q = 1/6, z = 1:7, lower.tail = FALSE, two.sided = FALSE)
-psmirnov(sizes = c(m = 4, n = 3), q = 1/2, z = 1:7, lower.tail = FALSE, two.sided = FALSE)
+psmirnov(sizes = c(m = 3, n = 4), q = 1/6, z = 1:7, lower.tail = FALSE, alternative = "greater")
+psmirnov(sizes = c(m = 4, n = 3), q = 1/2, z = 1:7, lower.tail = FALSE, alternative = "greater")
 
 all.equal(psmirnov(sizes = c(m = 5, n = 7), q = 3 / 7, z = 1:12, lower.tail = FALSE),
           psmirnov(sizes = c(m = 5, n = 7), q = 3 / 7, z = 1:12, lower.tail = FALSE))
@@ -28,11 +28,11 @@ x <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
 psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE)
 psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, 
          exact = FALSE, simulate = TRUE, B = B)
-psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, two.sided = FALSE)
-psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, two.sided = FALSE,
+psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, alternative = "greater")
+psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = FALSE, alternative = "greater",
          exact = FALSE, simulate = TRUE, B = B)
-psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, two.sided = FALSE)
-psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, two.sided = FALSE,
+psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, alternative = "greater")
+psmirnov(z = x, sizes = c(m = 5, n = 7), q = 3 / 7, lower.tail = TRUE, alternative = "greater",
          exact = FALSE, simulate = TRUE, B = B)
 
 ### check quantiles
@@ -71,12 +71,12 @@ p <- psmirnov(q, sizes = c(5, 7), z = obs)
 all.equal(qsmirnov(p, sizes = c(5, 7), z = obs), q)
 
 ### without ties
-q <- qsmirnov(1:9/10, sizes = c(5, 7), two.sided = FALSE)
-p <- psmirnov(q, sizes = c(5, 7), two.sided = FALSE)
-all.equal(qsmirnov(p, sizes = c(5, 7), two.sided = FALSE), q)
+q <- qsmirnov(1:9/10, sizes = c(5, 7), alternative = "greater")
+p <- psmirnov(q, sizes = c(5, 7), alternative = "greater")
+all.equal(qsmirnov(p, sizes = c(5, 7), alternative = "greater"), q)
 
 ### with ties
 obs <- c(1, 2, 2, 3, 3, 1, 2, 3, 3, 4, 5, 6)
-q <- qsmirnov(1:9/10, sizes = c(5, 7), z = obs, two.sided = FALSE)
-p <- psmirnov(q, sizes = c(5, 7), z = obs, two.sided = FALSE)
-all.equal(qsmirnov(p, sizes = c(5, 7), z = obs, two.sided = FALSE), q)
+q <- qsmirnov(1:9/10, sizes = c(5, 7), z = obs, alternative = "greater")
+p <- psmirnov(q, sizes = c(5, 7), z = obs, alternative = "greater")
+all.equal(qsmirnov(p, sizes = c(5, 7), z = obs, alternative = "greater"), q)
