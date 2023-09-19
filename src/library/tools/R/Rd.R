@@ -263,9 +263,7 @@ function(package, dir, lib.loc = NULL, stages = "build")
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        ##
-        ## For an installed package, we might have
-        ##
+        ## For an installed package, we have (even when there are no help pages)
         ## help/package.rd[bx]
         ##    with a DB of the parsed (and platform processed, see above) Rd objects.
         db_file <- file.path(dir, "help", package)
@@ -278,43 +276,9 @@ function(package, dir, lib.loc = NULL, stages = "build")
                     paths <- substring(paths, first)
                 names(db) <- paths
             }
-            return(db)
-        }
-        ## or else  pre-2.10.0-style    man/package.Rd.gz   
-        ## file with suitable concatenated Rd sources,
-        ##
-        docs_dir <- file.path(dir, "man")
-        db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
-        if(file_test("-f", db_file)) {
-            lines <- .read_Rd_lines_quietly(db_file)
-            eof_pos <-
-                grep("^\\\\eof$", lines, perl = TRUE, useBytes = TRUE)
-            db <- split(lines[-eof_pos],
-                        rep.int(seq_along(eof_pos),
-                                diff(c(0, eof_pos)))[-eof_pos])
-        } else return(structure(list(), names = character()))
-
-        ## NB: we only get here for pre-2.10.0 installs
-
-        ## If this was installed using a recent enough version of R CMD
-        ## INSTALL, information on source file names is available, and
-        ## we use it for the names of the Rd db.  Otherwise, remove the
-        ## artificial names attribute.
-        paths <- as.character(sapply(db, `[`, 1L))
-        names(db) <-
-            if(length(paths)
-               && all(grepl("^% --- Source file: (.+) ---$", paths)))
-                sub("^% --- Source file: (.+) ---$", "\\1", paths)
-            else
-                NULL
-        ## Determine package encoding.
-        encoding <- .get_package_metadata(dir, TRUE)["Encoding"]
-        if(is.na(encoding)) encoding <- "unknown"
-        db <- suppressWarnings(lapply(db,
-                                      prepare_Rd_from_Rd_lines,
-                                      encoding = encoding,
-                                      defines = .Platform$OS.type,
-                                      stages = "install"))
+        } else # should not happen for packages installed with R >= 2.10.0
+            stop(sprintf("installed help of package %s is corrupt",
+                         sQuote(package)), domain = NA)
     }
     else {
         if(missing(dir))
@@ -338,15 +302,6 @@ function(package, dir, lib.loc = NULL, stages = "build")
     }
 
     db
-
-}
-
-prepare_Rd_from_Rd_lines <-
-function(x, ...)
-{
-    con <- textConnection(x, "rt")
-    on.exit(close(con))
-    prepare_Rd(con, ...)
 }
 
 .build_Rd_db <-

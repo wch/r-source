@@ -319,22 +319,6 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse = "\n"))
     }
 
-    unfix <- function(file) {
-        ## we need to re-fix links altered by fixup.package.URLs
-        ## in R < 2.10.0
-        fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file)
-        if(file.exists(fixedfile)) {
-            top <- readLines(fixedfile)
-            lines <- readLines(file)
-            lines <- gsub(paste0(top, "/library"),
-                          "../../", lines, fixed = TRUE)
-            lines <- gsub(paste0(top, "/doc/"),
-                          "../../../doc/", lines, fixed = TRUE)
-            return(list(payload=paste(lines, collapse="\n")))
-        }
-        list(file = file)
-    }
-
     charsetSetting <- function(pkg) {
     	encoding <- read.dcf(system.file("DESCRIPTION", package=pkg),
                              "Encoding")
@@ -515,7 +499,6 @@ httpd <- function(path, query, ...)
                              mono(pkg))
                 return(error_page(msg))
             } else {
-                if(.Platform$OS.type == "windows") return(unfix(file))
                 return(list(file = file))
             }
     	}

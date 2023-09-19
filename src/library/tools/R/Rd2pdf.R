@@ -241,7 +241,7 @@
     latexEncodings <- character() # Record any encodings used in the output
     hasFigures <- FALSE           # and whether graphics is used
 
-    ## First check for a latex dir.
+    ## First check for a latex dir (from R CMD INSTALL --latex).
     ## Second guess is this is a >= 2.10.0 package with stored .rds files.
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
@@ -370,14 +370,7 @@
             if (!silent) message(domain = NA)
         }
     }
-    ## they might be zipped up
-    if (file.exists(f <- file.path(latexdir, "Rhelp.zip"))) {
-        dir.create(newdir <- tempfile("latex"))
-        utils::unzip(f, exdir = newdir)
-        ## res <- system(paste("unzip -q", f, "-d", newdir))
-        ## if (res) stop("unzipping latex files failed")
-        latexdir <- newdir
-    }
+
     ## There are some restrictions, but the former "[[:alnum:]]+\\.tex$" was
     ## too strict.
     files <- dir(latexdir, pattern = "\\.tex$", full.names = TRUE)
