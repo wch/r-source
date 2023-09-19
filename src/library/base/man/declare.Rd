@@ -22,7 +22,7 @@ declare(...)
   A syntax for declaration expressions is still being developed.
 }
 \value{
-  Evaluating a \code{declare()} call ingores the arguments and returns
+  Evaluating a \code{declare()} call ignores the arguments and returns
   \code{NULL} invisibly.
 }
 \keyword{programming}
