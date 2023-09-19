@@ -489,7 +489,8 @@ function(x, kind)
 ### * .Rd_keywords_auto
 
 .Rd_keywords_auto <-
-    c("~kwd1", "~kwd2", "~~ other possible keyword(s) ~~")
+    c("~kwd1", "~kwd2",                  # prompt.default() in R < 4.0.0
+      "~~ other possible keyword(s) ~~") # promptMethods()
 
 ### * .Rd_get_section
 
