@@ -105,7 +105,7 @@ package.skeleton <-
     description <- file(file.path(dir, "DESCRIPTION"), "wt")
     cat("Package: ", name, "\n",
 	"Type: Package\n",
-	"Title: What the package does (short line)\n",
+	"Title: What the Package Does (Short Line)\n",
 	"Version: 1.0\n",
 	"Date: ", format(Sys.time(), format="%Y-%m-%d"), "\n",
 	"Author: Who wrote it\n",
