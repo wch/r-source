@@ -1328,9 +1328,24 @@ findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
  */
 
 static SEXP
-findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
-	     Rboolean doGet)
+findVar1mode(SEXP symbol, SEXP rho, const char* mode_s, int inherits,
+             Rboolean doGet)
 {
+
+    int wants_S4 = 0;
+    SEXPTYPE mode;
+
+    if (!strcmp(mode_s, "function")) /* ASCII */
+        mode = FUNSXP;
+    else if (!strcmp(mode_s, "S4")) {
+        mode = OBJSXP;
+        wants_S4 = 1;
+    }
+    else {
+        mode = str2type(mode_s); /* ASCII */
+	if(mode == (SEXPTYPE) (-1))
+	    error(_("invalid '%s' argument"), "mode");
+    }
     SEXP vl;
     int tl;
     if (mode == INTSXP) mode = REALSXP;
@@ -1353,7 +1368,9 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
 	    if (tl == INTSXP) tl = REALSXP;
 	    if (tl == FUNSXP || tl ==  BUILTINSXP || tl == SPECIALSXP)
 		tl = CLOSXP;
-	    if (tl == mode) return vl;
+	    if (tl == mode &&
+               ((tl != OBJSXP) || wants_S4 == !!IS_S4_OBJECT(vl)))
+                 return vl;
 	}
 	if (inherits)
 	    rho = ENCLOS(rho);
@@ -1362,7 +1379,6 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
     }
     return (R_UnboundValue);
 }
-
 
 /*
    ddVal ("dot-dot-value"):
@@ -2052,7 +2068,6 @@ void R_removeVarFromFrame(SEXP name, SEXP env)
 attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval, genv, t1 = R_NilValue;
-    SEXPTYPE gmode;
     int ginherits = 0, where;
     checkArity(op, args);
 
@@ -2092,22 +2107,18 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
        storage.mode.
     */
 
-    if (isString(CADDR(args))) {
-	if (!strcmp(CHAR(STRING_ELT(CADDR(args), 0)), "function")) /* ASCII */
-	    gmode = FUNSXP;
-	else
-	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
-    } else {
-	error(_("invalid '%s' argument"), "mode");
-	gmode = FUNSXP;/* -Wall */
+    SEXP gmode_rstring = CADDR(args);
+    if (!(isString(gmode_rstring) && length(gmode_rstring) == 1)) {
+        error(_("invalid '%s' argument"), "mode");
     }
+    const char* gmode_cstring = CHAR(STRING_ELT(gmode_rstring, 0));
 
     ginherits = asLogical(CADDDR(args));
     if (ginherits == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "inherits");
 
     /* Search for the object */
-    rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
+    rval = findVar1mode(t1, genv, gmode_cstring, ginherits, PRIMVAL(op));
     if (rval == R_MissingArg)
 	error(_("argument \"%s\" is missing, with no default"),
 	      CHAR(PRINTNAME(t1)));
@@ -2119,7 +2130,7 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     case 1: // have get(.)
 	if (rval == R_UnboundValue) {
-	    if (gmode == ANYSXP)
+	    if (str2type(gmode_cstring) == ANYSXP)
 		error(_("object '%s' not found"), EncodeChar(PRINTNAME(t1)));
 	    else
 		error(_("object '%s' of mode '%s' was not found"),
@@ -2150,7 +2161,7 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #undef GET_VALUE
 
-static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
+static SEXP gfind(const char *name, SEXP env, const char* mode,
 		  SEXP ifnotfound, int inherits, SEXP enclos)
 {
     SEXP rval, t1, R_fcall, var;
@@ -2235,16 +2246,9 @@ attribute_hidden SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, nvals));
 
     for(int i = 0; i < nvals; i++) {
-	SEXPTYPE gmode;
-	if (!strcmp(CHAR(STRING_ELT(CADDR(args), i % nmode)), "function"))
-	    gmode = FUNSXP;
-	else {
-	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), i % nmode)));
-	    if(gmode == (SEXPTYPE) (-1))
-		error(_("invalid '%s' argument"), "mode");
-	}
+        const char* gmode_cstring = CHAR(STRING_ELT(CADDR(args), i % nmode));
 	SEXP ans_i = gfind(translateChar(STRING_ELT(x, i % nvals)), env,
-			   gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
+			   gmode_cstring, VECTOR_ELT(ifnotfound, i % nifnfnd),
 			   ginherits, rho);
 	SET_VECTOR_ELT(ans, i, lazy_duplicate(ans_i));
     }
@@ -3616,7 +3620,7 @@ attribute_hidden SEXP do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* C version of new.env */
 SEXP R_NewEnv(SEXP enclos, int hash, int size)
 {
-    if (hash) 
+    if (hash)
 	return R_NewHashedEnv(enclos, size);
     else
 	return NewEnvironment(R_NilValue, R_NilValue, enclos);
@@ -4221,7 +4225,7 @@ static void reportInvalidString(SEXP cval, int actionWhenInvalid)
 	    from = "UTF-8";
 	else if (IS_LATIN1(cval))
 	    from = "CP1252";
-	
+
 	native_str = reEnc3(CHAR(cval), from, "", 1);
 	if (actionWhenInvalid == 1)
 	    warning("invalid string %s", native_str);
@@ -4573,4 +4577,3 @@ attribute_hidden void findFunctionForBody(SEXP body) {
 	}
     }
 }
-
