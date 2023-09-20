@@ -673,6 +673,9 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 	  case LANGSXP:
 	    klass = lang2str(obj, t);
 	    break;
+	  case OBJSXP:
+	    klass = mkChar(IS_S4_OBJECT(obj) ? "S4" : "object");
+	    break;
 	  default:
 	    klass = type2str(t);
 	  }
