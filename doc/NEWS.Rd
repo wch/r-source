@@ -246,6 +246,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
+      for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry). 
+
       \item Arguments are now properly forwarded to methods on S4 generics
       with \dots{} in the middle of their formal arguments. This was
       broken for the case when a method introduced an argument but did
