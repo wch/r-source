@@ -7359,12 +7359,14 @@ form
 @end example
 
 @noindent
-for each component of the list returned.  Optional text may
-precede@footnote{Text between or after list items is discouraged.} this
-list (see for example the help for @code{rle}).  Note that @code{\value}
+for each component of the list returned.  There may be
+optional text outside the @code{\item} entries
+(see for example the help for @code{rle}).  Note that @code{\value}
 is implicitly a @code{\describe} environment, so that environment should
 not be used for listing components, just individual @code{\item@{@}@{@}}
-entries.
+entries.@footnote{@code{\describe} can still be used for more general
+lists, including when @code{\item} labels need special markup such as
+@code{\var} for metasyntactic variables, see @ref{Marking text}.}
 
 @item \references@{@dots{}@}
 @findex \references
