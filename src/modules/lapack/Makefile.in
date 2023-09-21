@@ -23,8 +23,10 @@ SOURCES = $(SOURCES_C) $(SOURCES_F) $(SOURCES_F90)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) flexiblas.o
 HEADERS = Lapack.h
 
-## Sources for the -lRlapack.  On OSX this may be linked directly to
-## vecLib/Accelerate, so needs the zdot* fix.
+## Sources for -lRlapack.
+## On macOS this will be linked directly to the vecLib/Accelerate
+## framework if --with-blas=Acceleraate --with-lapack is used, so
+## needs the zdot* fix in lapack.so.
 LIBSOURCES = dlamch.f dlapack.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
 LIBSOURCES90 = dlartg.f90 dlassq.f90 la_constants.f90 la_xisnan.f90 \
@@ -53,14 +55,14 @@ lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 Rlapack_la = libRlapack$(R_DYLIB_EXT)
 
-@BUILD_NEW_ACCELERATE_TRUE@Rlapack_la_OBJECTS = accelerateLapack.o
-@BUILD_NEW_ACCELERATE_FALSE@Rlapack_la_OBJECTS = $(LIBOBJECTS)
+@BUILD_NEW_ACCELERATE_LAPACK_TRUE@Rlapack_la_OBJECTS = accelerateLapack.o
+@BUILD_NEW_ACCELERATE_LAPACK_FALSE@Rlapack_la_OBJECTS = $(LIBOBJECTS)
 ## This used to skip FLIBS, but that relied on all the functions
 ## needed being loaded into R.bin/libR.so, and that need not be the
 ## case for a static libfortran or if a package is compiled under a
 ## different compiler.
-@BUILD_NEW_ACCELERATE_FALSE@Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
-@BUILD_NEW_ACCELERATE_TRUE@Rlapack_la_LIBADD = -framework Accelerate
+@BUILD_NEW_ACCELERATE_LAPACK_FALSE@Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
+@BUILD_NEW_ACCELERATE_LAPACK_TRUE@Rlapack_la_LIBADD = -framework Accelerate
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)

@@ -48,11 +48,13 @@ double ACC_NAME(fun)(void); \
 double F77_NAME(fun)(void) { \
     return ACC_NAME(fun)(); \
 }
-#define Mcomplex(fun) \
+/*
+#define Mcomplex(fun)		    \
 double complex ACC_NAME(fun)(void); \
 double complex F77_NAME(fun)(void) { \
     return ACC_NAME(fun)(); \
 }
+*/
 
 // Fortran subroutines
 #define M1(fun)\
@@ -101,8 +103,9 @@ Mint(idamax)
 Mint(izamax)
 M1(zaxpy)
 M1(zcopy)
-Mcomplex(zdotc)
-Mcomplex(zdotu)
+// gfortran and C have different ABIs for double complex return values
+//Mcomplex(zdotc)
+//Mcomplex(zdotu)
 M1(zdrot)
 M1(zdscal)
 M1(zgbmv)

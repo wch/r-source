@@ -12,10 +12,7 @@ foo(x, y, ...)
 %
 \begin{Arguments}
 \begin{ldescription}
-\item[\code{
-x,
-y
-}] 
+\item[\code{x}, \code{y}] 
 combined arguments, in multiple Rd lines
 
 paragraph

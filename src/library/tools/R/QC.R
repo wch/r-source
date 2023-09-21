@@ -9930,10 +9930,8 @@ function(x)
         k <- .Rd_get_metadata(x, "keyword")
         k <- k[k %in% .Rd_keywords_auto]
         if(length(k)) {
-            ## Not quite perfect as .Rd_get_metadata() already calls
-            ## trimws() ...
             out <- rbind(out,
-                         cbind(sprintf("\\keyword{%s}", k), k))
+                         cbind("\\keyword", k))
         }
     }
 

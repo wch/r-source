@@ -30,7 +30,12 @@ as <-
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
     where <- .classEnv(thisClass, mustFind = FALSE)
+    ## <FIXME>
+    ## This should really look for a coerce generic from where to its
+    ## topenv, and fall back to ourselves.
     coerceFun <- getGeneric("coerce", where = where)
+    if(is.null(coerceFun)) coerceFun <- coerce
+    ## </FIXME>
     ## get the methods table, use inherited table
     coerceMethods <- .getMethodsTable(coerceFun,environment(coerceFun),inherited= TRUE)
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods, where)
@@ -149,7 +154,12 @@ as <-
     if(!.identC(.class1(value), Class))
         value <- as(value, Class, strict = FALSE)
     where <- .classEnv(class(object))
+    ## <FIXME>
+    ## This should really look for a coerce<- generic from where to its
+    ## topenv, and fall back to ourselves.
     coerceFun <- getGeneric("coerce<-", where = where)
+    if(is.null(coerceFun)) coerceFun <- `coerce<-`
+    ## </FIXME>
     coerceMethods <- getMethodsForDispatch(coerceFun)
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods, where)
     if(is.null(asMethod)) {

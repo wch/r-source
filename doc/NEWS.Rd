@@ -131,6 +131,18 @@
       patch.
 
       \item Plain-text help shows \verb{\var} markup with angle brackets.
+
+      \item The new experimental primitive function \code{declare()} is
+      intended to eventually allow information about R code to be
+      communicated to the interpreter, compiler, and code analysis
+      tools. The syntax for declarations is still being developed.
+
+      \item Functions \code{psmirnov()}, \code{qsmirnov()} and
+      \code{rsmirnov()} in package \pkg{stats} have argument
+      \code{two.sided} changed to \code{alternative}, to take into
+      account that the permutation distributions of the one-sided
+      statistics can be different in the case of ties.  Consequence of 
+      \PR{18582}.      
     }
   }
 
@@ -160,6 +172,22 @@
 
       \item \command{configure} \option{--enable-lto=check} has not
       worked reliably since 2019 and has been removed.
+    }
+  }
+
+  \subsection{INSTALLATION on macOS}{
+    \itemize{
+      \item A new \command{configure} option \option{--with-newAccelerate}
+      makes use of Apple's \sQuote{new} BLAS / LAPACK interfaces in their
+      Accelerate framework.  Those interfaces are only available in macOS
+      13.3 or later, and building requires SDK 14.3 or later (from the
+      Command Line Tools or Xcode).
+
+      By default the option uses new Accelerate for BLAS calls: to also
+      use it for LAPACK use \option{--with-newAccelerate=lapack}.  The
+      later interfaces provide LAPACK 3.9.1 rather than 3.2.1: 3.9.1 is
+      from 2021-04 and does not include the improved algorithms
+      introduced in LAPACK 3.10.0.
     }
   }
 
@@ -206,13 +234,21 @@
       \item Headers \file{R_ext/Applic.h} and \file{R-ext/Linpack.h}
       used to include \file{R_ext/BLAS.h} although this was undocumented and
       unneeded by their documented entry points.  They no longer do so.
+    }
+  }
 
-      [Linpack.h deferred to 2023-09-18 to allow some packages to adjust.]
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{data()} no longer handles zipped data from
+      long-defunct (since \R 2.13.0) \option{--use-zip-data} installations.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{pairwise.t.test()} misbehaved when subgroups had 0 DF
+      for variance, even with \code{pool.sd=TRUE} \PR{18594} (Jack Berry). 
+
       \item Arguments are now properly forwarded to methods on S4 generics
       with \dots{} in the middle of their formal arguments. This was
       broken for the case when a method introduced an argument but did
@@ -353,7 +389,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item \command{R CMD check} reports the use of Fortran 90 random
+      \item \command{R CMD check} reports the use of the Fortran 90 random
       number generator \code{RANDOM_NUMBER()} and the subroutines to
       initialize it.
 

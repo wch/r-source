@@ -68,8 +68,10 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab Tag \verb{\dontrun} is only valid in \verb{\examples}\cr
     7 \tab Invalid email address: \ldots\cr
     7 \tab Invalid URL: \ldots\cr
+    5 \tab \verb{\name} should not contain !, | or @\cr
     5 \tab \verb{\item} in \var{block name} must have non-empty label\cr
     3 \tab Empty section \var{tag name}\cr
+    -1 \tab \verb{\name} should only contain printable ASCII characters\cr
     -1 \tab Non-ASCII contents without declared encoding\cr
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
     -1 \tab Escaped LaTeX specials: \ldots\cr

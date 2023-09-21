@@ -508,7 +508,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     for (tag in unique_tags) {
         where <- which(sections == tag)
         if(length(where) > 1L) {
-            warnRd(Rd[where[[2L]]], Rdfile,
+            warnRd(NULL, Rdfile,
                    sprintf("Only one %s section is allowed: the first will be used", tag))
             drop[where[-1L]] <- TRUE
         }
@@ -516,7 +516,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
-    	encoding <- Rd[[enc]]
+    	encoding <- Rd[[enc[1L]]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, Rdfile, "'encoding' must be plain text")
     }
@@ -525,7 +525,7 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     docTypes <- character(length(dt))
     if(length(dt)) {
         if(length(dt) > 1L)
-            warnRd("", Rdfile,
+            warnRd(NULL, Rdfile,
                    "Multiple \\docType sections are not supported")
         for(i in seq_along(dt)) {
             docType <- Rd[[dt[i]]]
@@ -568,16 +568,14 @@ prepare2_Rd <- function(Rd, Rdfile, stages)
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name"))
         || identical(sections[3L], "\\name"))
-    	stopRd("", Rdfile,
+    	stopRd(NULL, Rdfile,
                "Sections \\title, and \\name must exist and be unique in Rd files")
-    if (length(RdTags(Rd[[2L]])) > 1L)
-        stopRd(RdTags(Rd[[2L]]), Rdfile,"\\name must only contain simple text")
 
-    ## R-exts points out that ! | @ cause problems in \name:
-    ## ggplot2 demonstrated it
-    name_text <- as.character(Rd[[2L]])
-    if(grepl("[!|@]", name_text))
-        warnRd(Rd[[2L]], Rdfile, "\\name should not contain !, | or @")
+    ## \name (parsed verbatim) must not contain any markup
+    if (length(Rd[[2L]]) != 1L ||
+        grepl("\\", Rd[[2L]][[1L]], fixed = TRUE))
+        stopRd(Rd[[2L]], Rdfile, "\\name must only contain simple text")
+
     ## is this really what we want?  docTypes is a vector.
     structure(Rd, meta = list(docType = docTypes, generator = generator))
 }
@@ -1033,14 +1031,21 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                    warningCalls = FALSE, ..., msglevel = 1)
     }, warning = .whandler)
     Rdfile <- attr(Rd, "Rdfile")
+
+    ## check \name
+    name <- as.character(Rd[[2L]])
+    if(grepl("[!|@]", name)) # these cause LaTeX indexing problems
+        warnRd(Rd[[2L]], Rdfile, level = 5,
+               "\\name should not contain !, | or @")
+    if (Encoding(name) == "UTF-8" ||
+        !all(utils::charClass(trimws(name), "print")))
+        warnRd(Rd[[2L]], Rdfile, level = -1,
+               "\\name should only contain printable ASCII characters")
+
+    ## check all sections
     sections <- RdTags(Rd)
-
-    enc <- which(sections == "\\encoding")
-    ## sanity was checked in prepare2_Rd
-    if (length(enc)) def_enc <- TRUE
-
+    if (any(sections == "\\encoding")) def_enc <- TRUE
     inEnc2 <- FALSE
-
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])
 

@@ -153,8 +153,6 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
                 saveRDS(dlist, file.path(dataDir, "Rdata.rds"),
                          compress = compress)
                 unlink(f0)
-                if(file.exists(file.path(dataDir, "filelist")))
-                    unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
             }
         }
     }

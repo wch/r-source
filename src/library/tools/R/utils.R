@@ -132,16 +132,8 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    ## Might be in a zipped dir on Windows.
-    if(file.exists(file.path(dir, "filelist")) &&
-       any(file.exists(file.path(dir, c("Rdata.zip", "Rex.zip", "Rhelp.zip")))))
-    {
-        files <- readLines(file.path(dir, "filelist"))
-        if(!all.files)
-            files <- grep("^[^.]", files, value = TRUE)
-    } else {
-        files <- list.files(dir, all.files = all.files)
-    }
+
+    files <- list.files(dir, all.files = all.files)
     ## does not cope with exts with '.' in.
     ## files <- files[sub(".*\\.", "", files) %in% exts]
     patt <- paste0("\\.(", paste(exts, collapse="|"), ")$")
@@ -1728,7 +1720,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                     "csv", "CSV",
                     "csv.gz", "csv.bz2", "csv.xz"),
            demo = c("R", "r"),
-           docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
+           docs = c("Rd", "rd"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste0),
                         "Rmd"))
@@ -2041,21 +2033,6 @@ function(file, encoding = NA, keep.source = getOption("keep.source"))
             parse(file,
                   keep.source = keep.source)
     })
-}
-
-
-### ** .read_Rd_lines_quietly
-
-.read_Rd_lines_quietly <-
-function(con)
-{
-    ## Read lines from a connection to an Rd file, trying to suppress
-    ## "incomplete final line found by readLines" warnings.
-    if(is.character(con)) {
-        con <- if(endsWith(con, ".gz")) gzfile(con, "r") else file(con, "r")
-        on.exit(close(con))
-    }
-    .try_quietly(readLines(con, warn=FALSE))
 }
 
 ### ** .read_additional_repositories_field

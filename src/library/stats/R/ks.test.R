@@ -69,7 +69,7 @@ ks.test.default <-
                                  "less" = "the CDF of x lies below that of y",
                                  "greater" = "the CDF of x lies above that of y")
         PVAL <- psmirnov(STATISTIC, sizes = c(n.x, n.y), z = if(TIES) w, # else NULL
-                         two.sided = (alternative == "two.sided"),
+                         alternative = alternative,
                          exact = exact, simulate = simulate.p.value,
                          B = B, lower.tail = FALSE)
         ## match MC p-values to those reported by chisq.test
@@ -164,7 +164,10 @@ function(formula, data, subset, na.action, ...)
 }
 
 rsmirnov <-
-function(n, sizes, z = NULL, two.sided = TRUE) {
+function(n, sizes, z = NULL,
+         alternative = c("two.sided", "less", "greater")) {
+    alternative <- match.arg(alternative)
+
     if(!length(n) || n == 0L)
         return(numeric(0L))
     if (n < 0)
@@ -181,20 +184,29 @@ function(n, sizes, z = NULL, two.sided = TRUE) {
     n.y <- floor(n.y)
 
     rt <- if (is.null(z)) rep.int(1L, n.x + n.y) else table(z)
+    two.sided <- (alternative == "two.sided")
+    sizes <- if(alternative == "less")
+                 c(n.y, n.x)
+             else
+                 c(n.x, n.y)
     .Call(C_Smirnov_sim,
           as.integer(rt),
-          as.integer(c(n.x, n.y)),
+          as.integer(sizes),
           as.integer(n),
           as.integer(two.sided))
 }
 
 psmirnov_exact <-
 function(q, sizes, z = NULL,
-         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE) {
+         alternative = c("two.sided", "less", "greater"),
+         lower.tail = TRUE, log.p = FALSE) {
     if(!is.null(z)) {
         z <- (diff(sort(z)) != 0)
         z <- if(any(z)) c(0L, z, 1L) # else NULL
     }
+    two.sided <- (alternative == "two.sided")
+    if(alternative == "less")
+        sizes <- c(sizes[2L], sizes[1L])
     p <- .Call(C_psmirnov_exact, q, sizes[1L], sizes[2L], z,
                two.sided, lower.tail)
     if(log.p)
@@ -205,7 +217,10 @@ function(q, sizes, z = NULL,
 
 psmirnov_asymp <-
 function(q, sizes,
-         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE) {
+         alternative = c("two.sided", "less", "greater"),
+         lower.tail = TRUE, log.p = FALSE) {
+    alternative <- match.arg(alternative)
+    two.sided <- (alternative == "two.sided")
     n <- prod(sizes) / sum(sizes)
     ## <FIXME>
     ## Let m and n be the min and max of the sample sizes, respectively.
@@ -237,11 +252,14 @@ function(q, sizes,
 
 psmirnov_simul <-
 function(q, sizes, z = NULL,
-         two.sided = TRUE, lower.tail = TRUE, log.p = FALSE,
-         B) {
-    Dsim <- rsmirnov(B, sizes = sizes, z = z, two.sided = two.sided)
+         alternative = c("two.sided", "less", "greater"),
+         lower.tail = TRUE, log.p = FALSE, B) {
+    Dsim <- rsmirnov(B, sizes = sizes, z = z, alternative = alternative)
     ## need P(D < q)
+    ## <FIXME>
+    ## Sync with the corrections used in the C code.
     ret <- ecdf(Dsim)(q - sqrt(.Machine$double.eps))
+    ## </FIXME>
     if(log.p) {
         if(lower.tail)
             log(ret)
@@ -256,16 +274,18 @@ function(q, sizes, z = NULL,
 }
 
 psmirnov <-
-function(q, sizes, z = NULL, two.sided = TRUE,
+function(q, sizes, z = NULL,
+         alternative = c("two.sided", "less", "greater"),
          exact = TRUE, simulate = FALSE, B = 2000,
          lower.tail = TRUE, log.p = FALSE) {
 
     ##
     ## Distribution function Prob(D < q) for the Smirnov test statistic
     ##
-    ##   D = sup_c | ECDF_x(c) - ECDF_y(c) | 	(two.sided)
+    ##   D   = sup_c | ECDF_x(c) - ECDF_y(c) | 	(two.sided)
     ##
-    ##   D = sup_c ( ECDF_x(c) - ECDF_y(c) ) 	(!two.sided)
+    ##   D^+ = sup_c ( ECDF_x(c) - ECDF_y(c) ) 	(greater)
+    ##   D^- = sup_c ( ECDF_y(c) - ECDF_x(c) ) 	(less)
     ##
     ## See
     ##
@@ -274,6 +294,8 @@ function(q, sizes, z = NULL, two.sided = TRUE,
     ##   Tests for Two or Three Samples,
     ##   Computational Statistics & Data Analysis, 20, 185--202
 
+    alternative <- match.arg(alternative)
+    
     if (is.numeric(q)) {
         if(!is.double(q)) storage.mode(q) <- "double" # keeping dim() etc
     } else stop("argument 'q' must be numeric")
@@ -311,30 +333,32 @@ function(q, sizes, z = NULL, two.sided = TRUE,
         ret[IND] <-
             if (simulate)
                 psmirnov_simul(q[IND], sizes, z,
-                               two.sided, lower.tail, log.p,
+                               alternative,lower.tail, log.p,
                                B)
             else
                 psmirnov_asymp(q[IND], sizes,
-                               two.sided, lower.tail, log.p)
+                               alternative, lower.tail, log.p)
         return(ret)
     }
 
-    r <- psmirnov_exact(q[IND], sizes, z, two.sided, lower.tail, log.p)
+    r <- psmirnov_exact(q[IND], sizes, z, alternative, lower.tail, log.p)
     ret[IND] <-
         if(all(is.finite(r))) r
         else {
             warning("computation of exact probability failed, returning Monte Carlo approximation")
             psmirnov_simul(q[IND], sizes, z,
-                           two.sided, lower.tail, log.p,
+                           alternative, lower.tail, log.p,
                            B)
         }
     ret
 }
 
 qsmirnov <-
-function(p, sizes, z = NULL, two.sided = TRUE,
+function(p, sizes, z = NULL,
+         alternative = c("two.sided", "less", "greater"),
          exact = TRUE, simulate = FALSE, B = 2000)
 {
+    alternative <- match.arg(alternative)
     n.x <- floor(sizes[1L])
     n.y <- floor(sizes[2L])
     if (n.x * n.y < 1e4) {
@@ -343,8 +367,9 @@ function(p, sizes, z = NULL, two.sided = TRUE,
     } else {
         stat <- (-1e4):1e4 / (1e4 + 1)
     }
-    if (two.sided) stat <- abs(stat)
-    prb <- psmirnov(stat, sizes = sizes, z = z, two.sided = two.sided,
+    if (alternative == "two.sided") stat <- abs(stat)
+    prb <- psmirnov(stat, sizes = sizes, z = z,
+                    alternative = alternative,
                     exact = exact, simulate = simulate, B = B,
                     log.p = FALSE, lower.tail = TRUE)
     if (is.null(p)) return(list(stat = stat, prob = prb))
