@@ -349,6 +349,9 @@
       \item \code{transform.data.frame()} no longer adjusts names;
       in particular, untransformed variables are kept as-is,
       including those with syntactically invalid names (\PR{17890}).
+
+      \item The \code{keep.source} option for Rd \verb{\Sexpr} blocks is
+      no longer ignored.
    }
   }
 }

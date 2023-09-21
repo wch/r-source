@@ -70,7 +70,7 @@ RweaveRdDefaults <- list(
     eval = TRUE,
     fig = FALSE,
     echo = FALSE,
-    keep.source = TRUE,
+    keep.source = TRUE, # was ignored, effectively interactive(), thus often FALSE, in R < 4.4.0
     results = "text",
     strip.white = "true",
     stage = "install")
@@ -204,21 +204,25 @@ processRdChunk <- function(code, stage, options, env, macros)
             ## also USERMACROs are currently not supported inside \Sexpr{}
             warnRd(code, Rdfile, "\\Sexpr expects R code; found ",
                    paste0(sQuote(bad), collapse = ", "))
-        code <- code[tags != "COMMENT"]  # list attributes are lost here
-	chunkexps <- tryCatch(parse(text = code), error = identity)
-	if (inherits(chunkexps, "error"))
-            stopRd(code, Rdfile, conditionMessage(chunkexps))
+	code <- structure(code[tags != "COMMENT"],
+	                  srcref = codesrcref) # retain for error locations
+	chunkexps <- tryCatch(
+	    parse(text = as.character(code), keep.source = options$keep.source),
+	    error = function (e) stopRd(code, Rdfile, conditionMessage(e))
+	)
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
 
 	srcrefs <- attr(chunkexps, "srcref")
 	lastshown <- 0L
-	thisline <- 0
 	err <- NULL
 	for(nce in seq_along(chunkexps))
 	{
 	    ce <- chunkexps[[nce]]
+
+	    if (options$echo && options$results == "verbatim") {
+
 	    if (nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
 		srcfile <- attr(srcref, "srcfile")
 		showfrom <- srcref[1L]
@@ -234,7 +238,7 @@ processRdChunk <- function(code, stage, options, env, macros)
 		dce <- deparse(ce, width.cutoff=0.75*getOption("width"))
 		leading <- 1L
 	    }
-	    if(options$echo && length(dce)) {
+	    if (length(dce)) {
 		res <- c(res,"\n",
                          paste0(getOption("prompt"), dce[1L:leading],
                                 collapse="\n"))
@@ -242,7 +246,8 @@ processRdChunk <- function(code, stage, options, env, macros)
 		    res <- c(res, "\n",
                              paste0(getOption("continue"), dce[-(1L:leading)],
                                     collapse="\n"))
-		thisline <- thisline + length(dce)
+	    }
+
 	    }
 
 	    tmpcon <- file()
@@ -255,10 +260,8 @@ processRdChunk <- function(code, stage, options, env, macros)
 	    ## delete empty output
 	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
-	    if (inherits(err, "error")) {
-	    	attr(code, "srcref") <- codesrcref  # restore for error location
+	    if (inherits(err, "error"))
 	    	stopRd(code, Rdfile, conditionMessage(err))
-	    }
 
 	    if(length(output) && (options$results != "hide")) {
 		output <- paste(output, collapse="\n")
@@ -293,7 +296,7 @@ processRdChunk <- function(code, stage, options, env, macros)
                 bad <- flag[c(stage, switch(stage, install = "build",
                                             render = c("build", "install")))]
                 if (any(bad))
-                    warnRd(tagged(code, "\\Sexpr", codesrcref), Rdfile,
+                    warnRd(code, Rdfile,
                            "unprocessed ",
                            paste0(sQuote(names(bad)[bad]), collapse = "/"),
                            " macro from ", stage, "-stage \\Sexpr")
