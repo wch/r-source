@@ -2049,10 +2049,21 @@ void R_removeVarFromFrame(SEXP name, SEXP env)
       get0   (x, envir, mode, inherits, value_if_not_exists)
 */
 
+static SEXPTYPE str2mode(const char *modestr)
+{
+    if (!strcmp(modestr, "function"))
+	return FUNSXP;
+    else {
+	SEXPTYPE gmode = str2type(modestr);
+	if(gmode == (SEXPTYPE) (-1))
+	    error(_("invalid '%s' argument '%s'"), "mode", modestr);
+	return gmode;
+    }
+}
+
 attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval, genv, t1 = R_NilValue;
-    SEXPTYPE gmode;
     int ginherits = 0, where;
     checkArity(op, args);
 
@@ -2092,12 +2103,10 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
        storage.mode.
     */
 
-    if (isString(CADDR(args))) {
-	if (!strcmp(CHAR(STRING_ELT(CADDR(args), 0)), "function")) /* ASCII */
-	    gmode = FUNSXP;
-	else
-	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
-    } else {
+    SEXPTYPE gmode;
+    if (isString(CADDR(args)))
+	gmode = str2mode(CHAR(STRING_ELT(CADDR(args), 0)));
+    else {
 	error(_("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
     }
@@ -2235,17 +2244,11 @@ attribute_hidden SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, nvals));
 
     for(int i = 0; i < nvals; i++) {
-	SEXPTYPE gmode;
-	if (!strcmp(CHAR(STRING_ELT(CADDR(args), i % nmode)), "function"))
-	    gmode = FUNSXP;
-	else {
-	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), i % nmode)));
-	    if(gmode == (SEXPTYPE) (-1))
-		error(_("invalid '%s' argument"), "mode");
-	}
+	const char *modestr = CHAR(STRING_ELT(CADDR(args), i % nmode));
+	SEXPTYPE gmode = str2mode(modestr);
+	SEXP nf = VECTOR_ELT(ifnotfound, i % nifnfnd);
 	SEXP ans_i = gfind(translateChar(STRING_ELT(x, i % nvals)), env,
-			   gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
-			   ginherits, rho);
+			   gmode, nf, ginherits, rho);
 	SET_VECTOR_ELT(ans, i, lazy_duplicate(ans_i));
     }
 
