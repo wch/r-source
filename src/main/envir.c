@@ -3616,7 +3616,7 @@ attribute_hidden SEXP do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* C version of new.env */
 SEXP R_NewEnv(SEXP enclos, int hash, int size)
 {
-    if (hash) 
+    if (hash)
 	return R_NewHashedEnv(enclos, size);
     else
 	return NewEnvironment(R_NilValue, R_NilValue, enclos);
@@ -4221,7 +4221,7 @@ static void reportInvalidString(SEXP cval, int actionWhenInvalid)
 	    from = "UTF-8";
 	else if (IS_LATIN1(cval))
 	    from = "CP1252";
-	
+
 	native_str = reEnc3(CHAR(cval), from, "", 1);
 	if (actionWhenInvalid == 1)
 	    warning("invalid string %s", native_str);
@@ -4573,4 +4573,3 @@ attribute_hidden void findFunctionForBody(SEXP body) {
 	}
     }
 }
-
