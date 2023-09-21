@@ -92,6 +92,10 @@ output
 &#8288;</code>
 &ndash;
 </p>
+<p><code style="white-space: pre;">&#8288;
+&gt; x &lt;- 7
+&#8288;</code>
+</p>
 
 
 <h3><code style="white-space: pre;">&#8288;\tabular&#8288;</code></h3>

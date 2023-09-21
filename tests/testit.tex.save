@@ -64,6 +64,10 @@ Yihui Xie's example:
 output
 }}
 --
+
+\AsIs{\texttt{
+> x <- 7
+}}
 \end{Section}
 %
 \begin{Section}{\AsIs{\texttt{\bsl{}tabular}}}

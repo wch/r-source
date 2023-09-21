@@ -57,6 +57,8 @@ _V_a_l_u_e:
 
      -
 
+     > x <- 7
+
 \_t_a_b_u_l_a_r:
 
         1              linked text in \tabular  <https://example.org/a&b#c> 
