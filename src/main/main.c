@@ -1325,13 +1325,17 @@ static void PrintCall(SEXP call, SEXP rho)
     R_BrowseLines = old_bl;
 }
 
-#ifdef USE_BROWSER_HOOK
 static int countBrowserContexts()
 {
-    /* passing TRUE for the second aargument seems to over-count */
+#ifdef USE_BROWSER_HOOK
+    /* passing TRUE for the second argument seems to over-count */
     return countContexts(CTXT_BROWSER, FALSE);
+#else
+    return countContexts(CTXT_BROWSER, 1);
+#endif
 }
 
+#ifdef USE_BROWSER_HOOK
 struct callBrowserHookData { SEXP hook, cond, rho; };
 
 static SEXP callBrowserHook(void *data)
@@ -1447,13 +1451,7 @@ attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
 
-#ifdef USE_BROWSER_HOOK
-    /* this seems to make more sense in any case, but for now only use
-       with hooks */
     browselevel = countBrowserContexts();
-#else
-    browselevel = countContexts(CTXT_BROWSER, 1);
-#endif
     savestack = R_PPStackTop;
     PROTECT(topExp = R_CurrentExpr);
     saveToplevelContext = R_ToplevelContext;
