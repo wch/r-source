@@ -356,6 +356,9 @@
       \item The \code{formula} methods for \code{t.test()} and
       \code{wilcox.test()} now catch when \code{paired} is passed,
       addressing \PR{14359}; use \code{Pair(x1, x2) ~ 1} for a paired test.
+
+      \item The level reported in the browser prompt was often too
+      large. It now shows the number of browser contexts on the stack.
     }
   }
 }

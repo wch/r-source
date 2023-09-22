@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2023-08-17 r84982) -- "Unsuffered Consequences"
+R Under development (unstable) (2023-09-22 r85207) -- "Unsuffered Consequences"
 Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5102,7 +5102,7 @@ Calls: do.call -> <Anonymous>
 > g(function(x) x+1)
 debugging in: g(function(x) x + 1)
 debug: fun(1)
-Browse[2]> c
+Browse[1]> c
 exiting from: g(function(x) x + 1)
 [1] 2
 > 
@@ -6354,7 +6354,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6365,7 +6365,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6377,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5555f08>
+<bytecode: 0x563a4cd32a90>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -8327,6 +8327,6 @@ Error in f() : argument is missing, with no default
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
-  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0xfeef070> 
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x563a4c811e70> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
 > 
