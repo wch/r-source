@@ -1353,12 +1353,14 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, Rboolean wants_S4,
 	    if (tl == INTSXP) tl = REALSXP;
 	    if (tl == FUNSXP || tl ==  BUILTINSXP || tl == SPECIALSXP)
 		tl = CLOSXP;
-	    if (tl == OBJSXP) {
-		if ((wants_S4 && IS_S4_OBJECT(vl)) ||
-		    (! wants_S4 && ! IS_S4_OBJECT(vl)))
-		    return vl;
+	    if (tl == mode) {
+		if (tl == OBJSXP) {
+		    if ((wants_S4 && IS_S4_OBJECT(vl)) ||
+			(! wants_S4 && ! IS_S4_OBJECT(vl)))
+			return vl;
+		}
+		else return vl;
 	    }
-	    else if (tl == mode) return vl;
 	}
 	if (inherits)
 	    rho = ENCLOS(rho);
