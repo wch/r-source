@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/postscript.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2023 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -259,7 +259,7 @@ postscript <- function(file = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
             stop("invalid 'family' argument")
         old$family <- family
     }
-    if(grepl("[\n\r\f\127]", old$title))
+    if(grepl("[\n\r\f\177]", old$title))
         ## title with these characters generates corrupt postscript file
         stop(gettextf("'title' argument \"%s\" contains invalid characters",
                       old$title), domain = NA)

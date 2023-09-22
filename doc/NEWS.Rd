@@ -356,7 +356,7 @@
       \item The \code{formula} methods for \code{t.test()} and
       \code{wilcox.test()} now catch when \code{paired} is passed,
       addressing \PR{14359}; use \code{Pair(x1, x2) ~ 1} for a paired test.
-   }
+    }
   }
 }
 
@@ -445,7 +445,10 @@
       \item Formatting and printing complex numbers could give things
       like \samp{0.1683-0i} because of rounding error: \samp{-0i} is now
       replaced by \samp{+0i}.
-     }
+
+      \item \code{postscript()} refused to accept a \code{title} comment
+      containing the letter \dQuote{W} (\PR{18599}).
+    }
   }
 }
 
