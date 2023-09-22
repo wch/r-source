@@ -8259,9 +8259,10 @@ are supported.  Currently the allowed options and their defaults are:
 Whether the @R{} code should be evaluated.
 
 @item @code{echo=FALSE}
-Whether the @R{} code should be echoed.  If @code{TRUE}, a display will
+Whether the @R{} code should be echoed.  If @code{TRUE}
+@emph{and} @code{results=verbatim}, a display will
 be given in a preformatted block.  For example,
-@code{\Sexpr[echo=TRUE]@{ x <- 1 @}} will be displayed as
+@code{\Sexpr[echo=TRUE,results=verbatim]@{ x <- 1 @}} will be displayed as
 @example
 > x <- 1
 @end example

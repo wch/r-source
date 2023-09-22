@@ -42,13 +42,16 @@ foo(\var{x}, \var{y}, ...)
   From gap: pedtodot.Rd -- n=split(m,par,"\034") 
   }
 }
+\RdOpts{stage=render}
 \section{\verb{\Sexpr}}{
   Yihui Xie's example:
-  \Sexpr[results=rd,stage=render]{"\\\\describe{\\\\item{def}{ghi}}"}
+  \Sexpr[results=rd]{"\\\\describe{\\\\item{def}{ghi}}"}
 
   --
-  \Sexpr[results=verbatim,stage=render,echo=TRUE,strip.white=TRUE]{cat("\noutput\n")}
+  \Sexpr[results=verbatim,echo=TRUE,strip.white=TRUE]{cat("\noutput\n")}
   --
+
+  \Sexpr[echo=TRUE,results=verbatim,keep.source=TRUE]{x<-007}
 }
 \value{
   [NULL]\cr\cr\dots

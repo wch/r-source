@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2023 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -175,12 +175,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{keep_outputs}{
     a logical: if true, keep the outputs from installing source packages
     in the current working directory, with the names of the output files
-    the package names with \file{.out} appended.  Alternatively, a
+    the package names with \file{.out} appended (overwriting existing
+    files, possibly from previous installation attempts).  Alternatively, a
     character string giving the directory in which to save the outputs.
     Ignored when installing from local files.
   }
   \item{\dots}{
-    Arguments to be passed to \code{\link{download.file}},
+    further arguments to be passed to \code{\link{download.file}},
     \code{\link{available.packages}}, or to the functions for binary
     installs on macOS and Windows (which accept an argument \code{"lock"}:
     see the section on \sQuote{Locking}).
