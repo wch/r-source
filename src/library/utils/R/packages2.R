@@ -898,7 +898,7 @@ install.packages <-
                      }
             }
             if(keep_outputs)
-                file.copy(paste0(update[, 1L], ".out"), outdir)
+                file.copy(paste0(update[, 1L], ".out"), outdir, overwrite = TRUE)
             ## Keep binary packages possibly created via --build
             file.copy(Sys.glob(paste0(update[, 1L], "*.zip")), cwd)
             file.copy(Sys.glob(paste0(update[, 1L], "*.tgz")), cwd)
@@ -938,7 +938,7 @@ install.packages <-
                 }
             }
             if(keep_outputs)
-                file.copy(outfiles, outdir)
+                file.copy(outfiles, outdir, overwrite = TRUE)
             unlink(tmpd2, recursive = TRUE)
         }
         ## Using stderr is the wish of PR#16420
