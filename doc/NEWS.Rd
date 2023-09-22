@@ -352,6 +352,10 @@
 
       \item The \code{keep.source} option for Rd \verb{\Sexpr} blocks is
       no longer ignored.
+
+      \item The \code{formula} methods for \code{t.test()} and
+      \code{wilcox.test()} now catch when \code{paired} is passed,
+      addressing \PR{14359}; use \code{Pair(x1, x2) ~ 1} for a paired test.
    }
   }
 }

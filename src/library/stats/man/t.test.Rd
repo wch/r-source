@@ -42,7 +42,7 @@ t.test(x, \dots)
     \code{1} for a one-sample or paired test or a factor
     with two levels giving the corresponding groups. If \code{lhs} is of 
     class \code{"\link{Pair}"} and \code{rhs} is \code{1}, a paired test
-    is done.}
+    is done, see Examples.}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
@@ -50,8 +50,10 @@ t.test(x, \dots)
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA}s.}
-  \item{\dots}{further arguments to be passed to or from methods.}
+    the data contain \code{\link{NA}}s.}
+  \item{\dots}{further arguments to be passed to or from methods.
+    For the \code{formula} method, this includes arguments of the
+    default method, but not \code{paired}.}
 }
 \details{
   \code{alternative = "greater"} is the alternative that \code{x} has a
