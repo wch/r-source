@@ -771,6 +771,17 @@ stopifnot(exprs = {
 assertErrV(o2[ 1 ])
 assertErrV(o2[[1]])
 
+stopifnot(isFALSE(inherits(oo, "S4")))
+stopifnot(isTRUE(inherits(oo, "object")))
+stopifnot(isTRUE(inherits(x4, "S4")))
+stopifnot(isFALSE(inherits(x4, "object")))
+assertErrV(get("oo", .GlobalEnv, mode = "S4"))
+stopifnot(identical(get("oo", .GlobalEnv, mode = "object"), oo))
+stopifnot(identical(get("x4", .GlobalEnv, mode = "S4"), x4))
+assertErrV(get("x4", .GlobalEnv, mode = "object"))
+assertErrV(get("oo", mode = "integer"))
+assertErrV(get("x4", .GlobalEnv, mode = "integer"))
+
 
 ## kappa(), rcond() [& norm()] -- new features and several bug fixes, PR#18543:
 (m <- rbind(c(2, 8, 1),
