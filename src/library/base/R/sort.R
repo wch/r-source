@@ -122,7 +122,9 @@ sort.int <-
 	nlev <- nlevels(x)
  	isord <- is.ordered(x)
         x <- c(x) # drop attributes
-    } else if(!is.atomic(x))
+    } else if(is.null(x))
+        return(x)
+    else if(!is.atomic(x))
         stop("'x' must be atomic")
 
     if(has.na <- any(ina <- is.na(x))) {

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -179,8 +179,8 @@ var <- function(x, y = NULL, na.rm = FALSE, use) {
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
     if(is.na(na.method)) stop("invalid 'use' argument")
-    if (is.data.frame(x)) x <- as.matrix(x) else stopifnot(is.atomic(x))
-    if (is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
+    if (is.data.frame(x)) x <- as.matrix(x) else if(!is.null(x)) stopifnot(is.atomic(x))
+    if (is.data.frame(y)) y <- as.matrix(y) else if(!is.null(y)) stopifnot(is.atomic(y))
     .Call(C_cov, x, y, na.method, FALSE)
 }
 
