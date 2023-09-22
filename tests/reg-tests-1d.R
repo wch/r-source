@@ -5727,8 +5727,6 @@ stopifnot(exprs = {
     identical(lengths(LC), 1:2) #        ^^^^^   2 warnings in data.frame case
 })
 ## rbind.data.frame(.) did not warn in R <= 4.1.x
-## untested previously (failed in first version of `R-is`)
-stopifnot(is.null(sort(NULL)), is.null(sort.int(NULL)))
 
 
 ## match.arg("",*) etc; PR#17959

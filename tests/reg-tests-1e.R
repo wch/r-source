@@ -858,6 +858,12 @@ stopifnot(exprs = {
 tools::assertWarning(compiler::cmpfun(function(x) sqrt(x))(-1L))
 
 
+## untested previously
+stopifnot(is.null(sort(NULL)), is.null(sort.int(NULL)))
+## failed in first version of `R-is` branch
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
