@@ -91,7 +91,7 @@ ifndef USE_LLVM
   FLIBS=-lgfortran -lquadmath
 else
   FC=$(BINPREF)flang $(M_ARCH)
-  FLIBS=-lFortranRuntime -lFortranDecimal
+  FLIBS=-lFortranRuntime -lFortranDecimal -lc++
 endif
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
